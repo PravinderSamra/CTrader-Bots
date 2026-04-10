@@ -192,7 +192,9 @@ namespace cAlgo.Robots
             }
 
             if (ExitMode == ExitMode.DynamicOnly && !EnableDynamicStop)
-                Print("[WARN] ExitMode=DynamicOnly but EnableDynamicStop=False. Only MaxHoldBars time stop applies.");
+                Print($"[WARN] ExitMode=DynamicOnly but EnableDynamicStop=False. " +
+                      $"Position managed by MaxHoldBars time stop only ({MaxHoldBars} bars). " +
+                      "Enable Dynamic Stop for breakeven/trail management.");
 
             _positionStates    = new Dictionary<long, PositionState>();
             _tradeAttemptedToday = false;
@@ -256,10 +258,10 @@ namespace cAlgo.Robots
             foreach (var pos in Positions.Where(p => IsBotPosition(p)).ToList())
             {
                 var state = GetOrRegisterState(pos);
-                var elapsed = Server.Time - state.EntryTimeUtc;
-                if (elapsed.TotalHours > (MaxHoldBars + 1) * 24.0)
+                int timerBarsHeld = GetBarsHeld(pos, state);
+                if (timerBarsHeld > MaxHoldBars + 1) // +1 buffer for timer vs OnBar timing
                 {
-                    Print($"[SAFETY_NET] Timer-triggered close: {pos.Label} open {elapsed.TotalHours:F1}h");
+                    Print($"[SAFETY_NET] Timer-triggered close: {pos.Label} open {timerBarsHeld} bars (max {MaxHoldBars})");
                     ClosePosition(pos);
                 }
             }
@@ -302,7 +304,7 @@ namespace cAlgo.Robots
 
             if (EntryMode == EntryMode.DailyBarOpen)
             {
-                int maxCheck = Math.Min(NumberOfDownDays + 2, Bars.Count - 1);
+                int maxCheck = Math.Min(NumberOfDownDays + 2, Bars.Count - 2);
                 for (int i = 1; i <= maxCheck; i++)
                 {
                     double c = Bars.Last(i).Close;
@@ -598,7 +600,8 @@ namespace cAlgo.Robots
             {
                 refHigh  = GetTodaySessionHigh();
                 refLow   = GetTodaySessionLow();
-                refClose = _dailySeries != null && _dailySeries.Count > 1 ? _dailySeries.Last(1).Close : Symbol.Bid;
+                // In LateSession mode, today's candle is live — use current price as close anchor
+                refClose = Symbol.Bid;
                 if (refLow  == 0) refLow  = _dailySeries?.Last(1).Low  ?? Symbol.Bid;
                 if (refHigh == 0) refHigh = _dailySeries?.Last(1).High ?? Symbol.Bid;
             }
@@ -626,8 +629,9 @@ namespace cAlgo.Robots
 
                 case StopLossMode.CandlePercent:
                 {
-                    double range = refHigh - refLow;
-                    double dist  = range * (CandleStopPercent / 100.0);
+                    // Distance measured from Close down toward Low
+                    // 100% = stop at Low exactly | 50% = midpoint | 0% = stop at Close
+                    double dist  = (refClose - refLow) * (CandleStopPercent / 100.0);
                     stopPrice    = refClose - dist;
                     rawPips      = (entryPrice - stopPrice) / pipSize;
                     if (stopPrice >= entryPrice)
@@ -1096,7 +1100,9 @@ namespace cAlgo.Robots
         {
             string accountCcy = Account.Asset.Name;
 
-            if (RiskCurrencyMode == RiskCurrency.AccountCurrency)
+            if (RiskCurrencyMode == RiskCurrency.AccountCurrency ||
+                (RiskCurrencyMode == RiskCurrency.USD && accountCcy == "USD") ||
+                (RiskCurrencyMode == RiskCurrency.GBP && accountCcy == "GBP"))
             {
                 Print($"[RISK_CONV] No conversion needed. Risk: {RiskAmount:F2} {accountCcy}");
                 return RiskAmount;
@@ -1104,35 +1110,30 @@ namespace cAlgo.Robots
 
             string targetCcy = RiskCurrencyMode == RiskCurrency.USD ? "USD" : "GBP";
 
-            if (targetCcy == accountCcy)
-            {
-                Print($"[RISK_CONV] No conversion needed. Risk: {RiskAmount:F2} {accountCcy}");
-                return RiskAmount;
-            }
+            // pairBase: accountCcy is base (e.g. GBPUSD) — divide to get accountCcy units
+            string pairBase  = accountCcy + targetCcy;
+            // pairQuote: targetCcy is base (e.g. USDGBP) — multiply to get accountCcy units
+            string pairQuote = targetCcy + accountCcy;
 
-            // Try inverse pair first: accountCcy + targetCcy
-            string pairInverse = accountCcy + targetCcy;
-            string pairDirect  = targetCcy + accountCcy;
-
-            var symInverse = Symbols.GetSymbol(pairInverse);
-            if (symInverse != null)
+            var symBase = Symbols.GetSymbol(pairBase);
+            if (symBase != null)
             {
-                double rate      = symInverse.Bid;
-                double converted = RiskAmount * rate;
-                Print($"[RISK_CONV] Converting {RiskAmount:F2} {targetCcy} → {accountCcy} using {pairInverse} rate {rate:F5} = {converted:F2} {accountCcy}");
+                double rate      = symBase.Bid;
+                double converted = RiskAmount / rate; // e.g. 100 USD / 1.25 = 80 GBP
+                Print($"[RISK_CONV] {RiskAmount:F2} {targetCcy} / {pairBase} {rate:F5} = {converted:F2} {accountCcy}");
                 return converted;
             }
 
-            var symDirect = Symbols.GetSymbol(pairDirect);
-            if (symDirect != null)
+            var symQuote = Symbols.GetSymbol(pairQuote);
+            if (symQuote != null)
             {
-                double rate      = 1.0 / symDirect.Ask;
-                double converted = RiskAmount * rate;
-                Print($"[RISK_CONV] Converting {RiskAmount:F2} {targetCcy} → {accountCcy} using {pairDirect} (inverse) rate {rate:F5} = {converted:F2} {accountCcy}");
+                double rate      = symQuote.Ask;
+                double converted = RiskAmount * rate; // e.g. 100 USD * 0.80 = 80 GBP
+                Print($"[RISK_CONV] {RiskAmount:F2} {targetCcy} * {pairQuote} {rate:F5} = {converted:F2} {accountCcy}");
                 return converted;
             }
 
-            Print($"[WARN] Could not find conversion pair for {targetCcy}/{accountCcy}. Using RiskAmount as-is.");
+            Print($"[WARN] Could not find pair for {targetCcy}/{accountCcy}. Using RiskAmount as-is.");
             return RiskAmount;
         }
 
