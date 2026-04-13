@@ -145,7 +145,7 @@ namespace cAlgo.Robots
         private bool _tradeAttemptedToday;
         private int _dailyLossCount;
         private DateTime _lastProcessedDate;
-        private bool _hardCloseAttempted;
+
         private double _lastLoggedStop;
         private TimeZoneInfo _sessionTimeZone;
         private TimeSpan _lateEntryTimeCfg;
@@ -200,7 +200,6 @@ namespace cAlgo.Robots
             _tradeAttemptedToday = false;
             _dailyLossCount    = 0;
             _lastProcessedDate = DateTime.MinValue;
-            _hardCloseAttempted = false;
             _lastLoggedStop    = 0;
             _totalWins         = 0;
             _totalLosses       = 0;
@@ -275,7 +274,6 @@ namespace cAlgo.Robots
 
             _tradeAttemptedToday = false;
             _dailyLossCount      = 0;
-            _hardCloseAttempted  = false;
             _lastProcessedDate   = localNow;
             _lastLoggedStop      = 0;
 
