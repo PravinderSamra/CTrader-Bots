@@ -1,0 +1,19 @@
+{
+  "name": "video-test",
+  "version": "1.0.0",
+  "description": "Local Remotion Hello World test",
+  "scripts": {
+    "render": "remotion render HelloWorld out/video.mp4",
+    "preview": "remotion preview"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.0",
+    "remotion": "4.0.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "18.2.0",
+    "typescript": "5.3.3"
+  }
+}
