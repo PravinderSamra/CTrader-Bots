@@ -1,1 +1,5 @@
-node_modules/\ndist/\n*.mp4\n.remotion/\n/tmp/
+node_modules/
+dist/
+*.mp4
+.remotion/
+out/
