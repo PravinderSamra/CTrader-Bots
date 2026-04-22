@@ -3,22 +3,51 @@
     "tradingview-mcp": {
       "type": "stdio",
       "command": "uvx",
-      "args": ["tradingview-mcp"]
+      "args": ["tradingview-mcp"],
+      "_notes": "Screener, RSI/MACD/BB scans, technical analysis, 76+ markets"
+    },
+    "tradingview-ohlcv": {
+      "type": "stdio",
+      "command": "uv",
+      "args": ["run", "mcp-tradingview"],
+      "env": { "UV_PROJECT_DIR": "/tmp/mcp-tradingview-server" },
+      "_notes": "OHLCV candles + indicators via bidouilles/mcp-tradingview-server. Clone repo first: git clone https://github.com/bidouilles/mcp-tradingview-server /tmp/mcp-tradingview-server && cd /tmp/mcp-tradingview-server && uv venv --python 3.11 && uv pip install -e ."
+    },
+    "massive": {
+      "type": "stdio",
+      "command": "mcp_massive",
+      "env": { "MASSIVE_API_KEY": "YOUR_MASSIVE_API_KEY" },
+      "_notes": "Massive.com (formerly Polygon.io) — real-time forex/crypto/stocks OHLCV, tick data, 35+ tools. Get key at https://massive.com"
     },
     "coingecko": {
       "type": "http",
-      "url": "https://mcp.api.coingecko.com/mcp"
+      "url": "https://mcp.api.coingecko.com/mcp",
+      "_notes": "15k+ coins, 1000+ exchanges, real-time crypto market data. No key needed."
+    },
+    "aktools": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["mcp-aktools"],
+      "_notes": "AkTools — free financial data (stocks, forex, crypto, macro). No API key required."
     },
     "pinescript-docs": {
       "type": "stdio",
       "command": "uvx",
-      "args": ["pinescript-mcp"]
+      "args": ["pinescript-mcp"],
+      "_notes": "Pine Script v6 reference docs for strategy development"
     },
     "alpha-vantage": {
       "type": "stdio",
       "command": "uvx",
       "args": ["marketdata-mcp-server", "YOUR_API_KEY"],
-      "_comment": "Get a free API key at https://www.alphavantage.co/support/#api-key then replace YOUR_API_KEY"
+      "_notes": "Stocks, forex, crypto, fundamentals. Get free key at https://www.alphavantage.co/support/#api-key"
+    },
+    "perplexity": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-perplexity-ask"],
+      "env": { "PERPLEXITY_API_KEY": "YOUR_PERPLEXITY_API_KEY" },
+      "_notes": "Real-time news + financial sentiment search. Get key at https://perplexity.ai/api"
     }
   }
 }
