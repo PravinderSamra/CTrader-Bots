@@ -39,8 +39,8 @@
     "alpha-vantage": {
       "type": "stdio",
       "command": "uvx",
-      "args": ["marketdata-mcp-server", "YOUR_API_KEY"],
-      "_notes": "Stocks, forex, crypto, fundamentals. Get free key at https://www.alphavantage.co/support/#api-key"
+      "args": ["--from", "marketdata-mcp-server", "marketdata-mcp", "YOUR_API_KEY"],
+      "_notes": "Alpha Vantage — stocks, forex, crypto, technicals, fundamentals. Get free key at https://www.alphavantage.co/support/#api-key"
     },
     "newsmcp": {
       "type": "stdio",
