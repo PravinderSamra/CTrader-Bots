@@ -42,12 +42,18 @@
       "args": ["marketdata-mcp-server", "YOUR_API_KEY"],
       "_notes": "Stocks, forex, crypto, fundamentals. Get free key at https://www.alphavantage.co/support/#api-key"
     },
-    "perplexity": {
+    "newsmcp": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-perplexity-ask"],
-      "env": { "PERPLEXITY_API_KEY": "YOUR_PERPLEXITY_API_KEY" },
-      "_notes": "Real-time news + financial sentiment search. Get key at https://perplexity.ai/api"
+      "args": ["-y", "@newsmcp/server"],
+      "_notes": "Real-time news from hundreds of sources. FREE, no API key. 12 topics including Economy, 30 regions."
+    },
+    "tavily": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "tavily-mcp"],
+      "env": { "TAVILY_API_KEY": "YOUR_TAVILY_API_KEY" },
+      "_notes": "AI-optimised web search with financial focus. Free tier: 1000 searches/month. Sign up at https://app.tavily.com"
     }
   }
 }
