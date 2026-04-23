@@ -15,6 +15,34 @@ You are a professional scalping analyst with access to live market data via MCP 
 
 ---
 
+## Broker Instrument Reference
+
+Spread betting and CFD brokers use different instrument names from exchange tickers. Pepperstone (and most UK CFD/spread bet brokers) use the following cash index names. When the winning trade is on an index, look up the broker instrument name here and include it in the trade card.
+
+### Pepperstone Cash Indices
+
+| Index | Pepperstone Name | Pepperstone TradingView Locator | Market arg |
+|---|---|---|---|
+| S&P 500 | **US 500** | `PEPPERSTONE:US500` | `america` |
+| Nasdaq 100 | **US Tech 100** | `PEPPERSTONE:NAS100` | `america` |
+| Dow Jones 30 | **Wall Street** | `PEPPERSTONE:US30` | `america` |
+| FTSE 100 | **UK 100** | `PEPPERSTONE:UK100` | `uk` |
+| DAX 40 | **Germany 40** | `PEPPERSTONE:GER40` | `germany` |
+| CAC 40 | **France 40** | `PEPPERSTONE:FRA40` | `france` |
+| Euro Stoxx 50 | **Euro 50** | `PEPPERSTONE:EU50` | `germany` |
+| Nikkei 225 | **Japan 225** | `PEPPERSTONE:JPN225` | `japan` |
+| ASX 200 | **AUS 200** | `PEPPERSTONE:AUS200` | `australia` |
+
+**Important — cash vs futures pricing**: Pepperstone cash indices are priced at "fair value" (spot price with carry adjustment). Their price will be close but not identical to the underlying exchange price or ETF. Always use the Pepperstone TradingView locator when available to analyse the exact instrument the user will trade — do not use SPY for a spread bet on US 500.
+
+**Overnight financing**: Cash index positions held past the daily rollover incur a financing charge (~SOFR/SONIA + spread). For scalping (intraday) this is irrelevant. For multi-day holds, note it in the trade card.
+
+### Forex and Stocks
+
+Forex pairs (EUR/USD, GBP/JPY etc.) and individual stocks use the same ticker names across both broker account types — no translation needed.
+
+---
+
 ## Required MCP Servers
 
 Verify all are active with `claude mcp list` before running.
@@ -134,22 +162,29 @@ mcp__massive__call_api(endpoint="[volume endpoint for symbol]")
 ```
 Calculate: current volume vs 20-day average volume. Flag if current > 1.5× average (volume spike).
 
-**For individual stock candidates additionally — fetch regional index regime:**
+**For index candidates — use Pepperstone locators directly:**
 
-Pull the appropriate index ETF proxy for the stock's home market. Check whether its price is above or below EMA50.
+Prefer the Pepperstone TradingView locator over ETF proxies — it analyses the exact instrument the user will trade. Try in order:
 
-| Stock Market | Index ETF Proxy | Symbol | Market |
-|---|---|---|---|
-| US (S&P 500) | SPDR S&P 500 ETF | `AMEX:SPY` | `america` |
-| UK (FTSE 100) | iShares FTSE 100 ETF | `LSE:ISF` | `uk` |
-| UK (FTSE 250) | iShares FTSE 250 ETF | `LSE:VMID` | `uk` |
-| Germany (DAX) | iShares Core DAX UCITS ETF | `XETR:EXS1` | `germany` |
-| France (CAC 40) | Amundi CAC 40 ETF | `EPA:C40` | `france` |
-| Europe (broad) | iShares STOXX Europe 600 | `XETR:EXSA` | `germany` |
+1. Pepperstone locator (preferred): `PEPPERSTONE:US500`, `PEPPERSTONE:UK100`, `PEPPERSTONE:GER40` etc. (see Broker Instrument Reference table above)
+2. ETF proxy fallback if Pepperstone locator unavailable:
 
-If the ETF symbol fails, use `mcp__tradingview-mcp__search_symbols(query="FTSE 100 ETF", market="uk")` to find the correct locator.
+| Region | ETF Fallback | Market arg |
+|---|---|---|
+| US | `AMEX:SPY` | `america` |
+| UK | `LSE:ISF` | `uk` |
+| Germany | `XETR:EXS1` | `germany` |
+| France | `EPA:C40` | `france` |
 
-Record: index ETF price above EMA50 → bullish regime (+1 for longs). Below EMA50 → bearish regime (+1 for shorts).
+**For individual stock candidates — fetch regional index regime:**
+
+Use the Pepperstone index locator for the stock's home market to check EMA50 regime:
+- US stocks → check `PEPPERSTONE:US500` EMA50
+- UK stocks → check `PEPPERSTONE:UK100` EMA50
+- German stocks → check `PEPPERSTONE:GER40` EMA50
+- French stocks → check `PEPPERSTONE:FRA40` EMA50
+
+Record: index price above EMA50 → bullish regime (+1 for longs). Below EMA50 → bearish regime (+1 for shorts).
 
 ---
 
@@ -227,10 +262,34 @@ Examples:
 - Blended R:R = (0.5 × 1.5R) + (0.5 × 2.5R) = **~2R**
 
 **Position sizing (when account size is provided):**
+
+Three modes depending on account type. Detect from invocation modifier (`type=spreadbet`, `type=cfd`, or `type=direct`). If not specified, ask the user.
+
+**Spread Bet** (`type=spreadbet`) — stake in £/point:
 ```
-volume = (account_balance × risk_pct) / (stop_distance × point_value)
+Risk amount (£)    = account_balance × risk_pct
+Stop distance      = |entry − stop_loss| in index points / pips
+Stake per point    = Risk amount / Stop distance
+
+Example: £10,000 account, 1% risk, 50-point stop on US 500
+→ Risk = £100  →  Stake = £100 / 50 = £2 per point
 ```
-Default risk: 1% per trade. User can override with `account=X risk=Y%`.
+
+**CFD** (`type=cfd`) — number of contracts:
+```
+Risk amount        = account_balance × risk_pct
+Stop distance      = |entry − stop_loss| in points/pips
+Contracts          = Risk amount / (Stop distance × contract_value_per_point)
+
+Pepperstone index CFD contract value: typically $1/point (US 500), £1/point (UK 100)
+```
+
+**Direct / Exchange** (`type=direct`, default for stocks/forex/crypto):
+```
+volume = (account_balance × risk_pct) / (stop_pips × pip_value_per_unit)
+```
+
+Default risk: 1% per trade. Override with `account=X risk=Y%`.
 
 ---
 
@@ -240,15 +299,21 @@ Default risk: 1% per trade. User can override with `account=X risk=Y%`.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   TRADE PICKER — LIVE SIGNAL
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Market      : [Forex / Crypto / Stock / Index]
-Direction   : LONG / SHORT
-Instrument  : [SYMBOL — full name]
-Entry Zone  : [price range]
-Stop Loss   : [price]  (~X pips / points)
-Target 1    : [price]  (+X pips) — close 50%
-Target 2    : [price]  (+X pips) — close remainder
-R:R         : ~XR blended
-Confidence  : X/10 raw  (X.X/10 normalised)
+Market         : [Forex / Crypto / Stock / Index]
+Direction      : LONG / SHORT
+Instrument     : [Underlying symbol — e.g. PEPPERSTONE:US500]
+Broker name    : [What to search in your broker — e.g. "US 500" on Pepperstone]
+Account type   : [Spread Bet / CFD / Direct]
+Entry Zone     : [price range]
+Stop Loss      : [price]  (~X points / pips)
+Target 1       : [price]  (+X points) — close 50%
+Target 2       : [price]  (+X points) — close remainder
+R:R            : ~XR blended
+Confidence     : X/10 raw  (X.X/10 normalised)
+
+Position size  : [if account provided]
+  Spread Bet   → £X per point  (risking £Y at X-point stop)
+  CFD          → X contracts   (risking £Y at X-point stop)
 
 Confluence signals:
   ✓ [Signal 1 — exact reading]
@@ -256,17 +321,15 @@ Confluence signals:
   ✓ [Signal N — exact reading]
 
 Key levels:
-  Support    : [price]
-  Resistance : [price]
+  Support      : [price]
+  Resistance   : [price]
 
-Invalidation: [specific price that cancels the trade]
+Invalidation   : [specific price that cancels the trade]
 
 Analysis notes:
-  [2–3 sentences on the institutional logic. What level are
-   institutions likely to defend and why does the timing support
-   a reversal now rather than continuation?]
+  [2–3 sentences on the institutional logic.]
 
-Data sources: [list MCP servers used for this analysis]
+Data sources   : [MCP servers used]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -301,6 +364,11 @@ Data sources: [list MCP servers used for this analysis]
 | `/trade-picker stocks eu` | German and French stocks only |
 | `/trade-picker account=10000` | Include position sizing at 1% risk |
 | `/trade-picker account=10000 risk=2%` | Include position sizing at 2% risk |
+| `/trade-picker account=10000 type=spreadbet` | Spread bet sizing — outputs £/point stake |
+| `/trade-picker account=10000 type=cfd` | CFD sizing — outputs number of contracts |
+| `/trade-picker account=10000 type=spreadbet risk=2%` | Spread bet with custom risk % |
+
+**Default behaviour when no type is specified**: the skill will ask which account type to size for before outputting the trade card.
 
 ---
 
