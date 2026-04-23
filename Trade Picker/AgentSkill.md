@@ -335,19 +335,82 @@ Data sources   : [MCP servers used]
 
 ---
 
-## Behavioural Rules
+## Watch Mode
+
+When the 4-hour sweep finds a near-miss (score of 4–5/10, below threshold but close), the skill enters Watch Mode on the **single best candidate only**. All other near-misses are logged and dropped — only one instrument is watched at a time.
+
+### Selecting the Watch Instrument
+
+From all near-miss candidates, pick one using this priority:
+1. **Highest score** — 5/10 beats 4/10
+2. **Smallest distance to next signal** — closer to triggering beats further away
+3. **EMA200 as a pending signal** — if tied, prefer the setup where EMA200 confluence is the remaining signal (highest weight when it fires, +2)
+
+All other near-misses are discarded. The next 4-hour sweep will catch them again if they remain valid.
+
+### Check Frequency Tiers
+
+Watch Mode calls `get_technical_analysis` on the single watched instrument only — approximately **2,000 tokens per check**. Frequency is determined by the distance to the nearest untriggered signal.
+
+**Forex — distance in pips:**
+
+| Distance to next signal | Check frequency |
+|---|---|
+| > 40 pips | Return to 4-hour sweep — too far, no watch needed |
+| 20–40 pips | Every 30 minutes |
+| 10–20 pips | Every 15 minutes |
+| 3–10 pips | Every 5 minutes |
+| < 3 pips | Every 2 minutes |
+
+**Stocks and Indices — distance as % from trigger:**
+
+| Distance to next signal | Check frequency |
+|---|---|
+| > 1.0% | Return to 4-hour sweep |
+| 0.5–1.0% | Every 30 minutes |
+| 0.2–0.5% | Every 15 minutes |
+| 0.05–0.2% | Every 5 minutes |
+| < 0.05% | Every 2 minutes |
+
+After each check, recalculate distance and adjust the frequency tier accordingly. A setup moving toward the trigger automatically escalates. A setup drifting away de-escalates and eventually aborts.
+
+### Abort Conditions
+
+At every check, test these before rescheduling:
+
+| Condition | Action |
+|---|---|
+| Score reaches threshold | **Notify immediately — trade signal. Exit Watch Mode.** |
+| Score drops 2+ points from when watch started | Abort — setup has moved away. Return to 4-hour sweep. |
+| Price moves > 2× the original trigger distance in wrong direction | Abort — reversal underway. Return to 4-hour sweep. |
+| ADX rises above 25 (trending, not oscillating) | Abort — mean reversion conditions deteriorating. |
+| 8 hours elapsed since watch started | Abort — stale setup. Return to 4-hour sweep. |
+
+When a watch is aborted, **do not notify the user** unless the score crossed the threshold. Silent abort, resume normal cadence.
+
+### Watch Mode Token Cost
+
+- Typical watch episode (30–90 min, triggers or aborts naturally): **~30,000–60,000 tokens**
+- Worst case (8 hours at 2-min checks without triggering or aborting): **~480,000 tokens**
+- Single-watch limit ensures only one episode runs at a time, keeping daily budget predictable
+
+---
+
+
 
 1. **Never force a trade.** If no instrument reaches its market's minimum threshold after normalisation, output: *"No qualifying setups found. Markets are not at sufficient statistical extremes."* Do not lower the threshold.
 
 2. **One trade output only.** The single highest normalised score wins, regardless of market type. The discipline of one trade at a time is part of the edge.
 
-3. **Event filters are non-negotiable.** A technically perfect setup with earnings in 3 days (stocks) or a central bank decision in 2 hours (forex) is not a trade. Skip it entirely.
+3. **One watch at a time.** When entering Watch Mode on a near-miss, watch only the single best candidate. Drop all other near-misses. If the watch aborts, the next 4-hour sweep will re-evaluate the field.
 
-4. **Always report which data is unavailable.** If an MCP server is offline, state which signals could not be scored and note the impact on confidence. Do not fabricate readings.
+4. **Event filters are non-negotiable.** A technically perfect setup with earnings in 3 days (stocks) or a central bank decision in 2 hours (forex) is not a trade. Skip it entirely.
 
-5. **This is mean reversion, not trend following.** All signals are calibrated for statistical snap-backs from extremes. If ADX > 25 on the best candidate, flag it explicitly — the market may be trending and the setup less reliable.
+5. **Always report which data is unavailable.** If an MCP server is offline, state which signals could not be scored and note the impact on confidence. Do not fabricate readings.
 
-6. **After outputting the trade card**, prompt the user to record the outcome in `Trade Picker/TradeLog.md` once the trade closes.
+6. **This is mean reversion, not trend following.** All signals are calibrated for statistical snap-backs from extremes. If ADX > 25 on the best candidate, flag it explicitly — the market may be trending and the setup less reliable.
+
+7. **After outputting the trade card**, prompt the user to record the outcome in `Trade Picker/TradeLog.md` once the trade closes.
 
 ---
 
