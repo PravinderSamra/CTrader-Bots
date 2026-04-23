@@ -1,0 +1,129 @@
+# Trade Picker
+
+An AI-powered scalping analysis system that uses multiple MCP (Model Context Protocol) servers to scan live markets, identify high-probability trade setups, and output structured trade cards with entry, stop, and target prices.
+
+---
+
+## Overview
+
+The Trade Picker workflow is run by Claude Code using a suite of connected MCP servers. It follows a multi-step analysis pipeline:
+
+1. **Broad scan** — Screen forex, crypto, and stock markets for instruments at statistical extremes (BB extremes, RSI oversold/overbought, MACD crossovers)
+2. **News check** — Verify no high-impact scheduled events would invalidate the setup
+3. **Deep technical pull** — Get full indicator suite on the shortlisted candidates
+4. **Confluence scoring** — Rank setups by how many independent signals agree
+5. **Output trade card** — Direction, entry zone, stop, targets, R:R, and confidence score
+
+---
+
+## Connected MCP Servers
+
+| Server | Type | What It Provides | Key Requirement |
+|--------|------|-----------------|-----------------|
+| `tradingview-mcp` | stdio (uvx) | Live screener across 76+ markets — RSI/MACD/BB scans, technical analysis, candlestick patterns | None — free |
+| `massive` | stdio | Massive.com (formerly Polygon.io) — real-time OHLCV, tick data, 35+ tools for forex/crypto/stocks | API key at massive.com |
+| `tradingview-ohlcv` | stdio (uv) | Multi-timeframe OHLCV candles and indicators via bidouilles/mcp-tradingview-server | None — clone repo first (see .mcp.json) |
+| `coingecko` | HTTP | 15,000+ coins across 1,000+ exchanges — real-time prices, OHLCV, market depth | None — free |
+| `aktools` | stdio (uvx) | Free macro, forex, crypto, and economic data | None — free |
+| `alpha-vantage` | stdio (uvx) | Stocks, forex, crypto — historical data, technical indicators, fundamentals | Free API key at alphavantage.co |
+| `newsmcp` | stdio (npx) | Real-time AI-clustered news from hundreds of sources, 12 topics including Economy, 30 regions | None — free |
+| `pinescript-docs` | stdio (uvx) | Pine Script v6 reference documentation for strategy development | None — free |
+
+### Setup
+
+All servers are defined in `/.mcp.json` at the project root. To activate:
+
+```bash
+# Massive (formerly Polygon.io)
+claude mcp add massive -e MASSIVE_API_KEY=your_key -- mcp_massive
+
+# Alpha Vantage
+claude mcp add alpha-vantage -- uvx --from marketdata-mcp-server marketdata-mcp YOUR_KEY
+
+# TradingView OHLCV (requires local clone)
+git clone https://github.com/bidouilles/mcp-tradingview-server /tmp/mcp-tradingview-server
+cd /tmp/mcp-tradingview-server && uv venv --python 3.11 && uv pip install -e .
+claude mcp add tradingview-ohlcv -- uv --directory /tmp/mcp-tradingview-server run mcp-tradingview
+
+# All others (free, no key)
+claude mcp add tradingview-mcp -- uvx tradingview-mcp
+claude mcp add coingecko -t http -- https://mcp.api.coingecko.com/mcp
+claude mcp add aktools -- uvx mcp-aktools
+claude mcp add newsmcp -- npx -y @newsmcp/server
+claude mcp add pinescript-docs -- uvx pinescript-mcp
+```
+
+---
+
+## Analysis Workflow
+
+### Step 1 — Broad Market Scan
+Run simultaneously across markets:
+```
+mcp__tradingview-mcp__scan_bollinger_bands(market="forex")
+mcp__tradingview-mcp__scan_rsi_extremes(market="forex")
+mcp__tradingview-mcp__scan_macd_crossover(market="crypto")
+mcp__tradingview-mcp__scan_bollinger_bands(market="crypto")
+```
+Filter out: exotic/illiquid pairs (zero volume), meme coins, pegged currencies.
+
+### Step 2 — News Check
+For shortlisted instruments, query `newsmcp` for any breaking economic news or scheduled events (central bank decisions, NFP, CPI). If high-impact event within 4 hours → skip instrument.
+
+### Step 3 — Deep Technical Pull
+For each candidate, call `mcp__tradingview-mcp__get_technical_analysis` to retrieve:
+- RSI, Stoch %K/%D, MACD vs Signal
+- BB upper/lower, SMA20, EMA50, EMA200
+- ADX (trend strength), ATR (volatility/pip range)
+- ChaikinMoneyFlow, VWAP, bid_ask_spread_pct
+
+### Step 4 — Confluence Scoring
+Score each setup out of 10 based on how many independent signals agree:
+
+| Signal | Long Points | Short Points |
+|--------|------------|-------------|
+| Price at/below BB lower | +2 | — |
+| Price at/above BB upper | — | +2 |
+| Stoch < 15 | +2 | — |
+| Stoch > 85 | — | +2 |
+| RSI < 35 | +1 | — |
+| RSI > 65 | — | +1 |
+| Price at EMA200 (±0.05%) | +2 | +2 |
+| MACD bullish crossover | +1 | — |
+| MACD bearish crossover | — | +1 |
+| ADX < 20 (weak trend = mean reversion) | +1 | +1 |
+| **Max score** | **10** | **10** |
+
+Minimum score to trade: **6/10**
+
+### Step 5 — Output Trade Card
+```
+Direction  : LONG or SHORT
+Instrument : [pair/symbol]
+Entry Zone : [price range]
+Stop Loss  : [price] (~X pips)
+Target 1   : [price] (+X pips) — close 50% here
+Target 2   : [price] (+X pips) — close remainder
+R:R        : ~XR blended
+Confidence : X/10
+Key levels : Support / Resistance
+Invalidation: [what price action cancels the trade]
+```
+
+---
+
+## Trade Log
+
+All live trades generated by this system are recorded in [TradeLog.md](./TradeLog.md).
+
+---
+
+## Agent Skill
+
+The full reusable Agent Skill definition is in [AgentSkill.md](./AgentSkill.md). Install it into Claude Code with:
+
+```bash
+cp "Trade Picker/AgentSkill.md" ~/.claude/skills/trade-picker.md
+```
+
+Then invoke with `/trade-picker` in any Claude Code session.
