@@ -1,0 +1,59 @@
+{
+  "mcpServers": {
+    "tradingview-mcp": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["tradingview-mcp"],
+      "_notes": "Screener, RSI/MACD/BB scans, technical analysis, 76+ markets"
+    },
+    "tradingview-ohlcv": {
+      "type": "stdio",
+      "command": "uv",
+      "args": ["run", "mcp-tradingview"],
+      "env": { "UV_PROJECT_DIR": "/tmp/mcp-tradingview-server" },
+      "_notes": "OHLCV candles + indicators via bidouilles/mcp-tradingview-server. Clone repo first: git clone https://github.com/bidouilles/mcp-tradingview-server /tmp/mcp-tradingview-server && cd /tmp/mcp-tradingview-server && uv venv --python 3.11 && uv pip install -e ."
+    },
+    "massive": {
+      "type": "stdio",
+      "command": "mcp_massive",
+      "env": { "MASSIVE_API_KEY": "YOUR_MASSIVE_API_KEY" },
+      "_notes": "Massive.com (formerly Polygon.io) — real-time forex/crypto/stocks OHLCV, tick data, 35+ tools. Get key at https://massive.com"
+    },
+    "coingecko": {
+      "type": "http",
+      "url": "https://mcp.api.coingecko.com/mcp",
+      "_notes": "15k+ coins, 1000+ exchanges, real-time crypto market data. No key needed."
+    },
+    "aktools": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["mcp-aktools"],
+      "_notes": "AkTools — free financial data (stocks, forex, crypto, macro). No API key required."
+    },
+    "pinescript-docs": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["pinescript-mcp"],
+      "_notes": "Pine Script v6 reference docs for strategy development"
+    },
+    "alpha-vantage": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["--from", "marketdata-mcp-server", "marketdata-mcp", "YOUR_API_KEY"],
+      "_notes": "Alpha Vantage — stocks, forex, crypto, technicals, fundamentals. Get free key at https://www.alphavantage.co/support/#api-key"
+    },
+    "newsmcp": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@newsmcp/server"],
+      "_notes": "Real-time news from hundreds of sources. FREE, no API key. 12 topics including Economy, 30 regions."
+    },
+    "tavily": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "tavily-mcp"],
+      "env": { "TAVILY_API_KEY": "YOUR_TAVILY_API_KEY" },
+      "_notes": "AI-optimised web search with financial focus. Free tier: 1000 searches/month. Sign up at https://app.tavily.com"
+    }
+  }
+}
