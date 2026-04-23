@@ -73,14 +73,22 @@ mcp__tradingview-mcp__scan_bollinger_bands(market="crypto")
 mcp__tradingview-mcp__scan_rsi_extremes(market="crypto")
 mcp__tradingview-mcp__scan_macd_crossover(market="crypto")
 
-# US Stocks
+# US Stocks (NYSE / NASDAQ)
 mcp__tradingview-mcp__scan_bollinger_bands(market="america")
 mcp__tradingview-mcp__scan_rsi_extremes(market="america")
 
-# Indices
-mcp__tradingview-mcp__scan_bollinger_bands(market="index")
-mcp__tradingview-mcp__scan_rsi_extremes(market="index")
+# UK Stocks (LSE)
+mcp__tradingview-mcp__scan_bollinger_bands(market="uk")
+mcp__tradingview-mcp__scan_rsi_extremes(market="uk")
+
+# European Stocks
+mcp__tradingview-mcp__scan_bollinger_bands(market="germany")
+mcp__tradingview-mcp__scan_rsi_extremes(market="germany")
+mcp__tradingview-mcp__scan_bollinger_bands(market="france")
+mcp__tradingview-mcp__scan_rsi_extremes(market="france")
 ```
+
+**Note — Indices:** `"index"` is not a valid TradingView screener market. Indices are evaluated via ETF proxies in Step 3.
 
 Immediate disqualification: illiquid instruments (zero volume), stablecoins, meme coins, spreads > 0.1%, stocks with < 500k daily volume, ADX > 30.
 
@@ -93,7 +101,16 @@ Immediate disqualification: illiquid instruments (zero volume), stablecoins, mem
 
 `mcp__tradingview-mcp__get_technical_analysis` for each candidate: RSI, Stoch %K/%D, MACD, BB upper/lower, EMA200, ADX, ATR, VWAP, ChaikinMoneyFlow, bid_ask_spread_pct.
 
-**Stocks/indices additionally**: volume vs 20-day average (`massive`), and broad index EMA50 regime check (`tradingview-mcp` on SPX/FTSE/DAX).
+**Stocks additionally**: volume vs 20-day average (`massive`), and regional index EMA50 regime check using the correct ETF proxy per market:
+
+| Stock Market | Index ETF Proxy | Symbol | Market arg |
+|---|---|---|---|
+| US | S&P 500 | `AMEX:SPY` | `america` |
+| UK | FTSE 100 | `LSE:ISF` | `uk` |
+| UK | FTSE 250 | `LSE:VMID` | `uk` |
+| Germany | DAX | `XETR:EXS1` | `germany` |
+| France | CAC 40 | `EPA:C40` | `france` |
+| Europe broad | STOXX 600 | `XETR:EXSA` | `germany` |
 
 ### Step 4 — Confluence Scoring
 
@@ -179,11 +196,13 @@ cp "Trade Picker/AgentSkill.md" ~/.claude/skills/trade-picker.md
 
 | Command | Behaviour |
 |---------|-----------|
-| `/trade-picker` | Full scan — all markets |
+| `/trade-picker` | Full scan — all markets (forex, crypto, US + UK + EU stocks) |
 | `/trade-picker forex` | Forex only |
 | `/trade-picker crypto` | Crypto only |
-| `/trade-picker stocks` | US equities and indices |
-| `/trade-picker indices` | Major indices only |
+| `/trade-picker stocks` | All stock markets (US + UK + EU) |
+| `/trade-picker stocks us` | US equities only |
+| `/trade-picker stocks uk` | LSE stocks only |
+| `/trade-picker stocks eu` | German and French stocks only |
 | `/trade-picker account=10000` | Include position sizing at 1% risk |
 | `/trade-picker account=10000 risk=2%` | Include position sizing at 2% risk |
 

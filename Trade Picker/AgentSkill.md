@@ -51,17 +51,27 @@ mcp__tradingview-mcp__scan_rsi_extremes(market="crypto")
 mcp__tradingview-mcp__scan_macd_crossover(market="crypto")
 ```
 
-**Stocks (US equities):**
+**US Stocks:**
 ```
 mcp__tradingview-mcp__scan_bollinger_bands(market="america")
 mcp__tradingview-mcp__scan_rsi_extremes(market="america")
 ```
 
-**Indices:**
+**UK Stocks (LSE):**
 ```
-mcp__tradingview-mcp__scan_bollinger_bands(market="index")
-mcp__tradingview-mcp__scan_rsi_extremes(market="index")
+mcp__tradingview-mcp__scan_bollinger_bands(market="uk")
+mcp__tradingview-mcp__scan_rsi_extremes(market="uk")
 ```
+
+**European Stocks (major markets):**
+```
+mcp__tradingview-mcp__scan_bollinger_bands(market="germany")
+mcp__tradingview-mcp__scan_rsi_extremes(market="germany")
+mcp__tradingview-mcp__scan_bollinger_bands(market="france")
+mcp__tradingview-mcp__scan_rsi_extremes(market="france")
+```
+
+**Note — Indices:** `"index"` is not a valid TradingView screener market. Scan indices via their ETF proxies in Step 3 using the table below. Do not attempt `market="index"` scans.
 
 **Immediate disqualification filters (apply before shortlisting):**
 
@@ -74,7 +84,7 @@ mcp__tradingview-mcp__scan_rsi_extremes(market="index")
 | Average daily volume < 500k shares | Stocks |
 | ADX > 30 (strong trend — mean reversion not applicable) | All |
 
-Build a shortlist of the **top 3 candidates per market** (up to 12 total). Instruments appearing in multiple scan results simultaneously rank higher.
+Build a shortlist of the **top 3 candidates per market region** (up to 18 total across all markets). Instruments appearing in multiple scan results simultaneously rank higher.
 
 ---
 
@@ -124,11 +134,22 @@ mcp__massive__call_api(endpoint="[volume endpoint for symbol]")
 ```
 Calculate: current volume vs 20-day average volume. Flag if current > 1.5× average (volume spike).
 
-**For individual stock candidates additionally — fetch index regime:**
-```
-mcp__tradingview-mcp__get_technical_analysis(symbol="SPX", screener="index", exchange="SP", interval="1d")
-```
-Record: is SPX price above or below its EMA50? (Use FTSE for UK stocks, DAX for German stocks, etc.)
+**For individual stock candidates additionally — fetch regional index regime:**
+
+Pull the appropriate index ETF proxy for the stock's home market. Check whether its price is above or below EMA50.
+
+| Stock Market | Index ETF Proxy | Symbol | Market |
+|---|---|---|---|
+| US (S&P 500) | SPDR S&P 500 ETF | `AMEX:SPY` | `america` |
+| UK (FTSE 100) | iShares FTSE 100 ETF | `LSE:ISF` | `uk` |
+| UK (FTSE 250) | iShares FTSE 250 ETF | `LSE:VMID` | `uk` |
+| Germany (DAX) | iShares Core DAX UCITS ETF | `XETR:EXS1` | `germany` |
+| France (CAC 40) | Amundi CAC 40 ETF | `EPA:C40` | `france` |
+| Europe (broad) | iShares STOXX Europe 600 | `XETR:EXSA` | `germany` |
+
+If the ETF symbol fails, use `mcp__tradingview-mcp__search_symbols(query="FTSE 100 ETF", market="uk")` to find the correct locator.
+
+Record: index ETF price above EMA50 → bullish regime (+1 for longs). Below EMA50 → bearish regime (+1 for shorts).
 
 ---
 
@@ -271,11 +292,13 @@ Data sources: [list MCP servers used for this analysis]
 
 | Command | Behaviour |
 |---------|-----------|
-| `/trade-picker` | Full scan — all markets |
+| `/trade-picker` | Full scan — all markets (forex, crypto, US, UK, EU stocks) |
 | `/trade-picker forex` | Restrict to forex only |
 | `/trade-picker crypto` | Restrict to crypto only |
-| `/trade-picker stocks` | Restrict to US equities and indices |
-| `/trade-picker indices` | Restrict to major indices only |
+| `/trade-picker stocks` | All stock markets (US + UK + EU) |
+| `/trade-picker stocks us` | US equities only |
+| `/trade-picker stocks uk` | LSE stocks only |
+| `/trade-picker stocks eu` | German and French stocks only |
 | `/trade-picker account=10000` | Include position sizing at 1% risk |
 | `/trade-picker account=10000 risk=2%` | Include position sizing at 2% risk |
 
