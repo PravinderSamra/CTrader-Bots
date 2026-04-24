@@ -396,7 +396,61 @@ When a watch is aborted, **do not notify the user** unless the score crossed the
 
 ---
 
+## Telegram Notifications
 
+Credentials are stored in Claude Code environment variables and available to every session automatically.
+
+| Variable | Value |
+|---|---|
+| `TELEGRAM_BOT_TOKEN` | Stored in `~/.claude/settings.json` |
+| `TELEGRAM_CHAT_ID` | Stored in `~/.claude/settings.json` |
+
+**Trade signal — run this bash command after outputting the trade card:**
+```bash
+curl -s -X POST \
+  "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+  -d "chat_id=${TELEGRAM_CHAT_ID}" \
+  -d "parse_mode=HTML" \
+  -d "text=🚨 <b>TRADE SIGNAL</b>
+
+<b>[DIRECTION] [INSTRUMENT]</b>
+Broker: [BROKER NAME]
+Entry:  [ENTRY ZONE]
+Stop:   [STOP PRICE]  (~X pips/points)
+T1:     [TARGET 1]  (+X pips) — close 50%
+T2:     [TARGET 2]  (+X pips)
+R:R:    ~XR blended
+Score:  X/10
+
+[✅ Signal 1]
+[✅ Signal 2]
+[✅ Signal N]"
+```
+
+**Watch mode triggered — setup crossed threshold while being monitored:**
+```bash
+curl -s -X POST \
+  "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+  -d "chat_id=${TELEGRAM_CHAT_ID}" \
+  -d "parse_mode=HTML" \
+  -d "text=🎯 <b>WATCH MODE — SIGNAL HIT</b>
+
+[INSTRUMENT] just crossed the threshold.
+[Full trade card details]"
+```
+
+**Watch mode aborted — setup moved away (silent, no buzz):**
+```bash
+curl -s -X POST \
+  "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+  -d "chat_id=${TELEGRAM_CHAT_ID}" \
+  -d "disable_notification=true" \
+  -d "text=⚪ [INSTRUMENT] watch aborted — setup moved away. Resuming 4-hour sweep."
+```
+
+---
+
+## Behavioural Rules
 
 1. **Never force a trade.** If no instrument reaches its market's minimum threshold after normalisation, output: *"No qualifying setups found. Markets are not at sufficient statistical extremes."* Do not lower the threshold.
 
