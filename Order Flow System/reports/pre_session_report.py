@@ -25,6 +25,7 @@ from analysis.volume_profile import build_volume_profile
 from analysis.sessions import compute_session_levels, session_bias_note, current_kill_zone
 from analysis.zones import compute_premium_discount
 from analysis.confluence import SetupContext, score_setup, compute_position_size
+from data.fetchers.cot_fetcher import cot_bias_for_symbol, COT_MARKETS, SYMBOL_ALIASES
 from config import DATA_TIER_LABELS, WATCHLIST, ACCOUNT_SIZE_USD
 
 
@@ -143,6 +144,36 @@ def generate_asset_report(
         lines.append("  Manually check: footprint absorption, delta, CVD, DOM before entering.")
     lines.append("")
 
+    # ── COT POSITIONING (CFTC) ──────────────────────────────────────────────
+    sym_key = SYMBOL_ALIASES.get(symbol.upper(), symbol.upper())
+    has_cot = sym_key in COT_MARKETS and COT_MARKETS[sym_key] is not None
+    if has_cot:
+        try:
+            cot = cot_bias_for_symbol(symbol)
+            lines.append("  SMART MONEY POSITIONING — CFTC COT (Tier 3 / weekly)")
+            if cot.get("available"):
+                bias_icon = "▲" if cot["bias"] == "BULLISH" else ("▼" if cot["bias"] == "BEARISH" else "─")
+                lines.append(
+                    f"  {bias_icon} {cot['bias']}  |  "
+                    f"Net {cot['net']:+,} contracts  ({cot['net_pct_oi']:+.1f}% of OI)  "
+                    f"|  Report date: {cot['report_date']}"
+                )
+                lines.append(f"  {cot['momentum']}")
+                lines.append(f"  8-week position rank: {cot['pct_rank_8w']:.0f}th percentile")
+                lines.append(f"  Category: {cot['smart_money_category'].replace('_',' ').title()}")
+                for w in cot.get("warnings", []):
+                    lines.append(f"  ⚠  {w}")
+                # Mini net-change history
+                hist_parts = [
+                    f"{h['date'][5:]}:{h['net']:+,}" for h in cot.get("history", [])[:4]
+                ]
+                lines.append(f"  4-week history: {' | '.join(hist_parts)}")
+            else:
+                lines.append("  COT data unavailable (API timeout or no recent data)")
+        except Exception:
+            lines.append("  COT data unavailable")
+        lines.append("")
+
     # ── ORDER BLOCKS IN PLAY ────────────────────────────────────────────────
     obs = [ob for ob in detect_order_blocks(candles_mtf) if not ob.is_mitigated]
     if obs:
@@ -220,12 +251,17 @@ def generate_full_report(
     lines.append("")
     lines.append("  DATA QUALITY NOTICE")
     lines.append(f"  {DATA_TIER_LABELS[1]}")
-    lines.append(f"  Applies to: BTC, ETH, SOL (Binance taker volume)")
+    lines.append(f"  Applies to: BTC, ETH, SOL (exchange taker volume — OKX/Kraken/Binance)")
     lines.append("")
     lines.append(f"  {DATA_TIER_LABELS[2]}")
     lines.append(f"  Applies to: EUR/USD, GBP/USD, SPX, NDX, DAX, Gold, Oil")
-    lines.append("  For these markets: analyse structural levels below, then confirm")
-    lines.append("  order flow manually on Bookmap / Sierra Chart / ATAS before entering.")
+    lines.append("  For these markets: structural levels from OHLCV — confirm intraday")
+    lines.append("  order flow on Bookmap / Sierra Chart / ATAS before entering.")
+    lines.append("")
+    lines.append("  Tier 3 = MACRO POSITIONING (CFTC COT — weekly, ~3-day lag)")
+    lines.append("  Applies to: EUR/USD, GBP/USD, JPY, Gold, WTI Oil, S&P 500, NASDAQ")
+    lines.append("  Shows hedge fund / managed money net position vs prior weeks.")
+    lines.append("  Use for: weekly bias direction, extreme positioning alerts only.")
     lines.append("")
 
     for symbol, data in assets.items():
