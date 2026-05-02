@@ -26,6 +26,7 @@ from analysis.sessions import compute_session_levels, session_bias_note, current
 from analysis.zones import compute_premium_discount
 from analysis.confluence import SetupContext, score_setup, compute_position_size
 from data.fetchers.cot_fetcher import cot_bias_for_symbol, COT_MARKETS, SYMBOL_ALIASES
+from data.fetchers.calendar_fetcher import format_todays_high_impact, format_calendar_section, is_news_blackout
 from config import DATA_TIER_LABELS, WATCHLIST, ACCOUNT_SIZE_USD
 
 
@@ -217,9 +218,27 @@ def generate_asset_report(
             lines.append(f"  SSL below: {p.price:.5f}  [tests: {p.test_count}, strength: {p.strength}]")
         lines.append("")
 
-    # ── NEWS / RISK EVENTS ──────────────────────────────────────────────────
+    # ── ECONOMIC CALENDAR ───────────────────────────────────────────────────
+    try:
+        blackout = is_news_blackout(symbol)
+        if blackout["in_blackout"]:
+            lines.append(f"  ⛔ NEWS BLACKOUT ACTIVE: {blackout['reason']}")
+            lines.append("  Stand aside — do not enter new positions during this window.")
+            lines.append("")
+
+        high_impact = format_todays_high_impact(symbol)
+        lines.append(high_impact)
+        lines.append("")
+
+        upcoming = format_calendar_section(symbol, hours_ahead=6)
+        lines.append(upcoming)
+        lines.append("")
+    except Exception:
+        pass   # Calendar unavailable — don't break the report
+
+    # ── LEGACY NEWS / RISK EVENTS (passed in manually) ─────────────────────
     if news_events:
-        lines.append("  NEWS & RISK EVENTS")
+        lines.append("  ADDITIONAL NEWS & RISK EVENTS")
         for event in news_events:
             impact = event.get("impact", "UNKNOWN")
             icon   = "🔴" if impact == "HIGH" else "🟡" if impact == "MEDIUM" else "⚪"

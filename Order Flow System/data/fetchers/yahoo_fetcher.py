@@ -43,8 +43,15 @@ def fetch_klines(
     interval: '1m', '5m', '15m', '1h', '1d', '1w'
     limit: approximate number of candles (Yahoo uses period instead)
     """
-    period_map = {200: "6mo", 100: "3mo", 50: "1mo", 20: "5d"}
-    period = next((v for k, v in period_map.items() if limit <= k), "1y")
+    # Yahoo intraday ranges: 1m=7d max, 5m/15m/30m=60d max, 1h=730d max
+    if interval in ("1m",):
+        period = "7d"
+    elif interval in ("5m", "15m", "30m"):
+        # 5m: up to 60 days, use range based on candle count
+        period = "60d" if limit > 200 else ("30d" if limit > 96 else "7d")
+    else:
+        period_map = {200: "6mo", 100: "3mo", 50: "1mo", 20: "5d"}
+        period = next((v for k, v in period_map.items() if limit <= k), "1y")
 
     url = (
         f"{BASE_URL}/{urllib.parse.quote(ticker)}"

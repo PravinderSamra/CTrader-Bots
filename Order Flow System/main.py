@@ -96,10 +96,30 @@ def _fetch_crypto_klines(symbol: str, interval: str, limit: int):
     return []
 
 
+def _fetch_tier2_klines(symbol: str, yahoo_ticker: str, interval: str, limit: int):
+    """
+    Fetch Tier 2 (structural) klines for forex/indices/commodities.
+    Priority: Twelve Data (5m capable, reliable) → Yahoo Finance (free fallback).
+    """
+    try:
+        from data.fetchers.twelve_data_fetcher import fetch_klines as td_klines, is_configured
+        if is_configured():
+            candles = td_klines(symbol, interval, limit=limit, symbol_label=symbol)
+            if candles:
+                return candles
+    except Exception:
+        pass
+    # Yahoo Finance fallback
+    return yahoo_klines(yahoo_ticker, interval, limit=limit, symbol_label=symbol)
+
+
 def fetch_asset_data(symbol: str, config: dict) -> Dict[str, List[Candle]]:
     """
     Fetch multi-timeframe data for an asset based on its config.
-    Returns {"htf": [...], "mtf": [...], "ltf": [...]}
+    Returns {"htf": [...], "mtf": [...], "ltf": [...], "stf": [...]}
+
+    stf = short timeframe (5m) for day trading setups.
+    Populated when Twelve Data is configured or for indices via Yahoo Finance.
     """
     data_tier = config.get("data_tier", 2)
     source    = config.get("source", "binance")
@@ -112,23 +132,26 @@ def fetch_asset_data(symbol: str, config: dict) -> Dict[str, List[Candle]]:
             "htf": _fetch_crypto_klines(symbol, "1d",  60),
             "mtf": _fetch_crypto_klines(symbol, "1h",  168),
             "ltf": _fetch_crypto_klines(symbol, "15m", 96),
+            "stf": _fetch_crypto_klines(symbol, "5m",  288),  # 24h of 5m candles
         }
     elif source == "yahoo":
-        # Indices / commodities: Yahoo Finance — Tier 2
-        print(f"  Fetching {symbol} ({ticker}) from Yahoo Finance (Tier 2 — structural)...")
+        # Indices / commodities: Twelve Data (if key set) → Yahoo Finance fallback
+        print(f"  Fetching {symbol} ({ticker}) — Tier 2 structural...")
         return {
-            "htf": yahoo_klines(ticker, "1d",  limit=60,  symbol_label=symbol),
-            "mtf": yahoo_klines(ticker, "1h",  limit=120, symbol_label=symbol),
-            "ltf": yahoo_klines(ticker, "15m", limit=96,  symbol_label=symbol),
+            "htf": _fetch_tier2_klines(symbol, ticker, "1d",  60),
+            "mtf": _fetch_tier2_klines(symbol, ticker, "1h",  120),
+            "ltf": _fetch_tier2_klines(symbol, ticker, "15m", 96),
+            "stf": _fetch_tier2_klines(symbol, ticker, "5m",  288),
         }
     else:
-        # Forex and others: Alpha Vantage or Yahoo fallback — Tier 2
+        # Forex: Twelve Data (if key set) → Yahoo Finance fallback
         yahoo_ticker = symbol[:3] + symbol[3:] + "=X"   # e.g. EURUSD → EURUSD=X
-        print(f"  Fetching {symbol} from Yahoo Finance fallback (Tier 2 — structural)...")
+        print(f"  Fetching {symbol} — Tier 2 structural (Twelve Data → Yahoo fallback)...")
         return {
-            "htf": yahoo_klines(yahoo_ticker, "1d",  limit=60,  symbol_label=symbol),
-            "mtf": yahoo_klines(yahoo_ticker, "1h",  limit=120, symbol_label=symbol),
-            "ltf": yahoo_klines(yahoo_ticker, "15m", limit=96,  symbol_label=symbol),
+            "htf": _fetch_tier2_klines(symbol, yahoo_ticker, "1d",  60),
+            "mtf": _fetch_tier2_klines(symbol, yahoo_ticker, "1h",  120),
+            "ltf": _fetch_tier2_klines(symbol, yahoo_ticker, "15m", 96),
+            "stf": _fetch_tier2_klines(symbol, yahoo_ticker, "5m",  288),
         }
 
 

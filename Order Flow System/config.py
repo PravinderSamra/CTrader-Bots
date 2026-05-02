@@ -17,6 +17,11 @@ DATA_TIER_LABELS = {
     3: "CONFLUENCE FACTOR — Supporting context only. Not sufficient for entry decisions alone.",
 }
 
+# ─── API KEYS ────────────────────────────────────────────────────────────────
+# Twelve Data: free tier at https://twelvedata.com/register (800 req/day, no card)
+# Provides 5m/15m intraday data for forex, indices, gold — better than Yahoo for intraday.
+TWELVE_DATA_API_KEY = ""   # ← paste your key here after signing up
+
 # ─── ACCOUNT SETTINGS ────────────────────────────────────────────────────────
 
 ACCOUNT_SIZE_USD = 10_000
