@@ -20,7 +20,7 @@ DATA_TIER_LABELS = {
 # ─── API KEYS ────────────────────────────────────────────────────────────────
 # Twelve Data: free tier at https://twelvedata.com/register (800 req/day, no card)
 # Provides 5m/15m intraday data for forex, indices, gold — better than Yahoo for intraday.
-TWELVE_DATA_API_KEY = ""   # ← paste your key here after signing up
+TWELVE_DATA_API_KEY = "9778d3ede1ed4226bf12c913432ea929"
 
 # ─── ACCOUNT SETTINGS ────────────────────────────────────────────────────────
 

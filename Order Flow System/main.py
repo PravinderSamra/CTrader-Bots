@@ -96,20 +96,34 @@ def _fetch_crypto_klines(symbol: str, interval: str, limit: int):
     return []
 
 
+_TD_FREE_TIER_SYMBOLS = {
+    # Twelve Data free tier covers forex pairs and XAU/XAG (treated as FX)
+    # Indices (SPX, NDX, DAX, FTSE) require paid plan — route those to Yahoo directly
+    "EURUSD", "GBPUSD", "USDJPY", "USDCHF", "AUDUSD", "USDCAD", "NZDUSD",
+    "EURGBP", "EURJPY", "GBPJPY", "XAUUSD", "XAGUSD",
+}
+
+
 def _fetch_tier2_klines(symbol: str, yahoo_ticker: str, interval: str, limit: int):
     """
-    Fetch Tier 2 (structural) klines for forex/indices/commodities.
-    Priority: Twelve Data (5m capable, reliable) → Yahoo Finance (free fallback).
+    Fetch Tier 2 klines for forex/indices/commodities.
+
+    Routing:
+      Forex + XAU/XAG → Twelve Data (5m resolution, reliable)
+      Indices          → Yahoo Finance (^GSPC, ^NDX etc., 5m confirmed working)
+      Fallback         → Yahoo Finance for anything that fails
     """
-    try:
-        from data.fetchers.twelve_data_fetcher import fetch_klines as td_klines, is_configured
-        if is_configured():
-            candles = td_klines(symbol, interval, limit=limit, symbol_label=symbol)
-            if candles:
-                return candles
-    except Exception:
-        pass
-    # Yahoo Finance fallback
+    sym_up = symbol.upper()
+    if sym_up in _TD_FREE_TIER_SYMBOLS:
+        try:
+            from data.fetchers.twelve_data_fetcher import fetch_klines as td_klines, is_configured
+            if is_configured():
+                candles = td_klines(symbol, interval, limit=limit, symbol_label=symbol)
+                if candles:
+                    return candles
+        except Exception:
+            pass
+    # Yahoo Finance — primary for indices, fallback for everything else
     return yahoo_klines(yahoo_ticker, interval, limit=limit, symbol_label=symbol)
 
 
