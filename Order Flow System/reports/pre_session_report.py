@@ -22,7 +22,7 @@ from analysis.structure import (
 )
 from analysis.delta import compute_session_summary, TIER1_UNAVAILABLE
 from analysis.volume_profile import build_volume_profile
-from analysis.sessions import compute_session_levels, session_bias_note, current_kill_zone
+from analysis.sessions import compute_session_levels, session_bias_note, current_kill_zone, current_session
 from analysis.zones import compute_premium_discount
 from analysis.confluence import SetupContext, score_setup, compute_position_size
 from data.fetchers.cot_fetcher import cot_bias_for_symbol, COT_MARKETS, SYMBOL_ALIASES
@@ -260,12 +260,21 @@ def generate_full_report(
     """
     now = datetime.now(timezone.utc)
     kz  = current_kill_zone(now)
+    ses = current_session(now)
+
+    session_labels = {
+        "asia":   "ASIAN SESSION (20:00–00:00 ET)",
+        "london": "LONDON SESSION (02:00–11:00 ET)",
+        "ny":     "NEW YORK SESSION (07:00–16:00 ET)",
+    }
+    session_str = session_labels.get(ses, "INTER-SESSION") if ses else "INTER-SESSION"
 
     lines = []
     lines.append(SEP)
     lines.append("  ORDER FLOW PRE-SESSION REPORT")
-    lines.append(f"  Generated: {now.strftime('%Y-%m-%d %H:%M UTC')}")
-    lines.append(f"  Kill Zone: {kz.replace('_',' ').upper() if kz else 'None — outside high-probability windows'}")
+    lines.append(f"  Generated : {now.strftime('%Y-%m-%d %H:%M UTC')}")
+    lines.append(f"  Session   : {session_str}")
+    lines.append(f"  Kill Zone : {kz.replace('_',' ').upper() if kz else 'None — outside high-probability windows'}")
     lines.append(SEP)
     lines.append("")
     lines.append("  DATA QUALITY NOTICE")
