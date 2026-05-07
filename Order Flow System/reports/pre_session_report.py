@@ -192,16 +192,28 @@ def generate_asset_report(
         lines.append("")
 
     # ── FAIR VALUE GAPS ─────────────────────────────────────────────────────
-    fvgs = [f for f in detect_fvgs(candles_mtf) if not f.is_mitigated]
+    all_fvgs = detect_fvgs(candles_mtf)
+    fvgs = [f for f in all_fvgs if not f.is_mitigated and f.probability_grade != "SKIP"]
     if fvgs:
-        lines.append("  ACTIVE FAIR VALUE GAPS (unmitigated)")
-        for fvg in sorted(fvgs, key=lambda x: abs(x.midpoint - current))[:4]:
-            dist = ((fvg.midpoint - current) / current) * 100
-            side = "above" if fvg.midpoint > current else "below"
+        lines.append("  ACTIVE FAIR VALUE GAPS (unmitigated, SKIP-grade filtered)")
+        for fvg in sorted(fvgs, key=lambda x: abs(x.midpoint - current))[:5]:
+            dist    = ((fvg.midpoint - current) / current) * 100
+            side    = "ABOVE" if fvg.midpoint > current else "BELOW"
+            at_flag = " ← PRICE AT LEVEL" if abs(dist) < 0.15 else ""
+            fill    = f"  {fvg.partial_fill_pct:.0%} filled" if fvg.partial_fill_pct > 0 else "  virgin"
+            touch   = f"{fvg.touch_count}x tested" if fvg.touch_count > 0 else "untouched"
+            ctx     = []
+            if fvg.preceded_by_liquidity_grab:
+                ctx.append("liq.grab")
+            if fvg.formed_after_bos:
+                ctx.append("post-BOS")
+            ctx_str = f"  [{', '.join(ctx)}]" if ctx else ""
             lines.append(
                 f"  [{fvg.direction.upper()[:4]} FVG | {fvg.timeframe}] "
                 f"{fvg.gap_low:.5f}–{fvg.gap_high:.5f}  "
-                f"(midpoint {fvg.midpoint:.5f}, {dist:+.2f}%, {side})"
+                f"({dist:+.2f}%, {side})  "
+                f"Grade:{fvg.probability_grade}  {fvg.age_label}({fvg.candles_ago}c)  "
+                f"{fill}  {touch}{ctx_str}{at_flag}"
             )
         lines.append("")
 

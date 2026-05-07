@@ -107,8 +107,16 @@ class FairValueGap:
     gap_low: float
     formed_at: datetime
     impulse_volume: float = 0.0
+    impulse_body_size: float = 0.0
     is_mitigated: bool = False
-    quality_score: int = 0
+    quality_score: int = 0      # 0–10 composite score
+    probability_grade: str = "" # "A+", "A", "B", "C", "SKIP"
+    age_label: str = ""         # "FRESH", "RECENT", "MATURE", "STALE"
+    candles_ago: int = 0        # candles since formation (at analysis time)
+    touch_count: int = 0        # times price entered the gap without closing through
+    partial_fill_pct: float = 0.0  # 0.0 = untouched, 1.0 = fully filled
+    preceded_by_liquidity_grab: bool = False
+    formed_after_bos: bool = False
 
     @property
     def midpoint(self) -> float:

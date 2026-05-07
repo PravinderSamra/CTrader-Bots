@@ -200,20 +200,31 @@ def detect_fvgs(candles: List[Candle]) -> List[FairValueGap]:
 
     Bullish FVG: candle[i].high < candle[i+2].low
     Bearish FVG: candle[i].low  > candle[i+2].high
+
+    Each FVG is scored 0–10 with a probability grade (A+/A/B/C/SKIP)
+    based on age, gap size, touch count, impulse strength, and context.
     """
     if len(candles) < 3:
         return []
 
     atr  = compute_atr(candles)
+    total = len(candles)
     fvgs = []
 
-    for i in range(len(candles) - 2):
+    # Pre-compute BOS candle indices for context scoring
+    bos_indices = _find_bos_candle_indices(candles)
+
+    for i in range(total - 2):
         c1, c2, c3 = candles[i], candles[i + 1], candles[i + 2]
 
         # Bullish FVG
         if c1.high < c3.low:
             gap_size = c3.low - c1.high
             if gap_size >= atr * FVG_MIN_ATR_PCT:
+                subsequent = candles[i + 3:]
+                candles_ago = total - 1 - (i + 1)  # candles since the impulse (c2)
+                liq_grab = _check_liquidity_grab(candles, i, "bullish")
+                after_bos = i in bos_indices or (i - 1) in bos_indices
                 fvg = FairValueGap(
                     symbol=c1.symbol,
                     timeframe=c1.timeframe,
@@ -222,15 +233,23 @@ def detect_fvgs(candles: List[Candle]) -> List[FairValueGap]:
                     gap_low=c1.high,
                     formed_at=c2.timestamp,
                     impulse_volume=c2.volume,
+                    impulse_body_size=c2.body_size,
+                    candles_ago=candles_ago,
+                    preceded_by_liquidity_grab=liq_grab,
+                    formed_after_bos=after_bos,
                 )
-                fvg.quality_score = _score_fvg(fvg, c2, atr)
-                fvg = _check_fvg_mitigation(fvg, candles[i + 3:])
+                fvg = _check_fvg_mitigation(fvg, subsequent)
+                _score_fvg(fvg, atr)
                 fvgs.append(fvg)
 
         # Bearish FVG
         elif c1.low > c3.high:
             gap_size = c1.low - c3.high
             if gap_size >= atr * FVG_MIN_ATR_PCT:
+                subsequent = candles[i + 3:]
+                candles_ago = total - 1 - (i + 1)
+                liq_grab = _check_liquidity_grab(candles, i, "bearish")
+                after_bos = i in bos_indices or (i - 1) in bos_indices
                 fvg = FairValueGap(
                     symbol=c1.symbol,
                     timeframe=c1.timeframe,
@@ -239,9 +258,13 @@ def detect_fvgs(candles: List[Candle]) -> List[FairValueGap]:
                     gap_low=c3.high,
                     formed_at=c2.timestamp,
                     impulse_volume=c2.volume,
+                    impulse_body_size=c2.body_size,
+                    candles_ago=candles_ago,
+                    preceded_by_liquidity_grab=liq_grab,
+                    formed_after_bos=after_bos,
                 )
-                fvg.quality_score = _score_fvg(fvg, c2, atr)
-                fvg = _check_fvg_mitigation(fvg, candles[i + 3:])
+                fvg = _check_fvg_mitigation(fvg, subsequent)
+                _score_fvg(fvg, atr)
                 fvgs.append(fvg)
 
     return fvgs
@@ -351,24 +374,150 @@ def _check_mitigation(ob: OrderBlock, subsequent_candles: List[Candle]) -> Order
 
 
 def _check_fvg_mitigation(fvg: FairValueGap, subsequent_candles: List[Candle]) -> FairValueGap:
-    """Mark FVG as mitigated if price has fully traded through it."""
+    """
+    Track mitigation, touch count, and partial fill depth.
+
+    Touch: price enters the gap on a wick but candle does not close through.
+    Partial fill: how deep into the gap price has traded (as a fraction of gap size).
+    Mitigated: price closes fully through the gap.
+    """
+    if not subsequent_candles or fvg.size == 0:
+        return fvg
+
+    deepest_penetration = 0.0  # measured from the near edge of the gap
+
     for c in subsequent_candles:
-        if fvg.direction == "bullish" and c.close < fvg.gap_low:
-            fvg.is_mitigated = True
-        elif fvg.direction == "bearish" and c.close > fvg.gap_high:
-            fvg.is_mitigated = True
+        if fvg.direction == "bullish":
+            # Full mitigation: close below the gap low
+            if c.close < fvg.gap_low:
+                fvg.is_mitigated = True
+                fvg.partial_fill_pct = 1.0
+                break
+            # Entered the gap from above (price dipped into it)
+            if c.low < fvg.gap_high:
+                fvg.touch_count += 1
+                penetration = fvg.gap_high - max(c.low, fvg.gap_low)
+                deepest_penetration = max(deepest_penetration, penetration)
+        else:  # bearish
+            # Full mitigation: close above the gap high
+            if c.close > fvg.gap_high:
+                fvg.is_mitigated = True
+                fvg.partial_fill_pct = 1.0
+                break
+            # Entered the gap from below
+            if c.high > fvg.gap_low:
+                fvg.touch_count += 1
+                penetration = min(c.high, fvg.gap_high) - fvg.gap_low
+                deepest_penetration = max(deepest_penetration, penetration)
+
+    if not fvg.is_mitigated and fvg.size > 0:
+        fvg.partial_fill_pct = min(deepest_penetration / fvg.size, 0.99)
+
     return fvg
 
 
-def _score_fvg(fvg: FairValueGap, impulse_candle: Candle, atr: float) -> int:
-    score = 1
-    if atr > 0 and impulse_candle.body_size / atr >= 1.5:
-        score += 2  # Strong displacement
-    if fvg.size / atr >= 1.0:
-        score += 1  # Significant gap size
-    if impulse_candle.volume > 0:
-        score += 1  # Volume present (rough signal)
-    return min(score, 5)
+def _find_bos_candle_indices(candles: List[Candle]) -> set:
+    """Return set of candle indices where a BOS (break of structure) occurred."""
+    if len(candles) < 10:
+        return set()
+    swings = find_swing_points(candles)
+    highs = sorted([s for s in swings if s.swing_type == "high"], key=lambda s: s.timestamp)
+    lows  = sorted([s for s in swings if s.swing_type == "low"],  key=lambda s: s.timestamp)
+    bos_indices = set()
+    ts_to_idx   = {c.timestamp: i for i, c in enumerate(candles)}
+
+    for k in range(1, len(highs)):
+        if highs[k].price > highs[k - 1].price:
+            idx = ts_to_idx.get(highs[k].timestamp)
+            if idx is not None:
+                bos_indices.add(idx)
+    for k in range(1, len(lows)):
+        if lows[k].price < lows[k - 1].price:
+            idx = ts_to_idx.get(lows[k].timestamp)
+            if idx is not None:
+                bos_indices.add(idx)
+    return bos_indices
+
+
+def _score_fvg(fvg: FairValueGap, atr: float) -> None:
+    """
+    Score FVG 0–10 and assign probability grade.
+
+    Factors:
+      Age          0–3  (fresh = same session = highest probability)
+      Gap size     0–2  (optimal 0.5–2× ATR)
+      Touch count  0–2  (virgin = untouched = best)
+      Impulse body 0–2  (strong displacement = institutional)
+      Context      0–2  (liquidity grab / BOS = smart money confirmation)
+
+    Grade: A+ (9–10) | A (7–8) | B (5–6) | C (3–4) | SKIP (0–2)
+    """
+    score = 0
+
+    # 1. Age
+    age = fvg.candles_ago
+    if age <= 5:
+        score += 3
+        fvg.age_label = "FRESH"
+    elif age <= 20:
+        score += 2
+        fvg.age_label = "RECENT"
+    elif age <= 50:
+        score += 1
+        fvg.age_label = "MATURE"
+    else:
+        score += 0
+        fvg.age_label = "STALE"
+
+    # 2. Gap size vs ATR
+    if atr > 0:
+        ratio = fvg.size / atr
+        if 0.5 <= ratio <= 2.0:
+            score += 2
+        elif 0.2 <= ratio < 0.5 or 2.0 < ratio <= 3.0:
+            score += 1
+
+    # 3. Touch count (first test is always strongest)
+    if fvg.touch_count == 0:
+        score += 2
+    elif fvg.touch_count == 1:
+        score += 1
+
+    # 4. Impulse body strength
+    if atr > 0 and fvg.impulse_body_size > 0:
+        body_ratio = fvg.impulse_body_size / atr
+        if body_ratio >= 1.5:
+            score += 2
+        elif body_ratio >= 0.8:
+            score += 1
+
+    # 5. Formation context
+    if fvg.preceded_by_liquidity_grab:
+        score += 1
+    if fvg.formed_after_bos:
+        score += 1
+
+    # 6. Penalties — fill consumption and excessive testing
+    if fvg.partial_fill_pct >= 0.75:
+        score -= 2   # Mostly consumed — institutional orders largely filled
+    elif fvg.partial_fill_pct >= 0.50:
+        score -= 1   # Over half filled — diminished
+    if fvg.touch_count >= 6:
+        score -= 1   # Heavily contested — no longer clean
+
+    fvg.quality_score = max(0, min(score, 10))
+
+    # Assign grade
+    if fvg.quality_score >= 9:
+        fvg.probability_grade = "A+"
+    elif fvg.quality_score >= 7:
+        fvg.probability_grade = "A"
+    elif fvg.quality_score >= 5:
+        fvg.probability_grade = "B"
+    elif fvg.quality_score >= 3:
+        fvg.probability_grade = "C"
+    else:
+        fvg.probability_grade = "SKIP"
 
 
 def _deduplicate_pools(pools: List[LiquidityPool], tolerance: float) -> List[LiquidityPool]:
