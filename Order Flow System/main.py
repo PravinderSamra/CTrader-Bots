@@ -101,6 +101,14 @@ _TD_FREE_TIER_SYMBOLS = {
     # Indices (SPX, NDX, DAX, FTSE) require paid plan — route those to Yahoo directly
     "EURUSD", "GBPUSD", "USDJPY", "USDCHF", "AUDUSD", "USDCAD", "NZDUSD",
     "EURGBP", "EURJPY", "GBPJPY", "XAUUSD", "XAGUSD",
+    # GOLD routed to XAU/USD spot via Twelve Data — avoids Yahoo GC=F futures
+    # which have different H/L values from the spot price on Pepperstone/brokers
+    "GOLD",
+}
+
+# Map watchlist display names to Twelve Data symbols where they differ
+_TD_SYMBOL_OVERRIDES = {
+    "GOLD": "XAU/USD",   # spot gold — matches Pepperstone XAUUSD exactly
 }
 
 
@@ -118,7 +126,9 @@ def _fetch_tier2_klines(symbol: str, yahoo_ticker: str, interval: str, limit: in
         try:
             from data.fetchers.twelve_data_fetcher import fetch_klines as td_klines, is_configured
             if is_configured():
-                candles = td_klines(symbol, interval, limit=limit, symbol_label=symbol)
+                # Use override symbol if defined (e.g. GOLD → XAU/USD spot)
+                td_sym = _TD_SYMBOL_OVERRIDES.get(sym_up, symbol)
+                candles = td_klines(td_sym, interval, limit=limit, symbol_label=symbol)
                 if candles:
                     return candles
         except Exception:

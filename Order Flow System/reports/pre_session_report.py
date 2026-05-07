@@ -87,7 +87,7 @@ def generate_asset_report(
         zone = None
 
     # ── SESSION LEVELS ──────────────────────────────────────────────────────
-    session_lvls = compute_session_levels(candles_mtf)
+    session_lvls = compute_session_levels(candles_mtf, candles_daily=candles_htf)
     lines.append("  SESSION LEVELS")
     if session_lvls.prior_day_high:
         lines.append(f"  Prior day high : {session_lvls.prior_day_high:.5f}  ← BSL target")

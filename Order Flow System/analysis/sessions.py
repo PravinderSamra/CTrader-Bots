@@ -74,16 +74,18 @@ def _trading_day(dt: datetime) -> date_type:
 def compute_session_levels(
     candles: List[Candle],
     date_str: Optional[str] = None,
+    candles_daily: Optional[List[Candle]] = None,
 ) -> SessionLevels:
     """
     Compute session high/low/open levels from intraday candles.
 
     Uses the NY close (17:00 ET) daily boundary — the standard forex/CFD
     convention used by Pepperstone, IC Markets, and all major retail brokers.
-    A trading day runs 17:00 ET → 17:00 ET, so the Asian session
-    (17:00–00:00 ET) belongs to the NEXT calendar day's trading session.
+    A trading day runs 17:00 ET → 17:00 ET.
 
-    Expects 1h or 15m candles covering at least the prior 48 hours.
+    candles       : 1h or 15m intraday bars (for session sub-ranges)
+    candles_daily : daily bars (preferred source for PDH/PDL — matches
+                    what TradingView shows as yesterday's daily candle H/L)
     """
     if not candles:
         return SessionLevels(symbol="", date=date_str or "")
@@ -95,14 +97,21 @@ def compute_session_levels(
 
     levels = SessionLevels(symbol=symbol, date=date_str or str(today_td))
 
-    # Bucket every candle by its trading day and ET hour
-    today_candles = [c for c in candles if _trading_day(c.timestamp) == today_td]
-    prior_candles = [c for c in candles if _trading_day(c.timestamp) == prev_td]
+    # Prior day high / low — use daily candles when available (most accurate,
+    # matches TradingView daily H/L exactly). Fall back to 1h bucketing.
+    if candles_daily and len(candles_daily) >= 2:
+        # The second-to-last daily candle is the most recently completed day
+        prev_daily = candles_daily[-2]
+        levels.prior_day_high = prev_daily.high
+        levels.prior_day_low  = prev_daily.low
+    else:
+        prior_1h = [c for c in candles if _trading_day(c.timestamp) == prev_td]
+        if prior_1h:
+            levels.prior_day_high = max(c.high for c in prior_1h)
+            levels.prior_day_low  = min(c.low  for c in prior_1h)
 
-    # Prior day high / low  ← NOW CORRECTLY SCOPED TO YESTERDAY ONLY
-    if prior_candles:
-        levels.prior_day_high = max(c.high for c in prior_candles)
-        levels.prior_day_low  = min(c.low  for c in prior_candles)
+    # Bucket intraday candles by today's trading day
+    today_candles = [c for c in candles if _trading_day(c.timestamp) == today_td]
 
     # Today's session sub-ranges (scoped to today's trading day)
     asia_candles   = [c for c in today_candles if _to_et_hour(c.timestamp) >= 17
