@@ -6,7 +6,7 @@ marks the Asian range for manipulation detection, identifies
 kill zones, and computes session bias from the midnight open.
 """
 
-from datetime import datetime, timezone, time
+from datetime import datetime, timezone, time, timedelta, date as date_type
 from typing import List, Optional
 from data.models import Candle, SessionLevels
 
@@ -53,33 +53,62 @@ def _to_et_hour_frac(dt: datetime) -> float:
     return (dt.hour + offset) % 24 + dt.minute / 60.0
 
 
+def _trading_day(dt: datetime) -> date_type:
+    """
+    Return the forex trading day this timestamp belongs to.
+    Forex days run 17:00 ET → 17:00 ET (NY close convention).
+    A candle at 18:00 ET Monday belongs to Tuesday's trading day.
+    """
+    if _EASTERN is not None:
+        et = dt.astimezone(_EASTERN)
+    else:
+        month = dt.month
+        offset = -4 if 3 < month < 11 else -5
+        et = dt.replace(tzinfo=None).replace(hour=(dt.hour + offset) % 24)
+
+    if et.hour >= 17:
+        return (et + timedelta(days=1)).date()
+    return et.date()
+
+
 def compute_session_levels(
     candles: List[Candle],
     date_str: Optional[str] = None,
 ) -> SessionLevels:
     """
     Compute session high/low/open levels from intraday candles.
-    Expects 1h or 15m candles covering at least the prior 24 hours.
+
+    Uses the NY close (17:00 ET) daily boundary — the standard forex/CFD
+    convention used by Pepperstone, IC Markets, and all major retail brokers.
+    A trading day runs 17:00 ET → 17:00 ET, so the Asian session
+    (17:00–00:00 ET) belongs to the NEXT calendar day's trading session.
+
+    Expects 1h or 15m candles covering at least the prior 48 hours.
     """
-    symbol = candles[0].symbol if candles else ""
-    levels = SessionLevels(symbol=symbol, date=date_str or "")
+    if not candles:
+        return SessionLevels(symbol="", date=date_str or "")
 
-    asia_candles   = []
-    london_candles = []
-    ny_candles     = []
+    symbol   = candles[0].symbol
+    now_utc  = candles[-1].timestamp
+    today_td = _trading_day(now_utc)
+    prev_td  = today_td - timedelta(days=1)
 
-    for c in candles:
-        h = _to_et_hour(c.timestamp)
+    levels = SessionLevels(symbol=symbol, date=date_str or str(today_td))
 
-        # Asia: 20:00–00:00 ET (prior evening)
-        if h >= 20 or h == 0:
-            asia_candles.append(c)
-        # London: 02:00–11:00 ET
-        elif 2 <= h < 11:
-            london_candles.append(c)
-        # NY: 07:00–16:00 ET
-        if 7 <= h < 16:
-            ny_candles.append(c)
+    # Bucket every candle by its trading day and ET hour
+    today_candles = [c for c in candles if _trading_day(c.timestamp) == today_td]
+    prior_candles = [c for c in candles if _trading_day(c.timestamp) == prev_td]
+
+    # Prior day high / low  ← NOW CORRECTLY SCOPED TO YESTERDAY ONLY
+    if prior_candles:
+        levels.prior_day_high = max(c.high for c in prior_candles)
+        levels.prior_day_low  = min(c.low  for c in prior_candles)
+
+    # Today's session sub-ranges (scoped to today's trading day)
+    asia_candles   = [c for c in today_candles if _to_et_hour(c.timestamp) >= 17
+                      or _to_et_hour(c.timestamp) < 2]
+    london_candles = [c for c in today_candles if 2 <= _to_et_hour(c.timestamp) < 11]
+    ny_candles     = [c for c in today_candles if 7 <= _to_et_hour(c.timestamp) < 17]
 
     if asia_candles:
         levels.asia_high = max(c.high for c in asia_candles)
@@ -92,32 +121,25 @@ def compute_session_levels(
     if ny_candles:
         levels.ny_open = ny_candles[0].open
 
-    # Midnight open (00:00 ET) — ICT daily bias filter
-    midnight_candles = [c for c in candles if _to_et_hour(c.timestamp) == 0]
+    # Midnight open (00:00 ET) — ICT daily bias filter, scoped to today
+    midnight_candles = [c for c in today_candles if _to_et_hour(c.timestamp) == 0]
     if midnight_candles:
         levels.midnight_open = midnight_candles[0].open
 
-    # Prior day high/low (the full prior session: all candles before midnight)
-    prior_candles = [c for c in candles if c.timestamp < candles[-1].timestamp]
-    if prior_candles:
-        levels.prior_day_high = max(c.high for c in prior_candles)
-        levels.prior_day_low  = min(c.low  for c in prior_candles)
-
     # Session bias from midnight open
-    if levels.midnight_open and candles:
-        current_price = candles[-1].close
-        levels.in_premium = current_price > levels.midnight_open
+    if levels.midnight_open and today_candles:
+        levels.in_premium = today_candles[-1].close > levels.midnight_open
 
-    # Did London sweep the Asian range?
+    # Did London sweep today's Asian range?
     if levels.asia_high and levels.asia_low and london_candles:
         london_high = max(c.high for c in london_candles)
         london_low  = min(c.low  for c in london_candles)
         if london_high > levels.asia_high and london_low < levels.asia_low:
-            levels.asia_swept = "both"  # Unusual — note it
+            levels.asia_swept = "both"
         elif london_high > levels.asia_high:
-            levels.asia_swept = "high"  # London swept ASH → watch for bearish reversal
+            levels.asia_swept = "high"
         elif london_low < levels.asia_low:
-            levels.asia_swept = "low"   # London swept ASL → watch for bullish reversal
+            levels.asia_swept = "low"
 
     return levels
 
