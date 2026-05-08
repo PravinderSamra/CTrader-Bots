@@ -217,6 +217,11 @@ def detect_fvgs(candles: List[Candle]) -> List[FairValueGap]:
     for i in range(total - 2):
         c1, c2, c3 = candles[i], candles[i + 1], candles[i + 2]
 
+        # Skip FVGs that span session/overnight gaps (market-hours-only data
+        # like Yahoo Finance ^GSPC creates phantom gaps at the open/close boundary)
+        if _is_session_gap(c1, c2) or _is_session_gap(c2, c3):
+            continue
+
         # Bullish FVG
         if c1.high < c3.low:
             gap_size = c3.low - c1.high
@@ -331,6 +336,33 @@ def detect_liquidity_pools(
 
 
 # ─── PRIVATE HELPERS ─────────────────────────────────────────────────────────
+
+_INTERVAL_SECONDS = {
+    "1m": 60, "5m": 300, "15m": 900, "30m": 1800,
+    "1h": 3600, "4h": 14400, "1d": 86400, "1w": 604800,
+}
+
+
+def _is_session_gap(c_a: Candle, c_b: Candle) -> bool:
+    """
+    Returns True if the time gap between two consecutive candles is much
+    larger than the expected interval — meaning the candles span an
+    overnight or weekend session boundary rather than continuous trading.
+
+    Without this, Yahoo Finance market-hours-only data (US indices) produces
+    phantom FVGs from the overnight gap between the last candle before close
+    and the first candle at the next open.
+
+    Thresholds:
+      Intraday (1m–4h) : gap > 2.5× interval  (e.g. >2.5h on 1H chart)
+      Daily            : gap > 4.5× interval  (handles 3-day weekends)
+    """
+    interval_secs = _INTERVAL_SECONDS.get(c_a.timeframe, 0)
+    if interval_secs == 0:
+        return False
+    actual_gap = (c_b.timestamp - c_a.timestamp).total_seconds()
+    multiplier = 4.5 if c_a.timeframe == "1d" else 2.5
+    return actual_gap > interval_secs * multiplier
 
 def _check_liquidity_grab(candles: List[Candle], ob_index: int, direction: str) -> bool:
     """
