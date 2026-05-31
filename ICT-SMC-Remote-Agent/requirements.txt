@@ -1,0 +1,3 @@
+python-dotenv>=1.0.0
+zoneinfo; python_version < '3.9'
+# ctrader_open_api>=2.0.0   # Uncomment when cTrader credentials are configured
