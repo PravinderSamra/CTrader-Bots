@@ -8,40 +8,45 @@ Use for weekly bias direction and extreme positioning alerts only.
 Ranks current net position against the prior 8 weeks to identify:
   - Crowded longs/shorts (positioning at extremes = contrarian reversal risk)
   - Institutional accumulation/distribution shifts
+
+Uses the CFTC Legacy Futures-Only report (resource 6dca-aqww).
+Tracks Non-Commercial (speculative) positions — hedge funds, managed money, CTAs.
 """
 
 import urllib.request
+import urllib.parse
 import json
-import csv
-import io
 from typing import Optional
 from data.models import COTData
 
-# CFTC API — Socrata open data endpoint
+# CFTC API — Socrata open data endpoint (Legacy Futures-Only)
 _BASE = "https://publicreporting.cftc.gov/resource/6dca-aqww.json"
 
-# CFTC 'market_and_exchange_names' values mapped to our instrument names
+# Exact 'market_and_exchange_names' values from the CFTC dataset
+# These must match the dataset exactly — use LIKE searches to verify if adding new ones
 _MARKET_MAP = {
-    "EURUSD": "EURO FX",
-    "GBPUSD": "BRITISH POUND",
-    "USDJPY": "JAPANESE YEN",
-    "GBPJPY": "JAPANESE YEN",
-    "GOLD":   "GOLD",
-    "OIL":    "CRUDE OIL, LIGHT SWEET",
-    "SPX":    "S&P 500 STOCK INDEX",
-    "NDX":    "NASDAQ-100 STOCK INDEX",
-    "US30":   "DOW JONES INDUSTRIAL AVERAGE",
+    "EURUSD": "EURO FX - CHICAGO MERCANTILE EXCHANGE",
+    "GBPUSD": "BRITISH POUND - CHICAGO MERCANTILE EXCHANGE",
+    "USDJPY": "JAPANESE YEN - CHICAGO MERCANTILE EXCHANGE",
+    "GBPJPY": "JAPANESE YEN - CHICAGO MERCANTILE EXCHANGE",
+    "GOLD":   "GOLD - COMMODITY EXCHANGE INC.",
+    "OIL":    "CRUDE OIL, LIGHT SWEET-WTI - ICE FUTURES EUROPE",
+    "SPX":    "E-MINI S&P 500 STOCK INDEX - CHICAGO MERCANTILE EXCHANGE",
+    "NDX":    "NASDAQ-100 Consolidated - CHICAGO MERCANTILE EXCHANGE",
+    "US30":   "DJIA Consolidated - CHICAGO BOARD OF TRADE",
 }
 
 
 def _fetch_cot(market_name: str, weeks: int = 9) -> Optional[list]:
-    params = (
-        f"?$where=market_and_exchange_names=%27{urllib.parse.quote(market_name)}%27"
-        f"&$order=report_date_as_yyyy_mm_dd DESC"
+    # Socrata SoQL: $where/$order/$limit must remain literal in the URL;
+    # only the market name value is encoded.
+    name_enc = urllib.parse.quote(market_name, safe="")
+    url = (
+        f"{_BASE}"
+        f"?$where=market_and_exchange_names=%27{name_enc}%27"
+        f"&$order=report_date_as_yyyy_mm_dd%20DESC"
         f"&$limit={weeks}"
     )
-    url = _BASE + params
-    import urllib.parse
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
     try:
         with urllib.request.urlopen(req, timeout=15) as resp:
@@ -61,14 +66,15 @@ def fetch_cot(instrument: str) -> Optional[COTData]:
 
     latest = rows[0]
     try:
-        # Leveraged Money (hedge funds / managed money) positioning
-        long_pos  = int(latest.get("lev_money_positions_long_all",  0) or 0)
-        short_pos = int(latest.get("lev_money_positions_short_all", 0) or 0)
+        # Non-Commercial = speculative positions (hedge funds, managed money, CTAs)
+        # Available in the Legacy report — equivalent to COT speculator sentiment
+        long_pos  = int(latest.get("noncomm_positions_long_all",  0) or 0)
+        short_pos = int(latest.get("noncomm_positions_short_all", 0) or 0)
         net       = long_pos - short_pos
         oi        = int(latest.get("open_interest_all", 1) or 1)
         pct_of_oi = round(net / oi * 100, 1)
         date_str  = latest.get("report_date_as_yyyy_mm_dd", "")[:10]
-        category  = "Leveraged Money"
+        category  = "Non-Commercial (Speculative)"
 
         if pct_of_oi < -5:
             bias = "BEARISH"
@@ -81,8 +87,8 @@ def fetch_cot(instrument: str) -> Optional[COTData]:
         history = []
         nets_8wk = []
         for row in rows[1:9]:
-            l = int(row.get("lev_money_positions_long_all",  0) or 0)
-            s = int(row.get("lev_money_positions_short_all", 0) or 0)
+            l = int(row.get("noncomm_positions_long_all",  0) or 0)
+            s = int(row.get("noncomm_positions_short_all", 0) or 0)
             n = l - s
             d = row.get("report_date_as_yyyy_mm_dd", "")[:10]
             history.append((d, n))

@@ -15,7 +15,7 @@ from config.settings import (
     FTMO_ACCOUNT_SIZE, FTMO_RISK_PER_TRADE, FTMO_DAILY_LOSS_LIMIT,
     FTMO_TOTAL_LOSS_LIMIT, FTMO_PROFIT_TARGET_P1, AGENT_VERSION,
     SKIP_GRADES, MAX_FVG_DISPLAY, MAX_OB_DISPLAY, MAX_LIQ_DISPLAY,
-    PIP_VALUE_PER_LOT,
+    PIP_VALUE_PER_LOT, INSTRUMENTS,
 )
 
 _GRADE_ORDER = {"A+": 0, "A": 1, "B": 2, "C": 3, "SKIP": 4}
@@ -23,6 +23,42 @@ _WIDTH = 65
 _SEP   = "═" * _WIDTH
 _DIV   = "─" * _WIDTH
 _DOT   = "·" * _WIDTH
+
+# Price units per pip for each instrument (used to convert raw gap to pips)
+_PIP_SIZE: dict[str, float] = {
+    "EURUSD": 0.0001, "GBPUSD": 0.0001,
+    "USDJPY": 0.01,   "GBPJPY": 0.01,
+    "SPX": 1.0, "NDX": 1.0, "DAX": 1.0, "US30": 1.0, "UK100": 1.0,
+    "GOLD": 1.0,    # $1 per pip; PIP_VALUE_PER_LOT["GOLD"]=10 means $10 per $1 move per lot
+    "OIL": 0.01,
+    "BTCUSDT": 1.0, "ETHUSDT": 1.0, "SOLUSDT": 0.1,
+}
+
+# Minimum stop in pips to prevent nonsensical lot sizes from tiny FVG gaps
+_MIN_STOP_PIPS: dict[str, float] = {
+    "EURUSD": 15, "GBPUSD": 15, "USDJPY": 15, "GBPJPY": 20,
+    "SPX": 8, "NDX": 12, "DAX": 10, "US30": 30, "UK100": 20,
+    "GOLD": 5,   # $5 minimum stop for gold
+    "OIL": 30,
+    "BTCUSDT": 200, "ETHUSDT": 20, "SOLUSDT": 2,
+}
+
+# Build data source labels from INSTRUMENTS config once at import time
+_DATA_SOURCE_LABEL: dict[str, str] = {}
+_SOURCE_DISPLAY = {"twelve_data": "Twelve Data", "yahoo": "Yahoo Finance", "okx": "OKX"}
+_SOURCE_WARN: dict[str, str] = {
+    "yahoo": "⚠  Yahoo Finance (market-hours only). Verify levels on Pepperstone chart before trading.",
+    "okx":   "ℹ  OKX spot feed. Pepperstone crypto levels typically match closely.",
+    "twelve_data": "ℹ  Twelve Data spot. Levels should be close to Pepperstone (<1-2 pip variance).",
+}
+for _inst in INSTRUMENTS:
+    _name = _inst["name"]
+    _src  = _inst["source"]
+    _fb   = _inst.get("fallback_source")
+    _label = _SOURCE_DISPLAY.get(_src, _src)
+    if _fb:
+        _label += f" → {_SOURCE_DISPLAY.get(_fb, _fb)} fallback"
+    _DATA_SOURCE_LABEL[_name] = (_SOURCE_WARN.get(_src, f"Source: {_label}"), _label)
 
 
 def _grade_symbol(grade: str) -> str:
@@ -36,13 +72,24 @@ def _pct_str(val: float, current: float) -> str:
     return f"({sign}{pct:.2f}%, {direction})"
 
 
-def _position_size_hint(symbol: str, stop_pts: float) -> str:
-    """Calculate suggested lot size for $450 risk at the given stop."""
-    pip_val = PIP_VALUE_PER_LOT.get(symbol)
-    if not pip_val or stop_pts <= 0:
+def _position_size_hint(symbol: str, gap_price_units: float) -> str:
+    """Calculate suggested lot size for $450 risk.
+
+    Converts the FVG gap (raw price units) to pips, applies 1.5× for stop clearance,
+    enforces a per-instrument minimum stop so forex micro-gaps don't produce absurd
+    lot counts, then calculates position size.
+    """
+    pip_val  = PIP_VALUE_PER_LOT.get(symbol)
+    pip_size = _PIP_SIZE.get(symbol)
+    if not pip_val or not pip_size:
         return ""
-    lots = FTMO_RISK_PER_TRADE / (stop_pts * pip_val)
-    return f"  → ${FTMO_RISK_PER_TRADE} risk @ {stop_pts:.1f}pt stop = {lots:.2f} lots"
+    gap_pips  = (gap_price_units / pip_size) * 1.5
+    min_stop  = _MIN_STOP_PIPS.get(symbol, 15)
+    stop_pips = max(gap_pips, min_stop)
+    if stop_pips <= 0:
+        return ""
+    lots = FTMO_RISK_PER_TRADE / (stop_pips * pip_val)
+    return f"  → ${FTMO_RISK_PER_TRADE} risk @ {stop_pips:.0f}pt stop = {lots:.2f} lots"
 
 
 def _cot_section(cot: Optional[COTData]) -> list[str]:
@@ -65,12 +112,26 @@ def _cot_section(cot: Optional[COTData]) -> list[str]:
     elif cot.rank_8wk <= 10:
         lines.append(f"  ⚠  CROWDED SHORT — positioning at extreme, contrarian squeeze risk")
 
-    history_str = " | ".join(f"{d[:5]}:{n:+,}" for d, n in cot.history[:4])
+    history_str = " | ".join(f"{d[5:10]}:{n:+,}" for d, n in cot.history[:4])
     lines.append(f"  4-week history: {history_str}")
     return lines
 
 
+def _fvg_session_age(formed_at: datetime, now_utc: datetime) -> str:
+    """Return a human label for when the FVG formed relative to now."""
+    ts = formed_at if formed_at.tzinfo else formed_at.replace(tzinfo=timezone.utc)
+    hours = (now_utc - ts).total_seconds() / 3600
+    if hours < 12:
+        return "CURRENT SESSION"
+    if hours < 36:
+        return "YESTERDAY"
+    if hours < 168:
+        return "THIS WEEK"
+    return "OLDER"
+
+
 def _fvg_lines(fvgs: list[FVGResult], current_price: float, symbol: str) -> list[str]:
+    now_utc = datetime.now(timezone.utc)
     displayable = [f for f in fvgs if f.probability_grade not in SKIP_GRADES]
     displayable.sort(key=lambda f: (_GRADE_ORDER.get(f.probability_grade, 9), f.candles_ago))
     displayable = displayable[:MAX_FVG_DISPLAY]
@@ -98,10 +159,16 @@ def _fvg_lines(fvgs: list[FVGResult], current_price: float, symbol: str) -> list
         )
         lines.append(line)
 
+        # Formation timestamp — helps user find the exact candle on their chart
+        if fvg.formed_at:
+            sess_age  = _fvg_session_age(fvg.formed_at, now_utc)
+            formed_str = fvg.formed_at.strftime("%H:%M UTC %a %d %b")
+            lines.append(f"    Formed: {formed_str}  [{sess_age}]  ← find this candle on your chart")
+
         # Add position size hint if FVG is close to price and actionable
         if abs(pct_from) < 1.0 and fvg.probability_grade in ("A+", "A", "B"):
-            stop_distance = abs(fvg.gap_high - fvg.gap_low) * 1.5
-            hint = _position_size_hint(symbol, stop_distance)
+            gap_size = abs(fvg.gap_high - fvg.gap_low)
+            hint = _position_size_hint(symbol, gap_size)
             if hint:
                 lines.append(hint)
 
@@ -174,12 +241,15 @@ def generate_report(markets: list[MarketContext]) -> str:
 
     for ctx in markets:
         price = ctx.current_price
+        src_warn, src_label = _DATA_SOURCE_LABEL.get(ctx.symbol, ("", "Unknown"))
         lines += [
             "",
             _SEP,
-            f"  {ctx.symbol}  |  Current: {price:.5f}",
+            f"  {ctx.symbol}  |  Current: {price:.5f}  |  Feed: {src_label}",
             _DIV,
         ]
+        if src_warn:
+            lines.append(f"  {src_warn}")
 
         # Trend
         lines += [
