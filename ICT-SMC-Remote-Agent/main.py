@@ -18,13 +18,11 @@ except ImportError:
     pass
 
 from data.models import Candle, MarketContext
-from data.fetchers import yahoo_fetcher, twelve_data_fetcher, okx_fetcher, cot_fetcher
+from data.fetchers import yahoo_fetcher, twelve_data_fetcher, okx_fetcher, cot_fetcher, ctrader_fetcher
 from analysis import structure, sessions
 from reports.pre_session_report import generate_report
 from config.settings import INSTRUMENTS, PRIMARY_TF, CONTEXT_TF, DAILY_TF
 from config.settings import CANDLE_LIMIT_PRIMARY, CANDLE_LIMIT_DAILY
-
-_TWELVE_DATA_FREE_TIER = {"EURUSD", "GBPUSD", "USDJPY", "GBPJPY", "GOLD"}
 
 
 def _fetch_symbol(inst: dict) -> Optional[tuple[List[Candle], List[Candle], List[Candle]]]:
@@ -45,6 +43,8 @@ def _fetch_symbol(inst: dict) -> Optional[tuple[List[Candle], List[Candle], List
                 return twelve_data_fetcher.fetch_klines(symbol, tf, limit, symbol_label=label)
             elif source == "yahoo":
                 return yahoo_fetcher.fetch_klines(symbol, tf, limit, symbol_label=label)
+            elif source == "ctrader":
+                return ctrader_fetcher.fetch_klines(symbol, tf, limit, symbol_label=label)
         except Exception as e:
             print(f"    ⚠  {name} fetch error ({source}): {e}", file=sys.stderr)
             return []
