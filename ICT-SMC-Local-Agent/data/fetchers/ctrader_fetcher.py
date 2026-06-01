@@ -37,20 +37,27 @@ _PERIOD_MAP = {
 # Our instrument labels → Pepperstone cTrader symbol names
 # If a symbol doesn't match exactly, _get_symbol_id() falls back to partial matching
 SYMBOL_MAP = {
-    "EURUSD":  "EURUSD",
-    "GBPUSD":  "GBPUSD",
-    "USDJPY":  "USDJPY",
-    "GBPJPY":  "GBPJPY",
-    "GOLD":    "XAUUSD",
-    "OIL":     "WTOIL-PERP",
-    "SPX":     "US500",
-    "NDX":     "NAS100",
-    "US30":    "US30",
-    "DAX":     "GER40",
-    "UK100":   "UK100",
-    "BTCUSDT": "BTCUSD",
-    "ETHUSDT": "ETHUSD",
-    "SOLUSDT": "SOLUSD",
+    # Forex majors
+    "EURUSD":  "EURUSD",   "GBPUSD":  "GBPUSD",   "USDJPY":  "USDJPY",
+    "USDCHF":  "USDCHF",   "USDCAD":  "USDCAD",   "AUDUSD":  "AUDUSD",
+    "NZDUSD":  "NZDUSD",
+    # Forex crosses
+    "GBPJPY":  "GBPJPY",   "EURJPY":  "EURJPY",   "AUDJPY":  "AUDJPY",
+    "EURGBP":  "EURGBP",   "GBPAUD":  "GBPAUD",   "EURCAD":  "EURCAD",
+    "GBPCAD":  "GBPCAD",
+    # US indices
+    "SPX":     "US500",    "NDX":     "NAS100",   "US30":    "US30",
+    # European indices
+    "DAX":     "GER40",    "UK100":   "UK100",    "FRA40":   "FRA40",
+    "EUSTX50": "EUSTX50",
+    # Asia-Pacific indices
+    "JPN225":  "JPN225",   "AUS200":  "AUS200",   "HK50":    "HK50",
+    # Metals
+    "GOLD":    "XAUUSD",   "SILVER":  "XAGUSD",
+    # Commodities
+    "OIL":     "WTOIL-PERP", "BRENT": "BRENTOIL-PERP", "NATGAS": "NatGas",
+    # Crypto (via OKX, listed here for reference only)
+    "BTCUSDT": "BTCUSD",   "ETHUSDT": "ETHUSD",   "SOLUSDT": "SOLUSD",
 }
 
 # Pip digits per cTrader symbol — raw pipette price / 10^pipDigits = display price
@@ -58,30 +65,63 @@ SYMBOL_MAP = {
 # get_symbols does not return pipDigits; we auto-detect from price ranges (see below)
 # These are starting guesses; _pip_digits() corrects them via _PRICE_RANGES auto-detect.
 _PIP_DIGITS_HINT: dict[str, int] = {
+    # Forex majors
     "EURUSD": 5, "GBPUSD": 5, "AUDUSD": 5, "NZDUSD": 5,
-    "USDCHF": 5, "USDCAD": 5, "EURGBP": 5, "EURAUD": 5,
-    "USDJPY": 3, "GBPJPY": 3, "EURJPY": 3, "AUDJPY": 3,
-    "XAUUSD": 3, "XAGUSD": 3,
-    "US500":  3, "US100":  4, "US30":   4,
-    "GER40":  3, "UK100":  3, "AUS200": 3,
-    "USOIL":  3, "UKOIL":  3,
+    "USDCHF": 5, "USDCAD": 5,
+    # JPY pairs (3 decimal places — 100s)
+    "USDJPY": 3, "GBPJPY": 3, "EURJPY": 3, "AUDJPY": 3, "CADJPY": 3, "NZDJPY": 3,
+    # EUR/GBP/AUD crosses
+    "EURGBP": 5, "EURAUD": 5, "EURCAD": 5, "EURCHF": 5,
+    "GBPAUD": 5, "GBPCAD": 5, "GBPNZD": 5, "GBPCHF": 5,
+    "AUDCAD": 5, "AUDCHF": 5, "AUDNZD": 5, "NZDCAD": 5, "NZDCHF": 5,
+    # Metals
+    "XAUUSD": 3, "XAGUSD": 3, "XPTUSD": 3, "XPDUSD": 3,
+    # US indices
+    "US500":  3, "NAS100": 4, "US30":   4,
+    # European indices
+    "GER40":  3, "UK100":  3, "FRA40":  3, "EUSTX50": 3,
+    # Asia-Pacific indices
+    "JPN225": 2, "AUS200": 3, "HK50":   2,
+    # Commodities
+    "USOIL":  3, "UKOIL":  3, "WTOIL-PERP": 3, "BRENTOIL-PERP": 3,
+    "NATGAS": 3,
+    # Crypto
     "BTCUSD": 3, "ETHUSD": 3, "SOLUSD": 3,
 }
 
 # Plausible display-price ranges per symbol — used to auto-detect pip digits
 # from a live raw value. Ranges are intentionally wide.
 _PRICE_RANGES: dict[str, tuple[float, float]] = {
+    # Forex majors
     "EURUSD": (0.80, 1.60),   "GBPUSD": (1.00, 1.70),
     "AUDUSD": (0.50, 1.10),   "NZDUSD": (0.40, 0.90),
-    "USDCHF": (0.80, 1.20),   "USDCAD": (1.10, 1.60),
-    "USDJPY": (100, 180),     "GBPJPY": (150, 230),
-    "EURJPY": (110, 175),
+    "USDCHF": (0.75, 1.20),   "USDCAD": (1.10, 1.65),
+    # JPY pairs
+    "USDJPY": (100, 180),     "GBPJPY": (150, 240),
+    "EURJPY": (110, 180),     "AUDJPY": (60,  120),
+    "CADJPY": (85,  130),     "NZDJPY": (55,  100),
+    # EUR/GBP/AUD crosses
+    "EURGBP": (0.70, 0.95),   "GBPAUD": (1.70, 2.30),
+    "EURCAD": (1.30, 1.90),   "GBPCAD": (1.65, 2.20),
+    "GBPNZD": (1.80, 2.50),   "EURAUD": (1.50, 1.80),
+    # Metals
     "XAUUSD": (1_400, 6_000), "XAGUSD": (15, 60),
-    "US500":  (3_000, 12_000),"US100":  (8_000, 30_000),
-    "US30":   (25_000, 55_000),"GER40": (12_000, 30_000),
-    "UK100":  (6_000, 13_000),"AUS200": (5_000, 10_000),
-    "USOIL":  (40, 180),      "UKOIL":  (40, 180),
-    "BTCUSD": (10_000, 250_000),"ETHUSD":(500, 15_000),
+    "XPTUSD": (700, 2_000),   "XPDUSD": (700, 3_000),
+    # US indices
+    "US500":  (3_000, 12_000), "NAS100": (8_000, 30_000),
+    "US30":   (25_000, 55_000),
+    # European indices
+    "GER40":  (12_000, 30_000), "UK100":  (6_000, 13_000),
+    "FRA40":  (5_000, 12_000),  "EUSTX50": (3_000, 8_000),
+    # Asia-Pacific indices
+    "JPN225": (20_000, 50_000), "AUS200": (5_000, 10_000),
+    "HK50":   (13_000, 30_000),
+    # Commodities
+    "USOIL":  (30, 130),      "UKOIL":  (30, 130),
+    "WTOIL-PERP": (30, 130),  "BRENTOIL-PERP": (30, 140),
+    "NATGAS": (1.0, 15.0),
+    # Crypto
+    "BTCUSD": (10_000, 250_000), "ETHUSD": (500, 15_000),
     "SOLUSD": (10, 600),
 }
 

@@ -29,24 +29,51 @@ FTMO_LEVERAGE = {
 # Position size guidance (USD pip value at 1 standard lot)
 # Use: lot_size = FTMO_RISK_PER_TRADE / (stop_pips × pip_value)
 PIP_VALUE_PER_LOT = {
-    "EURUSD":  10.0,   # $10 per pip per lot
+    # Forex — USD-quoted (exact: $10/pip/lot)
+    "EURUSD":  10.0,
     "GBPUSD":  10.0,
+    "AUDUSD":  10.0,
+    "NZDUSD":  10.0,
+    # Forex — USD-base (pip value = 10 / rate, approx)
     "USDJPY":   8.0,   # approx — varies with JPY rate
-    "GBPJPY":   8.0,
+    "USDCHF":  11.0,   # approx — varies with CHF rate (~0.90)
+    "USDCAD":   7.5,   # approx — varies with CAD rate (~1.36)
+    # JPY-quoted crosses (pip value ≈ lot_size × 0.0001 × 1/USDJPY × base_rate)
+    "GBPJPY":   8.0,   # approx
+    "EURJPY":   8.0,   # approx
+    "AUDJPY":   7.0,   # approx
+    # Non-USD-quoted crosses
+    "EURGBP":  13.0,   # approx — GBP-quoted × GBPUSD
+    "GBPAUD":  10.0,   # approx
+    "EURCAD":   7.5,   # approx — CAD-quoted
+    # Indices ($per index point per contract)
     "SPX":     25.0,   # $25 per index point per contract
     "NDX":     20.0,
     "DAX":     25.0,
     "US30":    25.0,
     "UK100":   12.0,
+    "FRA40":   10.0,   # approx — EUR-denominated, varies with EURUSD
+    "EUSTX50": 10.0,   # approx
+    "JPN225":   9.0,   # approx — JPY-denominated, varies with USDJPY
+    "AUS200":   7.0,   # approx — AUD-denominated
+    "HK50":     1.25,  # approx — HKD-denominated
+    # Metals
     "GOLD":    10.0,   # $10 per $1 move per lot (100 oz)
+    "SILVER":   5.0,   # approx — $5 per $0.01 move per lot
+    # Commodities
     "OIL":     10.0,
+    "BRENT":   10.0,
+    "NATGAS":   5.0,   # approx
 }
 
 # ── Instrument Definitions ────────────────────────────────────────────────────
-# Each entry: (display_name, asset_class, primary_source, primary_symbol, fallback_source, fallback_symbol, cot_key)
+# All 32 instruments are FTMO Swing Challenge eligible.
+# source/symbol = cTrader Remote MCP symbol name (direct broker feed, 24/7)
+# fallback_source/fallback_symbol = used if cTrader fails
 
 INSTRUMENTS = [
-    # Crypto — OKX (no FTMO leverage, 1:1)
+
+    # ── Crypto (3) — OKX for best 24/7 data; cTrader demo has limited crypto history
     {
         "name": "BTCUSDT",
         "asset_class": "crypto",
@@ -78,7 +105,7 @@ INSTRUMENTS = [
         "note": "FTMO: 1:1 leverage — size positions accordingly",
     },
 
-    # Forex — cTrader Remote MCP (exact Pepperstone prices, 24/7)
+    # ── Forex Majors (7 G8 pairs) ─────────────────────────────────────────────
     {
         "name": "EURUSD",
         "asset_class": "forex",
@@ -113,6 +140,52 @@ INSTRUMENTS = [
         "ftmo_symbol": "USDJPY",
     },
     {
+        "name": "USDCHF",
+        "asset_class": "forex",
+        "source": "ctrader",
+        "symbol": "USDCHF",
+        "fallback_source": "twelve_data",
+        "fallback_symbol": "USD/CHF",
+        "cot_key": "USDCHF",
+        "ftmo_leverage": 30,
+        "ftmo_symbol": "USDCHF",
+    },
+    {
+        "name": "USDCAD",
+        "asset_class": "forex",
+        "source": "ctrader",
+        "symbol": "USDCAD",
+        "fallback_source": "twelve_data",
+        "fallback_symbol": "USD/CAD",
+        "cot_key": "USDCAD",
+        "ftmo_leverage": 30,
+        "ftmo_symbol": "USDCAD",
+    },
+    {
+        "name": "AUDUSD",
+        "asset_class": "forex",
+        "source": "ctrader",
+        "symbol": "AUDUSD",
+        "fallback_source": "twelve_data",
+        "fallback_symbol": "AUD/USD",
+        "cot_key": "AUDUSD",
+        "ftmo_leverage": 30,
+        "ftmo_symbol": "AUDUSD",
+    },
+    {
+        "name": "NZDUSD",
+        "asset_class": "forex",
+        "source": "ctrader",
+        "symbol": "NZDUSD",
+        "fallback_source": "twelve_data",
+        "fallback_symbol": "NZD/USD",
+        "cot_key": "NZDUSD",
+        "ftmo_leverage": 30,
+        "ftmo_symbol": "NZDUSD",
+    },
+
+    # ── Forex Key Crosses (7 pairs) ───────────────────────────────────────────
+    {
         "name": "GBPJPY",
         "asset_class": "forex",
         "source": "ctrader",
@@ -123,8 +196,74 @@ INSTRUMENTS = [
         "ftmo_leverage": 30,
         "ftmo_symbol": "GBPJPY",
     },
+    {
+        "name": "EURJPY",
+        "asset_class": "forex",
+        "source": "ctrader",
+        "symbol": "EURJPY",
+        "fallback_source": "twelve_data",
+        "fallback_symbol": "EUR/JPY",
+        "cot_key": None,
+        "ftmo_leverage": 30,
+        "ftmo_symbol": "EURJPY",
+    },
+    {
+        "name": "AUDJPY",
+        "asset_class": "forex",
+        "source": "ctrader",
+        "symbol": "AUDJPY",
+        "fallback_source": "twelve_data",
+        "fallback_symbol": "AUD/JPY",
+        "cot_key": None,
+        "ftmo_leverage": 30,
+        "ftmo_symbol": "AUDJPY",
+    },
+    {
+        "name": "EURGBP",
+        "asset_class": "forex",
+        "source": "ctrader",
+        "symbol": "EURGBP",
+        "fallback_source": "twelve_data",
+        "fallback_symbol": "EUR/GBP",
+        "cot_key": None,
+        "ftmo_leverage": 30,
+        "ftmo_symbol": "EURGBP",
+    },
+    {
+        "name": "GBPAUD",
+        "asset_class": "forex",
+        "source": "ctrader",
+        "symbol": "GBPAUD",
+        "fallback_source": "twelve_data",
+        "fallback_symbol": "GBP/AUD",
+        "cot_key": None,
+        "ftmo_leverage": 30,
+        "ftmo_symbol": "GBPAUD",
+    },
+    {
+        "name": "EURCAD",
+        "asset_class": "forex",
+        "source": "ctrader",
+        "symbol": "EURCAD",
+        "fallback_source": "twelve_data",
+        "fallback_symbol": "EUR/CAD",
+        "cot_key": None,
+        "ftmo_leverage": 30,
+        "ftmo_symbol": "EURCAD",
+    },
+    {
+        "name": "GBPCAD",
+        "asset_class": "forex",
+        "source": "ctrader",
+        "symbol": "GBPCAD",
+        "fallback_source": "twelve_data",
+        "fallback_symbol": "GBP/CAD",
+        "cot_key": None,
+        "ftmo_leverage": 30,
+        "ftmo_symbol": "GBPCAD",
+    },
 
-    # Indices — cTrader Remote MCP (24/7 CFD data — no overnight gaps)
+    # ── US Indices (3) ────────────────────────────────────────────────────────
     {
         "name": "SPX",
         "asset_class": "indices",
@@ -158,6 +297,8 @@ INSTRUMENTS = [
         "ftmo_leverage": 15,
         "ftmo_symbol": "US30.cash",
     },
+
+    # ── European Indices (4) ──────────────────────────────────────────────────
     {
         "name": "DAX",
         "asset_class": "indices",
@@ -180,8 +321,65 @@ INSTRUMENTS = [
         "ftmo_leverage": 15,
         "ftmo_symbol": "UK100.cash",
     },
+    {
+        "name": "FRA40",
+        "asset_class": "indices",
+        "source": "ctrader",
+        "symbol": "FRA40",
+        "fallback_source": "yahoo",
+        "fallback_symbol": "^FCHI",
+        "cot_key": None,
+        "ftmo_leverage": 15,
+        "ftmo_symbol": "FRA40.cash",
+    },
+    {
+        "name": "EUSTX50",
+        "asset_class": "indices",
+        "source": "ctrader",
+        "symbol": "EUSTX50",
+        "fallback_source": "yahoo",
+        "fallback_symbol": "^STOXX50E",
+        "cot_key": None,
+        "ftmo_leverage": 15,
+        "ftmo_symbol": "EUSTX50.cash",
+    },
 
-    # Commodities — cTrader Remote MCP
+    # ── Asia-Pacific Indices (3) ──────────────────────────────────────────────
+    {
+        "name": "JPN225",
+        "asset_class": "indices",
+        "source": "ctrader",
+        "symbol": "JPN225",
+        "fallback_source": "yahoo",
+        "fallback_symbol": "^N225",
+        "cot_key": None,
+        "ftmo_leverage": 15,
+        "ftmo_symbol": "JPN225.cash",
+    },
+    {
+        "name": "AUS200",
+        "asset_class": "indices",
+        "source": "ctrader",
+        "symbol": "AUS200",
+        "fallback_source": "yahoo",
+        "fallback_symbol": "^AXJO",
+        "cot_key": None,
+        "ftmo_leverage": 15,
+        "ftmo_symbol": "AUS200.cash",
+    },
+    {
+        "name": "HK50",
+        "asset_class": "indices",
+        "source": "ctrader",
+        "symbol": "HK50",
+        "fallback_source": "yahoo",
+        "fallback_symbol": "^HSI",
+        "cot_key": None,
+        "ftmo_leverage": 10,
+        "ftmo_symbol": "HK50.cash",
+    },
+
+    # ── Metals (2) ────────────────────────────────────────────────────────────
     {
         "name": "GOLD",
         "asset_class": "metals",
@@ -194,6 +392,19 @@ INSTRUMENTS = [
         "ftmo_symbol": "XAUUSD",
     },
     {
+        "name": "SILVER",
+        "asset_class": "metals",
+        "source": "ctrader",
+        "symbol": "XAGUSD",
+        "fallback_source": "twelve_data",
+        "fallback_symbol": "XAG/USD",
+        "cot_key": "SILVER",
+        "ftmo_leverage": 9,
+        "ftmo_symbol": "XAGUSD",
+    },
+
+    # ── Commodities (3) ───────────────────────────────────────────────────────
+    {
         "name": "OIL",
         "asset_class": "commodities",
         "source": "ctrader",
@@ -203,6 +414,28 @@ INSTRUMENTS = [
         "cot_key": "OIL",
         "ftmo_leverage": 9,
         "ftmo_symbol": "USOIL.cash",
+    },
+    {
+        "name": "BRENT",
+        "asset_class": "commodities",
+        "source": "ctrader",
+        "symbol": "BRENTOIL-PERP",
+        "fallback_source": "yahoo",
+        "fallback_symbol": "BZ=F",
+        "cot_key": None,
+        "ftmo_leverage": 9,
+        "ftmo_symbol": "BRENTOIL.cash",
+    },
+    {
+        "name": "NATGAS",
+        "asset_class": "commodities",
+        "source": "ctrader",
+        "symbol": "NatGas",
+        "fallback_source": "yahoo",
+        "fallback_symbol": "NG=F",
+        "cot_key": None,
+        "ftmo_leverage": 9,
+        "ftmo_symbol": "NatGas",
     },
 ]
 

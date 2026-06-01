@@ -25,12 +25,23 @@ _BASE = "https://publicreporting.cftc.gov/resource/6dca-aqww.json"
 # Exact 'market_and_exchange_names' values from the CFTC dataset
 # These must match the dataset exactly — use LIKE searches to verify if adding new ones
 _MARKET_MAP = {
+    # Forex majors (CME IMM futures)
     "EURUSD": "EURO FX - CHICAGO MERCANTILE EXCHANGE",
     "GBPUSD": "BRITISH POUND - CHICAGO MERCANTILE EXCHANGE",
     "USDJPY": "JAPANESE YEN - CHICAGO MERCANTILE EXCHANGE",
+    "USDCHF": "SWISS FRANC - CHICAGO MERCANTILE EXCHANGE",
+    "USDCAD": "CANADIAN DOLLAR - CHICAGO MERCANTILE EXCHANGE",
+    "AUDUSD": "AUSTRALIAN DOLLAR - CHICAGO MERCANTILE EXCHANGE",
+    "NZDUSD": "NEW ZEALAND DOLLAR - CHICAGO MERCANTILE EXCHANGE",
+    # Crosses — reported via underlying currency leg
     "GBPJPY": "JAPANESE YEN - CHICAGO MERCANTILE EXCHANGE",
+    "EURJPY": "JAPANESE YEN - CHICAGO MERCANTILE EXCHANGE",
+    # Metals
     "GOLD":   "GOLD - COMMODITY EXCHANGE INC.",
+    "SILVER": "SILVER - COMMODITY EXCHANGE INC.",
+    # Commodities
     "OIL":    "CRUDE OIL, LIGHT SWEET-WTI - ICE FUTURES EUROPE",
+    # US Indices
     "SPX":    "E-MINI S&P 500 STOCK INDEX - CHICAGO MERCANTILE EXCHANGE",
     "NDX":    "NASDAQ-100 Consolidated - CHICAGO MERCANTILE EXCHANGE",
     "US30":   "DJIA Consolidated - CHICAGO BOARD OF TRADE",

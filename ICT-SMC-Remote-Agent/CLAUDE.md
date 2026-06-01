@@ -60,24 +60,42 @@ ICT-SMC-Remote-Agent/
 
 ---
 
-## Instruments Scanned (all FTMO Swing eligible)
+## Instruments Scanned (32 total — all FTMO Swing eligible)
 
-| Symbol | Asset Class | FTMO Symbol | Leverage | Data Source |
-|---|---|---|---|---|
-| BTCUSDT | Crypto | BTCUSD | 1:1 | OKX |
-| ETHUSDT | Crypto | ETHUSD | 1:1 | OKX |
-| SOLUSDT | Crypto | SOLUSD | 1:1 | OKX |
-| EURUSD | Forex | EURUSD | 1:30 | Twelve Data |
-| GBPUSD | Forex | GBPUSD | 1:30 | Twelve Data |
-| USDJPY | Forex | USDJPY | 1:30 | Twelve Data → Yahoo |
-| GBPJPY | Forex | GBPJPY | 1:30 | Twelve Data → Yahoo |
-| SPX | Index | US500.cash | 1:15 | Yahoo ^GSPC |
-| NDX | Index | US100.cash | 1:15 | Yahoo ^NDX |
-| US30 | Index | US30.cash | 1:15 | Yahoo ^DJI |
-| DAX | Index | GER40.cash | 1:15 | Yahoo ^GDAXI |
-| UK100 | Index | UK100.cash | 1:15 | Yahoo ^FTSE |
-| GOLD | Metals | XAUUSD | 1:9 | Twelve Data XAU/USD |
-| OIL | Commodities | USOIL.cash | 1:9 | Yahoo CL=F |
+| Symbol | Asset Class | FTMO Symbol | Leverage | Primary Source | Fallback |
+|---|---|---|---|---|---|
+| BTCUSDT | Crypto | BTCUSD | 1:1 | OKX | — |
+| ETHUSDT | Crypto | ETHUSD | 1:1 | OKX | — |
+| SOLUSDT | Crypto | SOLUSD | 1:1 | OKX | — |
+| EURUSD | Forex | EURUSD | 1:30 | cTrader EURUSD | Twelve Data |
+| GBPUSD | Forex | GBPUSD | 1:30 | cTrader GBPUSD | Twelve Data |
+| USDJPY | Forex | USDJPY | 1:30 | cTrader USDJPY | Twelve Data |
+| USDCHF | Forex | USDCHF | 1:30 | cTrader USDCHF | Twelve Data |
+| USDCAD | Forex | USDCAD | 1:30 | cTrader USDCAD | Twelve Data |
+| AUDUSD | Forex | AUDUSD | 1:30 | cTrader AUDUSD | Twelve Data |
+| NZDUSD | Forex | NZDUSD | 1:30 | cTrader NZDUSD | Twelve Data |
+| GBPJPY | Forex | GBPJPY | 1:30 | cTrader GBPJPY | Twelve Data |
+| EURJPY | Forex | EURJPY | 1:30 | cTrader EURJPY | Twelve Data |
+| AUDJPY | Forex | AUDJPY | 1:30 | cTrader AUDJPY | Twelve Data |
+| EURGBP | Forex | EURGBP | 1:30 | cTrader EURGBP | Twelve Data |
+| GBPAUD | Forex | GBPAUD | 1:30 | cTrader GBPAUD | Twelve Data |
+| EURCAD | Forex | EURCAD | 1:30 | cTrader EURCAD | Twelve Data |
+| GBPCAD | Forex | GBPCAD | 1:30 | cTrader GBPCAD | Twelve Data |
+| SPX | Indices | US500.cash | 1:15 | cTrader US500 | Yahoo ^GSPC |
+| NDX | Indices | US100.cash | 1:15 | cTrader NAS100 | Yahoo ^NDX |
+| US30 | Indices | US30.cash | 1:15 | cTrader US30 | Yahoo ^DJI |
+| DAX | Indices | GER40.cash | 1:15 | cTrader GER40 | Yahoo ^GDAXI |
+| UK100 | Indices | UK100.cash | 1:15 | cTrader UK100 | Yahoo ^FTSE |
+| FRA40 | Indices | FRA40.cash | 1:15 | cTrader FRA40 | Yahoo ^FCHI |
+| EUSTX50 | Indices | EUSTX50.cash | 1:15 | cTrader EUSTX50 | Yahoo ^STOXX50E |
+| JPN225 | Indices | JPN225.cash | 1:15 | cTrader JPN225 | Yahoo ^N225 |
+| AUS200 | Indices | AUS200.cash | 1:15 | cTrader AUS200 | Yahoo ^AXJO |
+| HK50 | Indices | HK50.cash | 1:10 | cTrader HK50 | Yahoo ^HSI |
+| GOLD | Metals | XAUUSD | 1:9 | cTrader XAUUSD | Twelve Data |
+| SILVER | Metals | XAGUSD | 1:9 | cTrader XAGUSD | Twelve Data |
+| OIL | Commodities | USOIL.cash | 1:9 | cTrader WTOIL-PERP | Yahoo CL=F |
+| BRENT | Commodities | BRENTOIL.cash | 1:9 | cTrader BRENTOIL-PERP | Yahoo BZ=F |
+| NATGAS | Commodities | NatGas | 1:9 | cTrader NatGas | Yahoo NG=F |
 
 ---
 
@@ -149,7 +167,7 @@ Yahoo Finance returns market-hours-only candles for US indices. The overnight ga
 |---|---|---|
 | Yahoo returns null candle values for some JPY pairs | Mitigated | All OHLC None-checks in yahoo_fetcher.py; falls back to Twelve Data |
 | US index data is market-hours only (phantom FVGs) | Fixed | Session gap filter in structure.py |
-| cTrader fetcher not implemented | Planned Phase 2 | ctrader_fetcher.py is a documented placeholder |
+| OIL/BRENT cTrader demo limited | Known | Falls back to Yahoo — WTOIL-PERP and BRENTOIL-PERP have limited demo history |
 | Crypto OKX data marked Tier 2 | Known | OKX public endpoint doesn't include taker delta — need authenticated WebSocket |
 | COT data for DAX/UK100 unavailable | By design | CFTC only covers US markets |
 
@@ -160,8 +178,8 @@ Yahoo Finance returns market-hours-only candles for US indices. The overnight ga
 | Phase | What's Built | Status |
 |---|---|---|
 | Phase 1 | Data pipeline, FVG/OB/liq detection, FTMO risk context, all instruments | ✅ Complete |
-| Phase 2 | cTrader Remote MCP data source (24/7 CFD data, exact broker prices) + trade execution | 🔜 Pending cTrader credentials |
-| Phase 3 | cTrader DOM/Level 2 heatmap (Local Agent only — indices & commodities) | 🔜 After Phase 2 |
+| Phase 2 | cTrader Remote MCP data source (24/7 CFD prices), expanded to 32 instruments | ✅ Complete |
+| Phase 3 | cTrader DOM/Level 2 heatmap (Local Agent only — indices & commodities) | 🔜 After live account token |
 
 ---
 
