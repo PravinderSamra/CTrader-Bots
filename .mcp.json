@@ -54,6 +54,14 @@
       "args": ["-y", "tavily-mcp"],
       "env": { "TAVILY_API_KEY": "YOUR_TAVILY_API_KEY" },
       "_notes": "AI-optimised web search with financial focus. Free tier: 1000 searches/month. Sign up at https://app.tavily.com"
+    },
+    "ctrader": {
+      "type": "http",
+      "url": "https://mcp.ctrader.com/trading/mcp",
+      "headers": {
+        "Authorization": "Bearer eyJwbGFudCI6InBlcHBlcnN0b25ldWsiLCJlbnZpcm9ubWVudCI6ImRlbW8iLCJ0b2tlbiI6IkliMEJzUERzSXBpZUJnTEtUWTluRjRpMEJ6a3R4V0pvSm1ZNVB3a1lIb2c9In0"
+      },
+      "_notes": "cTrader Remote MCP — Pepperstone DEMO account. Provides live prices, OHLCV candles, account data. Replace token with LIVE account token for FTMO. DEMO env: pepperstoneuk/demo"
     }
   }
 }
