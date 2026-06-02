@@ -12,8 +12,8 @@ Token priority:
   2. Demo account fallback (read-only market data, no trading)
 """
 
-import urllib.request
-import urllib.error
+import http.client
+import ssl
 import json
 import os
 from datetime import datetime, timezone, timedelta
@@ -128,42 +128,69 @@ _PRICE_RANGES: dict[str, tuple[float, float]] = {
 # Runtime pip-digits cache — populated on first successful candle fetch
 _pip_digits_cache: dict[str, int] = {}
 
-# ── Session State ─────────────────────────────────────────────────────────────
+# ── Connection + Session State ─────────────────────────────────────────────────
+# Persistent HTTPS connection for session affinity (load-balanced MCP server
+# routes to the same instance when keep-alive is used; Connection:close causes 404s).
+_conn: Optional[http.client.HTTPSConnection] = None
 _session_id: Optional[str] = None
 _symbol_id_cache: dict[str, int] = {}   # ctrader_symbol_name → symbolId
 _symbols_loaded: bool = False
 
 
+def _get_conn() -> http.client.HTTPSConnection:
+    """Return (or create) the persistent HTTPS connection."""
+    global _conn
+    if _conn is None:
+        _conn = http.client.HTTPSConnection(
+            "mcp.ctrader.com",
+            context=ssl.create_default_context(),
+            timeout=20,
+        )
+    return _conn
+
+
 def _post(payload: dict, session_id: Optional[str] = None) -> tuple[Optional[dict], Optional[str]]:
-    """POST a JSON-RPC message to the MCP endpoint. Returns (parsed_data, session_id)."""
-    body = json.dumps(payload).encode()
+    """POST a JSON-RPC message over the persistent connection. Returns (parsed_data, session_id)."""
+    global _conn, _session_id
+    body = json.dumps(payload)
     headers = {
-        "Authorization":  f"Bearer {_TOKEN}",
-        "Accept":         "application/json, text/event-stream",
-        "Content-Type":   "application/json",
-        # Connection: close required — Python's HTTP keep-alive reuses the SSE
-        # connection which makes the server reject subsequent requests as orphaned.
-        "Connection":     "close",
+        "Authorization": f"Bearer {_TOKEN}",
+        "Accept":        "application/json, text/event-stream",
+        "Content-Type":  "application/json",
     }
     if session_id:
         headers["Mcp-Session-Id"] = session_id
 
-    req = urllib.request.Request(_MCP_URL, data=body, headers=headers, method="POST")
-    try:
-        with urllib.request.urlopen(req, timeout=20) as resp:
-            new_sid = (resp.headers.get("Mcp-Session-Id")
-                       or resp.headers.get("mcp-session-id")
+    for attempt in range(2):
+        try:
+            conn = _get_conn()
+            conn.request("POST", "/trading/mcp", body, headers)
+            resp = conn.getresponse()
+            new_sid = (resp.getheader("Mcp-Session-Id")
+                       or resp.getheader("mcp-session-id")
                        or session_id)
             raw = resp.read().decode()
+
+            if resp.status == 404:
+                return {"_session_expired": True}, None
+
             for line in raw.split("\n"):
                 if line.startswith("data: "):
                     return json.loads(line[6:]), new_sid
-    except urllib.error.HTTPError as e:
-        if e.code == 404:
-            # Session not found — signal caller to reinitialise
-            return {"_session_expired": True}, None
-    except Exception:
-        pass
+
+            return None, session_id
+
+        except Exception:
+            # Connection dropped — reset and retry once on a fresh connection
+            try:
+                if _conn:
+                    _conn.close()
+            except Exception:
+                pass
+            _conn = None
+            if attempt == 1:
+                return None, session_id
+
     return None, session_id
 
 
@@ -186,6 +213,8 @@ def _ensure_session() -> bool:
 
     if data and "result" in data and sid:
         _session_id = sid
+        # Complete the MCP handshake
+        _post({"jsonrpc": "2.0", "method": "notifications/initialized", "params": {}}, sid)
         return True
     return False
 
@@ -206,11 +235,10 @@ def _call_tool(tool: str, arguments: dict) -> Optional[dict]:
 
     data, new_sid = _post(payload, _session_id)
 
-    # Expired session (404 or JSON error) — reset and retry once
+    # Expired or lost session — reset and retry once
     expired = (
         (data and data.get("_session_expired")) or
-        (data and data.get("error", {}).get("message", "").startswith("No valid session")) or
-        (data is None)
+        (data and "error" in data and "session" in data["error"].get("message", "").lower())
     )
     if expired:
         _session_id = None
@@ -233,8 +261,16 @@ def _call_tool(tool: str, arguments: dict) -> Optional[dict]:
     return None
 
 
+def _strip_suffix(name: str) -> str:
+    """Remove broker/account suffixes for dict lookups. US30_SB -> US30, XAUUSD-F -> XAUUSD."""
+    for suffix in ("_SBE", "_SB", "-F_SB", "-F"):
+        if name.endswith(suffix):
+            return name[: -len(suffix)]
+    return name
+
+
 def _load_symbols() -> None:
-    """Fetch and cache the symbol list (called once per session)."""
+    """Fetch and cache ENABLED symbols (called once per session)."""
     global _symbols_loaded
     if _symbols_loaded:
         return
@@ -244,37 +280,44 @@ def _load_symbols() -> None:
         return
 
     for sym in result.get("symbols", []):
+        if not sym.get("enabled", False):
+            continue   # only cache tradeable symbols
         raw_name = sym.get("name") or sym.get("symbolName") or ""
         sid = sym.get("symbolId")
         if raw_name and sid is not None:
-            # Store both the exact name and an uppercase stripped version for matching
-            _symbol_id_cache[raw_name] = int(sid)
-            _symbol_id_cache[raw_name.upper().replace(" ", "")] = int(sid)
+            sid_int = int(sid)
+            # Exact name
+            _symbol_id_cache[raw_name.upper()] = sid_int
+            # Stripped name (US30_SB → US30) for broker-agnostic lookups
+            base = _strip_suffix(raw_name.upper())
+            if base != raw_name.upper():
+                _symbol_id_cache.setdefault(base, sid_int)
 
     _symbols_loaded = True
 
 
 def _get_symbol_id(ctrader_name: str) -> Optional[int]:
     """
-    Resolve a cTrader symbol name to its numeric symbolId.
-    Tries exact match first, then without .cash suffix, then partial match.
+    Resolve a cTrader symbol name to its numeric symbolId (enabled symbols only).
+    Tries exact match, then suffix-stripped, then partial match.
     """
     _load_symbols()
 
-    key = ctrader_name.upper().replace(" ", "")
+    key = ctrader_name.upper().replace(" ", "").split(".")[0]
 
-    # Exact
+    # Exact match
     if key in _symbol_id_cache:
         return _symbol_id_cache[key]
 
-    # Strip .cash/.futures suffix
-    base = key.split(".")[0]
+    # Suffix-stripped (handles _SB variants pre-populated by _load_symbols)
+    base = _strip_suffix(key)
     if base in _symbol_id_cache:
         return _symbol_id_cache[base]
 
-    # Partial match — find any symbol whose name starts with or contains base
+    # Partial match — find any enabled symbol whose base name starts with key
     for name, sid in _symbol_id_cache.items():
-        if name.startswith(base) or base in name:
+        name_base = _strip_suffix(name)
+        if name_base == base or name_base.startswith(base) or base.startswith(name_base):
             return sid
 
     return None
@@ -286,7 +329,7 @@ def _pip_digits(ctrader_name: str, raw_sample: Optional[float] = None) -> int:
     If raw_sample is provided, auto-detects the correct divisor using _PRICE_RANGES.
     Falls back to _PIP_DIGITS_HINT, then 5.
     """
-    key = ctrader_name.upper().split(".")[0]
+    key = _strip_suffix(ctrader_name.upper().split(".")[0])
 
     # Use cached value if already detected
     if key in _pip_digits_cache:
@@ -422,7 +465,7 @@ def fetch_current_price(symbol: str) -> Optional[float]:
     if symbol_id is None:
         return None
 
-    result = _call_tool("get_spot_prices", {"symbolIds": [symbol_id]})
+    result = _call_tool("get_spot_prices", {"symbolId": [symbol_id]})
     if not result:
         return None
 
