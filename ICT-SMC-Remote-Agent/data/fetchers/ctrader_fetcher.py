@@ -105,7 +105,7 @@ _PRICE_RANGES: dict[str, tuple[float, float]] = {
     "EURCAD": (1.30, 1.90),   "GBPCAD": (1.65, 2.20),
     "GBPNZD": (1.80, 2.50),   "EURAUD": (1.50, 1.80),
     # Metals
-    "XAUUSD": (1_400, 6_000), "XAGUSD": (15, 60),
+    "XAUUSD": (1_400, 8_000), "XAGUSD": (15, 200),
     "XPTUSD": (700, 2_000),   "XPDUSD": (700, 3_000),
     # US indices
     "US500":  (3_000, 12_000), "NAS100": (8_000, 30_000),
@@ -113,9 +113,9 @@ _PRICE_RANGES: dict[str, tuple[float, float]] = {
     # European indices
     "GER40":  (12_000, 30_000), "UK100":  (6_000, 13_000),
     "FRA40":  (5_000, 12_000),  "EUSTX50": (3_000, 8_000),
-    # Asia-Pacific indices
-    "JPN225": (20_000, 50_000), "AUS200": (5_000, 10_000),
-    "HK50":   (13_000, 30_000),
+    # Asia-Pacific indices (JPN225 range extended — Nikkei at 65k+ in 2026)
+    "JPN225": (15_000, 100_000), "AUS200": (5_000, 12_000),
+    "HK50":   (13_000, 35_000),
     # Commodities
     "USOIL":  (30, 130),      "UKOIL":  (30, 130),
     "WTOIL-PERP": (30, 130),  "BRENTOIL-PERP": (30, 140),
