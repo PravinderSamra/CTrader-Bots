@@ -17,29 +17,62 @@ You are a professional scalping analyst with access to live market data via MCP 
 
 ## Broker Instrument Reference
 
-Spread betting and CFD brokers use different instrument names from exchange tickers. Pepperstone (and most UK CFD/spread bet brokers) use the following cash index names. When the winning trade is on an index, look up the broker instrument name here and include it in the trade card.
+All tradeable symbols on the Pepperstone UK Spread Betting account end in `_SB`. The `cTrader symbolId` column is required for all cTrader MCP calls (`get_spot_prices`, `create_order` etc.). SymbolIds are confirmed against the live demo account — do not guess them.
 
 ### Pepperstone Cash Indices
 
-| Index | Pepperstone Name | Pepperstone TradingView Locator | Market arg |
-|---|---|---|---|
-| S&P 500 | **US 500** | `PEPPERSTONE:US500` | `america` |
-| Nasdaq 100 | **US Tech 100** | `PEPPERSTONE:NAS100` | `america` |
-| Dow Jones 30 | **Wall Street** | `PEPPERSTONE:US30` | `america` |
-| FTSE 100 | **UK 100** | `PEPPERSTONE:UK100` | `uk` |
-| DAX 40 | **Germany 40** | `PEPPERSTONE:GER40` | `germany` |
-| CAC 40 | **France 40** | `PEPPERSTONE:FRA40` | `france` |
-| Euro Stoxx 50 | **Euro 50** | `PEPPERSTONE:EU50` | `germany` |
-| Nikkei 225 | **Japan 225** | `PEPPERSTONE:JPN225` | `japan` |
-| ASX 200 | **AUS 200** | `PEPPERSTONE:AUS200` | `australia` |
+| Index | Pepperstone Name | cTrader Symbol | cTrader symbolId | TradingView Locator |
+|---|---|---|---|---|
+| S&P 500 | **US 500** | `US500_SB` | 220 | `PEPPERSTONE:US500` |
+| Nasdaq 100 | **US Tech 100** | `NAS100_SB` | 205 | `PEPPERSTONE:NAS100` |
+| Dow Jones 30 | **Wall Street** | `US30_SB` | 219 | `PEPPERSTONE:US30` |
+| FTSE 100 | **UK 100** | `UK100_SB` | 217 | `PEPPERSTONE:UK100` |
+| DAX 40 | **Germany 40** | `GER40_SB` | 200 | `PEPPERSTONE:GER40` |
+| CAC 40 | **France 40** | `FRA40_SB` | 188 | `PEPPERSTONE:FRA40` |
+| Euro Stoxx 50 | **Euro 50** | `EUSTX50_SB` | 187 | `PEPPERSTONE:EU50` |
+| Nikkei 225 | **Japan 225** | `JPN225_SB` | 203 | `PEPPERSTONE:JPN225` |
+| ASX 200 | **AUS 200** | `AUS200_SB` | 159 | `PEPPERSTONE:AUS200` |
+| Hang Seng | **HK 50** | `HK50_SB` | 201 | — |
 
-**Important — cash vs futures pricing**: Pepperstone cash indices are priced at "fair value" (spot price with carry adjustment). Their price will be close but not identical to the underlying exchange price or ETF. Always use the Pepperstone TradingView locator when available to analyse the exact instrument the user will trade — do not use SPY for a spread bet on US 500.
+**Important — cash vs futures pricing**: Pepperstone cash indices are priced at "fair value" (spot price with carry adjustment). Always use the Pepperstone TradingView locator — do not use SPY or ETF proxies for a spread bet on US 500.
 
-**Overnight financing**: Cash index positions held past the daily rollover incur a financing charge (~SOFR/SONIA + spread). For scalping (intraday) this is irrelevant. For multi-day holds, note it in the trade card.
+**Overnight financing**: Cash index positions held past daily rollover incur financing (~SOFR/SONIA + spread). Irrelevant for scalping; note in trade card for multi-day holds.
 
-### Forex and Stocks
+### Forex Pairs
 
-Forex pairs (EUR/USD, GBP/JPY etc.) and individual stocks use the same ticker names across both broker account types — no translation needed.
+| Pair | cTrader Symbol | cTrader symbolId |
+|---|---|---|
+| EUR/USD | `EURUSD_SB` | 185 |
+| GBP/USD | `GBPUSD_SB` | 199 |
+| USD/JPY | `USDJPY_SB` | 226 |
+| USD/CHF | `USDCHF_SB` | 222 |
+| USD/CAD | `USDCAD_SB` | 221 |
+| AUD/USD | `AUDUSD_SB` | 158 |
+| NZD/USD | `NZDUSD_SB` | 211 |
+| GBP/JPY | `GBPJPY_SB` | 192 |
+| EUR/JPY | `EURJPY_SB` | 177 |
+| AUD/JPY | `AUDJPY_SB` | 155 |
+| EUR/GBP | `EURGBP_SB` | 175 |
+| GBP/AUD | `GBPAUD_SB` | 189 |
+| EUR/CAD | `EURCAD_SB` | 172 |
+| GBP/CAD | `GBPCAD_SB` | 190 |
+| EUR/NZD | `EURNZD_SB` | 179 |
+
+Forex pair names are otherwise the same across broker platforms — no translation needed for the analysis step.
+
+### Commodities
+
+| Instrument | cTrader Symbol | cTrader symbolId |
+|---|---|---|
+| Gold | `XAUUSD_SB` | 241 |
+| Silver | `XAGUSD_SB` | 238 |
+| WTI Crude Oil | `Crude_SB` | 252 |
+| Brent Crude Oil | `Brent_SB` | 253 |
+| Natural Gas | `NatGas_SB` | 254 |
+
+> **Note — Crypto**: BTC, ETH, SOL and other crypto are **not available** on the Pepperstone UK Spread Betting account. Crypto setups are analysed via TradingView and CoinGecko only and cannot be executed via cTrader MCP.
+
+> **Note — Stocks**: Individual equities (NASDAQ, NYSE, LSE) are not on this account type. Stock results inform context but cannot be executed here.
 
 ---
 
@@ -50,6 +83,7 @@ Verify all are active with `claude mcp list` before running.
 | Server | Markets | What It Provides |
 |--------|---------|-----------------|
 | `tradingview-mcp` | All | Core screener — BB, RSI, MACD scans, full technical analysis across forex, crypto, stocks, indices |
+| `ctrader` | Forex, Indices, Commodities | Pepperstone broker prices — live bid/ask, OHLCV candles, account balance, open positions, and trade execution. All symbols end in `_SB`. |
 | `newsmcp` | All | Real-time news and macro event check |
 | `massive` | Stocks, Forex, Crypto | Real-time OHLCV, tick data, volume — required for volume spike signal on stocks |
 | `alpha-vantage` | Stocks | Earnings calendar — required for earnings clearance check |
@@ -186,6 +220,29 @@ Use the Pepperstone index locator for the stock's home market to check EMA50 reg
 
 Record: index price above EMA50 → bullish regime (+1 for longs). Below EMA50 → bearish regime (+1 for shorts).
 
+**For forex, index, and commodity candidates — verify live broker price and spread via cTrader:**
+
+For every forex/index/commodity candidate that survives to this step, pull the live Pepperstone bid/ask using the `symbolId` from the Broker Instrument Reference table. Run these in parallel alongside the tradingview-mcp technical pulls.
+
+```
+mcp__ctrader__get_spot_prices(symbolId=[symbolId from reference table])
+```
+
+Raw prices from `get_spot_prices` are in pipettes. Convert to display price:
+
+| Instrument type | Divide raw by |
+|---|---|
+| All forex pairs | 100,000 |
+| All indices (US500, UK100, GER40 etc.) | 100,000 |
+| Gold (XAUUSD), Silver (XAGUSD) | 100,000 |
+| Crude Oil, Brent | 100,000 |
+| Natural Gas | 10,000 |
+
+From the converted bid/ask:
+- **Real spread check**: `(ask − bid) / mid × 100` — **disqualify if > 0.1%**. This replaces estimated spread with your actual Pepperstone broker spread.
+- **Entry zone**: use `(bid + ask) / 2` as the live mid-price for the trade card. This matches exactly what you see on your cTrader chart.
+- If `get_spot_prices` is unavailable, fall back to the TradingView price and flag it on the trade card.
+
 ---
 
 ### Step 4 — Confluence Scoring
@@ -270,9 +327,14 @@ Three modes depending on account type. Detect from invocation modifier (`type=sp
 Risk amount (£)    = account_balance × risk_pct
 Stop distance      = |entry − stop_loss| in index points / pips
 Stake per point    = Risk amount / Stop distance
+cTrader volume     = max(100, round(Stake per point) × 100)
+
+Each 100 units of cTrader volume = £1 per point stake.
+Minimum volume: 100. Step size: 100 (always a multiple of 100).
 
 Example: £10,000 account, 1% risk, 50-point stop on US 500
-→ Risk = £100  →  Stake = £100 / 50 = £2 per point
+→ Risk = £100  →  Stake = £2/point  →  cTrader volume = 200
+→ Actual risk check: £2 × 50pts = £100 ✓
 ```
 
 **CFD** (`type=cfd`) — number of contracts:
@@ -332,6 +394,45 @@ Analysis notes:
 Data sources   : [MCP servers used]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
+
+---
+
+### Step 8 — Trade Execution (optional)
+
+Only runs when the invocation includes `execute=true` **or** the user explicitly confirms after reading the trade card. Never execute automatically without one of those two conditions.
+
+**Availability**: Only for instruments with a confirmed `symbolId` in the Broker Instrument Reference table (forex pairs, indices, commodities). Not available for crypto or stocks.
+
+**Calculate cTrader volume:**
+```
+stake    = risk_gbp / |entry_price − stop_loss|
+volume   = max(100, round(stake) × 100)
+```
+
+**Place the order:**
+```
+mcp__ctrader__create_order(
+  symbolId   = [from Broker Instrument Reference table],
+  orderType  = "LIMIT",
+  tradeSide  = "BUY"   ← long setups
+               "SELL"  ← short setups,
+  volume     = [calculated above],
+  limitPrice = [entry zone midpoint],
+  stopLoss   = [stop loss price],
+  takeProfit = [Target 1 price],
+  label      = "TRADE-PICKER"
+)
+```
+
+**On success** — response will contain `executionType: "ORDER_ACCEPTED"`. Report to user:
+- Order ID and Position ID
+- Filled / pending price
+- Volume placed and stake per point (volume ÷ 100 = £/point)
+- Actual risk: `(volume / 100) × stop_distance`
+
+**On failure** — if `symbolId` returns a minimum volume of 999999999999, the symbol is disabled on the account. Do not retry — inform the user the instrument is not tradeable on this account type.
+
+**After placing**, call `mcp__ctrader__get_positions({})` and show the user their current open positions so they can confirm the order appears correctly on their platform.
 
 ---
 
@@ -481,9 +582,10 @@ curl -s -X POST \
 | `/trade-picker stocks eu` | German and French stocks only |
 | `/trade-picker account=10000` | Include position sizing at 1% risk |
 | `/trade-picker account=10000 risk=2%` | Include position sizing at 2% risk |
-| `/trade-picker account=10000 type=spreadbet` | Spread bet sizing — outputs £/point stake |
+| `/trade-picker account=10000 type=spreadbet` | Spread bet sizing — outputs £/point stake and cTrader volume |
 | `/trade-picker account=10000 type=cfd` | CFD sizing — outputs number of contracts |
 | `/trade-picker account=10000 type=spreadbet risk=2%` | Spread bet with custom risk % |
+| `/trade-picker account=10000 type=spreadbet execute=true` | Full pipeline + place the order on Pepperstone automatically after trade card |
 
 **Default behaviour when no type is specified**: the skill will ask which account type to size for before outputting the trade card.
 

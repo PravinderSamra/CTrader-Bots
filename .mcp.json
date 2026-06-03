@@ -19,6 +19,14 @@
       "env": { "MASSIVE_API_KEY": "YOUR_MASSIVE_API_KEY" },
       "_notes": "Massive.com (formerly Polygon.io) — real-time forex/crypto/stocks OHLCV, tick data, 35+ tools. Get key at https://massive.com"
     },
+    "ctrader": {
+      "type": "http",
+      "url": "https://mcp.ctrader.com/trading/mcp",
+      "headers": {
+        "Authorization": "Bearer eyJwbGFudCI6InBlcHBlcnN0b25ldWsiLCJlbnZpcm9ubWVudCI6ImRlbW8iLCJ0b2tlbiI6IkliMEJzUERzSXBpZUJnTEtUWTluRjRpMEJ6a3R4V0pvSm1ZNVB3a1lIb2c9In0"
+      },
+      "_notes": "cTrader Remote MCP — Pepperstone UK GBP Spread Betting (demo). Tools: get_trendbars (OHLCV), get_spot_prices (live bid/ask), get_balance, get_positions, create_order, cancel_order, close_position, get_symbols. All tradeable symbols end in _SB. For live trading replace the bearer token with a fresh token from your Pepperstone cTrader account."
+    },
     "coingecko": {
       "type": "http",
       "url": "https://mcp.api.coingecko.com/mcp",

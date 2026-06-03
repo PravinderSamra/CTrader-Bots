@@ -10,10 +10,11 @@ The Trade Picker runs as a Claude Code Agent Skill (`/trade-picker`). It scans a
 
 1. **Parallel broad scan** — Screens forex, crypto, US stocks, and indices simultaneously for BB extremes, RSI oversold/overbought, and MACD crossovers
 2. **Event filters** — News check for all instruments; earnings clearance check for stocks (no earnings within 5 trading days)
-3. **Deep technical pull** — Full indicator suite on shortlisted candidates; volume data for stocks/indices
+3. **Deep technical pull** — Full indicator suite on shortlisted candidates; volume data for stocks/indices; live broker bid/ask and real spread check via cTrader MCP for forex/index candidates
 4. **Confluence scoring** — Market-aware scoring (max 10 for forex/crypto, max 12 for stocks, max 11 for indices)
 5. **Cross-market normalisation** — All scores converted to a common /10 scale so the best setup wins regardless of instrument type
-6. **Trade card output** — Direction, entry zone, stop, targets, R:R, and confidence score
+6. **Trade card output** — Direction, entry zone (broker-exact price), stop, targets, R:R, and confidence score
+7. **Trade execution** (optional) — Place the order directly on Pepperstone via cTrader MCP with automatic spread bet position sizing
 
 ---
 
@@ -22,6 +23,7 @@ The Trade Picker runs as a Claude Code Agent Skill (`/trade-picker`). It scans a
 | Server | Type | Markets | What It Provides | Key Requirement |
 |--------|------|---------|-----------------|-----------------|
 | `tradingview-mcp` | stdio (uvx) | All | Live screener — BB/RSI/MACD scans, full technical analysis across forex, crypto, stocks, indices | None — free |
+| `ctrader` | HTTP | Forex, Indices, Commodities | Pepperstone broker-exact prices — live bid/ask, OHLCV candles, account balance, open positions, and direct trade execution. Symbols use `_SB` suffix. | Bearer token from Pepperstone cTrader account |
 | `massive` | stdio | Stocks, Forex, Crypto | Real-time OHLCV, tick data, volume — used for volume spike signal on stocks | API key at massive.com |
 | `alpha-vantage` | stdio (uvx) | Stocks | Earnings calendar, historical indicators, fundamentals | Free API key at alphavantage.co |
 | `newsmcp` | stdio (npx) | All | Real-time news from hundreds of sources — macro event filter | None — free |
@@ -35,6 +37,12 @@ The Trade Picker runs as a Claude Code Agent Skill (`/trade-picker`). It scans a
 All servers are defined in `/.mcp.json` at the project root. To activate:
 
 ```bash
+# cTrader Remote MCP — Pepperstone Spread Betting (broker-exact prices + trade execution)
+# The demo token is pre-configured in .mcp.json. For live trading:
+# 1. Log in to your Pepperstone cTrader account
+# 2. Navigate to Settings → API → Generate MCP Token
+# 3. Replace the bearer token in .mcp.json headers.Authorization
+
 # Massive (formerly Polygon.io) — required for stock volume signals
 claude mcp add massive -e MASSIVE_API_KEY=your_key -- mcp_massive
 
