@@ -1,0 +1,218 @@
+"""
+Configuration — ICT/SMC Remote Agent
+
+FTMO Swing Challenge parameters and instrument definitions.
+Update FTMO_ACCOUNT_SIZE and FTMO_RISK_PER_TRADE if your challenge details change.
+"""
+
+# ── FTMO Challenge Configuration ──────────────────────────────────────────────
+
+FTMO_ACCOUNT_SIZE   = 200_000   # USD — your funded account size
+FTMO_RISK_PER_TRADE = 450       # USD — fixed risk per setup
+
+FTMO_DAILY_LOSS_LIMIT   = FTMO_ACCOUNT_SIZE * 0.05   # $10,000 — HARD STOP if hit
+FTMO_TOTAL_LOSS_LIMIT   = FTMO_ACCOUNT_SIZE * 0.10   # $20,000 — account terminated
+FTMO_PROFIT_TARGET_P1   = FTMO_ACCOUNT_SIZE * 0.10   # $20,000 — Phase 1 target
+FTMO_PROFIT_TARGET_P2   = FTMO_ACCOUNT_SIZE * 0.05   # $10,000 — Phase 2 target
+FTMO_MIN_TRADING_DAYS   = 4     # Per phase (not consecutive)
+
+# FTMO Swing leverage by asset class
+FTMO_LEVERAGE = {
+    "forex":        30,
+    "indices":      15,
+    "metals":        9,
+    "commodities":   9,
+    "crypto":        1,   # 1:1 — no leverage
+    "stocks":        1,
+}
+
+# Position size guidance (USD pip value at 1 standard lot)
+# Use: lot_size = FTMO_RISK_PER_TRADE / (stop_pips × pip_value)
+PIP_VALUE_PER_LOT = {
+    "EURUSD":  10.0,   # $10 per pip per lot
+    "GBPUSD":  10.0,
+    "USDJPY":   8.0,   # approx — varies with JPY rate
+    "GBPJPY":   8.0,
+    "SPX":     25.0,   # $25 per index point per contract
+    "NDX":     20.0,
+    "DAX":     25.0,
+    "US30":    25.0,
+    "UK100":   12.0,
+    "GOLD":    10.0,   # $10 per $1 move per lot (100 oz)
+    "OIL":     10.0,
+}
+
+# ── Instrument Definitions ────────────────────────────────────────────────────
+# Each entry: (display_name, asset_class, primary_source, primary_symbol, fallback_source, fallback_symbol, cot_key)
+
+INSTRUMENTS = [
+    # Crypto — OKX (no FTMO leverage, 1:1)
+    {
+        "name": "BTCUSDT",
+        "asset_class": "crypto",
+        "source": "okx",
+        "symbol": "BTC-USDT",
+        "cot_key": None,
+        "ftmo_leverage": 1,
+        "ftmo_symbol": "BTCUSD",
+        "note": "FTMO: 1:1 leverage — size positions accordingly",
+    },
+    {
+        "name": "ETHUSDT",
+        "asset_class": "crypto",
+        "source": "okx",
+        "symbol": "ETH-USDT",
+        "cot_key": None,
+        "ftmo_leverage": 1,
+        "ftmo_symbol": "ETHUSD",
+        "note": "FTMO: 1:1 leverage — size positions accordingly",
+    },
+    {
+        "name": "SOLUSDT",
+        "asset_class": "crypto",
+        "source": "okx",
+        "symbol": "SOL-USDT",
+        "cot_key": None,
+        "ftmo_leverage": 1,
+        "ftmo_symbol": "SOLUSD",
+        "note": "FTMO: 1:1 leverage — size positions accordingly",
+    },
+
+    # Forex — Twelve Data (spot prices, matches broker feed)
+    {
+        "name": "EURUSD",
+        "asset_class": "forex",
+        "source": "twelve_data",
+        "symbol": "EUR/USD",
+        "fallback_source": "yahoo",
+        "fallback_symbol": "EURUSD=X",
+        "cot_key": "EURUSD",
+        "ftmo_leverage": 30,
+        "ftmo_symbol": "EURUSD",
+    },
+    {
+        "name": "GBPUSD",
+        "asset_class": "forex",
+        "source": "twelve_data",
+        "symbol": "GBP/USD",
+        "fallback_source": "yahoo",
+        "fallback_symbol": "GBPUSD=X",
+        "cot_key": "GBPUSD",
+        "ftmo_leverage": 30,
+        "ftmo_symbol": "GBPUSD",
+    },
+    {
+        "name": "USDJPY",
+        "asset_class": "forex",
+        "source": "twelve_data",
+        "symbol": "USD/JPY",
+        "fallback_source": "yahoo",
+        "fallback_symbol": "JPY=X",
+        "cot_key": "USDJPY",
+        "ftmo_leverage": 30,
+        "ftmo_symbol": "USDJPY",
+    },
+    {
+        "name": "GBPJPY",
+        "asset_class": "forex",
+        "source": "twelve_data",
+        "symbol": "GBP/JPY",
+        "fallback_source": "yahoo",
+        "fallback_symbol": "GBPJPY=X",
+        "cot_key": None,
+        "ftmo_leverage": 30,
+        "ftmo_symbol": "GBPJPY",
+    },
+
+    # Indices — Yahoo Finance (market-hours data; session gap filter applied)
+    {
+        "name": "SPX",
+        "asset_class": "indices",
+        "source": "yahoo",
+        "symbol": "^GSPC",
+        "cot_key": "SPX",
+        "ftmo_leverage": 15,
+        "ftmo_symbol": "US500.cash",
+        "note": "Yahoo market-hours only. Session gap filter prevents phantom FVGs.",
+    },
+    {
+        "name": "NDX",
+        "asset_class": "indices",
+        "source": "yahoo",
+        "symbol": "^NDX",
+        "cot_key": "NDX",
+        "ftmo_leverage": 15,
+        "ftmo_symbol": "US100.cash",
+        "note": "Yahoo market-hours only. Session gap filter prevents phantom FVGs.",
+    },
+    {
+        "name": "US30",
+        "asset_class": "indices",
+        "source": "yahoo",
+        "symbol": "^DJI",
+        "cot_key": "US30",
+        "ftmo_leverage": 15,
+        "ftmo_symbol": "US30.cash",
+        "note": "Dow Jones Industrial Average. Yahoo market-hours only.",
+    },
+    {
+        "name": "DAX",
+        "asset_class": "indices",
+        "source": "yahoo",
+        "symbol": "^GDAXI",
+        "cot_key": None,
+        "ftmo_leverage": 15,
+        "ftmo_symbol": "GER40.cash",
+    },
+    {
+        "name": "UK100",
+        "asset_class": "indices",
+        "source": "yahoo",
+        "symbol": "^FTSE",
+        "cot_key": None,
+        "ftmo_leverage": 15,
+        "ftmo_symbol": "UK100.cash",
+        "note": "FTSE 100. London session primary instrument.",
+    },
+
+    # Commodities
+    {
+        "name": "GOLD",
+        "asset_class": "metals",
+        "source": "twelve_data",
+        "symbol": "XAU/USD",
+        "fallback_source": "yahoo",
+        "fallback_symbol": "GC=F",
+        "cot_key": "GOLD",
+        "ftmo_leverage": 9,
+        "ftmo_symbol": "XAUUSD",
+        "note": "Twelve Data returns spot XAU/USD (matches broker). Yahoo GC=F is futures.",
+    },
+    {
+        "name": "OIL",
+        "asset_class": "commodities",
+        "source": "yahoo",
+        "symbol": "CL=F",
+        "cot_key": "OIL",
+        "ftmo_leverage": 9,
+        "ftmo_symbol": "USOIL.cash",
+    },
+]
+
+# ── Scan Timeframes ───────────────────────────────────────────────────────────
+# Primary scan timeframe — 1H for ICT day trading setups
+PRIMARY_TF  = "1h"
+CONTEXT_TF  = "4h"    # Higher timeframe for trend/structure context
+DAILY_TF    = "1d"    # Daily for PDH/PDL and HTF bias
+
+CANDLE_LIMIT_PRIMARY  = 200   # 1H candles (~8 days)
+CANDLE_LIMIT_CONTEXT  = 96    # 4H candles (~16 days)
+CANDLE_LIMIT_DAILY    = 30    # Daily candles (~1 month)
+
+# ── Report Settings ───────────────────────────────────────────────────────────
+AGENT_VERSION = "Local"
+SKIP_GRADES   = {"SKIP"}              # FVG grades to filter from report
+MIN_FVG_GRADE = "C"                   # Minimum grade to show (C, B, A, A+)
+MAX_FVG_DISPLAY = 5                   # Max FVGs shown per symbol
+MAX_OB_DISPLAY  = 5                   # Max order blocks shown per symbol
+MAX_LIQ_DISPLAY = 5                   # Max liquidity pools per symbol
