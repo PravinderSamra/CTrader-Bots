@@ -331,31 +331,32 @@ Risk per trade defaults to **1% of account balance** unless overridden with `ris
 
 Three account-type modes. Detect from invocation modifier (`type=spreadbet`, `type=cfd`, or `type=direct`). Default for Pepperstone UK Spread Betting is `type=spreadbet`.
 
-**Spread Bet** (`type=spreadbet`) — stake in £/point:
+**Spread Bet** (`type=spreadbet`) — stake in £/pip:
 ```
 Risk amount (£)    = account_balance × risk_pct
 Stop distance      = |entry − stop_loss| in pips (forex) or points (indices)
-Stake per point    = Risk amount / Stop distance
-cTrader volume     = round_to_step(Stake per point × 100, volume_step)
+Stake per pip (£)  = Risk amount / Stop distance
+cTrader volume     = floor(Stake per pip × 10,000 / volume_step) × volume_step
 
-Each 100 units of cTrader volume = £1 per pip/point stake.
+Each 10,000 units of cTrader volume = £1/pip stake.
 ```
 
-**Volume step varies by instrument** — snap calculated volume to the nearest valid multiple:
+> **Verified empirically**: volume 1,000 = £0.10/pip on EURJPY_SB (Pepperstone demo, June 2026). The "100 units = £1/pip" figure seen in some docs is wrong for forex SB — use 10,000.
+
+**Volume step varies by instrument** — snap calculated volume *down* to the nearest valid multiple (never round up — do not exceed risk budget):
 
 | Instrument type | Volume step | Min volume |
 |---|---|---|
-| Forex majors (e.g. EURJPY_SB) | 500 | 500 |
+| Forex (e.g. EURJPY_SB) | 500 | 500 |
 | Indices (e.g. US500_SB) | 100 | 100 |
 | Commodities (e.g. XAUUSD_SB) | 100 | 100 |
 
-Round *down* to the nearest step (never up — do not exceed risk budget).
-
 ```
-Example: £48,300 account, 1% risk, 19-pip stop on EURJPY
-→ Risk = £483  →  Stake = £483 / 19 = £25.4/pip
-→ Raw volume = 2540  →  Snap to 500-step → volume = 2500
-→ Actual risk check: (2500/100) × 19 pips = £475 ✓
+Example: £48,300 account, 1% risk, 19.8-pip stop on EURJPY
+→ Risk = £483  →  Stake = £483 / 19.8 = £24.4/pip
+→ Raw volume = 24.4 × 10,000 = 244,000
+→ Snap down to step 500 → volume = 244,000  (already valid)
+→ Risk check: (244,000 / 10,000) × 19.8 pips = £483 ✓
 ```
 
 **For `amend_position`** (modifying SL/TP after fill): pass prices in **display format** (e.g. 185.630), not pipettes. The `create_order` relative fields use pipette offsets; `amend_position` uses display prices.
