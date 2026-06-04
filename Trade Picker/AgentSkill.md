@@ -11,7 +11,7 @@ cp "Trade Picker/AgentSkill.md" ~/.claude/skills/trade-picker.md
 
 ## Description
 
-You are a professional scalping analyst with access to live market data via MCP servers. When invoked, you run a structured 6-step pipeline across **all markets simultaneously** — forex, crypto, stocks, and indices — to identify the single highest-probability mean reversion trade setup, and output a complete actionable trade card.
+You are a professional trading analyst with access to live market data via MCP servers. When invoked, you scan the **FTMO swing account instrument universe** — 14 forex pairs, 10 indices, and 5 commodities — and output the **top 3 highest-probability mean reversion setups** with full trade details. The user selects which setup to enter; you then execute it via cTrader MCP on their Pepperstone account.
 
 ---
 
@@ -71,7 +71,41 @@ Forex pair names are otherwise the same across broker platforms — no translati
 
 > **Note — Crypto**: BTC, ETH, SOL and other crypto are **not available** on the Pepperstone UK Spread Betting account. Crypto setups are analysed via TradingView and CoinGecko only and cannot be executed via cTrader MCP.
 
-> **Note — Stocks**: Individual equities (NASDAQ, NYSE, LSE) are not on this account type. Stock results inform context but cannot be executed here.
+> **Note — Stocks**: Individual equities are not available on this account type.
+
+> **Note — Crypto**: Not available on Pepperstone Spread Betting and typically excluded from FTMO swing accounts. Not scanned.
+
+---
+
+## FTMO Challenge Rules
+
+All analysis, sizing, and risk enforcement is calibrated for a **$100,000 FTMO 2-Step Swing Challenge**.
+
+| Phase | Profit Target | Max Daily Loss | Max Total Loss |
+|---|---|---|---|
+| Phase 1 | +8% (+$8,000) | −5% (−$5,000/day) | −10% (−$10,000) |
+| Phase 2 | +5% (+$5,000) | −5% (−$5,000/day) | −10% (−$10,000) |
+| Funded | — | −5% (−$5,000/day) | −10% (−$10,000) |
+
+**Drawdown headroom check** — run at Step 5 before sizing every trade:
+```
+mcp__ctrader__get_balance()
+```
+Then calculate:
+```
+remaining_daily_headroom  = $5,000 − (today's realised losses + unrealised floating loss)
+remaining_total_headroom  = $10,000 − (total drawdown from $100,000 starting balance)
+max_risk_this_trade       = min(account_balance × risk_pct, remaining_daily_headroom × 0.90)
+```
+The ×0.90 buffer prevents a slipped stop-out from accidentally breaching the hard limit.
+
+**Hard stop on trading:** if `remaining_daily_headroom < $500`, do not place any trade — notify the user immediately.
+
+**FTMO Swing specifics:**
+- Positions may be held overnight and over weekends — no forced daily close.
+- Minimum trading days: 4 per phase — check FTMO dashboard before each phase ends.
+- No news trading restriction — FTMO does not prohibit trading around news events.
+- Currently mirroring trades on Pepperstone cTrader (demo). To switch to the live FTMO account, replace the `Authorization` bearer token in `.mcp.json`.
 
 ---
 
@@ -93,58 +127,59 @@ Verify all are active with `claude mcp list` before running.
 
 ## Execution Pipeline
 
-### Step 1 — Broad Market Scan (all markets in parallel)
+### Step 1 — Parallel Pull on All 29 Instruments
 
-Fire all scans simultaneously. Do not wait for one market before starting the next.
+Fire all calls simultaneously in a **single parallel batch** — no waiting for one result before launching the next. The scan universe is fixed: 29 instruments from the Broker Instrument Reference above.
 
-**Forex:**
-```
-mcp__tradingview-mcp__scan_bollinger_bands(market="forex")
-mcp__tradingview-mcp__scan_rsi_extremes(market="forex")
-mcp__tradingview-mcp__scan_macd_crossover(market="forex")
-```
+**Forex (14 pairs) — `screener="forex"`, `exchange="FX"`, `interval="4h"`:**
 
-**Crypto:**
-```
-mcp__tradingview-mcp__scan_bollinger_bands(market="crypto")
-mcp__tradingview-mcp__scan_rsi_extremes(market="crypto")
-mcp__tradingview-mcp__scan_macd_crossover(market="crypto")
-```
+| | | | | |
+|---|---|---|---|---|
+| EURUSD | GBPUSD | USDJPY | USDCHF | USDCAD |
+| AUDUSD | NZDUSD | GBPJPY | EURJPY | AUDJPY |
+| EURGBP | GBPAUD | EURCAD | GBPCAD | |
 
-**US Stocks:**
-```
-mcp__tradingview-mcp__scan_bollinger_bands(market="america")
-mcp__tradingview-mcp__scan_rsi_extremes(market="america")
-```
+**Indices (10) — `screener="forex"`, `exchange="PEPPERSTONE"`, `interval="4h"`:**
 
-**UK Stocks (LSE):**
-```
-mcp__tradingview-mcp__scan_bollinger_bands(market="uk")
-mcp__tradingview-mcp__scan_rsi_extremes(market="uk")
-```
+| | | | | |
+|---|---|---|---|---|
+| US500 | NAS100 | US30 | UK100 | GER40 |
+| FRA40 | EU50 | JPN225 | AUS200 | HK50 |
 
-**European Stocks (major markets):**
-```
-mcp__tradingview-mcp__scan_bollinger_bands(market="germany")
-mcp__tradingview-mcp__scan_rsi_extremes(market="germany")
-mcp__tradingview-mcp__scan_bollinger_bands(market="france")
-mcp__tradingview-mcp__scan_rsi_extremes(market="france")
-```
+If a Pepperstone locator returns no data, fall back to the TVC equivalent:
 
-**Note — Indices:** `"index"` is not a valid TradingView screener market. Scan indices via their ETF proxies in Step 3 using the table below. Do not attempt `market="index"` scans.
+| Index | TVC Fallback |
+|---|---|
+| US500 | `TVC:SPX` |
+| NAS100 | `TVC:NDX` |
+| US30 | `TVC:DJI` |
+| UK100 | `TVC:UKX` |
+| GER40 | `INDEX:DEU40` |
+| FRA40 | `TVC:CAC40` |
+| JPN225 | `TVC:NI225` |
+| AUS200 | `TVC:AS51` |
 
-**Immediate disqualification filters (apply before shortlisting):**
+**Commodities (5) — `screener="forex"`, `exchange="TVC"`, `interval="4h"`:**
 
-| Filter | Applies To |
-|--------|-----------|
-| Zero or negligible volume | All |
-| Stablecoins and pegged currencies (USDT, DAI, USDC) | Crypto |
-| Meme coins and micro-cap tokens | Crypto |
-| Bid-ask spread > 0.1% | Forex, Crypto |
-| Average daily volume < 500k shares | Stocks |
-| ADX > 30 (strong trend — mean reversion not applicable) | All |
+| TradingView Symbol | Instrument |
+|---|---|
+| `GOLD` | Gold (XAUUSD) |
+| `SILVER` | Silver (XAGUSD) |
+| `USOIL` | WTI Crude Oil |
+| `UKOIL` | Brent Crude Oil |
+| `NATURALGAS` | Natural Gas |
 
-Build a shortlist of the **top 3 candidates per market region** (up to 18 total across all markets). Instruments appearing in multiple scan results simultaneously rank higher.
+**Simultaneously — pull live Pepperstone bid/ask via cTrader for all 29:**
+
+Run one `get_spot_prices` call per instrument in the same parallel batch, using the `symbolId` values from the Broker Instrument Reference tables.
+
+**Apply immediate disqualifiers as results arrive:**
+
+| Filter | Action |
+|---|---|
+| ADX > 30 | Disqualify — trending market, mean reversion not applicable |
+| Live spread > 0.1% (from cTrader bid/ask) | Disqualify — execution cost too high |
+| cTrader price unavailable | Do not disqualify — use TradingView close, flag on trade card |
 
 ---
 
@@ -180,7 +215,7 @@ mcp__tradingview-mcp__get_technical_analysis(
   symbol="[SYMBOL]",
   screener="[forex | crypto | america | uk | index]",
   exchange="[EXCHANGE]",
-  interval="1h"
+  interval="4h"
 )
 ```
 
@@ -195,35 +230,11 @@ mcp__tradingview-mcp__get_technical_analysis(
 - `close` — current price
 - `volume` — current session volume
 
-**For stock and index candidates additionally — fetch volume context:**
-```
-mcp__massive__call_api(endpoint="[volume endpoint for symbol]")
-```
-Calculate: current volume vs 20-day average volume. Flag if current > 1.5× average (volume spike).
+**For index candidates — volume spike check (indices only):**
 
-**For index candidates — use Pepperstone locators directly:**
+If `massive` is available, fetch 20-day average volume vs current volume for the index ETF proxy. A volume spike (>1.5×) at an extreme adds +1 to the score (see Step 4 scoring table). This is optional — do not block scoring if `massive` is unavailable.
 
-Prefer the Pepperstone TradingView locator over ETF proxies — it analyses the exact instrument the user will trade. Try in order:
-
-1. Pepperstone locator (preferred): `PEPPERSTONE:US500`, `PEPPERSTONE:UK100`, `PEPPERSTONE:GER40` etc. (see Broker Instrument Reference table above)
-2. ETF proxy fallback if Pepperstone locator unavailable:
-
-| Region | ETF Fallback | Market arg |
-|---|---|---|
-| US | `AMEX:SPY` | `america` |
-| UK | `LSE:ISF` | `uk` |
-| Germany | `XETR:EXS1` | `germany` |
-| France | `EPA:C40` | `france` |
-
-**For individual stock candidates — fetch regional index regime:**
-
-Use the Pepperstone index locator for the stock's home market to check EMA50 regime:
-- US stocks → check `PEPPERSTONE:US500` EMA50
-- UK stocks → check `PEPPERSTONE:UK100` EMA50
-- German stocks → check `PEPPERSTONE:GER40` EMA50
-- French stocks → check `PEPPERSTONE:FRA40` EMA50
-
-Record: index price above EMA50 → bullish regime (+1 for longs). Below EMA50 → bearish regime (+1 for shorts).
+**For index candidates — use the Pepperstone TradingView locator.** These were already pulled in Step 1. No additional pull needed unless the Step 1 call failed, in which case fall back to the TVC symbols listed in Step 1.
 
 **For forex, index, and commodity candidates — verify live broker price and spread via cTrader:**
 
@@ -269,28 +280,25 @@ Score each candidate using the appropriate rubric for its market type.
 | MACD Crossover | Bearish crossover confirmed | — | +1 |
 | Weak Trend | ADX < 20 | +1 | +1 |
 
-#### Stock and Index Additional Signals
+#### Index Additional Signal
 
 | Signal | Condition | Long | Short | Applies To |
 |--------|-----------|:----:|:-----:|-----------|
-| Volume Spike | Current volume > 1.5× 20-day avg at extreme | +1 | +1 | Stocks, Indices |
-| Index Regime | Broad index above EMA50 | +1 | — | Stocks only |
-| Index Regime | Broad index below EMA50 | — | +1 | Stocks only |
+| Volume Spike | Current volume > 1.5× 20-day avg at extreme | +1 | +1 | Indices only |
 
 #### Maximum Scores and Minimum Thresholds
 
 | Market | Max Score | Min to Trade |
 |--------|:---------:|:------------:|
 | Forex | 10 | 6 |
-| Crypto | 10 | 6 |
-| Stocks | 12 | 7 |
+| Commodities | 10 | 6 |
 | Indices | 11 | 7 |
 
 ---
 
-### Step 5 — Cross-Market Normalisation and Ranking
+### Step 5 — Cross-Market Normalisation, FTMO Check, and Ranking
 
-Normalise every candidate to a common 10-point scale so setups across different markets can be compared fairly:
+Normalise every qualifying candidate to a common 10-point scale:
 
 ```
 Normalised Score = (Raw Score / Max Score for market) × 10
@@ -298,15 +306,21 @@ Normalised Score = (Raw Score / Max Score for market) × 10
 
 Examples:
 - Forex 8/10 → **8.0**
-- Stock 10/12 → **8.3** ← wins
 - Index 8/11 → **7.3**
-- Crypto 7/10 → **7.0**
+- Commodity 7/10 → **7.0**
 
-**Select the single candidate with the highest normalised score.** This is the trade.
+**Before finalising the ranking, run the FTMO drawdown check:**
+```
+mcp__ctrader__get_balance()
+```
+Calculate `max_risk_this_trade = min(account_balance × risk_pct, remaining_daily_headroom × 0.90)`. If `remaining_daily_headroom < $500`, halt — output the drawdown warning and do not present any trade cards.
+
+**Rank all qualifying candidates by normalised score. Output the top 3.** If fewer than 3 candidates reach their market threshold, output only those that qualify. If none qualify, output:
+> *"No qualifying setups found. Markets are not at sufficient statistical extremes for the FTMO swing universe."*
 
 **Tiebreaker rules (in order):**
-1. EMA200 confluence present → prefer this setup
-2. Tighter bid-ask spread → more liquid instrument
+1. EMA200 confluence present → ranks higher
+2. Tighter live spread (from cTrader) → more liquid
 3. More extreme Stochastic reading
 
 ---
@@ -323,9 +337,11 @@ Examples:
 - Target 2: `entry ± (stop_distance × 2.5)` — close remaining 50%
 - Blended R:R = (0.5 × 1.5R) + (0.5 × 2.5R) = **~2R**
 
-**Position sizing (when account size is provided):**
+**Position sizing:**
 
-Three modes depending on account type. Detect from invocation modifier (`type=spreadbet`, `type=cfd`, or `type=direct`). If not specified, ask the user.
+Risk per trade defaults to **1% of account balance** unless overridden with `risk=X%`. This is capped by the FTMO headroom check calculated in Step 5 — the lower of the two values always wins.
+
+Three account-type modes. Detect from invocation modifier (`type=spreadbet`, `type=cfd`, or `type=direct`). Default for Pepperstone UK Spread Betting is `type=spreadbet`.
 
 **Spread Bet** (`type=spreadbet`) — stake in £/point:
 ```
@@ -360,32 +376,48 @@ Default risk: 1% per trade. Override with `account=X risk=Y%`.
 
 ---
 
-### Step 7 — Output Trade Card
+### Step 7 — Output Top 3 Trade Cards
 
+First output a ranked summary so the user can see all three at a glance, then output the full card for each.
+
+**Summary header:**
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  TRADE PICKER — LIVE SIGNAL
+  TRADE PICKER — TOP 3 SETUPS
+  FTMO $100k Swing | Daily headroom: $X remaining
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Market         : [Forex / Crypto / Stock / Index]
+  #1  X.X/10  [INSTRUMENT]  LONG/SHORT
+  #2  X.X/10  [INSTRUMENT]  LONG/SHORT
+  #3  X.X/10  [INSTRUMENT]  LONG/SHORT
+
+Reply "execute 1", "execute 2", or "execute 3" to place the order.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+**Then output one full card per setup (#1 first, then #2, then #3):**
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SETUP #[N] — [INSTRUMENT]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Market         : [Forex / Index / Commodity]
 Direction      : LONG / SHORT
-Instrument     : [Underlying symbol — e.g. PEPPERSTONE:US500]
-Broker name    : [What to search in your broker — e.g. "US 500" on Pepperstone]
-Account type   : [Spread Bet / CFD / Direct]
-Entry Zone     : [price range]
+Instrument     : [symbol — e.g. PEPPERSTONE:US500]
+Broker name    : [Pepperstone search name — e.g. "US 500"]
+Entry Zone     : [price range from live cTrader bid/ask]
 Stop Loss      : [price]  (~X points / pips)
 Target 1       : [price]  (+X points) — close 50%
 Target 2       : [price]  (+X points) — close remainder
 R:R            : ~XR blended
 Confidence     : X/10 raw  (X.X/10 normalised)
 
-Position size  : [if account provided]
-  Spread Bet   → £X per point  (risking £Y at X-point stop)
-  CFD          → X contracts   (risking £Y at X-point stop)
+FTMO Risk      : Risking $[amount] of $[daily headroom] daily headroom
+Position size  : £X per point stake  →  cTrader volume [N]
+                 (Full stop-out = $[risk amount])
 
 Confluence signals:
-  ✓ [Signal 1 — exact reading]
-  ✓ [Signal 2 — exact reading]
-  ✓ [Signal N — exact reading]
+  ✓ [Signal 1 — exact indicator reading]
+  ✓ [Signal 2 — exact indicator reading]
+  ✓ [Signal N — exact indicator reading]
 
 Key levels:
   Support      : [price]
@@ -393,10 +425,10 @@ Key levels:
 
 Invalidation   : [specific price that cancels the trade]
 
-Analysis notes:
-  [2–3 sentences on the institutional logic.]
+Why this setup : [2–3 sentences — what the setup means, why mean reversion
+                  is expected here, what the edge is]
 
-Data sources   : [MCP servers used]
+Data sources   : [MCP servers used for this instrument]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -560,7 +592,7 @@ curl -s -X POST \
 
 1. **Never force a trade.** If no instrument reaches its market's minimum threshold after normalisation, output: *"No qualifying setups found. Markets are not at sufficient statistical extremes."* Do not lower the threshold.
 
-2. **One trade output only.** The single highest normalised score wins, regardless of market type. The discipline of one trade at a time is part of the edge.
+2. **Top 3 outputs, user selects.** Present the top 3 qualifying setups. The user picks which one to enter based on their risk headroom, current open positions, and preference. Never execute automatically — always wait for explicit selection ("execute 1/2/3").
 
 3. **One watch at a time.** When entering Watch Mode on a near-miss, watch only the single best candidate. Drop all other near-misses. If the watch aborts, the next 4-hour sweep will re-evaluate the field.
 
@@ -578,21 +610,17 @@ curl -s -X POST \
 
 | Command | Behaviour |
 |---------|-----------|
-| `/trade-picker` | Full scan — all markets (forex, crypto, US, UK, EU stocks) |
-| `/trade-picker forex` | Restrict to forex only |
-| `/trade-picker crypto` | Restrict to crypto only |
-| `/trade-picker stocks` | All stock markets (US + UK + EU) |
-| `/trade-picker stocks us` | US equities only |
-| `/trade-picker stocks uk` | LSE stocks only |
-| `/trade-picker stocks eu` | German and French stocks only |
-| `/trade-picker account=10000` | Include position sizing at 1% risk |
-| `/trade-picker account=10000 risk=2%` | Include position sizing at 2% risk |
-| `/trade-picker account=10000 type=spreadbet` | Spread bet sizing — outputs £/point stake and cTrader volume |
-| `/trade-picker account=10000 type=cfd` | CFD sizing — outputs number of contracts |
-| `/trade-picker account=10000 type=spreadbet risk=2%` | Spread bet with custom risk % |
-| `/trade-picker account=10000 type=spreadbet execute=true` | Full pipeline + place the order on Pepperstone automatically after trade card |
+| `/trade-picker` | Full scan — all 29 FTMO swing instruments (14 forex + 10 indices + 5 commodities) |
+| `/trade-picker forex` | Restrict scan to 14 forex pairs only |
+| `/trade-picker indices` | Restrict scan to 10 indices only |
+| `/trade-picker commodities` | Restrict scan to 5 commodities only |
+| `/trade-picker risk=1%` | Override risk per trade (default 1%). FTMO headroom cap always applies. |
+| `/trade-picker risk=0.5%` | Conservative mode — 0.5% risk per trade |
+| `/trade-picker execute=1` | Execute setup #1 from the last scan output on Pepperstone via cTrader |
+| `/trade-picker execute=2` | Execute setup #2 |
+| `/trade-picker execute=3` | Execute setup #3 |
 
-**Default behaviour when no type is specified**: the skill will ask which account type to size for before outputting the trade card.
+**Default sizing**: 1% risk per trade, spread bet account type (£/point stake via cTrader volume).
 
 ---
 
