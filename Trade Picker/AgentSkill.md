@@ -296,15 +296,34 @@ Calculate `max_risk_this_trade = min(account_balance × risk_pct, remaining_dail
 
 ### Step 6 — Calculate Trade Parameters
 
-**Stop Loss** (use whichever gives a tighter, more logical stop):
-- ATR-based: `stop = entry ± (ATR × 1.5)`
-- Structural: below most recent swing low (long) or above swing high (short)
-- Minimum stop distances: 20 pips for forex majors, 0.3% for indices and stocks
+**Stop Loss — structural first, ATR as sanity check:**
 
-**Targets:**
-- Target 1: `entry ± (stop_distance × 1.5)` — close 50% here
-- Target 2: `entry ± (stop_distance × 2.5)` — close remaining 50%
-- Blended R:R = (0.5 × 1.5R) + (0.5 × 2.5R) = **~2R**
+Always place the stop at the level that *invalidates the setup*, not at a generic volatility distance. Use ATR only to verify the stop isn't absurdly tight.
+
+| Primary signal that triggered | Logical stop placement |
+|---|---|
+| EMA200 confluence | Just below EMA200 (long) / above EMA200 (short) + buffer of 0.3–0.5 × ATR |
+| BB extreme (at lower band) | Just below BB lower (long) — the band itself is the extreme |
+| BB extreme (at upper band) | Just above BB upper (short) |
+| Stoch only / MACD only | Below most recent 4H swing low (long) / above swing high (short) |
+
+**Buffer sizing:** `buffer = 0.3 × ATR` for forex majors, `0.5 × ATR` for indices and commodities (wider due to gap risk).
+
+**ATR sanity check:** if the structural stop results in a distance < 0.5 × ATR, widen to `key_level ± 0.5 × ATR` to avoid being stopped out by normal noise. Never use ATR × 1.5 as the primary stop — it ignores price structure.
+
+**Targets — use BB bands and key structural levels, not R:R multiples:**
+
+Mean reversion trades have a natural target: the opposite BB band (or midline if entering mid-range). R:R multiples produce targets that float in empty space with no reason for price to stop there.
+
+| Entry location | Target 1 | Target 2 |
+|---|---|---|
+| Near BB lower | BB midline (SMA20) — close 50% | BB upper — close remainder |
+| Near BB upper | BB midline (SMA20) — close 50% | BB lower — close remainder |
+| Near EMA200 (mid-range) | BB upper (long) / BB lower (short) — close 50% | Extended: key swing high/low beyond BB — close remainder |
+
+After setting structural targets, calculate R:R as a *check*: if T1 gives less than 1.5R, the stop is probably too wide — tighten it or skip the trade.
+
+**Blended R:R target:** aim for ≥ 1.5R at T1, ≥ 2.5R at T2.
 
 **Position sizing:**
 
@@ -315,17 +334,31 @@ Three account-type modes. Detect from invocation modifier (`type=spreadbet`, `ty
 **Spread Bet** (`type=spreadbet`) — stake in £/point:
 ```
 Risk amount (£)    = account_balance × risk_pct
-Stop distance      = |entry − stop_loss| in index points / pips
+Stop distance      = |entry − stop_loss| in pips (forex) or points (indices)
 Stake per point    = Risk amount / Stop distance
-cTrader volume     = max(100, round(Stake per point) × 100)
+cTrader volume     = round_to_step(Stake per point × 100, volume_step)
 
-Each 100 units of cTrader volume = £1 per point stake.
-Minimum volume: 100. Step size: 100 (always a multiple of 100).
-
-Example: £10,000 account, 1% risk, 50-point stop on US 500
-→ Risk = £100  →  Stake = £2/point  →  cTrader volume = 200
-→ Actual risk check: £2 × 50pts = £100 ✓
+Each 100 units of cTrader volume = £1 per pip/point stake.
 ```
+
+**Volume step varies by instrument** — snap calculated volume to the nearest valid multiple:
+
+| Instrument type | Volume step | Min volume |
+|---|---|---|
+| Forex majors (e.g. EURJPY_SB) | 500 | 500 |
+| Indices (e.g. US500_SB) | 100 | 100 |
+| Commodities (e.g. XAUUSD_SB) | 100 | 100 |
+
+Round *down* to the nearest step (never up — do not exceed risk budget).
+
+```
+Example: £48,300 account, 1% risk, 19-pip stop on EURJPY
+→ Risk = £483  →  Stake = £483 / 19 = £25.4/pip
+→ Raw volume = 2540  →  Snap to 500-step → volume = 2500
+→ Actual risk check: (2500/100) × 19 pips = £475 ✓
+```
+
+**For `amend_position`** (modifying SL/TP after fill): pass prices in **display format** (e.g. 185.630), not pipettes. The `create_order` relative fields use pipette offsets; `amend_position` uses display prices.
 
 **CFD** (`type=cfd`) — number of contracts:
 ```
