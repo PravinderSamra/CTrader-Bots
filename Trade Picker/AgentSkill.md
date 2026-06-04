@@ -127,59 +127,48 @@ Verify all are active with `claude mcp list` before running.
 
 ## Execution Pipeline
 
-### Step 1 — Parallel Pull on All 29 Instruments
+### Step 1 — Run the cTrader Fallback Scanner
 
-Fire all calls simultaneously in a **single parallel batch** — no waiting for one result before launching the next. The scan universe is fixed: 29 instruments from the Broker Instrument Reference above.
+> **Why a script instead of MCP tool calls?** `tradingview-mcp combined_analysis` does not support the exchange types used by forex, indices, or commodities (`"FX"`, `"PEPPERSTONE"`, `"TVC"`). All 29 instruments return `"Invalid exchange"`. The fallback script uses the cTrader HTTP MCP endpoint directly — same Pepperstone SB feed, same pipette data, and calculates all indicators from raw 4H OHLCV.
 
-**Forex (14 pairs) — `screener="forex"`, `exchange="FX"`, `interval="4h"`:**
+Run the scanner via Bash:
 
-| | | | | |
-|---|---|---|---|---|
-| EURUSD | GBPUSD | USDJPY | USDCHF | USDCAD |
-| AUDUSD | NZDUSD | GBPJPY | EURJPY | AUDJPY |
-| EURGBP | GBPAUD | EURCAD | GBPCAD | |
+```bash
+python3 "Trade Picker/ctrader_fallback.py" 2>/dev/null
+```
 
-**Indices (10) — `screener="forex"`, `exchange="PEPPERSTONE"`, `interval="4h"`:**
+The script:
+- Opens a cTrader HTTP session (auto-renews if it expires mid-scan)
+- Fetches two consecutive 30-day windows of 4H bars (~360 bars) for all 29 instruments — enough to seed EMA200
+- Batch-fetches live Pepperstone SB bid/ask for all 29 instruments
+- Calculates BB20, RSI14, Stoch %K14, EMA200, MACD 12/26/9, ADX14, ATR14 from raw bar data
+- Uses `(bid + ask) / 2` SB mid-price for all price-dependent checks (BB, EMA200)
+- Applies immediate disqualifiers: ADX > 30 (trending), spread > 0.1% (too wide)
+- Normalises and ranks all results
 
-| | | | | |
-|---|---|---|---|---|
-| US500 | NAS100 | US30 | UK100 | GER40 |
-| FRA40 | EU50 | JPN225 | AUS200 | HK50 |
+**Output format (JSON):**
+```json
+{
+  "scanned_at": "2026-06-04T...",
+  "top3":        [...],   ← top 3 passing instruments, sorted by norm score
+  "all_ranked":  [...],   ← all passing instruments ranked
+  "disqualified":[...],   ← ADX > 30 or spread > 0.1%
+  "skipped":     [...]    ← insufficient bar data
+}
+```
 
-If a Pepperstone locator returns no data, fall back to the TVC equivalent:
+**Each instrument record contains:**
+```
+name, type, direction, raw, max, norm,
+mid, bid, ask, spread_pct,
+bb_upper, bb_lower, rsi, stoch_k,
+ema200, ema200_pct, adx, atr, macd_cross,
+signals (list of triggered confluence descriptions), bars (count)
+```
 
-| Index | TVC Fallback |
-|---|---|
-| US500 | `TVC:SPX` |
-| NAS100 | `TVC:NDX` |
-| US30 | `TVC:DJI` |
-| UK100 | `TVC:UKX` |
-| GER40 | `INDEX:DEU40` |
-| FRA40 | `TVC:CAC40` |
-| JPN225 | `TVC:NI225` |
-| AUS200 | `TVC:AS51` |
-
-**Commodities (5) — `screener="forex"`, `exchange="TVC"`, `interval="4h"`:**
-
-| TradingView Symbol | Instrument |
-|---|---|
-| `GOLD` | Gold (XAUUSD) |
-| `SILVER` | Silver (XAGUSD) |
-| `USOIL` | WTI Crude Oil |
-| `UKOIL` | Brent Crude Oil |
-| `NATURALGAS` | Natural Gas |
-
-**Simultaneously — pull live Pepperstone bid/ask via cTrader for all 29:**
-
-Run one `get_spot_prices` call per instrument in the same parallel batch, using the `symbolId` values from the Broker Instrument Reference tables.
-
-**Apply immediate disqualifiers as results arrive:**
-
-| Filter | Action |
-|---|---|
-| ADX > 30 | Disqualify — trending market, mean reversion not applicable |
-| Live spread > 0.1% (from cTrader bid/ask) | Disqualify — execution cost too high |
-| cTrader price unavailable | Do not disqualify — use TradingView close, flag on trade card |
+If the script fails to run (e.g. Python not found or network error):
+- Attempt to initialise a cTrader session manually via `mcp__ctrader__initialize` and call `mcp__ctrader__get_trendbars` per instrument as a fallback of last resort
+- Flag on all trade cards: "⚠️ Manual fallback — script unavailable"
 
 ---
 
@@ -200,54 +189,40 @@ Disqualify if: any high-impact scheduled event within 4 hours (central bank deci
 
 ---
 
-### Step 3 — Confirm Prices and Prepare for Scoring
+### Step 3 — Read Script Output and Prepare for Scoring
 
-> All `get_technical_analysis` data was already pulled in Step 1. This step uses those values — do not re-pull unless a Step 1 call failed.
+> The fallback script has already calculated all indicators and applied the spread and ADX disqualifiers. This step maps the script's JSON fields to the scoring rubric — do not re-fetch data unless the script failed.
 
-**Values to carry forward from Step 1 for each candidate:**
-- `RSI` — threshold: < 35 oversold, > 65 overbought
-- `Stoch.K` and `Stoch.D` — threshold: < 15 or > 85
-- `MACD.macd` vs `MACD.signal` — crossover direction
-- `BB.lower` and `BB.upper`
-- `EMA200`
-- `ADX` — trend strength (< 20 = ranging)
-- `ATR` — used for stop and target sizing
-- `volume` — current session tick volume
+**Read these fields from each instrument record in `all_ranked`:**
 
-**Account mode — Spread Betting (current):**
-
-All instruments use the `_SB` symbol suffix (e.g. `EURUSD_SB`, `US500_SB`). These are Pepperstone UK Spread Bet instruments. The `symbolId` values in the Broker Instrument Reference table are the `_SB` identifiers. Use these for all `get_spot_prices` calls and all `create_order` calls.
-
-> **Switching to FTMO (future):** FTMO accounts use CFD instruments without the `_SB` suffix. SymbolIds will differ. Position sizing formula also changes (CFD lots, not £/point stake). Do not switch until the user explicitly instructs it.
-
-**Live Pepperstone SB bid/ask — always use this for price-dependent confluence checks:**
-
-The live Pepperstone SB price was already pulled in Step 1 via `get_spot_prices`. Convert from pipettes:
-
-| Instrument type | Divide raw pipette price by |
+| Script field | Used for |
 |---|---|
-| All forex pairs (`_SB`) | 100,000 |
-| All indices (`_SB`) | 100,000 |
-| Gold (`XAUUSD_SB`), Silver (`XAGUSD_SB`) | 100,000 |
-| WTI Crude (`Crude_SB`), Brent (`Brent_SB`) | 100,000 |
-| Natural Gas (`NatGas_SB`) | 10,000 |
+| `rsi` | RSI threshold check (< 35 / > 65) |
+| `stoch_k` | Stochastic threshold check (< 15 / > 85) |
+| `macd_cross` | `"bullish"` / `"bearish"` / `null` |
+| `bb_lower`, `bb_upper` | BB extreme check (already compared to SB mid) |
+| `ema200`, `ema200_pct` | EMA200 confluence (already computed as `abs(mid − ema200) / ema200 × 100`) |
+| `adx` | Weak trend bonus (< 20), already used as disqualifier (> 30) |
+| `atr` | Stop and target sizing |
+| `mid` | Entry zone — this is the Pepperstone SB mid-price `(bid+ask)/2` |
+| `bid`, `ask` | Bracket the entry zone on the trade card |
+| `signals` | List of triggered confluence descriptions — include verbatim in card |
+| `norm` | Normalised score (0–10 scale) — use for ranking and threshold check |
+| `bars` | Bar count — flag if < 200 (EMA200 not available) |
 
-**Critical**: for ALL price-dependent confluence checks, use the **cTrader SB mid-price** `(bid + ask) / 2` — NOT TradingView's `close`. This eliminates feed discrepancies between TradingView data and Pepperstone SB pricing:
+**Scoring is already done by the script.** The `raw`, `max`, and `norm` fields are the scores. The `direction` field is `"LONG"` or `"SHORT"`.
 
-- BB extreme check: `SB_mid ≤ BB.lower` or `SB_mid ≥ BB.upper`
-- EMA200 check: `abs(SB_mid − EMA200) / EMA200`
+**Account mode — Spread Betting (current):** All symbolIds in the script match the `_SB` Pepperstone instruments. Use these for all `create_order` calls.
 
-TradingView indicator values (BB.lower, BB.upper, EMA200, RSI, Stoch, MACD, ADX) are calculated from historical 4H OHLCV — the minor feed difference there is immaterial. But the live price comparison must be SB.
+> **Switching to FTMO (future):** Remove `_SB` suffix, update symbolIds for CFD equivalents, change position sizing to CFD contracts. Do not switch until explicitly instructed.
 
-**Spread check**: `(ask − bid) / SB_mid × 100` — **disqualify if > 0.1%**
+**Entry zone on trade card**: use `bid`–`ask` as the bracket. `mid` = `(bid+ask)/2` is the reference price.
 
-**Entry zone**: use `SB_mid` on the trade card. This is the price you see on your cTrader chart.
-
-If `get_spot_prices` is unavailable: fall back to TradingView `close`, flag on card as "⚠️ TradingView price — SB feed unavailable."
+If `bid`/`ask` are `null` in the script output (live price fetch failed): use `closes[-1]` (last bar close) as entry estimate, flag as "⚠️ Live price unavailable — using last bar close."
 
 **For index candidates — volume spike check (optional):**
 
-If `massive` is available, compare current `volume` (tick) vs 20-bar average. A spike (>1.5×) at an extreme adds +1 (see scoring table). If `massive` is unavailable, skip — do not block scoring.
+The fallback script does not include a volume spike signal (no `massive` MCP call). If `massive` is available separately, compare current tick volume vs 20-bar average — a spike (> 1.5×) at an extreme adds +1. If unavailable, skip — the index max score remains 10 and the threshold remains 7.
 
 ---
 
