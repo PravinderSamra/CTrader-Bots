@@ -56,7 +56,6 @@ All tradeable symbols on the Pepperstone UK Spread Betting account end in `_SB`.
 | GBP/AUD | `GBPAUD_SB` | 189 |
 | EUR/CAD | `EURCAD_SB` | 172 |
 | GBP/CAD | `GBPCAD_SB` | 190 |
-| EUR/NZD | `EURNZD_SB` | 179 |
 
 Forex pair names are otherwise the same across broker platforms — no translation needed for the analysis step.
 
@@ -82,13 +81,12 @@ Verify all are active with `claude mcp list` before running.
 
 | Server | Markets | What It Provides |
 |--------|---------|-----------------|
-| `tradingview-mcp` | All | Core screener — BB, RSI, MACD scans, full technical analysis across forex, crypto, stocks, indices |
+| `tradingview-mcp` | All | Core screener — BB, RSI, MACD scans, full technical analysis, and `financial_news` for macro event checks |
 | `ctrader` | Forex, Indices, Commodities | Pepperstone broker prices — live bid/ask, OHLCV candles, account balance, open positions, and trade execution. All symbols end in `_SB`. |
-| `newsmcp` | All | Real-time news and macro event check |
+| `aktools` | All | Global macro news feed (`stock_news_global`) and per-symbol news (`stock_news`) — primary news filter |
 | `massive` | Stocks, Forex, Crypto | Real-time OHLCV, tick data, volume — required for volume spike signal on stocks |
 | `alpha-vantage` | Stocks | Earnings calendar — required for earnings clearance check |
 | `coingecko` | Crypto | Real-time crypto prices, OHLCV, market depth |
-| `aktools` | Stocks, Forex, Crypto | Supplementary macro, forex, and equity data |
 | `tradingview-ohlcv` | All | Multi-timeframe OHLCV candles for additional context |
 
 ---
@@ -152,11 +150,18 @@ Build a shortlist of the **top 3 candidates per market region** (up to 18 total 
 
 ### Step 2 — Event Filters (run in parallel per candidate)
 
-**For all instruments — news check:**
+**For all instruments — news check (run all three in parallel):**
 ```
-mcp__newsmcp__get_news(topic="Economy", region="[relevant region for instrument]")
+# Global macro feed — breaking events that affect broad markets
+mcp__aktools__stock_news_global()
+
+# Symbol-specific news — catalyst check on the candidate itself
+mcp__tradingview-mcp__financial_news(symbol="[SYMBOL]", category="all", limit=10)
+mcp__aktools__stock_news(symbol="[SYMBOL]", limit=10)
 ```
-Disqualify if: any high-impact scheduled event within 4 hours (central bank decision, NFP, CPI, GDP, flash PMI) or breaking unscheduled news.
+Disqualify if: any high-impact scheduled event within 4 hours (central bank decision, NFP, CPI, GDP, flash PMI, OPEC meeting) or breaking unscheduled news clearly driving the candidate instrument's move.
+
+> `newsmcp` is permanently shut down (HTTP 410). The combination of `aktools` global feed + `tradingview-mcp financial_news` + `aktools stock_news` provides equivalent coverage.
 
 **For stocks only — earnings clearance check:**
 ```

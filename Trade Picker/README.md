@@ -26,9 +26,8 @@ The Trade Picker runs as a Claude Code Agent Skill (`/trade-picker`). It scans a
 | `ctrader` | HTTP | Forex, Indices, Commodities | Pepperstone broker-exact prices — live bid/ask, OHLCV candles, account balance, open positions, and direct trade execution. Symbols use `_SB` suffix. | Bearer token from Pepperstone cTrader account |
 | `massive` | stdio | Stocks, Forex, Crypto | Real-time OHLCV, tick data, volume — used for volume spike signal on stocks | API key at massive.com |
 | `alpha-vantage` | stdio (uvx) | Stocks | Earnings calendar, historical indicators, fundamentals | Free API key at alphavantage.co |
-| `newsmcp` | stdio (npx) | All | Real-time news from hundreds of sources — macro event filter | None — free |
 | `coingecko` | HTTP | Crypto | 15,000+ coins — real-time prices, OHLCV, market depth | None — free |
-| `aktools` | stdio (uvx) | Stocks, Forex, Crypto | Supplementary macro, forex, and equity data | None — free |
+| `aktools` | stdio (uvx) | All | Global macro news feed (`stock_news_global`), per-symbol news (`stock_news`), and supplementary equity/forex data. Replaces shut-down newsmcp as the news filter. | None — free |
 | `tradingview-ohlcv` | stdio (uv) | All | Multi-timeframe OHLCV candles via bidouilles/mcp-tradingview-server | Clone repo first (see below) |
 | `pinescript-docs` | stdio (uvx) | — | Pine Script v6 reference docs for strategy development | None — free |
 
@@ -58,8 +57,10 @@ claude mcp add tradingview-ohlcv -- uv --directory /tmp/mcp-tradingview-server r
 claude mcp add tradingview-mcp -- uvx tradingview-mcp
 claude mcp add coingecko -t http -- https://mcp.api.coingecko.com/mcp
 claude mcp add aktools -- uvx mcp-aktools
-claude mcp add newsmcp -- npx -y @newsmcp/server
 claude mcp add pinescript-docs -- uvx pinescript-mcp
+
+# Note: newsmcp is permanently shut down (HTTP 410).
+# News filtering is now handled by aktools stock_news_global + tradingview-mcp financial_news.
 ```
 
 ---
