@@ -198,66 +198,56 @@ Disqualify if: any high-impact scheduled event within 4 hours (central bank deci
 
 > `newsmcp` is permanently shut down (HTTP 410). The combination of `aktools` global feed + `tradingview-mcp financial_news` + `aktools stock_news` provides equivalent coverage.
 
-**For stocks only — earnings clearance check:**
-```
-mcp__alpha-vantage__TOOL_GET(endpoint="EARNINGS_CALENDAR", symbol="[SYMBOL]")
-```
-Disqualify if: earnings report within 5 trading days. Non-negotiable — earnings create gap risk that invalidates the mean reversion thesis entirely.
-
 ---
 
-### Step 3 — Deep Technical Pull (surviving candidates, in parallel)
+### Step 3 — Confirm Prices and Prepare for Scoring
 
-For each candidate that passed Step 2 filters:
+> All `get_technical_analysis` data was already pulled in Step 1. This step uses those values — do not re-pull unless a Step 1 call failed.
 
-```
-mcp__tradingview-mcp__get_technical_analysis(
-  symbol="[SYMBOL]",
-  screener="[forex | crypto | america | uk | index]",
-  exchange="[EXCHANGE]",
-  interval="4h"
-)
-```
-
-**Record these values for every candidate:**
+**Values to carry forward from Step 1 for each candidate:**
 - `RSI` — threshold: < 35 oversold, > 65 overbought
 - `Stoch.K` and `Stoch.D` — threshold: < 15 or > 85
 - `MACD.macd` vs `MACD.signal` — crossover direction
-- `BB.lower` and `BB.upper` — distance from current price
-- `EMA200` — distance from current price (calculate % difference)
+- `BB.lower` and `BB.upper`
+- `EMA200`
 - `ADX` — trend strength (< 20 = ranging)
 - `ATR` — used for stop and target sizing
-- `close` — current price
-- `volume` — current session volume
+- `volume` — current session tick volume
 
-**For index candidates — volume spike check (indices only):**
+**Account mode — Spread Betting (current):**
 
-If `massive` is available, fetch 20-day average volume vs current volume for the index ETF proxy. A volume spike (>1.5×) at an extreme adds +1 to the score (see Step 4 scoring table). This is optional — do not block scoring if `massive` is unavailable.
+All instruments use the `_SB` symbol suffix (e.g. `EURUSD_SB`, `US500_SB`). These are Pepperstone UK Spread Bet instruments. The `symbolId` values in the Broker Instrument Reference table are the `_SB` identifiers. Use these for all `get_spot_prices` calls and all `create_order` calls.
 
-**For index candidates — use the Pepperstone TradingView locator.** These were already pulled in Step 1. No additional pull needed unless the Step 1 call failed, in which case fall back to the TVC symbols listed in Step 1.
+> **Switching to FTMO (future):** FTMO accounts use CFD instruments without the `_SB` suffix. SymbolIds will differ. Position sizing formula also changes (CFD lots, not £/point stake). Do not switch until the user explicitly instructs it.
 
-**For forex, index, and commodity candidates — verify live broker price and spread via cTrader:**
+**Live Pepperstone SB bid/ask — always use this for price-dependent confluence checks:**
 
-For every forex/index/commodity candidate that survives to this step, pull the live Pepperstone bid/ask using the `symbolId` from the Broker Instrument Reference table. Run these in parallel alongside the tradingview-mcp technical pulls.
+The live Pepperstone SB price was already pulled in Step 1 via `get_spot_prices`. Convert from pipettes:
 
-```
-mcp__ctrader__get_spot_prices(symbolId=[symbolId from reference table])
-```
-
-Raw prices from `get_spot_prices` are in pipettes. Convert to display price:
-
-| Instrument type | Divide raw by |
+| Instrument type | Divide raw pipette price by |
 |---|---|
-| All forex pairs | 100,000 |
-| All indices (US500, UK100, GER40 etc.) | 100,000 |
-| Gold (XAUUSD), Silver (XAGUSD) | 100,000 |
-| Crude Oil, Brent | 100,000 |
-| Natural Gas | 10,000 |
+| All forex pairs (`_SB`) | 100,000 |
+| All indices (`_SB`) | 100,000 |
+| Gold (`XAUUSD_SB`), Silver (`XAGUSD_SB`) | 100,000 |
+| WTI Crude (`Crude_SB`), Brent (`Brent_SB`) | 100,000 |
+| Natural Gas (`NatGas_SB`) | 10,000 |
 
-From the converted bid/ask:
-- **Real spread check**: `(ask − bid) / mid × 100` — **disqualify if > 0.1%**. This replaces estimated spread with your actual Pepperstone broker spread.
-- **Entry zone**: use `(bid + ask) / 2` as the live mid-price for the trade card. This matches exactly what you see on your cTrader chart.
-- If `get_spot_prices` is unavailable, fall back to the TradingView price and flag it on the trade card.
+**Critical**: for ALL price-dependent confluence checks, use the **cTrader SB mid-price** `(bid + ask) / 2` — NOT TradingView's `close`. This eliminates feed discrepancies between TradingView data and Pepperstone SB pricing:
+
+- BB extreme check: `SB_mid ≤ BB.lower` or `SB_mid ≥ BB.upper`
+- EMA200 check: `abs(SB_mid − EMA200) / EMA200`
+
+TradingView indicator values (BB.lower, BB.upper, EMA200, RSI, Stoch, MACD, ADX) are calculated from historical 4H OHLCV — the minor feed difference there is immaterial. But the live price comparison must be SB.
+
+**Spread check**: `(ask − bid) / SB_mid × 100` — **disqualify if > 0.1%**
+
+**Entry zone**: use `SB_mid` on the trade card. This is the price you see on your cTrader chart.
+
+If `get_spot_prices` is unavailable: fall back to TradingView `close`, flag on card as "⚠️ TradingView price — SB feed unavailable."
+
+**For index candidates — volume spike check (optional):**
+
+If `massive` is available, compare current `volume` (tick) vs 20-bar average. A spike (>1.5×) at an extreme adds +1 (see scoring table). If `massive` is unavailable, skip — do not block scoring.
 
 ---
 
@@ -267,32 +257,36 @@ Score each candidate using the appropriate rubric for its market type.
 
 #### Universal Signals (all markets)
 
-| Signal | Condition | Long | Short |
-|--------|-----------|:----:|:-----:|
-| BB Extreme | Price at/below BB lower | +2 | — |
-| BB Extreme | Price at/above BB upper | — | +2 |
-| Stochastic Extreme | Stoch.K < 15 | +2 | — |
-| Stochastic Extreme | Stoch.K > 85 | — | +2 |
-| EMA200 Confluence | Price within 0.05% of EMA200 | +2 | +2 |
-| RSI Extreme | RSI < 35 | +1 | — |
-| RSI Extreme | RSI > 65 | — | +1 |
-| MACD Crossover | Bullish crossover confirmed | +1 | — |
-| MACD Crossover | Bearish crossover confirmed | — | +1 |
-| Weak Trend | ADX < 20 | +1 | +1 |
+| Signal | Condition | Long | Short | Price source |
+|--------|-----------|:----:|:-----:|---|
+| BB Extreme | SB mid-price ≤ BB.lower | +2 | — | cTrader SB mid vs TradingView BB |
+| BB Extreme | SB mid-price ≥ BB.upper | — | +2 | cTrader SB mid vs TradingView BB |
+| Stochastic Extreme | Stoch.K < 15 | +2 | — | TradingView indicator |
+| Stochastic Extreme | Stoch.K > 85 | — | +2 | TradingView indicator |
+| EMA200 Confluence | SB mid within **0.1%** of EMA200 | +2 | +2 | cTrader SB mid vs TradingView EMA200 |
+| RSI Extreme | RSI < 35 | +1 | — | TradingView indicator |
+| RSI Extreme | RSI > 65 | — | +1 | TradingView indicator |
+| MACD Crossover | Bullish crossover on **last completed** 4H bar | +1 | — | TradingView indicator |
+| MACD Crossover | Bearish crossover on **last completed** 4H bar | — | +1 | TradingView indicator |
+| Weak Trend | ADX < 20 | +1 | +1 | TradingView indicator |
+
+> **MACD rule**: only count a crossover if `MACD.macd` crossed `MACD.signal` on the bar that has already closed. A crossover forming on the current open bar is not confirmed and scores 0 — it may reverse before the bar closes.
 
 #### Index Additional Signal
 
-| Signal | Condition | Long | Short | Applies To |
-|--------|-----------|:----:|:-----:|-----------|
-| Volume Spike | Current volume > 1.5× 20-day avg at extreme | +1 | +1 | Indices only |
+| Signal | Condition | Long | Short | Price source |
+|--------|-----------|:----:|:-----:|---|
+| Volume Spike | Tick volume > 1.5× 20-bar average at extreme | +1 | +1 | TradingView `volume` field |
 
 #### Maximum Scores and Minimum Thresholds
 
+The maximum achievable score per direction is 9 universal (2+2+2+1+1+1) + 1 index bonus = 10 for indices.
+
 | Market | Max Score | Min to Trade |
 |--------|:---------:|:------------:|
-| Forex | 10 | 6 |
-| Commodities | 10 | 6 |
-| Indices | 11 | 7 |
+| Forex | 9 | 6 |
+| Commodities | 9 | 6 |
+| Indices | 10 | 7 |
 
 ---
 
@@ -305,9 +299,9 @@ Normalised Score = (Raw Score / Max Score for market) × 10
 ```
 
 Examples:
-- Forex 8/10 → **8.0**
-- Index 8/11 → **7.3**
-- Commodity 7/10 → **7.0**
+- Forex 7/9 → **7.8**
+- Index 8/10 → **8.0**
+- Commodity 6/9 → **6.7**
 
 **Before finalising the ranking, run the FTMO drawdown check:**
 ```
