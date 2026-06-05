@@ -197,7 +197,20 @@ Yahoo Finance market-hours data creates phantom FVGs overnight. `structure._is_s
 4. To extend Phase 3 (DOM): implement `subscribe_dom()` in `data/fetchers/ctrader_fetcher.py`
 5. The ctrader_fetcher.py contains full implementation templates in comments
 6. FTMO rules in `config/settings.py` — check before modifying risk parameters
-7. FVG report format: `Bullish/Bearish FVG | Timeframe | gap_low → gap_high`
+7. **FVG pick card format**: Every FVG trade plan block MUST include `Current` price as the first line of the trade plan, showing the price and its distance/direction relative to the entry zone. Required format:
+   ```
+   ── TRADE PLAN ──────────────────────────────────────────
+   Current     : 4462.5  (3.7pts below entry zone ↓  (price must drop to fill))
+   Entry zone  : 4456.2 → 4458.8  (enter anywhere in FVG)
+   SL          : 4452.5  (5pt stop from entry midpoint)
+   TP1 (1:1)   : 4462.5  [R/R 1.0:1]
+   TP2 (liq)   : 4468.1  BSL (1× tested)  [R/R 2.1:1]
+   TP3 (PDH/L) : 4515.4  prior day high (BSL)  [R/R 5.5:1]
+   Size        : $450 risk = 9.00 lots @ 5pt stop
+   Confluences : 3/10  [███░░░░░░░]
+   ```
+   This is implemented in `_format_setup_block()` — do not remove the `Current` line.
+8. FVG header format: `Bullish/Bearish FVG | Timeframe | gap_low → gap_high`
 
 ## Phase Roadmap
 

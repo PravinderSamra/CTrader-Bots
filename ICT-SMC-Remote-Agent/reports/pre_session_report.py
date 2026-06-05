@@ -271,6 +271,7 @@ def _compute_fvg_setup(fvg: FVGResult, ctx: MarketContext) -> Optional[dict]:
         "entry_low": gap_low,
         "entry_high": gap_high,
         "entry_mid": entry,
+        "current_price": ctx.current_price,
         "sl": sl,
         "stop_pips": stop_size / pip_size,
         "tp1": tp1,
@@ -293,8 +294,21 @@ def _format_setup_block(setup: dict, symbol: str) -> list[str]:
     fp = lambda v: _fmt_price(v, symbol)
     lines = []
 
-    bull_label = "BUY ZONE" if setup["entry_mid"] < setup["sl"] + (setup["tp1"] - setup["entry_mid"]) else "BUY ZONE"
     is_bull = setup["tp1"] > setup["entry_mid"]
+
+    # Current price relative to entry zone
+    curr = setup.get("current_price")
+    if curr is not None:
+        entry_low, entry_high = setup["entry_low"], setup["entry_high"]
+        if curr < entry_low:
+            dist = fp(entry_low - curr)
+            pos = f"{dist} below entry zone ↓  (price must drop to fill)"
+        elif curr > entry_high:
+            dist = fp(curr - entry_high)
+            pos = f"{dist} above entry zone ↑  (price must rally to fill)"
+        else:
+            pos = "AT LEVEL — price inside FVG now"
+        lines.append(f"    Current     : {fp(curr)}  ({pos})")
 
     # Entry zone
     lines.append(f"    Entry zone  : {fp(setup['entry_low'])} → {fp(setup['entry_high'])}  (enter anywhere in FVG)")
