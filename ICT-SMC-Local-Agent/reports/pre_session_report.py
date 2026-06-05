@@ -303,10 +303,10 @@ def _format_setup_block(setup: dict, symbol: str) -> list[str]:
         entry_low, entry_high = setup["entry_low"], setup["entry_high"]
         if curr < entry_low:
             dist = fp(entry_low - curr)
-            pos = f"{dist} below entry zone ↓  (price must drop to fill)"
+            pos = f"{dist} below entry zone  (price must rally ↑ to fill)"
         elif curr > entry_high:
             dist = fp(curr - entry_high)
-            pos = f"{dist} above entry zone ↑  (price must rally to fill)"
+            pos = f"{dist} above entry zone  (price must drop ↓ to fill)"
         else:
             pos = "AT LEVEL — price inside FVG now"
         lines.append(f"    Current     : {fp(curr)}  ({pos})")
