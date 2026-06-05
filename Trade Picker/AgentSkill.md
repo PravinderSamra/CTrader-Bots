@@ -607,6 +607,13 @@ curl -s -X POST \
 
 7. **After outputting the trade card**, prompt the user to record the outcome in `Trade Picker/TradeLog.md` once the trade closes.
 
+8. **Always express times in UK local time.** Never output UTC or other timezones unless the user asks. Apply DST automatically:
+   - **BST (UTC+1)**: last Sunday in March → last Sunday in October
+   - **GMT (UTC+0)**: last Sunday in October → last Sunday in March
+   - To convert: get current date, determine if DST is active, add +1h (BST) or +0h (GMT) to UTC
+   - Always label the time with the active offset, e.g. "13:00 BST" or "09:00 GMT"
+   - 4H bar closes in UK time: 01:00, 05:00, 09:00, **13:00**, 17:00, 21:00 BST (summer) / 00:00, 04:00, 08:00, **12:00**, 16:00, 20:00 GMT (winter)
+
 ---
 
 ## Invocation Modifiers
