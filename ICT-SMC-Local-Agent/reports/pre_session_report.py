@@ -297,6 +297,9 @@ def _format_setup_block(setup: dict, symbol: str) -> list[str]:
 
     is_bull = setup["tp1"] > setup["entry_mid"]
 
+    # Direction — first line, clearly labelled
+    lines.append(f"    Direction   : {'▲ LONG  (BUY)' if is_bull else '▼ SHORT (SELL)'}")
+
     # Current price relative to entry zone
     curr = setup.get("current_price")
     if curr is not None:
