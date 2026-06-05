@@ -187,6 +187,51 @@ Yahoo Finance returns market-hours-only candles for US indices. The overnight ga
 
 If you are an AI agent reading this to reinstall or extend this system:
 
+### ⚠ CRITICAL — Always use HTTP, never wait for cTrader MCP tools
+
+**Do NOT wait for `mcp__ctrader__*` tools to reconnect.** Always use the HTTP method directly:
+
+```python
+import sys
+sys.path.insert(0, '/home/user/CTrader-Bots/ICT-SMC-Remote-Agent')
+from data.fetchers.ctrader_fetcher import _call_tool, _ensure_session, _get_symbol_id, fetch_current_price, fetch_klines
+
+_ensure_session()  # establish persistent HTTPS connection
+
+# Get symbol ID
+sym_id = _get_symbol_id("NZDUSD")
+
+# Current price
+price = fetch_current_price("NZDUSD")
+
+# Candles
+candles = fetch_klines("XAUUSD", "1h", limit=100)
+
+# Place order (SELL LIMIT example)
+result = _call_tool("create_order", {
+    "symbolId":        sym_id,
+    "orderType":       "LIMIT",        # MARKET | LIMIT | STOP | STOP_LIMIT
+    "tradeSide":       "SELL",         # BUY | SELL
+    "volume":          30000000,       # lots × lotSize × 100 (forex lotSize=100000)
+    "limitPrice":      0.59143,        # display price (not pipettes)
+    "stopLossPrice":   0.59323,        # display price
+    "takeProfitPrice": 0.59024,        # display price
+    "label":           "SYMBOL-SIDE-SETUP",
+    "comment":         "ICT FVG entry | confluence score | SL TP details",
+})
+```
+
+**Token**: Demo token is hardcoded in `ctrader_fetcher.py` line 28. When user is ready for live/FTMO trading, set `CTRADER_MCP_TOKEN` in `.env` — the fetcher will use it automatically.
+
+**Volume formula**: `lots × lotSize × 100`
+- Forex (EURUSD, NZDUSD etc): lotSize = 100,000 → 1 lot = 10,000,000
+- Metals (XAUUSD): lotSize = 100 → 1 lot = 10,000
+- Indices (US500): lotSize = 1 → 1 lot = 100
+
+**Order prices** are in **display price format** (not pipettes).
+
+---
+
 1. **Run `python main.py`** to verify the system works before making changes
 2. **The most sensitive file is `analysis/structure.py`** — especially `_is_session_gap()` which prevents phantom FVGs
 3. **Never remove the session gap filter** — it exists because Yahoo Finance returns market-hours-only data for US indices
