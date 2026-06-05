@@ -389,18 +389,18 @@ def _fvg_lines(fvgs: list, ctx: MarketContext) -> list[str]:
             f"{_grade_symbol(fvg.probability_grade)}"
         )
 
-        # Chart location line — key info for marking on chart
+        # ── FVG DETAILS — evaluate these before looking at the trade plan ──
+        lines.append("  │  ── FVG DETAILS ─────────────────────────────────────────────")
         if fvg.formed_at:
-            sess_age  = _fvg_session_age(fvg.formed_at, now_utc)
+            sess_age   = _fvg_session_age(fvg.formed_at, now_utc)
             formed_str = fvg.formed_at.strftime("%Y-%m-%d %H:%M UTC")
-            lines.append(f"  │  Chart: formed {formed_str}  [{sess_age}]")
-            lines.append(f"  │  Mark : {fp(fvg.gap_low)} (bottom) → {fp(fvg.gap_high)} (top)  on {fvg.timeframe} chart")
-
-        # Status line
+            gap_size   = fvg.gap_high - fvg.gap_low
+            lines.append(f"  │  Formed   : {formed_str}  [{sess_age}]")
+            lines.append(f"  │  Range    : {fp(fvg.gap_low)} → {fp(fvg.gap_high)}  (gap = {fp(gap_size)})")
         lines.append(
-            f"  │  Status: {fvg.age_label} ({fvg.candles_ago}c ago){fill_str}{touched}"
-            f"  |  {pos_str}{at_level}{ctx_str}"
+            f"  │  Status   : {fvg.age_label} ({fvg.candles_ago}c ago){fill_str}{touched}"
         )
+        lines.append(f"  │  vs Price : {pos_str}{at_level}{ctx_str}")
 
         # Trade plan
         setup = _compute_fvg_setup(fvg, ctx)
