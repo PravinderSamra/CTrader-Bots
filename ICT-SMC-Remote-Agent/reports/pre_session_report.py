@@ -179,7 +179,9 @@ def _confluence_checks(fvg: FVGResult, ctx: MarketContext) -> list[tuple[bool, s
 
     # 9. Nearby unmitigated Order Block in same direction
     pip_size = _PIP_SIZE.get(ctx.symbol, 0.0001)
-    proximity_threshold = pip_size * 50  # within 50 pips
+    # ATR-based proximity: 10% of recent price range (adapts per instrument)
+    range_size = (ctx.range_high - ctx.range_low) if (ctx.range_high and ctx.range_low) else 0
+    proximity_threshold = range_size * 0.10 if range_size > 0 else pip_size * 50
     nearby_ob = None
     for ob in ctx.order_blocks:
         if ob.direction != fvg.direction:
@@ -193,15 +195,14 @@ def _confluence_checks(fvg: FVGResult, ctx: MarketContext) -> list[tuple[bool, s
     else:
         checks.append((False, "Order Block: no nearby OB in setup direction"))
 
-    # 10. COT macro alignment
+    # 10. COT macro alignment (omitted entirely when data unavailable — don't penalise missing data)
     if ctx.cot:
         cot_aligned = (is_bull and ctx.cot.bias == "BULLISH") or (not is_bull and ctx.cot.bias == "BEARISH")
         cot_warn = ""
         if (is_bull and ctx.cot.rank_8wk >= 90) or (not is_bull and ctx.cot.rank_8wk <= 10):
             cot_warn = "  ⚠ CROWDED — contrarian risk"
         checks.append((cot_aligned, f"COT: {ctx.cot.bias} ({ctx.cot.rank_8wk}th pct, {ctx.cot.report_date}){cot_warn}"))
-    else:
-        checks.append((False, "COT: unavailable for this instrument"))
+    # else: COT unavailable — omit check so score is out of 9, not penalised as 0/10
 
     return checks
 
@@ -317,13 +318,13 @@ def _format_setup_block(setup: dict, symbol: str) -> list[str]:
     stop_pips = setup["stop_pips"]
     lines.append(f"    SL          : {fp(setup['sl'])}  ({stop_pips:.0f}pt stop from entry midpoint)")
 
-    # TP1
-    lines.append(f"    TP1 (1:1)   : {fp(setup['tp1'])}  [R/R {setup['rr_tp1']:.1f}:1]")
+    # TP1 — partial close (take 50% off)
+    lines.append(f"    TP1 (partial 50%) : {fp(setup['tp1'])}  [R/R {setup['rr_tp1']:.1f}:1]")
 
-    # TP2
+    # TP2 — primary target (run remaining 50% to liquidity)
     if setup["tp2"]:
         rr = f"  [R/R {setup['rr_tp2']:.1f}:1]" if setup["rr_tp2"] else ""
-        lines.append(f"    TP2 (liq)   : {fp(setup['tp2'])}  {setup['tp2_label']}{rr}")
+        lines.append(f"    TP2 ★ PRIMARY     : {fp(setup['tp2'])}  {setup['tp2_label']}{rr}")
 
     # TP3
     if setup["tp3"]:
@@ -364,15 +365,55 @@ def _fvg_lines(fvgs: list, ctx: MarketContext) -> list[str]:
     price   = ctx.current_price
     fp      = lambda v: _fmt_price(v, symbol)
 
-    displayable = [f for f in fvgs if f.probability_grade not in SKIP_GRADES]
-    displayable.sort(key=lambda f: (_GRADE_ORDER.get(f.probability_grade, 9), f.candles_ago))
-    displayable = displayable[:MAX_FVG_DISPLAY]
+    # Kill zone flag — marks live KZ opportunities
+    kz = active_kill_zone()
 
-    if not displayable:
+    # Trend alignment gate: if HTF and intraday trends disagree, cap A/A+ grades at B
+    trends_aligned = (
+        ctx.higher_tf_trend in ("BULLISH", "BEARISH") and
+        ctx.intraday_trend  in ("BULLISH", "BEARISH") and
+        ctx.higher_tf_trend == ctx.intraday_trend
+    )
+
+    # Session bias from midnight open — used to suppress counter-trend FVGs
+    session_bull_bias = None  # None = ambiguous (no midnight open data)
+    if ctx.midnight_open:
+        session_bull_bias = price < ctx.midnight_open  # True = discount → bull bias
+
+    displayable = [f for f in fvgs if f.probability_grade not in SKIP_GRADES]
+    # Sort: grade first, then nearest to current price within the same grade
+    displayable.sort(key=lambda f: (
+        _GRADE_ORDER.get(f.probability_grade, 9),
+        abs((f.gap_low if f.direction == "BULL" else f.gap_high) - price)
+    ))
+
+    # Split into session-aligned vs counter-trend (no display limit applied yet)
+    if session_bull_bias is not None:
+        aligned_fvgs  = [f for f in displayable if (f.direction == "BULL") == session_bull_bias]
+        counter_fvgs  = [f for f in displayable if (f.direction == "BULL") != session_bull_bias]
+    else:
+        aligned_fvgs  = displayable
+        counter_fvgs  = []
+
+    aligned_fvgs = aligned_fvgs[:MAX_FVG_DISPLAY]
+
+    if not aligned_fvgs and not counter_fvgs:
         return ["  No high-probability FVGs detected."]
 
     lines = []
-    for fvg in displayable:
+
+    if not aligned_fvgs:
+        lines.append("  No session-aligned FVGs. See counter-trend summary below.")
+        lines.append("")
+
+    for fvg in aligned_fvgs:
+        # Trend alignment gate: downgrade A/A+ to B when HTF ≠ intraday
+        display_grade = fvg.probability_grade
+        trend_capped  = False
+        if not trends_aligned and display_grade in ("A+", "A"):
+            display_grade = "B"
+            trend_capped  = True
+
         direction = "Bullish" if fvg.direction == "BULL" else "Bearish"
         ref_price = fvg.gap_low if fvg.direction == "BULL" else fvg.gap_high
         pct_from  = (ref_price - price) / price * 100
@@ -382,11 +423,14 @@ def _fvg_lines(fvgs: list, ctx: MarketContext) -> list[str]:
         fill_str  = f"  {fvg.partial_fill_pct:.0f}% filled" if fvg.touch_count > 0 else "  virgin"
         touched   = f"  {fvg.touch_count}× tested" if fvg.touch_count > 0 else "  untouched"
 
+        kz_flag   = f"  ⚡ {kz}" if kz else ""
+        cap_note  = f"  ⚠ trend split → {fvg.probability_grade} capped at B" if trend_capped else ""
+
         # Header line
         lines.append(
             f"  ┌─ [{direction} FVG | {fvg.timeframe}]  "
             f"{fp(fvg.gap_low)} → {fp(fvg.gap_high)}  "
-            f"{_grade_symbol(fvg.probability_grade)}"
+            f"{_grade_symbol(display_grade)}{kz_flag}{cap_note}"
         )
 
         # ── FVG DETAILS — evaluate these before looking at the trade plan ──
@@ -413,6 +457,15 @@ def _fvg_lines(fvgs: list, ctx: MarketContext) -> list[str]:
             lines.append(f"  │  (No pip data for position sizing on {symbol})")
 
         lines.append("  └" + "─" * 60)
+        lines.append("")
+
+    # Counter-trend summary — suppressed from main view, noted for awareness
+    if counter_fvgs:
+        bias_dir = "BULL (discount)" if session_bull_bias else "BEAR (premium)"
+        lines.append(
+            f"  ↓ {len(counter_fvgs)} counter-trend FVG(s) suppressed "
+            f"(session bias: {bias_dir} from midnight open)"
+        )
         lines.append("")
 
     return lines
@@ -510,10 +563,10 @@ def generate_report(markets: list[MarketContext]) -> str:
         _DIV,
         "  • Entry zone  = entire FVG (enter at any price within gap)",
         "  • SL          = just beyond the FVG edge (10% of gap + small buffer)",
-        "  • TP1 (1:1)   = equal distance above/below entry midpoint",
-        "  • TP2 (liq)   = nearest unswept swing high/low (BSL/SSL)",
-        "  • TP3 (PDH/L) = prior day high (longs) or prior day low (shorts)",
-        "  • Confluences = 10-factor ICT/SMC scoring per FVG",
+        "  • TP1 (partial 50%) = 1:1 RR — close half position here",
+        "  • TP2 ★ PRIMARY     = nearest unswept BSL/SSL — run remaining 50%",
+        "  • TP3 (PDH/L)       = prior day high/low — full extension target",
+        "  • Confluences       = 9-10 factor ICT/SMC scoring (COT excluded when unavailable)",
         _SEP,
     ]
 
