@@ -4,6 +4,29 @@ Running record of progress, decisions, and open questions. Newest entries at the
 
 ---
 
+## 2026-06-07 — Split into three skills: swing (`/smc-prob`), day-trade (`/smc-day`), combined scanner (`/smc-scan`)
+
+Following the walk-forward backtest (below) and a discussion of whether the existing skill suits day trading, built out a genuine architectural split rather than bolting a "mode" flag onto the existing pipeline.
+
+**Why a split, not a flag:** the backtest showed the existing skill's natural shape is a *swing* trade — every winning call was a multi-day hold riding to an HTF liquidity pool (avg ≈ +5.4R over 1–5 days), even though its entries are timed with day-trading precision (kill zones, LTF triggers). A genuine same-session, no-overnight-exposure mode needs two things the swing design fundamentally can't have at the same time: a **hard session-runway gate** (reject structurally-clean setups that can't complete before a deadline) and a **flatten-by-deadline rule** (close on the clock, not just on price/structure). Bolting those onto the validated swing pipeline would compromise the very design the backtest just proved out. So instead of one skill with an awkward dial, there are now three:
+
+1. **`AgentSkill.md` / `/smc-prob` (swing) — unchanged.** The validated multi-day pipeline, left exactly as backtested.
+2. **`DayTradeSkill.md` / `/smc-day` (day-trade) — new.** Same Step 1/2 (market-hours check, HTF bias — HTF bias is law in both modes, no shortcuts), then diverges hard: Step 3 adds a **session-runway gate** (pass/fail, not scored — estimates from intraday ATR whether there's realistically enough time to complete entry→target→exit before a defined session deadline; fails this and it's a flat "no trade" regardless of how clean the structural read looks), Step 5 redefines targets as **intraday-only** liquidity pools (current/prior session high-low, LTF FVG/OB — not the HTF BSL/SSL the swing skill rides for days) and adds the **flatten-by-deadline rule** as a mechanical exit equal in force to the stop or target. Two new behavioural rules make the clock a hard constraint ("the clock is a hard constraint, exactly like the stop loss" / "flatten on the clock, not only on price") and require the skill to name the seam when a read is swing-shaped rather than day-trade-shaped ("this is valid, but it's a swing setup — try `/smc-prob`").
+3. **`ScanSkill.md` / `/smc-scan` (combined) — new.** Per the user's explicit request: "have a sub agent designed to do the work in parallel to find and analyse the Day Trades... Then when a scan is done, I can be provided with the relevant Swing Trades available to take, as well as Day Trade options... Then I can get you to execute one, the other, or both." Implemented exactly that — it spawns the swing and day-trade pipelines as **two parallel sub-agent analyses** (via the Agent tool, single message — no dependency between independent reads of the same live data), then merges both into one combined report (`── SWING TRADE LENS ──` / `── DAY TRADE LENS ──` / a plain-English summary of what's actually on the table). Neither verdict is softened by the other; disagreements between the two reads are surfaced, not papered over; every "bias present, not at price yet" flag from either lens is called out explicitly as a follow-up candidate — directly building on the backtest's most validated finding (see below: the setups that mattered most were the ones somebody followed forward).
+
+All three share the same structural foundation (Step 2 HTF read is identical across swing and day-trade — "HTF bias is law" applies equally to both), the same verified `_SB` watchlist, the same data conventions, and the same £/point spread-bet sizing model — they diverge only where the trade *shape* genuinely diverges.
+
+**Installed all three** (`~/.claude/skills/smc-prob.md`, `smc-day.md`, `smc-scan.md`).
+
+**The bigger picture — this is step one toward the user's stated end-state**: an agent running on a laptop through the trading day on a strict schedule, periodically scanning and **automatically re-checking "bias present, not at price" setups** (re-scan as price approaches the flagged level; abandon the watch if it invalidates first) — i.e. the walk-forward behaviour the backtest just validated as the actual source of edge, made systematic and scheduled rather than manual. For now (running periodically from a phone), `/smc-scan` is built specifically to make every such flag impossible to miss, so the user can manually trigger the follow-up scans the future scheduler will eventually automate.
+
+**Still open:**
+- `/smc-day` and `/smc-scan` are freshly built and **not yet live-tested or backtested** — the day-trade lens in particular has zero logged outcomes (vs. the swing lens's small-but-real backtested batch). Both need their own evidence base before their Step 4 weights mean anything; do not assume the swing lens's calibration carries over.
+- `TradeLog.md` entries from all three skills should be tagged by mode (`[Swing]` / `[Day]`) going forward so each can be calibrated independently.
+- The scheduled-laptop-scanner vision remains the long-term target; `/smc-scan` is the manual bridge to it, not the thing itself.
+
+---
+
 ## 2026-06-07 — Walk-forward backtest: XAUUSD_SB over the last month
 
 Ran a hand-replicated walk-forward simulation of the full six-step pipeline against ~5 weeks of historical XAUUSD_SB H4/H1/M15 data (2026-05-04 → 2026-06-05), to get a first read on how `/smc-prob` would have performed "blind," called once per day at the simulated NY Kill Zone open (11:00 UTC). Logged every distinct signal — taken trades and stand-asides alike — to `TradeLog.md`.
