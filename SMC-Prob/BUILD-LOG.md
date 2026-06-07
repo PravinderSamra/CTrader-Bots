@@ -4,6 +4,27 @@ Running record of progress, decisions, and open questions. Newest entries at the
 
 ---
 
+## 2026-06-07 — Open questions resolved; AgentSkill.md v1 drafted
+
+**Decisions:**
+
+1. **Instrument scope** — Default to the same FTMO Swing-eligible watchlist already documented in `ICT-SMC-Local-Agent/CLAUDE.md` (14 instruments — forex majors, XAUUSD, US/UK/EU indices, USOIL, BTC/ETH/SOL). Reuses an already-curated, broker-validated list rather than inventing a new one. `/smc-prob [SYMBOL]` overrides to focus on a single instrument.
+2. **Timeframes** — Standard ICT top-down structure: **HTF (4H/1H) for directional bias**, **LTF (15M/5M) for the entry trigger**. This is the methodology the kill-zone definitions already in the repo assume (e.g. NY KZ as the LTF execution window for an HTF bias formed overnight).
+3. **Probability methodology** — Start **rules-based confluence scoring** (transparent, auditable, no training data required), modeled on `Trade Picker`'s normalised-scoring approach, but split into two axes: SMC structural signals + quant/statistical confirmation signals, combined into one score. An ML-classifier phase (à la agiprolabs' XGBoost skill) is deferred until `TradeLog.md` has enough logged outcomes to train and validate one credibly — premature ML on no data would be worse than a transparent rule set.
+4. **Kill zones** — Reused verbatim from `ICT-SMC-Local-Agent/CLAUDE.md`: NY KZ 07:00–10:00 ET, Silver Bullet 09:50–10:10 ET, London KZ 02:00–05:00 ET. Keeps timing definitions consistent across both projects.
+5. **Output format** — Trade card modeled on `Trade Picker/AgentSkill.md`'s card, extended with SMC-specific fields: structure state (BOS/CHoCH), OB/FVG levels + grade, liquidity targets (BSL/SSL), premium/discount zone, kill-zone status, AMD-cycle/sweep confirmation.
+6. **Position sizing** — Pull live account balance via `mcp__ctrader__get_balance` rather than requiring the user to type it in; convert risk % to cTrader volume using the symbol's `lotSize`/`pipDigits` from `get_symbols` (cents-of-base convention) — explicitly guards against the "reuse the forex 10,000,000 constant for XAUUSD" oversizing trap called out in the cTrader MCP's own instructions.
+
+**Done:**
+- Drafted `AgentSkill.md` v1 — full two-stage pipeline (structural read → confluence/probability scoring → trade card), `/smc-prob` invocation spec, behavioural rules, and an ICT/SMC concepts glossary.
+
+**Still open / to validate once tested live:**
+- Confluence score weights are a first pass — will need calibration against logged outcomes in `TradeLog.md`.
+- Whether `tradingview-mcp` cross-confirmation adds enough value to justify the extra calls, or whether cTrader-derived indicators alone are sufficient — assess after the first batch of live tests.
+- Whether the FTMO watchlist should be configurable per-account (the current list assumes the FTMO Swing account context from `ICT-SMC-Local-Agent`).
+
+---
+
 ## 2026-06-07 — Project scaffolded
 
 **Done:**

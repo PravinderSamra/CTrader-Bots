@@ -41,13 +41,15 @@ SMC-Prob is **not a copy or fork** of either — it's a fresh, standalone Agent 
 | [README.md](./README.md) | This file — project overview, vision, and design direction |
 | [BUILD-LOG.md](./BUILD-LOG.md) | Running log of build progress, decisions, and open questions |
 | [research/skill-survey.md](./research/skill-survey.md) | Survey notes on the source skills this combines, and others considered |
-| `AgentSkill.md` | *(to be added)* — the installable skill definition, `cp` to `~/.claude/skills/smc-prob.md` |
-| `TradeLog.md` | *(to be added)* — live signal log and outcome tracking, once the skill is generating trade cards |
+| [AgentSkill.md](./AgentSkill.md) | The installable skill definition — `cp` to `~/.claude/skills/smc-prob.md` |
+| [TradeLog.md](./TradeLog.md) | Live signal log and outcome tracking — logs every `/smc-prob` signal and its result, used to calibrate scoring weights over time |
 
 ---
 
 ## Status
 
-🔧 **Scaffolding stage** — folder structure and tracking docs created. Skill logic (the structural-read + probability-scoring pipeline and the `/smc-prob` invocation spec) is the next build phase.
+✅ **v1 drafted** — `AgentSkill.md` defines the full two-stage pipeline (HTF/LTF structural read → confluence & probability scoring → trade card), the `/smc-prob` invocation spec, behavioural rules, and an ICT/SMC concepts glossary. Scoring weights are a first pass and will be calibrated against logged outcomes in `TradeLog.md`.
 
-See [BUILD-LOG.md](./BUILD-LOG.md) for current progress and next steps.
+**Next**: install and test live against the cTrader MCP connection on a demo account; log signals to `TradeLog.md`; iterate scoring weights based on real outcomes.
+
+See [BUILD-LOG.md](./BUILD-LOG.md) for the full decision history and open items.
