@@ -1,2 +1,5 @@
 **/__pycache__
 **/*.pyc
+
+# Local-only helper containing a live MCP auth bearer token — never commit credentials
+.ctrader_http_helper.sh
