@@ -4,6 +4,27 @@ Running record of progress, decisions, and open questions. Newest entries at the
 
 ---
 
+## 2026-06-07 — First full end-to-end run (`/smc-prob XAUUSD_SB`); v1.2
+
+Ran the complete six-step pipeline live against XAUUSD_SB (gold) — first full structural read → scoring → verdict cycle, not just a plumbing check.
+
+**Found one more real-world gap: no market-hours check.** The run happened on a Sunday (2026-06-07 15:11 UTC); gold markets were closed. `get_spot_prices` and `get_trendbars` silently returned **Friday's stale close** (timestamped 2026-06-05 ~20:55 UTC) with no signal that the data was stale — the skill would have presented day-old weekend data as a live read with no caveat.
+- **Fix (v1.2)**: added an explicit market-hours check as the first action in Step 1 — compare the spot price's `timestamp` against current time; if stale beyond ~15–20 min during normal trading hours, label the analysis "last session" and lead with that fact rather than silently analysing old candles.
+
+**The analytical pipeline itself produced a correct, disciplined result** on real data:
+- **HTF read**: clean, confirmed bearish CHoCH/BOS on H4 — three consecutive large bearish candles broke a consolidation range and printed new lows (swing range 4311.80–4515.41, equilibrium ≈ 4413.6)
+- **Zone check**: price had already driven deep into the **discount** zone (~8% above the swing low) — which is wrong location for a fresh short (shorts want premium) and there was no confirmed bullish reversal to justify a counter-trend long either
+- **Verdict: no qualifying setup** — correctly stood aside rather than forcing a short into poor location just because the trend looked convincing. This is *exactly* the discipline Step 4's thresholds and Behavioural Rule #2 ("never force a trade") are designed to produce, and it held up under a real, live, slightly-messy market read (decisive trend + contradictory location is a common real-world combination, not an edge case).
+- Output included concrete "what to watch for" levels for the next session (premium-zone short-continuation setup near 4460–4515, or a sweep-and-reversal long setup below 4311.80) — giving the user something actionable even from a "no trade" read.
+
+**v1.2 installed.** Logged this run to `TradeLog.md` as a "no-trade" entry — tracking correct stand-asides is just as important for calibration as tracking taken trades, since a skill that's too eager to find confluence is worse than one that's appropriately cautious.
+
+**Still open:**
+- Haven't yet seen the pipeline produce an actual high-confidence trade card (score ≥ 11/14) — need to run it during live market hours, ideally across the full watchlist, to see one through to a real entry/stop/target output and validate the sizing math end-to-end.
+- Confluence score weights remain uncalibrated — first calibration pass requires several logged outcomes (taken trades + correct/incorrect stand-asides).
+
+---
+
 ## 2026-06-07 — Live test against connected cTrader account; v1 corrected to v1.1
 
 Installed the skill (`cp AgentSkill.md ~/.claude/skills/smc-prob.md`) and ran the early pipeline steps live against the connected cTrader MCP to validate assumptions before a full end-to-end run. **Found three real-world mismatches between the v1 draft and the live account — all now fixed in `AgentSkill.md`:**

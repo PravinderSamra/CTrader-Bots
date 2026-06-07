@@ -67,8 +67,9 @@ If an optional server is offline, say so and proceed with reduced confirmation �
 ### Step 1 — Setup
 
 - Resolve target instrument(s): single symbol if specified, else the full watchlist.
-- For each candidate, call `mcp__ctrader__get_symbols` to retrieve `pipDigits` and `lotSize` — required for price conversion and position sizing later. Cache these per symbol for the session.
-- Determine current session / kill-zone status against UTC→ET conversion (see Kill Zones table in the glossary). This frames *when* an LTF entry is even valid.
+- **Market-hours check (do this first — confirmed necessary by live testing).** Call `mcp__ctrader__get_spot_prices` and compare its `timestamp` against the current time. If the spot price is stale by more than ~15–20 minutes during a period the instrument should be actively trading (e.g. forex/metals Mon 22:00 UTC–Fri 21:00 UTC), **the market is closed** — say so plainly up front, label the analysis "last session" rather than "live," and use the most recent available candles as the last completed session's data. Do not present stale weekend/holiday data as a live read without this caveat — confirmed live: querying on a Sunday silently returned Friday's close with no indication it was stale.
+- For each candidate, pull its `description` from `get_symbols` (point size, dealing model — see "Account type & sizing" above) and cache it for the session.
+- Determine current session / kill-zone status against UTC→ET conversion (see Kill Zones table in the glossary) — only meaningful while the market is open.
 
 ---
 
