@@ -48,8 +48,10 @@ SMC-Prob is **not a copy or fork** of either — it's a fresh, standalone Agent 
 
 ## Status
 
-✅ **v1 drafted** — `AgentSkill.md` defines the full two-stage pipeline (HTF/LTF structural read → confluence & probability scoring → trade card), the `/smc-prob` invocation spec, behavioural rules, and an ICT/SMC concepts glossary. Scoring weights are a first pass and will be calibrated against logged outcomes in `TradeLog.md`.
+✅ **v1.1 — installed and live-tested.** `AgentSkill.md` is installed at `~/.claude/skills/smc-prob.md` and has been validated against the connected cTrader account's live data and account model.
 
-**Next**: install and test live against the cTrader MCP connection on a demo account; log signals to `TradeLog.md`; iterate scoring weights based on real outcomes.
+The first live test caught a real account-type mismatch: the connected account is a **UK spread-betting account** (`_SB`-suffixed instruments, £-per-point staking), not a CFD/FTMO account. The watchlist, sizing math, and a `get_trendbars` call-convention quirk were all corrected based on what the live MCP actually returned — see the 2026-06-07 entry in [BUILD-LOG.md](./BUILD-LOG.md) for the full detail. The structural-read *logic* (Step 2/3 BOS/CHoCH detection) was spot-checked against real EURUSD_SB price action and held up.
+
+**Next**: run a full end-to-end `/smc-prob` invocation (all six pipeline steps) on a live instrument, producing a real trade card; log it to `TradeLog.md`; begin calibrating Step 4 scoring weights against logged outcomes.
 
 See [BUILD-LOG.md](./BUILD-LOG.md) for the full decision history and open items.

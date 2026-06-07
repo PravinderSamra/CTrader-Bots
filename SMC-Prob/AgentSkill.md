@@ -31,33 +31,34 @@ The output is a single trade card: direction, entry zone, stop, targets, R:R, an
 If an optional server is offline, say so and proceed with reduced confirmation — note which signals could not be checked and how that affects the confidence score. Never fabricate a reading.
 
 ### cTrader data conventions (critical — do not skip)
-- **Prices** from `get_spot_prices`/`get_trendbars` are in **pipettes** — divide by `10^pipDigits` (from `get_symbols`) to get the display price.
-- **Volume** for sizing is in 1/100 of the base asset: `volume = lots × lotSize × 100`. `lotSize` is **per-symbol** — forex (~100,000), metals (~100 oz), indices/crypto (~1 unit). **Never reuse the forex constant for XAUUSD or indices** — that is a 1000× oversizing trap. Always confirm the symbol's actual `lotSize` via `get_symbols` before sizing.
+- **Prices** from `get_spot_prices`/`get_trendbars` are in **pipettes** — divide by `10^5` for forex/metals on this account (verified live: EURUSD_SB bid `115220` → `1.15220`; XAUUSD_SB bid `432767000` → `4327.67`). Confirm precision per-symbol against the spot price before trusting it blindly — don't assume a fixed digit count across asset classes.
+- **`get_trendbars` requires an explicit `fromTimestamp` + `toTimestamp` range on this server** — `count`-only and `toTimestamp`+`count` calls were rejected live with `"fromTimestamp: must not be null"`, despite the tool description suggesting they're valid. Always pass both timestamps (e.g. last ~5 days for H4/H1, last ~1 day for M15/M5).
+- **⚠️ Account-type check — do this first, every time.** `get_symbols` returns each symbol's `enabled` flag and a `description` that states its actual dealing convention. **Do not assume a CFD lots/lotSize model.** Verify which convention this account uses before scoring or sizing anything (see "Account type & sizing" below) — the two models are incompatible and mixing them up is the single biggest risk in this skill.
 
 ---
 
 ## Default Watchlist
 
-Mirrors the FTMO Swing-eligible instrument list already validated in `ICT-SMC-Local-Agent/CLAUDE.md` (kept in sync — if that list changes, update this one too):
+⚠️ **The tradeable symbol names and IDs are account-specific — verified live below for the connected account, which is a UK spread-betting account.** Every `_SB`-suffixed name here was confirmed `"enabled": true` via `get_symbols` on 2026-06-07; `symbolId` is the value to pass to `get_trendbars`/`get_spot_prices`. **If you connect a different account (CFD, FTMO, demo, etc.), re-run `get_symbols`, find the enabled equivalents, and update this table — do not assume these names or IDs carry over.**
 
-| Symbol | cTrader Symbol | Asset Class |
-|---|---|---|
-| EURUSD | EURUSD | Forex major |
-| GBPUSD | GBPUSD | Forex major |
-| USDJPY | USDJPY | Forex major |
-| GBPJPY | GBPJPY | Forex cross |
-| XAUUSD | XAUUSD | Metal |
-| USOIL | USOIL.cash | Commodity |
-| US500 | US500.cash | Index |
-| US100 | US100.cash | Index |
-| US30 | US30.cash | Index |
-| GER40 | GER40.cash | Index |
-| UK100 | UK100.cash | Index |
-| BTCUSD | BTCUSD | Crypto |
-| ETHUSD | ETHUSD | Crypto |
-| SOLUSD | SOLUSD | Crypto |
+| Symbol | cTrader Symbol | symbolId | Asset Class | Point size (from `description`) |
+|---|---|---|---|---|
+| EUR/USD | EURUSD_SB | 185 | Forex major | £1 per 0.0001 |
+| GBP/USD | GBPUSD_SB | 199 | Forex major | £1 per 0.0001 |
+| USD/JPY | USDJPY_SB | 226 | Forex major | £1 per 0.01 |
+| GBP/JPY | GBPJPY_SB | 192 | Forex cross | £1 per 0.01 |
+| Gold | XAUUSD_SB | 241 | Metal | £1 per 1.00 |
+| WTI Crude | Crude_SB | 252 | Commodity | £1 per 0.01 |
+| Brent Crude | Brent_SB | 253 | Commodity | £1 per 0.01 |
+| US 500 | US500_SB | 220 | Index | £1 per 1.0 |
+| US Tech 100 | NAS100_SB | 205 | Index | £1 per 1.0 |
+| Wall Street 30 | US30_SB | 219 | Index | £1 per 1.0 |
+| Germany 40 | GER40_SB | 200 | Index | £1 per 1.0 |
+| UK 100 | UK100_SB | 217 | Index | £1 per 1.0 |
 
-`/smc-prob [SYMBOL]` restricts analysis to a single instrument. With no symbol given, scan the full watchlist in parallel and surface the single highest-confidence setup (same "one trade, no forcing it" discipline as `Trade Picker`).
+**Crypto is not currently tradeable on this account** — `BTCUSD_SB` (160), `ETHUSD_SB` (170) and `SOLUSD_SB` (1616) all exist but are `"enabled": false`. Skip them; don't waste calls scanning instruments that can't be traded.
+
+`/smc-prob [SYMBOL]` restricts analysis to a single instrument (use the cTrader symbol name, e.g. `/smc-prob XAUUSD_SB`). With no symbol given, scan the full enabled watchlist in parallel and surface the single highest-confidence setup (same "one trade, no forcing it" discipline as `Trade Picker`).
 
 ---
 
@@ -147,15 +148,18 @@ Pull via `mcp__ctrader__get_trendbars`-derived indicators (or `tradingview-mcp__
 - **Target 1**: nearest liquidity target in the trade direction (BSL for longs, SSL for shorts) — close 50% here.
 - **Target 2**: next HTF liquidity pool beyond Target 1 — close remainder.
 - **R:R gate**: if R:R to Target 1 is below 2:1, this should already have been caught in Step 4 scoring — do not output a trade that fails this regardless of how good the structural read looks.
-- **Position sizing**: if `account=` is given, or on request, call `mcp__ctrader__get_balance` for live equity. Apply risk % (default 1%, override with `risk=`). Convert to cTrader volume using the cached `lotSize`/`pipDigits` from Step 1:
+- **Position sizing — spread-bet model (verified live convention for this account)**: this account deals in `_SB` (spread-bet) instruments, sized as **£ stake per point**, *not* CFD lots/`lotSize`. The point size for each instrument is given directly in its `get_symbols` `description` field (e.g. EURUSD_SB → "bet in 1 GBP per (0.0001)" means each 0.0001 move = 1 point; XAUUSD_SB → "bet in 1 GBP per (1.00)" means each $1.00 move = 1 point). This is the same model as `Trade Picker`'s "Spread Bet" sizing mode — reuse that logic:
 
 ```
-risk_amount   = balance × risk_pct
-stop_distance = |entry − stop| in price terms
-volume        = (risk_amount / stop_distance) × lotSize × 100   ← convert lots→cents-of-base
+risk_amount (£) = balance × risk_pct                     ← balance via get_balance (this account: GBP, moneyDigits=2)
+stop_distance   = |entry − stop| ÷ point_size            ← convert price distance to "points" using the instrument's point size
+stake (£/point) = risk_amount ÷ stop_distance
+
+Example: £48,233 balance, 1% risk, XAUUSD_SB stop 15.00 away (point size = 1.00 → 15 points)
+→ risk = £482.33  →  stake = £482.33 / 15 = £32.16 per point
 ```
 
-Show the working. If the computed size looks implausible for the instrument (e.g. a six-figure XAUUSD volume), stop and flag a probable `lotSize` mismatch rather than outputting it — this is the single most common and costly sizing error on this platform.
+Show the working, including the point size used and where it came from (the `description` field). **If you ever connect an account where `get_symbols` shows plain (non-`_SB`) CFD instruments enabled, switch to the lots/`lotSize`/cents-of-base model instead** (`volume = lots × lotSize × 100`) — the two models are mutually exclusive; check `enabled` + `description` first and use whichever the account actually deals in. Flag clearly which model you're using and why.
 
 ---
 
@@ -189,7 +193,7 @@ SMC structural   : X/8
 Quant confirmation: X/6
   ✓/✗ [signal — exact reading]
 
-Position size  : [if account provided — show working]
+Position size  : [£X per point — show working: balance, risk%, stop distance, point size + source]
 Invalidation   : [exact price/condition that proves this wrong]
 
 Analysis notes : [2–3 sentences — the institutional logic: what smart money is likely doing and why this level matters]
@@ -253,7 +257,9 @@ A setup forming outside any kill zone isn't invalid, but it scores lower (Step 4
 
 | Command | Behaviour |
 |---|---|
-| `/smc-prob` | Scan the full default watchlist; surface the single highest-confidence setup (or "no qualifying setup") |
-| `/smc-prob EURUSD` | Restrict analysis to a single instrument |
-| `/smc-prob XAUUSD account=10000` | Include live position sizing at 1% risk (pulls balance via `get_balance` if `account=` omitted but sizing requested) |
-| `/smc-prob GBPUSD account=10000 risk=2%` | Position sizing at custom risk % |
+| `/smc-prob` | Scan the full enabled watchlist; surface the single highest-confidence setup (or "no qualifying setup") |
+| `/smc-prob XAUUSD_SB` | Restrict analysis to a single instrument (use the live cTrader symbol name from the watchlist table) |
+| `/smc-prob XAUUSD_SB risk=1%` | Include live spread-bet position sizing (£/point stake) — pulls balance via `get_balance` automatically; default risk 1% |
+| `/smc-prob GBPUSD_SB risk=2%` | Position sizing at custom risk % |
+
+`account=` is not required — live balance is always pulled fresh via `get_balance` when sizing is requested, since the account is already connected through the MCP. Override only if the user wants to size against a hypothetical balance.

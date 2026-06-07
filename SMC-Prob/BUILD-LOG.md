@@ -4,6 +4,30 @@ Running record of progress, decisions, and open questions. Newest entries at the
 
 ---
 
+## 2026-06-07 — Live test against connected cTrader account; v1 corrected to v1.1
+
+Installed the skill (`cp AgentSkill.md ~/.claude/skills/smc-prob.md`) and ran the early pipeline steps live against the connected cTrader MCP to validate assumptions before a full end-to-end run. **Found three real-world mismatches between the v1 draft and the live account — all now fixed in `AgentSkill.md`:**
+
+1. **Account type mismatch (the big one).** The connected account is a **UK spread-betting account**, not a CFD/FTMO account like `ICT-SMC-Local-Agent` assumes. Live evidence:
+   - `get_symbols` shows the plain instrument names (`EURUSD`, `XAUUSD`, etc.) as `"enabled": false`; the *tradeable* equivalents are `_SB`-suffixed (`EURUSD_SB`, `XAUUSD_SB`, `NAS100_SB`, …).
+   - `get_balance` returned a GBP balance (`depositAssetId: 6`, `moneyDigits: 2` → ~£48,233.50).
+   - Each `_SB` symbol's `description` field states its dealing convention directly, e.g. `"EUR vs US Dollar, bet in 1 GBP per (0.0001)"` — this is a **£-stake-per-point** model, not the CFD lots/`lotSize`/cents-of-base model the cTrader MCP's general instructions describe (and which v1's sizing math used).
+   - **Fix**: rewrote Step 5 sizing to the spread-bet £/point model (same approach as `Trade Picker`'s "Spread Bet" mode), reading the point size straight from each symbol's `description`. Also added an explicit instruction to check `enabled` + `description` *first* on any newly-connected account, since CFD and spread-bet models are mutually exclusive and the wrong one produces a meaningless stake.
+
+2. **Default watchlist was wrong for this account.** v1's watchlist (copied from `ICT-SMC-Local-Agent`'s FTMO list) used plain CFD names and included crypto. Live `get_symbols` showed:
+   - The correct enabled equivalents have different names than expected in places — Nasdaq-100 is `NAS100_SB` (not `US100_SB`), oil is `Crude_SB`/`Brent_SB` (not `USOIL_SB`).
+   - `BTCUSD_SB`, `ETHUSD_SB`, `SOLUSD_SB` exist but are **all disabled** on this account — crypto isn't tradeable here.
+   - **Fix**: replaced the watchlist with the 12 confirmed-enabled `_SB` instruments, their live `symbolId`s (needed for `get_trendbars`/`get_spot_prices`), and their point sizes — with a note that this table is account-specific and must be re-verified if a different account connects.
+
+3. **`get_trendbars` call convention differs from its tool description.** The schema suggests `count` alone or `toTimestamp`+`count` should work ("last N bars ending now" / "ending at toTimestamp"), but both were rejected live with `"fromTimestamp: must not be null"`. Only the explicit `fromTimestamp`+`toTimestamp` range form worked.
+   - **Fix**: documented this in the cTrader data conventions section — always pass both timestamps explicitly.
+
+**Spot-checked the structural-read data itself** (EURUSD_SB H1, last ~46 bars): a clean recent swing high near 1.1645 followed by a sharp impulsive break down to ~1.1522 — exactly the kind of BOS/CHoCH shape Step 2 is designed to detect. The pipeline's *analytical* design holds up against real data; the issues found were all in the *plumbing* (account/instrument/sizing assumptions), which is precisely what a live test is for.
+
+**v1.1 is now installed** (`~/.claude/skills/smc-prob.md`) with all three fixes applied.
+
+---
+
 ## 2026-06-07 — Open questions resolved; AgentSkill.md v1 drafted
 
 **Decisions:**
