@@ -184,23 +184,18 @@ def rejection_read(o, h, l, c, body_max_pct=0.40, wick_min_pct=0.55):
     return result
 
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--symbol", default="", help="Instrument name for pip-divisor auto-detection, e.g. EURUSD")
-    ap.add_argument("--file", default="-", help="Path to trendbars JSON, or '-' for stdin (default)")
-    ap.add_argument("--key-level-lookback", type=int, default=96,
-                    help="How many of the supplied bars to scan for the swing high/low used as the 'key level' check")
-    args = ap.parse_args()
-
-    raw = sys.stdin.read() if args.file == "-" else open(args.file).read()
-    data = json.loads(raw)
+def analyse(data, symbol="", key_level_lookback=96):
+    """
+    Core analysis routine — takes a raw get_trendbars response (optionally with a
+    "symbol" key) and returns the summary dict described in the module docstring.
+    Raises ValueError if there isn't enough bar history to warm up the indicators.
+    """
     bars = data.get("trendbars") or data.get("trendBars") or data.get("bars") or []
     if len(bars) < 30:
-        print(json.dumps({"error": "not_enough_bars", "have": len(bars)}))
-        return
+        return {"symbol": symbol or data.get("symbol", ""), "error": "not_enough_bars", "have": len(bars)}
 
     bars = sorted(bars, key=lambda b: b["timestamp"])
-    divisor = detect_divisor(args.symbol or data.get("symbol", ""), bars[-1]["close"])
+    divisor = detect_divisor(symbol or data.get("symbol", ""), bars[-1]["close"])
 
     o = [b["open"] / divisor for b in bars]
     h = [b["high"] / divisor for b in bars]
@@ -216,7 +211,7 @@ def main():
     idx = len(bars) - 2 if len(bars) >= 2 else len(bars) - 1
     rej = rejection_read(o[idx], h[idx], l[idx], c[idx])
 
-    lookback = min(args.key_level_lookback, idx)
+    lookback = min(key_level_lookback, idx)
     window_h = h[idx - lookback:idx]
     window_l = l[idx - lookback:idx]
     swing_high = max(window_h) if window_h else None
@@ -226,7 +221,7 @@ def main():
     vol_ratio = (v[idx] / avg_vol) if avg_vol else None
 
     out = {
-        "symbol": args.symbol or data.get("symbol", ""),
+        "symbol": symbol or data.get("symbol", ""),
         "period": data.get("period", ""),
         "divisor": divisor,
         "bars_used": len(bars),
@@ -256,7 +251,20 @@ def main():
         },
         "current_price": c[-1],   # last (possibly still-forming) close — closest to live price
     }
-    print(json.dumps(out, indent=2))
+    return out
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--symbol", default="", help="Instrument name for pip-divisor auto-detection, e.g. EURUSD")
+    ap.add_argument("--file", default="-", help="Path to trendbars JSON, or '-' for stdin (default)")
+    ap.add_argument("--key-level-lookback", type=int, default=96,
+                    help="How many of the supplied bars to scan for the swing high/low used as the 'key level' check")
+    args = ap.parse_args()
+
+    raw = sys.stdin.read() if args.file == "-" else open(args.file).read()
+    data = json.loads(raw)
+    print(json.dumps(analyse(data, args.symbol, args.key_level_lookback), indent=2))
 
 
 if __name__ == "__main__":

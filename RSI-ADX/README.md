@@ -57,14 +57,41 @@ reasoning behind each signal and its weight.
 | `AgentSkill.md` | The skill definition — install this to `~/.claude/skills/` |
 | `ConfluenceGuide.md` | Rationale for every signal and its weight |
 | `analysis/indicators.py` | Stdlib-only Python: RSI/ADX/rejection-candle calculator from raw cTrader trendbar JSON |
+| `analysis/ctrader_client.py` | Direct persistent-HTTPS MCP client (bypasses the flaky `mcp__ctrader__*` tool session layer — see Connection notes below) |
+| `analysis/scan.py` | Full watchlist sweep — fetches + analyses all 32 instruments in one run, prints a progress table and a JSON candidate shortlist |
 | `TradeLog.md` | Outcome log — record every trade taken from this agent here |
+
+### Running a full scan from the command line
+
+```bash
+cd RSI-ADX/analysis
+python3 scan.py                              # all 32 instruments, M15, last 30h
+python3 scan.py --classes forex,metals       # restrict to asset classes
+python3 scan.py --period H_1 --hours 200     # different timeframe / lookback
+```
+
+Progress (per-instrument RSI/ADX/rejection read) goes to stderr; the final JSON
+(candidates + full results) goes to stdout — redirect them separately if you want
+both, e.g. `python3 scan.py 2>progress.log >results.json`.
 
 ---
 
 ## Connection notes (read before running)
 
-- The `mcp__ctrader__*` tools occasionally return `"session expired"` on the first
-  call of a session — just retry once, it reconnects automatically.
+- **Prefer `analysis/scan.py` (direct HTTP) over the `mcp__ctrader__*` Claude tools
+  for anything that loops over the watchlist.** In testing, the `mcp__ctrader__*`
+  tool layer dropped mid-scan ("session expired" -> "MCP server is not connected")
+  and never recovered for ~25 minutes; `ctrader_client.py`'s persistent keep-alive
+  HTTPS connection (same approach documented in `ctrader-mcp-integration-guide.md`,
+  Lesson 1) completed the identical 32-instrument sweep in one clean pass. This
+  matches what the other agents in this repo (Trade Picker, ICT-SMC) already found —
+  see Lesson 6 of the integration guide.
+- The `mcp__ctrader__*` tools are still fine for one-off interactive calls (checking
+  balance, positions, placing a single order at the end of a scan) — just don't rely
+  on them for a 32-call loop.
+- If `mcp__ctrader__*` does return `"session expired"` on a single call, retry once —
+  it usually reconnects. If it returns `"not connected"` repeatedly, switch to
+  `scan.py` / `ctrader_client.py` rather than waiting it out.
 - All tradeable symbols on this account end in `_SB` (e.g. `EURUSD_SB`). Use the
   bare name (`EURUSD`) for `--symbol` when running `indicators.py` — it strips the
   suffix internally.

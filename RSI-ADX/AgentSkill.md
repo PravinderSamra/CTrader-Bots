@@ -120,31 +120,36 @@ sizing is stake-per-point (see Step 6), not lots or contracts.
 
 ### Step 1 — Broad Scan (all 32 instruments)
 
-For each instrument, pull recent M15 candles:
-
-```
-mcp__ctrader__get_trendbars(
-  symbolId: <id from table>,
-  period: "M_15",
-  fromTimestamp: "<~30 hours ago, ISO-8601>",
-  toTimestamp: "<now, ISO-8601>"
-)
-```
-
-This returns ~120 bars — enough for a warmed-up RSI(14)/ADX(14) and a 96-bar swing
-high/low lookback. `fromTimestamp`/`toTimestamp` MUST be ISO-8601 strings (not epoch
-ints), and the range must not exceed 720h.
-
-Save each response to a temp file and run it through the analyser:
+**Use `analysis/scan.py`, NOT a loop of `mcp__ctrader__get_trendbars` calls.**
+In testing, looping the `mcp__ctrader__*` Claude-tool layer over the watchlist caused
+it to drop mid-scan ("session expired" → "MCP server is not connected") and never
+recover. `analysis/scan.py` uses a direct, persistent-HTTPS MCP client
+(`ctrader_client.py` — same connection approach as `ctrader-mcp-integration-guide.md`
+Lesson 1) that completed the identical sweep cleanly in one pass. Run it as a Bash
+command:
 
 ```bash
-python3 "RSI-ADX/analysis/indicators.py" --symbol <NAME> --file /tmp/<name>_m15.json
+cd "RSI-ADX/analysis" && python3 scan.py --period M_15 --hours 30 2>progress.log >results.json
 ```
 
-This returns a compact JSON block: `rsi.value`/`oversold`/`overbought`,
-`adx.value`/`recent_peak`/`declining_from_peak`/`exhaustion_signal`,
-`rejection.type` (`bullish_rejection` / `bearish_rejection` / `none`),
-`key_levels.swing_high`/`swing_low`/`dist_to_swing_*_pct`, and `current_price`.
+This fetches ~120 M15 bars per instrument (enough to warm up RSI(14)/ADX(14) and a
+96-bar swing high/low lookback), runs each through the analyser, and writes:
+- `progress.log` (stderr) — a one-line-per-instrument RSI/ADX/rejection read, useful
+  for showing the user the full sweep happened
+- `results.json` (stdout) — `{"candidates": [...], "all_results": [...]}`, where each
+  entry is the same compact summary block produced by `indicators.py`: `rsi.value`/
+  `oversold`/`overbought`, `adx.value`/`recent_peak`/`declining_from_peak`/
+  `exhaustion_signal`, `rejection.type` (`bullish_rejection`/`bearish_rejection`/`none`),
+  `key_levels.swing_high`/`swing_low`/`dist_to_swing_*_pct`, `current_price`
+
+Read `results.json` to get the `candidates` array directly — `scan.py` already applies
+the first-pass filter (see below) for you. Use `--classes forex,metals` etc. to
+restrict the sweep per the invocation modifiers. Delete the temp files when done.
+
+(`analysis/indicators.py` is also usable standalone — `python3 indicators.py --symbol
+<NAME> --file <trendbars.json>` — for one-off analysis of a single fetch, e.g. when
+deep-diving a candidate on H1 in Step 3, or for ad-hoc checks via the interactive
+`mcp__ctrader__get_trendbars` tool.)
 
 **First-pass filter — keep only instruments where ALL THREE fire in the same direction:**
 
