@@ -43,7 +43,7 @@ Once both return, present a single combined report — do not just concatenate t
   SMC-SCAN — COMBINED SETUP REPORT
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Instrument(s) scanned : [list]
-Data as of            : [timestamp / market-open status — flag if the two analyses disagreed on staleness]
+Data as of            : [timestamp in UK local time (BST/GMT) / market-open status — flag if the two analyses disagreed on staleness]
 
 ── SWING TRADE LENS (multi-day hold, HTF liquidity targets) ──
 [Agent A's full trade card — or its "no qualifying setup" card with what-to-watch level]
@@ -54,7 +54,7 @@ Data as of            : [timestamp / market-open status — flag if the two anal
 ── Summary — what's actually on the table right now ──
 [One short paragraph: e.g. "Two independent setups available — a Grade-A swing short from the current premium retracement, and a Grade-B day-trade long off this morning's London sweep. They don't conflict (different structural levels, different timeframes) — both, either, or neither could be worth taking." OR "Nothing clears the bar on either lens right now — here's what to watch for on each: [swing watch level] / [day-trade watch level]."]
 
-Recommended next scan : [the SOONER of the two lenses' "Recommended re-scan" times — state the time (UTC), which lens/level it's tied to, and note the other lens's recommendation too if it differs meaningfully]
+Recommended next scan : [the SOONER of the two lenses' "Recommended re-scan" times — state the time in UK local time (BST/GMT), which lens/level it's tied to, and note the other lens's recommendation too if it differs meaningfully]
 
 Tell me which (if any) you'd like to execute — one, the other, both, or neither — and at what size.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

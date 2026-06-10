@@ -49,11 +49,11 @@ Reuse the verified `_SB` watchlist from `AgentSkill.md` ("Default Watchlist" tab
 
 - Resolve target instrument(s): single symbol if specified, else the full watchlist.
 - **Market-hours check** — identical to the swing skill's Step 1 (compare `get_spot_prices` timestamp to current time; if stale, label "last session" and proceed with reduced/no live conviction — a day trade fundamentally cannot be opened in a closed market, so a stale read here usually means "no trade, market closed" rather than "last session, here's what to watch").
-- **NEW — determine and state the session deadline up front.** This single number governs every downstream step. Default deadlines (adjust for the actual current session and instrument's typical liquidity windows):
-  - A setup forming in the **London Kill Zone** (02:00–05:00 ET) → flatten by **NY open** (~12:00 UTC / 08:00 ET) — don't carry a London-session trade into the regime change of the NY open.
-  - A setup forming in the **NY Kill Zone** (07:00–10:00 ET) or **Silver Bullet** (09:50–10:10 ET) → flatten by **NY close** (~21:00 UTC / 17:00 ET).
+- **NEW — determine and state the session deadline up front.** This single number governs every downstream step. Default deadlines (adjust for the actual current session and instrument's typical liquidity windows; see `AgentSkill.md` "Time Zone Convention" and Kill Zones table for the BST/GMT figures):
+  - A setup forming in the **London Kill Zone** (07:00–10:00 BST / 06:00–09:00 GMT) → flatten by **NY open** (~13:00 BST / 12:00 GMT) — don't carry a London-session trade into the regime change of the NY open.
+  - A setup forming in the **NY Kill Zone** (12:00–15:00 BST / 11:00–14:00 GMT) or **Silver Bullet** (14:50–15:10 BST / 13:50–14:10 GMT) → flatten by **NY close** (~22:00 BST / 21:00 GMT).
   - A setup forming **outside any kill zone** → score this honestly in Step 4 (it already scores lower for timing) and set the deadline to the end of whichever session is currently active.
-  - State the deadline explicitly at the top of the analysis: *"Session deadline: flatten by [time] ET — N hours/minutes of runway remain."* Every subsequent step is judged against this number.
+  - State the deadline explicitly at the top of the analysis, **in UK local time**: *"Session deadline: flatten by [HH:MM BST/GMT] — N hours/minutes of runway remain."* Every subsequent step is judged against this number.
 - Pull each candidate's `description` from `get_symbols` (point size, dealing model) and cache it for the session — same as the swing skill.
 
 ---
@@ -116,7 +116,7 @@ Stop Loss         : [price]   (structural — beyond [OB/FVG/swing])
 Target 1          : [price]   (+X pips/points) — close 50%
 Target 2          : [price]   (+X pips/points) — close remainder
 R:R               : ~XR to Target 1
-Session deadline  : flatten by [HH:MM ET / UTC] — exit regardless of target progress (N hrs runway remaining at entry)
+Session deadline  : flatten by [HH:MM UK time (BST/GMT)] — exit regardless of target progress (N hrs runway remaining at entry)
 ```
 
 If the runway gate fails, use a variant of the swing skill's "no qualifying setup" card that names the specific reason:
@@ -127,13 +127,13 @@ If the runway gate fails, use a variant of the swing skill's "no qualifying setu
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Instrument(s) reviewed : [list]
 Reason                 : [No HTF bias / No intraday LTF entry / Insufficient session runway / Score below threshold (X/14)]
-Session deadline       : [time] — [N mins/hrs runway remaining]
-Recommended re-scan    : [HH:MM UTC — ~N min from now] — [trigger], OR "today's runway exhausted — next session: [time/kill zone]"
+Session deadline       : [HH:MM UK time (BST/GMT)] — [N mins/hrs runway remaining]
+Recommended re-scan    : [HH:MM UK time (BST/GMT) — ~N min from now] — [trigger], OR "today's runway exhausted — next session: [HH:MM BST/GMT, kill zone]"
 Better fit elsewhere?  : [if the structural read is genuinely clean but too slow to resolve intraday — say so and point at /smc-prob]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-**Computing "Recommended re-scan"** — use the same level-ETA / structure-ETA / session-ETA logic as the swing skill (`AgentSkill.md`, Step 6), but with one extra cap: **the recommendation can never fall after today's session deadline.** If the soonest sensible re-check (by that logic) would land after the flatten-by-deadline time, today's runway can't support a fresh day trade regardless — say so explicitly and recommend the next session's kill-zone open instead (e.g. *"today's runway is exhausted for this setup — recommend re-scanning at tomorrow's London KZ open, ~06:00 UTC"*). Don't recommend a same-day re-scan that would itself fail the runway gate on arrival.
+**Computing "Recommended re-scan"** — use the same level-ETA / structure-ETA / session-ETA logic as the swing skill (`AgentSkill.md`, Step 6), stated in UK local time (BST/GMT), but with one extra cap: **the recommendation can never fall after today's session deadline.** If the soonest sensible re-check (by that logic) would land after the flatten-by-deadline time, today's runway can't support a fresh day trade regardless — say so explicitly and recommend the next session's kill-zone open instead (e.g. *"today's runway is exhausted for this setup — recommend re-scanning at tomorrow's London KZ open, ~07:00 BST"*). Don't recommend a same-day re-scan that would itself fail the runway gate on arrival.
 
 ---
 

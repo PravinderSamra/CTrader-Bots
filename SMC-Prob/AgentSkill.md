@@ -37,6 +37,17 @@ If an optional server is offline, say so and proceed with reduced confirmation �
 
 ---
 
+## Time Zone Convention
+
+**All timestamps shown to the user — data-as-of times, kill zone windows, session deadlines, and recommended re-scan times — must be presented in UK local time (Europe/London).**
+
+- cTrader timestamps come back in UTC, and the ICT kill-zone reference points below are anchored to ET — do structural calculations on whichever basis is convenient, then convert the final numbers for display.
+- UK clocks are **GMT (UTC+0)** from the last Sunday in October to the last Sunday in March, and **BST (UTC+1)** the rest of the year. Work out which applies from the current date and state it explicitly (e.g. "14:27 UTC = 15:27 BST" or "09:00 UTC = 09:00 GMT").
+- US Eastern Time (ET) and UK time both observe DST and are usually 5 hours apart (ET = UK − 5h), but their DST transition dates differ by 1–2 weeks each spring and autumn — during those brief windows the gap is 4 hours, not 5. If a calculation falls inside one of those windows, convert via UTC rather than assuming the usual 5-hour gap.
+- Internal working notes can stay in UTC/ET for precision, but every time that reaches a trade card, no-trade card, or combined report must be in UK local time, with the BST/GMT label shown.
+
+---
+
 ## Default Watchlist
 
 ⚠️ **The tradeable symbol names and IDs are account-specific — verified live below for the connected account, which is a UK spread-betting account.** Every `_SB`-suffixed name here was confirmed `"enabled": true` via `get_symbols` on 2026-06-07; `symbolId` is the value to pass to `get_trendbars`/`get_spot_prices`. **If you connect a different account (CFD, FTMO, demo, etc.), re-run `get_symbols`, find the enabled equivalents, and update this table — do not assume these names or IDs carry over.**
@@ -211,11 +222,11 @@ If no trade qualifies:
 Instrument(s) reviewed : [list]
 Reason                 : [No HTF bias / No LTF entry confluence / Score below threshold (X/14)]
 What to watch for      : [the level/condition that would change this]
-Recommended re-scan    : [HH:MM UTC — ~N min/hrs from now] — [trigger: level-ETA / structure-ETA / session-ETA, see below]
+Recommended re-scan    : [HH:MM UK time (BST/GMT) — ~N min/hrs from now] — [trigger: level-ETA / structure-ETA / session-ETA, see below]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-**Computing "Recommended re-scan"** — never leave this as a vague "soon," "later," or "in 30-60 minutes." Pick whichever of the following triggers is soonest and state it as both a clock time (UTC) and a relative duration:
+**Computing "Recommended re-scan"** — never leave this as a vague "soon," "later," or "in 30-60 minutes." Pick whichever of the following triggers is soonest and state it as both a clock time **in UK local time (BST/GMT — see Time Zone Convention)** and a relative duration:
 
 - **Level-ETA**: if "what to watch for" is "price reaches/retraces to level X," estimate time-to-level from the relevant timeframe's ATR (1H ATR for HTF zones, 15M/5M ATR for LTF triggers): `ETA ≈ distance to level ÷ ATR-per-hour`. Floor at 15 minutes — don't recommend re-scanning faster than that regardless of how close price looks.
 - **Structure-ETA**: if "what to watch for" is "confirm/deny a CHoCH or BOS," use the next relevant candle close (the next 1H or 4H boundary from now).
@@ -238,13 +249,13 @@ Recommended re-scan    : [HH:MM UTC — ~N min/hrs from now] — [trigger: level
 | **AMD cycle** | Accumulation → Manipulation (liquidity sweep) → Distribution — the institutional cycle ICT models price action around |
 | **Liquidity sweep** | A deliberate move beyond a recent high/low to trigger resting stops before reversing — the "Manipulation" phase |
 
-### Kill Zones (Eastern Time) — reused from `ICT-SMC-Local-Agent/CLAUDE.md`
+### Kill Zones — reused from `ICT-SMC-Local-Agent/CLAUDE.md`
 
-| Window | ET | Notes |
-|---|---|---|
-| London Kill Zone | 02:00–05:00 | London expansion — best for EUR/GBP setups |
-| NY Kill Zone | 07:00–10:00 | Highest-probability day-trade window overall |
-| Silver Bullet | 09:50–10:10 | ICT Silver Bullet setup window — tight, high-precision |
+| Window | ET (reference) | UK time (BST, Mar–Oct) | UK time (GMT, Oct–Mar) | Notes |
+|---|---|---|---|---|
+| London Kill Zone | 02:00–05:00 | 07:00–10:00 | 06:00–09:00 | London expansion — best for EUR/GBP setups |
+| NY Kill Zone | 07:00–10:00 | 12:00–15:00 | 11:00–14:00 | Highest-probability day-trade window overall |
+| Silver Bullet | 09:50–10:10 | 14:50–15:10 | 13:50–14:10 | ICT Silver Bullet setup window — tight, high-precision |
 
 A setup forming outside any kill zone isn't invalid, but it scores lower (Step 4) and should be flagged as lower-conviction timing.
 

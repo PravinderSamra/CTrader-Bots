@@ -4,6 +4,12 @@ Running record of progress, decisions, and open questions. Newest entries at the
 
 ---
 
+## 2026-06-10 — All user-facing timestamps now in UK local time (BST/GMT)
+
+Per user request, every timestamp shown in a trade card, no-trade card, or combined report — data-as-of, kill zone windows, session deadlines, recommended re-scan times — must now be in UK local time (Europe/London), with the BST/GMT label shown. Added a "Time Zone Convention" section to `AgentSkill.md` explaining the GMT/BST DST boundary (last Sunday of Oct/Mar) and the ET↔UK 5-hour offset (4 hours during the brief Mar/Nov windows where US and UK DST transitions don't align — convert via UTC there). Converted the Kill Zones table to show BST and GMT columns alongside the ET reference, and updated `DayTradeSkill.md`'s session-deadline definitions (NY open / NY close) and both lenses' Step 6 templates accordingly. cTrader timestamps remain UTC internally — only the final user-facing numbers change.
+
+---
+
 ## 2026-06-10 — Added concrete "Recommended re-scan" times to no-trade verdicts
 
 Following two consecutive no-trade scans on Gold/NAS100 (both showing post-sweep bullish CHoCH but in the wrong zone for either lens's bias), the "what to watch for" flags were qualitative only — no concrete time to actually come back and check. Added a `Recommended re-scan` field to both lenses' "no trade" cards (`AgentSkill.md` Step 6, `DayTradeSkill.md` Step 6), computed from whichever of **level-ETA** (distance to the watch level ÷ relevant ATR-per-hour), **structure-ETA** (next 1H/4H candle close), or **session-ETA** (next kill zone) is soonest — floored at 15 min, capped at session close. The day-trade variant adds one more cap: the recommendation can never exceed today's flatten-by-deadline time; if the soonest sensible check would land after that, it explicitly recommends the next session's kill-zone open instead. `ScanSkill.md`'s combined report now surfaces a single `Recommended next scan` line taking the sooner of the two lenses' times.
