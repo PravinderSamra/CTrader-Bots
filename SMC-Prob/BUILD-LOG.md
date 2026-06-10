@@ -4,6 +4,12 @@ Running record of progress, decisions, and open questions. Newest entries at the
 
 ---
 
+## 2026-06-10 — Added concrete "Recommended re-scan" times to no-trade verdicts
+
+Following two consecutive no-trade scans on Gold/NAS100 (both showing post-sweep bullish CHoCH but in the wrong zone for either lens's bias), the "what to watch for" flags were qualitative only — no concrete time to actually come back and check. Added a `Recommended re-scan` field to both lenses' "no trade" cards (`AgentSkill.md` Step 6, `DayTradeSkill.md` Step 6), computed from whichever of **level-ETA** (distance to the watch level ÷ relevant ATR-per-hour), **structure-ETA** (next 1H/4H candle close), or **session-ETA** (next kill zone) is soonest — floored at 15 min, capped at session close. The day-trade variant adds one more cap: the recommendation can never exceed today's flatten-by-deadline time; if the soonest sensible check would land after that, it explicitly recommends the next session's kill-zone open instead. `ScanSkill.md`'s combined report now surfaces a single `Recommended next scan` line taking the sooner of the two lenses' times.
+
+---
+
 ## 2026-06-07 — Walk-forward backtest: SMC-Day (XAUUSD_SB) over the last month
 
 Ran a hand-replicated walk-forward simulation of the full `/smc-day` six-step pipeline against the same instrument, ~5-week window, and sample-time as the swing backtest below (XAUUSD_SB, 2026-05-04 → 2026-06-04, daily scans at simulated NY KZ open / 11:00 UTC) — specifically so the two lenses could be compared directly on identical underlying structure. Logged every card (qualifying and no-trade alike) to `research/day-trade-backtest-report.md` in the exact format it would have been shown live, and condensed entries to `TradeLog.md` tagged `[Day]`.

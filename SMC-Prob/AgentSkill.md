@@ -211,8 +211,17 @@ If no trade qualifies:
 Instrument(s) reviewed : [list]
 Reason                 : [No HTF bias / No LTF entry confluence / Score below threshold (X/14)]
 What to watch for      : [the level/condition that would change this]
+Recommended re-scan    : [HH:MM UTC — ~N min/hrs from now] — [trigger: level-ETA / structure-ETA / session-ETA, see below]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
+
+**Computing "Recommended re-scan"** — never leave this as a vague "soon," "later," or "in 30-60 minutes." Pick whichever of the following triggers is soonest and state it as both a clock time (UTC) and a relative duration:
+
+- **Level-ETA**: if "what to watch for" is "price reaches/retraces to level X," estimate time-to-level from the relevant timeframe's ATR (1H ATR for HTF zones, 15M/5M ATR for LTF triggers): `ETA ≈ distance to level ÷ ATR-per-hour`. Floor at 15 minutes — don't recommend re-scanning faster than that regardless of how close price looks.
+- **Structure-ETA**: if "what to watch for" is "confirm/deny a CHoCH or BOS," use the next relevant candle close (the next 1H or 4H boundary from now).
+- **Session-ETA**: if "what to watch for" depends on a kill zone (e.g. "needs London KZ price action to develop"), use that kill zone's start time.
+- If several triggers apply, name the soonest as the primary recommendation and mention the others briefly if they're also close.
+- **Cap at the end of the current trading session** — don't recommend a re-scan time the market will be closed for. If the soonest sensible check falls after close, say so and recommend the next session's open/kill-zone instead.
 
 ---
 

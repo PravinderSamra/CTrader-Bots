@@ -54,13 +54,15 @@ Data as of            : [timestamp / market-open status — flag if the two anal
 ── Summary — what's actually on the table right now ──
 [One short paragraph: e.g. "Two independent setups available — a Grade-A swing short from the current premium retracement, and a Grade-B day-trade long off this morning's London sweep. They don't conflict (different structural levels, different timeframes) — both, either, or neither could be worth taking." OR "Nothing clears the bar on either lens right now — here's what to watch for on each: [swing watch level] / [day-trade watch level]."]
 
+Recommended next scan : [the SOONER of the two lenses' "Recommended re-scan" times — state the time (UTC), which lens/level it's tied to, and note the other lens's recommendation too if it differs meaningfully]
+
 Tell me which (if any) you'd like to execute — one, the other, both, or neither — and at what size.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ### Step 4 — Flag follow-up candidates explicitly
 
-If either lens (or both) produces a **"bias present, not yet at price"** verdict, call it out as a standing watch item — this is the manual seed of the laptop-resident scheduled-rescan workflow the user is building toward (see Behavioural Rules below and `BUILD-LOG.md`'s 2026-06-07 backtest entry, which found that *exactly this kind of followed-through setup produced the three largest wins in the test sample* — don't let one slip past unflagged).
+If either lens (or both) produces a **"bias present, not yet at price"** verdict, call it out as a standing watch item with its `Recommended re-scan` time (clock time UTC + trigger, per each lens's Step 6) — this is the manual seed of the laptop-resident scheduled-rescan workflow the user is building toward (see Behavioural Rules below and `BUILD-LOG.md`'s 2026-06-07 backtest entry, which found that *exactly this kind of followed-through setup produced the three largest wins in the test sample* — don't let one slip past unflagged).
 
 ---
 
@@ -68,7 +70,7 @@ If either lens (or both) produces a **"bias present, not yet at price"** verdict
 
 1. **Each lens's verdict stands on its own merits.** A "no trade" from one mode is never softened, hedged, or talked up just because the other mode found something — and vice versa. Two honest, independent reads, presented side by side, full stop.
 2. **Surface disagreement, don't paper over it.** If the two analyses read the HTF structure differently (e.g. one sees a confirmed CHoCH the other doesn't), or disagree on market-open/staleness status, say so plainly in the summary — that's a useful signal about read ambiguity, not a bug to hide.
-3. **Always name follow-up candidates.** Any "bias present, no entry yet" verdict from either lens gets explicitly flagged with its watch level and a recommended re-scan trigger ("re-run `/smc-scan [SYMBOL]` once price approaches [level], or at the next [kill zone]"). This is the single most validated finding from the 2026-06-07 backtest — the setups that mattered most were the ones somebody followed forward.
+3. **Always name follow-up candidates with a concrete re-scan time.** Any "bias present, no entry yet" / "no qualifying setup" verdict from either lens carries its own `Recommended re-scan` field (a clock time in UTC plus the trigger — see `AgentSkill.md`/`DayTradeSkill.md` Step 6 for how each lens computes it). Don't water this down to "soon" or "check back later" — pull both lenses' times into the combined report's `Recommended next scan` line, surfacing whichever is sooner. This is the single most validated finding from the 2026-06-07 backtest — the setups that mattered most were the ones somebody followed forward.
 4. **Log everything, tagged by mode.** Every distinct outcome from either lens — taken trade or stand-aside — gets logged to `TradeLog.md`, tagged `[Swing]` or `[Day]` in the Notes column, so the two modes' Step-4 weights can eventually be calibrated independently. The swing lens already has a small backtested calibration batch; the day-trade lens starts from zero and needs its own evidence base before its weights mean anything.
 5. **Never auto-execute.** This skill analyses and reports — it places no orders on its own. Execution happens only on the user's explicit instruction, naming which setup(s) and at what size.
 

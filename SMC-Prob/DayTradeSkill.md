@@ -128,9 +128,12 @@ If the runway gate fails, use a variant of the swing skill's "no qualifying setu
 Instrument(s) reviewed : [list]
 Reason                 : [No HTF bias / No intraday LTF entry / Insufficient session runway / Score below threshold (X/14)]
 Session deadline       : [time] — [N mins/hrs runway remaining]
+Recommended re-scan    : [HH:MM UTC — ~N min from now] — [trigger], OR "today's runway exhausted — next session: [time/kill zone]"
 Better fit elsewhere?  : [if the structural read is genuinely clean but too slow to resolve intraday — say so and point at /smc-prob]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
+
+**Computing "Recommended re-scan"** — use the same level-ETA / structure-ETA / session-ETA logic as the swing skill (`AgentSkill.md`, Step 6), but with one extra cap: **the recommendation can never fall after today's session deadline.** If the soonest sensible re-check (by that logic) would land after the flatten-by-deadline time, today's runway can't support a fresh day trade regardless — say so explicitly and recommend the next session's kill-zone open instead (e.g. *"today's runway is exhausted for this setup — recommend re-scanning at tomorrow's London KZ open, ~06:00 UTC"*). Don't recommend a same-day re-scan that would itself fail the runway gate on arrival.
 
 ---
 
