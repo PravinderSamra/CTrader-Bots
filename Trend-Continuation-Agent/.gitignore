@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+data/last_scan.json
+data/last_scan.log
