@@ -331,44 +331,52 @@ Risk per trade defaults to **1% of account balance** unless overridden with `ris
 
 Three account-type modes. Detect from invocation modifier (`type=spreadbet`, `type=cfd`, or `type=direct`). Default for Pepperstone UK Spread Betting is `type=spreadbet`.
 
-**Spread Bet** (`type=spreadbet`) — stake in £/pip:
+**Spread Bet** (`type=spreadbet`) — stake in £/pip. **The volume-to-£/pip conversion depends on the instrument's pip size** — it is NOT a single constant across forex:
+
 ```
 Risk amount (£)    = account_balance × risk_pct
 Stop distance      = |entry − stop_loss| in pips (forex) or points (indices)
 Stake per pip (£)  = Risk amount / Stop distance
-cTrader volume     = floor(Stake per pip × 10,000 / volume_step) × volume_step
+cTrader volume     = Stake per pip (£) × 100 / pip_size
 
-Each 10,000 units of cTrader volume = £1/pip stake.
+Equivalently:
+  JPY-quoted pairs   (pip_size = 0.01)   → volume = £/pip × 10,000
+  Other forex pairs  (pip_size = 0.0001) → volume = £/pip × 1,000,000
 ```
 
-> **Verified empirically**: volume 1,000 = £0.10/pip on EURJPY_SB (Pepperstone demo, June 2026). The "100 units = £1/pip" figure seen in some docs is wrong for forex SB — use 10,000.
+> **Verified empirically (Pepperstone demo, June 2026)**:
+> - EURJPY_SB (pip 0.01): volume 1,000 = £0.10/pip → ratio **10,000 : 1**
+> - EURCAD_SB / GBPCAD_SB (pip 0.0001): volume 100,000 = £0.10/pip → ratio **1,000,000 : 1**
+> - The two ratios differ by exactly 100×, matching the 100× difference in pip size (0.01 vs 0.0001). Cross-checked against the existing EURGBP_SB position (16,000,000 vol → £16/pip → ~1% risk on its 26.8-pip stop) — consistent with the 1,000,000:1 ratio.
+> - **Indices/commodities ratio is unconfirmed** — verify empirically before sizing a live order (place at calculated volume, then check the resulting £/point against `get_balance` equity movement before scaling).
 
 **Volume step varies by instrument — and varies WIDELY even within forex.** Do not assume a single forex step. Snap calculated volume *down* to the nearest valid multiple (never round up — do not exceed risk budget):
 
-| Symbol | Confirmed volume step | Confirmed min volume | £/pip at min |
-|---|---|---|---|
-| EURJPY_SB | 500 | 500 | £0.05/pip |
-| EURCAD_SB | 100,000 | 100,000 | £10/pip |
-| GBPCAD_SB | 100,000 | 100,000 | £10/pip |
+| Symbol | Confirmed volume step | Confirmed min volume |
+|---|---|---|
+| EURJPY_SB | 500 | 500 |
+| EURCAD_SB | 100,000 | 100,000 |
+| GBPCAD_SB | 100,000 | 100,000 |
 
 > **Other symbols are unconfirmed** — do not assume 500. If `create_order` rejects with `"Order volume = X.XX must be multiple of volume step = Y.YY"`, the real step is `Y.YY × 100` (e.g. step "1000.00" in the error → real step 100,000). Snap down to that and retry, then record the confirmed value in this table.
 
 **When the calculated volume doesn't divide evenly into the confirmed step**, snap down to the nearest valid multiple even if that means risking noticeably less than the target %. Tell the user the actual £-risk and %-of-balance once sized — do not silently round up to get closer to the target.
 
 ```
-Example: £48,300 account, 1% risk, 19.8-pip stop on EURJPY
+Example: £48,300 account, 1% risk, 19.8-pip stop on EURJPY (pip 0.01)
 → Risk = £483  →  Stake = £483 / 19.8 = £24.4/pip
 → Raw volume = 24.4 × 10,000 = 244,000
 → Snap down to step 500 → volume = 244,000  (already valid)
 → Risk check: (244,000 / 10,000) × 19.8 pips = £483 ✓
 
-Example: £47,771 account, 1% risk, 25.6-pip stop on EURCAD
+Example: £47,771 account, 1% risk, 25.6-pip stop on EURCAD (pip 0.0001)
 → Risk = £477.71  →  Stake = £477.71 / 25.6 = £18.66/pip
-→ Raw volume = 18.66 × 10,000 = 186,600
-→ Snap down to step 100,000 → volume = 100,000  (£10/pip)
-→ Actual risk = £10 × 25.6 = £256 (≈0.54% — below target, but the
-   next step up, 200,000 = £512, would exceed the 1% budget)
+→ Raw volume = 18.66 × 1,000,000 = 18,660,000
+→ Snap down to step 100,000 → volume = 18,600,000  (£18.60/pip)
+→ Risk check: £18.60 × 25.6 = £476.16 (≈1.00% ✓)
 ```
+
+> ⚠️ **Always sanity-check a freshly placed order**: after fill, run `get_balance` and confirm `equity ≈ balance − (spread × stake_per_pip)`. If the floating loss on a fresh fill looks ~100× too big or too small relative to the spread, the volume is wrong by a factor of 100 — stop and re-derive before leaving the position open.
 
 **For `amend_position`** (modifying SL/TP after fill): pass prices in **display format** (e.g. 185.630), not pipettes. The `create_order` relative fields use pipette offsets; `amend_position` uses display prices.
 
