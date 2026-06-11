@@ -372,6 +372,43 @@ just a different unit) is required before the third attempt.
 
 ---
 
+## 15. LIVE TRADE PLACED — TP2/TP3 limit-price precision bug
+
+**The third attempt (2026-06-11, fresh CONFIRM) succeeded for the MARKET
+leg**: EURGBP SHORT, £16/pt (`volume: 16,000,000`), `positionId: 50650145`,
+`orderId: 65620412`, `entryPrice: 0.86296`, `stopLoss: 0.86564`,
+`takeProfit: 0.85894` (TP1) — `executionType: ORDER_ACCEPTED`. Confirmed live
+via `get_positions`. **This is a real open position on the Pepperstone demo
+SB account**, fully protected by SL + TP1.
+
+The TP2/TP3 LIMIT legs both failed:
+```
+tp2_order: HTTP 400: {"error":{"code":"400 BAD_REQUEST","message":"Order price = 0.8561696562357894 has more digits than symbol allows. Allowed 5 digits","httpStatus":400}}
+tp3_order: HTTP 400: {"error":{"code":"400 BAD_REQUEST","message":"Order price = 0.8521449243755937 has more digits than symbol allows. Allowed 5 digits","httpStatus":400}}
+```
+
+**Root cause**: `tp2`/`tp3` are computed via floating-point arithmetic
+(`entry_mid + sign * TPn_R * sl_distance` in `agents/trade_card.py`) and
+retain ~16 significant digits. `create_limit_order`'s `limitPrice` was passed
+this raw float — EURGBP only allows 5 decimal places.
+
+**Fix**: added `mcp_client.round_price(base_name, price)` (rounds to
+`get_pip_digits`, the same precision used for `to_raw_points`/
+`get_trendbars`/`get_spot_prices`). `execute_order` now rounds `tp2`/`tp3`
+through this before calling `create_limit_order`. Also extracted the TP2/TP3
+placement loop into `execution.place_tp_legs(order_plan)`, reused by
+`execute_order` AND exposed via a new `--retry-tps` flag on
+`orchestrator.py execute` — so the two missing legs for the open position
+above can be (re)placed without re-submitting the MARKET order (which would
+double the position). Dry-run with `--retry-tps` re-verified: `tp2=0.85617`,
+`tp3=0.85214` (both within 5 digits), `tp23_volume=5,000,000` (£5/pt) each,
+`close_side=BUY` (closes the SHORT).
+
+**Not yet retried** — placing TP2/TP3 is itself a new order action and
+requires fresh CONFIRM per spec §6.
+
+---
+
 ## Testing performed
 
 - `python orchestrator.py --symbols UK100,GER40,EURUSD` and a 10-instrument

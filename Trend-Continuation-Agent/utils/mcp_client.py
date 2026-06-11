@@ -365,6 +365,15 @@ def to_raw_points(base_name: str, display_distance: float) -> int:
     return max(1, round(display_distance * (10 ** digits)))
 
 
+def round_price(base_name: str, price: float) -> float:
+    """Round an absolute price to the symbol's allowed display precision
+    (pip digits), as required by `limitPrice`/`stopPrice`/`stopLoss`/
+    `takeProfit` on LIMIT/STOP orders — the broker rejects prices with more
+    decimal places than the symbol allows."""
+    digits = get_pip_digits(base_name)
+    return round(price, digits)
+
+
 def _ts_to_utc(raw: int) -> datetime:
     if raw > 1_000_000_000_000:
         ts = raw / 1000

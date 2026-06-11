@@ -198,6 +198,11 @@ def run_execute(args: argparse.Namespace) -> dict:
     if args.confirm:
         if issues:
             result["result"] = {"error": "Not placed — resolve the issues above first."}
+        elif args.retry_tps:
+            if not order_plan["split_tps"]:
+                result["result"] = {"error": "split_tps is false for this plan — nothing to retry."}
+            else:
+                result["result"] = execution.place_tp_legs(order_plan)
         else:
             result["result"] = execution.execute_order(order_plan)
 
@@ -211,6 +216,7 @@ def main() -> None:
         parser.add_argument("--symbol", help="Instrument symbol from the last scan")
         parser.add_argument("--risk", type=float, required=True, help="Risk amount in GBP")
         parser.add_argument("--confirm", action="store_true", help="Place the order (omit for a dry-run confirmation)")
+        parser.add_argument("--retry-tps", action="store_true", help="Skip the MARKET order and only (re)place the TP2/TP3 LIMIT legs for an already-open position")
         args = parser.parse_args(sys.argv[2:])
         print(json.dumps(run_execute(args), indent=2, default=_json_default))
         return

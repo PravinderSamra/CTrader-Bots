@@ -117,12 +117,23 @@ def execute_order(order_plan: dict) -> dict:
     result: dict = {"market_order": market_resp}
 
     if order_plan["split_tps"]:
-        for label, tp_price in (("tp2_order", order_plan["tp2"]), ("tp3_order", order_plan["tp3"])):
-            result[label] = mcp_client.create_limit_order(
-                symbol_id=order_plan["symbol_id"],
-                trade_side=order_plan["close_side"],
-                volume=order_plan["tp23_volume"],
-                limit_price=tp_price,
-            )
+        result.update(place_tp_legs(order_plan))
 
+    return result
+
+
+def place_tp_legs(order_plan: dict) -> dict:
+    """Places the TP2/TP3 partial-close LIMIT orders (spec §6 steps 3-4) for
+    `order_plan`. Used both by `execute_order` for a fresh trade and to retry
+    just these legs if they failed against an already-open position (e.g.
+    `--retry-tps`)."""
+    symbol = order_plan["symbol"]
+    result: dict = {}
+    for label, tp_price in (("tp2_order", order_plan["tp2"]), ("tp3_order", order_plan["tp3"])):
+        result[label] = mcp_client.create_limit_order(
+            symbol_id=order_plan["symbol_id"],
+            trade_side=order_plan["close_side"],
+            volume=order_plan["tp23_volume"],
+            limit_price=mcp_client.round_price(symbol, tp_price),
+        )
     return result
