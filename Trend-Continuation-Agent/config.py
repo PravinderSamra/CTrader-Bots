@@ -75,14 +75,20 @@ ENTRY_ZONE_HALFWIDTH_PCT = 0.0003
 # Spec §6: "Round down to nearest £0.50/pt increment for clean sizing"
 SPEC_STAKE_ROUND_INCREMENT = 0.5
 
-# DEVIATION / broker reality (confirmed in ctrader-mcp-integration-guide.md
-# Lesson 5 with a live test order): the cTrader MCP `volume` field for this
-# Pepperstone SB account is in units of £0.01/pt, with a minimum of 100
-# (= £1/pt) and a step of 100 (= £1/pt). A £0.50/pt stake is NOT placeable.
-# The execution agent rounds DOWN to the nearest whole £1/pt for the actual
+# DEVIATION / broker reality: ctrader-mcp-integration-guide.md Lesson 5
+# ("volume = stake_£/pt * 100, min/step 100") only holds for point_size==1.0
+# instruments (indices, XAU/XPD/XPT) — confirmed there with a live UK30/US30-
+# style order. A live EURGBP order using that formula was REJECTED
+# ("Order volume = 16.00 is smaller than minimum allowed volume = 1000.00")
+# because cTrader `volume` is "cents of base asset"; for point_size != 1.0
+# instruments it must be `(stake_£/pt / point_size) * 100` (CLAUDE.md item
+# 14). These two constants remain the point_size==1.0 baseline — £1/pt
+# minimum/step — and `calc_stake` scales them by 1/point_size for other
+# instruments. A £0.50/pt stake is NOT placeable on indices either way; the
+# execution agent rounds DOWN to the nearest whole £1/pt for the actual
 # order, after first applying the spec's £0.50 rounding for display.
-BROKER_MIN_VOLUME = 100        # = £1.00/pt
-BROKER_VOLUME_STEP = 100       # = £1.00/pt increments
+BROKER_MIN_VOLUME = 100        # = £1.00/pt (point_size == 1.0 baseline)
+BROKER_VOLUME_STEP = 100       # = £1.00/pt increments (point_size == 1.0 baseline)
 
 # ── Scan universe ────────────────────────────────────────────────────────────────
 # Spec §12: "33 configured instruments + full available SB symbol list scan"

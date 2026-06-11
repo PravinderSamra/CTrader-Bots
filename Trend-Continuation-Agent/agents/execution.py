@@ -31,14 +31,16 @@ def build_order_plan(data: InstrumentData, plan: dict, risk_amount: float) -> di
     # CLAUDE.md "Implementation Notes" (position sizing / point_size).
     point_size = data.point_size or 1.0
     sl_distance_points = plan["sl_distance"] / point_size
-    sizing = calc_stake(risk_amount, sl_distance_points)
+    sizing = calc_stake(risk_amount, sl_distance_points, point_size)
     entry_price = data.spot_ask if trade_side == "BUY" else data.spot_bid
 
     # Spec §6 steps 3-4: TP2 and TP3 close volume/3 each as separate limit
     # orders; the remainder stays on the position with TP1. If a third of
-    # the stake would round below the broker's £1/pt step, skip the split
-    # and let TP1 cover the full position (see CLAUDE.md).
-    tp23_volume = (sizing["volume"] // 3 // BROKER_VOLUME_STEP) * BROKER_VOLUME_STEP
+    # the stake would round below the broker's £1/pt-equivalent step for
+    # this symbol (CLAUDE.md item 14), skip the split and let TP1 cover the
+    # full position (see CLAUDE.md item 5).
+    volume_step = int(round(BROKER_VOLUME_STEP / point_size))
+    tp23_volume = (sizing["volume"] // 3 // volume_step) * volume_step
     split_tps = tp23_volume > 0
     tp1_volume = sizing["volume"] - (2 * tp23_volume if split_tps else 0)
 

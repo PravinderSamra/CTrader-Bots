@@ -325,6 +325,53 @@ Pravinder to review"), a fresh CONFIRM is required.
 
 ---
 
+## 14. `volume` is "cents of base asset" — NOT a flat £/pt unit for non-index instruments
+
+With item 13's fix in place, retrying `--confirm` for the same EURGBP SHORT
+(Card #2, £450 risk, £16/pt) returned a **second**, now-real broker error:
+```
+HTTP 400: {"error":{"code":"400 BAD_REQUEST","message":"Order volume = 16.00 is smaller than minimum allowed volume = 1000.00.","httpStatus":400}}
+```
+Confirmed again via `get_positions`/`get_order_history`: still nothing
+placed.
+
+**Root cause**: `ctrader-mcp-integration-guide.md` Lesson 5 ("volume = £/pt
+stake × 100, min/step 100") was derived from an **index** (US30) example. For
+indices/XAU/XPD/XPT (`point_size == 1.0`), this happens to coincide with
+cTrader's real convention — `volume` = "cents of base asset"
+(`volume = lots × lotSize × 100`) — because 1 unit of the underlying = £1
+P&L per 1-point move. For an FX pair the relationship between "1 unit of
+base-currency notional" and "£/pt P&L" is scaled by `point_size`
+(EURGBP: a 1 EUR notional position moves by `0.0001` GBP per `0.0001` price
+change, i.e. per "point" — so £1/pt needs `1/point_size = 10,000` EUR
+notional, not 1). Our submitted `volume=1600` (the old `broker_stake*100`
+formula, i.e. £16/pt taken literally as "cents of base") was interpreted by
+the broker as **16 EUR notional** — far below its **1,000 EUR (0.01 lot)
+minimum** — hence "16.00 ... minimum ... 1000.00".
+
+**Fix** (`utils/position_sizing.py` `calc_stake`, now takes `point_size`):
+```python
+volume = int(round(broker_stake * 100 / point_size))
+min_volume = int(round(BROKER_MIN_VOLUME / point_size))
+```
+For `point_size == 1.0` this is unchanged (`volume = broker_stake * 100`,
+verified against the original XAUUSD/AUDUSD-style dry runs). For EURGBP
+(£16/pt, `point_size = 0.0001`): `volume = 16,000,000` — comfortably above
+the ~100,000 (0.01 lot) minimum observed above.
+
+The TP2/TP3 split in `agents/execution.py` `build_order_plan` used a fixed
+`BROKER_VOLUME_STEP = 100` to snap `tp23_volume` — also only valid for
+`point_size == 1.0`. Now scaled the same way:
+`volume_step = round(BROKER_VOLUME_STEP / point_size)`. For EURGBP this gives
+`tp1_volume = 6,000,000` (£6/pt) / `tp23_volume = 5,000,000` (£5/pt each) —
+same £/pt split (6/5/5) as before, just correctly scaled.
+
+**Not yet retried** — per spec §6, a fresh CONFIRM against the corrected
+`order_plan` (10,000× larger `volume` numbers for EURGBP — same £16/pt risk,
+just a different unit) is required before the third attempt.
+
+---
+
 ## Testing performed
 
 - `python orchestrator.py --symbols UK100,GER40,EURUSD` and a 10-instrument
