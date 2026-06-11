@@ -614,6 +614,14 @@ curl -s -X POST \
    - Always label the time with the active offset, e.g. "13:00 BST" or "09:00 GMT"
    - 4H bar closes in UK time: 01:00, 05:00, 09:00, **13:00**, 17:00, 21:00 BST (summer) / 00:00, 04:00, 08:00, **12:00**, 16:00, 20:00 GMT (winter)
 
+9. **Check the actual wall-clock time before any time-sensitive response.** Never assume the current prompt arrives immediately after the previous one — minutes or hours may have passed between user messages. Before stating "current" prices/setups, answering "is there a setup now?", or giving rescan timing, run:
+   ```bash
+   date -u && TZ=Europe/London date
+   ```
+   Compare this to the `scanned_at` timestamp of the last scan you have. If a new 4H bar has closed since (`01:00/05:00/09:00/13:00/17:00/21:00 BST` or `00:00/04:00/08:00/12:00/16:00/20:00 GMT`), the cached scan is stale — re-run `ctrader_fallback.py` before answering rather than reusing old numbers.
+
+10. **Always use full Step 7 trade cards for recommended setups.** Any time you present one or more tradeable/recommended setups — whether from a full scan, a rescan, or an ad-hoc "any setups?" question — output the complete Step 7 format (summary header + full card per setup: market, direction, entry zone, stop, targets, R:R, position size, confluence signals, key levels, invalidation, rationale). Do not substitute a condensed bullet-point summary for a genuine recommendation. A short-form answer is only acceptable when explicitly recapping a card already shown moments earlier in the same turn.
+
 ---
 
 ## Invocation Modifiers
