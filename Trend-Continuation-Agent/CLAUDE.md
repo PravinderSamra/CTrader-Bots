@@ -211,14 +211,35 @@ near-zero-conviction noise on quiet days.
 # Note: invert logic for SHORT (price below fib levels)`.
 
 **Decision** (`agents/scoring_ranking.py`): no inversion implemented. The
-38.2%–61.8% *price band* (`fib["0.382"]` .. `fib["0.618"]`, both measured
-down from `swing_high_ref`) is a fixed absolute-price interval — checking
+38.2%–61.8% *price band* is a fixed absolute-price interval — checking
 whether `current_price` falls inside it is identical regardless of whether
 the setup is LONG or SHORT. There is no separate "SHORT fib level set" to
 invert *to*; the spec's note appears to be a leftover caution that doesn't
 apply to an absolute price-band test. `fib_retracement_pct` (added for the
 trade card / commentary, item 11) gives the same answer either way: `0%` =
 at `swing_high_ref`, `100%` = at `swing_low_ref`.
+
+**Bug fix (post-initial-build)**: `utils.indicators.fibonacci_levels` returns
+levels in **descending** order — `fib["0.0"]` = `swing_high_ref` down to
+`fib["1.0"]` = `swing_low_ref`, so `fib["0.382"] > fib["0.618"]` and
+`fib["0.236"] > fib["0.382"]` etc. The original comparisons
+(`fib["0.382"] <= current_price <= fib["0.618"]`, and similarly for the
+8pt zones) were therefore **always false** — `lower_bound <= x <= upper_bound`
+where `lower_bound > upper_bound` is never satisfiable — so **S6 scored 0 for
+every instrument, every scan**, regardless of price. Caught when a live scan
+showed EURGBP at `fib_retracement_pct = 74.2%` (squarely in the 61.8–76.4%
+band) still scoring `S6 = 0`. Fixed by swapping the comparison bounds to
+match the descending order:
+```python
+if fib["0.618"] <= current_price <= fib["0.382"]:      # 38.2-61.8% zone -> 15
+    s6 = 15
+elif (fib["0.764"] <= current_price <= fib["0.618"]) or (fib["0.382"] <= current_price <= fib["0.236"]):
+    s6 = 8                                              # 23.6-38.2% or 61.8-76.4% -> 8
+else:
+    s6 = 0
+```
+This changed EURGBP's live score from 70 (Tier B) to 78 (Tier A) on the
+2026-06-11 10:46 BST scan.
 
 ---
 

@@ -97,9 +97,12 @@ def score_instrument(data: InstrumentData, gate_result: dict) -> dict:
 
     # The 38.2-61.8% zone is a fixed price band regardless of direction —
     # checking current_price against it is correct for both LONG and SHORT.
-    if fib["0.382"] <= current_price <= fib["0.618"]:
+    # fibonacci_levels() returns levels in descending order (0.0 = swing_high
+    # down to 1.0 = swing_low), so the "deeper" retracement level is the
+    # lower bound of each band.
+    if fib["0.618"] <= current_price <= fib["0.382"]:
         s6 = 15
-    elif (fib["0.236"] <= current_price <= fib["0.382"]) or (fib["0.618"] <= current_price <= fib["0.764"]):
+    elif (fib["0.764"] <= current_price <= fib["0.618"]) or (fib["0.382"] <= current_price <= fib["0.236"]):
         s6 = 8
     else:
         s6 = 0
