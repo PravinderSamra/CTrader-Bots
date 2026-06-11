@@ -343,13 +343,17 @@ Each 10,000 units of cTrader volume = £1/pip stake.
 
 > **Verified empirically**: volume 1,000 = £0.10/pip on EURJPY_SB (Pepperstone demo, June 2026). The "100 units = £1/pip" figure seen in some docs is wrong for forex SB — use 10,000.
 
-**Volume step varies by instrument** — snap calculated volume *down* to the nearest valid multiple (never round up — do not exceed risk budget):
+**Volume step varies by instrument — and varies WIDELY even within forex.** Do not assume a single forex step. Snap calculated volume *down* to the nearest valid multiple (never round up — do not exceed risk budget):
 
-| Instrument type | Volume step | Min volume |
-|---|---|---|
-| Forex (e.g. EURJPY_SB) | 500 | 500 |
-| Indices (e.g. US500_SB) | 100 | 100 |
-| Commodities (e.g. XAUUSD_SB) | 100 | 100 |
+| Symbol | Confirmed volume step | Confirmed min volume | £/pip at min |
+|---|---|---|---|
+| EURJPY_SB | 500 | 500 | £0.05/pip |
+| EURCAD_SB | 100,000 | 100,000 | £10/pip |
+| GBPCAD_SB | 100,000 | 100,000 | £10/pip |
+
+> **Other symbols are unconfirmed** — do not assume 500. If `create_order` rejects with `"Order volume = X.XX must be multiple of volume step = Y.YY"`, the real step is `Y.YY × 100` (e.g. step "1000.00" in the error → real step 100,000). Snap down to that and retry, then record the confirmed value in this table.
+
+**When the calculated volume doesn't divide evenly into the confirmed step**, snap down to the nearest valid multiple even if that means risking noticeably less than the target %. Tell the user the actual £-risk and %-of-balance once sized — do not silently round up to get closer to the target.
 
 ```
 Example: £48,300 account, 1% risk, 19.8-pip stop on EURJPY
@@ -357,6 +361,13 @@ Example: £48,300 account, 1% risk, 19.8-pip stop on EURJPY
 → Raw volume = 24.4 × 10,000 = 244,000
 → Snap down to step 500 → volume = 244,000  (already valid)
 → Risk check: (244,000 / 10,000) × 19.8 pips = £483 ✓
+
+Example: £47,771 account, 1% risk, 25.6-pip stop on EURCAD
+→ Risk = £477.71  →  Stake = £477.71 / 25.6 = £18.66/pip
+→ Raw volume = 18.66 × 10,000 = 186,600
+→ Snap down to step 100,000 → volume = 100,000  (£10/pip)
+→ Actual risk = £10 × 25.6 = £256 (≈0.54% — below target, but the
+   next step up, 200,000 = £512, would exceed the 1% budget)
 ```
 
 **For `amend_position`** (modifying SL/TP after fill): pass prices in **display format** (e.g. 185.630), not pipettes. The `create_order` relative fields use pipette offsets; `amend_position` uses display prices.
