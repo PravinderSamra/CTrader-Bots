@@ -633,6 +633,8 @@ curl -s -X POST \
 
 10. **Always use full Step 7 trade cards for recommended setups.** Any time you present one or more tradeable/recommended setups — whether from a full scan, a rescan, or an ad-hoc "any setups?" question — output the complete Step 7 format (summary header + full card per setup: market, direction, entry zone, stop, targets, R:R, position size, confluence signals, key levels, invalidation, rationale). Do not substitute a condensed bullet-point summary for a genuine recommendation. A short-form answer is only acceptable when explicitly recapping a card already shown moments earlier in the same turn.
 
+11. **Trade cards render as fenced code blocks ("tiles"), not bold markdown.** The summary header and every full card (Step 7 templates) must be wrapped in a triple-backtick ``` ``` ``` code fence, exactly like the templates in this document — box-drawing characters, aligned `field : value` columns, no markdown bold (`**`). This renders as a copyable monospace tile. The "Why this setup" line inside each card is the required commentary for that pick — never omit it, and never move the card's content into plain prose instead of a code fence.
+
 ---
 
 ## Invocation Modifiers
