@@ -4,6 +4,17 @@ Running record of progress, decisions, and open questions. Newest entries at the
 
 ---
 
+## 2026-06-11 — `create_order` MARKET orders: relative SL/TP precision finding
+
+First live (non-backtest) order placed via `/smc-day` (XAUUSD_SB short, see `TradeLog.md` 2026-06-11 entry). Two `create_order` API details not previously documented here:
+
+1. **MARKET orders reject absolute `stopLoss`/`takeProfit` outright** (the cTrader MCP server's own instructions confirm this — fill price isn't known at send time). Must use `relativeStopLoss` / `relativeTakeProfit` instead. This is fine for `LIMIT`/`STOP` orders, where absolute prices work as expected.
+2. **`relativeStopLoss`/`relativeTakeProfit` are NOT in display-price "points" despite the docs' wording** — passing e.g. `10` (for a 10-point/£10 stop on XAUUSD) fails with `400 Relative stop loss has invalid precision`. They must be scaled to the same **pipette units** as `get_spot_prices`/`get_trendbars` raw values — i.e. `display_points × 10^pipDigits` (×100,000 for XAUUSD_SB). `relativeStopLoss=1000000` / `relativeTakeProfit=4000000` correctly produced a 10pt/40pt SL/TP around the fill price.
+
+Practical recipe for a same-session MARKET entry: get a fresh `get_spot_prices` quote, compute the desired SL/TP distance in display points, multiply by `10^pipDigits` for the relative fields, then verify the resulting position's `stopLoss`/`takeProfit` (already display prices) via `get_positions` match expectations.
+
+---
+
 ## 2026-06-10 — All user-facing timestamps now in UK local time (BST/GMT)
 
 Per user request, every timestamp shown in a trade card, no-trade card, or combined report — data-as-of, kill zone windows, session deadlines, recommended re-scan times — must now be in UK local time (Europe/London), with the BST/GMT label shown. Added a "Time Zone Convention" section to `AgentSkill.md` explaining the GMT/BST DST boundary (last Sunday of Oct/Mar) and the ET↔UK 5-hour offset (4 hours during the brief Mar/Nov windows where US and UK DST transitions don't align — convert via UTC there). Converted the Kill Zones table to show BST and GMT columns alongside the ET reference, and updated `DayTradeSkill.md`'s session-deadline definitions (NY open / NY close) and both lenses' Step 6 templates accordingly. cTrader timestamps remain UTC internally — only the final user-facing numbers change.
