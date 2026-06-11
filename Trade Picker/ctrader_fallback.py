@@ -6,7 +6,7 @@ calculates all confluence signals, and outputs ranked results as JSON.
 
 Usage: python3 "Trade Picker/ctrader_fallback.py"
 """
-import requests, json, sys
+import requests, json, sys, time
 from datetime import datetime, timedelta
 
 BEARER = "eyJwbGFudCI6InBlcHBlcnN0b25ldWsiLCJlbnZpcm9ubWVudCI6ImRlbW8iLCJ0b2tlbiI6IkliMEJzUERzSXBpZUJnTEtUWTluRjRpMEJ6a3R4V0pvSm1ZNVB3a1lIb2c9In0"
@@ -263,14 +263,18 @@ def renew_session():
     return sid
 
 
-def safe_mcp_call(sid_ref, tool, args):
+def safe_mcp_call(sid_ref, tool, args, max_retries=4):
     """
-    Call mcp_call; if result is None (session expired), renew session once and retry.
+    Call mcp_call; if result is None (session expired/dropped), renew session
+    and retry, up to max_retries times with a short backoff.
     sid_ref is a one-element list so we can mutate it from the caller.
     """
     result = mcp_call(sid_ref[0], tool, args)
-    if result is None:
-        print(f"\n  [session expired — renewing]", file=sys.stderr, end=" ", flush=True)
+    attempt = 0
+    while result is None and attempt < max_retries:
+        attempt += 1
+        print(f"\n  [session expired — renewing, attempt {attempt}]", file=sys.stderr, end=" ", flush=True)
+        time.sleep(0.5 * attempt)
         sid_ref[0] = renew_session()
         result = mcp_call(sid_ref[0], tool, args)
     return result
