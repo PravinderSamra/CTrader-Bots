@@ -12,7 +12,13 @@ orchestrating skill (see SKILL.md) from the dicts returned here.
 
 from __future__ import annotations
 
-from config import BROKER_MIN_VOLUME, BROKER_VOLUME_STEP
+from config import (
+    ASSUMED_MARGIN_RATE,
+    BROKER_MIN_VOLUME,
+    BROKER_VOLUME_STEP,
+    MAX_STAKE_PER_POINT,
+    SPREAD_TO_SL_WARN_PCT,
+)
 from agents.data_retrieval import InstrumentData
 from utils import mcp_client
 from utils.position_sizing import calc_stake
@@ -44,6 +50,10 @@ def build_order_plan(data: InstrumentData, plan: dict, risk_amount: float) -> di
     split_tps = tp23_volume > 0
     tp1_volume = sizing["volume"] - (2 * tp23_volume if split_tps else 0)
 
+    # Day Trade Pipeline (v1.1 §5.2): spread-as-%-of-SL warning needs the
+    # current spread expressed in the same "points" unit as sl_distance.
+    spread_points = abs(data.spot_ask - data.spot_bid) / point_size
+
     return {
         "symbol": data.symbol,
         "sb_symbol": data.sb_symbol,
@@ -52,6 +62,8 @@ def build_order_plan(data: InstrumentData, plan: dict, risk_amount: float) -> di
         "trade_side": trade_side,
         "close_side": close_side,
         "entry_price": entry_price,
+        "point_size": point_size,
+        "spread_points": spread_points,
         "sl": plan["sl"],
         "sl_distance": plan["sl_distance"],
         "sl_distance_points": sl_distance_points,
@@ -88,6 +100,56 @@ def validate_order_plan(order_plan: dict) -> list[str]:
         issues.append("Price has moved through the SL level — trade no longer valid. Abort.")
 
     return issues
+
+
+def order_plan_warnings(order_plan: dict) -> list[str]:
+    """Day Trade Pipeline (v1.1 §5.2) non-blocking sanity checks — returned
+    alongside the confirmation block. Empty list if nothing to flag."""
+    warnings: list[str] = []
+    sizing = order_plan["sizing"]
+
+    if sizing["broker_stake"] > MAX_STAKE_PER_POINT:
+        warnings.append(
+            f"Stake £{sizing['broker_stake']:.2f}/pt exceeds £{MAX_STAKE_PER_POINT:.0f}/pt — "
+            "confirm this position size is intentional before placing."
+        )
+
+    sl_distance_points = order_plan["sl_distance_points"]
+    spread_points = order_plan["spread_points"]
+    if sl_distance_points and (spread_points / sl_distance_points) > SPREAD_TO_SL_WARN_PCT:
+        spread_pct = spread_points / sl_distance_points * 100
+        warnings.append(
+            f"Spread ({spread_points:.1f} pts) is {spread_pct:.0f}% of the SL distance "
+            f"({sl_distance_points:.1f} pts) — consider waiting for tighter spread conditions."
+        )
+
+    return warnings
+
+
+def check_margin(order_plan: dict) -> list[str]:
+    """Day Trade Pipeline (v1.1 §5.2) margin check. Returns blocking issues
+    (empty if free margin covers the estimated requirement).
+
+    DEVIATION (see CLAUDE.md): no per-symbol margin rate is available from
+    get_symbols, so the requirement is estimated as
+    `notional_value_gbp * ASSUMED_MARGIN_RATE`, where
+    `notional_value_gbp = (volume / 100) * entry_price` ("cents of base
+    asset" / 100 = base-asset units, times price = notional in the
+    instrument's quote currency, treated as GBP for this approximation).
+    """
+    balance = mcp_client.get_balance()
+    if balance is None:
+        return ["Could not retrieve account balance/margin from cTrader MCP — aborting."]
+
+    notional_value = (order_plan["sizing"]["volume"] / 100) * order_plan["entry_price"]
+    estimated_margin = notional_value * ASSUMED_MARGIN_RATE
+
+    if balance["free_margin"] < estimated_margin:
+        return [
+            f"Estimated margin requirement (£{estimated_margin:,.2f}) exceeds free margin "
+            f"(£{balance['free_margin']:,.2f}) — aborting."
+        ]
+    return []
 
 
 def execute_order(order_plan: dict) -> dict:

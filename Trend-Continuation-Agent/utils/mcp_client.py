@@ -397,15 +397,15 @@ _MAX_WINDOWS = 4  # 4 x 720h = 120 days back — comfortably covers 210 x 4H bar
 
 def get_trendbars(base_name: str, period: str, count: int) -> Optional[list[Bar]]:
     """
-    Fetch the most recent `count` bars for `base_name` (e.g. 'UK100', '4H'/'1H').
-    period: '4H' or '1H' (mapped to cTrader 'H_4' / 'H_1').
+    Fetch the most recent `count` bars for `base_name` (e.g. 'UK100', '4H'/'1H'/'15M').
+    period: '4H', '1H' or '15M' (mapped to cTrader 'H_4' / 'H_1' / 'M_15').
     Returns None on resolution/data failure (caller applies §2 error handling).
     """
     sym = resolve_symbol(base_name)
     if sym is None:
         return None
 
-    period_map = {"4H": "H_4", "1H": "H_1", "H4": "H_4", "H1": "H_1"}
+    period_map = {"4H": "H_4", "1H": "H_1", "H4": "H_4", "H1": "H_1", "15M": "M_15", "M15": "M_15", "M_15": "M_15"}
     ctrader_period = period_map.get(period.upper(), period)
 
     bars_by_ts: dict[int, Bar] = {}

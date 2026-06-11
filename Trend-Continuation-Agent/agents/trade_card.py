@@ -13,6 +13,7 @@ from __future__ import annotations
 
 from config import (
     ATR_PERIOD,
+    DAY_ENTRY_ZONE_HALFWIDTH_PCT,
     ENTRY_ZONE_HALFWIDTH_PCT,
     SL_ATR_MULTIPLIER,
     SL_SWING_BUFFER_ATR,
@@ -24,7 +25,7 @@ from config import (
 )
 from agents.data_retrieval import InstrumentData
 from utils.indicators import atr, find_swings
-from utils.time_utils import compute_rescan_time, format_uk_short, now_utc
+from utils.time_utils import compute_rescan_time, compute_rescan_time_15m, format_uk_short, now_utc
 
 
 def build_trade_plan(data: InstrumentData, scored: dict) -> dict:
@@ -116,3 +117,89 @@ def build_trade_plan(data: InstrumentData, scored: dict) -> dict:
 def build_trade_plans(top_n: list[tuple[InstrumentData, dict]]) -> list[dict]:
     """Convenience wrapper: build a trade plan for each (data, scored) pair."""
     return [build_trade_plan(data, scored) for data, scored in top_n]
+
+
+def build_day_trade_plan(data: InstrumentData, scored: dict) -> dict:
+    """
+    Day Trade Pipeline (v1.1 §3.3/§3.4). Same shape as `build_trade_plan`,
+    but: entry = current 15M EMA21 (not 1H EMA21), entry zone half-width =
+    DAY_ENTRY_ZONE_HALFWIDTH_PCT (0.1%, vs swing's 0.03%), and SL is sized
+    off 1H ATR vs the min/max low/high of the last 20 1H bars (vs swing's
+    `find_swings`-confirmed 4H structure). TP1/2/3 use the same R-multiples.
+    """
+    direction = scored["direction"]
+    current_price = scored["current_price"]
+    ema21_15m = scored["ema21_15m"]
+    atr_1h = scored["atr_1h"]
+
+    # ── Entry zone: band around the 15M EMA21 (see config.py) ────────────────
+    half_width = abs(ema21_15m) * DAY_ENTRY_ZONE_HALFWIDTH_PCT
+    entry_low = ema21_15m - half_width
+    entry_high = ema21_15m + half_width
+    entry_mid = ema21_15m
+
+    # ── Stop loss (spec §3.3): wider of ATR-based and last-20-1H-bar structure
+    last_20_1h = data.bars_1h[-20:]
+    sl_atr_distance = SL_ATR_MULTIPLIER * atr_1h
+    if direction == "LONG":
+        sl_atr = entry_mid - sl_atr_distance
+        sl_swing = min(b.low for b in last_20_1h) - SL_SWING_BUFFER_ATR * atr_1h
+        sl = min(sl_atr, sl_swing)  # lower = wider for LONG
+    else:
+        sl_atr = entry_mid + sl_atr_distance
+        sl_swing = max(b.high for b in last_20_1h) + SL_SWING_BUFFER_ATR * atr_1h
+        sl = max(sl_atr, sl_swing)  # higher = wider for SHORT
+
+    sl_distance = abs(entry_mid - sl)
+
+    # ── Take profits: same R multiples as swing pipeline ─────────────────────
+    sign = 1 if direction == "LONG" else -1
+    tp1 = entry_mid + sign * TP1_R * sl_distance
+    tp2 = entry_mid + sign * TP2_R * sl_distance
+    tp3 = entry_mid + sign * TP3_R * sl_distance
+
+    # ── Status: AT ENTRY vs WATCH (spec §3.4 — driven by S2) ──────────────────
+    at_entry = scored["scores"]["S2"] > 0
+    status = "AT_ENTRY" if at_entry else "WATCH"
+
+    if current_price > entry_high:
+        distance_points = current_price - entry_high
+        entry_zone_position = "above"
+    elif current_price < entry_low:
+        distance_points = entry_low - current_price
+        entry_zone_position = "below"
+    else:
+        distance_points = 0.0
+        entry_zone_position = "at"
+    distance_pct = (distance_points / current_price * 100) if current_price else 0.0
+
+    plan = {
+        **scored,
+        "entry_low": entry_low,
+        "entry_high": entry_high,
+        "entry_mid": entry_mid,
+        "status": status,
+        "distance_points": distance_points,
+        "distance_pct": distance_pct,
+        "entry_zone_position": entry_zone_position,
+        "sl": sl,
+        "sl_distance": sl_distance,
+        "tp1": tp1,
+        "tp2": tp2,
+        "tp3": tp3,
+        "tp1_points": abs(tp1 - entry_mid),
+        "tp2_points": abs(tp2 - entry_mid),
+        "tp3_points": abs(tp3 - entry_mid),
+    }
+
+    if status == "WATCH":
+        rescan_time = compute_rescan_time_15m(now_utc())
+        plan["rescan_time_utc"] = rescan_time
+        plan["rescan_time_uk"] = format_uk_short(rescan_time)
+
+    return plan
+
+
+def build_day_trade_plans(top_n: list[tuple[InstrumentData, dict]]) -> list[dict]:
+    """Convenience wrapper: build a day trade plan for each (data, scored) pair."""
+    return [build_day_trade_plan(data, scored) for data, scored in top_n]

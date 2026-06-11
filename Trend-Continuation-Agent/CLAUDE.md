@@ -409,6 +409,198 @@ requires fresh CONFIRM per spec §6.
 
 ---
 
+## 16. `BARS_15M = 65` / `BARS_15M_USED = 60` — extra fetch buffer beyond v1.1's literal `60`
+
+**v1.1 §2.4 says**: `BARS_15M = 60 # 15M bars, ~15 hours of 15M data`.
+
+**Decision** (`config.py`): matched the existing `BARS_4H`/`BARS_1H` "fetch a
+few more than you use" pattern (item 6) — `BARS_15M = 65` (fetch) /
+`BARS_15M_USED = 60` (use). The extra 5 bars give `_drop_incomplete_bar` and
+`MIN_BARS_15M` (21) headroom against any short window from `get_trendbars`
+(item 1). The *used* count (60) matches the spec exactly, so all downstream
+indicator math (EMA21_15M etc.) sees exactly the spec's window.
+
+---
+
+## 17. Day trade SL uses simple last-20-1H-bar `min`/`max`, not `find_swings`
+
+**v1.1 §3.3 says**: SL = wider of `1.5 × ATR_1H` from entry and
+`min(low of last 20 1H bars) − 0.5 × ATR_1H` (LONG), symmetric `max(high)`
+for SHORT — with no mention of `find_swings`'s confirmed-swing-point logic
+(used by the swing pipeline's SL, spec §5).
+
+**Decision** (`agents/trade_card.py` `build_day_trade_plan`): implemented
+literally — `data.bars_1h[-20:]`, plain `min(b.low ...)` / `max(b.high ...)`,
+no swing-confirmation filter. This is a deliberate spec difference, not an
+oversight: the day trade pipeline trades faster-moving 15M-entry structure,
+where the raw 20-bar extreme (even if not a "confirmed" swing point) is the
+relevant invalidation level — vs the swing pipeline's slower 4H structure,
+where only confirmed swing points are meaningful support/resistance.
+
+---
+
+## 18. `compute_rescan_time_15m` — interpretive day-trade rescan cadence
+
+**v1.1 §3.4** says WATCH cards get a "recommended rescan time" but gives no
+formula for the day trade pipeline (the swing pipeline's
+`compute_rescan_time` is keyed to the 1H grid).
+
+**Decision** (`utils/time_utils.py`): added `compute_rescan_time_15m`,
+mirroring `compute_rescan_time`'s shape but on the 15M grid — recommended
+rescan = next 15M candle close + 15 minutes (i.e. 2 candles forward), with
+the same "if the next close is within 2 minutes, push out one extra candle
+first" guard against an immediate re-scan. Same interpretive-derivation
+pattern as item 7 (no explicit spec formula; derived from the existing
+analogous swing-pipeline mechanism).
+
+---
+
+## 19. `ASSUMED_MARGIN_RATE` (1/30) + notional-value formula for the v1.1 §5.2 margin check
+
+**v1.1 §5.2 says**: "Check free margin covers the estimated requirement for
+this position; if not, abort with a clear message" — no formula is given,
+and no per-symbol margin/leverage rate is exposed by `get_symbols`.
+
+**Decision** (`config.py` / `agents/execution.py` `check_margin`):
+
+```python
+notional_value_gbp = (order_plan["sizing"]["volume"] / 100) * entry_price
+estimated_margin = notional_value_gbp * ASSUMED_MARGIN_RATE   # 1/30
+```
+
+`ASSUMED_MARGIN_RATE = 1/30` (~3.33%) is the ESMA retail FX/CFD leverage cap
+(30:1) — a conservative *floor* on real leverage for indices/majors (which
+often allow higher), so this errs toward **over-estimating** the margin
+requirement and blocking a marginal trade, not under-estimating and allowing
+an over-leveraged one.
+
+`notional_value_gbp = (volume / 100) * entry_price` follows from the cTrader
+MCP server's documented convention `volume = lots × lotSize × 100`
+(`volume / 100` = base-asset units; × `entry_price` = notional in the
+instrument's quote currency, treated as GBP for this approximation — same
+simplification as item 2). Verified against two cases:
+- **UK100** (`point_size = 1.0`, £16/pt → `volume = 1600`):
+  `notional = 16 × entry_price` — sane for a £16/pt index CFD.
+- **EURGBP** (`point_size = 0.0001`, £16/pt → `volume = 16,000,000`, item
+  14): `notional = 160,000 × 0.86 ≈ £137,600` (i.e. 160,000 EUR notional ×
+  spot ≈ £137,600); `estimated_margin ≈ £4,587` at 30:1 — a believable
+  margin requirement for a position that size.
+
+---
+
+## 20. Day trade S4 (1H ATR Range Guard) "≥2x: 0pts" treated as consistent with "else: 0"
+
+**v1.1 §3.2 S4 says**: `<1.0x ATR: 15pts | 1.0–1.5x: 8pts | ≥2x: 0pts` —
+leaving the `[1.5x, 2.0x)` band unstated.
+
+**Decision** (`agents/scoring_ranking.py` `score_day_trade`): implemented
+`<1.0 → 15, <1.5 → 8, else → 0`, identical in shape to the (unambiguous)
+swing pipeline S4. The `[1.5, 2.0)` gap falls into `else → 0` — "≥2x: 0pts"
+is treated as a redundant special case of the general "else: 0": any bar
+range ≥1.5×ATR scores 0, whether it's 1.6× or 6×.
+
+---
+
+## 21. Day trade S5 (1H + 4H Alignment) "Neither: 0pts" branch is unreachable post-gate
+
+**v1.1 §3.2 S5 says**: "1H EMA stack aligned AND 4H EMA stack same direction:
+15pts | 1H only: 8pts | Neither: 0pts".
+
+**Decision** (`agents/scoring_ranking.py` `score_day_trade`): implemented
+all three branches via `aligned_1h` (1H EMA stack matches `direction`) and
+`gate_result["bias_4h_aligned"]` (4H stack matches `direction`, computed in
+`day_trade_gates`). However, the day trade gate cascade's G2 (mirroring the
+swing pipeline's hard EMA-alignment gate) already requires `aligned_1h ==
+True` for any instrument that reaches scoring, so "Neither: 0pts"
+(`not aligned_1h`) can never execute in practice. Kept for spec fidelity /
+defensive completeness rather than removed — same approach as item 9's
+provably-unreachable branch.
+
+**Overlap with `DAY_BONUS_4H`** (not double-counting): `S5` and the +10
+bonus both reward 4H/1H alignment, so a fully-aligned setup gets `S5 = 15`
+**and** `bonus = 10`. This is intentional per v1.1 §2.1/§3.2 — the bonus
+answers a separate question ("is this day trade *also* a swing-aligned
+trend continuation?") layered on top of the day-trade-only S1-S6 score, not
+a re-statement of S5.
+
+---
+
+## 22. Day trade universe = `DAY_TRADE_UNIVERSE ∩ data_by_symbol` (bounded by `--symbols`/`--full-universe` scope)
+
+**v1.1 §2.5/§6.2 step 4 says**: the day trade pipeline runs on a fixed
+27-instrument `DAY_TRADE_UNIVERSE` (config.py), "using existing 4H+1H data"
+already fetched for the swing pipeline — explicitly no second fetch loop.
+
+**Decision** (`orchestrator.py` `_day_trade_symbols`): when `--symbols` (or
+the default `CORE_INSTRUMENTS`) is a *subset* of `DAY_TRADE_UNIVERSE`, the
+day trade pipeline only scans `DAY_TRADE_UNIVERSE ∩ data_by_symbol.keys()` —
+never an instrument that wasn't fetched for the swing pipeline this run.
+This is the only interpretation consistent with "no second fetch": a
+`DAY_TRADE_UNIVERSE` member with no 4H/1H data in `data_by_symbol` is
+silently absent from the day trade universe (not logged as a failure — it
+was never requested this scan). `--full-universe`/`--full-universe-all`
+naturally cover all of `DAY_TRADE_UNIVERSE`, since it's a subset of
+`EXTENDED_UNIVERSE ∪ CORE_INSTRUMENTS`.
+
+---
+
+## 23. Crypto (`BTCUSD`/`ETHUSD`) >0.15%-of-price spread exclusion in `_day_trade_symbols`
+
+**v1.1 §2.5 says**: crypto symbols (BTCUSD, ETHUSD) should be flagged/excluded
+if the live spread exceeds 0.15% of price.
+
+**Decision** (`orchestrator.py` `_day_trade_symbols`): implemented as an
+exclusion-with-log (`WIDE_SPREAD_DAY: {symbol} (spread=X.XXX% of price)`)
+rather than a soft "flag but include" — a >0.15% spread is large enough to
+materially distort the tight day-trade SL/TP math (spread eats directly into
+the SL distance), so exclusion is the safer reading of "flag/exclude". In
+practice `BTCUSD`/`ETHUSD` are already in `config.KNOWN_UNAVAILABLE` (item
+12) and never reach `data_by_symbol`, so this check is currently a no-op —
+implemented for correctness/future-proofing if either is ever re-enabled.
+
+---
+
+## 24. Day trade AT_ENTRY/WATCH status via `scores["S2"] > 0` matches v1.1's 0.1%/0.5% description
+
+**v1.1 §3.4 says**: entry zone = `ema21_15m ± 0.1%`; a setup is AT_ENTRY if
+price is "within" this zone and WATCH otherwise. Separately, §3.2 S2 scores
+`<=0.2% → 20pts, <=0.5% → 10pts, else → 0pts`.
+
+**Decision** (`agents/trade_card.py` `build_day_trade_plan`): reused the
+swing pipeline's pattern (item 7), `status = "AT_ENTRY" if scores["S2"] > 0
+else "WATCH"`. For day trade this maps onto S2's **0.5%** threshold — i.e.
+AT_ENTRY means "price within 0.5% of EMA21_15M" — which is a tighter fit to
+spec intent than the swing pipeline's analogous mapping (item 7 noted a
+0.3%-vs-0.03% mismatch there, since swing's S2 thresholds are 0.3%/0.75%).
+The *displayed* entry zone (`entry_low`/`entry_high`, ±0.1%) remains
+narrower than the AT_ENTRY threshold (±0.5%), so item 7's "an AT_ENTRY card
+can have `distance_points` > 0" nuance applies here too.
+
+---
+
+## 25. cTrader `get_trendbars` requires `M_15`, not `M15`, for the 15M period
+
+**Live test (2026-06-11, first end-to-end day-trade-pipeline run)**: a
+31-instrument `CORE_INSTRUMENTS` scan found exactly one day-trade-gate-passed
+instrument (NZDUSD), but its 15M fetch failed:
+`DATA_FAIL: NZDUSD (15M bars)` — `day.scored_count = 0`, `day.ranked = []`,
+despite `day.gates_passed_count = 1`.
+
+**Root cause**: `get_trendbars`'s `period_map` (item added this session,
+v1.1 §2.4) mapped `"15M"`/`"M15"` → `"M15"`. A direct `call_tool` with
+`period: "M15"` returned a JSON-RPC validation error — the tool's `period`
+enum is `["M_1","M_5","M_15","M_30","H_1","H_4","D_1","W_1","MN_1"]`
+(underscore-separated, matching the existing `"H_4"`/`"H_1"` mappings for 4H/1H —
+`"M15"` was the only one missing the underscore).
+
+**Fix** (`utils/mcp_client.py` `get_trendbars`): `period_map` now maps
+`"15M"`/`"M15"`/`"M_15"` → `"M_15"`. Re-ran the same scan: NZDUSD's 15M fetch
+now returns 65 bars, `day.scored_count = 1`, and produces a Tier A (75/110)
+SHORT day trade card (`bonus = 10`, `bias_4h_aligned = true`) with no
+`DATA_FAIL`/`INSUFFICIENT_DATA` entries anywhere in `last_scan.log`.
+
+---
+
 ## Testing performed
 
 - `python orchestrator.py --symbols UK100,GER40,EURUSD` and a 10-instrument
@@ -421,3 +613,30 @@ requires fresh CONFIRM per spec §6.
   risk budget, `split_tps: true`, `issues: []`).
 - No order was placed (`--confirm` not used) — execution placement itself
   has not been live-tested.
+
+### Day Trade Pipeline Upgrade (v1.1)
+
+- `python orchestrator.py --symbols UK100,GER40,EURUSD,GBPUSD,EURGBP,XAUUSD`
+  (6-instrument smoke test) — both pipelines ran end-to-end, output JSON has
+  the new top-level `swing`/`day` structure, `day.gates_passed_count = 0`
+  for this small subset (`DAY_GATE_FAIL` for all 6 — expected, see item 22).
+- Full default `python orchestrator.py` (`CORE_INSTRUMENTS`, 31 fetched) —
+  first run surfaced item 25's `M_15` period-code bug
+  (`day.gates_passed_count = 1`, `day.scored_count = 0`,
+  `DATA_FAIL: NZDUSD (15M bars)`). After the fix, re-ran the identical scan:
+  - **Swing**: 4/31 gates passed, all 4 scored → 3× Tier A (EURGBP 93,
+    AUDUSD 85, XAUUSD 75, all SHORT/AT_ENTRY) + 1× Tier B (NZDUSD 65,
+    SHORT/AT_ENTRY). Watchlist empty.
+  - **Day**: 25-instrument `DAY_TRADE_UNIVERSE ∩ data_by_symbol`, 1/25
+    1H-gates passed (NZDUSD), 15M fetch succeeded (65 bars), scored Tier A
+    (75/110, `bonus = 10`, `bias_4h_aligned = true`, SHORT/AT_ENTRY).
+    Watchlist empty.
+  - `last_scan.log`: 27 `GATE_FAIL` + 24 `DAY_GATE_FAIL`, 0
+    `DATA_FAIL`/`INSUFFICIENT_DATA`/`WIDE_SPREAD_DAY`/`BELOW_WATCH_DAY`.
+  - No anomalies in score breakdowns — every S1-S6/bonus component checked
+    against its inputs (ADX, RSI, ATR ratio, EMA stacks, fib retracement,
+    15M EMA21 distance) and matches the configured thresholds.
+  - Only 4 actionable setups total (3 swing + 1 swing/day overlap on
+    NZDUSD) reflects current market conditions (most instruments failed
+    `G1_adx`/`G2_ema_stack` — a quiet/ranging session per the "London Mid"
+    session note), not a pipeline defect.

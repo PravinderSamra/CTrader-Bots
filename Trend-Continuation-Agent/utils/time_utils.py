@@ -74,3 +74,16 @@ def compute_rescan_time(dt_utc: datetime) -> datetime:
     if (next_close - dt_utc) <= timedelta(minutes=10):
         next_close += timedelta(hours=1)
     return next_close + timedelta(hours=1)
+
+
+# Day Trade Pipeline (v1.1, interpretive addition — spec is silent on day-trade
+# rescan cadence; see CLAUDE.md). Mirrors compute_rescan_time but on the 15M
+# grid: recommended rescan = next 15M candle close + 15 minutes (2 candles
+# forward). If the next 15M close is within 2 minutes, push out one extra
+# 15-minute candle first.
+def compute_rescan_time_15m(dt_utc: datetime) -> datetime:
+    minute = (dt_utc.minute // 15 + 1) * 15
+    next_close = dt_utc.replace(minute=0, second=0, microsecond=0) + timedelta(minutes=minute)
+    if (next_close - dt_utc) <= timedelta(minutes=2):
+        next_close += timedelta(minutes=15)
+    return next_close + timedelta(minutes=15)

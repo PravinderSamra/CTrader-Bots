@@ -13,16 +13,19 @@ from __future__ import annotations
 
 from config import (
     ATR_PERIOD,
+    DAY_BONUS_4H,
     EMA_FAST,
     EMA_MID,
     EMA_SLOW,
     RSI_PERIOD,
+    SWING_LOOKBACK_1H,
     TIER_A_MIN,
     TIER_B_MIN,
     TIER_C_MIN,
 )
 from agents.data_retrieval import InstrumentData
 from utils.indicators import atr, ema, fibonacci_levels, rsi
+from utils.mcp_client import Bar
 
 
 def score_instrument(data: InstrumentData, gate_result: dict) -> dict:
@@ -136,6 +139,130 @@ def score_instrument(data: InstrumentData, gate_result: dict) -> dict:
         # Pre-computed display values for the §9 trade card / commentary
         # (Sub-Agent 4 / SKILL.md) — keeps all numeric work in Python.
         "ema21_distance_pct": ema21_distance_pct,
+        "atr_ratio": atr_ratio,
+        "fib_retracement_pct": fib_retracement_pct,
+    }
+
+
+def score_day_trade(data: InstrumentData, gate_result: dict, bars_15m: list[Bar]) -> dict:
+    """
+    Day Trade Pipeline (v1.1 §3.2). Scores a 1H-gate-passed instrument across
+    S1-S6 (max 100, on 1H/15M data) plus the DAY_BONUS_4H bonus (+10 if the
+    4H bias from `gate_result["bias_4h_aligned"]` agrees with the 1H
+    direction), for a max of DAY_TIER_MAX (110). Tier bands (A/B/C) use the
+    same absolute thresholds as the swing pipeline — the bonus lifts
+    well-aligned setups above them, not the thresholds themselves.
+    """
+    direction = gate_result["direction"]
+    adx_value = gate_result["adx_value"]
+    ema21_1h = gate_result["ema21_1h"]
+    ema50_1h = gate_result["ema50_1h"]
+    ema200_1h = gate_result["ema200_1h"]
+
+    rsi_1h = rsi([b.close for b in data.bars_1h], RSI_PERIOD)[-1]
+    atr_1h = atr(data.bars_1h, ATR_PERIOD)[-1]
+    ema21_15m = ema([b.close for b in bars_15m], EMA_FAST)[-1]
+
+    current_price = data.spot_bid
+
+    # ── S1: 1H ADX Strength (max 20) ─────────────────────────────────────────
+    if adx_value > 35:
+        s1 = 20
+    elif adx_value >= 27:
+        s1 = 15
+    elif adx_value >= 22:
+        s1 = 10
+    else:
+        s1 = 0  # shouldn't reach here — G1 requires ADX > 22
+
+    # ── S2: 15M EMA21 Proximity (max 20) ─────────────────────────────────────
+    ema21_distance_pct_15m = abs(current_price - ema21_15m) / ema21_15m * 100
+    if ema21_distance_pct_15m <= 0.2:
+        s2 = 20
+    elif ema21_distance_pct_15m <= 0.5:
+        s2 = 10
+    else:
+        s2 = 0
+
+    # ── S3: 1H RSI Momentum Zone (max 15) ────────────────────────────────────
+    if rsi_1h is None:
+        s3 = 0
+    elif direction == "LONG":
+        s3 = 15 if 45 <= rsi_1h <= 65 else 0
+    else:
+        s3 = 15 if 35 <= rsi_1h <= 55 else 0
+
+    # ── S4: 1H ATR Range Guard (max 15) ──────────────────────────────────────
+    current_bar_range = data.bars_1h[-1].high - data.bars_1h[-1].low
+    atr_ratio = (current_bar_range / atr_1h) if atr_1h else None
+    if atr_ratio is None:
+        s4 = 0
+    elif atr_ratio < 1.0:
+        s4 = 15
+    elif atr_ratio < 1.5:
+        s4 = 8
+    else:
+        s4 = 0
+
+    # ── S5: 1H + 4H Alignment (max 15) ───────────────────────────────────────
+    # G2 already guarantees the 1H stack is aligned with `direction` for any
+    # gate-passed instrument, so `aligned_1h` is always True here — the
+    # "Neither: 0pts" branch is unreachable but kept for spec fidelity.
+    bull_1h = ema21_1h > ema50_1h > ema200_1h
+    bear_1h = ema21_1h < ema50_1h < ema200_1h
+    aligned_1h = (direction == "LONG" and bull_1h) or (direction == "SHORT" and bear_1h)
+    if aligned_1h and gate_result["bias_4h_aligned"]:
+        s5 = 15
+    elif aligned_1h:
+        s5 = 8
+    else:
+        s5 = 0
+
+    # ── S6: 1H Fibonacci Retracement Zone (last SWING_LOOKBACK_1H bars) ──────
+    last_n_1h = data.bars_1h[-SWING_LOOKBACK_1H:]
+    swing_high_ref = max(b.high for b in last_n_1h)
+    swing_low_ref = min(b.low for b in last_n_1h)
+    fib = fibonacci_levels(swing_high_ref, swing_low_ref)
+    swing_range = swing_high_ref - swing_low_ref
+    fib_retracement_pct = ((swing_high_ref - current_price) / swing_range * 100) if swing_range else None
+
+    if fib["0.618"] <= current_price <= fib["0.382"]:
+        s6 = 15
+    elif (fib["0.764"] <= current_price <= fib["0.618"]) or (fib["0.382"] <= current_price <= fib["0.236"]):
+        s6 = 8
+    else:
+        s6 = 0
+
+    scores = {"S1": s1, "S2": s2, "S3": s3, "S4": s4, "S5": s5, "S6": s6}
+    bonus = DAY_BONUS_4H if gate_result["bias_4h_aligned"] else 0
+    total_score = sum(scores.values()) + bonus
+
+    if total_score >= TIER_A_MIN:
+        tier = "A"
+    elif total_score >= TIER_B_MIN:
+        tier = "B"
+    elif total_score >= TIER_C_MIN:
+        tier = "C"
+    else:
+        tier = None  # below watch threshold — not actionable
+
+    return {
+        **gate_result,
+        "scores": scores,
+        "bonus": bonus,
+        "total_score": total_score,
+        "tier": tier,
+        "current_price": current_price,
+        "ema21_1h": ema21_1h,
+        "ema50_1h": ema50_1h,
+        "ema200_1h": ema200_1h,
+        "ema21_15m": ema21_15m,
+        "rsi_1h": rsi_1h,
+        "atr_1h": atr_1h,
+        "fib_levels": fib,
+        "fib_swing_high": swing_high_ref,
+        "fib_swing_low": swing_low_ref,
+        "ema21_distance_pct_15m": ema21_distance_pct_15m,
         "atr_ratio": atr_ratio,
         "fib_retracement_pct": fib_retracement_pct,
     }

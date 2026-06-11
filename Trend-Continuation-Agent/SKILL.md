@@ -12,16 +12,23 @@ cp "Trend-Continuation-Agent/SKILL.md" ~/.claude/skills/trend-continuation-agent
 ## Description
 
 Multi-market trend-continuation scanner for the Pepperstone UK Spread Betting
-account (cTrader MCP HTTP). All deterministic work — data retrieval, the four
-gates, the six-signal score, ranking, entry-zone/SL/TP maths, and order
-placement — is done by `orchestrator.py` and the `agents/`/`utils/` modules.
-**This skill's job is rendering, commentary, and the CONFIRM/CANCEL
-conversation** — do not re-derive any numbers; read them from the JSON the
-orchestrator emits.
+account (cTrader MCP HTTP). Runs **two pipelines every scan**:
+
+- **Swing pipeline** — 4H gates, 1H entry timing, 4H-ATR-based SL. Up to 3
+  cards, score X/100.
+- **Day trade pipeline** — 1H gates (+ non-excluding 4H directional bias),
+  15M entry timing, 1H-ATR-based SL. Up to 3 cards, score X/110.
+
+All deterministic work — data retrieval, gates, scoring, ranking,
+entry-zone/SL/TP maths, and order placement — is done by `orchestrator.py`
+and the `agents/`/`utils/` modules. **This skill's job is rendering,
+commentary, and the CONFIRM/CANCEL conversation** — do not re-derive any
+numbers; read them from the JSON the orchestrator emits.
 
 See `CLAUDE.md` in this directory for every place the implementation deviates
-from or fills a gap in the spec (PDF), e.g. position-sizing units, how
-`relativeStopLoss`/`relativeTakeProfit` work, the TP2/TP3 ordering caveat.
+from or fills a gap in the spec (PDFs), e.g. position-sizing units, how
+`relativeStopLoss`/`relativeTakeProfit` work, the TP2/TP3 ordering caveat, and
+the day trade pipeline's interpretive decisions.
 
 ---
 
@@ -33,18 +40,29 @@ From the `Trend-Continuation-Agent` directory:
 python orchestrator.py [--symbols UK100,GER40,US500] [--full-universe] [--full-universe-all]
 ```
 
-- No arguments → scans `CORE_INSTRUMENTS` (the spec's 33, minus 2 known
-  unavailable on this account).
-- `--symbols` → scan only the listed instruments (comma-separated, any case).
+- No arguments → swing pipeline scans `CORE_INSTRUMENTS` (33 instruments,
+  minus 2 known unavailable on this account); day trade pipeline scans
+  `DAY_TRADE_UNIVERSE` (the subset of those that were fetched).
+- `--symbols` → scan only the listed instruments (comma-separated, any case)
+  for the swing pipeline; the day trade pipeline runs on whichever of those
+  are also in `DAY_TRADE_UNIVERSE`.
 - `--full-universe` → also scans `EXTENDED_UNIVERSE` (curated FX/metal
-  crosses).
+  crosses) for the swing pipeline.
 - `--full-universe-all` → scans every enabled SB symbol (~1,600+ — slow, only
   use if explicitly asked for an overnight/batch scan).
 
 The command prints the full result JSON to stdout (and writes it to
 `data/last_scan.json` / `data/last_scan.log`). Parse that JSON for everything
-below. Field names referenced as `{ranked[i].field}` etc. are exactly the
-JSON keys in `output["ranked"]` / `output["watchlist"]`.
+below.
+
+**Output is nested by pipeline**: `output["swing"]` and `output["day"]`, each
+with `universe_count`, `gates_passed_count`, `scored_count`, `tier_counts`,
+`ranked` (top-10 A/B, sorted), and `watchlist` (Tier C). Field names
+referenced as `{ranked[i].field}` etc. below mean
+`output["swing"]["ranked"][i]` or `output["day"]["ranked"][i]` as
+appropriate. `output["scan_time_uk"]`, `output["session"]`,
+`output["fetched_count"]`, and `output["log_summary"]` are top-level (shared
+by both pipelines).
 
 ---
 
@@ -63,46 +81,56 @@ JSON keys in `output["ranked"]` / `output["watchlist"]`.
   `0.00706 from entry`) — don't invent a pip/point conversion that isn't in
   the JSON.
 - **Tier**: `ranked[i].tier` is `"A"` or `"B"` (Tier C goes to `watchlist`,
-  scores < 30 never appear at all — see `CLAUDE.md` item 8).
+  scores below `TIER_C_MIN` never appear at all — see `CLAUDE.md` item 8).
 - **Status**: `ranked[i].status` is `"AT_ENTRY"` or `"WATCH"` — selects which
   card template below to use.
+- **Score denominator**: swing cards show `X/100`; day trade cards show
+  `X/110` (100 base + the `bonus` field, which is `0` or `DAY_BONUS_4H`).
 
 ---
 
 ## Step 2 — Scan Header
 
 Render first, using `output["scan_time_uk"]`, `output["session"]`,
-`output["universe_count"]`, `output["gates_passed_count"]`,
-`output["scored_count"]`, `output["tier_counts"]`:
+`output["swing"]` and `output["day"]`:
 
 ```
 ═══════════════════════════════════════════════════════════
-/TREND-CONTINUATION-AGENT | Scan complete
+/TREND-CONTINUATION-AGENT | Dual Pipeline Scan Complete
 Time     : {scan_time_uk}
 Session  : {session.name} — {session.note}
-Universe : {universe_count} instruments scanned
-Gates    : {gates_passed_count} passed all 4 gates
-Scored   : {scored_count} | Tier A: {tier_counts.A} | Tier B: {tier_counts.B} | Tier C: {tier_counts.C}
-Output   : Top 3 trade cards below
+Universe : {swing.universe_count} instruments (swing) | {day.universe_count} instruments (day trade)
+Swing gates : {swing.gates_passed_count} passed | Tier A: {swing.tier_counts.A} B: {swing.tier_counts.B} C: {swing.tier_counts.C}
+Day gates   : {day.gates_passed_count} passed | Tier A: {day.tier_counts.A} B: {day.tier_counts.B} C: {day.tier_counts.C}
 ═══════════════════════════════════════════════════════════
 ```
 
-If `output["ranked"]` is empty, state plainly: **"No Tier A/B setups found
-this scan."** — then skip to the Watch List (Step 5) if it has entries,
-otherwise end here. If `ranked` has 1-2 entries, render only those cards and
-note *"Fewer than 3 actionable setups found this scan."* after the header.
+If both `output["swing"]["ranked"]` and `output["day"]["ranked"]` are empty,
+state plainly: **"No Tier A/B setups found in either pipeline this scan."** —
+then skip to the Watch List (Step 5) if it has entries, otherwise end here.
 
 ---
 
-## Step 3 — Trade Cards (`ranked[0]`, `ranked[1]`, `ranked[2]`)
+## Step 3 — Swing Trade Cards (`swing.ranked[0..2]`)
 
-For each card, `n` = 1-based position, `c` = `ranked[n-1]`.
+Render the divider, then up to 3 cards. If `swing.ranked` is empty, write
+*"No swing setups this scan."* and move on. If it has 1-2 entries, render only
+those and note *"Fewer than 3 actionable swing setups found this scan."*
+
+```
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+■■ SWING TRADES ■■
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+```
+
+For each card, `n` = 1-based position, `c` = `swing.ranked[n-1]`.
 
 ### AT_ENTRY card (`c.status == "AT_ENTRY"`)
 
 ```
 ───────────────────────────────────────────────────────────
-TRADE CARD #{n} | TIER {c.tier} | SCORE: {c.total_score}/100
+SWING TRADE CARD #{n} | TIER {c.tier} | SCORE: {c.total_score}/100
+Pipeline: Swing | Gate TF: 4H | Entry TF: 1H
 ───────────────────────────────────────────────────────────
 Instrument     : {c.symbol} ({c.sb_symbol})
 Direction      : {c.direction}
@@ -144,7 +172,8 @@ Fill the `{>|<}` / `{above|below}` / `{bullish|bearish}` placeholders from
 
 ```
 ───────────────────────────────────────────────────────────
-TRADE CARD #{n} | TIER {c.tier} | SCORE: {c.total_score}/100
+SWING TRADE CARD #{n} | TIER {c.tier} | SCORE: {c.total_score}/100
+Pipeline: Swing | Gate TF: 4H | Entry TF: 1H
 WATCH — ENTRY NOT YET REACHED
 ───────────────────────────────────────────────────────────
 Instrument   : {c.symbol} ({c.sb_symbol})
@@ -171,17 +200,106 @@ CLAUDE COMMENTARY
 case noted in `CLAUDE.md` item 7 where an `AT_ENTRY` card would have shown
 nonzero distance — that case never reaches a WATCH card).
 
-### Writing the commentary
+---
+
+## Step 4 — Day Trade Cards (`day.ranked[0..2]`)
+
+Render the divider, then up to 3 cards. If `day.ranked` is empty, write *"No
+day trade setups this scan."* and move on. If it has 1-2 entries, render only
+those and note *"Fewer than 3 actionable day trade setups found this scan."*
+
+```
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+■■ DAY TRADES ■■
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+```
+
+For each card, `n` = 1-based position, `c` = `day.ranked[n-1]`.
+
+### AT_ENTRY card (`c.status == "AT_ENTRY"`)
+
+```
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+DAY TRADE CARD #{n} | TIER {c.tier} | SCORE: {c.total_score}/110
+Pipeline: Day Trade | Gate TF: 1H | Entry TF: 15M
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+Instrument     : {c.symbol} ({c.sb_symbol})
+Direction      : {c.direction}
+Current Price  : {c.current_price}
+Status         : ✅ AT ENTRY ZONE
+
+ENTRY      : {c.entry_low} – {c.entry_high}  (15M EMA21 zone)
+STOP LOSS  : {c.sl}  ({c.sl_distance} [pts] / 1.5× 1H ATR or 20-bar 1H structure)
+TP1        : {c.tp1}  (+{c.tp1_points} [pts] | R:R 1.5:1)
+TP2        : {c.tp2}  (+{c.tp2_points} [pts] | R:R 2.5:1)
+TP3        : {c.tp3}  (+{c.tp3_points} [pts] | R:R 4.0:1)
+
+CONFLUENCE MET
+───────────────
+✅ G1 ADX(14) on 1H = {c.adx_value:.1f} — Rising (trend confirmed, > 22)
+✅ G2 EMA Stack: 21 {>|<} 50 {>|<} 200 on 1H  ({c.ema21_1h} {>|<} {c.ema50_1h} {>|<} {c.ema200_1h})
+✅ G3 Price {above|below} 1H EMA21
+✅ G4 No RSI divergence on 1H (30-bar lookback)
+{✅|❌} S1 ADX Strength (1H): {c.adx_value:.1f} → {c.scores.S1}pts
+{✅|❌} S2 15M EMA21 Proximity: price {c.ema21_distance_pct_15m:.2f}% from EMA21 → {c.scores.S2}pts
+{✅|❌} S3 1H RSI Zone: RSI = {c.rsi_1h:.1f} ({in|outside} momentum zone) → {c.scores.S3}pts
+{✅|❌} S4 1H ATR Guard: bar range {c.atr_ratio:.1f}× ATR → {c.scores.S4}pts
+{✅|❌} S5 1H+4H Alignment: 1H stack {bullish|bearish}, 4H stack {also aligned|not aligned} → {c.scores.S5}pts
+{✅|❌} S6 1H Fib Zone (30-bar): price at {c.fib_retracement_pct:.0f}% retracement → {c.scores.S6}pts
+{✅|➖} BONUS 4H Bias Aligned: 4H EMA stack {confirms|does not confirm} 1H direction → +{c.bonus}pts
+
+CLAUDE COMMENTARY
+─────────────────
+{2-4 sentences — see "Writing the commentary" below}
+───────────────────────────────────────────────────────────
+```
+
+`{✅|➖}` for BONUS is ✅ if `c.bonus > 0` else ➖ (not a failure — just no
+bonus). For S5, "1H stack" direction phrase comes from `c.direction` (always
+aligned post-gate); "4H stack also aligned/not aligned" comes from
+`c.bias_4h_aligned`.
+
+### WATCH card (`c.status == "WATCH"`)
+
+```
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+DAY TRADE CARD #{n} | TIER {c.tier} | SCORE: {c.total_score}/110
+Pipeline: Day Trade | Gate TF: 1H | Entry TF: 15M
+WATCH — ENTRY NOT YET REACHED
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+Instrument   : {c.symbol} ({c.sb_symbol})
+Direction    : {c.direction}
+Current Price: {c.current_price}
+Entry Zone   : {c.entry_low} – {c.entry_high}  (15M EMA21)
+Distance     : {c.distance_points} [pts] away ({c.distance_pct:.2f}% {c.entry_zone_position} entry)
+
+[SL, TP1/2/3 calculated at entry zone midpoint]
+STOP LOSS  : {c.sl}
+TP1: {c.tp1}   TP2: {c.tp2}   TP3: {c.tp3}
+
+RECOMMENDED RESCAN : {c.rescan_time_uk} (next 15M close)
+NOTE: If price reaches {c.entry_low}–{c.entry_high} before rescan, entry
+conditions are met — monitor manually.
+
+CLAUDE COMMENTARY
+─────────────────
+{1-3 sentences — why it's not at entry yet, and what's needed}
+───────────────────────────────────────────────────────────
+```
+
+### Writing the commentary (both pipelines)
 
 2-4 sentences (1-3 for WATCH cards), in Claude's own words, covering:
-- The 4H trend picture (ADX level/direction, EMA stack) — why the
-  continuation thesis holds.
-- What S2-S6 collectively say about entry timing/quality — call out the
-  *strongest* and *weakest* signals by name (don't just restate the
-  ✅/❌ table).
-- `c.session.note` (from the header) if it's relevant to execution quality
+- The gate-timeframe trend picture (ADX level/direction, EMA stack) — why the
+  continuation thesis holds. For day trade cards, also mention whether the 4H
+  bias is aligned (the BONUS) or not.
+- What the remaining signals collectively say about entry timing/quality —
+  call out the *strongest* and *weakest* signals by name (don't just restate
+  the ✅/❌ table).
+- `session.note` (from the header) if it's relevant to execution quality
   right now (e.g. After Hours / Pre-London → flag wider spreads; NY
-  Overlap/London Open → favourable).
+  Overlap/London Open → favourable). This is especially relevant for day
+  trade cards.
 - For WATCH cards: what would need to happen (price action vs EMA21) for
   status to flip to AT_ENTRY.
 
@@ -190,71 +308,83 @@ JSON.
 
 ---
 
-## Step 4 — Watch List (Tier C)
+## Step 5 — Watch List (Tier C, both pipelines)
 
-If `output["watchlist"]` is non-empty, render one line per entry:
+Combine `output["swing"]["watchlist"]` and `output["day"]["watchlist"]`. If
+both are empty, omit this section entirely. Otherwise:
 
 ```
 WATCH LIST (Tier C — passed gates, below actionable threshold)
 ────────────────────────────────────────────────────────────
-{w.symbol} {w.direction} — Score {w.total_score}/100 (Tier C)
-... (one line per entry in output["watchlist"])
+[SWING] {w.symbol} {w.direction} — Score {w.total_score}/100 (Tier C)
+[DAY]   {w.symbol} {w.direction} — Score {w.total_score}/110 (Tier C)
+... (one line per entry — `w.pipeline` selects the [SWING]/[DAY] tag)
 ```
-
-Omit this section entirely if `watchlist` is empty.
 
 ---
 
-## Step 5 — Rescan Guidance
+## Step 6 — Rescan Guidance
 
-If any of `ranked[0..2]` has `status == "WATCH"`, render:
+Check `swing.ranked[0..2]` and `day.ranked[0..2]` (whichever were rendered)
+for `status == "WATCH"`. Render only the lines that apply:
 
 ```
 RESCAN GUIDANCE
 ───────────────
-Next recommended scan: {rescan_time_uk} (next 1H close)
+Swing : {rescan_time_uk from any WATCH swing card} (next 1H close)
+Day   : {rescan_time_uk from any WATCH day card} (next 15M close)
 ```
 
-Use the `rescan_time_uk` from any WATCH card shown — they're all computed
-from the same scan timestamp via the same §10 rule and will be identical.
-Omit this section if no shown card is `WATCH`.
+Within a pipeline, all WATCH cards share the same `rescan_time_uk` (computed
+from the same scan timestamp). Omit a line if no shown card from that
+pipeline is `WATCH`; omit the whole section if neither pipeline has a WATCH
+card.
 
 ---
 
-## Step 6 — Entry Prompt
+## Step 7 — Entry Prompt
 
-Always end with this single line (verbatim, per spec §9):
+Always end with this single line (verbatim, per v1.1 §4.2):
 
 ```
-To enter a trade, say: Enter trade [1/2/3] with £[amount] risk
+To enter a trade, say: Enter [swing/day] trade [1/2/3] with £[amount] risk
 ```
 
 ---
 
-## Execution Flow (spec §6) — explicit invocation only
+## Execution Flow (spec §6 / v1.1 §5) — explicit invocation only
 
 **Never run this flow unless Pravinder gives a direct instruction** like
-*"Enter trade 1 with £450 risk"* or *"Enter trade 2 — 300"*. A scan alone
-never triggers execution.
+*"Enter swing trade 1 with £450 risk"* or *"Enter day trade 2 — 300"*. A scan
+alone never triggers execution.
 
 ### 6a — Build the order plan (dry run)
 
 ```bash
-python orchestrator.py execute --card N --risk <AMOUNT>
+python orchestrator.py execute --pipeline {swing|day} --card N --risk <AMOUNT>
 ```
 
-(`N` = the card number 1-3 from the *last* scan; `<AMOUNT>` = risk in GBP,
-numeric only.) This returns `{"order_plan": {...}, "issues": [...]}` and
-places **no order**.
+(`--pipeline` = `swing` or `day` depending on which list the user referred to,
+default `swing` if genuinely ambiguous — but always confirm which pipeline if
+the instruction doesn't say; `N` = the card number 1-3 from the *last* scan;
+`<AMOUNT>` = risk in GBP, numeric only.) This returns
+`{"order_plan": {...}, "issues": [...], "warnings": [...]}` and places **no
+order**.
 
 - If `issues` is non-empty: render each issue verbatim and **stop** — do not
   show a confirmation block. Each issue is a complete, user-facing sentence
   already (e.g. "Stake £0.00/pt is below the broker minimum...", "Price has
-  moved through the SL level — trade no longer valid. Abort.").
-- Otherwise render the confirmation block from `order_plan`:
+  moved through the SL level — trade no longer valid. Abort.", "Estimated
+  margin requirement (£X) exceeds free margin (£Y) — aborting.").
+- If `warnings` is non-empty, render each one above the confirmation block
+  under a `⚠ WARNINGS` heading — these do NOT stop the flow, but the user
+  should see them before typing CONFIRM (e.g. "Stake £X/pt exceeds £50/pt...",
+  "Spread (...) is N% of the SL distance...").
+- Otherwise (or after the warnings) render the confirmation block from
+  `order_plan`:
 
 ```
-== ORDER CONFIRMATION ==
+== ORDER CONFIRMATION ({SWING|DAY} TRADE) ==
 Instrument : {order_plan.symbol}
 Direction  : {order_plan.trade_side}
 Entry      : MARKET (current {ask|bid} ~{order_plan.entry_price})
@@ -263,6 +393,7 @@ TP1 : {order_plan.tp1} | TP2: {order_plan.tp2} | TP3: {order_plan.tp3}
 Risk       : £{order_plan.risk_amount}
 Stake      : £{order_plan.sizing.broker_stake:.2f}/pt (rounded down from £{order_plan.sizing.raw_stake:.2f}; broker step = £1/pt)
 Max loss   : £{order_plan.sizing.max_loss:.2f} (at SL)
+Spread     : {order_plan.spread_points:.2f} pts
 {If order_plan.split_tps: "Note: TP2/TP3 (£{order_plan.tp23_volume/100:.2f}/pt each) are placed as independent opposite-side LIMIT orders, not formally linked to this position — see CLAUDE.md item 5."}
 {If NOT order_plan.split_tps: "Note: stake too small to split — TP2/TP3 not placed, full position runs to TP1."}
 
@@ -277,7 +408,7 @@ Type CONFIRM to place, or CANCEL to abort.
 ### 6b — On "CONFIRM"
 
 ```bash
-python orchestrator.py execute --card N --risk <AMOUNT> --confirm
+python orchestrator.py execute --pipeline {swing|day} --card N --risk <AMOUNT> --confirm
 ```
 
 Read `result`:
@@ -305,18 +436,24 @@ Acknowledge and take no further action. Do not run `--confirm`.
    ahead") — always show the confirmation block first and wait for the
    literal word `CONFIRM`.
 2. **A scan never places an order.** Execution only runs from an explicit
-   "Enter trade N with £X risk"-style instruction, against the *last* saved
-   scan (`data/last_scan.json`). If no scan has been run yet, say so and run
-   one first.
+   "Enter [swing/day] trade N with £X risk"-style instruction, against the
+   *last* saved scan (`data/last_scan.json`). If no scan has been run yet, say
+   so and run one first.
 3. **If `issues` is non-empty, stop before the confirmation block** — report
    the issue(s) and ask whether to adjust risk or skip the trade.
-4. **Report MCP/order errors verbatim** — do not retry, reinterpret, or
+4. **Render `warnings` (if any) before the confirmation block** but do not
+   treat them as blocking — the user can still CONFIRM.
+5. **Report MCP/order errors verbatim** — do not retry, reinterpret, or
    suppress them.
-5. **Don't fabricate data.** Every number in a card or the commentary must
+6. **Don't fabricate data.** Every number in a card or the commentary must
    trace back to a field in the orchestrator's JSON output.
-6. **Flag After Hours / Pre-London sessions explicitly** in commentary per
+7. **Flag After Hours / Pre-London sessions explicitly** in commentary per
    spec §10 — note wider spreads / "do not recommend entry" framing for
-   After Hours.
+   After Hours. This applies doubly to day trade cards, where spread cost is
+   a larger fraction of the (smaller) SL distance.
+8. **Always disambiguate swing vs day trade** in execution — if Pravinder
+   says "enter trade 1" without specifying which pipeline and both pipelines
+   produced a card #1, ask which one before running `execute`.
 
 ---
 
@@ -324,8 +461,9 @@ Acknowledge and take no further action. Do not run `--confirm`.
 
 | Command | Behaviour |
 |---|---|
-| `/Trend-Continuation-Agent` | Default scan — `CORE_INSTRUMENTS` |
-| `/Trend-Continuation-Agent --symbols UK100,GER40,US500` | Scan only the listed instruments |
-| `/Trend-Continuation-Agent --full-universe` | `CORE_INSTRUMENTS` + `EXTENDED_UNIVERSE` |
+| `/Trend-Continuation-Agent` | Default scan — swing on `CORE_INSTRUMENTS`, day trade on `DAY_TRADE_UNIVERSE` |
+| `/Trend-Continuation-Agent --symbols UK100,GER40,US500` | Scan only the listed instruments (swing); day trade runs on the overlap with `DAY_TRADE_UNIVERSE` |
+| `/Trend-Continuation-Agent --full-universe` | `CORE_INSTRUMENTS` + `EXTENDED_UNIVERSE` (swing only — day trade universe unchanged) |
 | `/Trend-Continuation-Agent --full-universe-all` | All enabled SB symbols (slow — only if explicitly requested) |
-| "Enter trade N with £X risk" | Run the Execution Flow (§6) for card N from the last scan |
+| "Enter swing trade N with £X risk" | Run the Execution Flow (§6) with `--pipeline swing` for card N from the last scan |
+| "Enter day trade N with £X risk" | Run the Execution Flow (§6) with `--pipeline day` for card N from the last scan |

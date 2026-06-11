@@ -1,29 +1,46 @@
 """
 /Trend-Continuation-Agent — Sub-Agent 2: Gate Layer
 
-Spec §3 / §7. Applies four binary gates to each instrument's 4H data. All
-four must pass for the instrument to proceed to scoring. Direction (LONG /
-SHORT) is set by G2 (EMA stack) and confirmed by G3 (price side) — if they
-disagree the instrument fails (no ambiguous direction).
+Spec §3 / §7. Applies four binary gates to each instrument's data. All four
+must pass for the instrument to proceed to scoring. Direction (LONG / SHORT)
+is set by G2 (EMA stack) and confirmed by G3 (price side) — if they disagree
+the instrument fails (no ambiguous direction).
+
+Day Trade Pipeline (v1.1 §2.1-§2.3): the same 4-gate cascade also runs on 1H
+bars (different ADX threshold / divergence lookback) via `day_trade_gates`,
+which additionally computes a non-excluding 4H directional-bias check from
+the already-fetched 4H bars.
 """
 
 from __future__ import annotations
 
-from config import ADX_PERIOD, EMA_FAST, EMA_MID, EMA_SLOW, GATE_ADX_MIN, RSI_PERIOD, SWING_LOOKBACK, SWING_N
+from config import (
+    ADX_1H_MIN,
+    ADX_PERIOD,
+    EMA_FAST,
+    EMA_MID,
+    EMA_SLOW,
+    GATE_ADX_MIN,
+    RSI_PERIOD,
+    SWING_LOOKBACK,
+    SWING_LOOKBACK_1H,
+    SWING_N,
+)
 from agents.data_retrieval import InstrumentData
 from utils.indicators import adx, ema, find_swings, rsi
+from utils.mcp_client import Bar
 
 
-def evaluate_gates(data: InstrumentData) -> dict:
+def _run_gate_cascade(bars: list[Bar], adx_min: float, swing_lookback: int) -> dict:
     """
-    Returns the Gate Agent Output Schema (spec §3), plus a few extra fields
-    (`fail_gate`, EMA values, RSI series) consumed by Sub-Agent 3 / 4.
+    Shared 4-gate cascade (spec §3) over an arbitrary bar series. Returns
+    `passed`, `direction`, `gates`, `adx_value`, `adx_previous`, `adx_rising`,
+    `fail_gate`, and `ema21`/`ema50`/`ema200` (the EMA values used for
+    G2/G3, on whatever timeframe `bars` represents).
     """
-    bars = data.bars_4h
     closes = [b.close for b in bars]
 
     base = {
-        "symbol": data.symbol,
         "passed": False,
         "direction": None,
         "gates": {
@@ -36,6 +53,9 @@ def evaluate_gates(data: InstrumentData) -> dict:
         "adx_previous": None,
         "adx_rising": False,
         "fail_gate": None,
+        "ema21": None,
+        "ema50": None,
+        "ema200": None,
     }
 
     # ── G1: Trend Exists (ADX rising and above threshold) ───────────────────
@@ -46,7 +66,7 @@ def evaluate_gates(data: InstrumentData) -> dict:
         base["fail_gate"] = "G1_adx"
         return base
 
-    g1_pass = (adx_current > GATE_ADX_MIN) and (adx_current > adx_previous)
+    g1_pass = (adx_current > adx_min) and (adx_current > adx_previous)
     base["adx_value"] = adx_current
     base["adx_previous"] = adx_previous
     base["adx_rising"] = adx_current > adx_previous
@@ -68,9 +88,9 @@ def evaluate_gates(data: InstrumentData) -> dict:
     direction = "LONG" if bull_stack else ("SHORT" if bear_stack else None)
 
     base["gates"]["G2_ema_stack"] = g2_pass
-    base["ema21_4h"] = ema21
-    base["ema50_4h"] = ema50
-    base["ema200_4h"] = ema200
+    base["ema21"] = ema21
+    base["ema50"] = ema50
+    base["ema200"] = ema200
 
     if direction is None:
         base["fail_gate"] = "G2_ema_stack"
@@ -97,8 +117,8 @@ def evaluate_gates(data: InstrumentData) -> dict:
 
     # ── G4: No Divergence ────────────────────────────────────────────────────
     rsi_vals = rsi(closes, RSI_PERIOD)
-    swing_highs = find_swings(bars, "high", SWING_N, SWING_LOOKBACK)[-2:]
-    swing_lows = find_swings(bars, "low", SWING_N, SWING_LOOKBACK)[-2:]
+    swing_highs = find_swings(bars, "high", SWING_N, swing_lookback)[-2:]
+    swing_lows = find_swings(bars, "low", SWING_N, swing_lookback)[-2:]
 
     g4_pass = True
     if direction == "LONG" and len(swing_highs) >= 2:
@@ -122,3 +142,59 @@ def evaluate_gates(data: InstrumentData) -> dict:
         base["fail_gate"] = "G4_no_divergence"
 
     return base
+
+
+def evaluate_gates(data: InstrumentData) -> dict:
+    """
+    Swing pipeline (spec §3/§7): 4-gate cascade on 4H bars using
+    GATE_ADX_MIN (25) and SWING_LOOKBACK (50). Returns the Gate Agent Output
+    Schema (spec §3), plus `ema21_4h`/`ema50_4h`/`ema200_4h` consumed by
+    Sub-Agent 3 / 4.
+    """
+    result = _run_gate_cascade(data.bars_4h, GATE_ADX_MIN, SWING_LOOKBACK)
+    return {
+        "symbol": data.symbol,
+        **{k: v for k, v in result.items() if k not in ("ema21", "ema50", "ema200")},
+        "ema21_4h": result["ema21"],
+        "ema50_4h": result["ema50"],
+        "ema200_4h": result["ema200"],
+    }
+
+
+def day_trade_gates(data: InstrumentData) -> dict:
+    """
+    Day Trade Pipeline (v1.1 §2.1-§2.3): same 4-gate cascade as
+    `evaluate_gates`, but on 1H bars with day-trade thresholds (ADX_1H_MIN=22,
+    SWING_LOOKBACK_1H=30, SWING_N unchanged).
+
+    Also computes a NON-EXCLUDING 4H directional-bias check (v1.1 §2.1) from
+    the already-fetched 4H bars: whether the 4H EMA21/50/200 stack agrees
+    with the 1H-determined direction. This does not gate the instrument — it
+    feeds Sub-Agent 3's DAY_BONUS_4H scoring bonus.
+    """
+    result = _run_gate_cascade(data.bars_1h, ADX_1H_MIN, SWING_LOOKBACK_1H)
+    direction = result["direction"]
+
+    closes_4h = [b.close for b in data.bars_4h]
+    ema21_4h = ema(closes_4h, EMA_FAST)[-1]
+    ema50_4h = ema(closes_4h, EMA_MID)[-1]
+    ema200_4h = ema(closes_4h, EMA_SLOW)[-1]
+
+    bias_known = ema21_4h is not None and ema50_4h is not None and ema200_4h is not None
+    bias_4h_bull = bias_known and ema21_4h > ema50_4h > ema200_4h
+    bias_4h_bear = bias_known and ema21_4h < ema50_4h < ema200_4h
+    bias_4h_aligned = (direction == "LONG" and bias_4h_bull) or (direction == "SHORT" and bias_4h_bear)
+
+    return {
+        "symbol": data.symbol,
+        **{k: v for k, v in result.items() if k not in ("ema21", "ema50", "ema200")},
+        "ema21_1h": result["ema21"],
+        "ema50_1h": result["ema50"],
+        "ema200_1h": result["ema200"],
+        "ema21_4h": ema21_4h,
+        "ema50_4h": ema50_4h,
+        "ema200_4h": ema200_4h,
+        "bias_4h_bull": bias_4h_bull,
+        "bias_4h_bear": bias_4h_bear,
+        "bias_4h_aligned": bias_4h_aligned,
+    }

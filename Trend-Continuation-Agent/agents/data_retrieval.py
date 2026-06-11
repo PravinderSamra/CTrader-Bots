@@ -16,13 +16,18 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Optional
 
-from config import BARS_4H, BARS_4H_USED, BARS_1H, BARS_1H_USED
+from config import BARS_4H, BARS_4H_USED, BARS_1H, BARS_1H_USED, BARS_15M, BARS_15M_USED
 from utils import mcp_client
 from utils.mcp_client import Bar
 from utils.time_utils import now_utc
 
 # Spec §2: "Partial data (< 150 bars) -> Skip — ADX/EMA calculations are unreliable."
 MIN_BARS = 150
+
+# Day Trade Pipeline (v1.1 §2.4): 15M bars are entry-timing only (EMA21_15M),
+# so the bar-count floor is far lower than the 4H/1H gate timeframes — just
+# enough for a stable EMA21 with some lookback margin.
+MIN_BARS_15M = 21
 
 
 @dataclass
@@ -89,6 +94,24 @@ def fetch_instrument(symbol: str, log: list[str]) -> Optional[InstrumentData]:
         spot_bid=spot[0],
         spot_ask=spot[1],
     )
+
+
+def fetch_15m_bars(symbol: str, log: list[str]) -> Optional[list[Bar]]:
+    """
+    Day Trade Pipeline (v1.1 §2.4/§6.2): fetch 15M bars for entry timing.
+    Called ONLY for instruments that have already passed the day-trade gates
+    — never for the full universe. Returns None on fetch/insufficient-data
+    (caller treats this as "15M fetch failed", per spec §8 review checklist).
+    """
+    bars_raw = mcp_client.get_trendbars(symbol, "15M", BARS_15M)
+    if not bars_raw:
+        log.append(f"DATA_FAIL: {symbol} (15M bars)")
+        return None
+    bars = _drop_incomplete_bar(bars_raw, 15)[-BARS_15M_USED:]
+    if len(bars) < MIN_BARS_15M:
+        log.append(f"INSUFFICIENT_DATA: {symbol} (15M, {len(bars)} bars)")
+        return None
+    return bars
 
 
 def fetch_all(symbols: list[str]) -> tuple[dict[str, InstrumentData], list[str]]:
