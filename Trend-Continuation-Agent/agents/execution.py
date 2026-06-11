@@ -108,9 +108,9 @@ def execute_order(order_plan: dict) -> dict:
         relative_tp_points=tp1_raw,
     )
     if not market_resp:
-        return {"error": "MCP create_order (MARKET) returned no response — check get_positions before retrying."}
+        return {"error": "MCP create_order (MARKET) — no response from cTrader MCP (transport/session failure). Check get_positions before retrying."}
     if isinstance(market_resp, dict) and (market_resp.get("error") or market_resp.get("errorCode")):
-        return {"error": market_resp}
+        return {"error": market_resp.get("error", market_resp)}
 
     result: dict = {"market_order": market_resp}
 

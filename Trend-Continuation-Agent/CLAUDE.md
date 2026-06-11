@@ -292,6 +292,39 @@ item 1) — scanning all 1,618 is an overnight batch job, not an interactive
 
 ---
 
+## 13. `call_tool` was swallowing real broker errors as a generic "no response"
+
+**Live test (2026-06-11)**: First-ever `--confirm` execution — Card #2
+(EURGBP SHORT, £450 risk, £16/pt, `split_tps: true`) — returned:
+```
+{"error": "MCP create_order (MARKET) returned no response — check get_positions before retrying."}
+```
+Verified via `get_positions` (empty) and `get_order_history` (empty for the
+day) that **no order was placed** — not a margin issue either (`get_balance`
+showed £48,233.50 free margin). `tools/list` confirmed `create_order` is
+present and the session/auth handshake succeeds, so the failure was specific
+to the `tools/call` for `create_order`.
+
+**Root cause** (`utils/mcp_client.py` `call_tool`): the old code only handled
+the success path (`data["result"]["content"][0]["type"] == "text"`, parsed as
+JSON) and a session-expiry `error`. Any *other* response shape — a top-level
+JSON-RPC `error` (broker rejection), an MCP tool-execution error
+(`result.isError: true` with a plain-text message), or successful-but-non-JSON
+text — fell through to `return None`. `execute_order` then reported the
+generic "no response" message, hiding the broker's actual rejection reason
+and violating spec §6 / SKILL.md's "report MCP/order errors verbatim" rule.
+
+**Fix**: `call_tool` now returns `{"error": <message>}` for all three of
+those cases (and only returns `None` on a true transport/session failure).
+`execute_order` (`agents/execution.py`) unwraps `market_resp["error"]`
+directly so the confirmation-flow caller sees the real broker message.
+`--card 2 --risk 450` dry-run re-verified working after the fix
+(`issues: []`, same sizing). **The EURGBP trade itself was not retried** —
+per spec §6 Execution Error Handling ("do not retry automatically — ask
+Pravinder to review"), a fresh CONFIRM is required.
+
+---
+
 ## Testing performed
 
 - `python orchestrator.py --symbols UK100,GER40,EURUSD` and a 10-instrument

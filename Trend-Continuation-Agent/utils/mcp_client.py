@@ -165,6 +165,12 @@ def call_tool(tool: str, arguments: dict, retries: int = 1) -> Optional[dict]:
     """
     Call a cTrader MCP tool. Reinitialises session once on expiry.
     Retries once after a 2s delay on total failure (spec §2 error handling).
+
+    Returns the parsed tool result on success. On a JSON-RPC error or an
+    MCP tool-execution error (`result.isError`), returns {"error": <message>}
+    so callers placing orders can surface the broker's actual rejection
+    reason verbatim (spec §6). Returns None only on a transport/session
+    failure (no response received at all).
     """
     global _session_id
 
@@ -200,13 +206,23 @@ def call_tool(tool: str, arguments: dict, retries: int = 1) -> Optional[dict]:
         if new_sid:
             _session_id = new_sid
 
+        if data and "error" in data:
+            return {"error": data["error"].get("message", data["error"])}
+
         if data and "result" in data:
-            content = data["result"].get("content", [])
-            if content and content[0].get("type") == "text":
+            result = data["result"]
+            content = result.get("content", [])
+            text = content[0]["text"] if content and content[0].get("type") == "text" else None
+
+            if result.get("isError"):
+                return {"error": text if text is not None else result}
+
+            if text is not None:
                 try:
-                    return json.loads(content[0]["text"])
-                except (json.JSONDecodeError, KeyError):
-                    return None
+                    return json.loads(text)
+                except json.JSONDecodeError:
+                    return {"error": text}
+
             return None
 
         if attempt < retries:
