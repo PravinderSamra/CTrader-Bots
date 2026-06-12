@@ -1,56 +1,66 @@
 # Position Sizing Reference — stake(£/point) → `create_order` volume
 
-**Check this table before every `create_order` call.** The skills (`AgentSkill.md` Step 5,
+**Check this before every `create_order` call.** The skills (`AgentSkill.md` Step 5,
 `DayTradeSkill.md`) compute a target stake in **£ per point**, where "point" is defined by
-the instrument's `get_symbols` `description` field (e.g. "bet in 1 GBP per (0.01)" → 1 point
-= 0.01 price units).
+the instrument's `get_symbols` `description` field (e.g. "bet in 1 GBP per (0.0001)" → 1
+point = 0.0001 price units; "bet in 1 GBP per (1.00)" → 1 point = 1.00 price units).
 
-Converting that stake into the integer `volume` field `create_order` expects requires a
-**per-category multiplier K**:
+## Primary formula (derived from confirmed data, use this first)
 
 ```
-volume = stake_per_point × K
+volume = (stake_per_point ÷ point_size) × 100
 ```
 
-**K is NOT universal across asset classes.** Assuming K=100 for every instrument is the
-default trap (it happens to be correct for metals and indices, but is 100× too small for
-energies) — see the 2026-06-12 Crude_SB incident in `BUILD-LOG.md` / `TradeLog.md`.
+`point_size` is the number in the instrument's `get_symbols` `description` — e.g. 0.0001
+for EURUSD_SB/GBPCAD_SB, 0.01 for USDJPY_SB/GBPJPY_SB/Crude_SB/Brent_SB, 1.00 for
+XAUUSD_SB and all indices.
 
-## Confirmed conversion factors (empirically verified via realized P/L on this account)
+Equivalently: **`volume / 100` = £ per 1.0 unit of *raw* price movement**, independent of
+instrument — this is the standard cTrader "volume in cents of base, contract value scales
+with volume" convention. A smaller `point_size` (e.g. 0.0001) means each "point" is a
+smaller slice of raw price movement, so it takes a much larger `volume` to produce the
+same £/point stake — hence K (= volume ÷ stake_per_point) grows as point_size shrinks.
 
-| symbolCategoryId | Asset class | Example symbols | K | Evidence |
+### Confirmed against realized P/L on this account (n=2, both exact)
+
+| Symbol | point_size | Predicted volume for £X/pt | Actual trade | Realized £/pt | Check |
+|---|---|---|---|---|---|
+| XAUUSD_SB | 1.00 | `volume = X × 100` | volume=2600 (intended £26/pt) | £26.00/pt exactly (£555.36 / 21.36pt) | `(26/1.00)×100=2600` ✓ |
+| Crude_SB | 0.01 | `volume = X × 10,000` | volume=500 (intended £5/pt, but formula says should've been 50,000) | £0.05/pt exactly (£7.45 / 149pt) | `(0.05/0.01)×100 = 500` ✓ — confirms formula in reverse: the 100×-undersized order is *exactly* what the formula predicts for volume=500 |
+
+### Derived predictions (NOT yet independently confirmed on this account — verify on first live trade)
+
+| Asset class | Example symbols | point_size | K = volume ÷ stake_per_pt | Confidence |
 |---|---|---|---|---|
-| 67 | Metals | XAUUSD_SB | **100** | 2026-06-12: volume=2600 → realized profit £555.36 on a 21.36pt move = £26.00/pt exactly = 2600 ÷ 100 ✓ |
-| 73 | Energies | Crude_SB, Brent_SB, NatGas_SB | **10,000** | 2026-06-12: volume=500 → realized profit £7.45 on a 149pt move = £0.05/pt exactly = 500 ÷ 10,000 ✓. Order was placed assuming K=100 (intended £5/pt) — resulting position was **100× undersized** (£0.05/pt actual, £4.05 risk instead of £405). |
+| Indices | US500_SB, NAS100_SB, US30_SB, GER40_SB, UK100_SB | 1.00 | **100** | Medium — also matches `ctrader-mcp-integration-guide.md` Lesson 5's US30 example (volume=1100 → £11/pt) |
+| JPY pairs / energies-like | USDJPY_SB, GBPJPY_SB | 0.01 | **10,000** | Low-medium — same point_size class as Crude (confirmed), but different `symbolCategoryId` |
+| 4-decimal FX (majors/crosses) | EURUSD_SB, GBPUSD_SB, EURGBP_SB, GBPCAD_SB | 0.0001 | **1,000,000** | Low — large extrapolation (n=2 → predicts a 10,000× jump from metals' K). Treat K=100 (the old default) as actively wrong here, not just unverified. |
 
-## Unverified — confirm on first live trade in this category
+**⚠ Do not fall back to K=100 for forex.** If the formula above is right, K=100 for a
+0.0001-point_size pair would mean `volume=100` → £0.01/pt — i.e. a forex order sized with
+the old "volume=stake×100" assumption would be **10,000× undersized** (vs. 100× for
+energies). Conversely, if you ever reach for K=1,000,000 by habit on an instrument with
+point_size=1.00 (metals/indices), that's a 10,000×-**oversized** order. Always compute
+`point_size` from the description first.
 
-| symbolCategoryId | Asset class | Example symbols | Best-guess K | Status |
-|---|---|---|---|---|
-| 50 | Indices | US500_SB, NAS100_SB, US30_SB, GER40_SB, UK100_SB | 100 | Per `ctrader-mcp-integration-guide.md` Lesson 5's US30 worked example (volume=1100 → £11/pt claimed) — NOT yet confirmed via this account's own realized P/L |
-| 69 | Forex (USD-quoted majors) | EURUSD_SB, GBPUSD_SB, USDJPY_SB | 100 (guess) | UNVERIFIED — no trade of ours has closed in this category yet |
-| 71 | Forex crosses | EURGBP_SB, GBPJPY_SB, GBPCAD_SB | 100 (guess) | UNVERIFIED — open EURGBP_SB/GBPCAD_SB positions on this account were placed externally, not sized by this skill, so can't be used to back-solve K |
+## How to confirm a new instrument
 
-## How to confirm a new category
-
-1. After a position in an "Unverified" category closes, compute realized P/L ÷ points moved
-   = actual £/point.
-2. Compare to `volume ÷ best-guess K`.
-3. If they match, move the category to "Confirmed" with that K and the evidence (date,
-   volume, P/L, points moved).
-4. If they don't match, solve `K = volume ÷ actual_£_per_point`, record the corrected K,
-   and add a `BUILD-LOG.md` entry documenting the discrepancy (size and direction of the
-   error) so past trades in that category can be re-checked.
+1. After a position closes, compute realized P/L ÷ points moved = actual £/point.
+2. Compare to `volume ÷ (100 / point_size)` (the formula's prediction).
+3. If they match, move the row to "Confirmed" with the evidence (date, volume, P/L, points
+   moved, point_size).
+4. If they don't match, record the actual K, add a `BUILD-LOG.md` entry, and re-derive the
+   pattern (the point_size-inverse relationship may not hold universally).
 
 ## Process for the skills (`AgentSkill.md` / `DayTradeSkill.md`)
 
-- After computing `stake_per_point` (Step 5), fetch the instrument's `symbolCategoryId` via
-  `get_symbols` and look it up here before computing `volume`.
-- **Confirmed category** → use the listed K, proceed normally.
-- **Unverified category** → use the best-guess K, but:
-  - Prefix the trade card's `Position size` line with `[SIZING UNVERIFIED for category N — see SizingReference.md]`.
-  - After the position closes, compute the realized £/point from the balance change and
-    update this table per the procedure above.
-- **Brand-new category with no entry at all here** → size the first trade at the minimum
-  volume (100) regardless of intended risk, confirm realized £/pt on close, then scale up
-  on the next trade in that category.
+- After computing `stake_per_point` (Step 5), read `point_size` from the instrument's
+  `get_symbols` `description`, then compute `volume = (stake_per_point ÷ point_size) × 100`.
+- **For instrument classes with a "Confirmed" row above** → proceed normally.
+- **For "Derived prediction" classes (indices, JPY pairs, 4-decimal FX)** → use the
+  formula's prediction, but prefix the trade card's `Position size` line with
+  `[SIZING UNVERIFIED — see SizingReference.md]`, and once the position closes compute
+  realized £/point to confirm/correct.
+- **Brand-new instrument with an unfamiliar `point_size`** → size the first trade at
+  minimum volume (100) regardless of intended risk, confirm realized £/pt on close, then
+  scale on the next trade.

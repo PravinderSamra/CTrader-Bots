@@ -173,10 +173,10 @@ Example: £48,233 balance, 1% risk, XAUUSD_SB stop 15.00 away (point size = 1.00
 
 Show the working, including the point size used and where it came from (the `description` field). **If you ever connect an account where `get_symbols` shows plain (non-`_SB`) CFD instruments enabled, switch to the lots/`lotSize`/cents-of-base model instead** (`volume = lots × lotSize × 100`) — the two models are mutually exclusive; check `enabled` + `description` first and use whichever the account actually deals in. Flag clearly which model you're using and why.
 
-- **`stake (£/point)` → `create_order` `volume` — check `SizingReference.md` first.** The conversion `volume = stake_per_point × K` uses a per-`symbolCategoryId` multiplier `K` that is **not universal** — confirmed K=100 for metals (67) but K=10,000 for energies (73); see the 2026-06-12 Crude_SB incident (`BUILD-LOG.md`). Before computing `volume`: fetch the instrument's `symbolCategoryId` via `get_symbols` and look up `K` in `SizingReference.md`.
-  - **Confirmed category** → use the listed `K`.
-  - **Unverified category** → use the best-guess `K`, but prefix the trade card's `Position size` line with `[SIZING UNVERIFIED for category N — see SizingReference.md]`, and once the position closes compute realized £/point from the balance change to confirm/correct `K` and update the table.
-  - **Category not in the table at all** → size the first trade at minimum volume (100) regardless of intended risk, confirm realized £/pt on close, then scale on the next trade.
+- **`stake (£/point)` → `create_order` `volume` — use `SizingReference.md`'s formula.** `volume = (stake_per_point ÷ point_size) × 100`, where `point_size` is the number in the instrument's `get_symbols` description (already extracted above). **Do not assume `volume = stake_per_point × 100` regardless of point_size** — that's only correct when point_size=1.00 (metals/indices); for point_size=0.01 (energies, JPY pairs) it's 100× too small, and for point_size=0.0001 (4-decimal FX) it would be 10,000× too small. See the 2026-06-12 Crude_SB incident (`BUILD-LOG.md`).
+  - **point_size class already "Confirmed" in `SizingReference.md`** → proceed normally.
+  - **point_size class only "derived/unverified"** (indices, JPY pairs, 4-decimal FX) → use the formula's prediction, but prefix the trade card's `Position size` line with `[SIZING UNVERIFIED — see SizingReference.md]`, and once the position closes compute realized £/point from the balance change to confirm/correct.
+  - **Unfamiliar point_size not covered at all** → size the first trade at minimum volume (100) regardless of intended risk, confirm realized £/pt on close, then scale on the next trade.
 
 ---
 

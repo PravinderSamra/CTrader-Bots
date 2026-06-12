@@ -13,28 +13,39 @@ undersizing**. Confirmed by reconciling the account balance change across the XA
 and the Crude close: +£562.81 total = £555.36 (XAUUSD, 21.36pt × £26/pt, confirms
 metals K=100 is correct) + £7.45 (Crude, 149pt × £0.05/pt).
 
-**Root cause**: the `volume = stake_per_point × K` conversion factor `K` is **per-category**,
-not a universal constant. Metals (symbolCategoryId 67) and (per the integration guide's
-US30 example, not yet independently confirmed) indices (50) use `K=100`. Energies
-(symbolCategoryId 73 — Crude_SB, Brent_SB, NatGas_SB) use `K=10,000`. Forex (69, 71) is
-unverified. The `create_order` schema's own `volume` description ("forex=100000 lotSize,
-metals=100 lotSize, indices/crypto=1 lotSize") doesn't cover energies at all, and no
-amount of reasoning from that table would have caught this — it had to be discovered via
-realized P/L.
+**Root cause**: the `volume = stake_per_point × K` conversion factor `K` is **not a
+universal constant** — it scales with the instrument's `point_size` (the number in its
+`get_symbols` description, e.g. 0.0001 for EURUSD_SB, 0.01 for Crude_SB, 1.00 for
+XAUUSD_SB). XAUUSD (point_size=1.00) gave K=100; Crude (point_size=0.01) gave K=10,000 —
+exactly `K = 100 / point_size` for both. The `create_order` schema's own `volume`
+description ("forex=100000 lotSize, metals=100 lotSize, indices/crypto=1 lotSize") doesn't
+mention point_size or cover energies at all, and no amount of reasoning from that table
+would have caught this — it had to be discovered via realized P/L.
 
-**Fix**: created `SMC-Prob/SizingReference.md` — a per-`symbolCategoryId` table of
-confirmed/unverified `K` values, with a procedure for confirming new categories from
-realized P/L after a position closes, and a "size the first trade in an unverified
-category at minimum volume" fallback. `AgentSkill.md` Step 5 and `DayTradeSkill.md` now
-point to it and require checking it before computing `volume`, and trade cards must flag
-`[SIZING UNVERIFIED for category N]` when the category's K hasn't been empirically
-confirmed yet.
+**Follow-up research**: a background agent investigated cTrader/Pepperstone docs to
+sanity-check this `K = 100 / point_size` pattern for indices and forex (categories we
+haven't traded yet). It found no definitive published formula, but the pattern is
+internally consistent with the only other documentary example (`ctrader-mcp-integration-guide.md`
+Lesson 5's US30 case: point_size=1.00 → K=100, matching metals/indices). Critically, it
+flagged that **forex (point_size=0.0001) would predict K=1,000,000** — i.e. the old
+default K=100 would be **10,000× undersized** for forex, not just 100×. Indices
+(point_size=1.00) likely share metals' K=100.
+
+**Fix**: rewrote `SMC-Prob/SizingReference.md` around the formula
+`volume = (stake_per_point ÷ point_size) × 100`, with a table of confirmed (metals,
+energies) vs. derived-but-unverified (indices, JPY pairs, 4-decimal FX) predictions, and a
+procedure for confirming new instruments from realized P/L after a position closes.
+`AgentSkill.md` Step 5 and `DayTradeSkill.md` now require computing `volume` via this
+formula and flagging `[SIZING UNVERIFIED — see SizingReference.md]` for any instrument
+whose point_size class isn't yet confirmed.
 
 **Net effect on the 06-12 Crude trade**: harmless in outcome (TP hit, ~+1.72R, but only
 +£7.45 cash instead of the intended ~+£745) precisely because it was a winner — had it
 been a 100×-undersized *loser* this would also have been harmless in cash terms, but the
-real risk is the *opposite* error (K too large → 100× **oversized** order) going
-undetected on a loser. Always confirm K for a category before scaling size up.
+real risk is the *opposite* error (K too large → an oversized order) going undetected on a
+loser. Always confirm the formula's prediction for a new point_size class before scaling
+size up — especially for forex, where the predicted jump from K=100 to K=1,000,000 is
+large enough that even a partially-correct guess could be dangerously oversized.
 
 ---
 
