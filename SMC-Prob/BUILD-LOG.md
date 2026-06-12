@@ -4,6 +4,40 @@ Running record of progress, decisions, and open questions. Newest entries at the
 
 ---
 
+## 2026-06-12 — CRITICAL: `volume` → £/point conversion factor differs by asset class (Crude_SB 100× undersized)
+
+The 06-12 Crude_SB SHORT (`TradeLog.md`, position 50738528) was sized for £5/point
+(`volume=500`, using the same `volume = stake_per_point × 100` conversion that worked
+correctly for XAUUSD_SB) but realized only **£0.05/point** when it closed — a **100×
+undersizing**. Confirmed by reconciling the account balance change across the XAUUSD scalp
+and the Crude close: +£562.81 total = £555.36 (XAUUSD, 21.36pt × £26/pt, confirms
+metals K=100 is correct) + £7.45 (Crude, 149pt × £0.05/pt).
+
+**Root cause**: the `volume = stake_per_point × K` conversion factor `K` is **per-category**,
+not a universal constant. Metals (symbolCategoryId 67) and (per the integration guide's
+US30 example, not yet independently confirmed) indices (50) use `K=100`. Energies
+(symbolCategoryId 73 — Crude_SB, Brent_SB, NatGas_SB) use `K=10,000`. Forex (69, 71) is
+unverified. The `create_order` schema's own `volume` description ("forex=100000 lotSize,
+metals=100 lotSize, indices/crypto=1 lotSize") doesn't cover energies at all, and no
+amount of reasoning from that table would have caught this — it had to be discovered via
+realized P/L.
+
+**Fix**: created `SMC-Prob/SizingReference.md` — a per-`symbolCategoryId` table of
+confirmed/unverified `K` values, with a procedure for confirming new categories from
+realized P/L after a position closes, and a "size the first trade in an unverified
+category at minimum volume" fallback. `AgentSkill.md` Step 5 and `DayTradeSkill.md` now
+point to it and require checking it before computing `volume`, and trade cards must flag
+`[SIZING UNVERIFIED for category N]` when the category's K hasn't been empirically
+confirmed yet.
+
+**Net effect on the 06-12 Crude trade**: harmless in outcome (TP hit, ~+1.72R, but only
++£7.45 cash instead of the intended ~+£745) precisely because it was a winner — had it
+been a 100×-undersized *loser* this would also have been harmless in cash terms, but the
+real risk is the *opposite* error (K too large → 100× **oversized** order) going
+undetected on a loser. Always confirm K for a category before scaling size up.
+
+---
+
 ## 2026-06-11 — `create_order` MARKET orders: relative SL/TP precision finding
 
 First live (non-backtest) order placed via `/smc-day` (XAUUSD_SB short, see `TradeLog.md` 2026-06-11 entry). Two `create_order` API details not previously documented here:

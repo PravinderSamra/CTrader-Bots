@@ -101,7 +101,7 @@ Same thresholds apply: 11–14 = high-probability, 8–10 = moderate (flagged, r
 - **Stop — same structural principle** (beyond the invalidation point of the OB/FVG/protecting swing), anchored to *intraday* (LTF) structure — naturally tighter than the swing skill's HTF-anchored stops.
 - **R:R gate** — same non-negotiable ≥2:1 to Target 1. With both target and stop now intraday-scale, this should still hold; if it doesn't, that's the runway gate's logic confirming itself — the setup isn't a clean day trade.
 - **NEW — the flatten rule (this is the mechanical core of "day trade"):** *Flatten by [session deadline] regardless of target progress.* State it in exactly those words in the trade card. An open position at the deadline is closed at market — full stop, no exceptions, no "let it run a bit longer, it's close." This is what actually makes it a day trade rather than a swing trade with a tight stop and good intentions.
-- **Position sizing** — identical £/point spread-bet model as the swing skill (see `AgentSkill.md` Step 5 for the full worked example and formula). Show the working.
+- **Position sizing** — identical £/point spread-bet model as the swing skill (see `AgentSkill.md` Step 5 for the full worked example and formula). Show the working. **Before converting `stake (£/point)` to `create_order`'s `volume`, check `SizingReference.md` for the instrument's `symbolCategoryId` — the conversion factor `K` is not universal (confirmed K=100 for metals, K=10,000 for energies; see the 2026-06-12 Crude_SB incident in `BUILD-LOG.md`).** Flag `[SIZING UNVERIFIED for category N]` in the trade card for any category not yet confirmed in that table.
 
 ---
 
