@@ -10,10 +10,13 @@ Replaces Yahoo Finance (indices/oil) and Twelve Data (forex/gold) with:
 
 Configuration (set in your local, gitignored .env — NEVER commit these):
   CTRADER_MCP_URL   — full MCP endpoint URL for your FTMO connection
-  CTRADER_MCP_TOKEN — bearer token for your FTMO connection
+  CTRADER_MCP_TOKEN — bearer token for your FTMO connection (optional —
+                       leave unset for a local cTrader desktop MCP server
+                       that doesn't require a bearer token)
 
-If either is unset, all fetchers in this module no-op (return None / [])
-and the agent falls back to Twelve Data / Yahoo for those instruments.
+If CTRADER_MCP_URL is unset, all fetchers in this module no-op (return
+None / []) and the agent falls back to Twelve Data / Yahoo for those
+instruments.
 """
 
 import http.client
@@ -238,7 +241,7 @@ def _call_tool(tool: str, arguments: dict) -> Optional[dict]:
     """Call a cTrader MCP tool. Reinitialises session once on expiry."""
     global _session_id
 
-    if _MCP_URL is None or _TOKEN is None:
+    if _MCP_URL is None:
         return None
 
     if not _ensure_session():

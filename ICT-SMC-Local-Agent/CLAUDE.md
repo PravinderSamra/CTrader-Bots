@@ -28,7 +28,8 @@ This agent fetches 24/7 CFD candles via `data/fetchers/ctrader_fetcher.py`, whic
 - **`.env` is gitignored** (`.gitignore` includes `.env` and `**/.env`). Never `git add` it.
 - **Never hardcode `CTRADER_MCP_URL` or `CTRADER_MCP_TOKEN`** anywhere in `ctrader_fetcher.py` or any other tracked file — these belong to a live FTMO account.
 - **Never paste the URL or token into chat, commit messages, issues, or PRs.**
-- If either env var is unset, `ctrader_fetcher.py` no-ops (`_call_tool` returns `None` immediately) and every instrument falls back to its `fallback_source` (Twelve Data / Yahoo / OKX). This is the expected state for a fresh checkout.
+- If `CTRADER_MCP_URL` is unset, `ctrader_fetcher.py` no-ops (`_call_tool` returns `None` immediately) and every instrument falls back to its `fallback_source` (Twelve Data / Yahoo / OKX). This is the expected state for a fresh checkout.
+- `CTRADER_MCP_TOKEN` is optional — leave it unset for a local cTrader desktop MCP server (e.g. `http://127.0.0.1:<port>/mcp/`) that authenticates via the desktop app session and doesn't issue a bearer token. When set, it's sent as `Authorization: Bearer <token>`.
 
 ### How it works
 `_MCP_URL` and `_MCP_HOST`/`_MCP_PORT`/`_MCP_PATH`/`_MCP_SECURE` are derived from `CTRADER_MCP_URL` via `urlparse()`, so this fetcher works with any cTrader MCP HTTP endpoint (different host/port/path than the Remote Agent's). The rest of the logic (symbol resolution, pip-digit auto-detection, candle parsing) is identical to the Remote Agent's `ctrader_fetcher.py`.
