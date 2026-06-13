@@ -173,6 +173,42 @@ Yahoo Finance returns market-hours-only candles for US indices. The overnight ga
 
 ---
 
+## Trade Log System
+
+Every setup the agent presents, and every trade the user takes, is recorded in
+`trade_log/trades.json` (full schema + helper functions in `trade_log/log_trade.py`).
+
+**Logging must never block or slow down the user-facing response.** Workflow:
+
+1. **After posting scan recommendations in chat** — spawn a background Agent
+   (`run_in_background: true`, `subagent_type: general-purpose`) that:
+   - Calls `add_trade()` for each setup presented this scan (one record per
+     setup, `recommendation_status` = `recommended` | `watch_only` |
+     `not_recommended`), using the exact entry/SL/TP/confluence numbers from
+     the trade card just shown to the user.
+   - Calls `get_pending_trades()` to find prior records still
+     `pending`/`filled_open`, fetches price history since each record's
+     `scan_timestamp_utc` via `ctrader_fetcher.fetch_klines()` (see "Always
+     use HTTP" section below), determines whether the entry zone was reached
+     and whether SL/TP was hit, then calls `update_trade()` with the
+     resulting `outcome_status`, `pnl_usd`, and `outcome_notes`.
+
+2. **After confirming a trade entry in chat** (user says "enter trade X") —
+   place the order and confirm in chat first as normal, THEN spawn a
+   background Agent that calls `update_trade(trade_id, {...})` to set
+   `action_status: "taken"` plus `order_id` / `position_id` / `order_volume` /
+   `order_type`. If the trade wasn't previously logged as a recommendation
+   (ad-hoc entry), create a new record via `add_trade()` instead.
+
+3. `pnl_usd` is computed with the same `$450 risk / stop_pts` sizing model
+   used in trade cards — scale by how far price moved from `entry_price`
+   toward `stop_loss` or the relevant TP (pro-rate for TP1 partials).
+
+`trades.json` lives in this repo so it can also be reviewed/queried directly
+(`cat trade_log/trades.json` or `get_all_trades()`).
+
+---
+
 ## Phase Roadmap
 
 | Phase | What's Built | Status |
