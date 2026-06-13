@@ -2,12 +2,36 @@
 
 ## What This Is
 
-The Local Agent is the full-capability version of the ICT/SMC scanner. It runs on your Mac with cTrader desktop installed, giving access to the cTrader Local MCP server — chart control, live price feeds, DOM/Level 2 data (Phase 3), and direct trade execution.
+The Local Agent is the full-capability version of the ICT/SMC scanner. It scans the same 32 FTMO-eligible instruments as the Remote Agent, fetching CFD candles via its **own cTrader MCP connection to a separate FTMO account** (see "cTrader Data Connection" below). It also runs on your Mac with cTrader desktop installed, giving access to the cTrader Local MCP server — chart control, live price feeds, DOM/Level 2 data (Phase 3), and direct trade execution.
 
 **This is the Local Agent** — for Mac desktop use with Claude Code.
-**The Remote Agent** is in `/ICT-SMC-Remote-Agent/` — for phone/web use (lighter, no Local MCP needed).
+**The Remote Agent** is in `/ICT-SMC-Remote-Agent/` — for phone/web use, connected to a different (Pepperstone demo) cTrader account.
 
 Both agents share identical analysis logic. Bugs fixed in `analysis/` should be applied to both.
+
+---
+
+## cTrader Data Connection (FTMO account — Local Agent only)
+
+This agent fetches 24/7 CFD candles via `data/fetchers/ctrader_fetcher.py`, which talks to a cTrader MCP HTTP endpoint — **a separate FTMO account, distinct from the Remote Agent's connection**.
+
+### Setup
+1. Get your FTMO cTrader MCP endpoint URL and bearer token (from your cTrader AI Agent Connect setup for the FTMO account).
+2. Copy `.env.example` to `.env` (already gitignored).
+3. Add to `.env`:
+   ```
+   CTRADER_MCP_URL=<your FTMO MCP endpoint URL>
+   CTRADER_MCP_TOKEN=<your FTMO bearer token>
+   ```
+
+### 🔒 Security — read before touching this
+- **`.env` is gitignored** (`.gitignore` includes `.env` and `**/.env`). Never `git add` it.
+- **Never hardcode `CTRADER_MCP_URL` or `CTRADER_MCP_TOKEN`** anywhere in `ctrader_fetcher.py` or any other tracked file — these belong to a live FTMO account.
+- **Never paste the URL or token into chat, commit messages, issues, or PRs.**
+- If either env var is unset, `ctrader_fetcher.py` no-ops (`_call_tool` returns `None` immediately) and every instrument falls back to its `fallback_source` (Twelve Data / Yahoo / OKX). This is the expected state for a fresh checkout.
+
+### How it works
+`_MCP_URL` and `_MCP_HOST`/`_MCP_PORT`/`_MCP_PATH`/`_MCP_SECURE` are derived from `CTRADER_MCP_URL` via `urlparse()`, so this fetcher works with any cTrader MCP HTTP endpoint (different host/port/path than the Remote Agent's). The rest of the logic (symbol resolution, pip-digit auto-detection, candle parsing) is identical to the Remote Agent's `ctrader_fetcher.py`.
 
 ---
 
@@ -69,7 +93,7 @@ python main.py
 ```
 ICT-SMC-Local-Agent/
 ├── main.py                     Entry point — run this
-├── config/settings.py          FTMO params, instrument list (AGENT_VERSION = "Local")
+├── config/settings.py          FTMO params, 32-instrument list (AGENT_VERSION = "Local")
 ├── analysis/
 │   ├── structure.py            FVG/OB/liq detection, session gap filter, trend
 │   └── sessions.py             Session/kill zone detection
@@ -77,11 +101,12 @@ ICT-SMC-Local-Agent/
 │   ├── models.py               Candle, FVGResult, OrderBlock, MarketContext
 │   └── fetchers/
 │       ├── yahoo_fetcher.py    Indices + oil (fallback)
-│       ├── twelve_data_fetcher.py  Forex spot + XAU/USD
+│       ├── twelve_data_fetcher.py  Forex + metals fallback
 │       ├── okx_fetcher.py      Crypto OHLCV
 │       ├── cot_fetcher.py      CFTC COT macro data
-│       └── ctrader_fetcher.py  cTrader Open API (Phase 2 data + Phase 3 DOM)
-└── reports/pre_session_report.py   Formatted report output
+│       ├── ctrader_fetcher.py  cTrader MCP — primary feed (FTMO account, env-configured)
+│       └── calendar_fetcher.py ForexFactory economic calendar / news-risk
+└── reports/pre_session_report.py   Formatted report output (incl. news/risk section)
 ```
 
 ---
@@ -115,24 +140,44 @@ When cTrader Open API credentials are configured, the Local Agent will build a r
 
 ---
 
-## Instruments Scanned (all FTMO Swing eligible)
+## Instruments Scanned (32 total — all FTMO Swing eligible)
 
-| Symbol | FTMO Symbol | Leverage | Data Source | Phase 2 Source |
-|---|---|---|---|---|
-| BTCUSDT | BTCUSD | 1:1 | OKX | OKX (no change) |
-| ETHUSDT | ETHUSD | 1:1 | OKX | OKX |
-| SOLUSDT | SOLUSD | 1:1 | OKX | OKX |
-| EURUSD | EURUSD | 1:30 | Twelve Data | cTrader (Pepperstone) |
-| GBPUSD | GBPUSD | 1:30 | Twelve Data | cTrader |
-| USDJPY | USDJPY | 1:30 | Twelve Data | cTrader |
-| GBPJPY | GBPJPY | 1:30 | Twelve Data | cTrader |
-| SPX | US500.cash | 1:15 | Yahoo ^GSPC | cTrader US500 (24/7) |
-| NDX | US100.cash | 1:15 | Yahoo ^NDX | cTrader US100 (24/7) |
-| US30 | US30.cash | 1:15 | Yahoo ^DJI | cTrader US30 (24/7) |
-| DAX | GER40.cash | 1:15 | Yahoo ^GDAXI | cTrader GER40 |
-| UK100 | UK100.cash | 1:15 | Yahoo ^FTSE | cTrader UK100 |
-| GOLD | XAUUSD | 1:9 | Twelve Data | cTrader XAUUSD |
-| OIL | USOIL.cash | 1:9 | Yahoo CL=F | cTrader USOIL |
+Primary source `ctrader` = this agent's own FTMO cTrader MCP connection (24/7 CFD feed, data_tier=1). Falls back automatically if `CTRADER_MCP_URL`/`CTRADER_MCP_TOKEN` are unset or the request fails.
+
+| Symbol | Asset Class | FTMO Symbol | Leverage | Primary Source | Fallback |
+|---|---|---|---|---|---|
+| BTCUSDT | Crypto | BTCUSD | 1:1 | OKX | — |
+| ETHUSDT | Crypto | ETHUSD | 1:1 | OKX | — |
+| SOLUSDT | Crypto | SOLUSD | 1:1 | OKX | — |
+| EURUSD | Forex | EURUSD | 1:30 | cTrader EURUSD | Twelve Data |
+| GBPUSD | Forex | GBPUSD | 1:30 | cTrader GBPUSD | Twelve Data |
+| USDJPY | Forex | USDJPY | 1:30 | cTrader USDJPY | Twelve Data |
+| USDCHF | Forex | USDCHF | 1:30 | cTrader USDCHF | Twelve Data |
+| USDCAD | Forex | USDCAD | 1:30 | cTrader USDCAD | Twelve Data |
+| AUDUSD | Forex | AUDUSD | 1:30 | cTrader AUDUSD | Twelve Data |
+| NZDUSD | Forex | NZDUSD | 1:30 | cTrader NZDUSD | Twelve Data |
+| GBPJPY | Forex | GBPJPY | 1:30 | cTrader GBPJPY | Twelve Data |
+| EURJPY | Forex | EURJPY | 1:30 | cTrader EURJPY | Twelve Data |
+| AUDJPY | Forex | AUDJPY | 1:30 | cTrader AUDJPY | Twelve Data |
+| EURGBP | Forex | EURGBP | 1:30 | cTrader EURGBP | Twelve Data |
+| GBPAUD | Forex | GBPAUD | 1:30 | cTrader GBPAUD | Twelve Data |
+| EURCAD | Forex | EURCAD | 1:30 | cTrader EURCAD | Twelve Data |
+| GBPCAD | Forex | GBPCAD | 1:30 | cTrader GBPCAD | Twelve Data |
+| SPX | Indices | US500.cash | 1:15 | cTrader US500 | Yahoo ^GSPC |
+| NDX | Indices | US100.cash | 1:15 | cTrader NAS100 | Yahoo ^NDX |
+| US30 | Indices | US30.cash | 1:15 | cTrader US30 | Yahoo ^DJI |
+| DAX | Indices | GER40.cash | 1:15 | cTrader GER40 | Yahoo ^GDAXI |
+| UK100 | Indices | UK100.cash | 1:15 | cTrader UK100 | Yahoo ^FTSE |
+| FRA40 | Indices | FRA40.cash | 1:15 | cTrader FRA40 | Yahoo ^FCHI |
+| EUSTX50 | Indices | EUSTX50.cash | 1:15 | cTrader EUSTX50 | Yahoo ^STOXX50E |
+| JPN225 | Indices | JPN225.cash | 1:15 | cTrader JPN225 | Yahoo ^N225 |
+| AUS200 | Indices | AUS200.cash | 1:15 | cTrader AUS200 | Yahoo ^AXJO |
+| HK50 | Indices | HK50.cash | 1:10 | cTrader HK50 | Yahoo ^HSI |
+| GOLD | Metals | XAUUSD | 1:9 | cTrader XAUUSD | Twelve Data |
+| SILVER | Metals | XAGUSD | 1:9 | cTrader XAGUSD | Twelve Data |
+| OIL | Commodities | USOIL.cash | 1:9 | cTrader WTOIL-PERP | Yahoo CL=F |
+| BRENT | Commodities | BRENTOIL.cash | 1:9 | cTrader BRENTOIL-PERP | Yahoo BZ=F |
+| NATGAS | Commodities | NatGas | 1:9 | cTrader NatGas | Yahoo NG=F |
 
 ---
 
@@ -178,14 +223,39 @@ Yahoo Finance market-hours data creates phantom FVGs overnight. `structure._is_s
 
 ---
 
+## Economic Calendar / News Risk
+
+`data/fetchers/calendar_fetcher.py` pulls the ForexFactory weekly calendar feed
+(`nfs.faireconomy.media` — free, no API key) and is wired into the report:
+
+- **Global section** — "NEWS & RISK EVENTS" near the top of the report lists
+  today's HIGH-impact events across all currencies (NFP, FOMC, CPI, etc.).
+- **Per-instrument** — each symbol's block shows:
+  - `⚠ NEWS BLACKOUT` if a HIGH-impact event affecting that symbol is within
+    30 min before / 15 min after right now (`is_news_blackout()`).
+  - An "ECONOMIC CALENDAR — next 12h" mini-section of upcoming events that
+    affect that symbol, via `CURRENCY_TO_SYMBOLS` (e.g. USD events affect
+    EURUSD, GOLD, SPX, etc.).
+
+`CURRENCY_TO_SYMBOLS` in `calendar_fetcher.py` uses **this agent's instrument
+names** (e.g. `OIL`, `US30`, `GOLD` — not ForexFactory's `USOIL`/`DOW`/`XAUUSD`).
+If new instruments are added to `config/settings.py`, add them to the relevant
+currency lists in `CURRENCY_TO_SYMBOLS` too.
+
+`fetch_events()` caches results for the lifetime of the process (one scan run),
+so adding this check per-instrument doesn't multiply HTTP requests.
+
+---
+
 ## Known Issues & Fixes
 
 | Issue | Fix Applied |
 |---|---|
 | Phantom FVGs on US indices from Yahoo overnight gap | Session gap filter in structure.py |
 | USDJPY/GBPJPY null values from Yahoo | None-check on all OHLC fields in yahoo_fetcher.py |
-| Price discrepancy vs Pepperstone chart | Fundamental data source difference — resolved in Phase 2 with cTrader feed |
+| Price discrepancy vs broker chart | Resolved by cTrader feed (data_tier=1) once `.env` is configured |
 | OKX crypto marked Tier 2 | Authenticated WebSocket needed for taker delta — Phase 3 |
+| OIL/BRENT cTrader demo limited history | Falls back to Yahoo — WTOIL-PERP / BRENTOIL-PERP have limited demo history |
 
 ---
 
@@ -194,8 +264,8 @@ Yahoo Finance market-hours data creates phantom FVGs overnight. `structure._is_s
 1. `python main.py` to verify everything works before changes
 2. **DO NOT** remove `_is_session_gap()` from `analysis/structure.py` — critical phantom FVG fix
 3. Analysis code in `analysis/` must match the Remote Agent exactly — sync both when fixing bugs
-4. To extend Phase 3 (DOM): implement `subscribe_dom()` in `data/fetchers/ctrader_fetcher.py`
-5. The ctrader_fetcher.py contains full implementation templates in comments
+4. **NEVER hardcode `CTRADER_MCP_URL` or `CTRADER_MCP_TOKEN`** (or any FTMO credential) in `ctrader_fetcher.py` or any tracked file. They come from a local, gitignored `.env` only — see "cTrader Data Connection" above. If `CTRADER_MCP_URL`/`CTRADER_MCP_TOKEN` are unset, `_call_tool()` returns `None` immediately and every instrument falls back to `fallback_source` — this is correct, expected behaviour, not a bug to "fix" by adding a default token.
+5. To extend Phase 3 (DOM): implement `subscribe_dom()` in `data/fetchers/ctrader_fetcher.py`
 6. FTMO rules in `config/settings.py` — check before modifying risk parameters
 7. **FVG pick card format**: Every FVG trade plan block MUST follow this exact format. `Direction` is the first line (LONG/SHORT), followed by `Current` price with distance/direction to entry zone. Required format:
    ```
@@ -220,5 +290,7 @@ Yahoo Finance market-hours data creates phantom FVGs overnight. `structure._is_s
 | Phase | Description | Status |
 |---|---|---|
 | 1 | Full scan pipeline, all FTMO instruments, FTMO risk context | ✅ Complete |
-| 2 | cTrader Open API data (24/7 CFD, exact prices) + trade execution | 🔜 Needs cTrader credentials |
+| 1.5 | 32-instrument cTrader-primary config + economic calendar/news-risk section | ✅ Complete |
+| 2 | cTrader MCP data (24/7 CFD, exact FTMO prices) — needs `.env` with `CTRADER_MCP_URL`/`CTRADER_MCP_TOKEN` | 🔜 Needs FTMO MCP credentials |
+| 2.5 | Trade execution via cTrader MCP (FTMO account) | 🔜 After Phase 2 |
 | 3 | DOM/Level 2 heatmap for indices & commodities | 🔜 After Phase 2 |

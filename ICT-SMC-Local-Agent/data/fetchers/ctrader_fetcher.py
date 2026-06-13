@@ -1,15 +1,19 @@
 """
-cTrader Remote MCP Fetcher — Tier 1 Data
+cTrader MCP Fetcher — Tier 1 Data
 
-Fetches exact Pepperstone CFD prices via the cTrader Remote MCP HTTP API.
+Fetches exact CFD prices via the cTrader MCP HTTP API (FTMO account,
+connected locally — separate from the Remote Agent's connection).
 Replaces Yahoo Finance (indices/oil) and Twelve Data (forex/gold) with:
   - 24/7 CFD candles — no overnight market-hours gaps, no phantom FVGs
-  - Exact Pepperstone price feed — matches your cTrader/TradingView chart
+  - Exact broker price feed — matches your cTrader/TradingView chart
   - Candles marked data_tier=1 (direct broker feed, highest quality)
 
-Token priority:
-  1. CTRADER_MCP_TOKEN env var (set in .env for live account)
-  2. Demo account fallback (read-only market data, no trading)
+Configuration (set in your local, gitignored .env — NEVER commit these):
+  CTRADER_MCP_URL   — full MCP endpoint URL for your FTMO connection
+  CTRADER_MCP_TOKEN — bearer token for your FTMO connection
+
+If either is unset, all fetchers in this module no-op (return None / [])
+and the agent falls back to Twelve Data / Yahoo for those instruments.
 """
 
 import http.client
@@ -18,15 +22,22 @@ import json
 import os
 from datetime import datetime, timezone, timedelta
 from typing import List, Optional
+from urllib.parse import urlparse
 from data.models import Candle
 
 # ── Config ────────────────────────────────────────────────────────────────────
-_MCP_URL = "https://mcp.ctrader.com/trading/mcp"
+# No hardcoded URL or token — both must come from the local .env file.
+_MCP_URL = os.environ.get("CTRADER_MCP_URL")
+_TOKEN   = os.environ.get("CTRADER_MCP_TOKEN")
 
-_TOKEN = os.environ.get(
-    "CTRADER_MCP_TOKEN",
-    "eyJwbGFudCI6InBlcHBlcnN0b25ldWsiLCJlbnZpcm9ubWVudCI6ImRlbW8iLCJ0b2tlbiI6IkliMEJzUERzSXBpZUJnTEtUWTluRjRpMEJ6a3R4V0pvSm1ZNVB3a1lIb2c9In0"
-)
+if _MCP_URL:
+    _parsed     = urlparse(_MCP_URL)
+    _MCP_HOST   = _parsed.hostname or ""
+    _MCP_PORT   = _parsed.port or (80 if _parsed.scheme == "http" else 443)
+    _MCP_PATH   = _parsed.path or "/"
+    _MCP_SECURE = _parsed.scheme != "http"
+else:
+    _MCP_HOST = _MCP_PORT = _MCP_PATH = _MCP_SECURE = None
 
 # cTrader period strings — server uses underscore format (M_1, H_1, D_1, etc.)
 _PERIOD_MAP = {
@@ -129,23 +140,26 @@ _PRICE_RANGES: dict[str, tuple[float, float]] = {
 _pip_digits_cache: dict[str, int] = {}
 
 # ── Connection + Session State ─────────────────────────────────────────────────
-# Persistent HTTPS connection for session affinity (load-balanced MCP server
+# Persistent connection for session affinity (load-balanced MCP server
 # routes to the same instance when keep-alive is used; Connection:close causes 404s).
-_conn: Optional[http.client.HTTPSConnection] = None
+_conn: Optional[http.client.HTTPConnection] = None
 _session_id: Optional[str] = None
 _symbol_id_cache: dict[str, int] = {}   # ctrader_symbol_name → symbolId
 _symbols_loaded: bool = False
 
 
-def _get_conn() -> http.client.HTTPSConnection:
-    """Return (or create) the persistent HTTPS connection."""
+def _get_conn() -> http.client.HTTPConnection:
+    """Return (or create) the persistent connection to the configured MCP endpoint."""
     global _conn
     if _conn is None:
-        _conn = http.client.HTTPSConnection(
-            "mcp.ctrader.com",
-            context=ssl.create_default_context(),
-            timeout=20,
-        )
+        if _MCP_SECURE:
+            _conn = http.client.HTTPSConnection(
+                _MCP_HOST, _MCP_PORT,
+                context=ssl.create_default_context(),
+                timeout=20,
+            )
+        else:
+            _conn = http.client.HTTPConnection(_MCP_HOST, _MCP_PORT, timeout=20)
     return _conn
 
 
@@ -154,17 +168,18 @@ def _post(payload: dict, session_id: Optional[str] = None) -> tuple[Optional[dic
     global _conn, _session_id
     body = json.dumps(payload)
     headers = {
-        "Authorization": f"Bearer {_TOKEN}",
         "Accept":        "application/json, text/event-stream",
         "Content-Type":  "application/json",
     }
+    if _TOKEN:
+        headers["Authorization"] = f"Bearer {_TOKEN}"
     if session_id:
         headers["Mcp-Session-Id"] = session_id
 
     for attempt in range(2):
         try:
             conn = _get_conn()
-            conn.request("POST", "/trading/mcp", body, headers)
+            conn.request("POST", _MCP_PATH, body, headers)
             resp = conn.getresponse()
             new_sid = (resp.getheader("Mcp-Session-Id")
                        or resp.getheader("mcp-session-id")
@@ -222,6 +237,9 @@ def _ensure_session() -> bool:
 def _call_tool(tool: str, arguments: dict) -> Optional[dict]:
     """Call a cTrader MCP tool. Reinitialises session once on expiry."""
     global _session_id
+
+    if _MCP_URL is None or _TOKEN is None:
+        return None
 
     if not _ensure_session():
         return None

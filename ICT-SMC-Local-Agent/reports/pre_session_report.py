@@ -9,6 +9,7 @@ Asian sweep, liq.grab, post-BOS, COT, premium/discount, OTE).
 from datetime import datetime, timezone
 from typing import Optional
 from data.models import MarketContext, FVGResult, OrderBlock, LiquidityPool, COTData
+from data.fetchers import calendar_fetcher
 from analysis.sessions import (
     current_session, active_kill_zone, session_display_label, session_bias_note
 )
@@ -570,8 +571,12 @@ def generate_report(markets: list[MarketContext]) -> str:
         "  • TP2 ★ PRIMARY     = nearest unswept BSL/SSL — run remaining 50%",
         "  • TP3 (PDH/L)       = prior day high/low — full extension target",
         "  • Confluences       = 9-10 factor ICT/SMC scoring (COT excluded when unavailable)",
-        _SEP,
+        "",
+        "  NEWS & RISK EVENTS (ForexFactory — all markets)",
+        _DIV,
     ]
+    lines.append(calendar_fetcher.format_todays_high_impact())
+    lines.append(_SEP)
 
     for ctx in markets:
         price = ctx.current_price
@@ -587,8 +592,15 @@ def generate_report(markets: list[MarketContext]) -> str:
         if src_warn:
             lines.append(f"  {src_warn}")
 
+        # News risk
+        blackout = calendar_fetcher.is_news_blackout(ctx.symbol)
+        if blackout["in_blackout"]:
+            lines.append(f"  ⚠  NEWS BLACKOUT — {blackout['reason']}")
+        lines.append(calendar_fetcher.format_calendar_section(ctx.symbol, hours_ahead=12))
+
         # Trend
         lines += [
+            "",
             "  MARKET STRUCTURE",
             f"  Higher-TF trend : {ctx.higher_tf_trend}",
             f"  Intraday trend  : {ctx.intraday_trend}",

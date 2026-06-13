@@ -1,5 +1,5 @@
 """
-ICT/SMC Market Scanner — Remote Agent
+ICT/SMC Market Scanner — Local Agent
 Entry point. Run: python main.py
 
 Fetches data for all FTMO-eligible instruments, runs ICT/SMC analysis,
@@ -18,7 +18,7 @@ except ImportError:
     pass
 
 from data.models import Candle, MarketContext
-from data.fetchers import yahoo_fetcher, twelve_data_fetcher, okx_fetcher, cot_fetcher
+from data.fetchers import yahoo_fetcher, twelve_data_fetcher, okx_fetcher, cot_fetcher, ctrader_fetcher
 from analysis import structure, sessions
 from reports.pre_session_report import generate_report
 from config.settings import INSTRUMENTS, PRIMARY_TF, CONTEXT_TF, DAILY_TF
@@ -45,6 +45,8 @@ def _fetch_symbol(inst: dict) -> Optional[tuple[List[Candle], List[Candle], List
                 return twelve_data_fetcher.fetch_klines(symbol, tf, limit, symbol_label=label)
             elif source == "yahoo":
                 return yahoo_fetcher.fetch_klines(symbol, tf, limit, symbol_label=label)
+            elif source == "ctrader":
+                return ctrader_fetcher.fetch_klines(symbol, tf, limit, symbol_label=label)
         except Exception as e:
             print(f"    ⚠  {name} fetch error ({source}): {e}", file=sys.stderr)
             return []
@@ -130,7 +132,7 @@ def _build_context(inst: dict, candles_1h: List[Candle], candles_1d: List[Candle
 
 
 def run_scan():
-    print("\nICT/SMC Remote Agent — Fetching market data...", file=sys.stderr)
+    print("\nICT/SMC Local Agent — Fetching market data...", file=sys.stderr)
     print(f"Instruments: {len(INSTRUMENTS)}\n", file=sys.stderr)
 
     markets = []
