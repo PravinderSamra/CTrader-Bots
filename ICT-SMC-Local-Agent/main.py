@@ -27,10 +27,10 @@ from config.settings import CANDLE_LIMIT_PRIMARY, CANDLE_LIMIT_DAILY
 _TWELVE_DATA_FREE_TIER = {"EURUSD", "GBPUSD", "USDJPY", "GBPJPY", "GOLD"}
 
 
-def _fetch_symbol(inst: dict) -> Optional[tuple[List[Candle], List[Candle], List[Candle]]]:
+def _fetch_symbol(inst: dict) -> Optional[tuple[List[Candle], List[Candle], List[Candle], str]]:
     """
     Fetch primary (1H), context (4H), and daily candles for one instrument.
-    Returns (candles_1h, candles_4h, candles_1d) or None on failure.
+    Returns (candles_1h, candles_4h, candles_1d, actual_source) or None on failure.
     """
     name   = inst["name"]
     src    = inst["source"]
@@ -54,11 +54,14 @@ def _fetch_symbol(inst: dict) -> Optional[tuple[List[Candle], List[Candle], List
 
     # Primary 1H
     candles_1h = _try_fetch(src, sym, PRIMARY_TF, CANDLE_LIMIT_PRIMARY)
+    actual_source = src
 
     # Fallback for forex if Twelve Data fails
     if not candles_1h and inst.get("fallback_source"):
         print(f"    → Falling back to {inst['fallback_source']} for {name}", file=sys.stderr)
         candles_1h = _try_fetch(inst["fallback_source"], inst["fallback_symbol"], PRIMARY_TF, CANDLE_LIMIT_PRIMARY)
+        if candles_1h:
+            actual_source = inst["fallback_source"]
 
     if not candles_1h:
         print(f"  ⚠  {name}: Failed to fetch primary data — skipping.", file=sys.stderr)
@@ -71,10 +74,10 @@ def _fetch_symbol(inst: dict) -> Optional[tuple[List[Candle], List[Candle], List
     if not candles_1d and inst.get("fallback_source"):
         candles_1d = _try_fetch(inst["fallback_source"], inst["fallback_symbol"], DAILY_TF, CANDLE_LIMIT_DAILY)
 
-    return candles_1h, [], candles_1d   # 4H omitted for speed — use 1H and daily only
+    return candles_1h, [], candles_1d, actual_source   # 4H omitted for speed — use 1H and daily only
 
 
-def _build_context(inst: dict, candles_1h: List[Candle], candles_1d: List[Candle]) -> MarketContext:
+def _build_context(inst: dict, candles_1h: List[Candle], candles_1d: List[Candle], data_source: str) -> MarketContext:
     name = inst["name"]
     price = candles_1h[-1].close
 
@@ -120,6 +123,7 @@ def _build_context(inst: dict, candles_1h: List[Candle], candles_1d: List[Candle
         midnight_open=asian.get("midnight_open"),
         asian_swept=asian.get("asian_swept"),
         data_tier=candles_1h[-1].data_tier,
+        data_source=data_source,
         fvgs=fvgs,
         order_blocks=obs,
         liquidity_pools=liq,
@@ -142,9 +146,9 @@ def run_scan():
         result = _fetch_symbol(inst)
         if result is None:
             continue
-        candles_1h, _, candles_1d = result
+        candles_1h, _, candles_1d, actual_source = result
         try:
-            ctx = _build_context(inst, candles_1h, candles_1d)
+            ctx = _build_context(inst, candles_1h, candles_1d, actual_source)
             markets.append(ctx)
         except Exception as e:
             print(f"  ⚠  {name}: Analysis error — {e}", file=sys.stderr)

@@ -130,6 +130,7 @@ class MarketContext:
     midnight_open: Optional[float]
     asian_swept: Optional[str]      # "HIGH" / "LOW" / None
     data_tier: int
+    data_source: str                # actual source used: "ctrader", "twelve_data", "yahoo", "okx"
     fvgs: List[FVGResult] = field(default_factory=list)
     order_blocks: List[OrderBlock] = field(default_factory=list)
     liquidity_pools: List[LiquidityPool] = field(default_factory=list)
