@@ -192,6 +192,13 @@ def _post(payload: dict, session_id: Optional[str] = None) -> tuple[Optional[dic
             if resp.status == 404:
                 return {"_session_expired": True}, None
 
+            content_type = resp.getheader("Content-Type", "")
+            if "application/json" in content_type:
+                try:
+                    return json.loads(raw), new_sid
+                except json.JSONDecodeError:
+                    return None, session_id
+
             for line in raw.split("\n"):
                 if line.startswith("data: "):
                     return json.loads(line[6:]), new_sid
