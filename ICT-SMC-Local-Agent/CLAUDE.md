@@ -164,21 +164,21 @@ Primary source `ctrader` = this agent's own FTMO cTrader MCP connection (24/7 CF
 | GBPAUD | Forex | GBPAUD | 1:30 | cTrader GBPAUD | Twelve Data |
 | EURCAD | Forex | EURCAD | 1:30 | cTrader EURCAD | Twelve Data |
 | GBPCAD | Forex | GBPCAD | 1:30 | cTrader GBPCAD | Twelve Data |
-| SPX | Indices | US500.cash | 1:15 | cTrader US500 | Yahoo ^GSPC |
-| NDX | Indices | US100.cash | 1:15 | cTrader NAS100 | Yahoo ^NDX |
-| US30 | Indices | US30.cash | 1:15 | cTrader US30 | Yahoo ^DJI |
-| DAX | Indices | GER40.cash | 1:15 | cTrader GER40 | Yahoo ^GDAXI |
-| UK100 | Indices | UK100.cash | 1:15 | cTrader UK100 | Yahoo ^FTSE |
-| FRA40 | Indices | FRA40.cash | 1:15 | cTrader FRA40 | Yahoo ^FCHI |
-| EUSTX50 | Indices | EUSTX50.cash | 1:15 | cTrader EUSTX50 | Yahoo ^STOXX50E |
-| JPN225 | Indices | JPN225.cash | 1:15 | cTrader JPN225 | Yahoo ^N225 |
-| AUS200 | Indices | AUS200.cash | 1:15 | cTrader AUS200 | Yahoo ^AXJO |
-| HK50 | Indices | HK50.cash | 1:10 | cTrader HK50 | Yahoo ^HSI |
+| SPX | Indices | US500.cash | 1:15 | cTrader US500.cash | Yahoo ^GSPC |
+| NDX | Indices | US100.cash | 1:15 | cTrader US100.cash | Yahoo ^NDX |
+| US30 | Indices | US30.cash | 1:15 | cTrader US30.cash | Yahoo ^DJI |
+| DAX | Indices | GER40.cash | 1:15 | cTrader GER40.cash | Yahoo ^GDAXI |
+| UK100 | Indices | UK100.cash | 1:15 | cTrader UK100.cash | Yahoo ^FTSE |
+| FRA40 | Indices | FRA40.cash | 1:15 | cTrader FRA40.cash | Yahoo ^FCHI |
+| EUSTX50 | Indices | EU50.cash | 1:15 | cTrader EU50.cash | Yahoo ^STOXX50E |
+| JPN225 | Indices | JP225.cash | 1:15 | cTrader JP225.cash | Yahoo ^N225 |
+| AUS200 | Indices | AUS200.cash | 1:15 | cTrader AUS200.cash | Yahoo ^AXJO |
+| HK50 | Indices | HK50.cash | 1:10 | cTrader HK50.cash | Yahoo ^HSI |
 | GOLD | Metals | XAUUSD | 1:9 | cTrader XAUUSD | Twelve Data |
 | SILVER | Metals | XAGUSD | 1:9 | cTrader XAGUSD | Twelve Data |
-| OIL | Commodities | USOIL.cash | 1:9 | cTrader WTOIL-PERP | Yahoo CL=F |
-| BRENT | Commodities | BRENTOIL.cash | 1:9 | cTrader BRENTOIL-PERP | Yahoo BZ=F |
-| NATGAS | Commodities | NatGas | 1:9 | cTrader NatGas | Yahoo NG=F |
+| OIL | Commodities | USOIL.cash | 1:9 | cTrader USOIL.cash | Yahoo CL=F |
+| BRENT | Commodities | UKOIL.cash | 1:9 | cTrader UKOIL.cash | Yahoo BZ=F |
+| NATGAS | Commodities | NATGAS.cash | 1:9 | cTrader NATGAS.cash | Yahoo NG=F |
 
 ---
 
@@ -256,7 +256,7 @@ so adding this check per-instrument doesn't multiply HTTP requests.
 | USDJPY/GBPJPY null values from Yahoo | None-check on all OHLC fields in yahoo_fetcher.py |
 | Price discrepancy vs broker chart | Resolved by cTrader feed (data_tier=1) once `.env` is configured |
 | OKX crypto marked Tier 2 | Authenticated WebSocket needed for taker delta — Phase 3 |
-| OIL/BRENT cTrader demo limited history | Falls back to Yahoo — WTOIL-PERP / BRENTOIL-PERP have limited demo history |
+| OIL/BRENT wrong cTrader symbol names (WTOIL-PERP / BRENTOIL-PERP don't exist on this account) | Fixed — use `USOIL.cash` / `UKOIL.cash` (confirmed via get_symbols) |
 
 ---
 
