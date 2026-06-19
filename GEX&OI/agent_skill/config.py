@@ -3,9 +3,63 @@ GEX & OI Agent Configuration
 """
 
 import os
+from datetime import datetime, date
+import zoneinfo
 
 # --- API Keys ---
+# Key is read from environment variable only - never hardcoded or written to any committed file
 ALPHA_VANTAGE_API_KEY = os.environ.get("ALPHA_VANTAGE_API_KEY", "")
+
+# --- Timezone ---
+# User trades from UK (BST in summer = UTC+1, GMT in winter = UTC+0)
+UK_TZ = zoneinfo.ZoneInfo("Europe/London")
+
+
+def uk_now() -> datetime:
+    """Current datetime in UK local time (BST/GMT auto-adjusted for DST)."""
+    return datetime.now(tz=UK_TZ)
+
+
+def is_opex_week() -> bool:
+    """True if today is in the week of monthly options expiry (third Friday of month)."""
+    today = date.today()
+    # Find third Friday of current month
+    first_day = today.replace(day=1)
+    first_friday = first_day + __import__("datetime").timedelta(days=(4 - first_day.weekday()) % 7)
+    third_friday = first_friday + __import__("datetime").timedelta(weeks=2)
+    # OPEX week = Monday through Friday of that week
+    opex_monday = third_friday - __import__("datetime").timedelta(days=4)
+    return opex_monday <= today <= third_friday
+
+
+def is_weekly_opex_day() -> bool:
+    """True if today is Friday (weekly options expiry)."""
+    return date.today().weekday() == 4
+
+
+def opex_status() -> dict:
+    """Return full OPEX context for use in briefings."""
+    today = date.today()
+    first_day = today.replace(day=1)
+    first_friday = first_day + __import__("datetime").timedelta(days=(4 - first_day.weekday()) % 7)
+    third_friday = first_friday + __import__("datetime").timedelta(weeks=2)
+    days_to_monthly = (third_friday - today).days
+
+    return {
+        "monthly_opex_date": str(third_friday),
+        "days_to_monthly_opex": days_to_monthly,
+        "in_opex_week": is_opex_week(),
+        "is_weekly_opex": is_weekly_opex_day(),
+        "gex_reliability": (
+            "HIGHEST — within 3 days of monthly OPEX, dealer hedging at maximum"
+            if days_to_monthly <= 3 else
+            "HIGH — in OPEX week, GEX levels well-established"
+            if is_opex_week() else
+            "MODERATE — mid-cycle, GEX levels meaningful but less pinning force"
+            if days_to_monthly > 7 else
+            "BUILDING — approaching OPEX, gamma effects increasing"
+        ),
+    }
 
 # --- Instrument Definitions ---
 # Maps Pepperstone spread bet symbols to their underlying options market tickers
