@@ -206,13 +206,24 @@ def _analyse_with_gex(key: str, cfg: dict, macro: dict):
 
     # Charts
     print("\n  Generating charts...")
+    chart_files = []
     try:
-        plot_gex_by_strike(gex)
-        plot_oi_distribution(oi)
+        gex_chart = plot_gex_by_strike(gex)
+        if gex_chart:
+            chart_files.append(gex_chart)
+            print(f"  GEX Chart:       {gex_chart}")
+        oi_chart = plot_oi_distribution(oi)
+        if oi_chart:
+            chart_files.append(oi_chart)
+            print(f"  OI Chart:        {oi_chart}")
         dashboard = plot_combined_dashboard(gex, oi, macro)
-        print(f"  Dashboard: {os.path.basename(dashboard)}")
+        if dashboard:
+            chart_files.append(dashboard)
+            print(f"  Dashboard:       {dashboard}")
+        print(f"  CHARTS_GENERATED: {','.join(chart_files)}")
     except Exception as e:
         print(f"  Chart error: {e}")
+        chart_files = []
 
     # Trade plan
     macro_for_plan = dict(macro)
@@ -367,20 +378,40 @@ def _print_macro(macro: dict) -> None:
 def _print_gex_summary(key: str, spot: float, gex, oi) -> None:
     regime_indicator = {"PINNED": "PINNED (rangebound)", "TRENDING": "TRENDING (directional)",
                         "NEUTRAL": "NEUTRAL"}.get(gex.regime, gex.regime)
+    thin = "─" * 68
     print(f"\n  GEX SUMMARY — {key}")
-    print(f"    Spot:        {spot:,.2f}")
-    print(f"    Net GEX:     ${gex.total_gex:.2f}B  ({regime_indicator})")
-    print(f"    Call GEX:    +${gex.call_gex:.2f}B  |  Put GEX: -${gex.put_gex:.2f}B")
-    print(f"    Call Wall:   {gex.call_wall:,.0f}  ← resistance")
-    print(f"    Put Wall:    {gex.put_wall:,.0f}  ← support")
-    print(f"    Max GEX:     {gex.max_gex_strike:,.0f}  ← gravitational pin")
-    print(f"    Max Pain:    {oi.max_pain:,.0f}  ← expiry magnet")
-    print(f"    P/C Ratio:   {oi.put_call_ratio:.2f}  ({oi.sentiment})")
-
-    if gex.support_levels:
-        print(f"    GEX Supp:    {', '.join(f'{s:,.0f}' for s in gex.support_levels[:3])}")
+    print(f"  {thin}")
+    print(f"    {'Metric':<18}  {'Value':>12}   Note")
+    print(f"    {'─'*18}  {'─'*12}   {'─'*30}")
+    print(f"    {'Spot Price':<18}  {spot:>12,.2f}")
+    print(f"    {'Net GEX':<18}  ${gex.total_gex:>11.2f}B   {regime_indicator}")
+    print(f"    {'Call GEX':<18}  +${gex.call_gex:>10.2f}B   dealer long gamma above spot")
+    print(f"    {'Put GEX':<18}  -${gex.put_gex:>10.2f}B   dealer short gamma below spot")
+    print(f"    {'─'*18}  {'─'*12}   {'─'*30}")
+    print(f"    {'Call Wall':<18}  {gex.call_wall:>12,.0f}   ← primary resistance")
+    print(f"    {'Max GEX Pin':<18}  {gex.max_gex_strike:>12,.0f}   ← gravitational pin / T1")
+    print(f"    {'Zero GEX':<18}  {gex.zero_gex_strike:>12,.0f}   ← volatility trigger")
+    print(f"    {'Max Pain':<18}  {oi.max_pain:>12,.0f}   ← expiry magnet")
+    print(f"    {'Put Wall':<18}  {gex.put_wall:>12,.0f}   ← primary support")
+    print(f"    {'─'*18}  {'─'*12}   {'─'*30}")
+    print(f"    {'P/C Ratio':<18}  {oi.put_call_ratio:>12.2f}   {oi.sentiment}")
     if gex.resistance_levels:
-        print(f"    GEX Res:     {', '.join(f'{r:,.0f}' for r in gex.resistance_levels[:3])}")
+        print(f"    {'GEX Resistance':<18}  {'':>12}   {', '.join(f'{r:,.0f}' for r in gex.resistance_levels[:4])}")
+    if gex.support_levels:
+        print(f"    {'GEX Support':<18}  {'':>12}   {', '.join(f'{s:,.0f}' for s in gex.support_levels[:4])}")
+
+    # Top OI strikes breakdown
+    print(f"\n  OPEN INTEREST — TOP STRIKES")
+    print(f"  {thin}")
+    print(f"    {'Strike':>8}   {'Type':<6}   {'OI Contracts':>14}   Note")
+    print(f"    {'─'*8}   {'─'*6}   {'─'*14}   {'─'*28}")
+    for item in oi.top_call_strikes[:4]:
+        note = "← max call OI" if item == oi.top_call_strikes[0] else "call resistance"
+        print(f"    {item['strike']:>8,.0f}   {'CALL':<6}   {item['oi']:>14,}   {note}")
+    for item in oi.top_put_strikes[:4]:
+        note = "← max put OI" if item == oi.top_put_strikes[0] else "put support"
+        print(f"    {item['strike']:>8,.0f}   {'PUT':<6}   {item['oi']:>14,}   {note}")
+    print(f"  {thin}")
 
 
 if __name__ == "__main__":
