@@ -23,7 +23,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from config import INSTRUMENTS, opex_status, uk_now
 from data_fetchers.yfinance_options import fetch_options_for_gex, compute_iv_skew
-from data_fetchers.ctrader_fetcher import get_live_price, get_session_structure
+from data_fetchers.ctrader_fetcher import get_live_price, get_session_structure, compute_volume_profile
 from data_fetchers.yahoo_finance import describe_cross_market_proxy, gex_regime_applies
 from analysis.gex_calculator import calculate_gex
 from analysis.oi_analyzer import analyse_oi
@@ -183,8 +183,23 @@ def _analyse_with_gex(key: str, cfg: dict, macro: dict):
     print("  Fetching session structure (CTrader)...")
     session_structure = get_session_structure(key)
 
+    # Volume profile from CTrader H1 candles
+    print("  Computing volume profile...")
+    try:
+        vol_profile = compute_volume_profile(key)
+        if vol_profile:
+            print(f"  POC: {vol_profile['poc']:,.1f}  |  "
+                  f"HVN: {len(vol_profile['hvn_levels'])} nodes  |  "
+                  f"LVN: {len(vol_profile['lvn_levels'])} thin zones")
+    except Exception as e:
+        vol_profile = {}
+        print(f"  Volume profile unavailable: {e}")
+
     # IV skew
     iv_skew = compute_iv_skew(options_df, etf_spot)
+
+    # CTA positioning from ETF moving averages
+    cta_data = _compute_cta_levels(cfg.get("etf_ticker", "SPY"))
 
     # Print summary
     _print_gex_summary(key, spot_live, gex, oi)
@@ -200,17 +215,73 @@ def _analyse_with_gex(key: str, cfg: dict, macro: dict):
         print(f"  Chart error: {e}")
 
     # Trade plan
-    # Inject macro scalars so the formatter can access them via key_levels
     macro_for_plan = dict(macro)
     macro_for_plan["_vix"] = macro.get("vix")
     macro_for_plan["_yield_10y"] = macro.get("yield_10y")
     macro_for_plan["_dxy"] = macro.get("dxy")
 
     plan = generate_trade_plan(key, spot_live, gex, oi, macro_for_plan,
-                               session_structure=session_structure, iv_skew=iv_skew)
+                               session_structure=session_structure, iv_skew=iv_skew,
+                               vol_profile=vol_profile, cta_data=cta_data)
     print(f"\n{format_trade_plan(plan)}")
 
     return gex
+
+
+def _compute_cta_levels(etf_ticker: str) -> dict:
+    """
+    Approximate CTA (systematic trend-follower) positioning from ETF moving averages.
+    CTAs — large quant funds that follow price trends — go long when price is above
+    their key MAs and short when below. This gives us a sense of whether systematic
+    money is aligned with or against the current price direction.
+    """
+    try:
+        hist = yf.Ticker(etf_ticker).history(period="1y", interval="1d")
+        if hist.empty or len(hist) < 50:
+            return {}
+        close = hist["Close"]
+        current = float(close.iloc[-1])
+        sma_20  = float(close.rolling(20).mean().iloc[-1])
+        sma_50  = float(close.rolling(50).mean().iloc[-1])
+        sma_100 = float(close.rolling(100).mean().iloc[-1]) if len(hist) >= 100 else None
+        sma_200 = float(close.rolling(200).mean().iloc[-1]) if len(hist) >= 200 else None
+
+        # CTA stance classification
+        above_50  = current > sma_50
+        above_200 = sma_200 is None or current > sma_200
+        ma_aligned = sma_100 is None or sma_50 > sma_100  # short MA above long MA = uptrend
+
+        if above_50 and ma_aligned and above_200:
+            bias = "LONG"
+            signal = "CTAs positioned LONG — price above 50-day MA with trend aligned upward."
+            implication = "Systematic funds are a tailwind for the long. If the call wall breaks, CTA buying adds further fuel."
+        elif above_50 and not ma_aligned:
+            bias = "MILD_LONG"
+            signal = "CTAs mildly long — above 50-day MA but MAs not fully aligned."
+            implication = "Moderate CTA support. Breakout longs have some systematic backing but not full conviction."
+        elif not above_50 and not ma_aligned:
+            bias = "SHORT"
+            signal = "CTAs positioned SHORT — price below 50-day MA with trend turning down."
+            implication = "Systematic funds are a headwind for longs. Rejection shorts have CTA selling behind them."
+        else:
+            bias = "NEUTRAL"
+            signal = "CTAs near neutral — price at MA crossover zone. Systematic funds in transition."
+            implication = "No strong CTA tailwind in either direction. Trade purely off GEX and price action."
+
+        result = {
+            "etf_ticker": etf_ticker,
+            "current_etf": round(current, 2),
+            "sma_20":  round(sma_20, 2),
+            "sma_50":  round(sma_50, 2),
+            "bias":    bias,
+            "signal":  signal,
+            "implication": implication,
+        }
+        if sma_100: result["sma_100"] = round(sma_100, 2)
+        if sma_200: result["sma_200"] = round(sma_200, 2)
+        return result
+    except Exception:
+        return {}
 
 
 def _analyse_proxy(key: str, cfg: dict, macro: dict, us500_gex=None) -> None:

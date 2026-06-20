@@ -30,6 +30,8 @@ class TradePlan:
     session_structure: Optional[dict] = None
     iv_skew: Optional[dict] = None
     opex: Optional[dict] = None
+    vol_profile: Optional[dict] = None
+    cta_data: Optional[dict] = None
 
 
 def generate_trade_plan(
@@ -41,6 +43,8 @@ def generate_trade_plan(
     session: str = "LONDON_NY",
     session_structure: Optional[dict] = None,
     iv_skew: Optional[dict] = None,
+    vol_profile: Optional[dict] = None,
+    cta_data: Optional[dict] = None,
 ) -> TradePlan:
     now_uk = datetime.now(tz=UK_TZ)
     key_levels = _build_key_levels(gex_result, oi_result, spot_price, session_structure)
@@ -72,6 +76,8 @@ def generate_trade_plan(
         session_structure=session_structure,
         iv_skew=iv_skew,
         opex=macro.get("opex"),
+        vol_profile=vol_profile,
+        cta_data=cta_data,
     )
 
 
@@ -121,35 +127,66 @@ def format_trade_plan(plan: TradePlan) -> str:
         arrow = "▲" if diff > 0 else "▼"
         return f"{arrow} {abs(diff):,.0f} pts {'above' if diff > 0 else 'below'} spot"
 
+    vp = plan.vol_profile or {}
+    vp_poc      = vp.get("poc")
+    vp_hvn      = vp.get("hvn_levels", [])
+    vp_lvn      = vp.get("lvn_levels", [])
+    vp_bucket   = vp.get("bucket_size", 5)
+
+    def _vol_tag(price: float) -> str:
+        if not vp:
+            return ""
+        if vp_poc and abs(price - vp_poc) < vp_bucket * 1.5:
+            return " [POC]"
+        if any(abs(price - h) < vp_bucket * 1.5 for h in vp_hvn):
+            return " [HVN]"
+        if any(abs(price - l) < vp_bucket * 1.5 for l in vp_lvn):
+            return " [LVN — thin]"
+        return ""
+
     glance_levels = []
     glance_levels.append(("Live Spot", spot, "◄ Current price"))
     if call_wall:
         glance_levels.append(("Call Wall", call_wall,
-            f"Dealer resistance  ({_sig(call_wall, spot)})"))
+            f"Dealer resistance  ({_sig(call_wall, spot)}){_vol_tag(call_wall)}"))
     if put_wall:
         glance_levels.append(("Put Wall", put_wall,
-            f"Dealer support floor  ({_sig(put_wall, spot)})"))
+            f"Dealer support floor  ({_sig(put_wall, spot)}){_vol_tag(put_wall)}"))
     if max_gex:
         glance_levels.append(("Max GEX Pin", max_gex,
-            f"Gravitational magnet  ({_sig(max_gex, spot)})"))
+            f"Gravitational magnet  ({_sig(max_gex, spot)}){_vol_tag(max_gex)}"))
     if max_pain:
         glance_levels.append(("Max Pain", max_pain,
-            f"Expiry magnet  ({_sig(max_pain, spot)})"))
+            f"Expiry magnet  ({_sig(max_pain, spot)}){_vol_tag(max_pain)}"))
     if zero_gex:
         glance_levels.append(("Zero GEX", zero_gex,
-            f"Volatility trigger  ({_sig(zero_gex, spot)})"))
+            f"Volatility trigger  ({_sig(zero_gex, spot)}){_vol_tag(zero_gex)}"))
+    if vp_poc:
+        glance_levels.append(("Volume POC", vp_poc,
+            f"Highest-volume price  ({_sig(vp_poc, spot)}) — price revisits this"))
     if ss:
         if ss.get("prev_day_high"):
             glance_levels.append(("Prior Day High", ss["prev_day_high"],
-                f"Inst. sell zone yesterday  ({_sig(ss['prev_day_high'], spot)})"))
+                f"Inst. sell zone yesterday  ({_sig(ss['prev_day_high'], spot)}){_vol_tag(ss['prev_day_high'])}"))
         if ss.get("prev_day_low"):
             glance_levels.append(("Prior Day Low", ss["prev_day_low"],
-                f"Inst. buy zone yesterday  ({_sig(ss['prev_day_low'], spot)})"))
+                f"Inst. buy zone yesterday  ({_sig(ss['prev_day_low'], spot)}){_vol_tag(ss['prev_day_low'])}"))
 
     glance_levels.sort(key=lambda x: x[1], reverse=True)
     for name, val, sig in glance_levels:
         at = "  ◄ HERE" if abs(val - spot) < 5 else ""
         L.append(f"  {name:<20}  {val:>9,.0f}   {sig}{at}")
+
+    if vp_hvn:
+        nearby_hvn = [h for h in vp_hvn if abs(h - spot) / spot < 0.02]
+        if nearby_hvn:
+            L.append(f"  {'HVN nodes (nearby)':<20}  {'':>9}   "
+                     f"{', '.join(f'{h:,.0f}' for h in sorted(nearby_hvn, reverse=True))} — thick volume zones")
+    if vp_lvn:
+        nearby_lvn = [l for l in vp_lvn if abs(l - spot) / spot < 0.02]
+        if nearby_lvn:
+            L.append(f"  {'LVN zones (nearby)':<20}  {'':>9}   "
+                     f"{', '.join(f'{l:,.0f}' for l in sorted(nearby_lvn, reverse=True))} — thin; fast moves here")
 
     # Narrative summary — synthesises the situation and what could unfold
     L.append("")
@@ -190,6 +227,48 @@ def format_trade_plan(plan: TradePlan) -> str:
         L.append(f"  and {dist_to_put:.0f} pts above the {put_wall:,.0f} Put Wall.")
         L.append(f"  Primary trade zone: between these two walls. Watch Zero GEX at {zero_gex:,.0f}")
         L.append(f"  — a break below it shifts dealer hedging from dampening to amplifying drops.")
+
+    # ── CONFLUENCE SCENARIO MATRIX ───────────────────────────────────────
+    L.append("")
+    L.append(thick)
+    L.append("  CONFLUENCE SCENARIO MATRIX")
+    L.append(thick)
+    scenario_id, matched_signals, scenario_tactic = _identify_confluence_scenario(
+        plan, spot, call_wall, put_wall, zero_gex, vp, vp_bucket, skew_ratio
+    )
+
+    scenarios_ref = [
+        ("A", "MEAN REVERSION / CEILING",
+         ["Positive GEX (PINNED regime)", "High OI cluster at level", "HVN at resistance"],
+         "Dealers AND volume both cap the move. Fade to resistance, target Max Pain.",
+         "Short the bounce from resistance OR long from support. Take profits at midpoint."),
+        ("B", "DIRECTIONAL ACCELERATION",
+         ["Negative GEX (TRENDING regime)", "IV Skew > 1.10", "Price at key structural level"],
+         "Whichever direction breaks holds and accelerates. Dealer flow adds fuel.",
+         "Wait for confirmed 15-min close, trade WITH direction, trail stops. No fading."),
+        ("C", "FAST-THROUGH ZONE (LVN)",
+         ["Price approaching Low Volume Node", "Thin volume = few resting orders"],
+         "Price moves quickly through LVN with little resistance to slow it.",
+         "Set wider targets. Do not take profits early while inside an LVN zone."),
+        ("D", "STRUCTURAL ACCUMULATION / SQUEEZE SETUP",
+         ["OI cluster building at support", "High P/C ratio (heavy put positioning)", "CTA short trigger near"],
+         "Large positions being built. Market is over-hedged. Short squeeze setup forming.",
+         "Look for low-risk longs near OI cluster. Target Max GEX Pin on the squeeze."),
+    ]
+
+    for sid, sname, sig_list, behavior, tactic in scenarios_ref:
+        marker = "  ★ TODAY'S MATCH ►" if sid == scenario_id else "   "
+        L.append(f"{marker} SCENARIO {sid}: {sname}")
+        L.append(f"     Data required:  {' + '.join(sig_list)}")
+        L.append(f"     Behavior:       {behavior}")
+        L.append(f"     Tactic:         {tactic}")
+        if sid == scenario_id:
+            L.append(f"")
+            L.append(f"     TODAY'S SIGNALS PRESENT:")
+            for sig in matched_signals:
+                L.append(f"       ✓ {sig}")
+            L.append(f"     WHAT TO DO: {scenario_tactic}")
+        L.append("")
 
     # ── 1. GEX REGIME BRIEFING ───────────────────────────────────────────
     L.append("")
@@ -288,6 +367,24 @@ def format_trade_plan(plan: TradePlan) -> str:
         L.append(f"  become stronger 'magnets' and Max Pain becomes more magnetic. Within")
         L.append(f"  3 days of OPEX, pin risk is very high — price often converges on Max Pain.")
         L.append(f"  Reliability today: {rel}")
+
+    cta = plan.cta_data or {}
+    if cta:
+        L.append(f"  CTA Positioning ({cta.get('etf_ticker', 'ETF')} MAs): {cta.get('signal', '')}")
+        sma_50  = cta.get("sma_50")
+        sma_200 = cta.get("sma_200")
+        etf_cur = cta.get("current_etf")
+        if sma_50 and etf_cur:
+            dist_50 = etf_cur - sma_50
+            L.append(f"  ETF price {etf_cur:.2f} vs 50-day MA {sma_50:.2f} "
+                     f"({'above' if dist_50 > 0 else 'below'} by {abs(dist_50):.2f})")
+        if sma_200 and etf_cur:
+            dist_200 = etf_cur - sma_200
+            L.append(f"  ETF price vs 200-day MA {sma_200:.2f} "
+                     f"({'above' if dist_200 > 0 else 'below'} by {abs(dist_200):.2f})")
+        L.append(f"  Why: CTAs are large systematic funds that buy when trend is up (above 50-day MA)")
+        L.append(f"  and sell when trend turns down. Their flows amplify moves in the trend direction.")
+        L.append(f"  Today: {cta.get('implication', '')}")
 
     if skew_ratio is not None:
         put_iv = sk.get("put_iv_pct", 0)
@@ -669,6 +766,89 @@ def _append_level_block(
 
 
 # ─── Internal helpers ─────────────────────────────────────────────────────────
+
+def _identify_confluence_scenario(
+    plan, spot: float, call_wall, put_wall, zero_gex,
+    vp: dict, vp_bucket: float, skew_ratio
+) -> tuple[str, list[str], str]:
+    """
+    Match today's data to one of four standard confluence scenarios.
+    Returns (scenario_id, matched_signals_list, tactical_note).
+    """
+    regime = plan.gex_regime
+    gex_val = plan.gex_value
+    pcr = plan.key_levels.get("pcr", 1.0)
+    cta_bias = (plan.cta_data or {}).get("bias", "NEUTRAL")
+    vp_hvn = vp.get("hvn_levels", [])
+    vp_lvn = vp.get("lvn_levels", [])
+
+    dist_to_call = (call_wall - spot) / spot if call_wall else 1.0
+    call_at_hvn = call_wall and any(abs(call_wall - h) < vp_bucket * 2 for h in vp_hvn)
+    near_lvn = any(abs(spot - l) < vp_bucket * 2 for l in vp_lvn)
+    skew_elevated = skew_ratio is not None and skew_ratio > 1.10
+
+    # Scenario B: Directional Acceleration
+    if regime == "TRENDING" and abs(dist_to_call) < 0.008 and skew_elevated:
+        signals = [
+            f"Negative GEX (${gex_val:.0f}B) — dealers short gamma",
+            f"IV Skew {skew_ratio:.2f} — elevated put premium (smart money hedged)",
+            f"Spot {spot:,.0f} pressing Call Wall {call_wall:,.0f} ({dist_to_call*100:.1f}% away)",
+        ]
+        if cta_bias in ("LONG", "MILD_LONG"):
+            signals.append(f"CTA positioning: {cta_bias} — systematic tailwind for longs")
+        if call_at_hvn:
+            signals.append(f"Call Wall at HVN — thick volume confirms resistance strength")
+        return ("B", signals,
+                f"This is a DIRECTIONAL ACCELERATION setup. The {call_wall:,.0f} Call Wall is "
+                f"the trigger. A confirmed break above sends dealers buying → breakout accelerates. "
+                f"A rejection sends dealers selling → drop accelerates. Trade the direction, not the range.")
+
+    # Scenario A: Mean Reversion
+    if regime == "PINNED":
+        signals = [f"Positive GEX (+${gex_val:.0f}B) — dealers long gamma, dampening moves"]
+        if call_at_hvn:
+            signals.append(f"Call Wall at HVN — thick volume confirms ceiling")
+        signals.append("PINNED regime → statistically favours mean-reversion trades")
+        return ("A", signals,
+                "Fade moves to the walls. Short into the Call Wall, long into the Put Wall. "
+                "Target Max Pain in the middle. Avoid chasing breakouts — they snap back.")
+
+    # Scenario C: Fast-Through LVN
+    if near_lvn:
+        near = [l for l in vp_lvn if abs(l - spot) < vp_bucket * 2]
+        signals = [
+            f"Spot near LVN at {near[0]:,.0f} — thin volume zone" if near else "Spot in thin volume zone",
+            "Low volume = few resting orders = fast directional move through here",
+        ]
+        return ("C", signals,
+                "Price is in (or approaching) a low-volume zone. Do not take profits early. "
+                "Set wider targets — LVN zones are where price travels fast. "
+                "Wait for the next HVN or GEX wall before exiting.")
+
+    # Scenario D: Structural Accumulation
+    pcr_val = 0
+    try:
+        pcr_val = plan.key_levels.get("_pcr", 0) or 0
+    except Exception:
+        pass
+    if regime == "TRENDING" and cta_bias == "SHORT":
+        signals = [
+            f"Negative GEX (${gex_val:.0f}B) with CTA SHORT trigger",
+            "Systematic selling aligns with dealer amplification — double pressure downward",
+        ]
+        return ("D", signals,
+                "CTA selling + negative GEX = strongest downside setup. "
+                "If price breaks below Zero GEX, the move can be sharp and sustained. "
+                "Do not fight this combination — wait for a GEX support level to long.")
+
+    # Default fallback → B (trending at a level)
+    signals = [
+        f"Negative GEX (${gex_val:.0f}B) — dealer flows amplify moves",
+        f"Price near key level — waiting for directional trigger",
+    ]
+    return ("B", signals,
+            "Watch for a confirmed candle close above/below a key level. Trade WITH the break.")
+
 
 def _determine_bias(gex_result, oi_result, macro: dict, spot: float) -> str:
     """

@@ -363,6 +363,81 @@ def get_recent_candles(instrument: str, interval: str = "1h", limit: int = 50) -
     return candles[-limit:]
 
 
+def compute_volume_profile(instrument: str, bucket_size: float = None, lookback_candles: int = 168) -> dict:
+    """
+    Compute a volume profile from H1 CTrader candles.
+    lookback_candles=168 covers ~7 days of H1 bars (includes overnight gaps).
+
+    Returns:
+        poc         : Point of Control — price bucket with highest tick volume
+        hvn_levels  : High Volume Nodes — price areas with above-average volume
+        lvn_levels  : Low Volume Nodes  — thin areas where price moves fast
+        bucket_size : bucket width used
+    """
+    candles = get_recent_candles(instrument, "1h", lookback_candles)
+    if not candles or len(candles) < 10:
+        return {}
+
+    mid_price = (candles[-1]["h"] + candles[-1]["l"]) / 2
+
+    if bucket_size is None:
+        raw = mid_price * 0.001
+        for snap in (0.5, 1, 2, 5, 10, 25, 50, 100):
+            if raw <= snap:
+                bucket_size = snap
+                break
+        else:
+            bucket_size = 100.0
+
+    profile: dict[float, float] = {}
+    for c in candles:
+        h, l, v = c["h"], c["l"], c["v"]
+        if h <= l or v <= 0:
+            continue
+        low_b  = round(round(l  / bucket_size) * bucket_size, 4)
+        high_b = round(round(h  / bucket_size) * bucket_size, 4)
+        if high_b < low_b:
+            high_b = low_b
+        n = max(1, round((high_b - low_b) / bucket_size) + 1)
+        vpb = v / n
+        price = low_b
+        for _ in range(n):
+            key = round(price, 4)
+            profile[key] = profile.get(key, 0.0) + vpb
+            price += bucket_size
+
+    if len(profile) < 5:
+        return {}
+
+    poc = max(profile, key=profile.get)
+    vals = list(profile.values())
+
+    import statistics
+    mean_v = statistics.mean(vals)
+    std_v  = statistics.stdev(vals) if len(vals) > 1 else 0.0
+
+    hvn_thresh = mean_v + 0.3 * std_v
+    lvn_thresh = mean_v - 0.5 * std_v
+
+    current = candles[-1]["c"]
+    hvn = sorted(
+        [p for p, v in profile.items() if v >= hvn_thresh and abs(p - poc) > bucket_size],
+        key=lambda p: -profile[p],
+    )[:8]
+    lvn = sorted(
+        [p for p, v in profile.items() if v <= max(lvn_thresh, 0)],
+        key=lambda p: abs(p - current),
+    )[:5]
+
+    return {
+        "poc":            poc,
+        "hvn_levels":     sorted(hvn, reverse=True),
+        "lvn_levels":     sorted(lvn, reverse=True),
+        "bucket_size":    bucket_size,
+        "lookback_bars":  len(candles),
+    }
+
+
 def get_session_structure(instrument: str) -> dict:
     """
     Fetch key structural levels from Pepperstone candles:
