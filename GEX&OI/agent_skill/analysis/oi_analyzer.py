@@ -28,14 +28,27 @@ class OIResult:
     sentiment_description: str
 
 
+def _normalize_df(df: pd.DataFrame) -> pd.DataFrame:
+    """Map yfinance column names to expected format."""
+    df = df.copy()
+    if "strike_etf" in df.columns and "strike" not in df.columns:
+        df["strike"] = df["strike_etf"]
+    if "oi" in df.columns and "open_interest" not in df.columns:
+        df["open_interest"] = df["oi"]
+    if "expiration" in df.columns and not pd.api.types.is_datetime64_any_dtype(df["expiration"]):
+        df["expiration"] = pd.to_datetime(df["expiration"])
+    return df
+
+
 def analyse_oi(options_df: pd.DataFrame, spot_price: float, symbol: str) -> OIResult:
     """
     Analyse open interest distribution and derive key price levels.
     """
-    df = options_df.dropna(subset=["strike", "open_interest"]).copy()
+    df = _normalize_df(options_df)
+    df = df.dropna(subset=["strike", "open_interest"]).copy()
     df = df[df["open_interest"] > 0]
 
-    today = pd.Timestamp.today()
+    today = pd.Timestamp.today().normalize()
 
     # Focus on front two expiries for most relevant positioning
     expiries = sorted(df["expiration"].dropna().unique())

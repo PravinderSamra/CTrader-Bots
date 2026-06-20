@@ -30,6 +30,18 @@ class GEXResult:
     gex_by_strike: pd.DataFrame         # Full breakdown for charting
 
 
+def _normalize_df(df: pd.DataFrame) -> pd.DataFrame:
+    """Map yfinance column names (strike_etf, oi) to expected format (strike, open_interest)."""
+    df = df.copy()
+    if "strike_etf" in df.columns and "strike" not in df.columns:
+        df["strike"] = df["strike_etf"]
+    if "oi" in df.columns and "open_interest" not in df.columns:
+        df["open_interest"] = df["oi"]
+    if "expiration" in df.columns and not pd.api.types.is_datetime64_any_dtype(df["expiration"]):
+        df["expiration"] = pd.to_datetime(df["expiration"])
+    return df
+
+
 def calculate_gex(options_df: pd.DataFrame, spot_price: float, symbol: str,
                   contract_multiplier: int = 100) -> GEXResult:
     """
@@ -37,17 +49,18 @@ def calculate_gex(options_df: pd.DataFrame, spot_price: float, symbol: str,
 
     Parameters
     ----------
-    options_df : DataFrame with columns: strike, type (CALL/PUT), gamma, open_interest, expiration
-    spot_price : Current spot price of the underlying
+    options_df : DataFrame — accepts yfinance format (strike_etf, oi) or legacy format (strike, open_interest)
+    spot_price : Current spot price of the underlying (ETF scale for yfinance data)
     symbol : Ticker symbol
     contract_multiplier : Number of shares/units per contract (default 100)
     """
-    df = options_df.dropna(subset=["strike", "gamma", "open_interest"]).copy()
+    df = _normalize_df(options_df)
+    df = df.dropna(subset=["strike", "gamma", "open_interest"]).copy()
     df = df[df["open_interest"] > 0]
     df = df[df["gamma"] > 0]
 
     # Focus on near-term expiries (next 45 days) — where dealer hedging is most active
-    today = pd.Timestamp.today()
+    today = pd.Timestamp.today().normalize()
     df = df[df["expiration"] <= today + pd.Timedelta(days=45)]
     df = df[df["expiration"] >= today]
 

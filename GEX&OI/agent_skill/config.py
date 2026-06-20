@@ -39,11 +39,21 @@ def is_weekly_opex_day() -> bool:
 
 def opex_status() -> dict:
     """Return full OPEX context for use in briefings."""
+    import calendar
     today = date.today()
     first_day = today.replace(day=1)
     first_friday = first_day + __import__("datetime").timedelta(days=(4 - first_day.weekday()) % 7)
     third_friday = first_friday + __import__("datetime").timedelta(weeks=2)
     days_to_monthly = (third_friday - today).days
+
+    # If we're past this month's OPEX, compute next month's
+    if days_to_monthly < 0:
+        _, last_day = calendar.monthrange(today.year, today.month)
+        next_month_first = today.replace(day=last_day) + __import__("datetime").timedelta(days=1)
+        first_friday = next_month_first + __import__("datetime").timedelta(
+            days=(4 - next_month_first.weekday()) % 7)
+        third_friday = first_friday + __import__("datetime").timedelta(weeks=2)
+        days_to_monthly = (third_friday - today).days
 
     return {
         "monthly_opex_date": str(third_friday),

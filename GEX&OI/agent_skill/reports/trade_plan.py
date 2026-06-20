@@ -257,7 +257,7 @@ def _build_primary_scenario(bias: str, spot: float, levels: dict, gex_result, oi
             "target_1": f"Midpoint: {(support + resistance) / 2:,.0f}",
             "target_2": f"Opposite wall",
             "rr": "~2:1",
-            "rationale": f"Positive GEX ({gex_result.total_gex:.1f}B) pins price. Fade the range between {support:,.0f} and {resistance:,.0f}.",
+            "rationale": f"GEX ${gex_result.total_gex:.1f}B ({gex_result.regime}). Spot between put wall ({support:,.0f}) and call wall ({resistance:,.0f}) — wait for a break of either level to initiate.",
         }
 
 
