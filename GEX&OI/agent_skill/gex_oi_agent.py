@@ -13,7 +13,8 @@ Usage:
 import argparse
 import sys
 import os
-from datetime import datetime
+import json
+from datetime import datetime, timezone
 
 import yfinance as yf
 import warnings
@@ -236,6 +237,13 @@ def _analyse_with_gex(key: str, cfg: dict, macro: dict):
                                vol_profile=vol_profile, cta_data=cta_data)
     print(f"\n{format_trade_plan(plan)}")
 
+    # Export to dashboard data file
+    try:
+        _export_dashboard_data(key, spot_live, gex, oi, macro, vol_profile, cta_data,
+                               session_structure, plan)
+    except Exception as e:
+        print(f"\n  [Dashboard export skipped: {e}]")
+
     return gex
 
 
@@ -414,12 +422,176 @@ def _print_gex_summary(key: str, spot: float, gex, oi) -> None:
     print(f"  {thin}")
 
 
+def _export_dashboard_data(key: str, spot: float, gex, oi, macro: dict,
+                           vol_profile: dict, cta_data: dict,
+                           session_structure: dict, plan) -> None:
+    """Export scan results as a JS variable file to the dashboard/data/ directory."""
+    # Resolve dashboard/data path relative to this file
+    agent_dir  = os.path.dirname(os.path.abspath(__file__))
+    project_dir = os.path.dirname(agent_dir)  # GEX&OI/
+    data_dir   = os.path.join(project_dir, "dashboard", "data")
+    os.makedirs(data_dir, exist_ok=True)
+
+    now_iso = datetime.now(timezone.utc).astimezone().isoformat()
+
+    # GEX by strike
+    gex_strikes, gex_vals = [], []
+    if gex.gex_by_strike is not None and not gex.gex_by_strike.empty:
+        gex_strikes = [round(float(s), 1) for s in gex.gex_by_strike["strike"].tolist()]
+        gex_vals    = [round(float(v) / 1e9, 4) for v in gex.gex_by_strike["total_gex"].tolist()]
+
+    # OI by strike
+    oi_strikes, call_oi_list, put_oi_list = [], [], []
+    if oi.oi_by_strike is not None and not oi.oi_by_strike.empty:
+        oi_strikes    = [round(float(s), 1) for s in oi.oi_by_strike["strike"].tolist()]
+        call_oi_list  = [int(v) for v in oi.oi_by_strike.get("call_oi", [0]*len(oi_strikes))]
+        put_oi_list   = [int(v) for v in oi.oi_by_strike.get("put_oi",  [0]*len(oi_strikes))]
+
+    # Volume profile
+    vp_export: dict = {}
+    if vol_profile:
+        vp_export = {
+            "poc":          round(float(vol_profile.get("poc", 0)), 2),
+            "hvn_levels":   [round(float(v), 2) for v in vol_profile.get("hvn_levels", [])],
+            "lvn_levels":   [round(float(v), 2) for v in vol_profile.get("lvn_levels", [])],
+            "bucket_size":  vol_profile.get("bucket_size", 5),
+            "lookback_bars":vol_profile.get("lookback_bars", 168),
+            "price_buckets":[round(float(b), 2) for b in vol_profile.get("price_buckets", [])],
+            "volume":       [int(v) for v in vol_profile.get("volume", [])],
+        }
+
+    # CTA
+    cta_export: dict = {}
+    if cta_data:
+        cta_export = {
+            "bias":    cta_data.get("bias", "NEUTRAL"),
+            "sma20":   cta_data.get("sma_20", 0),
+            "sma50":   cta_data.get("sma_50", 0),
+            "sma100":  cta_data.get("sma_100", 0),
+            "sma200":  cta_data.get("sma_200", 0),
+            "note":    cta_data.get("signal", ""),
+        }
+
+    # Macro
+    mac_export = {
+        "vix":          round(float(macro.get("vix", 0) or 0), 2),
+        "vix_signal":   _vix_label(macro.get("vix")),
+        "dxy":          round(float(macro.get("dxy") or 0), 2),
+        "dxy_signal":   "DXY data",
+        "us10y":        round(float(macro.get("yield_10y") or 0), 2),
+        "us10y_signal": "US 10Y yield",
+        "prev_day_high": round(float(session_structure.get("prev_day_high", 0) or 0), 2) if session_structure else 0,
+        "prev_day_low":  round(float(session_structure.get("prev_day_low", 0) or 0), 2) if session_structure else 0,
+        "weekly_open":   round(float(session_structure.get("weekly_open", 0) or 0), 2) if session_structure else 0,
+    }
+
+    # Trade plan → scenarios
+    scenarios_export: dict = {}
+    if plan:
+        scenarios = getattr(plan, "scenarios", [])
+        if scenarios:
+            scenarios_export["primary"] = _scenario_export(scenarios[0], "A")
+        if len(scenarios) > 1:
+            scenarios_export["alt1"] = _scenario_export(scenarios[1], "B")
+        if len(scenarios) > 2:
+            scenarios_export["alt2"] = _scenario_export(scenarios[2], "C")
+
+    # Assemble payload
+    payload = {
+        "instrument": key,
+        "scan_time":  now_iso,
+        "spot":       round(float(spot), 2),
+        "metrics": {
+            "net_gex":        round(gex.total_gex / 1e9, 3),
+            "call_gex":       round(gex.call_gex / 1e9, 3),
+            "put_gex":        round(gex.put_gex / 1e9, 3),
+            "regime":         gex.regime,
+            "call_wall":      round(float(gex.call_wall or 0), 1),
+            "put_wall":       round(float(gex.put_wall or 0), 1),
+            "max_gex_strike": round(float(gex.max_gex_strike or 0), 1),
+            "zero_gex_strike":round(float(gex.zero_gex_strike or 0), 1),
+            "max_pain":       round(float(oi.max_pain or 0), 1),
+            "put_call_ratio": round(float(oi.put_call_ratio or 0), 3),
+            "sentiment":      oi.sentiment,
+            "iv_skew_ratio":  round(float(getattr(oi, "iv_skew_ratio", 1.0) or 1.0), 3),
+            "iv_skew_bias":   getattr(oi, "iv_skew_bias", ""),
+            "resistance_levels": [round(float(r), 1) for r in gex.resistance_levels[:4]],
+            "support_levels":    [round(float(s), 1) for s in gex.support_levels[:4]],
+        },
+        "top_strikes": {
+            "calls": [{"strike": round(float(c["strike"]), 1), "oi": int(c["oi"]), "note": c.get("note", "call")}
+                      for c in oi.top_call_strikes[:4]],
+            "puts":  [{"strike": round(float(p["strike"]), 1), "oi": int(p["oi"]), "note": p.get("note", "put")}
+                      for p in oi.top_put_strikes[:4]],
+        },
+        "gex_by_strike": {"strikes": gex_strikes, "gex_values": gex_vals},
+        "oi_by_strike":  {"strikes": oi_strikes,  "call_oi": call_oi_list, "put_oi": put_oi_list},
+        "volume_profile": vp_export,
+        "cta":            cta_export,
+        "macro":          mac_export,
+        "session_structure": {
+            "london_open": "08:00",
+            "ny_open":     "13:30",
+            "ny_close":    "21:00",
+            "key_time_events": [],
+        },
+        "situation": {
+            "narrative": getattr(plan, "situation_narrative", ""),
+            "confluence_scenario": getattr(plan, "confluence_scenario", "A"),
+            "scenario_name": getattr(plan, "scenario_name", ""),
+            "scenario_description": getattr(plan, "scenario_description", ""),
+            "levels_table": getattr(plan, "levels_table", []),
+        },
+        "key_levels": getattr(plan, "key_levels_export", []),
+        "trade_scenarios": scenarios_export,
+    }
+
+    js_content = (
+        f"// GEX & OI Dashboard Data — {key}\n"
+        f"// Auto-generated by gex_oi_agent.py at {now_iso} — DO NOT EDIT MANUALLY\n"
+        f"window.GEX_OI_DATA = window.GEX_OI_DATA || {{}};\n"
+        f"window.GEX_OI_DATA[\"{key}\"] = "
+        + json.dumps(payload, indent=2, ensure_ascii=False)
+        + ";\n"
+    )
+
+    out_path = os.path.join(data_dir, f"{key}_latest.js")
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write(js_content)
+    print(f"  DASHBOARD_EXPORT: {out_path}")
+
+
+def _vix_label(vix) -> str:
+    if not isinstance(vix, (int, float)):
+        return "N/A"
+    if vix < 15: return "Low vol — range bias, premium sellers in control"
+    if vix < 20: return "Normal vol"
+    if vix < 30: return "Elevated — consider reducing size"
+    return "High vol — specialist setups only"
+
+
+def _scenario_export(scenario, letter: str) -> dict:
+    return {
+        "label": getattr(scenario, "label", f"Scenario {letter}"),
+        "probability": getattr(scenario, "probability", "MEDIUM"),
+        "bias": getattr(scenario, "bias", "NEUTRAL"),
+        "entry": getattr(scenario, "entry", ""),
+        "target": getattr(scenario, "target", ""),
+        "stop": getattr(scenario, "stop", ""),
+        "context": getattr(scenario, "context", ""),
+        "invalidation": getattr(scenario, "invalidation", ""),
+    }
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="GEX & OI Trading Session Briefing")
     parser.add_argument("--instrument", action="append", default=[],
                         choices=list(INSTRUMENTS.keys()),
                         help="Instrument to analyse (repeatable)")
     parser.add_argument("--all", action="store_true", help="Analyse all instruments")
+    parser.add_argument("--output", choices=["chat", "dashboard", "both"],
+                        default=None,
+                        help="Output destination: chat (terminal only), dashboard (JS export only), both")
 
     args = parser.parse_args()
 
@@ -430,4 +602,28 @@ if __name__ == "__main__":
     else:
         instruments = ["US500", "XAUUSD"]
 
+    # Output destination selection
+    output_dest = args.output
+    if not output_dest:
+        print("\n  Where would you like the output?")
+        print("    [1] Chat / Terminal  (default)")
+        print("    [2] Dashboard only   (updates dashboard/data/*.js, no terminal output)")
+        print("    [3] Both")
+        try:
+            choice = input("  Choice [1/2/3, Enter=1]: ").strip() or "1"
+        except (EOFError, KeyboardInterrupt):
+            choice = "1"
+        output_dest = {"1": "chat", "2": "dashboard", "3": "both"}.get(choice, "chat")
+
+    # Suppress terminal output if dashboard-only
+    if output_dest == "dashboard":
+        import io
+        sys.stdout = io.StringIO()
+
     run_session_briefing(instruments)
+
+    if output_dest == "dashboard":
+        # Restore stdout, confirm silently
+        sys.stdout = sys.__stdout__
+        print(f"  Dashboard updated for: {', '.join(instruments)}")
+        print(f"  Open: GEX&OI/dashboard/index.html")
