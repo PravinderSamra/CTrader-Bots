@@ -13,17 +13,17 @@ const STATE = {
 const INSTRUMENTS = ['US500', 'XAUUSD', 'GER40', 'UK100'];
 
 const SECTIONS = [
-  { id: 'charts',   label: 'Charts',          icon: '📈' },
-  { id: 'metrics',  label: 'Metrics',          icon: '⚡' },
-  { id: 'oi',       label: 'Open Interest',    icon: '🎯' },
-  { id: 'situation',label: 'Situation',        icon: '🧭' },
-  { id: 'levels',   label: 'Key Levels',       icon: '📌' },
-  { id: 'scenarios',label: 'Trade Scenarios',  icon: '🎲' },
+  { id: 'charts',    label: 'Charts',         icon: '📈' },
+  { id: 'metrics',   label: 'Metrics',         icon: '⚡' },
+  { id: 'oi',        label: 'Open Interest',   icon: '🎯' },
+  { id: 'situation', label: 'Situation',        icon: '🧭' },
+  { id: 'levels',    label: 'Key Levels',      icon: '📌' },
+  { id: 'scenarios', label: 'Trade Scenarios', icon: '🎲' },
 ];
 
 const SITUATION_SUBSECTIONS = [
   { id: 'levels-table', label: 'Levels Table' },
-  { id: 'narrative',    label: 'Narrative' },
+  { id: 'narrative',    label: 'Narrative'    },
   { id: 'vol-profile',  label: 'Volume Profile' },
   { id: 'confluence',   label: 'Confluence Matrix' },
 ];
@@ -60,7 +60,6 @@ function applyTheme(theme, save = true) {
 function toggleTheme() {
   const next = STATE.theme === 'dark' ? 'light' : 'dark';
   applyTheme(next);
-  // Re-render charts with new theme
   setTimeout(() => refreshAllCharts(STATE.instrument), 50);
 }
 
@@ -80,10 +79,7 @@ function buildTopbar() {
     const tab = document.createElement('div');
     tab.className = `instrument-tab${inst === STATE.instrument ? ' active' : ''}`;
     tab.setAttribute('data-instrument', inst);
-    tab.innerHTML = `
-      <span>${inst}</span>
-      <span class="tab-regime-badge ${regimeCls}">${regime}</span>
-    `;
+    tab.innerHTML = `<span>${inst}</span><span class="tab-regime-badge ${regimeCls}">${regime}</span>`;
     tab.addEventListener('click', () => switchInstrument(inst));
     tabsContainer.appendChild(tab);
   });
@@ -98,7 +94,7 @@ function updateScanTime() {
   if (!data) { el.textContent = '—'; return; }
   try {
     const d = new Date(data.scan_time);
-    el.textContent = `Last scan: ${d.toLocaleDateString('en-GB', {day:'2-digit',month:'short'})} ${d.toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit'})} BST`;
+    el.textContent = `Last scan: ${d.toLocaleDateString('en-GB',{day:'2-digit',month:'short'})} ${d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})} BST`;
   } catch { el.textContent = data.scan_time || '—'; }
 }
 
@@ -110,7 +106,6 @@ function buildSidebar() {
   if (!sidebar) return;
   sidebar.innerHTML = '';
 
-  // Label
   const label = document.createElement('div');
   label.className = 'sidebar-section-label';
   label.textContent = 'Sections';
@@ -124,7 +119,6 @@ function buildSidebar() {
     tab.addEventListener('click', () => switchSection(sec.id));
     sidebar.appendChild(tab);
 
-    // Sub-tabs for Situation
     if (sec.id === 'situation') {
       SITUATION_SUBSECTIONS.forEach(sub => {
         const subTab = document.createElement('div');
@@ -163,19 +157,11 @@ function buildContent() {
 // ============================================================
 function switchInstrument(inst, rerender = true) {
   STATE.instrument = inst;
-
-  // Update topbar tabs
   document.querySelectorAll('.instrument-tab').forEach(t => {
     t.classList.toggle('active', t.getAttribute('data-instrument') === inst);
   });
-
   updateScanTime();
-
-  if (rerender) {
-    renderCurrentPanel();
-  } else {
-    renderCurrentPanel();
-  }
+  renderCurrentPanel();
 }
 
 // ============================================================
@@ -185,22 +171,14 @@ function switchSection(sectionId, subSection = null) {
   STATE.section = sectionId;
   STATE.subSection = subSection || (sectionId === 'situation' ? SITUATION_SUBSECTIONS[0].id : null);
 
-  // Update sidebar tabs
   document.querySelectorAll('.sidebar-tab').forEach(t => {
     t.classList.toggle('active', t.getAttribute('data-section') === sectionId);
   });
-
   document.querySelectorAll('.sidebar-subtab').forEach(t => {
     t.classList.toggle('active', t.getAttribute('data-subsection') === STATE.subSection);
-  });
-
-  // Show/hide sub-tabs
-  const subTabs = document.querySelectorAll('.sidebar-subtab');
-  subTabs.forEach(t => {
     t.style.display = sectionId === 'situation' ? '' : 'none';
   });
 
-  // Show panel
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   const panel = document.getElementById(`panel-${sectionId}`);
   if (panel) panel.classList.add('active');
@@ -217,23 +195,18 @@ function renderCurrentPanel() {
   if (!panel) return;
 
   panel.classList.add('active');
-
-  // Clear other panels
   document.querySelectorAll('.panel').forEach(p => {
     if (p.id !== `panel-${STATE.section}`) p.classList.remove('active');
   });
 
-  if (!data) {
-    panel.innerHTML = renderEmptyState();
-    return;
-  }
+  if (!data) { panel.innerHTML = renderEmptyState(); return; }
 
   switch (STATE.section) {
-    case 'charts':    renderChartsPanel(panel, data); break;
-    case 'metrics':   renderMetricsPanel(panel, data); break;
-    case 'oi':        renderOIPanel(panel, data); break;
+    case 'charts':    renderChartsPanel(panel, data);    break;
+    case 'metrics':   renderMetricsPanel(panel, data);   break;
+    case 'oi':        renderOIPanel(panel, data);        break;
     case 'situation': renderSituationPanel(panel, data); break;
-    case 'levels':    renderLevelsPanel(panel, data); break;
+    case 'levels':    renderLevelsPanel(panel, data);    break;
     case 'scenarios': renderScenariosPanel(panel, data); break;
   }
 }
@@ -249,18 +222,21 @@ function renderChartsPanel(panel, data) {
           <div class="spot-instrument">${data.instrument}</div>
           <div class="spot-price">${fmtNum(data.spot)}</div>
           <div>
-            <div class="spot-meta">GEX: ${fmtGex(data.metrics.net_gex)} &nbsp;|&nbsp; Regime: ${data.metrics.regime}</div>
+            <div class="spot-meta">Net GEX: ${fmtGex(data.metrics.net_gex)} &nbsp;|&nbsp; Regime: <strong>${data.metrics.regime}</strong> &nbsp;|&nbsp; Scan: ${fmtTime(data.scan_time)}</div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="card" style="padding:12px 16px 8px;">
+      <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;">
+        ${regimeChartCaption(data.metrics.regime, data.metrics.net_gex, data.metrics.call_wall, data.metrics.put_wall, data.metrics.max_gex_strike, data.metrics.zero_gex_strike)}
       </div>
     </div>
     <div class="charts-grid">
       <div class="chart-card chart-card-full">
         <div class="chart-header">
-          <span class="chart-title">GEX by Strike</span>
-          <div class="chart-controls">
-            <span class="chart-control-btn active">All</span>
-          </div>
+          <span class="chart-title">GEX by Strike — with Key Levels</span>
+          <span style="font-size:11px;color:var(--text-muted);">Green bars = dealers long gamma (stabilising). Red bars = dealers short gamma (amplifying).</span>
         </div>
         <div class="chart-container" id="combined-chart" style="min-height:320px;"></div>
       </div>
@@ -272,7 +248,7 @@ function renderChartsPanel(panel, data) {
       </div>
       <div class="chart-card">
         <div class="chart-header">
-          <span class="chart-title">Open Interest Distribution</span>
+          <span class="chart-title">Open Interest by Strike</span>
         </div>
         <div class="chart-container" id="oi-chart" style="min-height:280px;"></div>
       </div>
@@ -286,26 +262,27 @@ function renderChartsPanel(panel, data) {
   }, 30);
 }
 
+function regimeChartCaption(regime, netGex, callWall, putWall, pin, zeroGex) {
+  if (regime === 'PINNED') {
+    return `<strong style="color:var(--accent-green)">⚓ PINNED REGIME</strong> — Net GEX is ${fmtGex(netGex)}, meaning options dealers are net long gamma. They are mechanically forced to <em>sell rallies and buy dips</em> to hedge their options book — this dampens price swings and keeps ${STATE.instrument} in a range. The tall green bars on the chart show where this dampening force is strongest. The <span style="color:var(--accent-gold)">gold dashed line</span> is the Max GEX Pin (${fmtNum(pin)}) — the gravitational centre price is being pulled toward. The <span style="color:var(--accent-red)">red dashed line</span> is the Call Wall (${fmtNum(callWall)}) — your upside ceiling. The <span style="color:var(--accent-green)">green dashed line</span> is the Put Wall (${fmtNum(putWall)}) — your downside floor. The <span style="color:var(--accent-orange)">orange line</span> is Zero GEX (${fmtNum(zeroGex)}) — if price breaks through this level, the pinning force disappears and moves accelerate.`;
+  } else if (regime === 'TRENDING') {
+    return `<strong style="color:var(--accent-red)">🚀 TRENDING REGIME</strong> — Net GEX is ${fmtGex(netGex)}, meaning options dealers are net short gamma. They are forced to <em>buy as price rises and sell as price falls</em> — this amplifies moves in whichever direction price is going. The red bars dominate the chart, showing dealer short gamma exposure. This is a momentum-friendly environment: breakouts tend to run further than expected and pullbacks can be sharp. The <span style="color:var(--accent-orange)">orange line</span> is Zero GEX (${fmtNum(zeroGex)}) — the critical pivot. Above it, some dealer dampening remains. Below it, negative GEX amplification kicks in fully and moves accelerate.`;
+  }
+  return `Net GEX: ${fmtGex(netGex)}. Mixed dealer positioning — no strong directional bias from gamma flows today.`;
+}
+
 // ============================================================
 // METRICS PANEL
 // ============================================================
 function renderMetricsPanel(panel, data) {
   const m = data.metrics;
   const mac = data.macro;
-  const cta = data.cta;
+  const cta = data.cta || {};
 
   const regimeCls = m.regime === 'PINNED' ? 'pinned' : m.regime === 'TRENDING' ? 'trending' : 'neutral';
-  const regimeIcon = m.regime === 'PINNED' ? '⚓' : m.regime === 'TRENDING' ? '🚀' : '〰️';
-  const regimeDetail = m.regime === 'PINNED'
-    ? 'Positive GEX — Dealer long gamma. Sell rallies, buy dips. Range environment.'
-    : m.regime === 'TRENDING'
-    ? 'Negative GEX — Dealer short gamma. Moves amplified. Momentum environment.'
-    : 'Neutral GEX — Mixed positioning. No strong directional bias.';
-
   const netGexColor = m.net_gex >= 0 ? 'val-green' : 'val-red';
   const pcrColor = m.put_call_ratio > 1.1 ? 'val-red' : m.put_call_ratio < 0.9 ? 'val-green' : 'val-gold';
-  const skewColor = m.iv_skew_ratio > 1.10 ? 'val-red' : 'val-gold';
-
+  const skewColor = (m.iv_skew_ratio || 1) > 1.10 ? 'val-red' : 'val-gold';
   const ctaBiasCls = { 'LONG':'cta-long','MILD_LONG':'cta-mild-long','SHORT':'cta-short','NEUTRAL':'cta-neutral' }[cta.bias] || 'cta-neutral';
 
   panel.innerHTML = `
@@ -315,72 +292,98 @@ function renderMetricsPanel(panel, data) {
           <div class="spot-instrument">${data.instrument}</div>
           <div class="spot-price">${fmtNum(data.spot)}</div>
         </div>
-        <div class="content-subtitle">As of ${fmtTime(data.scan_time)}</div>
+        <div class="content-subtitle">Scan as of ${fmtTime(data.scan_time)}</div>
       </div>
     </div>
 
-    <div class="regime-banner ${regimeCls}">
-      <div class="regime-icon">${regimeIcon}</div>
-      <div>
-        <div class="regime-label">${m.regime} REGIME</div>
-        <div class="regime-detail">${regimeDetail}</div>
+    ${renderRegimeBanner(m, regimeCls)}
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">GEX Summary — Gamma Exposure Breakdown</span>
+        <span class="card-badge ${regimeCls === 'pinned' ? 'badge-pinned' : regimeCls === 'trending' ? 'badge-trending' : 'badge-neutral'}">${m.regime}</span>
       </div>
+
+      ${richMetricRow('Net GEX', fmtGex(m.net_gex), netGexColor,
+        netGexExplainer(m.net_gex, m.regime, data.instrument))}
+
+      ${richMetricRow('Call GEX', '+$' + m.call_gex.toFixed(2) + 'B', 'val-green',
+        `The total gamma exposure from <strong>call options above the current spot price</strong>. Dealers who sold these calls must buy the underlying as price rises toward those strikes — which slows upward moves. The higher this number, the more ceiling resistance there is above spot. Call GEX concentration is what creates the Call Wall.`)}
+
+      ${richMetricRow('Put GEX', '-$' + m.put_gex.toFixed(2) + 'B', 'val-red',
+        `The total gamma exposure from <strong>put options below the current spot price</strong>. Dealers who sold these puts must sell the underlying as price falls toward those strikes — in a trending (negative GEX) environment this amplifies downside moves. In a pinned environment, high put GEX creates the Put Wall floor.`)}
+
+      <div class="metric-divider"></div>
+
+      ${richMetricRow('Call Wall — ' + fmtNum(m.call_wall), 'Primary Resistance', 'val-red',
+        `The strike price where call option open interest is highest. This is your <strong>primary ceiling for the session</strong>. Options dealers who sold these calls have to sell ${data.instrument} futures as price rises toward this level to hedge their exposure — creating significant supply overhead. A clean break and hold ABOVE the Call Wall flips the dynamic and can trigger a sharp move higher as dealers are forced to cover. Until that happens, treat it as a hard cap.`)}
+
+      ${richMetricRow('Max GEX Pin — ' + fmtNum(m.max_gex_strike), 'Gravitational Anchor', 'val-gold',
+        `The strike where total dealer gamma exposure is at its absolute maximum. This is the <strong>most powerful gravitational level on the board</strong> — price is constantly being pulled back toward it throughout the session. In a pinned regime, this is your primary Target 1 on any trade. Think of it as a magnet: the further price moves away from the pin, the stronger the force pulling it back. It is also typically the best risk:reward entry zone for mean-reversion trades.`)}
+
+      ${richMetricRow('Zero GEX — ' + fmtNum(m.zero_gex_strike), 'Volatility Trigger', 'val-orange',
+        `The price level where dealer net gamma exposure flips from positive to negative (or vice versa). This is the <strong>most important level on the chart</strong> from a volatility perspective. Above Zero GEX: dealer dampening is active and moves are muted. Below Zero GEX: dealer dampening disappears, negative gamma amplification begins and moves accelerate rapidly. A confirmed break through Zero GEX on strong volume is a high-conviction signal — it is the trigger for a directional, fast-move trade setup.`)}
+
+      ${richMetricRow('Max Pain — ' + fmtNum(m.max_pain), 'Expiry Magnet', 'val-purple',
+        `The price at which the maximum number of options contracts (both calls and puts) expire worthless — minimising the payout to options buyers. Market makers and large dealers have a structural incentive to keep price near Max Pain heading into expiry, as it reduces their hedging obligations. Max Pain acts as a <strong>slow-moving gravitational pull</strong> — more relevant in the final 1–2 days before options expiry than early in the week, but always worth noting as an expiry target.`)}
+
+      ${richMetricRow('Put Wall — ' + fmtNum(m.put_wall), 'Primary Support', 'val-green',
+        `The strike price where put option open interest is highest. This is your <strong>primary floor for the session</strong>. Dealers who sold these puts must buy ${data.instrument} futures as price falls toward this level — creating significant demand and support. The Put Wall is the level where aggressive short sellers face the strongest natural opposition. A clean break and hold BELOW the Put Wall is a significant bearish signal and often leads to rapid further downside as the support flips to resistance.`)}
     </div>
 
     <div class="card">
       <div class="card-header">
-        <span class="card-title">GEX Summary</span>
-        <span class="card-badge ${regimeCls === 'pinned' ? 'badge-pinned' : regimeCls === 'trending' ? 'badge-trending' : 'badge-neutral'}">${m.regime}</span>
+        <span class="card-title">Options Market Sentiment</span>
       </div>
-      <div class="metrics-grid">
-        ${metricItem('Net GEX', fmtGex(m.net_gex), m.regime, netGexColor)}
-        ${metricItem('Call GEX', '+$' + m.call_gex.toFixed(2) + 'B', 'dealer long above spot', 'val-green')}
-        ${metricItem('Put GEX', '-$' + m.put_gex.toFixed(2) + 'B', 'dealer short below spot', 'val-red')}
-        ${metricItem('Call Wall', fmtNum(m.call_wall), 'primary resistance', 'val-red')}
-        ${metricItem('Max GEX Pin', fmtNum(m.max_gex_strike), 'gravitational pin / T1', 'val-gold')}
-        ${metricItem('Zero GEX', fmtNum(m.zero_gex_strike), 'volatility trigger', 'val-orange')}
-        ${metricItem('Max Pain', fmtNum(m.max_pain), 'expiry magnet', 'val-purple')}
-        ${metricItem('Put Wall', fmtNum(m.put_wall), 'primary support', 'val-green')}
-        ${metricItem('P/C Ratio', m.put_call_ratio.toFixed(2), m.sentiment, pcrColor)}
-        ${metricItem('IV Skew', m.iv_skew_ratio.toFixed(2), m.iv_skew_bias, skewColor)}
-      </div>
+      ${richMetricRow('Put/Call Ratio — ' + m.put_call_ratio.toFixed(2), m.sentiment, pcrColor,
+        pcrExplainer(m.put_call_ratio, m.sentiment, data.instrument))}
+
+      ${m.iv_skew_ratio ? richMetricRow('IV Skew — ' + (m.iv_skew_ratio).toFixed(2), m.iv_skew_bias || '', skewColor,
+        skewExplainer(m.iv_skew_ratio, m.iv_skew_bias, data.instrument)) : ''}
     </div>
 
     <div class="card">
-      <div class="card-header"><span class="card-title">Macro Snapshot</span></div>
+      <div class="card-header"><span class="card-title">Macro Snapshot — Market Context</span></div>
+      <div style="font-size:12.5px;color:var(--text-secondary);line-height:1.65;margin-bottom:16px;">
+        ${macroNarrative(mac, data.instrument)}
+      </div>
       <div class="macro-strip">
-        ${macroItem('VIX', mac.vix.toFixed(2), mac.vix_signal)}
-        ${macroItem('DXY', mac.dxy.toFixed(2), mac.dxy_signal)}
-        ${macroItem('US 10Y', mac.us10y.toFixed(2) + '%', mac.us10y_signal)}
-        ${macroItem('Prev High', fmtNum(mac.prev_day_high), 'session high')}
-        ${macroItem('Prev Low', fmtNum(mac.prev_day_low), 'session low')}
-        ${macroItem('Wkly Open', fmtNum(mac.weekly_open), 'weekly reference')}
+        ${macroItem('VIX', (mac.vix||0).toFixed(2), mac.vix_signal || vixLabel(mac.vix))}
+        ${macroItem('DXY', (mac.dxy||0).toFixed(2), mac.dxy_signal || 'US Dollar Index')}
+        ${macroItem('US 10Y', (mac.us10y||0).toFixed(2) + '%', mac.us10y_signal || 'US Treasury yield')}
+        ${macroItem('Prev High', fmtNum(mac.prev_day_high), 'Yesterday\'s session high')}
+        ${macroItem('Prev Low', fmtNum(mac.prev_day_low), 'Yesterday\'s session low')}
+        ${macroItem('Wkly Open', fmtNum(mac.weekly_open), 'Monday\'s opening price')}
       </div>
     </div>
 
     <div class="card">
-      <div class="card-header"><span class="card-title">CTA Positioning (Approximate)</span></div>
+      <div class="card-header"><span class="card-title">CTA Positioning — Systematic Trend Follower Bias</span></div>
+      <div style="font-size:12.5px;color:var(--text-secondary);line-height:1.65;margin-bottom:14px;">
+        ${ctaExplainer(cta, data.instrument)}
+      </div>
       <div class="cta-row">
         <div class="cta-bias-label">CTA Bias</div>
-        <div class="cta-bias-value ${ctaBiasCls}">${cta.bias.replace('_', ' ')}</div>
+        <div class="cta-bias-value ${ctaBiasCls}">${(cta.bias||'N/A').replace('_',' ')}</div>
         <div class="cta-smas">
-          ${ctaSma('SMA20', cta.sma20)}
-          ${ctaSma('SMA50', cta.sma50)}
-          ${ctaSma('SMA100', cta.sma100)}
-          ${ctaSma('SMA200', cta.sma200)}
+          ${cta.sma20  ? ctaSma('20-day MA',  cta.sma20)  : ''}
+          ${cta.sma50  ? ctaSma('50-day MA',  cta.sma50)  : ''}
+          ${cta.sma100 ? ctaSma('100-day MA', cta.sma100) : ''}
+          ${cta.sma200 ? ctaSma('200-day MA', cta.sma200) : ''}
         </div>
-        <div class="cta-note">${cta.note}</div>
       </div>
+      ${cta.note ? `<div style="font-size:11.5px;color:var(--text-muted);margin-top:10px;font-style:italic;">${cta.note}</div>` : ''}
     </div>
 
-    ${data.session_structure && data.session_structure.key_time_events.length ? `
+    ${data.session_structure && data.session_structure.key_time_events && data.session_structure.key_time_events.length ? `
     <div class="card">
       <div class="card-header"><span class="card-title">Key Time Events Today</span></div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-bottom:12px;">Scheduled data releases and events that can trigger sharp moves. Size down or stand aside in the 5 minutes before and after each event until direction is confirmed.</div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         ${data.session_structure.key_time_events.map(e => `
-          <div style="display:flex;align-items:center;gap:12px;padding:8px 12px;background:var(--bg-card-alt);border-radius:4px;border:1px solid var(--border);">
-            <span style="font-size:14px;">🕐</span>
-            <span style="font-size:12.5px;color:var(--text-primary);">${e}</span>
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--bg-card-alt);border-radius:6px;border:1px solid var(--border);">
+            <span style="font-size:16px;">🕐</span>
+            <span style="font-size:13px;color:var(--text-primary);font-weight:500;">${e}</span>
           </div>
         `).join('')}
       </div>
@@ -388,12 +391,125 @@ function renderMetricsPanel(panel, data) {
   `;
 }
 
+// ---- Regime Banner ----
+function renderRegimeBanner(m, regimeCls) {
+  const icon = m.regime === 'PINNED' ? '⚓' : m.regime === 'TRENDING' ? '🚀' : '〰️';
+  const detail = regimeFullExplainer(m.regime, m.net_gex);
+  return `
+    <div class="regime-banner ${regimeCls}">
+      <div class="regime-icon">${icon}</div>
+      <div style="flex:1;">
+        <div class="regime-label">${m.regime} REGIME</div>
+        <div class="regime-detail" style="margin-top:4px;line-height:1.6;">${detail}</div>
+      </div>
+    </div>
+  `;
+}
+
+// ---- Rich Metric Row ----
+function richMetricRow(label, value, valCls, explanation) {
+  return `
+    <div class="rich-metric-row">
+      <div class="rich-metric-header">
+        <div class="rich-metric-label">${label}</div>
+        <div class="rich-metric-value ${valCls}">${value}</div>
+      </div>
+      <div class="rich-metric-explanation">${explanation}</div>
+    </div>
+  `;
+}
+
+// ---- Explainer Functions ----
+function regimeFullExplainer(regime, netGex) {
+  if (regime === 'PINNED') {
+    return `Net GEX is <strong>${fmtGex(netGex)}</strong> — positive, meaning options dealers are net long gamma. In simple terms: dealers have sold large amounts of options on both sides of the market. To stay hedged, they are mechanically forced to <strong>sell when price rallies and buy when price dips</strong>. This acts like a shock absorber — dampening swings and pulling price back toward the centre. The result is a <strong>range-bound, mean-reverting session</strong>. The best strategy is to fade moves to the extremes (Call Wall / Put Wall) and target the Max GEX Pin in the middle. Avoid chasing breakouts — dealer flows actively work against them.`;
+  } else if (regime === 'TRENDING') {
+    return `Net GEX is <strong>${fmtGex(netGex)}</strong> — negative, meaning options dealers are net short gamma. Dealers must <strong>buy as price rises and sell as price falls</strong> to stay hedged — the opposite of the pinned regime. Instead of dampening moves, dealer flows <strong>amplify and accelerate them</strong>. This is a momentum-friendly environment. Breakouts have more follow-through. Pullbacks can be sharper. The best strategy is to trade with the direction of the move once confirmed, use wider stops, and expect faster price action than normal.`;
+  }
+  return `Net GEX is near zero — dealers have balanced gamma exposure. No strong directional force from options flows today. Price can move freely in either direction. Focus on price action and key structural levels.`;
+}
+
+function netGexExplainer(netGex, regime, instrument) {
+  const sign = netGex >= 0 ? 'positive' : 'negative';
+  const abs = Math.abs(netGex).toFixed(2);
+  return `Net GEX of <strong>${fmtGex(netGex)}</strong> represents the total dollar gamma exposure across all options on ${instrument}. A ${sign} reading means dealers are net ${netGex >= 0 ? 'long' : 'short'} gamma — they ${netGex >= 0 ? 'buy dips and sell rallies' : 'buy as price rises and sell as it falls'} to stay hedged. The magnitude ($${abs}B) tells you the strength of this force: the higher the absolute value, the stronger the pinning or amplifying effect on price movement today.`;
+}
+
+function pcrExplainer(pcr, sentiment, instrument) {
+  if (pcr > 1.2) return `Put/Call ratio of <strong>${pcr.toFixed(2)}</strong> means there are significantly more put options open than calls. This indicates <strong>bearish positioning or heavy hedging activity</strong> in the ${instrument} options market. Participants are paying up for downside protection, suggesting expectations of either a correction or elevated uncertainty. This is a contrarian indicator when extreme — very high PCR can signal oversold conditions and a potential bounce as the hedging unwinds.`;
+  if (pcr > 1.05) return `Put/Call ratio of <strong>${pcr.toFixed(2)}</strong> shows a mild tilt toward puts — slightly more participants are buying downside protection than upside calls. This reflects a cautious, mildly bearish bias in the options market but is not extreme. Watch for whether this builds further (more bearish) or fades (sentiment improving).`;
+  if (pcr < 0.8) return `Put/Call ratio of <strong>${pcr.toFixed(2)}</strong> is notably low, meaning calls significantly outnumber puts. This indicates <strong>bullish positioning and speculative call-buying</strong>. Participants are positioned for upside. Extremely low PCR can be a contrarian warning — when everyone is positioned long via calls, there may be fewer buyers left to push price higher, and any disappointment can trigger a sharp unwinding.`;
+  return `Put/Call ratio of <strong>${pcr.toFixed(2)}</strong> is near neutral — broadly balanced positioning between puts and calls. No extreme directional bias from the options market at this time. Sentiment: ${sentiment}.`;
+}
+
+function skewExplainer(skew, bias, instrument) {
+  if (skew > 1.15) return `IV Skew of <strong>${skew.toFixed(2)}</strong> means put options are significantly more expensive than equivalent call options (${Math.round((skew-1)*100)}% premium). This tells you <strong>institutional money is paying up for downside insurance</strong> on ${instrument}. It doesn't necessarily mean a crash is coming — but it shows that large players are hedging their long exposure and are worried about downside risk. Elevated skew adds weight to bearish scenarios and suggests the market is not fully confident in the upside.`;
+  if (skew > 1.08) return `IV Skew of <strong>${skew.toFixed(2)}</strong> shows a mild bias toward put premium — puts cost slightly more than calls. This is a <strong>mild bearish hedge signal</strong>: the options market has a slight lean toward downside protection but nothing extreme. Standard defensive positioning. Note this as a slight headwind for aggressive long setups.`;
+  return `IV Skew of <strong>${skew.toFixed(2)}</strong> — options market is showing broadly balanced implied volatility between puts and calls. No significant skew bias. Consistent with a neutral to mildly bullish options sentiment on ${instrument}.`;
+}
+
+function macroNarrative(mac, instrument) {
+  const vix = mac.vix || 0;
+  const dxy = mac.dxy || 0;
+  const y10 = mac.us10y || 0;
+
+  let parts = [];
+
+  if (vix < 15) parts.push(`<strong>VIX at ${vix.toFixed(1)}</strong> is in low volatility territory — the market's "fear gauge" is calm. This favours range-trading, premium-selling strategies, and mean-reversion setups. Options are cheap, which means implied moves are small. Don't expect explosive directional moves unless there's a major catalyst.`);
+  else if (vix < 20) parts.push(`<strong>VIX at ${vix.toFixed(1)}</strong> is in a normal range — moderate implied volatility. Normal intraday ranges. Standard position sizing applies.`);
+  else if (vix < 30) parts.push(`<strong>VIX at ${vix.toFixed(1)}</strong> is elevated — the market is pricing in above-average uncertainty. Intraday ranges will be wider than normal. Consider reducing position size by 20–30% and widening stops to account for the noisier price action.`);
+  else parts.push(`<strong>VIX at ${vix.toFixed(1)}</strong> is HIGH — fear is elevated and markets are volatile. Specialist setups only. Significantly reduced position sizes. Wide stops. Favour defined-risk trades.`);
+
+  if (dxy > 0) {
+    if (instrument === 'XAUUSD') {
+      parts.push(`<strong>DXY at ${dxy.toFixed(2)}</strong>: Gold trades inversely to the US Dollar. A strong DXY is a headwind for Gold prices — dollar strength makes Gold more expensive for foreign buyers. Watch DXY direction as a leading indicator for XAUUSD throughout the session.`);
+    } else if (instrument === 'US500') {
+      parts.push(`<strong>DXY at ${dxy.toFixed(2)}</strong>: A strong dollar can be a mild headwind for US equities as it impacts multinational earnings. More relevant for longer-term positioning — for intraday GEX setups, treat DXY as background context.`);
+    } else {
+      parts.push(`<strong>DXY at ${dxy.toFixed(2)}</strong>: US Dollar index for broader macro context.`);
+    }
+  }
+
+  if (y10 > 0) {
+    if (y10 > 4.5) parts.push(`<strong>US 10-Year Yield at ${y10.toFixed(2)}%</strong> is elevated. High real yields compete with equities for capital and create a structural headwind for risk assets and Gold. Watch for any yield spikes intraday — sudden moves higher in the 10Y are typically negative for equities and Gold.`);
+    else parts.push(`<strong>US 10-Year Yield at ${y10.toFixed(2)}%</strong> — moderate yield environment. Monitoring for any significant moves that could shift risk appetite.`);
+  }
+
+  return parts.join('<br><br>');
+}
+
+function ctaExplainer(cta, instrument) {
+  if (!cta || !cta.bias) return `CTA positioning data unavailable for this scan.`;
+  const bias = cta.bias;
+  const biasLabel = bias.replace('_', ' ');
+  let text = `<strong>CTAs (Commodity Trading Advisors)</strong> are large systematic/quantitative hedge funds that follow price trends — they go long when prices are above their key moving averages and short when below. They collectively manage hundreds of billions in capital, meaning their positioning creates real order flow that can amplify or counteract your trades.<br><br>`;
+
+  if (bias === 'LONG') {
+    text += `Current CTA bias is <strong style="color:var(--accent-green)">LONG</strong> — ${instrument} is trading above all major moving averages (20, 50, 100, 200-day) with the shorter averages above the longer ones (uptrend structure). Systematic funds are positioned long and are a <strong>tailwind for long trades</strong>. If the Call Wall breaks today, CTA momentum-buying could add significant fuel to the move. Rejection shorts at resistance are working against the CTA flow — keep stops tighter on short positions.`;
+  } else if (bias === 'MILD_LONG') {
+    text += `Current CTA bias is <strong style="color:#6ee7b7">MILD LONG</strong> — ${instrument} is above the 50-day MA but the moving average structure is not fully aligned. CTAs are leaning long but without maximum conviction. There is some systematic support for longs, but not the full-force tailwind of a clean uptrend. Both long and short setups are playable — just note that the mild CTA tailwind slightly favours buyers.`;
+  } else if (bias === 'SHORT') {
+    text += `Current CTA bias is <strong style="color:var(--accent-red)">SHORT</strong> — ${instrument} is below its 50-day MA with moving averages in a downtrend structure. Systematic funds are positioned short and are a <strong>headwind for long trades</strong>. Short setups have CTA selling flows behind them, giving them more conviction. Long trades at support need to be treated as counter-trend — use tighter targets and stops.`;
+  } else {
+    text += `Current CTA bias is <strong>NEUTRAL</strong> — ${instrument} is near a moving average crossover zone and systematic funds have not committed to a clear direction. No significant CTA tailwind or headwind today. Trade purely off GEX levels and price action signals.`;
+  }
+  return text;
+}
+
+function vixLabel(vix) {
+  if (!vix) return 'N/A';
+  if (vix < 15) return 'Low vol — range-trading conditions';
+  if (vix < 20) return 'Normal vol environment';
+  if (vix < 30) return 'Elevated — reduce position size';
+  return 'High vol — specialist setups only';
+}
+
 // ============================================================
 // OI PANEL
 // ============================================================
 function renderOIPanel(panel, data) {
   const oi = data.top_strikes;
-
+  const m = data.metrics;
   const maxCallOI = Math.max(...oi.calls.map(c => c.oi));
   const maxPutOI  = Math.max(...oi.puts.map(p => p.oi));
 
@@ -403,66 +519,77 @@ function renderOIPanel(panel, data) {
       <div class="content-subtitle">${data.instrument} &nbsp;|&nbsp; Spot: ${fmtNum(data.spot)}</div>
     </div>
 
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">OI Distribution Chart</span>
+    <div class="card" style="padding:16px 20px;">
+      <div style="font-size:12.5px;color:var(--text-secondary);line-height:1.7;">
+        <strong>What is Open Interest?</strong> Open Interest (OI) is the total number of live options contracts that have not yet been closed or expired. High OI at a specific strike price means a large number of participants hold options at that level — which forces options dealers to maintain significant hedges near those prices.<br><br>
+        <strong>Call OI (Red bars — above spot):</strong> Strikes with high call open interest act as <strong>resistance zones</strong>. Dealers who sold these calls must sell ${data.instrument} futures as price approaches these levels to stay hedged — creating supply overhead. The strike with the <em>highest</em> call OI is your Call Wall: <strong>${fmtNum(m.call_wall)}</strong>.<br><br>
+        <strong>Put OI (Green bars — below spot):</strong> Strikes with high put open interest act as <strong>support zones</strong>. Dealers who sold these puts must buy ${data.instrument} futures as price falls toward these levels — creating demand. The strike with the <em>highest</em> put OI is your Put Wall: <strong>${fmtNum(m.put_wall)}</strong>.<br><br>
+        <strong>Max Pain (${fmtNum(m.max_pain)}):</strong> The price where the most options contracts expire worthless — minimising payouts to option buyers. Dealers are incentivised to keep price near this level, especially approaching expiry.
       </div>
-      <div class="chart-container" id="oi-chart" style="min-height:340px;"></div>
     </div>
 
     <div class="card">
-      <div class="card-header"><span class="card-title">Top Strike Analysis</span></div>
+      <div class="card-header"><span class="card-title">Interactive OI Chart — Calls vs Puts by Strike</span></div>
+      <div class="chart-container" id="oi-chart" style="min-height:360px;"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="card-title">Top Strikes — Supply & Demand Map</span></div>
       <div class="oi-grid">
         <div>
-          <div class="oi-side-header oi-calls-header">↑ CALLS — Supply Above</div>
-          ${oi.calls.map(c => `
+          <div class="oi-side-header oi-calls-header">↑ CALLS — Supply / Resistance Above Spot</div>
+          ${oi.calls.map((c,i) => `
             <div class="oi-bar-row">
               <div class="oi-strike">${fmtNum(c.strike)}</div>
               <div class="oi-bar-wrap">
                 <div class="oi-bar oi-bar-call" style="width:${Math.round(c.oi/maxCallOI*100)}%"></div>
               </div>
-              <div class="oi-value">${fmtOI(c.oi)}</div>
-              <div class="oi-note">${c.note}</div>
+              <div class="oi-value">${c.oi.toLocaleString()}</div>
+              <div class="oi-note">${i === 0 ? '← Call Wall (max resistance)' : c.note}</div>
             </div>
           `).join('')}
+          <div style="font-size:11px;color:var(--text-muted);padding:10px 12px 4px;line-height:1.5;">
+            These are the strikes with the most call contracts open. Dealers are forced to sell ${data.instrument} as price approaches each level. The longer the bar, the stronger the resistance.
+          </div>
         </div>
         <div>
-          <div class="oi-side-header oi-puts-header">↓ PUTS — Demand Below</div>
-          ${oi.puts.map(p => `
+          <div class="oi-side-header oi-puts-header">↓ PUTS — Demand / Support Below Spot</div>
+          ${oi.puts.map((p,i) => `
             <div class="oi-bar-row">
               <div class="oi-strike">${fmtNum(p.strike)}</div>
               <div class="oi-bar-wrap">
                 <div class="oi-bar oi-bar-put" style="width:${Math.round(p.oi/maxPutOI*100)}%"></div>
               </div>
-              <div class="oi-value">${fmtOI(p.oi)}</div>
-              <div class="oi-note">${p.note}</div>
+              <div class="oi-value">${p.oi.toLocaleString()}</div>
+              <div class="oi-note">${i === 0 ? '← Put Wall (max support)' : p.note}</div>
             </div>
           `).join('')}
+          <div style="font-size:11px;color:var(--text-muted);padding:10px 12px 4px;line-height:1.5;">
+            These are the strikes with the most put contracts open. Dealers are forced to buy ${data.instrument} as price falls toward each level. The longer the bar, the stronger the support floor.
+          </div>
         </div>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-header"><span class="card-title">Full OI Table</span></div>
+      <div class="card-header"><span class="card-title">Full OI Strike Table</span></div>
       <table class="data-table">
-        <thead>
-          <tr><th>Strike</th><th>Type</th><th>OI Contracts</th><th>Note</th></tr>
-        </thead>
+        <thead><tr><th>Strike</th><th>Type</th><th>OI Contracts</th><th>Role</th></tr></thead>
         <tbody>
-          ${oi.calls.map(c => `
+          ${oi.calls.map((c,i) => `
             <tr class="row-resistance">
               <td>${fmtNum(c.strike)}</td>
               <td><span style="color:var(--accent-red);font-weight:700;">CALL</span></td>
               <td>${c.oi.toLocaleString()}</td>
-              <td style="color:var(--text-muted);font-size:11px;">${c.note}</td>
+              <td style="color:var(--text-muted);font-size:11px;">${i===0 ? 'Call Wall — primary ceiling / max resistance' : 'Call resistance — supply overhead'}</td>
             </tr>
           `).join('')}
-          ${oi.puts.map(p => `
+          ${oi.puts.map((p,i) => `
             <tr class="row-support">
               <td>${fmtNum(p.strike)}</td>
               <td><span style="color:var(--accent-green);font-weight:700;">PUT</span></td>
               <td>${p.oi.toLocaleString()}</td>
-              <td style="color:var(--text-muted);font-size:11px;">${p.note}</td>
+              <td style="color:var(--text-muted);font-size:11px;">${i===0 ? 'Put Wall — primary floor / max support' : 'Put support — demand below'}</td>
             </tr>
           `).join('')}
         </tbody>
@@ -479,12 +606,12 @@ function renderOIPanel(panel, data) {
 function renderSituationPanel(panel, data) {
   const sub = STATE.subSection || SITUATION_SUBSECTIONS[0].id;
 
-  // Sub-tab nav
   const subNavHtml = `
     <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;">
       ${SITUATION_SUBSECTIONS.map(s => `
         <button onclick="switchSection('situation','${s.id}')"
-          style="font-size:11px;font-weight:600;padding:6px 14px;border-radius:4px;cursor:pointer;border:1px solid var(--border);
+          style="font-size:11px;font-weight:600;padding:6px 14px;border-radius:4px;cursor:pointer;
+            border:1px solid var(--border);
             background:${sub===s.id ? 'var(--accent-blue)' : 'var(--bg-card)'};
             color:${sub===s.id ? '#fff' : 'var(--text-secondary)'};
             transition:all 0.18s ease;">
@@ -495,27 +622,20 @@ function renderSituationPanel(panel, data) {
   `;
 
   let content = '';
-
-  if (sub === 'levels-table') {
-    content = renderLevelsTable(data);
-  } else if (sub === 'narrative') {
-    content = renderNarrative(data);
-  } else if (sub === 'vol-profile') {
-    content = renderVolProfileSection(data);
-  } else if (sub === 'confluence') {
-    content = renderConfluenceSection(data);
-  }
+  if (sub === 'levels-table') content = renderLevelsTable(data);
+  else if (sub === 'narrative')    content = renderNarrative(data);
+  else if (sub === 'vol-profile')  content = renderVolProfileSection(data);
+  else if (sub === 'confluence')   content = renderConfluenceSection(data);
 
   panel.innerHTML = `
     <div class="content-header">
       <div class="content-title">Situation at a Glance</div>
-      <div class="content-subtitle">${data.instrument} &nbsp;|&nbsp; ${data.situation.confluence_scenario}: ${data.situation.scenario_name}</div>
+      <div class="content-subtitle">${data.instrument} &nbsp;|&nbsp; Active Scenario: ${data.situation.confluence_scenario} — ${data.situation.scenario_name}</div>
     </div>
     ${subNavHtml}
     ${content}
   `;
 
-  // Render vol profile chart after DOM insert
   if (sub === 'vol-profile') {
     setTimeout(() => renderVolProfileChart('vol-profile-chart', data), 30);
   }
@@ -523,35 +643,38 @@ function renderSituationPanel(panel, data) {
 
 function renderLevelsTable(data) {
   const typeMap = {
-    'CALL_WALL':  { cls: 'row-resistance', label: 'Resistance' },
-    'PUT_WALL':   { cls: 'row-support',    label: 'Support'    },
-    'MAX_GEX':    { cls: 'row-pin',        label: 'Pin'        },
-    'ZERO_GEX':   { cls: 'row-trigger',    label: 'Trigger'    },
-    'MAX_PAIN':   { cls: 'row-poc',        label: 'Magnet'     },
-    'PDH':        { cls: '',               label: 'PDH'        },
-    'PDL':        { cls: '',               label: 'PDL'        },
-    'WEEKLY_OPEN':{ cls: '',               label: 'Ref'        },
-    'POC':        { cls: 'row-poc',        label: 'POC'        },
-    'SPOT':       { cls: 'row-spot',       label: 'Current'    },
-    'GEX_RES':    { cls: 'row-resistance', label: 'GEX Res'    },
-    'GEX_SUP':    { cls: 'row-support',    label: 'GEX Sup'    },
+    'CALL_WALL':   { cls: 'row-resistance', label: 'Call Wall',    desc: 'Primary resistance ceiling — highest call OI' },
+    'PUT_WALL':    { cls: 'row-support',    label: 'Put Wall',     desc: 'Primary support floor — highest put OI' },
+    'MAX_GEX':     { cls: 'row-pin',        label: 'Max GEX Pin',  desc: 'Gravitational anchor — strongest dealer gamma' },
+    'ZERO_GEX':    { cls: 'row-trigger',    label: 'Zero GEX',     desc: 'Volatility trigger — gamma flips here' },
+    'MAX_PAIN':    { cls: 'row-poc',        label: 'Max Pain',     desc: 'Expiry magnet — max options decay strike' },
+    'PDH':         { cls: '',               label: 'Prev Day High', desc: 'Yesterday\'s high — key reference level' },
+    'PDL':         { cls: '',               label: 'Prev Day Low',  desc: 'Yesterday\'s low — key reference level' },
+    'WEEKLY_OPEN': { cls: '',               label: 'Weekly Open',   desc: 'This week\'s opening price — trend reference' },
+    'POC':         { cls: 'row-poc',        label: 'Volume POC',   desc: 'Highest volume price — strong acceptance zone' },
+    'SPOT':        { cls: 'row-spot',       label: 'Current Spot', desc: 'Live market price' },
+    'GEX_RES':     { cls: 'row-resistance', label: 'GEX Resistance', desc: 'Secondary resistance from gamma levels' },
+    'GEX_SUP':     { cls: 'row-support',    label: 'GEX Support',   desc: 'Secondary support from gamma levels' },
   };
 
   return `
     <div class="card">
-      <div class="card-header"><span class="card-title">Key Levels — Structured View</span></div>
+      <div class="card-header"><span class="card-title">Structured Levels Map — Resistance to Support</span></div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-bottom:14px;line-height:1.6;">
+        All key levels for today's session, ordered from highest to lowest price. <span style="color:var(--accent-red)">Red</span> = resistance above (supply). <span style="color:var(--accent-gold)">Gold</span> = pin / magnet. <span style="color:var(--accent-blue)">Blue</span> = current spot. <span style="color:var(--accent-green)">Green</span> = support below (demand). <span style="color:var(--accent-orange)">Orange</span> = volatility trigger.
+      </div>
       <table class="data-table">
-        <thead><tr><th>Level</th><th>Price</th><th>Type</th><th>Note</th></tr></thead>
+        <thead><tr><th>Level Name</th><th>Price</th><th>Role</th><th>Tag</th></tr></thead>
         <tbody>
           ${data.situation.levels_table.map(row => {
-            const meta = typeMap[row.type] || { cls: '', label: row.type };
+            const meta = typeMap[row.type] || { cls: '', label: row.type, desc: '' };
             const tagHtml = row.tag ? tagChip(row.tag) : '';
             return `
               <tr class="${meta.cls}">
-                <td>${row.label}${tagHtml}</td>
-                <td>${fmtNum(row.level)}</td>
-                <td><span style="font-size:10px;color:var(--text-muted);">${meta.label}</span></td>
-                <td style="color:var(--text-muted);font-size:11px;">${row.tag || ''}</td>
+                <td>${meta.label}${tagHtml}</td>
+                <td style="font-family:'JetBrains Mono',monospace;font-weight:700;">${fmtNum(row.level)}</td>
+                <td style="font-size:11px;color:var(--text-muted);">${meta.desc}</td>
+                <td>${row.tag ? tagChip(row.tag) : ''}</td>
               </tr>
             `;
           }).join('')}
@@ -563,67 +686,102 @@ function renderLevelsTable(data) {
 
 function renderNarrative(data) {
   return `
-    <div class="narrative-card">
-      <div class="narrative-text">${data.situation.narrative}</div>
+    <div class="card" style="padding:20px 24px;">
+      <div class="card-header" style="margin-bottom:16px;"><span class="card-title">Market Narrative — Full Analysis</span></div>
+      <div style="font-size:13.5px;color:var(--text-secondary);line-height:1.8;">
+        ${data.situation.narrative}
+      </div>
     </div>
   `;
 }
 
 function renderVolProfileSection(data) {
   const vp = data.volume_profile;
+  if (!vp || !vp.poc) {
+    return `<div class="card"><div style="padding:20px;color:var(--text-muted);">Volume Profile data will be available after running a live scan. The agent fetches H1 candles from CTrader and distributes tick volume into price buckets to identify where the most trading activity has occurred.</div></div>`;
+  }
   return `
+    <div class="card" style="padding:16px 20px;">
+      <div style="font-size:12.5px;color:var(--text-secondary);line-height:1.7;">
+        <strong>What is the Volume Profile?</strong> The Volume Profile shows how much trading volume occurred at each price level over the past ${vp.lookback_bars || 168} hourly candles (approximately the past week). It answers the question: <em>"Where has this market spent the most time and activity?"</em><br><br>
+        <strong>POC (Point of Control) — ${fmtNum(vp.poc)}:</strong> The single price bucket with the <em>highest volume</em>. This is the most accepted price in recent history — price tends to return to the POC when untethered and it acts as a strong magnet for mean-reversion trades.<br><br>
+        <strong>HVN (High Volume Nodes) — ${vp.hvn_levels ? vp.hvn_levels.map(h => fmtNum(h)).join(', ') : 'N/A'}:</strong> Price ranges with above-average volume. Markets tend to <em>slow down and consolidate</em> when entering HVN zones — there are many buyers and sellers who transacted here and will defend their positions. Expect choppy, difficult price action in HVN zones.<br><br>
+        <strong>LVN (Low Volume Nodes) — ${vp.lvn_levels ? vp.lvn_levels.map(l => fmtNum(l)).join(', ') : 'N/A'}:</strong> Price ranges with very little historical volume — thin areas. Markets tend to <em>move quickly through LVN zones</em> because there is little opposing order flow. If price enters an LVN, expect a fast, sharp move to the next HVN or key level. LVNs create the "fast-through" momentum setups.
+      </div>
+    </div>
     <div class="card">
-      <div class="card-header"><span class="card-title">Volume Profile</span>
-        <span style="font-size:11px;color:var(--text-muted);">168-bar lookback · H1 candles</span>
+      <div class="card-header">
+        <span class="card-title">Volume Profile Chart</span>
+        <span style="font-size:11px;color:var(--text-muted);">${vp.lookback_bars || 168} H1 bars · bucket size ${vp.bucket_size || 5} points</span>
       </div>
       <div class="chart-container vol-profile-container" id="vol-profile-chart"></div>
       <div class="vp-legend">
-        <div class="vp-legend-item"><div class="vp-dot vp-dot-poc"></div>POC ${fmtNum(vp.poc)}</div>
-        ${vp.hvn_levels ? vp.hvn_levels.slice(0,3).map(h =>
-          `<div class="vp-legend-item"><div class="vp-dot vp-dot-hvn"></div>HVN ${fmtNum(h)}</div>`
-        ).join('') : ''}
-        ${vp.lvn_levels ? vp.lvn_levels.slice(0,2).map(l =>
-          `<div class="vp-legend-item"><div class="vp-dot vp-dot-lvn"></div>LVN ${fmtNum(l)}</div>`
-        ).join('') : ''}
+        <div class="vp-legend-item"><div class="vp-dot vp-dot-poc"></div>POC ${fmtNum(vp.poc)} — highest volume</div>
+        ${(vp.hvn_levels||[]).slice(0,3).map(h => `<div class="vp-legend-item"><div class="vp-dot vp-dot-hvn"></div>HVN ${fmtNum(h)}</div>`).join('')}
+        ${(vp.lvn_levels||[]).slice(0,2).map(l => `<div class="vp-legend-item"><div class="vp-dot vp-dot-lvn"></div>LVN ${fmtNum(l)} (thin)</div>`).join('')}
       </div>
     </div>
-    <div class="metrics-grid" style="margin-top:4px;">
-      ${metricItem('POC', fmtNum(vp.poc), 'highest volume price', 'val-gold')}
-      ${vp.hvn_levels ? metricItem('HVN Count', vp.hvn_levels.length, 'high volume nodes', 'val-green') : ''}
-      ${vp.lvn_levels ? metricItem('LVN Count', vp.lvn_levels.length, 'low volume nodes (thin)', 'val-red') : ''}
-      ${metricItem('Lookback', vp.lookback_bars + ' bars', 'H1 candles ~7 days', '')}
+    <div class="metrics-grid" style="margin-top:0;">
+      ${metricItem('POC', fmtNum(vp.poc), 'Most accepted price — mean reversion target', 'val-gold')}
+      ${vp.hvn_levels ? metricItem('HVN Zones', vp.hvn_levels.length, 'High vol zones — expect slow/choppy price action', 'val-green') : ''}
+      ${vp.lvn_levels ? metricItem('LVN Zones', vp.lvn_levels.length, 'Thin zones — expect fast moves through here', 'val-red') : ''}
+      ${metricItem('Lookback', (vp.lookback_bars||168) + ' H1 bars', 'Approx. 7 trading days of data', '')}
     </div>
   `;
 }
 
 function renderConfluenceSection(data) {
   const active = data.situation.confluence_scenario;
-  const scenarios = [
-    { id: 'A', name: 'Mean Reversion', desc: 'Positive GEX + price near pin = dealer dampening. Fade extremes, target pin.' },
-    { id: 'B', name: 'Directional Acceleration', desc: 'Negative GEX + CTA aligned = momentum amplified. Trade the trend.' },
-    { id: 'C', name: 'Fast Through LVN', desc: 'Price enters LVN zone = thin volume = fast move. Momentum trade, tight SL.' },
-    { id: 'D', name: 'Structural Accumulation', desc: 'Price in HVN zone = high acceptance = chop and accumulation. Wait for breakout.' },
+  const allScenarios = [
+    {
+      id: 'A',
+      name: 'Mean Reversion',
+      shortDesc: 'Positive GEX + price near pin = dealer dampening active. Fade the extremes, target the pin.',
+      fullDesc: 'This is the highest-probability setup in a pinned GEX environment. Price is gravitationally attracted to the Max GEX Pin. Dealer flows actively oppose directional moves. The strategy is to wait for price to reach an extreme — the Call Wall above or the Put Wall below — and fade it back toward the pin. Use tight stops just beyond the wall, target the pin as T1. Best executed as a scalp with defined risk.',
+    },
+    {
+      id: 'B',
+      name: 'Directional Acceleration',
+      shortDesc: 'Negative GEX or wall broken + CTA aligned = momentum amplified. Trade with the move.',
+      fullDesc: 'When net GEX is negative (TRENDING regime) or a key wall has been broken and absorbed, dealer flows amplify directional moves rather than dampening them. Combined with CTA trend-following positioning in the same direction, this creates a high-conviction momentum environment. The strategy is to enter on the first confirmed pullback after the break, trail stops aggressively, and target the next key level (GEX resistance/support). Avoid fading — fighting the flow is costly in this scenario.',
+    },
+    {
+      id: 'C',
+      name: 'Fast Through LVN',
+      shortDesc: 'Price enters a Low Volume Node = thin area = fast, sharp move to next HVN or key level.',
+      fullDesc: 'When price breaks into a Low Volume Node (LVN) on the Volume Profile, historical volume in that zone is thin — meaning there are very few resting orders to slow the move. Price tends to travel quickly to the next High Volume Node or key GEX level. The setup: identify the LVN boundary, wait for a confirmed entry, set a tight stop just inside the LVN, and target the next HVN or key level as T1. These moves can be very fast — execution and discipline on the stop are critical.',
+    },
+    {
+      id: 'D',
+      name: 'Structural Accumulation',
+      shortDesc: 'Price in HVN zone = high acceptance = choppy two-way price action. Wait for a breakout.',
+      fullDesc: 'When price is sitting inside a High Volume Node (HVN) on the Volume Profile, it is in a zone of heavy historical acceptance. There are many participants who bought and sold here and will defend their positions both ways. This creates slow, choppy, mean-reverting price action with no clear directional edge. The correct play is to stand aside and wait for a confirmed breakout of the HVN boundary — at which point the move becomes directional and you can trade the break.',
+    },
   ];
 
   return `
     <div class="card">
       <div class="card-header">
         <span class="card-title">Confluence Scenario Matrix</span>
-        <span class="card-badge badge-pinned">Active: ${active}</span>
+        <span class="card-badge badge-pinned">Active Today: ${active}</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-bottom:16px;line-height:1.6;">
+        The Confluence Matrix combines GEX regime, Volume Profile position, and CTA bias into one of four defined scenario types. Each scenario has a different trading strategy. The active scenario for today is highlighted.
       </div>
       <div class="confluence-grid">
-        ${scenarios.map(s => `
+        ${allScenarios.map(s => `
           <div class="confluence-item${s.id === active ? ' active-scenario' : ''}">
             <div class="conf-scenario-letter">${s.id}</div>
             <div class="conf-scenario-name">${s.name}</div>
-            <div class="conf-scenario-desc">${s.desc}</div>
+            <div class="conf-scenario-desc" style="margin-bottom:8px;">${s.shortDesc}</div>
+            ${s.id === active ? `<div style="font-size:11px;color:var(--text-secondary);line-height:1.5;border-top:1px solid var(--border);padding-top:8px;margin-top:4px;">${s.fullDesc}</div>` : ''}
           </div>
         `).join('')}
       </div>
     </div>
     <div class="narrative-card" style="margin-top:0;">
-      <div style="font-size:11px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;">Active Scenario</div>
-      <div class="narrative-text"><strong>${active}: ${data.situation.scenario_name}</strong><br><br>${data.situation.scenario_description}</div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;">Today's Active Scenario — ${active}: ${data.situation.scenario_name}</div>
+      <div style="font-size:13.5px;color:var(--text-secondary);line-height:1.75;">${data.situation.scenario_description}</div>
     </div>
   `;
 }
@@ -632,49 +790,62 @@ function renderConfluenceSection(data) {
 // KEY LEVELS PANEL
 // ============================================================
 function renderLevelsPanel(panel, data) {
-  const levels = data.key_levels;
-
   panel.innerHTML = `
     <div class="content-header">
-      <div class="content-title">Key Levels</div>
-      <div class="content-subtitle">${data.instrument} &nbsp;|&nbsp; Spot: ${fmtNum(data.spot)}</div>
+      <div class="content-title">Key Levels — Trade Setup Blocks</div>
+      <div class="content-subtitle">${data.instrument} &nbsp;|&nbsp; Spot: ${fmtNum(data.spot)} &nbsp;|&nbsp; ${data.metrics.regime} regime</div>
+    </div>
+    <div class="card" style="padding:14px 18px;">
+      <div style="font-size:12.5px;color:var(--text-secondary);line-height:1.7;">
+        Each level below is a structured trade setup. Tap a level to expand the full entry, stop, targets, risk:reward, and the reasoning behind the setup. Levels are listed from the most significant resistance down to the most significant support. The <strong>regime is ${data.metrics.regime}</strong> — ${data.metrics.regime === 'PINNED' ? 'fade the extremes and target the pin' : 'trade momentum with the direction of the break'}.
+      </div>
     </div>
     <div class="level-blocks-container">
-      ${levels.map((lv, i) => renderLevelBlock(lv, i)).join('')}
+      ${data.key_levels.map((lv, i) => renderLevelBlock(lv, i)).join('')}
     </div>
   `;
 }
 
 function renderLevelBlock(lv, idx) {
   const dotCls = {
-    resistance: 'dot-resistance',
-    support:    'dot-support',
-    pin:        'dot-pin',
-    trigger:    'dot-trigger',
+    resistance: 'dot-resistance', support: 'dot-support',
+    pin: 'dot-pin', trigger: 'dot-trigger',
   }[lv.type] || 'dot-pin';
 
-  const bodyId = `level-body-${idx}`;
+  const typeLabel = {
+    resistance: 'RESISTANCE', support: 'SUPPORT', pin: 'PIN / MAGNET', trigger: 'VOL TRIGGER',
+  }[lv.type] || lv.type.toUpperCase();
+
+  const typeBadgeColor = {
+    resistance: 'color:var(--accent-red);background:rgba(242,87,87,0.1)',
+    support:    'color:var(--accent-green);background:rgba(16,217,139,0.1)',
+    pin:        'color:var(--accent-gold);background:rgba(245,200,66,0.1)',
+    trigger:    'color:var(--accent-orange);background:rgba(251,146,60,0.1)',
+  }[lv.type] || '';
 
   return `
     <div class="level-block" id="level-block-${idx}">
       <div class="level-block-header" onclick="toggleLevelBlock(${idx})">
         <div class="level-type-dot ${dotCls}"></div>
-        <div class="level-block-label">${lv.label}</div>
+        <div style="flex:1;">
+          <div class="level-block-label">${lv.label}</div>
+          <span style="font-size:9px;font-weight:700;letter-spacing:0.6px;padding:2px 6px;border-radius:3px;${typeBadgeColor}">${typeLabel}</span>
+        </div>
         <div class="level-block-price">${fmtNum(lv.level)}</div>
         <span style="font-size:18px;color:var(--text-muted);margin-left:8px;" id="level-chevron-${idx}">▾</span>
       </div>
-      <div class="level-block-body" id="${bodyId}">
+      <div class="level-block-body" id="level-body-${idx}">
         <div class="level-detail-grid">
           <div class="level-detail-item">
             <div class="level-detail-label">Entry</div>
             <div class="level-detail-value">${lv.entry}</div>
           </div>
           <div class="level-detail-item">
-            <div class="level-detail-label">Stop</div>
+            <div class="level-detail-label">Stop Loss</div>
             <div class="level-detail-value" style="color:var(--accent-red);">${lv.stop}</div>
           </div>
           <div class="level-detail-item">
-            <div class="level-detail-label">R:R</div>
+            <div class="level-detail-label">Risk : Reward</div>
             <div class="level-detail-value level-rr">${lv.rr}</div>
           </div>
           <div class="level-detail-item">
@@ -686,7 +857,7 @@ function renderLevelBlock(lv, idx) {
             <div class="level-detail-value" style="color:var(--accent-green);">${lv.target2}</div>
           </div>
         </div>
-        <div class="level-context">${lv.context}</div>
+        <div class="level-context" style="font-size:13px;line-height:1.7;">${lv.context}</div>
       </div>
     </div>
   `;
@@ -710,12 +881,17 @@ function renderScenariosPanel(panel, data) {
   panel.innerHTML = `
     <div class="content-header">
       <div class="content-title">Today's Trade Scenarios</div>
-      <div class="content-subtitle">${data.instrument} &nbsp;|&nbsp; Active: ${data.situation.confluence_scenario} — ${data.situation.scenario_name}</div>
+      <div class="content-subtitle">${data.instrument} &nbsp;|&nbsp; Active Confluence: ${data.situation.confluence_scenario} — ${data.situation.scenario_name}</div>
+    </div>
+    <div class="card" style="padding:14px 18px;">
+      <div style="font-size:12.5px;color:var(--text-secondary);line-height:1.7;">
+        Three defined scenarios for today's session, ranked by probability. The <strong>Primary Scenario</strong> is what the GEX regime, Volume Profile, and CTA data all point toward. The Alternative Scenarios cover the key ways the primary could be invalidated. <em>Only trade the scenario that is actively playing out — do not force a trade if price action is not confirming.</em>
+      </div>
     </div>
     <div class="scenarios-container">
-      ${renderScenarioCard(sc.primary, 'primary', 'A')}
-      ${sc.alt1 ? renderScenarioCard(sc.alt1, 'alt1', 'B') : ''}
-      ${sc.alt2 ? renderScenarioCard(sc.alt2, 'alt2', 'C') : ''}
+      ${sc.primary ? renderScenarioCard(sc.primary, 'primary', 'A') : ''}
+      ${sc.alt1    ? renderScenarioCard(sc.alt1,    'alt1',    'B') : ''}
+      ${sc.alt2    ? renderScenarioCard(sc.alt2,    'alt2',    'C') : ''}
     </div>
   `;
 }
@@ -739,23 +915,24 @@ function renderScenarioCard(sc, type, letter) {
       </div>
       <div class="scenario-body">
         <div class="scenario-field">
-          <label>Entry</label>
+          <label>Entry Trigger</label>
           <p>${sc.entry}</p>
         </div>
         <div class="scenario-field">
-          <label>Target</label>
+          <label>Target / Exit</label>
           <p style="color:var(--accent-green);">${sc.target}</p>
         </div>
         <div class="scenario-field">
-          <label>Stop</label>
+          <label>Stop Loss</label>
           <p style="color:var(--accent-red);">${sc.stop}</p>
         </div>
         <div class="scenario-field">
-          <label>Invalidation</label>
+          <label>Scenario Invalidation</label>
           <p style="color:var(--accent-orange);">${sc.invalidation}</p>
         </div>
         <div class="scenario-context">
-          <p>${sc.context}</p>
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;">Reasoning &amp; Context</div>
+          <p style="font-size:13px;line-height:1.75;">${sc.context}</p>
         </div>
       </div>
     </div>
@@ -763,11 +940,14 @@ function renderScenarioCard(sc, type, letter) {
 }
 
 // ============================================================
-// UTILITY FUNCTIONS
+// UTILITY / HELPER FUNCTIONS
 // ============================================================
 function fmtNum(n) {
-  if (n === null || n === undefined) return '—';
-  return Number(n).toLocaleString('en-GB', { minimumFractionDigits: n % 1 !== 0 ? 1 : 0, maximumFractionDigits: 1 });
+  if (n === null || n === undefined || n === 0) return n === 0 ? '0' : '—';
+  return Number(n).toLocaleString('en-GB', {
+    minimumFractionDigits: Math.abs(n) % 1 !== 0 ? 1 : 0,
+    maximumFractionDigits: Math.abs(n) < 100 ? 2 : 1,
+  });
 }
 
 function fmtGex(v) {
@@ -777,19 +957,20 @@ function fmtGex(v) {
 }
 
 function fmtOI(n) {
-  if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
+  if (n >= 1000000) return (n/1000000).toFixed(1)+'M';
+  if (n >= 1000) return (n/1000).toFixed(1)+'K';
   return n.toString();
 }
 
 function fmtTime(ts) {
   try {
     const d = new Date(ts);
-    return d.toLocaleDateString('en-GB', { weekday: 'short', day: '2-digit', month: 'short' }) +
-      ' ' + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) + ' BST';
+    return d.toLocaleDateString('en-GB', { weekday:'short', day:'2-digit', month:'short' }) +
+      ' ' + d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' }) + ' BST';
   } catch { return ts || '—'; }
 }
 
-function metricItem(label, value, note, valCls = '') {
+function metricItem(label, value, note, valCls='') {
   return `
     <div class="metric-item">
       <div class="metric-label">${label}</div>
@@ -816,22 +997,16 @@ function ctaSma(label, value) {
 function tagChip(tag) {
   if (!tag) return '';
   const cls = tag.includes('HVN') ? 'tag-hvn' : tag.includes('LVN') ? 'tag-lvn' : tag.includes('POC') ? 'tag-poc' : '';
-  return `<span class="level-tag ${cls}">${tag.replace(/[[\]]/g, '')}</span>`;
+  return `<span class="level-tag ${cls}">${tag.replace(/[[\]]/g,'')}</span>`;
 }
 
 function probClass(p) {
-  const map = {
-    'HIGH': 'prob-high',
-    'MEDIUM-HIGH': 'prob-medium-high',
-    'MEDIUM': 'prob-medium',
-    'LOW-MEDIUM': 'prob-low-medium',
-    'LOW': 'prob-low',
-  };
+  const map = { 'HIGH':'prob-high','MEDIUM-HIGH':'prob-medium-high','MEDIUM':'prob-medium','LOW-MEDIUM':'prob-low-medium','LOW':'prob-low' };
   return map[p] || 'prob-medium';
 }
 
 function biasClass(b) {
-  const map = { 'LONG': 'bias-long', 'SHORT': 'bias-short', 'RANGE': 'bias-range', 'NEUTRAL': 'bias-neutral' };
+  const map = { 'LONG':'bias-long','SHORT':'bias-short','RANGE':'bias-range','NEUTRAL':'bias-neutral' };
   return map[b] || 'bias-neutral';
 }
 
@@ -839,7 +1014,7 @@ function renderEmptyState() {
   return `
     <div class="empty-state">
       <div class="empty-state-icon">📭</div>
-      <div class="empty-state-text">No scan data available for ${STATE.instrument}. Run a scan to populate this dashboard.</div>
+      <div class="empty-state-text">No scan data available for ${STATE.instrument}.<br>Run the agent with <code>--output both</code> to populate the dashboard with live data.</div>
     </div>
   `;
 }
