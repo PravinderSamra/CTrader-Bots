@@ -80,288 +80,268 @@ def format_trade_plan(plan: TradePlan) -> str:
     L = []
     sep = "=" * 68
     thin = "─" * 68
+    thick = "━" * 68
 
-    L.append(sep)
-    L.append(f"  GEX & OI TRADE PLAN — {plan.instrument}")
-    L.append(f"  {plan.session_date}  |  {plan.session_time_uk}  |  Spot: {plan.spot_price:,.2f}")
-    L.append(sep)
-
-    # ── 1. WHAT IS GEX TELLING US? ──────────────────────────────────────
-    L.append("")
-    L.append("WHAT IS GEX TELLING US?")
-    L.append(thin)
-    regime_colour_map = {
-        "PINNED":   f"PINNED (+${plan.gex_value:.1f}B)",
-        "NEUTRAL":  f"NEUTRAL (${plan.gex_value:.1f}B)",
-        "TRENDING": f"TRENDING (${plan.gex_value:.1f}B)",
-    }
-    L.append(f"  Net GEX: {regime_colour_map.get(plan.gex_regime, plan.gex_regime)}")
-    L.append("")
-
-    if plan.gex_regime == "TRENDING":
-        L.append("  Dealers (options market makers) are SHORT GAMMA.")
-        L.append("  When price RISES: they must BUY futures to stay hedged → amplifies the rally.")
-        L.append("  When price FALLS: they must SELL futures to stay hedged → amplifies the drop.")
-        L.append("  Plain English: DO NOT fight momentum. Wait for direction, then trade WITH it.")
-        L.append("  ✗ Avoid: fading moves, picking tops/bottoms, holding against strong trend")
-        L.append("  ✓ Do:    trade breakouts, ride momentum, honour your stops quickly")
-    elif plan.gex_regime == "PINNED":
-        L.append("  Dealers are LONG GAMMA — they act as shock absorbers.")
-        L.append("  When price RISES: they SELL futures → dampens the rally.")
-        L.append("  When price FALLS: they BUY futures → cushions the drop.")
-        L.append("  Plain English: The market tends to REVERT to the mean. Fade extremes.")
-        L.append("  ✓ Do:    fade moves to the GEX walls, target the mid-range / max pain")
-        L.append("  ✗ Avoid: chasing breakouts — they tend to snap back")
-    else:
-        L.append("  GEX is near neutral — no strong dealer influence on direction.")
-        L.append("  Price is free to move on technical and macro signals alone.")
-
-    # ── 2. MACRO ENVIRONMENT ─────────────────────────────────────────────
-    L.append("")
-    L.append("MARKET ENVIRONMENT")
-    L.append(thin)
-    vix = plan.opex and plan.opex or {}
-    # (macro context is passed in via plan, extracted below from the key_levels or direct)
-    # We pass macro into key_levels so it's accessible
     kl = plan.key_levels
     vix_val = kl.get("_vix")
     yield_10y = kl.get("_yield_10y")
     dxy = kl.get("_dxy")
     opex = plan.opex or {}
+    ss = plan.session_structure
+    spot = plan.spot_price
+
+    call_wall = kl.get("call_wall", spot * 1.03)
+    put_wall = kl.get("put_wall", spot * 0.97)
+    max_pain = kl.get("max_pain", spot)
+    max_gex = kl.get("max_gex_strike", spot)
+    zero_gex = kl.get("zero_gex_strike")
+
+    sk = plan.iv_skew or {}
+    skew_ratio = sk.get("skew_ratio")
+    skew_bullish = skew_ratio is not None and skew_ratio < 0.95
+    skew_bearish = skew_ratio is not None and skew_ratio > 1.10
+
+    # ── HEADER ───────────────────────────────────────────────────────────
+    L.append(sep)
+    L.append(f"  GEX & OI TRADE PLAN — {plan.instrument}")
+    L.append(f"  {plan.session_date}  |  {plan.session_time_uk}  |  Spot: {plan.spot_price:,.2f}")
+    L.append(sep)
+
+    # ── 1. GEX REGIME BRIEFING ───────────────────────────────────────────
+    L.append("")
+    L.append("MARKET REGIME — WHAT GEX IS TELLING YOU RIGHT NOW")
+    L.append(thin)
+
+    regime_map = {
+        "PINNED":   f"PINNED  (Net GEX +${plan.gex_value:.1f}B)",
+        "NEUTRAL":  f"NEUTRAL  (Net GEX ${plan.gex_value:.1f}B)",
+        "TRENDING": f"TRENDING  (Net GEX ${plan.gex_value:.1f}B)",
+    }
+    L.append(f"  Regime: {regime_map.get(plan.gex_regime, plan.gex_regime)}")
+    L.append("")
+
+    if plan.gex_regime == "TRENDING":
+        L.append("  Dealers (options market makers) are SHORT GAMMA. Here is what that means")
+        L.append("  for you as a trader:")
+        L.append("")
+        L.append("  → Price goes UP:  dealers must BUY futures to re-hedge. This adds fuel")
+        L.append("    to the rally — the rise amplifies itself.")
+        L.append("  → Price goes DOWN: dealers must SELL futures to re-hedge. This adds")
+        L.append("    pressure to the drop — the fall amplifies itself.")
+        L.append("")
+        L.append("  Rule: DO NOT fight momentum in a TRENDING regime. Wait for price to")
+        L.append("  commit to a direction, then trade WITH it. GEX walls (call wall /")
+        L.append("  put wall) are still important — but a BREAK through them is more")
+        L.append("  likely to run further than in a PINNED environment.")
+        if vix_val is not None and vix_val < 20 and plan.gex_value < -0.5:
+            L.append(f"")
+            L.append(f"  MACRO NOTE: VIX is {vix_val:.1f} (low) yet GEX is negative. This combination")
+            L.append(f"  means the options market is not pricing in large moves, but the dealer")
+            L.append(f"  positioning would amplify any move that does occur. Breakouts can be")
+            L.append(f"  sharper and faster than VIX alone would suggest.")
+    elif plan.gex_regime == "PINNED":
+        L.append("  Dealers are LONG GAMMA — they act as a shock absorber for the market:")
+        L.append("")
+        L.append("  → Price goes UP:  dealers SELL futures to re-hedge → caps the rally.")
+        L.append("  → Price goes DOWN: dealers BUY futures to re-hedge → cushions the drop.")
+        L.append("")
+        L.append("  Rule: The market tends to REVERT to the mean in a PINNED regime.")
+        L.append("  Fade moves to the walls. Target max pain. Avoid chasing breakouts")
+        L.append("  — they tend to snap back quickly.")
+    else:
+        L.append("  GEX is near zero — dealers have no strong directional hedging obligation.")
+        L.append("  The market is free to move on technical and macro signals alone.")
+        L.append("  Treat this like a standard price action session — use session structure")
+        L.append("  levels (PDH/PDL) as your primary reference.")
+
+    # ── 2. MACRO SNAPSHOT (concise, only what matters today) ─────────────
+    L.append("")
+    L.append("MACRO SNAPSHOT — CONTEXT THAT AFFECTS YOUR TRADE")
+    L.append(thin)
 
     if vix_val is not None:
         vix_label = (
-            "LOW — cheap options, market is calm. Breakouts can be clean."
+            "LOW (calm market, cheap options — breakouts can be clean runs)"
             if vix_val < 15 else
-            "NORMAL — standard volatility environment."
+            "NORMAL (standard environment)"
             if vix_val < 20 else
-            "ELEVATED — reduce position size by 25-50%. Moves are larger than usual."
+            "ELEVATED — reduce your position size by 25-50%, moves are larger"
             if vix_val < 30 else
-            "HIGH — high-risk environment. Specialist setups only, small size."
+            "HIGH — small size only, specialist setups"
         )
         L.append(f"  VIX {vix_val:.1f} — {vix_label}")
-        L.append(f"  Why it matters: VIX measures how much the options market expects the S&P 500")
-        L.append(f"  to move over the next 30 days. Higher = bigger expected swings.")
+        L.append(f"  (VIX = how much the market expects S&P 500 to move over the next 30 days.)")
 
     if yield_10y is not None:
         headwind = yield_10y > 4.5
-        L.append(f"  10Y Yield {yield_10y:.2f}% — {'mild headwind for equities (above 4.5%)' if headwind else 'acceptable level'}")
-        L.append(f"  Why it matters: Higher yields = bonds become more attractive vs stocks, drawing")
-        L.append(f"  money away from equities. Above 4.5% tends to pressure the S&P 500.")
+        yield_note = "above 4.5% — bonds are competitive with stocks; headwind for equities" if headwind else "below 4.5% — not a headwind for equities today"
+        L.append(f"  10Y Yield {yield_10y:.2f}% — {yield_note}")
+        L.append(f"  (When yields rise sharply, money rotates from stocks → bonds. Watch for spikes.)")
 
     if dxy is not None:
-        L.append(f"  DXY {dxy:.2f} — {'Strong dollar = headwind for gold/risk assets' if dxy > 103 else 'Neutral dollar environment'}")
+        dxy_note = "strong dollar — headwind for gold & risk assets" if dxy > 103 else "neutral — no major currency drag today"
+        L.append(f"  DXY {dxy:.2f} — {dxy_note}")
 
     if opex:
         days = opex.get('days_to_monthly_opex', '?')
         opex_date = opex.get('monthly_opex_date', 'N/A')
-        L.append(f"")
-        L.append(f"  OPEX (Options Expiry): {opex_date} — {days} days away")
-        L.append(f"  Why it matters: As expiry approaches (especially the last 3 days), dealers")
-        L.append(f"  hedge more aggressively. GEX levels become stronger 'magnets' near OPEX.")
-        L.append(f"  Reliability: {opex.get('gex_reliability', 'Unknown')}")
+        rel = opex.get('gex_reliability', '')
+        L.append(f"  OPEX: {opex_date} ({days} days) — {rel}")
+        L.append(f"  (Closer to OPEX = GEX walls become stronger magnets as dealers hedge harder.)")
 
-    # ── 3. IV SKEW ───────────────────────────────────────────────────────
-    if plan.iv_skew and plan.iv_skew.get("skew_ratio"):
-        L.append("")
-        L.append("IMPLIED VOLATILITY SKEW")
-        L.append(thin)
-        sk = plan.iv_skew
+    if skew_ratio is not None:
         put_iv = sk.get("put_iv_pct", 0)
         call_iv = sk.get("call_iv_pct", 0)
-        ratio = sk.get("skew_ratio", 1)
-        L.append(f"  5% OTM Put IV: {put_iv:.1f}%  |  5% OTM Call IV: {call_iv:.1f}%  |  Ratio: {ratio:.2f}")
+        L.append(f"  IV Skew: Put IV {put_iv:.1f}% vs Call IV {call_iv:.1f}% → ratio {skew_ratio:.2f}")
         L.append(f"  {sk.get('description', '')}")
-        L.append("")
-        L.append("  What is IV skew? It's the difference in 'price' (implied volatility) between")
-        L.append("  put options (bets on a fall) and call options (bets on a rise) at equal")
-        L.append("  distances from current price. When puts are much more expensive than calls,")
-        L.append("  the market is paying a big premium to protect against a drop — signalling")
-        L.append("  institutional caution even if price appears to be rising.")
+        L.append(f"  (Institutions paying extra for put protection = they are hedging downside)")
 
-    # ── 4. SESSION STRUCTURE ─────────────────────────────────────────────
-    ss = plan.session_structure
+    # ── 3. SESSION STRUCTURE ─────────────────────────────────────────────
     if ss:
         L.append("")
-        L.append("SESSION STRUCTURE (from Pepperstone/CTrader candles)")
+        L.append("SESSION STRUCTURE")
         L.append(thin)
         if "prev_day_high" in ss:
-            L.append(f"  Prior Day High:  {ss['prev_day_high']:>10,.1f}  ← bulls must clear this to confirm upside")
-            L.append(f"  Prior Day Low:   {ss['prev_day_low']:>10,.1f}  ← bears target this; break = next level down")
+            L.append(f"  Prior Day High (PDH):  {ss['prev_day_high']:>10,.1f}")
+            L.append(f"  Prior Day Low  (PDL):  {ss['prev_day_low']:>10,.1f}")
         if "prev_day_close" in ss:
-            L.append(f"  Prior Day Close: {ss['prev_day_close']:>10,.1f}")
+            L.append(f"  Prior Day Close:       {ss['prev_day_close']:>10,.1f}")
         if "today_open" in ss:
-            L.append(f"  Today's Open:    {ss['today_open']:>10,.1f}  ← above/below tells you who is in control at open")
+            L.append(f"  Today's Open:          {ss['today_open']:>10,.1f}")
         if "weekly_open" in ss:
-            L.append(f"  Weekly Open:     {ss['weekly_open']:>10,.1f}  ← above = weekly bullish bias")
+            L.append(f"  Weekly Open:           {ss['weekly_open']:>10,.1f}")
         if "session_high" in ss:
-            L.append(f"  Session High:    {ss['session_high']:>10,.1f}")
-            L.append(f"  Session Low:     {ss['session_low']:>10,.1f}")
+            L.append(f"  Session High:          {ss['session_high']:>10,.1f}")
+            L.append(f"  Session Low:           {ss['session_low']:>10,.1f}")
         L.append("")
-        L.append("  Why these matter: Prior day's high and low are where institutions placed")
-        L.append("  their largest orders. A break above PDH = new buyers stepping in. A break")
-        L.append("  below PDL = sellers taking control. These levels combine with GEX walls")
-        L.append("  to create your highest-probability zones.")
+        L.append("  PDH and PDL mark where institutions placed their biggest orders yesterday.")
+        L.append("  A break and CLOSE above PDH = new buyers are stepping in — bullish.")
+        L.append("  A break and CLOSE below PDL = sellers taking control — bearish.")
 
-    # ── 5. KEY LEVELS ────────────────────────────────────────────────────
+    # ── 4. KEY LEVELS — LEVEL-CENTRIC NARRATIVE ──────────────────────────
     L.append("")
-    L.append("KEY LEVELS — WHAT EACH ONE DOES")
-    L.append(thin)
-    spot = plan.spot_price
-    gex = plan.key_levels
+    L.append(thick)
+    L.append("  KEY LEVELS — WHAT EACH ONE MEANS & WHAT TO DO THERE")
+    L.append(thick)
 
-    # Build level table sorted high to low
-    level_items = [
-        ("GEX Resistance", gex.get("gex_resistance_levels", []), "#", "orange"),
-        ("Call Wall",      [gex.get("call_wall")],               "CALL WALL — dealer selling ceiling", "orange"),
-        ("Max GEX Pin",    [gex.get("max_gex_strike")],          "MAX GEX PIN — gravity level", "white"),
-        ("Spot",           [spot],                                f"◄ YOU ARE HERE", "white"),
-        ("Max Pain",       [gex.get("max_pain")],                "MAX PAIN — expiry magnet", "yellow"),
-        ("Zero GEX",       [gex.get("zero_gex_strike")],         "ZERO GEX — below here moves accelerate", "red"),
-        ("GEX Support",    gex.get("gex_support_levels", []),    "#", "blue"),
-        ("Put Wall",       [gex.get("put_wall")],                "PUT WALL — dealer buying floor", "blue"),
-    ]
-
+    # Build sorted list of all levels (high to low) for the narrative
     all_levels = []
-    for name, values, label, colour in level_items:
-        if not values:
-            continue
-        for v in values:
-            if v is None:
-                continue
-            if name in ("GEX Resistance", "GEX Support"):
-                display_label = f"GEX {'Resistance' if name == 'GEX Resistance' else 'Support'} — dealer {'selling' if name == 'GEX Resistance' else 'buying'} cluster"
-            else:
-                display_label = label
-            all_levels.append((v, name, display_label))
+    special_levels = {call_wall, put_wall, max_gex, max_pain, zero_gex}
+    for v in kl.get("gex_resistance_levels", [])[:3]:
+        if v and v not in special_levels:
+            all_levels.append((v, "GEX_RES"))
+    if call_wall:
+        all_levels.append((call_wall, "CALL_WALL"))
+    if max_gex and max_gex != call_wall and max_gex != put_wall:
+        all_levels.append((max_gex, "MAX_GEX"))
+    if max_pain and max_pain != max_gex:
+        all_levels.append((max_pain, "MAX_PAIN"))
+    if zero_gex and zero_gex != max_pain:
+        all_levels.append((zero_gex, "ZERO_GEX"))
+    for v in kl.get("gex_support_levels", [])[:3]:
+        if v and v not in special_levels:
+            all_levels.append((v, "GEX_SUP"))
+    if put_wall:
+        all_levels.append((put_wall, "PUT_WALL"))
+
+    # Add session structure levels if available
+    if ss:
+        pdh = ss.get("prev_day_high")
+        pdl = ss.get("prev_day_low")
+        weekly_open = ss.get("weekly_open")
+        if pdh:
+            all_levels.append((pdh, "PDH"))
+        if pdl:
+            all_levels.append((pdl, "PDL"))
+        if weekly_open:
+            all_levels.append((weekly_open, "WEEKLY_OPEN"))
 
     all_levels.sort(key=lambda x: x[0], reverse=True)
 
-    for price_val, name, label in all_levels:
-        at_spot = "  ◄◄ SPOT" if abs(price_val - spot) < 3 else ""
-        rel = "above spot" if price_val > spot else "below spot" if price_val < spot else "at spot"
-        L.append(f"  {price_val:>9,.0f}  {label}{at_spot}")
+    for level_price, level_type in all_levels:
+        _append_level_block(L, level_price, level_type, spot, kl, ss, vix_val, yield_10y, skew_ratio, plan.gex_regime, opex, thin)
 
+    # ── 5. TRADE SCENARIOS ───────────────────────────────────────────────
     L.append("")
-    L.append("  EXPLANATION OF KEY LEVELS:")
-    L.append("  Call Wall: The strike with the highest call open interest ABOVE spot. Dealers")
-    L.append("    who sold these calls must sell futures as price approaches, creating resistance.")
-    L.append("    A sustained CLOSE above = forced dealer buying (breakout accelerates).")
-    L.append("  Put Wall: Same logic below spot. Dealers who sold puts must BUY futures as")
-    L.append("    price falls toward it. Natural floor. A break BELOW = dealers stop buying.")
-    L.append("  Max Pain: The strike where option sellers (dealers) lose the least money.")
-    L.append("    The market tends to drift toward this level as expiry approaches.")
-    L.append("  Max GEX Pin: Where dealer delta (hedging need) is most concentrated.")
-    L.append("    Strong gravitational pull. Often becomes a magnet intraday.")
-    L.append("  Zero GEX Line: Where net GEX flips from positive to negative. Crossing")
-    L.append("    this level changes dealer behaviour — moves accelerate beyond it.")
-
-    # ── 5b. LEVEL CONFLUENCE (session structure + GEX) ──────────────────
-    if ss and ss.get("prev_day_high"):
-        L.append("")
-        L.append("LEVEL CONFLUENCE — Where Session Structure Meets GEX")
-        L.append(thin)
-        pdh = ss.get("prev_day_high", 0)
-        pdl = ss.get("prev_day_low", 0)
-        today_open = ss.get("today_open", spot)
-        call_wall_l = kl.get("call_wall", 0)
-        put_wall_l = kl.get("put_wall", 0)
-        max_pain_l = kl.get("max_pain", 0)
-
-        # Check if PDH is near call wall
-        if call_wall_l and abs(pdh - call_wall_l) / call_wall_l < 0.005:
-            L.append(f"  ★ STRONG RESISTANCE: Prior Day High ({pdh:,.1f}) ≈ Call Wall ({call_wall_l:,.0f})")
-            L.append(f"    Two independent resistance forces at the same level = very difficult to break.")
-        elif pdh > call_wall_l > spot:
-            L.append(f"  Note: PDH ({pdh:,.1f}) sits ABOVE the Call Wall ({call_wall_l:,.0f}).")
-            L.append(f"    Prior day closed above the call wall then retreated. This is significant:")
-            L.append(f"    → The market proved it can trade above {call_wall_l:,.0f} but chose not to hold there.")
-            L.append(f"    → Watch for dealers to defend this level again on the retest.")
-        elif pdh < call_wall_l:
-            L.append(f"  PDH ({pdh:,.1f}) is BELOW the Call Wall ({call_wall_l:,.0f}).")
-            L.append(f"    The market has not tested the call wall recently. First touch tends to be strongest.")
-
-        if today_open > call_wall_l:
-            L.append(f"  Today opened ABOVE the Call Wall ({today_open:,.1f} vs {call_wall_l:,.0f}).")
-            L.append(f"    If current spot is below it, the market has since retreated — this is a flag.")
-        elif today_open < call_wall_l:
-            L.append(f"  Today opened BELOW the Call Wall at {today_open:,.1f}.")
-            L.append(f"    A move up to {call_wall_l:,.0f} would be testing fresh resistance.")
-
-        # Max pain vs session levels
-        if pdl and max_pain_l and abs(pdl - max_pain_l) / pdl < 0.008:
-            L.append(f"  ★ PDL ({pdl:,.1f}) is near Max Pain ({max_pain_l:,.0f}) — double support zone.")
-            L.append(f"    If price reaches here, expect strong buying interest.")
-
-    # ── 6. TODAY'S SCENARIOS ─────────────────────────────────────────────
-    L.append("")
-    L.append("TODAY'S TRADE SCENARIOS")
-    L.append(thin)
-
-    # Context paragraph
-    call_wall = gex.get("call_wall", spot * 1.03)
-    put_wall = gex.get("put_wall", spot * 0.97)
-    max_pain = gex.get("max_pain", spot)
-    max_gex = gex.get("max_gex_strike", spot)
-    zero_gex = gex.get("zero_gex_strike", spot)
-    dist_to_call = call_wall - spot
-    dist_to_put = spot - put_wall
-
-    L.append(f"  Context: Spot {spot:,.0f} sits {dist_to_call:+.0f} pts from Call Wall ({call_wall:,.0f})")
-    L.append(f"  and {dist_to_put:,.0f} pts above Put Wall ({put_wall:,.0f}).")
+    L.append(thick)
+    L.append("  TODAY'S TRADE SCENARIOS")
+    L.append(thick)
 
     now_uk = datetime.now(tz=UK_TZ)
     hour = now_uk.hour
     if hour < 7:
-        session_note = "Asian session (low liquidity). Best to observe only — levels form during EU/NY."
+        session_note = "Asian session — low liquidity. Observe only. Levels form during EU/NY."
     elif hour < 10:
-        session_note = "London open window (07:00-10:00 BST) — EU levels can test pre-NY. Watch PDH/PDL."
+        session_note = "London open (07:00-10:00 BST) — watch PDH/PDL first, GEX walls second."
     elif hour < 13:
-        session_note = "London mid-session. Quieter period. NY open at 14:30 BST is the catalyst."
+        session_note = "London mid-session. Quieter. NY open (14:30 BST) is the key catalyst."
     elif hour < 17:
-        session_note = "NY open / overlap window (14:30-17:00 BST) — HIGHEST probability for breakouts."
+        session_note = "NY open / overlap (14:30-17:00 BST) — HIGHEST probability for decisive moves."
     else:
-        session_note = "NY afternoon / closing session. Look for close above/below key levels."
-    L.append(f"  Now: {now_uk.strftime('%H:%M %Z')} — {session_note}")
-
+        session_note = "NY afternoon. Look for closes above/below key levels for next-day bias."
+    L.append(f"  {now_uk.strftime('%H:%M %Z')} — {session_note}")
     L.append("")
+
     for i, scenario in enumerate([plan.primary_scenario] + plan.alternative_scenarios, 1):
         name = scenario.get("name", f"Scenario {i}")
-        L.append(f"  {'PRIMARY — ' if i == 1 else ''}{name}")
-        L.append(f"  {'─' * 62}")
+        label = "  PRIMARY" if i == 1 else f"  ALTERNATIVE {i-1}"
+        L.append(f"{label} — {name}")
+        L.append(f"  {thin}")
         trigger = scenario.get("trigger", "")
-        L.append(f"  Trigger:    {trigger}")
+        if trigger:
+            L.append(f"  Trigger:  {trigger}")
         why = scenario.get("why", "")
         if why:
-            L.append(f"  Why:        {why}")
+            L.append(f"  Why:      {why}")
         entry = scenario.get("entry_zone", "")
         if entry:
-            L.append(f"  Entry:      {entry}")
+            L.append(f"  Entry:    {entry}")
         stop = scenario.get("stop", "")
         if stop:
-            L.append(f"  Stop:       {stop}")
+            L.append(f"  Stop:     {stop}")
         t1 = scenario.get("target_1", "")
         t2 = scenario.get("target_2", "")
         rr = scenario.get("rr", "")
         if t1:
-            L.append(f"  Target 1:   {t1}")
+            L.append(f"  Target 1: {t1}")
         if t2:
-            L.append(f"  Target 2:   {t2}")
+            L.append(f"  Target 2: {t2}")
         if rr:
-            L.append(f"  R:R:        {rr}")
+            L.append(f"  R:R:      {rr}")
         note = scenario.get("note", "")
         if note:
-            L.append(f"  Note:       {note}")
+            L.append(f"  Note:     {note}")
+
+        # Weave macro into scenarios where relevant
+        macro_notes = []
+        if i == 1 and skew_bearish:
+            macro_notes.append(
+                f"IV Skew {skew_ratio:.2f} — institutions paying above-average for downside "
+                f"protection. If this is a long scenario, recognise smart money is hedging against you."
+            )
+        if i == 2 and skew_bearish:
+            macro_notes.append(
+                f"IV Skew {skew_ratio:.2f} reinforces this scenario — the options market "
+                f"is paying a large premium for downside protection, aligning with a rejection short."
+            )
+        if yield_10y is not None and yield_10y > 4.5 and "LONG" in name.upper():
+            macro_notes.append(
+                f"10Y yield at {yield_10y:.2f}% (above 4.5%) is a headwind for this long. "
+                f"Reduce size by 25% and be quick to take profit at T1."
+            )
+        for mn in macro_notes:
+            L.append(f"  [MACRO]: {mn}")
+
         L.append("")
 
-    # ── 7. CHART INSTRUCTIONS ────────────────────────────────────────────
+    # ── 6. CHART INSTRUCTIONS ────────────────────────────────────────────
     L.append("CHART MARKING INSTRUCTIONS")
     L.append(thin)
     L.append("  Mark these on your CTrader chart before the session:")
     for i, instruction in enumerate(plan.chart_instructions, 1):
         L.append(f"  {i:>2}. {instruction}")
 
-    # ── 8. CONFLUENCE SCORE + RISK ───────────────────────────────────────
+    # ── 7. CONFLUENCE + RISK ─────────────────────────────────────────────
     L.append("")
     L.append("CONFLUENCE & RISK")
     L.append(thin)
@@ -376,6 +356,192 @@ def format_trade_plan(plan: TradePlan) -> str:
     L.append(sep)
 
     return "\n".join(L)
+
+
+def _append_level_block(
+    L: list, price: float, level_type: str, spot: float, kl: dict,
+    ss: Optional[dict], vix_val, yield_10y, skew_ratio, regime: str, opex: dict, thin: str
+) -> None:
+    """Append a level-centric narrative block for one key level."""
+    rel = "ABOVE spot" if price > spot else "BELOW spot" if price < spot else "AT spot"
+    at_spot = "  ◄ CURRENT PRICE" if abs(price - spot) / spot < 0.003 else f"  ({rel})"
+
+    # Level type definitions
+    type_labels = {
+        "CALL_WALL":   "CALL WALL",
+        "PUT_WALL":    "PUT WALL",
+        "MAX_GEX":     "MAX GEX PIN",
+        "MAX_PAIN":    "MAX PAIN",
+        "ZERO_GEX":    "ZERO GEX LINE",
+        "GEX_RES":     "GEX RESISTANCE",
+        "GEX_SUP":     "GEX SUPPORT",
+        "PDH":         "PRIOR DAY HIGH",
+        "PDL":         "PRIOR DAY LOW",
+        "WEEKLY_OPEN": "WEEKLY OPEN",
+    }
+
+    label = type_labels.get(level_type, level_type)
+    L.append("")
+    L.append(f"  ┌─ {price:,.0f} — {label}{at_spot}")
+
+    # WHY DOES THIS LEVEL EXIST?
+    if level_type == "CALL_WALL":
+        L.append(f"  │  WHY: Highest concentration of call open interest above spot. Dealers who")
+        L.append(f"  │  sold these calls must SELL futures as price approaches — creating a ceiling.")
+        L.append(f"  │  If the call wall holds, that selling pressure keeps price capped here.")
+        if ss and ss.get("today_open"):
+            today_open = ss["today_open"]
+            if today_open > price:
+                L.append(f"  │  TODAY: Opened above ({today_open:,.0f}) then retreated below — dealers")
+                L.append(f"  │  defended successfully. Second test is usually weaker.")
+        if skew_ratio and skew_ratio > 1.10:
+            L.append(f"  │  MACRO: IV skew {skew_ratio:.2f} — institutions are buying put protection,")
+            L.append(f"  │  not call spreads. Suggests smart money is cautious about upside follow-through.")
+
+        call_wall_above = round(price + 3, 0)
+        call_wall_stop = round(price - 12, 0)
+        max_gex_l = kl.get("max_gex_strike", price + 50)
+        t1 = max_gex_l if max_gex_l and max_gex_l > price else round(price + 50, 0)
+        res_above = [r for r in kl.get("gex_resistance_levels", []) if r > t1]
+        t2 = res_above[0] if res_above else round(t1 + 50, 0)
+
+        rej_entry = round(price * 0.9985, 0)
+        rej_stop = round(price * 1.002, 0)
+        max_pain_l = kl.get("max_pain", price * 0.99)
+        gex_sups = [s for s in kl.get("gex_support_levels", []) if s < (max_pain_l or price)]
+        rej_t1 = max_pain_l
+        rej_t2 = gex_sups[0] if gex_sups else round((max_pain_l or price) - 30, 0)
+
+        L.append(f"  │")
+        L.append(f"  │  ── IF PRICE BREAKS AND CLOSES A 15-MIN CANDLE ABOVE {price:,.0f}:")
+        L.append(f"  │     Entry:    {call_wall_above:,.0f}  (on confirmed close above)")
+        L.append(f"  │     Stop:     {call_wall_stop:,.0f}  (back inside the wall = failed breakout)")
+        L.append(f"  │     Target 1: {t1:,.0f}  (Max GEX pin — take 50% here)")
+        L.append(f"  │     Target 2: {t2:,.0f}  (next resistance — trail remainder)")
+        rr1 = round((t1 - call_wall_above) / (call_wall_above - call_wall_stop), 1) if call_wall_above > call_wall_stop else "N/A"
+        rr2 = round((t2 - call_wall_above) / (call_wall_above - call_wall_stop), 1) if call_wall_above > call_wall_stop else "N/A"
+        L.append(f"  │     R:R:      {rr1}:1 to T1  |  {rr2}:1 to T2")
+        L.append(f"  │     Why: A close above forces dealers to BUY futures (re-hedging short calls).")
+        L.append(f"  │     That buying pressure is self-reinforcing — breakouts here run fast.")
+        if yield_10y and yield_10y > 4.5:
+            L.append(f"  │     [MACRO]: Yields at {yield_10y:.2f}% (above 4.5%) — take T1 quickly,")
+            L.append(f"  │     the yield headwind may limit how far the breakout runs.")
+
+        L.append(f"  │")
+        L.append(f"  │  ── IF PRICE IS REJECTED AT {price:,.0f} (spike up, closes back below):")
+        L.append(f"  │     Entry:    {rej_entry:,.0f}  (on break below the rejection candle's low)")
+        L.append(f"  │     Stop:     {rej_stop:,.0f}  (above the rejection spike)")
+        L.append(f"  │     Target 1: {rej_t1:,.0f}  (Max Pain — take 60% here)")
+        L.append(f"  │     Target 2: {rej_t2:,.0f}  (nearest GEX support — trail remainder)")
+        rr_rej = round((rej_entry - (rej_t1 or rej_entry)) / (rej_stop - rej_entry), 1) if rej_stop > rej_entry and rej_t1 else "N/A"
+        L.append(f"  │     R:R:      ~{rr_rej}:1 to T1")
+        L.append(f"  │     Why: A failed breakout traps bulls. Their stops cluster just above {price:,.0f}.")
+        L.append(f"  │     Dealers also stop buying futures — two forces pushing price lower.")
+        if skew_ratio and skew_ratio > 1.10:
+            L.append(f"  │     [MACRO]: IV skew {skew_ratio:.2f} reinforces this — options market is")
+            L.append(f"  │     paying above-average for downside protection. Aligns with short.")
+
+    elif level_type == "PUT_WALL":
+        L.append(f"  │  WHY: Highest concentration of put open interest below spot. Dealers who")
+        L.append(f"  │  sold these puts must BUY futures as price falls toward it — natural floor.")
+
+        long_entry = round(price * 1.001, 0)
+        long_stop = round(price * 0.998, 0)
+        max_pain_l = kl.get("max_pain", price * 1.01)
+        t1 = max_pain_l if max_pain_l and max_pain_l > price else round(price + (kl.get("call_wall", price * 1.03) - price) * 0.4, 0)
+        max_gex_l = kl.get("max_gex_strike")
+        t2 = max_gex_l if max_gex_l and max_gex_l > t1 else kl.get("call_wall", round(price * 1.03, 0))
+
+        L.append(f"  │")
+        L.append(f"  │  ── IF PRICE TESTS {price:,.0f} AND SHOWS BUYING (green candle close):")
+        L.append(f"  │     Entry:    {long_entry:,.0f}  (on first green 15-min candle above the wall)")
+        L.append(f"  │     Stop:     {long_stop:,.0f}  (below the put wall — dealer support removed)")
+        L.append(f"  │     Target 1: {t1:,.0f}  (Max Pain — expiry magnet)")
+        L.append(f"  │     Target 2: {t2:,.0f}  (Max GEX pin / call wall)")
+        L.append(f"  │     Why: Dealer buying at the put wall acts as a cushion. In a TRENDING regime,")
+        L.append(f"  │     this support can spark a sharp bounce as short-sellers cover.")
+
+        L.append(f"  │")
+        L.append(f"  │  ── IF PRICE CLOSES BELOW {price:,.0f} ON A 15-MIN CANDLE:")
+        L.append(f"  │     Dealer support is removed. Moves accelerate lower.")
+        gex_sups = [s for s in kl.get("gex_support_levels", []) if s < price]
+        next_level = gex_sups[0] if gex_sups else round(price * 0.97, 0)
+        L.append(f"  │     Next support: {next_level:,.0f} (next GEX support cluster)")
+        L.append(f"  │     Short entry: {round(price - 3, 0):,.0f}  Stop: {round(price + 12, 0):,.0f}")
+        if skew_ratio and skew_ratio > 1.10:
+            L.append(f"  │     [MACRO]: IV skew {skew_ratio:.2f} — smart money hedged for this break.")
+            L.append(f"  │     A put wall break with heavy put OI = aggressive move lower likely.")
+
+    elif level_type == "MAX_GEX":
+        L.append(f"  │  WHY: The strike where dealer delta hedging is most concentrated.")
+        L.append(f"  │  Acts like a gravitational pin — price is repeatedly drawn back here.")
+        L.append(f"  │  Think of it as a magnet: even if price moves away, it often returns.")
+        L.append(f"  │")
+        L.append(f"  │  USE: Primary profit target for directional trades. If price is trading")
+        L.append(f"  │  near this level, expect choppy, mean-reverting action.")
+
+    elif level_type == "MAX_PAIN":
+        days_to_opex = opex.get("days_to_monthly_opex", 30) if opex else 30
+        L.append(f"  │  WHY: The strike where option SELLERS (primarily dealers) lose the least money")
+        L.append(f"  │  at expiry. The market drifts toward this level as expiry approaches.")
+        strength = "STRONG" if isinstance(days_to_opex, int) and days_to_opex <= 5 else "moderate"
+        L.append(f"  │  OPEX in {days_to_opex} days → {strength} gravitational pull to {price:,.0f}.")
+        L.append(f"  │")
+        L.append(f"  │  USE: Primary T1 for short trades; secondary T1 for longs from put wall.")
+        L.append(f"  │  Near OPEX week, this level often acts as a 'end of day parking spot'.")
+
+    elif level_type == "ZERO_GEX":
+        L.append(f"  │  WHY: Where net GEX flips from positive (dealers buying) to negative")
+        L.append(f"  │  (dealers selling). Crossing this removes the last brake pad.")
+        L.append(f"  │")
+        L.append(f"  │  ── IF PRICE CLOSES BELOW {price:,.0f}:")
+        L.append(f"  │     Dealer behaviour shifts from dampening → amplifying drops.")
+        gex_sups = [s for s in kl.get("gex_support_levels", []) if s < price]
+        next_sup = gex_sups[0] if gex_sups else round(price * 0.97, 0)
+        L.append(f"  │     Short entry: {round(price - 3, 0):,.0f}  Stop: {round(price + 12, 0):,.0f}")
+        L.append(f"  │     Target:      {next_sup:,.0f} (next GEX support)")
+        rr = round((round(price - 3, 0) - next_sup) / 15, 1)
+        L.append(f"  │     R:R:         ~{rr}:1")
+
+    elif level_type == "GEX_RES":
+        L.append(f"  │  WHY: A GEX resistance cluster — multiple strikes with concentrated call OI.")
+        L.append(f"  │  Dealers must sell futures here. Secondary resistance above the call wall.")
+        L.append(f"  │  If a breakout through the call wall extends, this is where to take profits.")
+        L.append(f"  │  USE: Partial T2 exit target for call wall breakout longs.")
+
+    elif level_type == "GEX_SUP":
+        L.append(f"  │  WHY: A GEX support cluster — concentrated put OI where dealers must buy.")
+        L.append(f"  │  Secondary support below the put wall. In a trending down move,")
+        L.append(f"  │  this is where to expect a temporary bounce or profit-take level.")
+        L.append(f"  │  USE: T1 or T2 exit target for put wall breakdown shorts.")
+
+    elif level_type == "PDH":
+        L.append(f"  │  WHY: Yesterday's high — institutions had sell orders here.")
+        L.append(f"  │  A break and CLOSE above PDH signals new buyers stepping in (bullish).")
+        call_wall_l = kl.get("call_wall")
+        if call_wall_l and abs(price - call_wall_l) / call_wall_l < 0.005:
+            L.append(f"  │  ★ PDH aligns with Call Wall ({call_wall_l:,.0f}) — DOUBLE RESISTANCE.")
+            L.append(f"  │    Two independent forces at the same level. Extremely hard to break.")
+        L.append(f"  │  USE: Long above PDH close with stop below it. Target next GEX resistance.")
+
+    elif level_type == "PDL":
+        L.append(f"  │  WHY: Yesterday's low — institutions had buy orders here.")
+        L.append(f"  │  A break and CLOSE below PDL signals sellers taking control (bearish).")
+        put_wall_l = kl.get("put_wall")
+        if put_wall_l and abs(price - put_wall_l) / put_wall_l < 0.005:
+            L.append(f"  │  ★ PDL aligns with Put Wall ({put_wall_l:,.0f}) — DOUBLE SUPPORT.")
+            L.append(f"  │    Expect a very strong bounce here. High-probability long setup.")
+        L.append(f"  │  USE: Short below PDL close with stop above it. Target Max Pain next.")
+
+    elif level_type == "WEEKLY_OPEN":
+        L.append(f"  │  WHY: The price at Monday's open — a macro reference for the whole week.")
+        if price < spot:
+            L.append(f"  │  Current spot is ABOVE weekly open → week is bullish so far.")
+        else:
+            L.append(f"  │  Current spot is BELOW weekly open → week is bearish so far.")
+        L.append(f"  │  USE: Directional context only — not a trading level by itself.")
+
+    L.append(f"  └{'─' * 65}")
 
 
 # ─── Internal helpers ─────────────────────────────────────────────────────────

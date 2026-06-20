@@ -72,8 +72,10 @@ def plot_gex_by_strike(gex_result, save: bool = True) -> str:
     )
     ax.set_xlabel("Strike Price", fontsize=10)
     ax.set_ylabel("Net GEX ($B)", fontsize=10)
-    ax.set_xticks(df["strike"])
-    ax.set_xticklabels([f"{k:,.0f}" for k in df["strike"]], rotation=90, ha="center", fontsize=7)
+    strikes = df["strike"].tolist()
+    ticks = strikes[::2]
+    ax.set_xticks(ticks)
+    ax.set_xticklabels([f"{k:,.0f}" for k in ticks], rotation=45, ha="right", fontsize=8)
     ax.legend(loc="upper left", framealpha=0.3, labelcolor="white", fontsize=9)
 
     # Regime annotation
@@ -137,8 +139,10 @@ def plot_oi_distribution(oi_result, save: bool = True) -> str:
     )
     ax.set_xlabel("Strike Price", fontsize=10)
     ax.set_ylabel("Open Interest (×1000 contracts)", fontsize=10)
-    ax.set_xticks(df["strike"])
-    ax.set_xticklabels([f"{k:,.0f}" for k in df["strike"]], rotation=90, ha="center", fontsize=7)
+    strikes = df["strike"].tolist()
+    ticks = strikes[::2]
+    ax.set_xticks(ticks)
+    ax.set_xticklabels([f"{k:,.0f}" for k in ticks], rotation=45, ha="right", fontsize=8)
     ax.legend(loc="upper left", framealpha=0.3, labelcolor="white", fontsize=9)
 
     ax.text(0.98, 0.96, f"P/C: {pcr:.2f}", transform=ax.transAxes,
@@ -177,8 +181,10 @@ def plot_combined_dashboard(gex_result, oi_result, macro: dict, save: bool = Tru
     if gex_result.call_wall:
         ax1.axvline(gex_result.call_wall, color="#FF8C00", linewidth=1, linestyle="-.")
     ax1.axhline(0, color="white", linewidth=0.5, alpha=0.4)
-    ax1.set_xticks(df_gex["strike"])
-    ax1.set_xticklabels([f"{k:,.0f}" for k in df_gex["strike"]], rotation=90, ha="center", fontsize=6)
+    gex_strikes = df_gex["strike"].tolist()
+    gex_ticks = gex_strikes[::2]
+    ax1.set_xticks(gex_ticks)
+    ax1.set_xticklabels([f"{k:,.0f}" for k in gex_ticks], rotation=45, ha="right", fontsize=6)
     _style_ax(ax1, f"{gex_result.symbol} — GEX by Strike (${gex_result.total_gex:.1f}B)", "Strike", "GEX ($B)")
 
     # --- Subplot 2: OI distribution ---
@@ -192,8 +198,10 @@ def plot_combined_dashboard(gex_result, oi_result, macro: dict, save: bool = Tru
     ax2.axvline(spot, color="white", linewidth=1.5, linestyle="--")
     ax2.axvline(oi_result.max_pain, color="#FFD700", linewidth=1, linestyle=":")
     if not df_oi.empty:
-        ax2.set_xticks(df_oi["strike"])
-        ax2.set_xticklabels([f"{k:,.0f}" for k in df_oi["strike"]], rotation=90, ha="center", fontsize=6)
+        oi_strikes = df_oi["strike"].tolist()
+        oi_ticks = oi_strikes[::2]
+        ax2.set_xticks(oi_ticks)
+        ax2.set_xticklabels([f"{k:,.0f}" for k in oi_ticks], rotation=45, ha="right", fontsize=6)
     _style_ax(ax2, f"OI Distribution — P/C: {oi_result.put_call_ratio:.2f}  |  {oi_result.sentiment}", "Strike", "OI (×1000)")
 
     # --- Subplot 3: Macro panel ---
