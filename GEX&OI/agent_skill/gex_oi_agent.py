@@ -22,7 +22,7 @@ warnings.filterwarnings("ignore")
 sys.path.insert(0, os.path.dirname(__file__))
 
 from config import INSTRUMENTS, opex_status, uk_now
-from data_fetchers.yfinance_options import fetch_options_for_gex
+from data_fetchers.yfinance_options import fetch_options_for_gex, compute_iv_skew
 from data_fetchers.ctrader_fetcher import get_live_price, get_session_structure
 from data_fetchers.yahoo_finance import describe_cross_market_proxy, gex_regime_applies
 from analysis.gex_calculator import calculate_gex
@@ -179,6 +179,13 @@ def _analyse_with_gex(key: str, cfg: dict, macro: dict):
     oi.spot_price = spot_live
     oi.symbol = key
 
+    # Session structure from CTrader candles
+    print("  Fetching session structure (CTrader)...")
+    session_structure = get_session_structure(key)
+
+    # IV skew
+    iv_skew = compute_iv_skew(options_df, etf_spot)
+
     # Print summary
     _print_gex_summary(key, spot_live, gex, oi)
 
@@ -193,7 +200,14 @@ def _analyse_with_gex(key: str, cfg: dict, macro: dict):
         print(f"  Chart error: {e}")
 
     # Trade plan
-    plan = generate_trade_plan(key, spot_live, gex, oi, macro)
+    # Inject macro scalars so the formatter can access them via key_levels
+    macro_for_plan = dict(macro)
+    macro_for_plan["_vix"] = macro.get("vix")
+    macro_for_plan["_yield_10y"] = macro.get("yield_10y")
+    macro_for_plan["_dxy"] = macro.get("dxy")
+
+    plan = generate_trade_plan(key, spot_live, gex, oi, macro_for_plan,
+                               session_structure=session_structure, iv_skew=iv_skew)
     print(f"\n{format_trade_plan(plan)}")
 
     return gex

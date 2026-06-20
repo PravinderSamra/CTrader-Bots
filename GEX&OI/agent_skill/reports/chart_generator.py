@@ -70,8 +70,10 @@ def plot_gex_by_strike(gex_result, save: bool = True) -> str:
         f"Total GEX: ${gex_result.total_gex:.2f}B  |  Regime: {gex_result.regime}",
         color="white", fontsize=13, pad=15
     )
-    ax.set_xlabel("Strike Price", fontsize=11)
-    ax.set_ylabel("Net GEX ($B)", fontsize=11)
+    ax.set_xlabel("Strike Price", fontsize=10)
+    ax.set_ylabel("Net GEX ($B)", fontsize=10)
+    ax.set_xticks(df["strike"])
+    ax.set_xticklabels([f"{k:,.0f}" for k in df["strike"]], rotation=90, ha="center", fontsize=7)
     ax.legend(loc="upper left", framealpha=0.3, labelcolor="white", fontsize=9)
 
     # Regime annotation
@@ -133,8 +135,10 @@ def plot_oi_distribution(oi_result, save: bool = True) -> str:
         f"P/C Ratio: {pcr:.2f}  |  Nearest Expiry: {oi_result.nearest_expiry}  |  Sentiment: {oi_result.sentiment}",
         color="white", fontsize=13, pad=15
     )
-    ax.set_xlabel("Strike Price", fontsize=11)
-    ax.set_ylabel("Open Interest (×1000 contracts)", fontsize=11)
+    ax.set_xlabel("Strike Price", fontsize=10)
+    ax.set_ylabel("Open Interest (×1000 contracts)", fontsize=10)
+    ax.set_xticks(df["strike"])
+    ax.set_xticklabels([f"{k:,.0f}" for k in df["strike"]], rotation=90, ha="center", fontsize=7)
     ax.legend(loc="upper left", framealpha=0.3, labelcolor="white", fontsize=9)
 
     ax.text(0.98, 0.96, f"P/C: {pcr:.2f}", transform=ax.transAxes,
@@ -173,6 +177,8 @@ def plot_combined_dashboard(gex_result, oi_result, macro: dict, save: bool = Tru
     if gex_result.call_wall:
         ax1.axvline(gex_result.call_wall, color="#FF8C00", linewidth=1, linestyle="-.")
     ax1.axhline(0, color="white", linewidth=0.5, alpha=0.4)
+    ax1.set_xticks(df_gex["strike"])
+    ax1.set_xticklabels([f"{k:,.0f}" for k in df_gex["strike"]], rotation=90, ha="center", fontsize=6)
     _style_ax(ax1, f"{gex_result.symbol} — GEX by Strike (${gex_result.total_gex:.1f}B)", "Strike", "GEX ($B)")
 
     # --- Subplot 2: OI distribution ---
@@ -185,6 +191,9 @@ def plot_combined_dashboard(gex_result, oi_result, macro: dict, save: bool = Tru
         ax2.bar(df_oi["strike"] + w / 2, df_oi.get("PUT", 0) / 1000, width=w, color="#FF4444", alpha=0.85)
     ax2.axvline(spot, color="white", linewidth=1.5, linestyle="--")
     ax2.axvline(oi_result.max_pain, color="#FFD700", linewidth=1, linestyle=":")
+    if not df_oi.empty:
+        ax2.set_xticks(df_oi["strike"])
+        ax2.set_xticklabels([f"{k:,.0f}" for k in df_oi["strike"]], rotation=90, ha="center", fontsize=6)
     _style_ax(ax2, f"OI Distribution — P/C: {oi_result.put_call_ratio:.2f}  |  {oi_result.sentiment}", "Strike", "OI (×1000)")
 
     # --- Subplot 3: Macro panel ---

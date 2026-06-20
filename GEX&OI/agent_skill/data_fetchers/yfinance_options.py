@@ -101,3 +101,56 @@ def fetch_options_for_gex(instrument: str, spot_live: float, max_expiry_days: in
                 })
 
     return pd.DataFrame(rows) if rows else pd.DataFrame()
+
+
+def compute_iv_skew(options_df: pd.DataFrame, etf_spot: float, moneyness: float = 0.05) -> dict:
+    """
+    IV skew: compare put IV at -(moneyness)% vs call IV at +(moneyness)% from spot.
+
+    A ratio > 1.0 means puts are more expensive than equivalent calls (normal for equities —
+    the market always pays more to hedge crashes than to bet on rallies).
+    A ratio > 1.20 signals unusual downside fear.
+    A ratio < 1.0 (call skew) means the market is positioning for a sharp upside move.
+    """
+    front_expiry = options_df["expiration"].min()
+    front = options_df[options_df["expiration"] == front_expiry].copy()
+
+    target_put = etf_spot * (1 - moneyness)
+    target_call = etf_spot * (1 + moneyness)
+
+    put_iv = call_iv = put_strike = call_strike = None
+
+    puts = front[front["type"] == "PUT"]
+    calls = front[front["type"] == "CALL"]
+
+    if not puts.empty:
+        idx = (puts["strike_etf"] - target_put).abs().idxmin()
+        put_iv = round(float(puts.loc[idx, "iv"]) * 100, 1)
+        put_strike = float(puts.loc[idx, "strike_etf"])
+
+    if not calls.empty:
+        idx = (calls["strike_etf"] - target_call).abs().idxmin()
+        call_iv = round(float(calls.loc[idx, "iv"]) * 100, 1)
+        call_strike = float(calls.loc[idx, "strike_etf"])
+
+    skew_ratio = None
+    description = "Skew data unavailable"
+    if put_iv and call_iv and call_iv > 0:
+        skew_ratio = round(put_iv / call_iv, 2)
+        if skew_ratio > 1.25:
+            description = "STRONG BEARISH SKEW — puts carry very large premium. Market pricing significant downside risk."
+        elif skew_ratio > 1.10:
+            description = "BEARISH SKEW — puts more expensive than calls. Normal for equities: market always fears drops more than it expects rallies."
+        elif skew_ratio > 0.95:
+            description = "NEUTRAL SKEW — balanced implied vol. No strong directional fear in options pricing."
+        else:
+            description = "CALL SKEW — calls unusually expensive. Market may be positioning for a sharp upside breakout."
+
+    return {
+        "put_iv_pct": put_iv,
+        "call_iv_pct": call_iv,
+        "put_strike_etf": put_strike,
+        "call_strike_etf": call_strike,
+        "skew_ratio": skew_ratio,
+        "description": description,
+    }
