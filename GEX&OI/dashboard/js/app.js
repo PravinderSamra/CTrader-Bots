@@ -19,6 +19,7 @@ const SECTIONS = [
   { id: 'situation', label: 'Situation',        icon: '🧭' },
   { id: 'levels',    label: 'Key Levels',      icon: '📌' },
   { id: 'scenarios', label: 'Trade Scenarios', icon: '🎲' },
+  { id: 'orb',       label: 'ORB Setup',       icon: '⏱️' },
 ];
 
 const SITUATION_SUBSECTIONS = [
@@ -149,6 +150,7 @@ function buildContent() {
     <div id="panel-situation" class="panel"></div>
     <div id="panel-levels"    class="panel"></div>
     <div id="panel-scenarios" class="panel"></div>
+    <div id="panel-orb"       class="panel"></div>
   `;
 }
 
@@ -208,6 +210,7 @@ function renderCurrentPanel() {
     case 'situation': renderSituationPanel(panel, data); break;
     case 'levels':    renderLevelsPanel(panel, data);    break;
     case 'scenarios': renderScenariosPanel(panel, data); break;
+    case 'orb':       renderORBPanel(panel, data);       break;
   }
 }
 
@@ -935,6 +938,325 @@ function renderScenarioCard(sc, type, letter) {
           <p style="font-size:13px;line-height:1.75;">${sc.context}</p>
         </div>
       </div>
+    </div>
+  `;
+}
+
+// ============================================================
+// ORB SETUP PANEL
+// ============================================================
+function renderORBPanel(panel, data) {
+  const m      = data.metrics;
+  const cta    = data.cta || {};
+  const mac    = data.macro || {};
+  const events = (data.session_structure || {}).key_time_events || [];
+
+  const envData   = orbEnvData(m, cta, mac);
+  const biasData  = orbBiasData(data);
+  const lvls      = orbKeyLevels(data);
+
+  panel.innerHTML = `
+    <div class="content-header">
+      <div class="content-title">ORB Setup — Opening Range Breakout</div>
+      <div class="content-subtitle">${data.instrument} &nbsp;|&nbsp; Spot: ${fmtNum(data.spot)} &nbsp;|&nbsp; ${m.regime} regime</div>
+    </div>
+    ${renderORBEnvCard(envData)}
+    ${renderORBBiasCard(biasData, data.instrument)}
+    ${renderORBTargetsCard(lvls, data)}
+    ${renderORBRulesCard(m, lvls, data.instrument)}
+    ${renderORBWarningsCard(data, lvls, events)}
+  `;
+}
+
+// ---- Environment Rating ----
+function orbEnvData(m, cta, mac) {
+  const regime = m.regime;
+  const hasCTABias = ['LONG','MILD_LONG','SHORT'].includes(cta.bias);
+
+  if (regime === 'TRENDING') {
+    return {
+      rating: 'HIGH CONVICTION', cls: 'orb-env-high',
+      headline: 'Breakout conditions are active today.',
+      body: `Net GEX is <strong>${fmtGex(m.net_gex)}</strong> — dealers are net short gamma (TRENDING regime). Their hedging flows <em>amplify</em> moves rather than dampening them: as price rises they must buy more, as it falls they must sell more. This is the ideal environment for ORB — breakouts have real dealer-flow momentum behind them and are significantly more likely to follow through to the next GEX level.`,
+      timeframeNote: `<strong>5-min ORB:</strong> Valid and high-probability today. Enter on the candle close through the range high/low — in trending conditions price may not return for a retest, so don't wait for one. &nbsp;·&nbsp; <strong>15-min ORB:</strong> Also valid, slightly better signal quality. The wider range gives cleaner stop placement. Both approaches are acceptable.`,
+    };
+  }
+  if (hasCTABias) {
+    return {
+      rating: 'MODERATE', cls: 'orb-env-moderate',
+      headline: 'ORB can work — favour the directional bias, use the 15-min.',
+      body: `Net GEX is <strong>${fmtGex(m.net_gex)}</strong> — dealers are net long gamma (PINNED regime). They buy dips and sell rallies, which creates genuine false-break risk. However, there is a directional CTA bias (${(cta.bias||'').replace('_',' ')}) that provides a tailwind in one direction. ORB breaks in the direction of that bias carry meaningfully higher follow-through probability than breaks against it.`,
+      timeframeNote: `<strong>5-min ORB:</strong> Treat with caution — pinned conditions create high false-break noise in the first five minutes. Only trade if the break has clear volume confirmation. &nbsp;·&nbsp; <strong>15-min ORB:</strong> Strongly preferred today. The wider range is harder to fake and gives more time for noise to resolve before you commit.`,
+    };
+  }
+  return {
+    rating: 'CAUTION', cls: 'orb-env-caution',
+    headline: 'Classic mean-reversion day — ORB has a lower success rate today.',
+    body: `Net GEX is <strong>${fmtGex(m.net_gex)}</strong> — dealers are net long gamma (PINNED regime) with no strong CTA directional bias. Dealer hedging flows actively oppose breakouts. ORB setups in this environment typically break the range, run 10–20 points, then reverse hard as dealer flows kick in. <strong>The better strategy today is fading the GEX walls back toward the Max GEX Pin — see the Key Levels and Scenarios tabs for those setups.</strong>`,
+    timeframeNote: `<strong>5-min ORB:</strong> Not recommended today — false-break probability is high in a pinned, neutral regime. &nbsp;·&nbsp; <strong>15-min ORB:</strong> If you trade ORB today, the 15-min is the only timeframe worth considering. Require volume confirmation AND a second candle hold outside the range before entry.`,
+  };
+}
+
+function renderORBEnvCard(r) {
+  return `
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Today's ORB Environment</span>
+        <span class="orb-env-badge ${r.cls}">${r.rating}</span>
+      </div>
+      <div style="font-size:13px;font-weight:700;color:var(--text-primary);margin-bottom:10px;">${r.headline}</div>
+      <div style="font-size:12.5px;color:var(--text-secondary);line-height:1.7;margin-bottom:14px;">${r.body}</div>
+      <div class="orb-timeframe-note">${r.timeframeNote}</div>
+    </div>
+  `;
+}
+
+// ---- Directional Bias ----
+function orbBiasData(data) {
+  const m   = data.metrics;
+  const cta = data.cta || {};
+  const spot = data.spot;
+  let score = 0;
+  const factors = [];
+
+  if (cta.bias === 'LONG')      { score += 2; factors.push({ dir:'long',    text:'CTA LONG — systematic trend funds are positioned long, a tailwind for upside ORB breaks.' }); }
+  else if (cta.bias === 'MILD_LONG') { score += 1; factors.push({ dir:'long',    text:'CTA MILD LONG — trend followers lean long, mild upside tailwind.' }); }
+  else if (cta.bias === 'SHORT')     { score -= 2; factors.push({ dir:'short',   text:'CTA SHORT — systematic funds are positioned short, a tailwind for downside ORB breaks.' }); }
+  else                               {             factors.push({ dir:'neutral', text:'CTA NEUTRAL — no directional signal from trend-following funds today.' }); }
+
+  if (m.put_call_ratio < 0.85)      { score += 1; factors.push({ dir:'long',    text:`PCR ${m.put_call_ratio.toFixed(2)} — call-heavy positioning, options market leaning bullish.` }); }
+  else if (m.put_call_ratio > 1.10) { score -= 1; factors.push({ dir:'short',   text:`PCR ${m.put_call_ratio.toFixed(2)} — put-heavy, bearish hedging activity dominant.` }); }
+  else                              {             factors.push({ dir:'neutral', text:`PCR ${m.put_call_ratio.toFixed(2)} — balanced put/call positioning, no strong lean.` }); }
+
+  const skew = m.iv_skew_ratio || 1;
+  if (skew > 1.10)      { score -= 1; factors.push({ dir:'short',   text:`IV Skew ${skew.toFixed(2)} — put options priced at a premium, institutional bearish hedging present.` }); }
+  else if (skew < 0.95) { score += 1; factors.push({ dir:'long',    text:`IV Skew ${skew.toFixed(2)} — calls priced at a slight premium, mild bullish options sentiment.` }); }
+
+  const pin = m.max_gex_strike;
+  if (spot < pin)      { score += 1; factors.push({ dir:'long',    text:`Spot (${fmtNum(spot)}) is ${(pin-spot).toFixed(1)} pts below Max GEX Pin (${fmtNum(pin)}) — gravitational pull is upward.` }); }
+  else if (spot > pin) { score -= 1; factors.push({ dir:'short',   text:`Spot (${fmtNum(spot)}) is ${(spot-pin).toFixed(1)} pts above Max GEX Pin (${fmtNum(pin)}) — gravitational pull is downward.` }); }
+  else                 {             factors.push({ dir:'neutral', text:`Spot is at the Max GEX Pin — balanced pin pull, no directional lean from this.` }); }
+
+  let bias, biasCls, biasDesc;
+  if (score >= 2) {
+    bias = 'LONG BIAS'; biasCls = 'orb-bias-long';
+    biasDesc = `Multiple factors point toward upside. When the opening range forms, a break to the upside carries higher follow-through probability. Treat long ORB as your A-setup and short ORB as a lower-conviction counter-trade requiring extra confirmation.`;
+  } else if (score <= -2) {
+    bias = 'SHORT BIAS'; biasCls = 'orb-bias-short';
+    biasDesc = `Multiple factors point toward downside. A break below the opening range low carries higher follow-through probability. Treat short ORB as your A-setup. Long ORB against this bias is lower conviction — require extra confirmation before entry.`;
+  } else {
+    bias = 'NEUTRAL'; biasCls = 'orb-bias-neutral';
+    biasDesc = `No strong directional lean — factors are balanced or conflicting. Trade whichever direction the opening range actually breaks, with equal conviction for both. Focus on the quality of the break (volume, candle close) rather than direction.`;
+  }
+  return { score, bias, biasCls, biasDesc, factors };
+}
+
+function renderORBBiasCard(b, instrument) {
+  const icon = b.bias === 'LONG BIAS' ? '↑' : b.bias === 'SHORT BIAS' ? '↓' : '↔';
+  return `
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Directional Bias — Which ORB Break to Favour</span>
+        <span class="orb-bias-badge ${b.biasCls}">${icon} ${b.bias}</span>
+      </div>
+      <div style="font-size:12.5px;color:var(--text-secondary);line-height:1.7;margin-bottom:16px;">${b.biasDesc}</div>
+      <div class="orb-factors">
+        ${b.factors.map(f => `
+          <div class="orb-factor">
+            <span class="orb-factor-dot orb-factor-${f.dir}"></span>
+            <span style="font-size:12px;color:var(--text-secondary);line-height:1.5;">${f.text}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// ---- Pre-mapped GEX Targets ----
+function orbKeyLevels(data) {
+  const m   = data.metrics;
+  const mac = data.macro || {};
+  const spot = data.spot;
+
+  const pool = [
+    { name: 'Call Wall',   price: m.call_wall,       role: 'Hard ceiling — primary dealer selling zone', type: 'resistance' },
+    { name: 'Max GEX Pin', price: m.max_gex_strike,  role: 'Gravitational anchor — strongest pull',      type: 'pin' },
+    { name: 'Zero GEX',   price: m.zero_gex_strike,  role: 'Volatility trigger — gamma flips here',      type: 'trigger' },
+    { name: 'Max Pain',   price: m.max_pain,          role: 'Expiry magnet',                              type: 'pain' },
+    { name: 'Put Wall',   price: m.put_wall,          role: 'Hard floor — primary dealer buying zone',    type: 'support' },
+  ];
+  if (mac.prev_day_high) pool.push({ name: 'Prev Day High', price: mac.prev_day_high, role: 'Prior session structural reference', type: 'pdh' });
+  if (mac.prev_day_low)  pool.push({ name: 'Prev Day Low',  price: mac.prev_day_low,  role: 'Prior session structural reference', type: 'pdl' });
+
+  const above = pool.filter(l => l.price > spot).sort((a,b) => a.price - b.price);
+  const below = pool.filter(l => l.price < spot).sort((a,b) => b.price - a.price);
+  return { above, below, spot };
+}
+
+function renderORBTargetsCard(lvls, data) {
+  const { above, below, spot } = lvls;
+  const m = data.metrics;
+
+  function typeColor(t) {
+    return { resistance:'var(--accent-red)', pin:'var(--accent-gold)', trigger:'var(--accent-orange)',
+             pain:'var(--accent-purple)', support:'var(--accent-green)', pdh:'var(--text-secondary)', pdl:'var(--text-secondary)' }[t] || 'var(--text-secondary)';
+  }
+
+  function levelRows(list, isAbove) {
+    if (!list.length) return `<div style="padding:12px;color:var(--text-muted);font-size:12px;">No GEX levels on this side of spot.</div>`;
+    return list.map((lv, i) => {
+      const badge = i === 0 ? '<span class="orb-t-badge orb-t1">T1</span>' : i === 1 ? '<span class="orb-t-badge orb-t2">T2</span>' : '<span class="orb-t-badge orb-t-ext">EXT</span>';
+      const dist  = isAbove ? (lv.price - spot).toFixed(1) + ' pts above' : (spot - lv.price).toFixed(1) + ' pts below';
+      return `
+        <div class="orb-target-level${i < 2 ? ' orb-target-highlight' : ''}">
+          <div style="display:flex;align-items:center;gap:8px;">
+            ${badge}
+            <span style="font-size:12px;font-weight:700;color:${typeColor(lv.type)};flex:1;">${lv.name}</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:${typeColor(lv.type)};">${fmtNum(lv.price)}</span>
+          </div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:3px;padding-left:32px;">${lv.role} &nbsp;·&nbsp; ${dist}</div>
+        </div>`;
+    }).join('');
+  }
+
+  return `
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Pre-Mapped GEX Targets — Long &amp; Short ORB</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;margin-bottom:14px;">
+        The opening range forms at market open — but the GEX levels that will act as targets, stops, and ceilings are known right now. Once the range is set, slot these in as your reference map. Spot reference: <strong>${fmtNum(spot)}</strong>.
+      </div>
+      <div class="orb-targets-grid">
+        <div class="orb-target-col">
+          <div class="orb-target-header orb-target-long">↑ LONG ORB — Levels Above Spot</div>
+          <div style="font-size:11px;color:var(--text-muted);padding:8px 14px 4px;">T1 = first target. T2 = extended run. EXT = only if momentum strong.</div>
+          <div class="orb-target-levels-list">${levelRows(above, true)}</div>
+          <div class="orb-target-footer orb-footer-long">Stop reference: below ORB low &nbsp;·&nbsp; First key level below: <strong>${below[0] ? below[0].name + ' ' + fmtNum(below[0].price) : 'N/A'}</strong></div>
+        </div>
+        <div class="orb-target-col">
+          <div class="orb-target-header orb-target-short">↓ SHORT ORB — Levels Below Spot</div>
+          <div style="font-size:11px;color:var(--text-muted);padding:8px 14px 4px;">T1 = first target. T2 = extended run. EXT = only if momentum strong.</div>
+          <div class="orb-target-levels-list">${levelRows(below, false)}</div>
+          <div class="orb-target-footer orb-footer-short">Stop reference: above ORB high &nbsp;·&nbsp; First key level above: <strong>${above[0] ? above[0].name + ' ' + fmtNum(above[0].price) : 'N/A'}</strong></div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ---- Regime-Specific ORB Rules ----
+function renderORBRulesCard(m, lvls, instrument) {
+  const regime   = m.regime;
+  const { above, below } = lvls;
+  const pin      = fmtNum(m.max_gex_strike);
+  const zeroGex  = fmtNum(m.zero_gex_strike);
+  const callWall = fmtNum(m.call_wall);
+  const putWall  = fmtNum(m.put_wall);
+  const t1Long   = above[0] ? `${above[0].name} (${fmtNum(above[0].price)})` : 'first GEX level above';
+  const t1Short  = below[0] ? `${below[0].name} (${fmtNum(below[0].price)})` : 'first GEX level below';
+
+  const rules = regime === 'TRENDING' ? [
+    `<strong>Both 5-min and 15-min ORB are valid today.</strong> Dealer flows amplify breakouts in TRENDING regime — the setup has real momentum behind it in both timeframes.`,
+    `<strong>Enter on the candle close through the ORB level.</strong> In trending conditions price may not return for a retest. If it does retest and holds, that's an even stronger entry — but don't wait for one that may never come.`,
+    `<strong>Long ORB primary target: ${t1Long}.</strong> Trail stop to breakeven once T1 is hit and let T2 run. Full runs to the Call Wall (${callWall}) are realistic on strong trending days.`,
+    `<strong>Short ORB primary target: ${t1Short}.</strong> Once Zero GEX (${zeroGex}) is broken on a short ORB, expect an acceleration — the volatility amplification kicks in fully below that level. Target Put Wall (${putWall}) as T2.`,
+    `<strong>Trail stops aggressively.</strong> Trending moves run further and faster than you expect. Use a trailing stop rather than fixed exit — your job is to stay in, not just reach T1.`,
+    `<strong>If the break reverses back inside the range within 2 candles, exit without hesitation.</strong> False breaks do happen even in trending regimes. The stop is your insurance — honour it and re-evaluate.`,
+  ] : [
+    `<strong>Strongly favour the 15-min ORB over the 5-min today.</strong> PINNED regime means dealer flows actively oppose early breakout attempts. The first 5 minutes are high-noise — the 15-min range is much harder to fake.`,
+    `<strong>Volume confirmation is non-negotiable in PINNED conditions.</strong> A low-volume break is almost certainly a dealer-flow false break being absorbed. If the break doesn't have notably above-average volume, skip it.`,
+    `<strong>Require two candle closes beyond the range before entry.</strong> One candle is not enough in a pinned environment. The second close confirms dealer flows have not immediately capped the move.`,
+    `<strong>Long ORB primary target: ${t1Long} — not the Call Wall.</strong> In PINNED conditions, dealer selling starts building before the Call Wall (${callWall}). Take T1, bank profit, and reassess before extending to T2.`,
+    `<strong>Short ORB primary target: ${t1Short}.</strong> Genuine acceleration only begins if Zero GEX (${zeroGex}) is cleanly breached — that is the volatility trigger. Before that, treat every bounce as a potential reversal.`,
+    `<strong>If price breaks the range and reverses back inside within 3 candles, exit immediately.</strong> This is the classic pinned false break. No second-guessing — out. Dealer flows just reasserted themselves.`,
+    `<strong>When in doubt, the better trade today is the mean-reversion fade at the GEX walls targeting the Max GEX Pin (${pin}).</strong> See Key Levels for those pre-built setups.`,
+  ];
+
+  return `
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">ORB Rules for Today — ${regime} Regime</span>
+        <span class="card-badge ${regime === 'TRENDING' ? 'badge-trending' : 'badge-pinned'}">${regime}</span>
+      </div>
+      <div class="orb-rules-list">
+        ${rules.map((r, i) => `
+          <div class="orb-rule">
+            <div class="orb-rule-num">${i+1}</div>
+            <div class="orb-rule-text">${r}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// ---- Warnings / Pre-Session Checklist ----
+function renderORBWarningsCard(data, lvls, events) {
+  const m    = data.metrics;
+  const mac  = data.macro || {};
+  const spot = data.spot;
+  const vix  = mac.vix || 0;
+
+  const distUp   = m.call_wall - spot;
+  const distDown = spot - m.put_wall;
+
+  function roomRating(d) {
+    if (d < 20) return { cls:'orb-room-tight',    label:'TIGHT' };
+    if (d < 50) return { cls:'orb-room-moderate', label:'MODERATE' };
+    return          { cls:'orb-room-clear',    label:'GOOD ROOM' };
+  }
+
+  const upRoom   = roomRating(distUp);
+  const downRoom = roomRating(distDown);
+
+  const upNote   = distUp < 20   ? 'Call Wall is very close — long ORB has minimal upside before hitting the ceiling. Only worthwhile if targeting the Max GEX Pin, not the wall itself.'
+                 : distUp < 50   ? 'Moderate room above. Long ORB can work but manage targets — the ceiling is relatively close.'
+                 :                 'Good room above. Long ORB has space to run to T1 and potentially T2 before hitting the Call Wall.';
+  const downNote = distDown < 20  ? 'Put Wall is very close — short ORB has minimal downside before hitting the floor. Low-reward setup unless Zero GEX breaks and accelerates.'
+                 : distDown < 50  ? 'Moderate room below. Short ORB can work — manage targets and watch the Zero GEX level carefully.'
+                 :                  'Good room below. Short ORB has space to run to T1 and T2 before the Put Wall floor.';
+
+  return `
+    <div class="card">
+      <div class="card-header"><span class="card-title">Pre-Session Checklist &amp; Warnings</span></div>
+
+      <div class="orb-section-label">Room to Run</div>
+      <div class="orb-room-strip">
+        <div class="orb-room-item">
+          <div style="font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:6px;">↑ Long ORB — upside to Call Wall</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:800;color:var(--accent-red);">${distUp.toFixed(1)}<span style="font-size:12px;font-weight:400;"> pts</span></span>
+            <span class="orb-room-badge ${upRoom.cls}">${upRoom.label}</span>
+          </div>
+          <div style="font-size:11px;color:var(--text-muted);line-height:1.5;">${upNote}</div>
+        </div>
+        <div class="orb-room-item">
+          <div style="font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:6px;">↓ Short ORB — downside to Put Wall</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:800;color:var(--accent-green);">${distDown.toFixed(1)}<span style="font-size:12px;font-weight:400;"> pts</span></span>
+            <span class="orb-room-badge ${downRoom.cls}">${downRoom.label}</span>
+          </div>
+          <div style="font-size:11px;color:var(--text-muted);line-height:1.5;">${downNote}</div>
+        </div>
+      </div>
+
+      ${vix > 25 ? `
+      <div class="orb-vix-warning">
+        ⚠️ <strong>VIX ${vix.toFixed(1)} — elevated volatility.</strong> Intraday ranges will be wider than normal. Widen your stops proportionally and reduce position size by 20–30% to account for the noisier price action.
+      </div>` : ''}
+
+      ${events.length ? `
+      <div class="orb-section-label" style="margin-top:16px;">Key Events — Stand Aside 5 Min Either Side</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        ${events.map(e => `
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(251,146,60,0.08);border:1px solid rgba(251,146,60,0.2);border-radius:6px;">
+            <span style="font-size:15px;">⚡</span>
+            <span style="font-size:12.5px;color:var(--text-primary);font-weight:500;">${e}</span>
+          </div>
+        `).join('')}
+        <div style="font-size:11px;color:var(--text-muted);padding:4px 4px 0;line-height:1.5;">During news events, spreads widen and stops can be hunted. Reduce size or stand aside until the candle following the event has closed and direction is confirmed.</div>
+      </div>` : ''}
     </div>
   `;
 }
