@@ -1,0 +1,17 @@
+# API keys and secrets - NEVER commit these
+.env
+.env.*
+*.env
+secrets.py
+config_local.py
+
+# Generated output (charts, trade plans) - local only
+agent_skill/output/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
