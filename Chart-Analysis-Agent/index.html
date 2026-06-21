@@ -408,18 +408,37 @@ function Calculator(){
   </div>`;
 }
 
+/* ── Image compression helper ────────────────────────────────────── */
+function compressImage(file){
+  return new Promise(resolve=>{
+    const r=new FileReader();
+    r.onload=e=>{
+      const img=new Image();
+      img.onload=()=>{
+        const MAX=1600;
+        const scale=Math.min(1,MAX/Math.max(img.width,img.height));
+        const w=Math.round(img.width*scale), h=Math.round(img.height*scale);
+        const canvas=document.createElement('canvas');
+        canvas.width=w; canvas.height=h;
+        const ctx=canvas.getContext('2d');
+        ctx.drawImage(img,0,0,w,h);
+        const dataUrl=canvas.toDataURL('image/jpeg',0.88);
+        resolve({base64:dataUrl.split(',')[1],mediaType:'image/jpeg',preview:dataUrl});
+      };
+      img.src=e.target.result;
+    };
+    r.readAsDataURL(file);
+  });
+}
+
 /* ── Image Uploader ──────────────────────────────────────────────── */
 function Uploader({onLoad}){
   const [drag,setDrag]=useState(false);
   const ref=useRef(null);
-  const process=useCallback(file=>{
+  const process=useCallback(async file=>{
     if(!file||!file.type.match(/image\/(jpeg|png|webp)/)) return;
-    const r=new FileReader();
-    r.onload=e=>{
-      const b64=e.target.result.split(',')[1];
-      onLoad({base64:b64,mediaType:file.type,preview:e.target.result});
-    };
-    r.readAsDataURL(file);
+    const data=await compressImage(file);
+    onLoad(data);
   },[onLoad]);
 
   return html`<div
@@ -625,18 +644,36 @@ function App(){
     if(!img){setError('Please upload a chart image first.');return;}
     setLoading(true);setError(null);
     try{
-      const res=await fetch('https://api.anthropic.com/v1/messages',{
-        method:'POST',
-        headers:{'Content-Type':'application/json','x-api-key':key.trim(),'anthropic-version':'2023-06-01','anthropic-dangerous-allow-browser':'true'},
-        body:JSON.stringify({
-          model:'claude-sonnet-4-6',max_tokens:4000,temperature:0,system:SYSTEM_PROMPT,
-          messages:[{role:'user',content:[
-            {type:'image',source:{type:'base64',media_type:img.mediaType,data:img.base64}},
-            {type:'text',text:'Analyse this chart screenshot using the complete SMC/ICT framework. Produce the full structured analysis in the exact format specified. Be precise, specific, and use ICT terminology exclusively.'}
-          ]}]
-        })
-      });
-      if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||`API error ${res.status}`);}
+      let res;
+      try{
+        res=await fetch('https://api.anthropic.com/v1/messages',{
+          method:'POST',
+          mode:'cors',
+          headers:{
+            'Content-Type':'application/json',
+            'x-api-key':key.trim(),
+            'anthropic-version':'2023-06-01',
+            'anthropic-dangerous-allow-browser':'true',
+          },
+          body:JSON.stringify({
+            model:'claude-sonnet-4-6',max_tokens:4000,temperature:0,system:SYSTEM_PROMPT,
+            messages:[{role:'user',content:[
+              {type:'image',source:{type:'base64',media_type:img.mediaType,data:img.base64}},
+              {type:'text',text:'Analyse this chart screenshot using the complete SMC/ICT framework. Produce the full structured analysis in the exact format specified. Be precise, specific, and use ICT terminology exclusively.'}
+            ]}]
+          })
+        });
+      }catch(netErr){
+        throw new Error('Network request failed — check your internet connection and that the API key is correct. ('+netErr.message+')');
+      }
+      if(!res.ok){
+        const e=await res.json().catch(()=>({}));
+        const msg=e.error?.message||'';
+        if(res.status===401) throw new Error('Invalid API key — please check and re-enter your Anthropic API key.');
+        if(res.status===429) throw new Error('Rate limit reached — please wait a moment and try again.');
+        if(res.status===413) throw new Error('Image too large for API — try a smaller screenshot.');
+        throw new Error(msg||`API error ${res.status}`);
+      }
       const data=await res.json();
       const text=data.content?.[0]?.text;
       if(!text) throw new Error('No content returned from API.');
