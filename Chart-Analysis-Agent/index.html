@@ -422,7 +422,7 @@ function compressImage(file){
         canvas.width=w; canvas.height=h;
         const ctx=canvas.getContext('2d');
         ctx.drawImage(img,0,0,w,h);
-        const dataUrl=canvas.toDataURL('image/jpeg',0.88);
+        const dataUrl=canvas.toDataURL('image/jpeg',0.92);
         resolve({base64:dataUrl.split(',')[1],mediaType:'image/jpeg',preview:dataUrl});
       };
       img.src=e.target.result;
