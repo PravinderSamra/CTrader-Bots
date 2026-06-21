@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SMC/ICT Chart Analysis Agent</title>
+
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg:       '#0D1117',
+            surface:  '#161B22',
+            border:   '#30363D',
+            gold:     '#F0B429',
+            text:     '#E6EDF3',
+            subtle:   '#8B949E',
+            bullish:  '#22c55e',
+            bearish:  '#ef4444',
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #0D1117;
+      color: #E6EDF3;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: #0D1117; }
+    ::-webkit-scrollbar-thumb { background: #30363D; border-radius: 4px; }
+    .spin { animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .pulse-dot { animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .drop-zone-active { border-color: #F0B429 !important; background: rgba(240,180,41,0.06) !important; }
+    .bar-fill { transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useCallback, useRef, useMemo } = React;
+
+/* ─── System Prompt (Part 16) ─────────────────────────────────────── */
+const SYSTEM_PROMPT = `[ IDENTITY ]
+You are an expert chart analyst with doctorate-level mastery of Smart Money Concepts (SMC) and ICT (Inner Circle Trader) methodology developed by Michael J. Huddleston. You have 25 years of institutional trading experience and analyse every chart with the precision of a professional prop trader.
+
+[ CORE AXIOMS — NEVER VIOLATE THESE ]
+1. Price is delivered algorithmically by the IPDA to seek liquidity concentrations.
+2. Every significant move is preceded by a manipulation phase (liquidity sweep) and followed by distribution in the true direction.
+3. Time matters as much as price. Kill zone context is mandatory in every analysis.
+4. Never buy at premium. Never sell at discount. Identify equilibrium and trade accordingly.
+5. A structural break is ambiguous until retested and rejected. Never confirm regime change on a break alone.
+6. Protected highs and protected lows define the current regime until proven otherwise through the 3-phase regime change test: Break → Retest → Rejection.
+
+[ ANALYSIS PROTOCOL — EXECUTE IN THIS ORDER ]
+When given a chart screenshot, execute the following analysis sequence without exception:
+
+■ STEP 1 — STRUCTURAL READING
+  - Identify all visible swing highs and lows (STH, STL, ITH, ITL)
+  - Classify the current regime: bullish (higher highs, higher lows), bearish (lower highs, lower lows), or transitional
+  - Identify the most recent PROTECTED HIGH and PROTECTED LOW
+  - Note whether any protected levels have been broken and if so, whether they have been retested/rejected
+  - Identify any BOS (continuation) or CHoCH (potential reversal) events visible
+
+■ STEP 2 — LIQUIDITY MAPPING
+  - Mark all visible Buy-Side Liquidity (BSL): equal highs, prior swing highs, obvious resistance clusters
+  - Mark all visible Sell-Side Liquidity (SSL): equal lows, prior swing lows, obvious support clusters
+  - Determine the DRAW ON LIQUIDITY: which side has the greater concentration and is therefore the algorithmic target
+  - Note any liquidity sweeps that have already occurred and their significance
+
+■ STEP 3 — PD ARRAY IDENTIFICATION
+  - Identify all Order Blocks visible (last opposing candle before a significant impulsive move)
+  - Identify all Fair Value Gaps (three-candle imbalances)
+  - Note any Breaker Blocks (failed OBs that have flipped)
+  - Identify any Mitigation Blocks (unmitigated swing points)
+  - Determine which arrays are in the DISCOUNT zone (for bullish setups) or PREMIUM zone (for bearish setups)
+  - Note the Consequent Encroachment (CE/midpoint) of each significant FVG
+
+■ STEP 4 — PREMIUM/DISCOUNT ANALYSIS
+  - Calculate the equilibrium (50% level) of the most recent significant dealing range
+  - Determine whether current price is in premium, equilibrium, or discount
+  - Confirm that any proposed trade entry aligns with the correct side of the range
+
+■ STEP 5 — TIME CONTEXT
+  - Assess which kill zone the current candle formation represents (if visible from price context)
+  - Note if a Judas Swing pattern is identifiable
+  - Identify any AMD (Accumulation-Manipulation-Distribution) phases visible
+  - Consider whether the move is in the manipulation or distribution phase
+
+■ STEP 6 — MULTI-TIMEFRAME CONTEXT
+  - Assess whether the visible price action appears to be an intraday, swing, or position-level move
+  - Note any evidence of higher timeframe levels acting on the visible price action
+  - Identify the likely higher timeframe draw on liquidity even if not directly visible
+
+[ OUTPUT FORMAT — MANDATORY STRUCTURE ]
+Produce your analysis in EXACTLY this format:
+
+SMC/ICT CHART ANALYSIS
+
+REGIME ASSESSMENT
+Current Regime: [BULLISH / BEARISH / TRANSITIONAL]
+Protected High: [Price level and significance]
+Protected Low: [Price level and significance]
+Regime Status: [INTACT / UNDER THREAT / CHANGED]
+Regime Change Phase: [Not applicable / Phase 1 Break / Phase 2 Awaiting Retest / Phase 3 Confirmed Change]
+
+STRUCTURE
+Recent BOS/CHoCH: [Describe any structural events]
+Current Market Structure Phase: [Accumulation / Manipulation / Distribution]
+Higher Lows Building: [YES / NO — describe]
+Lower Highs Building: [YES / NO — describe]
+
+LIQUIDITY MAP
+Buy-Side Liquidity Above: [List levels with descriptions]
+Sell-Side Liquidity Below: [List levels with descriptions]
+PRIMARY Draw on Liquidity: [BSL above at X / SSL below at X]
+Liquidity Sweeps Identified: [Describe any sweeps and their phase]
+
+KEY PD ARRAYS
+Bullish OBs: [List with price zones]
+Bearish OBs: [List with price zones]
+Bullish FVGs: [List with zones and CE levels]
+Bearish FVGs: [List with zones and CE levels]
+Breaker Blocks: [If visible]
+Current Price vs Equilibrium: [DISCOUNT / PREMIUM / EQUILIBRIUM at X]
+
+PROBABILITY ASSESSMENT
+Primary Scenario Probability: [XX%] — [BULLISH / BEARISH]
+Secondary Scenario Probability: [XX%] — [opposite direction]
+Confidence Level: [HIGH / MEDIUM / LOW]
+Key Invalidation Level: [Price that would negate primary scenario]
+
+TRADE IDEA 1 — PRIMARY
+Direction: [LONG / SHORT]
+Setup Type: [OTE / OB Retest / FVG Entry / Sweep Reversal / BPR / Other]
+Entry Zone: [Price range]
+Stop Loss: [Price level and rationale]
+Target 1: [Price level — first liquidity pool]
+Target 2: [Price level — secondary DOL]
+Target 3: [Price level — maximum extension]
+Estimated R:R: [X:1]
+Entry Trigger Required: [Describe LTF confirmation needed before entry]
+Probability: [XX%]
+
+TRADE IDEA 2 — ALTERNATIVE (if applicable)
+Direction: [LONG / SHORT]
+Setup Type: [OTE / OB Retest / FVG Entry / Sweep Reversal / BPR / Other]
+Entry Zone: [Price range]
+Stop Loss: [Price level and rationale]
+Target 1: [Price level — first liquidity pool]
+Target 2: [Price level — secondary DOL]
+Target 3: [Price level — maximum extension]
+Estimated R:R: [X:1]
+Entry Trigger Required: [Describe LTF confirmation needed before entry]
+Probability: [XX%]
+
+KEY LEVELS TO WATCH
+Critical Support: [Levels]
+Critical Resistance: [Levels]
+Invalidation Level: [Level that changes the entire analysis]
+
+MARKET NARRATIVE
+[3–5 sentence plain-English summary of what smart money appears to be doing on this chart, where price is most likely to go next and why, and what the retail trap risk is.]
+
+[ PROBABILITY SCORING RULES ]
+Apply these rules when assigning probability scores:
+BASE PROBABILITY STARTS AT 50% FOR ALL SCENARIOS.
+
+ADD TO PROBABILITY (+) for:
++15% HTF (4H/Daily) structure aligns with the trade direction
++10% Trade is in correct premium/discount zone (long in discount, short in premium)
++10% Active kill zone (London Open, NY AM, Silver Bullet window)
++8% Confirmed liquidity sweep immediately preceding the setup
++8% OB and FVG confluence at the entry zone
++7% Protected high/low is intact in favour of the trade
++5% SMT divergence confirms direction
++5% AMD model distribution phase aligns (manipulation completed, distribution beginning)
++3% Round number or session level confluence at entry or target
+
+SUBTRACT FROM PROBABILITY (-) for:
+-20% Trading against a confirmed (3-phase) regime change
+-15% Entry at or above equilibrium (for longs) or at or below equilibrium (for shorts)
+-10% No active kill zone
+-10% No liquidity sweep before setup
+-8% Protected high/low has been broken and retested with rejection against the trade
+-5% NY Lunch period
+-5% High-impact news event within the next 2 hours
+
+CAP TOTAL PROBABILITY AT 92% MAXIMUM (no setup is certain).
+MINIMUM REPORTABLE PROBABILITY: 30% (below this, do not propose the trade).
+DIFFERENCE between primary and secondary scenarios must be at least 15%.
+
+[ WHAT TO NEVER DO ]
+- Never suggest a trade entry at equilibrium (50% of dealing range)
+- Never ignore the protected high/low framework
+- Never confirm a regime change from a break alone — require the retest + rejection
+- Never propose a trade without specifying the LTF entry trigger
+- Never assign probability above 92% or below 30%
+- Never omit the invalidation level
+- Never use standard TA terminology (support/resistance, overbought/oversold) — use ICT terminology exclusively
+- Never assume the visible timeframe is the only timeframe that matters — always reference HTF context`;
+
+/* ─── Kill Zone / Macro Definitions ───────────────────────────────── */
+const KILL_ZONES = [
+  { name: 'Asian Session',      start: [20,0],  end: [0,0],   color: '#8B949E', crossesMidnight: true },
+  { name: 'London Open',        start: [2,0],   end: [5,0],   color: '#F0B429' },
+  { name: 'NY AM Kill Zone',    start: [7,0],   end: [10,0],  color: '#22c55e' },
+  { name: 'NY Lunch (Avoid)',   start: [11,30], end: [13,0],  color: '#ef4444' },
+  { name: 'NY Close',           start: [13,30], end: [16,0],  color: '#818cf8' },
+];
+
+const MACRO_WINDOWS = [
+  { name: 'Macro 1 (Opening)',     start: [8,50],  end: [9,10]  },
+  { name: 'Macro 2',               start: [9,50],  end: [10,10] },
+  { name: 'London Close Macro',    start: [10,50], end: [11,10] },
+  { name: 'PM Macro 1',            start: [13,10], end: [13,30] },
+  { name: 'PM Macro 2',            start: [14,50], end: [15,10] },
+  { name: 'PM Macro 3 (Close)',    start: [15,50], end: [16,10] },
+];
+
+function timeInRange(h, m, [sh, sm], [eh, em], crossesMidnight = false) {
+  const now = h * 60 + m, s = sh * 60 + sm, e = eh * 60 + em;
+  if (crossesMidnight) return now >= s || now < e;
+  return now >= s && now < e;
+}
+
+/* ─── Helpers ─────────────────────────────────────────────────────── */
+function parseAnalysis(text) {
+  if (!text) return {};
+  const SECTIONS = [
+    'REGIME ASSESSMENT','STRUCTURE','LIQUIDITY MAP','KEY PD ARRAYS',
+    'PROBABILITY ASSESSMENT','TRADE IDEA 1 — PRIMARY','TRADE IDEA 2 — ALTERNATIVE',
+    'KEY LEVELS TO WATCH','MARKET NARRATIVE',
+  ];
+
+  const out = {};
+  let cur = null;
+  for (const raw of text.split('\n')) {
+    const line = raw.trim();
+    const hit = SECTIONS.find(s => line === s || line.startsWith(s + ' ('));
+    if (hit) { cur = hit; out[cur] = []; }
+    else if (cur && line) out[cur].push(line);
+  }
+  return out;
+}
+
+function getField(lines = [], key) {
+  for (const l of lines) {
+    if (l.startsWith(key + ':')) return l.slice(key.length + 1).trim();
+  }
+  return null;
+}
+
+function parsePct(str) {
+  const m = str?.match(/(\d+)\s*%/);
+  return m ? parseInt(m[1]) : 0;
+}
+
+function dirColor(str) {
+  if (!str) return '#E6EDF3';
+  const u = str.toUpperCase();
+  if (u.includes('BULL') || u.includes('LONG') || u.includes('INTACT') || u === 'YES') return '#22c55e';
+  if (u.includes('BEAR') || u.includes('SHORT') || u.includes('CHANGED')) return '#ef4444';
+  return '#E6EDF3';
+}
+
+/* ─── UI Primitives ───────────────────────────────────────────────── */
+const C = { bg: '#0D1117', surface: '#161B22', border: '#30363D', gold: '#F0B429', text: '#E6EDF3', subtle: '#8B949E', bull: '#22c55e', bear: '#ef4444', indigo: '#818cf8' };
+
+function Badge({ value }) {
+  const cl = { BULLISH: C.bull, BEARISH: C.bear, TRANSITIONAL: C.gold, INTACT: C.bull, 'UNDER THREAT': C.gold, CHANGED: C.bear }[value?.toUpperCase()] || C.subtle;
+  return (
+    <span style={{ color: cl, background: cl + '20', border: `1px solid ${cl}40`, padding: '1px 7px', borderRadius: 4, fontSize: 11, fontWeight: 700 }}>
+      {value}
+    </span>
+  );
+}
+
+function Card({ title, titleColor = C.gold, children }) {
+  return (
+    <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, overflow: 'hidden' }}>
+      <div style={{ padding: '10px 16px', borderBottom: `1px solid ${C.border}`, background: titleColor + '10' }}>
+        <span style={{ color: titleColor, fontWeight: 700, fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{title}</span>
+      </div>
+      <div style={{ padding: '14px 16px' }}>{children}</div>
+    </div>
+  );
+}
+
+function Row({ label, value, vc }) {
+  if (!value) return null;
+  const color = vc || dirColor(value);
+  return (
+    <div style={{ display: 'flex', gap: 8, marginBottom: 8, flexWrap: 'wrap' }}>
+      <span style={{ color: C.subtle, fontSize: 11, minWidth: 160, flexShrink: 0 }}>{label}</span>
+      <span style={{ color, fontSize: 12, flex: 1 }}>{value}</span>
+    </div>
+  );
+}
+
+function ProbBar({ label, pct, dir }) {
+  const p = Math.max(0, Math.min(100, pct));
+  const col = p >= 70 ? C.bull : p >= 50 ? C.gold : C.bear;
+  const dc = dir ? dirColor(dir) : col;
+  return (
+    <div style={{ marginBottom: 10 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+        <span style={{ fontSize: 11, color: C.subtle }}>{label}</span>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          {dir && <span style={{ fontSize: 11, fontWeight: 700, color: dc }}>{dir}</span>}
+          <span style={{ fontSize: 13, fontWeight: 700, color: col }}>{p}%</span>
+        </div>
+      </div>
+      <div style={{ height: 6, background: C.bg, borderRadius: 3, overflow: 'hidden' }}>
+        <div className="bar-fill" style={{ height: '100%', width: `${p}%`, background: col, borderRadius: 3 }} />
+      </div>
+    </div>
+  );
+}
+
+/* ─── Session Clock ───────────────────────────────────────────────── */
+function SessionClock() {
+  const [now, setNow] = useState(() => new Date());
+  useEffect(() => {
+    const t = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(t);
+  }, []);
+
+  const ny = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+  const lo = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/London' }));
+  const tk = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }));
+  const h = ny.getHours(), m = ny.getMinutes();
+
+  const activeKZ = KILL_ZONES.find(kz => timeInRange(h, m, kz.start, kz.end, kz.crossesMidnight));
+  const activeMacro = MACRO_WINDOWS.find(mw => timeInRange(h, m, mw.start, mw.end));
+
+  const fmt = d => d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+  const fmtDate = d => d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <Card title="World Clocks" titleColor={C.gold}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
+          {[['New York', ny], ['London', lo], ['Tokyo', tk]].map(([label, t]) => (
+            <div key={label} style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 10, color: C.subtle, marginBottom: 3 }}>{label}</div>
+              <div style={{ fontFamily: 'monospace', fontSize: 15, fontWeight: 700, color: C.text }}>{fmt(t)}</div>
+              <div style={{ fontSize: 10, color: C.subtle }}>{fmtDate(t)}</div>
+            </div>
+          ))}
+        </div>
+      </Card>
+
+      <Card title="Kill Zone Status" titleColor={C.gold}>
+        <div style={{ marginBottom: 12 }}>
+          {activeKZ ? (
+            <div style={{ padding: '10px 14px', borderRadius: 8, border: `1px solid ${activeKZ.color}50`, background: activeKZ.color + '15', color: activeKZ.color, fontWeight: 700, fontSize: 14 }}>
+              🟢 {activeKZ.name} — ACTIVE
+            </div>
+          ) : (
+            <div style={{ padding: '10px 14px', borderRadius: 8, border: `1px solid ${C.border}`, background: C.bg, color: C.subtle, fontSize: 13 }}>
+              ⚫ No Kill Zone Active — Lower Probability Window
+            </div>
+          )}
+          {activeMacro && (
+            <div style={{ marginTop: 8, padding: '8px 14px', borderRadius: 8, border: `1px solid ${C.gold}50`, background: C.gold + '12', color: C.gold, fontSize: 12, fontWeight: 600 }}>
+              ⚡ {activeMacro.name} Macro Window Active
+            </div>
+          )}
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
+          {KILL_ZONES.map(kz => {
+            const active = timeInRange(h, m, kz.start, kz.end, kz.crossesMidnight);
+            return (
+              <div key={kz.name} style={{ display: 'flex', alignItems: 'center', gap: 6, opacity: active ? 1 : 0.38, fontSize: 11, color: kz.color }}>
+                <div className={active ? 'pulse-dot' : ''} style={{ width: 6, height: 6, borderRadius: '50%', background: kz.color, flexShrink: 0 }} />
+                {kz.name}
+              </div>
+            );
+          })}
+        </div>
+      </Card>
+
+      <Card title="ICT Macro Windows (NY Time)" titleColor={C.gold}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          {MACRO_WINDOWS.map(mw => {
+            const active = timeInRange(h, m, mw.start, mw.end);
+            const [sh, sm] = mw.start, [eh, em] = mw.end;
+            const range = `${String(sh).padStart(2,'0')}:${String(sm).padStart(2,'0')}–${String(eh).padStart(2,'0')}:${String(em).padStart(2,'0')}`;
+            return (
+              <div key={mw.name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 10px', borderRadius: 6, background: active ? C.gold + '15' : 'transparent', border: `1px solid ${active ? C.gold + '40' : 'transparent'}`, opacity: active ? 1 : 0.5 }}>
+                <span style={{ fontSize: 11, color: active ? C.gold : C.subtle, fontWeight: active ? 700 : 400 }}>{mw.name}</span>
+                <span style={{ fontSize: 11, color: C.subtle, fontFamily: 'monospace' }}>{range}</span>
+              </div>
+            );
+          })}
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+/* ─── Level Calculator ────────────────────────────────────────────── */
+function LevelCalculator() {
+  const [acc, setAcc] = useState('');
+  const [riskPct, setRisk] = useState('1');
+  const [entry, setEntry] = useState('');
+  const [sl, setSl] = useState('');
+  const [tp1, setTp1] = useState('');
+  const [tp2, setTp2] = useState('');
+  const [result, setResult] = useState(null);
+
+  const inp = { background: C.bg, border: `1px solid ${C.border}`, color: C.text, borderRadius: 8, padding: '8px 12px', width: '100%', fontSize: 13, outline: 'none' };
+
+  const calc = () => {
+    const a = parseFloat(acc), r = parseFloat(riskPct) / 100, e = parseFloat(entry), s = parseFloat(sl);
+    if (!a || !r || !e || !s) return;
+    const riskAmt = a * r;
+    const dist = Math.abs(e - s);
+    const size = dist > 0 ? riskAmt / dist : 0;
+    const t1 = parseFloat(tp1), t2 = parseFloat(tp2);
+    setResult({
+      riskAmt: riskAmt.toFixed(2),
+      dist: dist.toFixed(5),
+      size: size.toFixed(4),
+      rr1: t1 ? (Math.abs(t1 - e) / dist).toFixed(2) : null,
+      rr2: t2 ? (Math.abs(t2 - e) / dist).toFixed(2) : null,
+    });
+  };
+
+  const resBox = (label, value, color) => (
+    <div style={{ textAlign: 'center', background: color + '10', border: `1px solid ${color}30`, borderRadius: 8, padding: '10px 8px' }}>
+      <div style={{ fontSize: 10, color: C.subtle, marginBottom: 3 }}>{label}</div>
+      <div style={{ fontSize: 16, fontWeight: 700, color }}>{value}</div>
+    </div>
+  );
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <Card title="Position Size Calculator" titleColor={C.gold}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 12 }}>
+          {[
+            ['Account Size ($)', acc, setAcc, '10000', '1'],
+            ['Risk % Per Trade', riskPct, setRisk, '1', '0.1'],
+            ['Entry Price', entry, setEntry, '1.08500', '0.00001'],
+            ['Stop Loss Price', sl, setSl, '1.08350', '0.00001'],
+            ['Target 1 (optional)', tp1, setTp1, '1.08800', '0.00001'],
+            ['Target 2 (optional)', tp2, setTp2, '1.09200', '0.00001'],
+          ].map(([label, val, setter, ph, step]) => (
+            <div key={label}>
+              <div style={{ fontSize: 10, color: C.subtle, marginBottom: 4 }}>{label.toUpperCase()}</div>
+              <input style={inp} type="number" placeholder={ph} step={step} value={val} onChange={e => setter(e.target.value)} />
+            </div>
+          ))}
+        </div>
+        <button onClick={calc} style={{ width: '100%', padding: '10px', background: C.gold, color: C.bg, border: 'none', borderRadius: 8, fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>
+          Calculate Position
+        </button>
+
+        {result && (
+          <div style={{ marginTop: 14 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 8 }}>
+              {resBox('Risk Amount', `$${result.riskAmt}`, C.bear)}
+              {resBox('Stop Distance', result.dist, C.subtle)}
+              {resBox('Position Size (units)', result.size, C.gold)}
+              {result.rr1 && resBox('R:R to T1', `${result.rr1}:1`, parseFloat(result.rr1) >= 3 ? C.bull : C.gold)}
+            </div>
+            {result.rr2 && (
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 8 }}>
+                {resBox('R:R to T2', `${result.rr2}:1`, parseFloat(result.rr2) >= 3 ? C.bull : C.gold)}
+              </div>
+            )}
+            {result.rr1 && parseFloat(result.rr1) < 3 && (
+              <div style={{ marginTop: 8, padding: '8px 12px', borderRadius: 6, background: C.bear + '12', border: `1px solid ${C.bear}30`, fontSize: 11, color: C.bear }}>
+                ⚠ R:R below 3:1 — ICT minimum is 3:1. Consider adjusting targets or avoiding this trade.
+              </div>
+            )}
+          </div>
+        )}
+      </Card>
+
+      <Card title="ICT Risk Rules Reference" titleColor={C.subtle}>
+        {[
+          ['Max risk per trade', '1% of account (0.5% conservative)'],
+          ['Minimum R:R ratio', '3:1 — do not trade below this'],
+          ['Max daily loss', '3% — stop trading after 3 consecutive losses'],
+          ['Partial profit', '50% at T1, move stop to break-even'],
+        ].map(([rule, val]) => (
+          <div key={rule} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8, gap: 8 }}>
+            <span style={{ fontSize: 11, color: C.subtle }}>{rule}</span>
+            <span style={{ fontSize: 11, color: C.text, textAlign: 'right' }}>{val}</span>
+          </div>
+        ))}
+      </Card>
+    </div>
+  );
+}
+
+/* ─── Image Uploader ──────────────────────────────────────────────── */
+function ImageUploader({ onLoad }) {
+  const [drag, setDrag] = useState(false);
+  const ref = useRef(null);
+
+  const process = useCallback(file => {
+    if (!file || !file.type.match(/image\/(jpeg|png|webp|gif)/)) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const b64 = e.target.result.split(',')[1];
+      onLoad({ base64: b64, mediaType: file.type.replace('image/gif','image/jpeg'), preview: e.target.result });
+    };
+    reader.readAsDataURL(file);
+  }, [onLoad]);
+
+  return (
+    <div
+      className={drag ? 'drop-zone-active' : ''}
+      onClick={() => ref.current?.click()}
+      onDrop={e => { e.preventDefault(); setDrag(false); process(e.dataTransfer.files[0]); }}
+      onDragOver={e => { e.preventDefault(); setDrag(true); }}
+      onDragLeave={() => setDrag(false)}
+      style={{
+        border: `2px dashed ${drag ? C.gold : C.border}`,
+        borderRadius: 12,
+        padding: '60px 24px',
+        textAlign: 'center',
+        cursor: 'pointer',
+        transition: 'all 0.2s',
+        background: drag ? C.gold + '06' : 'transparent',
+      }}
+    >
+      <input ref={ref} type="file" accept="image/jpeg,image/png,image/webp" style={{ display: 'none' }} onChange={e => process(e.target.files[0])} />
+      <div style={{ fontSize: 48, marginBottom: 12 }}>📊</div>
+      <div style={{ color: C.text, fontWeight: 600, fontSize: 16, marginBottom: 6 }}>Drop chart screenshot here</div>
+      <div style={{ color: C.subtle, fontSize: 13 }}>or click to browse — PNG · JPEG · WEBP</div>
+      <div style={{ color: C.border, fontSize: 12, marginTop: 10 }}>TradingView · MT4/5 · cTrader screenshots supported</div>
+    </div>
+  );
+}
+
+/* ─── Trade Card ──────────────────────────────────────────────────── */
+function TradeCard({ title, lines, primary }) {
+  const g = k => getField(lines, k);
+  const dir = g('Direction'), setup = g('Setup Type'), ez = g('Entry Zone'), s = g('Stop Loss');
+  const t1 = g('Target 1'), t2 = g('Target 2'), t3 = g('Target 3');
+  const rr = g('Estimated R:R'), trigger = g('Entry Trigger Required'), prob = g('Probability');
+  const isLong = dir?.includes('LONG');
+  const dc = isLong ? C.bull : C.bear;
+  const pct = parsePct(prob);
+
+  return (
+    <div style={{ background: C.surface, border: `1px solid ${primary ? C.gold : C.border}`, borderRadius: 12, overflow: 'hidden' }}>
+      {/* Header */}
+      <div style={{ padding: '12px 16px', borderBottom: `1px solid ${C.border}`, background: primary ? C.gold + '10' : C.border + '20', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+        <div>
+          <div style={{ color: primary ? C.gold : C.subtle, fontWeight: 700, fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{title}</div>
+          {setup && <div style={{ color: C.subtle, fontSize: 11, marginTop: 2 }}>{setup}</div>}
+        </div>
+        <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+          {dir && <span style={{ color: dc, background: dc + '20', border: `1px solid ${dc}40`, padding: '2px 8px', borderRadius: 4, fontWeight: 700, fontSize: 12 }}>{dir}</span>}
+          {primary && <span style={{ color: C.gold, background: C.gold + '20', padding: '2px 8px', borderRadius: 4, fontSize: 11, fontWeight: 600 }}>PRIMARY</span>}
+        </div>
+      </div>
+
+      <div style={{ padding: '14px 16px' }}>
+        {/* Entry / SL / T1 boxes */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, marginBottom: 12 }}>
+          {[[ez, 'Entry Zone', C.gold], [s, 'Stop Loss', C.bear], [t1, 'Target 1', C.bull]].map(([v, lbl, col]) => v && (
+            <div key={lbl} style={{ textAlign: 'center', padding: '10px 6px', borderRadius: 8, background: col + '10', border: `1px solid ${col}30` }}>
+              <div style={{ fontSize: 10, color: col + 'bb', marginBottom: 3 }}>{lbl}</div>
+              <div style={{ fontSize: 12, fontWeight: 700, color: col }}>{v}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* T2 / T3 */}
+        {(t2 || t3) && (
+          <div style={{ display: 'grid', gridTemplateColumns: t2 && t3 ? '1fr 1fr' : '1fr', gap: 8, marginBottom: 12 }}>
+            {[t2 && ['Target 2', t2], t3 && ['Target 3', t3]].filter(Boolean).map(([lbl, v]) => (
+              <div key={lbl} style={{ textAlign: 'center', padding: '8px', borderRadius: 8, background: C.bull + '08', border: `1px solid ${C.bull}25` }}>
+                <div style={{ fontSize: 10, color: C.bull + '99', marginBottom: 2 }}>{lbl}</div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.bull }}>{v}</div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {rr && (
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+            <span style={{ fontSize: 11, color: C.subtle }}>Estimated R:R</span>
+            <span style={{ fontSize: 13, fontWeight: 700, color: C.gold }}>{rr}</span>
+          </div>
+        )}
+
+        {prob && <ProbBar label="Setup Probability" pct={pct} />}
+
+        {trigger && (
+          <div style={{ marginTop: 10, padding: '10px 12px', background: C.bg, borderRadius: 8, border: `1px solid ${C.border}` }}>
+            <div style={{ fontSize: 10, color: C.subtle, marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Entry Trigger Required</div>
+            <div style={{ fontSize: 12, color: C.text, lineHeight: 1.5 }}>{trigger}</div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Analysis Display ────────────────────────────────────────────── */
+function AnalysisDisplay({ raw }) {
+  const sec = useMemo(() => parseAnalysis(raw), [raw]);
+
+  const regime     = sec['REGIME ASSESSMENT']     || [];
+  const structure  = sec['STRUCTURE']             || [];
+  const liq        = sec['LIQUIDITY MAP']         || [];
+  const pda        = sec['KEY PD ARRAYS']         || [];
+  const prob       = sec['PROBABILITY ASSESSMENT']|| [];
+  const trade1     = sec['TRADE IDEA 1 — PRIMARY']|| [];
+  const trade2     = sec['TRADE IDEA 2 — ALTERNATIVE'] || [];
+  const levels     = sec['KEY LEVELS TO WATCH']   || [];
+  const narr       = sec['MARKET NARRATIVE']      || [];
+
+  const primStr   = getField(prob, 'Primary Scenario Probability')   || '';
+  const secStr    = getField(prob, 'Secondary Scenario Probability') || '';
+  const conf      = getField(prob, 'Confidence Level');
+  const primPct   = parsePct(primStr);
+  const secPct    = parsePct(secStr);
+  const primDir   = primStr.match(/(BULLISH|BEARISH)/)?.[1];
+  const secDir    = secStr.match(/(BULLISH|BEARISH)/)?.[1];
+  const confColor = conf === 'HIGH' ? C.bull : conf === 'MEDIUM' ? C.gold : C.bear;
+
+  const hasSections = Object.keys(sec).length > 0;
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+      {/* Banner */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', background: C.surface, border: `1px solid ${C.gold}40`, borderRadius: 12 }}>
+        <div>
+          <div style={{ color: C.gold, fontWeight: 700, fontSize: 16 }}>SMC/ICT Chart Analysis</div>
+          <div style={{ color: C.subtle, fontSize: 11, marginTop: 2 }}>claude-sonnet-4-6 · ICT/SMC Framework v1.0</div>
+        </div>
+        {conf && (
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: 10, color: C.subtle, marginBottom: 2 }}>CONFIDENCE</div>
+            <div style={{ fontSize: 18, fontWeight: 800, color: confColor }}>{conf}</div>
+          </div>
+        )}
+      </div>
+
+      {/* Probability */}
+      {(primPct > 0 || secPct > 0) && (
+        <Card title="Probability Assessment" titleColor={C.gold}>
+          {primPct > 0 && <ProbBar label="Primary Scenario" pct={primPct} dir={primDir} />}
+          {secPct > 0  && <ProbBar label="Secondary Scenario" pct={secPct} dir={secDir} />}
+          <Row label="Key Invalidation Level" value={getField(prob, 'Key Invalidation Level')} vc={C.bear} />
+        </Card>
+      )}
+
+      {/* Regime */}
+      {regime.length > 0 && (
+        <Card title="Regime Assessment" titleColor={C.gold}>
+          <Row label="Current Regime"    value={getField(regime, 'Current Regime')} />
+          <Row label="Protected High"    value={getField(regime, 'Protected High')}    vc={C.bull} />
+          <Row label="Protected Low"     value={getField(regime, 'Protected Low')}     vc={C.bear} />
+          <Row label="Regime Status"     value={getField(regime, 'Regime Status')} />
+          <Row label="Regime Change Phase" value={getField(regime, 'Regime Change Phase')} />
+        </Card>
+      )}
+
+      {/* Structure */}
+      {structure.length > 0 && (
+        <Card title="Market Structure" titleColor={C.indigo}>
+          <Row label="Recent BOS / CHoCH"       value={getField(structure, 'Recent BOS/CHoCH')} />
+          <Row label="Structure Phase"           value={getField(structure, 'Current Market Structure Phase')} />
+          <Row label="Higher Lows Building"      value={getField(structure, 'Higher Lows Building')} />
+          <Row label="Lower Highs Building"      value={getField(structure, 'Lower Highs Building')} />
+        </Card>
+      )}
+
+      {/* Liquidity */}
+      {liq.length > 0 && (
+        <Card title="Liquidity Map" titleColor={C.bull}>
+          <Row label="Buy-Side Liquidity Above"  value={getField(liq, 'Buy-Side Liquidity Above')}  vc={C.bull} />
+          <Row label="Sell-Side Liquidity Below" value={getField(liq, 'Sell-Side Liquidity Below')} vc={C.bear} />
+          <Row label="PRIMARY Draw on Liquidity" value={getField(liq, 'PRIMARY Draw on Liquidity')} vc={C.gold} />
+          <Row label="Liquidity Sweeps"          value={getField(liq, 'Liquidity Sweeps Identified')} />
+        </Card>
+      )}
+
+      {/* PD Arrays */}
+      {pda.length > 0 && (
+        <Card title="Key PD Arrays" titleColor={C.gold}>
+          <Row label="Bullish OBs"              value={getField(pda, 'Bullish OBs')}  vc={C.bull} />
+          <Row label="Bearish OBs"              value={getField(pda, 'Bearish OBs')}  vc={C.bear} />
+          <Row label="Bullish FVGs"             value={getField(pda, 'Bullish FVGs')} vc={C.bull} />
+          <Row label="Bearish FVGs"             value={getField(pda, 'Bearish FVGs')} vc={C.bear} />
+          <Row label="Breaker Blocks"           value={getField(pda, 'Breaker Blocks')} />
+          <Row label="Price vs Equilibrium"     value={getField(pda, 'Current Price vs Equilibrium')} vc={C.gold} />
+        </Card>
+      )}
+
+      {/* Trade Ideas */}
+      {trade1.length > 0 && <TradeCard title="Trade Idea 1 — Primary"     lines={trade1} primary={true}  />}
+      {trade2.length > 0 && <TradeCard title="Trade Idea 2 — Alternative" lines={trade2} primary={false} />}
+
+      {/* Key Levels */}
+      {levels.length > 0 && (
+        <Card title="Key Levels to Watch" titleColor={C.gold}>
+          <Row label="Critical Demand Zone"  value={getField(levels, 'Critical Support')}    vc={C.bull} />
+          <Row label="Critical Supply Zone"  value={getField(levels, 'Critical Resistance')} vc={C.bear} />
+          <Row label="Full Invalidation"     value={getField(levels, 'Invalidation Level')}  vc={C.bear} />
+        </Card>
+      )}
+
+      {/* Narrative */}
+      {narr.length > 0 && (
+        <div style={{ background: C.surface, border: `1px solid ${C.gold}40`, borderRadius: 12, overflow: 'hidden' }}>
+          <div style={{ padding: '10px 16px', borderBottom: `1px solid ${C.gold}25`, background: C.gold + '08' }}>
+            <span style={{ color: C.gold, fontWeight: 700, fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Market Narrative</span>
+          </div>
+          <div style={{ padding: '18px 20px' }}>
+            <p style={{ margin: 0, color: C.text, fontSize: 14, lineHeight: 1.7, fontStyle: 'italic', borderLeft: `4px solid ${C.gold}`, paddingLeft: 14 }}>
+              {narr.join(' ')}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Raw fallback */}
+      {!hasSections && (
+        <Card title="Raw Analysis Output" titleColor={C.subtle}>
+          <pre style={{ margin: 0, fontSize: 12, color: C.text, lineHeight: 1.6 }}>{raw}</pre>
+        </Card>
+      )}
+    </div>
+  );
+}
+
+/* ─── Trade Journal ───────────────────────────────────────────────── */
+function TradeJournal({ entries, onDelete, onView }) {
+  if (!entries.length) return (
+    <div style={{ textAlign: 'center', padding: '60px 24px' }}>
+      <div style={{ fontSize: 42, marginBottom: 12 }}>📋</div>
+      <div style={{ color: C.subtle, fontSize: 15 }}>No analyses saved yet</div>
+      <div style={{ color: C.border, fontSize: 13, marginTop: 6 }}>Analyse a chart and click "Save to Journal"</div>
+    </div>
+  );
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+      {entries.map((e, i) => {
+        const dc = e.direction?.includes('BULL') ? C.bull : e.direction?.includes('BEAR') ? C.bear : C.subtle;
+        return (
+          <div key={i} style={{ display: 'flex', gap: 12, background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: 14, alignItems: 'flex-start' }}>
+            {e.preview && <img src={e.preview} alt="chart" style={{ width: 88, height: 60, objectFit: 'cover', borderRadius: 6, border: `1px solid ${C.border}`, flexShrink: 0 }} />}
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 5, flexWrap: 'wrap' }}>
+                <span style={{ fontSize: 11, color: C.subtle }}>{new Date(e.timestamp).toLocaleString()}</span>
+                {e.regime && <Badge value={e.regime} />}
+              </div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: C.text, marginBottom: 3 }}>
+                Primary: <span style={{ color: C.gold }}>{e.primaryPct}%</span>
+                {e.direction && <span style={{ color: dc }}> {e.direction}</span>}
+              </div>
+              {e.narrative && <p className="line-clamp-2" style={{ margin: 0, fontSize: 11, color: C.subtle, lineHeight: 1.4 }}>{e.narrative}</p>}
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6, flexShrink: 0 }}>
+              <button onClick={() => onView(e)} style={{ fontSize: 11, color: C.gold, background: 'none', border: `1px solid ${C.gold}40`, borderRadius: 6, padding: '3px 10px', cursor: 'pointer' }}>View</button>
+              <button onClick={() => onDelete(i)} style={{ fontSize: 11, color: C.subtle, background: 'none', border: `1px solid ${C.border}`, borderRadius: 6, padding: '3px 10px', cursor: 'pointer' }}>Delete</button>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+/* ─── Main App ────────────────────────────────────────────────────── */
+function App() {
+  const [apiKey, setApiKey]     = useState('');
+  const [showKey, setShowKey]   = useState(false);
+  const [img, setImg]           = useState(null);       // { base64, mediaType, preview }
+  const [analysis, setAnalysis] = useState(null);       // raw text
+  const [loading, setLoading]   = useState(false);
+  const [error, setError]       = useState(null);
+  const [journal, setJournal]   = useState([]);
+  const [tab, setTab]           = useState('analysis'); // analysis | journal | calculator | clock
+  const [viewEntry, setViewEntry] = useState(null);     // journal entry being viewed
+
+  const handleImg = useCallback(data => {
+    setImg(data);
+    setAnalysis(null);
+    setError(null);
+    setViewEntry(null);
+  }, []);
+
+  const analyse = async () => {
+    if (!apiKey.trim())   { setError('Please enter your Anthropic API key.'); return; }
+    if (!img)             { setError('Please upload a chart image first.'); return; }
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey.trim(),
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-allow-browser': 'true',
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-6',
+          max_tokens: 4000,
+          temperature: 0,
+          system: SYSTEM_PROMPT,
+          messages: [{
+            role: 'user',
+            content: [
+              { type: 'image', source: { type: 'base64', media_type: img.mediaType, data: img.base64 } },
+              { type: 'text', text: 'Analyse this chart screenshot using the complete SMC/ICT framework. Produce the full structured analysis in the exact format specified. Be precise, specific, and use ICT terminology exclusively.' },
+            ]
+          }]
+        })
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error?.message || `API error ${res.status}: ${res.statusText}`);
+      }
+
+      const data = await res.json();
+      const text = data.content?.[0]?.text;
+      if (!text) throw new Error('No content returned from the API.');
+      setAnalysis(text);
+    } catch (e) {
+      setError(e.message || 'Unexpected error — please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const saveToJournal = () => {
+    if (!analysis) return;
+    const sec    = parseAnalysis(analysis);
+    const regime = sec['REGIME ASSESSMENT']      || [];
+    const prob   = sec['PROBABILITY ASSESSMENT'] || [];
+    const narr   = sec['MARKET NARRATIVE']       || [];
+    const primStr = getField(prob, 'Primary Scenario Probability') || '';
+
+    setJournal(prev => [{
+      timestamp:  Date.now(),
+      preview:    img?.preview,
+      regime:     getField(regime, 'Current Regime'),
+      primaryPct: parsePct(primStr),
+      direction:  primStr.match(/(BULLISH|BEARISH)/)?.[1],
+      narrative:  narr.join(' ').slice(0, 300),
+      rawAnalysis: analysis,
+    }, ...prev]);
+    setTab('journal');
+  };
+
+  const reset = () => { setImg(null); setAnalysis(null); setError(null); setViewEntry(null); };
+
+  const TABS = [
+    { id: 'analysis',   label: 'Chart Analysis' },
+    { id: 'journal',    label: `Journal (${journal.length})` },
+    { id: 'calculator', label: 'Calculator' },
+    { id: 'clock',      label: 'Session Clock' },
+  ];
+
+  const inpStyle = { background: C.bg, border: `1px solid ${C.border}`, color: C.text, borderRadius: 8, padding: '8px 40px 8px 12px', width: '100%', fontSize: 13, outline: 'none' };
+
+  return (
+    <div style={{ minHeight: '100vh', background: C.bg }}>
+      {/* ── Header ── */}
+      <div style={{ borderBottom: `1px solid ${C.border}`, background: C.surface, position: 'sticky', top: 0, zIndex: 10 }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 58 }}>
+          <div>
+            <div style={{ fontSize: 17, fontWeight: 800, color: C.gold }}>⚡ SMC/ICT Chart Analysis Agent</div>
+            <div style={{ fontSize: 10, color: C.subtle, marginTop: 1 }}>Smart Money Concepts · Inner Circle Trader · Institutional-Grade Analysis</div>
+          </div>
+          <div style={{ textAlign: 'right', display: 'none' }} className="sm-block">
+            <div style={{ fontSize: 10, color: C.subtle }}>Powered by</div>
+            <div style={{ fontSize: 12, fontWeight: 700, color: C.gold }}>claude-sonnet-4-6</div>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '24px 20px' }}>
+        {/* ── API Key ── */}
+        <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: '14px 16px', marginBottom: 20 }}>
+          <div style={{ fontSize: 10, color: C.subtle, fontWeight: 700, letterSpacing: '0.08em', marginBottom: 6 }}>ANTHROPIC API KEY</div>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <div style={{ position: 'relative', flex: 1 }}>
+              <input
+                type={showKey ? 'text' : 'password'}
+                value={apiKey}
+                onChange={e => setApiKey(e.target.value)}
+                placeholder="sk-ant-api03-..."
+                style={inpStyle}
+              />
+              <button onClick={() => setShowKey(v => !v)} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', fontSize: 14 }}>
+                {showKey ? '🙈' : '👁️'}
+              </button>
+            </div>
+          </div>
+          <div style={{ fontSize: 11, color: C.subtle, marginTop: 6 }}>
+            Key stays in browser memory only — never stored or transmitted beyond the Anthropic API.
+          </div>
+        </div>
+
+        {/* ── Tabs ── */}
+        <div style={{ display: 'flex', gap: 2, borderBottom: `1px solid ${C.border}`, marginBottom: 24 }}>
+          {TABS.map(t => (
+            <button key={t.id} onClick={() => setTab(t.id)} style={{
+              padding: '10px 18px',
+              fontSize: 13,
+              fontWeight: 600,
+              background: 'none',
+              border: 'none',
+              borderBottom: tab === t.id ? `2px solid ${C.gold}` : '2px solid transparent',
+              color: tab === t.id ? C.gold : C.subtle,
+              cursor: 'pointer',
+              marginBottom: -1,
+              transition: 'color 0.15s',
+            }}>{t.label}</button>
+          ))}
+        </div>
+
+        {/* ── Analysis Tab ── */}
+        {tab === 'analysis' && (
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+            {/* Left */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {!img ? (
+                <ImageUploader onLoad={handleImg} />
+              ) : viewEntry ? (
+                <div>
+                  <button onClick={() => setViewEntry(null)} style={{ fontSize: 12, color: C.subtle, background: 'none', border: 'none', cursor: 'pointer', marginBottom: 10, padding: 0 }}>← Back to current chart</button>
+                  <img src={viewEntry.preview} alt="Saved chart" style={{ width: '100%', borderRadius: 10, border: `1px solid ${C.border}` }} />
+                </div>
+              ) : (
+                <div style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${C.border}` }}>
+                  <img src={img.preview} alt="Chart" style={{ width: '100%', maxHeight: 320, objectFit: 'contain', background: '#000', display: 'block' }} />
+                  <div style={{ padding: '12px 14px', background: C.surface, display: 'flex', gap: 8 }}>
+                    <button onClick={analyse} disabled={loading} style={{
+                      flex: 1, padding: '10px', borderRadius: 8, border: 'none', cursor: loading ? 'not-allowed' : 'pointer',
+                      background: loading ? C.border : C.gold, color: loading ? C.subtle : C.bg, fontWeight: 700, fontSize: 13,
+                    }}>
+                      {loading ? (
+                        <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+                          <svg className="spin" width="14" height="14" viewBox="0 0 24 24" fill="none">
+                            <circle opacity="0.25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                            <path opacity="0.75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" fill="currentColor"/>
+                          </svg>
+                          Analysing Chart...
+                        </span>
+                      ) : 'Analyse Chart'}
+                    </button>
+                    <button onClick={reset} style={{ padding: '10px 16px', borderRadius: 8, border: `1px solid ${C.border}`, background: 'transparent', color: C.subtle, fontSize: 13, cursor: 'pointer' }}>Reset</button>
+                  </div>
+                </div>
+              )}
+
+              {/* Error */}
+              {error && (
+                <div style={{ padding: '12px 14px', borderRadius: 10, border: `1px solid ${C.bear}50`, background: C.bear + '12' }}>
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    <span>⚠️</span>
+                    <div>
+                      <div style={{ fontWeight: 700, fontSize: 12, color: C.bear }}>Error</div>
+                      <div style={{ fontSize: 12, color: C.text, marginTop: 2 }}>{error}</div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Save */}
+              {analysis && !viewEntry && (
+                <button onClick={saveToJournal} style={{ padding: '10px', borderRadius: 8, border: `1px solid ${C.border}`, background: 'transparent', color: C.gold, fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>
+                  📋 Save to Journal
+                </button>
+              )}
+
+              {/* Instructions */}
+              {!img && (
+                <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: '14px 16px' }}>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: C.gold, marginBottom: 10, letterSpacing: '0.06em' }}>HOW TO USE</div>
+                  {[
+                    '① Enter your Anthropic API key above',
+                    '② Upload any TradingView, MT4/5 or cTrader chart screenshot',
+                    '③ Click "Analyse Chart" — analysis takes 10–20 seconds',
+                    '④ Review probability scores, PD arrays and trade ideas',
+                    '⑤ Save to Journal to track analyses over time',
+                    '⑥ Use the Calculator tab for position sizing',
+                    '⑦ Check Session Clock for active kill zones',
+                  ].map((s, i) => <div key={i} style={{ fontSize: 12, color: C.subtle, marginBottom: 5 }}>{s}</div>)}
+                </div>
+              )}
+            </div>
+
+            {/* Right */}
+            <div>
+              {viewEntry ? (
+                <AnalysisDisplay raw={viewEntry.rawAnalysis} />
+              ) : analysis ? (
+                <AnalysisDisplay raw={analysis} />
+              ) : (
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 400, border: `1px dashed ${C.border}`, borderRadius: 12 }}>
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: 42, marginBottom: 12 }}>🔍</div>
+                    <div style={{ color: C.subtle, fontSize: 15 }}>Analysis will appear here</div>
+                    <div style={{ color: C.border, fontSize: 12, marginTop: 6 }}>Upload a chart and click Analyse Chart</div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* ── Journal Tab ── */}
+        {tab === 'journal' && (
+          <TradeJournal
+            entries={journal}
+            onDelete={i => setJournal(prev => prev.filter((_, idx) => idx !== i))}
+            onView={e => { setViewEntry(e); setTab('analysis'); }}
+          />
+        )}
+
+        {/* ── Calculator Tab ── */}
+        {tab === 'calculator' && (
+          <div style={{ maxWidth: 560 }}>
+            <LevelCalculator />
+          </div>
+        )}
+
+        {/* ── Clock Tab ── */}
+        {tab === 'clock' && (
+          <div style={{ maxWidth: 480 }}>
+            <SessionClock />
+          </div>
+        )}
+      </div>
+
+      {/* ── Footer ── */}
+      <div style={{ borderTop: `1px solid ${C.border}`, marginTop: 48, padding: '16px 20px', textAlign: 'center' }}>
+        <div style={{ fontSize: 11, color: C.border }}>
+          SMC/ICT Chart Analysis Agent · Based on ICT Methodology by Michael J. Huddleston · v1.0 — June 2026
+        </div>
+        <div style={{ fontSize: 10, color: C.border, marginTop: 4 }}>
+          "Trade with discipline. The edge is in the process, not the prediction."
+        </div>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
