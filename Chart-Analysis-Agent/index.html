@@ -629,6 +629,8 @@ function Journal({entries,onDelete,onView}){
 function App(){
   const [key,setKey]=useState('');
   const [showK,setShowK]=useState(false);
+  const [proxyUrl,setProxyUrl]=useState('');
+  const [showProxy,setShowProxy]=useState(false);
   const [img,setImg]=useState(null);
   const [analysis,setAnalysis]=useState(null);
   const [loading,setLoading]=useState(false);
@@ -643,18 +645,17 @@ function App(){
     if(!key.trim()){setError('Please enter your Anthropic API key.');return;}
     if(!img){setError('Please upload a chart image first.');return;}
     setLoading(true);setError(null);
+    const useProxy=proxyUrl.trim().length>0;
+    const endpoint=useProxy?proxyUrl.trim():'https://api.anthropic.com/v1/messages';
+    const headers={'Content-Type':'application/json','x-api-key':key.trim(),'anthropic-version':'2023-06-01'};
+    if(!useProxy) headers['anthropic-dangerous-allow-browser']='true';
     try{
       let res;
       try{
-        res=await fetch('https://api.anthropic.com/v1/messages',{
+        res=await fetch(endpoint,{
           method:'POST',
           mode:'cors',
-          headers:{
-            'Content-Type':'application/json',
-            'x-api-key':key.trim(),
-            'anthropic-version':'2023-06-01',
-            'anthropic-dangerous-allow-browser':'true',
-          },
+          headers,
           body:JSON.stringify({
             model:'claude-sonnet-4-6',max_tokens:4000,temperature:0,system:SYSTEM_PROMPT,
             messages:[{role:'user',content:[
@@ -664,7 +665,7 @@ function App(){
           })
         });
       }catch(netErr){
-        throw new Error('Network request failed — check your internet connection and that the API key is correct. ('+netErr.message+')');
+        throw new Error((useProxy?'Proxy request failed — check the proxy URL is correct. ':'Network request failed — check your internet connection and that the API key is correct. ')+'('+netErr.message+')');
       }
       if(!res.ok){
         const e=await res.json().catch(()=>({}));
@@ -738,6 +739,27 @@ function App(){
           </button>
         </div>
         <div style=${{fontSize:11,color:C.subtle,marginTop:5}}>Key stays in browser memory only — never stored or sent anywhere except api.anthropic.com</div>
+        <div style=${{marginTop:8}}>
+          <button onClick=${()=>setShowProxy(v=>!v)} style=${{fontSize:11,color:C.subtle,background:'none',border:'none',cursor:'pointer',padding:0,textDecoration:'underline'}}>
+            ${showProxy?'▲ Hide proxy settings (iOS fix)':'▼ iOS Safari getting "Load failed"? Set up a proxy'}
+          </button>
+          ${showProxy&&html`<div style=${{marginTop:8,padding:'11px 13px',borderRadius:9,background:C.bg,border:`1px solid ${C.border}`}}>
+            <div style=${{fontSize:11,fontWeight:700,color:C.gold,marginBottom:5}}>CLOUDFLARE WORKER PROXY URL (iOS Fix)</div>
+            <div style=${{fontSize:11,color:C.subtle,marginBottom:8,lineHeight:1.5}}>
+              iOS Safari blocks direct calls to api.anthropic.com due to CORS restrictions.
+              Deploy the free Cloudflare Worker in <b style=${{color:C.text}}>cloudflare-proxy/worker.js</b> (in the repo),
+              then paste your Worker URL here. The proxy forwards your request server-side — no CORS issues.
+            </div>
+            <input
+              type="url"
+              value=${proxyUrl}
+              onInput=${e=>setProxyUrl(e.target.value)}
+              placeholder="https://your-worker.your-subdomain.workers.dev"
+              style=${{...iStyle,fontFamily:'monospace',fontSize:12}}
+            />
+            ${proxyUrl&&html`<div style=${{fontSize:11,color:C.bull,marginTop:5}}>✓ Proxy active — requests will be routed via your Worker</div>`}
+          </div>`}
+        </div>
       </div>
 
       <!-- Tabs -->
@@ -792,6 +814,7 @@ function App(){
                '⑤ Save to Journal to track analyses over time',
                '⑥ Calculator tab → position sizing',
                '⑦ Session Clock tab → active kill zones',
+               '📱 iOS Safari users: expand "iOS Safari getting Load failed?" below the API key field',
               ].map(s=>html`<div key=${s} style=${{fontSize:12,color:C.subtle,marginBottom:4}}>${s}</div>`)}
           </div>`}
         </div>
