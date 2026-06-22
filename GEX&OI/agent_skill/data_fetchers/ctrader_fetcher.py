@@ -32,7 +32,7 @@ _TOKEN = os.environ.get(
 SYMBOL_MAP = {
     "US500":  "US500",
     "UK100":  "UK100",
-    "Ger40":  "GER40",
+    "GER40":  "GER40",
     "XAUUSD": "XAUUSD",
 }
 
@@ -244,7 +244,7 @@ def get_live_price(instrument: str) -> Optional[dict]:
     """
     Return live bid/ask/mid price for a Pepperstone spread bet instrument.
 
-    instrument: 'US500', 'UK100', 'Ger40', 'XAUUSD'
+    instrument: 'US500', 'UK100', 'GER40', 'XAUUSD'
     Returns: {'bid': float, 'ask': float, 'mid': float, 'spread': float, 'symbol': str}
     """
     ct_name = SYMBOL_MAP.get(instrument, instrument)
@@ -283,7 +283,7 @@ def get_live_price(instrument: str) -> Optional[dict]:
 def get_all_live_prices() -> dict[str, dict]:
     """Fetch live prices for all four trading instruments in one session."""
     prices = {}
-    for instrument in ["US500", "UK100", "Ger40", "XAUUSD"]:
+    for instrument in ["US500", "UK100", "GER40", "XAUUSD"]:
         result = get_live_price(instrument)
         if result:
             prices[instrument] = result
@@ -294,7 +294,7 @@ def get_recent_candles(instrument: str, interval: str = "1h", limit: int = 50) -
     """
     Fetch recent OHLCV candles from Pepperstone via cTrader MCP.
 
-    instrument: 'US500', 'UK100', 'Ger40', 'XAUUSD'
+    instrument: 'US500', 'UK100', 'GER40', 'XAUUSD'
     interval: '1m', '5m', '15m', '1h', '4h', '1d'
     limit: number of candles to return
 

@@ -2,7 +2,7 @@
 Yahoo Finance data fetcher (via TradingView MCP's yahoo_price tool).
 
 This provides live index prices for instruments where we have no direct
-options data — specifically UK100 (^FTSE) and Ger40 (^GDAXI).
+options data — specifically UK100 (^FTSE) and GER40 (^GDAXI).
 
 Also used as a fast backup price source for US500 (^GSPC) and Gold (GC=F).
 """
@@ -11,7 +11,7 @@ Also used as a fast backup price source for US500 (^GSPC) and Gold (GC=F).
 YAHOO_SYMBOLS = {
     "US500":  "^GSPC",    # S&P 500 Index
     "UK100":  "^FTSE",    # FTSE 100 Index
-    "Ger40":  "^GDAXI",   # DAX 40 Index
+    "GER40":  "^GDAXI",   # DAX 40 Index
     "XAUUSD": "GC=F",     # Gold Futures (front month)
     "VIX":    "^VIX",     # CBOE Volatility Index
     "DXY":    "DX-Y.NYB", # US Dollar Index
@@ -25,7 +25,7 @@ YAHOO_SYMBOLS = {
 PEPPERSTONE_SPREAD = {
     "US500":  0.4,    # ~0.4 index points
     "UK100":  1.0,    # ~1 index point
-    "Ger40":  1.2,    # ~1.2 index points
+    "GER40":  1.2,    # ~1.2 index points
     "XAUUSD": 0.20,   # ~$0.20 per oz
 }
 
@@ -33,7 +33,7 @@ PEPPERSTONE_SPREAD = {
 # Used when applying SPX GEX regime to correlated indices
 CROSS_MARKET_CORRELATION = {
     "UK100": 0.78,   # FTSE 100 ↔ SPX
-    "Ger40": 0.87,   # DAX 40 ↔ SPX (higher due to export-heavy, risk-on character)
+    "GER40": 0.87,   # DAX 40 ↔ SPX (higher due to export-heavy, risk-on character)
 }
 
 
@@ -62,7 +62,7 @@ def gex_regime_applies(instrument: str, correlation_threshold: float = 0.70) -> 
 
 def describe_cross_market_proxy(instrument: str, spx_regime: str, spx_gex: float) -> str:
     """
-    Generate cross-market proxy commentary for UK100/Ger40.
+    Generate cross-market proxy commentary for UK100/GER40.
     """
     corr = CROSS_MARKET_CORRELATION.get(instrument, 0)
     corr_pct = int(corr * 100)

@@ -106,8 +106,8 @@ INSTRUMENTS = {
         "proxy_approach": "cross_market_sentiment",
         "session": "LONDON",
     },
-    "Ger40": {
-        "pepperstone_symbol": "Ger40",
+    "GER40": {
+        "pepperstone_symbol": "GER40",
         "description": "DAX 40 Index",
         "options_ticker": "EWG",        # iShares MSCI Germany ETF (proxy only)
         "etf_ticker": "EWG",

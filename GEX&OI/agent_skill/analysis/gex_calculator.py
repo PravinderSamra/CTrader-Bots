@@ -86,6 +86,13 @@ def calculate_gex(options_df: pd.DataFrame, spot_price: float, symbol: str,
     total_put_gex = abs(put_df["gex"].sum()) / 1e9
     total_gex = (call_df["gex"].sum() + put_df["gex"].sum()) / 1e9
 
+    if gex_by_strike.empty:
+        raise ValueError(
+            f"Insufficient options data to calculate GEX for {symbol}. "
+            "Options chain returned no contracts with valid OI, IV and gamma. "
+            "This typically happens pre-market or when the data source has not updated yet."
+        )
+
     # Max GEX strike (gravity / pin level)
     max_gex_strike = gex_by_strike.loc[gex_by_strike["net_gex"].idxmax(), "strike"]
 

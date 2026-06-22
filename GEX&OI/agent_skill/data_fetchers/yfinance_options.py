@@ -34,6 +34,7 @@ MULTIPLIER = {
 RISK_FREE_RATE = 0.0445   # 10Y yield as of session
 CONTRACT_MULT  = 100      # Both SPY and GLD options: 100 shares per contract
 MAX_STRIKE_PCT = 0.12     # Only use strikes within ±12% of spot
+MIN_IV         = 0.01     # Filter out yfinance placeholder IV (0.00001) — real options have IV > 1%
 
 
 def _bs_gamma(S: float, K: float, T: float, r: float, sigma: float) -> float:
@@ -82,7 +83,7 @@ def fetch_options_for_gex(instrument: str, spot_live: float, max_expiry_days: in
                 iv  = float(row["impliedVolatility"]) if pd.notna(row["impliedVolatility"]) else 0
                 oi  = int(row["openInterest"]) if pd.notna(row["openInterest"]) else 0
 
-                if oi <= 0 or iv <= 0 or K <= 0:
+                if oi <= 0 or iv < MIN_IV or K <= 0:
                     continue
                 if abs(K - etf_spot) / etf_spot > MAX_STRIKE_PCT:
                     continue

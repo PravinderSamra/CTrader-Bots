@@ -32,6 +32,42 @@ from reports.chart_generator import plot_gex_by_strike, plot_oi_distribution, pl
 from reports.trade_plan import generate_trade_plan, format_trade_plan
 
 
+def _session_timing_check(now_uk: datetime) -> None:
+    """Print a session-awareness block: weekday check + data quality warning."""
+    weekday  = now_uk.weekday()          # 0=Mon … 6=Sun
+    hour_min = now_uk.hour * 60 + now_uk.minute
+    day_name = now_uk.strftime("%A")
+
+    print(f"  Session clock: {now_uk.strftime('%H:%M %Z')}  |  {day_name}")
+
+    if weekday >= 5:
+        print(f"  ⚠  WEEKEND — US and European cash markets are closed.")
+        print(f"     Options OI data will be from Friday's close (stale).")
+        print(f"     GEX levels are indicative only. Run again Monday morning for fresh data.")
+        print()
+        return
+
+    # US market opens at 14:30 BST (09:30 ET); European opens ~08:00 BST
+    eu_open_min = 8 * 60       # 08:00 BST
+    us_open_min = 14 * 60 + 30 # 14:30 BST
+    us_close_min = 21 * 60     # 21:00 BST
+
+    if hour_min < eu_open_min:
+        print(f"  ⚠  PRE-MARKET — European markets not yet open.")
+        print(f"     Options OI data reflects Friday's close. Best to run after 08:00 BST.")
+    elif hour_min < us_open_min:
+        print(f"  ℹ  LONDON SESSION — European markets open. US pre-market.")
+        print(f"     Options OI data from previous NY close. Will refresh when NY opens at 14:30 BST.")
+        print(f"     GEX levels are valid for European session planning.")
+    elif hour_min < us_close_min:
+        print(f"  ✓  NY SESSION ACTIVE — Options OI data is current.")
+        print(f"     Live GEX levels reflect today's positioning.")
+    else:
+        print(f"  ℹ  POST-MARKET — NY session has closed.")
+        print(f"     Options OI data reflects today's close — good for tomorrow's planning.")
+    print()
+
+
 def run_session_briefing(instruments: list[str]) -> None:
     """Run a full pre-session briefing for the given instruments."""
     now_uk = uk_now()
@@ -41,6 +77,8 @@ def run_session_briefing(instruments: list[str]) -> None:
     print(f"  {now_uk.strftime('%Y-%m-%d %H:%M %Z')}")
     print(f"  Instruments: {', '.join(instruments)}")
     print(f"{'=' * 70}\n")
+
+    _session_timing_check(now_uk)
 
     # 1. Macro context (fetch once)
     print("Fetching macro context...")
@@ -144,15 +182,25 @@ def _analyse_with_gex(key: str, cfg: dict, macro: dict):
     n = len(options_df)
     print(f"  {n:,} option contracts loaded")
 
+    if n < 10:
+        print(f"  ⚠  Only {n} contracts with valid OI and IV — insufficient for reliable GEX.")
+        print(f"     yfinance options OI updates when NY opens (14:30 BST). Run the scan then.")
+        print(f"     Skipping GEX analysis for {key}.")
+        return None
+
     # ETF spot is used internally for GEX (gamma was computed at ETF scale)
     etf_spot = float(options_df["etf_spot"].iloc[0])
 
     # Calculate GEX (pass etf_spot — gamma and strikes are ETF-scale)
     print("  Calculating GEX...")
-    gex = calculate_gex(
-        options_df, etf_spot, cfg["etf_ticker"],
-        contract_multiplier=cfg.get("contract_multiplier", 100)
-    )
+    try:
+        gex = calculate_gex(
+            options_df, etf_spot, cfg["etf_ticker"],
+            contract_multiplier=cfg.get("contract_multiplier", 100)
+        )
+    except ValueError as e:
+        print(f"  ⚠  GEX calculation failed: {e}")
+        return None
 
     # Scale GEX output levels from ETF scale → instrument scale
     for attr in ["put_wall", "call_wall", "max_gex_strike", "zero_gex_strike", "max_pain"]:
@@ -304,7 +352,7 @@ def _compute_cta_levels(etf_ticker: str) -> dict:
 
 
 def _analyse_proxy(key: str, cfg: dict, macro: dict, us500_gex=None) -> None:
-    """Proxy analysis for UK100 and Ger40 where direct GEX is unavailable."""
+    """Proxy analysis for UK100 and GER40 where direct GEX is unavailable."""
     # Live price from CTrader
     price_data = get_live_price(key)
     spot_live = price_data["mid"] if price_data else None
