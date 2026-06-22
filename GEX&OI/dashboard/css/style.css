@@ -1549,3 +1549,197 @@ body {
   .instrument-tab { padding: 0 8px; font-size: 11px; }
   .spot-strip { flex-wrap: wrap; gap: 8px; }
 }
+
+/* ============================================================
+   REFRESH BUTTON
+   ============================================================ */
+.btn-refresh {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 5px;
+  border: 1px solid var(--accent-blue);
+  background: transparent;
+  color: var(--accent-blue);
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+.btn-refresh:hover { background: var(--accent-blue); color: #fff; }
+.btn-refresh:disabled { opacity: 0.5; cursor: wait; }
+
+/* ============================================================
+   GITHUB TOKEN MODAL
+   ============================================================ */
+.token-modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.72);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+}
+.token-modal-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 28px 24px;
+  max-width: 460px;
+  width: 92%;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.55);
+}
+.token-modal-title {
+  font-size: 15px; font-weight: 700; color: var(--text-primary);
+  margin-bottom: 10px;
+}
+.token-modal-body {
+  font-size: 12.5px; color: var(--text-secondary); line-height: 1.65;
+  margin-bottom: 12px;
+}
+.token-modal-steps {
+  font-size: 11px; color: var(--text-muted); line-height: 1.65;
+  background: var(--bg-primary); border-radius: 6px; padding: 10px 12px;
+  margin-bottom: 12px;
+}
+.token-modal-err {
+  font-size: 11px; color: var(--accent-red);
+  min-height: 16px; margin-bottom: 8px;
+}
+.token-modal-input {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+.token-modal-input:focus { outline: none; border-color: var(--accent-blue); }
+.token-modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+.token-modal-cancel {
+  padding: 8px 16px; background: transparent;
+  border: 1px solid var(--border); border-radius: 6px;
+  color: var(--text-secondary); cursor: pointer; font-size: 13px;
+}
+.token-modal-cancel:hover { border-color: var(--text-secondary); }
+.token-modal-save {
+  padding: 8px 18px; background: var(--accent-blue); border: none;
+  border-radius: 6px; color: #fff; cursor: pointer;
+  font-size: 13px; font-weight: 600;
+}
+.token-modal-save:hover { opacity: 0.88; }
+
+/* ============================================================
+   PROXY INSTRUMENT PANELS (UK100 / GER40)
+   ============================================================ */
+.proxy-notice {
+  display: flex; gap: 12px; align-items: flex-start;
+  background: rgba(56,189,248,0.07); border: 1px solid rgba(56,189,248,0.2);
+  border-radius: 8px; padding: 12px 14px;
+  font-size: 12px; color: var(--text-secondary); line-height: 1.6;
+}
+.proxy-notice-icon {
+  font-size: 16px; font-weight: 700; color: var(--accent-blue); flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Range Ladder */
+.prc-wrapper {
+  padding: 16px 4px 8px;
+}
+.prc-pdh-row, .prc-pdl-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 4px 0 8px;
+}
+.prc-extreme-val {
+  font-size: 14px; font-weight: 700; font-family: 'JetBrains Mono', monospace;
+  min-width: 68px;
+}
+.prc-extreme-lbl {
+  font-size: 11px; color: var(--text-muted); flex: 1;
+}
+.prc-dist {
+  font-size: 11px; font-weight: 600;
+}
+.prc-track-container {
+  padding: 0 4px 4px;
+}
+.prc-track {
+  position: relative; height: 28px;
+  background: var(--bg-primary);
+  border-radius: 6px; border: 1px solid var(--border);
+  overflow: visible;
+}
+.prc-fill {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  background: linear-gradient(90deg, rgba(16,185,129,0.25), rgba(239,68,68,0.25));
+  border-radius: 6px 0 0 6px;
+  pointer-events: none;
+}
+.prc-open-mark {
+  position: absolute; top: 0; bottom: 0; width: 2px;
+  background: var(--accent-gold); opacity: 0.7;
+}
+.prc-open-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent-gold);
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+}
+.prc-open-label {
+  position: absolute; bottom: calc(100% + 4px); left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px; color: var(--accent-gold); white-space: nowrap;
+  font-weight: 600;
+}
+.prc-spot-pin {
+  position: absolute; top: -4px; bottom: -4px;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center;
+  pointer-events: none;
+}
+.prc-spot-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--accent-gold);
+  border: 2px solid var(--bg-card);
+  margin-top: 3px;
+  box-shadow: 0 0 8px rgba(240,180,41,0.6);
+}
+.prc-spot-label {
+  font-size: 10px; font-weight: 700; color: var(--accent-gold);
+  white-space: nowrap; margin-top: 2px;
+}
+
+/* Struct grid */
+.proxy-struct-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 8px;
+  margin-top: 14px;
+}
+.proxy-struct-item {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.psi-label {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.5px;
+  text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px;
+}
+.psi-value {
+  font-size: 14px; font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-primary);
+}
+.psi-sub {
+  font-size: 10px; color: var(--text-muted); margin-top: 3px;
+}
+
+@media (max-width: 480px) {
+  .proxy-struct-grid { grid-template-columns: 1fr 1fr; }
+  .prc-dist { display: none; }
+}

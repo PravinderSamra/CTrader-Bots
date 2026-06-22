@@ -47,6 +47,9 @@
     <!-- Controls -->
     <div class="topbar-controls">
       <span class="scan-time" id="scan-time" title="Time of last scan"></span>
+      <button id="refresh-btn" onclick="triggerAgentRefresh()" class="btn-refresh" title="Trigger a fresh data scan via GitHub Actions (requires one-time token setup)">
+        ↺ Refresh
+      </button>
       <button class="btn-icon" id="theme-toggle" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle dark/light mode">☀️</button>
     </div>
 
@@ -71,6 +74,7 @@
       <div id="panel-situation" class="panel"></div>
       <div id="panel-levels"    class="panel"></div>
       <div id="panel-scenarios" class="panel"></div>
+      <div id="panel-orb"       class="panel"></div>
     </div>
 
   </div>
@@ -80,6 +84,30 @@
        ============================================================ -->
   <script src="js/charts.js"></script>
   <script src="js/app.js"></script>
+
+  <!-- GitHub Token Modal — for Refresh button one-time setup -->
+  <div id="token-modal" class="token-modal-overlay" style="display:none;">
+    <div class="token-modal-box">
+      <div class="token-modal-title">One-time Setup — GitHub Token</div>
+      <div class="token-modal-body">
+        To trigger a data refresh from this button, you need a GitHub Personal Access Token with <strong>workflow</strong> scope.
+        The token is stored only in this browser's localStorage and never sent anywhere except GitHub.
+      </div>
+      <div class="token-modal-steps">
+        <strong>How to create one (2 minutes):</strong><br>
+        GitHub → Settings → Developer Settings → Personal access tokens → Tokens (classic) →
+        Generate new token (classic) → tick <strong>workflow</strong> → Copy &amp; paste below
+      </div>
+      <div id="token-modal-msg" class="token-modal-err"></div>
+      <input id="token-modal-input" type="password" class="token-modal-input"
+        placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        onkeydown="if(event.key==='Enter')saveTokenAndRefresh()">
+      <div class="token-modal-actions">
+        <button onclick="closeTokenModal()" class="token-modal-cancel">Cancel</button>
+        <button onclick="saveTokenAndRefresh()" class="token-modal-save">Save &amp; Refresh</button>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>

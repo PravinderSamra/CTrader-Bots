@@ -1,0 +1,167 @@
+name: Run GEX & OI Agent
+
+on:
+  schedule:
+    - cron: '0 7 * * 1-5'    # 07:00 UTC = 08:00 BST (London open) Mon–Fri
+    - cron: '30 13 * * 1-5'  # 13:30 UTC = 14:30 BST (NY open)    Mon–Fri
+  workflow_dispatch:
+    inputs:
+      instruments:
+        description: 'Which instruments to scan'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - 'US500 XAUUSD'
+          - 'UK100 GER40'
+          - US500
+          - XAUUSD
+          - UK100
+          - GER40
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: gex-agent-deploy
+  cancel-in-progress: false
+
+jobs:
+  run-agent-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Python dependencies
+        run: pip install yfinance scipy pandas numpy matplotlib
+
+      - name: Run GEX & OI Agent
+        env:
+          MPLBACKEND: Agg
+          CTRADER_MCP_TOKEN: ${{ secrets.CTRADER_MCP_TOKEN }}
+        run: |
+          cd "GEX&OI/agent_skill"
+          INSTRUMENTS="${{ github.event.inputs.instruments }}"
+
+          if [ -z "$INSTRUMENTS" ] || [ "$INSTRUMENTS" = "all" ]; then
+            echo "Running full scan for all instruments..."
+            python gex_oi_agent.py --all --output both
+          else
+            echo "Running scan for: $INSTRUMENTS"
+            FLAGS=""
+            for inst in $INSTRUMENTS; do
+              FLAGS="$FLAGS --instrument $inst"
+            done
+            python gex_oi_agent.py $FLAGS --output both
+          fi
+
+      - name: Commit updated data files to repository
+        run: |
+          git config user.name "GEX Agent Bot"
+          git config user.email "gex-agent@noreply.github.com"
+          git add "GEX&OI/dashboard/data/"
+          if ! git diff --staged --quiet; then
+            git commit -m "Auto-scan: GEX & OI data [$(date -u '+%Y-%m-%d %H:%M UTC')]"
+            git push origin main
+          else
+            echo "No data changes to commit."
+          fi
+
+      - name: Build site structure
+        run: |
+          mkdir -p _site/gex-oi
+          mkdir -p _site/chart-analysis
+
+          cp -r "GEX&OI/dashboard/." _site/gex-oi/
+          cp "Chart-Analysis-Agent/index.html" _site/chart-analysis/index.html
+
+          cat > _site/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>CTrader Bots — Dashboards</title>
+            <style>
+              * { box-sizing: border-box; margin: 0; padding: 0; }
+              body {
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+                background: #0a0e17; color: #e8ecf4;
+                min-height: 100vh;
+                display: flex; flex-direction: column;
+                align-items: center; justify-content: center;
+                padding: 40px 20px;
+              }
+              .logo { font-size: 13px; font-weight: 700; letter-spacing: 1.5px;
+                      text-transform: uppercase; color: #38bdf8; margin-bottom: 8px; }
+              h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 6px; }
+              .sub { font-size: 13px; color: #8896b0; margin-bottom: 48px; }
+              .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                      gap: 16px; width: 100%; max-width: 760px; }
+              a.card {
+                background: #151d2e; border: 1px solid #1e2d45; border-radius: 10px;
+                padding: 24px; text-decoration: none; color: inherit;
+                transition: border-color 0.18s, transform 0.18s;
+                display: flex; flex-direction: column; gap: 8px;
+              }
+              a.card:hover { border-color: #38bdf8; transform: translateY(-2px); }
+              a.card.gold:hover { border-color: #F0B429; }
+              .card-icon { font-size: 28px; }
+              .card-title { font-size: 15px; font-weight: 700; color: #e8ecf4; }
+              .card-desc { font-size: 12px; color: #8896b0; line-height: 1.5; }
+              .card-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.6px;
+                          padding: 3px 8px; border-radius: 4px; width: fit-content;
+                          text-transform: uppercase; }
+              .tag-blue { background: rgba(56,189,248,0.12); color: #38bdf8; }
+              .tag-gold { background: rgba(240,180,41,0.15); color: #F0B429; }
+            </style>
+          </head>
+          <body>
+            <div class="logo">CTrader Bots</div>
+            <h1>Trading Dashboards</h1>
+            <p class="sub">Select a dashboard below</p>
+            <div class="grid">
+              <a class="card" href="gex-oi/">
+                <div class="card-icon">📊</div>
+                <div class="card-title">GEX &amp; OI Dashboard</div>
+                <div class="card-desc">Gamma Exposure &amp; Open Interest analysis for US500, XAUUSD, GER40, UK100</div>
+                <div class="card-tag tag-blue">Live</div>
+              </a>
+              <a class="card gold" href="chart-analysis/">
+                <div class="card-icon">⚡</div>
+                <div class="card-title">SMC/ICT Chart Analysis Agent</div>
+                <div class="card-desc">Upload a chart screenshot for full institutional-grade ICT/SMC analysis with probability scores and trade ideas</div>
+                <div class="card-tag tag-gold">AI Agent</div>
+              </a>
+            </div>
+          </body>
+          </html>
+          EOF
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "_site"
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

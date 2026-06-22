@@ -218,6 +218,7 @@ function renderCurrentPanel() {
 // CHARTS PANEL
 // ============================================================
 function renderChartsPanel(panel, data) {
+  if (data.proxy_mode) { renderProxyChartsPanel(panel, data); return; }
   panel.innerHTML = `
     <div class="content-header">
       <div>
@@ -278,6 +279,7 @@ function regimeChartCaption(regime, netGex, callWall, putWall, pin, zeroGex) {
 // METRICS PANEL
 // ============================================================
 function renderMetricsPanel(panel, data) {
+  if (data.proxy_mode) { renderProxyMetricsPanel(panel, data); return; }
   const m = data.metrics;
   const mac = data.macro;
   const cta = data.cta || {};
@@ -511,8 +513,12 @@ function vixLabel(vix) {
 // OI PANEL
 // ============================================================
 function renderOIPanel(panel, data) {
+  if (data.proxy_mode) { renderProxyOIPanel(panel, data); return; }
   const oi = data.top_strikes;
   const m = data.metrics;
+  if (!oi || !oi.calls || !oi.puts || oi.calls.length === 0 || oi.puts.length === 0) {
+    panel.innerHTML = renderEmptyState(); return;
+  }
   const maxCallOI = Math.max(...oi.calls.map(c => c.oi));
   const maxPutOI  = Math.max(...oi.puts.map(p => p.oi));
 
@@ -1339,4 +1345,280 @@ function renderEmptyState() {
       <div class="empty-state-text">No scan data available for ${STATE.instrument}.<br>Run the agent with <code>--output both</code> to populate the dashboard with live data.</div>
     </div>
   `;
+}
+
+// ============================================================
+// PROXY INSTRUMENTS — UK100 / GER40 (no direct options data)
+// ============================================================
+
+function renderProxyChartsPanel(panel, data) {
+  const mac  = data.macro || {};
+  const ss   = data.session_structure || {};
+  const m    = data.metrics;
+  const spot = data.spot;
+
+  const pdh       = mac.prev_day_high;
+  const pdl       = mac.prev_day_low;
+  const todayOpen = ss.today_open;
+  const sesHigh   = ss.session_high;
+  const sesLow    = ss.session_low;
+  const range     = (pdh && pdl) ? (pdh - pdl) : 0;
+  const spotPct   = range > 0 ? Math.max(2, Math.min(97, (spot - pdl) / range * 100)) : 50;
+  const openPct   = (todayOpen && range > 0) ? Math.max(2, Math.min(97, (todayOpen - pdl) / range * 100)) : null;
+
+  const spxRegime = m.spx_regime || m.regime || 'NEUTRAL';
+  const spxGex    = m.spx_gex_bn || 0;
+  const regimeCls = spxRegime === 'PINNED' ? 'badge-pinned' : spxRegime === 'TRENDING' ? 'badge-trending' : 'badge-neutral';
+  const corrPct   = data.instrument === 'GER40' ? 87 : 78;
+
+  panel.innerHTML = `
+    <div class="content-header">
+      <div>
+        <div class="spot-strip">
+          <div class="spot-instrument">${data.instrument}</div>
+          <div class="spot-price">${fmtNum(spot)}</div>
+          <div>
+            <div class="spot-meta">
+              SPX Regime (proxy): <strong>${spxRegime}</strong> &nbsp;|&nbsp; Scan: ${fmtTime(data.scan_time)}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="padding:12px 16px;">
+      <div class="proxy-notice">
+        <span class="proxy-notice-icon">ℹ</span>
+        <div>
+          <strong>Cross-Market Proxy Mode</strong> — No liquid free options data exists for ${data.instrument}.
+          GEX regime is derived from SPX (US500), which has a <strong>${corrPct}% correlation</strong> with ${data.instrument}.
+          Session structure levels from CTrader live candles are the primary reference.
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">SPX GEX Regime → ${data.instrument} Implication</span>
+        <span class="card-badge ${regimeCls}">${spxRegime}</span>
+      </div>
+      <div style="font-size:12.5px;color:var(--text-secondary);line-height:1.75;margin-bottom:14px;">
+        ${data.situation && data.situation.narrative ? data.situation.narrative : regimeFullExplainer(spxRegime, spxGex)}
+      </div>
+      <div class="macro-strip">
+        ${macroItem('SPX Regime', spxRegime, 'S&P 500 GEX regime applied as proxy')}
+        ${macroItem('Correlation', corrPct + '%', 'Historical correlation with SPX')}
+        ${macroItem('VIX', (mac.vix||0).toFixed(1), vixLabel(mac.vix))}
+        ${macroItem('DXY', (mac.dxy||0).toFixed(2), 'US Dollar Index')}
+        ${macroItem('US 10Y', (mac.us10y||0).toFixed(2) + '%', 'Treasury yield')}
+      </div>
+    </div>
+
+    ${range > 0 ? `
+    <div class="card">
+      <div class="card-header"><span class="card-title">Session Range — Spot vs Prior Day H/L</span></div>
+      <div class="prc-wrapper">
+        <div class="prc-pdh-row">
+          <span class="prc-extreme-val" style="color:var(--accent-red)">${fmtNum(pdh)}</span>
+          <span class="prc-extreme-lbl">PDH — Resistance</span>
+          <span class="prc-dist" style="color:var(--accent-red)">▲ ${fmtNum(pdh - spot)} to PDH</span>
+        </div>
+        <div class="prc-track-container">
+          <div class="prc-track">
+            <div class="prc-fill" style="width:${spotPct}%"></div>
+            ${openPct !== null ? `<div class="prc-open-mark" style="left:${openPct}%" title="Today Open: ${fmtNum(todayOpen)}"><div class="prc-open-dot"></div><div class="prc-open-label">Open</div></div>` : ''}
+            <div class="prc-spot-pin" style="left:${spotPct}%">
+              <div class="prc-spot-dot"></div>
+              <div class="prc-spot-label">${fmtNum(spot)} LIVE</div>
+            </div>
+          </div>
+        </div>
+        <div class="prc-pdl-row">
+          <span class="prc-extreme-val" style="color:var(--accent-green)">${fmtNum(pdl)}</span>
+          <span class="prc-extreme-lbl">PDL — Support</span>
+          <span class="prc-dist" style="color:var(--accent-green)">▼ ${fmtNum(spot - pdl)} to PDL</span>
+        </div>
+      </div>
+      <div class="proxy-struct-grid">
+        ${structMetric('Live Spot',     fmtNum(spot),     'Current price',                  'val-gold')}
+        ${todayOpen ? structMetric('Today Open', fmtNum(todayOpen), spot > todayOpen ? '▲ Above open' : '▼ Below open', spot > todayOpen ? 'val-green' : 'val-red') : ''}
+        ${pdh ? structMetric('PDH',     fmtNum(pdh),      fmtNum(pdh - spot) + ' above spot','val-red')   : ''}
+        ${pdl ? structMetric('PDL',     fmtNum(pdl),      fmtNum(spot - pdl) + ' below spot','val-green') : ''}
+        ${sesHigh ? structMetric('Session High', fmtNum(sesHigh), 'Intraday high', '') : ''}
+        ${sesLow  ? structMetric('Session Low',  fmtNum(sesLow),  'Intraday low',  '') : ''}
+        ${structMetric('Daily Range', fmtNum(range), 'PDH minus PDL', 'val-gold')}
+        ${structMetric('Position',    spotPct.toFixed(1) + '%', 'of range from PDL',
+          spotPct > 70 ? 'val-red' : spotPct < 30 ? 'val-green' : '')}
+      </div>
+    </div>` : ''}
+  `;
+}
+
+function structMetric(label, value, sub, cls) {
+  return `
+    <div class="proxy-struct-item">
+      <div class="psi-label">${label}</div>
+      <div class="psi-value ${cls}">${value}</div>
+      ${sub ? `<div class="psi-sub">${sub}</div>` : ''}
+    </div>
+  `;
+}
+
+function renderProxyMetricsPanel(panel, data) {
+  renderProxyChartsPanel(panel, data);
+  const mac = data.macro || {};
+  const extra = document.createElement('div');
+  extra.className = 'card';
+  extra.innerHTML = `
+    <div class="card-header"><span class="card-title">Macro Snapshot — Market Context</span></div>
+    <div style="font-size:12.5px;color:var(--text-secondary);line-height:1.65;margin-bottom:16px;">
+      ${macroNarrative(mac, data.instrument)}
+    </div>
+    <div class="macro-strip">
+      ${macroItem('VIX',       (mac.vix||0).toFixed(2),        mac.vix_signal  || vixLabel(mac.vix))}
+      ${macroItem('DXY',       (mac.dxy||0).toFixed(2),        'US Dollar Index')}
+      ${macroItem('US 10Y',    (mac.us10y||0).toFixed(2) + '%','US Treasury yield')}
+      ${macroItem('Prev High', fmtNum(mac.prev_day_high),      'Yesterday\'s session high')}
+      ${macroItem('Prev Low',  fmtNum(mac.prev_day_low),       'Yesterday\'s session low')}
+      ${macroItem('Wkly Open', fmtNum(mac.weekly_open),        'Monday\'s opening price')}
+    </div>
+  `;
+  panel.appendChild(extra);
+}
+
+function renderProxyOIPanel(panel, data) {
+  const m         = data.metrics;
+  const spxRegime = m.spx_regime || m.regime || 'NEUTRAL';
+  const regimeCls = spxRegime === 'PINNED' ? 'badge-pinned' : spxRegime === 'TRENDING' ? 'badge-trending' : 'badge-neutral';
+  const corrPct   = data.instrument === 'GER40' ? 87 : 78;
+
+  panel.innerHTML = `
+    <div class="content-header">
+      <div class="content-title">Open Interest — Cross-Market Reference</div>
+      <div class="content-subtitle">${data.instrument} &nbsp;|&nbsp; Spot: ${fmtNum(data.spot)}</div>
+    </div>
+
+    <div class="card" style="padding:20px 24px;">
+      <div class="proxy-notice" style="margin-bottom:16px;">
+        <span class="proxy-notice-icon">ℹ</span>
+        <div>
+          <strong>No direct OI data for ${data.instrument}</strong> —
+          ${data.instrument === 'UK100' ? 'FTSE 100' : 'DAX 40'} options are not freely available with sufficient liquidity for GEX/OI modelling.
+          The ETF proxies (${data.instrument === 'UK100' ? 'EWU' : 'EWG'}) traded on US markets have too little open interest
+          to generate reliable dealer positioning data.
+        </div>
+      </div>
+      <div style="font-size:12.5px;color:var(--text-secondary);line-height:1.8;">
+        <strong>What to use instead:</strong><br><br>
+        <strong>1. Session Structure (PDH / PDL)</strong> — The most reliable, market-generated reference levels
+        for ${data.instrument}. Prior day high and low represent where price was accepted and rejected yesterday.
+        These are the de facto support and resistance for today's session.<br><br>
+        <strong>2. SPX GEX as Global Risk Proxy</strong> — SPX has a <strong>${corrPct}% correlation</strong> with ${data.instrument}.
+        The dealer gamma regime on SPX (${spxRegime}) tends to set the tone for global index volatility.
+        PINNED SPX = expect range-bound, lower-volatility sessions across all indices.
+        TRENDING SPX = expect directional, higher-range sessions globally.<br><br>
+        <strong>3. VIX as Volatility Gauge</strong> — VIX tracks closely with VFTSE and VDAX.
+        VIX above 20 = widen stops and expect larger intraday ranges on ${data.instrument}.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">SPX Regime → ${data.instrument} Volatility Implication</span>
+        <span class="card-badge ${regimeCls}">${spxRegime}</span>
+      </div>
+      <div style="font-size:12.5px;color:var(--text-secondary);line-height:1.75;">
+        ${data.situation && data.situation.narrative ? data.situation.narrative : regimeFullExplainer(spxRegime, m.spx_gex_bn || 0)}
+      </div>
+    </div>
+
+    ${data.key_levels && data.key_levels.length ? `
+    <div class="card">
+      <div class="card-header"><span class="card-title">Session Key Levels — PDH / PDL Reference</span></div>
+      <table class="data-table">
+        <thead><tr><th>Level</th><th>Price</th><th>Role</th></tr></thead>
+        <tbody>
+          ${data.key_levels.map(lv => `
+            <tr class="${lv.type === 'resistance' ? 'row-resistance' : lv.type === 'support' ? 'row-support' : ''}">
+              <td style="font-weight:600;">${lv.label}</td>
+              <td style="font-family:'JetBrains Mono',monospace;font-weight:700;">${fmtNum(lv.level)}</td>
+              <td style="font-size:11px;color:var(--text-muted);">${lv.note || ''}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>` : ''}
+  `;
+}
+
+// ============================================================
+// REFRESH BUTTON — GitHub Actions manual trigger
+// ============================================================
+
+const GITHUB_DISPATCH_URL =
+  'https://api.github.com/repos/pravindersamra/ctrader-bots/actions/workflows/run-agent.yml/dispatches';
+
+function triggerAgentRefresh() {
+  const token = localStorage.getItem('gex_github_pat');
+  if (!token) { showTokenModal(); return; }
+
+  const btn = document.getElementById('refresh-btn');
+  if (btn) { btn.disabled = true; btn.textContent = '↺ Sending...'; }
+
+  fetch(GITHUB_DISPATCH_URL, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ ref: 'main' }),
+  })
+  .then(res => {
+    if (res.status === 204) {
+      if (btn) btn.textContent = '✓ Refresh triggered!';
+      setTimeout(() => {
+        if (btn) { btn.textContent = '↺ Refresh'; btn.disabled = false; }
+      }, 10000);
+    } else if (res.status === 401 || res.status === 403) {
+      localStorage.removeItem('gex_github_pat');
+      if (btn) { btn.textContent = '↺ Refresh'; btn.disabled = false; }
+      showTokenModal('Token invalid or expired. Please enter a new one.');
+    } else {
+      res.text().then(t => {
+        console.error('Dispatch failed:', res.status, t);
+        if (btn) { btn.textContent = '↺ Refresh'; btn.disabled = false; }
+        alert(`Refresh failed (HTTP ${res.status}). Check console for details.`);
+      });
+    }
+  })
+  .catch(err => {
+    console.error('Refresh error:', err);
+    if (btn) { btn.textContent = '↺ Refresh'; btn.disabled = false; }
+    alert('Could not reach GitHub API. Check your internet connection.');
+  });
+}
+
+function showTokenModal(msg = '') {
+  const modal = document.getElementById('token-modal');
+  if (!modal) return;
+  const msgEl = document.getElementById('token-modal-msg');
+  if (msgEl) msgEl.textContent = msg;
+  const inp = document.getElementById('token-modal-input');
+  if (inp) inp.value = '';
+  modal.style.display = 'flex';
+  if (inp) setTimeout(() => inp.focus(), 60);
+}
+
+function closeTokenModal() {
+  const modal = document.getElementById('token-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+function saveTokenAndRefresh() {
+  const inp = document.getElementById('token-modal-input');
+  if (!inp || !inp.value.trim()) return;
+  localStorage.setItem('gex_github_pat', inp.value.trim());
+  closeTokenModal();
+  triggerAgentRefresh();
 }
