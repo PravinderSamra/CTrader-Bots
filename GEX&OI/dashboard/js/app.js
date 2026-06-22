@@ -1569,26 +1569,35 @@ function triggerAgentRefresh() {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,
-      'Accept': 'application/vnd.github.v3+json',
+      'Accept': 'application/vnd.github+json',
       'Content-Type': 'application/json',
+      'X-GitHub-Api-Version': '2022-11-28',
     },
     body: JSON.stringify({ ref: 'main' }),
   })
   .then(res => {
     if (res.status === 204) {
-      if (btn) btn.textContent = '✓ Refresh triggered!';
+      if (btn) btn.textContent = '✓ Triggered! (~2-3 min)';
       setTimeout(() => {
         if (btn) { btn.textContent = '↺ Refresh'; btn.disabled = false; }
       }, 10000);
-    } else if (res.status === 401 || res.status === 403) {
+    } else if (res.status === 401) {
+      // Credentials rejected — token is wrong or expired
       localStorage.removeItem('gex_github_pat');
       if (btn) { btn.textContent = '↺ Refresh'; btn.disabled = false; }
-      showTokenModal('Token invalid or expired. Please enter a new one.');
+      showTokenModal('HTTP 401 — Token rejected. Re-enter the token (make sure you copied the full ghp_... string).');
+    } else if (res.status === 403) {
+      // Authenticated but no permission — wrong scope
+      if (btn) { btn.textContent = '↺ Refresh'; btn.disabled = false; }
+      showTokenModal('HTTP 403 — Token lacks permission. On the token page, make sure the "workflow" checkbox is ticked. You may need to regenerate the token.');
+    } else if (res.status === 404) {
+      if (btn) { btn.textContent = '↺ Refresh'; btn.disabled = false; }
+      alert('HTTP 404 — Workflow not found. The run-agent.yml may still be deploying. Wait 1 minute and try again.');
     } else {
       res.text().then(t => {
         console.error('Dispatch failed:', res.status, t);
         if (btn) { btn.textContent = '↺ Refresh'; btn.disabled = false; }
-        alert(`Refresh failed (HTTP ${res.status}). Check console for details.`);
+        alert(`Refresh failed (HTTP ${res.status}). Open browser console for details.`);
       });
     }
   })

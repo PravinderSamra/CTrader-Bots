@@ -94,9 +94,13 @@
         The token is stored only in this browser's localStorage and never sent anywhere except GitHub.
       </div>
       <div class="token-modal-steps">
-        <strong>How to create one (2 minutes):</strong><br>
-        GitHub → Settings → Developer Settings → Personal access tokens → Tokens (classic) →
-        Generate new token (classic) → tick <strong>workflow</strong> → Copy &amp; paste below
+        <strong>How to create one:</strong><br>
+        1. GitHub.com → your profile icon → <strong>Settings</strong><br>
+        2. Scroll to bottom → <strong>Developer settings</strong><br>
+        3. <strong>Personal access tokens</strong> → <strong>Tokens (classic)</strong><br>
+        4. <strong>Generate new token (classic)</strong><br>
+        5. Tick the <strong>workflow</strong> checkbox (under "Update GitHub Action workflows")<br>
+        6. Click Generate, copy the <code>ghp_...</code> token, paste below
       </div>
       <div id="token-modal-msg" class="token-modal-err"></div>
       <input id="token-modal-input" type="password" class="token-modal-input"
