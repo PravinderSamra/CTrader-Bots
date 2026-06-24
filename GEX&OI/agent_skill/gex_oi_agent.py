@@ -652,7 +652,7 @@ def _load_cached_payload(key: str):
             return None
         payload = json.loads(match.group(1))
         # Only use if it has real GEX data (not a pure proxy scan)
-        if not payload.get("proxy_mode") and not payload.get("gex_stale") \
+        if not payload.get("proxy_mode") \
                 and payload.get("metrics", {}).get("call_wall", 0) > 0:
             return payload
     except Exception:
