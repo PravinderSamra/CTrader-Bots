@@ -40,7 +40,7 @@ SYMBOL_MAP = {
 PIP_DIGITS = {
     "US500": 3, "NAS100": 4, "US30": 4,
     "UK100": 3, "GER40":  3,
-    "XAUUSD": 3, "XAGUSD": 3,
+    "XAUUSD": 5, "XAGUSD": 5,
 }
 
 # Plausible display price ranges for auto-detection of pip digits
