@@ -172,24 +172,30 @@ def _analyse_with_gex(key: str, cfg: dict, macro: dict):
 
     # Fetch options
     print(f"  Fetching options chain (yfinance {cfg['etf_ticker']})...")
+    options_df = None
     try:
         options_df = fetch_options_for_gex(key, spot_live)
     except Exception as e:
         print(f"  ERROR fetching options: {e}")
-        return None
 
-    if options_df.empty:
-        print("  No options data retrieved.")
+    options_ok = options_df is not None and not options_df.empty and len(options_df) >= 10
+
+    if not options_ok:
+        if options_df is None or options_df.empty:
+            print("  No options data retrieved — yfinance options unavailable.")
+        else:
+            n_got = len(options_df)
+            print(f"  ⚠  Only {n_got} contracts with valid OI/IV — insufficient for GEX.")
+        print(f"  Falling back to CTrader-only export for {key}.")
+        session_structure = get_session_structure(key)
+        try:
+            _export_proxy_dashboard_data(key, spot_live, macro, session_structure, None)
+        except Exception as e:
+            print(f"  [Dashboard export skipped: {e}]")
         return None
 
     n = len(options_df)
     print(f"  {n:,} option contracts loaded")
-
-    if n < 10:
-        print(f"  ⚠  Only {n} contracts with valid OI and IV — insufficient for reliable GEX.")
-        print(f"     yfinance options OI updates when NY opens (14:30 BST). Run the scan then.")
-        print(f"     Skipping GEX analysis for {key}.")
-        return None
 
     # ETF spot is used internally for GEX (gamma was computed at ETF scale)
     etf_spot = float(options_df["etf_spot"].iloc[0])
