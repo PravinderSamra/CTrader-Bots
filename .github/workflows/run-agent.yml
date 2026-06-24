@@ -78,6 +78,7 @@ jobs:
           git add "GEX&OI/dashboard/data/"
           if ! git diff --staged --quiet; then
             git commit -m "Auto-scan: GEX & OI data [$(date -u '+%Y-%m-%d %H:%M UTC')]"
+            git pull --rebase origin main
             git push origin main
           else
             echo "No data changes to commit."
