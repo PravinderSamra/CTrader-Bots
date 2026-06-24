@@ -158,10 +158,13 @@ def _analyse_with_gex(key: str, cfg: dict, macro: dict):
         print(f"  Live: {spot_live:,.2f}  "
               f"(bid {price_data['bid']:,.2f} / ask {price_data['ask']:,.2f})")
     else:
-        # Fallback: yfinance ETF × multiplier
+        # Fallback: yfinance — use gold futures directly for XAUUSD (more accurate than GLD×10)
         try:
-            etf_price = float(yf.Ticker(cfg["etf_ticker"]).fast_info["last_price"])
-            spot_live = etf_price * multiplier
+            if key == "XAUUSD":
+                spot_live = float(yf.Ticker("GC=F").fast_info["last_price"])
+            else:
+                etf_price = float(yf.Ticker(cfg["etf_ticker"]).fast_info["last_price"])
+                spot_live = etf_price * multiplier
             print(f"  CTrader unavailable — yfinance fallback: {spot_live:,.2f}")
         except Exception as e:
             print(f"  ERROR: Cannot determine spot price: {e}")
@@ -542,13 +545,14 @@ def _export_dashboard_data(key: str, spot: float, gex, oi, macro: dict,
     # Trade plan → scenarios
     scenarios_export: dict = {}
     if plan:
-        scenarios = getattr(plan, "scenarios", [])
-        if scenarios:
-            scenarios_export["primary"] = _scenario_export(scenarios[0], "A")
-        if len(scenarios) > 1:
-            scenarios_export["alt1"] = _scenario_export(scenarios[1], "B")
-        if len(scenarios) > 2:
-            scenarios_export["alt2"] = _scenario_export(scenarios[2], "C")
+        primary = plan.primary_scenario
+        if primary:
+            scenarios_export["primary"] = _scenario_export(primary, "A")
+        alts = plan.alternative_scenarios or []
+        if len(alts) > 0:
+            scenarios_export["alt1"] = _scenario_export(alts[0], "B")
+        if len(alts) > 1:
+            scenarios_export["alt2"] = _scenario_export(alts[1], "C")
 
     # Assemble payload
     payload = {
@@ -590,13 +594,13 @@ def _export_dashboard_data(key: str, spot: float, gex, oi, macro: dict,
             "key_time_events": [],
         },
         "situation": {
-            "narrative": getattr(plan, "situation_narrative", ""),
-            "confluence_scenario": getattr(plan, "confluence_scenario", "A"),
-            "scenario_name": getattr(plan, "scenario_name", ""),
-            "scenario_description": getattr(plan, "scenario_description", ""),
-            "levels_table": getattr(plan, "levels_table", []),
+            "narrative":            "",
+            "confluence_scenario":  plan.primary_bias if plan else "",
+            "scenario_name":        plan.primary_scenario.get("name", "") if (plan and plan.primary_scenario) else "",
+            "scenario_description": plan.primary_scenario.get("why", "")  if (plan and plan.primary_scenario) else "",
+            "levels_table":         [],
         },
-        "key_levels": getattr(plan, "key_levels_export", []),
+        "key_levels": _build_key_levels_export(spot, gex, oi),
         "trade_scenarios": scenarios_export,
     }
 
@@ -645,23 +649,67 @@ def _export_proxy_dashboard_data(key: str, spot_live, macro: dict,
     # VIX
     vix = macro.get("vix", 20)
 
-    # Key levels from structure
+    # Key levels from structure — full level-block format for dashboard renderLevelBlock()
     key_levels_export = []
+    range_size = round(pdh - pdl, 1) if (pdh and pdl) else 0
+    mid = round((pdh + pdl) / 2, 1) if (pdh and pdl) else 0
+
     if pdh:
-        key_levels_export.append({"level": pdh, "label": "PDH", "type": "resistance",
-                                  "note": "Prior day high — key resistance / breakout trigger"})
+        t1 = round(pdh + range_size * 0.5, 1) if range_size else round(pdh + 20, 1)
+        t2 = round(pdh + range_size, 1) if range_size else round(pdh + 40, 1)
+        stop = round(pdh - range_size * 0.15, 1) if range_size else round(pdh - 10, 1)
+        key_levels_export.append({
+            "level": pdh, "label": "PDH", "type": "resistance",
+            "entry": f"15-min close above PDH ({pdh:,.1f})",
+            "stop":  f"{stop:,.1f} — back below PDH (breakout failed)",
+            "rr":    "~2:1",
+            "target1": f"{t1:,.1f}",
+            "target2": f"{t2:,.1f}",
+            "context": "Prior Day High: the most watched resistance level. A confirmed close above triggers momentum buy stops. Below, it acts as resistance to fade from.",
+        })
     if pdl:
-        key_levels_export.append({"level": pdl, "label": "PDL", "type": "support",
-                                  "note": "Prior day low — key support / breakdown trigger"})
+        t1 = round(pdl - range_size * 0.5, 1) if range_size else round(pdl - 20, 1)
+        t2 = round(pdl - range_size, 1) if range_size else round(pdl - 40, 1)
+        stop = round(pdl + range_size * 0.15, 1) if range_size else round(pdl + 10, 1)
+        key_levels_export.append({
+            "level": pdl, "label": "PDL", "type": "support",
+            "entry": f"15-min close below PDL ({pdl:,.1f})",
+            "stop":  f"{stop:,.1f} — recovery above PDL (breakdown failed)",
+            "rr":    "~2:1",
+            "target1": f"{t1:,.1f}",
+            "target2": f"{t2:,.1f}",
+            "context": "Prior Day Low: the most watched support level. A confirmed close below triggers sell stops. Above, it acts as support to buy from.",
+        })
     if today_open:
-        key_levels_export.append({"level": today_open, "label": "Today Open", "type": "pivot",
-                                  "note": "Today's opening price — above = bullish bias, below = bearish"})
+        key_levels_export.append({
+            "level": today_open, "label": "Today Open", "type": "pin",
+            "entry": f"Fade from Today Open ({today_open:,.1f}) as directional filter",
+            "stop":  f"Sustained close through PDH or PDL",
+            "rr":    "~2:1",
+            "target1": f"{pdh:,.1f}" if pdh else "—",
+            "target2": f"{pdl:,.1f}" if pdl else "—",
+            "context": "Today's opening price acts as the session's intraday pivot — price above = bullish bias, price below = bearish bias. Use as a filter, not a standalone entry.",
+        })
     if session_hi and session_hi != pdh:
-        key_levels_export.append({"level": session_hi, "label": "Session High", "type": "resistance",
-                                  "note": "Current session swing high"})
+        key_levels_export.append({
+            "level": session_hi, "label": "Session High", "type": "resistance",
+            "entry": f"Break above session high ({session_hi:,.1f})",
+            "stop":  f"{round(session_hi - 10, 1):,.1f}",
+            "rr":    "~2:1",
+            "target1": f"{pdh:,.1f}" if (pdh and pdh > session_hi) else f"{round(session_hi + 20, 1):,.1f}",
+            "target2": "—",
+            "context": "Current session's intraday swing high — a break above signals intraday trend continuation.",
+        })
     if session_lo and session_lo != pdl:
-        key_levels_export.append({"level": session_lo, "label": "Session Low", "type": "support",
-                                  "note": "Current session swing low"})
+        key_levels_export.append({
+            "level": session_lo, "label": "Session Low", "type": "support",
+            "entry": f"Break below session low ({session_lo:,.1f})",
+            "stop":  f"{round(session_lo + 10, 1):,.1f}",
+            "rr":    "~2:1",
+            "target1": f"{pdl:,.1f}" if (pdl and pdl < session_lo) else f"{round(session_lo - 20, 1):,.1f}",
+            "target2": "—",
+            "context": "Current session's intraday swing low — a break below signals intraday downside continuation.",
+        })
 
     # Simple trade scenarios driven by regime + PDH/PDL
     scenarios_export: dict = {}
@@ -817,16 +865,126 @@ def _vix_label(vix) -> str:
     return "High vol — specialist setups only"
 
 
-def _scenario_export(scenario, letter: str) -> dict:
+def _build_key_levels_export(spot: float, gex, oi) -> list:
+    """Build the dashboard key_levels list from GEX/OI results."""
+    levels = []
+
+    call_wall = float(gex.call_wall or 0)
+    put_wall  = float(gex.put_wall  or 0)
+    max_gex   = float(gex.max_gex_strike  or 0)
+    zero_gex  = float(gex.zero_gex_strike or 0)
+    max_pain  = float(oi.max_pain or 0)
+
+    if call_wall:
+        entry = round(call_wall + 3, 0)
+        stop  = round(call_wall - 12, 0)
+        t1    = max_gex if max_gex > call_wall else round(call_wall + 50, 0)
+        res_above = [r for r in gex.resistance_levels if r > t1]
+        t2    = round(res_above[0], 0) if res_above else round(t1 + 50, 0)
+        rr1   = round((t1 - entry) / max(entry - stop, 0.1), 1)
+        levels.append({
+            "level":   round(call_wall, 1),
+            "label":   "Call Wall",
+            "type":    "resistance",
+            "entry":   f"15-min close above {call_wall:,.0f} → entry {entry:,.0f}",
+            "stop":    f"{stop:,.0f} (back inside wall = failed breakout)",
+            "rr":      f"~{rr1}:1 to T1",
+            "target1": f"{t1:,.0f}",
+            "target2": f"{t2:,.0f}",
+            "context": (f"Dealers short calls at {call_wall:,.0f} must buy futures as price rises — "
+                        f"creating overhead resistance. A confirmed 15-min close above triggers "
+                        f"accelerating dealer buy flow (short-squeeze dynamics)."),
+        })
+
+    if put_wall:
+        entry = round(put_wall + 3, 0)
+        stop  = round(put_wall - 10, 0)
+        t1    = max_pain if (max_pain and put_wall < max_pain < (call_wall or 1e9)) else (
+                    round((call_wall + put_wall) / 2, 0) if call_wall else round(put_wall + 50, 0))
+        rr1   = round((t1 - entry) / max(entry - stop, 0.1), 1)
+        levels.append({
+            "level":   round(put_wall, 1),
+            "label":   "Put Wall",
+            "type":    "support",
+            "entry":   f"Bounce at {put_wall:,.0f} zone → entry {entry:,.0f}",
+            "stop":    f"{stop:,.0f} (sustained break below put wall = support removed)",
+            "rr":      f"~{rr1}:1 to T1",
+            "target1": f"{t1:,.0f}",
+            "target2": f"{call_wall:,.0f}" if call_wall else "—",
+            "context": (f"Dealers long puts at {put_wall:,.0f} sell futures as price falls — "
+                        f"natural buy pressure that cushions declines. Strongest structural "
+                        f"support in the current GEX framework."),
+        })
+
+    if max_pain and abs(max_pain - call_wall) > 5 and abs(max_pain - put_wall) > 5:
+        levels.append({
+            "level":   round(max_pain, 1),
+            "label":   "Max Pain",
+            "type":    "pin",
+            "entry":   f"Fade extremes back toward {max_pain:,.0f}",
+            "stop":    f"Confirmed close through call or put wall",
+            "rr":      "~2:1",
+            "target1": f"{max_pain:,.0f}",
+            "target2": "—",
+            "context": (f"The price where total open interest (calls + puts) is worth the least — "
+                        f"market makers have a structural incentive to drift price toward "
+                        f"{max_pain:,.0f} into weekly expiry (Friday close)."),
+        })
+
+    if zero_gex and abs(zero_gex - call_wall) > 5 and abs(zero_gex - put_wall) > 5:
+        entry = round(zero_gex - 3, 0)
+        stop  = round(zero_gex + 12, 0)
+        near_supp = float(gex.support_levels[0]) if gex.support_levels else round(zero_gex - 50, 0)
+        rr1   = round((entry - near_supp) / max(stop - entry, 0.1), 1)
+        levels.append({
+            "level":   round(zero_gex, 1),
+            "label":   "Zero GEX",
+            "type":    "trigger",
+            "entry":   f"15-min close below {zero_gex:,.0f} → entry {entry:,.0f}",
+            "stop":    f"{stop:,.0f} (recovery above Zero GEX)",
+            "rr":      f"~{rr1}:1",
+            "target1": f"{near_supp:,.0f}",
+            "target2": f"{put_wall:,.0f}" if put_wall else "—",
+            "context": (f"Below {zero_gex:,.0f} net dealer gamma turns negative — "
+                        f"dealers begin amplifying moves rather than damping them. "
+                        f"Moves accelerate and can run further than in a pinned regime."),
+        })
+
+    levels.sort(key=lambda x: x["level"], reverse=True)
+    return levels
+
+
+def _scenario_export(scenario: dict, letter: str) -> dict:
+    """Convert a TradePlan scenario dict to dashboard export format."""
+    name = scenario.get("name", f"Scenario {letter}")
+
+    name_upper = name.upper()
+    if any(w in name_upper for w in ("LONG", "BREAKOUT", "BOUNCE", "BUY", "TREND")):
+        bias = "LONG"
+    elif any(w in name_upper for w in ("SHORT", "REJECTION", "FADE", "SELL", "BREAKDOWN")):
+        bias = "SHORT"
+    else:
+        bias = "NEUTRAL"
+
+    prob_map = {"A": "HIGH", "B": "MEDIUM", "C": "LOW"}
+    probability = prob_map.get(letter, "MEDIUM")
+
+    t1 = scenario.get("target_1", "")
+    t2 = scenario.get("target_2", "")
+    target = f"{t1}  |  T2: {t2}" if t1 and t2 else (t1 or t2 or "—")
+
+    trigger = scenario.get("trigger", "")
+    note    = scenario.get("note", "")
+
     return {
-        "label": getattr(scenario, "label", f"Scenario {letter}"),
-        "probability": getattr(scenario, "probability", "MEDIUM"),
-        "bias": getattr(scenario, "bias", "NEUTRAL"),
-        "entry": getattr(scenario, "entry", ""),
-        "target": getattr(scenario, "target", ""),
-        "stop": getattr(scenario, "stop", ""),
-        "context": getattr(scenario, "context", ""),
-        "invalidation": getattr(scenario, "invalidation", ""),
+        "label":        name,
+        "probability":  probability,
+        "bias":         bias,
+        "entry":        scenario.get("entry_zone", trigger or "—"),
+        "target":       target,
+        "stop":         scenario.get("stop", "—"),
+        "context":      scenario.get("why", note or ""),
+        "invalidation": trigger or note or "—",
     }
 
 

@@ -2,7 +2,7 @@ name: Run GEX & OI Agent
 
 on:
   schedule:
-    - cron: '0 7 * * 1-5'    # 07:00 UTC = 08:00 BST (London open) Mon–Fri
+    - cron: '0 6 * * 1-5'    # 06:00 UTC = 07:00 BST (pre-London)  Mon–Fri
     - cron: '30 13 * * 1-5'  # 13:30 UTC = 14:30 BST (NY open)    Mon–Fri
   workflow_dispatch:
     inputs:

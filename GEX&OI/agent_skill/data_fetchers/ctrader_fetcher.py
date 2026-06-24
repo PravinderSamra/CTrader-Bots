@@ -23,9 +23,9 @@ from typing import Optional
 _MCP_HOST = "mcp.ctrader.com"
 _MCP_PATH = "/trading/mcp"
 
-_TOKEN = os.environ.get(
-    "CTRADER_MCP_TOKEN",
-    "eyJwbGFudCI6InBlcHBlcnN0b25ldWsiLCJlbnZpcm9ubWVudCI6ImRlbW8iLCJ0b2tlbiI6IkliMEJzUERzSXBpZUJnTEtUWTluRjRpMEJ6a3R4V0pvSm1ZNVB3a1lIb2c9In0"
+_TOKEN = (
+    os.environ.get("CTRADER_MCP_TOKEN")
+    or "eyJwbGFudCI6InBlcHBlcnN0b25ldWsiLCJlbnZpcm9ubWVudCI6ImRlbW8iLCJ0b2tlbiI6IkliMEJzUERzSXBpZUJnTEtUWTluRjRpMEJ6a3R4V0pvSm1ZNVB3a1lIb2c9In0"
 )
 
 # ── Instrument map: our label → Pepperstone _SB suffix symbol ─────────────────
