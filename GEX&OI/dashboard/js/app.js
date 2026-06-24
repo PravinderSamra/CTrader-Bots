@@ -217,6 +217,11 @@ function renderCurrentPanel() {
 // ============================================================
 // CHARTS PANEL
 // ============================================================
+function staleGexBanner(data) {
+  if (!data.gex_stale) return '';
+  return `<div class="gex-stale-banner">⏱ GEX &amp; OI data from previous NY close (${fmtTime(data.gex_data_time)}) — live price updated. GEX levels refresh at 14:30 BST when NY opens.</div>`;
+}
+
 function renderChartsPanel(panel, data) {
   if (data.proxy_mode) { renderProxyChartsPanel(panel, data); return; }
   panel.innerHTML = `
@@ -231,6 +236,7 @@ function renderChartsPanel(panel, data) {
         </div>
       </div>
     </div>
+    ${staleGexBanner(data)}
     <div class="card" style="padding:12px 16px 8px;">
       <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;">
         ${regimeChartCaption(data.metrics.regime, data.metrics.net_gex, data.metrics.call_wall, data.metrics.put_wall, data.metrics.max_gex_strike, data.metrics.zero_gex_strike)}
@@ -300,7 +306,7 @@ function renderMetricsPanel(panel, data) {
         <div class="content-subtitle">Scan as of ${fmtTime(data.scan_time)}</div>
       </div>
     </div>
-
+    ${staleGexBanner(data)}
     ${renderRegimeBanner(m, regimeCls)}
 
     <div class="card">

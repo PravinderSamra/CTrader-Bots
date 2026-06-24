@@ -186,12 +186,20 @@ def _analyse_with_gex(key: str, cfg: dict, macro: dict):
         else:
             n_got = len(options_df)
             print(f"  ⚠  Only {n_got} contracts with valid OI/IV — insufficient for GEX.")
-        print(f"  Falling back to CTrader-only export for {key}.")
         session_structure = get_session_structure(key)
-        try:
-            _export_proxy_dashboard_data(key, spot_live, macro, session_structure, None)
-        except Exception as e:
-            print(f"  [Dashboard export skipped: {e}]")
+        cached = _load_cached_payload(key)
+        if cached:
+            print(f"  Using cached GEX data from {cached.get('scan_time','')[:10]} with fresh live price.")
+            try:
+                _export_stale_gex_dashboard_data(key, spot_live, macro, session_structure, cached)
+            except Exception as e:
+                print(f"  [Dashboard export skipped: {e}]")
+        else:
+            print(f"  No cached GEX data — falling back to proxy export for {key}.")
+            try:
+                _export_proxy_dashboard_data(key, spot_live, macro, session_structure, None)
+            except Exception as e:
+                print(f"  [Dashboard export skipped: {e}]")
         return None
 
     n = len(options_df)
@@ -619,6 +627,148 @@ def _export_dashboard_data(key: str, spot: float, gex, oi, macro: dict,
         + ";\n"
     )
 
+    out_path = os.path.join(data_dir, f"{key}_latest.js")
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write(js_content)
+    print(f"  DASHBOARD_EXPORT: {out_path}")
+
+
+def _load_cached_payload(key: str):
+    """Load the previous scan's dashboard payload if it contains real GEX data."""
+    import re as _re
+    agent_dir   = os.path.dirname(os.path.abspath(__file__))
+    project_dir = os.path.dirname(agent_dir)
+    js_path = os.path.join(project_dir, "dashboard", "data", f"{key}_latest.js")
+    if not os.path.exists(js_path):
+        return None
+    try:
+        with open(js_path, "r", encoding="utf-8") as f:
+            content = f.read()
+        match = _re.search(
+            r'window\.GEX_OI_DATA\["[^"]+"\]\s*=\s*(\{.*\});\s*$',
+            content, _re.DOTALL
+        )
+        if not match:
+            return None
+        payload = json.loads(match.group(1))
+        # Only use if it has real GEX data (not a pure proxy scan)
+        if not payload.get("proxy_mode") and not payload.get("gex_stale") \
+                and payload.get("metrics", {}).get("call_wall", 0) > 0:
+            return payload
+    except Exception:
+        pass
+    return None
+
+
+def _export_stale_gex_dashboard_data(key: str, spot_live, macro: dict,
+                                     structure: dict, cached: dict) -> None:
+    """
+    Write a dashboard file that merges cached GEX/OI levels with a fresh
+    live price and session structure from CTrader.  Used for morning scans
+    when yfinance options are unavailable before NY open.
+    """
+    agent_dir   = os.path.dirname(os.path.abspath(__file__))
+    project_dir = os.path.dirname(agent_dir)
+    data_dir    = os.path.join(project_dir, "dashboard", "data")
+    os.makedirs(data_dir, exist_ok=True)
+
+    now_iso = datetime.now(timezone.utc).astimezone().isoformat()
+    spot    = round(float(spot_live), 2) if spot_live else 0.0
+
+    s = structure or {}
+    pdh         = round(float(s.get("prev_day_high", 0) or 0), 2)
+    pdl         = round(float(s.get("prev_day_low",  0) or 0), 2)
+    today_open  = round(float(s.get("today_open",    0) or 0), 2)
+    session_hi  = round(float(s.get("session_high",  0) or 0), 2)
+    session_lo  = round(float(s.get("session_low",   0) or 0), 2)
+    weekly_open = round(float(s.get("weekly_open",   0) or 0), 2)
+    range_size  = round(pdh - pdl, 1) if (pdh and pdl) else 0
+
+    # Fresh session-structure key-levels
+    fresh_levels = []
+    if pdh:
+        fresh_levels.append({
+            "level": pdh, "label": "PDH", "type": "resistance",
+            "entry":   f"15-min close above PDH ({pdh:,.1f})",
+            "stop":    f"{round(pdh - range_size * 0.15, 1):,.1f} — back below PDH",
+            "rr":      "~2:1",
+            "target1": f"{round(pdh + range_size * 0.5, 1):,.1f}",
+            "target2": f"{round(pdh + range_size, 1):,.1f}",
+            "context": "Prior Day High: most-watched resistance. A confirmed close above triggers momentum buying.",
+        })
+    if pdl:
+        fresh_levels.append({
+            "level": pdl, "label": "PDL", "type": "support",
+            "entry":   f"15-min close below PDL ({pdl:,.1f})",
+            "stop":    f"{round(pdl + range_size * 0.15, 1):,.1f} — recovery above PDL",
+            "rr":      "~2:1",
+            "target1": f"{round(pdl - range_size * 0.5, 1):,.1f}",
+            "target2": f"{round(pdl - range_size, 1):,.1f}",
+            "context": "Prior Day Low: most-watched support. A confirmed close below triggers sell stops.",
+        })
+    if today_open:
+        fresh_levels.append({
+            "level": today_open, "label": "Today Open", "type": "pin",
+            "entry":   f"Use Today Open ({today_open:,.1f}) as directional filter",
+            "stop":    "Sustained close through PDH or PDL",
+            "rr":      "~2:1",
+            "target1": f"{pdh:,.1f}" if pdh else "—",
+            "target2": f"{pdl:,.1f}" if pdl else "—",
+            "context": "Session pivot — above = bullish bias, below = bearish bias.",
+        })
+
+    # GEX key-levels from the previous scan (these are structural, not session-specific)
+    gex_labels = {"Call Wall", "Put Wall", "Max GEX Pin", "Zero GEX", "Max Pain"}
+    cached_gex_levels = [
+        lv for lv in cached.get("key_levels", [])
+        if lv.get("label") in gex_labels
+    ]
+
+    combined_levels = sorted(
+        fresh_levels + cached_gex_levels,
+        key=lambda x: -x.get("level", 0)
+    )
+
+    fresh_macro = {
+        "vix":           round(float(macro.get("vix", 0) or 0), 2),
+        "vix_signal":    _vix_label(macro.get("vix")),
+        "dxy":           round(float(macro.get("dxy") or 0), 2),
+        "dxy_signal":    "DXY data",
+        "us10y":         round(float(macro.get("yield_10y") or 0), 2),
+        "us10y_signal":  "US 10Y yield",
+        "prev_day_high": pdh,
+        "prev_day_low":  pdl,
+        "weekly_open":   weekly_open,
+    }
+
+    payload = {
+        **cached,                              # full GEX fields from previous scan
+        "scan_time":   now_iso,                # fresh scan timestamp
+        "spot":        spot,                   # fresh live price
+        "proxy_mode":  False,                  # render as full GEX, not proxy
+        "gex_stale":   True,
+        "gex_data_time": cached.get("scan_time", ""),
+        "macro":       fresh_macro,
+        "session_structure": {
+            "london_open":     "08:00",
+            "ny_open":         "13:30",
+            "ny_close":        "21:00",
+            "today_open":      today_open,
+            "session_high":    session_hi,
+            "session_low":     session_lo,
+            "key_time_events": [],
+        },
+        "key_levels": combined_levels,
+    }
+
+    js_content = (
+        f"// GEX & OI Dashboard Data — {key}\n"
+        f"// Auto-generated by gex_oi_agent.py at {now_iso} — DO NOT EDIT MANUALLY\n"
+        f"window.GEX_OI_DATA = window.GEX_OI_DATA || {{}};\n"
+        f"window.GEX_OI_DATA[\"{key}\"] = "
+        + json.dumps(payload, indent=2, ensure_ascii=False)
+        + ";\n"
+    )
     out_path = os.path.join(data_dir, f"{key}_latest.js")
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(js_content)
