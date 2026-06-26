@@ -456,3 +456,8 @@ MIN_FVG_GRADE = "C"                   # Minimum grade to show (C, B, A, A+)
 MAX_FVG_DISPLAY = 5                   # Max FVGs shown per symbol
 MAX_OB_DISPLAY  = 5                   # Max order blocks shown per symbol
 MAX_LIQ_DISPLAY = 5                   # Max liquidity pools per symbol
+
+# ── Scalp Quality Filters ──────────────────────────────────────────────────────
+MIN_RR_SCALP          = 1.5    # Minimum R:R — if TP2 fails, escalate to TP3; if both fail, flag NO VIABLE TP
+STANDBY_DISTANCE_PCT  = 0.80   # % from entry edge — suppress from scalp report if price is further than this
+MAX_TOUCH_COUNT_SCALP = 3      # FVGs tested more than this are excluded (orders likely absorbed)

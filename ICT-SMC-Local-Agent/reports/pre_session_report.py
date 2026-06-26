@@ -11,13 +11,15 @@ from typing import Optional
 from data.models import MarketContext, FVGResult, OrderBlock, LiquidityPool, COTData
 from data.fetchers import calendar_fetcher
 from analysis.sessions import (
-    current_session, active_kill_zone, session_display_label, session_bias_note
+    current_session, active_kill_zone, session_display_label, session_bias_note,
+    next_kill_zone,
 )
 from config.settings import (
     FTMO_ACCOUNT_SIZE, FTMO_RISK_PER_TRADE, FTMO_DAILY_LOSS_LIMIT,
     FTMO_TOTAL_LOSS_LIMIT, FTMO_PROFIT_TARGET_P1, AGENT_VERSION,
     SKIP_GRADES, MAX_FVG_DISPLAY, MAX_OB_DISPLAY, MAX_LIQ_DISPLAY,
     PIP_VALUE_PER_LOT, INSTRUMENTS,
+    MIN_RR_SCALP, STANDBY_DISTANCE_PCT, MAX_TOUCH_COUNT_SCALP,
 )
 
 _GRADE_ORDER = {"A+": 0, "A": 1, "B": 2, "C": 3, "SKIP": 4}
@@ -218,7 +220,8 @@ def _confluence_checks(fvg: FVGResult, ctx: MarketContext) -> list[tuple[bool, s
 
 def _compute_fvg_setup(fvg: FVGResult, ctx: MarketContext) -> Optional[dict]:
     """
-    Compute SL, entry zone, TP1/TP2/TP3, lot size, and confluence score.
+    Compute SL, entry zone, TP1/TP2/TP3, lot size, confluence score,
+    R:R gate (escalate TP if needed), distance label, and POC obstacle.
     Returns None if pip data is unavailable.
     """
     symbol = ctx.symbol
@@ -230,19 +233,24 @@ def _compute_fvg_setup(fvg: FVGResult, ctx: MarketContext) -> Optional[dict]:
     gap_low, gap_high = fvg.gap_low, fvg.gap_high
     gap_size = gap_high - gap_low
 
-    # SL: just beyond the FVG edge, minimum 10% of gap beyond it
+    # SL: placed beyond the FVG edge (not derived from mid-entry)
     min_stop = _MIN_STOP.get(symbol, pip_size * 15)
     buffer   = max(gap_size * 0.10, pip_size * 3)
-    entry    = (gap_low + gap_high) / 2   # mid-FVG OTE entry
+    entry    = (gap_low + gap_high) / 2   # mid-FVG entry (OTE)
 
-    # Compute initial stop from FVG edge + buffer, then enforce minimum
     initial_stop = (entry - (gap_low - buffer)) if is_bull else ((gap_high + buffer) - entry)
     stop_size    = max(initial_stop, min_stop)
-
-    # SL is always exactly stop_size away from entry
     sl = entry - stop_size if is_bull else entry + stop_size
 
-    # TP1: 1:1 RR
+    # Sizing from mid entry (reported baseline)
+    size_str = _position_size(symbol, stop_size)
+
+    # Sizing from worst-case entry edge (gap_high for longs, gap_low for shorts)
+    worst_entry   = gap_high if is_bull else gap_low
+    worst_stop    = max(abs(worst_entry - sl), min_stop)
+    size_str_worst = _position_size(symbol, worst_stop)
+
+    # TP1: 1:1 RR from mid entry
     tp1 = entry + stop_size if is_bull else entry - stop_size
 
     # TP2: nearest unswept liquidity pool in trade direction
@@ -265,25 +273,65 @@ def _compute_fvg_setup(fvg: FVGResult, ctx: MarketContext) -> Optional[dict]:
     tp3 = ctx.prior_day_high if is_bull else ctx.prior_day_low
     tp3_label = "prior day high (BSL)" if is_bull else "prior day low (SSL)"
 
-    # Confluences
-    checks = _confluence_checks(fvg, ctx)
-    score  = sum(1 for passed, _ in checks if passed)
-
-    # Position size
-    size_str = _position_size(symbol, stop_size)
-
     # RR ratios
     rr_tp1 = abs(tp1 - entry) / stop_size if stop_size > 0 else 0
     rr_tp2 = abs(tp2 - entry) / stop_size if (tp2 and stop_size > 0) else None
     rr_tp3 = abs(tp3 - entry) / stop_size if (tp3 and stop_size > 0) else None
 
+    # ── R:R gate: require MIN_RR_SCALP — escalate TP2 → TP3 if needed ──────────
+    primary_tp = None
+    primary_tp_label = ""
+    primary_rr = None
+    tp_escalated = False
+    no_viable_tp = False
+
+    if tp2 and rr_tp2 and rr_tp2 >= MIN_RR_SCALP:
+        primary_tp, primary_tp_label, primary_rr = tp2, tp2_label, rr_tp2
+    elif tp3 and rr_tp3 and rr_tp3 >= MIN_RR_SCALP:
+        primary_tp, primary_tp_label, primary_rr = tp3, tp3_label, rr_tp3
+        tp_escalated = True
+    else:
+        no_viable_tp = True
+
+    # ── Price distance to nearest entry edge ─────────────────────────────────────
+    price = ctx.current_price
+    if price < gap_low:
+        dist_pct = (gap_low - price) / price * 100
+    elif price > gap_high:
+        dist_pct = (price - gap_high) / price * 100
+    else:
+        dist_pct = 0.0
+
+    if dist_pct == 0.0:
+        distance_label = "ACTIVE — price inside FVG"
+    elif dist_pct < 0.20:
+        distance_label = "PENDING NEAR"
+    elif dist_pct < STANDBY_DISTANCE_PCT:
+        distance_label = "PENDING FAR"
+    else:
+        distance_label = "STANDBY"
+
+    # ── POC obstacle between entry and primary TP ─────────────────────────────────
+    poc_obstacle = None
+    if ctx.poc and primary_tp:
+        poc = ctx.poc
+        if is_bull and entry < poc < primary_tp:
+            poc_obstacle = poc
+        elif not is_bull and primary_tp < poc < entry:
+            poc_obstacle = poc
+
+    # Confluences
+    checks = _confluence_checks(fvg, ctx)
+    score  = sum(1 for passed, _ in checks if passed)
+
     return {
         "entry_low": gap_low,
         "entry_high": gap_high,
         "entry_mid": entry,
-        "current_price": ctx.current_price,
+        "current_price": price,
         "sl": sl,
         "stop_pips": stop_size / pip_size,
+        "worst_stop_pips": worst_stop / pip_size,
         "tp1": tp1,
         "tp2": tp2,
         "tp2_label": tp2_label,
@@ -292,7 +340,16 @@ def _compute_fvg_setup(fvg: FVGResult, ctx: MarketContext) -> Optional[dict]:
         "rr_tp1": rr_tp1,
         "rr_tp2": rr_tp2,
         "rr_tp3": rr_tp3,
+        "primary_tp": primary_tp,
+        "primary_tp_label": primary_tp_label,
+        "primary_rr": primary_rr,
+        "tp_escalated": tp_escalated,
+        "no_viable_tp": no_viable_tp,
         "size_str": size_str,
+        "size_str_worst": size_str_worst,
+        "distance_pct": dist_pct,
+        "distance_label": distance_label,
+        "poc_obstacle": poc_obstacle,
         "confluences": checks,
         "confluence_score": score,
         "total_checks": len(checks),
@@ -305,8 +362,16 @@ def _format_setup_block(setup: dict, symbol: str) -> list[str]:
     lines = []
 
     is_bull = setup["tp1"] > setup["entry_mid"]
+    stop_pips = setup["stop_pips"]
+    worst_stop_pips = setup["worst_stop_pips"]
 
-    # Direction — first line, clearly labelled
+    # Status line — distance and viability
+    status = setup["distance_label"]
+    if setup["no_viable_tp"]:
+        status += "  ⚠ NO VIABLE TP (neither TP2 nor TP3 meets 1.5:1 minimum)"
+    lines.append(f"    Status      : {status}")
+
+    # Direction
     lines.append(f"    Direction   : {'▲ LONG  (BUY)' if is_bull else '▼ SHORT (SELL)'}")
 
     # Current price relative to entry zone
@@ -326,26 +391,56 @@ def _format_setup_block(setup: dict, symbol: str) -> list[str]:
     # Entry zone
     lines.append(f"    Entry zone  : {fp(setup['entry_low'])} → {fp(setup['entry_high'])}  (enter anywhere in FVG)")
 
-    # SL
-    stop_pips = setup["stop_pips"]
-    lines.append(f"    SL          : {fp(setup['sl'])}  ({stop_pips:.0f}pt stop from entry midpoint)")
+    # SL (placed beyond FVG edge)
+    lines.append(f"    SL          : {fp(setup['sl'])}  ({stop_pips:.0f}pt stop from mid)")
 
-    # TP1 — partial close (take 50% off)
+    # TP1 — partial close
     lines.append(f"    TP1 (partial 50%) : {fp(setup['tp1'])}  [R/R {setup['rr_tp1']:.1f}:1]")
 
-    # TP2 — primary target (run remaining 50% to liquidity)
+    # TP2 — always show with R:R flag if it fails the gate
     if setup["tp2"]:
-        rr = f"  [R/R {setup['rr_tp2']:.1f}:1]" if setup["rr_tp2"] else ""
-        lines.append(f"    TP2 ★ PRIMARY     : {fp(setup['tp2'])}  {setup['tp2_label']}{rr}")
+        rr_str = f"  [R/R {setup['rr_tp2']:.1f}:1]" if setup["rr_tp2"] else ""
+        below_min = setup["rr_tp2"] and setup["rr_tp2"] < MIN_RR_SCALP
+        warn = "  ← below 1.5:1 minimum" if below_min else ""
+        primary_mark = "  ★ PRIMARY" if not setup["tp_escalated"] and not setup["no_viable_tp"] else ""
+        lines.append(f"    TP2{primary_mark} : {fp(setup['tp2'])}  {setup['tp2_label']}{rr_str}{warn}")
 
-    # TP3
-    if setup["tp3"]:
-        rr = f"  [R/R {setup['rr_tp3']:.1f}:1]" if setup["rr_tp3"] else ""
-        lines.append(f"    TP3 (PDH/L) : {fp(setup['tp3'])}  {setup['tp3_label']}{rr}")
+    # Primary TP — show escalation clearly
+    if setup["no_viable_tp"]:
+        lines.append(f"    PRIMARY TARGET    : ⚠ SKIP — no TP meets 1.5:1 R:R. Do not trade this setup.")
+    elif setup["tp_escalated"]:
+        rr_str = f"  [R/R {setup['primary_rr']:.1f}:1]" if setup["primary_rr"] else ""
+        lines.append(
+            f"    TP3 ★ PRIMARY     : {fp(setup['primary_tp'])}  {setup['primary_tp_label']}{rr_str}"
+            f"  ← TP2 failed 1.5:1 gate, escalated to TP3"
+        )
+    else:
+        # TP3 shown for context (not primary)
+        if setup["tp3"]:
+            rr_str = f"  [R/R {setup['rr_tp3']:.1f}:1]" if setup["rr_tp3"] else ""
+            lines.append(f"    TP3 (PDH/L) : {fp(setup['tp3'])}  {setup['tp3_label']}{rr_str}")
 
-    # Size
+    # POC obstacle warning
+    if setup.get("poc_obstacle"):
+        lines.append(f"    ⚠ POC obstacle    : {fp(setup['poc_obstacle'])}  — price may stall here before primary TP")
+
+    # Position size — mid entry and worst-case edge
     if setup["size_str"]:
-        lines.append(f"    Size        : ${FTMO_RISK_PER_TRADE} risk = {setup['size_str']} @ {stop_pips:.0f}pt stop")
+        lines.append(f"    Size (mid entry)  : ${FTMO_RISK_PER_TRADE} risk = {setup['size_str']} @ {stop_pips:.0f}pt stop")
+    if setup["size_str_worst"] and setup["size_str_worst"] != setup["size_str"]:
+        lines.append(
+            f"    Size (worst edge) : ${FTMO_RISK_PER_TRADE} risk = {setup['size_str_worst']} @ {worst_stop_pips:.0f}pt stop"
+            f"  ← use if entering at zone edge"
+        )
+
+    # Next kill zone window
+    kz_active = active_kill_zone()
+    if kz_active:
+        lines.append(f"    Entry window : NOW — {kz_active} active  ← enter on confirmation")
+    else:
+        nkz = next_kill_zone()
+        if nkz:
+            lines.append(f"    Entry window : {nkz[0]}  {nkz[2]}  ← earliest valid entry window")
 
     # Confluences
     score = setup["confluence_score"]
@@ -392,7 +487,20 @@ def _fvg_lines(fvgs: list, ctx: MarketContext) -> list[str]:
     if ctx.midnight_open:
         session_bull_bias = price < ctx.midnight_open  # True = discount → bull bias
 
-    displayable = [f for f in fvgs if f.probability_grade not in SKIP_GRADES]
+    # Distance from current price to nearest FVG edge (% of price)
+    _dist_pct = lambda f: (
+        (f.gap_low - price) / price * 100 if price < f.gap_low
+        else (price - f.gap_high) / price * 100 if price > f.gap_high
+        else 0.0
+    )
+
+    # Filter: skip SKIP-grades, STALE/over-tested FVGs, and far-away STANDBY zones
+    displayable = [
+        f for f in fvgs
+        if f.probability_grade not in SKIP_GRADES
+        and not (f.touch_count > MAX_TOUCH_COUNT_SCALP or f.age_label == "STALE")
+        and _dist_pct(f) < STANDBY_DISTANCE_PCT
+    ]
     # Sort: grade first, then nearest to current price within the same grade
     displayable.sort(key=lambda f: (
         _GRADE_ORDER.get(f.probability_grade, 9),

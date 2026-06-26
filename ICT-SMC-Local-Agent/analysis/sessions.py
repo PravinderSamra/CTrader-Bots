@@ -103,6 +103,33 @@ def minutes_until_kill_zone_closes() -> int | None:
     return int(diff // 60)
 
 
+def next_kill_zone() -> tuple | None:
+    """
+    Return (name, mins_away, time_label) for the next kill zone starting after now.
+    Skips the currently active kill zone. Returns None if none found.
+    """
+    et = _now_et()
+    now_mins = et.hour * 60 + et.minute
+    active = active_kill_zone()
+
+    candidates = []
+    for name, (start, _end) in _KILL_ZONES.items():
+        if name == active:
+            continue
+        s_h, s_m = start
+        start_mins = s_h * 60 + s_m
+        mins_away = start_mins - now_mins if start_mins > now_mins else (24 * 60 - now_mins) + start_mins
+        candidates.append((mins_away, name, s_h, s_m))
+
+    if not candidates:
+        return None
+    candidates.sort()
+    mins_away, name, s_h, s_m = candidates[0]
+    h_away, m_away = divmod(mins_away, 60)
+    countdown = f"{h_away}h {m_away}m" if h_away else f"{m_away}m"
+    return name, mins_away, f"{s_h:02d}:{s_m:02d} ET  ({countdown} from now)"
+
+
 def session_bias_note(
     asian_swept: str | None,
     midnight_open: float | None,
