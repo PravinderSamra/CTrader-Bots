@@ -9,6 +9,7 @@ Asian sweep, liq.grab, post-BOS, COT, premium/discount, OTE).
 from datetime import datetime, timezone
 from typing import Optional
 from data.models import MarketContext, FVGResult, OrderBlock, LiquidityPool, COTData
+from data.fetchers import calendar_fetcher
 from analysis.sessions import (
     current_session, active_kill_zone, session_display_label, session_bias_note
 )
@@ -69,22 +70,30 @@ _MIN_STOP: dict[str, float] = {
     "BTCUSDT": 200.0, "ETHUSDT": 20.0, "SOLUSDT": 2.0,
 }
 
-# Build data source labels from INSTRUMENTS config once at import time
-_DATA_SOURCE_LABEL: dict[str, str] = {}
-_SOURCE_DISPLAY = {"twelve_data": "Twelve Data", "yahoo": "Yahoo Finance", "okx": "OKX"}
+# Data source display names and per-source warnings, keyed by the source
+# that was ACTUALLY used to fetch the candles (MarketContext.data_source) —
+# not the instrument's configured primary source, which may not match if a
+# fallback was triggered at runtime.
+_SOURCE_DISPLAY = {"ctrader": "cTrader", "twelve_data": "Twelve Data", "yahoo": "Yahoo Finance", "okx": "OKX"}
 _SOURCE_WARN: dict[str, str] = {
     "yahoo":      "⚠  Yahoo Finance (market-hours only). Verify levels on Pepperstone chart before trading.",
     "okx":        "ℹ  OKX spot feed. Pepperstone crypto levels typically match closely.",
     "twelve_data":"ℹ  Twelve Data spot. Levels should be close to Pepperstone (<1-2 pip variance).",
 }
-for _inst in INSTRUMENTS:
-    _name = _inst["name"]
-    _src  = _inst["source"]
-    _fb   = _inst.get("fallback_source")
-    _label = _SOURCE_DISPLAY.get(_src, _src)
-    if _fb:
-        _label += f" → {_SOURCE_DISPLAY.get(_fb, _fb)} fallback"
-    _DATA_SOURCE_LABEL[_name] = (_SOURCE_WARN.get(_src, f"Source: {_label}"), _label)
+
+# Configured primary source per instrument — used to detect when the
+# actual source differs (i.e. a fallback was triggered at runtime).
+_PRIMARY_SOURCE: dict[str, str] = {_inst["name"]: _inst["source"] for _inst in INSTRUMENTS}
+
+
+def _data_source_label(ctx: MarketContext) -> tuple[str, str]:
+    """Return (warning_line, feed_label) reflecting the source actually used for this context."""
+    actual = ctx.data_source
+    configured = _PRIMARY_SOURCE.get(ctx.symbol, actual)
+    label = _SOURCE_DISPLAY.get(actual, actual)
+    if actual != configured:
+        label = f"{_SOURCE_DISPLAY.get(configured, configured)} → {label} fallback"
+    return _SOURCE_WARN.get(actual, ""), label
 
 
 def _grade_symbol(grade: str) -> str:
@@ -570,12 +579,16 @@ def generate_report(markets: list[MarketContext]) -> str:
         "  • TP2 ★ PRIMARY     = nearest unswept BSL/SSL — run remaining 50%",
         "  • TP3 (PDH/L)       = prior day high/low — full extension target",
         "  • Confluences       = 9-10 factor ICT/SMC scoring (COT excluded when unavailable)",
-        _SEP,
+        "",
+        "  NEWS & RISK EVENTS (ForexFactory — all markets)",
+        _DIV,
     ]
+    lines.append(calendar_fetcher.format_todays_high_impact())
+    lines.append(_SEP)
 
     for ctx in markets:
         price = ctx.current_price
-        src_warn, src_label = _DATA_SOURCE_LABEL.get(ctx.symbol, ("", "Unknown"))
+        src_warn, src_label = _data_source_label(ctx)
         fp = lambda v: _fmt_price(v, ctx.symbol)
 
         lines += [
@@ -586,6 +599,12 @@ def generate_report(markets: list[MarketContext]) -> str:
         ]
         if src_warn:
             lines.append(f"  {src_warn}")
+
+        # News risk
+        blackout = calendar_fetcher.is_news_blackout(ctx.symbol)
+        if blackout["in_blackout"]:
+            lines.append(f"  ⚠  NEWS BLACKOUT — {blackout['reason']}")
+        lines.append(calendar_fetcher.format_calendar_section(ctx.symbol, hours_ahead=12))
 
         # Trend
         lines += [
