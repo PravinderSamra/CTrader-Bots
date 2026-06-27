@@ -21,11 +21,12 @@ Do not paste the raw report. The user can ask "show me [SYMBOL] in full" at any 
 
 **SCAN HEADER** — timestamp (UK/BST), active kill zone, instruments on cTrader Remote feed vs fallback (e.g. 29/32 cTrader Remote, 3 OKX), any NEWS BLACKOUT warnings.
 
-**A+ AND A GRADE SETUPS** — paste the complete TRADE PLAN block exactly as printed in the report for each A+ or A graded FVG, including Direction, Current price, Entry zone, SL, TP1/TP2/TP3, Size, and Confluences bar.
+**A+ AND A GRADE SETUPS** — paste the complete TRADE PLAN block exactly as printed in the report for each A+ or A graded FVG. This includes: Status (ACTIVE/PENDING NEAR/PENDING FAR), Direction, Current price, Entry zone, SL, TP1/TP2/TP3 with PRIMARY marker, Size (mid + worst-case edge), Entry window (kill zone), and Confluences weighted score (e.g. 8.5/12.3 [████████░░░░] (69%)) with each ✓/✗ check listed.
 
-**B GRADE SETUPS** — one line each: SYMBOL direction | Entry zone | SL | TP primary | R:R | Confluences X/9
+**B GRADE SETUPS** — one line each: SYMBOL direction | Status | Entry zone | SL | TP primary | R:R | Confluences X.X/12.X (Y%)
+If NO VIABLE TP flag is set on a B setup, append: ⚠ no viable TP — skip.
 
-**NO ACTIONABLE SETUP** — one line each: SYMBOL — no setup (C/SKIP)
+**NO ACTIONABLE SETUP** — one line each: SYMBOL — no setup (C/SKIP/filtered)
 
 **ECONOMIC CALENDAR** — list upcoming HIGH-impact news events from the report that could affect open setups.
 
