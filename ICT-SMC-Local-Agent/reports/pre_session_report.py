@@ -133,64 +133,100 @@ def _position_size(symbol: str, stop_price_units: float) -> str:
 
 # ── Confluence check ──────────────────────────────────────────────────────────
 
-def _confluence_checks(fvg: FVGResult, ctx: MarketContext) -> list[tuple[bool, str]]:
+def _confluence_checks(fvg: FVGResult, ctx: MarketContext) -> list[tuple[bool, str, float]]:
     """
-    Returns a list of (passed, description) tuples for each confluence check.
-    Used to build the per-FVG confluence block in the report.
+    Returns (passed, description, weight) tuples for each confluence check.
+
+    Weights reflect relative predictive importance for intraday scalps:
+      1.5 — HTF trend (strongest directional filter), Asian sweep (high-conviction signal)
+      1.0 — Most setup-specific checks
+      0.75 — Session bias (supporting context)
+      0.5  — P/D zone (covered more precisely by weighted OTE check)
     """
     is_bull = fvg.direction == "BULL"
+    fvg_mid = (fvg.gap_low + fvg.gap_high) / 2
+    fp = lambda v: _fmt_price(v, ctx.symbol)
     checks = []
 
-    # 1. Higher-TF trend aligned
+    # 0. Kill zone timing — highest-probability entry window; not scored before = critical gap
+    kz = active_kill_zone()
+    nkz = next_kill_zone()
+    in_kz   = kz is not None
+    near_kz = not in_kz and nkz is not None and nkz[1] <= 30
+    if in_kz:
+        kz_str = f"Kill zone: {kz} — ACTIVE now"
+    elif near_kz:
+        kz_str = f"Kill zone: {nkz[0]} opens in {nkz[1]}min"
+    elif nkz:
+        h_away, m_away = divmod(nkz[1], 60)
+        kz_str = f"Kill zone: none active — next {nkz[0]} in {h_away}h {m_away}m"
+    else:
+        kz_str = "Kill zone: none active"
+    checks.append((in_kz or near_kz, kz_str, 1.0))
+
+    # 1. Higher-TF trend aligned (weight 1.5 — primary directional filter)
     htf = ctx.higher_tf_trend
     aligned_htf = (is_bull and htf == "BULLISH") or (not is_bull and htf == "BEARISH")
-    checks.append((aligned_htf, f"HTF (daily) trend: {htf}"))
+    checks.append((aligned_htf, f"HTF (daily) trend: {htf}  [×1.5]", 1.5))
 
-    # 2. Intraday trend aligned
+    # 2. Intraday trend aligned (weight 1.0)
     intra = ctx.intraday_trend
     aligned_intra = (is_bull and intra == "BULLISH") or (not is_bull and intra == "BEARISH")
-    checks.append((aligned_intra, f"Intraday (1H) trend: {intra}"))
+    checks.append((aligned_intra, f"Intraday (1H) trend: {intra}", 1.0))
 
-    # 3. Session bias from midnight open
+    # 3. Session bias from midnight open (weight 0.75 — supporting context)
     if ctx.midnight_open:
         price_vs_mid = ctx.current_price < ctx.midnight_open
         mid_aligned = (is_bull and price_vs_mid) or (not is_bull and not price_vs_mid)
         bias_label = "DISCOUNT (below midnight open)" if price_vs_mid else "PREMIUM (above midnight open)"
-        checks.append((mid_aligned, f"Session bias: {bias_label}"))
+        checks.append((mid_aligned, f"Session bias: {bias_label}  [×0.75]", 0.75))
     else:
-        checks.append((False, "Session bias: midnight open unavailable"))
+        checks.append((False, "Session bias: midnight open unavailable  [×0.75]", 0.75))
 
-    # 4. Asian manipulation swept in setup direction
+    # 4. Asian manipulation swept in setup direction (weight 1.5 — strong signal when active)
     asian_swept = ctx.asian_swept
     if asian_swept:
         swept_aligned = (is_bull and asian_swept == "LOW") or (not is_bull and asian_swept == "HIGH")
-        swept_label = f"Asian {'low' if asian_swept == 'LOW' else 'high'} swept — manipulation complete"
-        checks.append((swept_aligned, swept_label))
+        swept_label = f"Asian {'low' if asian_swept == 'LOW' else 'high'} swept — manipulation complete  [×1.5]"
+        checks.append((swept_aligned, swept_label, 1.5))
     else:
-        checks.append((False, "Asian manipulation: range intact (watch for sweep before entry)"))
+        checks.append((False, "Asian manipulation: range intact (watch for sweep before entry)  [×1.5]", 1.5))
 
-    # 5. In discount (bull) or premium (bear)
+    # 5. In discount (bull) or premium (bear) (weight 0.5 — directional context, OTE is more precise)
     pd_status = ctx.premium_discount_status
     in_discount = "DISCOUNT" in pd_status or "OTE" in pd_status
     in_premium  = "PREMIUM"  in pd_status or "OTE" in pd_status
     pd_aligned = (is_bull and in_discount) or (not is_bull and in_premium)
-    checks.append((pd_aligned, f"P/D zone: {pd_status.split('—')[0].strip()}"))
+    checks.append((pd_aligned, f"P/D zone: {pd_status.split('—')[0].strip()}  [×0.5]", 0.5))
 
-    # 6. In OTE zone (61.8–78.6% Fibonacci retracement — highest probability entry)
-    in_ote = ctx.ote_low <= ctx.current_price <= ctx.ote_high
-    checks.append((in_ote, f"OTE zone: {'IN OTE ({:.5f}–{:.5f})'.format(ctx.ote_low, ctx.ote_high) if in_ote else 'NOT in OTE'}"))
+    # 6. FVG midpoint in OTE zone (FIXED: checks FVG position, not current price)
+    #    Bull OTE: 61.8–78.6% up from range low; Bear OTE: mirror from range high
+    rng = ctx.range_high - ctx.range_low
+    if is_bull:
+        in_ote = ctx.ote_low <= fvg_mid <= ctx.ote_high
+        ote_lo_str, ote_hi_str = fp(ctx.ote_low), fp(ctx.ote_high)
+    else:
+        bear_ote_lo = ctx.range_high - rng * 0.786
+        bear_ote_hi = ctx.range_high - rng * 0.618
+        in_ote = bear_ote_lo <= fvg_mid <= bear_ote_hi
+        ote_lo_str, ote_hi_str = fp(bear_ote_lo), fp(bear_ote_hi)
+    ote_label = (
+        f"OTE zone: FVG midpoint in OTE ({ote_lo_str}–{ote_hi_str})"
+        if in_ote else
+        f"OTE zone: FVG midpoint not in OTE ({ote_lo_str}–{ote_hi_str})"
+    )
+    checks.append((in_ote, ote_label, 1.0))
 
-    # 7. FVG liquidity grab context
+    # 7. FVG liquidity grab context (weight 1.0)
     has_liq_grab = "liq.grab" in fvg.context_flags
-    checks.append((has_liq_grab, "Liquidity grab before FVG formation" + (" ✓" if has_liq_grab else " (not detected)")))
+    checks.append((has_liq_grab, "Liquidity grab before FVG formation" + (" ✓" if has_liq_grab else " (not detected)"), 1.0))
 
-    # 8. FVG post-BOS context
+    # 8. FVG post-BOS context (weight 1.0)
     has_bos = "post-BOS" in fvg.context_flags
-    checks.append((has_bos, "Break of Structure before FVG" + (" ✓" if has_bos else " (not detected)")))
+    checks.append((has_bos, "Break of Structure before FVG" + (" ✓" if has_bos else " (not detected)"), 1.0))
 
-    # 9. Nearby unmitigated Order Block in same direction
+    # 9. Nearby unmitigated Order Block in same direction (weight 1.0)
     pip_size = _PIP_SIZE.get(ctx.symbol, 0.0001)
-    # ATR-based proximity: 10% of recent price range (adapts per instrument)
     range_size = (ctx.range_high - ctx.range_low) if (ctx.range_high and ctx.range_low) else 0
     proximity_threshold = range_size * 0.10 if range_size > 0 else pip_size * 50
     nearby_ob = None
@@ -202,18 +238,54 @@ def _confluence_checks(fvg: FVGResult, ctx: MarketContext) -> list[tuple[bool, s
             nearby_ob = ob
             break
     if nearby_ob:
-        checks.append((True, f"Order Block confluence: {_fmt_price(nearby_ob.ob_low, ctx.symbol)}–{_fmt_price(nearby_ob.ob_high, ctx.symbol)} (Q:{nearby_ob.quality}/5{'  liq-grab OB' if nearby_ob.preceded_by_liq_grab else ''})"))
+        checks.append((True, f"Order Block confluence: {fp(nearby_ob.ob_low)}–{fp(nearby_ob.ob_high)} (Q:{nearby_ob.quality}/5{'  liq-grab OB' if nearby_ob.preceded_by_liq_grab else ''})", 1.0))
     else:
-        checks.append((False, "Order Block: no nearby OB in setup direction"))
+        checks.append((False, "Order Block: no nearby OB in setup direction", 1.0))
 
-    # 10. COT macro alignment (omitted entirely when data unavailable — don't penalise missing data)
+    # 10. FVG at or near a structural anchor level (NEW — weight 1.0)
+    #     Checks zone overlap: does the FVG span or touch a key institutional level?
+    zone_buf = fvg_mid * 0.001  # 0.1% buffer around zone edges for near-misses
+    structural_levels = []
+    if ctx.prior_day_high: structural_levels.append(("Prior Day High", ctx.prior_day_high))
+    if ctx.prior_day_low:  structural_levels.append(("Prior Day Low",  ctx.prior_day_low))
+    if ctx.asian_high:     structural_levels.append(("Asian High",     ctx.asian_high))
+    if ctx.asian_low:      structural_levels.append(("Asian Low",      ctx.asian_low))
+    if ctx.midnight_open:  structural_levels.append(("Midnight Open",  ctx.midnight_open))
+    at_anchor, anchor_label = False, "Structural anchor: no key level within FVG zone"
+    for anchor_name, level in structural_levels:
+        if fvg.gap_low - zone_buf <= level <= fvg.gap_high + zone_buf:
+            at_anchor = True
+            anchor_label = f"Structural anchor: FVG overlaps {anchor_name} ({fp(level)})"
+            break
+    checks.append((at_anchor, anchor_label, 1.0))
+
+    # 11. Volume profile alignment (NEW — weight 1.0)
+    #     Bull: FVG near VAL (structural support) or LVN (fast-move zone)
+    #     Bear: FVG near VAH (structural resistance) or LVN
+    vp_tol  = fvg_mid * 0.002
+    lvn_tol = fvg_mid * 0.001
+    vp_aligned, vp_label = False, "Volume profile: FVG not at key VP level"
+    if is_bull and ctx.val and abs(fvg_mid - ctx.val) <= vp_tol:
+        vp_aligned = True
+        vp_label = f"Volume profile: FVG at VAL ({fp(ctx.val)}) — structural support"
+    elif not is_bull and ctx.vah and abs(fvg_mid - ctx.vah) <= vp_tol:
+        vp_aligned = True
+        vp_label = f"Volume profile: FVG at VAH ({fp(ctx.vah)}) — structural resistance"
+    elif ctx.lvns:
+        for lvn in ctx.lvns:
+            if abs(fvg_mid - lvn) <= lvn_tol:
+                vp_aligned = True
+                vp_label = f"Volume profile: FVG at LVN ({fp(lvn)}) — low-resistance zone, fast move expected"
+                break
+    checks.append((vp_aligned, vp_label, 1.0))
+
+    # 12. COT macro alignment (weight 1.0 — omit entirely when unavailable, not penalised)
     if ctx.cot:
         cot_aligned = (is_bull and ctx.cot.bias == "BULLISH") or (not is_bull and ctx.cot.bias == "BEARISH")
         cot_warn = ""
         if (is_bull and ctx.cot.rank_8wk >= 90) or (not is_bull and ctx.cot.rank_8wk <= 10):
             cot_warn = "  ⚠ CROWDED — contrarian risk"
-        checks.append((cot_aligned, f"COT: {ctx.cot.bias} ({ctx.cot.rank_8wk}th pct, {ctx.cot.report_date}){cot_warn}"))
-    # else: COT unavailable — omit check so score is out of 9, not penalised as 0/10
+        checks.append((cot_aligned, f"COT: {ctx.cot.bias} ({ctx.cot.rank_8wk}th pct, {ctx.cot.report_date}){cot_warn}", 1.0))
 
     return checks
 
@@ -320,9 +392,10 @@ def _compute_fvg_setup(fvg: FVGResult, ctx: MarketContext) -> Optional[dict]:
         elif not is_bull and primary_tp < poc < entry:
             poc_obstacle = poc
 
-    # Confluences
-    checks = _confluence_checks(fvg, ctx)
-    score  = sum(1 for passed, _ in checks if passed)
+    # Confluences — weighted scoring
+    checks     = _confluence_checks(fvg, ctx)
+    score      = sum(w for passed, _, w in checks if passed)
+    max_weight = sum(w for _, _, w in checks)
 
     return {
         "entry_low": gap_low,
@@ -352,7 +425,7 @@ def _compute_fvg_setup(fvg: FVGResult, ctx: MarketContext) -> Optional[dict]:
         "poc_obstacle": poc_obstacle,
         "confluences": checks,
         "confluence_score": score,
-        "total_checks": len(checks),
+        "max_weight": max_weight,
     }
 
 
@@ -442,12 +515,14 @@ def _format_setup_block(setup: dict, symbol: str) -> list[str]:
         if nkz:
             lines.append(f"    Entry window : {nkz[0]}  {nkz[2]}  ← earliest valid entry window")
 
-    # Confluences
-    score = setup["confluence_score"]
-    total = setup["total_checks"]
-    bar = "█" * score + "░" * (total - score)
-    lines.append(f"    Confluences : {score}/{total}  [{bar}]")
-    for passed, desc in setup["confluences"]:
+    # Confluences — weighted score
+    score      = setup["confluence_score"]
+    max_weight = setup["max_weight"]
+    pct        = score / max_weight if max_weight > 0 else 0
+    filled     = round(pct * 12)
+    bar        = "█" * filled + "░" * (12 - filled)
+    lines.append(f"    Confluences : {score:.1f}/{max_weight:.1f}  [{bar}]  ({pct*100:.0f}%)")
+    for passed, desc, _weight in setup["confluences"]:
         tick = "  ✓" if passed else "  ✗"
         lines.append(f"    {tick} {desc}")
 
