@@ -942,9 +942,9 @@ def generate_condensed_report(markets: list[MarketContext]) -> str:
 
     # News summary
     try:
-        cal_lines = calendar_fetcher.format_todays_high_impact()
-        if cal_lines and any(l.strip() for l in cal_lines):
-            for l in cal_lines[:5]:
+        news_str = calendar_fetcher.format_todays_high_impact()
+        if news_str and news_str.strip():
+            for l in news_str.split("\n")[:5]:
                 if l.strip():
                     lines.append(l)
     except Exception:
