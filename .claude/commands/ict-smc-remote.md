@@ -19,18 +19,38 @@ User specified: $ARGUMENTS
 
 ## Condensed summary format (when no instrument specified)
 
-The Python script already outputs the condensed format directly — do NOT try to summarise it further. Present it to the user as-is, with this structure:
+Run `python main.py`, then present the output with this structure:
 
-**SCAN HEADER** — Python outputs this directly (timestamp, kill zone, data sources)
+**SCAN HEADER** — Present the Python header verbatim (timestamp, kill zone, data sources, news).
 
-**A+/A SETUPS** — Python outputs full trade cards for top-grade setups. Include these verbatim.
+**A+/A SETUPS** — For each A+ or A grade setup:
+1. Present the trade card verbatim exactly as Python outputs it.
+2. Immediately after the card, write an **ADVISOR NOTE** in plain English as an expert ICT/SMC trade advisor. This is the most important part — write it as if you are personally advising the trader on what to do and why. Cover:
+   - **The narrative**: What has price done to set this up? (e.g. swept Asian high, ran into premium FVG, daily trend confirms direction). Connect the dots so the trade makes sense as a story.
+   - **Why this specific FVG matters**: What structural level or liquidity pool is it sitting at? Why would institutions be interested at this zone?
+   - **Exactly how to enter**: Which timeframe to drop to (5m or 15m), what confirmation to look for before pressing the button (e.g. "wait for a bearish engulfing or displacement candle on the 5m after price taps the top of the FVG at [price]"). Be specific — name the price level.
+   - **Key risk**: One thing that would invalidate this setup (e.g. "if price closes a 1H candle above the SL level, the setup is dead — do not re-enter").
+   - **Position management**: When to take the partial (TP1) and when to move SL to breakeven, in plain language.
+   Format the advisor note clearly:
 
-**B SETUPS** — Python outputs one-line summaries with BST rescan times and /ict-smc-remote SYMBOL commands. Include all of these verbatim.
+   > **Advisor Note — [SYMBOL] [LONG/SHORT]**
+   > [3–6 sentences covering narrative, entry trigger, risk, and position management]
 
-**NO SETUP** — Python outputs these grouped. Include verbatim.
+**B SETUPS** — Present the Python one-liner output verbatim for all B setups. No advisor note for B setups.
 
-**RESCAN SCHEDULE** — After presenting the output, extract all pending B setups and list their rescan times as a numbered watch-list:
-  1. 12:00 BST — EURUSD (PENDING NEAR) → /ict-smc-remote EURUSD
-  2. 14:45 BST — GOLD (PENDING FAR, pre-Silver Bullet) → /ict-smc-remote GOLD
+**NO SETUP** — Present the Python grouped output verbatim.
 
-When $ARGUMENTS contains a symbol name (rescan): run `python main.py`, extract that instrument's result from the output, and compare it to what was shown in the previous scan in this chat. State whether the setup is PROGRESSING (closer to entry), STALLED (same distance), or DISQUALIFIED (beyond SL, FVG filled wrong direction, or aged out). Then state the next rescan time in BST.
+**RESCAN SCHEDULE** — After presenting all output, list all pending setups (A+/A and B) with their rescan times as a numbered watch-list:
+  1. 12:00 BST — EURUSD SHORT (PENDING NEAR) → /ict-smc-remote EURUSD
+  2. 14:45 BST — GOLD LONG (PENDING FAR, pre-Silver Bullet) → /ict-smc-remote GOLD
+
+## Rescan (when $ARGUMENTS contains a symbol name)
+
+Run `python main.py`, extract that instrument's section from the output, and:
+
+1. Present the updated trade card verbatim.
+2. Write an updated **Advisor Note** as above — but also state explicitly:
+   - **Status change**: PROGRESSING (price moved closer to entry), STALLED (same distance), or DISQUALIFIED (price beyond SL, FVG filled in wrong direction, or aged out).
+   - If PROGRESSING: update entry trigger with current price context.
+   - If DISQUALIFIED: state clearly "Do not trade this setup — [reason]. Remove from watch list."
+3. State the next rescan time in BST.
