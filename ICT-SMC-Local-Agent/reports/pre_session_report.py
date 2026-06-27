@@ -6,8 +6,9 @@ Per-FVG trade plans: SL, TP1/2/3, confluence scoring (OB, trend, session bias,
 Asian sweep, liq.grab, post-BOS, COT, premium/discount, OTE).
 """
 
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from typing import Optional
+from zoneinfo import ZoneInfo
 from data.models import MarketContext, FVGResult, OrderBlock, LiquidityPool, COTData
 from data.fetchers import calendar_fetcher
 from analysis.sessions import (
@@ -22,11 +23,16 @@ from config.settings import (
     MIN_RR_SCALP, STANDBY_DISTANCE_PCT, MAX_TOUCH_COUNT_SCALP,
 )
 
+_BST = ZoneInfo("Europe/London")
+
 _GRADE_ORDER = {"A+": 0, "A": 1, "B": 2, "C": 3, "SKIP": 4}
 _WIDTH = 70
 _SEP   = "═" * _WIDTH
 _DIV   = "─" * _WIDTH
 _DOT   = "·" * _WIDTH
+
+# Scanner name → cTrader/TradingView symbol (what she sees on her charts)
+_FTMO_SYMBOLS = {i["name"]: i.get("ftmo_symbol", i["name"]) for i in INSTRUMENTS}
 
 # Price units per pip for every supported instrument
 _PIP_SIZE: dict[str, float] = {
@@ -96,6 +102,40 @@ def _data_source_label(ctx: MarketContext) -> tuple[str, str]:
     if actual != configured:
         label = f"{_SOURCE_DISPLAY.get(configured, configured)} → {label} fallback"
     return _SOURCE_WARN.get(actual, ""), label
+
+
+def _rescan_bst(distance_label: str, symbol: str) -> str:
+    """BST rescan recommendation based on distance and next kill zone."""
+    bst_now = datetime.now(tz=_BST)
+    kz  = active_kill_zone()
+    nkz = next_kill_zone()
+
+    if "ACTIVE" in distance_label:
+        return "Enter on confirmation — no rescan needed, monitor fill"
+
+    if "PENDING NEAR" in distance_label:
+        if kz:
+            t = (bst_now + timedelta(minutes=15)).strftime("%H:%M")
+            return f"Monitor now ({kz} active) — rescan {t} BST if no fill → /ict-smc-local {symbol}"
+        elif nkz and nkz[1] <= 90:
+            t = (bst_now + timedelta(minutes=nkz[1])).strftime("%H:%M")
+            return f"Rescan {t} BST when {nkz[0]} opens → /ict-smc-local {symbol}"
+        else:
+            t = (bst_now + timedelta(minutes=20)).strftime("%H:%M")
+            return f"Rescan {t} BST — PENDING NEAR, check progress → /ict-smc-local {symbol}"
+
+    if "PENDING FAR" in distance_label:
+        if kz:
+            t = (bst_now + timedelta(minutes=30)).strftime("%H:%M")
+            return f"Rescan {t} BST — in {kz} but price needs to move → /ict-smc-local {symbol}"
+        elif nkz:
+            t = (bst_now + timedelta(minutes=nkz[1])).strftime("%H:%M")
+            return f"Rescan {t} BST when {nkz[0]} opens → /ict-smc-local {symbol}"
+        else:
+            t = (bst_now + timedelta(minutes=60)).strftime("%H:%M")
+            return f"Rescan {t} BST — no kill zone imminent → /ict-smc-local {symbol}"
+
+    return f"Monitor at next kill zone → /ict-smc-local {symbol}"
 
 
 def _grade_symbol(grade: str) -> str:
@@ -506,7 +546,7 @@ def _format_setup_block(setup: dict, symbol: str) -> list[str]:
             f"  ← use if entering at zone edge"
         )
 
-    # Next kill zone window
+    # Kill zone + BST rescan advice
     kz_active = active_kill_zone()
     if kz_active:
         lines.append(f"    Entry window : NOW — {kz_active} active  ← enter on confirmation")
@@ -514,6 +554,8 @@ def _format_setup_block(setup: dict, symbol: str) -> list[str]:
         nkz = next_kill_zone()
         if nkz:
             lines.append(f"    Entry window : {nkz[0]}  {nkz[2]}  ← earliest valid entry window")
+    rescan = _rescan_bst(setup.get("distance_label", ""), symbol)
+    lines.append(f"    Rescan (BST) : {rescan}")
 
     # Confluences — weighted score
     score      = setup["confluence_score"]
@@ -774,10 +816,12 @@ def generate_report(markets: list[MarketContext]) -> str:
         src_warn, src_label = _data_source_label(ctx)
         fp = lambda v: _fmt_price(v, ctx.symbol)
 
+        ftmo_sym = _FTMO_SYMBOLS.get(ctx.symbol, ctx.symbol)
+        ctrader_note = f" ({ftmo_sym})" if ftmo_sym != ctx.symbol else ""
         lines += [
             "",
             _SEP,
-            f"  {ctx.symbol}  |  Current: {fp(price)}  |  Feed: {src_label}",
+            f"  {ctx.symbol}{ctrader_note}  |  Current: {fp(price)}  |  Feed: {src_label}",
             _DIV,
         ]
         if src_warn:

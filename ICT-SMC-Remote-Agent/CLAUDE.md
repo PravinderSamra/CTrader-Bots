@@ -156,7 +156,7 @@ Yahoo Finance returns market-hours-only candles for US indices. The overnight ga
 | USDJPY | 20 pips | ~2.0 lots | Pip value varies |
 | US500 | 10 pts | 1.80 contracts | $25/pt/contract |
 | US500 | 15 pts | 1.20 contracts | |
-| XAUUSD | 5 pts | ~9 lots | $1/pt × 100oz |
+| XAUUSD | 5 pts | ~0.9 lots | $100/pt/lot (100 oz × $1) |
 | BTC | varies | $450 / price_move | 1:1 leverage — size in USD |
 
 ---

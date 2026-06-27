@@ -6,8 +6,9 @@ Per-FVG trade plans: SL, TP1/2/3, confluence scoring (OB, trend, session bias,
 Asian sweep, liq.grab, post-BOS, COT, premium/discount, OTE).
 """
 
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from typing import Optional
+from zoneinfo import ZoneInfo
 from data.models import MarketContext, FVGResult, OrderBlock, LiquidityPool, COTData
 from data.fetchers import calendar_fetcher
 from analysis.sessions import (
@@ -22,11 +23,16 @@ from config.settings import (
     MIN_RR_SCALP, STANDBY_DISTANCE_PCT, MAX_TOUCH_COUNT_SCALP,
 )
 
+_BST = ZoneInfo("Europe/London")
+
 _GRADE_ORDER = {"A+": 0, "A": 1, "B": 2, "C": 3, "SKIP": 4}
 _WIDTH = 70
 _SEP   = "═" * _WIDTH
 _DIV   = "─" * _WIDTH
 _DOT   = "·" * _WIDTH
+
+# Scanner name → cTrader/TradingView symbol (what she sees on her charts)
+_FTMO_SYMBOLS = {i["name"]: i.get("ftmo_symbol", i["name"]) for i in INSTRUMENTS}
 
 # Price units per pip for every supported instrument
 _PIP_SIZE: dict[str, float] = {
@@ -96,6 +102,40 @@ def _data_source_label(ctx: MarketContext) -> tuple[str, str]:
     if actual != configured:
         label = f"{_SOURCE_DISPLAY.get(configured, configured)} → {label} fallback"
     return _SOURCE_WARN.get(actual, ""), label
+
+
+def _rescan_bst(distance_label: str, symbol: str) -> str:
+    """BST rescan recommendation based on distance and next kill zone."""
+    bst_now = datetime.now(tz=_BST)
+    kz  = active_kill_zone()
+    nkz = next_kill_zone()
+
+    if "ACTIVE" in distance_label:
+        return "Enter on confirmation — no rescan needed, monitor fill"
+
+    if "PENDING NEAR" in distance_label:
+        if kz:
+            t = (bst_now + timedelta(minutes=15)).strftime("%H:%M")
+            return f"Monitor now ({kz} active) — rescan {t} BST if no fill → /ict-smc-remote {symbol}"
+        elif nkz and nkz[1] <= 90:
+            t = (bst_now + timedelta(minutes=nkz[1])).strftime("%H:%M")
+            return f"Rescan {t} BST when {nkz[0]} opens → /ict-smc-remote {symbol}"
+        else:
+            t = (bst_now + timedelta(minutes=20)).strftime("%H:%M")
+            return f"Rescan {t} BST — PENDING NEAR, check progress → /ict-smc-remote {symbol}"
+
+    if "PENDING FAR" in distance_label:
+        if kz:
+            t = (bst_now + timedelta(minutes=30)).strftime("%H:%M")
+            return f"Rescan {t} BST — in {kz} but price needs to move → /ict-smc-remote {symbol}"
+        elif nkz:
+            t = (bst_now + timedelta(minutes=nkz[1])).strftime("%H:%M")
+            return f"Rescan {t} BST when {nkz[0]} opens → /ict-smc-remote {symbol}"
+        else:
+            t = (bst_now + timedelta(minutes=60)).strftime("%H:%M")
+            return f"Rescan {t} BST — no kill zone imminent → /ict-smc-remote {symbol}"
+
+    return f"Monitor at next kill zone → /ict-smc-remote {symbol}"
 
 
 def _grade_symbol(grade: str) -> str:
@@ -506,7 +546,7 @@ def _format_setup_block(setup: dict, symbol: str) -> list[str]:
             f"  ← use if entering at zone edge"
         )
 
-    # Next kill zone window
+    # Kill zone + BST rescan advice
     kz_active = active_kill_zone()
     if kz_active:
         lines.append(f"    Entry window : NOW — {kz_active} active  ← enter on confirmation")
@@ -514,6 +554,8 @@ def _format_setup_block(setup: dict, symbol: str) -> list[str]:
         nkz = next_kill_zone()
         if nkz:
             lines.append(f"    Entry window : {nkz[0]}  {nkz[2]}  ← earliest valid entry window")
+    rescan = _rescan_bst(setup.get("distance_label", ""), symbol)
+    lines.append(f"    Rescan (BST) : {rescan}")
 
     # Confluences — weighted score
     score      = setup["confluence_score"]
@@ -774,10 +816,12 @@ def generate_report(markets: list[MarketContext]) -> str:
         src_warn, src_label = _data_source_label(ctx)
         fp = lambda v: _fmt_price(v, ctx.symbol)
 
+        ftmo_sym = _FTMO_SYMBOLS.get(ctx.symbol, ctx.symbol)
+        ctrader_note = f" ({ftmo_sym})" if ftmo_sym != ctx.symbol else ""
         lines += [
             "",
             _SEP,
-            f"  {ctx.symbol}  |  Current: {fp(price)}  |  Feed: {src_label}",
+            f"  {ctx.symbol}{ctrader_note}  |  Current: {fp(price)}  |  Feed: {src_label}",
             _DIV,
         ]
         if src_warn:
@@ -864,4 +908,185 @@ def generate_report(markets: list[MarketContext]) -> str:
         lines.append(_DOT)
 
     lines += ["", _SEP, "  END OF REPORT", _SEP, ""]
+    return "\n".join(lines)
+
+
+def generate_condensed_report(markets: list[MarketContext]) -> str:
+    """
+    Token-efficient condensed output for the agent skill.
+    A+/A: full trade cards. B: one-line summary + BST rescan. C/SKIP/filtered: grouped.
+    Reduces Claude's input token cost by ~90% vs full report.
+    """
+    from data.fetchers import calendar_fetcher
+
+    bst_now = datetime.now(tz=_BST)
+    bst_label = bst_now.strftime("%H:%M BST")
+    kz  = active_kill_zone()
+    nkz = next_kill_zone()
+    sess = current_session()
+
+    ctrader_n  = sum(1 for m in markets if m.data_source == "ctrader")
+    okx_n      = sum(1 for m in markets if m.data_source == "okx")
+    fallback_n = len(markets) - ctrader_n - okx_n
+
+    lines = []
+    lines.append("═" * 68)
+    kz_line = f"  {kz} ACTIVE  ←  HIGH probability window NOW" if kz else (
+        f"  Next KZ: {nkz[0]} at {(bst_now + timedelta(minutes=nkz[1])).strftime('%H:%M')} BST" if nkz
+        else f"  Session: {sess}"
+    )
+    lines.append(f"  ICT/SMC SCAN — {bst_label}")
+    lines.append(kz_line)
+    lines.append(f"  Data: {ctrader_n} cTrader · {okx_n} OKX · {fallback_n} fallback")
+    lines.append("═" * 68)
+
+    # News summary
+    try:
+        cal_lines = calendar_fetcher.format_todays_high_impact()
+        if cal_lines and any(l.strip() for l in cal_lines):
+            for l in cal_lines[:5]:
+                if l.strip():
+                    lines.append(l)
+    except Exception:
+        pass
+
+    # Classify each market
+    a_plus_setups, a_setups, b_setups, no_setup_notes = [], [], [], []
+
+    for ctx in markets:
+        symbol = ctx.symbol
+        price  = ctx.current_price
+
+        # Apply same filters as _fvg_lines()
+        _dist = lambda f: (
+            (f.gap_low - price) / price * 100 if price < f.gap_low
+            else (price - f.gap_high) / price * 100 if price > f.gap_high
+            else 0.0
+        )
+
+        session_bull_bias = (price < ctx.midnight_open) if ctx.midnight_open else None
+
+        candidates = [
+            f for f in ctx.fvgs
+            if f.probability_grade not in SKIP_GRADES
+            and not (f.touch_count > MAX_TOUCH_COUNT_SCALP or f.age_label == "STALE")
+            and _dist(f) < STANDBY_DISTANCE_PCT
+        ]
+
+        if session_bull_bias is not None:
+            aligned = [f for f in candidates if (f.direction == "BULL") == session_bull_bias]
+        else:
+            aligned = candidates
+
+        if not aligned:
+            # Count standby/filtered for note
+            standby = [f for f in ctx.fvgs if _dist(f) >= STANDBY_DISTANCE_PCT and f.probability_grade not in SKIP_GRADES]
+            reason = "STANDBY" if standby else "no setup"
+            no_setup_notes.append(f"{symbol}({reason})")
+            continue
+
+        # Take best (sorted same way as _fvg_lines)
+        aligned.sort(key=lambda f: (
+            _GRADE_ORDER.get(f.probability_grade, 9),
+            abs((f.gap_low if f.direction == "BULL" else f.gap_high) - price)
+        ))
+
+        best_fvg = aligned[0]
+
+        # Apply trend cap
+        trends_aligned = (
+            ctx.higher_tf_trend in ("BULLISH", "BEARISH") and
+            ctx.intraday_trend  in ("BULLISH", "BEARISH") and
+            ctx.higher_tf_trend == ctx.intraday_trend
+        )
+        display_grade = best_fvg.probability_grade
+        if not trends_aligned and display_grade in ("A+", "A"):
+            display_grade = "B"
+
+        setup = _compute_fvg_setup(best_fvg, ctx)
+        if not setup:
+            no_setup_notes.append(f"{symbol}(no pip data)")
+            continue
+
+        if setup.get("no_viable_tp"):
+            no_setup_notes.append(f"{symbol}(NO TP)")
+            continue
+
+        if display_grade == "A+":
+            a_plus_setups.append((ctx, best_fvg, setup, display_grade))
+        elif display_grade == "A":
+            a_setups.append((ctx, best_fvg, setup, display_grade))
+        else:
+            b_setups.append((ctx, best_fvg, setup, display_grade))
+
+    # ── A+/A full cards ──────────────────────────────────────────────────────
+    if a_plus_setups or a_setups:
+        lines.append("")
+        lines.append("━━ PREMIUM SETUPS (A+/A) " + "━" * 42)
+        for ctx, fvg, setup, grade in a_plus_setups + a_setups:
+            symbol = ctx.symbol
+            ftmo_sym = _FTMO_SYMBOLS.get(symbol, symbol)
+            ctrader_note = f" ({ftmo_sym})" if ftmo_sym != symbol else ""
+            direction = "Bullish" if fvg.direction == "BULL" else "Bearish"
+            lines.append("")
+            lines.append(f"  ┌─ {symbol}{ctrader_note}  [{direction} FVG | {fvg.timeframe}]  ★ {grade}")
+            lines.append(f"  │  ── TRADE PLAN ────────────────────────────────")
+            for tl in _format_setup_block(setup, symbol):
+                lines.append(f"  │  {tl.lstrip()}")
+            lines.append(f"  └{'─' * 60}")
+    else:
+        lines.append("")
+        lines.append("━━ PREMIUM SETUPS (A+/A) " + "━" * 42)
+        lines.append("  None this scan.")
+
+    # ── B one-liners ─────────────────────────────────────────────────────────
+    if b_setups:
+        lines.append("")
+        lines.append("━━ WATCH LIST (B) " + "━" * 48)
+        for ctx, fvg, setup, grade in b_setups:
+            symbol = ctx.symbol
+            fp = lambda v: _fmt_price(v, symbol)
+            direction = "▲ LONG " if fvg.direction == "BULL" else "▼ SHORT"
+            dist_label = setup.get("distance_label", "")
+            # Compact distance
+            if "ACTIVE" in dist_label:
+                dist_str = "ACTIVE"
+            elif "NEAR" in dist_label:
+                pct = setup.get("distance_pct", 0)
+                dist_str = f"NEAR({pct:.2f}%)"
+            else:
+                pct = setup.get("distance_pct", 0)
+                dist_str = f"FAR({pct:.2f}%)"
+
+            prim_rr = setup.get("primary_rr")
+            rr_str  = f"[{prim_rr:.1f}:1]" if prim_rr else "[?:1]"
+            prim_tp = setup.get("primary_tp")
+            tp_str  = fp(prim_tp) if prim_tp else "no TP"
+            sl_str  = fp(setup["sl"])
+            entry_str = f"{fp(setup['entry_low'])}–{fp(setup['entry_high'])}"
+            score   = setup["confluence_score"]
+            maxw    = setup["max_weight"]
+            pct_score = int(score / maxw * 100) if maxw else 0
+
+            rescan = _rescan_bst(dist_label, symbol)
+
+            lines.append(
+                f"  {symbol:8s} {direction}  {dist_str:12s}  "
+                f"Entry:{entry_str}  SL:{sl_str}  TP★:{tp_str} {rr_str}  "
+                f"{pct_score}%  ←  {rescan}"
+            )
+
+    # ── No setup ─────────────────────────────────────────────────────────────
+    if no_setup_notes:
+        lines.append("")
+        lines.append("━━ NO SETUP " + "━" * 55)
+        # Group into rows of 6
+        for i in range(0, len(no_setup_notes), 6):
+            lines.append("  " + "  ·  ".join(no_setup_notes[i:i+6]))
+
+    lines.append("")
+    lines.append("═" * 68)
+    lines.append(f"  Run /ict-smc-remote SYMBOL for a full drill-down on any instrument.")
+    lines.append("═" * 68)
+
     return "\n".join(lines)

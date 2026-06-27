@@ -58,8 +58,8 @@ PIP_VALUE_PER_LOT = {
     "AUS200":   7.0,   # approx — AUD-denominated
     "HK50":     1.25,  # approx — HKD-denominated
     # Metals
-    "GOLD":    10.0,   # $10 per $1 move per lot (100 oz)
-    "SILVER":   5.0,   # approx — $5 per $0.01 move per lot
+    "GOLD":   100.0,   # $100/pt/lot (100 oz × $1)
+    "SILVER":  50.0,   # approx — $50/pip/lot (5000 oz × $0.01)
     # Commodities
     "OIL":     10.0,
     "BRENT":   10.0,

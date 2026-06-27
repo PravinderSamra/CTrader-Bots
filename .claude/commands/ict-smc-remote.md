@@ -4,6 +4,8 @@ Run the ICT/SMC pre-session market scanner using the cTrader Remote MCP connecti
 
 Run this command: `cd ICT-SMC-Remote-Agent && python main.py`
 
+The script outputs a condensed summary by default. For a full instrument-by-instrument report (high token cost), run `python main.py --full`. Use `python main.py --full` only when the user asks to see all setups in detail or when debugging.
+
 The scan fetches 1H + Daily candles for all 32 instruments and takes ~30-60 seconds. Instruments with source set to ctrader will show Feed: cTrader when the Remote MCP succeeds. If the Remote MCP is unavailable, instruments transparently fall back to Twelve Data or Yahoo Finance (the Feed label will reflect the actual source used). BTCUSDT/ETHUSDT/SOLUSDT use OKX — expected and correct.
 
 Note: this agent connects to the Pepperstone demo account by default. Prices will be close to but not identical to your FTMO account. Use /ict-smc-local for exact FTMO prices when cTrader desktop is open.
@@ -17,17 +19,18 @@ User specified: $ARGUMENTS
 
 ## Condensed summary format (when no instrument specified)
 
-Do not paste the raw report. The user can ask "show me [SYMBOL] in full" at any time.
+The Python script already outputs the condensed format directly — do NOT try to summarise it further. Present it to the user as-is, with this structure:
 
-**SCAN HEADER** — timestamp (UK/BST), active kill zone, instruments on cTrader Remote feed vs fallback (e.g. 29/32 cTrader Remote, 3 OKX), any NEWS BLACKOUT warnings.
+**SCAN HEADER** — Python outputs this directly (timestamp, kill zone, data sources)
 
-**A+ AND A GRADE SETUPS** — paste the complete TRADE PLAN block exactly as printed in the report for each A+ or A graded FVG. This includes: Status (ACTIVE/PENDING NEAR/PENDING FAR), Direction, Current price, Entry zone, SL, TP1/TP2/TP3 with PRIMARY marker, Size (mid + worst-case edge), Entry window (kill zone), and Confluences weighted score (e.g. 8.5/12.3 [████████░░░░] (69%)) with each ✓/✗ check listed.
+**A+/A SETUPS** — Python outputs full trade cards for top-grade setups. Include these verbatim.
 
-**B GRADE SETUPS** — one line each: SYMBOL direction | Status | Entry zone | SL | TP primary | R:R | Confluences X.X/12.X (Y%)
-If NO VIABLE TP flag is set on a B setup, append: ⚠ no viable TP — skip.
+**B SETUPS** — Python outputs one-line summaries with BST rescan times and /ict-smc-remote SYMBOL commands. Include all of these verbatim.
 
-**NO ACTIONABLE SETUP** — one line each: SYMBOL — no setup (C/SKIP/filtered)
+**NO SETUP** — Python outputs these grouped. Include verbatim.
 
-**ECONOMIC CALENDAR** — list upcoming HIGH-impact news events from the report that could affect open setups.
+**RESCAN SCHEDULE** — After presenting the output, extract all pending B setups and list their rescan times as a numbered watch-list:
+  1. 12:00 BST — EURUSD (PENDING NEAR) → /ict-smc-remote EURUSD
+  2. 14:45 BST — GOLD (PENDING FAR, pre-Silver Bullet) → /ict-smc-remote GOLD
 
-This condensed format surfaces only what is needed to make a trading decision while keeping token usage low.
+When $ARGUMENTS contains a symbol name (rescan): run `python main.py`, extract that instrument's result from the output, and compare it to what was shown in the previous scan in this chat. State whether the setup is PROGRESSING (closer to entry), STALLED (same distance), or DISQUALIFIED (beyond SL, FVG filled wrong direction, or aged out). Then state the next rescan time in BST.

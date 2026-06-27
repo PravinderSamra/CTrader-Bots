@@ -133,7 +133,7 @@ def _build_context(inst: dict, candles_1h: List[Candle], candles_1d: List[Candle
     )
 
 
-def run_scan():
+def run_scan(full_mode: bool = False):
     print("\nICT/SMC Remote Agent — Fetching market data...", file=sys.stderr)
     print(f"Instruments: {len(INSTRUMENTS)}\n", file=sys.stderr)
 
@@ -155,9 +155,13 @@ def run_scan():
     print(f"\n  → {len(markets)}/{len(INSTRUMENTS)} instruments analysed successfully.", file=sys.stderr)
     print("\nGenerating report...\n", file=sys.stderr)
 
-    report = generate_report(markets)
+    from reports.pre_session_report import generate_condensed_report
+    if full_mode:
+        report = generate_report(markets)
+    else:
+        report = generate_condensed_report(markets)
     print(report)
 
 
 if __name__ == "__main__":
-    run_scan()
+    run_scan(full_mode="--full" in sys.argv)
