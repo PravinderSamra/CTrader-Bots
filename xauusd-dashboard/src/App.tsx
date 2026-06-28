@@ -1,0 +1,97 @@
+import { useState, useCallback } from 'react'
+import { useCTraderPrices } from './hooks/useCTraderPrices'
+import { useDailySnapshot } from './hooks/useFredData'
+import { useEconomicCalendar, useNewsHeadlines, useVIX } from './hooks/useEconomicCalendar'
+import { aggregateData } from './services/dataAggregator'
+import { Header } from './components/layout/Header'
+import { Footer } from './components/layout/Footer'
+import { YieldsTile } from './components/tiles/YieldsTile'
+import { DollarTile } from './components/tiles/DollarTile'
+import { EquitiesTile } from './components/tiles/EquitiesTile'
+import { GoldTile } from './components/tiles/GoldTile'
+import { CalendarTile } from './components/tiles/CalendarTile'
+import { FedTile } from './components/tiles/FedTile'
+import { PositioningTile } from './components/tiles/PositioningTile'
+import { FlowsTile } from './components/tiles/FlowsTile'
+import { BriefingPanel } from './components/briefing/BriefingPanel'
+import styles from './App.module.css'
+
+function getSessionLabel(utcH: number): string {
+  if (utcH >= 13 && utcH < 16) return 'OVERLAP'
+  if (utcH >= 8 && utcH < 16) return 'LONDON'
+  if (utcH >= 16 && utcH < 21) return 'NEW_YORK'
+  if (utcH >= 0 && utcH < 8) return 'ASIAN'
+  return 'OFF'
+}
+
+export function App() {
+  const [refreshKey, setRefreshKey] = useState(0)
+  const [lastRefresh, setLastRefresh] = useState('')
+
+  const prices   = useCTraderPrices()
+  const snapshot = useDailySnapshot()
+  const calendar = useEconomicCalendar()
+  const headlines = useNewsHeadlines()
+  const vix      = useVIX()
+
+  const riskTone = aggregateData(
+    prices, snapshot, calendar, headlines, vix,
+    getSessionLabel(new Date().getUTCHours()),
+  ).marketVolatility.riskTone
+
+  const aggregated = aggregateData(
+    prices, snapshot, calendar, headlines, vix,
+    getSessionLabel(new Date().getUTCHours()),
+  )
+
+  const handleRefresh = useCallback(() => {
+    setRefreshKey(k => k + 1)
+    const now = new Date()
+    setLastRefresh(
+      `${String(now.getUTCHours()).padStart(2,'0')}:${String(now.getUTCMinutes()).padStart(2,'0')} GMT`
+    )
+  }, [])
+
+  // Suppress unused variable warning for refreshKey
+  void refreshKey
+
+  return (
+    <div className={styles.app}>
+      <Header prices={prices} onRefresh={handleRefresh} lastRefresh={lastRefresh} />
+
+      <main className={styles.main}>
+        {/* Row 1: Yields | Dollar | Calendar */}
+        <div className={styles.grid3}>
+          <YieldsTile yields={snapshot?.yields ?? null} />
+          <DollarTile prices={prices} />
+          <CalendarTile events={calendar} />
+        </div>
+
+        {/* Row 2: Gold | Risk Tone | Fed */}
+        <div className={styles.grid3}>
+          <GoldTile
+            prices={prices}
+            gvz={snapshot?.marketVolatility?.GVZ ?? null}
+          />
+          <EquitiesTile
+            prices={prices}
+            vix={vix}
+            riskTone={riskTone}
+          />
+          <FedTile fed={snapshot?.fedExpectations ?? null} />
+        </div>
+
+        {/* Row 3: Positioning | Flows */}
+        <div className={styles.grid2}>
+          <PositioningTile cot={snapshot?.positioning ?? null} />
+          <FlowsTile flows={snapshot?.etfFlows ?? null} />
+        </div>
+
+        {/* Briefing panel — full width */}
+        <BriefingPanel data={aggregated} headlines={headlines} />
+      </main>
+
+      <Footer />
+    </div>
+  )
+}

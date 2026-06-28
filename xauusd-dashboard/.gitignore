@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.env
+.env.local
+briefings/
+dist-scripts/

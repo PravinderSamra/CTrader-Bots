@@ -1,0 +1,149 @@
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--gold);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid var(--border-2);
+}
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.sub {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.genTime {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
+.generateBtn {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+  background: var(--gold-dim);
+  border: 1px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 6px 16px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.generateBtn:hover:not(:disabled) {
+  background: rgba(201, 149, 42, 0.25);
+}
+
+.generateBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.gaugeWrap {
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid var(--border-2);
+}
+
+.body {
+  padding: 16px 20px;
+  min-height: 80px;
+}
+
+.briefingText {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.8;
+  font-family: var(--font);
+}
+
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.placeholderTitle {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.placeholderSub {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.6;
+  max-width: 560px;
+}
+
+.loadingState {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dot {
+  font-size: 16px;
+  color: var(--gold);
+}
+
+.loadingText {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.error {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--red);
+  background: var(--red-dim);
+  border: 1px solid var(--red);
+  padding: 8px 12px;
+  border-radius: var(--radius);
+}
+
+.headlines {
+  border-top: 1px solid var(--border-2);
+  padding: 12px 20px;
+}
+
+.headlinesLabel {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.headline {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  padding: 2px 0;
+}
