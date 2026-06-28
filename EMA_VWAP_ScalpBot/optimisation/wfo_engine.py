@@ -19,6 +19,7 @@ import bisect
 import csv
 import json
 import math
+import multiprocessing
 import os
 from collections import Counter
 from datetime import datetime, timedelta, timezone
@@ -33,6 +34,42 @@ from config import (
 )
 from parameter_grid import generate_grid, get_neighbours
 from backtest_engine import run_backtest
+
+
+# ── Multiprocessing pool state ────────────────────────────────────────────────
+
+N_WORKERS = 4
+
+# Module-level refs inherited by forked workers (set via _pool_setup before Pool())
+_POOL_BARS5M:    list = []
+_POOL_BARS1H:    list = []
+_POOL_TIMES5M:   list = []
+_POOL_TIMES1H:   list = []
+_POOL_IS_START:  Optional[datetime] = None
+_POOL_IS_END:    Optional[datetime] = None
+_POOL_INSTRUMENT: str = ""
+
+
+def _pool_setup(b5m, b1h, t5m, t1h, is_start, is_end, instrument) -> None:
+    global _POOL_BARS5M, _POOL_BARS1H, _POOL_TIMES5M, _POOL_TIMES1H
+    global _POOL_IS_START, _POOL_IS_END, _POOL_INSTRUMENT
+    _POOL_BARS5M     = b5m
+    _POOL_BARS1H     = b1h
+    _POOL_TIMES5M    = t5m
+    _POOL_TIMES1H    = t1h
+    _POOL_IS_START   = is_start
+    _POOL_IS_END     = is_end
+    _POOL_INSTRUMENT = instrument
+
+
+def _pool_eval(params: dict) -> tuple:
+    result = run_backtest(
+        _POOL_BARS5M, _POOL_BARS1H,
+        _POOL_IS_START, _POOL_IS_END,
+        params, _POOL_INSTRUMENT,
+        _5m_times=_POOL_TIMES5M, _1h_times=_POOL_TIMES1H,
+    )
+    return params, result
 
 
 # ── Window schedule ───────────────────────────────────────────────────────────
@@ -196,21 +233,23 @@ def run_wfo(
         is_bars_1h   = bars_1h[j0:j1]
         is_times_1h  = bars_1h_times[j0:j1]
 
-        # ── IS: Run parameter grid ──────────────────────────────────────────
+        # ── IS: Run parameter grid (parallel) ──────────────────────────────
 
         is_results = []
         grid = list(generate_grid(coarse=coarse_first))
         total = len(grid)
 
         if verbose:
-            print(f"  Running {total:,} IS parameter combinations…")
+            print(f"  Running {total:,} IS combinations on {N_WORKERS} workers…")
 
-        for idx, params in enumerate(grid):
-            if verbose and idx % 500 == 0:
-                print(f"  [{idx:5d}/{total}] {idx/total*100:.0f}%…")
+        # Set module-level state; workers inherit it via fork (Linux)
+        _pool_setup(is_bars_5m, is_bars_1h, is_times_5m, is_times_1h,
+                    is_start, is_end, instrument)
 
-            result = run_backtest(is_bars_5m, is_bars_1h, is_start, is_end, params, instrument,
-                                  _5m_times=is_times_5m, _1h_times=is_times_1h)
+        with multiprocessing.Pool(N_WORKERS) as pool:
+            batch = pool.map(_pool_eval, grid, chunksize=200)
+
+        for params, result in batch:
             if _qualifies(result):
                 score = _composite_score(result)
                 is_results.append({
