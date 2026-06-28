@@ -15,6 +15,7 @@ Process:
     - Evaluate combined OOS metrics against acceptance criteria
 """
 
+import bisect
 import csv
 import json
 import math
@@ -169,6 +170,9 @@ def run_wfo(
     pass_results     = []
     param_selections = []
 
+    # Maximum possible lookback across all param combinations
+    _MAX_LOOKBACK_DAYS = max(26, 18, 21) * 2 + 10   # 62 days
+
     for window in windows:
         pass_n    = window["pass"]
         is_start  = window["is_start"]
@@ -180,6 +184,18 @@ def run_wfo(
             print(f"\n{'─'*60}")
             print(f"PASS {pass_n}/{len(windows)} | IS: {is_start.date()}–{is_end.date()}")
 
+        # Pre-slice bars to IS window + max lookback (once per pass, not per combo)
+        is_warmup = is_start - timedelta(days=_MAX_LOOKBACK_DAYS)
+        i0 = bisect.bisect_left(bars_5m_times, is_warmup)
+        i1 = bisect.bisect_right(bars_5m_times, is_end)
+        is_bars_5m   = bars_5m[i0:i1]
+        is_times_5m  = bars_5m_times[i0:i1]
+
+        j0 = bisect.bisect_left(bars_1h_times, is_warmup - timedelta(days=5))
+        j1 = bisect.bisect_right(bars_1h_times, is_end)
+        is_bars_1h   = bars_1h[j0:j1]
+        is_times_1h  = bars_1h_times[j0:j1]
+
         # ── IS: Run parameter grid ──────────────────────────────────────────
 
         is_results = []
@@ -190,11 +206,11 @@ def run_wfo(
             print(f"  Running {total:,} IS parameter combinations…")
 
         for idx, params in enumerate(grid):
-            if verbose and idx % 200 == 0:
+            if verbose and idx % 500 == 0:
                 print(f"  [{idx:5d}/{total}] {idx/total*100:.0f}%…")
 
-            result = run_backtest(bars_5m, bars_1h, is_start, is_end, params, instrument,
-                                  _5m_times=bars_5m_times, _1h_times=bars_1h_times)
+            result = run_backtest(is_bars_5m, is_bars_1h, is_start, is_end, params, instrument,
+                                  _5m_times=is_times_5m, _1h_times=is_times_1h)
             if _qualifies(result):
                 score = _composite_score(result)
                 is_results.append({
@@ -227,8 +243,8 @@ def run_wfo(
 
         for candidate in is_results[:10]:  # check top 10 only
             stable = _stability_check(
-                candidate["params"], bars_5m, bars_1h, is_start, is_end, instrument,
-                bars_5m_times=bars_5m_times, bars_1h_times=bars_1h_times,
+                candidate["params"], is_bars_5m, is_bars_1h, is_start, is_end, instrument,
+                bars_5m_times=is_times_5m, bars_1h_times=is_times_1h,
             )
             if stable:
                 selected_params = candidate["params"]
@@ -253,8 +269,19 @@ def run_wfo(
         if verbose:
             print(f"  Running OOS with: {_params_str(selected_params)}")
 
-        oos_result = run_backtest(bars_5m, bars_1h, oos_start, oos_end, selected_params, instrument,
-                                  _5m_times=bars_5m_times, _1h_times=bars_1h_times)
+        # OOS: use full bars (OOS window is outside IS range)
+        oos_warmup = oos_start - timedelta(days=_MAX_LOOKBACK_DAYS)
+        oi0 = bisect.bisect_left(bars_5m_times, oos_warmup)
+        oi1 = bisect.bisect_right(bars_5m_times, oos_end)
+        oos_bars_5m  = bars_5m[oi0:oi1]
+        oos_times_5m = bars_5m_times[oi0:oi1]
+        oj0 = bisect.bisect_left(bars_1h_times, oos_warmup - timedelta(days=5))
+        oj1 = bisect.bisect_right(bars_1h_times, oos_end)
+        oos_bars_1h  = bars_1h[oj0:oj1]
+        oos_times_1h = bars_1h_times[oj0:oj1]
+
+        oos_result = run_backtest(oos_bars_5m, oos_bars_1h, oos_start, oos_end, selected_params, instrument,
+                                  _5m_times=oos_times_5m, _1h_times=oos_times_1h)
         oos_trades = oos_result.get("trades", [])
 
         if verbose:
