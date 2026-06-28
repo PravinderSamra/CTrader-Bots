@@ -1,0 +1,69 @@
+{
+  "metrics": {
+    "n_trades": 438,
+    "n_sims": 2000,
+    "prob_profit": 0.0395,
+    "ruin_prob_5pct": 0.9935,
+    "ruin_prob_10pct": 0.8595,
+    "final_equity_5th": 74.0633,
+    "final_equity_25th": 81.5921,
+    "final_equity_50th": 86.7537,
+    "final_equity_75th": 91.697,
+    "final_equity_95th": 99.2857,
+    "max_dd_50th": 0.163,
+    "max_dd_95th": 0.279,
+    "pf_25th": 0.7208,
+    "pf_50th": 0.7895,
+    "pf_75th": 0.8612,
+    "streak_50th": 5,
+    "streak_95th": 8
+  },
+  "pass_fail": {
+    "prob_profit": {
+      "status": "FAIL",
+      "threshold": 0.85,
+      "measured": 0.0395
+    },
+    "ruin_5pct": {
+      "status": "FAIL",
+      "threshold": 0.05,
+      "measured": 0.9935
+    },
+    "ruin_10pct": {
+      "status": "FAIL",
+      "threshold": 0.01,
+      "measured": 0.8595
+    },
+    "median_max_dd": {
+      "status": "FAIL",
+      "threshold": 0.1,
+      "measured": 0.163
+    },
+    "p95_max_dd": {
+      "status": "FAIL",
+      "threshold": 0.2,
+      "measured": 0.279
+    },
+    "median_pf": {
+      "status": "FAIL",
+      "threshold": 1.3,
+      "measured": 0.7895
+    },
+    "5th_equity": {
+      "status": "FAIL",
+      "threshold": 100.0,
+      "measured": 74.0633
+    },
+    "median_streak": {
+      "status": "PASS",
+      "threshold": 8,
+      "measured": 5
+    },
+    "p95_streak": {
+      "status": "PASS",
+      "threshold": 15,
+      "measured": 8
+    }
+  },
+  "all_pass": false
+}
