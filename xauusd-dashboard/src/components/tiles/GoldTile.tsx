@@ -32,10 +32,10 @@ export function GoldTile({ prices, gvz }: Props) {
       <div>
         <div className="tile-label" style={{ marginBottom: 4 }}>XAUUSD</div>
         <div className={`${styles.headline} ${chgCls}`}>
-          {isLive ? `$${fmt(xau.price, 2)}` : '—'}
+          {xau.price ? `$${fmt(xau.price, 2)}` : '—'}
         </div>
         <div className={`${styles.change} ${chgCls}`}>
-          {isLive ? `${xau.changeDay >= 0 ? '+' : ''}${fmt(xau.changeDay, 2)} (${xau.changePct >= 0 ? '+' : ''}${fmt(xau.changePct, 2)}%)` : ''}
+          {isLive && xau.changeDay !== 0 ? `${xau.changeDay >= 0 ? '+' : ''}${fmt(xau.changeDay, 2)} (${xau.changePct >= 0 ? '+' : ''}${fmt(xau.changePct, 2)}%)` : ''}
         </div>
       </div>
 
@@ -44,11 +44,11 @@ export function GoldTile({ prices, gvz }: Props) {
       <div className={styles.rows}>
         <div className="tile-row">
           <span className="tile-label">XAGUSD</span>
-          <span className="tile-val mono">{isLive ? `$${fmt(xag.price, 3)}` : '—'}</span>
+          <span className="tile-val mono">{xag.price ? `$${fmt(xag.price, 3)}` : '—'}</span>
         </div>
         <div className="tile-row">
           <span className="tile-label">Au/Ag Ratio</span>
-          <span className="tile-val mono">{isLive && prices.goldSilverRatio ? prices.goldSilverRatio.toFixed(1) : '—'}</span>
+          <span className="tile-val mono">{prices.goldSilverRatio ? prices.goldSilverRatio.toFixed(1) : '—'}</span>
         </div>
         <div className="tile-row">
           <span className="tile-label">GVZ</span>

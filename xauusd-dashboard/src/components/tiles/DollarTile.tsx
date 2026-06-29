@@ -29,10 +29,10 @@ export function DollarTile({ prices }: Props) {
       <div>
         <div className="tile-label" style={{ marginBottom: 4 }}>DXY</div>
         <div className={`${styles.headline} ${cls(dxy.changePct)}`}>
-          {isLive ? fmt(dxy.price, 2) : '—'}
+          {dxy.price ? fmt(dxy.price, 2) : '—'}
         </div>
         <div className={`${styles.change} ${cls(dxy.changePct)}`}>
-          {isLive ? `${arrow(dxy.changePct)} ${dxy.changePct >= 0 ? '+' : ''}${fmt(dxy.changePct, 2)}%` : ''}
+          {isLive && dxy.changePct !== 0 ? `${arrow(dxy.changePct)} ${dxy.changePct >= 0 ? '+' : ''}${fmt(dxy.changePct, 2)}%` : ''}
         </div>
       </div>
 
@@ -41,19 +41,19 @@ export function DollarTile({ prices }: Props) {
       <div className={styles.rows}>
         <div className="tile-row">
           <span className="tile-label">EUR/USD</span>
-          <span className="tile-val mono">{isLive ? fmt(prices.EURUSD, 4) : '—'}</span>
+          <span className="tile-val mono">{fmt(prices.EURUSD, 4)}</span>
         </div>
         <div className="tile-row">
           <span className="tile-label">USD/JPY</span>
-          <span className="tile-val mono">{isLive ? fmt(prices.USDJPY, 2) : '—'}</span>
+          <span className="tile-val mono">{fmt(prices.USDJPY, 2)}</span>
         </div>
         <div className="tile-row">
           <span className="tile-label">USD/CHF</span>
-          <span className="tile-val mono">{isLive ? fmt(prices.USDCHF, 4) : '—'}</span>
+          <span className="tile-val mono">{fmt(prices.USDCHF, 4)}</span>
         </div>
         <div className="tile-row">
           <span className="tile-label" title="China proxy">USD/CNH</span>
-          <span className="tile-val mono">{isLive ? fmt(prices.USDCNH, 4) : '—'}</span>
+          <span className="tile-val mono">{fmt(prices.USDCNH, 4)}</span>
         </div>
       </div>
 

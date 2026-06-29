@@ -44,19 +44,25 @@ export function EquitiesTile({ prices, vix, riskTone }: Props) {
         <div className="tile-row">
           <span className="tile-label">US500</span>
           <span className={`tile-val mono ${isLive ? cls(prices.US500.changePct) : 'flat'}`}>
-            {isLive ? `${prices.US500.changePct >= 0 ? '+' : ''}${fmt(prices.US500.changePct)}%${arrow(prices.US500.changePct)}` : '—'}
+            {isLive
+              ? `${prices.US500.changePct >= 0 ? '+' : ''}${fmt(prices.US500.changePct)}%${arrow(prices.US500.changePct)}`
+              : prices.US500.price ? prices.US500.price.toLocaleString('en-US', { maximumFractionDigits: 0 }) : '—'}
           </span>
         </div>
         <div className="tile-row">
           <span className="tile-label">GER40</span>
           <span className={`tile-val mono ${isLive ? cls(prices.GER40.changePct) : 'flat'}`}>
-            {isLive ? `${prices.GER40.changePct >= 0 ? '+' : ''}${fmt(prices.GER40.changePct)}%${arrow(prices.GER40.changePct)}` : '—'}
+            {isLive
+              ? `${prices.GER40.changePct >= 0 ? '+' : ''}${fmt(prices.GER40.changePct)}%${arrow(prices.GER40.changePct)}`
+              : prices.GER40.price ? prices.GER40.price.toLocaleString('en-US', { maximumFractionDigits: 0 }) : '—'}
           </span>
         </div>
         <div className="tile-row">
           <span className="tile-label">UK100</span>
           <span className={`tile-val mono ${isLive ? cls(prices.UK100.changePct) : 'flat'}`}>
-            {isLive ? `${prices.UK100.changePct >= 0 ? '+' : ''}${fmt(prices.UK100.changePct)}%${arrow(prices.UK100.changePct)}` : '—'}
+            {isLive
+              ? `${prices.UK100.changePct >= 0 ? '+' : ''}${fmt(prices.UK100.changePct)}%${arrow(prices.UK100.changePct)}`
+              : prices.UK100.price ? prices.UK100.price.toLocaleString('en-US', { maximumFractionDigits: 0 }) : '—'}
           </span>
         </div>
         <hr className="tile-divider" />

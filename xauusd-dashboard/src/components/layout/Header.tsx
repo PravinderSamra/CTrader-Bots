@@ -93,9 +93,9 @@ export function Header({ prices, onRefresh, lastRefresh }: Props) {
         <div className={styles.eyebrow}>XAUUSD Intelligence Dashboard</div>
         <div className={styles.priceRow}>
           <span className={styles.price}>
-            {isLive ? `$${fmt(xau.price, 2)}` : '—'}
+            {xau.price ? `$${fmt(xau.price, 2)}` : '—'}
           </span>
-          {isLive && (
+          {isLive && change !== 0 && (
             <span className={`${styles.change} ${arrowClass(change)}`}>
               {arrow(change)} {change >= 0 ? '+' : ''}{fmt(change, 2)} ({pct >= 0 ? '+' : ''}{fmt(pct, 2)}%)
             </span>
