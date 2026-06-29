@@ -11,6 +11,10 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import * as https from 'https'
+import { fileURLToPath } from 'url'
+
+// ESM shim — tsx runs as ESM on GitHub Actions runners
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
