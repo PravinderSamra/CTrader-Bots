@@ -374,7 +374,7 @@ async function fetchGVZ(): Promise<number | null> {
 
 // ── SPDR GLD holdings ─────────────────────────────────────────────────────
 
-async function fetchGLD(): Promise<Snapshot['etfFlows']> {
+async function fetchGLD(fallbackGoldPrice: number | null): Promise<Snapshot['etfFlows']> {
   console.log('Fetching SPDR GLD holdings...')
   const outPath = path.join(__dirname, '../public/data/daily-snapshot.json')
   let prevTonnes: number | null = null
@@ -433,8 +433,11 @@ async function fetchGLD(): Promise<Snapshot['etfFlows']> {
         } else if (data.net_assets) {
           const netAssets = parseFloat(data.net_assets)
           if (netAssets > 1e9) {
-            const goldPrice = await fredSeries('GOLDAMGBD228NLBM')
-            console.log(`GLD AV: net_assets=$${(netAssets / 1e9).toFixed(1)}B, FRED gold=$${goldPrice}/oz`)
+            // GOLDAMGBD228NLBM (LBMA AM gold fix) is unreliable on FRED — fall back to
+            // the already-confirmed-working CTrader XAUUSD spot price for goldPrice.
+            const fredGold = await fredSeries('GOLDAMGBD228NLBM')
+            const goldPrice = fredGold ?? fallbackGoldPrice
+            console.log(`GLD AV: net_assets=$${(netAssets / 1e9).toFixed(1)}B, FRED gold=$${fredGold}/oz, fallback=$${fallbackGoldPrice}/oz, using=$${goldPrice}/oz`)
             if (goldPrice && goldPrice > 500) {
               const tonnes = Math.round(netAssets / goldPrice / 32150.7 * 10) / 10
               console.log(`GLD AV → ${tonnes}t`)
@@ -670,14 +673,17 @@ async function main() {
 
   console.log('=== XAUUSD Daily Data Fetch ===')
 
-  const [yields, fedExpectations, gvz, etfFlows, positioning, snapshotPrices] = await Promise.all([
+  const [yields, fedExpectations, gvz, positioning, snapshotPrices] = await Promise.all([
     fetchYields(),
     fetchFedWatch(),
     fetchGVZ(),
-    fetchGLD(),
     fetchCOT(existing),
     fetchCTraderPrices(),
   ])
+
+  // GLD needs the CTrader XAUUSD price as a fallback if FRED's gold series is null,
+  // so it runs after the prices above rather than inside the initial Promise.all.
+  const etfFlows = await fetchGLD(snapshotPrices?.XAUUSD ?? null)
 
   const snapshot: Snapshot = {
     generatedAt: new Date().toISOString(),
