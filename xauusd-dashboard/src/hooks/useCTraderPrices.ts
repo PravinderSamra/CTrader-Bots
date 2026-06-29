@@ -5,11 +5,11 @@ const MCP_URL = import.meta.env.VITE_CTRADER_MCP_URL ?? 'https://mcp.ctrader.com
 const MCP_TOKEN = import.meta.env.VITE_CTRADER_MCP_TOKEN ?? ''
 const POLL_MS = 15_000
 
-// pip digits per symbol — raw pipette / 10^digits = display price
+// All _SB spread-bet instruments use 10^5 pipettes (verified server-side empirically)
 const PIP_DIGITS: Record<string, number> = {
-  XAUUSD: 3, XAGUSD: 3,
-  EURUSD: 5, USDJPY: 3, USDCHF: 5, USDCNH: 5,
-  US500: 3, GER40: 3, UK100: 3,
+  XAUUSD: 5, XAGUSD: 5,
+  EURUSD: 5, USDJPY: 5, USDCHF: 5, USDCNH: 5,
+  US500: 5, GER40: 5, UK100: 5,
 }
 
 // ── MCP protocol helpers ────────────────────────────────────────────────────
@@ -69,7 +69,8 @@ async function callTool(tool: string, args: object, sessionId: string): Promise<
 
 // ── Symbol resolution ───────────────────────────────────────────────────────
 
-interface SymbolEntry { name: string; symbolId: number }
+// CTrader API returns `symbolName` (not `name`) — keep in sync with fetch-static-data.ts
+interface SymbolEntry { symbolName: string; symbolId: number; enabled?: boolean }
 let symbolCache: Record<string, number> | null = null
 
 async function loadSymbols(sessionId: string): Promise<Record<string, number>> {
@@ -77,11 +78,16 @@ async function loadSymbols(sessionId: string): Promise<Record<string, number>> {
   const raw = await callTool('get_symbols', {}, sessionId)
   const symbols = (raw as { symbols?: SymbolEntry[] })?.symbols ?? []
   const map: Record<string, number> = {}
+  const enabledMap: Record<string, boolean> = {}
+  const suffixRe = /(_SBE|_SB|-F_SBE|-F_SB|-PERP_SBE|-PERP_SB|-PERP|-F)$/
   for (const s of symbols) {
-    if (s.name && s.symbolId != null) {
-      const base = s.name.replace(/(_SBE|_SB|-F_SB|-F)$/, '')
-      map[s.name.toUpperCase()] = s.symbolId
-      map[base.toUpperCase()] = s.symbolId
+    if (!s.symbolName || s.symbolId == null) continue
+    const upper = s.symbolName.toUpperCase()
+    const base = upper.replace(suffixRe, '')
+    map[upper] = s.symbolId
+    if (enabledMap[base] === undefined || s.enabled) {
+      map[base] = s.symbolId
+      enabledMap[base] = !!s.enabled
     }
   }
   symbolCache = map
