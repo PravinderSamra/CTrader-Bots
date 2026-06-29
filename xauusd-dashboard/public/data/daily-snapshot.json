@@ -1,15 +1,19 @@
 {
-  "generatedAt": null,
+  "generatedAt": "2026-06-29T14:56:51.337Z",
   "yields": {
-    "US10Y": null,
-    "US2Y": null,
-    "realYield10Y": null,
-    "realYield5Y": null,
-    "curve2s10s": null,
-    "breakeven10Y": null,
-    "breakeven5Y": null,
-    "forward5y5y": null,
-    "dayOverDay": { "US10Y": null, "US2Y": null, "realYield10Y": null }
+    "US10Y": 4.4,
+    "US2Y": 4.09,
+    "realYield10Y": 2.19,
+    "realYield5Y": 1.92,
+    "curve2s10s": 31,
+    "breakeven10Y": 2.2,
+    "breakeven5Y": 2.21,
+    "forward5y5y": 2.19,
+    "dayOverDay": {
+      "US10Y": -0.01,
+      "US2Y": -0.02,
+      "realYield10Y": -0.04
+    }
   },
   "fedExpectations": {
     "nextMeeting": null,
@@ -17,7 +21,9 @@
     "probHold": null,
     "probHike": null
   },
-  "marketVolatility": { "GVZ": null },
+  "marketVolatility": {
+    "GVZ": 1
+  },
   "positioning": {
     "cotNetLong": null,
     "cotWoWChange": null,
