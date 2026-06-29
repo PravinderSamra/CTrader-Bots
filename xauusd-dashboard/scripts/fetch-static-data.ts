@@ -11,6 +11,10 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import * as https from 'https'
+import { fileURLToPath } from 'url'
+
+// ESM shim — tsx runs as ESM on GitHub Actions runners
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -84,6 +88,43 @@ function httpGet(url: string, headers: Record<string,string> = {}): Promise<stri
   })
 }
 
+// ── Yahoo Finance cookie+crumb auth ───────────────────────────────────────
+// fc.yahoo.com sets the A3 session cookie (returns 404 but still sets it);
+// that cookie is required to fetch a crumb for authenticated endpoints.
+
+let _yfAuth: { cookie: string; crumb: string } | null = null
+
+async function getYFAuth(): Promise<{ cookie: string; crumb: string } | null> {
+  if (_yfAuth) return _yfAuth
+  const UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
+  try {
+    const r1 = await fetch('https://fc.yahoo.com/', {
+      headers: { 'User-Agent': UA, 'Accept-Encoding': 'identity' },
+    })
+    type HeadersWithSetCookie = Headers & { getSetCookie?: () => string[] }
+    const h1 = r1.headers as HeadersWithSetCookie
+    const rawCookies: string[] = typeof h1.getSetCookie === 'function'
+      ? h1.getSetCookie()
+      : [h1.get('set-cookie') ?? ''].filter(Boolean)
+    const cookie = rawCookies.map(c => c.split(';')[0]).join('; ')
+    if (!cookie) return null
+
+    const r2 = await fetch('https://query1.finance.yahoo.com/v1/test/getcrumb', {
+      headers: { 'User-Agent': UA, Cookie: cookie, 'Accept-Encoding': 'identity' },
+    })
+    if (!r2.ok) { console.log(`YF crumb HTTP ${r2.status} — auth skipped`); return null }
+    const crumb = (await r2.text()).trim()
+    // Reject if it looks like an error page/message rather than a real crumb
+    if (!crumb || crumb.length < 3 || crumb.includes(' ') || crumb.startsWith('<') || crumb.startsWith('{')) return null
+
+    _yfAuth = { cookie, crumb }
+    console.log(`YF auth OK: crumb=${crumb.slice(0, 4)}…`)
+    return _yfAuth
+  } catch {
+    return null
+  }
+}
+
 // ── FRED API ───────────────────────────────────────────────────────────────
 
 const FRED_KEY = process.env.FRED_API_KEY ?? ''
@@ -91,7 +132,7 @@ const FRED_KEY = process.env.FRED_API_KEY ?? ''
 async function fredSeries(id: string): Promise<number | null> {
   if (!FRED_KEY) return null
   try {
-    const url = `https://api.stlouisfed.org/fred/series/observations?series_id=${id}&api_key=${FRED_KEY}&file_type=json&sort_order=desc&limit=2`
+    const url = `https://api.stlouisfed.org/fred/series/observations?series_id=${id}&api_key=${FRED_KEY}&file_type=json&sort_order=desc&limit=10`
     const raw = await httpGet(url)
     const data = JSON.parse(raw) as { observations?: Array<{ value: string; date: string }> }
     const obs = data.observations?.filter(o => o.value !== '.') ?? []
@@ -154,84 +195,181 @@ async function fetchYields(): Promise<YieldsData> {
 // ── CME FedWatch scrape ────────────────────────────────────────────────────
 
 async function fetchFedWatch(): Promise<Snapshot['fedExpectations']> {
-  console.log('Fetching CME FedWatch...')
-  try {
-    // CME FedWatch probabilities — public JSON endpoint
-    const raw = await httpGet('https://www.cmegroup.com/CmeWS/mvc/ProductCalendar/V2/fomc')
-    const data = JSON.parse(raw) as {
-      meetingList?: Array<{
-        meetingDate?: string
-        cutProb?: number | string
-        holdProb?: number | string
-        hikeProb?: number | string
-        raiseProb?: number | string
-        lowerProb?: number | string
-        unchangedProb?: number | string
-      }>
-    }
-    const meetings = data.meetingList ?? []
-    const now = new Date()
-    const next = meetings.find(m => m.meetingDate && new Date(m.meetingDate) > now)
-    if (!next) return { nextMeeting: null, probCut: null, probHold: null, probHike: null }
+  console.log('Fetching Fed expectations...')
 
-    const toNum = (v: unknown) => v != null ? Math.round(parseFloat(String(v))) : null
-    return {
-      nextMeeting: next.meetingDate ?? null,
-      probCut:  toNum(next.lowerProb ?? next.cutProb),
-      probHold: toNum(next.unchangedProb ?? next.holdProb),
-      probHike: toNum(next.raiseProb ?? next.hikeProb),
-    }
-  } catch {
-    // Fallback: scrape HTML
-    try {
-      const html = await httpGet('https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html', {
-        Accept: 'text/html',
-      })
-      const meetingMatch = html.match(/(\d{4}-\d{2}-\d{2})[^"]*FOMC/i)
-      const cutMatch   = html.match(/lower[^>]*>[\s\S]*?(\d+\.\d+)%/i)
-      const holdMatch  = html.match(/unchanged[^>]*>[\s\S]*?(\d+\.\d+)%/i)
-      const hikeMatch  = html.match(/raise[^>]*>[\s\S]*?(\d+\.\d+)%/i)
-      return {
-        nextMeeting: meetingMatch?.[1] ?? null,
-        probCut:  cutMatch  ? Math.round(parseFloat(cutMatch[1]))  : null,
-        probHold: holdMatch ? Math.round(parseFloat(holdMatch[1])) : null,
-        probHike: hikeMatch ? Math.round(parseFloat(hikeMatch[1])) : null,
+  // FOMC decision dates (second day of each two-day meeting) — updated annually
+  const FOMC_DATES = [
+    '2026-01-28', '2026-03-18', '2026-04-29', '2026-06-10',
+    '2026-07-29', '2026-09-16', '2026-10-28', '2026-12-09',
+    '2027-01-27', '2027-03-17', '2027-04-28', '2027-06-09',
+    '2027-07-28', '2027-09-15', '2027-10-27', '2027-12-08',
+  ]
+
+  const now = new Date()
+  // Include same-day meetings (decision announced after market open)
+  const nextMeeting = FOMC_DATES.find(d => new Date(d + 'T23:59:59Z') > now) ?? null
+
+  if (!nextMeeting) return { nextMeeting: null, probCut: null, probHold: null, probHike: null }
+
+  // Current Fed Funds upper target rate from FRED
+  const currentRate = await fredSeries('DFEDTARU')
+  console.log(`Fed DFEDTARU: ${currentRate}`)
+  if (!currentRate) return { nextMeeting, probCut: null, probHold: null, probHike: null }
+
+  // 30-Day Fed Funds futures for the month AFTER the meeting
+  // (that month's entire period reflects the post-meeting rate)
+  const MONTH_CODES = ['F','G','H','J','K','M','N','Q','U','V','X','Z']
+  const meetDate = new Date(nextMeeting)
+  const futMon = new Date(meetDate.getFullYear(), meetDate.getMonth() + 1, 1)
+  const ticker = `ZQ${MONTH_CODES[futMon.getMonth()]}${String(futMon.getFullYear()).slice(-2)}.CBT`
+  console.log(`Fed futures ticker: ${ticker}`)
+
+  try {
+    const UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
+    const r = await fetch(`https://query2.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d&range=5d`, {
+      headers: { 'User-Agent': UA, Accept: 'application/json', 'Accept-Encoding': 'identity' },
+    })
+    console.log(`Fed futures HTTP ${r.status}`)
+    if (!r.ok) {
+      const txt = await r.text()
+      console.log(`Fed futures body: ${txt.slice(0, 150)}`)
+      // fall through to DGS1MO fallback below
+    } else {
+      const parsed = await r.json() as {
+        chart?: { result?: Array<{ meta?: { regularMarketPrice?: number; chartPreviousClose?: number } }>; error?: unknown }
       }
-    } catch {
-      return { nextMeeting: null, probCut: null, probHold: null, probHike: null }
+      if (parsed.chart?.error) console.log(`Fed futures error: ${JSON.stringify(parsed.chart.error)}`)
+      const meta = parsed.chart?.result?.[0]?.meta
+      const futuresPrice = meta?.regularMarketPrice ?? meta?.chartPreviousClose
+      console.log(`Fed futures price: ${futuresPrice}`)
+      if (futuresPrice) {
+        const impliedRate = 100 - futuresPrice
+        const expectedChange = currentRate - impliedRate
+        const pct = Math.round(expectedChange / 0.25 * 100)
+        const probCut  = Math.max(0, Math.min(100, pct))
+        const probHike = Math.max(0, Math.min(100, -pct))
+        const probHold = Math.max(0, 100 - probCut - probHike)
+        console.log(`Fed: R0=${currentRate}% implied=${impliedRate.toFixed(3)}% (${ticker}) → cut=${probCut}% hold=${probHold}% hike=${probHike}%`)
+        return { nextMeeting, probCut, probHold, probHike }
+      }
     }
+  } catch (err) {
+    console.error('FedWatch futures error:', err)
   }
+
+  // Fallback: approximate via 1-month T-bill yield from FRED
+  // DGS1MO reflects the market's expected average fed funds rate over the next month
+  try {
+    const oneMoYield = await fredSeries('DGS1MO')
+    console.log(`Fed DGS1MO fallback: ${oneMoYield}`)
+    if (oneMoYield !== null) {
+      const expectedChange = currentRate - oneMoYield
+      const pct = Math.round(expectedChange / 0.25 * 100)
+      const probCut  = Math.max(0, Math.min(100, pct))
+      const probHike = Math.max(0, Math.min(100, -pct))
+      const probHold = Math.max(0, 100 - probCut - probHike)
+      console.log(`Fed DGS1MO: R0=${currentRate}% 1mo=${oneMoYield}% → cut=${probCut}% hold=${probHold}% hike=${probHike}%`)
+      return { nextMeeting, probCut, probHold, probHike }
+    }
+  } catch (err) {
+    console.error('FedWatch DGS1MO fallback error:', err)
+  }
+
+  return { nextMeeting, probCut: null, probHold: null, probHike: null }
 }
 
 // ── GVZ via Yahoo Finance ──────────────────────────────────────────────────
 
 async function fetchGVZ(): Promise<number | null> {
   console.log('Fetching GVZ (Gold Volatility Index)...')
-  const YF_HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
-    Accept: 'application/json',
-  }
+  const UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
+
+  // Method 0: CBOE CDN — delayed quotes static endpoint, rarely rate-limits
   try {
-    const raw = await httpGet(
-      'https://query1.finance.yahoo.com/v8/finance/chart/%5EGVZ?interval=1d&range=3d',
-      YF_HEADERS,
-    )
-    const parsed = JSON.parse(raw) as {
-      chart?: { result?: Array<{ meta?: { regularMarketPrice?: number } }> }
+    const r = await fetch('https://cdn.cboe.com/api/global/delayed_quotes/quotes/%5EGVZ.json', {
+      headers: { 'User-Agent': UA, Accept: 'application/json' },
+    })
+    console.log(`GVZ CBOE CDN HTTP ${r.status}`)
+    if (r.ok) {
+      const parsed = await r.json() as { data?: { last?: number; close?: number } }
+      const price = parsed.data?.last ?? parsed.data?.close ?? null
+      console.log(`GVZ CBOE CDN price: ${price}`)
+      if (price != null && price > 2) return price
     }
-    return parsed.chart?.result?.[0]?.meta?.regularMarketPrice ?? null
-  } catch {
-    // Fallback: Stooq free CSV
-    try {
-      const csv = await httpGet('https://stooq.com/q/d/l/?s=%5Egvz&i=d')
-      const lines = csv.trim().split('\n').filter(l => l.trim())
-      if (lines.length < 2) return null
-      const last = lines[lines.length - 1].split(',')
-      return last[4] ? parseFloat(last[4]) : null   // close price is column 5
-    } catch {
-      return null
-    }
+  } catch (err) {
+    console.error('GVZ CBOE CDN failed:', err)
   }
+
+  // Method 1: Yahoo Finance query2 chart API (no auth required)
+  try {
+    const r = await fetch('https://query2.finance.yahoo.com/v8/finance/chart/%5EGVZ?interval=1d&range=5d', {
+      headers: { 'User-Agent': UA, Accept: 'application/json', 'Accept-Encoding': 'identity' },
+    })
+    console.log(`GVZ query2 HTTP ${r.status}`)
+    if (r.ok) {
+      const parsed = await r.json() as {
+        chart?: { result?: Array<{ meta?: { regularMarketPrice?: number; chartPreviousClose?: number } }>; error?: unknown }
+      }
+      if (parsed.chart?.error) console.log(`GVZ query2 error: ${JSON.stringify(parsed.chart.error)}`)
+      const meta = parsed.chart?.result?.[0]?.meta
+      const price = meta?.regularMarketPrice ?? meta?.chartPreviousClose ?? null
+      console.log(`GVZ query2 price: ${price}`)
+      if (price != null && price > 2) return price
+    } else {
+      const txt = await r.text()
+      console.log(`GVZ query2 body: ${txt.slice(0, 150)}`)
+    }
+  } catch (err) {
+    console.error('GVZ query2 failed:', err)
+  }
+
+  // Method 2: Yahoo Finance query1 with cookie+crumb auth
+  try {
+    const auth = await getYFAuth()
+    if (auth) {
+      const r = await fetch(
+        `https://query1.finance.yahoo.com/v8/finance/chart/%5EGVZ?interval=1d&range=5d&crumb=${encodeURIComponent(auth.crumb)}`,
+        { headers: { 'User-Agent': UA, Cookie: auth.cookie, Accept: 'application/json', 'Accept-Encoding': 'identity' } },
+      )
+      console.log(`GVZ query1-auth HTTP ${r.status}`)
+      if (r.ok) {
+        const parsed = await r.json() as {
+          chart?: { result?: Array<{ meta?: { regularMarketPrice?: number; chartPreviousClose?: number } }> }
+        }
+        const meta = parsed.chart?.result?.[0]?.meta
+        const price = meta?.regularMarketPrice ?? meta?.chartPreviousClose ?? null
+        console.log(`GVZ query1-auth price: ${price}`)
+        if (price != null && price > 2) return price
+      }
+    }
+  } catch (err) {
+    console.error('GVZ query1-auth failed:', err)
+  }
+
+  // Method 3: Stooq CSV (Date,Open,High,Low,Close,Volume — close is column index 4)
+  try {
+    const csv = await httpGet('https://stooq.com/q/d/l/?s=%5Egvz&i=d')
+    const lines = csv.trim().split('\n').filter(l => l.trim())
+    console.log(`GVZ Stooq: ${lines.length} lines, last: ${lines[lines.length - 1] ?? 'none'}`)
+    if (lines.length >= 2) {
+      const last = lines[lines.length - 1].split(',')
+      const price = last[4] ? parseFloat(last[4]) : null
+      if (price != null && price > 2) return price
+    }
+  } catch (err) {
+    console.error('GVZ Stooq failed:', err)
+  }
+
+  // Method 4: FRED GVZCLS (CBOE Gold ETF Volatility Index — updated daily by CBOE)
+  try {
+    const gvzFred = await fredSeries('GVZCLS')
+    console.log(`GVZ FRED GVZCLS: ${gvzFred}`)
+    if (gvzFred != null && gvzFred > 2) return gvzFred
+  } catch (err) {
+    console.error('GVZ FRED failed:', err)
+  }
+
+  return null
 }
 
 // ── SPDR GLD holdings ─────────────────────────────────────────────────────
@@ -252,41 +390,66 @@ async function fetchGLD(): Promise<Snapshot['etfFlows']> {
     return { gldTonnes: tonnes, gldWoWChange: wow, trend3W: trend }
   }
 
-  const YF_HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
-    Accept: 'application/json',
+  // Method 1: Yahoo Finance (blocked from GitHub Actions — 429)
+  try {
+    // Yahoo Finance summaryDetail: totalAssets ($AUM) ÷ navPrice ($/share) = shares outstanding
+    // shares × ~0.0904 troy oz/share ÷ 32,150.7 troy oz/tonne = tonnes of gold held
+    const UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
+    const auth = await getYFAuth()
+    if (!auth) throw new Error('no YF auth')
+    const r = await fetch(
+      `https://query1.finance.yahoo.com/v10/finance/quoteSummary/GLD?modules=summaryDetail&crumb=${encodeURIComponent(auth.crumb)}`,
+      { headers: { 'User-Agent': UA, Cookie: auth.cookie, Accept: 'application/json', 'Accept-Encoding': 'identity' } },
+    )
+    const parsed = await r.json() as {
+      quoteSummary?: { result?: Array<{ summaryDetail?: { totalAssets?: { raw?: number }; navPrice?: { raw?: number } } }> }
+    }
+    const sd = parsed.quoteSummary?.result?.[0]?.summaryDetail
+    const totalAssets = sd?.totalAssets?.raw
+    const navPrice = sd?.navPrice?.raw
+    if (!totalAssets || !navPrice) throw new Error('missing GLD data')
+    const shares = totalAssets / navPrice
+    const tonnes = Math.round(shares * 0.0904 / 32150.7 * 10) / 10
+    console.log(`GLD YF: $${(totalAssets / 1e9).toFixed(1)}B AUM, NAV $${navPrice} → ${tonnes}t`)
+    return toWoW(tonnes)
+  } catch (err) {
+    console.error('GLD YF fetch failed:', err)
   }
 
+  // Method 2: Alpha Vantage ETF_PROFILE + FRED London gold fix
+  // tonnes = net_assets (USD) / goldPrice (USD/oz) / 32150.7 (oz/tonne)
+  // Requires ALPHA_VANTAGE_API_KEY secret — free key at alphavantage.co (25 calls/day)
   try {
-    // Yahoo Finance: GLD shares outstanding × gold per share → tonnes
-    // GLD holds ~0.0904 troy oz per share (started at 0.1, decays 0.4%/yr for expenses)
-    // 1 metric tonne = 32,150.7 troy oz
-    const raw = await httpGet(
-      'https://query1.finance.yahoo.com/v10/finance/quoteSummary/GLD?modules=defaultKeyStatistics',
-      YF_HEADERS,
-    )
-    const parsed = JSON.parse(raw) as {
-      quoteSummary?: { result?: Array<{ defaultKeyStatistics?: { sharesOutstanding?: { raw?: number } } }> }
+    const avKey = process.env.ALPHA_VANTAGE_API_KEY
+    if (!avKey) {
+      console.log('GLD AV: ALPHA_VANTAGE_API_KEY not set — skipping (add secret to enable GLD data)')
+    } else {
+      const r = await fetch(`https://www.alphavantage.co/query?function=ETF_PROFILE&symbol=GLD&apikey=${avKey}`)
+      console.log(`GLD AV HTTP ${r.status}`)
+      if (r.ok) {
+        const data = await r.json() as { net_assets?: string; Information?: string }
+        if (data.Information) {
+          console.log(`GLD AV rate limit: ${data.Information.slice(0, 120)}`)
+        } else if (data.net_assets) {
+          const netAssets = parseFloat(data.net_assets)
+          if (netAssets > 1e9) {
+            const goldPrice = await fredSeries('GOLDAMGBD228NLBM')
+            console.log(`GLD AV: net_assets=$${(netAssets / 1e9).toFixed(1)}B, FRED gold=$${goldPrice}/oz`)
+            if (goldPrice && goldPrice > 500) {
+              const tonnes = Math.round(netAssets / goldPrice / 32150.7 * 10) / 10
+              console.log(`GLD AV → ${tonnes}t`)
+              return toWoW(tonnes)
+            }
+          }
+        }
+      }
     }
-    const shares = parsed.quoteSummary?.result?.[0]?.defaultKeyStatistics?.sharesOutstanding?.raw
-    if (!shares) throw new Error('no shares data')
-    const tonnes = Math.round(shares * 0.0904 / 32150.7 * 10) / 10
-    console.log(`GLD: ${shares.toLocaleString()} shares → ${tonnes}t`)
-    return toWoW(tonnes)
-  } catch {
-    // Fallback: SSGA CSV holdings export
-    try {
-      const csv = await httpGet(
-        'https://www.ssga.com/us/en/intermediary/etfs/funds/spdr-gold-shares-gld',
-        { 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36' }
-      )
-      const match = csv.match(/(\d[\d,]+\.\d+)\s*(?:tonnes|oz)/i)
-      const tonnes = match ? parseFloat(match[1].replace(/,/g, '')) : null
-      return toWoW(tonnes)
-    } catch {
-      return { gldTonnes: prevTonnes, gldWoWChange: null, trend3W: null }
-    }
+  } catch (err) {
+    console.error('GLD AV fallback failed:', err)
   }
+
+  console.log(`GLD: all sources failed, carrying forward prevTonnes=${prevTonnes}`)
+  return { gldTonnes: prevTonnes, gldWoWChange: null, trend3W: null }
 }
 
 // ── CFTC COT data ─────────────────────────────────────────────────────────
@@ -340,10 +503,11 @@ async function fetchCOT(existingSnapshot: Partial<Snapshot>): Promise<Snapshot['
 const CTRADER_URL   = process.env.CTRADER_MCP_URL   || 'https://mcp.ctrader.com/trading/mcp'
 const CTRADER_TOKEN = process.env.CTRADER_MCP_TOKEN || ''
 
+// All CTrader _SB spread-bet instruments use 10^5 pipettes (verified empirically)
 const PIP_DIGITS: Record<string, number> = {
-  XAUUSD: 3, XAGUSD: 3,
-  EURUSD: 5, USDJPY: 3, USDCHF: 5, USDCNH: 5,
-  US500: 3, GER40: 3, UK100: 3,
+  XAUUSD: 5, XAGUSD: 5,
+  EURUSD: 5, USDJPY: 5, USDCHF: 5, USDCNH: 5,
+  US500: 5, GER40: 5, UK100: 5,
 }
 
 async function mcpFetch(body: object, sessionId?: string): Promise<{ data: unknown; sessionId: string | null }> {
@@ -354,27 +518,38 @@ async function mcpFetch(body: object, sessionId?: string): Promise<{ data: unkno
   }
   if (sessionId) headers['Mcp-Session-Id'] = sessionId
 
-  const res = await fetch(CTRADER_URL, { method: 'POST', headers, body: JSON.stringify(body) })
-  const newSid = res.headers.get('Mcp-Session-Id') ?? res.headers.get('mcp-session-id') ?? sessionId ?? null
-  const text = await res.text()
+  const ctrl = new AbortController()
+  const timer = setTimeout(() => ctrl.abort(), 20000)
+  try {
+    const res = await fetch(CTRADER_URL, { method: 'POST', headers, body: JSON.stringify(body), signal: ctrl.signal })
+    const newSid = res.headers.get('Mcp-Session-Id') ?? res.headers.get('mcp-session-id') ?? sessionId ?? null
+    const text = await res.text()
 
-  for (const line of text.split('\n')) {
-    if (line.startsWith('data: ')) {
-      try { return { data: JSON.parse(line.slice(6)), sessionId: newSid } } catch { /* next line */ }
+    if (!res.ok) {
+      console.error(`CTrader MCP HTTP ${res.status}: ${text.slice(0, 200)}`)
+      return { data: null, sessionId: newSid }
     }
+
+    for (const line of text.split('\n')) {
+      if (line.startsWith('data: ')) {
+        try { return { data: JSON.parse(line.slice(6)), sessionId: newSid } } catch { /* next line */ }
+      }
+    }
+    try { return { data: JSON.parse(text), sessionId: newSid } } catch { /* ignore */ }
+    return { data: null, sessionId: newSid }
+  } finally {
+    clearTimeout(timer)
   }
-  try { return { data: JSON.parse(text), sessionId: newSid } } catch { /* ignore */ }
-  return { data: null, sessionId: newSid }
 }
 
 interface McpBar { high?: number; low?: number; open?: number }
 
 async function fetchCTraderPrices(): Promise<SnapshotPrices | null> {
   const SYMS = ['XAUUSD', 'XAGUSD', 'EURUSD', 'USDJPY', 'USDCHF', 'USDCNH', 'US500', 'GER40', 'UK100']
-  console.log('Fetching CTrader prices via MCP...')
+  console.log(`Fetching CTrader prices via MCP (url=${CTRADER_URL.slice(0, 50)}…)`)
 
   if (!CTRADER_TOKEN) {
-    console.log('CTrader MCP: no token, skipping')
+    console.log('CTrader MCP: CTRADER_MCP_TOKEN env var not set — skipping')
     return null
   }
 
@@ -384,14 +559,16 @@ async function fetchCTraderPrices(): Promise<SnapshotPrices | null> {
       jsonrpc: '2.0', id: 0, method: 'initialize',
       params: { protocolVersion: '2024-11-05', capabilities: {}, clientInfo: { name: 'xauusd-fetch', version: '1.0' } },
     })
-    if (!(initData as Record<string,unknown>)?.result || !sessionId) {
-      console.log('CTrader MCP: init failed')
+    console.log(`CTrader MCP: init result=${JSON.stringify(initData)?.slice(0, 150)} sid=${sessionId}`)
+    if (!(initData as Record<string,unknown>)?.result) {
+      console.log('CTrader MCP: init failed — no result in response')
       return null
     }
-    await mcpFetch({ jsonrpc: '2.0', method: 'notifications/initialized', params: {} }, sessionId)
+    // sessionId is optional (stateless REST proxy servers may not return Mcp-Session-Id)
+    await mcpFetch({ jsonrpc: '2.0', method: 'notifications/initialized', params: {} }, sessionId ?? undefined)
 
     async function callTool(name: string, args: object): Promise<unknown> {
-      const { data } = await mcpFetch({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name, arguments: args } }, sessionId!)
+      const { data } = await mcpFetch({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name, arguments: args } }, sessionId ?? undefined)
       const result = (data as Record<string,unknown>)?.result as Record<string,unknown> | undefined
       const content = result?.content as Array<{ type: string; text: string }> | undefined
       if (content?.[0]?.type === 'text') {
@@ -400,20 +577,33 @@ async function fetchCTraderPrices(): Promise<SnapshotPrices | null> {
       return null
     }
 
-    // Symbol map
+    // Symbol map — field is symbolName (not name); prefer enabled=true variants
     const symRaw = await callTool('get_symbols', {})
-    const symbols = (symRaw as { symbols?: Array<{ name: string; symbolId: number }> })?.symbols ?? []
+    console.log(`CTrader get_symbols raw: ${JSON.stringify(symRaw)?.slice(0, 300)}`)
+    const symbols = (symRaw as { symbols?: Array<{ symbolName: string; symbolId: number; enabled?: boolean }> })?.symbols ?? []
+    console.log(`CTrader symbols count: ${symbols.length}`)
     const symMap: Record<string, number> = {}
+    const symEnabledMap: Record<string, boolean> = {}
+    const suffixRe = /(_SBE|_SB|-F_SBE|-F_SB|-PERP_SBE|-PERP_SB|-PERP|-F)$/
     for (const s of symbols) {
-      const base = s.name.replace(/(_SBE|_SB|-F_SB|-F)$/, '')
-      symMap[s.name.toUpperCase()] = s.symbolId
-      symMap[base.toUpperCase()] = s.symbolId
+      if (!s.symbolName || !s.symbolId) continue
+      const base = s.symbolName.replace(suffixRe, '').toUpperCase()
+      const upperName = s.symbolName.toUpperCase()
+      symMap[upperName] = s.symbolId
+      // For base name, prefer enabled symbol over disabled
+      if (symEnabledMap[base] === undefined || s.enabled) {
+        symMap[base] = s.symbolId
+        symEnabledMap[base] = !!s.enabled
+      }
     }
+    console.log(`CTrader symMap XAUUSD=${symMap['XAUUSD']} EURUSD=${symMap['EURUSD']}`)
 
     const ids = SYMS.map(s => symMap[s]).filter((id): id is number => id != null)
+    console.log(`CTrader requesting spot prices for ids: ${JSON.stringify(ids)}`)
 
     // Spot prices
     const spotRaw = await callTool('get_spot_prices', { symbolId: ids })
+    console.log(`CTrader get_spot_prices raw: ${JSON.stringify(spotRaw)?.slice(0, 300)}`)
     const spots = (spotRaw as { prices?: Array<{ symbolId: number; bid?: number; ask?: number }> })?.prices ?? []
     const spotMap: Record<number, { bid?: number; ask?: number }> = {}
     for (const s of spots) spotMap[s.symbolId] = s
@@ -442,10 +632,10 @@ async function fetchCTraderPrices(): Promise<SnapshotPrices | null> {
       if (bars.length >= 2) {
         const recent = bars.slice(-15)
         const ranges = recent.slice(0, Math.min(14, recent.length - 1))
-          .map(b => (b.high ?? 0) / 10 ** 3 - (b.low ?? 0) / 10 ** 3)
+          .map(b => (b.high ?? 0) / 10 ** 5 - (b.low ?? 0) / 10 ** 5)
         if (ranges.length > 0) adr14 = Math.round(ranges.reduce((a, b) => a + b, 0) / ranges.length * 10) / 10
         const last = recent[recent.length - 1]
-        adrUsed = Math.round(((last.high ?? 0) - (last.low ?? 0)) / 10 ** 3 * 10) / 10
+        adrUsed = Math.round(((last.high ?? 0) - (last.low ?? 0)) / 10 ** 5 * 10) / 10
       }
     }
 

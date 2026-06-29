@@ -40,9 +40,10 @@ jobs:
       - name: Fetch daily data snapshot
         run: cd xauusd-dashboard && npx tsx scripts/fetch-static-data.ts
         env:
-          FRED_API_KEY:        ${{ secrets.FRED_API_KEY }}
-          CTRADER_MCP_URL:     ${{ secrets.VITE_CTRADER_MCP_URL }}
-          CTRADER_MCP_TOKEN:   ${{ secrets.VITE_CTRADER_MCP_TOKEN }}
+          FRED_API_KEY:             ${{ secrets.FRED_API_KEY }}
+          CTRADER_MCP_URL:          ${{ secrets.VITE_CTRADER_MCP_URL }}
+          CTRADER_MCP_TOKEN:        ${{ secrets.VITE_CTRADER_MCP_TOKEN }}
+          ALPHA_VANTAGE_API_KEY:    ${{ secrets.ALPHA_VANTAGE_API_KEY }}
 
       - name: Commit updated snapshot
         run: |

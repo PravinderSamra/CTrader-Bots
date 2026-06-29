@@ -1,33 +1,52 @@
 {
-  "generatedAt": null,
+  "generatedAt": "2026-06-29T22:47:45.163Z",
   "yields": {
-    "US10Y": null,
-    "US2Y": null,
-    "realYield10Y": null,
-    "realYield5Y": null,
-    "curve2s10s": null,
-    "breakeven10Y": null,
-    "breakeven5Y": null,
-    "forward5y5y": null,
-    "dayOverDay": { "US10Y": null, "US2Y": null, "realYield10Y": null }
+    "US10Y": 4.38,
+    "US2Y": 4.07,
+    "realYield10Y": 2.18,
+    "realYield5Y": 1.91,
+    "curve2s10s": 31,
+    "breakeven10Y": 2.22,
+    "breakeven5Y": 2.24,
+    "forward5y5y": 2.2,
+    "dayOverDay": {
+      "US10Y": -0.02,
+      "US2Y": -0.02,
+      "realYield10Y": -0.01
+    }
   },
   "fedExpectations": {
-    "nextMeeting": null,
-    "probCut": null,
-    "probHold": null,
-    "probHike": null
+    "nextMeeting": "2026-07-29",
+    "probCut": 20,
+    "probHold": 80,
+    "probHike": 0
   },
-  "marketVolatility": { "GVZ": null },
+  "marketVolatility": {
+    "GVZ": 27.18
+  },
   "positioning": {
-    "cotNetLong": null,
-    "cotWoWChange": null,
-    "crowding": null,
-    "reportDate": null
+    "cotNetLong": 172884,
+    "cotWoWChange": 0,
+    "crowding": "NEUTRAL",
+    "reportDate": "2026-06-23T00:00:00.000"
   },
   "etfFlows": {
-    "gldTonnes": null,
+    "gldTonnes": 1131.4,
     "gldWoWChange": null,
     "trend3W": null
   },
-  "snapshotPrices": null
+  "snapshotPrices": {
+    "XAUUSD": 4013.575,
+    "XAGUSD": 58.715,
+    "EURUSD": 1.14236,
+    "USDJPY": 161.9305,
+    "USDCHF": 0.8075,
+    "USDCNH": 6.79934,
+    "US500": 7495.1,
+    "GER40": 24893.6,
+    "UK100": 10545.4,
+    "ADR_14day": 105.6,
+    "ADR_usedToday": 12.4,
+    "goldSilverRatio": 68.4
+  }
 }
