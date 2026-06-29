@@ -130,7 +130,7 @@ const FRED_KEY = process.env.FRED_API_KEY ?? ''
 async function fredSeries(id: string): Promise<number | null> {
   if (!FRED_KEY) return null
   try {
-    const url = `https://api.stlouisfed.org/fred/series/observations?series_id=${id}&api_key=${FRED_KEY}&file_type=json&sort_order=desc&limit=2`
+    const url = `https://api.stlouisfed.org/fred/series/observations?series_id=${id}&api_key=${FRED_KEY}&file_type=json&sort_order=desc&limit=10`
     const raw = await httpGet(url)
     const data = JSON.parse(raw) as { observations?: Array<{ value: string; date: string }> }
     const obs = data.observations?.filter(o => o.value !== '.') ?? []
@@ -211,6 +211,7 @@ async function fetchFedWatch(): Promise<Snapshot['fedExpectations']> {
 
   // Current Fed Funds upper target rate from FRED
   const currentRate = await fredSeries('DFEDTARU')
+  console.log(`Fed DFEDTARU: ${currentRate}`)
   if (!currentRate) return { nextMeeting, probCut: null, probHold: null, probHike: null }
 
   // 30-Day Fed Funds futures for the month AFTER the meeting
@@ -219,20 +220,26 @@ async function fetchFedWatch(): Promise<Snapshot['fedExpectations']> {
   const meetDate = new Date(nextMeeting)
   const futMon = new Date(meetDate.getFullYear(), meetDate.getMonth() + 1, 1)
   const ticker = `ZQ${MONTH_CODES[futMon.getMonth()]}${String(futMon.getFullYear()).slice(-2)}.CBT`
+  console.log(`Fed futures ticker: ${ticker}`)
 
   try {
-    const raw = await httpGet(
-      `https://query2.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d&range=5d`,
-      {
-        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
-        Accept: 'application/json', 'Accept-Encoding': 'identity',
-      },
-    )
-    const parsed = JSON.parse(raw) as {
-      chart?: { result?: Array<{ meta?: { regularMarketPrice?: number; chartPreviousClose?: number } }> }
+    const UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
+    const r = await fetch(`https://query2.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d&range=5d`, {
+      headers: { 'User-Agent': UA, Accept: 'application/json', 'Accept-Encoding': 'identity' },
+    })
+    console.log(`Fed futures HTTP ${r.status}`)
+    if (!r.ok) {
+      const txt = await r.text()
+      console.log(`Fed futures body: ${txt.slice(0, 150)}`)
+      return { nextMeeting, probCut: null, probHold: null, probHike: null }
     }
+    const parsed = await r.json() as {
+      chart?: { result?: Array<{ meta?: { regularMarketPrice?: number; chartPreviousClose?: number } }>; error?: unknown }
+    }
+    if (parsed.chart?.error) console.log(`Fed futures error: ${JSON.stringify(parsed.chart.error)}`)
     const meta = parsed.chart?.result?.[0]?.meta
     const futuresPrice = meta?.regularMarketPrice ?? meta?.chartPreviousClose
+    console.log(`Fed futures price: ${futuresPrice}`)
     if (!futuresPrice) return { nextMeeting, probCut: null, probHold: null, probHike: null }
 
     // Implied rate after meeting = 100 − futures price
@@ -248,7 +255,7 @@ async function fetchFedWatch(): Promise<Snapshot['fedExpectations']> {
     console.log(`Fed: R0=${currentRate}% implied=${impliedRate.toFixed(3)}% (${ticker}) → cut=${probCut}% hold=${probHold}% hike=${probHike}%`)
     return { nextMeeting, probCut, probHold, probHike }
   } catch (err) {
-    console.error('FedWatch futures fetch failed:', err)
+    console.error('FedWatch futures error:', err)
     return { nextMeeting, probCut: null, probHold: null, probHike: null }
   }
 }
@@ -257,35 +264,69 @@ async function fetchFedWatch(): Promise<Snapshot['fedExpectations']> {
 
 async function fetchGVZ(): Promise<number | null> {
   console.log('Fetching GVZ (Gold Volatility Index)...')
-  const YF_HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
-    Accept: 'application/json',
-  }
+  const UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
+
+  // Method 1: Yahoo Finance query2 chart API (no auth required)
   try {
-    const raw = await httpGet(
-      'https://query2.finance.yahoo.com/v8/finance/chart/%5EGVZ?interval=1d&range=5d',
-      YF_HEADERS,
-    )
-    const parsed = JSON.parse(raw) as {
-      chart?: { result?: Array<{ meta?: { regularMarketPrice?: number; chartPreviousClose?: number } }> }
+    const r = await fetch('https://query2.finance.yahoo.com/v8/finance/chart/%5EGVZ?interval=1d&range=5d', {
+      headers: { 'User-Agent': UA, Accept: 'application/json', 'Accept-Encoding': 'identity' },
+    })
+    console.log(`GVZ query2 HTTP ${r.status}`)
+    if (r.ok) {
+      const parsed = await r.json() as {
+        chart?: { result?: Array<{ meta?: { regularMarketPrice?: number; chartPreviousClose?: number } }>; error?: unknown }
+      }
+      if (parsed.chart?.error) console.log(`GVZ query2 error: ${JSON.stringify(parsed.chart.error)}`)
+      const meta = parsed.chart?.result?.[0]?.meta
+      const price = meta?.regularMarketPrice ?? meta?.chartPreviousClose ?? null
+      console.log(`GVZ query2 price: ${price}`)
+      if (price != null && price > 2) return price
+    } else {
+      const txt = await r.text()
+      console.log(`GVZ query2 body: ${txt.slice(0, 150)}`)
     }
-    const meta = parsed.chart?.result?.[0]?.meta
-    // regularMarketPrice is null when market is closed; fall back to Friday's close
-    const price = meta?.regularMarketPrice ?? meta?.chartPreviousClose ?? null
-    if (price != null && price > 2) return price  // sanity: GVZ should never be ≤2
-    return null
-  } catch {
-    // Fallback: Stooq free CSV
-    try {
-      const csv = await httpGet('https://stooq.com/q/d/l/?s=%5Egvz&i=d')
-      const lines = csv.trim().split('\n').filter(l => l.trim())
-      if (lines.length < 2) return null
-      const last = lines[lines.length - 1].split(',')
-      return last[4] ? parseFloat(last[4]) : null   // close price is column 5
-    } catch {
-      return null
-    }
+  } catch (err) {
+    console.error('GVZ query2 failed:', err)
   }
+
+  // Method 2: Yahoo Finance query1 with cookie+crumb auth
+  try {
+    const auth = await getYFAuth()
+    if (auth) {
+      const r = await fetch(
+        `https://query1.finance.yahoo.com/v8/finance/chart/%5EGVZ?interval=1d&range=5d&crumb=${encodeURIComponent(auth.crumb)}`,
+        { headers: { 'User-Agent': UA, Cookie: auth.cookie, Accept: 'application/json', 'Accept-Encoding': 'identity' } },
+      )
+      console.log(`GVZ query1-auth HTTP ${r.status}`)
+      if (r.ok) {
+        const parsed = await r.json() as {
+          chart?: { result?: Array<{ meta?: { regularMarketPrice?: number; chartPreviousClose?: number } }> }
+        }
+        const meta = parsed.chart?.result?.[0]?.meta
+        const price = meta?.regularMarketPrice ?? meta?.chartPreviousClose ?? null
+        console.log(`GVZ query1-auth price: ${price}`)
+        if (price != null && price > 2) return price
+      }
+    }
+  } catch (err) {
+    console.error('GVZ query1-auth failed:', err)
+  }
+
+  // Method 3: Stooq CSV (Date,Open,High,Low,Close,Volume — close is column index 4)
+  try {
+    const csv = await httpGet('https://stooq.com/q/d/l/?s=%5Egvz&i=d')
+    const lines = csv.trim().split('\n').filter(l => l.trim())
+    console.log(`GVZ Stooq: ${lines.length} lines, last: ${lines[lines.length - 1] ?? 'none'}`)
+    if (lines.length >= 2) {
+      const last = lines[lines.length - 1].split(',')
+      const price = last[4] ? parseFloat(last[4]) : null
+      if (price != null && price > 2) return price
+    }
+  } catch (err) {
+    console.error('GVZ Stooq failed:', err)
+  }
+
+  return null
 }
 
 // ── SPDR GLD holdings ─────────────────────────────────────────────────────
@@ -440,14 +481,16 @@ async function fetchCTraderPrices(): Promise<SnapshotPrices | null> {
       jsonrpc: '2.0', id: 0, method: 'initialize',
       params: { protocolVersion: '2024-11-05', capabilities: {}, clientInfo: { name: 'xauusd-fetch', version: '1.0' } },
     })
-    if (!(initData as Record<string,unknown>)?.result || !sessionId) {
-      console.log(`CTrader MCP: init failed — data=${JSON.stringify(initData)?.slice(0, 200)} sid=${sessionId}`)
+    console.log(`CTrader MCP: init result=${JSON.stringify(initData)?.slice(0, 150)} sid=${sessionId}`)
+    if (!(initData as Record<string,unknown>)?.result) {
+      console.log('CTrader MCP: init failed — no result in response')
       return null
     }
-    await mcpFetch({ jsonrpc: '2.0', method: 'notifications/initialized', params: {} }, sessionId)
+    // sessionId is optional (stateless REST proxy servers may not return Mcp-Session-Id)
+    await mcpFetch({ jsonrpc: '2.0', method: 'notifications/initialized', params: {} }, sessionId ?? undefined)
 
     async function callTool(name: string, args: object): Promise<unknown> {
-      const { data } = await mcpFetch({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name, arguments: args } }, sessionId!)
+      const { data } = await mcpFetch({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name, arguments: args } }, sessionId ?? undefined)
       const result = (data as Record<string,unknown>)?.result as Record<string,unknown> | undefined
       const content = result?.content as Array<{ type: string; text: string }> | undefined
       if (content?.[0]?.type === 'text') {
