@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-29T21:38:15.294Z",
+  "generatedAt": "2026-06-29T22:15:23.764Z",
   "yields": {
     "US10Y": 4.38,
     "US2Y": 4.07,
@@ -17,9 +17,9 @@
   },
   "fedExpectations": {
     "nextMeeting": "2026-07-29",
-    "probCut": null,
-    "probHold": null,
-    "probHike": null
+    "probCut": 20,
+    "probHold": 80,
+    "probHike": 0
   },
   "marketVolatility": {
     "GVZ": null
@@ -36,17 +36,17 @@
     "trend3W": null
   },
   "snapshotPrices": {
-    "XAUUSD": null,
-    "XAGUSD": null,
-    "EURUSD": null,
-    "USDJPY": null,
-    "USDCHF": null,
-    "USDCNH": null,
-    "US500": null,
-    "GER40": null,
-    "UK100": null,
-    "ADR_14day": null,
-    "ADR_usedToday": null,
-    "goldSilverRatio": null
+    "XAUUSD": 4018.485,
+    "XAGUSD": 58.753,
+    "EURUSD": 1.14247,
+    "USDJPY": 161.9365,
+    "USDCHF": 0.80746,
+    "USDCNH": 6.79926,
+    "US500": 7494.3,
+    "GER40": 24893.6,
+    "UK100": 10544.6,
+    "ADR_14day": 105.6,
+    "ADR_usedToday": 5.2,
+    "goldSilverRatio": 68.4
   }
 }
