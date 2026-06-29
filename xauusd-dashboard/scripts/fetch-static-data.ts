@@ -112,8 +112,10 @@ async function getYFAuth(): Promise<{ cookie: string; crumb: string } | null> {
     const r2 = await fetch('https://query1.finance.yahoo.com/v1/test/getcrumb', {
       headers: { 'User-Agent': UA, Cookie: cookie, 'Accept-Encoding': 'identity' },
     })
+    if (!r2.ok) { console.log(`YF crumb HTTP ${r2.status} — auth skipped`); return null }
     const crumb = (await r2.text()).trim()
-    if (!crumb || crumb.length < 3 || crumb.startsWith('<') || crumb.startsWith('{')) return null
+    // Reject if it looks like an error page/message rather than a real crumb
+    if (!crumb || crumb.length < 3 || crumb.includes(' ') || crumb.startsWith('<') || crumb.startsWith('{')) return null
 
     _yfAuth = { cookie, crumb }
     console.log(`YF auth OK: crumb=${crumb.slice(0, 4)}…`)
@@ -256,8 +258,27 @@ async function fetchFedWatch(): Promise<Snapshot['fedExpectations']> {
     return { nextMeeting, probCut, probHold, probHike }
   } catch (err) {
     console.error('FedWatch futures error:', err)
-    return { nextMeeting, probCut: null, probHold: null, probHike: null }
   }
+
+  // Fallback: approximate via 1-month T-bill yield from FRED
+  // DGS1MO reflects the market's expected average fed funds rate over the next month
+  try {
+    const oneMoYield = await fredSeries('DGS1MO')
+    console.log(`Fed DGS1MO fallback: ${oneMoYield}`)
+    if (oneMoYield !== null) {
+      const expectedChange = currentRate - oneMoYield
+      const pct = Math.round(expectedChange / 0.25 * 100)
+      const probCut  = Math.max(0, Math.min(100, pct))
+      const probHike = Math.max(0, Math.min(100, -pct))
+      const probHold = Math.max(0, 100 - probCut - probHike)
+      console.log(`Fed DGS1MO: R0=${currentRate}% 1mo=${oneMoYield}% → cut=${probCut}% hold=${probHold}% hike=${probHike}%`)
+      return { nextMeeting, probCut, probHold, probHike }
+    }
+  } catch (err) {
+    console.error('FedWatch DGS1MO fallback error:', err)
+  }
+
+  return { nextMeeting, probCut: null, probHold: null, probHike: null }
 }
 
 // ── GVZ via Yahoo Finance ──────────────────────────────────────────────────
@@ -265,6 +286,22 @@ async function fetchFedWatch(): Promise<Snapshot['fedExpectations']> {
 async function fetchGVZ(): Promise<number | null> {
   console.log('Fetching GVZ (Gold Volatility Index)...')
   const UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
+
+  // Method 0: CBOE CDN — delayed quotes static endpoint, rarely rate-limits
+  try {
+    const r = await fetch('https://cdn.cboe.com/api/global/delayed_quotes/quotes/%5EGVZ.json', {
+      headers: { 'User-Agent': UA, Accept: 'application/json' },
+    })
+    console.log(`GVZ CBOE CDN HTTP ${r.status}`)
+    if (r.ok) {
+      const parsed = await r.json() as { data?: { last?: number; close?: number } }
+      const price = parsed.data?.last ?? parsed.data?.close ?? null
+      console.log(`GVZ CBOE CDN price: ${price}`)
+      if (price != null && price > 2) return price
+    }
+  } catch (err) {
+    console.error('GVZ CBOE CDN failed:', err)
+  }
 
   // Method 1: Yahoo Finance query2 chart API (no auth required)
   try {
@@ -504,6 +541,7 @@ async function fetchCTraderPrices(): Promise<SnapshotPrices | null> {
     const symbols = (symRaw as { symbols?: Array<{ name: string; symbolId: number }> })?.symbols ?? []
     const symMap: Record<string, number> = {}
     for (const s of symbols) {
+      if (!s.name || !s.symbolId) continue
       const base = s.name.replace(/(_SBE|_SB|-F_SB|-F)$/, '')
       symMap[s.name.toUpperCase()] = s.symbolId
       symMap[base.toUpperCase()] = s.symbolId
