@@ -157,7 +157,12 @@ function calcADR(bars: Bar[], symbol: string): { adr: number; used: number } {
 export function pricesFromSnapshot(sp: SnapshotPrices): CTraderPrices {
   const pt = (price: number | null): PricePoint => ({ price: price ?? 0, changeDay: 0, changePct: 0 })
   const eur = sp.EURUSD ?? 0
-  const dxyPrice = eur > 0 ? parseFloat((50.14348 / eur * 0.576 + 13.4).toFixed(3)) : 0
+  const jpy = sp.USDJPY ?? 0
+  const chf = sp.USDCHF ?? 0
+  // Official DXY formula (ICE). Fixed factor ~1.099 covers GBP(-0.119), CAD(+0.091), SEK(+0.042).
+  const dxyPrice = eur > 0 && jpy > 0
+    ? parseFloat((50.14348 * Math.pow(eur, -0.576) * Math.pow(jpy, 0.136) * Math.pow(chf > 0 ? chf : 0.85, 0.036) * 1.099).toFixed(2))
+    : 0
   return {
     XAUUSD: pt(sp.XAUUSD),
     XAGUSD: pt(sp.XAGUSD),
@@ -264,9 +269,16 @@ export function useCTraderPrices(): CTraderPrices {
       const rawCNH = getSpot('USDCNH')
       const cnh = rawCNH.bid != null ? rawToDisplay((rawCNH.bid + (rawCNH.ask ?? rawCNH.bid)) / 2, 'USDCNH') : 0
 
-      // DXY approximation from EUR/USD (DXY ≈ 50.14348% EUR/USD inverse weighted)
-      const dxyPrice = eur > 0 ? parseFloat((50.14348 / eur * 0.576 + 13.4).toFixed(3)) : 0
-      const dxyOpen = todayOpen['EURUSD'] ? 50.14348 / rawToDisplay(todayOpen['EURUSD'], 'EURUSD') * 0.576 + 13.4 : dxyPrice
+      // Official DXY formula (ICE). Fixed factor ~1.099 covers GBP(-0.119), CAD(+0.091), SEK(+0.042).
+      const dxyPrice = eur > 0 && jpy > 0
+        ? parseFloat((50.14348 * Math.pow(eur, -0.576) * Math.pow(jpy, 0.136) * Math.pow(chf > 0 ? chf : 0.85, 0.036) * 1.099).toFixed(2))
+        : 0
+      const oEur = todayOpen['EURUSD'] ? rawToDisplay(todayOpen['EURUSD'], 'EURUSD') : eur
+      const oJpy = todayOpen['USDJPY'] ? rawToDisplay(todayOpen['USDJPY'], 'USDJPY') : jpy
+      const oChf = todayOpen['USDCHF'] ? rawToDisplay(todayOpen['USDCHF'], 'USDCHF') : chf
+      const dxyOpen = oEur > 0 && oJpy > 0
+        ? 50.14348 * Math.pow(oEur, -0.576) * Math.pow(oJpy, 0.136) * Math.pow(oChf > 0 ? oChf : 0.85, 0.036) * 1.099
+        : dxyPrice
       const dxy: typeof xau = {
         price: dxyPrice,
         changeDay: dxyPrice - dxyOpen,
