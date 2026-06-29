@@ -460,10 +460,11 @@ async function fetchCOT(existingSnapshot: Partial<Snapshot>): Promise<Snapshot['
 const CTRADER_URL   = process.env.CTRADER_MCP_URL   || 'https://mcp.ctrader.com/trading/mcp'
 const CTRADER_TOKEN = process.env.CTRADER_MCP_TOKEN || ''
 
+// All CTrader _SB spread-bet instruments use 10^5 pipettes (verified empirically)
 const PIP_DIGITS: Record<string, number> = {
-  XAUUSD: 3, XAGUSD: 3,
-  EURUSD: 5, USDJPY: 3, USDCHF: 5, USDCNH: 5,
-  US500: 3, GER40: 3, UK100: 3,
+  XAUUSD: 5, XAGUSD: 5,
+  EURUSD: 5, USDJPY: 5, USDCHF: 5, USDCNH: 5,
+  US500: 5, GER40: 5, UK100: 5,
 }
 
 async function mcpFetch(body: object, sessionId?: string): Promise<{ data: unknown; sessionId: string | null }> {
@@ -533,17 +534,24 @@ async function fetchCTraderPrices(): Promise<SnapshotPrices | null> {
       return null
     }
 
-    // Symbol map
+    // Symbol map — field is symbolName (not name); prefer enabled=true variants
     const symRaw = await callTool('get_symbols', {})
     console.log(`CTrader get_symbols raw: ${JSON.stringify(symRaw)?.slice(0, 300)}`)
-    const symbols = (symRaw as { symbols?: Array<{ name: string; symbolId: number }> })?.symbols ?? []
+    const symbols = (symRaw as { symbols?: Array<{ symbolName: string; symbolId: number; enabled?: boolean }> })?.symbols ?? []
     console.log(`CTrader symbols count: ${symbols.length}`)
     const symMap: Record<string, number> = {}
+    const symEnabledMap: Record<string, boolean> = {}
+    const suffixRe = /(_SBE|_SB|-F_SBE|-F_SB|-PERP_SBE|-PERP_SB|-PERP|-F)$/
     for (const s of symbols) {
-      if (!s.name || !s.symbolId) continue
-      const base = s.name.replace(/(_SBE|_SB|-F_SB|-F)$/, '')
-      symMap[s.name.toUpperCase()] = s.symbolId
-      symMap[base.toUpperCase()] = s.symbolId
+      if (!s.symbolName || !s.symbolId) continue
+      const base = s.symbolName.replace(suffixRe, '').toUpperCase()
+      const upperName = s.symbolName.toUpperCase()
+      symMap[upperName] = s.symbolId
+      // For base name, prefer enabled symbol over disabled
+      if (symEnabledMap[base] === undefined || s.enabled) {
+        symMap[base] = s.symbolId
+        symEnabledMap[base] = !!s.enabled
+      }
     }
     console.log(`CTrader symMap XAUUSD=${symMap['XAUUSD']} EURUSD=${symMap['EURUSD']}`)
 
@@ -581,10 +589,10 @@ async function fetchCTraderPrices(): Promise<SnapshotPrices | null> {
       if (bars.length >= 2) {
         const recent = bars.slice(-15)
         const ranges = recent.slice(0, Math.min(14, recent.length - 1))
-          .map(b => (b.high ?? 0) / 10 ** 3 - (b.low ?? 0) / 10 ** 3)
+          .map(b => (b.high ?? 0) / 10 ** 5 - (b.low ?? 0) / 10 ** 5)
         if (ranges.length > 0) adr14 = Math.round(ranges.reduce((a, b) => a + b, 0) / ranges.length * 10) / 10
         const last = recent[recent.length - 1]
-        adrUsed = Math.round(((last.high ?? 0) - (last.low ?? 0)) / 10 ** 3 * 10) / 10
+        adrUsed = Math.round(((last.high ?? 0) - (last.low ?? 0)) / 10 ** 5 * 10) / 10
       }
     }
 
