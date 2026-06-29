@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-06-29T20:51:36.451Z",
+  "generatedAt": "2026-06-29T21:38:15.294Z",
   "yields": {
     "US10Y": 4.38,
     "US2Y": 4.07,
     "realYield10Y": 2.18,
     "realYield5Y": 1.91,
     "curve2s10s": 31,
-    "breakeven10Y": 2.2,
-    "breakeven5Y": 2.21,
-    "forward5y5y": 2.19,
+    "breakeven10Y": 2.22,
+    "breakeven5Y": 2.24,
+    "forward5y5y": 2.2,
     "dayOverDay": {
       "US10Y": -0.02,
       "US2Y": -0.02,
@@ -35,5 +35,18 @@
     "gldWoWChange": null,
     "trend3W": null
   },
-  "snapshotPrices": null
+  "snapshotPrices": {
+    "XAUUSD": null,
+    "XAGUSD": null,
+    "EURUSD": null,
+    "USDJPY": null,
+    "USDCHF": null,
+    "USDCNH": null,
+    "US500": null,
+    "GER40": null,
+    "UK100": null,
+    "ADR_14day": null,
+    "ADR_usedToday": null,
+    "goldSilverRatio": null
+  }
 }
