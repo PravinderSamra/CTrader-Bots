@@ -233,29 +233,26 @@ async function fetchFedWatch(): Promise<Snapshot['fedExpectations']> {
     if (!r.ok) {
       const txt = await r.text()
       console.log(`Fed futures body: ${txt.slice(0, 150)}`)
-      return { nextMeeting, probCut: null, probHold: null, probHike: null }
+      // fall through to DGS1MO fallback below
+    } else {
+      const parsed = await r.json() as {
+        chart?: { result?: Array<{ meta?: { regularMarketPrice?: number; chartPreviousClose?: number } }>; error?: unknown }
+      }
+      if (parsed.chart?.error) console.log(`Fed futures error: ${JSON.stringify(parsed.chart.error)}`)
+      const meta = parsed.chart?.result?.[0]?.meta
+      const futuresPrice = meta?.regularMarketPrice ?? meta?.chartPreviousClose
+      console.log(`Fed futures price: ${futuresPrice}`)
+      if (futuresPrice) {
+        const impliedRate = 100 - futuresPrice
+        const expectedChange = currentRate - impliedRate
+        const pct = Math.round(expectedChange / 0.25 * 100)
+        const probCut  = Math.max(0, Math.min(100, pct))
+        const probHike = Math.max(0, Math.min(100, -pct))
+        const probHold = Math.max(0, 100 - probCut - probHike)
+        console.log(`Fed: R0=${currentRate}% implied=${impliedRate.toFixed(3)}% (${ticker}) → cut=${probCut}% hold=${probHold}% hike=${probHike}%`)
+        return { nextMeeting, probCut, probHold, probHike }
+      }
     }
-    const parsed = await r.json() as {
-      chart?: { result?: Array<{ meta?: { regularMarketPrice?: number; chartPreviousClose?: number } }>; error?: unknown }
-    }
-    if (parsed.chart?.error) console.log(`Fed futures error: ${JSON.stringify(parsed.chart.error)}`)
-    const meta = parsed.chart?.result?.[0]?.meta
-    const futuresPrice = meta?.regularMarketPrice ?? meta?.chartPreviousClose
-    console.log(`Fed futures price: ${futuresPrice}`)
-    if (!futuresPrice) return { nextMeeting, probCut: null, probHold: null, probHike: null }
-
-    // Implied rate after meeting = 100 − futures price
-    const impliedRate = 100 - futuresPrice
-    const expectedChange = currentRate - impliedRate  // positive → market expects cut
-
-    // Linear interpolation between adjacent 25 bp outcomes
-    const pct = Math.round(expectedChange / 0.25 * 100)
-    const probCut  = Math.max(0, Math.min(100, pct))
-    const probHike = Math.max(0, Math.min(100, -pct))
-    const probHold = Math.max(0, 100 - probCut - probHike)
-
-    console.log(`Fed: R0=${currentRate}% implied=${impliedRate.toFixed(3)}% (${ticker}) → cut=${probCut}% hold=${probHold}% hike=${probHike}%`)
-    return { nextMeeting, probCut, probHold, probHike }
   } catch (err) {
     console.error('FedWatch futures error:', err)
   }
@@ -538,7 +535,9 @@ async function fetchCTraderPrices(): Promise<SnapshotPrices | null> {
 
     // Symbol map
     const symRaw = await callTool('get_symbols', {})
+    console.log(`CTrader get_symbols raw: ${JSON.stringify(symRaw)?.slice(0, 300)}`)
     const symbols = (symRaw as { symbols?: Array<{ name: string; symbolId: number }> })?.symbols ?? []
+    console.log(`CTrader symbols count: ${symbols.length}`)
     const symMap: Record<string, number> = {}
     for (const s of symbols) {
       if (!s.name || !s.symbolId) continue
@@ -546,11 +545,14 @@ async function fetchCTraderPrices(): Promise<SnapshotPrices | null> {
       symMap[s.name.toUpperCase()] = s.symbolId
       symMap[base.toUpperCase()] = s.symbolId
     }
+    console.log(`CTrader symMap XAUUSD=${symMap['XAUUSD']} EURUSD=${symMap['EURUSD']}`)
 
     const ids = SYMS.map(s => symMap[s]).filter((id): id is number => id != null)
+    console.log(`CTrader requesting spot prices for ids: ${JSON.stringify(ids)}`)
 
     // Spot prices
     const spotRaw = await callTool('get_spot_prices', { symbolId: ids })
+    console.log(`CTrader get_spot_prices raw: ${JSON.stringify(spotRaw)?.slice(0, 300)}`)
     const spots = (spotRaw as { prices?: Array<{ symbolId: number; bid?: number; ask?: number }> })?.prices ?? []
     const spotMap: Record<number, { bid?: number; ask?: number }> = {}
     for (const s of spots) spotMap[s.symbolId] = s
