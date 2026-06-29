@@ -203,33 +203,31 @@ async function fetchFedWatch(): Promise<Snapshot['fedExpectations']> {
   }
 }
 
-// ── CBOE GVZ ──────────────────────────────────────────────────────────────
+// ── GVZ via Yahoo Finance ──────────────────────────────────────────────────
 
 async function fetchGVZ(): Promise<number | null> {
-  console.log('Fetching CBOE GVZ...')
+  console.log('Fetching GVZ (Gold Volatility Index)...')
+  const YF_HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
+    Accept: 'application/json',
+  }
   try {
-    // CBOE delayed quotes JSON (GVZ = Gold Volatility Index)
-    const raw = await httpGet('https://cdn.cboe.com/api/global/delayed_quotes/charts/historical/_VIX.json')
-    // Try GVZ endpoint
-    const gvzRaw = await httpGet('https://cdn.cboe.com/api/global/delayed_quotes/charts/historical/GVZ.json')
-    const data = JSON.parse(gvzRaw) as {
-      data?: Array<{ datetime?: string; close?: number; price?: number }>
-      currentPrice?: number
+    const raw = await httpGet(
+      'https://query1.finance.yahoo.com/v8/finance/chart/%5EGVZ?interval=1d&range=3d',
+      YF_HEADERS,
+    )
+    const parsed = JSON.parse(raw) as {
+      chart?: { result?: Array<{ meta?: { regularMarketPrice?: number } }> }
     }
-    if (data.currentPrice) return data.currentPrice
-    const rows = data.data ?? []
-    if (rows.length > 0) {
-      const last = rows[rows.length - 1]
-      return last.close ?? last.price ?? null
-    }
-    void raw // suppress unused warning
-    return null
+    return parsed.chart?.result?.[0]?.meta?.regularMarketPrice ?? null
   } catch {
+    // Fallback: Stooq free CSV
     try {
-      // Fallback: scrape CBOE page
-      const html = await httpGet('https://www.cboe.com/us/indices/dashboard/gvz/', { Accept: 'text/html' })
-      const match = html.match(/GVZ[^>]*>[\s\S]{0,200}?(\d+\.\d+)/i)
-      return match ? parseFloat(match[1]) : null
+      const csv = await httpGet('https://stooq.com/q/d/l/?s=%5Egvz&i=d')
+      const lines = csv.trim().split('\n').filter(l => l.trim())
+      if (lines.length < 2) return null
+      const last = lines[lines.length - 1].split(',')
+      return last[4] ? parseFloat(last[4]) : null   // close price is column 5
     } catch {
       return null
     }
@@ -242,36 +240,52 @@ async function fetchGLD(): Promise<Snapshot['etfFlows']> {
   console.log('Fetching SPDR GLD holdings...')
   const outPath = path.join(__dirname, '../public/data/daily-snapshot.json')
   let prevTonnes: number | null = null
-  let prevTonnesWeek: number | null = null
 
-  // Read previous value for WoW calculation
   try {
-    const prev = JSON.parse(fs.readFileSync(outPath, 'utf8')) as { etfFlows?: { gldTonnes?: number; gldTonnesWeek?: number } }
+    const prev = JSON.parse(fs.readFileSync(outPath, 'utf8')) as { etfFlows?: { gldTonnes?: number } }
     prevTonnes = prev.etfFlows?.gldTonnes ?? null
-    prevTonnesWeek = (prev as { etfFlows?: { gldTonnesWeek?: number } }).etfFlows?.gldTonnesWeek ?? null
   } catch { /* first run */ }
 
-  try {
-    const html = await httpGet('https://www.spdrgoldshares.com/usa/gold/en/', {
-      Accept: 'text/html',
-      Referer: 'https://www.spdrgoldshares.com',
-    })
-    // Find "Tonnes" figure in the holdings table
-    const match = html.match(/(\d[\d,]+\.\d+)\s*(?:tonnes|Tonnes|TONNES)/i)
-      ?? html.match(/(?:Gold Holdings|Ounces)\D{0,40}(\d[\d,]+\.\d+)/i)
-    const tonnes = match ? parseFloat(match[1].replace(/,/g, '')) : null
-    const wow = tonnes != null && prevTonnes != null
-      ? parseFloat((tonnes - prevTonnes).toFixed(2))
-      : null
-
-    // 3-week trend requires 3 data points — approximate from WoW direction
-    let trend: Snapshot['etfFlows']['trend3W'] = null
-    if (wow != null) trend = wow > 0.5 ? 'INFLOW' : wow < -0.5 ? 'OUTFLOW' : 'FLAT'
-    void prevTonnesWeek
-
+  const toWoW = (tonnes: number | null) => {
+    const wow = tonnes != null && prevTonnes != null ? parseFloat((tonnes - prevTonnes).toFixed(2)) : null
+    const trend: Snapshot['etfFlows']['trend3W'] = wow != null ? (wow > 0.5 ? 'INFLOW' : wow < -0.5 ? 'OUTFLOW' : 'FLAT') : null
     return { gldTonnes: tonnes, gldWoWChange: wow, trend3W: trend }
+  }
+
+  const YF_HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
+    Accept: 'application/json',
+  }
+
+  try {
+    // Yahoo Finance: GLD shares outstanding × gold per share → tonnes
+    // GLD holds ~0.0904 troy oz per share (started at 0.1, decays 0.4%/yr for expenses)
+    // 1 metric tonne = 32,150.7 troy oz
+    const raw = await httpGet(
+      'https://query1.finance.yahoo.com/v10/finance/quoteSummary/GLD?modules=defaultKeyStatistics',
+      YF_HEADERS,
+    )
+    const parsed = JSON.parse(raw) as {
+      quoteSummary?: { result?: Array<{ defaultKeyStatistics?: { sharesOutstanding?: { raw?: number } } }> }
+    }
+    const shares = parsed.quoteSummary?.result?.[0]?.defaultKeyStatistics?.sharesOutstanding?.raw
+    if (!shares) throw new Error('no shares data')
+    const tonnes = Math.round(shares * 0.0904 / 32150.7 * 10) / 10
+    console.log(`GLD: ${shares.toLocaleString()} shares → ${tonnes}t`)
+    return toWoW(tonnes)
   } catch {
-    return { gldTonnes: prevTonnes, gldWoWChange: null, trend3W: null }
+    // Fallback: SSGA CSV holdings export
+    try {
+      const csv = await httpGet(
+        'https://www.ssga.com/us/en/intermediary/etfs/funds/spdr-gold-shares-gld',
+        { 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36' }
+      )
+      const match = csv.match(/(\d[\d,]+\.\d+)\s*(?:tonnes|oz)/i)
+      const tonnes = match ? parseFloat(match[1].replace(/,/g, '')) : null
+      return toWoW(tonnes)
+    } catch {
+      return { gldTonnes: prevTonnes, gldWoWChange: null, trend3W: null }
+    }
   }
 }
 
@@ -279,51 +293,52 @@ async function fetchGLD(): Promise<Snapshot['etfFlows']> {
 
 async function fetchCOT(existingSnapshot: Partial<Snapshot>): Promise<Snapshot['positioning']> {
   console.log('Fetching CFTC COT data...')
-  const today = new Date()
-  const dayOfWeek = today.getUTCDay() // 0=Sun, 5=Fri
+  const prevData = existingSnapshot.positioning ?? { cotNetLong: null, cotWoWChange: null, crowding: null, reportDate: null }
 
-  // COT releases Fridays; if we have recent data and it's not Friday, skip re-fetch
-  const reportDate = existingSnapshot.positioning?.reportDate
-  if (reportDate) {
-    const reportAge = (today.getTime() - new Date(reportDate).getTime()) / (1000 * 60 * 60 * 24)
-    if (reportAge < 7 && dayOfWeek !== 5) {
+  // COT releases Fridays; skip mid-week if data is fresh
+  const today = new Date()
+  if (prevData.reportDate) {
+    const ageMs = today.getTime() - new Date(prevData.reportDate).getTime()
+    if (ageMs < 5 * 24 * 3600 * 1000 && today.getUTCDay() !== 5) {
       console.log('COT data fresh, skipping re-fetch')
-      return existingSnapshot.positioning!
+      return prevData
     }
   }
 
   try {
-    // CFTC legacy futures CSV for financial instruments
-    const url = 'https://www.cftc.gov/dea/futures/deacmesf.htm'
-    const html = await httpGet(url)
-    // Extract gold row — COMEX gold futures
-    const goldMatch = html.match(/GOLD[^\n]{0,2000}?(\d[\d,]+)\s*(\d[\d,]+)\s*(\d[\d,]+)/i)
-    if (!goldMatch) return existingSnapshot.positioning ?? { cotNetLong: null, cotWoWChange: null, crowding: null, reportDate: null }
+    // CFTC public Socrata API — Legacy Futures-Only COT (non-commercial positions, COMEX Gold)
+    const url =
+      'https://publicreporting.cftc.gov/resource/jun7-fc8e.json' +
+      '?$where=market_and_exchange_names%20like%20%27%25GOLD%25%27' +
+      '&$order=report_date_as_yyyy_mm_dd%20DESC' +
+      '&$limit=2' +
+      '&$select=report_date_as_yyyy_mm_dd,noncomm_positions_long_all,noncomm_positions_short_all'
+    const raw = await httpGet(url, { Accept: 'application/json', 'User-Agent': 'xauusd-dashboard/1.0' })
+    const rows = JSON.parse(raw) as Array<{
+      report_date_as_yyyy_mm_dd?: string
+      noncomm_positions_long_all?: string
+      noncomm_positions_short_all?: string
+    }>
+    if (!rows.length) throw new Error('empty COT response')
 
-    const longPos  = parseInt(goldMatch[1].replace(/,/g, ''))
-    const shortPos = parseInt(goldMatch[2].replace(/,/g, ''))
+    const latest   = rows[0]
+    const longPos  = parseInt(latest.noncomm_positions_long_all  ?? '0')
+    const shortPos = parseInt(latest.noncomm_positions_short_all ?? '0')
     const net      = longPos - shortPos
-    const prevNet  = existingSnapshot.positioning?.cotNetLong ?? null
-    const wow      = prevNet != null ? net - prevNet : null
-
-    // Crowding threshold: top/bottom 20% of historical range (approximate)
+    const wow      = prevData.cotNetLong != null ? net - prevData.cotNetLong : null
     const crowding: Snapshot['positioning']['crowding'] = net > 200000 ? 'CROWDED_LONG' : net < 100000 ? 'CROWDED_SHORT' : 'NEUTRAL'
-
-    return {
-      cotNetLong: net,
-      cotWoWChange: wow,
-      crowding,
-      reportDate: today.toISOString().slice(0, 10),
-    }
-  } catch {
-    return existingSnapshot.positioning ?? { cotNetLong: null, cotWoWChange: null, crowding: null, reportDate: null }
+    console.log(`COT: long=${longPos.toLocaleString()} short=${shortPos.toLocaleString()} net=${net.toLocaleString()}`)
+    return { cotNetLong: net, cotWoWChange: wow, crowding, reportDate: latest.report_date_as_yyyy_mm_dd ?? null }
+  } catch (err) {
+    console.error('COT fetch failed:', err)
+    return prevData
   }
 }
 
 // ── CTrader MCP prices ─────────────────────────────────────────────────────
 
-const CTRADER_URL   = process.env.CTRADER_MCP_URL   ?? 'https://mcp.ctrader.com/trading/mcp'
-const CTRADER_TOKEN = process.env.CTRADER_MCP_TOKEN ?? ''
+const CTRADER_URL   = process.env.CTRADER_MCP_URL   || 'https://mcp.ctrader.com/trading/mcp'
+const CTRADER_TOKEN = process.env.CTRADER_MCP_TOKEN || ''
 
 const PIP_DIGITS: Record<string, number> = {
   XAUUSD: 3, XAGUSD: 3,
