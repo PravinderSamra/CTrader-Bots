@@ -399,27 +399,38 @@ async function mcpFetch(body: object, sessionId?: string): Promise<{ data: unkno
   }
   if (sessionId) headers['Mcp-Session-Id'] = sessionId
 
-  const res = await fetch(CTRADER_URL, { method: 'POST', headers, body: JSON.stringify(body) })
-  const newSid = res.headers.get('Mcp-Session-Id') ?? res.headers.get('mcp-session-id') ?? sessionId ?? null
-  const text = await res.text()
+  const ctrl = new AbortController()
+  const timer = setTimeout(() => ctrl.abort(), 20000)
+  try {
+    const res = await fetch(CTRADER_URL, { method: 'POST', headers, body: JSON.stringify(body), signal: ctrl.signal })
+    const newSid = res.headers.get('Mcp-Session-Id') ?? res.headers.get('mcp-session-id') ?? sessionId ?? null
+    const text = await res.text()
 
-  for (const line of text.split('\n')) {
-    if (line.startsWith('data: ')) {
-      try { return { data: JSON.parse(line.slice(6)), sessionId: newSid } } catch { /* next line */ }
+    if (!res.ok) {
+      console.error(`CTrader MCP HTTP ${res.status}: ${text.slice(0, 200)}`)
+      return { data: null, sessionId: newSid }
     }
+
+    for (const line of text.split('\n')) {
+      if (line.startsWith('data: ')) {
+        try { return { data: JSON.parse(line.slice(6)), sessionId: newSid } } catch { /* next line */ }
+      }
+    }
+    try { return { data: JSON.parse(text), sessionId: newSid } } catch { /* ignore */ }
+    return { data: null, sessionId: newSid }
+  } finally {
+    clearTimeout(timer)
   }
-  try { return { data: JSON.parse(text), sessionId: newSid } } catch { /* ignore */ }
-  return { data: null, sessionId: newSid }
 }
 
 interface McpBar { high?: number; low?: number; open?: number }
 
 async function fetchCTraderPrices(): Promise<SnapshotPrices | null> {
   const SYMS = ['XAUUSD', 'XAGUSD', 'EURUSD', 'USDJPY', 'USDCHF', 'USDCNH', 'US500', 'GER40', 'UK100']
-  console.log('Fetching CTrader prices via MCP...')
+  console.log(`Fetching CTrader prices via MCP (url=${CTRADER_URL.slice(0, 50)}…)`)
 
   if (!CTRADER_TOKEN) {
-    console.log('CTrader MCP: no token, skipping')
+    console.log('CTrader MCP: CTRADER_MCP_TOKEN env var not set — skipping')
     return null
   }
 
@@ -430,7 +441,7 @@ async function fetchCTraderPrices(): Promise<SnapshotPrices | null> {
       params: { protocolVersion: '2024-11-05', capabilities: {}, clientInfo: { name: 'xauusd-fetch', version: '1.0' } },
     })
     if (!(initData as Record<string,unknown>)?.result || !sessionId) {
-      console.log('CTrader MCP: init failed')
+      console.log(`CTrader MCP: init failed — data=${JSON.stringify(initData)?.slice(0, 200)} sid=${sessionId}`)
       return null
     }
     await mcpFetch({ jsonrpc: '2.0', method: 'notifications/initialized', params: {} }, sessionId)
