@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-29T22:15:23.764Z",
+  "generatedAt": "2026-06-29T22:47:45.163Z",
   "yields": {
     "US10Y": 4.38,
     "US2Y": 4.07,
@@ -22,7 +22,7 @@
     "probHike": 0
   },
   "marketVolatility": {
-    "GVZ": null
+    "GVZ": 27.18
   },
   "positioning": {
     "cotNetLong": 172884,
@@ -36,17 +36,17 @@
     "trend3W": null
   },
   "snapshotPrices": {
-    "XAUUSD": 4018.485,
-    "XAGUSD": 58.753,
-    "EURUSD": 1.14247,
-    "USDJPY": 161.9365,
-    "USDCHF": 0.80746,
-    "USDCNH": 6.79926,
-    "US500": 7494.3,
+    "XAUUSD": 4013.575,
+    "XAGUSD": 58.715,
+    "EURUSD": 1.14236,
+    "USDJPY": 161.9305,
+    "USDCHF": 0.8075,
+    "USDCNH": 6.79934,
+    "US500": 7495.1,
     "GER40": 24893.6,
-    "UK100": 10544.6,
+    "UK100": 10545.4,
     "ADR_14day": 105.6,
-    "ADR_usedToday": 5.2,
+    "ADR_usedToday": 12.4,
     "goldSilverRatio": 68.4
   }
 }
