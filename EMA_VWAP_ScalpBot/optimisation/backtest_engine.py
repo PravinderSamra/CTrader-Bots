@@ -15,14 +15,15 @@ import bisect
 import math
 from datetime import datetime, timezone, timedelta
 from typing import Optional
+from zoneinfo import ZoneInfo
+
+_TZ_LONDON = ZoneInfo("Europe/London")
 
 # ── Session gate (mirrors SessionGate.cs) ─────────────────────────────────────
 
 def _to_uk(utc: datetime) -> datetime:
-    """Convert UTC datetime to UK wall-clock time (approximate DST: GMT+1 Apr–Oct)."""
-    month = utc.month
-    offset = 1 if 4 <= month <= 10 else 0
-    return utc + timedelta(hours=offset)
+    """Convert UTC datetime to UK wall-clock time using Europe/London (IANA DST rules)."""
+    return utc.astimezone(_TZ_LONDON)
 
 
 def _in_trading_window_ger40(utc: datetime) -> bool:
@@ -237,6 +238,8 @@ def run_backtest(
     tp2_price     = 0.0
     tp1_hit       = False
     risk_amount   = equity * 0.01   # 1% per trade (reset each trade from current equity)
+    trade_id_counter = 0
+    current_trade_id = 0
 
     signal_pending     = False
     signal_direction   = None
@@ -276,7 +279,8 @@ def run_backtest(
                 fraction = 0.5 if tp1_hit else 1.0
                 pnl_r = _pnl_r(direction, bar["close"], entry_price, orig_sl_price, fraction)
                 equity, peak_equity = _apply_pnl(equity, peak_equity, risk_amount, pnl_r, trades, bar,
-                                                  entry_price, bar["close"], direction, "SESSION_END")
+                                                  entry_price, bar["close"], direction, "SESSION_END",
+                                                  current_trade_id)
                 in_trade = signal_pending = False
             continue
 
@@ -290,7 +294,8 @@ def run_backtest(
                 fraction = 0.5 if tp1_hit else 1.0
                 pnl_r = _pnl_r(direction, sl_price, entry_price, orig_sl_price, fraction)
                 equity, peak_equity = _apply_pnl(equity, peak_equity, risk_amount, pnl_r,
-                                                  trades, bar, entry_price, sl_price, direction, "SL")
+                                                  trades, bar, entry_price, sl_price, direction, "SL",
+                                                  current_trade_id)
                 in_trade = False
                 signal_pending = False
                 continue
@@ -304,7 +309,8 @@ def run_backtest(
                     # Close 50%: compute actual R vs original stop, apply to equity
                     tp1_pnl_r = _pnl_r(direction, tp1_price, entry_price, orig_sl_price, 0.5)
                     equity, peak_equity = _apply_pnl(equity, peak_equity, risk_amount, tp1_pnl_r,
-                                                      trades, bar, entry_price, tp1_price, direction, "TP1")
+                                                      trades, bar, entry_price, tp1_price, direction, "TP1",
+                                                      current_trade_id)
                     sl_price = entry_price   # move SL to break-even
                     continue
 
@@ -316,7 +322,8 @@ def run_backtest(
                 fraction = 0.5 if tp1_hit else 1.0
                 pnl_r = _pnl_r(direction, tp2_price, entry_price, orig_sl_price, fraction)
                 equity, peak_equity = _apply_pnl(equity, peak_equity, risk_amount, pnl_r,
-                                                  trades, bar, entry_price, tp2_price, direction, "TP2")
+                                                  trades, bar, entry_price, tp2_price, direction, "TP2",
+                                                  current_trade_id)
                 in_trade = False
                 continue
 
@@ -329,7 +336,8 @@ def run_backtest(
                 fraction = 0.5 if tp1_hit else 1.0
                 pnl_r = _pnl_r(direction, bar["close"], entry_price, orig_sl_price, fraction)
                 equity, peak_equity = _apply_pnl(equity, peak_equity, risk_amount, pnl_r,
-                                                  trades, bar, entry_price, bar["close"], direction, "REVERSION")
+                                                  trades, bar, entry_price, bar["close"], direction, "REVERSION",
+                                                  current_trade_id)
                 in_trade = False
                 continue
 
@@ -354,6 +362,8 @@ def run_backtest(
                     signal_pending = False
                     continue
 
+                trade_id_counter += 1
+                current_trade_id = trade_id_counter
                 in_trade      = True
                 direction     = signal_direction
                 entry_price   = ep
@@ -441,7 +451,8 @@ def run_backtest(
         fraction = 0.5 if tp1_hit else 1.0
         pnl_r = _pnl_r(direction, last_bar["close"], entry_price, orig_sl_price, fraction)
         equity, peak_equity = _apply_pnl(equity, peak_equity, risk_amount, pnl_r,
-                                          trades, last_bar, entry_price, last_bar["close"], direction, "PERIOD_END")
+                                          trades, last_bar, entry_price, last_bar["close"], direction, "PERIOD_END",
+                                          current_trade_id)
 
     return _calc_statistics(trades, equity, peak_equity)
 
@@ -459,12 +470,13 @@ def _pnl_r(direction: str, exit_price: float, entry_price: float,
 
 
 def _apply_pnl(equity, peak_equity, risk_amount, pnl_r, trades, bar,
-               entry_price, exit_price, direction, exit_type):
+               entry_price, exit_price, direction, exit_type, trade_id=0):
     trade_pnl = pnl_r * risk_amount
     equity += trade_pnl
     if equity > peak_equity:
         peak_equity = equity
     trades.append({
+        "trade_id":    trade_id,
         "exit_time":   bar["time"],
         "exit_price":  exit_price,
         "direction":   direction,
@@ -481,7 +493,13 @@ def _calc_statistics(trades: list[dict], final_equity: float, peak_equity: float
     if not closed:
         return _empty_result()
 
-    pnls = [t["pnl_r"] for t in closed]
+    # Group by trade_id and net pnl_r so TP1 partial + final exit = one trade result
+    from collections import defaultdict
+    groups: dict = defaultdict(list)
+    for t in closed:
+        groups[t.get("trade_id", id(t))].append(t["pnl_r"])
+    pnls = [sum(rs) for rs in groups.values()]
+
     n    = len(pnls)
     wins = [p for p in pnls if p > 0]
     losses = [p for p in pnls if p < 0]
