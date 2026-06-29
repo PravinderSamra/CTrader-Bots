@@ -35,7 +35,8 @@ export function App() {
     : (snapshot?.snapshotPrices ? pricesFromSnapshot(snapshot.snapshotPrices) : livePrices)
   const calendar = useEconomicCalendar()
   const headlines = useNewsHeadlines()
-  const vix      = useVIX()
+  const vixLive  = useVIX()
+  const vix      = vixLive ?? snapshot?.marketVolatility?.VIX ?? null
 
   const riskTone = aggregateData(
     prices, snapshot, calendar, headlines, vix,

@@ -54,7 +54,7 @@ interface Snapshot {
     probHold: number | null
     probHike: number | null
   }
-  marketVolatility: { GVZ: number | null }
+  marketVolatility: { GVZ: number | null; VIX: number | null }
   positioning: {
     cotNetLong: number | null
     cotWoWChange: number | null
@@ -673,13 +673,15 @@ async function main() {
 
   console.log('=== XAUUSD Daily Data Fetch ===')
 
-  const [yields, fedExpectations, gvz, positioning, snapshotPrices] = await Promise.all([
+  const [yields, fedExpectations, gvz, vix, positioning, snapshotPrices] = await Promise.all([
     fetchYields(),
     fetchFedWatch(),
     fetchGVZ(),
+    fredSeries('VIXCLS'),
     fetchCOT(existing),
     fetchCTraderPrices(),
   ])
+  console.log(`VIX FRED VIXCLS: ${vix}`)
 
   // GLD needs the CTrader XAUUSD price as a fallback if FRED's gold series is null,
   // so it runs after the prices above rather than inside the initial Promise.all.
@@ -689,7 +691,7 @@ async function main() {
     generatedAt: new Date().toISOString(),
     yields,
     fedExpectations,
-    marketVolatility: { GVZ: gvz },
+    marketVolatility: { GVZ: gvz, VIX: vix },
     positioning,
     etfFlows,
     snapshotPrices,
