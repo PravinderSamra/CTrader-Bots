@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-29T23:22:00.974Z",
+  "generatedAt": "2026-06-29T23:31:20.392Z",
   "yields": {
     "US10Y": 4.38,
     "US2Y": 4.07,
@@ -22,7 +22,8 @@
     "probHike": 0
   },
   "marketVolatility": {
-    "GVZ": 27.18
+    "GVZ": 27.18,
+    "VIX": 18.41
   },
   "positioning": {
     "cotNetLong": 172884,
@@ -31,22 +32,22 @@
     "reportDate": "2026-06-23T00:00:00.000"
   },
   "etfFlows": {
-    "gldTonnes": 1163.7,
-    "gldWoWChange": 0.2,
-    "trend3W": "FLAT"
+    "gldTonnes": 1164.5,
+    "gldWoWChange": 0.8,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4019.945,
-    "XAGUSD": 59.013,
-    "EURUSD": 1.14245,
-    "USDJPY": 161.9235,
-    "USDCHF": 0.80741,
-    "USDCNH": 6.79903,
-    "US500": 7496.3,
+    "XAUUSD": 4017.005,
+    "XAGUSD": 58.925,
+    "EURUSD": 1.14233,
+    "USDJPY": 161.9285,
+    "USDCHF": 0.8075,
+    "USDCNH": 6.79898,
+    "US500": 7496.8,
     "GER40": 24893.6,
-    "UK100": 10546.9,
+    "UK100": 10547.6,
     "ADR_14day": 105.6,
     "ADR_usedToday": 12.8,
-    "goldSilverRatio": 68.1
+    "goldSilverRatio": 68.2
   }
 }
