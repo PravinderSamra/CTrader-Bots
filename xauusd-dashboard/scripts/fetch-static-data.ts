@@ -360,6 +360,15 @@ async function fetchGVZ(): Promise<number | null> {
     console.error('GVZ Stooq failed:', err)
   }
 
+  // Method 4: FRED GVZCLS (CBOE Gold ETF Volatility Index — updated daily by CBOE)
+  try {
+    const gvzFred = await fredSeries('GVZCLS')
+    console.log(`GVZ FRED GVZCLS: ${gvzFred}`)
+    if (gvzFred != null && gvzFred > 2) return gvzFred
+  } catch (err) {
+    console.error('GVZ FRED failed:', err)
+  }
+
   return null
 }
 
