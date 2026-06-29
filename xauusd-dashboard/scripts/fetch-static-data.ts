@@ -390,10 +390,10 @@ async function fetchGLD(): Promise<Snapshot['etfFlows']> {
     return { gldTonnes: tonnes, gldWoWChange: wow, trend3W: trend }
   }
 
+  // Method 1: Yahoo Finance (blocked from GitHub Actions — 429)
   try {
     // Yahoo Finance summaryDetail: totalAssets ($AUM) ÷ navPrice ($/share) = shares outstanding
     // shares × ~0.0904 troy oz/share ÷ 32,150.7 troy oz/tonne = tonnes of gold held
-    // quoteSummary requires YF cookie+crumb auth (crumb prevents unauthenticated scraping)
     const UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
     const auth = await getYFAuth()
     if (!auth) throw new Error('no YF auth')
@@ -410,12 +410,46 @@ async function fetchGLD(): Promise<Snapshot['etfFlows']> {
     if (!totalAssets || !navPrice) throw new Error('missing GLD data')
     const shares = totalAssets / navPrice
     const tonnes = Math.round(shares * 0.0904 / 32150.7 * 10) / 10
-    console.log(`GLD: $${(totalAssets / 1e9).toFixed(1)}B AUM, NAV $${navPrice} → ${tonnes}t`)
+    console.log(`GLD YF: $${(totalAssets / 1e9).toFixed(1)}B AUM, NAV $${navPrice} → ${tonnes}t`)
     return toWoW(tonnes)
   } catch (err) {
-    console.error('GLD fetch failed:', err)
-    return { gldTonnes: prevTonnes, gldWoWChange: null, trend3W: null }
+    console.error('GLD YF fetch failed:', err)
   }
+
+  // Method 2: Alpha Vantage ETF_PROFILE + FRED London gold fix
+  // tonnes = net_assets (USD) / goldPrice (USD/oz) / 32150.7 (oz/tonne)
+  // Requires ALPHA_VANTAGE_API_KEY secret — free key at alphavantage.co (25 calls/day)
+  try {
+    const avKey = process.env.ALPHA_VANTAGE_API_KEY
+    if (!avKey) {
+      console.log('GLD AV: ALPHA_VANTAGE_API_KEY not set — skipping (add secret to enable GLD data)')
+    } else {
+      const r = await fetch(`https://www.alphavantage.co/query?function=ETF_PROFILE&symbol=GLD&apikey=${avKey}`)
+      console.log(`GLD AV HTTP ${r.status}`)
+      if (r.ok) {
+        const data = await r.json() as { net_assets?: string; Information?: string }
+        if (data.Information) {
+          console.log(`GLD AV rate limit: ${data.Information.slice(0, 120)}`)
+        } else if (data.net_assets) {
+          const netAssets = parseFloat(data.net_assets)
+          if (netAssets > 1e9) {
+            const goldPrice = await fredSeries('GOLDAMGBD228NLBM')
+            console.log(`GLD AV: net_assets=$${(netAssets / 1e9).toFixed(1)}B, FRED gold=$${goldPrice}/oz`)
+            if (goldPrice && goldPrice > 500) {
+              const tonnes = Math.round(netAssets / goldPrice / 32150.7 * 10) / 10
+              console.log(`GLD AV → ${tonnes}t`)
+              return toWoW(tonnes)
+            }
+          }
+        }
+      }
+    }
+  } catch (err) {
+    console.error('GLD AV fallback failed:', err)
+  }
+
+  console.log(`GLD: all sources failed, carrying forward prevTonnes=${prevTonnes}`)
+  return { gldTonnes: prevTonnes, gldWoWChange: null, trend3W: null }
 }
 
 // ── CFTC COT data ─────────────────────────────────────────────────────────
