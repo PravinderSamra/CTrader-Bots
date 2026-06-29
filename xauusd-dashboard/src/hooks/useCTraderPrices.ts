@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import type { CTraderPrices, PricePoint } from '../types/dashboard'
+import type { CTraderPrices, PricePoint, SnapshotPrices } from '../types/dashboard'
 
 const MCP_URL = import.meta.env.VITE_CTRADER_MCP_URL ?? 'https://mcp.ctrader.com/trading/mcp'
 const MCP_TOKEN = import.meta.env.VITE_CTRADER_MCP_TOKEN ?? ''
@@ -144,6 +144,31 @@ function calcADR(bars: Bar[], symbol: string): { adr: number; used: number } {
   const l = rawToDisplay(today.low ?? 0, symbol)
   const used = h - l
   return { adr: Math.round(adr * 10) / 10, used: Math.round(used * 10) / 10 }
+}
+
+// ── Snapshot fallback ───────────────────────────────────────────────────────
+
+export function pricesFromSnapshot(sp: SnapshotPrices): CTraderPrices {
+  const pt = (price: number | null): PricePoint => ({ price: price ?? 0, changeDay: 0, changePct: 0 })
+  const eur = sp.EURUSD ?? 0
+  const dxyPrice = eur > 0 ? parseFloat((50.14348 / eur * 0.576 + 13.4).toFixed(3)) : 0
+  return {
+    XAUUSD: pt(sp.XAUUSD),
+    XAGUSD: pt(sp.XAGUSD),
+    goldSilverRatio: sp.goldSilverRatio ?? 0,
+    DXY: pt(dxyPrice),
+    EURUSD: eur,
+    USDJPY: sp.USDJPY ?? 0,
+    USDCHF: sp.USDCHF ?? 0,
+    USDCNH: sp.USDCNH ?? 0,
+    US500: pt(sp.US500),
+    GER40:  pt(sp.GER40),
+    UK100:  pt(sp.UK100),
+    ADR_14day: sp.ADR_14day,
+    ADR_usedToday: sp.ADR_usedToday,
+    lastUpdated: '',
+    status: 'offline',
+  }
 }
 
 // ── Hook ────────────────────────────────────────────────────────────────────

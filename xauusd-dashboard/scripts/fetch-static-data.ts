@@ -26,6 +26,21 @@ interface YieldsData {
   dayOverDay: { US10Y: number | null; US2Y: number | null; realYield10Y: number | null }
 }
 
+interface SnapshotPrices {
+  XAUUSD: number | null
+  XAGUSD: number | null
+  EURUSD: number | null
+  USDJPY: number | null
+  USDCHF: number | null
+  USDCNH: number | null
+  US500: number | null
+  GER40: number | null
+  UK100: number | null
+  ADR_14day: number | null
+  ADR_usedToday: number | null
+  goldSilverRatio: number | null
+}
+
 interface Snapshot {
   generatedAt: string
   yields: YieldsData
@@ -47,6 +62,7 @@ interface Snapshot {
     gldWoWChange: number | null
     trend3W: 'INFLOW' | 'OUTFLOW' | 'FLAT' | null
   }
+  snapshotPrices: SnapshotPrices | null
 }
 
 // ── HTTP helper ────────────────────────────────────────────────────────────
@@ -304,6 +320,137 @@ async function fetchCOT(existingSnapshot: Partial<Snapshot>): Promise<Snapshot['
   }
 }
 
+// ── CTrader MCP prices ─────────────────────────────────────────────────────
+
+const CTRADER_URL   = process.env.CTRADER_MCP_URL   ?? 'https://mcp.ctrader.com/trading/mcp'
+const CTRADER_TOKEN = process.env.CTRADER_MCP_TOKEN ?? ''
+
+const PIP_DIGITS: Record<string, number> = {
+  XAUUSD: 3, XAGUSD: 3,
+  EURUSD: 5, USDJPY: 3, USDCHF: 5, USDCNH: 5,
+  US500: 3, GER40: 3, UK100: 3,
+}
+
+async function mcpFetch(body: object, sessionId?: string): Promise<{ data: unknown; sessionId: string | null }> {
+  const headers: Record<string, string> = {
+    Authorization: `Bearer ${CTRADER_TOKEN}`,
+    'Content-Type': 'application/json',
+    Accept: 'application/json, text/event-stream',
+  }
+  if (sessionId) headers['Mcp-Session-Id'] = sessionId
+
+  const res = await fetch(CTRADER_URL, { method: 'POST', headers, body: JSON.stringify(body) })
+  const newSid = res.headers.get('Mcp-Session-Id') ?? res.headers.get('mcp-session-id') ?? sessionId ?? null
+  const text = await res.text()
+
+  for (const line of text.split('\n')) {
+    if (line.startsWith('data: ')) {
+      try { return { data: JSON.parse(line.slice(6)), sessionId: newSid } } catch { /* next line */ }
+    }
+  }
+  try { return { data: JSON.parse(text), sessionId: newSid } } catch { /* ignore */ }
+  return { data: null, sessionId: newSid }
+}
+
+interface McpBar { high?: number; low?: number; open?: number }
+
+async function fetchCTraderPrices(): Promise<SnapshotPrices | null> {
+  const SYMS = ['XAUUSD', 'XAGUSD', 'EURUSD', 'USDJPY', 'USDCHF', 'USDCNH', 'US500', 'GER40', 'UK100']
+  console.log('Fetching CTrader prices via MCP...')
+
+  if (!CTRADER_TOKEN) {
+    console.log('CTrader MCP: no token, skipping')
+    return null
+  }
+
+  try {
+    // Initialize session
+    const { data: initData, sessionId } = await mcpFetch({
+      jsonrpc: '2.0', id: 0, method: 'initialize',
+      params: { protocolVersion: '2024-11-05', capabilities: {}, clientInfo: { name: 'xauusd-fetch', version: '1.0' } },
+    })
+    if (!(initData as Record<string,unknown>)?.result || !sessionId) {
+      console.log('CTrader MCP: init failed')
+      return null
+    }
+    await mcpFetch({ jsonrpc: '2.0', method: 'notifications/initialized', params: {} }, sessionId)
+
+    async function callTool(name: string, args: object): Promise<unknown> {
+      const { data } = await mcpFetch({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name, arguments: args } }, sessionId!)
+      const result = (data as Record<string,unknown>)?.result as Record<string,unknown> | undefined
+      const content = result?.content as Array<{ type: string; text: string }> | undefined
+      if (content?.[0]?.type === 'text') {
+        try { return JSON.parse(content[0].text) } catch { return null }
+      }
+      return null
+    }
+
+    // Symbol map
+    const symRaw = await callTool('get_symbols', {})
+    const symbols = (symRaw as { symbols?: Array<{ name: string; symbolId: number }> })?.symbols ?? []
+    const symMap: Record<string, number> = {}
+    for (const s of symbols) {
+      const base = s.name.replace(/(_SBE|_SB|-F_SB|-F)$/, '')
+      symMap[s.name.toUpperCase()] = s.symbolId
+      symMap[base.toUpperCase()] = s.symbolId
+    }
+
+    const ids = SYMS.map(s => symMap[s]).filter((id): id is number => id != null)
+
+    // Spot prices
+    const spotRaw = await callTool('get_spot_prices', { symbolId: ids })
+    const spots = (spotRaw as { prices?: Array<{ symbolId: number; bid?: number; ask?: number }> })?.prices ?? []
+    const spotMap: Record<number, { bid?: number; ask?: number }> = {}
+    for (const s of spots) spotMap[s.symbolId] = s
+
+    const pip = (sym: string) => PIP_DIGITS[sym] ?? 5
+    const mid = (sym: string): number | null => {
+      const id = symMap[sym]; if (!id) return null
+      const sp = spotMap[id]; if (!sp) return null
+      const bid = sp.bid ?? 0; const ask = sp.ask ?? bid
+      if (!bid && !ask) return null
+      return parseFloat(((bid + ask) / 2 / 10 ** pip(sym)).toFixed(pip(sym)))
+    }
+
+    // ADR for XAUUSD
+    let adr14: number | null = null
+    let adrUsed: number | null = null
+    const xauId = symMap['XAUUSD']
+    if (xauId) {
+      const now = new Date()
+      const from = new Date(now.getTime() - 16 * 24 * 3600 * 1000)
+      const adrRaw = await callTool('get_trendbars', {
+        symbolId: xauId, period: 'D_1',
+        fromTimestamp: from.toISOString(), toTimestamp: now.toISOString(),
+      })
+      const bars: McpBar[] = (adrRaw as { trendbars?: McpBar[] })?.trendbars ?? []
+      if (bars.length >= 2) {
+        const recent = bars.slice(-15)
+        const ranges = recent.slice(0, Math.min(14, recent.length - 1))
+          .map(b => (b.high ?? 0) / 10 ** 3 - (b.low ?? 0) / 10 ** 3)
+        if (ranges.length > 0) adr14 = Math.round(ranges.reduce((a, b) => a + b, 0) / ranges.length * 10) / 10
+        const last = recent[recent.length - 1]
+        adrUsed = Math.round(((last.high ?? 0) - (last.low ?? 0)) / 10 ** 3 * 10) / 10
+      }
+    }
+
+    const xau = mid('XAUUSD')
+    const xag = mid('XAGUSD')
+    const result: SnapshotPrices = {
+      XAUUSD: xau, XAGUSD: xag,
+      EURUSD: mid('EURUSD'), USDJPY: mid('USDJPY'), USDCHF: mid('USDCHF'), USDCNH: mid('USDCNH'),
+      US500: mid('US500'), GER40: mid('GER40'), UK100: mid('UK100'),
+      ADR_14day: adr14, ADR_usedToday: adrUsed,
+      goldSilverRatio: xau && xag ? Math.round(xau / xag * 10) / 10 : null,
+    }
+    console.log(`CTrader: XAUUSD=${result.XAUUSD}, EURUSD=${result.EURUSD}, ADR=${result.ADR_14day}`)
+    return result
+  } catch (err) {
+    console.error('CTrader MCP fetch failed:', err)
+    return null
+  }
+}
+
 // ── Main ───────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -318,12 +465,13 @@ async function main() {
 
   console.log('=== XAUUSD Daily Data Fetch ===')
 
-  const [yields, fedExpectations, gvz, etfFlows, positioning] = await Promise.all([
+  const [yields, fedExpectations, gvz, etfFlows, positioning, snapshotPrices] = await Promise.all([
     fetchYields(),
     fetchFedWatch(),
     fetchGVZ(),
     fetchGLD(),
     fetchCOT(existing),
+    fetchCTraderPrices(),
   ])
 
   const snapshot: Snapshot = {
@@ -333,6 +481,7 @@ async function main() {
     marketVolatility: { GVZ: gvz },
     positioning,
     etfFlows,
+    snapshotPrices,
   }
 
   fs.writeFileSync(outPath, JSON.stringify(snapshot, null, 2))
@@ -342,6 +491,7 @@ async function main() {
   console.log(`GVZ: ${gvz ?? 'null'}`)
   console.log(`GLD: ${etfFlows.gldTonnes ?? 'null'}t`)
   console.log(`COT net: ${positioning.cotNetLong ?? 'null'}`)
+  console.log(`XAUUSD price: ${snapshotPrices?.XAUUSD ?? 'null'}`)
 }
 
 main().catch(err => {

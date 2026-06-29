@@ -80,6 +80,21 @@ export interface ETFFlows {
   trend3W: 'INFLOW' | 'OUTFLOW' | 'FLAT' | null
 }
 
+export interface SnapshotPrices {
+  XAUUSD: number | null
+  XAGUSD: number | null
+  EURUSD: number | null
+  USDJPY: number | null
+  USDCHF: number | null
+  USDCNH: number | null
+  US500: number | null
+  GER40: number | null
+  UK100: number | null
+  ADR_14day: number | null
+  ADR_usedToday: number | null
+  goldSilverRatio: number | null
+}
+
 export interface DailySnapshot {
   generatedAt: string
   yields: YieldsData
@@ -87,6 +102,7 @@ export interface DailySnapshot {
   marketVolatility: Partial<MarketVolatility>
   positioning: COTPositioning
   etfFlows: ETFFlows
+  snapshotPrices?: SnapshotPrices
 }
 
 export interface BriefingResult {

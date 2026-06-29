@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { useCTraderPrices } from './hooks/useCTraderPrices'
+import { useCTraderPrices, pricesFromSnapshot } from './hooks/useCTraderPrices'
 import { useDailySnapshot } from './hooks/useFredData'
 import { useEconomicCalendar, useNewsHeadlines, useVIX } from './hooks/useEconomicCalendar'
 import { aggregateData } from './services/dataAggregator'
@@ -28,8 +28,11 @@ export function App() {
   const [refreshKey, setRefreshKey] = useState(0)
   const [lastRefresh, setLastRefresh] = useState('')
 
-  const prices   = useCTraderPrices()
   const snapshot = useDailySnapshot()
+  const livePrices = useCTraderPrices()
+  const prices = livePrices.status === 'live'
+    ? livePrices
+    : (snapshot?.snapshotPrices ? pricesFromSnapshot(snapshot.snapshotPrices) : livePrices)
   const calendar = useEconomicCalendar()
   const headlines = useNewsHeadlines()
   const vix      = useVIX()
