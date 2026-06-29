@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-29T14:56:51.337Z",
+  "generatedAt": "2026-06-29T15:08:45.374Z",
   "yields": {
     "US10Y": 4.4,
     "US2Y": 4.09,
@@ -22,13 +22,13 @@
     "probHike": null
   },
   "marketVolatility": {
-    "GVZ": 1
+    "GVZ": null
   },
   "positioning": {
-    "cotNetLong": null,
+    "cotNetLong": 172884,
     "cotWoWChange": null,
-    "crowding": null,
-    "reportDate": null
+    "crowding": "NEUTRAL",
+    "reportDate": "2026-06-23T00:00:00.000"
   },
   "etfFlows": {
     "gldTonnes": null,
