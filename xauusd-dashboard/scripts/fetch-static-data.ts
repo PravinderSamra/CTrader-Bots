@@ -88,6 +88,41 @@ function httpGet(url: string, headers: Record<string,string> = {}): Promise<stri
   })
 }
 
+// ── Yahoo Finance cookie+crumb auth ───────────────────────────────────────
+// fc.yahoo.com sets the A3 session cookie (returns 404 but still sets it);
+// that cookie is required to fetch a crumb for authenticated endpoints.
+
+let _yfAuth: { cookie: string; crumb: string } | null = null
+
+async function getYFAuth(): Promise<{ cookie: string; crumb: string } | null> {
+  if (_yfAuth) return _yfAuth
+  const UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
+  try {
+    const r1 = await fetch('https://fc.yahoo.com/', {
+      headers: { 'User-Agent': UA, 'Accept-Encoding': 'identity' },
+    })
+    type HeadersWithSetCookie = Headers & { getSetCookie?: () => string[] }
+    const h1 = r1.headers as HeadersWithSetCookie
+    const rawCookies: string[] = typeof h1.getSetCookie === 'function'
+      ? h1.getSetCookie()
+      : [h1.get('set-cookie') ?? ''].filter(Boolean)
+    const cookie = rawCookies.map(c => c.split(';')[0]).join('; ')
+    if (!cookie) return null
+
+    const r2 = await fetch('https://query1.finance.yahoo.com/v1/test/getcrumb', {
+      headers: { 'User-Agent': UA, Cookie: cookie, 'Accept-Encoding': 'identity' },
+    })
+    const crumb = (await r2.text()).trim()
+    if (!crumb || crumb.length < 3 || crumb.startsWith('<') || crumb.startsWith('{')) return null
+
+    _yfAuth = { cookie, crumb }
+    console.log(`YF auth OK: crumb=${crumb.slice(0, 4)}…`)
+    return _yfAuth
+  } catch {
+    return null
+  }
+}
+
 // ── FRED API ───────────────────────────────────────────────────────────────
 
 const FRED_KEY = process.env.FRED_API_KEY ?? ''
@@ -158,52 +193,63 @@ async function fetchYields(): Promise<YieldsData> {
 // ── CME FedWatch scrape ────────────────────────────────────────────────────
 
 async function fetchFedWatch(): Promise<Snapshot['fedExpectations']> {
-  console.log('Fetching CME FedWatch...')
-  try {
-    // CME FedWatch probabilities — public JSON endpoint
-    const raw = await httpGet('https://www.cmegroup.com/CmeWS/mvc/ProductCalendar/V2/fomc')
-    const data = JSON.parse(raw) as {
-      meetingList?: Array<{
-        meetingDate?: string
-        cutProb?: number | string
-        holdProb?: number | string
-        hikeProb?: number | string
-        raiseProb?: number | string
-        lowerProb?: number | string
-        unchangedProb?: number | string
-      }>
-    }
-    const meetings = data.meetingList ?? []
-    const now = new Date()
-    const next = meetings.find(m => m.meetingDate && new Date(m.meetingDate) > now)
-    if (!next) return { nextMeeting: null, probCut: null, probHold: null, probHike: null }
+  console.log('Fetching Fed expectations...')
 
-    const toNum = (v: unknown) => v != null ? Math.round(parseFloat(String(v))) : null
-    return {
-      nextMeeting: next.meetingDate ?? null,
-      probCut:  toNum(next.lowerProb ?? next.cutProb),
-      probHold: toNum(next.unchangedProb ?? next.holdProb),
-      probHike: toNum(next.raiseProb ?? next.hikeProb),
+  // FOMC decision dates (second day of each two-day meeting) — updated annually
+  const FOMC_DATES = [
+    '2026-01-28', '2026-03-18', '2026-04-29', '2026-06-10',
+    '2026-07-29', '2026-09-16', '2026-10-28', '2026-12-09',
+    '2027-01-27', '2027-03-17', '2027-04-28', '2027-06-09',
+    '2027-07-28', '2027-09-15', '2027-10-27', '2027-12-08',
+  ]
+
+  const now = new Date()
+  // Include same-day meetings (decision announced after market open)
+  const nextMeeting = FOMC_DATES.find(d => new Date(d + 'T23:59:59Z') > now) ?? null
+
+  if (!nextMeeting) return { nextMeeting: null, probCut: null, probHold: null, probHike: null }
+
+  // Current Fed Funds upper target rate from FRED
+  const currentRate = await fredSeries('DFEDTARU')
+  if (!currentRate) return { nextMeeting, probCut: null, probHold: null, probHike: null }
+
+  // 30-Day Fed Funds futures for the month AFTER the meeting
+  // (that month's entire period reflects the post-meeting rate)
+  const MONTH_CODES = ['F','G','H','J','K','M','N','Q','U','V','X','Z']
+  const meetDate = new Date(nextMeeting)
+  const futMon = new Date(meetDate.getFullYear(), meetDate.getMonth() + 1, 1)
+  const ticker = `ZQ${MONTH_CODES[futMon.getMonth()]}${String(futMon.getFullYear()).slice(-2)}.CBT`
+
+  try {
+    const raw = await httpGet(
+      `https://query2.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d&range=5d`,
+      {
+        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
+        Accept: 'application/json', 'Accept-Encoding': 'identity',
+      },
+    )
+    const parsed = JSON.parse(raw) as {
+      chart?: { result?: Array<{ meta?: { regularMarketPrice?: number; chartPreviousClose?: number } }> }
     }
-  } catch {
-    // Fallback: scrape HTML
-    try {
-      const html = await httpGet('https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html', {
-        Accept: 'text/html',
-      })
-      const meetingMatch = html.match(/(\d{4}-\d{2}-\d{2})[^"]*FOMC/i)
-      const cutMatch   = html.match(/lower[^>]*>[\s\S]*?(\d+\.\d+)%/i)
-      const holdMatch  = html.match(/unchanged[^>]*>[\s\S]*?(\d+\.\d+)%/i)
-      const hikeMatch  = html.match(/raise[^>]*>[\s\S]*?(\d+\.\d+)%/i)
-      return {
-        nextMeeting: meetingMatch?.[1] ?? null,
-        probCut:  cutMatch  ? Math.round(parseFloat(cutMatch[1]))  : null,
-        probHold: holdMatch ? Math.round(parseFloat(holdMatch[1])) : null,
-        probHike: hikeMatch ? Math.round(parseFloat(hikeMatch[1])) : null,
-      }
-    } catch {
-      return { nextMeeting: null, probCut: null, probHold: null, probHike: null }
-    }
+    const meta = parsed.chart?.result?.[0]?.meta
+    const futuresPrice = meta?.regularMarketPrice ?? meta?.chartPreviousClose
+    if (!futuresPrice) return { nextMeeting, probCut: null, probHold: null, probHike: null }
+
+    // Implied rate after meeting = 100 − futures price
+    const impliedRate = 100 - futuresPrice
+    const expectedChange = currentRate - impliedRate  // positive → market expects cut
+
+    // Linear interpolation between adjacent 25 bp outcomes
+    const pct = Math.round(expectedChange / 0.25 * 100)
+    const probCut  = Math.max(0, Math.min(100, pct))
+    const probHike = Math.max(0, Math.min(100, -pct))
+    const probHold = Math.max(0, 100 - probCut - probHike)
+
+    console.log(`Fed: R0=${currentRate}% implied=${impliedRate.toFixed(3)}% (${ticker}) → cut=${probCut}% hold=${probHold}% hike=${probHike}%`)
+    return { nextMeeting, probCut, probHold, probHike }
+  } catch (err) {
+    console.error('FedWatch futures fetch failed:', err)
+    return { nextMeeting, probCut: null, probHold: null, probHike: null }
   }
 }
 
@@ -217,13 +263,17 @@ async function fetchGVZ(): Promise<number | null> {
   }
   try {
     const raw = await httpGet(
-      'https://query1.finance.yahoo.com/v8/finance/chart/%5EGVZ?interval=1d&range=3d',
+      'https://query2.finance.yahoo.com/v8/finance/chart/%5EGVZ?interval=1d&range=5d',
       YF_HEADERS,
     )
     const parsed = JSON.parse(raw) as {
-      chart?: { result?: Array<{ meta?: { regularMarketPrice?: number } }> }
+      chart?: { result?: Array<{ meta?: { regularMarketPrice?: number; chartPreviousClose?: number } }> }
     }
-    return parsed.chart?.result?.[0]?.meta?.regularMarketPrice ?? null
+    const meta = parsed.chart?.result?.[0]?.meta
+    // regularMarketPrice is null when market is closed; fall back to Friday's close
+    const price = meta?.regularMarketPrice ?? meta?.chartPreviousClose ?? null
+    if (price != null && price > 2) return price  // sanity: GVZ should never be ≤2
+    return null
   } catch {
     // Fallback: Stooq free CSV
     try {
@@ -256,40 +306,31 @@ async function fetchGLD(): Promise<Snapshot['etfFlows']> {
     return { gldTonnes: tonnes, gldWoWChange: wow, trend3W: trend }
   }
 
-  const YF_HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
-    Accept: 'application/json',
-  }
-
   try {
-    // Yahoo Finance: GLD shares outstanding × gold per share → tonnes
-    // GLD holds ~0.0904 troy oz per share (started at 0.1, decays 0.4%/yr for expenses)
-    // 1 metric tonne = 32,150.7 troy oz
-    const raw = await httpGet(
-      'https://query1.finance.yahoo.com/v10/finance/quoteSummary/GLD?modules=defaultKeyStatistics',
-      YF_HEADERS,
+    // Yahoo Finance summaryDetail: totalAssets ($AUM) ÷ navPrice ($/share) = shares outstanding
+    // shares × ~0.0904 troy oz/share ÷ 32,150.7 troy oz/tonne = tonnes of gold held
+    // quoteSummary requires YF cookie+crumb auth (crumb prevents unauthenticated scraping)
+    const UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
+    const auth = await getYFAuth()
+    if (!auth) throw new Error('no YF auth')
+    const r = await fetch(
+      `https://query1.finance.yahoo.com/v10/finance/quoteSummary/GLD?modules=summaryDetail&crumb=${encodeURIComponent(auth.crumb)}`,
+      { headers: { 'User-Agent': UA, Cookie: auth.cookie, Accept: 'application/json', 'Accept-Encoding': 'identity' } },
     )
-    const parsed = JSON.parse(raw) as {
-      quoteSummary?: { result?: Array<{ defaultKeyStatistics?: { sharesOutstanding?: { raw?: number } } }> }
+    const parsed = await r.json() as {
+      quoteSummary?: { result?: Array<{ summaryDetail?: { totalAssets?: { raw?: number }; navPrice?: { raw?: number } } }> }
     }
-    const shares = parsed.quoteSummary?.result?.[0]?.defaultKeyStatistics?.sharesOutstanding?.raw
-    if (!shares) throw new Error('no shares data')
+    const sd = parsed.quoteSummary?.result?.[0]?.summaryDetail
+    const totalAssets = sd?.totalAssets?.raw
+    const navPrice = sd?.navPrice?.raw
+    if (!totalAssets || !navPrice) throw new Error('missing GLD data')
+    const shares = totalAssets / navPrice
     const tonnes = Math.round(shares * 0.0904 / 32150.7 * 10) / 10
-    console.log(`GLD: ${shares.toLocaleString()} shares → ${tonnes}t`)
+    console.log(`GLD: $${(totalAssets / 1e9).toFixed(1)}B AUM, NAV $${navPrice} → ${tonnes}t`)
     return toWoW(tonnes)
-  } catch {
-    // Fallback: SSGA CSV holdings export
-    try {
-      const csv = await httpGet(
-        'https://www.ssga.com/us/en/intermediary/etfs/funds/spdr-gold-shares-gld',
-        { 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36' }
-      )
-      const match = csv.match(/(\d[\d,]+\.\d+)\s*(?:tonnes|oz)/i)
-      const tonnes = match ? parseFloat(match[1].replace(/,/g, '')) : null
-      return toWoW(tonnes)
-    } catch {
-      return { gldTonnes: prevTonnes, gldWoWChange: null, trend3W: null }
-    }
+  } catch (err) {
+    console.error('GLD fetch failed:', err)
+    return { gldTonnes: prevTonnes, gldWoWChange: null, trend3W: null }
   }
 }
 

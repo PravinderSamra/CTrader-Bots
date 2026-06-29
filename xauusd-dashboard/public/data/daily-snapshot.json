@@ -1,37 +1,37 @@
 {
-  "generatedAt": "2026-06-29T15:08:45.374Z",
+  "generatedAt": "2026-06-29T15:29:55.136Z",
   "yields": {
-    "US10Y": 4.4,
-    "US2Y": 4.09,
-    "realYield10Y": 2.19,
-    "realYield5Y": 1.92,
-    "curve2s10s": 31,
-    "breakeven10Y": 2.2,
-    "breakeven5Y": 2.21,
-    "forward5y5y": 2.19,
+    "US10Y": null,
+    "US2Y": null,
+    "realYield10Y": null,
+    "realYield5Y": null,
+    "curve2s10s": null,
+    "breakeven10Y": null,
+    "breakeven5Y": null,
+    "forward5y5y": null,
     "dayOverDay": {
-      "US10Y": -0.01,
-      "US2Y": -0.02,
-      "realYield10Y": -0.04
+      "US10Y": null,
+      "US2Y": null,
+      "realYield10Y": null
     }
   },
   "fedExpectations": {
-    "nextMeeting": null,
+    "nextMeeting": "2026-07-29",
     "probCut": null,
     "probHold": null,
     "probHike": null
   },
   "marketVolatility": {
-    "GVZ": null
+    "GVZ": 28.16
   },
   "positioning": {
     "cotNetLong": 172884,
-    "cotWoWChange": null,
+    "cotWoWChange": 0,
     "crowding": "NEUTRAL",
     "reportDate": "2026-06-23T00:00:00.000"
   },
   "etfFlows": {
-    "gldTonnes": null,
+    "gldTonnes": 1131.4,
     "gldWoWChange": null,
     "trend3W": null
   },
