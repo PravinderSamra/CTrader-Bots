@@ -1,38 +1,31 @@
-name: Deploy Dashboards to GitHub Pages
+name: XAUUSD Daily Data Fetch
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "GEX&OI/dashboard/**"
-      - "Chart-Analysis-Agent/**"
-      - "xauusd-dashboard/src/**"
-      - "xauusd-dashboard/public/**"
-      - "xauusd-dashboard/index.html"
-      - "xauusd-dashboard/vite.config.ts"
-      - ".github/workflows/deploy-dashboard.yml"
-  workflow_dispatch:  # Allow manual trigger from GitHub UI
+  schedule:
+    - cron: '45 6 * * 1-5'   # 06:45 GMT, Mon–Fri
+  workflow_dispatch:           # Triggerable manually from GitHub UI
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
 concurrency:
-  group: "pages"
-  cancel-in-progress: true
+  group: gex-agent-deploy
+  cancel-in-progress: false
 
 jobs:
-  deploy:
+  fetch-and-deploy:
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
-    runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -41,33 +34,45 @@ jobs:
           cache: 'npm'
           cache-dependency-path: xauusd-dashboard/package-lock.json
 
-      - name: Install XAUUSD dashboard dependencies
+      - name: Install dependencies
         run: cd xauusd-dashboard && npm ci
+
+      - name: Fetch daily data snapshot
+        run: cd xauusd-dashboard && npx tsx scripts/fetch-static-data.ts
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+
+      - name: Commit updated snapshot
+        run: |
+          git config user.name  "xauusd-data-bot"
+          git config user.email "xauusd-data-bot@noreply.github.com"
+          git add xauusd-dashboard/public/data/daily-snapshot.json
+          if ! git diff --staged --quiet; then
+            git commit -m "chore: daily XAUUSD data snapshot $(date -u +%Y-%m-%d)"
+            git pull --rebase origin main
+            git push origin main
+          else
+            echo "No data changes to commit"
+          fi
 
       - name: Build XAUUSD dashboard
         run: cd xauusd-dashboard && npm run build
         env:
-          VITE_FINNHUB_KEY:       ${{ secrets.FINNHUB_API_KEY }}
-          VITE_ANTHROPIC_KEY:     ${{ secrets.ANTHROPIC_API_KEY }}
-          VITE_CTRADER_MCP_URL:   ${{ secrets.VITE_CTRADER_MCP_URL }}
-          VITE_CTRADER_MCP_TOKEN: ${{ secrets.VITE_CTRADER_MCP_TOKEN }}
+          VITE_FINNHUB_KEY:        ${{ secrets.FINNHUB_API_KEY }}
+          VITE_ANTHROPIC_KEY:      ${{ secrets.ANTHROPIC_API_KEY }}
+          VITE_CTRADER_MCP_URL:    ${{ secrets.VITE_CTRADER_MCP_URL }}
+          VITE_CTRADER_MCP_TOKEN:  ${{ secrets.VITE_CTRADER_MCP_TOKEN }}
 
-      - name: Build site structure
+      - name: Build full site structure
         run: |
           mkdir -p _site/gex-oi
           mkdir -p _site/chart-analysis
           mkdir -p _site/xauusd-dashboard
 
-          # Copy GEX & OI dashboard into its subfolder
           cp -r "GEX&OI/dashboard/." _site/gex-oi/
-
-          # Copy Chart Analysis Agent into its subfolder
           cp "Chart-Analysis-Agent/index.html" _site/chart-analysis/index.html
-
-          # Copy built XAUUSD dashboard
           cp -r xauusd-dashboard/dist/. _site/xauusd-dashboard/
 
-          # Root index — links to all dashboards
           cat > _site/index.html << 'EOF'
           <!DOCTYPE html>
           <html lang="en">
@@ -98,7 +103,7 @@ jobs:
                 display: flex; flex-direction: column; gap: 8px;
               }
               a.card:hover { border-color: #38bdf8; transform: translateY(-2px); }
-              a.card.gold:hover   { border-color: #F0B429; }
+              a.card.gold:hover  { border-color: #F0B429; }
               a.card.xauusd:hover { border-color: #C9952A; }
               .card-icon { font-size: 28px; }
               .card-title { font-size: 15px; font-weight: 700; color: #e8ecf4; }
@@ -106,9 +111,9 @@ jobs:
               .card-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.6px;
                           padding: 3px 8px; border-radius: 4px; width: fit-content;
                           text-transform: uppercase; }
-              .tag-blue   { background: rgba(56,189,248,0.12);  color: #38bdf8; }
-              .tag-gold   { background: rgba(240,180,41,0.15);  color: #F0B429; }
-              .tag-xauusd { background: rgba(201,149,42,0.15);  color: #C9952A; }
+              .tag-blue  { background: rgba(56,189,248,0.12);  color: #38bdf8; }
+              .tag-gold  { background: rgba(240,180,41,0.15);  color: #F0B429; }
+              .tag-xauusd { background: rgba(201,149,42,0.15); color: #C9952A; }
             </style>
           </head>
           <body>

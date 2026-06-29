@@ -1,0 +1,136 @@
+/* Shared tile utility styles */
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bearish {
+  color: var(--red);
+}
+
+.bullish {
+  color: var(--green);
+}
+
+.warning {
+  color: var(--amber);
+}
+
+.badgeInline {
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.headline {
+  font-family: var(--mono);
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.change {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.barOuter {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  height: 6px;
+  overflow: hidden;
+  margin-top: 2px;
+}
+
+.barInner {
+  height: 100%;
+  border-radius: 2px;
+  background: var(--gold);
+  transition: width 0.4s ease;
+}
+
+.calEvent {
+  padding: 6px 8px;
+  border-left: 2px solid var(--border);
+  margin: 4px 0;
+}
+
+.calEventHigh {
+  border-left-color: var(--gold);
+  background: var(--gold-dim);
+}
+
+.calEventMed {
+  border-left-color: var(--blue);
+}
+
+.eventTime {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.eventName {
+  font-size: 12px;
+  color: var(--text);
+  font-weight: 500;
+  margin: 1px 0;
+}
+
+.eventMeta {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.impactDots {
+  font-size: 10px;
+  letter-spacing: -1px;
+}
+
+.probBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.probLabel {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  width: 36px;
+  flex-shrink: 0;
+}
+
+.probTrack {
+  flex: 1;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  height: 8px;
+  overflow: hidden;
+}
+
+.probFill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.probNum {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text);
+  width: 32px;
+  text-align: right;
+  flex-shrink: 0;
+}

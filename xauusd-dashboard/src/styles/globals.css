@@ -1,0 +1,142 @@
+@import './tokens.css';
+
+/* ── Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { font-size: 14px; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.5;
+  min-width: 1200px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── All numbers, prices, data values → monospace ── */
+.mono, [data-value] {
+  font-family: var(--mono);
+}
+
+/* ── Direction arrows ── */
+.up   { color: var(--green); }
+.down { color: var(--red); }
+.flat { color: var(--text-dim); }
+
+/* ── Tile chrome ── */
+.tile {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--tile-pad);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tile-eyebrow {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.tile-headline {
+  font-family: var(--mono);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1;
+}
+
+.tile-subvalue {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.tile-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.tile-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+}
+
+.tile-val {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--text);
+}
+
+.tile-divider {
+  border: none;
+  border-top: 1px solid var(--border-2);
+  margin: 4px 0;
+}
+
+/* ── Badge ── */
+.badge {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 2px;
+  font-weight: 500;
+}
+.badge-green  { background: var(--green-dim);  color: var(--green); }
+.badge-red    { background: var(--red-dim);    color: var(--red); }
+.badge-gold   { background: var(--gold-dim);   color: var(--gold); }
+.badge-amber  { background: var(--amber-dim);  color: var(--amber); }
+.badge-blue   { background: var(--blue-dim);   color: var(--blue); }
+.badge-muted  { background: var(--surface-2);  color: var(--text-muted); border: 1px solid var(--border); }
+
+/* ── Null / offline state ── */
+.data-null {
+  color: var(--text-dim);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-style: italic;
+}
+
+/* ── Price flash animation ── */
+@keyframes flash-green {
+  0%   { color: var(--green); }
+  100% { color: var(--text); }
+}
+@keyframes flash-red {
+  0%   { color: var(--red); }
+  100% { color: var(--text); }
+}
+.flash-up   { animation: flash-green 0.3s ease-out forwards; }
+.flash-down { animation: flash-red   0.3s ease-out forwards; }
+
+/* ── Briefing pulse ── */
+@keyframes pulse-gold {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+.pulse { animation: pulse-gold 1.4s ease-in-out infinite; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }

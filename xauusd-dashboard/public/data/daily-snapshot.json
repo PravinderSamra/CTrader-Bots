@@ -1,0 +1,32 @@
+{
+  "generatedAt": null,
+  "yields": {
+    "US10Y": null,
+    "US2Y": null,
+    "realYield10Y": null,
+    "realYield5Y": null,
+    "curve2s10s": null,
+    "breakeven10Y": null,
+    "breakeven5Y": null,
+    "forward5y5y": null,
+    "dayOverDay": { "US10Y": null, "US2Y": null, "realYield10Y": null }
+  },
+  "fedExpectations": {
+    "nextMeeting": null,
+    "probCut": null,
+    "probHold": null,
+    "probHike": null
+  },
+  "marketVolatility": { "GVZ": null },
+  "positioning": {
+    "cotNetLong": null,
+    "cotWoWChange": null,
+    "crowding": null,
+    "reportDate": null
+  },
+  "etfFlows": {
+    "gldTonnes": null,
+    "gldWoWChange": null,
+    "trend3W": null
+  }
+}

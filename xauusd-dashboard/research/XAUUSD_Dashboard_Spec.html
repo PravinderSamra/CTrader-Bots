@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XAUUSD Intelligence Dashboard — Build Specification</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0D0E11;
+    --surface: #141519;
+    --surface-2: #1C1D24;
+    --border: #2A2B35;
+    --gold: #C9952A;
+    --gold-light: #E8B84B;
+    --blue: #5B8CDB;
+    --green: #3BB57A;
+    --red: #E85050;
+    --text: #E8E9ED;
+    --text-muted: #8B8D99;
+    --text-dim: #4A4C59;
+    --font: 'Space Grotesk', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 15px;
+    line-height: 1.6;
+    padding: 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ── HEADER ── */
+  .doc-header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 32px;
+    margin-bottom: 48px;
+  }
+  .doc-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .doc-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .doc-subtitle {
+    color: var(--text-muted);
+    font-size: 16px;
+    font-weight: 400;
+  }
+  .doc-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .meta-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 3px;
+  }
+  .meta-tag span { color: var(--gold); }
+
+  /* ── SECTIONS ── */
+  .section {
+    margin-bottom: 52px;
+  }
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .section-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── CALLOUT ── */
+  .callout {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 16px 20px;
+    border-radius: 4px;
+    margin: 16px 0;
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  .callout strong { color: var(--text); }
+  .callout.blue { border-left-color: var(--blue); }
+  .callout.green { border-left-color: var(--green); }
+  .callout.red { border-left-color: var(--red); }
+
+  /* ── CODE ── */
+  pre, code {
+    font-family: var(--mono);
+    font-size: 12px;
+    background: var(--surface-2);
+    color: #A8D8A8;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+  }
+  code { padding: 2px 6px; }
+  pre {
+    padding: 18px 20px;
+    overflow-x: auto;
+    margin: 16px 0;
+    line-height: 1.6;
+    color: #C8E6C9;
+  }
+  pre .comment { color: var(--text-dim); }
+  pre .key { color: #80CBC4; }
+  pre .val { color: #FFCC80; }
+  pre .gold { color: var(--gold); }
+
+  /* ── TABLES ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 16px 0;
+  }
+  th {
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #1E1F28;
+    vertical-align: top;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  tr:last-child td { border-bottom: none; }
+  .tag-free { color: var(--green); font-family: var(--mono); font-size: 11px; }
+  .tag-scrape { color: var(--gold); font-family: var(--mono); font-size: 11px; }
+  .tag-ctrader { color: var(--blue); font-family: var(--mono); font-size: 11px; }
+
+  /* ── TILE SPEC CARDS ── */
+  .tile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .tile-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 18px;
+  }
+  .tile-card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 8px;
+    font-family: var(--mono);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .tile-card p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 4px 0;
+    line-height: 1.5;
+  }
+  .tile-card p strong { color: var(--text); }
+
+  /* ── ASCII LAYOUT ── */
+  .ascii-layout {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: #7EC8E3;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    padding: 20px;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin: 16px 0;
+    line-height: 1.8;
+  }
+
+  /* ── COLOUR SWATCHES ── */
+  .swatch-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 16px 0;
+  }
+  .swatch {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 8px 14px;
+  }
+  .swatch-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .swatch-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .swatch-hex {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-left: 4px;
+  }
+
+  /* ── NUMBERED LIST ── */
+  ol.spec-list {
+    padding-left: 20px;
+    margin: 12px 0;
+  }
+  ol.spec-list li {
+    margin: 10px 0;
+    color: var(--text-muted);
+    font-size: 14px;
+    padding-left: 4px;
+    line-height: 1.6;
+  }
+  ol.spec-list li strong { color: var(--text); }
+
+  ul.spec-list {
+    padding-left: 20px;
+    margin: 12px 0;
+    list-style: none;
+  }
+  ul.spec-list li {
+    margin: 8px 0;
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.6;
+    padding-left: 4px;
+  }
+  ul.spec-list li::before {
+    content: "→ ";
+    color: var(--gold);
+    font-family: var(--mono);
+  }
+  ul.spec-list li strong { color: var(--text); }
+
+  /* ── AGENT SKILL BLOCK ── */
+  .agent-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--gold);
+    border-radius: 4px;
+    padding: 20px;
+    margin: 16px 0;
+  }
+  .agent-block-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 12px;
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .agent-block p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 6px 0;
+    line-height: 1.6;
+  }
+  .agent-block p strong { color: var(--text); }
+
+  /* ── TOC ── */
+  .toc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+  }
+  .toc-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .toc ol {
+    padding-left: 16px;
+    margin: 0;
+  }
+  .toc li {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 5px 0;
+  }
+  .toc li a {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+  .toc li a:hover { color: var(--gold); }
+  .toc li span {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-right: 8px;
+  }
+
+  hr.divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 32px 0;
+  }
+
+  p { margin-bottom: 12px; color: var(--text-muted); font-size: 14px; line-height: 1.7; }
+  p strong { color: var(--text); }
+  h4 { font-size: 15px; font-weight: 600; color: var(--text); margin: 20px 0 8px; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!--  DOCUMENT HEADER                                                   -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="doc-header">
+  <div class="doc-eyebrow">Build Specification · Rev 1.0</div>
+  <div class="doc-title">XAUUSD Intelligence Dashboard</div>
+  <div class="doc-subtitle">Daily gold trading analyst — data tiles, AI briefing, and agent skill</div>
+  <div class="doc-meta">
+    <div class="meta-tag">Repo: <span>PravinderSamra/CTrader-Bots</span></div>
+    <div class="meta-tag">Hosting: <span>GitHub Pages</span></div>
+    <div class="meta-tag">Stack: <span>React + Vite + TypeScript</span></div>
+    <div class="meta-tag">AI: <span>Anthropic claude-sonnet-4-6</span></div>
+    <div class="meta-tag">Prices: <span>CTrader MCP (HTTP)</span></div>
+    <div class="meta-tag">Cost: <span>£0/month</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!--  TABLE OF CONTENTS                                                  -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="toc">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><span>01</span> Project Overview &amp; Goals</li>
+    <li><span>02</span> Repository &amp; Folder Structure</li>
+    <li><span>03</span> Tech Stack</li>
+    <li><span>04</span> Architecture — How Everything Connects</li>
+    <li><span>05</span> Data Sources — Full Map (Free / CTrader / Scrape)</li>
+    <li><span>06</span> Dashboard Tile Specifications</li>
+    <li><span>07</span> AI Intelligence Briefing — System Prompt &amp; Output Format</li>
+    <li><span>08</span> Design System — Colours, Typography, Layout</li>
+    <li><span>09</span> GitHub Actions — Scheduled Data Fetcher</li>
+    <li><span>10</span> GitHub Pages Deployment</li>
+    <li><span>11</span> Agent Skill Specification</li>
+    <li><span>12</span> Build Instructions for Claude Code</li>
+  </ol>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!--  01 · PROJECT OVERVIEW                                             -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Section 01</div>
+  <div class="section-title">Project Overview &amp; Goals</div>
+
+  <p>
+    This dashboard is a <strong>daily gold trading intelligence tool</strong> for a day trader who uses ICT / Smart Money Concepts (SMC) methodology, trading XAUUSD on the 1M / 5M / 1H timeframe hierarchy with entries only in the direction of the established trend (HH/HL or LH/LL structure).
+  </p>
+
+  <div class="callout">
+    <strong>What the dashboard does:</strong> Aggregates all the macro and market data that a professional gold analyst would review each morning, presents it in a clean tile layout, and then uses a Claude AI agent to read all those data points and write a plain-English daily intelligence briefing — telling the trader what is likely to happen in gold today and why, in terms a beginner can understand.
+  </div>
+
+  <h4>Primary goals</h4>
+  <ul class="spec-list">
+    <li><strong>One screen, every morning.</strong> No visiting 8 different websites. Open the dashboard at 07:00 GMT, everything is already populated.</li>
+    <li><strong>Real-time prices from CTrader MCP.</strong> Gold, silver, indices and forex pairs pulled via the local CTrader MCP HTTP server — zero delay, zero cost.</li>
+    <li><strong>Zero monthly API fees.</strong> All non-price data sourced from free APIs (FRED, Finnhub) or web scraping.</li>
+    <li><strong>Refresh on demand.</strong> A single "Refresh" button re-fetches all data and optionally re-generates the AI briefing mid-session.</li>
+    <li><strong>AI Intelligence Briefing.</strong> A structured paragraph written by Claude (via Anthropic API) that synthesises all data points into a plain-English trade context and directional bias for the day — not a one-liner, a full professional briefing.</li>
+    <li><strong>Callable agent skill.</strong> The briefing generation function is structured so Claude Code can call it as a standalone agent skill from the command line or schedule it independently.</li>
+  </ul>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!--  02 · REPOSITORY STRUCTURE                                          -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Section 02</div>
+  <div class="section-title">Repository &amp; Folder Structure</div>
+
+  <p>
+    Create a new top-level folder <code>xauusd-dashboard</code> inside the existing <code>PravinderSamra/CTrader-Bots</code> repository. All files for this project live inside that folder.
+  </p>
+
+<pre>
+CTrader-Bots/
+└── xauusd-dashboard/              <span class="comment"># Root of this project</span>
+    │
+    ├── research/                  <span class="comment"># All research docs, specs, reference</span>
+    │   ├── XAUUSD_Dashboard_Spec.html     <span class="comment"># This document</span>
+    │   ├── gold-driver-analysis.md        <span class="comment"># Fundamental driver research</span>
+    │   └── data-source-map.md             <span class="comment"># API / scrape source reference</span>
+    │
+    ├── src/                       <span class="comment"># React application source</span>
+    │   ├── main.tsx
+    │   ├── App.tsx
+    │   ├── components/
+    │   │   ├── layout/
+    │   │   │   ├── Header.tsx             <span class="comment"># Gold price hero + session clock</span>
+    │   │   │   └── Footer.tsx
+    │   │   ├── tiles/
+    │   │   │   ├── YieldsTile.tsx         <span class="comment"># US Treasury yields</span>
+    │   │   │   ├── DollarTile.tsx         <span class="comment"># DXY + key forex pairs</span>
+    │   │   │   ├── EquitiesTile.tsx       <span class="comment"># US500, GER40, UK100 + VIX</span>
+    │   │   │   ├── GoldTile.tsx           <span class="comment"># Gold price, Silver, GVZ</span>
+    │   │   │   ├── CalendarTile.tsx       <span class="comment"># Economic events today</span>
+    │   │   │   ├── FedTile.tsx            <span class="comment"># Fed expectations + rate probs</span>
+    │   │   │   ├── PositioningTile.tsx    <span class="comment"># COT spec positioning</span>
+    │   │   │   ├── FlowsTile.tsx          <span class="comment"># GLD ETF holdings</span>
+    │   │   │   └── SessionTile.tsx        <span class="comment"># Session map + key times</span>
+    │   │   └── briefing/
+    │   │       ├── BriefingPanel.tsx      <span class="comment"># AI briefing output + bias gauge</span>
+    │   │       └── BiasGauge.tsx          <span class="comment"># Visual bullish/bearish meter</span>
+    │   ├── hooks/
+    │   │   ├── useCTraderPrices.ts        <span class="comment"># CTrader MCP HTTP polling</span>
+    │   │   ├── useFredData.ts             <span class="comment"># FRED API data fetcher</span>
+    │   │   ├── useEconomicCalendar.ts     <span class="comment"># Finnhub calendar</span>
+    │   │   ├── useFedWatch.ts             <span class="comment"># CME FedWatch scraper</span>
+    │   │   ├── useGVZ.ts                  <span class="comment"># CBOE GVZ scraper</span>
+    │   │   ├── useGldFlows.ts             <span class="comment"># GLD ETF holdings scraper</span>
+    │   │   └── useCOT.ts                  <span class="comment"># CFTC COT data reader</span>
+    │   ├── services/
+    │   │   ├── anthropicBriefing.ts       <span class="comment"># Anthropic API call for briefing</span>
+    │   │   └── dataAggregator.ts          <span class="comment"># Assembles all data for agent</span>
+    │   ├── types/
+    │   │   └── dashboard.ts               <span class="comment"># TypeScript interfaces</span>
+    │   └── styles/
+    │       ├── globals.css
+    │       └── tokens.css                 <span class="comment"># Design tokens (see Section 08)</span>
+    │
+    ├── scripts/
+    │   └── fetch-static-data.ts           <span class="comment"># Node script for GitHub Action</span>
+    │
+    ├── public/
+    │   └── data/
+    │       └── daily-snapshot.json        <span class="comment"># Generated by GitHub Action</span>
+    │
+    ├── .github/
+    │   └── workflows/
+    │       └── daily-data-fetch.yml       <span class="comment"># Scheduled data fetcher</span>
+    │
+    ├── index.html
+    ├── vite.config.ts
+    ├── tsconfig.json
+    ├── package.json
+    └── README.md
+</pre>
+
+  <div class="callout">
+    <strong>Note to Claude Code:</strong> This project lives at <code>CTrader-Bots/xauusd-dashboard/</code>. Do not create it at the repo root. The research folder should be committed first so all reference material is versioned alongside the code.
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!--  03 · TECH STACK                                                   -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Section 03</div>
+  <div class="section-title">Tech Stack</div>
+
+  <table>
+    <tr><th>Layer</th><th>Technology</th><th>Reason</th></tr>
+    <tr><td>Framework</td><td>React 18 + TypeScript</td><td>Consistent with existing CTrader-Bots dashboard projects</td></tr>
+    <tr><td>Build tool</td><td>Vite</td><td>Fast dev server, clean GitHub Pages build output</td></tr>
+    <tr><td>Styling</td><td>CSS Modules + custom CSS tokens</td><td>No framework bloat, precise design control for custom aesthetic</td></tr>
+    <tr><td>Fonts</td><td>Space Grotesk + JetBrains Mono (Google Fonts)</td><td>See Section 08 design system</td></tr>
+    <tr><td>HTTP client</td><td>Native fetch API</td><td>No dependency needed</td></tr>
+    <tr><td>Scheduling</td><td>GitHub Actions (cron)</td><td>Fetches slow-moving data daily and stores as JSON — no server</td></tr>
+    <tr><td>Hosting</td><td>GitHub Pages</td><td>Existing pattern in this repo — free, zero infra</td></tr>
+    <tr><td>AI briefing</td><td>Anthropic API (claude-sonnet-4-6)</td><td>Owner has API key; briefing called client-side on demand</td></tr>
+    <tr><td>Prices</td><td>CTrader MCP (HTTP, local)</td><td>Real-time, no delay, no cost — runs on trader's machine</td></tr>
+  </table>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!--  04 · ARCHITECTURE                                                 -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Section 04</div>
+  <div class="section-title">Architecture — How Everything Connects</div>
+
+<pre>
+<span class="gold">╔═══════════════════════════════════════════════════════════════════╗</span>
+<span class="gold">║           XAUUSD INTELLIGENCE DASHBOARD — DATA FLOW               ║</span>
+<span class="gold">╚═══════════════════════════════════════════════════════════════════╝</span>
+
+<span class="comment">─── REAL-TIME PRICES (every 15 seconds) ─────────────────────────</span>
+
+  CTrader MCP (HTTP localhost)
+    └──► useCTraderPrices.ts
+           ├── XAUUSD, XAGUSD
+           ├── DXY (or EUR/USD, USD/JPY, USD/CHF, USD/CNH)
+           ├── GER40, US500, UK100
+           └── Calculated: Gold ADR (daily range used so far)
+                         Gold/Silver ratio
+
+<span class="comment">─── MACRO DATA (via GitHub Action daily at 06:45 GMT) ───────────</span>
+
+  FRED API (free, api key required)
+    └──► daily-snapshot.json (stored in /public/data/)
+           ├── 10Y nominal yield (DGS10)
+           ├── 2Y yield (DGS2)
+           ├── 10Y real yield TIPS (DFII10)
+           ├── 5Y real yield (DFII5)
+           ├── 10Y inflation breakeven (T10YIE)
+           ├── 5Y inflation breakeven (T5YIE)
+           ├── 5y5y forward inflation (T5YIFR)
+           └── 2s10s curve (calculated: DGS10 - DGS2)
+
+<span class="comment">─── CALENDAR &amp; EVENTS (on page load + manual refresh) ────────────</span>
+
+  Finnhub API (free tier — 60 calls/min)
+    └──► useEconomicCalendar.ts
+           └── Today's events: name, time (GMT), impact, 
+               actual/forecast/previous values, currency affected
+
+<span class="comment">─── SCRAPED DATA (via GitHub Action daily at 06:45 GMT) ──────────</span>
+
+  CME FedWatch (web scrape → daily-snapshot.json)
+    └──► Implied probability of cut / hold / hike at next FOMC
+
+  CBOE website (web scrape → daily-snapshot.json)
+    └──► GVZ (gold volatility index — gold's own VIX)
+
+  State Street / SPDR ETFs (web scrape → daily-snapshot.json)
+    └──► GLD ETF tonnage holdings (proxy for institutional flows)
+
+  CFTC website (scrape Friday releases → daily-snapshot.json)
+    └──► COT: net speculative positioning in COMEX gold futures
+
+<span class="comment">─── MARKET NEWS HEADLINES (on page load + manual refresh) ────────</span>
+
+  Finnhub News API (free)
+    └──► Top 5 headlines tagged: gold, Fed, inflation, yields, USD
+
+<span class="comment">─── AI INTELLIGENCE BRIEFING (on demand — button click) ─────────</span>
+
+  dataAggregator.ts assembles ALL above data into structured object
+    └──► anthropicBriefing.ts
+           └──► POST /v1/messages (claude-sonnet-4-6)
+                  └──► Structured briefing paragraph → BriefingPanel.tsx
+</pre>
+
+  <div class="callout blue">
+    <strong>CTrader MCP connection:</strong> The dashboard assumes the CTrader MCP HTTP server is running locally on the trader's machine (same machine as the browser). The base URL should be configurable via a <code>.env</code> file: <code>VITE_CTRADER_MCP_URL=http://localhost:PORT</code>. Claude Code should check the existing CTrader-Bots repo for the MCP server port used in other agent skills and match it exactly. If the MCP is unreachable, tiles degrade gracefully with a "CTrader offline" badge and retain the last cached price.
+  </div>
+
+  <div class="callout green">
+    <strong>GitHub Action as scheduler:</strong> Because GitHub Pages is static, there is no server to run cron jobs. Instead, a GitHub Action (see Section 09) runs at 06:45 GMT every weekday, calls FRED + scrapers, writes <code>public/data/daily-snapshot.json</code> to the repo, and triggers a redeploy. The React app then reads this file on load. Real-time prices always come from CTrader MCP directly.
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!--  05 · DATA SOURCES                                                 -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Section 05</div>
+  <div class="section-title">Data Sources — Full Map</div>
+
+  <table>
+    <tr>
+      <th>Data Point</th>
+      <th>Source</th>
+      <th>Method</th>
+      <th>Update</th>
+      <th>Type</th>
+    </tr>
+    <tr>
+      <td>Gold price (XAUUSD)</td>
+      <td>CTrader MCP</td>
+      <td>HTTP GET to local MCP server</td>
+      <td>Every 15s</td>
+      <td class="tag-ctrader">CTRADER</td>
+    </tr>
+    <tr>
+      <td>Silver (XAGUSD), Gold/Silver ratio</td>
+      <td>CTrader MCP</td>
+      <td>HTTP GET, ratio calculated</td>
+      <td>Every 15s</td>
+      <td class="tag-ctrader">CTRADER</td>
+    </tr>
+    <tr>
+      <td>DXY (US Dollar Index)</td>
+      <td>CTrader MCP</td>
+      <td>HTTP GET (DXY or DX symbol)</td>
+      <td>Every 15s</td>
+      <td class="tag-ctrader">CTRADER</td>
+    </tr>
+    <tr>
+      <td>EUR/USD, USD/JPY, USD/CHF, USD/CNH</td>
+      <td>CTrader MCP</td>
+      <td>HTTP GET for each pair</td>
+      <td>Every 15s</td>
+      <td class="tag-ctrader">CTRADER</td>
+    </tr>
+    <tr>
+      <td>US500, GER40, UK100</td>
+      <td>CTrader MCP</td>
+      <td>HTTP GET for each index</td>
+      <td>Every 15s</td>
+      <td class="tag-ctrader">CTRADER</td>
+    </tr>
+    <tr>
+      <td>Gold ADR (average daily range)</td>
+      <td>CTrader MCP</td>
+      <td>Calculated from 14-day OHLC history</td>
+      <td>Daily</td>
+      <td class="tag-ctrader">CTRADER</td>
+    </tr>
+    <tr>
+      <td>10Y Treasury yield (DGS10)</td>
+      <td>FRED API</td>
+      <td>GitHub Action → daily-snapshot.json</td>
+      <td>06:45 GMT daily</td>
+      <td class="tag-free">FREE API</td>
+    </tr>
+    <tr>
+      <td>2Y Treasury yield (DGS2)</td>
+      <td>FRED API</td>
+      <td>GitHub Action → daily-snapshot.json</td>
+      <td>06:45 GMT daily</td>
+      <td class="tag-free">FREE API</td>
+    </tr>
+    <tr>
+      <td>10Y Real yield / TIPS (DFII10)</td>
+      <td>FRED API</td>
+      <td>GitHub Action → daily-snapshot.json</td>
+      <td>06:45 GMT daily</td>
+      <td class="tag-free">FREE API</td>
+    </tr>
+    <tr>
+      <td>Inflation breakevens (T10YIE, T5YIE)</td>
+      <td>FRED API</td>
+      <td>GitHub Action → daily-snapshot.json</td>
+      <td>06:45 GMT daily</td>
+      <td class="tag-free">FREE API</td>
+    </tr>
+    <tr>
+      <td>5y5y forward inflation (T5YIFR)</td>
+      <td>FRED API</td>
+      <td>GitHub Action → daily-snapshot.json</td>
+      <td>06:45 GMT daily</td>
+      <td class="tag-free">FREE API</td>
+    </tr>
+    <tr>
+      <td>2s10s yield curve spread</td>
+      <td>FRED API</td>
+      <td>Calculated (DGS10 − DGS2)</td>
+      <td>06:45 GMT daily</td>
+      <td class="tag-free">FREE API</td>
+    </tr>
+    <tr>
+      <td>Economic calendar (today's events)</td>
+      <td>Finnhub API (free)</td>
+      <td>Client-side fetch on load</td>
+      <td>On load + refresh</td>
+      <td class="tag-free">FREE API</td>
+    </tr>
+    <tr>
+      <td>Market news headlines (gold, Fed)</td>
+      <td>Finnhub News API (free)</td>
+      <td>Client-side fetch on load</td>
+      <td>On load + refresh</td>
+      <td class="tag-free">FREE API</td>
+    </tr>
+    <tr>
+      <td>VIX (equity fear gauge)</td>
+      <td>Finnhub API (free)</td>
+      <td>Client-side fetch on load</td>
+      <td>On load + refresh</td>
+      <td class="tag-free">FREE API</td>
+    </tr>
+    <tr>
+      <td>Fed rate cut/hike probabilities</td>
+      <td>CME FedWatch (web scrape)</td>
+      <td>GitHub Action scrapes cmegroup.com</td>
+      <td>06:45 GMT daily</td>
+      <td class="tag-scrape">SCRAPE</td>
+    </tr>
+    <tr>
+      <td>GVZ (gold implied volatility)</td>
+      <td>CBOE website (web scrape)</td>
+      <td>GitHub Action scrapes cboe.com</td>
+      <td>06:45 GMT daily</td>
+      <td class="tag-scrape">SCRAPE</td>
+    </tr>
+    <tr>
+      <td>GLD ETF tonnage holdings</td>
+      <td>SPDR / State Street (web scrape)</td>
+      <td>GitHub Action scrapes spdrgoldshares.com</td>
+      <td>06:45 GMT daily</td>
+      <td class="tag-scrape">SCRAPE</td>
+    </tr>
+    <tr>
+      <td>COT speculative positioning</td>
+      <td>CFTC.gov (free download)</td>
+      <td>GitHub Action — Friday releases only</td>
+      <td>Friday 15:30 ET</td>
+      <td class="tag-free">FREE API</td>
+    </tr>
+  </table>
+
+  <h4>FRED API Setup</h4>
+  <p>Register for a free API key at <code>fred.stlouisfed.org/docs/api/api_key.html</code>. Store key as GitHub Actions secret <code>FRED_API_KEY</code>. Base URL: <code>https://api.stlouisfed.org/fred/series/observations?series_id=DGS10&api_key=KEY&file_type=json&sort_order=desc&limit=1</code></p>
+
+  <h4>Finnhub API Setup</h4>
+  <p>Register for a free key at <code>finnhub.io</code>. Free tier allows 60 calls/minute — more than sufficient. Store as GitHub secret <code>FINNHUB_API_KEY</code> and expose to Vite as <code>VITE_FINNHUB_KEY</code> for client-side calendar/news calls. Economic calendar endpoint: <code>https://finnhub.io/api/v1/calendar/economic?from=YYYY-MM-DD&to=YYYY-MM-DD&token=KEY</code></p>
+
+  <h4>Anthropic API Setup</h4>
+  <p>Key stored as GitHub secret <code>ANTHROPIC_API_KEY</code> and exposed via <code>VITE_ANTHROPIC_KEY</code> for client-side briefing generation. Model: <code>claude-sonnet-4-6</code>. Max tokens: <code>1200</code> for the briefing.</p>
+
+  <h4>CFTC COT Data</h4>
+  <p>CFTC publishes weekly Commitments of Traders data every Friday. Download URL for COMEX gold futures (legacy format): <code>https://www.cftc.gov/dea/futures/deacmesf.htm</code>. Parse the CSV to extract the "Gold" row — specifically: Non-Commercial Long, Non-Commercial Short, and the net position (Long − Short). Store net positioning value and the week-over-week change.</p>
+
+  <div class="callout">
+    <strong>Scraping resilience:</strong> All scrapers in the GitHub Action should implement try/catch and write <code>null</code> values to the JSON on failure rather than crashing the action. The dashboard should handle null values gracefully with a "Data unavailable" state per tile rather than breaking the whole page.
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!--  06 · DASHBOARD TILE SPECIFICATIONS                               -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Section 06</div>
+  <div class="section-title">Dashboard Tile Specifications</div>
+
+  <h4>Overall Layout (ASCII wireframe)</h4>
+
+<div class="ascii-layout">
+┌─────────────────────────────────────────────────────────────────────────┐
+│  HEADER                                                                  │
+│  [XAUUSD  $4,187.50  ▼ -12.40 (-0.29%)]  [London Open 08:00] [07:43 GMT]│
+│  [Session: LONDON]  [NY Open in: 5h 47m]  [Last refresh: 07:45]  [↺]    │
+└─────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────┐  ┌─────────────────┐  ┌─────────────────────────────┐
+│  YIELDS &        │  │  DOLLAR &        │  │  ECONOMIC CALENDAR          │
+│  RATES           │  │  FX              │  │  Today's Events             │
+│                  │  │                  │  │                             │
+│  10Y  4.41%  ▲   │  │  DXY  101.3  ▲   │  │  13:30 ●●● US CPI m/m     │
+│  2Y   4.89%  ▲   │  │  EUR  1.082  ▼   │  │       cons: 0.3%           │
+│  Real 2.12%  ▲   │  │  JPY  152.3  ▲   │  │  15:00 ●●  US ISM          │
+│  2s10s -48bp     │  │  CHF  0.911  ▲   │  │  Today: 3 HIGH impact      │
+│  BE 10Y 2.29%    │  │  CNH  7.248  →   │  │                             │
+│  5y5y  2.31%     │  │                  │  │                             │
+└─────────────────┘  └─────────────────┘  └─────────────────────────────┘
+
+┌─────────────────┐  ┌─────────────────┐  ┌─────────────────────────────┐
+│  GOLD PANEL      │  │  RISK TONE       │  │  FED EXPECTATIONS           │
+│                  │  │                  │  │                             │
+│  XAUUSD $4,187   │  │  US500 -0.4%  ▼  │  │  Sep FOMC:                  │
+│  XAGUSD  $32.1   │  │  GER40 +0.1%  →  │  │  Hold  62%  ████████░░     │
+│  Ratio   130.4   │  │  UK100 -0.2%  ▼  │  │  Hike  31%  ████░░░░░░     │
+│  GVZ     18.4    │  │  VIX   18.2   ▲  │  │  Cut    7%  █░░░░░░░░░     │
+│  ADR     $52     │  │  TONE: ⚠ RISK-OFF│  │                             │
+│  Used    $21     │  │                  │  │                             │
+└─────────────────┘  └─────────────────┘  └─────────────────────────────┘
+
+┌─────────────────┐  ┌─────────────────┐
+│  POSITIONING     │  │  ETF FLOWS       │
+│  (COT)           │  │                  │
+│  Net Longs:      │  │  GLD Holdings:   │
+│  +182,450        │  │  894.3 tonnes    │
+│  WoW: -3,200 ▼  │  │  WoW: -2.1t  ▼  │
+│  Crowd: NEUTRAL  │  │  Trend: OUTFLOW  │
+└─────────────────┘  └─────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│  DAILY INTELLIGENCE BRIEFING                              [Generate]     │
+│  ─────────────────────────────────────────────────────────────────────  │
+│  BIAS GAUGE:  [ BEARISH ◄──────────●──────── BULLISH ]  6.5/10 bear    │
+│                                                                          │
+│  Gold is under meaningful pressure today, primarily because the cost     │
+│  of holding it has risen — US Treasury yields are elevated and real      │
+│  interest rates (the "true" return you give up by holding gold instead   │
+│  of a bond) are climbing, which typically pulls money out of gold...     │
+│                                                                          │
+│  [Generated: 07:46 GMT] [Refresh Briefing]                               │
+└─────────────────────────────────────────────────────────────────────────┘
+</div>
+
+  <h4>Individual Tile Specifications</h4>
+
+  <div class="tile-grid">
+    <div class="tile-card">
+      <div class="tile-card-title">TILE 1 · Yields &amp; Rates</div>
+      <p><strong>Data:</strong> 10Y yield, 2Y yield, 10Y real yield, 2s10s spread, 10Y breakeven, 5Y breakeven, 5y5y forward inflation</p>
+      <p><strong>Source:</strong> FRED API (via daily-snapshot.json)</p>
+      <p><strong>Display:</strong> Each row shows label, value, and a directional arrow (▲▼→) vs prior day. Positive real yield number = red tint. Inverted curve (negative 2s10s) = amber badge.</p>
+      <p><strong>What it means (for AI context):</strong> Higher real yields → bearish gold. Rising breakevens with stable nominals → bullish gold. Inverted curve → macro stress building.</p>
+    </div>
+    <div class="tile-card">
+      <div class="tile-card-title">TILE 2 · Dollar &amp; FX</div>
+      <p><strong>Data:</strong> DXY, EUR/USD, USD/JPY, USD/CHF, USD/CNH</p>
+      <p><strong>Source:</strong> CTrader MCP (real-time)</p>
+      <p><strong>Display:</strong> DXY as the headline number. Each pair shows value and % change on the day. DXY up = amber. DXY down = green. USD/CNH shown as "China proxy".</p>
+      <p><strong>What it means:</strong> DXY rising = bearish gold (gold priced in dollars, stronger dollar = gold more expensive globally). USD/CNH rising = Chinese buyers paying more = demand floor signal.</p>
+    </div>
+    <div class="tile-card">
+      <div class="tile-card-title">TILE 3 · Economic Calendar</div>
+      <p><strong>Data:</strong> Today's events with time (GMT), impact level (●●● high, ●● medium), event name, previous, forecast, actual (once released)</p>
+      <p><strong>Source:</strong> Finnhub API (real-time on load)</p>
+      <p><strong>Display:</strong> Chronological list, high-impact events highlighted in gold border. Count of high-impact events at top. Time shown in GMT. "RELEASED" badge once actual populates. Events filtered to: US, EUR, GBP, JPY.</p>
+      <p><strong>Key events to flag prominently:</strong> CPI, PCE, NFP, FOMC, ISM, GDP, PPI, Initial Claims, JOLTS.</p>
+    </div>
+    <div class="tile-card">
+      <div class="tile-card-title">TILE 4 · Gold Panel</div>
+      <p><strong>Data:</strong> XAUUSD live price, XAGUSD live price, Gold/Silver ratio, GVZ (gold VIX), Average Daily Range, ADR used today</p>
+      <p><strong>Source:</strong> CTrader MCP (prices); daily-snapshot.json (GVZ)</p>
+      <p><strong>Display:</strong> XAUUSD is the hero number (large). Silver and ratio below. GVZ shown with context (below 15 = calm, 15–25 = normal, above 25 = elevated). ADR bar showing % of typical range consumed.</p>
+      <p><strong>ADR Calculation:</strong> 14-day average of (daily high − daily low) from CTrader OHLC history. "Used today" = (today's high − today's low) as % of ADR.</p>
+    </div>
+    <div class="tile-card">
+      <div class="tile-card-title">TILE 5 · Risk Tone</div>
+      <p><strong>Data:</strong> US500, GER40, UK100 (% change on day), VIX level and direction</p>
+      <p><strong>Source:</strong> CTrader MCP (indices); Finnhub (VIX)</p>
+      <p><strong>Display:</strong> Each index shows % change with colour (green up / red down). VIX shown with context band. A computed "Risk Tone" badge at the bottom: RISK-ON (green), RISK-OFF (red), NEUTRAL (grey). Logic: VIX &gt;20 + all indices negative = Risk-Off; all indices positive + VIX &lt;16 = Risk-On; else Neutral.</p>
+      <p><strong>What it means:</strong> Risk-Off can mean gold bid (safe haven) — but also watch for forced selling (see briefing context). Risk-On typically bearish for gold unless in debasement regime.</p>
+    </div>
+    <div class="tile-card">
+      <div class="tile-card-title">TILE 6 · Fed Expectations</div>
+      <p><strong>Data:</strong> Implied probability of Cut / Hold / Hike at the next FOMC meeting</p>
+      <p><strong>Source:</strong> CME FedWatch (web scrape via GitHub Action)</p>
+      <p><strong>Display:</strong> Horizontal bar chart for each outcome (%) with colour coding: Cut = green, Hold = grey, Hike = red. Meeting date shown. A "Market Pricing" summary line: "Market pricing 62% chance of HOLD in Sep."</p>
+      <p><strong>What it means:</strong> Rising cut probability = dovish = bullish gold. Rising hike probability = hawkish = bearish gold. A sudden shift in these probabilities intraday (triggered by data) is a key momentum driver.</p>
+    </div>
+    <div class="tile-card">
+      <div class="tile-card-title">TILE 7 · Positioning (COT)</div>
+      <p><strong>Data:</strong> Net speculative positions in COMEX gold futures (Non-Commercial Long − Short), week-over-week change, crowding assessment</p>
+      <p><strong>Source:</strong> CFTC.gov (weekly Friday release, GitHub Action)</p>
+      <p><strong>Display:</strong> Net position number with direction arrow. WoW change highlighted. Crowding label: "CROWDED LONG" (caution, squeeze risk), "NEUTRAL", "CROWDED SHORT" (potential squeeze higher). Crowded threshold: top/bottom 20% of 52-week range.</p>
+      <p><strong>Note:</strong> Updates only on Fridays — display the date of the most recent report clearly so the trader knows its age.</p>
+    </div>
+    <div class="tile-card">
+      <div class="tile-card-title">TILE 8 · ETF Flows (GLD)</div>
+      <p><strong>Data:</strong> GLD ETF holdings in tonnes, week-over-week change, trend direction (3-week rolling)</p>
+      <p><strong>Source:</strong> SPDR GLD website scrape (spdrgoldshares.com)</p>
+      <p><strong>Display:</strong> Holdings in tonnes as headline. WoW change with arrow. Trend badge: "INFLOW (3W)" or "OUTFLOW (3W)". Contextual note: "Institutional investors adding / reducing gold exposure."</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Session Awareness:</strong> The header should show which trading session is currently live (Asian / London / New York / Overlap) based on current GMT time, and countdown to the next session open. Key times to hard-code: Asian open 00:00 GMT, London open 08:00 GMT, NY open 13:30 GMT, London close 16:30 GMT, NY close 21:00 GMT. London–NY overlap (13:00–16:00 GMT) should be flagged as "PRIME SESSION."
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!--  07 · AI INTELLIGENCE BRIEFING                                    -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Section 07</div>
+  <div class="section-title">AI Intelligence Briefing — System Prompt &amp; Format</div>
+
+  <h4>How it works</h4>
+  <p>When the user clicks "Generate Briefing", the <code>dataAggregator.ts</code> service assembles all available data from every tile into a structured JSON object. This is passed to the Anthropic API with the system prompt below. The response is rendered in the briefing panel.</p>
+
+  <h4>System Prompt for Claude</h4>
+
+<pre>
+You are a senior gold trading analyst and market intelligence advisor.
+Your job is to write a daily intelligence briefing for a beginner day 
+trader who uses ICT / Smart Money Concepts methodology to trade XAUUSD.
+
+The trader only trades WITH the trend (buying into uptrends, selling 
+into downtrends) using the 1H chart to determine trend direction, 
+the 5M chart for signals, and the 1M chart for precise entry. 
+They trade during the London and New York sessions.
+
+You will receive a structured JSON snapshot of all the day's market data.
+
+Write a SINGLE flowing briefing paragraph (200–300 words) using PLAIN, 
+BEGINNER-FRIENDLY language. Avoid jargon wherever possible. 
+When you use a financial term, briefly explain what it means in brackets.
+
+Your briefing MUST follow this structure within the single paragraph:
+1. REGIME LINE: Which forces are most relevant today and why 
+   (e.g. "today is primarily driven by interest rate expectations").
+2. OVERNIGHT CONTEXT: What happened in Asia, where gold opened London,
+   direction of the dollar and yields overnight, any key headlines.
+3. DIRECTIONAL BIAS with plain reasoning: Is the day likely to favour 
+   gold going UP, DOWN, or being CHOPPY — and in simple terms, WHY.
+4. CONFIDENCE SCORE: Express confidence in the bias as X/10. Explain 
+   what would change the view.
+5. EVENT RISK: Any scheduled news today, when it hits (GMT), what to 
+   expect and how to position around it.
+6. KEY LEVELS: The most important price levels to watch today. Use 
+   the ADR data to comment on how much move is likely remaining.
+7. TRADE INTEGRATION: Explicit guidance on whether today is a good 
+   day for trend-following trades, what size/conviction is appropriate.
+
+End with one sentence that a beginner can screenshot and remember for 
+the day — a plain English summary of the single most important thing 
+to know.
+
+CRITICAL RULES:
+- Use plain English throughout. Write as if explaining to a smart 
+  person who is new to financial markets.
+- Never say "in conclusion" or "to summarise".
+- Do NOT make up data. Only use what is in the JSON you receive.
+  If data is null or unavailable, say so and explain what you'd 
+  normally look for.
+- The bias gauge score should also be returned as a structured field
+  outside the paragraph so the UI can render the visual gauge.
+  Return your response as JSON: 
+  { "biasScore": -5 to +5 (negative = bearish, positive = bullish), 
+    "biasLabel": "BEARISH" | "NEUTRAL" | "BULLISH",
+    "confidence": 1-10,
+    "briefing": "your paragraph here" }
+</pre>
+
+  <h4>Data Object Passed to Claude</h4>
+
+<pre>
+{
+  <span class="key">"timestamp"</span>: <span class="val">"2026-06-28T07:45:00Z"</span>,
+  <span class="key">"session"</span>: <span class="val">"LONDON"</span>,
+  <span class="key">"prices"</span>: {
+    <span class="key">"XAUUSD"</span>: { <span class="key">"price"</span>: <span class="val">4187.50</span>, <span class="key">"changeDay"</span>: <span class="val">-12.40</span>, <span class="key">"changePct"</span>: <span class="val">-0.29</span> },
+    <span class="key">"XAGUSD"</span>: { <span class="key">"price"</span>: <span class="val">32.14</span>, <span class="key">"changeDay"</span>: <span class="val">-0.21</span>, <span class="key">"changePct"</span>: <span class="val">-0.65</span> },
+    <span class="key">"goldSilverRatio"</span>: <span class="val">130.4</span>,
+    <span class="key">"DXY"</span>: { <span class="key">"price"</span>: <span class="val">101.56</span>, <span class="key">"changePct"</span>: <span class="val">+0.19</span> },
+    <span class="key">"EURUSD"</span>: <span class="val">1.0821</span>, <span class="key">"USDJPY"</span>: <span class="val">152.34</span>,
+    <span class="key">"USDCHF"</span>: <span class="val">0.9112</span>, <span class="key">"USDCNH"</span>: <span class="val">7.2480</span>,
+    <span class="key">"US500"</span>: { <span class="key">"changePct"</span>: <span class="val">-0.38</span> },
+    <span class="key">"GER40"</span>: { <span class="key">"changePct"</span>: <span class="val">+0.07</span> },
+    <span class="key">"UK100"</span>: { <span class="key">"changePct"</span>: <span class="val">-0.19</span> },
+    <span class="key">"ADR_14day"</span>: <span class="val">52</span>, <span class="key">"ADR_usedToday"</span>: <span class="val">21</span>
+  },
+  <span class="key">"yields"</span>: {
+    <span class="key">"US10Y"</span>: <span class="val">4.41</span>, <span class="key">"US2Y"</span>: <span class="val">4.89</span>,
+    <span class="key">"realYield10Y"</span>: <span class="val">2.12</span>, <span class="key">"curve2s10s"</span>: <span class="val">-48</span>,
+    <span class="key">"breakeven10Y"</span>: <span class="val">2.29</span>, <span class="key">"breakeven5Y"</span>: <span class="val">2.18</span>,
+    <span class="key">"forward5y5y"</span>: <span class="val">2.31</span>,
+    <span class="key">"dayOverDay"</span>: { <span class="key">"US10Y"</span>: <span class="val">+0.04</span>, <span class="key">"realYield10Y"</span>: <span class="val">+0.03</span> }
+  },
+  <span class="key">"fedExpectations"</span>: {
+    <span class="key">"nextMeeting"</span>: <span class="val">"2026-09-17"</span>,
+    <span class="key">"probHike"</span>: <span class="val">31</span>, <span class="key">"probHold"</span>: <span class="val">62</span>, <span class="key">"probCut"</span>: <span class="val">7</span>
+  },
+  <span class="key">"marketVolatility"</span>: {
+    <span class="key">"VIX"</span>: <span class="val">18.2</span>, <span class="key">"GVZ"</span>: <span class="val">18.4</span>, <span class="key">"riskTone"</span>: <span class="val">"RISK_OFF"</span>
+  },
+  <span class="key">"positioning"</span>: {
+    <span class="key">"cotNetLong"</span>: <span class="val">182450</span>, <span class="key">"cotWoWChange"</span>: <span class="val">-3200</span>,
+    <span class="key">"crowding"</span>: <span class="val">"NEUTRAL"</span>, <span class="key">"reportDate"</span>: <span class="val">"2026-06-24"</span>
+  },
+  <span class="key">"etfFlows"</span>: {
+    <span class="key">"gldTonnes"</span>: <span class="val">894.3</span>, <span class="key">"gldWoWChange"</span>: <span class="val">-2.1</span>, <span class="key">"trend3W"</span>: <span class="val">"OUTFLOW"</span>
+  },
+  <span class="key">"calendar"</span>: [
+    { <span class="key">"time"</span>: <span class="val">"13:30"</span>, <span class="key">"event"</span>: <span class="val">"US CPI m/m"</span>, <span class="key">"impact"</span>: <span class="val">"HIGH"</span>,
+      <span class="key">"forecast"</span>: <span class="val">0.3</span>, <span class="key">"previous"</span>: <span class="val">0.2</span>, <span class="key">"actual"</span>: <span class="val">null</span> }
+  ],
+  <span class="key">"headlines"</span>: [
+    <span class="val">"Fed's Kashkari signals one rate hike expected this year"</span>,
+    <span class="val">"Gold falls as dollar strengthens after PCE data"</span>
+  ]
+}
+</pre>
+
+  <h4>Bias Gauge Visual</h4>
+  <p>The <code>biasScore</code> from Claude's JSON response (−5 to +5) drives a visual horizontal gauge in the briefing panel. It should be rendered as a bar with a sliding indicator — not a number, a visual. Bearish end is red (#E85050), bullish end is green (#3BB57A), the midpoint is grey. The indicator dot is gold-coloured. This is the <strong>signature design element</strong> of the dashboard.</p>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!--  08 · DESIGN SYSTEM                                               -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Section 08</div>
+  <div class="section-title">Design System — Colours, Typography, Layout</div>
+
+  <div class="callout red">
+    <strong>Critical instruction to Claude Code:</strong> Before writing a single line of CSS, read the frontend-design SKILL.md at <code>/mnt/skills/public/frontend-design/SKILL.md</code>. This dashboard must NOT look like standard AI-generated UI. The design choices below are deliberate and specific. Follow them exactly. The aesthetic target is: <strong>Bloomberg Terminal meets luxury financial product</strong> — dense, professional, technically credible, with one moment of personality (the bias gauge).
+  </div>
+
+  <h4>Colour Palette — "Terminal Gold"</h4>
+
+  <div class="swatch-row">
+    <div class="swatch"><div class="swatch-dot" style="background:#0D0E11"></div><span class="swatch-label">Page BG</span><span class="swatch-hex">#0D0E11</span></div>
+    <div class="swatch"><div class="swatch-dot" style="background:#141519"></div><span class="swatch-label">Surface</span><span class="swatch-hex">#141519</span></div>
+    <div class="swatch"><div class="swatch-dot" style="background:#1C1D24"></div><span class="swatch-label">Surface 2</span><span class="swatch-hex">#1C1D24</span></div>
+    <div class="swatch"><div class="swatch-dot" style="background:#2A2B35"></div><span class="swatch-label">Border</span><span class="swatch-hex">#2A2B35</span></div>
+    <div class="swatch"><div class="swatch-dot" style="background:#C9952A"></div><span class="swatch-label">Gold</span><span class="swatch-hex">#C9952A</span></div>
+    <div class="swatch"><div class="swatch-dot" style="background:#E8B84B"></div><span class="swatch-label">Gold Light</span><span class="swatch-hex">#E8B84B</span></div>
+    <div class="swatch"><div class="swatch-dot" style="background:#5B8CDB"></div><span class="swatch-label">Steel Blue</span><span class="swatch-hex">#5B8CDB</span></div>
+    <div class="swatch"><div class="swatch-dot" style="background:#3BB57A"></div><span class="swatch-label">Up/Bull</span><span class="swatch-hex">#3BB57A</span></div>
+    <div class="swatch"><div class="swatch-dot" style="background:#E85050"></div><span class="swatch-label">Down/Bear</span><span class="swatch-hex">#E85050</span></div>
+    <div class="swatch"><div class="swatch-dot" style="background:#E8E9ED"></div><span class="swatch-label">Text Primary</span><span class="swatch-hex">#E8E9ED</span></div>
+    <div class="swatch"><div class="swatch-dot" style="background:#8B8D99"></div><span class="swatch-label">Text Muted</span><span class="swatch-hex">#8B8D99</span></div>
+  </div>
+
+  <h4>Typography</h4>
+  <table>
+    <tr><th>Role</th><th>Face</th><th>Weight</th><th>Usage</th></tr>
+    <tr><td>Display / Labels</td><td>Space Grotesk</td><td>400, 500, 700</td><td>Tile titles, headers, UI text, briefing copy</td></tr>
+    <tr><td>Data / Numbers</td><td>JetBrains Mono</td><td>400, 500</td><td>All price values, yield numbers, %, timestamps, metric labels</td></tr>
+  </table>
+  <p>Both fonts are available via Google Fonts — include in <code>index.html</code> <code>&lt;head&gt;</code>. All numeric data fields MUST use JetBrains Mono. This is non-negotiable — it distinguishes data from copy and gives the terminal feel.</p>
+
+  <h4>Layout Rules</h4>
+  <ul class="spec-list">
+    <li><strong>No rounded corners on tiles.</strong> Use <code>border-radius: 3px</code> maximum. Sharp corners feel more professional / terminal-like.</li>
+    <li><strong>Borders not shadows.</strong> Use <code>border: 1px solid #2A2B35</code> for tile edges. No <code>box-shadow</code> on tiles.</li>
+    <li><strong>Tight but breathable grid.</strong> Main tile grid uses <code>gap: 12px</code>. Padding inside tiles: <code>16px 18px</code>.</li>
+    <li><strong>Full-width header bar</strong> with a thin gold bottom border (<code>border-bottom: 1px solid #C9952A</code>).</li>
+    <li><strong>Tile eyebrow labels</strong> in JetBrains Mono, 9–10px, letter-spacing 0.15em, uppercase, gold colour. This is how each tile identifies itself.</li>
+    <li><strong>Data values: large and mono.</strong> The headline number in each tile should be 22–28px JetBrains Mono. Secondary values 13–14px. Muted labels 11px.</li>
+    <li><strong>Direction arrows.</strong> Use Unicode ▲ ▼ → characters (not icon libraries). Colour them green/red/grey respectively.</li>
+    <li><strong>No emojis anywhere on the dashboard.</strong> Use Unicode symbols only.</li>
+    <li><strong>The briefing panel spans full width</strong> at the bottom with a 2px gold top border to visually separate it as the "intelligence layer."</li>
+  </ul>
+
+  <h4>Animation — restrained by design</h4>
+  <ul class="spec-list">
+    <li>Price updates: a 0.3s colour flash (green or red) on the number when it changes. Then returns to default. No jank.</li>
+    <li>Briefing generation: a typing-cursor animation while Claude streams. Show a subtle pulsing gold dot while waiting.</li>
+    <li><strong>No other animations.</strong> No page-load transitions, no hover scale effects, no CSS keyframe loops. This is a data tool, not a marketing page.</li>
+  </ul>
+
+  <h4>Responsive behaviour</h4>
+  <p>Desktop-first (the trader uses this on a screen, not mobile). Minimum width: 1200px. Below 1200px, tiles stack to a 2-column layout. Do not engineer for mobile — it's a distraction from the desktop experience.</p>
+
+  <h4>What NOT to do — explicit prohibitions</h4>
+  <ul class="spec-list">
+    <li><strong>No Tailwind.</strong> Use custom CSS with the token variables defined above. Tailwind produces generic, recognisable output.</li>
+    <li><strong>No gradient backgrounds on tiles.</strong> Flat colour only.</li>
+    <li><strong>No icon libraries</strong> (Lucide, FontAwesome, etc.). Unicode symbols only.</li>
+    <li><strong>No card hover lift effects.</strong> Tiles are static.</li>
+    <li><strong>No blue colour for anything except the steel-blue accent</strong> (#5B8CDB), which is used sparingly for USD/bond context only.</li>
+    <li><strong>No white backgrounds anywhere.</strong> The entire dashboard is dark.</li>
+  </ul>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!--  09 · GITHUB ACTIONS SCHEDULER                                    -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Section 09</div>
+  <div class="section-title">GitHub Actions — Scheduled Data Fetcher</div>
+
+  <p>The file <code>.github/workflows/daily-data-fetch.yml</code> runs a Node.js script every weekday at 06:45 GMT to fetch all non-real-time data and write it to <code>public/data/daily-snapshot.json</code>.</p>
+
+<pre>
+<span class="comment"># .github/workflows/daily-data-fetch.yml</span>
+<span class="key">name</span>: <span class="val">XAUUSD Daily Data Fetch</span>
+
+<span class="key">on</span>:
+  <span class="key">schedule</span>:
+    - <span class="key">cron</span>: <span class="val">'45 6 * * 1-5'</span>   <span class="comment"># 06:45 GMT, Mon–Fri</span>
+  <span class="key">workflow_dispatch</span>:       <span class="comment"># Also triggerable manually</span>
+
+<span class="key">jobs</span>:
+  <span class="key">fetch-data</span>:
+    <span class="key">runs-on</span>: <span class="val">ubuntu-latest</span>
+    <span class="key">steps</span>:
+      - <span class="key">uses</span>: <span class="val">actions/checkout@v4</span>
+
+      - <span class="key">name</span>: <span class="val">Setup Node</span>
+        <span class="key">uses</span>: <span class="val">actions/setup-node@v4</span>
+        <span class="key">with</span>: { <span class="key">node-version</span>: <span class="val">'20'</span> }
+
+      - <span class="key">name</span>: <span class="val">Install deps</span>
+        <span class="key">run</span>: <span class="val">cd xauusd-dashboard && npm ci</span>
+
+      - <span class="key">name</span>: <span class="val">Fetch data</span>
+        <span class="key">run</span>: <span class="val">npx ts-node scripts/fetch-static-data.ts</span>
+        <span class="key">env</span>:
+          <span class="key">FRED_API_KEY</span>: ${{ <span class="key">secrets.FRED_API_KEY</span> }}
+
+      - <span class="key">name</span>: <span class="val">Commit snapshot</span>
+        <span class="key">run</span>: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add xauusd-dashboard/public/data/daily-snapshot.json
+          git diff --staged --quiet || git commit -m "chore: daily data snapshot $(date -u +%Y-%m-%d)"
+          git push
+</pre>
+
+  <p>The <code>fetch-static-data.ts</code> script should:</p>
+  <ol class="spec-list">
+    <li><strong>Fetch all 7 FRED series</strong> (DGS10, DGS2, DFII10, DFII5, T10YIE, T5YIE, T5YIFR) — one API call per series. Calculate 2s10s spread from the values.</li>
+    <li><strong>Scrape CME FedWatch</strong> page for the next FOMC meeting probability table using a HEAD request and HTML parsing (cheerio library).</li>
+    <li><strong>Scrape CBOE for GVZ</strong> — fetch the CBOE gold volatility page and extract the index level.</li>
+    <li><strong>Scrape SPDR GLD page</strong> for holdings in tonnes (spdrgoldshares.com/usa/gold/en).</li>
+    <li><strong>Fetch CFTC COT data</strong> — download the legacy futures CSV from CFTC.gov, parse the gold row for net speculative positioning. Only update if it's a Friday or the data is stale (&gt;7 days old).</li>
+    <li><strong>Wrap each operation in try/catch</strong> — on failure, write the previous value if available, or null. Never crash the entire script.</li>
+    <li><strong>Write output to</strong> <code>xauusd-dashboard/public/data/daily-snapshot.json</code> with a top-level <code>generatedAt</code> ISO timestamp.</li>
+  </ol>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!--  10 · GITHUB PAGES DEPLOYMENT                                     -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Section 10</div>
+  <div class="section-title">GitHub Pages Deployment</div>
+
+  <p>Build and deploy the React app to GitHub Pages from the <code>xauusd-dashboard/</code> subfolder. Match the pattern already established in the CTrader-Bots repo for other dashboard projects.</p>
+
+  <ul class="spec-list">
+    <li><strong>Vite base path:</strong> Set <code>base</code> in <code>vite.config.ts</code> to match the GitHub Pages URL path (e.g. <code>/CTrader-Bots/xauusd-dashboard/</code>)</li>
+    <li><strong>Deploy workflow:</strong> Add a second GitHub Action at <code>.github/workflows/deploy-dashboard.yml</code> that triggers on push to <code>main</code> and runs <code>npm run build</code>, then deploys the <code>dist/</code> folder to the <code>gh-pages</code> branch using <code>actions/deploy-pages@v4</code></li>
+    <li><strong>Environment variables for Vite:</strong> VITE_ prefixed vars (VITE_FINNHUB_KEY, VITE_ANTHROPIC_KEY, VITE_CTRADER_MCP_URL) must be set as GitHub Actions secrets and passed during the build step</li>
+    <li><strong>CTrader MCP URL default:</strong> <code>http://localhost:8080</code> — check existing CTrader agent skill code in the repo for the actual port</li>
+  </ul>
+
+  <div class="callout">
+    <strong>Note on VITE_ANTHROPIC_KEY in a public GitHub Pages site:</strong> The API key will be embedded in the built JavaScript bundle and visible to anyone who views the source. This is acceptable for a personal tool on a personal repo — the key is rate-limited to the owner's account. However, Claude Code should add a clear comment in the code noting this and suggesting the user regenerate the key if the repo ever goes public. Do not implement a backend proxy — keep it simple.
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!--  11 · AGENT SKILL SPECIFICATION                                   -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Section 11</div>
+  <div class="section-title">Agent Skill Specification</div>
+
+  <p>The intelligence briefing generation function must be extractable as a standalone agent skill that Claude Code can call independently — for example, from the command line, on a schedule, or as part of a larger agentic workflow.</p>
+
+  <div class="agent-block">
+    <div class="agent-block-title">SKILL: xauusd-daily-brief</div>
+    <p><strong>File:</strong> <code>scripts/agent-skill-daily-brief.ts</code></p>
+    <p><strong>What it does:</strong> Fetches all macro and market data independently (does not rely on the dashboard UI being open), assembles the data object, calls the Anthropic API, and outputs the structured briefing JSON to stdout — or optionally writes it to a dated file in <code>briefings/YYYY-MM-DD.json</code>.</p>
+    <p><strong>Input:</strong> No arguments required. Reads environment variables for API keys. Optionally accepts <code>--save</code> flag to write to file.</p>
+    <p><strong>Output (stdout):</strong> The same JSON structure Claude returns — biasScore, biasLabel, confidence, briefing paragraph.</p>
+    <p><strong>Dependencies:</strong> Same as the fetch-static-data script. Can share utility functions.</p>
+    <p><strong>Designed for:</strong> Future extension — e.g. emailing the briefing, posting to a webhook, integrating into a pre-trading-session automation.</p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!--  12 · BUILD INSTRUCTIONS FOR CLAUDE CODE                          -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Section 12</div>
+  <div class="section-title">Build Instructions for Claude Code</div>
+
+  <div class="callout red">
+    <strong>READ FIRST — mandatory pre-build steps:</strong>
+    <br>1. Read <code>/mnt/skills/public/frontend-design/SKILL.md</code> before writing any CSS or component code.
+    <br>2. Check the existing CTrader-Bots repo for: (a) the CTrader MCP HTTP port used in other agent skills, and (b) the GitHub Pages deploy workflow pattern already established — replicate it exactly.
+    <br>3. Do not install Tailwind, shadcn, MUI, Ant Design, or any UI component library. Raw CSS + React only.
+    <br>4. Do not use any paid APIs. Every data source in this spec is free or scraped.
+  </div>
+
+  <h4>Recommended build sequence</h4>
+  <ol class="spec-list">
+    <li><strong>Create folder structure.</strong> Create <code>xauusd-dashboard/</code> and all subdirectories. Copy this spec file into <code>research/</code>.</li>
+    <li><strong>Initialise Vite + React + TypeScript project</strong> inside the folder. Install only: <code>react</code>, <code>react-dom</code>, <code>typescript</code>, <code>vite</code>, <code>cheerio</code> (for scraping in scripts), <code>tsx</code> or <code>ts-node</code> (for scripts).</li>
+    <li><strong>Build the design token CSS file</strong> (<code>styles/tokens.css</code>) with all variables from Section 08. This is the foundation of the entire UI.</li>
+    <li><strong>Build the data hooks</strong> in order: <code>useCTraderPrices</code> first (proves MCP connectivity), then <code>useFredData</code> (reads from snapshot.json), then <code>useEconomicCalendar</code> (Finnhub), then the remaining hooks.</li>
+    <li><strong>Build each tile component</strong> one at a time. Test with mock data first, then wire to real hooks.</li>
+    <li><strong>Build the Header component</strong> with live gold price, session clock, and refresh controls.</li>
+    <li><strong>Build the AI briefing panel and bias gauge.</strong> Test with a hardcoded mock briefing first, then wire to <code>anthropicBriefing.ts</code>.</li>
+    <li><strong>Build the GitHub Actions workflow</strong> (<code>daily-data-fetch.yml</code>) and the <code>fetch-static-data.ts</code> script. Test locally with <code>npx ts-node scripts/fetch-static-data.ts</code>.</li>
+    <li><strong>Configure GitHub Pages deployment</strong> following the existing repo pattern.</li>
+    <li><strong>Build the standalone agent skill</strong> (<code>agent-skill-daily-brief.ts</code>) and test it runs independently.</li>
+    <li><strong>Final QA:</strong> Verify all null/error states are handled gracefully. Verify design matches the spec — check fonts are loading, all numbers use JetBrains Mono, colours match the palette, no border-radius &gt; 3px on tiles.</li>
+  </ol>
+
+  <h4>GitHub Secrets to configure</h4>
+  <ul class="spec-list">
+    <li><strong>FRED_API_KEY</strong> — Free from fred.stlouisfed.org/docs/api/api_key.html</li>
+    <li><strong>FINNHUB_API_KEY</strong> — Free from finnhub.io (also set as VITE_FINNHUB_KEY)</li>
+    <li><strong>ANTHROPIC_API_KEY</strong> — Owner already has this (also set as VITE_ANTHROPIC_KEY)</li>
+    <li><strong>VITE_CTRADER_MCP_URL</strong> — The local HTTP MCP server URL (check existing repo code)</li>
+  </ul>
+
+  <div class="callout green">
+    <strong>Definition of done:</strong> The dashboard is accessible at the GitHub Pages URL. On load, all tiles populate with real data (CTrader MCP prices live, snapshot data from the GitHub Action). Clicking "Generate Briefing" calls the Anthropic API and renders a structured paragraph with the bias gauge. The standalone agent skill runs from the command line and outputs valid JSON. All scraping and FRED data updates automatically at 06:45 GMT each weekday via the GitHub Action.
+  </div>
+</div>
+
+<hr class="divider">
+<p style="text-align:center; color: var(--text-dim); font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;">
+  XAUUSD Intelligence Dashboard · Build Specification Rev 1.0 · PravinderSamra/CTrader-Bots
+</p>
+
+</body>
+</html>
