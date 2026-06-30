@@ -742,8 +742,9 @@ function normaliseImpact(raw: string | undefined, eventName: string): CalendarEv
 function weekAheadRange(): { from: string; to: string } {
   const now = new Date()
   const fmt = (d: Date) => d.toISOString().slice(0, 10)
-  const day = now.getUTCDay() // 0=Sun .. 6=Sat
-  const daysToFriday = Math.max(day === 0 ? 5 : 5 - day, 0)
+  const day = now.getUTCDay() // 0=Sun, 1=Mon … 6=Sat
+  // Sat(6)→6 days to next Fri, Sun(0)→5, Mon(1)→4 … Fri(5)→0
+  const daysToFriday = day === 0 ? 5 : day === 6 ? 6 : 5 - day
   const friday = new Date(now)
   friday.setUTCDate(now.getUTCDate() + daysToFriday)
   return { from: fmt(now), to: fmt(friday) }
@@ -769,7 +770,7 @@ async function fetchEconomicCalendar(): Promise<CalendarEvent[]> {
         (e.country ?? e.currency ?? '').toUpperCase().includes(c)
       ))
       .map(e => {
-        const date = e.time?.slice(0, 10) ?? from
+        const date = e.time?.slice(0, 10) || from
         return {
           date,
           daysFromToday: daysBetween(date, from),
