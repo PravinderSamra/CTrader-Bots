@@ -9,30 +9,50 @@ Target: $ARGUMENTS (if blank, assume XAUUSD on the account's default trading sym
 
 ---
 
-## STEP 0 — GATHER LIVE DATA (do this first, in order, before any analysis)
+## STEP 0 — GATHER LIVE DATA (three parallel phases — do not serialise within a phase)
 
-1. `mcp__ctrader__get_symbols` → resolve the symbolId for XAUUSD (and note its `pipDigits`/digits for price formatting).
-2. `mcp__ctrader__get_spot_prices` for that symbolId → current bid/ask.
-3. `mcp__ctrader__get_trendbars` period `H_1`, count 100 → trend-timeframe structure.
-4. `mcp__ctrader__get_trendbars` period `M_5`, count 100 → signal-timeframe structure.
-5. `mcp__ctrader__get_trendbars` period `M_1`, count 60 → entry-timeframe structure.
-6. `mcp__ctrader__get_positions` and `mcp__ctrader__get_balance` → check existing exposure and account size before sizing any new idea. If a position is already open on this symbol, say so up front and adjust guidance (don't suggest stacking against an open position).
-7. Fetch `https://pravindersamra.github.io/CTrader-Bots/xauusd-dashboard/data/daily-snapshot.json` (the macro snapshot — DXY/yields/Fed expectations/COT positioning & open interest/ETF flows/STLFSI4 & NFCI dollar-liquidity stress/GPR geopolitical risk/VIX/GVZ — refreshed roughly hourly during London/NY hours, so treat `generatedAt` as "as of last refresh", not "as of midnight"). If the fetch fails or the data is more than 4h stale during session hours (or 24h stale outside session hours), say so explicitly and proceed without it rather than inventing values. Note two fields in particular:
-   - `economicCalendar` now spans the **whole current week**, not just today — each event carries `daysFromToday` (0 = today, 1 = tomorrow, ...). Use events with `daysFromToday > 0` and `impact: "HIGH"` to flag build-up caution ahead of releases later in the week.
-   - `newsItems` is a list of recent macro/micro headlines (last 24h, keyword-filtered for gold/Fed/dollar/yields/geopolitics/etc.) each carrying `hoursAgo` and `source`. Use `hoursAgo` to identify same-day, recent-hours catalysts — e.g. a rumor about central banks reducing dollar exposure a few hours ago is exactly the kind of item that should be cross-referenced against any unexplained DXY/gold move in step 5.
-8. **Run the structure engine.** Divide every `open/high/low/close` in the H_1/M_5/M_1 trendbars by `10^pipDigits` (from step 1) to get display prices, then build a JSON payload:
-   ```json
-   {"symbol": "XAUUSD", "current_price": <mid of bid/ask>, "h1": [...], "m5": [...], "m1": [...]}
-   ```
-   where each candle is `{"timestamp": "<ISO8601 UTC>", "open": ..., "high": ..., "low": ..., "close": ..., "volume": ...}`. Write it to a temp file and run:
-   ```bash
-   python3 /home/user/CTrader-Bots/ICT-SMC-Local-Agent/skill_adapter.py < /tmp/gold_session_input.json
-   ```
-   This calls the repo's existing graded ICT/SMC engine (`analysis/structure.py` + `analysis/sessions.py` — the same code used by `ICT-SMC-Local-Agent`/`ICT-SMC-Remote-Agent`) and returns, per timeframe: trend (HH/HL vs LH/LL), premium/discount + OTE zone, graded FVGs (A+/A/B/C/SKIP with age, touch count, liq.grab/post-BOS context flags), quality-scored (1–5) unmitigated Order Blocks, BSL/SSL liquidity pools with strength labels, an approximate volume profile (H1 only: POC/VAH/VAL/LVNs), the Asian range + London-sweep flag (H1 only), and the live session/kill-zone/bias notes. Treat this output as ground truth for swing/FVG/OB/liquidity levels — use it to anchor STEP 1–4 below instead of eyeballing the raw candle arrays. If the script errors or returns `{"error": ...}`, say so and fall back to manual reading of the raw trendbars rather than blocking the whole brief.
-9. Cross-check signal: call `mcp__tradingview-mcp__recognize_market_pattern` with `symbol` = the target, `timeframe` = "5m", `recent_candles` built from the M_5 trendbars (at least the most recent 10-20, as `{open, high, low, close, volume}`), and `indicators` populated with whatever you can derive cheaply from the same candles (e.g. a simple RSI/MA position estimate — label it as estimated, not authoritative). This is an independent, non-ICT pattern read used only to confirm or challenge your structural analysis — never let it override the ICT read on its own.
-10. If a Finnhub API key is configured in this environment, pull today's economic calendar / headlines / VIX for event-risk context. If not, state plainly that live calendar/headlines are unavailable and rely only on the Fed meeting date already present in the macro snapshot.
+Data gathering is structured into phases by dependency. Within each phase, fire **all calls simultaneously** in a single response (parallel tool calls). Do not wait for one to finish before starting the next within the same phase.
 
-Never proceed to analysis on partial/missing trendbar data — if any of steps 1-5 fail, report the failure and stop rather than guessing prices. The engine in step 8 is a structural aid, not a hard dependency — if it fails, note the degradation and continue with manual analysis rather than stopping the whole brief.
+### Phase A — No dependencies (fire all at once immediately)
+
+Call all of the following in one response:
+
+- `mcp__ctrader__get_symbols` → resolve symbolId for XAUUSD and note `pipDigits`.
+- `mcp__ctrader__get_positions` → check existing exposure on this symbol.
+- `mcp__ctrader__get_balance` → account balance/equity/free margin for position sizing.
+- **Fetch macro snapshot:** `https://pravindersamra.github.io/CTrader-Bots/xauusd-dashboard/data/daily-snapshot.json` (DXY/yields/Fed/COT/ETF flows/STLFSI4/NFCI/GPR/VIX/GVZ/economicCalendar/newsItems — refreshed hourly during London/NY hours; treat `generatedAt` as "as of last refresh". If fetch fails or data is >4h stale during session hours / >24h stale outside, say so and proceed without it.)
+- **Finnhub (if API key is in environment):** pull economic calendar and recent headlines for additional event-risk context. If no key, skip and note it — the macro snapshot's `economicCalendar` and `newsItems` fields already cover this.
+
+### Phase B — Requires symbolId from Phase A (fire all at once)
+
+Once Phase A completes and symbolId is known, call all of the following in one response:
+
+- `mcp__ctrader__get_spot_prices` for the symbolId → current bid/ask.
+- `mcp__ctrader__get_trendbars` period `H_1`, count 100 → trend-timeframe structure.
+- `mcp__ctrader__get_trendbars` period `M_5`, count 100 → signal-timeframe structure.
+- `mcp__ctrader__get_trendbars` period `M_1`, count 60 → entry-timeframe structure.
+
+Never proceed to Phase C on partial/missing trendbar data — if any Phase B call fails, report the failure and stop rather than guessing prices.
+
+### Phase C — Requires trendbar data from Phase B (fire both at once)
+
+Once Phase B completes, call both of the following in one response:
+
+- **Structure engine:** divide every H_1/M_5/M_1 `open/high/low/close` by `10^pipDigits` to get display prices, then build:
+  ```json
+  {"symbol": "XAUUSD", "current_price": <mid of bid/ask>, "h1": [...], "m5": [...], "m1": [...]}
+  ```
+  where each candle is `{"timestamp": "<ISO8601 UTC>", "open": ..., "high": ..., "low": ..., "close": ..., "volume": ...}`. Write to a temp file and run:
+  ```bash
+  python3 /home/user/CTrader-Bots/ICT-SMC-Local-Agent/skill_adapter.py < /tmp/gold_session_input.json
+  ```
+  Returns per-timeframe: trend, premium/discount + OTE zone, graded FVGs (A+/A/B/C/SKIP), quality-scored OBs (1–5), BSL/SSL liquidity pools, H1 volume profile (POC/VAH/VAL/LVNs), Asian range + London-sweep flag, live session/kill-zone/bias notes. Treat as ground truth for structure levels. If the script errors or returns `{"error": ...}`, note the degradation and continue with manual trendbar analysis.
+
+- **Cross-check:** `mcp__tradingview-mcp__recognize_market_pattern` with `symbol` = target, `timeframe` = "5m", `recent_candles` from the last 10–20 M_5 candles (as `{open, high, low, close, volume}`), `indicators` estimated from those same candles. This is an independent non-ICT read — use it only to confirm or challenge the structural bias, never to override it.
+
+Two notes on macro snapshot fields (relevant to STEP 5 analysis):
+- `economicCalendar` spans the **whole current week** — use events with `daysFromToday > 0` and `impact: "HIGH"` to flag build-up caution ahead of later-week releases.
+- `newsItems` covers the last 24h, keyword-filtered, each with `hoursAgo` and `source` — scan for same-session catalysts that might explain recent DXY/gold moves.
 
 ---
 
@@ -217,7 +237,9 @@ After printing the full analysis to the chat, save it to the **Gold-Session AI**
 
 **Two-file approach** (keeps JSON simple, no escaping of the long analysis text):
 
-**Step 8a** — Write a small metadata JSON to `/tmp/gold-session-meta.json`:
+**Steps 8a + 8b — Write both files simultaneously (one response, two Write tool calls):**
+
+`/tmp/gold-session-meta.json`:
 ```json
 {
   "session": "LONDON",
@@ -232,11 +254,13 @@ Field guide:
 |---|---|
 | `session` | `LONDON`, `NEW_YORK`, `OVERLAP`, or `ASIAN` — from your Session Context section |
 | `bias` | `BULLISH`, `BEARISH`, or `NEUTRAL` — from your Probability Assessment |
-| `biasScore` | −5 to +5 integer: HIGH-confidence bullish = +4/+5, medium = +2/+3, neutral = 0, medium bearish = −2/−3, HIGH bearish = −4/−5 |
-| `probability` | The primary scenario percentage from your Probability Assessment (e.g. 65) |
-| `confidence` | Map your Confidence Level: HIGH → 8, MEDIUM → 5, LOW → 3 |
+| `biasScore` | −5 to +5 integer: HIGH bullish = +4/+5, medium = +2/+3, neutral = 0, medium bearish = −2/−3, HIGH bearish = −4/−5 |
+| `probability` | Primary scenario percentage from your Probability Assessment (e.g. 65) |
+| `confidence` | Map Confidence Level: HIGH → 8, MEDIUM → 5, LOW → 3 |
 
-**Step 8b** — Write the complete analysis text (everything you printed from `# GOLD INTRADAY SESSION BRIEF` to the end of `[DISCLAIMER]`) to `/tmp/gold-session-analysis.txt`.
+`/tmp/gold-session-analysis.txt`: the complete analysis output (everything from `# GOLD INTRADAY SESSION BRIEF` to the end of `[DISCLAIMER]`).
+
+Write both files in the **same response** (parallel Write tool calls) — do not wait for one before starting the other.
 
 **Step 8c** — Run the save script:
 ```bash
