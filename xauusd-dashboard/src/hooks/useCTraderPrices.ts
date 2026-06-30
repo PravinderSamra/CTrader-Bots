@@ -1,6 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import type { CTraderPrices, PricePoint, SnapshotPrices } from '../types/dashboard'
 
+// VITE_CTRADER_MCP_URL/TOKEN are intentionally NOT injected at CI build time (see
+// deploy-dashboard.yml) — doing so would bake the bearer token into this public bundle.
+// With these unset, MCP_TOKEN is '', live polling reports 'offline', and App.tsx falls
+// back to pricesFromSnapshot() using the once-daily server-fetched snapshot instead.
 const MCP_URL = import.meta.env.VITE_CTRADER_MCP_URL ?? 'https://mcp.ctrader.com/trading/mcp'
 const MCP_TOKEN = import.meta.env.VITE_CTRADER_MCP_TOKEN ?? ''
 const POLL_MS = 15_000

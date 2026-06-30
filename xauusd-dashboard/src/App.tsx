@@ -1,7 +1,6 @@
 import { useState, useCallback } from 'react'
 import { useCTraderPrices, pricesFromSnapshot } from './hooks/useCTraderPrices'
 import { useDailySnapshot } from './hooks/useFredData'
-import { useEconomicCalendar, useNewsHeadlines, useVIX } from './hooks/useEconomicCalendar'
 import { aggregateData } from './services/dataAggregator'
 import { Header } from './components/layout/Header'
 import { Footer } from './components/layout/Footer'
@@ -33,20 +32,14 @@ export function App() {
   const prices = livePrices.status === 'live'
     ? livePrices
     : (snapshot?.snapshotPrices ? pricesFromSnapshot(snapshot.snapshotPrices) : livePrices)
-  const calendar = useEconomicCalendar()
-  const headlines = useNewsHeadlines()
-  const vixLive  = useVIX()
-  const vix      = vixLive ?? snapshot?.marketVolatility?.VIX ?? null
+  const calendar = snapshot?.economicCalendar ?? []
+  const headlines = snapshot?.newsHeadlines ?? []
+  const vix = snapshot?.marketVolatility?.VIX ?? null
 
   const riskTone = aggregateData(
     prices, snapshot, calendar, headlines, vix,
     getSessionLabel(new Date().getUTCHours()),
   ).marketVolatility.riskTone
-
-  const aggregated = aggregateData(
-    prices, snapshot, calendar, headlines, vix,
-    getSessionLabel(new Date().getUTCHours()),
-  )
 
   const handleRefresh = useCallback(() => {
     setRefreshKey(k => k + 1)
@@ -94,7 +87,7 @@ export function App() {
         </div>
 
         {/* Briefing panel — full width */}
-        <BriefingPanel data={aggregated} headlines={headlines} />
+        <BriefingPanel briefing={snapshot?.briefing ?? null} headlines={headlines} />
       </main>
 
       <Footer />

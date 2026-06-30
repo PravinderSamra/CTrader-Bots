@@ -48,6 +48,24 @@ interface SnapshotPrices {
   goldSilverRatio: number | null
 }
 
+interface CalendarEvent {
+  time: string
+  event: string
+  impact: 'HIGH' | 'MEDIUM' | 'LOW'
+  currency: string
+  forecast: number | null
+  previous: number | null
+  actual: number | null
+}
+
+interface BriefingResult {
+  biasScore: number
+  biasLabel: 'BEARISH' | 'NEUTRAL' | 'BULLISH'
+  confidence: number
+  briefing: string
+  generatedAt: string
+}
+
 interface Snapshot {
   generatedAt: string
   yields: YieldsData
@@ -74,6 +92,9 @@ interface Snapshot {
   snapshotPrices: SnapshotPrices | null
   dollarLiquidity: { stlfsi: number | null; nfci: number | null }
   geopoliticalRisk: { gpr: number | null; gprDate: string | null }
+  economicCalendar: CalendarEvent[]
+  newsHeadlines: string[]
+  briefing: BriefingResult | null
 }
 
 // ── HTTP helper ────────────────────────────────────────────────────────────
@@ -678,6 +699,197 @@ async function fetchCTraderPrices(): Promise<SnapshotPrices | null> {
   }
 }
 
+// ── Finnhub economic calendar & news ───────────────────────────────────────
+
+const FINNHUB_KEY = process.env.FINNHUB_API_KEY ?? ''
+const HIGH_IMPACT_EVENTS = ['CPI', 'PCE', 'NFP', 'FOMC', 'ISM', 'GDP', 'PPI', 'Claims', 'JOLTS', 'Nonfarm', 'Federal Funds', 'Interest Rate']
+
+type FinnhubEvent = {
+  event: string
+  time?: string
+  impact?: string
+  estimate?: number | null
+  prev?: number | null
+  actual?: number | null
+  country?: string
+  currency?: string
+}
+
+function normaliseImpact(raw: string | undefined, eventName: string): CalendarEvent['impact'] {
+  if (!raw) {
+    const name = eventName.toUpperCase()
+    if (HIGH_IMPACT_EVENTS.some(k => name.includes(k.toUpperCase()))) return 'HIGH'
+    return 'LOW'
+  }
+  const r = raw.toLowerCase()
+  if (r === 'high' || r === '3') return 'HIGH'
+  if (r === 'medium' || r === '2') return 'MEDIUM'
+  return 'LOW'
+}
+
+async function fetchEconomicCalendar(): Promise<CalendarEvent[]> {
+  console.log('Fetching economic calendar (Finnhub)...')
+  if (!FINNHUB_KEY) { console.log('Finnhub: FINNHUB_API_KEY env var not set — skipping calendar'); return [] }
+  try {
+    const dateStr = new Date().toISOString().slice(0, 10)
+    const url = `https://finnhub.io/api/v1/calendar/economic?from=${dateStr}&to=${dateStr}&token=${FINNHUB_KEY}`
+    const raw = await httpGet(url)
+    const data = JSON.parse(raw) as { economicCalendar?: FinnhubEvent[] }
+    if (!data.economicCalendar) return []
+    return data.economicCalendar
+      .filter(e => ['US', 'EU', 'GB', 'JP', 'EUR', 'USD', 'GBP', 'JPY'].some(c =>
+        (e.country ?? e.currency ?? '').toUpperCase().includes(c)
+      ))
+      .map(e => ({
+        time: e.time?.slice(11, 16) ?? '',
+        event: e.event,
+        impact: normaliseImpact(e.impact, e.event),
+        currency: e.currency ?? e.country ?? 'US',
+        forecast: e.estimate ?? null,
+        previous: e.prev ?? null,
+        actual: e.actual ?? null,
+      } satisfies CalendarEvent))
+      .sort((a, b) => a.time.localeCompare(b.time))
+  } catch (err) {
+    console.error('Economic calendar fetch failed:', err)
+    return []
+  }
+}
+
+async function fetchNewsHeadlines(): Promise<string[]> {
+  console.log('Fetching news headlines (Finnhub)...')
+  if (!FINNHUB_KEY) { console.log('Finnhub: FINNHUB_API_KEY env var not set — skipping headlines'); return [] }
+  try {
+    const raw = await httpGet(`https://finnhub.io/api/v1/news?category=general&token=${FINNHUB_KEY}`)
+    const data = JSON.parse(raw) as Array<{ headline: string }>
+    const keywords = ['gold', 'fed', 'inflation', 'yield', 'dollar', 'rate', 'powell', 'treasury']
+    return data
+      .filter(a => keywords.some(k => a.headline.toLowerCase().includes(k)))
+      .slice(0, 5)
+      .map(a => a.headline)
+  } catch (err) {
+    console.error('News headlines fetch failed:', err)
+    return []
+  }
+}
+
+// ── Anthropic daily briefing ────────────────────────────────────────────────
+
+const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY ?? ''
+const BRIEFING_MODEL = 'claude-sonnet-4-6'
+
+const BRIEFING_SYSTEM_PROMPT = `You are a senior gold trading analyst and market intelligence advisor.
+Your job is to write a daily intelligence briefing for a beginner day trader who uses ICT / Smart Money Concepts methodology to trade XAUUSD.
+
+The trader only trades WITH the trend (buying into uptrends, selling into downtrends) using the 1H chart to determine trend direction, the 5M chart for signals, and the 1M chart for precise entry. They trade during the London and New York sessions.
+
+You will receive a structured JSON snapshot of all the day's market data.
+
+Write a SINGLE flowing briefing paragraph (200–300 words) using PLAIN, BEGINNER-FRIENDLY language. Avoid jargon wherever possible. When you use a financial term, briefly explain what it means in brackets.
+
+Your briefing MUST follow this structure within the single paragraph:
+1. REGIME LINE: Which forces are most relevant today and why.
+2. OVERNIGHT CONTEXT: What happened in Asia, where gold opened London, direction of the dollar and yields overnight, any key headlines.
+3. DIRECTIONAL BIAS with plain reasoning: Is the day likely to favour gold going UP, DOWN, or being CHOPPY — and in simple terms, WHY.
+4. CONFIDENCE SCORE: Express confidence in the bias as X/10. Explain what would change the view.
+5. EVENT RISK: Any scheduled news today, when it hits (GMT), what to expect and how to position around it.
+6. KEY LEVELS: The most important price levels to watch today. Use the ADR data to comment on how much move is likely remaining.
+7. TRADE INTEGRATION: Explicit guidance on whether today is a good day for trend-following trades, what size/conviction is appropriate.
+
+End with one sentence that a beginner can screenshot and remember for the day.
+
+CRITICAL RULES:
+- Use plain English. Write as if explaining to a smart person who is new to financial markets.
+- Never say "in conclusion" or "to summarise".
+- Do NOT make up data. Only use what is in the JSON. If data is null, say so.
+- Return your response as JSON:
+  { "biasScore": number from -5 to +5 (negative = bearish, positive = bullish), "biasLabel": "BEARISH" | "NEUTRAL" | "BULLISH", "confidence": number 1-10, "briefing": "your paragraph here" }`
+
+function computeDXY(eur: number, jpy: number, gbp: number, cad: number, sek: number, chf: number): number | null {
+  if (eur <= 0 || jpy <= 0 || gbp <= 0 || cad <= 0 || sek <= 0 || chf <= 0) return null
+  return parseFloat((50.14348
+    * Math.pow(eur, -0.576)
+    * Math.pow(jpy, 0.136)
+    * Math.pow(gbp, -0.119)
+    * Math.pow(cad, 0.091)
+    * Math.pow(sek, 0.042)
+    * Math.pow(chf, 0.036)).toFixed(2))
+}
+
+function getSessionLabel(utcH: number): string {
+  if (utcH >= 13 && utcH < 16) return 'OVERLAP'
+  if (utcH >= 8 && utcH < 16) return 'LONDON'
+  if (utcH >= 16 && utcH < 21) return 'NEW_YORK'
+  if (utcH >= 0 && utcH < 8) return 'ASIAN'
+  return 'OFF'
+}
+
+async function generateDailyBriefing(snapshot: Omit<Snapshot, 'briefing'>): Promise<BriefingResult | null> {
+  console.log('Generating daily briefing (Anthropic)...')
+  if (!ANTHROPIC_KEY) { console.log('Anthropic: ANTHROPIC_API_KEY env var not set — skipping briefing'); return null }
+
+  const sp = snapshot.snapshotPrices
+  const payload = {
+    timestamp: new Date().toISOString(),
+    session: getSessionLabel(new Date().getUTCHours()),
+    prices: {
+      XAUUSD: sp?.XAUUSD ?? null,
+      XAGUSD: sp?.XAGUSD ?? null,
+      goldSilverRatio: sp?.goldSilverRatio ?? null,
+      DXY: sp ? computeDXY(sp.EURUSD ?? 0, sp.USDJPY ?? 0, sp.GBPUSD ?? 0, sp.USDCAD ?? 0, sp.USDSEK ?? 0, sp.USDCHF ?? 0) : null,
+      EURUSD: sp?.EURUSD ?? null,
+      USDJPY: sp?.USDJPY ?? null,
+      USDCHF: sp?.USDCHF ?? null,
+      USDCNH: sp?.USDCNH ?? null,
+      ADR_14day: sp?.ADR_14day ?? null,
+      ADR_usedToday: sp?.ADR_usedToday ?? null,
+    },
+    yields: snapshot.yields,
+    fedExpectations: snapshot.fedExpectations,
+    marketVolatility: snapshot.marketVolatility,
+    positioning: snapshot.positioning,
+    etfFlows: snapshot.etfFlows,
+    dollarLiquidity: snapshot.dollarLiquidity,
+    geopoliticalRisk: snapshot.geopoliticalRisk,
+    calendar: snapshot.economicCalendar,
+    headlines: snapshot.newsHeadlines,
+  }
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'x-api-key': ANTHROPIC_KEY,
+        'anthropic-version': '2023-06-01',
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: BRIEFING_MODEL,
+        max_tokens: 1200,
+        system: BRIEFING_SYSTEM_PROMPT,
+        messages: [
+          { role: 'user', content: `Here is today's market data snapshot:\n\n${JSON.stringify(payload, null, 2)}` },
+        ],
+      }),
+    })
+
+    if (!response.ok) {
+      console.error(`Anthropic API error ${response.status}: ${(await response.text()).slice(0, 200)}`)
+      return null
+    }
+
+    const body = await response.json() as { content: Array<{ type: string; text: string }> }
+    const text = body.content.find(c => c.type === 'text')?.text ?? ''
+    const cleaned = text.replace(/^```json?\s*/i, '').replace(/\s*```$/, '').trim()
+    const parsed = JSON.parse(cleaned) as Omit<BriefingResult, 'generatedAt'>
+    console.log(`Briefing generated: bias=${parsed.biasLabel} score=${parsed.biasScore} confidence=${parsed.confidence}`)
+    return { ...parsed, generatedAt: new Date().toISOString() }
+  } catch (err) {
+    console.error('Briefing generation failed:', err)
+    return null
+  }
+}
+
 // ── Geopolitical Risk Index (Caldara-Iacoviello) ───────────────────────────
 
 async function fetchGPR(): Promise<Snapshot['geopoliticalRisk']> {
@@ -720,7 +932,7 @@ async function main() {
 
   console.log('=== XAUUSD Daily Data Fetch ===')
 
-  const [yields, fedExpectations, gvz, vix, stlfsi, nfci, positioning, snapshotPrices, geopoliticalRisk] = await Promise.all([
+  const [yields, fedExpectations, gvz, vix, stlfsi, nfci, positioning, snapshotPrices, geopoliticalRisk, economicCalendar, newsHeadlines] = await Promise.all([
     fetchYields(),
     fetchFedWatch(),
     fetchGVZ(),
@@ -730,6 +942,8 @@ async function main() {
     fetchCOT(existing),
     fetchCTraderPrices(),
     fetchGPR(),
+    fetchEconomicCalendar(),
+    fetchNewsHeadlines(),
   ])
   console.log(`VIX FRED VIXCLS: ${vix}, STLFSI4: ${stlfsi}, NFCI: ${nfci}`)
 
@@ -737,7 +951,7 @@ async function main() {
   // so it runs after the prices above rather than inside the initial Promise.all.
   const etfFlows = await fetchGLD(snapshotPrices?.XAUUSD ?? null)
 
-  const snapshot: Snapshot = {
+  const snapshotWithoutBriefing: Omit<Snapshot, 'briefing'> = {
     generatedAt: new Date().toISOString(),
     yields,
     fedExpectations,
@@ -747,7 +961,13 @@ async function main() {
     snapshotPrices,
     dollarLiquidity: { stlfsi, nfci },
     geopoliticalRisk,
+    economicCalendar,
+    newsHeadlines,
   }
+
+  // Briefing runs last — it summarises everything fetched above.
+  const briefing = await generateDailyBriefing(snapshotWithoutBriefing)
+  const snapshot: Snapshot = { ...snapshotWithoutBriefing, briefing }
 
   fs.writeFileSync(outPath, JSON.stringify(snapshot, null, 2))
   console.log(`\nSnapshot written to ${outPath}`)
@@ -757,6 +977,8 @@ async function main() {
   console.log(`GLD: ${etfFlows.gldTonnes ?? 'null'}t`)
   console.log(`COT net: ${positioning.cotNetLong ?? 'null'}`)
   console.log(`XAUUSD price: ${snapshotPrices?.XAUUSD ?? 'null'}`)
+  console.log(`Calendar events: ${economicCalendar.length}, headlines: ${newsHeadlines.length}`)
+  console.log(`Briefing: ${briefing ? `${briefing.biasLabel} ${briefing.biasScore} (conf ${briefing.confidence})` : 'null'}`)
 }
 
 main().catch(err => {

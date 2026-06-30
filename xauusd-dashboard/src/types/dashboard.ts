@@ -123,6 +123,9 @@ export interface DailySnapshot {
   snapshotPrices?: SnapshotPrices
   dollarLiquidity?: DollarLiquidity
   geopoliticalRisk?: GeopoliticalRisk
+  economicCalendar?: CalendarEvent[]
+  newsHeadlines?: string[]
+  briefing?: BriefingResult | null
 }
 
 export interface BriefingResult {
