@@ -37,6 +37,9 @@ interface SnapshotPrices {
   USDJPY: number | null
   USDCHF: number | null
   USDCNH: number | null
+  GBPUSD: number | null
+  USDCAD: number | null
+  USDSEK: number | null
   US500: number | null
   GER40: number | null
   UK100: number | null
@@ -60,6 +63,8 @@ interface Snapshot {
     cotWoWChange: number | null
     crowding: 'CROWDED_LONG' | 'NEUTRAL' | 'CROWDED_SHORT' | null
     reportDate: string | null
+    openInterest: number | null
+    openInterestChange: number | null
   }
   etfFlows: {
     gldTonnes: number | null
@@ -67,6 +72,8 @@ interface Snapshot {
     trend3W: 'INFLOW' | 'OUTFLOW' | 'FLAT' | null
   }
   snapshotPrices: SnapshotPrices | null
+  dollarLiquidity: { stlfsi: number | null; nfci: number | null }
+  geopoliticalRisk: { gpr: number | null; gprDate: string | null }
 }
 
 // ── HTTP helper ────────────────────────────────────────────────────────────
@@ -459,7 +466,10 @@ async function fetchGLD(fallbackGoldPrice: number | null): Promise<Snapshot['etf
 
 async function fetchCOT(existingSnapshot: Partial<Snapshot>): Promise<Snapshot['positioning']> {
   console.log('Fetching CFTC COT data...')
-  const prevData = existingSnapshot.positioning ?? { cotNetLong: null, cotWoWChange: null, crowding: null, reportDate: null }
+  const prevData = existingSnapshot.positioning ?? {
+    cotNetLong: null, cotWoWChange: null, crowding: null, reportDate: null,
+    openInterest: null, openInterestChange: null,
+  }
 
   // COT releases Fridays; skip mid-week if data is fresh
   const today = new Date()
@@ -478,12 +488,14 @@ async function fetchCOT(existingSnapshot: Partial<Snapshot>): Promise<Snapshot['
       '?$where=market_and_exchange_names%20like%20%27%25GOLD%25%27' +
       '&$order=report_date_as_yyyy_mm_dd%20DESC' +
       '&$limit=2' +
-      '&$select=report_date_as_yyyy_mm_dd,noncomm_positions_long_all,noncomm_positions_short_all'
+      '&$select=report_date_as_yyyy_mm_dd,noncomm_positions_long_all,noncomm_positions_short_all,open_interest_all,change_in_open_interest_all'
     const raw = await httpGet(url, { Accept: 'application/json', 'User-Agent': 'xauusd-dashboard/1.0' })
     const rows = JSON.parse(raw) as Array<{
       report_date_as_yyyy_mm_dd?: string
       noncomm_positions_long_all?: string
       noncomm_positions_short_all?: string
+      open_interest_all?: string
+      change_in_open_interest_all?: string
     }>
     if (!rows.length) throw new Error('empty COT response')
 
@@ -493,8 +505,13 @@ async function fetchCOT(existingSnapshot: Partial<Snapshot>): Promise<Snapshot['
     const net      = longPos - shortPos
     const wow      = prevData.cotNetLong != null ? net - prevData.cotNetLong : null
     const crowding: Snapshot['positioning']['crowding'] = net > 200000 ? 'CROWDED_LONG' : net < 100000 ? 'CROWDED_SHORT' : 'NEUTRAL'
-    console.log(`COT: long=${longPos.toLocaleString()} short=${shortPos.toLocaleString()} net=${net.toLocaleString()}`)
-    return { cotNetLong: net, cotWoWChange: wow, crowding, reportDate: latest.report_date_as_yyyy_mm_dd ?? null }
+    const openInterest = latest.open_interest_all != null ? parseInt(latest.open_interest_all) : null
+    const openInterestChange = latest.change_in_open_interest_all != null ? parseInt(latest.change_in_open_interest_all) : null
+    console.log(`COT: long=${longPos.toLocaleString()} short=${shortPos.toLocaleString()} net=${net.toLocaleString()} OI=${openInterest?.toLocaleString()} OIchg=${openInterestChange}`)
+    return {
+      cotNetLong: net, cotWoWChange: wow, crowding, reportDate: latest.report_date_as_yyyy_mm_dd ?? null,
+      openInterest, openInterestChange,
+    }
   } catch (err) {
     console.error('COT fetch failed:', err)
     return prevData
@@ -510,6 +527,7 @@ const CTRADER_TOKEN = process.env.CTRADER_MCP_TOKEN || ''
 const PIP_DIGITS: Record<string, number> = {
   XAUUSD: 5, XAGUSD: 5,
   EURUSD: 5, USDJPY: 5, USDCHF: 5, USDCNH: 5,
+  GBPUSD: 5, USDCAD: 5, USDSEK: 5,
   US500: 5, GER40: 5, UK100: 5,
 }
 
@@ -548,7 +566,7 @@ async function mcpFetch(body: object, sessionId?: string): Promise<{ data: unkno
 interface McpBar { high?: number; low?: number; open?: number }
 
 async function fetchCTraderPrices(): Promise<SnapshotPrices | null> {
-  const SYMS = ['XAUUSD', 'XAGUSD', 'EURUSD', 'USDJPY', 'USDCHF', 'USDCNH', 'US500', 'GER40', 'UK100']
+  const SYMS = ['XAUUSD', 'XAGUSD', 'EURUSD', 'USDJPY', 'USDCHF', 'USDCNH', 'GBPUSD', 'USDCAD', 'USDSEK', 'US500', 'GER40', 'UK100']
   console.log(`Fetching CTrader prices via MCP (url=${CTRADER_URL.slice(0, 50)}…)`)
 
   if (!CTRADER_TOKEN) {
@@ -647,6 +665,7 @@ async function fetchCTraderPrices(): Promise<SnapshotPrices | null> {
     const result: SnapshotPrices = {
       XAUUSD: xau, XAGUSD: xag,
       EURUSD: mid('EURUSD'), USDJPY: mid('USDJPY'), USDCHF: mid('USDCHF'), USDCNH: mid('USDCNH'),
+      GBPUSD: mid('GBPUSD'), USDCAD: mid('USDCAD'), USDSEK: mid('USDSEK'),
       US500: mid('US500'), GER40: mid('GER40'), UK100: mid('UK100'),
       ADR_14day: adr14, ADR_usedToday: adrUsed,
       goldSilverRatio: xau && xag ? Math.round(xau / xag * 10) / 10 : null,
@@ -656,6 +675,34 @@ async function fetchCTraderPrices(): Promise<SnapshotPrices | null> {
   } catch (err) {
     console.error('CTrader MCP fetch failed:', err)
     return null
+  }
+}
+
+// ── Geopolitical Risk Index (Caldara-Iacoviello) ───────────────────────────
+
+async function fetchGPR(): Promise<Snapshot['geopoliticalRisk']> {
+  console.log('Fetching GPR (Geopolitical Risk Index)...')
+  try {
+    const res = await fetch('https://www.matteoiacoviello.com/gpr_files/data_gpr_export.xls')
+    if (!res.ok) { console.log(`GPR HTTP ${res.status}`); return { gpr: null, gprDate: null } }
+    const buf = Buffer.from(await res.arrayBuffer())
+    const XLSX = await import('xlsx')
+    const wb = XLSX.read(buf, { type: 'buffer' })
+    const sheet = wb.Sheets[wb.SheetNames[0]]
+    const rows = XLSX.utils.sheet_to_json<Record<string, unknown>>(sheet)
+    if (!rows.length) throw new Error('empty GPR sheet')
+    const last = rows[rows.length - 1]
+    const gpr = typeof last.GPR === 'number' ? Math.round(last.GPR * 10) / 10 : null
+    // "month" is an Excel date serial (days since 1899-12-30)
+    const monthSerial = last.month
+    const gprDate = typeof monthSerial === 'number'
+      ? new Date(Date.UTC(1899, 11, 30) + monthSerial * 86400000).toISOString().slice(0, 7)
+      : null
+    console.log(`GPR: ${gpr} (${gprDate})`)
+    return { gpr, gprDate }
+  } catch (err) {
+    console.error('GPR fetch failed:', err)
+    return { gpr: null, gprDate: null }
   }
 }
 
@@ -673,15 +720,18 @@ async function main() {
 
   console.log('=== XAUUSD Daily Data Fetch ===')
 
-  const [yields, fedExpectations, gvz, vix, positioning, snapshotPrices] = await Promise.all([
+  const [yields, fedExpectations, gvz, vix, stlfsi, nfci, positioning, snapshotPrices, geopoliticalRisk] = await Promise.all([
     fetchYields(),
     fetchFedWatch(),
     fetchGVZ(),
     fredSeries('VIXCLS'),
+    fredSeries('STLFSI4'),
+    fredSeries('NFCI'),
     fetchCOT(existing),
     fetchCTraderPrices(),
+    fetchGPR(),
   ])
-  console.log(`VIX FRED VIXCLS: ${vix}`)
+  console.log(`VIX FRED VIXCLS: ${vix}, STLFSI4: ${stlfsi}, NFCI: ${nfci}`)
 
   // GLD needs the CTrader XAUUSD price as a fallback if FRED's gold series is null,
   // so it runs after the prices above rather than inside the initial Promise.all.
@@ -695,6 +745,8 @@ async function main() {
     positioning,
     etfFlows,
     snapshotPrices,
+    dollarLiquidity: { stlfsi, nfci },
+    geopoliticalRisk,
   }
 
   fs.writeFileSync(outPath, JSON.stringify(snapshot, null, 2))

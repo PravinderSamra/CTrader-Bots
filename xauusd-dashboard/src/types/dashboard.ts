@@ -17,6 +17,9 @@ export interface CTraderPrices {
   USDJPY: number
   USDCHF: number
   USDCNH: number
+  GBPUSD: number
+  USDCAD: number
+  USDSEK: number
   US500: PricePoint
   GER40: PricePoint
   UK100: PricePoint
@@ -72,6 +75,18 @@ export interface COTPositioning {
   cotWoWChange: number | null
   crowding: 'CROWDED_LONG' | 'NEUTRAL' | 'CROWDED_SHORT' | null
   reportDate: string | null
+  openInterest: number | null
+  openInterestChange: number | null
+}
+
+export interface DollarLiquidity {
+  stlfsi: number | null   // St. Louis Fed Financial Stress Index (0 = average; >0 = stress)
+  nfci: number | null     // Chicago Fed National Financial Conditions Index (0 = average; >0 = tighter)
+}
+
+export interface GeopoliticalRisk {
+  gpr: number | null      // Caldara-Iacoviello Geopolitical Risk Index (100 = 1985-2019 avg)
+  gprDate: string | null  // month the latest reading covers
 }
 
 export interface ETFFlows {
@@ -87,6 +102,9 @@ export interface SnapshotPrices {
   USDJPY: number | null
   USDCHF: number | null
   USDCNH: number | null
+  GBPUSD: number | null
+  USDCAD: number | null
+  USDSEK: number | null
   US500: number | null
   GER40: number | null
   UK100: number | null
@@ -103,6 +121,8 @@ export interface DailySnapshot {
   positioning: COTPositioning
   etfFlows: ETFFlows
   snapshotPrices?: SnapshotPrices
+  dollarLiquidity?: DollarLiquidity
+  geopoliticalRisk?: GeopoliticalRisk
 }
 
 export interface BriefingResult {
