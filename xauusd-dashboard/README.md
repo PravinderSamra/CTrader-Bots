@@ -49,6 +49,85 @@ xauusd-dashboard/
 
 The briefing (directional bias, confidence score, 200–300 word plain-English paragraph) is regenerated **hourly during London/NY hours**, server-side, by `generateDailyBriefing()` in `fetch-static-data.ts` — it reuses the same system prompt and JSON-output contract that used to live in `src/services/anthropicBriefing.ts` (since removed; see Security). The dashboard no longer has a "Generate Briefing" button — `BriefingPanel.tsx` simply renders `snapshot.briefing` and shows a "not yet available" placeholder before the first scheduled run of the day.
 
+## Gold-Session AI tab
+
+The dashboard's second tab ("Gold-Session AI") stores a rolling 3-day history of `/gold-session` analyses. Each entry is saved automatically at the end of every skill run — no manual action required from the trader.
+
+### Data structure
+
+```
+xauusd-dashboard/
+├── public/data/sessions/
+│   ├── index.json                  Rolling 3-day index (max 3 days of entries)
+│   └── YYYY-MM-DD/
+│       └── HH-MM.json              One file per analysis (filename uses UTC for stability)
+└── scripts/save-gold-session.ts    Save script — called by the skill at STEP 8
+```
+
+**`index.json`** shape:
+```json
+{
+  "updatedAt": "2026-06-30T21:48:30.283Z",
+  "sessions": [
+    {
+      "date": "2026-06-30",
+      "time": "21:48 GMT",
+      "filename": "2026-06-30/21-48.json",
+      "session": "NEW_YORK",
+      "bias": "BEARISH",
+      "biasScore": -3,
+      "probability": 65,
+      "confidence": 5,
+      "timestamp": "2026-06-30T21:48:30.283Z"
+    }
+  ]
+}
+```
+
+**Session record** (`YYYY-MM-DD/HH-MM.json`) adds `analysis` (the full plain-text brief) to all index fields.
+
+The index is maintained as a rolling window: entries older than 3 days are pruned on each write. The newest entry is always listed first.
+
+### `save-gold-session.ts` — the save script
+
+Called by the skill at the end of every run (STEP 8 in `gold-session.md`) with two temp files:
+
+```bash
+cd xauusd-dashboard
+npx tsx scripts/save-gold-session.ts /tmp/gold-session-meta.json /tmp/gold-session-analysis.txt
+```
+
+- **`/tmp/gold-session-meta.json`** — 5 scalar fields: `session`, `bias`, `biasScore`, `probability`, `confidence`.
+- **`/tmp/gold-session-analysis.txt`** — full analysis text (everything from the `# GOLD INTRADAY SESSION BRIEF` header to the end of `[DISCLAIMER]`). Kept as a separate file to avoid JSON-escaping a multi-kilobyte string.
+
+The script computes UK time (BST = UTC+1 from last Sunday in March to last Sunday in October, else GMT), uses UTC time for the filename (so filenames are stable), and stores the UK-local time as the `time` display field (e.g. `"21:48 GMT"` or `"14:30 BST"`). It then commits the session file and updated index to `main` and pushes, triggering a GitHub Actions deploy (~1–2 min).
+
+**ESM note:** the script uses `fileURLToPath(import.meta.url)` + `path.dirname()` instead of `__dirname` because the project's `tsconfig.json` targets ES modules — `__dirname` is not defined in ESM scope.
+
+### How the tab renders
+
+`GoldSessionTab.tsx` fetches `index.json` on load, displays entries grouped by day in a left sidebar (most recent first, labelled TODAY / YESTERDAY / day-name), and shows the full analysis for the selected entry in the main view alongside a `BiasGauge` component. The `time` field already includes the timezone label (`GMT` / `BST`) — the component does not append it again.
+
+### MCP permissions required
+
+The `/gold-session` skill needs the following tools pre-approved in `.claude/settings.json` (committed at repo root) so it can run without per-call prompts:
+
+```json
+"mcp__ctrader__get_version",
+"mcp__ctrader__get_symbols",
+"mcp__ctrader__get_spot_prices",
+"mcp__ctrader__get_trendbars",
+"mcp__ctrader__get_positions",
+"mcp__ctrader__get_balance",
+"mcp__tradingview-mcp__recognize_market_pattern",
+"mcp__tradingview-mcp__get_trade_levels",
+"mcp__tradingview-mcp__risk_based_position_size"
+```
+
+These are committed in `.claude/settings.json` at the repo root. **Do not use `.claude/settings.local.json`** for these — that file is globally gitignored by `/root/.config/git/ignore` and permissions added there are lost when the container is recycled.
+
+---
+
 ## Environment variables / GitHub Secrets
 
 All API keys are consumed **only** by `xauusd-daily-fetch.yml`'s "Fetch daily data snapshot" step, which runs server-side in CI. None of these are ever passed to `npm run build` and none reach the browser bundle.

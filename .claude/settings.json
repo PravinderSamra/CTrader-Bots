@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__ctrader__get_version",
+      "mcp__ctrader__get_symbols",
+      "mcp__ctrader__get_spot_prices",
+      "mcp__ctrader__get_trendbars",
+      "mcp__ctrader__get_positions",
+      "mcp__ctrader__get_balance",
+      "mcp__alpha-vantage__TOOL_GET",
+      "mcp__alpha-vantage__TOOL_LIST",
+      "mcp__alpha-vantage__TOOL_CALL",
+      "mcp__tradingview-mcp__get_live_price",
+      "mcp__tradingview-mcp__market_snapshot",
+      "mcp__tradingview-mcp__yahoo_price",
+      "mcp__tradingview-mcp__multi_timeframe_analysis",
+      "mcp__tradingview-mcp__recognize_market_pattern",
+      "mcp__tradingview-mcp__get_trade_levels",
+      "mcp__tradingview-mcp__risk_based_position_size"
+    ]
+  }
+}

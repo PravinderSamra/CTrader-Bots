@@ -18,13 +18,34 @@ xauusd-dashboard/public/data/daily-snapshot.json   Macro context (yields, Fed od
 
 ### STEP 0 — data gathering (defined in `gold-session.md`)
 
-When `/gold-session` runs, Claude is instructed to:
+STEP 0 is divided into three **parallel phases** based on dependency. Within each phase, all tool calls fire simultaneously in a single response — never serialised within a phase.
 
-1. Call the **cTrader Local/Remote MCP server** (`mcp__ctrader__*` tools) for the current XAUUSD symbol info, spot price, and trendbars on **H1, M5, and M1**, plus open positions and account balance.
-2. Fetch `xauusd-dashboard/public/data/daily-snapshot.json` (or the deployed `daily-snapshot.json` on GitHub Pages) for the macro picture — yields/real yields, Fed cut/hold/hike odds, GVZ, COT positioning, ETF flows, dollar-liquidity stress, geopolitical risk, and the AI-generated daily briefing/bias score. This is the same file the dashboard renders; the skill reuses it instead of re-deriving macro context itself.
-3. Pipe the three candle sets (`h1`, `m5`, `m1`) plus `symbol`/`current_price` as JSON on stdin to `python skill_adapter.py`, which runs the shared `analysis/` engine (see below) and returns structured FVG/OB/liquidity/trend/premium-discount output per timeframe, plus the current session and kill-zone status.
-4. Optionally cross-checks the read with the `recognize_market_pattern` tool (an independent pattern-recognition pass) as a sanity check against the rule-based engine's output.
-5. Optionally pulls the Finnhub economic calendar for any high-impact events in the next few hours.
+#### Phase A (no dependencies — all fire at once)
+- `mcp__ctrader__get_symbols` → resolve symbolId for XAUUSD and note `pipDigits`.
+- `mcp__ctrader__get_positions` → existing exposure on the symbol.
+- `mcp__ctrader__get_balance` → account balance/equity/free margin.
+- HTTP fetch of `xauusd-dashboard/public/data/daily-snapshot.json` from GitHub Pages → macro snapshot (yields, COT, ETF flows, Fed odds, GVZ, VIX, GPR, news, calendar). Treat as stale and warn if `generatedAt` is >4h old during London/NY hours.
+- `ToolSearch` with `query: "select:mcp__tradingview-mcp__recognize_market_pattern"` → pre-loads the TradingView tool schema so it is callable in Phase C. **This must be in Phase A** — TradingView tools are deferred (schema not loaded until explicitly fetched); calling them without a prior ToolSearch produces `InputValidationError`.
+
+#### Phase B (requires symbolId from Phase A — all fire at once)
+- `mcp__ctrader__get_spot_prices` → current bid/ask.
+- `mcp__ctrader__get_trendbars` for H1 (100 candles), M5 (100 candles), M1 (60 candles).
+
+  **⚠️ API quirk — always use explicit timestamps:** the `count`-only form of `get_trendbars` fails with `INVALID_REQUEST: fromTimestamp must not be null`. Derive timestamps from the spot price timestamp (`spotTimestamp` = the `timestamp` field returned by `get_spot_prices`, in milliseconds):
+
+  | Timeframe | `fromTimestamp` | `toTimestamp` |
+  |---|---|---|
+  | H1 | `spotTimestamp - 360_000_000` (100 h back) | `spotTimestamp` |
+  | M5 | `spotTimestamp - 30_000_000` (100 × 5 min back) | `spotTimestamp` |
+  | M1 | `spotTimestamp - 3_600_000` (60 min back) | `spotTimestamp` |
+
+#### Phase C (requires trendbar data from Phase B — both fire at once)
+- **Structure engine:** divide every H1/M5/M1 `open/high/low/close` by `10^pipDigits` to get display prices, then write:
+  ```bash
+  python3 /home/user/CTrader-Bots/ICT-SMC-Local-Agent/skill_adapter.py < /tmp/gold_session_input.json
+  ```
+  Returns per-timeframe: trend, premium/discount + OTE zone, graded FVGs (A+/A/B/C/SKIP), quality-scored OBs (1–5), BSL/SSL liquidity pools, Asian range, session/kill-zone/bias notes. This is ground truth for structure levels.
+- **Cross-check:** `mcp__tradingview-mcp__recognize_market_pattern` — an independent non-ICT pattern-recognition pass used only to confirm or challenge the structural bias.
 
 ### `skill_adapter.py` — the engine bridge
 
@@ -62,6 +83,15 @@ The skill's system prompt encodes 7 ICT/SMC ground rules Claude must follow when
 
 A fixed markdown template, always in this order: **Account Context → Regime Assessment → Structure → Liquidity Map → Key PD Arrays → Macro Regime → Session Context → Cross-Check → Probability Assessment → Trade Idea (Primary) → Key Levels → Market Narrative.** Keeping this order fixed is intentional — it lets a trader scan the same section every time regardless of what the market is doing that day.
 
+The report header always shows both UK time and UTC:
+```
+# GOLD INTRADAY SESSION BRIEF — YYYY-MM-DD — HH:MM BST|GMT / HH:MM UTC
+```
+
+**UK time rule (DST-aware):** BST (UTC+1) from the last Sunday in March to the last Sunday in October; GMT (UTC+0) otherwise. Approximate boundary: day ≥ 25 in March or October. Express all session times as `HH:MM BST` or `HH:MM GMT` — never UTC-only. The SESSION CONTEXT section includes a dedicated `**UK Time:**` line.
+
+**OFF-HOURS mapping for STEP 8:** the `session` field in the meta JSON only accepts `LONDON`, `NEW_YORK`, `OVERLAP`, or `ASIAN`. If `skill_adapter.py` returns `OFF-HOURS`, write `ASIAN` to the meta file.
+
 ### Probability scoring rules
 
 - Base probability starts at **50%**.
@@ -72,6 +102,30 @@ A fixed markdown template, always in this order: **Account Context → Regime As
 ### What the skill must never do
 
 `gold-session.md` lists 9 hard constraints (e.g. never fabricate price levels not present in the candle data, never recommend a trade against the dominant H1 structure without explicitly flagging it as counter-trend, never omit the kill-zone/session context, never silently drop the cross-check step, never execute a trade). These are guardrails against the most likely failure modes of an LLM doing chart reasoning from structured data — fabrication and overconfidence — rather than general style guidance.
+
+## STEP 8 — saving to the dashboard
+
+After producing the report, the skill saves it to the **Gold-Session AI** tab in the dashboard using a two-file approach (no escaping of a long analysis string in JSON):
+
+1. Write `/tmp/gold-session-meta.json` (5 scalar fields) and `/tmp/gold-session-analysis.txt` (full analysis text) **simultaneously** (parallel Write calls in one response).
+2. Run:
+   ```bash
+   cd /home/user/CTrader-Bots/xauusd-dashboard && npx tsx scripts/save-gold-session.ts /tmp/gold-session-meta.json /tmp/gold-session-analysis.txt
+   ```
+   This writes `public/data/sessions/YYYY-MM-DD/HH-MM.json` and updates `public/data/sessions/index.json`, then commits and pushes to `main`. The dashboard tab is live after GitHub Actions deploys (~1–2 min).
+
+**ESM note on `save-gold-session.ts`:** the script uses `fileURLToPath(import.meta.url)` + `path.dirname()` to compute `__dirname` — standard `__dirname` is not defined in ES module scope and will throw `ReferenceError` if used.
+
+## Known issues & workarounds
+
+| Issue | Root cause | Fix |
+|---|---|---|
+| `get_trendbars` fails with `INVALID_REQUEST: fromTimestamp must not be null` | The API requires explicit timestamps even when a count is given | Always provide both `fromTimestamp` and `toTimestamp` derived from `spotTimestamp` (see Phase B above) |
+| `recognize_market_pattern` produces `InputValidationError` or "UNAVAILABLE" | TradingView tools are **deferred** — schema not loaded until `ToolSearch` is called; also, `uvx tradingview-mcp` stdio process has a slow cold-start | Add `ToolSearch` call with `query: "select:mcp__tradingview-mcp__recognize_market_pattern"` in Phase A, before Phase B; if still unavailable in Phase C, retry once and note degradation if it fails again |
+| TradingView permission prompts appear each session | `settings.local.json` is globally gitignored (`**/.claude/settings.local.json` in `/root/.config/git/ignore`) — permissions added there are lost when the container is recycled | Permissions live in committed `.claude/settings.json` at repo root; do NOT use `settings.local.json` for persistent permissions |
+| `get_symbols` response is very large (all broker instruments) | Pepperstone has hundreds of symbols; parsing the full list in Claude's context is expensive | Use Python: `python3 -c "import json,sys; data=json.load(sys.stdin); s=[x for x in data['symbols'] if 'XAU' in x.get('name','')]; print(json.dumps(s))"` piped from the MCP response, or filter by name/symbolId before returning |
+| `save-gold-session.ts` fails with `ReferenceError: __dirname is not defined` | ESM module scope — `__dirname` is a CommonJS global | Script uses `fileURLToPath(import.meta.url)` + `path.dirname()` (already fixed) |
+| `git pull --rebase` fails during save script with "unstaged changes" | Save script had already committed but unstaged local edits existed | Stage and commit any pending changes before running the save script; or ensure the working tree is clean before the skill run |
 
 ## Relationship to the standalone Local/Remote scanner agents
 
