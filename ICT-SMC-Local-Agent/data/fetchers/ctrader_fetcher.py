@@ -7,9 +7,8 @@ Replaces Yahoo Finance (indices/oil) and Twelve Data (forex/gold) with:
   - Exact Pepperstone price feed — matches your cTrader/TradingView chart
   - Candles marked data_tier=1 (direct broker feed, highest quality)
 
-Token priority:
-  1. CTRADER_MCP_TOKEN env var (set in .env for live account)
-  2. Demo account fallback (read-only market data, no trading)
+Token: set CTRADER_MCP_TOKEN in .env — required, no fallback. See README/.env.example
+for how to obtain a token (live or demo) from cTrader Settings → AI Agent Connect.
 """
 
 import http.client
@@ -23,10 +22,7 @@ from data.models import Candle
 # ── Config ────────────────────────────────────────────────────────────────────
 _MCP_URL = "https://mcp.ctrader.com/trading/mcp"
 
-_TOKEN = os.environ.get(
-    "CTRADER_MCP_TOKEN",
-    "eyJwbGFudCI6InBlcHBlcnN0b25ldWsiLCJlbnZpcm9ubWVudCI6ImRlbW8iLCJ0b2tlbiI6IkliMEJzUERzSXBpZUJnTEtUWTluRjRpMEJ6a3R4V0pvSm1ZNVB3a1lIb2c9In0"
-)
+_TOKEN = os.environ.get("CTRADER_MCP_TOKEN")
 
 # cTrader period strings — server uses underscore format (M_1, H_1, D_1, etc.)
 _PERIOD_MAP = {
@@ -152,6 +148,11 @@ def _get_conn() -> http.client.HTTPSConnection:
 def _post(payload: dict, session_id: Optional[str] = None) -> tuple[Optional[dict], Optional[str]]:
     """POST a JSON-RPC message over the persistent connection. Returns (parsed_data, session_id)."""
     global _conn, _session_id
+    if not _TOKEN:
+        raise RuntimeError(
+            "CTRADER_MCP_TOKEN is not set. Add it to .env — see "
+            "Settings → AI Agent Connect in cTrader to generate one."
+        )
     body = json.dumps(payload)
     headers = {
         "Authorization": f"Bearer {_TOKEN}",

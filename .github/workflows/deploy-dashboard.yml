@@ -32,10 +32,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '20'
           cache: 'npm'
@@ -45,12 +45,12 @@ jobs:
         run: cd xauusd-dashboard && npm ci
 
       - name: Build XAUUSD dashboard
+        # No secrets here by design: prices/calendar/headlines/briefing all come from
+        # the pre-built, secret-free public/data/daily-snapshot.json committed by the
+        # daily-fetch workflow. Injecting API keys here would bake them into this
+        # public, statically-hosted JS bundle — see xauusd-daily-fetch.yml for where
+        # the real (server-side) API calls happen.
         run: cd xauusd-dashboard && npm run build
-        env:
-          VITE_FINNHUB_KEY:       ${{ secrets.FINNHUB_API_KEY }}
-          VITE_ANTHROPIC_KEY:     ${{ secrets.ANTHROPIC_API_KEY }}
-          VITE_CTRADER_MCP_URL:   ${{ secrets.VITE_CTRADER_MCP_URL }}
-          VITE_CTRADER_MCP_TOKEN: ${{ secrets.VITE_CTRADER_MCP_TOKEN }}
 
       - name: Build site structure
         run: |
@@ -140,13 +140,13 @@ jobs:
           EOF
 
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@1f0c5cde4bc74cd7e1254d0cb4de8d49e9068c7d # v4.0.0
 
       - name: Upload site artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
         with:
           path: "_site"
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5

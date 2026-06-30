@@ -1,7 +1,4 @@
-import { useState, useCallback } from 'react'
 import type { BriefingResult } from '../../types/dashboard'
-import type { AggregatedData } from '../../services/dataAggregator'
-import { generateBriefing } from '../../services/anthropicBriefing'
 import { BiasGauge } from './BiasGauge'
 import styles from './BriefingPanel.module.css'
 
@@ -14,28 +11,11 @@ function fmtTime(iso: string): string {
 }
 
 interface Props {
-  data: AggregatedData
+  briefing: BriefingResult | null
   headlines: string[]
 }
 
-export function BriefingPanel({ data, headlines }: Props) {
-  const [briefing, setBriefing] = useState<BriefingResult | null>(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-
-  const generate = useCallback(async () => {
-    setLoading(true)
-    setError(null)
-    try {
-      const result = await generateBriefing(data)
-      setBriefing(result)
-    } catch (e) {
-      setError(e instanceof Error ? e.message : 'Unknown error generating briefing')
-    } finally {
-      setLoading(false)
-    }
-  }, [data])
-
+export function BriefingPanel({ briefing, headlines }: Props) {
   return (
     <div className={styles.panel}>
       <div className={styles.header}>
@@ -49,19 +29,6 @@ export function BriefingPanel({ data, headlines }: Props) {
           {briefing && (
             <span className={styles.genTime}>Generated: {fmtTime(briefing.generatedAt)}</span>
           )}
-          <button
-            className={styles.generateBtn}
-            onClick={generate}
-            disabled={loading}
-          >
-            {loading ? (
-              <><span className="pulse">●</span> Generating...</>
-            ) : briefing ? (
-              '↺ Refresh Briefing'
-            ) : (
-              'Generate Briefing'
-            )}
-          </button>
         </div>
       </div>
 
@@ -76,32 +43,17 @@ export function BriefingPanel({ data, headlines }: Props) {
       )}
 
       <div className={styles.body}>
-        {error && (
-          <div className={styles.error}>
-            Error: {error}
-          </div>
-        )}
-
-        {!briefing && !loading && !error && (
+        {!briefing && (
           <div className={styles.placeholder}>
-            <div className={styles.placeholderTitle}>Ready to generate</div>
+            <div className={styles.placeholderTitle}>Briefing not yet available</div>
             <div className={styles.placeholderSub}>
-              Click "Generate Briefing" to get today's AI-synthesised market analysis.
-              The briefing reads all loaded data and produces a plain-English directional view with confidence scoring.
+              The daily briefing is generated once per day by the data-fetch workflow (06:45 GMT, Mon–Fri).
+              Check back after the next scheduled run.
             </div>
           </div>
         )}
 
-        {loading && (
-          <div className={styles.loadingState}>
-            <span className={`${styles.dot} pulse`}>●</span>
-            <span className={styles.loadingText}>
-              Analysing market data and composing briefing...
-            </span>
-          </div>
-        )}
-
-        {briefing && !loading && (
+        {briefing && (
           <p className={styles.briefingText}>{briefing.briefing}</p>
         )}
       </div>
