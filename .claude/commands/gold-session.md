@@ -17,20 +17,23 @@ Data gathering is structured into phases by dependency. Within each phase, fire 
 
 Call all of the following in one response:
 
-- `mcp__ctrader__get_symbols` → resolve symbolId for XAUUSD and note `pipDigits`.
+- `mcp__ctrader__get_symbols` → resolve symbolId for XAUUSD and note `pipDigits`. **Note:** this response is very large (~57k lines). If it can't be scanned inline, run: `python3 -c "import sys,json; d=json.load(sys.stdin); [print(s['symbolId'],s.get('pipDigits'),s['symbolName']) for s in d.get('symbols',[]) if 'XAU' in s.get('symbolName','')]"` to extract just the XAUUSD rows. Spot-check by dividing raw bid by `10^pipDigits` — result should be near the known gold price ($3000–5000 range). If `pipDigits` is absent from the response, infer it from the trendbar data in Phase B.
 - `mcp__ctrader__get_positions` → check existing exposure on this symbol.
 - `mcp__ctrader__get_balance` → account balance/equity/free margin for position sizing.
-- **Fetch macro snapshot:** `https://pravindersamra.github.io/CTrader-Bots/xauusd-dashboard/data/daily-snapshot.json` (DXY/yields/Fed/COT/ETF flows/STLFSI4/NFCI/GPR/VIX/GVZ/economicCalendar/newsItems — refreshed hourly during London/NY hours; treat `generatedAt` as "as of last refresh". If fetch fails or data is >4h stale during session hours / >24h stale outside, say so and proceed without it.)
+- **Fetch macro snapshot:** `https://pravindersamra.github.io/CTrader-Bots/xauusd-dashboard/data/daily-snapshot.json` (DXY/yields/Fed/COT/ETF flows/STLFSI4/NFCI/GPR/VIX/GVZ/economicCalendar/newsItems — refreshed hourly during London/NY hours; treat `generatedAt` as "as of last refresh". If fetch fails or data is >4h stale during session hours / >24h stale outside, say so and proceed without it. An empty array `[]` for `economicCalendar` or `newsItems` means "fetcher ran but found nothing" — report it as "no events/no catalysts" rather than "unavailable".)
 - **Finnhub (if API key is in environment):** pull economic calendar and recent headlines for additional event-risk context. If no key, skip and note it — the macro snapshot's `economicCalendar` and `newsItems` fields already cover this.
+- **Pre-load TradingView schema:** Call `ToolSearch` with query `select:mcp__tradingview-mcp__recognize_market_pattern` — this ensures the schema is cached before Phase C with no extra round-trip. Fire this in the same response as the other Phase A calls.
 
 ### Phase B — Requires symbolId from Phase A (fire all at once)
 
 Once Phase A completes and symbolId is known, call all of the following in one response:
 
-- `mcp__ctrader__get_spot_prices` for the symbolId → current bid/ask.
-- `mcp__ctrader__get_trendbars` period `H_1`, count 100 → trend-timeframe structure.
-- `mcp__ctrader__get_trendbars` period `M_5`, count 100 → signal-timeframe structure.
-- `mcp__ctrader__get_trendbars` period `M_1`, count 60 → entry-timeframe structure.
+- `mcp__ctrader__get_spot_prices` for the symbolId → current bid/ask. Note the `timestamp` field — you will need it to compute trendbar time ranges.
+- `mcp__ctrader__get_trendbars` period `H_1` with `fromTimestamp` = `spotTimestamp - 360_000_000` (100 hours back) and `toTimestamp` = `spotTimestamp`.
+- `mcp__ctrader__get_trendbars` period `M_5` with `fromTimestamp` = `spotTimestamp - 30_000_000` (500 minutes back) and `toTimestamp` = `spotTimestamp`.
+- `mcp__ctrader__get_trendbars` period `M_1` with `fromTimestamp` = `spotTimestamp - 3_600_000` (60 minutes back) and `toTimestamp` = `spotTimestamp`.
+
+**⚠️ API quirk:** The `count`-only form (`count=100` without timestamps) fails with `INVALID_REQUEST: fromTimestamp must not be null` on this deployment. Always use explicit `fromTimestamp`+`toTimestamp` ranges as shown above.
 
 Never proceed to Phase C on partial/missing trendbar data — if any Phase B call fails, report the failure and stop rather than guessing prices.
 
@@ -48,7 +51,13 @@ Once Phase B completes, call both of the following in one response:
   ```
   Returns per-timeframe: trend, premium/discount + OTE zone, graded FVGs (A+/A/B/C/SKIP), quality-scored OBs (1–5), BSL/SSL liquidity pools, H1 volume profile (POC/VAH/VAL/LVNs), Asian range + London-sweep flag, live session/kill-zone/bias notes. Treat as ground truth for structure levels. If the script errors or returns `{"error": ...}`, note the degradation and continue with manual trendbar analysis.
 
-- **Cross-check:** `mcp__tradingview-mcp__recognize_market_pattern` with `symbol` = target, `timeframe` = "5m", `recent_candles` from the last 10–20 M_5 candles (as `{open, high, low, close, volume}`), `indicators` estimated from those same candles. This is an independent non-ICT read — use it only to confirm or challenge the structural bias, never to override it.
+- **Cross-check:** `mcp__tradingview-mcp__recognize_market_pattern` — schema was pre-loaded in Phase A via ToolSearch. Call with:
+  - `symbol` = target symbol string (e.g. `"XAUUSD"`)
+  - `timeframe` = `"5m"`
+  - `recent_candles` = last 15 M_5 candles as display-price `{open, high, low, close, volume}` dicts (already converted from pipettes)
+  - `indicators` = estimated from the same candles: `{"RSI": <14-period estimate>, "trend": "<BULLISH|BEARISH|NEUTRAL>", "volatility": "HIGH|MEDIUM|LOW"}`
+  
+  This is an independent non-ICT read — use it only to confirm or challenge the structural bias, never to override it. If the server is still initialising (tool call errors with a connection/timeout error rather than an argument error), retry once after a brief pause; if it fails a second time, note the unavailability and proceed.
 
 Two notes on macro snapshot fields (relevant to STEP 5 analysis):
 - `economicCalendar` spans the **whole current week** — use events with `daysFromToday > 0` and `impact: "HIGH"` to flag build-up caution ahead of later-week releases.
@@ -109,6 +118,7 @@ Two notes on macro snapshot fields (relevant to STEP 5 analysis):
 - If session is ASIA or OFF-HOURS, state plainly that this is outside the trader's stated trading hours — still report the analysis, but mark any trade idea as "WAIT FOR LONDON/NY OPEN" rather than an actionable now-entry.
 - Report `session.minutes_until_kz_closes` if a kill zone is active, and surface `session.bias_notes` (midnight-open premium/discount bias, Asian sweep status, kill-zone status) verbatim alongside your own read.
 - Note any Judas Swing or AMD (Accumulation-Manipulation-Distribution) phase visible on M5/M1.
+- **UK time (mandatory):** Convert all timestamps to UK local time for display. UK observes BST (UTC+1) from the last Sunday in March to the last Sunday in October, and GMT (UTC+0) the rest of the year. Express times as `HH:MM BST` or `HH:MM GMT` throughout the output — never UTC-only. Quick rule: if the current UTC date is between 25 March and 25 October (approximate), UK = UTC+1 (BST); otherwise UK = UTC+0 (GMT). Kill zone reference times in UK local: London KZ 07:00–10:00 BST / 07:00–10:00 GMT · NY KZ 13:30–16:00 BST / 13:30–16:00 GMT · Silver Bullet 1: 09:00–10:00 BST · Silver Bullet 2: 16:00–17:00 BST (adjust by −1h for GMT season).
 
 **STEP 7 — CROSS-CHECK**
 - State the `recognize_market_pattern` result (pattern type, confidence, suggested entry/stop/TP) alongside your ICT read.
@@ -121,7 +131,7 @@ Two notes on macro snapshot fields (relevant to STEP 5 analysis):
 
 ---
 
-# GOLD INTRADAY SESSION BRIEF — [UTC timestamp] — [SESSION LABEL]
+# GOLD INTRADAY SESSION BRIEF — [YYYY-MM-DD] — [HH:MM BST|GMT] / [HH:MM UTC] — [SESSION LABEL]
 
 ## ACCOUNT CONTEXT
 - **Open Positions on Symbol:** [None / describe — direction, size, entry, current P&L]
@@ -157,7 +167,8 @@ Two notes on macro snapshot fields (relevant to STEP 5 analysis):
 
 ## SESSION CONTEXT
 - **Current Session:** [LONDON / NEW YORK / ASIA / OFF-HOURS — from `session.current_session`]
-- **Kill Zone:** [`session.active_kill_zone` or "none"; include `session.minutes_until_kz_closes` if active]
+- **UK Time:** [HH:MM BST or HH:MM GMT]
+- **Kill Zone:** [`session.active_kill_zone` or "none"; include `session.minutes_until_kz_closes` if active; express close time in UK time]
 - **Trading Window Status:** [ACTIVE / WAIT — outside stated hours]
 
 ## CROSS-CHECK (recognize_market_pattern)
@@ -252,7 +263,7 @@ After printing the full analysis to the chat, save it to the **Gold-Session AI**
 Field guide:
 | Field | How to derive it |
 |---|---|
-| `session` | `LONDON`, `NEW_YORK`, `OVERLAP`, or `ASIAN` — from your Session Context section |
+| `session` | `LONDON`, `NEW_YORK`, `OVERLAP`, or `ASIAN` — from your Session Context section. Map `OFF-HOURS` → `ASIAN`. |
 | `bias` | `BULLISH`, `BEARISH`, or `NEUTRAL` — from your Probability Assessment |
 | `biasScore` | −5 to +5 integer: HIGH bullish = +4/+5, medium = +2/+3, neutral = 0, medium bearish = −2/−3, HIGH bearish = −4/−5 |
 | `probability` | Primary scenario percentage from your Probability Assessment (e.g. 65) |

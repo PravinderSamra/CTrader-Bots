@@ -74,7 +74,7 @@ export function GoldSessionTab() {
                 className={`${styles.entry} ${activeFile === s.filename ? styles.entryActive : ''}`}
                 onClick={() => setSelectedFilename(s.filename)}
               >
-                <span className={styles.entryTime}>{s.time} GMT</span>
+                <span className={styles.entryTime}>{s.time}</span>
                 <span className={`${styles.entryBadge} ${sessionClass(s.session)}`}>
                   {s.session.replace('_', ' ')}
                 </span>
@@ -110,7 +110,7 @@ export function GoldSessionTab() {
                 {session.session.replace('_', ' ')}
               </span>
               <span className={styles.viewDate}>{dateLabel(session.date)}</span>
-              <span className={styles.viewTime}>{session.time} GMT</span>
+              <span className={styles.viewTime}>{session.time}</span>
             </div>
 
             {/* Gauge + stats */}

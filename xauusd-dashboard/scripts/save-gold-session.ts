@@ -72,10 +72,25 @@ function main() {
   const meta     = JSON.parse(fs.readFileSync(metaPath, 'utf8')) as SessionMeta
   const analysis = fs.readFileSync(analysisPath, 'utf8').trim()
 
-  const now         = new Date()
-  const date        = now.toISOString().slice(0, 10)
-  const hhmm        = `${String(now.getUTCHours()).padStart(2,'0')}-${String(now.getUTCMinutes()).padStart(2,'0')}`
-  const timeDisplay = `${String(now.getUTCHours()).padStart(2,'0')}:${String(now.getUTCMinutes()).padStart(2,'0')}`
+  const now  = new Date()
+  const date = now.toISOString().slice(0, 10)
+
+  // UK time: BST (UTC+1) runs from last Sunday of March to last Sunday of October.
+  // Approximate with month boundaries — accurate to within a week at month edges.
+  function ukOffsetHours(d: Date): number {
+    const m = d.getUTCMonth() + 1 // 1-12
+    const day = d.getUTCDate()
+    if (m > 3 && m < 10) return 1
+    if (m === 3 && day >= 25) return 1   // last Sun March ≈ 25–31
+    if (m === 10 && day < 25) return 1   // last Sun Oct ≈ 25–31
+    return 0
+  }
+  const offsetH      = ukOffsetHours(now)
+  const ukMs         = now.getTime() + offsetH * 3_600_000
+  const ukDate       = new Date(ukMs)
+  const tzLabel      = offsetH === 1 ? 'BST' : 'GMT'
+  const hhmm         = `${String(now.getUTCHours()).padStart(2,'0')}-${String(now.getUTCMinutes()).padStart(2,'0')}` // filename uses UTC
+  const timeDisplay  = `${String(ukDate.getUTCHours()).padStart(2,'0')}:${String(ukDate.getUTCMinutes()).padStart(2,'0')} ${tzLabel}`
 
   const record: SessionRecord = { ...meta, timestamp: now.toISOString(), date, time: timeDisplay, analysis }
 
@@ -118,7 +133,7 @@ function main() {
     try { run(`git -C "${REPO_ROOT}" diff --staged --quiet`); } catch { hasStagedChanges = true }
 
     if (hasStagedChanges) {
-      run(`git -C "${REPO_ROOT}" commit -m "chore: gold-session ${date} ${timeDisplay} GMT"`)
+      run(`git -C "${REPO_ROOT}" commit -m "chore: gold-session ${date} ${timeDisplay}"`)
       run(`git -C "${REPO_ROOT}" pull --rebase origin main`)
       run(`git -C "${REPO_ROOT}" push -u origin main`)
       console.log('Committed and pushed to main — dashboard updates after GitHub Actions deploys (~1-2 min).')
