@@ -1,0 +1,131 @@
+#!/usr/bin/env tsx
+/**
+ * Save a /gold-session analysis to the dashboard's Gold-Session AI tab.
+ *
+ * Usage (from xauusd-dashboard/):
+ *   npx tsx scripts/save-gold-session.ts /tmp/gold-session-meta.json /tmp/gold-session-analysis.txt
+ *
+ * Args:
+ *   1. Path to a JSON file with: { session, bias, biasScore, probability, confidence }
+ *   2. Path to a plain-text file containing the full analysis output
+ *
+ * Writes:
+ *   public/data/sessions/<YYYY-MM-DD>/<HH-MM>.json
+ *   public/data/sessions/index.json  (rolling 3-day window)
+ *
+ * Then commits and pushes to origin main so the dashboard deploys automatically.
+ */
+
+import * as fs from 'fs'
+import * as path from 'path'
+import { execSync } from 'child_process'
+
+const DATA_DIR   = path.join(__dirname, '../public/data/sessions')
+const INDEX_FILE = path.join(DATA_DIR, 'index.json')
+const REPO_ROOT  = path.join(__dirname, '../..')
+const MAX_DAYS   = 3
+
+interface SessionMeta {
+  session:     string   // LONDON | NEW_YORK | OVERLAP | ASIAN
+  bias:        string   // BULLISH | BEARISH | NEUTRAL
+  biasScore:   number   // -5 to +5
+  probability: number   // 0-100
+  confidence:  number   // 1-10
+}
+
+interface SessionRecord extends SessionMeta {
+  timestamp: string
+  date:      string
+  time:      string
+  analysis:  string
+}
+
+interface IndexEntry extends SessionMeta {
+  date:      string
+  time:      string
+  filename:  string   // YYYY-MM-DD/HH-MM.json
+  timestamp: string
+}
+
+interface SessionIndex {
+  updatedAt: string
+  sessions:  IndexEntry[]
+}
+
+function run(cmd: string) {
+  return execSync(cmd, { stdio: 'pipe' }).toString().trim()
+}
+
+function main() {
+  const metaPath     = process.argv[2]
+  const analysisPath = process.argv[3]
+
+  if (!metaPath || !analysisPath) {
+    console.error('Usage: save-gold-session.ts <meta.json> <analysis.txt>')
+    process.exit(1)
+  }
+
+  const meta     = JSON.parse(fs.readFileSync(metaPath, 'utf8')) as SessionMeta
+  const analysis = fs.readFileSync(analysisPath, 'utf8').trim()
+
+  const now         = new Date()
+  const date        = now.toISOString().slice(0, 10)
+  const hhmm        = `${String(now.getUTCHours()).padStart(2,'0')}-${String(now.getUTCMinutes()).padStart(2,'0')}`
+  const timeDisplay = `${String(now.getUTCHours()).padStart(2,'0')}:${String(now.getUTCMinutes()).padStart(2,'0')}`
+
+  const record: SessionRecord = { ...meta, timestamp: now.toISOString(), date, time: timeDisplay, analysis }
+
+  // Write session file
+  const sessionDir  = path.join(DATA_DIR, date)
+  fs.mkdirSync(sessionDir, { recursive: true })
+  const sessionFile = path.join(sessionDir, `${hhmm}.json`)
+  fs.writeFileSync(sessionFile, JSON.stringify(record, null, 2))
+  console.log(`Session saved: ${path.relative(REPO_ROOT, sessionFile)}`)
+
+  // Load + update index (rolling MAX_DAYS window)
+  let index: SessionIndex = { updatedAt: '', sessions: [] }
+  try { index = JSON.parse(fs.readFileSync(INDEX_FILE, 'utf8')) as SessionIndex } catch { /* fresh index */ }
+
+  const entry: IndexEntry = {
+    date, time: timeDisplay, filename: `${date}/${hhmm}.json`,
+    ...meta, timestamp: now.toISOString(),
+  }
+
+  const cutoff    = new Date()
+  cutoff.setUTCDate(cutoff.getUTCDate() - MAX_DAYS)
+  const cutoffStr = cutoff.toISOString().slice(0, 10)
+
+  index.sessions = [
+    ...index.sessions.filter(s => s.date >= cutoffStr && s.filename !== entry.filename),
+    entry,
+  ].sort((a, b) => b.timestamp.localeCompare(a.timestamp))
+  index.updatedAt = now.toISOString()
+
+  fs.writeFileSync(INDEX_FILE, JSON.stringify(index, null, 2))
+  console.log(`Index updated (${index.sessions.length} session${index.sessions.length !== 1 ? 's' : ''}, last ${MAX_DAYS} days)`)
+
+  // Git commit + push
+  try {
+    run(`git -C "${REPO_ROOT}" config user.name "gold-session-bot"`)
+    run(`git -C "${REPO_ROOT}" config user.email "gold-session-bot@noreply.github.com"`)
+    run(`git -C "${REPO_ROOT}" add xauusd-dashboard/public/data/sessions/`)
+
+    let hasStagedChanges = false
+    try { run(`git -C "${REPO_ROOT}" diff --staged --quiet`); } catch { hasStagedChanges = true }
+
+    if (hasStagedChanges) {
+      run(`git -C "${REPO_ROOT}" commit -m "chore: gold-session ${date} ${timeDisplay} GMT"`)
+      run(`git -C "${REPO_ROOT}" pull --rebase origin main`)
+      run(`git -C "${REPO_ROOT}" push -u origin main`)
+      console.log('Committed and pushed to main — dashboard updates after GitHub Actions deploys (~1-2 min).')
+    } else {
+      console.log('No changes staged — session may already be committed.')
+    }
+  } catch (err) {
+    console.error('Git operation failed:', (err as Error).message)
+    console.error('Session file saved locally. Retry with: git push origin main')
+    process.exit(1)
+  }
+}
+
+main()

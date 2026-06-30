@@ -1,0 +1,238 @@
+/* ── Outer shell ── */
+
+.tab {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ── Sidebar ── */
+
+.sidebar {
+  width: 224px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  background: var(--surface);
+  overflow-y: auto;
+  padding: 12px 0 24px;
+}
+
+.sidebarTitle {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding: 0 14px 10px;
+}
+
+.sidebarEmpty {
+  font-size: 11px;
+  color: var(--text-dim);
+  padding: 8px 14px;
+  line-height: 1.6;
+}
+
+.dateGroup {
+  margin-bottom: 2px;
+}
+
+.dateHeader {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 10px 14px 4px;
+  border-top: 1px solid var(--border-2);
+}
+
+.dateGroup:first-of-type .dateHeader {
+  border-top: none;
+  padding-top: 0;
+}
+
+.entry {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 7px 14px;
+  background: transparent;
+  border: none;
+  border-left: 2px solid transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s;
+}
+
+.entry:hover { background: var(--surface-2); }
+
+.entryActive {
+  background: var(--surface-3);
+  border-left-color: var(--gold);
+  padding-left: 12px;
+}
+
+.entryTime {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text);
+  flex-shrink: 0;
+}
+
+.entryBadge {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 2px 5px;
+  border-radius: 2px;
+  text-transform: uppercase;
+  flex: 1;
+}
+
+.badgeLondon  { background: var(--blue-dim);  color: var(--blue);  }
+.badgeNewYork { background: var(--green-dim); color: var(--green); }
+.badgeOverlap { background: var(--gold-dim);  color: var(--gold);  }
+.badgeAsian   { background: var(--surface-3); color: var(--text-muted); }
+
+.biasUp   { font-family: var(--mono); font-size: 12px; color: var(--green); }
+.biasDown { font-family: var(--mono); font-size: 12px; color: var(--red);   }
+.biasFlat { font-family: var(--mono); font-size: 12px; color: var(--text-dim); }
+
+/* ── Main view ── */
+
+.view {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 28px 40px;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 280px;
+  gap: 10px;
+  text-align: center;
+}
+
+.emptyTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.emptySub {
+  font-size: 12px;
+  color: var(--text-dim);
+  max-width: 380px;
+  line-height: 1.65;
+}
+
+.emptySub code {
+  font-family: var(--mono);
+  color: var(--gold);
+}
+
+.viewLoading {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  padding-top: 32px;
+}
+
+/* ── Session view ── */
+
+.sessionView {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 1000px;
+}
+
+.viewHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.viewBadge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+.viewDate {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.viewTime {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.gaugeRow {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 16px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.gaugeWrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.statPills {
+  display: flex;
+  gap: 24px;
+  flex-shrink: 0;
+}
+
+.statPill {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: right;
+}
+
+.statLabel {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.statValue {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+}
+
+.analysisText {
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.75;
+  color: var(--text-muted);
+  white-space: pre-wrap;
+  word-break: break-word;
+}

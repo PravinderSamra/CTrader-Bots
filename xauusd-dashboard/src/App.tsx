@@ -13,7 +13,10 @@ import { FedTile } from './components/tiles/FedTile'
 import { PositioningTile } from './components/tiles/PositioningTile'
 import { FlowsTile } from './components/tiles/FlowsTile'
 import { BriefingPanel } from './components/briefing/BriefingPanel'
+import { GoldSessionTab } from './components/gold-session/GoldSessionTab'
 import styles from './App.module.css'
+
+type DashTab = 'dashboard' | 'gold-session'
 
 function getSessionLabel(utcH: number): string {
   if (utcH >= 13 && utcH < 16) return 'OVERLAP'
@@ -24,6 +27,7 @@ function getSessionLabel(utcH: number): string {
 }
 
 export function App() {
+  const [activeTab, setActiveTab] = useState<DashTab>('dashboard')
   const [refreshKey, setRefreshKey] = useState(0)
   const [lastRefresh, setLastRefresh] = useState('')
 
@@ -56,39 +60,62 @@ export function App() {
     <div className={styles.app}>
       <Header prices={prices} onRefresh={handleRefresh} lastRefresh={lastRefresh} />
 
-      <main className={styles.main}>
-        {/* Row 1: Yields | Dollar | Calendar */}
-        <div className={styles.grid3}>
-          <YieldsTile yields={snapshot?.yields ?? null} />
-          <DollarTile prices={prices} />
-          <CalendarTile events={calendar} />
-        </div>
+      <nav className={styles.tabNav}>
+        <button
+          className={`${styles.tabBtn} ${activeTab === 'dashboard' ? styles.tabBtnActive : ''}`}
+          onClick={() => setActiveTab('dashboard')}
+        >
+          Macro Dashboard
+        </button>
+        <button
+          className={`${styles.tabBtn} ${activeTab === 'gold-session' ? styles.tabBtnActive : ''}`}
+          onClick={() => setActiveTab('gold-session')}
+        >
+          Gold-Session AI
+        </button>
+      </nav>
 
-        {/* Row 2: Gold | Risk Tone | Fed */}
-        <div className={styles.grid3}>
-          <GoldTile
-            prices={prices}
-            gvz={snapshot?.marketVolatility?.GVZ ?? null}
-          />
-          <EquitiesTile
-            prices={prices}
-            vix={vix}
-            riskTone={riskTone}
-            dollarLiquidity={snapshot?.dollarLiquidity ?? null}
-            geopoliticalRisk={snapshot?.geopoliticalRisk ?? null}
-          />
-          <FedTile fed={snapshot?.fedExpectations ?? null} />
-        </div>
+      {activeTab === 'dashboard' && (
+        <main className={styles.main}>
+          {/* Row 1: Yields | Dollar | Calendar */}
+          <div className={styles.grid3}>
+            <YieldsTile yields={snapshot?.yields ?? null} />
+            <DollarTile prices={prices} />
+            <CalendarTile events={calendar} />
+          </div>
 
-        {/* Row 3: Positioning | Flows */}
-        <div className={styles.grid2}>
-          <PositioningTile cot={snapshot?.positioning ?? null} />
-          <FlowsTile flows={snapshot?.etfFlows ?? null} />
-        </div>
+          {/* Row 2: Gold | Risk Tone | Fed */}
+          <div className={styles.grid3}>
+            <GoldTile
+              prices={prices}
+              gvz={snapshot?.marketVolatility?.GVZ ?? null}
+            />
+            <EquitiesTile
+              prices={prices}
+              vix={vix}
+              riskTone={riskTone}
+              dollarLiquidity={snapshot?.dollarLiquidity ?? null}
+              geopoliticalRisk={snapshot?.geopoliticalRisk ?? null}
+            />
+            <FedTile fed={snapshot?.fedExpectations ?? null} />
+          </div>
 
-        {/* Briefing panel — full width */}
-        <BriefingPanel briefing={snapshot?.briefing ?? null} newsItems={newsItems} />
-      </main>
+          {/* Row 3: Positioning | Flows */}
+          <div className={styles.grid2}>
+            <PositioningTile cot={snapshot?.positioning ?? null} />
+            <FlowsTile flows={snapshot?.etfFlows ?? null} />
+          </div>
+
+          {/* Briefing panel — full width */}
+          <BriefingPanel briefing={snapshot?.briefing ?? null} newsItems={newsItems} />
+        </main>
+      )}
+
+      {activeTab === 'gold-session' && (
+        <div className={styles.sessionPane}>
+          <GoldSessionTab />
+        </div>
+      )}
 
       <Footer />
     </div>

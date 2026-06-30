@@ -208,3 +208,39 @@ Base probability starts at **50%**.
 - Never omit the invalidation level.
 - Never use standard TA terminology (support/resistance, overbought/oversold) in the ICT sections — ICT terminology only.
 - Never fabricate macro, calendar, or pattern-recognition data that a tool call failed to return — say it's unavailable instead.
+
+---
+
+## STEP 8 — SAVE TO DASHBOARD
+
+After printing the full analysis to the chat, save it to the **Gold-Session AI** tab on the dashboard so it appears in the 3-day history.
+
+**Two-file approach** (keeps JSON simple, no escaping of the long analysis text):
+
+**Step 8a** — Write a small metadata JSON to `/tmp/gold-session-meta.json`:
+```json
+{
+  "session": "LONDON",
+  "bias": "BULLISH",
+  "biasScore": 2,
+  "probability": 65,
+  "confidence": 7
+}
+```
+Field guide:
+| Field | How to derive it |
+|---|---|
+| `session` | `LONDON`, `NEW_YORK`, `OVERLAP`, or `ASIAN` — from your Session Context section |
+| `bias` | `BULLISH`, `BEARISH`, or `NEUTRAL` — from your Probability Assessment |
+| `biasScore` | −5 to +5 integer: HIGH-confidence bullish = +4/+5, medium = +2/+3, neutral = 0, medium bearish = −2/−3, HIGH bearish = −4/−5 |
+| `probability` | The primary scenario percentage from your Probability Assessment (e.g. 65) |
+| `confidence` | Map your Confidence Level: HIGH → 8, MEDIUM → 5, LOW → 3 |
+
+**Step 8b** — Write the complete analysis text (everything you printed from `# GOLD INTRADAY SESSION BRIEF` to the end of `[DISCLAIMER]`) to `/tmp/gold-session-analysis.txt`.
+
+**Step 8c** — Run the save script:
+```bash
+cd /home/user/CTrader-Bots/xauusd-dashboard && npx tsx scripts/save-gold-session.ts /tmp/gold-session-meta.json /tmp/gold-session-analysis.txt
+```
+
+Confirm the output shows `Session saved` and `Committed and pushed to main`. The Gold-Session AI tab on the dashboard will show the entry after GitHub Actions deploys (~1–2 min). If the push fails, the files are saved locally and can be retried with `git push origin main`.

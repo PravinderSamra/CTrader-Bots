@@ -155,3 +155,34 @@ export interface SessionInfo {
   minutesToNext: number
   isPrime: boolean
 }
+
+// ── Gold-Session AI history ────────────────────────────────────────────
+
+export interface GoldSessionRecord {
+  timestamp:   string   // ISO
+  date:        string   // YYYY-MM-DD
+  time:        string   // HH:MM (UTC)
+  session:     string   // LONDON | NEW_YORK | OVERLAP | ASIAN
+  bias:        string   // BULLISH | BEARISH | NEUTRAL
+  biasScore:   number   // -5 to +5
+  probability: number   // 0-100 (primary scenario)
+  confidence:  number   // 1-10
+  analysis:    string   // full plain-text analysis output
+}
+
+export interface GoldSessionEntry {
+  date:        string
+  time:        string
+  filename:    string   // YYYY-MM-DD/HH-MM.json  (relative to sessions/)
+  session:     string
+  bias:        string
+  biasScore:   number
+  probability: number
+  confidence:  number
+  timestamp:   string
+}
+
+export interface GoldSessionIndex {
+  updatedAt: string
+  sessions:  GoldSessionEntry[]
+}
