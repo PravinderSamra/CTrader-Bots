@@ -48,6 +48,8 @@ export interface YieldsData {
 export type ImpactLevel = 'HIGH' | 'MEDIUM' | 'LOW'
 
 export interface CalendarEvent {
+  date: string            // YYYY-MM-DD
+  daysFromToday: number   // 0 = today, 1 = tomorrow, etc.
   time: string
   event: string
   impact: ImpactLevel
@@ -55,6 +57,13 @@ export interface CalendarEvent {
   forecast: number | null
   previous: number | null
   actual: number | null
+}
+
+export interface NewsItem {
+  headline: string
+  source: string
+  publishedAt: string   // ISO timestamp
+  hoursAgo: number
 }
 
 export interface FedExpectations {
@@ -124,7 +133,7 @@ export interface DailySnapshot {
   dollarLiquidity?: DollarLiquidity
   geopoliticalRisk?: GeopoliticalRisk
   economicCalendar?: CalendarEvent[]
-  newsHeadlines?: string[]
+  newsItems?: NewsItem[]
   briefing?: BriefingResult | null
 }
 

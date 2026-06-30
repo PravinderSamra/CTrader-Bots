@@ -97,6 +97,28 @@
   letter-spacing: -1px;
 }
 
+.cautionBanner {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--amber);
+  background: var(--gold-dim);
+  border: 1px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 6px 8px;
+  margin-bottom: 6px;
+}
+
+.dayHeader {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin: 8px 0 2px;
+  padding-top: 4px;
+  border-top: 1px solid var(--border-2);
+}
+
 .probBar {
   display: flex;
   align-items: center;

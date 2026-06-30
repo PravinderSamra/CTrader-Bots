@@ -33,11 +33,11 @@ export function App() {
     ? livePrices
     : (snapshot?.snapshotPrices ? pricesFromSnapshot(snapshot.snapshotPrices) : livePrices)
   const calendar = snapshot?.economicCalendar ?? []
-  const headlines = snapshot?.newsHeadlines ?? []
+  const newsItems = snapshot?.newsItems ?? []
   const vix = snapshot?.marketVolatility?.VIX ?? null
 
   const riskTone = aggregateData(
-    prices, snapshot, calendar, headlines, vix,
+    prices, snapshot, calendar, newsItems, vix,
     getSessionLabel(new Date().getUTCHours()),
   ).marketVolatility.riskTone
 
@@ -87,7 +87,7 @@ export function App() {
         </div>
 
         {/* Briefing panel — full width */}
-        <BriefingPanel briefing={snapshot?.briefing ?? null} headlines={headlines} />
+        <BriefingPanel briefing={snapshot?.briefing ?? null} newsItems={newsItems} />
       </main>
 
       <Footer />

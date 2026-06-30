@@ -1,4 +1,4 @@
-import type { BriefingResult } from '../../types/dashboard'
+import type { BriefingResult, NewsItem } from '../../types/dashboard'
 import { BiasGauge } from './BiasGauge'
 import styles from './BriefingPanel.module.css'
 
@@ -10,12 +10,18 @@ function fmtTime(iso: string): string {
   } catch { return iso }
 }
 
-interface Props {
-  briefing: BriefingResult | null
-  headlines: string[]
+function fmtHoursAgo(hoursAgo: number): string {
+  if (hoursAgo >= 999) return ''
+  if (hoursAgo < 1) return `${Math.round(hoursAgo * 60)}m ago`
+  return `${hoursAgo.toFixed(1)}h ago`
 }
 
-export function BriefingPanel({ briefing, headlines }: Props) {
+interface Props {
+  briefing: BriefingResult | null
+  newsItems: NewsItem[]
+}
+
+export function BriefingPanel({ briefing, newsItems }: Props) {
   return (
     <div className={styles.panel}>
       <div className={styles.header}>
@@ -47,7 +53,7 @@ export function BriefingPanel({ briefing, headlines }: Props) {
           <div className={styles.placeholder}>
             <div className={styles.placeholderTitle}>Briefing not yet available</div>
             <div className={styles.placeholderSub}>
-              The daily briefing is generated once per day by the data-fetch workflow (06:45 GMT, Mon–Fri).
+              The briefing is regenerated hourly by the data-fetch workflow (06:00–20:00 GMT, Mon–Fri).
               Check back after the next scheduled run.
             </div>
           </div>
@@ -58,11 +64,16 @@ export function BriefingPanel({ briefing, headlines }: Props) {
         )}
       </div>
 
-      {headlines.length > 0 && (
+      {newsItems.length > 0 && (
         <div className={styles.headlines}>
-          <div className={styles.headlinesLabel}>Market Headlines</div>
-          {headlines.map((h, i) => (
-            <div key={i} className={styles.headline}>→ {h}</div>
+          <div className={styles.headlinesLabel}>Recent Catalysts (last 24h)</div>
+          {newsItems.map((n, i) => (
+            <div key={i} className={styles.headline}>
+              → {n.headline}
+              {n.hoursAgo < 999 && (
+                <span className={styles.headlineMeta}> · {fmtHoursAgo(n.hoursAgo)} · {n.source}</span>
+              )}
+            </div>
           ))}
         </div>
       )}
