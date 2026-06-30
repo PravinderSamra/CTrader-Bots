@@ -17,7 +17,9 @@ Target: $ARGUMENTS (if blank, assume XAUUSD on the account's default trading sym
 4. `mcp__ctrader__get_trendbars` period `M_5`, count 100 → signal-timeframe structure.
 5. `mcp__ctrader__get_trendbars` period `M_1`, count 60 → entry-timeframe structure.
 6. `mcp__ctrader__get_positions` and `mcp__ctrader__get_balance` → check existing exposure and account size before sizing any new idea. If a position is already open on this symbol, say so up front and adjust guidance (don't suggest stacking against an open position).
-7. Fetch `https://pravindersamra.github.io/CTrader-Bots/xauusd-dashboard/data/daily-snapshot.json` (today's macro snapshot — DXY/yields/Fed expectations/COT positioning & open interest/ETF flows/STLFSI4 & NFCI dollar-liquidity stress/GPR geopolitical risk/VIX/GVZ). If the fetch fails or the data is more than 24h stale (`generatedAt`), say so explicitly and proceed without it rather than inventing values.
+7. Fetch `https://pravindersamra.github.io/CTrader-Bots/xauusd-dashboard/data/daily-snapshot.json` (the macro snapshot — DXY/yields/Fed expectations/COT positioning & open interest/ETF flows/STLFSI4 & NFCI dollar-liquidity stress/GPR geopolitical risk/VIX/GVZ — refreshed roughly hourly during London/NY hours, so treat `generatedAt` as "as of last refresh", not "as of midnight"). If the fetch fails or the data is more than 4h stale during session hours (or 24h stale outside session hours), say so explicitly and proceed without it rather than inventing values. Note two fields in particular:
+   - `economicCalendar` now spans the **whole current week**, not just today — each event carries `daysFromToday` (0 = today, 1 = tomorrow, ...). Use events with `daysFromToday > 0` and `impact: "HIGH"` to flag build-up caution ahead of releases later in the week.
+   - `newsItems` is a list of recent macro/micro headlines (last 24h, keyword-filtered for gold/Fed/dollar/yields/geopolitics/etc.) each carrying `hoursAgo` and `source`. Use `hoursAgo` to identify same-day, recent-hours catalysts — e.g. a rumor about central banks reducing dollar exposure a few hours ago is exactly the kind of item that should be cross-referenced against any unexplained DXY/gold move in step 5.
 8. **Run the structure engine.** Divide every `open/high/low/close` in the H_1/M_5/M_1 trendbars by `10^pipDigits` (from step 1) to get display prices, then build a JSON payload:
    ```json
    {"symbol": "XAUUSD", "current_price": <mid of bid/ask>, "h1": [...], "m5": [...], "m1": [...]}
@@ -78,7 +80,9 @@ Never proceed to analysis on partial/missing trendbar data — if any of steps 1
 - Dollar liquidity stress (STLFSI4/NFCI) — rising stress favors gold as a safe haven.
 - GPR geopolitical risk index — elevated GPR favors gold.
 - VIX/GVZ — elevated favors safe-haven flow into gold.
-- Write one sentence: does the macro backdrop support, conflict with, or stay neutral to the ICT structural bias?
+- **Recent catalysts (`newsItems`):** scan items with low `hoursAgo` (same session) for anything that plausibly explains an otherwise-unexplained move in DXY, yields, or gold in the last few hours — e.g. central-bank reserve-diversification rumors, tariff/sanction headlines, surprise data prints, safe-haven flow triggers. State explicitly which recent headline (if any) appears to be driving current price action, with its `hoursAgo` and source, rather than describing the move as unexplained. If nothing in `newsItems` plausibly explains a notable recent move, say so rather than inventing a cause.
+- **Build-up caution (`economicCalendar`):** check for HIGH-impact events with `daysFromToday` 1–4 (later this week, not today). If present, note that price action into the release is likely to be cautious/range-bound/positioning-driven rather than committal, and factor this into confidence — don't treat pre-event chop as a clean structural signal.
+- Write one sentence: does the macro backdrop (including any recent catalyst) support, conflict with, or stay neutral to the ICT structural bias?
 
 **STEP 6 — SESSION & TIME CONTEXT**
 - Use `session.current_session` (ASIA / LONDON / NEW YORK / OFF-HOURS — DST-aware, computed from America/New_York local time, not a fixed UTC-hour bucket) and `session.active_kill_zone` (LONDON KZ / NY KZ / SILVER BULLET 1 / SILVER BULLET 2 / LONDON CLOSE KZ / ASIA KZ, or null) directly from the engine output.
@@ -126,8 +130,10 @@ Never proceed to analysis on partial/missing trendbar data — if any of steps 1
 
 ## MACRO REGIME
 - [DXY, real yields, Fed expectations, COT/OI, ETF flows, dollar liquidity stress, GPR, VIX/GVZ — one line each]
+- **Recent Catalysts (last 24h):** [headline + hoursAgo + source for any news item plausibly driving current price action, or "none identified" if `newsItems` doesn't explain recent moves]
+- **Build-Up Caution:** [HIGH-impact event(s) later this week from `economicCalendar` with daysFromToday 1-4, or "none this week" — note expected cautious/range-bound positioning into the release]
 - **Macro Verdict:** [SUPPORTS / CONFLICTS WITH / NEUTRAL to the structural bias]
-- **Snapshot Freshness:** [generatedAt timestamp, flagged stale if >24h]
+- **Snapshot Freshness:** [generatedAt timestamp, flagged stale if >4h during session hours or >24h outside]
 
 ## SESSION CONTEXT
 - **Current Session:** [LONDON / NEW YORK / ASIA / OFF-HOURS — from `session.current_session`]

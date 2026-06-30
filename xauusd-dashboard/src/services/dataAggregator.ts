@@ -1,5 +1,5 @@
 import type {
-  CTraderPrices, DailySnapshot, CalendarEvent,
+  CTraderPrices, DailySnapshot, CalendarEvent, NewsItem,
   MarketVolatility, DollarLiquidity, GeopoliticalRisk,
 } from '../types/dashboard'
 
@@ -29,14 +29,14 @@ export interface AggregatedData {
   dollarLiquidity: DollarLiquidity | null
   geopoliticalRisk: GeopoliticalRisk | null
   calendar: CalendarEvent[]
-  headlines: string[]
+  newsItems: NewsItem[]
 }
 
 export function aggregateData(
   prices: CTraderPrices,
   snapshot: DailySnapshot | null,
   calendar: CalendarEvent[],
-  headlines: string[],
+  newsItems: NewsItem[],
   vix: number | null,
   session: string,
 ): AggregatedData {
@@ -69,7 +69,7 @@ export function aggregateData(
     dollarLiquidity: snapshot?.dollarLiquidity ?? null,
     geopoliticalRisk: snapshot?.geopoliticalRisk ?? null,
     calendar,
-    headlines,
+    newsItems,
   }
 }
 

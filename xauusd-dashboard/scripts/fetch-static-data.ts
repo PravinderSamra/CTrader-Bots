@@ -49,6 +49,8 @@ interface SnapshotPrices {
 }
 
 interface CalendarEvent {
+  date: string            // YYYY-MM-DD
+  daysFromToday: number   // 0 = today, 1 = tomorrow, etc.
   time: string
   event: string
   impact: 'HIGH' | 'MEDIUM' | 'LOW'
@@ -56,6 +58,13 @@ interface CalendarEvent {
   forecast: number | null
   previous: number | null
   actual: number | null
+}
+
+interface NewsItem {
+  headline: string
+  source: string
+  publishedAt: string   // ISO timestamp
+  hoursAgo: number
 }
 
 interface BriefingResult {
@@ -93,7 +102,7 @@ interface Snapshot {
   dollarLiquidity: { stlfsi: number | null; nfci: number | null }
   geopoliticalRisk: { gpr: number | null; gprDate: string | null }
   economicCalendar: CalendarEvent[]
-  newsHeadlines: string[]
+  newsItems: NewsItem[]
   briefing: BriefingResult | null
 }
 
@@ -727,12 +736,31 @@ function normaliseImpact(raw: string | undefined, eventName: string): CalendarEv
   return 'LOW'
 }
 
+// Today through Friday of the current week (UTC) — covers the rest of the trading
+// week so the dashboard/briefing can flag "build-up caution" ahead of events that
+// haven't happened yet, not just what's scheduled for today.
+function weekAheadRange(): { from: string; to: string } {
+  const now = new Date()
+  const fmt = (d: Date) => d.toISOString().slice(0, 10)
+  const day = now.getUTCDay() // 0=Sun .. 6=Sat
+  const daysToFriday = Math.max(day === 0 ? 5 : 5 - day, 0)
+  const friday = new Date(now)
+  friday.setUTCDate(now.getUTCDate() + daysToFriday)
+  return { from: fmt(now), to: fmt(friday) }
+}
+
+function daysBetween(dateStr: string, fromStr: string): number {
+  const a = new Date(`${dateStr}T00:00:00Z`).getTime()
+  const b = new Date(`${fromStr}T00:00:00Z`).getTime()
+  return Math.round((a - b) / 86_400_000)
+}
+
 async function fetchEconomicCalendar(): Promise<CalendarEvent[]> {
   console.log('Fetching economic calendar (Finnhub)...')
   if (!FINNHUB_KEY) { console.log('Finnhub: FINNHUB_API_KEY env var not set — skipping calendar'); return [] }
   try {
-    const dateStr = new Date().toISOString().slice(0, 10)
-    const url = `https://finnhub.io/api/v1/calendar/economic?from=${dateStr}&to=${dateStr}&token=${FINNHUB_KEY}`
+    const { from, to } = weekAheadRange()
+    const url = `https://finnhub.io/api/v1/calendar/economic?from=${from}&to=${to}&token=${FINNHUB_KEY}`
     const raw = await httpGet(url)
     const data = JSON.parse(raw) as { economicCalendar?: FinnhubEvent[] }
     if (!data.economicCalendar) return []
@@ -740,33 +768,60 @@ async function fetchEconomicCalendar(): Promise<CalendarEvent[]> {
       .filter(e => ['US', 'EU', 'GB', 'JP', 'EUR', 'USD', 'GBP', 'JPY'].some(c =>
         (e.country ?? e.currency ?? '').toUpperCase().includes(c)
       ))
-      .map(e => ({
-        time: e.time?.slice(11, 16) ?? '',
-        event: e.event,
-        impact: normaliseImpact(e.impact, e.event),
-        currency: e.currency ?? e.country ?? 'US',
-        forecast: e.estimate ?? null,
-        previous: e.prev ?? null,
-        actual: e.actual ?? null,
-      } satisfies CalendarEvent))
-      .sort((a, b) => a.time.localeCompare(b.time))
+      .map(e => {
+        const date = e.time?.slice(0, 10) ?? from
+        return {
+          date,
+          daysFromToday: daysBetween(date, from),
+          time: e.time?.slice(11, 16) ?? '',
+          event: e.event,
+          impact: normaliseImpact(e.impact, e.event),
+          currency: e.currency ?? e.country ?? 'US',
+          forecast: e.estimate ?? null,
+          previous: e.prev ?? null,
+          actual: e.actual ?? null,
+        } satisfies CalendarEvent
+      })
+      .sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time))
   } catch (err) {
     console.error('Economic calendar fetch failed:', err)
     return []
   }
 }
 
-async function fetchNewsHeadlines(): Promise<string[]> {
+// Catches both scheduled-data-release catalysts (CPI, NFP) and unscheduled/rumor-driven
+// catalysts (e.g. a "banks reduce dollar exposure" report moving DXY intraday) so the
+// briefing can explain *why* price moved in the last few hours, not just what's on the
+// calendar. Window is capped at 24h so stale headlines don't get reported as "recent."
+const NEWS_KEYWORDS = [
+  'gold', 'fed', 'inflation', 'yield', 'dollar', 'rate', 'powell', 'treasury',
+  'central bank', 'reserve', 'diversif', 'tariff', 'sanction', 'geopolit',
+  'safe haven', 'fx reserves', 'currency', 'recession', 'jobs report', 'payroll',
+  'ecb', 'boj', 'pboc',
+]
+const NEWS_WINDOW_HOURS = 24
+
+async function fetchNewsItems(): Promise<NewsItem[]> {
   console.log('Fetching news headlines (Finnhub)...')
   if (!FINNHUB_KEY) { console.log('Finnhub: FINNHUB_API_KEY env var not set — skipping headlines'); return [] }
   try {
     const raw = await httpGet(`https://finnhub.io/api/v1/news?category=general&token=${FINNHUB_KEY}`)
-    const data = JSON.parse(raw) as Array<{ headline: string }>
-    const keywords = ['gold', 'fed', 'inflation', 'yield', 'dollar', 'rate', 'powell', 'treasury']
+    const data = JSON.parse(raw) as Array<{ headline: string; source?: string; datetime?: number }>
+    const nowMs = Date.now()
     return data
-      .filter(a => keywords.some(k => a.headline.toLowerCase().includes(k)))
-      .slice(0, 5)
-      .map(a => a.headline)
+      .filter(a => NEWS_KEYWORDS.some(k => a.headline.toLowerCase().includes(k)))
+      .map(a => {
+        const publishedMs = (a.datetime ?? 0) * 1000
+        return {
+          headline: a.headline,
+          source: a.source ?? 'Finnhub',
+          publishedAt: publishedMs ? new Date(publishedMs).toISOString() : '',
+          hoursAgo: publishedMs ? Math.round((nowMs - publishedMs) / 3_600_000 * 10) / 10 : 999,
+        } satisfies NewsItem
+      })
+      .filter(n => n.hoursAgo <= NEWS_WINDOW_HOURS)
+      .sort((a, b) => a.hoursAgo - b.hoursAgo)
+      .slice(0, 8)
   } catch (err) {
     console.error('News headlines fetch failed:', err)
     return []
@@ -783,25 +838,29 @@ Your job is to write a daily intelligence briefing for a beginner day trader who
 
 The trader only trades WITH the trend (buying into uptrends, selling into downtrends) using the 1H chart to determine trend direction, the 5M chart for signals, and the 1M chart for precise entry. They trade during the London and New York sessions.
 
-You will receive a structured JSON snapshot of all the day's market data.
+You will receive a structured JSON snapshot of the current market data. The snapshot is refreshed roughly hourly during London/NY hours, so "recent" means since your last update, not necessarily since midnight.
+
+The snapshot includes:
+- `calendar`: this week's economic events, each tagged with `daysFromToday` (0 = today, 1+ = later this week). Events with `daysFromToday > 0` haven't happened yet — markets sometimes trade cautiously/range-bound in the days leading up to a major one (e.g. NFP, CPI, FOMC).
+- `newsItems`: recent headlines (last 24h only), each tagged with `hoursAgo`. These include both scheduled-data headlines AND unscheduled/rumor-driven catalysts (central-bank rumors, reserve-diversification reports, tariffs, sanctions, geopolitical escalation) that can move the dollar and gold without being on any calendar.
 
 Write a SINGLE flowing briefing paragraph (200–300 words) using PLAIN, BEGINNER-FRIENDLY language. Avoid jargon wherever possible. When you use a financial term, briefly explain what it means in brackets.
 
 Your briefing MUST follow this structure within the single paragraph:
-1. REGIME LINE: Which forces are most relevant today and why.
-2. OVERNIGHT CONTEXT: What happened in Asia, where gold opened London, direction of the dollar and yields overnight, any key headlines.
-3. DIRECTIONAL BIAS with plain reasoning: Is the day likely to favour gold going UP, DOWN, or being CHOPPY — and in simple terms, WHY.
+1. REGIME LINE: Which forces are most relevant right now and why.
+2. RECENT CATALYSTS: Using `newsItems`, explicitly name any headline from the last few hours that plausibly explains a dollar or gold move (cite how many hours ago it broke). If nothing in `newsItems` looks market-moving, say so rather than inventing significance.
+3. DIRECTIONAL BIAS with plain reasoning: Is price likely to favour gold going UP, DOWN, or being CHOPPY from here — and in simple terms, WHY.
 4. CONFIDENCE SCORE: Express confidence in the bias as X/10. Explain what would change the view.
-5. EVENT RISK: Any scheduled news today, when it hits (GMT), what to expect and how to position around it.
-6. KEY LEVELS: The most important price levels to watch today. Use the ADR data to comment on how much move is likely remaining.
-7. TRADE INTEGRATION: Explicit guidance on whether today is a good day for trend-following trades, what size/conviction is appropriate.
+5. EVENT RISK: Any scheduled news today (when it hits GMT, what to expect), AND a build-up caution line if a HIGH-impact event is later this week (`daysFromToday` 1-4) — note that price may trade cautiously/range-bound into it.
+6. KEY LEVELS: The most important price levels to watch from here. Use the ADR data to comment on how much move is likely remaining.
+7. TRADE INTEGRATION: Explicit guidance on whether now is a good window for trend-following trades, what size/conviction is appropriate.
 
-End with one sentence that a beginner can screenshot and remember for the day.
+End with one sentence that a beginner can screenshot and remember.
 
 CRITICAL RULES:
 - Use plain English. Write as if explaining to a smart person who is new to financial markets.
 - Never say "in conclusion" or "to summarise".
-- Do NOT make up data. Only use what is in the JSON. If data is null, say so.
+- Do NOT make up data. Only use what is in the JSON. If data is null or `newsItems`/`calendar` are empty, say so.
 - Return your response as JSON:
   { "biasScore": number from -5 to +5 (negative = bearish, positive = bullish), "biasLabel": "BEARISH" | "NEUTRAL" | "BULLISH", "confidence": number 1-10, "briefing": "your paragraph here" }`
 
@@ -852,7 +911,7 @@ async function generateDailyBriefing(snapshot: Omit<Snapshot, 'briefing'>): Prom
     dollarLiquidity: snapshot.dollarLiquidity,
     geopoliticalRisk: snapshot.geopoliticalRisk,
     calendar: snapshot.economicCalendar,
-    headlines: snapshot.newsHeadlines,
+    newsItems: snapshot.newsItems,
   }
 
   try {
@@ -932,7 +991,7 @@ async function main() {
 
   console.log('=== XAUUSD Daily Data Fetch ===')
 
-  const [yields, fedExpectations, gvz, vix, stlfsi, nfci, positioning, snapshotPrices, geopoliticalRisk, economicCalendar, newsHeadlines] = await Promise.all([
+  const [yields, fedExpectations, gvz, vix, stlfsi, nfci, positioning, snapshotPrices, geopoliticalRisk, economicCalendar, newsItems] = await Promise.all([
     fetchYields(),
     fetchFedWatch(),
     fetchGVZ(),
@@ -943,7 +1002,7 @@ async function main() {
     fetchCTraderPrices(),
     fetchGPR(),
     fetchEconomicCalendar(),
-    fetchNewsHeadlines(),
+    fetchNewsItems(),
   ])
   console.log(`VIX FRED VIXCLS: ${vix}, STLFSI4: ${stlfsi}, NFCI: ${nfci}`)
 
@@ -962,7 +1021,7 @@ async function main() {
     dollarLiquidity: { stlfsi, nfci },
     geopoliticalRisk,
     economicCalendar,
-    newsHeadlines,
+    newsItems,
   }
 
   // Briefing runs last — it summarises everything fetched above.
@@ -977,7 +1036,7 @@ async function main() {
   console.log(`GLD: ${etfFlows.gldTonnes ?? 'null'}t`)
   console.log(`COT net: ${positioning.cotNetLong ?? 'null'}`)
   console.log(`XAUUSD price: ${snapshotPrices?.XAUUSD ?? 'null'}`)
-  console.log(`Calendar events: ${economicCalendar.length}, headlines: ${newsHeadlines.length}`)
+  console.log(`Calendar events (week): ${economicCalendar.length}, news items (24h): ${newsItems.length}`)
   console.log(`Briefing: ${briefing ? `${briefing.biasLabel} ${briefing.biasScore} (conf ${briefing.confidence})` : 'null'}`)
 }
 

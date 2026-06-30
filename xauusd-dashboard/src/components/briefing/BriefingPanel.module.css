@@ -147,3 +147,9 @@
   line-height: 1.6;
   padding: 2px 0;
 }
+
+.headlineMeta {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-dim);
+}
