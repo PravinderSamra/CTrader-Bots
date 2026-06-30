@@ -1,4 +1,16 @@
 {
-  "updatedAt": "",
-  "sessions": []
+  "updatedAt": "2026-06-30T21:48:30.283Z",
+  "sessions": [
+    {
+      "date": "2026-06-30",
+      "time": "21:48",
+      "filename": "2026-06-30/21-48.json",
+      "session": "NEW_YORK",
+      "bias": "BEARISH",
+      "biasScore": -3,
+      "probability": 65,
+      "confidence": 5,
+      "timestamp": "2026-06-30T21:48:30.283Z"
+    }
+  ]
 }
