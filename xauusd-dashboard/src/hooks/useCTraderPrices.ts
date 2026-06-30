@@ -9,7 +9,20 @@ const POLL_MS = 15_000
 const PIP_DIGITS: Record<string, number> = {
   XAUUSD: 5, XAGUSD: 5,
   EURUSD: 5, USDJPY: 5, USDCHF: 5, USDCNH: 5,
+  GBPUSD: 5, USDCAD: 5, USDSEK: 5,
   US500: 5, GER40: 5, UK100: 5,
+}
+
+// Official ICE DXY formula: 50.14348 × EUR^-0.576 × JPY^0.136 × GBP^-0.119 × CAD^0.091 × SEK^0.042 × CHF^0.036
+function computeDXY(eur: number, jpy: number, gbp: number, cad: number, sek: number, chf: number): number {
+  if (eur <= 0 || jpy <= 0 || gbp <= 0 || cad <= 0 || sek <= 0 || chf <= 0) return 0
+  return 50.14348
+    * Math.pow(eur, -0.576)
+    * Math.pow(jpy, 0.136)
+    * Math.pow(gbp, -0.119)
+    * Math.pow(cad, 0.091)
+    * Math.pow(sek, 0.042)
+    * Math.pow(chf, 0.036)
 }
 
 // ── MCP protocol helpers ────────────────────────────────────────────────────
@@ -126,6 +139,7 @@ function emptyPrices(status: CTraderPrices['status']): CTraderPrices {
   return {
     XAUUSD: z, XAGUSD: z, goldSilverRatio: 0,
     DXY: z, EURUSD: 0, USDJPY: 0, USDCHF: 0, USDCNH: 0,
+    GBPUSD: 0, USDCAD: 0, USDSEK: 0,
     US500: z, GER40: z, UK100: z,
     ADR_14day: null, ADR_usedToday: null,
     lastUpdated: '', status,
@@ -159,10 +173,10 @@ export function pricesFromSnapshot(sp: SnapshotPrices): CTraderPrices {
   const eur = sp.EURUSD ?? 0
   const jpy = sp.USDJPY ?? 0
   const chf = sp.USDCHF ?? 0
-  // Official DXY formula (ICE). Fixed factor ~1.099 covers GBP(-0.119), CAD(+0.091), SEK(+0.042).
-  const dxyPrice = eur > 0 && jpy > 0
-    ? parseFloat((50.14348 * Math.pow(eur, -0.576) * Math.pow(jpy, 0.136) * Math.pow(chf > 0 ? chf : 0.85, 0.036) * 1.099).toFixed(2))
-    : 0
+  const gbp = sp.GBPUSD ?? 0
+  const cad = sp.USDCAD ?? 0
+  const sek = sp.USDSEK ?? 0
+  const dxyPrice = parseFloat(computeDXY(eur, jpy, gbp, cad, sek, chf).toFixed(2))
   return {
     XAUUSD: pt(sp.XAUUSD),
     XAGUSD: pt(sp.XAGUSD),
@@ -172,6 +186,9 @@ export function pricesFromSnapshot(sp: SnapshotPrices): CTraderPrices {
     USDJPY: sp.USDJPY ?? 0,
     USDCHF: sp.USDCHF ?? 0,
     USDCNH: sp.USDCNH ?? 0,
+    GBPUSD: gbp,
+    USDCAD: cad,
+    USDSEK: sek,
     US500: pt(sp.US500),
     GER40:  pt(sp.GER40),
     UK100:  pt(sp.UK100),
@@ -210,7 +227,7 @@ export function useCTraderPrices(): CTraderPrices {
       }
       const smap = symbolMapRef.current
 
-      const SYMBOLS = ['XAUUSD', 'XAGUSD', 'EURUSD', 'USDJPY', 'USDCHF', 'USDCNH', 'US500', 'GER40', 'UK100']
+      const SYMBOLS = ['XAUUSD', 'XAGUSD', 'EURUSD', 'USDJPY', 'USDCHF', 'USDCNH', 'GBPUSD', 'USDCAD', 'USDSEK', 'US500', 'GER40', 'UK100']
       const ids = SYMBOLS.map(s => getSymbolId(s, smap)).filter((id): id is number => id != null)
 
       const spotRaw = await callTool('get_spot_prices', { symbolId: ids }, sid)
@@ -268,17 +285,23 @@ export function useCTraderPrices(): CTraderPrices {
       const chf = rawCHF.bid != null ? rawToDisplay((rawCHF.bid + (rawCHF.ask ?? rawCHF.bid)) / 2, 'USDCHF') : 0
       const rawCNH = getSpot('USDCNH')
       const cnh = rawCNH.bid != null ? rawToDisplay((rawCNH.bid + (rawCNH.ask ?? rawCNH.bid)) / 2, 'USDCNH') : 0
+      const rawGBP = getSpot('GBPUSD')
+      const gbp = rawGBP.bid != null ? rawToDisplay((rawGBP.bid + (rawGBP.ask ?? rawGBP.bid)) / 2, 'GBPUSD') : 0
+      const rawCAD = getSpot('USDCAD')
+      const cad = rawCAD.bid != null ? rawToDisplay((rawCAD.bid + (rawCAD.ask ?? rawCAD.bid)) / 2, 'USDCAD') : 0
+      const rawSEK = getSpot('USDSEK')
+      const sek = rawSEK.bid != null ? rawToDisplay((rawSEK.bid + (rawSEK.ask ?? rawSEK.bid)) / 2, 'USDSEK') : 0
 
-      // Official DXY formula (ICE). Fixed factor ~1.099 covers GBP(-0.119), CAD(+0.091), SEK(+0.042).
-      const dxyPrice = eur > 0 && jpy > 0
-        ? parseFloat((50.14348 * Math.pow(eur, -0.576) * Math.pow(jpy, 0.136) * Math.pow(chf > 0 ? chf : 0.85, 0.036) * 1.099).toFixed(2))
-        : 0
+      // Official ICE DXY formula computed from all 6 real components (no approximation).
+      const dxyPrice = parseFloat(computeDXY(eur, jpy, gbp, cad, sek, chf).toFixed(2))
       const oEur = todayOpen['EURUSD'] ? rawToDisplay(todayOpen['EURUSD'], 'EURUSD') : eur
       const oJpy = todayOpen['USDJPY'] ? rawToDisplay(todayOpen['USDJPY'], 'USDJPY') : jpy
       const oChf = todayOpen['USDCHF'] ? rawToDisplay(todayOpen['USDCHF'], 'USDCHF') : chf
-      const dxyOpen = oEur > 0 && oJpy > 0
-        ? 50.14348 * Math.pow(oEur, -0.576) * Math.pow(oJpy, 0.136) * Math.pow(oChf > 0 ? oChf : 0.85, 0.036) * 1.099
-        : dxyPrice
+      const oGbp = todayOpen['GBPUSD'] ? rawToDisplay(todayOpen['GBPUSD'], 'GBPUSD') : gbp
+      const oCad = todayOpen['USDCAD'] ? rawToDisplay(todayOpen['USDCAD'], 'USDCAD') : cad
+      const oSek = todayOpen['USDSEK'] ? rawToDisplay(todayOpen['USDSEK'], 'USDSEK') : sek
+      const dxyOpenRaw = computeDXY(oEur, oJpy, oGbp, oCad, oSek, oChf)
+      const dxyOpen = dxyOpenRaw > 0 ? dxyOpenRaw : dxyPrice
       const dxy: typeof xau = {
         price: dxyPrice,
         changeDay: dxyPrice - dxyOpen,
@@ -294,6 +317,9 @@ export function useCTraderPrices(): CTraderPrices {
         USDJPY: jpy,
         USDCHF: chf,
         USDCNH: cnh,
+        GBPUSD: gbp,
+        USDCAD: cad,
+        USDSEK: sek,
         US500: makePrice(getSpot('US500'), todayOpen['US500'], 'US500'),
         GER40:  makePrice(getSpot('GER40'),  todayOpen['GER40'],  'GER40'),
         UK100:  makePrice(getSpot('UK100'),  todayOpen['UK100'],  'UK100'),

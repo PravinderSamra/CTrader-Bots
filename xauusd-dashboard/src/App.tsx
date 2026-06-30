@@ -81,6 +81,8 @@ export function App() {
             prices={prices}
             vix={vix}
             riskTone={riskTone}
+            dollarLiquidity={snapshot?.dollarLiquidity ?? null}
+            geopoliticalRisk={snapshot?.geopoliticalRisk ?? null}
           />
           <FedTile fed={snapshot?.fedExpectations ?? null} />
         </div>

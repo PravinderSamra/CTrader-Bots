@@ -1,6 +1,6 @@
 import type {
   CTraderPrices, DailySnapshot, CalendarEvent,
-  MarketVolatility,
+  MarketVolatility, DollarLiquidity, GeopoliticalRisk,
 } from '../types/dashboard'
 
 export interface AggregatedData {
@@ -26,6 +26,8 @@ export interface AggregatedData {
   marketVolatility: MarketVolatility
   positioning: DailySnapshot['positioning'] | null
   etfFlows: DailySnapshot['etfFlows'] | null
+  dollarLiquidity: DollarLiquidity | null
+  geopoliticalRisk: GeopoliticalRisk | null
   calendar: CalendarEvent[]
   headlines: string[]
 }
@@ -64,6 +66,8 @@ export function aggregateData(
     marketVolatility: { VIX: vix, GVZ: gvz, riskTone },
     positioning: snapshot?.positioning ?? null,
     etfFlows: snapshot?.etfFlows ?? null,
+    dollarLiquidity: snapshot?.dollarLiquidity ?? null,
+    geopoliticalRisk: snapshot?.geopoliticalRisk ?? null,
     calendar,
     headlines,
   }

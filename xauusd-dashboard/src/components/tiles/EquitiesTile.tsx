@@ -1,4 +1,4 @@
-import type { CTraderPrices, MarketVolatility } from '../../types/dashboard'
+import type { CTraderPrices, MarketVolatility, DollarLiquidity, GeopoliticalRisk } from '../../types/dashboard'
 import styles from './Tile.module.css'
 
 function fmt(v: number, dp = 2): string {
@@ -20,9 +20,11 @@ interface Props {
   prices: CTraderPrices
   vix: number | null
   riskTone: MarketVolatility['riskTone']
+  dollarLiquidity?: DollarLiquidity | null
+  geopoliticalRisk?: GeopoliticalRisk | null
 }
 
-export function EquitiesTile({ prices, vix, riskTone }: Props) {
+export function EquitiesTile({ prices, vix, riskTone, dollarLiquidity, geopoliticalRisk }: Props) {
   const isLive = prices.status === 'live'
 
   const tone = riskTone ?? 'NEUTRAL'
@@ -35,6 +37,12 @@ export function EquitiesTile({ prices, vix, riskTone }: Props) {
 
   const vixCtx = vix == null ? null : vix > 25 ? 'ELEVATED' : vix > 15 ? 'NORMAL' : 'CALM'
   const vixCls = vix == null ? 'flat' : vix > 25 ? 'down' : vix > 15 ? 'flat' : 'up'
+
+  const stlfsi = dollarLiquidity?.stlfsi ?? null
+  const stlfsiCls = stlfsi == null ? 'flat' : stlfsi > 0.5 ? 'down' : stlfsi < -0.5 ? 'up' : 'flat'
+
+  const gpr = geopoliticalRisk?.gpr ?? null
+  const gprCls = gpr == null ? 'flat' : gpr > 150 ? 'down' : gpr < 80 ? 'up' : 'flat'
 
   return (
     <div className="tile">
@@ -72,6 +80,14 @@ export function EquitiesTile({ prices, vix, riskTone }: Props) {
             {vix != null ? `${fmt(vix, 1)}` : '—'}
             {vixCtx && <span className={`badge badge-muted ${styles.badgeInline}`}>{vixCtx}</span>}
           </span>
+        </div>
+        <div className="tile-row">
+          <span className="tile-label">Fin. Stress</span>
+          <span className={`tile-val mono ${stlfsiCls}`}>{stlfsi != null ? fmt(stlfsi) : '—'}</span>
+        </div>
+        <div className="tile-row">
+          <span className="tile-label">Geo Risk</span>
+          <span className={`tile-val mono ${gprCls}`}>{gpr != null ? fmt(gpr, 1) : '—'}</span>
         </div>
       </div>
 

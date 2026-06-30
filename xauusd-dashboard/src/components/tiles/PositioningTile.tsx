@@ -52,6 +52,17 @@ export function PositioningTile({ cot }: Props) {
             <span className="tile-label">Crowd</span>
             {crowdBadge}
           </div>
+          <hr className="tile-divider" />
+          <div className="tile-row">
+            <span className="tile-label">Open Interest</span>
+            <span className="tile-val mono">{cot.openInterest != null ? cot.openInterest.toLocaleString('en-US') : '—'}</span>
+          </div>
+          <div className="tile-row">
+            <span className="tile-label">OI change</span>
+            <span className={`tile-val mono ${cot.openInterestChange == null ? 'flat' : cot.openInterestChange > 0 ? 'up' : cot.openInterestChange < 0 ? 'down' : 'flat'}`}>
+              {fmtNet(cot.openInterestChange)}
+            </span>
+          </div>
           <div className="tile-row">
             <span className="tile-label">Report date</span>
             <span className="tile-val mono">{fmtDate(cot.reportDate)}</span>
