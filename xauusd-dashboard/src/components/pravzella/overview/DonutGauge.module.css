@@ -1,0 +1,11 @@
+.donut {
+  position: relative;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.hole {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--surface);
+}

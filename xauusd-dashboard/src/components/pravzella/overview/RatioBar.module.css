@@ -1,0 +1,39 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.track {
+  display: flex;
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: var(--surface-2);
+}
+
+.win {
+  background: var(--green);
+}
+
+.loss {
+  background: var(--red);
+}
+
+.labels {
+  display: flex;
+  justify-content: space-between;
+}
+
+.winLabel {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--green);
+}
+
+.lossLabel {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--red);
+}

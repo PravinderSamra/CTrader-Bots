@@ -45,12 +45,20 @@ jobs:
         run: cd xauusd-dashboard && npm ci
 
       - name: Build XAUUSD dashboard
-        # No secrets here by design: prices/calendar/headlines/briefing all come from
-        # the pre-built, secret-free public/data/daily-snapshot.json committed by the
-        # daily-fetch workflow. Injecting API keys here would bake them into this
-        # public, statically-hosted JS bundle — see xauusd-daily-fetch.yml for where
-        # the real (server-side) API calls happen.
+        # No third-party API secrets here by design: prices/calendar/headlines/briefing
+        # all come from the pre-built, secret-free public/data/daily-snapshot.json
+        # committed by the daily-fetch workflow — see xauusd-daily-fetch.yml for where
+        # those real (server-side) API calls happen.
+        #
+        # VITE_SUPABASE_URL/ANON_KEY are the one exception: Supabase's anon key is
+        # designed to be public (it grants nothing by itself — access control is Row
+        # Level Security + a real login, see xauusd-dashboard/PRAVZELLA.md "Auth
+        # model"), unlike the bearer tokens described above, so it's safe to inline
+        # into this public bundle.
         run: cd xauusd-dashboard && npm run build
+        env:
+          VITE_SUPABASE_URL:      ${{ secrets.SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
 
       - name: Build site structure
         run: |

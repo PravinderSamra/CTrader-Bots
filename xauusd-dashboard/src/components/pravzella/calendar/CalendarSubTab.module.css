@@ -1,0 +1,146 @@
+.tab {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.calendarPane {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 20px 32px;
+  min-width: 0;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.navBtn {
+  font-family: var(--mono);
+  font-size: 14px;
+  width: 26px;
+  height: 26px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.navBtn:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+.monthLabel {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  min-width: 160px;
+}
+
+.monthTotalPos {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--green);
+  margin-left: auto;
+}
+
+.monthTotalNeg {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--red);
+  margin-left: auto;
+}
+
+.weekHeader {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.weekHeaderCell {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-align: center;
+  padding-bottom: 4px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.cellEmpty {
+  aspect-ratio: 1.15;
+}
+
+.cell {
+  aspect-ratio: 1.15;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 2px;
+  padding: 6px 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: default;
+  text-align: left;
+  transition: border-color 0.12s;
+}
+
+.cell:disabled {
+  cursor: default;
+}
+
+.cell:not(:disabled) {
+  cursor: pointer;
+}
+
+.cellPos {
+  background: var(--green-dim);
+  border-color: rgba(59, 181, 122, 0.35);
+}
+
+.cellNeg {
+  background: var(--red-dim);
+  border-color: rgba(232, 80, 80, 0.35);
+}
+
+.cellActive {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px var(--gold);
+}
+
+.cellDate {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.cellPnl {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.cellPos .cellPnl { color: var(--green); }
+.cellNeg .cellPnl { color: var(--red); }
+
+.cellCount {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-dim);
+}
