@@ -14,9 +14,10 @@ import { PositioningTile } from './components/tiles/PositioningTile'
 import { FlowsTile } from './components/tiles/FlowsTile'
 import { BriefingPanel } from './components/briefing/BriefingPanel'
 import { GoldSessionTab } from './components/gold-session/GoldSessionTab'
+import { PravzellaTab } from './components/pravzella/PravzellaTab'
 import styles from './App.module.css'
 
-type DashTab = 'dashboard' | 'gold-session'
+type DashTab = 'dashboard' | 'gold-session' | 'pravzella'
 
 function getSessionLabel(utcH: number): string {
   if (utcH >= 13 && utcH < 16) return 'OVERLAP'
@@ -73,6 +74,12 @@ export function App() {
         >
           Gold-Session AI
         </button>
+        <button
+          className={`${styles.tabBtn} ${activeTab === 'pravzella' ? styles.tabBtnActive : ''}`}
+          onClick={() => setActiveTab('pravzella')}
+        >
+          Pravzella
+        </button>
       </nav>
 
       {activeTab === 'dashboard' && (
@@ -114,6 +121,12 @@ export function App() {
       {activeTab === 'gold-session' && (
         <div className={styles.sessionPane}>
           <GoldSessionTab />
+        </div>
+      )}
+
+      {activeTab === 'pravzella' && (
+        <div className={styles.sessionPane}>
+          <PravzellaTab />
         </div>
       )}
 

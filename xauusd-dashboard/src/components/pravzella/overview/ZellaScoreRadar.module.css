@@ -1,0 +1,50 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.ring {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.spoke {
+  stroke: var(--border-2);
+  stroke-width: 1;
+}
+
+.data {
+  fill: var(--gold-dim);
+  stroke: var(--gold);
+  stroke-width: 1.5;
+}
+
+.axisLabel {
+  font-family: var(--mono);
+  font-size: 9px;
+  fill: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.scoreWrap {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.scoreLabel {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.scoreValue {
+  font-family: var(--mono);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--gold);
+}
