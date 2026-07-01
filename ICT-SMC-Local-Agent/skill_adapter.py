@@ -36,11 +36,16 @@ from analysis import structure, sessions
 
 def _parse_candles(raw_candles: list, timeframe: str, symbol: str) -> list[Candle]:
     candles = []
+    skipped = 0
     for bar in raw_candles:
         try:
             ts_raw = bar["timestamp"]
             if isinstance(ts_raw, (int, float)):
                 ts = datetime.fromtimestamp(ts_raw / 1000 if ts_raw > 1_000_000_000_000 else ts_raw, tz=timezone.utc)
+            elif isinstance(ts_raw, str) and ts_raw.strip().lstrip("-").isdigit():
+                # Numeric string e.g. "1782684000000" — treat as ms epoch
+                ts_int = int(ts_raw)
+                ts = datetime.fromtimestamp(ts_int / 1000 if abs(ts_int) > 1_000_000_000_000 else ts_int, tz=timezone.utc)
             else:
                 ts = datetime.fromisoformat(str(ts_raw).replace("Z", "+00:00"))
             candles.append(Candle(
@@ -54,7 +59,14 @@ def _parse_candles(raw_candles: list, timeframe: str, symbol: str) -> list[Candl
                 symbol=symbol,
             ))
         except (KeyError, TypeError, ValueError):
+            skipped += 1
             continue
+    if skipped:
+        print(
+            f"[skill_adapter] WARNING: skipped {skipped}/{len(raw_candles)} candles"
+            f" in {timeframe} due to parse errors",
+            file=sys.stderr,
+        )
     candles.sort(key=lambda c: c.timestamp)
     return candles
 

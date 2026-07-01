@@ -22,7 +22,7 @@ Call all of the following in one response:
 - `mcp__ctrader__get_balance` → account balance/equity/free margin for position sizing.
 - **Fetch macro snapshot:** `https://pravindersamra.github.io/CTrader-Bots/xauusd-dashboard/data/daily-snapshot.json` (DXY/yields/Fed/COT/ETF flows/STLFSI4/NFCI/GPR/VIX/GVZ/economicCalendar/newsItems — refreshed hourly during London/NY hours; treat `generatedAt` as "as of last refresh". If fetch fails or data is >4h stale during session hours / >24h stale outside, say so and proceed without it. An empty array `[]` for `economicCalendar` or `newsItems` means "fetcher ran but found nothing" — report it as "no events/no catalysts" rather than "unavailable".)
 - **Finnhub (if API key is in environment):** pull economic calendar and recent headlines for additional event-risk context. If no key, skip and note it — the macro snapshot's `economicCalendar` and `newsItems` fields already cover this.
-- **Pre-load TradingView schema:** Call `ToolSearch` with query `select:mcp__tradingview-mcp__recognize_market_pattern` — this ensures the schema is cached before Phase C with no extra round-trip. Fire this in the same response as the other Phase A calls.
+- **Pre-load TradingView schema (best-effort):** Call `ToolSearch` with query `select:mcp__tradingview-mcp__recognize_market_pattern`. Fire this in the same response as the other Phase A calls. **If ToolSearch returns nothing (server not yet initialised), do not stop or retry here — Phase C has a mandatory retry that fires after the server has had Phase A+B warmup time (~20–40 s).**
 
 ### Phase B — Requires symbolId from Phase A (fire all at once)
 
@@ -37,27 +37,31 @@ Once Phase A completes and symbolId is known, call all of the following in one r
 
 Never proceed to Phase C on partial/missing trendbar data — if any Phase B call fails, report the failure and stop rather than guessing prices.
 
-### Phase C — Requires trendbar data from Phase B (fire both at once)
+### Phase C — Requires trendbar data from Phase B (two sub-steps)
 
-Once Phase B completes, call both of the following in one response:
+#### Phase C1 — Fire both at once in one response
 
 - **Structure engine:** divide every H_1/M_5/M_1 `open/high/low/close` by `10^pipDigits` to get display prices, then build:
   ```json
   {"symbol": "XAUUSD", "current_price": <mid of bid/ask>, "h1": [...], "m5": [...], "m1": [...]}
   ```
-  where each candle is `{"timestamp": "<ISO8601 UTC>", "open": ..., "high": ..., "low": ..., "close": ..., "volume": ...}`. Write to a temp file and run:
+  where each candle is `{"timestamp": <integer ms epoch>, "open": ..., "high": ..., "low": ..., "close": ..., "volume": ...}`. **Use plain integers for timestamps — do NOT wrap them in str().** Write to a temp file and run:
   ```bash
   python3 /home/user/CTrader-Bots/ICT-SMC-Local-Agent/skill_adapter.py < /tmp/gold_session_input.json
   ```
   Returns per-timeframe: trend, premium/discount + OTE zone, graded FVGs (A+/A/B/C/SKIP), quality-scored OBs (1–5), BSL/SSL liquidity pools, H1 volume profile (POC/VAH/VAL/LVNs), Asian range + London-sweep flag, live session/kill-zone/bias notes. Treat as ground truth for structure levels. If the script errors or returns `{"error": ...}`, note the degradation and continue with manual trendbar analysis.
 
-- **Cross-check:** `mcp__tradingview-mcp__recognize_market_pattern` — schema was pre-loaded in Phase A via ToolSearch. Call with:
+- **TradingView schema retry (mandatory):** Call `ToolSearch` with query `select:mcp__tradingview-mcp__recognize_market_pattern` in the same response as the structure engine Bash call. By this point, Phase A+B have elapsed (~20–40 s) — the MCP server has had time to initialise, making this the reliable load point. If ToolSearch still returns nothing, mark the cross-check as UNAVAILABLE and proceed to analysis.
+
+#### Phase C2 — After C1 completes (depends on schema)
+
+- **Cross-check:** `mcp__tradingview-mcp__recognize_market_pattern` — only call this once the Phase C1 ToolSearch confirmed the schema is loaded. Call with:
   - `symbol` = target symbol string (e.g. `"XAUUSD"`)
   - `timeframe` = `"5m"`
   - `recent_candles` = last 15 M_5 candles as display-price `{open, high, low, close, volume}` dicts (already converted from pipettes)
   - `indicators` = estimated from the same candles: `{"RSI": <14-period estimate>, "trend": "<BULLISH|BEARISH|NEUTRAL>", "volatility": "HIGH|MEDIUM|LOW"}`
   
-  This is an independent non-ICT read — use it only to confirm or challenge the structural bias, never to override it. If the server is still initialising (tool call errors with a connection/timeout error rather than an argument error), retry once after a brief pause; if it fails a second time, note the unavailability and proceed.
+  This is an independent non-ICT read — use it only to confirm or challenge the structural bias, never to override it. If the tool call itself errors (connection/timeout), note the unavailability and proceed. **Do not call this tool if Phase C1 ToolSearch returned no schema** — it will fail with InputValidationError.
 
 Two notes on macro snapshot fields (relevant to STEP 5 analysis):
 - `economicCalendar` spans the **whole current week** — use events with `daysFromToday > 0` and `impact: "HIGH"` to flag build-up caution ahead of later-week releases.
