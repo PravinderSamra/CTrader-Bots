@@ -382,8 +382,15 @@ def _compute_fvg_setup(fvg: FVGResult, ctx: MarketContext) -> Optional[dict]:
             tp2_label = f"SSL ({ssl[0].test_count}× tested)"
 
     # TP3: prior day high (bull) / prior day low (bear)
+    # Must be beyond entry in trade direction — if price has already surpassed PDH/PDL
+    # the prior day level sits on the wrong side of the FVG and is not a valid TP.
     tp3 = ctx.prior_day_high if is_bull else ctx.prior_day_low
     tp3_label = "prior day high (BSL)" if is_bull else "prior day low (SSL)"
+    if tp3 is not None:
+        if is_bull and tp3 <= entry:
+            tp3 = None  # PDH is below entry — not a valid long target
+        elif not is_bull and tp3 >= entry:
+            tp3 = None  # PDL is above entry — not a valid short target
 
     # RR ratios
     rr_tp1 = abs(tp1 - entry) / stop_size if stop_size > 0 else 0
