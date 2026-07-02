@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, lazy, Suspense } from 'react'
 import { useCTraderPrices, pricesFromSnapshot } from './hooks/useCTraderPrices'
 import { useDailySnapshot } from './hooks/useFredData'
 import { aggregateData } from './services/dataAggregator'
@@ -14,8 +14,11 @@ import { PositioningTile } from './components/tiles/PositioningTile'
 import { FlowsTile } from './components/tiles/FlowsTile'
 import { BriefingPanel } from './components/briefing/BriefingPanel'
 import { GoldSessionTab } from './components/gold-session/GoldSessionTab'
-import { PravzellaTab } from './components/pravzella/PravzellaTab'
 import styles from './App.module.css'
+
+// Lazy-loaded: the Firebase SDK it pulls in is sizeable, and the Macro Dashboard /
+// Gold-Session AI tabs (the vast majority of page loads) never touch it.
+const PravzellaTab = lazy(() => import('./components/pravzella/PravzellaTab').then(m => ({ default: m.PravzellaTab })))
 
 type DashTab = 'dashboard' | 'gold-session' | 'pravzella'
 
@@ -126,7 +129,9 @@ export function App() {
 
       {activeTab === 'pravzella' && (
         <div className={styles.sessionPane}>
-          <PravzellaTab />
+          <Suspense fallback={<div className={styles.tabLoading}>Loading…</div>}>
+            <PravzellaTab />
+          </Suspense>
         </div>
       )}
 

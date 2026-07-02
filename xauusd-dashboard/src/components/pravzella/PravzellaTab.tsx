@@ -11,8 +11,8 @@ import styles from './PravzellaTab.module.css'
 type SubTab = 'overview' | 'calendar' | 'trade-log'
 
 function PravzellaContent() {
-  const { session, signOut } = useAuth()
-  const { trades, loading, error } = useTrades(session)
+  const { user, signOut } = useAuth()
+  const { trades, loading, error } = useTrades(user)
   const [subTab, setSubTab] = useState<SubTab>('overview')
 
   const metrics = useMemo(() => computeMetrics(trades), [trades])

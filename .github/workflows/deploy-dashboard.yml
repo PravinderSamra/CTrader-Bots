@@ -50,15 +50,17 @@ jobs:
         # committed by the daily-fetch workflow — see xauusd-daily-fetch.yml for where
         # those real (server-side) API calls happen.
         #
-        # VITE_SUPABASE_URL/ANON_KEY are the one exception: Supabase's anon key is
-        # designed to be public (it grants nothing by itself — access control is Row
-        # Level Security + a real login, see xauusd-dashboard/PRAVZELLA.md "Auth
-        # model"), unlike the bearer tokens described above, so it's safe to inline
-        # into this public bundle.
+        # VITE_FIREBASE_* are the one exception: this is just Firebase's public client
+        # config (identifies which project to talk to) — it grants nothing by itself.
+        # Access control is Firestore Security Rules + a real login, see
+        # xauusd-dashboard/PRAVZELLA.md "Auth model" — unlike the bearer tokens
+        # described above, it's safe to inline into this public bundle.
         run: cd xauusd-dashboard && npm run build
         env:
-          VITE_SUPABASE_URL:      ${{ secrets.SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          VITE_FIREBASE_API_KEY:      ${{ secrets.FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN:  ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_PROJECT_ID:   ${{ secrets.FIREBASE_PROJECT_ID }}
+          VITE_FIREBASE_APP_ID:       ${{ secrets.FIREBASE_APP_ID }}
 
       - name: Build site structure
         run: |

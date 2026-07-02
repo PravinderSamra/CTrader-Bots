@@ -132,17 +132,18 @@ These are committed in `.claude/settings.json` at the repo root. **Do not use `.
 
 The dashboard's third tab ("Pravzella") is a TradeZella-style trade journal — stats
 overview, a clickable day-by-day P&L calendar, and a full trade log — built from real
-cTrader trade history synced into a Supabase database on a schedule. It's login-gated
-(the tab shows real account P&L on an otherwise-public site). Full architecture, setup
-steps, the trade-reconstruction algorithm, and the auth/security model are documented
-in **[`PRAVZELLA.md`](./PRAVZELLA.md)** — that file is the source of truth for this
-tab and is expected to be kept current by whoever (human or AI) touches it next.
+cTrader trade history synced into a Firebase (Firestore) database on a schedule. It's
+login-gated (the tab shows real account P&L on an otherwise-public site). Full
+architecture, setup steps, the trade-reconstruction algorithm, and the auth/security
+model are documented in **[`PRAVZELLA.md`](./PRAVZELLA.md)** — that file is the source
+of truth for this tab and is expected to be kept current by whoever (human or AI)
+touches it next.
 
 ---
 
 ## Environment variables / GitHub Secrets
 
-Most API keys are consumed **only** by `xauusd-daily-fetch.yml`'s "Fetch daily data snapshot" step, which runs server-side in CI, and are never passed to `npm run build` or exposed to the browser bundle. The two `VITE_SUPABASE_*` secrets are the one deliberate exception — see `PRAVZELLA.md`'s "Auth model" for why that's safe.
+Most API keys are consumed **only** by `xauusd-daily-fetch.yml`'s "Fetch daily data snapshot" step, which runs server-side in CI, and are never passed to `npm run build` or exposed to the browser bundle. The four `VITE_FIREBASE_*` secrets are the one deliberate exception — see `PRAVZELLA.md`'s "Auth model" for why that's safe.
 
 | Secret | Used for |
 |---|---|
@@ -151,10 +152,10 @@ Most API keys are consumed **only** by `xauusd-daily-fetch.yml`'s "Fetch daily d
 | `VITE_CTRADER_MCP_URL` / `VITE_CTRADER_MCP_TOKEN` | cTrader MCP — read server-side as `CTRADER_MCP_URL`/`CTRADER_MCP_TOKEN` env vars for the macro snapshot fetch, and as the same names for the Pravzella trade sync (`sync-trades.ts`). (Secret names are legacy `VITE_`-prefixed from before the security fix below; the values are no longer forwarded to the client build.) |
 | `FINNHUB_API_KEY` | Economic calendar + news headlines |
 | `ANTHROPIC_API_KEY` | Daily briefing generation |
-| `SUPABASE_URL` / `SUPABASE_ANON_KEY` | Pravzella tab — injected into the client build as `VITE_SUPABASE_URL`/`VITE_SUPABASE_ANON_KEY` (safe to expose, see `PRAVZELLA.md`). |
-| `SUPABASE_SERVICE_ROLE_KEY` / `SUPABASE_USER_ID` | Pravzella trade sync only (`sync-trades.ts`, GitHub Actions) — bypasses RLS, never exposed to the browser. |
+| `FIREBASE_API_KEY` / `FIREBASE_AUTH_DOMAIN` / `FIREBASE_PROJECT_ID` / `FIREBASE_APP_ID` | Pravzella tab — injected into the client build as `VITE_FIREBASE_*` (safe to expose, see `PRAVZELLA.md`). |
+| `FIREBASE_SERVICE_ACCOUNT_JSON` / `FIREBASE_USER_ID` | Pravzella trade sync only (`sync-trades.ts`, GitHub Actions) — bypasses Firestore Security Rules, never exposed to the browser. |
 
-No `.env` file or `VITE_*` build-time secret is required to run `npm run build` or `npm run dev` locally for the Macro Dashboard or Gold-Session AI tabs — they read everything from the static snapshot JSON at runtime. The Pravzella tab does need `VITE_SUPABASE_URL`/`VITE_SUPABASE_ANON_KEY` in `.env.local` to authenticate locally (see `PRAVZELLA.md`); without them it renders a "not configured yet" message instead of breaking the build.
+No `.env` file or `VITE_*` build-time secret is required to run `npm run build` or `npm run dev` locally for the Macro Dashboard or Gold-Session AI tabs — they read everything from the static snapshot JSON at runtime. The Pravzella tab does need the four `VITE_FIREBASE_*` values in `.env.local` to authenticate locally (see `PRAVZELLA.md`); without them it renders a "not configured yet" message instead of breaking the build.
 
 ## Security note: client-side secret exposure (fixed)
 
