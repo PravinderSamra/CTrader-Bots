@@ -28,11 +28,10 @@ jobs:
       - name: Install dependencies
         run: cd xauusd-dashboard && npm ci
 
-      - name: Sync trades from cTrader to Supabase
+      - name: Sync trades from cTrader to Firestore
         run: cd xauusd-dashboard && npx tsx scripts/sync-trades.ts
         env:
-          CTRADER_MCP_URL:          ${{ secrets.VITE_CTRADER_MCP_URL }}
-          CTRADER_MCP_TOKEN:        ${{ secrets.VITE_CTRADER_MCP_TOKEN }}
-          SUPABASE_URL:              ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-          SUPABASE_USER_ID:          ${{ secrets.SUPABASE_USER_ID }}
+          CTRADER_MCP_URL:               ${{ secrets.VITE_CTRADER_MCP_URL }}
+          CTRADER_MCP_TOKEN:             ${{ secrets.VITE_CTRADER_MCP_TOKEN }}
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+          FIREBASE_USER_ID:              ${{ secrets.FIREBASE_USER_ID }}

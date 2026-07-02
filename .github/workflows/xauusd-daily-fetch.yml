@@ -66,12 +66,14 @@ jobs:
 
       - name: Build XAUUSD dashboard
         # No third-party API secrets here by design — see comment in
-        # deploy-dashboard.yml's build step. VITE_SUPABASE_* is the one exception,
-        # explained there too (Supabase's anon key is meant to be public).
+        # deploy-dashboard.yml's build step. VITE_FIREBASE_* is the one exception,
+        # explained there too (Firebase's client config is meant to be public).
         run: cd xauusd-dashboard && npm run build
         env:
-          VITE_SUPABASE_URL:      ${{ secrets.SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          VITE_FIREBASE_API_KEY:      ${{ secrets.FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN:  ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_PROJECT_ID:   ${{ secrets.FIREBASE_PROJECT_ID }}
+          VITE_FIREBASE_APP_ID:       ${{ secrets.FIREBASE_APP_ID }}
 
       - name: Build full site structure
         run: |

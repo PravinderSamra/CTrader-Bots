@@ -5,8 +5,7 @@
 export type TradeDirection = 'LONG' | 'SHORT'
 
 export interface Trade {
-  id: string
-  user_id: string
+  id: string               // Firestore doc id — equal to position_id as a string
   position_id: number
   symbol: string
   direction: TradeDirection

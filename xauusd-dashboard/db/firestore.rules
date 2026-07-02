@@ -1,0 +1,25 @@
+// Pravzella trade journal — Firestore Security Rules (v1)
+//
+// One-time setup: Firebase Console -> Firestore Database -> Rules tab -> paste this
+// whole file -> Publish. See PRAVZELLA.md for the full setup checklist.
+//
+// Single-user design: trades live under users/{uid}/trades/{positionId} — one
+// subcollection per authenticated user. A rule scoped to request.auth.uid == uid means
+// nobody can read or write another user's trades, and nobody can read/write at all
+// without being logged in — even though the Firebase client config ships in the
+// public bundle (see PRAVZELLA.md "Auth model" for why that's safe by Firebase's own
+// design, same reasoning as Supabase's anon key + RLS).
+//
+// scripts/sync-trades.ts writes via the Firebase Admin SDK using a service account,
+// which bypasses these rules entirely (equivalent to Supabase's service_role key) —
+// that's expected and only ever runs server-side in GitHub Actions.
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{uid}/trades/{tradeId} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+  }
+}

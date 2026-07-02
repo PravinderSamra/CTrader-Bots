@@ -7,7 +7,7 @@ interface Props {
 }
 
 export function LoginGate({ children }: Props) {
-  const { session, loading, configured, signIn } = useAuth()
+  const { user, loading, configured, signIn } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -22,14 +22,14 @@ export function LoginGate({ children }: Props) {
       <div className={styles.status}>
         <div className={styles.statusTitle}>Pravzella isn&rsquo;t configured yet</div>
         <div className={styles.statusSub}>
-          VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY aren&rsquo;t set for this build.
-          See <code>PRAVZELLA.md</code> for setup steps.
+          VITE_FIREBASE_API_KEY / VITE_FIREBASE_AUTH_DOMAIN / VITE_FIREBASE_PROJECT_ID / VITE_FIREBASE_APP_ID
+          aren&rsquo;t all set for this build. See <code>PRAVZELLA.md</code> for setup steps.
         </div>
       </div>
     )
   }
 
-  if (session) {
+  if (user) {
     return <>{children}</>
   }
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env tsx
 /**
  * Pravzella trade sync — pulls closed positions from the cTrader MCP server and
- * upserts them into Supabase as reconstructed trades (cTrader's `get_deals` only
+ * upserts them into Firestore as reconstructed trades (cTrader's `get_deals` only
  * returns raw fills, not P&L, so each closed position is rebuilt from its fills).
  *
  * Runs on a schedule via .github/workflows/xauusd-trade-sync.yml. Always re-scans a
@@ -9,13 +9,13 @@
  * high-water mark — a position opened just before a previous sync's cutoff and closed
  * after it would otherwise have its opening fill permanently missed, making it
  * unreconstructable. Re-scanning is cheap (this account trades tens of positions a
- * month) and upserts are idempotent on (user_id, position_id), so this is simply more
- * correct with no real cost.
+ * month) and upserts are idempotent (Firestore doc id = position_id), so this is
+ * simply more correct with no real cost.
  *
  * Usage:
- *   npx tsx scripts/sync-trades.ts             # writes to Supabase
- *   npx tsx scripts/sync-trades.ts --dry-run    # reconstructs + prints, no Supabase calls,
- *                                                 no SUPABASE_* env vars required
+ *   npx tsx scripts/sync-trades.ts             # writes to Firestore
+ *   npx tsx scripts/sync-trades.ts --dry-run    # reconstructs + prints, no Firestore calls,
+ *                                                 no FIREBASE_* env vars required
  */
 
 const DRY_RUN = process.argv.includes('--dry-run')
@@ -23,9 +23,8 @@ const DRY_RUN = process.argv.includes('--dry-run')
 const CTRADER_URL   = process.env.CTRADER_MCP_URL   || 'https://mcp.ctrader.com/trading/mcp'
 const CTRADER_TOKEN = process.env.CTRADER_MCP_TOKEN || ''
 
-const SUPABASE_URL         = process.env.SUPABASE_URL || ''
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || ''
-const SUPABASE_USER_ID     = process.env.SUPABASE_USER_ID || ''
+const FIREBASE_SERVICE_ACCOUNT_JSON = process.env.FIREBASE_SERVICE_ACCOUNT_JSON || ''
+const FIREBASE_USER_ID              = process.env.FIREBASE_USER_ID || ''
 
 const LOOKBACK_DAYS = Number(process.env.TRADE_SYNC_LOOKBACK_DAYS || 35)
 const WINDOW_HOURS  = 24 * 29 // stay under cTrader's 720h/30-day cap per call
@@ -222,25 +221,32 @@ function reconstructTrades(deals: Deal[], symbolMap: Map<number, string>): Recon
   return trades.sort((a, b) => a.exit_time.localeCompare(b.exit_time))
 }
 
-// ── Supabase upsert ─────────────────────────────────────────────────────────
+// ── Firestore upsert (via firebase-admin, server-side only) ────────────────
+
+const BATCH_SIZE = 400 // Firestore's hard cap is 500 writes/batch — stay comfortably under it
 
 async function upsertTrades(trades: ReconstructedTrade[]): Promise<void> {
   if (trades.length === 0) return
-  const rows = trades.map(t => ({ ...t, user_id: SUPABASE_USER_ID, source: 'ctrader_sync' }))
-  const url = `${SUPABASE_URL}/rest/v1/trades?on_conflict=user_id,position_id`
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: {
-      apikey: SUPABASE_SERVICE_KEY,
-      Authorization: `Bearer ${SUPABASE_SERVICE_KEY}`,
-      'Content-Type': 'application/json',
-      Prefer: 'resolution=merge-duplicates,return=minimal',
-    },
-    body: JSON.stringify(rows),
-  })
-  if (!res.ok) {
-    const text = await res.text()
-    throw new Error(`Supabase upsert failed: ${res.status} ${text.slice(0, 500)}`)
+
+  // Dynamic import: firebase-admin is an optionalDependency used only here, so
+  // --dry-run (which never calls this function) doesn't need it installed or configured.
+  const { initializeApp, cert, getApps } = await import('firebase-admin/app')
+  const { getFirestore } = await import('firebase-admin/firestore')
+
+  const serviceAccount = JSON.parse(FIREBASE_SERVICE_ACCOUNT_JSON)
+  const app = getApps().length ? getApps()[0] : initializeApp({ credential: cert(serviceAccount) })
+  const db = getFirestore(app)
+
+  const now = new Date().toISOString()
+  const tradesCollection = db.collection('users').doc(FIREBASE_USER_ID).collection('trades')
+
+  for (let i = 0; i < trades.length; i += BATCH_SIZE) {
+    const batch = db.batch()
+    for (const t of trades.slice(i, i + BATCH_SIZE)) {
+      const ref = tradesCollection.doc(String(t.position_id))
+      batch.set(ref, { ...t, source: 'ctrader_sync', created_at: t.exit_time, updated_at: now }, { merge: true })
+    }
+    await batch.commit()
   }
 }
 
@@ -253,8 +259,8 @@ async function main() {
     console.error('CTRADER_MCP_TOKEN not set — nothing to sync.')
     process.exit(1)
   }
-  if (!DRY_RUN && (!SUPABASE_URL || !SUPABASE_SERVICE_KEY || !SUPABASE_USER_ID)) {
-    console.error('SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY / SUPABASE_USER_ID must be set (or pass --dry-run).')
+  if (!DRY_RUN && (!FIREBASE_SERVICE_ACCOUNT_JSON || !FIREBASE_USER_ID)) {
+    console.error('FIREBASE_SERVICE_ACCOUNT_JSON / FIREBASE_USER_ID must be set (or pass --dry-run).')
     process.exit(1)
   }
 
@@ -276,7 +282,7 @@ async function main() {
   }
 
   await upsertTrades(trades)
-  console.log(`Upserted ${trades.length} trades to Supabase`)
+  console.log(`Upserted ${trades.length} trades to Firestore`)
 }
 
 main().catch(err => {

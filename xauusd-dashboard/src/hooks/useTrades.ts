@@ -1,32 +1,36 @@
 import { useState, useEffect } from 'react'
-import type { Session } from '@supabase/supabase-js'
-import { supabase } from '../services/supabaseClient'
+import type { User } from 'firebase/auth'
+import { collection, query, orderBy, onSnapshot } from 'firebase/firestore'
+import { db } from '../services/firebaseClient'
 import type { Trade } from '../types/trades'
 
-export function useTrades(session: Session | null): { trades: Trade[]; loading: boolean; error: string | null } {
+export function useTrades(user: User | null): { trades: Trade[]; loading: boolean; error: string | null } {
   const [trades, setTrades] = useState<Trade[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    if (!session) { setTrades([]); setLoading(false); return }
+    if (!user) { setTrades([]); setLoading(false); return }
 
-    let cancelled = false
     setLoading(true)
+    const tradesQuery = query(collection(db, 'users', user.uid, 'trades'), orderBy('exit_time', 'asc'))
 
-    supabase
-      .from('trades')
-      .select('*')
-      .order('exit_time', { ascending: true })
-      .then(({ data, error: err }) => {
-        if (cancelled) return
-        if (err) { setError(err.message); setTrades([]) }
-        else { setError(null); setTrades((data ?? []) as Trade[]) }
+    const unsubscribe = onSnapshot(
+      tradesQuery,
+      snapshot => {
+        setError(null)
+        setTrades(snapshot.docs.map(d => ({ id: d.id, ...d.data() } as Trade)))
         setLoading(false)
-      })
+      },
+      err => {
+        setError(err.message)
+        setTrades([])
+        setLoading(false)
+      },
+    )
 
-    return () => { cancelled = true }
-  }, [session])
+    return unsubscribe
+  }, [user])
 
   return { trades, loading, error }
 }
