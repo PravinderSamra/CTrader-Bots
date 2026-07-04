@@ -41,6 +41,17 @@ before its directional move, and how to trade it mechanically on the 5m/15m.
 
 👉 Phase 2b write-up: **[`research/Phase2b_Methodology_and_Entry_Tests.md`](research/Phase2b_Methodology_and_Entry_Tests.md)**
 
+## Phase 2c — cross-instrument test (is the edge better elsewhere?)
+- The fade *strategy* P&L had only ever been run on GER40. Ran the **same entry engine** anchored to
+  each instrument's cash open (RTH). **GER40 wins by a wide margin** and is positive in every config.
+- **US500 is marginal-to-negative; US30 is negative almost everywhere** — despite having the *best*
+  gap-fill *statistics*. **Fill probability ≠ fade profitability:** US gaps fill too fast (0–15 min)
+  for the confirmation entry to get filled before the target.
+- So **don't drill M5/retest into US500/US30** — no base edge to refine. UK100 (other European
+  nightly-void index) is the only logical instrument left to test.
+
+👉 Phase 2c write-up: **[`research/Phase2c_Cross_Instrument.md`](research/Phase2c_Cross_Instrument.md)**
+
 ## Layout
 ```
 Gap-Retrace-Research/

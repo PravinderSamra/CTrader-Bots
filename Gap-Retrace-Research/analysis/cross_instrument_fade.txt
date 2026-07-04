@@ -1,0 +1,40 @@
+========================================================================================================
+CROSS-INSTRUMENT FADE BACKTEST — RTH cash-open anchor, M15, breakout entry, 2pt cost, 2y
+same entry engine as the GER40 experiment (compare_entries.run_session)
+========================================================================================================
+
+### GER40  (RTH-anchored)
+  config                          N   win%   exp(R)    totR  +qtrs
+  breakout >=0.15% all          205   58.5   +0.097   +19.8    5/9
+  breakout >=0.15% skip-wknd    157   59.2   +0.114   +18.0    6/9
+  break-retest >=0.15% all      146   42.5   +0.137   +20.0    4/9
+  break-retest >=0.15% skip-wknd  110   42.7   +0.113   +12.4    5/9
+  breakout >=0.25% all          169   55.6   +0.098   +16.5    5/9
+  breakout >=0.25% skip-wknd    127   54.3   +0.094   +12.0    5/9
+  break-retest >=0.25% all      117   40.2   +0.165   +19.3    4/8
+  break-retest >=0.25% skip-wknd   87   39.1   +0.110    +9.6    5/8
+
+### US500  (RTH-anchored)
+  config                          N   win%   exp(R)    totR  +qtrs
+  breakout >=0.15% all          182   54.4   -0.065   -11.8    3/9
+  breakout >=0.15% skip-wknd    135   56.3   -0.040    -5.4    4/9
+  break-retest >=0.15% all      133   39.8   -0.019    -2.5    5/9
+  break-retest >=0.15% skip-wknd  103   39.8   -0.046    -4.7    3/9
+  breakout >=0.25% all          137   53.3   -0.023    -3.2    3/8
+  breakout >=0.25% skip-wknd     98   57.1   +0.052    +5.1    5/8
+  break-retest >=0.25% all       90   34.4   -0.012    -1.1    4/8
+  break-retest >=0.25% skip-wknd   66   37.9   +0.065    +4.3    4/8
+
+### US30  (RTH-anchored)
+  config                          N   win%   exp(R)    totR  +qtrs
+  breakout >=0.15% all          166   57.2   -0.048    -8.0    1/9
+  breakout >=0.15% skip-wknd    125   52.8   -0.128   -16.0    0/9
+  break-retest >=0.15% all      137   40.9   -0.100   -13.6    2/9
+  break-retest >=0.15% skip-wknd  108   39.8   -0.184   -19.9    0/9
+  breakout >=0.25% all          139   53.2   -0.060    -8.4    2/9
+  breakout >=0.25% skip-wknd    106   49.1   -0.153   -16.3    0/9
+  break-retest >=0.25% all      105   39.0   -0.084    -8.8    2/9
+  break-retest >=0.25% skip-wknd   82   37.8   -0.197   -16.2    2/9
+
+Reference — GER40 NATIVE overnight-void anchor (weekday-only >=0.25%): +0.247R, 59% win, +12R (49 trades).
+RTH rows above use the 09:30-ET / Xetra cash open instead, so GER40 here is NOT its best anchor.
