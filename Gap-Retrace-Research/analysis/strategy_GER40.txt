@@ -1,0 +1,32 @@
+==================================================================================
+CODED GAP-FADE STRATEGY — GER40  (GER40_M15_2y.csv, 2024-07-04 .. 2026-07-03)
+params: {'MIN_GAP_PCT': 0.25, 'MAX_GAP_PCT': 1.0, 'WARMUP': 2, 'MAX_WAIT': 16, 'STOP_BUF_PCT': 0.1, 'COST_PTS': 2.0}
+==================================================================================
+
+HEADLINE (all qualifying sessions, gap>=0.25%): trades=83  win%=53.0  expectancy=0.172R  total=14.3R
+** RECOMMENDED (weekday-only, gap>=0.25%): trades=49  win%=59.2  expectancy=0.247R  total=12.1R **
+
+BY DAY-OF-WEEK (session open day):
+  Mon: n= 30  win%= 36.7  exp=-0.082R  tot=-2.5R
+  Tue: n= 19  win%= 52.6  exp=+0.286R  tot=+5.4R
+  Wed: n= 10  win%= 50.0  exp=+0.063R  tot=+0.6R
+  Thu: n= 14  win%= 64.3  exp=+0.036R  tot=+0.5R
+  Fri: n= 10  win%= 90.0  exp=+1.019R  tot=+10.2R
+  [WEEKEND gaps] n=34  win%=44.1  exp=+0.065R  tot=+2.2R
+  [WEEKDAY overnight gaps] n=49  win%=59.2  exp=+0.247R  tot=+12.1R
+
+WALK-FORWARD by calendar quarter (same fixed params — checks time stability):
+  2024Q3: n=  7  win%= 57.1  exp=+0.448R  tot=+3.1R
+  2024Q4: n=  5  win%= 60.0  exp=+0.544R  tot=+2.7R
+  2025Q1: n= 10  win%= 50.0  exp=-0.141R  tot=-1.4R
+  2025Q2: n= 14  win%= 35.7  exp=-0.163R  tot=-2.3R
+  2025Q3: n=  7  win%= 57.1  exp=-0.020R  tot=-0.1R
+  2025Q4: n=  4  win%= 25.0  exp=-0.445R  tot=-1.8R
+  2026Q1: n= 14  win%= 50.0  exp=+0.178R  tot=+2.5R
+  2026Q2: n= 22  win%= 68.2  exp=+0.526R  tot=+11.6R
+
+PARAMETER SENSITIVITY (expectancy R / #trades), across MIN_GAP x WARMUP:
+    MIN_GAP\WARMUP           1           2           4
+              0.10   -0.04/219   -0.04/218   -0.15/214
+              0.15   -0.01/154   +0.03/153   -0.14/155
+              0.25    +0.12/82    +0.17/83    -0.03/83

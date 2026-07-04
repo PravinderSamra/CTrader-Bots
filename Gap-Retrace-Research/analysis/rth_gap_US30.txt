@@ -1,0 +1,17 @@
+================================================================================
+US RTH CASH-OPEN GAP STUDY — US30  (US30_M15_2y.csv)
+span 2024-07-04 .. 2026-07-03  |  RTH sessions 495
+================================================================================
+
+ALL RTH gaps: N=494  (up 277/down 217)  median gap 0.25%
+   RTH GAP FILLED same session: 65.0%   time-to-fill median 0min  (<=60min 49%)
+   closed in gap direction (GO): 49.8%   (FADE 50.2%)
+
+TRADEABLE RTH gaps >= 0.1%: N=376  (up 213/down 163)  median gap 0.38%
+   RTH GAP FILLED same session: 55.1%   time-to-fill median 30min  (<=60min 36%)
+   closed in gap direction (GO): 50.0%   (FADE 50.0%)
+   FILL RATE BY GAP SIZE:
+     0.00-0.25% : N=246  fill 87%
+     0.25-0.50% : N=119  fill 56%
+     0.50-1.00% : N= 92  fill 35%
+     1.00-+% : N= 37  fill 22%
