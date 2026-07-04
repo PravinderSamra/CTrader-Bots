@@ -1,0 +1,51 @@
+==============================================================================
+GER40 (DAX) INTRADAY GAP-&-RETRACE MECHANICS  — M15, ~5.4 months
+==============================================================================
+
+ALL overnight+weekend gaps (any size): N=111  (up 53 / down 58)
+   median gap 0.19%  (46 pts)
+   GAP FILLED same session: 87.4%   |  re-entered prior-day range: 95.5%
+   time-to-fill: median 60 min  | filled <=60min 44%  | <=120min 55%
+   closed in gap direction (GO): 43.2%  (FADE 56.8%)
+   max retrace toward fill (frac of gap): median 200%
+   retrace-depth distribution: <25%:3%  25-50%:5%  50-75%:1%  75-100%:4%  >=100%:87%
+
+TRADEABLE gaps >= 0.1%: N=82  (up 42 / down 40)
+   median gap 0.26%  (64 pts)
+   GAP FILLED same session: 84.1%   |  re-entered prior-day range: 93.9%
+   time-to-fill: median 90 min  | filled <=60min 34%  | <=120min 46%
+   closed in gap direction (GO): 41.5%  (FADE 58.5%)
+   max retrace toward fill (frac of gap): median 200%
+   retrace-depth distribution: <25%:4%  25-50%:6%  50-75%:1%  75-100%:5%  >=100%:84%
+
+WEEKEND gaps only: N=22  (up 9 / down 13)
+   median gap 0.44%  (102 pts)
+   GAP FILLED same session: 72.7%   |  re-entered prior-day range: 86.4%
+   time-to-fill: median 165 min  | filled <=60min 27%  | <=120min 36%
+   closed in gap direction (GO): 36.4%  (FADE 63.6%)
+   max retrace toward fill (frac of gap): median 200%
+   retrace-depth distribution: <25%:9%  25-50%:14%  50-75%:0%  75-100%:5%  >=100%:73%
+
+WEEKDAY overnight gaps >= 0.1%: N=60  (up 33 / down 27)
+   median gap 0.24%  (57 pts)
+   GAP FILLED same session: 88.3%   |  re-entered prior-day range: 96.7%
+   time-to-fill: median 90 min  | filled <=60min 37%  | <=120min 50%
+   closed in gap direction (GO): 43.3%  (FADE 56.7%)
+   max retrace toward fill (frac of gap): median 200%
+   retrace-depth distribution: <25%:2%  25-50%:3%  50-75%:2%  75-100%:5%  >=100%:88%
+
+GAP-UP >= 0.1%: N=42  (up 42 / down 0)
+   median gap 0.23%  (57 pts)
+   GAP FILLED same session: 83.3%   |  re-entered prior-day range: 90.5%
+   time-to-fill: median 105 min  | filled <=60min 33%  | <=120min 45%
+   closed in gap direction (GO): 42.9%  (FADE 57.1%)
+   max retrace toward fill (frac of gap): median 200%
+   retrace-depth distribution: <25%:5%  25-50%:5%  50-75%:2%  75-100%:5%  >=100%:83%
+
+GAP-DOWN >= 0.1%: N=40  (up 0 / down 40)
+   median gap 0.33%  (82 pts)
+   GAP FILLED same session: 85.0%   |  re-entered prior-day range: 97.5%
+   time-to-fill: median 90 min  | filled <=60min 35%  | <=120min 48%
+   closed in gap direction (GO): 40.0%  (FADE 60.0%)
+   max retrace toward fill (frac of gap): median 200%
+   retrace-depth distribution: <25%:2%  25-50%:8%  50-75%:0%  75-100%:5%  >=100%:85%

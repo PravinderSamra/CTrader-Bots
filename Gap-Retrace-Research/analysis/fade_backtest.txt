@@ -1,0 +1,21 @@
+==============================================================================
+GER40 GAP-FADE MECHANICAL BACKTEST (M15, ~5.4 months)
+==============================================================================
+
+--- min gap 0.10%  (N=82 gap days) ---
+BASELINE OPEN-FADE (TP=fill):
+   stop(xgap)    R:R   win% expectancy(R)     W/L/none
+          0.5   2.00   40.2         0.249   33/47/2
+          1.0   1.00   56.1         0.183   46/31/5
+          1.5   0.67   67.1         0.186   55/21/6
+CONFIRMATION FADE (enter on 15m rejection back through open; SL beyond extreme; TP=fill):
+  traded 66/82 (no-trigger 16)  win% 69.7  expectancy 0.216R  W/L/none 46/20/0
+
+--- min gap 0.20%  (N=52 gap days) ---
+BASELINE OPEN-FADE (TP=fill):
+   stop(xgap)    R:R   win% expectancy(R)     W/L/none
+          0.5   2.00   44.2         0.393   23/27/2
+          1.0   1.00   61.5         0.327   32/15/5
+          1.5   0.67   71.2         0.293   37/9/6
+CONFIRMATION FADE (enter on 15m rejection back through open; SL beyond extreme; TP=fill):
+  traded 45/52 (no-trigger 7)  win% 68.9  expectancy 0.356R  W/L/none 31/14/0

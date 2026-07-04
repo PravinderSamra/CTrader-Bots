@@ -1,0 +1,131 @@
+
+==============================================================================
+GER40  (2023-07-04 .. 2026-07-02, 761 daily bars)
+==============================================================================
+  Continuous weekday rolls: 598, of which |gap|>=0.15%: 129 (21.6%)  <- shows intraweek gaps are ~absent
+  WEEKEND/HOLIDAY gaps (ALL sizes): N=161  (up 93 / down 68)
+      gap size %: median 0.18  mean 0.29  p90 0.65
+      SAME-DAY FULL FILL: 127/161 = 78.9%   median retrace 150% of gap
+      closed in gap direction (continuation): 47.2%   (fade 52.8%)
+      retrace-depth distribution: <25%:4%  25-50%:9%  50-75%:4%  75-100%:4%  >=100% (full):79%
+  WEEKEND/HOLIDAY gaps >= 0.15%: N=90  (up 54 / down 36)
+      gap size %: median 0.31  mean 0.46  p90 0.98
+      SAME-DAY FULL FILL: 59/90 = 65.6%   median retrace 147% of gap
+      closed in gap direction (continuation): 48.9%   (fade 51.1%)
+      retrace-depth distribution: <25%:7%  25-50%:14%  50-75%:8%  75-100%:6%  >=100% (full):66%
+      FILL RATE BY GAP SIZE (weekend/holiday gaps):
+        gap 0.00-0.25% : N=106  full-fill 88%
+        gap 0.25-0.50% : N= 32  full-fill 69%
+        gap 0.50-1.00% : N= 15  full-fill 60%
+        gap 1.00-+% : N=  8  full-fill 38%
+
+==============================================================================
+NAS100  (2023-07-04 .. 2026-07-02, 775 daily bars)
+==============================================================================
+  Continuous weekday rolls: 609, of which |gap|>=0.15%: 50 (8.2%)  <- shows intraweek gaps are ~absent
+  WEEKEND/HOLIDAY gaps (ALL sizes): N=160  (up 107 / down 53)
+      gap size %: median 0.13  mean 0.30  p90 0.85
+      SAME-DAY FULL FILL: 124/160 = 77.5%   median retrace 150% of gap
+      closed in gap direction (continuation): 53.8%   (fade 46.2%)
+      retrace-depth distribution: <25%:8%  25-50%:6%  50-75%:4%  75-100%:4%  >=100% (full):78%
+  WEEKEND/HOLIDAY gaps >= 0.15%: N=71  (up 44 / down 27)
+      gap size %: median 0.37  mean 0.58  p90 1.14
+      SAME-DAY FULL FILL: 44/71 = 62.0%   median retrace 150% of gap
+      closed in gap direction (continuation): 54.9%   (fade 45.1%)
+      retrace-depth distribution: <25%:14%  25-50%:11%  50-75%:6%  75-100%:7%  >=100% (full):62%
+      FILL RATE BY GAP SIZE (weekend/holiday gaps):
+        gap 0.00-0.25% : N=111  full-fill 86%
+        gap 0.25-0.50% : N= 25  full-fill 72%
+        gap 0.50-1.00% : N= 12  full-fill 25%
+        gap 1.00-+% : N= 12  full-fill 58%
+
+==============================================================================
+UK100  (2023-07-04 .. 2026-07-02, 759 daily bars)
+==============================================================================
+  Continuous weekday rolls: 597, of which |gap|>=0.15%: 110 (18.4%)  <- shows intraweek gaps are ~absent
+  WEEKEND/HOLIDAY gaps (ALL sizes): N=158  (up 93 / down 65)
+      gap size %: median 0.12  mean 0.21  p90 0.49
+      SAME-DAY FULL FILL: 129/158 = 81.6%   median retrace 150% of gap
+      closed in gap direction (continuation): 46.2%   (fade 53.8%)
+      retrace-depth distribution: <25%:4%  25-50%:7%  50-75%:3%  75-100%:4%  >=100% (full):82%
+  WEEKEND/HOLIDAY gaps >= 0.15%: N=70  (up 42 / down 28)
+      gap size %: median 0.27  mean 0.40  p90 0.75
+      SAME-DAY FULL FILL: 46/70 = 65.7%   median retrace 150% of gap
+      closed in gap direction (continuation): 41.4%   (fade 58.6%)
+      retrace-depth distribution: <25%:6%  25-50%:13%  50-75%:7%  75-100%:9%  >=100% (full):66%
+      FILL RATE BY GAP SIZE (weekend/holiday gaps):
+        gap 0.00-0.25% : N=121  full-fill 90%
+        gap 0.25-0.50% : N= 23  full-fill 70%
+        gap 0.50-1.00% : N= 11  full-fill 18%
+        gap 1.00-+% : N=  3  full-fill 67%
+
+==============================================================================
+US30  (2023-07-04 .. 2026-07-02, 775 daily bars)
+==============================================================================
+  Continuous weekday rolls: 612, of which |gap|>=0.15%: 16 (2.6%)  <- shows intraweek gaps are ~absent
+  WEEKEND/HOLIDAY gaps (ALL sizes): N=160  (up 104 / down 56)
+      gap size %: median 0.11  mean 0.22  p90 0.52
+      SAME-DAY FULL FILL: 135/160 = 84.4%   median retrace 150% of gap
+      closed in gap direction (continuation): 45.0%   (fade 55.0%)
+      retrace-depth distribution: <25%:7%  25-50%:5%  50-75%:1%  75-100%:2%  >=100% (full):84%
+  WEEKEND/HOLIDAY gaps >= 0.15%: N=61  (up 33 / down 28)
+      gap size %: median 0.32  mean 0.46  p90 0.94
+      SAME-DAY FULL FILL: 43/61 = 70.5%   median retrace 150% of gap
+      closed in gap direction (continuation): 37.7%   (fade 62.3%)
+      retrace-depth distribution: <25%:15%  25-50%:10%  50-75%:2%  75-100%:3%  >=100% (full):70%
+      FILL RATE BY GAP SIZE (weekend/holiday gaps):
+        gap 0.00-0.25% : N=121  full-fill 90%
+        gap 0.25-0.50% : N= 23  full-fill 70%
+        gap 0.50-1.00% : N= 11  full-fill 64%
+        gap 1.00-+% : N=  5  full-fill 60%
+
+==============================================================================
+US500  (2023-07-04 .. 2026-07-02, 775 daily bars)
+==============================================================================
+  Continuous weekday rolls: 598, of which |gap|>=0.15%: 26 (4.3%)  <- shows intraweek gaps are ~absent
+  WEEKEND/HOLIDAY gaps (ALL sizes): N=159  (up 113 / down 46)
+      gap size %: median 0.12  mean 0.25  p90 0.56
+      SAME-DAY FULL FILL: 122/159 = 76.7%   median retrace 150% of gap
+      closed in gap direction (continuation): 53.5%   (fade 46.5%)
+      retrace-depth distribution: <25%:8%  25-50%:7%  50-75%:6%  75-100%:3%  >=100% (full):77%
+  WEEKEND/HOLIDAY gaps >= 0.15%: N=71  (up 43 / down 28)
+      gap size %: median 0.34  mean 0.48  p90 0.97
+      SAME-DAY FULL FILL: 47/71 = 66.2%   median retrace 150% of gap
+      closed in gap direction (continuation): 47.9%   (fade 52.1%)
+      retrace-depth distribution: <25%:11%  25-50%:13%  50-75%:7%  75-100%:3%  >=100% (full):66%
+      FILL RATE BY GAP SIZE (weekend/holiday gaps):
+        gap 0.00-0.25% : N=115  full-fill 83%
+        gap 0.25-0.50% : N= 26  full-fill 62%
+        gap 0.50-1.00% : N= 11  full-fill 55%
+        gap 1.00-+% : N=  7  full-fill 71%
+
+==============================================================================
+XAUUSD  (2023-07-04 .. 2026-07-02, 774 daily bars)
+==============================================================================
+  Continuous weekday rolls: 608, of which |gap|>=0.15%: 39 (6.4%)  <- shows intraweek gaps are ~absent
+  WEEKEND/HOLIDAY gaps (ALL sizes): N=157  (up 75 / down 82)
+      gap size %: median 0.08  mean 0.22  p90 0.54
+      SAME-DAY FULL FILL: 133/157 = 84.7%   median retrace 150% of gap
+      closed in gap direction (continuation): 58.6%   (fade 41.4%)
+      retrace-depth distribution: <25%:5%  25-50%:2%  50-75%:4%  75-100%:4%  >=100% (full):85%
+  WEEKEND/HOLIDAY gaps >= 0.15%: N=60  (up 29 / down 31)
+      gap size %: median 0.35  mean 0.48  p90 1.13
+      SAME-DAY FULL FILL: 39/60 = 65.0%   median retrace 150% of gap
+      closed in gap direction (continuation): 63.3%   (fade 36.7%)
+      retrace-depth distribution: <25%:10%  25-50%:5%  50-75%:8%  75-100%:12%  >=100% (full):65%
+      FILL RATE BY GAP SIZE (weekend/holiday gaps):
+        gap 0.00-0.25% : N=117  full-fill 93%
+        gap 0.25-0.50% : N= 22  full-fill 68%
+        gap 0.50-1.00% : N= 11  full-fill 55%
+        gap 1.00-+% : N=  7  full-fill 43%
+
+==============================================================================
+INSTRUMENT RANKING (weekend/holiday session gaps, 3y)
+==============================================================================
+sym       #gaps  #>=.15%  medGap%  fill%(all)  fill%(>=.15)   cont%
+US30        160       61     0.11        84.4          70.5    37.7
+US500       159       71     0.12        76.7          66.2    47.9
+UK100       158       70     0.12        81.6          65.7    41.4
+GER40       161       90     0.18        78.9          65.6    48.9
+XAUUSD      157       60     0.08        84.7          65.0    63.3
+NAS100      160       71     0.13        77.5          62.0    54.9
