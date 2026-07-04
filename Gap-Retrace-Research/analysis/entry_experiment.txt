@@ -1,0 +1,15 @@
+====================================================================================================
+ENTRY-EXECUTION EXPERIMENT — GER40, common window 2025-07-04 .. 2026-07-03
+setups (weekday gaps 0.25-1.0%): 30   warmup 30m  maxwait 240m  retest 180m  cost 2.0pt
+====================================================================================================
+
+[BREAKOUT]
+  M15 : n= 26 trig%=  87 win%= 69.2 exp=+0.438R tot= +11.4R avgW=+1.09 avgL=-1.03 medTTE=30m
+  M5  : n= 26 trig%=  87 win%= 69.2 exp=+0.308R tot=  +8.0R avgW=+0.90 avgL=-1.03 medTTE=30m
+
+[BREAK-RETEST]
+  M15 : n= 15 trig%=  50 win%= 33.3 exp=+0.499R tot=  +7.5R avgW=+3.62 avgL=-1.06 medTTE=75m
+  M5  : n= 16 trig%=  53 win%= 37.5 exp=+0.837R tot= +13.4R avgW=+4.03 avgL=-1.08 medTTE=70m
+
+Columns: trig%=share of setups that produced an entry; medTTE=median minutes from
+session open to entry; avgW/avgL = mean R of winners / losers.

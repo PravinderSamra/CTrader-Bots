@@ -31,6 +31,16 @@ before its directional move, and how to trade it mechanically on the 5m/15m.
 
 👉 Phase 2 write-up: **[`research/Phase2_Strategy_And_Validation.md`](research/Phase2_Strategy_And_Validation.md)**
 
+## Phase 2b — methodology, M5 entry, break-vs-retest
+- **Backtest method:** single sequential order-of-touch pass, conservative adverse-first tie-break,
+  fixed-parameter *out-of-sample time-slicing* (not true walk-forward optimisation), **no Monte Carlo**.
+- **M5 vs M15 entry:** M5 does **not** improve the breakout — marginally worse (finer wicks widen the
+  stop, entry timing unchanged). Consistent across 3 gap thresholds.
+- **Break-and-retest vs breakout:** current rule is **pure breakout**. Retest is a different profile —
+  ~1/3 win rate but +2.5–4R winners, skips ~half the setups; only clearly helps on gaps ≥0.25% and M5.
+
+👉 Phase 2b write-up: **[`research/Phase2b_Methodology_and_Entry_Tests.md`](research/Phase2b_Methodology_and_Entry_Tests.md)**
+
 ## Layout
 ```
 Gap-Retrace-Research/
