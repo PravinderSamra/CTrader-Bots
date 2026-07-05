@@ -45,6 +45,10 @@ class Config:
     session_end: float = 16.0
     one_per_day: bool = True
     same_bar_pessimistic: bool = True  # if a bar spans SL & TP, assume SL first
+    # stop management (all levels expressed in R, 1R = initial stop distance)
+    trail_mode: str = "none"      # none | be | step
+    trail_step: float = 1.0       # step size in R (step mode): SL ratchets to (k-1)*step at k*step MFE
+    be_trigger: float = 1.0       # R at which SL jumps to breakeven (be mode)
 
 
 def _atr_m5(day_bars, idx, length):
@@ -78,6 +82,65 @@ def _passes_volume(cfg, day_bars, idx, premarket_avg):
         z = (v - seg.mean()) / (seg.std(ddof=0) + 1e-9)
         return z >= cfg.vol_z, z
     return True, np.nan
+
+
+def _trail_sl_R(cfg, mfe_R):
+    """Candidate stop level in R given max favourable excursion so far.
+    Returns None if the scheme does not move the stop yet."""
+    if cfg.trail_mode == "be":
+        return 0.0 if mfe_R >= cfg.be_trigger else None
+    if cfg.trail_mode == "step":
+        k = int(mfe_R // cfg.trail_step)     # steps reached
+        return (k - 1) * cfg.trail_step if k >= 1 else None
+    return None
+
+
+def simulate_trade(day_bars, i, side, ep, sd, tp_dist, cfg):
+    """Bar-by-bar to resolution with static or trailing stop.
+    Pessimistic intrabar rule: the stop level in force during a bar is the one
+    ratcheted from PRIOR bars (never raised by this bar's own extreme), and a bar
+    that spans both stop and target is treated as a stop. Returns dict of outcome.
+    1R = sd points; stop levels tracked in R and converted to price each bar."""
+    tp = ep + tp_dist if side == "LONG" else ep - tp_dist
+    sl_R = -1.0                                  # initial stop at -1R
+    def sl_price(r): return ep + r * sd if side == "LONG" else ep - r * sd
+    end_mask = day_bars["ny_hour"] <= cfg.session_end
+    fut = day_bars.iloc[i + 1:][end_mask.iloc[i + 1:]]
+    mfe_R = 0.0; mae_R = 0.0; bars_held = 0
+    outcome = "TIMEOUT"; exit_R = None; moved = False
+    for _, b in fut.iterrows():
+        bars_held += 1
+        sl = sl_price(sl_R)
+        if side == "LONG":
+            hit_sl = b["low"] <= sl; hit_tp = b["high"] >= tp
+            bar_fav = b["high"] - ep; bar_adv = b["low"] - ep
+        else:
+            hit_sl = b["high"] >= sl; hit_tp = b["low"] <= tp
+            bar_fav = ep - b["low"]; bar_adv = ep - b["high"]
+        mae_R = min(mae_R, bar_adv / sd)
+        if hit_sl and hit_tp:
+            outcome = "SL" if cfg.same_bar_pessimistic else "TP"
+            exit_R = sl_R if cfg.same_bar_pessimistic else cfg.rr
+            break
+        if hit_sl:
+            outcome = "SL"; exit_R = sl_R; break
+        if hit_tp:
+            outcome = "TP"; exit_R = cfg.rr; break
+        # no hit this bar -> register favourable excursion and ratchet stop
+        mfe_R = max(mfe_R, bar_fav / sd)
+        cand = _trail_sl_R(cfg, mfe_R)
+        if cand is not None and cand > sl_R:
+            sl_R = cand; moved = True
+    if exit_R is None:  # timeout at last close
+        last = fut.iloc[-1]["close"] if len(fut) else ep
+        exit_R = ((last - ep) if side == "LONG" else (ep - last)) / sd
+    # label: STOP that locked >= breakeven is a "TRAIL" exit
+    if outcome == "SL" and sl_R > -1.0:
+        outcome = "TRAIL"
+    return dict(outcome=outcome, R=exit_R, bars_held=bars_held,
+                mae_R=mae_R, mfe_R=mfe_R, moved=moved,
+                final_sl_R=sl_R, exit_price=sl_price(exit_R) if outcome in ("SL", "TRAIL")
+                else (tp if outcome == "TP" else ep + (exit_R * sd if side == "LONG" else -exit_R * sd)))
 
 
 def run(df, cfg: Config):
@@ -147,42 +210,20 @@ def run(df, cfg: Config):
         # --- simulate ---
         side = entry["side"]; ep = entry["price"]; sd = entry["stop_dist"]
         tp_dist = cfg.rr * sd
-        if side == "LONG":
-            sl = ep - sd; tp = ep + tp_dist
-        else:
-            sl = ep + sd; tp = ep - tp_dist
-        end_mask = day_bars["ny_hour"] <= cfg.session_end
-        fut = day_bars.iloc[entry["i"] + 1:][end_mask.iloc[entry["i"] + 1:]]
-        outcome = "TIMEOUT"; exit_price = None; bars_held = 0
-        mae = 0.0; mfe = 0.0
-        for _, b in fut.iterrows():
-            bars_held += 1
-            if side == "LONG":
-                mfe = max(mfe, b["high"] - ep); mae = min(mae, b["low"] - ep)
-                hit_sl = b["low"] <= sl; hit_tp = b["high"] >= tp
-            else:
-                mfe = max(mfe, ep - b["low"]); mae = min(mae, ep - b["high"])
-                hit_sl = b["high"] >= sl; hit_tp = b["low"] <= tp
-            if hit_sl and hit_tp:
-                outcome = "SL" if cfg.same_bar_pessimistic else "TP"
-                exit_price = sl if cfg.same_bar_pessimistic else tp
-                break
-            if hit_sl:
-                outcome = "SL"; exit_price = sl; break
-            if hit_tp:
-                outcome = "TP"; exit_price = tp; break
-        if exit_price is None:  # timeout
-            exit_price = fut.iloc[-1]["close"] if len(fut) else ep
-        pnl_pts = (exit_price - ep) if side == "LONG" else (ep - exit_price)
-        r_mult = pnl_pts / sd if sd else 0.0
+        sl0 = ep - sd if side == "LONG" else ep + sd
+        tp = ep + tp_dist if side == "LONG" else ep - tp_dist
+        sim = simulate_trade(day_bars, entry["i"], side, ep, sd, tp_dist, cfg)
+        outcome = sim["outcome"]; r_mult = sim["R"]
+        exit_price = sim["exit_price"]; bars_held = sim["bars_held"]
+        pnl_pts = r_mult * sd
         trades.append({
             "date": str(day), "side": side, "entry_time_ny": str(day_bars.iloc[entry["i"]]["ny"]),
-            "entry": round(ep, 2), "stop": round(sl, 2), "target": round(tp, 2),
+            "entry": round(ep, 2), "stop": round(sl0, 2), "target": round(tp, 2),
             "stop_dist": round(sd, 2), "tp_dist": round(tp_dist, 2),
             "outcome": outcome, "exit": round(exit_price, 2),
             "pnl_pts": round(pnl_pts, 2), "R": round(r_mult, 3),
             "bars_held": bars_held, "mins_held": bars_held * 5,
-            "mae_pts": round(mae, 2), "mfe_pts": round(mfe, 2),
+            "mae_pts": round(sim["mae_R"] * sd, 2), "mfe_pts": round(sim["mfe_R"] * sd, 2),
             "range_w": round(entry["range_w"], 2),
             "bo_vol": entry["bo_vol"],
             "vol_trail_rel": round(float(entry["trail_rel"]), 3) if pd.notna(entry["trail_rel"]) else np.nan,
