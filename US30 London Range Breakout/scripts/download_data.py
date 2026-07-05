@@ -71,7 +71,13 @@ def download_m5(name, sym_id):
     rows = load_existing(path)
     div = None
     now = datetime.now(timezone.utc).replace(second=0, microsecond=0)
-    to = now
+    # resume: page backward from the earliest bar already stored (avoid re-fetching
+    # the covered range). Fresh start pages from now.
+    if rows:
+        to = datetime.fromtimestamp(min(rows) / 1000, timezone.utc)
+        print(f"[{name}] resuming backward from earliest stored bar {to:%Y-%m-%d %H:%M}", flush=True)
+    else:
+        to = now
     calls = 0
     new = 0
     empty_streak = 0
