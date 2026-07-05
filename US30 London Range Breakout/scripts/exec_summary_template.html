@@ -1,0 +1,348 @@
+<title>London Range Breakout — P&L Executive Summary</title>
+<style>
+  :root{
+    --paper:#f5f6f8; --panel:#ffffff; --panel2:#fbfcfd; --ink:#14181f; --muted:#5c6675;
+    --line:#e2e6ec; --line2:#eef1f5; --accent:#a9761f; --accent-soft:#f0e6d2;
+    --steel:#345b7d; --profit:#16794c; --profit-bg:#e7f2ec; --loss:#c0433d; --loss-bg:#f8e9e8;
+    --serif:ui-serif,"Iowan Old Style","Palatino Linotype",Georgia,serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+    --shadow:0 1px 2px rgba(20,24,31,.04),0 4px 16px rgba(20,24,31,.05);
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --paper:#0f1319; --panel:#161c24; --panel2:#131922; --ink:#e8ecf2; --muted:#94a1b3;
+      --line:#242e3a; --line2:#1c242e; --accent:#d6a75a; --accent-soft:#2a2415;
+      --steel:#6fa0cc; --profit:#35b87d; --profit-bg:#12251c; --loss:#e0645d; --loss-bg:#2a1715;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#f5f6f8; --panel:#ffffff; --panel2:#fbfcfd; --ink:#14181f; --muted:#5c6675;
+    --line:#e2e6ec; --line2:#eef1f5; --accent:#a9761f; --accent-soft:#f0e6d2;
+    --steel:#345b7d; --profit:#16794c; --profit-bg:#e7f2ec; --loss:#c0433d; --loss-bg:#f8e9e8;
+    --shadow:0 1px 2px rgba(20,24,31,.04),0 4px 16px rgba(20,24,31,.05);
+  }
+  :root[data-theme="dark"]{
+    --paper:#0f1319; --panel:#161c24; --panel2:#131922; --ink:#e8ecf2; --muted:#94a1b3;
+    --line:#242e3a; --line2:#1c242e; --accent:#d6a75a; --accent-soft:#2a2415;
+    --steel:#6fa0cc; --profit:#35b87d; --profit-bg:#12251c; --loss:#e0645d; --loss-bg:#2a1715;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    line-height:1.5;margin:0;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:48px 24px 80px}
+  .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .pos{color:var(--profit)} .neg{color:var(--loss)}
+
+  header.top{border-bottom:2px solid var(--ink);padding-bottom:22px;margin-bottom:8px}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);
+    font-weight:600;margin:0 0 10px}
+  h1{font-family:var(--serif);font-weight:600;font-size:clamp(30px,5vw,46px);line-height:1.05;
+    margin:0;letter-spacing:-.01em;text-wrap:balance}
+  .sub{color:var(--muted);font-size:15px;margin:12px 0 0;max-width:64ch}
+
+  .assump{display:flex;flex-wrap:wrap;gap:0;margin:22px 0 34px;border:1px solid var(--line);
+    border-radius:10px;overflow:hidden;background:var(--panel);box-shadow:var(--shadow)}
+  .assump div{flex:1 1 160px;padding:12px 16px;border-right:1px solid var(--line)}
+  .assump div:last-child{border-right:0}
+  .assump .k{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .assump .v{font-family:var(--mono);font-size:15px;font-weight:600;margin-top:3px}
+
+  h2{font-family:var(--serif);font-weight:600;font-size:23px;margin:44px 0 4px;letter-spacing:-.01em}
+  h2 .n{color:var(--accent);font-family:var(--mono);font-size:16px;margin-right:10px}
+  .lede{color:var(--muted);font-size:14px;margin:0 0 18px}
+
+  /* decision matrix */
+  .matrix{width:100%;border-collapse:collapse;background:var(--panel);border-radius:10px;
+    overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line)}
+  .matrix th,.matrix td{padding:13px 16px;text-align:right;border-bottom:1px solid var(--line2)}
+  .matrix th:first-child,.matrix td:first-child{text-align:left}
+  .matrix thead th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+    font-weight:600;background:var(--panel2)}
+  .matrix tbody tr:last-child td{border-bottom:0}
+  .matrix .inst{font-weight:600;font-family:var(--serif);font-size:16px}
+  .matrix .v{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .matrix td.best{background:var(--accent-soft);font-weight:700;position:relative}
+  .matrix td.best::after{content:"BEST";position:absolute;top:3px;right:6px;font-family:var(--sans);
+    font-size:8px;letter-spacing:.1em;color:var(--accent);font-weight:700}
+
+  /* controls */
+  .controls{display:flex;flex-wrap:wrap;gap:18px;align-items:center;margin:14px 0 24px;
+    position:sticky;top:0;background:var(--paper);padding:14px 0;z-index:5;border-bottom:1px solid var(--line)}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel)}
+  .seg button{font-family:var(--sans);font-size:13px;font-weight:600;color:var(--muted);
+    background:transparent;border:0;padding:8px 15px;cursor:pointer;border-right:1px solid var(--line)}
+  .seg button:last-child{border-right:0}
+  .seg button.on{background:var(--ink);color:var(--paper)}
+  .seg.rr button.on{background:var(--accent);color:#fff}
+  .seg.mode button.on{background:var(--steel);color:#fff}
+  .clabel{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:-8px}
+
+  /* KPI */
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:0 0 12px}
+  .kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;
+    box-shadow:var(--shadow)}
+  .kpi .k{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+  .kpi .v{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:26px;font-weight:600;
+    margin-top:6px;letter-spacing:-.01em}
+  .kpi .s{font-size:12px;color:var(--muted);margin-top:2px}
+
+  /* tables */
+  .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);
+    background:var(--panel);margin-bottom:8px}
+  table.data{width:100%;border-collapse:collapse;min-width:640px}
+  table.data th,table.data td{padding:11px 14px;text-align:right;border-bottom:1px solid var(--line2);font-size:14px}
+  table.data th:first-child,table.data td:first-child{text-align:left}
+  table.data thead th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+    font-weight:600;background:var(--panel2);position:sticky;top:0}
+  table.data td.num,table.data td.money{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  table.data tbody tr:hover{background:var(--panel2)}
+  table.data tfoot td{font-weight:700;border-top:2px solid var(--line);background:var(--panel2);
+    font-family:var(--mono);font-variant-numeric:tabular-nums}
+  table.data tfoot td:first-child{font-family:var(--sans)}
+  .yr{font-weight:600}
+  .partial{color:var(--muted);font-weight:400;font-size:11px;margin-left:6px;font-family:var(--sans)}
+
+  /* monthly chart */
+  .chartcard{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px;
+    box-shadow:var(--shadow);margin-bottom:8px;overflow-x:auto}
+  .chartcard svg{display:block;min-width:640px;width:100%;height:auto}
+  .axis{stroke:var(--line);stroke-width:1}
+  .zero{stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3;opacity:.6}
+  .gl{stroke:var(--line2);stroke-width:1}
+  .bar-pos{fill:var(--profit)} .bar-neg{fill:var(--loss)}
+  .eqline{fill:none;stroke:var(--accent);stroke-width:2}
+  .mlabel{fill:var(--muted);font-family:var(--mono);font-size:9px}
+  .ylabel{fill:var(--muted);font-family:var(--mono);font-size:10px}
+  .yrsep{stroke:var(--muted);stroke-width:1;opacity:.35}
+  .yrtag{fill:var(--ink);font-family:var(--sans);font-size:11px;font-weight:600}
+
+  details{border:1px solid var(--line);border-radius:10px;margin-bottom:10px;background:var(--panel);
+    box-shadow:var(--shadow);overflow:hidden}
+  details summary{cursor:pointer;padding:13px 18px;font-weight:600;font-family:var(--sans);
+    display:flex;justify-content:space-between;align-items:center;list-style:none}
+  details summary::-webkit-details-marker{display:none}
+  details summary .tot{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:14px}
+  details[open] summary{border-bottom:1px solid var(--line)}
+  .wkscroll{max-height:340px;overflow-y:auto}
+  .wkscroll table{min-width:520px}
+
+  .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin:10px 2px 0}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+
+  .foot{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+  .foot code{font-family:var(--mono);background:var(--panel2);padding:1px 6px;border-radius:4px;border:1px solid var(--line)}
+  .note{background:var(--panel2);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;
+    padding:12px 16px;font-size:13px;color:var(--muted);margin:16px 0}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <p class="eyebrow">Strategy Performance · Management Brief</p>
+    <h1>London Range Breakout — P&amp;L in Dollars</h1>
+    <p class="sub">Three-year backtest (Jul 2023 – Jul 2026) of the refined US30 &amp; NAS100
+      London-range breakout, translated to account dollars. Toggle instrument and reward target
+      to read the year, month and week breakdown behind every figure.</p>
+  </header>
+
+  <div class="assump" id="assump"></div>
+
+  <h2><span class="n">01</span>The decision at a glance</h2>
+  <p class="lede">Total 3-year profit by instrument and reward-to-risk target. Flat $100 risk per trade. Toggle Gross / After-costs in section 02.</p>
+  <div class="tblwrap" style="border:0;box-shadow:none;background:transparent">
+    <table class="matrix" id="matrix"></table>
+  </div>
+  <div class="note" id="matrixnote"></div>
+
+  <h2><span class="n">02</span>Explore the numbers</h2>
+  <div class="controls">
+    <span class="clabel">Instrument</span>
+    <div class="seg" id="instSeg"></div>
+    <span class="clabel">Reward target</span>
+    <div class="seg rr" id="rrSeg"></div>
+    <span class="clabel">View</span>
+    <div class="seg mode" id="modeSeg"></div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <h3 style="font-family:var(--serif);font-weight:600;font-size:18px;margin:26px 0 4px">Yearly breakdown</h3>
+  <p class="lede" id="yearlede"></p>
+  <div class="tblwrap"><table class="data" id="yearly"></table></div>
+
+  <h3 style="font-family:var(--serif);font-weight:600;font-size:18px;margin:34px 0 4px">Monthly profit &amp; loss</h3>
+  <p class="lede">Each bar is one calendar month's P&amp;L; the gold line is the cumulative account gain.</p>
+  <div class="chartcard"><svg id="monthly" viewBox="0 0 960 300" preserveAspectRatio="xMidYMid meet"></svg></div>
+  <div class="legend">
+    <span><i class="sw" style="background:var(--profit)"></i>Profitable month</span>
+    <span><i class="sw" style="background:var(--loss)"></i>Losing month</span>
+    <span><i class="sw" style="background:var(--accent)"></i>Cumulative $ (right axis)</span>
+  </div>
+
+  <h3 style="font-family:var(--serif);font-weight:600;font-size:18px;margin:34px 0 4px">Weekly detail</h3>
+  <p class="lede">Every trading week, grouped by year. Expand a year to see its weeks.</p>
+  <div id="weekly"></div>
+
+  <div class="foot">
+    <p><strong>Method &amp; assumptions.</strong> Account $100,000; flat risk <strong>$100 per trade = 1R</strong>
+      (dollars = R&nbsp;×&nbsp;$100, independent of stop size). Wins = trades closed in profit, losses = trades
+      closed in loss. Streaks are consecutive wins / losses in date order. First qualifying high-volume
+      breakout per day. <strong>Dealing costs are modelled</strong> as one bid/ask spread per trade
+      (US30 2.0 pts, NAS100 1.5 pts; spread-bet indices carry no separate commission) — toggle
+      <em>Gross / After costs</em> above. Backtest, not live results; slippage on stops not modelled;
+      2023 and 2026 are part-years. Figures reproducible from <code>scripts/dollar_report.py</code>.</p>
+  </div>
+</div>
+
+<script>
+const DATA = /*INJECT*/{}/*END*/;
+const fmtUSD = (v,sign=true)=>{const s=v<0?'-':(sign&&v>0?'+':'');return s+'$'+Math.abs(v).toLocaleString('en-US',{maximumFractionDigits:0});};
+const state = {inst:'NAS100', rr:'3.0', mode:'net'};
+
+function el(t,c,txt){const e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e;}
+function partial(y){return (y==2023||y==2026)?'<span class="partial">part-yr</span>':'';}
+function meta(){return DATA.data[state.inst][state.rr];}          // {cost_per_trade_usd, gross, net}
+function cur(){return meta()[state.mode];}                         // selected gross|net block
+const modeLabel=()=>state.mode==='net'?'after costs':'gross';
+
+function renderAssump(){
+  const c=DATA.config[state.inst], sp=DATA.spread_pts[state.inst], cost=meta().cost_per_trade_usd;
+  const rows=[
+    ['Account','$100,000'],['Risk / trade','$100  (1R)'],
+    ['Backtest','Jul 2023 – Jul 2026'],
+    ['Range window', state.inst==='US30'?'08:00→09:30 ET':'02:00→09:30 ET'],
+    ['Execution', state.inst==='US30'?'10:00–13:00 ET':'10:00–11:00 ET'],
+    ['Stop', c.stop_pts+' pts'],['Volume filter','≥ '+c.vol_mult+'× 20-bar avg'],
+    ['Dealing spread', sp+' pts  ·  $'+cost.toFixed(2)+'/trade'],
+  ];
+  const box=document.getElementById('assump'); box.innerHTML='';
+  rows.forEach(([k,v])=>{const d=el('div');d.innerHTML=`<div class="k">${k}</div><div class="v">${v}</div>`;box.appendChild(d);});
+}
+
+function renderMatrix(){
+  const t=document.getElementById('matrix');
+  const rrs=DATA.rrs.map(r=>r.toFixed(1)); const mode=state.mode;
+  const val=(inst,rr)=>DATA.data[inst][rr][mode].total_usd;
+  let best={inst:null,rr:null,v:-1e9};
+  for(const inst of Object.keys(DATA.data)) for(const rr of rrs){const v=val(inst,rr); if(v>best.v)best={inst,rr,v};}
+  let h='<thead><tr><th>Instrument</th>';
+  rrs.forEach(r=>h+=`<th>${r}R</th>`); h+='<th>Best</th></tr></thead><tbody>';
+  for(const inst of Object.keys(DATA.data)){
+    h+=`<tr><td class="inst">${inst}</td>`;
+    let brr=rrs.reduce((a,b)=>val(inst,b)>val(inst,a)?b:a);
+    rrs.forEach(r=>{const v=val(inst,r);const cls=(r===brr?'v best':'v');h+=`<td class="${cls}">${fmtUSD(v)}</td>`;});
+    h+=`<td class="v">${brr}R</td></tr>`;
+  }
+  t.innerHTML=h+'</tbody>';
+  document.getElementById('matrixnote').innerHTML=
+    `Figures shown <strong>${modeLabel()}</strong> (${state.mode==='net'?'after ~'+DATA.spread_pts[best.inst]+'pt dealing spread':'before dealing costs'}). `+
+    `Best combination: <strong>${best.inst} at ${best.rr}R → ${fmtUSD(best.v)}</strong> over 3 years. `+
+    `NAS100 earns comparable dollars to US30 in ~35% fewer trades with roughly half the drawdown; US30's higher targets `+
+    `lift its total but 2024 was near-flat. Higher R targets help up to ~3R, then plateau. Costs trim roughly `+
+    `$1,500–1,650 per configuration but do not overturn the edge.`;
+}
+
+function seg(id, items, key, labelFn){
+  const box=document.getElementById(id); box.innerHTML='';
+  items.forEach(it=>{const b=el('button',state[key]===it?'on':'', labelFn?labelFn(it):(id==='rrSeg'?it+'R':it));
+    b.dataset.val=it; b.onclick=()=>{state[key]=it;syncSeg(id,it);renderAll();};box.appendChild(b);});
+}
+function syncSeg(id,val){document.querySelectorAll('#'+id+' button').forEach(b=>b.classList.toggle('on',b.dataset.val===val));}
+
+function renderKpis(){
+  const d=cur(); const yr=d.yearly; const totUsd=d.total_usd; const trades=d.trades;
+  const wins=yr.reduce((a,r)=>a+r.wins,0); const winpct=(wins/trades*100);
+  const maxLoss=Math.max(...yr.map(r=>r.longest_loss_streak));
+  const maxWin=Math.max(...yr.map(r=>r.longest_win_streak));
+  const costTot=meta().cost_per_trade_usd*trades;
+  const k=[
+    ['3-yr P&L ('+modeLabel()+')',fmtUSD(totUsd),(state.mode==='net'?'after $'+Math.round(costTot).toLocaleString()+' costs':(totUsd/1000).toFixed(1)+'% of account'),totUsd>=0?'pos':'neg'],
+    ['Ending balance','$'+Math.round(100000+totUsd).toLocaleString(),'from $100,000',''],
+    ['Trades',trades.toLocaleString(),winpct.toFixed(0)+'% closed in profit',''],
+    ['Longest win streak',maxWin,'consecutive',''],
+    ['Longest loss streak',maxLoss,'consecutive — plan for it','neg'],
+  ];
+  const box=document.getElementById('kpis');box.innerHTML='';
+  k.forEach(([kk,v,s,cls])=>{const e=el('div','kpi');
+    e.innerHTML=`<div class="k">${kk}</div><div class="v ${cls}">${v}</div><div class="s">${s}</div>`;box.appendChild(e);});
+}
+
+function renderYearly(){
+  const d=cur(); const yr=d.yearly;
+  let h='<thead><tr><th>Year</th><th>Trades</th><th>Won</th><th>Lost</th><th>Win %</th>'+
+        '<th>Win streak</th><th>Loss streak</th><th>P&L</th><th>Balance</th></tr></thead><tbody>';
+  yr.forEach(r=>{
+    h+=`<tr><td class="yr">${r.year}${partial(r.year)}</td>`+
+       `<td class="num">${r.trades}</td><td class="num">${r.wins}</td><td class="num">${r.losses}</td>`+
+       `<td class="num">${r.win_pct.toFixed(1)}%</td>`+
+       `<td class="num">${r.longest_win_streak}</td><td class="num">${r.longest_loss_streak}</td>`+
+       `<td class="money ${r.usd>=0?'pos':'neg'}">${fmtUSD(r.usd)}</td>`+
+       `<td class="money">$${Math.round(r.account_end).toLocaleString()}</td></tr>`;
+  });
+  const tt=yr.reduce((a,r)=>({t:a.t+r.trades,w:a.w+r.wins,l:a.l+r.losses,u:a.u+r.usd}),{t:0,w:0,l:0,u:0});
+  h+='</tbody><tfoot><tr><td>3-year total</td>'+
+     `<td>${tt.t}</td><td>${tt.w}</td><td>${tt.l}</td><td>${(tt.w/tt.t*100).toFixed(1)}%</td>`+
+     `<td>—</td><td>—</td><td class="${tt.u>=0?'pos':'neg'}">${fmtUSD(tt.u)}</td>`+
+     `<td>$${Math.round(100000+tt.u).toLocaleString()}</td></tr></tfoot>`;
+  document.getElementById('yearly').innerHTML=h;
+  document.getElementById('yearlede').innerHTML=
+    `${state.inst} · ${state.rr}R target · ${DATA.config[state.inst].stop_pts}pt stop · ${modeLabel()}. Wins are trades closed in profit.`;
+}
+
+function renderMonthly(){
+  const d=cur(); const m=d.monthly;
+  const W=960,H=300,padL=44,padR=52,padT=18,padB=40;
+  const iw=W-padL-padR, ih=H-padT-padB;
+  const vals=m.map(x=>x.usd); const maxV=Math.max(50,...vals), minV=Math.min(-50,...vals);
+  const span=maxV-minV; const y0=padT+(maxV/span)*ih;
+  let cum=0; const cumVals=m.map(x=>{cum+=x.usd;return cum;});
+  const cumMax=Math.max(...cumVals,1), cumMin=Math.min(...cumVals,0); const cumSpan=(cumMax-cumMin)||1;
+  const bw=iw/m.length; let svg='';
+  for(let g=0;g<=4;g++){const yy=padT+ih*g/4; const val=maxV-span*g/4;
+    svg+=`<line class="gl" x1="${padL}" y1="${yy}" x2="${W-padR}" y2="${yy}"/>`;
+    svg+=`<text class="ylabel" x="${padL-6}" y="${yy+3}" text-anchor="end">${val>=0?'+':''}${Math.round(val/1000*10)/10}k</text>`;}
+  svg+=`<line class="zero" x1="${padL}" y1="${y0}" x2="${W-padR}" y2="${y0}"/>`;
+  let lastYr=null;
+  m.forEach((x,i)=>{const yr=x.month.slice(0,4); if(yr!==lastYr){const xx=padL+bw*i;
+    if(lastYr!==null)svg+=`<line class="yrsep" x1="${xx}" y1="${padT}" x2="${xx}" y2="${padT+ih}"/>`;
+    svg+=`<text class="yrtag" x="${xx+4}" y="${padT+12}">${yr}</text>`; lastYr=yr;}});
+  m.forEach((x,i)=>{const xx=padL+bw*i+bw*0.16; const w=bw*0.68;
+    const vy=padT+((maxV-x.usd)/span)*ih; const top=Math.min(vy,y0), hgt=Math.abs(vy-y0);
+    svg+=`<rect class="${x.usd>=0?'bar-pos':'bar-neg'}" x="${xx}" y="${top}" width="${w}" height="${Math.max(0.5,hgt)}"><title>${x.month}: ${fmtUSD(x.usd)}</title></rect>`;});
+  const cx=i=>padL+bw*i+bw/2; const cy=v=>padT+((cumMax-v)/cumSpan)*ih;
+  svg+=`<path class="eqline" d="${cumVals.map((v,i)=>`${i?'L':'M'}${cx(i).toFixed(1)},${cy(v).toFixed(1)}`).join(' ')}"/>`;
+  for(let g=0;g<=4;g++){const val=cumMax-cumSpan*g/4;const yy=padT+ih*g/4;
+    svg+=`<text class="ylabel" x="${W-padR+6}" y="${yy+3}" text-anchor="start" fill="var(--accent)">${fmtUSD(val,false)}</text>`;}
+  document.getElementById('monthly').innerHTML=svg;
+}
+
+function renderWeekly(){
+  const d=cur(); const wk=d.weekly;
+  const byYear={}; wk.forEach(w=>{const y=w.week.slice(0,4);(byYear[y]=byYear[y]||[]).push(w);});
+  const box=document.getElementById('weekly'); box.innerHTML='';
+  Object.keys(byYear).sort().forEach(y=>{
+    const weeks=byYear[y]; const tot=weeks.reduce((a,w)=>a+w.usd,0);
+    const det=el('details'); const sum=el('summary');
+    sum.innerHTML=`<span>${y} <span style="color:var(--muted);font-weight:400">· ${weeks.length} weeks</span></span>`+
+      `<span class="tot ${tot>=0?'pos':'neg'}">${fmtUSD(tot)}</span>`;
+    det.appendChild(sum);
+    const sc=el('div','wkscroll');
+    let h='<table class="data"><thead><tr><th>Week of</th><th>Trades</th><th>Won</th><th>Lost</th><th>P&L</th></tr></thead><tbody>';
+    weeks.forEach(w=>{h+=`<tr><td class="num">${w.week_start}</td><td class="num">${w.trades}</td>`+
+      `<td class="num">${w.wins}</td><td class="num">${w.losses}</td>`+
+      `<td class="money ${w.usd>=0?'pos':'neg'}">${fmtUSD(w.usd)}</td></tr>`;});
+    sc.innerHTML=h+'</tbody></table>'; det.appendChild(sc); box.appendChild(det);
+  });
+}
+
+function renderAll(){renderMatrix();renderAssump();renderKpis();renderYearly();renderMonthly();renderWeekly();}
+
+seg('instSeg',Object.keys(DATA.data),'inst');
+seg('rrSeg',DATA.rrs.map(r=>r.toFixed(1)),'rr');
+seg('modeSeg',['gross','net'],'mode',m=>m==='net'?'After costs':'Gross');
+renderAll();
+</script>

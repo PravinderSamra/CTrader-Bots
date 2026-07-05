@@ -1,0 +1,104 @@
+<!doctype html><html><head><meta charset="utf-8"><title>LRB Exec Summary</title>
+<style>
+@page { size: Letter portrait; margin: 13mm 14mm; }
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;color:#16181d;background:#fff;
+  font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:9.4px;line-height:1.4}
+.mono,td,th,.big,.matrix td{font-variant-numeric:tabular-nums}
+.serif{font-family:"Iowan Old Style",Georgia,"Times New Roman",serif}
+h1{font-family:"Iowan Old Style",Georgia,serif;font-size:21px;margin:0;letter-spacing:-.01em;font-weight:600}
+.eyebrow{font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:#a9761f;font-weight:700;margin:0 0 4px}
+.sub{color:#5c6675;font-size:9.2px;margin:4px 0 0;max-width:118ch}
+header{border-bottom:2px solid #16181d;padding-bottom:9px;margin-bottom:10px;
+  display:flex;justify-content:space-between;align-items:flex-end;gap:16px}
+.hl{text-align:right;white-space:nowrap}
+.hl .k{font-size:8px;text-transform:uppercase;letter-spacing:.08em;color:#5c6675}
+.hl .v{font-family:"Iowan Old Style",Georgia,serif;font-size:16px;font-weight:600;color:#16794c}
+.assump{display:flex;flex-wrap:wrap;gap:0;border:1px solid #e2e6ec;border-radius:6px;overflow:hidden;margin-bottom:11px}
+.assump div{flex:1 1 auto;padding:6px 10px;border-right:1px solid #eef1f5}
+.assump div:last-child{border-right:0}
+.assump .k{font-size:7.5px;text-transform:uppercase;letter-spacing:.06em;color:#5c6675}
+.assump .v{font-family:ui-monospace,Menlo,monospace;font-size:9.6px;font-weight:600;margin-top:1px}
+h2{font-family:"Iowan Old Style",Georgia,serif;font-size:12.5px;margin:12px 0 5px;font-weight:600}
+h2 .n{color:#a9761f;font-family:ui-monospace,monospace;font-size:10px;margin-right:6px}
+table{border-collapse:collapse;width:100%}
+.matrix{border:1px solid #e2e6ec;border-radius:6px;overflow:hidden}
+.matrix th,.matrix td{padding:6px 10px;text-align:right;border-bottom:1px solid #eef1f5;font-size:9.4px}
+.matrix th:first-child,.matrix td:first-child{text-align:left}
+.matrix thead th{background:#f7f8fa;font-size:8px;text-transform:uppercase;letter-spacing:.05em;color:#5c6675}
+.matrix tbody tr:last-child td{border-bottom:0}
+.matrix .inst{font-weight:700}
+.matrix td.best{background:#f2e6cd;font-weight:700}
+.matrix .rec{font-family:ui-monospace,monospace;color:#a9761f;font-weight:700}
+.note{background:#f7f8fa;border-left:3px solid #a9761f;border-radius:0 5px 5px 0;padding:7px 10px;
+  font-size:8.8px;color:#3d4451;margin:7px 0 0}
+.grid2{display:grid;grid-template-columns:1fr;gap:9px;margin-top:4px}
+.ib{border:1px solid #e2e6ec;border-radius:6px;padding:9px 11px}
+.ib-head{display:flex;justify-content:space-between;align-items:baseline}
+.ib h3{font-family:"Iowan Old Style",Georgia,serif;font-size:12px;margin:0;font-weight:600}
+.ib .tag{font-family:-apple-system,sans-serif;font-size:8px;font-weight:600;color:#a9761f;
+  background:#f2e6cd;padding:1px 6px;border-radius:20px;margin-left:5px;letter-spacing:.02em}
+.big{font-family:ui-monospace,monospace;font-size:15px;font-weight:700}
+.big .lab{font-family:-apple-system,sans-serif;font-size:8px;font-weight:400;color:#5c6675}
+.cfg{color:#5c6675;font-size:8.4px;margin:2px 0 6px;font-family:ui-monospace,monospace}
+.yt th,.yt td{padding:3.5px 6px;text-align:right;border-bottom:1px solid #eef1f5;font-size:9px;
+  font-family:ui-monospace,Menlo,monospace}
+.yt th{font-family:-apple-system,sans-serif;font-size:7.6px;text-transform:uppercase;letter-spacing:.04em;
+  color:#5c6675;font-weight:600;background:#fafbfc;line-height:1.15}
+.yt th:first-child,.yt td:first-child{text-align:left;font-family:-apple-system,sans-serif}
+.yt .yr{font-weight:600} .yt .p{color:#8b95a4;font-size:7px;font-family:-apple-system,sans-serif}
+.yt tr.tot td{font-weight:700;border-top:1.5px solid #cfd6df;background:#fafbfc}
+.pos{color:#16794c} .neg{color:#c0433d}
+.takeaways{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:9px}
+.tk{border:1px solid #e2e6ec;border-radius:6px;padding:8px 10px}
+.tk .h{font-weight:700;font-size:9.2px;margin-bottom:2px}
+.tk .b{color:#3d4451;font-size:8.6px}
+.foot{margin-top:10px;padding-top:7px;border-top:1px solid #e2e6ec;color:#5c6675;font-size:7.8px}
+.foot code{font-family:ui-monospace,monospace}
+</style></head><body>
+<header>
+  <div>
+    <p class="eyebrow">Strategy Performance · Management Brief · 75pt / 40pt</p>
+    <h1>London Range Breakout — P&amp;L in Dollars</h1>
+    <p class="sub">Three-year backtest (Jul 2023 – Jul 2026) of the refined US30 &amp; NAS100 London-range breakout.
+      $100,000 account, flat $100 risk per trade (1R = $100). <b>All figures net of dealing spread.</b></p>
+  </div>
+  <div class="hl"><div class="k">Best net result (3 yrs)</div><div class="v">+$10,033</div>
+    <div class="k" style="margin-top:2px">US30 · 3.0R</div></div>
+</header>
+
+<div class="assump">
+  <div><div class="k">Account</div><div class="v">$100,000</div></div>
+  <div><div class="k">Risk / trade</div><div class="v">$100 (1R)</div></div>
+  <div><div class="k">Entry</div><div class="v">1st hi-vol break</div></div>
+  <div><div class="k">No-trade</div><div class="v">09:30–10:00 ET</div></div>
+  <div><div class="k">US30 spread</div><div class="v">2.0 pt · $2.67</div></div>
+  <div><div class="k">NAS100 spread</div><div class="v">1.5 pt · $3.75</div></div>
+  <div><div class="k">Costs</div><div class="v">modelled</div></div>
+</div>
+
+<h2><span class="n">01</span>3-year net profit — instrument × reward target</h2>
+<table class="matrix"><thead><tr><th>Instrument (net of costs)</th><th>2.0R</th><th>2.5R</th><th>3.0R</th><th>3.5R</th><th>Best</th></tr></thead>
+<tbody><tr><td class="inst">US30</td><td class="">+$6,561</td><td class="">+$8,694</td><td class="best">+$10,033</td><td class="">+$8,498</td><td class="rec">3.0R</td></tr><tr><td class="inst">NAS100</td><td class="">+$2,626</td><td class="">+$5,263</td><td class="">+$7,031</td><td class="best">+$7,807</td><td class="rec">3.5R</td></tr></tbody></table>
+<div class="note"><b>Decision:</b> US30 at 3.0R delivers the highest net total (+$10,033). NAS100
+  (best +$7,807 at 3.5R) earns comparable dollars in ~35% fewer trades with roughly half the drawdown and
+  is profitable every year — the preferred vehicle on risk-adjusted terms. Higher targets help up to ~3R, then plateau.</div>
+
+<h2><span class="n">02</span>Recommended configuration — yearly detail (net)</h2>
+<div class="grid2"><section class="ib"><div class="ib-head"><h3>US30 <span class="tag">recommended · 3.0R</span></h3><div class="big pos">+$10,033<span class="lab"> net over 3 yrs</span></div></div><p class="cfg">Range 08:00→09:30 ET · execute 10:00–13:00 ET · 75-pt stop · vol ≥1.2× · 613 trades · 37% win · worst losing streak 9 · cost $2.67/trade</p><table class="yt"><thead><tr><th>Year</th><th>Trades</th><th>Won</th><th>Lost</th><th>Win%</th><th>Win<br>streak</th><th>Loss<br>streak</th><th>P&amp;L</th><th>Balance</th></tr></thead><tbody><tr><td class="yr">2023 <span class="p">part</span></td><td>95</td><td>41</td><td>54</td><td>43%</td><td>6</td><td>7</td><td class="pos">+$1,230</td><td>$101,230</td></tr><tr><td class="yr">2024</td><td>218</td><td>70</td><td>148</td><td>32%</td><td>5</td><td>8</td><td class="pos">+$480</td><td>$101,710</td></tr><tr><td class="yr">2025</td><td>217</td><td>83</td><td>134</td><td>38%</td><td>4</td><td>7</td><td class="pos">+$5,267</td><td>$106,976</td></tr><tr><td class="yr">2026 <span class="p">part</span></td><td>83</td><td>31</td><td>52</td><td>37%</td><td>3</td><td>9</td><td class="pos">+$3,057</td><td>$110,033</td></tr><tr class="tot"><td>3-yr total</td><td>613</td><td>225</td><td>388</td><td>37%</td><td>—</td><td>—</td><td class="pos">+$10,033</td><td>$110,033</td></tr></tbody></table></section><section class="ib"><div class="ib-head"><h3>NAS100 <span class="tag">recommended · 3.5R</span></h3><div class="big pos">+$7,807<span class="lab"> net over 3 yrs</span></div></div><p class="cfg">Range 02:00→09:30 ET · execute 10:00–11:00 ET · 40-pt stop · vol ≥1.2× · 398 trades · 33% win · worst losing streak 12 · cost $3.75/trade</p><table class="yt"><thead><tr><th>Year</th><th>Trades</th><th>Won</th><th>Lost</th><th>Win%</th><th>Win<br>streak</th><th>Loss<br>streak</th><th>P&amp;L</th><th>Balance</th></tr></thead><tbody><tr><td class="yr">2023 <span class="p">part</span></td><td>81</td><td>28</td><td>53</td><td>35%</td><td>2</td><td>7</td><td class="pos">+$591</td><td>$100,591</td></tr><tr><td class="yr">2024</td><td>152</td><td>44</td><td>108</td><td>29%</td><td>4</td><td>12</td><td class="pos">+$2,097</td><td>$102,688</td></tr><tr><td class="yr">2025</td><td>147</td><td>49</td><td>98</td><td>33%</td><td>3</td><td>12</td><td class="pos">+$3,367</td><td>$106,055</td></tr><tr><td class="yr">2026 <span class="p">part</span></td><td>18</td><td>10</td><td>8</td><td>56%</td><td>6</td><td>3</td><td class="pos">+$1,752</td><td>$107,807</td></tr><tr class="tot"><td>3-yr total</td><td>398</td><td>131</td><td>267</td><td>33%</td><td>—</td><td>—</td><td class="pos">+$7,807</td><td>$107,807</td></tr></tbody></table></section></div>
+
+<div class="takeaways">
+  <div class="tk"><div class="h">The edge survives costs</div><div class="b">After spread, US30 3.0R nets
+    +$10,033 and NAS100 3.5R nets +$7,807 — profitable in all four calendar years.</div></div>
+  <div class="tk"><div class="h">Plan for losing streaks</div><div class="b">Win rates are 20–43%; runs of
+    7–9 consecutive losers occur every year. Sizing and psychology must absorb this.</div></div>
+  <div class="tk"><div class="h">Next step</div><div class="b">Forward-test NAS100 (balanced 60pt/2.0R and 3.5R)
+    on demo for 4–8 weeks before committing capital.</div></div>
+</div>
+
+<div class="foot"><b>Method.</b> Dollars = R × $100 (stop-size independent). Wins/losses = trades closed in
+  profit/loss; streaks are consecutive in date order. Dealing cost = one bid/ask spread per trade (spread-bet
+  indices carry no separate commission); slippage on stops not modelled. First qualifying high-volume breakout
+  per day. Backtest on cTrader M5 data, not live results; 2023 &amp; 2026 are part-years. Source: <code>scripts/dollar_report.py</code>.
+</div>
+</body></html>
