@@ -32,21 +32,21 @@ def _trades(inst, cfg):
     return tdf, s
 
 
-def equity_curve(configs):
-    """configs: {inst: (label, Config)}"""
-    fig, ax = plt.subplots(figsize=(9, 5))
-    for inst, (label, cfg) in configs.items():
+def equity_curve(series, fname="equity_curve.png", title="Equity curve (R-multiples)"):
+    """series: list of (inst, label, Config, color, style)"""
+    fig, ax = plt.subplots(figsize=(9.5, 5.5))
+    for inst, label, cfg, color, style in series:
         tdf, s = _trades(inst, cfg)
         if not len(tdf):
             continue
         eq = tdf["R"].cumsum().values
-        ax.plot(range(len(eq)), eq, color=C.get(inst, "#666"), lw=1.8,
-                label=f"{inst} — {label}  (exp {s['expectancy_R']:+.2f}R, PF {s['profit_factor']}, n={s['trades']})")
+        ax.plot(range(len(eq)), eq, color=color, lw=1.8, ls=style,
+                label=f"{inst} {label}: {s['total_R']:+.0f}R, PF {s['profit_factor']}, DD {s['max_dd_R']}R, n={s['trades']}")
     ax.axhline(0, color=C["ink"], lw=0.8)
     ax.set_xlabel("trade #"); ax.set_ylabel("cumulative R")
-    ax.set_title("Equity curve (R-multiples)")
+    ax.set_title(title)
     ax.legend(fontsize=8, loc="upper left")
-    fig.tight_layout(); fig.savefig(os.path.join(CHARTS, "equity_curve.png")); plt.close(fig)
+    fig.tight_layout(); fig.savefig(os.path.join(CHARTS, fname)); plt.close(fig)
 
 
 def risk_heatmap(inst):
@@ -88,12 +88,19 @@ def volume_bars(inst):
 
 
 if __name__ == "__main__":
-    base = {i: ("base 50/100 (2R), vol>=1.2x",
-                bt.Config(instrument=i, range_ref="ny", lon_start=3.0, lon_end=9.5,
-                          bo_start=10.0, bo_end=12.0, stop_pts=50, rr=2.0,
-                          vol_method="trailing", vol_mult=1.2))
-            for i in ["US30", "NAS100"]}
-    equity_curve(base)
+    V = dict(vol_method="trailing", vol_mult=1.2)
+    def C30(**k): return bt.Config(instrument="US30", range_ref="ny", **k, **V)
+    def CN(**k): return bt.Config(instrument="NAS100", range_ref="ny", **k, **V)
+    # base (literal 50/2R updated-structure) vs recommended, both instruments
+    series = [
+        ("US30", "base 50/2R", C30(lon_start=3, lon_end=9.5, bo_start=10, bo_end=12, stop_pts=50, rr=2.0), C["US30"], ":"),
+        ("US30", "atr2.0/2.0R", C30(lon_start=8, lon_end=9.5, bo_start=10, bo_end=13, stop_method="atr", atr_mult=2.0, rr=2.0), C["US30"], "-"),
+        ("US30", "fixed75/3.0R", C30(lon_start=8, lon_end=9.5, bo_start=10, bo_end=13, stop_pts=75, rr=3.0), "#7c3aed", "-"),
+        ("NAS100", "base 50/2R", CN(lon_start=3, lon_end=9.5, bo_start=10, bo_end=12, stop_pts=50, rr=2.0), C["NAS100"], ":"),
+        ("NAS100", "fixed60/2.0R", CN(lon_start=2, lon_end=9.5, bo_start=10, bo_end=11, stop_pts=60, rr=2.0), C["NAS100"], "-"),
+        ("NAS100", "fixed40/3.5R", CN(lon_start=2, lon_end=9.5, bo_start=10, bo_end=11, stop_pts=40, rr=3.5), "#b45309", "-"),
+    ]
+    equity_curve(series, "equity_recommended.png", "Equity curves — base vs recommended (3yr, R-multiples)")
     for inst in ["US30", "NAS100"]:
         risk_heatmap(inst); volume_bars(inst)
     print("charts written to", CHARTS)
