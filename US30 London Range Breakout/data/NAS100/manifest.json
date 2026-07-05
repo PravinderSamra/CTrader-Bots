@@ -1,0 +1,12 @@
+{
+  "instrument": "NAS100",
+  "symbol_id": 205,
+  "period_primary": "M_5",
+  "price_divisor": 100000,
+  "m5_bars": 212383,
+  "coverage_first_utc": "2023-07-02 22:00:00",
+  "coverage_last_utc": "2026-07-03 16:55:00",
+  "source": "cTrader MCP (Pepperstone UK GBP spread-bet demo)",
+  "volume_note": "tick volume (price-update count), not real contract volume",
+  "downloaded_at": "2026-07-05T14:27:38.388284+00:00"
+}
