@@ -20,33 +20,37 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ANALYSIS = os.path.join(ROOT, "analysis")
 os.makedirs(ANALYSIS, exist_ok=True)
 
-# London range candidate windows (LONDON local hours)
+# Updated rule set: range is built UP TO 09:30 ET, so windows are NY-anchored and
+# all end at 09:30 ET (9.5). We sweep the range START.
+RANGE_REF = "ny"
 LON_WINDOWS = {
-    "LR-A 03-08": (3.0, 8.0),
-    "LR-B 06-09": (6.0, 9.0),
-    "LR-C 08-13": (8.0, 13.0),
-    "LR-D 00-08": (0.0, 8.0),
-    "LR-E 02-0830": (2.0, 8.5),
-    "LR-F 07-12": (7.0, 12.0),
+    "RNG 02-0930ET": (2.0, 9.5),
+    "RNG 03-0930ET": (3.0, 9.5),   # London open -> NY open (default)
+    "RNG 04-0930ET": (4.0, 9.5),
+    "RNG 07-0930ET": (7.0, 9.5),
+    "RNG 08-0930ET": (8.0, 9.5),
+    "RNG 00-0930ET": (0.0, 9.5),
 }
-# breakout scan windows (NY local hours) measured from the 09:30 open
+# breakout scan windows (NY local hours) — trading only AFTER the 10:00 ET wait
 BO_WINDOWS = {
-    "first 5m": (9.5, 9.5834),
-    "first 30m": (9.5, 10.0),
-    "first 60m": (9.5, 10.5),
-    "first 90m": (9.5, 11.0),
-    "first 2h": (9.5, 11.5),
-    "whole session": (9.5, 16.0),
+    "10:00-10:30": (10.0, 10.5),
+    "10:00-11:00": (10.0, 11.0),
+    "10:00-12:00": (10.0, 12.0),
+    "10:00-13:00": (10.0, 13.0),
+    "10:00-16:00": (10.0, 16.0),
 }
+
+
+# high-volume rule now part of the base strategy
+VOL_BASE = dict(vol_method="trailing", vol_mult=1.2)
 
 
 def stage1(df, inst):
     rows = []
     for lw, (ls, le) in LON_WINDOWS.items():
         for bw, (bs, be) in BO_WINDOWS.items():
-            cfg = bt.Config(instrument=inst, lon_start=ls, lon_end=le,
-                            bo_start=bs, bo_end=be, stop_pts=50, rr=2.0,
-                            vol_method="none")
+            cfg = bt.Config(instrument=inst, range_ref=RANGE_REF, lon_start=ls, lon_end=le,
+                            bo_start=bs, bo_end=be, stop_pts=50, rr=2.0, **VOL_BASE)
             _, s = bt.run(df, cfg)
             if s.get("trades", 0) == 0:
                 continue
@@ -67,8 +71,9 @@ def stage2(df, inst, lw, bw):
     # fixed stops
     for sp in [30, 40, 50, 60, 75, 100]:
         for rr in rr_targets:
-            cfg = bt.Config(instrument=inst, lon_start=ls, lon_end=le, bo_start=bs, bo_end=be,
-                            stop_method="fixed", stop_pts=sp, rr=rr, vol_method="none")
+            cfg = bt.Config(instrument=inst, range_ref=RANGE_REF, lon_start=ls, lon_end=le,
+                            bo_start=bs, bo_end=be,
+                            stop_method="fixed", stop_pts=sp, rr=rr, **VOL_BASE)
             _, s = bt.run(df, cfg)
             if s.get("trades", 0) == 0:
                 continue
@@ -77,8 +82,9 @@ def stage2(df, inst, lw, bw):
     # ATR stops
     for am in [1.0, 1.5, 2.0, 2.5]:
         for rr in rr_targets:
-            cfg = bt.Config(instrument=inst, lon_start=ls, lon_end=le, bo_start=bs, bo_end=be,
-                            stop_method="atr", atr_mult=am, rr=rr, vol_method="none")
+            cfg = bt.Config(instrument=inst, range_ref=RANGE_REF, lon_start=ls, lon_end=le,
+                            bo_start=bs, bo_end=be,
+                            stop_method="atr", atr_mult=am, rr=rr, **VOL_BASE)
             _, s = bt.run(df, cfg)
             if s.get("trades", 0) == 0:
                 continue
@@ -86,8 +92,9 @@ def stage2(df, inst, lw, bw):
             rows.append(s)
     # structure (range edge) stop
     for rr in rr_targets:
-        cfg = bt.Config(instrument=inst, lon_start=ls, lon_end=le, bo_start=bs, bo_end=be,
-                        stop_method="range_edge", range_buffer_pts=5, rr=rr, vol_method="none")
+        cfg = bt.Config(instrument=inst, range_ref=RANGE_REF, lon_start=ls, lon_end=le,
+                        bo_start=bs, bo_end=be,
+                        stop_method="range_edge", range_buffer_pts=5, rr=rr, **VOL_BASE)
         _, s = bt.run(df, cfg)
         if s.get("trades", 0) == 0:
             continue
@@ -99,8 +106,10 @@ def stage2(df, inst, lw, bw):
 
 
 def base_case_log(df, inst):
-    """Persist the literal-spec base-case trade log for the record."""
-    cfg = bt.Config(instrument=inst, stop_pts=50, rr=2.0)
+    """Persist the base-case trade log (updated rules: range->09:30 ET,
+    exec from 10:00 ET, high-volume breakout, 50/100)."""
+    cfg = bt.Config(instrument=inst, range_ref=RANGE_REF, lon_start=3.0, lon_end=9.5,
+                    bo_start=10.0, bo_end=12.0, stop_pts=50, rr=2.0, **VOL_BASE)
     tdf, s = bt.run(df, cfg)
     tdf.to_csv(os.path.join(ANALYSIS, f"{inst}_basecase_trades.csv"), index=False)
     return s

@@ -20,7 +20,8 @@ import numpy as np
 @dataclass
 class Config:
     instrument: str = "US30"
-    # London range window in LONDON local hours [start, end)
+    # range window [start, end) in the hours of `range_ref` timezone
+    range_ref: str = "london"      # "london" -> use lon_hour; "ny" -> use ny_hour
     lon_start: float = 3.0
     lon_end: float = 8.0
     # breakout scan window in NY local hours [start, end)
@@ -86,15 +87,16 @@ def run(df, cfg: Config):
         day_bars = day_bars.reset_index(drop=True)
         if cfg.dow_skip(day_bars):  # placeholder; see below
             pass
-        # --- London range ---
-        lon_mask = (day_bars["lon_hour"] >= cfg.lon_start) & (day_bars["lon_hour"] < cfg.lon_end)
+        # --- range (London-local or NY-anchored) ---
+        rcol = "ny_hour" if cfg.range_ref == "ny" else "lon_hour"
+        lon_mask = (day_bars[rcol] >= cfg.lon_start) & (day_bars[rcol] < cfg.lon_end)
         lr = day_bars[lon_mask]
         if len(lr) < 3:
             continue
         r_high = lr["high"].max()
         r_low = lr["low"].min()
-        # premarket volume baseline: bars between London-end and NY open
-        pm_mask = (day_bars["ny_hour"] < cfg.bo_start) & (day_bars["lon_hour"] >= cfg.lon_end)
+        # premarket volume baseline: bars between range-end and breakout-scan start
+        pm_mask = (day_bars["ny_hour"] < cfg.bo_start) & (day_bars[rcol] >= cfg.lon_end)
         pm_avg = day_bars[pm_mask]["volume"].mean() if pm_mask.any() else np.nan
         # --- breakout scan ---
         bo_mask = (day_bars["ny_hour"] >= cfg.bo_start) & (day_bars["ny_hour"] < cfg.bo_end)

@@ -7,6 +7,14 @@
 
 ---
 
+> **RULE UPDATE (2026-07-05):** The base strategy was revised after the first
+> 45-day test. Loading range is now built **up to 09:30 ET**; the **first 30 min
+> after the open (09:30–10:00 ET) is skipped**; from **10:00 ET** the **first
+> high-volume 5m candle** breaking the range is the entry. On the same 45-day
+> sample this flipped US30 from −7R (PF 0.67) to +9R (PF 2.00). See
+> `analysis/US30_45day_rule_update_comparison.md`. Sweeps/volume study/charts now
+> use this as the base.
+
 ## 1. The strategy under test (as briefed)
 
 On the US30 (and, as an alternative, NAS100):

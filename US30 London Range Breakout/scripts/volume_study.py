@@ -69,8 +69,10 @@ def run(inst):
     prof = tod_profile(df)
     prof.to_csv(os.path.join(ANALYSIS, f"{inst}_volume_tod_profile.csv"))
 
-    # base breakout set (no vol filter) with volume features attached
-    cfg = bt.Config(instrument=inst, stop_pts=50, rr=2.0, vol_method="none")
+    # base breakout set (NO vol filter, so we can study volume vs outcome),
+    # updated structure: range -> 09:30 ET, execute from 10:00 ET
+    cfg = bt.Config(instrument=inst, range_ref="ny", lon_start=3.0, lon_end=9.5,
+                    bo_start=10.0, bo_end=12.0, stop_pts=50, rr=2.0, vol_method="none")
     tdf, _ = bt.run(df, cfg)
     tdf.to_csv(os.path.join(ANALYSIS, f"{inst}_breakouts_with_volume.csv"), index=False)
 

@@ -88,7 +88,11 @@ def volume_bars(inst):
 
 
 if __name__ == "__main__":
-    base = {i: ("base 50/100 (2R)", bt.Config(instrument=i, stop_pts=50, rr=2.0)) for i in ["US30", "NAS100"]}
+    base = {i: ("base 50/100 (2R), vol>=1.2x",
+                bt.Config(instrument=i, range_ref="ny", lon_start=3.0, lon_end=9.5,
+                          bo_start=10.0, bo_end=12.0, stop_pts=50, rr=2.0,
+                          vol_method="trailing", vol_mult=1.2))
+            for i in ["US30", "NAS100"]}
     equity_curve(base)
     for inst in ["US30", "NAS100"]:
         risk_heatmap(inst); volume_bars(inst)
