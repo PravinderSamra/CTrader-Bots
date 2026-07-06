@@ -561,6 +561,22 @@ const PIP_DIGITS: Record<string, number> = {
   US500: 5, GER40: 5, UK100: 5,
 }
 
+// Broker-assigned symbolIds for the 12 instruments this script needs, captured from a
+// full get_symbols dump (2026-07-06). These are stable/static per broker account — a
+// venue essentially never renumbers its symbol IDs. We use them directly instead of
+// calling get_symbols on every run because that endpoint returns the ENTIRE symbol
+// universe (~57k lines / ~1.5MB for this account), which has been observed to fail to
+// parse over the MCP SSE transport (see mcpFetch's multi-line "data:" handling below) —
+// silently yielding a null price snapshot for a run rather than an explicit error.
+// If CTrader ever changes an ID (e.g. account/broker migration), fetchCTraderPrices
+// falls back to a live get_symbols call for just the missing entries.
+const KNOWN_SYMBOL_IDS: Record<string, number> = {
+  XAUUSD: 41, XAGUSD: 42,
+  EURUSD: 1, USDJPY: 4, USDCHF: 6, USDCNH: 60,
+  GBPUSD: 2, USDCAD: 8, USDSEK: 29,
+  US500: 115, GER40: 110, UK100: 113,
+}
+
 async function mcpFetch(body: object, sessionId?: string): Promise<{ data: unknown; sessionId: string | null }> {
   const headers: Record<string, string> = {
     Authorization: `Bearer ${CTRADER_TOKEN}`,
@@ -581,12 +597,17 @@ async function mcpFetch(body: object, sessionId?: string): Promise<{ data: unkno
       return { data: null, sessionId: newSid }
     }
 
-    for (const line of text.split('\n')) {
-      if (line.startsWith('data: ')) {
-        try { return { data: JSON.parse(line.slice(6)), sessionId: newSid } } catch { /* next line */ }
-      }
+    // SSE events are separated by a blank line, and a single event's payload can span
+    // multiple physical "data:" lines for large results (e.g. get_symbols' ~1.5MB dump).
+    // Rejoin all data lines within an event before parsing — trying only the first
+    // physical "data:" line (as this used to) silently fails on any multi-line payload.
+    for (const event of text.split(/\r?\n\r?\n/)) {
+      const dataLines = event.split(/\r?\n/).filter(l => l.startsWith('data:')).map(l => l.replace(/^data:\s?/, ''))
+      if (dataLines.length === 0) continue
+      try { return { data: JSON.parse(dataLines.join('\n')), sessionId: newSid } } catch { /* try next event */ }
     }
     try { return { data: JSON.parse(text), sessionId: newSid } } catch { /* ignore */ }
+    console.error(`CTrader MCP: failed to parse response (${text.length} chars): ${text.slice(0, 200)}${text.length > 200 ? '…' : ''}`)
     return { data: null, sessionId: newSid }
   } finally {
     clearTimeout(timer)
@@ -620,31 +641,45 @@ async function fetchCTraderPrices(): Promise<SnapshotPrices | null> {
 
     async function callTool(name: string, args: object): Promise<unknown> {
       const { data } = await mcpFetch({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name, arguments: args } }, sessionId ?? undefined)
-      const result = (data as Record<string,unknown>)?.result as Record<string,unknown> | undefined
+      const parsed = data as Record<string,unknown> | undefined
+      if (parsed?.error) {
+        console.error(`CTrader MCP: ${name} returned JSON-RPC error: ${JSON.stringify(parsed.error).slice(0, 300)}`)
+        return null
+      }
+      const result = parsed?.result as Record<string,unknown> | undefined
       const content = result?.content as Array<{ type: string; text: string }> | undefined
       if (content?.[0]?.type === 'text') {
-        try { return JSON.parse(content[0].text) } catch { return null }
+        try { return JSON.parse(content[0].text) }
+        catch (e) { console.error(`CTrader MCP: ${name} content JSON.parse failed: ${(e as Error).message}`); return null }
       }
+      if (parsed != null) console.error(`CTrader MCP: ${name} unexpected response shape: ${JSON.stringify(parsed).slice(0, 300)}`)
       return null
     }
 
-    // Symbol map — field is symbolName (not name); prefer enabled=true variants
-    const symRaw = await callTool('get_symbols', {})
-    console.log(`CTrader get_symbols raw: ${JSON.stringify(symRaw)?.slice(0, 300)}`)
-    const symbols = (symRaw as { symbols?: Array<{ symbolName: string; symbolId: number; enabled?: boolean }> })?.symbols ?? []
-    console.log(`CTrader symbols count: ${symbols.length}`)
-    const symMap: Record<string, number> = {}
-    const symEnabledMap: Record<string, boolean> = {}
-    const suffixRe = /(_SBE|_SB|-F_SBE|-F_SB|-PERP_SBE|-PERP_SB|-PERP|-F)$/
-    for (const s of symbols) {
-      if (!s.symbolName || !s.symbolId) continue
-      const base = s.symbolName.replace(suffixRe, '').toUpperCase()
-      const upperName = s.symbolName.toUpperCase()
-      symMap[upperName] = s.symbolId
-      // For base name, prefer enabled symbol over disabled
-      if (symEnabledMap[base] === undefined || s.enabled) {
-        symMap[base] = s.symbolId
-        symEnabledMap[base] = !!s.enabled
+    // Symbol map — use the known-stable IDs directly to avoid the ~1.5MB get_symbols
+    // dump (see KNOWN_SYMBOL_IDS comment above). Only fall back to a live get_symbols
+    // call if one of the symbols we need isn't in the known map.
+    const symMap: Record<string, number> = { ...KNOWN_SYMBOL_IDS }
+    const missing = SYMS.filter(s => symMap[s] == null)
+    if (missing.length > 0) {
+      console.log(`CTrader: ${missing.length} symbol(s) not in KNOWN_SYMBOL_IDS (${missing.join(', ')}) — falling back to get_symbols`)
+      const symRaw = await callTool('get_symbols', {})
+      const symbols = (symRaw as { symbols?: Array<{ symbolName: string; symbolId: number; enabled?: boolean }> })?.symbols ?? []
+      console.log(`CTrader symbols count: ${symbols.length}`)
+      const missingSet = new Set(missing)
+      const symEnabledMap: Record<string, boolean> = {}
+      const suffixRe = /(_SBE|_SB|-F_SBE|-F_SB|-PERP_SBE|-PERP_SB|-PERP|-F)$/
+      for (const s of symbols) {
+        if (!s.symbolName || !s.symbolId) continue
+        const base = s.symbolName.replace(suffixRe, '').toUpperCase()
+        const upperName = s.symbolName.toUpperCase()
+        // Only fill in symbols we don't already have a known-good ID for — never let
+        // a suffixed variant (e.g. XAUUSD_SB) clobber an already-resolved base entry.
+        if (missingSet.has(upperName)) symMap[upperName] = symMap[upperName] ?? s.symbolId
+        if (missingSet.has(base) && (symEnabledMap[base] === undefined || s.enabled)) {
+          symMap[base] = s.symbolId
+          symEnabledMap[base] = !!s.enabled
+        }
       }
     }
     console.log(`CTrader symMap XAUUSD=${symMap['XAUUSD']} EURUSD=${symMap['EURUSD']}`)
