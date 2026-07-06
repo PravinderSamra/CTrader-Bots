@@ -1,45 +1,141 @@
 /* ═══════════════════════════════════════════
    XAUUSD Dashboard — Design Tokens
-   "Terminal Gold" palette · Rev 1.0
+   "Bullion Desk" · Rev 2.0
    ═══════════════════════════════════════════ */
 
 :root {
-  /* ── Backgrounds ── */
-  --bg:        #0D0E11;
-  --surface:   #141519;
-  --surface-2: #1C1D24;
-  --surface-3: #22232D;
+  /* ── Backgrounds (dark default) ── */
+  --bg:        #0C0D11;
+  --surface:   #141720;
+  --surface-2: #1A1E2B;
+  --surface-3: #212636;
 
   /* ── Borders ── */
-  --border:    #2A2B35;
-  --border-2:  #1E1F28;
+  --border:    rgba(255, 255, 255, 0.07);
+  --border-2:  rgba(255, 255, 255, 0.04);
 
   /* ── Brand Gold ── */
-  --gold:      #C9952A;
-  --gold-light: #E8B84B;
-  --gold-dim:  rgba(201, 149, 42, 0.15);
+  --gold:       #C9952A;
+  --gold-light: #E0AF50;
+  --gold-dim:   rgba(201, 149, 42, 0.14);
 
   /* ── Signal colours ── */
-  --green:     #3BB57A;
-  --green-dim: rgba(59, 181, 122, 0.12);
-  --red:       #E85050;
-  --red-dim:   rgba(232, 80, 80, 0.12);
-  --blue:      #5B8CDB;
-  --blue-dim:  rgba(91, 140, 219, 0.12);
-  --amber:     #E8A030;
-  --amber-dim: rgba(232, 160, 48, 0.12);
+  --green:     #2DC57E;
+  --green-dim: rgba(45, 197, 126, 0.11);
+  --red:       #E05548;
+  --red-dim:   rgba(224, 85, 72, 0.11);
+  --blue:      #4A84D4;
+  --blue-dim:  rgba(74, 132, 212, 0.11);
+  --amber:     #D49038;
+  --amber-dim: rgba(212, 144, 56, 0.11);
 
   /* ── Text ── */
-  --text:      #E8E9ED;
-  --text-muted: #8B8D99;
-  --text-dim:  #4A4C59;
+  --text:       #CDD0DC;
+  --text-muted: #787B8A;
+  --text-dim:   #3E4158;
 
   /* ── Typography ── */
   --font:  'Space Grotesk', system-ui, -apple-system, sans-serif;
   --mono:  'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
 
   /* ── Spacing ── */
-  --tile-pad: 16px 18px;
-  --gap:      12px;
-  --radius:   3px;
+  --tile-pad:  18px 20px;
+  --gap:       12px;
+
+  /* ── Shape ── */
+  --radius-sm: 4px;
+  --radius:    6px;
+  --radius-lg: 10px;
+
+  /* ── Depth ── */
+  --shadow-sm:   0 1px 3px rgba(0, 0, 0, 0.35);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-lg:   0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Light mode (warm ivory — parchment) ── */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg:        #EDE8DF;
+    --surface:   #F8F5EE;
+    --surface-2: #F0EBE0;
+    --surface-3: #E8E2D7;
+
+    --border:    rgba(40, 32, 20, 0.10);
+    --border-2:  rgba(40, 32, 20, 0.06);
+
+    --gold:       #9B6E1A;
+    --gold-light: #B8841F;
+    --gold-dim:   rgba(155, 110, 26, 0.12);
+
+    --green:     #1A9459;
+    --green-dim: rgba(26, 148, 89, 0.10);
+    --red:       #C83D30;
+    --red-dim:   rgba(200, 61, 48, 0.10);
+    --blue:      #2A68C4;
+    --blue-dim:  rgba(42, 104, 196, 0.10);
+    --amber:     #B07020;
+    --amber-dim: rgba(176, 112, 32, 0.10);
+
+    --text:       #1C1B18;
+    --text-muted: #5A5652;
+    --text-dim:   #9A9590;
+
+    --shadow-sm:   0 1px 3px rgba(40, 30, 10, 0.08);
+    --shadow-card: 0 2px 8px rgba(40, 30, 10, 0.10);
+    --shadow-lg:   0 8px 24px rgba(40, 30, 10, 0.12);
+  }
+}
+
+/* ── Explicit theme overrides ── */
+:root[data-theme="light"] {
+  --bg:        #EDE8DF;
+  --surface:   #F8F5EE;
+  --surface-2: #F0EBE0;
+  --surface-3: #E8E2D7;
+  --border:    rgba(40, 32, 20, 0.10);
+  --border-2:  rgba(40, 32, 20, 0.06);
+  --gold:       #9B6E1A;
+  --gold-light: #B8841F;
+  --gold-dim:   rgba(155, 110, 26, 0.12);
+  --green:     #1A9459;
+  --green-dim: rgba(26, 148, 89, 0.10);
+  --red:       #C83D30;
+  --red-dim:   rgba(200, 61, 48, 0.10);
+  --blue:      #2A68C4;
+  --blue-dim:  rgba(42, 104, 196, 0.10);
+  --amber:     #B07020;
+  --amber-dim: rgba(176, 112, 32, 0.10);
+  --text:       #1C1B18;
+  --text-muted: #5A5652;
+  --text-dim:   #9A9590;
+  --shadow-sm:   0 1px 3px rgba(40, 30, 10, 0.08);
+  --shadow-card: 0 2px 8px rgba(40, 30, 10, 0.10);
+  --shadow-lg:   0 8px 24px rgba(40, 30, 10, 0.12);
+}
+
+:root[data-theme="dark"] {
+  --bg:        #0C0D11;
+  --surface:   #141720;
+  --surface-2: #1A1E2B;
+  --surface-3: #212636;
+  --border:    rgba(255, 255, 255, 0.07);
+  --border-2:  rgba(255, 255, 255, 0.04);
+  --gold:       #C9952A;
+  --gold-light: #E0AF50;
+  --gold-dim:   rgba(201, 149, 42, 0.14);
+  --green:     #2DC57E;
+  --green-dim: rgba(45, 197, 126, 0.11);
+  --red:       #E05548;
+  --red-dim:   rgba(224, 85, 72, 0.11);
+  --blue:      #4A84D4;
+  --blue-dim:  rgba(74, 132, 212, 0.11);
+  --amber:     #D49038;
+  --amber-dim: rgba(212, 144, 56, 0.11);
+  --text:       #CDD0DC;
+  --text-muted: #787B8A;
+  --text-dim:   #3E4158;
+  --shadow-sm:   0 1px 3px rgba(0, 0, 0, 0.35);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-lg:   0 8px 24px rgba(0, 0, 0, 0.5);
 }

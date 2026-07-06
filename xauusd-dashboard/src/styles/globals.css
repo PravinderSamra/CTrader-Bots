@@ -39,15 +39,22 @@ body {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.15s ease;
+}
+
+.tile:hover {
+  box-shadow: var(--shadow-card);
 }
 
 .tile-eyebrow {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.15em;
+  font-family: var(--font);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--gold);
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 .tile-headline {
@@ -56,12 +63,14 @@ body {
   font-weight: 500;
   color: var(--text);
   line-height: 1;
+  font-variant-numeric: tabular-nums;
 }
 
 .tile-subvalue {
   font-family: var(--mono);
   font-size: 13px;
   color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
 }
 
 .tile-row {
@@ -72,11 +81,10 @@ body {
 }
 
 .tile-label {
-  font-family: var(--mono);
   font-size: 11px;
   color: var(--text-dim);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   flex-shrink: 0;
 }
 
@@ -84,23 +92,24 @@ body {
   font-family: var(--mono);
   font-size: 13px;
   color: var(--text);
+  font-variant-numeric: tabular-nums;
 }
 
 .tile-divider {
   border: none;
   border-top: 1px solid var(--border-2);
-  margin: 4px 0;
+  margin: 2px 0;
 }
 
 /* ── Badge ── */
 .badge {
   font-family: var(--mono);
   font-size: 9px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 2px 6px;
-  border-radius: 2px;
-  font-weight: 500;
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
 }
 .badge-green  { background: var(--green-dim);  color: var(--green); }
 .badge-red    { background: var(--red-dim);    color: var(--red); }
@@ -137,6 +146,14 @@ body {
 .pulse { animation: pulse-gold 1.4s ease-in-out infinite; }
 
 /* ── Scrollbar ── */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
+/* ── Focus ── */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}

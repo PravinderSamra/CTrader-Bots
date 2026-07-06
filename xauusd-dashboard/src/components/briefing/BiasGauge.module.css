@@ -1,26 +1,26 @@
 .gauge {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .track {
   position: relative;
-  height: 12px;
+  height: 8px;
 }
 
 .gradient {
   position: absolute;
   inset: 0;
-  border-radius: 2px;
+  border-radius: 10px;
   background: linear-gradient(
     to right,
-    #E85050 0%,
-    #5a3a3a 25%,
-    #3A3B47 45%,
-    #3A3B47 55%,
-    #2a4a3a 75%,
-    #3BB57A 100%
+    #E05548 0%,
+    rgba(224, 85, 72, 0.3) 28%,
+    var(--surface-3) 42%,
+    var(--surface-3) 58%,
+    rgba(45, 197, 126, 0.3) 72%,
+    #2DC57E 100%
   );
 }
 
@@ -28,13 +28,13 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: var(--gold);
-  border: 2px solid var(--bg);
-  box-shadow: 0 0 8px rgba(201, 149, 42, 0.6);
-  transition: left 0.6s ease;
+  border: 2px solid var(--surface);
+  box-shadow: 0 0 0 1px var(--gold-dim), 0 2px 6px rgba(0, 0, 0, 0.4);
+  transition: left 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   cursor: default;
   z-index: 1;
 }
@@ -47,8 +47,8 @@
 }
 
 .end {
-  font-family: var(--mono);
   font-size: 10px;
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   flex-shrink: 0;
@@ -62,10 +62,9 @@
 }
 
 .label {
-  font-family: var(--mono);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
@@ -76,10 +75,12 @@
 .score {
   font-family: var(--mono);
   font-size: 11px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
 }
 
 .conf {
-  font-family: var(--mono);
   font-size: 10px;
   color: var(--text-dim);
+  letter-spacing: 0.03em;
 }
