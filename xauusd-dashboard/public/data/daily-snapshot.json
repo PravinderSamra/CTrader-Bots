@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-06T10:53:16.852Z",
+  "generatedAt": "2026-07-06T13:43:56.844Z",
   "yields": {
     "US10Y": 4.48,
     "US2Y": 4.17,
@@ -22,8 +22,8 @@
     "probHike": 0
   },
   "marketVolatility": {
-    "GVZ": 27.12,
-    "VIX": 16.59
+    "GVZ": 26,
+    "VIX": 15.81
   },
   "positioning": {
     "cotNetLong": 172884,
