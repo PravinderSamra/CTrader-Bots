@@ -105,6 +105,56 @@
   color: var(--text-dim);
 }
 
+/* ── Kill zone badge ── */
+.kzBadge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+}
+
+.kzActive {
+  border-color: var(--gold-dim);
+  background: var(--gold-dim);
+}
+
+.kzWaiting {
+  opacity: 0.6;
+}
+
+.kzPulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 5px var(--gold);
+  flex-shrink: 0;
+  animation: kzPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes kzPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 5px var(--gold); }
+  50%       { opacity: 0.35; box-shadow: none; }
+}
+
+.kzName {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.kzTime {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
 .themeBtn {
   font-size: 14px;
   width: 28px;

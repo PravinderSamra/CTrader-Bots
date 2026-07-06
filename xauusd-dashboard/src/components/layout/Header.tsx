@@ -2,6 +2,62 @@ import { useState, useEffect, useCallback } from 'react'
 import type { CTraderPrices, SessionInfo } from '../../types/dashboard'
 import styles from './Header.module.css'
 
+// ── BST / Kill zone detection ─────────────────────────────────────────────
+
+function isBST(d: Date): boolean {
+  const y = d.getUTCFullYear()
+  // Last Sunday of March at 01:00 UTC → BST starts
+  const marchSun = new Date(Date.UTC(y, 2, 31, 1))
+  marchSun.setUTCDate(31 - marchSun.getUTCDay())
+  // Last Sunday of October at 01:00 UTC → GMT returns
+  const octSun = new Date(Date.UTC(y, 9, 31, 1))
+  octSun.setUTCDate(31 - octSun.getUTCDay())
+  return d >= marchSun && d < octSun
+}
+
+interface KZDef { name: string; localStart: number; localEnd: number }
+const KILL_ZONES: KZDef[] = [
+  { name: 'London KZ',     localStart: 7*60,       localEnd: 10*60      },
+  { name: 'Silver Bullet', localStart: 9*60,        localEnd: 10*60      },
+  { name: 'NY KZ',         localStart: 13*60+30,    localEnd: 16*60      },
+  { name: 'London Close',  localStart: 15*60,        localEnd: 16*60      },
+]
+
+interface KZInfo {
+  active: boolean
+  name: string
+  minutes: number    // remaining if active, until if not
+}
+
+function getKZInfo(now: Date): KZInfo {
+  const bst = isBST(now)
+  const utcMin = now.getUTCHours() * 60 + now.getUTCMinutes()
+  const londonMin = bst ? utcMin + 60 : utcMin
+
+  for (const kz of KILL_ZONES) {
+    if (londonMin >= kz.localStart && londonMin < kz.localEnd) {
+      return { active: true, name: kz.name, minutes: kz.localEnd - londonMin }
+    }
+  }
+
+  const todayRemaining = KILL_ZONES.filter(kz => kz.localStart > londonMin)
+    .sort((a, b) => a.localStart - b.localStart)
+
+  if (todayRemaining.length > 0) {
+    return { active: false, name: todayRemaining[0].name, minutes: todayRemaining[0].localStart - londonMin }
+  }
+
+  const nextKZ = [...KILL_ZONES].sort((a, b) => a.localStart - b.localStart)[0]
+  return { active: false, name: nextKZ.name, minutes: (24*60 - londonMin) + nextKZ.localStart }
+}
+
+function fmtKZTime(mins: number): string {
+  const h = Math.floor(mins / 60)
+  const m = mins % 60
+  if (h > 0) return `${h}h ${String(m).padStart(2,'0')}m`
+  return `${m}m`
+}
+
 // ── Session detection ─────────────────────────────────────────────────────
 
 const SESSIONS = [
@@ -91,6 +147,7 @@ export function Header({ prices, onRefresh, lastRefresh }: Props) {
   const utcM = now.getUTCMinutes()
   const utcS = now.getUTCSeconds()
   const session = getSession(utcH, utcM) as SessionInfo & { nextLabel: string }
+  const kz = getKZInfo(now)
 
   const timeStr = `${String(utcH).padStart(2,'0')}:${String(utcM).padStart(2,'0')}:${String(utcS).padStart(2,'0')} GMT`
 
@@ -124,7 +181,13 @@ export function Header({ prices, onRefresh, lastRefresh }: Props) {
             {session.label.toUpperCase()}
             {session.isPrime && ' · PRIME SESSION'}
           </span>
-          <span className={styles.meta}>{session.nextSessionName} in {(session as unknown as { nextLabel: string }).nextLabel}</span>
+          <div className={`${styles.kzBadge} ${kz.active ? styles.kzActive : styles.kzWaiting}`}>
+            {kz.active && <span className={styles.kzPulse} />}
+            <span className={styles.kzName}>{kz.name}</span>
+            <span className={styles.kzTime}>
+              {kz.active ? `closes in ${fmtKZTime(kz.minutes)}` : `opens in ${fmtKZTime(kz.minutes)}`}
+            </span>
+          </div>
         </div>
         <div className={styles.metaRow}>
           <span className={styles.clock}>{timeStr}</span>
