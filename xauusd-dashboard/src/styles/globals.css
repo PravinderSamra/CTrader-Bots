@@ -7,7 +7,7 @@
   padding: 0;
 }
 
-html { font-size: 14px; }
+html { font-size: 13px; }
 
 body {
   background: var(--bg);
@@ -53,7 +53,7 @@ body {
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--text-dim);
   margin-bottom: 2px;
 }
 

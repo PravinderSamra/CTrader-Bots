@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import type { CTraderPrices, SessionInfo } from '../../types/dashboard'
 import styles from './Header.module.css'
 
@@ -69,11 +69,23 @@ interface Props {
 
 export function Header({ prices, onRefresh, lastRefresh }: Props) {
   const [now, setNow] = useState(new Date())
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    const stored = localStorage.getItem('xau-theme')
+    if (stored === 'light' || stored === 'dark') return stored
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  })
 
   useEffect(() => {
     const id = setInterval(() => setNow(new Date()), 1000)
     return () => clearInterval(id)
   }, [])
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    localStorage.setItem('xau-theme', theme)
+  }, [theme])
+
+  const toggleTheme = useCallback(() => setTheme(t => t === 'dark' ? 'light' : 'dark'), [])
 
   const utcH = now.getUTCHours()
   const utcM = now.getUTCMinutes()
@@ -119,6 +131,9 @@ export function Header({ prices, onRefresh, lastRefresh }: Props) {
           <span className={styles.meta}>
             Last refresh: {lastRefresh || '—'}
           </span>
+          <button className={styles.themeBtn} onClick={toggleTheme} title="Toggle theme">
+            {theme === 'dark' ? '☀' : '◑'}
+          </button>
           <button className={styles.refreshBtn} onClick={onRefresh} title="Refresh all data">
             ↺ Refresh
           </button>

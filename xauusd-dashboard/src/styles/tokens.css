@@ -39,8 +39,8 @@
   --mono:  'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
 
   /* ── Spacing ── */
-  --tile-pad:  18px 20px;
-  --gap:       12px;
+  --tile-pad:  14px 16px;
+  --gap:       10px;
 
   /* ── Shape ── */
   --radius-sm: 4px;

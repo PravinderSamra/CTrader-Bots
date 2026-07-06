@@ -105,6 +105,26 @@
   color: var(--text-dim);
 }
 
+.themeBtn {
+  font-size: 14px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color 0.12s, background 0.12s;
+  line-height: 1;
+}
+
+.themeBtn:hover {
+  border-color: var(--gold-dim);
+  background: var(--gold-dim);
+}
+
 .refreshBtn {
   font-size: 11px;
   font-weight: 600;
