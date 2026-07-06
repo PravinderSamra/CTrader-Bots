@@ -4,6 +4,7 @@ import { useDailySnapshot } from './hooks/useFredData'
 import { aggregateData } from './services/dataAggregator'
 import { Header } from './components/layout/Header'
 import { SessionTimeline } from './components/layout/SessionTimeline'
+import { MacroStrip } from './components/layout/MacroStrip'
 import { Footer } from './components/layout/Footer'
 import { YieldsTile } from './components/tiles/YieldsTile'
 import { DollarTile } from './components/tiles/DollarTile'
@@ -90,6 +91,7 @@ export function App() {
 
       {activeTab === 'dashboard' && (
         <main className={styles.main}>
+          <MacroStrip prices={prices} snapshot={snapshot} />
           {/* Row 1: Yields | Dollar | Calendar */}
           <div className={styles.grid3}>
             <YieldsTile yields={snapshot?.yields ?? null} />
