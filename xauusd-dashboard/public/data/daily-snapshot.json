@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-07-06T18:50:55.436Z",
+  "generatedAt": "2026-07-06T20:47:48.167Z",
   "yields": {
-    "US10Y": 4.48,
-    "US2Y": 4.17,
-    "realYield10Y": 2.25,
-    "realYield5Y": 1.98,
-    "curve2s10s": 31,
+    "US10Y": 4.49,
+    "US2Y": 4.14,
+    "realYield10Y": 2.26,
+    "realYield5Y": 1.99,
+    "curve2s10s": 35,
     "breakeven10Y": 2.23,
     "breakeven5Y": 2.24,
     "forward5y5y": 2.22,
     "dayOverDay": {
-      "US10Y": 0.04,
-      "US2Y": 0.03,
-      "realYield10Y": 0.05
+      "US10Y": 0.01,
+      "US2Y": -0.03,
+      "realYield10Y": 0.01
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-07-29",
-    "probCut": 32,
-    "probHold": 68,
+    "probCut": 20,
+    "probHold": 80,
     "probHike": 0
   },
   "marketVolatility": {
@@ -26,12 +26,12 @@
     "VIX": 15.81
   },
   "positioning": {
-    "cotNetLong": 172884,
-    "cotWoWChange": 0,
-    "crowding": "NEUTRAL",
-    "reportDate": "2026-06-23T00:00:00.000",
-    "openInterest": 497446,
-    "openInterestChange": 18091
+    "cotNetLong": -14945,
+    "cotWoWChange": -187829,
+    "crowding": "CROWDED_SHORT",
+    "reportDate": "2026-06-30T00:00:00.000",
+    "openInterest": 64821,
+    "openInterestChange": 2852
   },
   "etfFlows": {
     "gldTonnes": 1161.5,
@@ -64,6 +64,13 @@
     "gprDate": "2026-06"
   },
   "economicCalendar": [],
-  "newsItems": [],
+  "newsItems": [
+    {
+      "headline": "ECB's Schnabel says Iran shock is not over - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-07-06T17:32:16.000Z",
+      "hoursAgo": 3.3
+    }
+  ],
   "briefing": null
 }
