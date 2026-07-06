@@ -1,0 +1,130 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0 24px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Bar ── */
+.barWrap {
+  position: relative;
+  height: 6px;
+  background: var(--surface-3);
+  overflow: visible;
+}
+
+.seg {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  opacity: 0.5;
+}
+
+.kz {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  opacity: 0.7;
+}
+
+.segAsian   { background: var(--surface-3); }
+.segLondon  { background: var(--blue); }
+.segOverlap { background: var(--gold); }
+.segNY      { background: var(--green); }
+
+.kzLondon { background: var(--blue);  opacity: 0.85; }
+.kzNY     { background: var(--green); opacity: 0.85; }
+.kzClose  { background: var(--amber); opacity: 0.80; }
+
+.tick {
+  position: absolute;
+  top: -2px;
+  width: 1px;
+  height: calc(100% + 4px);
+  background: var(--bg);
+  opacity: 0.6;
+}
+
+.cursor {
+  position: absolute;
+  top: -3px;
+  width: 2px;
+  height: calc(100% + 6px);
+  background: var(--gold);
+  border-radius: 2px;
+  box-shadow: 0 0 4px var(--gold);
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+/* ── Labels row ── */
+.labels {
+  position: relative;
+  height: 20px;
+  margin-top: 2px;
+}
+
+.lbl {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  top: 4px;
+}
+
+.lblAsian   { color: var(--text-dim); }
+.lblLondon  { color: var(--blue);     }
+.lblOverlap { color: var(--gold);     }
+.lblNY      { color: var(--green);    }
+
+.timeLbl {
+  position: absolute;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--text-dim);
+  top: 0;
+  white-space: nowrap;
+}
+
+/* ── Active indicator ── */
+.nowLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 0 6px;
+}
+
+.nowDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 4px var(--gold);
+  flex-shrink: 0;
+  animation: nowPulse 2s ease-in-out infinite;
+}
+
+@keyframes nowPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+.nowText {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.nowUtc {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-dim);
+}

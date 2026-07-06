@@ -3,6 +3,7 @@ import { useCTraderPrices, pricesFromSnapshot } from './hooks/useCTraderPrices'
 import { useDailySnapshot } from './hooks/useFredData'
 import { aggregateData } from './services/dataAggregator'
 import { Header } from './components/layout/Header'
+import { SessionTimeline } from './components/layout/SessionTimeline'
 import { Footer } from './components/layout/Footer'
 import { YieldsTile } from './components/tiles/YieldsTile'
 import { DollarTile } from './components/tiles/DollarTile'
@@ -63,6 +64,8 @@ export function App() {
   return (
     <div className={styles.app}>
       <Header prices={prices} onRefresh={handleRefresh} lastRefresh={lastRefresh} />
+
+      <SessionTimeline />
 
       <nav className={styles.tabNav}>
         <button
