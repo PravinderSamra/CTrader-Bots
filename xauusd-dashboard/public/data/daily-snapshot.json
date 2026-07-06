@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-06-30T10:45:13.097Z",
+  "generatedAt": "2026-07-06T09:57:56.207Z",
   "yields": {
-    "US10Y": 4.38,
-    "US2Y": 4.07,
-    "realYield10Y": 2.18,
-    "realYield5Y": 1.91,
+    "US10Y": 4.48,
+    "US2Y": 4.17,
+    "realYield10Y": 2.25,
+    "realYield5Y": 1.98,
     "curve2s10s": 31,
-    "breakeven10Y": 2.22,
+    "breakeven10Y": 2.23,
     "breakeven5Y": 2.24,
-    "forward5y5y": 2.2,
+    "forward5y5y": 2.22,
     "dayOverDay": {
-      "US10Y": -0.02,
-      "US2Y": -0.02,
-      "realYield10Y": -0.01
+      "US10Y": 0.04,
+      "US2Y": 0.03,
+      "realYield10Y": 0.05
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-07-29",
-    "probCut": 20,
-    "probHold": 80,
+    "probCut": 32,
+    "probHold": 68,
     "probHike": 0
   },
   "marketVolatility": {
-    "GVZ": 27.18,
-    "VIX": 18.41
+    "GVZ": 27.12,
+    "VIX": 16.59
   },
   "positioning": {
     "cotNetLong": 172884,
@@ -35,32 +35,35 @@
   },
   "etfFlows": {
     "gldTonnes": 1161.5,
-    "gldWoWChange": -0.5,
-    "trend3W": "FLAT"
+    "gldWoWChange": null,
+    "trend3W": null
   },
   "snapshotPrices": {
-    "XAUUSD": 4027.475,
-    "XAGUSD": 59.388,
-    "EURUSD": 1.13986,
-    "USDJPY": 162.3545,
-    "USDCHF": 0.8092,
-    "USDCNH": 6.79068,
-    "GBPUSD": 1.32334,
-    "USDCAD": 1.42362,
-    "USDSEK": 9.73635,
-    "US500": 7506.4,
-    "GER40": 25127.1,
-    "UK100": 10631.5,
-    "ADR_14day": 105.6,
-    "ADR_usedToday": 93.8,
-    "goldSilverRatio": 67.8
+    "XAUUSD": null,
+    "XAGUSD": null,
+    "EURUSD": null,
+    "USDJPY": null,
+    "USDCHF": null,
+    "USDCNH": null,
+    "GBPUSD": null,
+    "USDCAD": null,
+    "USDSEK": null,
+    "US500": null,
+    "GER40": null,
+    "UK100": null,
+    "ADR_14day": null,
+    "ADR_usedToday": null,
+    "goldSilverRatio": null
   },
   "dollarLiquidity": {
-    "stlfsi": -0.9568,
-    "nfci": -0.516
+    "stlfsi": -0.6445,
+    "nfci": -0.504
   },
   "geopoliticalRisk": {
-    "gpr": 184.2,
-    "gprDate": "2026-05"
-  }
+    "gpr": 173.6,
+    "gprDate": "2026-06"
+  },
+  "economicCalendar": [],
+  "newsItems": [],
+  "briefing": null
 }
