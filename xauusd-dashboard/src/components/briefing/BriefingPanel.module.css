@@ -127,29 +127,96 @@
   border-radius: var(--radius);
 }
 
-.headlines {
+.catalysts {
   border-top: 1px solid var(--border-2);
-  padding: 12px 20px;
+  padding: 12px 20px 16px;
 }
 
-.headlinesLabel {
-  font-family: var(--mono);
+.catalystsLabel {
   font-size: 9px;
+  font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--text-dim);
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
-.headline {
+/* ── Timeline ── */
+.timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.tlItem {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.tlTrack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 12px;
+  padding-top: 3px;
+}
+
+.tlDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dotFresh  { background: var(--gold);        box-shadow: 0 0 5px var(--gold-dim); }
+.dotRecent { background: var(--amber);       }
+.dotOld    { background: var(--text-dim);    }
+
+.tlLine {
+  width: 1px;
+  flex: 1;
+  min-height: 12px;
+  background: var(--border-2);
+  margin: 3px 0;
+}
+
+.tlContent {
+  flex: 1;
+  min-width: 0;
+  padding-bottom: 12px;
+}
+
+.tlHeadline {
   font-size: 12px;
-  color: var(--text-muted);
-  line-height: 1.6;
-  padding: 2px 0;
+  color: var(--text);
+  line-height: 1.55;
+  display: block;
 }
 
-.headlineMeta {
+.tlMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 3px;
+}
+
+.tlTime {
   font-family: var(--mono);
   font-size: 10px;
   color: var(--text-dim);
 }
+
+.tlSource {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+}
+
+.srcFed     { background: var(--blue-dim);  color: var(--blue);  }
+.srcCentral { background: var(--amber-dim); color: var(--amber); }
+.srcGeo     { background: var(--red-dim);   color: var(--red);   }
+.srcDefault { background: var(--surface-2); color: var(--text-muted); border: 1px solid var(--border); }

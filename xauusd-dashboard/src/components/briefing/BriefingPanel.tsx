@@ -16,6 +16,20 @@ function fmtHoursAgo(hoursAgo: number): string {
   return `${hoursAgo.toFixed(1)}h ago`
 }
 
+function recencyClass(hoursAgo: number): string {
+  if (hoursAgo < 2)  return styles.dotFresh
+  if (hoursAgo < 8)  return styles.dotRecent
+  return styles.dotOld
+}
+
+function sourceClass(source: string): string {
+  const s = source.toLowerCase()
+  if (s.includes('fed') || s.includes('fomc') || s.includes('reserve')) return styles.srcFed
+  if (s.includes('treasury') || s.includes('ecb') || s.includes('boe') || s.includes('central')) return styles.srcCentral
+  if (s.includes('geo') || s.includes('sanction') || s.includes('war') || s.includes('conflict')) return styles.srcGeo
+  return styles.srcDefault
+}
+
 interface Props {
   briefing: BriefingResult | null
   newsItems: NewsItem[]
@@ -65,16 +79,25 @@ export function BriefingPanel({ briefing, newsItems }: Props) {
       </div>
 
       {newsItems.length > 0 && (
-        <div className={styles.headlines}>
-          <div className={styles.headlinesLabel}>Recent Catalysts (last 24h)</div>
-          {newsItems.map((n, i) => (
-            <div key={i} className={styles.headline}>
-              → {n.headline}
-              {n.hoursAgo < 999 && (
-                <span className={styles.headlineMeta}> · {fmtHoursAgo(n.hoursAgo)} · {n.source}</span>
-              )}
-            </div>
-          ))}
+        <div className={styles.catalysts}>
+          <div className={styles.catalystsLabel}>Recent Catalysts — last 24h</div>
+          <div className={styles.timeline}>
+            {newsItems.map((n, i) => (
+              <div key={i} className={styles.tlItem}>
+                <div className={styles.tlTrack}>
+                  <div className={`${styles.tlDot} ${recencyClass(n.hoursAgo)}`} />
+                  {i < newsItems.length - 1 && <div className={styles.tlLine} />}
+                </div>
+                <div className={styles.tlContent}>
+                  <span className={styles.tlHeadline}>{n.headline}</span>
+                  <div className={styles.tlMeta}>
+                    {n.hoursAgo < 999 && <span className={styles.tlTime}>{fmtHoursAgo(n.hoursAgo)}</span>}
+                    <span className={`${styles.tlSource} ${sourceClass(n.source)}`}>{n.source}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>
