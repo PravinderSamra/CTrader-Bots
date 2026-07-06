@@ -56,28 +56,47 @@
 }
 
 .calEvent {
-  padding: 6px 8px;
+  padding: 5px 8px;
   border-left: 2px solid var(--border);
-  margin: 4px 0;
 }
 
 .calEventHigh {
-  border-left-color: var(--gold);
-  background: var(--gold-dim);
+  border-left-color: var(--red);
+  background: var(--red-dim);
 }
 
 .calEventMed {
-  border-left-color: var(--blue);
+  border-left-color: var(--amber);
+  background: var(--amber-dim);
+}
+
+.calEventHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .eventTime {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 10px;
   color: var(--text-muted);
 }
 
+.calCountdown {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--amber);
+  margin-left: auto;
+}
+
+.calCountdownHigh {
+  color: var(--red);
+}
+
 .eventName {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text);
   font-weight: 500;
   margin: 1px 0;
@@ -90,11 +109,6 @@
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-}
-
-.impactDots {
-  font-size: 10px;
-  letter-spacing: -1px;
 }
 
 .cautionBanner {
