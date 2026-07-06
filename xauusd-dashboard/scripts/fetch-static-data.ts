@@ -607,7 +607,11 @@ async function mcpFetch(body: object, sessionId?: string): Promise<{ data: unkno
       try { return { data: JSON.parse(dataLines.join('\n')), sessionId: newSid } } catch { /* try next event */ }
     }
     try { return { data: JSON.parse(text), sessionId: newSid } } catch { /* ignore */ }
-    console.error(`CTrader MCP: failed to parse response (${text.length} chars): ${text.slice(0, 200)}${text.length > 200 ? '…' : ''}`)
+    // An empty body is the expected response to a JSON-RPC *notification* (e.g.
+    // notifications/initialized) — only warn when there was actual unparseable content.
+    if (text.length > 0) {
+      console.error(`CTrader MCP: failed to parse response (${text.length} chars): ${text.slice(0, 200)}${text.length > 200 ? '…' : ''}`)
+    }
     return { data: null, sessionId: newSid }
   } finally {
     clearTimeout(timer)
