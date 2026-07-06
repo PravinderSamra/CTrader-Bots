@@ -1,27 +1,16 @@
 {
-  "updatedAt": "2026-07-01T14:40:45.683Z",
+  "updatedAt": "2026-07-06T08:07:36.173Z",
   "sessions": [
     {
-      "date": "2026-07-01",
-      "time": "15:40 BST",
-      "filename": "2026-07-01/14-40.json",
+      "date": "2026-07-06",
+      "time": "09:07 BST",
+      "filename": "2026-07-06/08-07.json",
       "session": "LONDON",
-      "bias": "BULLISH",
-      "biasScore": 3,
-      "probability": 70,
-      "confidence": 5,
-      "timestamp": "2026-07-01T14:40:45.683Z"
-    },
-    {
-      "date": "2026-06-30",
-      "time": "21:48",
-      "filename": "2026-06-30/21-48.json",
-      "session": "NEW_YORK",
       "bias": "BEARISH",
-      "biasScore": -3,
+      "biasScore": -2,
       "probability": 65,
-      "confidence": 5,
-      "timestamp": "2026-06-30T21:48:30.283Z"
+      "confidence": 3,
+      "timestamp": "2026-07-06T08:07:36.173Z"
     }
   ]
 }
