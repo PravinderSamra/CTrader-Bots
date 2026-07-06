@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import type { CTraderPrices, SessionInfo } from '../../types/dashboard'
+import type { OpenPosition } from '../../hooks/useOpenPosition'
 import styles from './Header.module.css'
 
 // ── BST / Kill zone detection ─────────────────────────────────────────────
@@ -121,9 +122,10 @@ interface Props {
   prices: CTraderPrices
   onRefresh: () => void
   lastRefresh: string
+  openPosition?: OpenPosition | null
 }
 
-export function Header({ prices, onRefresh, lastRefresh }: Props) {
+export function Header({ prices, onRefresh, lastRefresh, openPosition }: Props) {
   const [now, setNow] = useState(new Date())
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
     const stored = localStorage.getItem('xau-theme')
@@ -157,51 +159,66 @@ export function Header({ prices, onRefresh, lastRefresh }: Props) {
   const pct = xau.changePct
 
   return (
-    <header className={styles.header}>
-      <div className={styles.left}>
-        <div className={styles.eyebrow}>XAUUSD Intelligence Dashboard</div>
-        <div className={styles.priceRow}>
-          <span className={styles.price}>
-            {xau.price ? `$${fmt(xau.price, 2)}` : '—'}
-          </span>
-          {isLive && change !== 0 && (
-            <span className={`${styles.change} ${arrowClass(change)}`}>
-              {arrow(change)} {change >= 0 ? '+' : ''}{fmt(change, 2)} ({pct >= 0 ? '+' : ''}{fmt(pct, 2)}%)
+    <>
+      <header className={styles.header}>
+        <div className={styles.left}>
+          <div className={styles.eyebrow}>XAUUSD Intelligence Dashboard</div>
+          <div className={styles.priceRow}>
+            <span className={styles.price}>
+              {xau.price ? `$${fmt(xau.price, 2)}` : '—'}
             </span>
-          )}
-          <span className={`${styles.statusBadge} ${isLive ? styles.live : styles.offline}`}>
-            {isLive ? 'LIVE' : prices.status === 'loading' ? 'CONNECTING...' : 'OFFLINE'}
-          </span>
-        </div>
-      </div>
-
-      <div className={styles.right}>
-        <div className={styles.metaRow}>
-          <span className={`${styles.sessionBadge} ${session.isPrime ? styles.prime : ''}`}>
-            {session.label.toUpperCase()}
-            {session.isPrime && ' · PRIME SESSION'}
-          </span>
-          <div className={`${styles.kzBadge} ${kz.active ? styles.kzActive : styles.kzWaiting}`}>
-            {kz.active && <span className={styles.kzPulse} />}
-            <span className={styles.kzName}>{kz.name}</span>
-            <span className={styles.kzTime}>
-              {kz.active ? `closes in ${fmtKZTime(kz.minutes)}` : `opens in ${fmtKZTime(kz.minutes)}`}
+            {isLive && change !== 0 && (
+              <span className={`${styles.change} ${arrowClass(change)}`}>
+                {arrow(change)} {change >= 0 ? '+' : ''}{fmt(change, 2)} ({pct >= 0 ? '+' : ''}{fmt(pct, 2)}%)
+              </span>
+            )}
+            <span className={`${styles.statusBadge} ${isLive ? styles.live : styles.offline}`}>
+              {isLive ? 'LIVE' : prices.status === 'loading' ? 'CONNECTING...' : 'OFFLINE'}
             </span>
           </div>
         </div>
-        <div className={styles.metaRow}>
-          <span className={styles.clock}>{timeStr}</span>
-          <span className={styles.meta}>
-            Last refresh: {lastRefresh || '—'}
-          </span>
-          <button className={styles.themeBtn} onClick={toggleTheme} title="Toggle theme">
-            {theme === 'dark' ? '☀' : '◑'}
-          </button>
-          <button className={styles.refreshBtn} onClick={onRefresh} title="Refresh all data">
-            ↺ Refresh
-          </button>
+
+        <div className={styles.right}>
+          <div className={styles.metaRow}>
+            <span className={`${styles.sessionBadge} ${session.isPrime ? styles.prime : ''}`}>
+              {session.label.toUpperCase()}
+              {session.isPrime && ' · PRIME SESSION'}
+            </span>
+            <div className={`${styles.kzBadge} ${kz.active ? styles.kzActive : styles.kzWaiting}`}>
+              {kz.active && <span className={styles.kzPulse} />}
+              <span className={styles.kzName}>{kz.name}</span>
+              <span className={styles.kzTime}>
+                {kz.active ? `closes in ${fmtKZTime(kz.minutes)}` : `opens in ${fmtKZTime(kz.minutes)}`}
+              </span>
+            </div>
+          </div>
+          <div className={styles.metaRow}>
+            <span className={styles.clock}>{timeStr}</span>
+            <span className={styles.meta}>
+              Last refresh: {lastRefresh || '—'}
+            </span>
+            <button className={styles.themeBtn} onClick={toggleTheme} title="Toggle theme">
+              {theme === 'dark' ? '☀' : '◑'}
+            </button>
+            <button className={styles.refreshBtn} onClick={onRefresh} title="Refresh all data">
+              ↺ Refresh
+            </button>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+
+      {openPosition && (
+        <div className={`${styles.posBanner} ${openPosition.pnl >= 0 ? styles.posProfit : styles.posLoss}`}>
+          <span className={styles.posDir}>{openPosition.direction}</span>
+          <span className={styles.posDetail}>
+            {openPosition.lots.toFixed(2)} lot · Entry ${fmt(openPosition.entryPrice, 2)} · Now ${fmt(openPosition.currentPrice, 2)}
+          </span>
+          <span className={styles.posPnl}>
+            {openPosition.pnl >= 0 ? '+' : ''}${openPosition.pnl.toFixed(2)}
+            {' '}({openPosition.pnlPct >= 0 ? '+' : ''}{openPosition.pnlPct.toFixed(2)}%)
+          </span>
+        </div>
+      )}
+    </>
   )
 }

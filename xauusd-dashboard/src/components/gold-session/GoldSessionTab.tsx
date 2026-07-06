@@ -39,6 +39,16 @@ function groupByDate(sessions: GoldSessionEntry[]): [string, GoldSessionEntry[]]
   return [...map.entries()]
 }
 
+// ── Price-in-range parser ────────────────────────────────────────────────────
+
+interface PriceInRange { status: string; level: string }
+
+function parsePriceInRange(analysis: string): PriceInRange | null {
+  const m = analysis.match(/Current Price vs Equilibrium[*:\s]+([A-Z]+)(?:[*\s]+(?:at\s+)?([\$\d,\.–]+))?/i)
+  if (!m) return null
+  return { status: m[1].toUpperCase(), level: (m[2] ?? '').trim() }
+}
+
 // ── Analysis parser ──────────────────────────────────────────────────────────
 
 interface Section {
@@ -631,6 +641,23 @@ export function GoldSessionTab() {
                   <div className={styles.statLabel}>Confidence</div>
                   <div className={styles.statValue}>{session.confidence}<span className={styles.statDenom}>/10</span></div>
                 </div>
+                {(() => {
+                  const pir = parsePriceInRange(session.analysis)
+                  if (!pir) return null
+                  const cls = pir.status === 'DISCOUNT' ? styles.pirDiscount
+                    : pir.status === 'PREMIUM' ? styles.pirPremium
+                    : pir.status === 'OTE' ? styles.pirOte
+                    : styles.pirEquilibrium
+                  return (
+                    <div className={styles.statPill}>
+                      <div className={styles.statLabel}>Price Zone</div>
+                      <div className={`${styles.pirBadge} ${cls}`}>
+                        {pir.status}
+                        {pir.level && <span className={styles.pirLevel}>{pir.level}</span>}
+                      </div>
+                    </div>
+                  )
+                })()}
               </div>
             </div>
 

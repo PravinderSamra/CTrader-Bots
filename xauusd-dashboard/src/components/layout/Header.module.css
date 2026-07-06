@@ -193,3 +193,48 @@
   border-color: var(--gold-dim);
   background: var(--gold-dim);
 }
+
+/* ── Open position banner ── */
+.posBanner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 6px 24px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  border-bottom: 1px solid var(--border);
+}
+
+.posProfit {
+  background: var(--green-dim);
+  color: var(--green);
+}
+
+.posLoss {
+  background: var(--red-dim);
+  color: var(--red);
+}
+
+.posDir {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, currentColor 15%, transparent);
+  flex-shrink: 0;
+}
+
+.posDetail {
+  flex: 1;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.posPnl {
+  font-weight: 600;
+  font-size: 13px;
+  flex-shrink: 0;
+}

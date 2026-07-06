@@ -1,5 +1,6 @@
 import { useState, useCallback, lazy, Suspense } from 'react'
 import { useCTraderPrices, pricesFromSnapshot } from './hooks/useCTraderPrices'
+import { useOpenPosition } from './hooks/useOpenPosition'
 import { useDailySnapshot } from './hooks/useFredData'
 import { aggregateData } from './services/dataAggregator'
 import { Header } from './components/layout/Header'
@@ -39,6 +40,7 @@ export function App() {
 
   const snapshot = useDailySnapshot()
   const livePrices = useCTraderPrices()
+  const openPosition = useOpenPosition()
   const prices = livePrices.status === 'live'
     ? livePrices
     : (snapshot?.snapshotPrices ? pricesFromSnapshot(snapshot.snapshotPrices) : livePrices)
@@ -64,7 +66,7 @@ export function App() {
 
   return (
     <div className={styles.app}>
-      <Header prices={prices} onRefresh={handleRefresh} lastRefresh={lastRefresh} />
+      <Header prices={prices} onRefresh={handleRefresh} lastRefresh={lastRefresh} openPosition={openPosition} />
 
       <SessionTimeline />
 
