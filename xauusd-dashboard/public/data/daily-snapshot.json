@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-07-06T20:47:48.167Z",
+  "generatedAt": "2026-07-07T09:25:27.042Z",
   "yields": {
     "US10Y": 4.49,
     "US2Y": 4.14,
     "realYield10Y": 2.26,
     "realYield5Y": 1.99,
     "curve2s10s": 35,
-    "breakeven10Y": 2.23,
-    "breakeven5Y": 2.24,
-    "forward5y5y": 2.22,
+    "breakeven10Y": 2.24,
+    "breakeven5Y": 2.27,
+    "forward5y5y": 2.21,
     "dayOverDay": {
       "US10Y": 0.01,
       "US2Y": -0.03,
@@ -27,7 +27,7 @@
   },
   "positioning": {
     "cotNetLong": -14945,
-    "cotWoWChange": -187829,
+    "cotWoWChange": 0,
     "crowding": "CROWDED_SHORT",
     "reportDate": "2026-06-30T00:00:00.000",
     "openInterest": 64821,
@@ -68,8 +68,8 @@
     {
       "headline": "ECB's Schnabel says Iran shock is not over - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-07-06T17:32:16.000Z",
-      "hoursAgo": 3.3
+      "publishedAt": "2026-07-06T17:23:00.000Z",
+      "hoursAgo": 16
     }
   ],
   "briefing": null
