@@ -1,6 +1,17 @@
 {
-  "updatedAt": "2026-07-07T08:03:57.353Z",
+  "updatedAt": "2026-07-07T12:41:18.252Z",
   "sessions": [
+    {
+      "date": "2026-07-07",
+      "time": "13:41 BST",
+      "filename": "2026-07-07/12-41.json",
+      "session": "NEW_YORK",
+      "bias": "BEARISH",
+      "biasScore": -2,
+      "probability": 55,
+      "confidence": 3,
+      "timestamp": "2026-07-07T12:41:18.252Z"
+    },
     {
       "date": "2026-07-07",
       "time": "09:03 BST",
