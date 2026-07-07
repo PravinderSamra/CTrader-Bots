@@ -1,8 +1,10 @@
 import { useState, useEffect, useCallback } from 'react'
-import type { CTraderPrices } from '../../types/dashboard'
+import type { CTraderPrices, CalendarEvent } from '../../types/dashboard'
 import type { OpenPosition } from '../../hooks/useOpenPosition'
 import { getSession, getKillZone, fmtDuration } from '../../utils/sessions'
 import { ukClockString, ukTimeString } from '../../utils/time'
+import { nextHighImpactEvent } from '../../utils/nextEvent'
+import { EventCountdown } from '../common/EventCountdown'
 import styles from './Header.module.css'
 
 function fmt(n: number, dp = 2): string {
@@ -28,9 +30,10 @@ interface Props {
   lastRefresh: string
   openPosition?: OpenPosition | null
   snapshotGeneratedAt?: string | null
+  calendar?: CalendarEvent[]
 }
 
-export function Header({ prices, onRefresh, lastRefresh, openPosition, snapshotGeneratedAt }: Props) {
+export function Header({ prices, onRefresh, lastRefresh, openPosition, snapshotGeneratedAt, calendar }: Props) {
   const [now, setNow] = useState(new Date())
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
     const stored = localStorage.getItem('xau-theme')
@@ -101,6 +104,7 @@ export function Header({ prices, onRefresh, lastRefresh, openPosition, snapshotG
                 {kz.active ? `closes in ${fmtDuration(kz.minutes)}` : `opens in ${fmtDuration(kz.minutes)}`}
               </span>
             </div>
+            {calendar && <EventCountdown next={nextHighImpactEvent(calendar, now.getTime())} />}
           </div>
           <div className={styles.metaRow}>
             <span className={styles.clock}>{timeStr}</span>

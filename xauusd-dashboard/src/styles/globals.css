@@ -15,7 +15,6 @@ body {
   font-family: var(--font);
   font-size: 14px;
   line-height: 1.5;
-  min-width: 1200px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -143,6 +142,21 @@ body {
   font-family: var(--mono);
   font-size: 11px;
   font-style: italic;
+}
+
+/* ── Tile sparkline ── */
+.tile-spark {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+}
+.tile-spark-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
 }
 
 /* ── Price flash animation ── */

@@ -1,4 +1,5 @@
 import type { YieldsData } from '../../types/dashboard'
+import { TileSpark } from '../common/TileSpark'
 import styles from './Tile.module.css'
 
 function fmt(v: number | null, dp = 2): string {
@@ -38,6 +39,7 @@ export function YieldsTile({ yields }: Props) {
             {fmt(yields?.US10Y ?? null)}%{arrow(dodUS10Y)}
           </span>
         </div>
+        <TileSpark metric="us10y" label="US 10Y 7-day trend" />
         <div className="tile-row">
           <span className="tile-label">2Y</span>
           <span className={`tile-val mono ${cls(dodUS2Y)}`}>

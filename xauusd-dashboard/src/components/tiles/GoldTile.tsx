@@ -1,4 +1,5 @@
 import type { CTraderPrices } from '../../types/dashboard'
+import { TileSpark } from '../common/TileSpark'
 import styles from './Tile.module.css'
 
 function fmt(v: number, dp = 2): string {
@@ -37,6 +38,7 @@ export function GoldTile({ prices, gvz }: Props) {
         <div className={`${styles.change} ${chgCls}`}>
           {isLive && xau.changeDay !== 0 ? `${xau.changeDay >= 0 ? '+' : ''}${fmt(xau.changeDay, 2)} (${xau.changePct >= 0 ? '+' : ''}${fmt(xau.changePct, 2)}%)` : ''}
         </div>
+        <TileSpark metric="xau" signed label="XAUUSD 7-day trend" />
       </div>
 
       <hr className="tile-divider" />

@@ -1,4 +1,5 @@
 import type { CTraderPrices, MarketVolatility, DollarLiquidity, GeopoliticalRisk } from '../../types/dashboard'
+import { TileSpark } from '../common/TileSpark'
 import styles from './Tile.module.css'
 
 function fmt(v: number, dp = 2): string {
@@ -81,6 +82,7 @@ export function EquitiesTile({ prices, vix, riskTone, dollarLiquidity, geopoliti
             {vixCtx && <span className={`badge badge-muted ${styles.badgeInline}`}>{vixCtx}</span>}
           </span>
         </div>
+        <TileSpark metric="vix" label="VIX 7-day trend" />
         <div className="tile-row">
           <span className="tile-label">Fin. Stress</span>
           <span className={`tile-val mono ${stlfsiCls}`}>{stlfsi != null ? fmt(stlfsi) : '—'}</span>

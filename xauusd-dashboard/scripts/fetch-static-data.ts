@@ -952,6 +952,47 @@ async function fetchGPR(): Promise<Snapshot['geopoliticalRisk']> {
   }
 }
 
+// ── Intraday history (rolling 7-day, for tile sparklines) ──────────────────
+
+interface HistoryPoint {
+  ts:  string
+  xau: number | null
+  dxy: number | null
+  us10y: number | null
+  vix: number | null
+  gvz: number | null
+  realYield10Y: number | null
+}
+
+function appendHistory(outDir: string, snapshot: Snapshot): void {
+  const historyPath = path.join(outDir, 'history.json')
+  const sp = snapshot.snapshotPrices
+  const dxyRaw = sp && sp.EURUSD && sp.USDJPY && sp.GBPUSD && sp.USDCAD && sp.USDSEK && sp.USDCHF
+    ? computeDXY(sp.EURUSD, sp.USDJPY, sp.GBPUSD, sp.USDCAD, sp.USDSEK, sp.USDCHF)
+    : null
+  const dxy = dxyRaw != null ? Math.round(dxyRaw * 100) / 100 : null
+
+  const point: HistoryPoint = {
+    ts:  snapshot.generatedAt,
+    xau: sp?.XAUUSD ?? null,
+    dxy,
+    us10y: snapshot.yields?.US10Y ?? null,
+    vix:   snapshot.marketVolatility?.VIX ?? null,
+    gvz:   snapshot.marketVolatility?.GVZ ?? null,
+    realYield10Y: snapshot.yields?.realYield10Y ?? null,
+  }
+
+  let points: HistoryPoint[] = []
+  try { points = (JSON.parse(fs.readFileSync(historyPath, 'utf8')) as { points: HistoryPoint[] }).points ?? [] } catch { /* first run */ }
+
+  const cutoff = Date.now() - 7 * 86_400_000
+  points = points.filter(p => Date.parse(p.ts) >= cutoff)
+  points.push(point)
+
+  fs.writeFileSync(historyPath, JSON.stringify({ updatedAt: point.ts, points }, null, 2))
+  console.log(`History appended (${points.length} points, last 7 days)`)
+}
+
 // ── Main ───────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -1005,6 +1046,8 @@ async function main() {
 
   fs.writeFileSync(outPath, JSON.stringify(snapshot, null, 2))
   console.log(`\nSnapshot written to ${outPath}`)
+
+  try { appendHistory(outDir, snapshot) } catch (e) { console.error('History append failed:', (e as Error).message) }
   console.log(`Generated at: ${snapshot.generatedAt}`)
   console.log(`10Y yield: ${yields.US10Y ?? 'null'}%`)
   console.log(`GVZ: ${gvz ?? 'null'}`)

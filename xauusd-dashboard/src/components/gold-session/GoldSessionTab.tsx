@@ -1,6 +1,8 @@
 import { useState, useMemo } from 'react'
 import { useGoldSessionIndex, useGoldSession, useSessionOutcomes } from '../../hooks/useGoldSessions'
 import { BiasGauge } from '../briefing/BiasGauge'
+import { EventCountdown } from '../common/EventCountdown'
+import { LiquidityRuler } from './LiquidityRuler'
 import type { GoldSessionEntry, GoldSessionRecord, StructuredTradeIdea, OutcomeRow, SessionResult } from '../../types/dashboard'
 import {
   parsePriceInRange, parseSections, parseKVRows, parseLevelLines, valueColor, parseProbability,
@@ -203,6 +205,65 @@ function KVCard({ title, rows }: { title: string; rows: KVRow[] }) {
   )
 }
 
+function RRBar({ idea }: { idea: StructuredTradeIdea }) {
+  const entry = idea.entryLow != null && idea.entryHigh != null
+    ? (idea.entryLow + idea.entryHigh) / 2
+    : (idea.entryLow ?? idea.entryHigh ?? null)
+  if (entry == null || idea.stop == null || !idea.targets || idea.targets.length === 0) return null
+
+  const stop = idea.stop
+  const risk = Math.abs(entry - stop)
+  if (risk <= 0) return null
+
+  const targets = [...idea.targets].sort((a, b) =>
+    idea.direction === 'LONG' ? a - b : b - a)   // nearest first
+  const rewards = targets.map(t => Math.abs(t - entry))
+  const maxReward = Math.max(...rewards)
+  const total = risk + maxReward
+
+  const W = 320, padX = 2
+  const usable = W - 2 * padX
+  const redW = (risk / total) * usable
+  const greenW = (maxReward / total) * usable
+  const entryX = padX + redW
+
+  const fmt = (p: number) => p.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+
+  return (
+    <div className={styles.rrWrap}>
+      <svg viewBox={`0 0 ${W} 50`} className={styles.rrSvg} role="img" aria-label="Risk-reward">
+        {/* risk (red) + reward (green) spans */}
+        <rect x={padX} y={22} width={redW} height={8} rx={2} className={styles.rrRisk} />
+        <rect x={entryX} y={22} width={greenW} height={8} rx={2} className={styles.rrReward} />
+
+        {/* stop marker — price + SL label sit BELOW the bar, left-anchored */}
+        <line x1={padX} y1={18} x2={padX} y2={34} className={styles.rrStopMark} />
+        <text x={padX} y={46} className={styles.rrTick} style={{ fill: 'var(--red)' }}>SL {fmt(stop)}</text>
+
+        {/* entry marker — label ABOVE the bar, centred (clamped off the edges) */}
+        <line x1={entryX} y1={14} x2={entryX} y2={38} className={styles.rrEntryMark} />
+        <text x={Math.min(Math.max(entryX, 40), W - 40)} y={12} className={styles.rrTickMid} style={{ fill: 'var(--gold)' }}>
+          Entry {fmt(entry)}
+        </text>
+
+        {/* target markers — R multiple ABOVE the bar at each target */}
+        {targets.map((_t, i) => {
+          const tx = entryX + (rewards[i] / maxReward) * greenW
+          const r = rewards[i] / risk
+          return (
+            <g key={i}>
+              <line x1={tx} y1={18} x2={tx} y2={34} className={styles.rrTargetMark} />
+              <text x={Math.min(tx, W - 24)} y={46} className={styles.rrTickEnd} style={{ fill: 'var(--green)' }}>
+                T{i + 1} · {r.toFixed(1)}R
+              </text>
+            </g>
+          )
+        })}
+      </svg>
+    </div>
+  )
+}
+
 function TradeCard({ body, structured }: { body: string; structured?: StructuredTradeIdea | null }) {
   // Prefer the structured tradeIdea meta field; fall back to parsing the text.
   const isNoTrade = structured
@@ -262,6 +323,8 @@ function TradeCard({ body, structured }: { body: string; structured?: Structured
           )}
         </div>
       ) : (
+        <>
+        {structured && <RRBar idea={structured} />}
         <div className={styles.kvList}>
           {rows.map((row, i) => {
             const color = valueColor(row.value)
@@ -282,6 +345,7 @@ function TradeCard({ body, structured }: { body: string; structured?: Structured
             )
           })}
         </div>
+        </>
       )}
     </div>
   )
@@ -487,18 +551,22 @@ function AnalysisRenderer({ session }: { session: GoldSessionRecord }) {
         <KVCard title="Structure" rows={parseKVRows(structure.body)} />
       )}
 
-      {/* Liquidity Map */}
-      {liquidity && (
+      {/* Liquidity Ruler (structured) — falls back to the text KV card otherwise */}
+      {session.keyLevels && session.keyLevels.length > 0 && session.priceAtAnalysis != null ? (
+        <LiquidityRuler levels={session.keyLevels} current={session.priceAtAnalysis} />
+      ) : liquidity ? (
         <KVCard title="Liquidity Map" rows={parseKVRows(liquidity.body)} />
-      )}
+      ) : null}
 
       {/* Key PD Arrays */}
       {pdArrays && (
         <KVCard title="Key PD Arrays" rows={parseKVRows(pdArrays.body)} />
       )}
 
-      {/* Trade Idea */}
-      {tradeIdea && <TradeCard body={tradeIdea.body} structured={session.tradeIdea} />}
+      {/* Trade Idea — render if the text section OR a structured tradeIdea exists */}
+      {(tradeIdea || session.tradeIdea) && (
+        <TradeCard body={tradeIdea?.body ?? ''} structured={session.tradeIdea} />
+      )}
 
       {/* Probability */}
       {probability && <ProbCard body={probability.body} />}
@@ -633,6 +701,11 @@ export function GoldSessionTab() {
               </span>
               <span className={styles.viewDate}>{dateLabel(session.date)}</span>
               <span className={styles.viewTime}>{session.time}</span>
+              {session.nextHighImpactEvent && (
+                <span style={{ marginLeft: 'auto' }}>
+                  <EventCountdown next={{ event: session.nextHighImpactEvent.event, whenIso: session.nextHighImpactEvent.timeIso }} />
+                </span>
+              )}
             </div>
 
             {/* Gauge + stats */}
