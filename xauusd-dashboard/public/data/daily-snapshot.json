@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-07T12:22:48.558Z",
+  "generatedAt": "2026-07-07T15:40:42.866Z",
   "yields": {
     "US10Y": 4.49,
     "US2Y": 4.14,
@@ -22,8 +22,8 @@
     "probHike": 0
   },
   "marketVolatility": {
-    "GVZ": 26,
-    "VIX": 15.81
+    "GVZ": 25.33,
+    "VIX": 15.57
   },
   "positioning": {
     "cotNetLong": -14945,
@@ -66,22 +66,34 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Trump says he will lift Turkey sanctions, decide on selling F-35s - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-07-07T13:42:45.000Z",
+      "hoursAgo": 2
+    },
+    {
+      "headline": "Trump says U.S. will lift sanctions on Turkey, possibly sell F-35 fighter jets - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-07-07T03:35:00.000Z",
+      "hoursAgo": 12.1
+    },
+    {
       "headline": "Gold slips as stronger dollar weighs; focus on Fed minutes and Gulf tensions - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-07T02:57:00.000Z",
-      "hoursAgo": 9.4
+      "hoursAgo": 12.7
     },
     {
       "headline": "Israeli interest rates could fall to at least 3%, central bank governor says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-06T17:56:54.000Z",
-      "hoursAgo": 18.4
+      "hoursAgo": 21.7
     },
     {
       "headline": "ECB's Schnabel says Iran shock is not over - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-06T17:23:00.000Z",
-      "hoursAgo": 19
+      "hoursAgo": 22.3
     }
   ],
   "briefing": null
