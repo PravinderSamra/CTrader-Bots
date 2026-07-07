@@ -528,6 +528,115 @@ def detect_trend(candles: List[Candle], lookback: int = 20) -> str:
     return "NEUTRAL"
 
 
+# ── Swing Points, BOS / CHoCH, Displacement ──────────────────────────────────
+
+def find_swing_points(
+    candles: List[Candle], wing: int = 2
+) -> Tuple[List[Tuple[int, float]], List[Tuple[int, float]]]:
+    """
+    Fractal swing detection: a swing high is a candle whose high exceeds the
+    `wing` candles on either side; a swing low is the mirror. Returns
+    (swing_highs, swing_lows) as chronological lists of (index, price).
+    """
+    highs: List[Tuple[int, float]] = []
+    lows:  List[Tuple[int, float]] = []
+    n = len(candles)
+    for i in range(wing, n - wing):
+        c = candles[i]
+        if (all(c.high > candles[i - j].high for j in range(1, wing + 1)) and
+                all(c.high > candles[i + j].high for j in range(1, wing + 1))):
+            highs.append((i, c.high))
+        if (all(c.low < candles[i - j].low for j in range(1, wing + 1)) and
+                all(c.low < candles[i + j].low for j in range(1, wing + 1))):
+            lows.append((i, c.low))
+    return highs, lows
+
+
+def detect_structure_breaks(candles: List[Candle], wing: int = 2) -> dict:
+    """
+    Detect the most recent Break of Structure (BOS — continuation) and Change of
+    Character (CHoCH — first counter-trend break) from confirmed swing points.
+
+    A close beyond the most recent confirmed swing high/low is a break:
+      - same direction as the running bias  → BOS  (trend continuation)
+      - opposite the running bias           → CHoCH (character change)
+    The first break (no prior bias) is labelled BOS — there is no character to
+    change yet. A broken level is consumed; the next break in that direction
+    waits for a fresh confirmed swing.
+
+    Returns {"last_bos": {...} | None, "last_choch": {...} | None} where each
+    event is {type, direction, level, timestamp}.
+    """
+    if len(candles) < 2 * wing + 3:
+        return {"last_bos": None, "last_choch": None}
+
+    highs, lows = find_swing_points(candles, wing)
+    swings = sorted(
+        [(i, "H", p) for (i, p) in highs] + [(i, "L", p) for (i, p) in lows],
+        key=lambda s: s[0],
+    )
+
+    bias: Optional[str] = None
+    last_sh: Optional[float] = None
+    last_sl: Optional[float] = None
+    last_bos: Optional[dict] = None
+    last_choch: Optional[dict] = None
+    ptr = 0
+
+    for i, c in enumerate(candles):
+        # Activate swings only once confirmed (needs `wing` candles to its right).
+        while ptr < len(swings) and swings[ptr][0] + wing <= i:
+            _, kind, price = swings[ptr]
+            if kind == "H":
+                last_sh = price
+            else:
+                last_sl = price
+            ptr += 1
+
+        ts = c.timestamp.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+        if last_sh is not None and c.close > last_sh:
+            typ = "CHoCH" if (bias is not None and bias != "BULLISH") else "BOS"
+            event = {"type": typ, "direction": "BULLISH", "level": last_sh, "timestamp": ts}
+            if typ == "BOS":
+                last_bos = event
+            else:
+                last_choch = event
+            bias = "BULLISH"
+            last_sh = None
+        elif last_sl is not None and c.close < last_sl:
+            typ = "CHoCH" if (bias is not None and bias != "BEARISH") else "BOS"
+            event = {"type": typ, "direction": "BEARISH", "level": last_sl, "timestamp": ts}
+            if typ == "BOS":
+                last_bos = event
+            else:
+                last_choch = event
+            bias = "BEARISH"
+            last_sl = None
+
+    return {"last_bos": last_bos, "last_choch": last_choch}
+
+
+def detect_displacement(
+    candles: List[Candle], atr_period: int = 14, mult: float = 1.5, lookback: int = 3
+) -> bool:
+    """
+    True if any of the last `lookback` candles has a body larger than `mult`× the
+    average body of the preceding `atr_period` candles — an institutional
+    range-expansion (displacement) leg, the M1/M5 entry-confirmation signal.
+    """
+    if len(candles) < atr_period + lookback + 1:
+        return False
+    bodies = [c.body_size for c in candles]
+    ref = bodies[-(atr_period + lookback):-lookback]
+    if not ref:
+        return False
+    avg = sum(ref) / len(ref)
+    if avg <= 0:
+        return False
+    return any(b > mult * avg for b in bodies[-lookback:])
+
+
 # ── Asian Session Analysis ────────────────────────────────────────────────────
 
 def find_asian_range(candles_1h: List[Candle]) -> dict:

@@ -193,6 +193,7 @@ export interface StructuredSessionFields {
   keyLevels?:           KeyLevel[]
   tradeIdea?:           StructuredTradeIdea | null
   nextHighImpactEvent?: { event: string; timeIso: string } | null
+  smtDivergence?:       'BULLISH' | 'BEARISH' | null
 }
 
 export interface GoldSessionRecord extends StructuredSessionFields {

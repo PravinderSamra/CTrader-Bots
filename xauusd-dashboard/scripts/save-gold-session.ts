@@ -70,6 +70,7 @@ interface SessionMeta {
   keyLevels?:           KeyLevel[]
   tradeIdea?:           StructuredTradeIdea | null
   nextHighImpactEvent?: { event: string; timeIso: string } | null
+  smtDivergence?:       'BULLISH' | 'BEARISH' | null
 }
 
 interface SessionRecord extends SessionMeta {
