@@ -45,7 +45,7 @@ export function BiasGauge({ score, label, confidence }: Props) {
   return (
     <div className={styles.gauge}>
       <svg
-        viewBox="0 0 220 148"
+        viewBox="0 0 220 186"
         className={styles.svg}
         aria-label={`Bias: ${label}, score ${score > 0 ? '+' : ''}${score}`}
       >

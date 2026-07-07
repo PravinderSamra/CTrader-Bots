@@ -44,9 +44,20 @@ function groupByDate(sessions: GoldSessionEntry[]): [string, GoldSessionEntry[]]
 interface PriceInRange { status: string; level: string }
 
 function parsePriceInRange(analysis: string): PriceInRange | null {
-  const m = analysis.match(/Current Price vs Equilibrium[*:\s]+([A-Z]+)(?:[*\s]+(?:at\s+)?([\$\d,\.–]+))?/i)
-  if (!m) return null
-  return { status: m[1].toUpperCase(), level: (m[2] ?? '').trim() }
+  // Extract the full "Current Price vs Equilibrium" line first
+  const lineMatch = analysis.match(/Current Price vs Equilibrium[^\n]*/i)
+  if (!lineMatch) return null
+  const line = lineMatch[0]
+
+  // Match only the known status keywords (stops H1/M5 prefixes returning "H"/"M")
+  const statusMatch = line.match(/\b(DISCOUNT|PREMIUM|EQUILIBRIUM|OTE)\b/i)
+  if (!statusMatch) return null
+
+  // Extract a price level if present on the same line
+  const priceMatch = line.match(/([\$]?[\d,]{4,}(?:\.\d+)?)/i)
+  const level = priceMatch ? priceMatch[1].trim() : ''
+
+  return { status: statusMatch[1].toUpperCase(), level }
 }
 
 // ── Analysis parser ──────────────────────────────────────────────────────────
