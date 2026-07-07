@@ -15,6 +15,14 @@ Data gathering is structured into phases by dependency. Within each phase, fire 
 
 ### Phase A — No dependencies (fire all at once immediately)
 
+**⚠️ Load the cTrader tool schemas first.** In the Claude Code CLI the `mcp__ctrader__*` tools are **deferred** — they appear by name in a `<system-reminder>` list but their schemas are NOT loaded, so calling them directly fails with `InputValidationError`. Before the first cTrader call of the run, load them in one `ToolSearch`:
+
+```
+ToolSearch  query: select:mcp__ctrader__get_spot_prices,mcp__ctrader__get_trendbars,mcp__ctrader__get_positions,mcp__ctrader__get_balance,mcp__ctrader__get_symbols
+```
+
+Only after that result comes back are the tools callable. (If `ToolSearch` returns nothing for these names — the `ctrader` server never registered as a session connector — use the direct-HTTP fallback described in the symbolId bullet below.) You can fire this `ToolSearch` in the same response as the TradingView pre-load `ToolSearch` at the end of Phase A.
+
 Call all of the following in one response:
 
 - **Resolve symbolId — try the known-stable ID first, skip `get_symbols` if possible.** `XAUUSD` on this account's broker is `symbolId: 241` (`XAUUSD_SB`), `pipDigits: 5` (confirmed empirically 2026-07-07 via direct HTTP call — divide raw bid by `10^5` and it lands in the $3000–5000 gold range). Note: symbolId `41` appeared in earlier versions of this doc but does not resolve on this account — always use `241`. Try `mcp__ctrader__get_spot_prices` directly with `symbolId: 241` first; if that returns a sane price, skip `get_symbols` entirely. Only fall back to `mcp__ctrader__get_symbols` if `symbolId: 241` stops resolving (e.g. broker/account migration changed IDs) — that response is very large (~57k lines / ~1.5MB) and both the CTrader MCP transport and this account's own `xauusd-dashboard` data-fetch script have independently hit parsing failures on payloads that size (see 2026-07-06 incident: `fetch-static-data.ts`'s SSE parser silently returned `null` on it — fixed in that script by hardcoding known symbolIds instead of calling `get_symbols` on every run; same logic applies here). If you do fall back to it, extract just the rows you need rather than scanning inline: `python3 -c "import sys,json; d=json.load(sys.stdin); [print(s['symbolId'],s.get('pipDigits'),s['symbolName']) for s in d.get('symbols',[]) if 'XAU' in s.get('symbolName','')]"`.
@@ -52,7 +60,52 @@ Never proceed to Phase C on partial/missing trendbar data — if any Phase B cal
    "h1": [...], "m5": [...], "m1": [...],
    "d1": [...], "smt_symbol_m5": [...]}
   ```
-  where each candle is `{"timestamp": <integer ms epoch>, "open": ..., "high": ..., "low": ..., "close": ..., "volume": ...}`. **Use plain integers for timestamps — do NOT wrap them in str().** `d1` = the D_1 series (divide XAU by `10^5`); `smt_symbol_m5` = the EURUSD M5 series (divide by `10^5`). Both are optional — omit a key if that fetch failed. Write to a temp file and run:
+  where each candle is `{"timestamp": <integer ms epoch>, "open": ..., "high": ..., "low": ..., "close": ..., "volume": ...}`. **Use plain integers for timestamps — do NOT wrap them in str().** `d1` = the D_1 series (divide XAU by `10^5`); `smt_symbol_m5` = the EURUSD M5 series (divide by `10^5`). Both are optional — omit a key if that fetch failed.
+
+  **Do NOT hand-transcribe candles or hand-divide by 10^5 — it is slow and error-prone across hundreds of bars.** Instead, dump each raw trendbar tool result verbatim to its own file and let Python do the division and assembly. Write the raw JSON that each `get_trendbars` returned (the object containing the `trendbars`/`bars` array, exactly as the tool gave it) to files via heredoc, then run a small assembler:
+  ```bash
+  # One heredoc per timeframe — paste the raw tool output between the EOF markers.
+  cat > /tmp/gs_h1.json  <<'EOF'
+  { ...raw H_1 get_trendbars result... }
+  EOF
+  cat > /tmp/gs_m5.json  <<'EOF'
+  { ...raw M_5 result... }
+  EOF
+  cat > /tmp/gs_m1.json  <<'EOF'
+  { ...raw M_1 result... }
+  EOF
+  cat > /tmp/gs_d1.json  <<'EOF'
+  { ...raw D_1 result... }
+  EOF
+  cat > /tmp/gs_smt.json <<'EOF'
+  { ...raw EURUSD M_5 result (omit this file if the fetch failed)... }
+  EOF
+
+  # Assemble: divide OHLC by 10^5, keep integer ms timestamps, drop missing series.
+  python3 - "$CURRENT_MID_PRICE" <<'PY' > /tmp/gold_session_input.json
+  import json, sys, os
+  mid = float(sys.argv[1])
+  def load(path):
+      if not os.path.exists(path): return None
+      d = json.load(open(path))
+      bars = d.get('trendbars') or d.get('bars') or (d if isinstance(d, list) else [])
+      out = []
+      for b in bars:
+          if b.get('high') is None or b.get('low') is None: continue
+          o = b.get('open', b.get('close', 0)); c = b.get('close', b.get('open', 0))
+          out.append({"timestamp": int(b.get('timestamp') or b.get('utcTimestampInMinutes',0)*60000),
+                      "open": o/1e5, "high": b['high']/1e5, "low": b['low']/1e5,
+                      "close": c/1e5, "volume": b.get('volume', 0)})
+      return out
+  payload = {"symbol": "XAUUSD", "current_price": mid}
+  for key, path in [("h1","/tmp/gs_h1.json"),("m5","/tmp/gs_m5.json"),("m1","/tmp/gs_m1.json"),
+                    ("d1","/tmp/gs_d1.json"),("smt_symbol_m5","/tmp/gs_smt.json")]:
+      series = load(path)
+      if series: payload[key] = series
+  json.dump(payload, sys.stdout)
+  PY
+  ```
+  (Replace `$CURRENT_MID_PRICE` with the mid of the Phase-B bid/ask, e.g. `4161.77`. If the raw trendbar timestamps are ISO strings rather than ms epochs — as they are over the direct-HTTP fallback — adjust the `timestamp` line to `int(datetime.fromisoformat(...).timestamp()*1000)`.) Then run the engine:
   ```bash
   python3 /home/user/CTrader-Bots/ICT-SMC-Local-Agent/skill_adapter.py < /tmp/gold_session_input.json
   ```
@@ -269,9 +322,21 @@ After printing the full analysis to the chat, save it to the **Gold-Session AI**
 
 **Two-file approach** (keeps JSON simple, no escaping of the long analysis text):
 
-**Steps 8a + 8b — Write both files simultaneously (one response, two Write tool calls):**
+**Steps 8a + 8b — Write both files with `cat` heredocs, NOT the Write tool.** `/tmp/gold-session-meta.json` and `/tmp/gold-session-analysis.txt` usually already exist from a prior run, and the Write tool refuses to overwrite a file it has not Read this session (`Error: File has not been read yet`). Use Bash heredocs instead — they overwrite unconditionally and need no prior Read. Fire both in the same response (two parallel Bash calls):
 
-`/tmp/gold-session-meta.json`:
+```bash
+cat > /tmp/gold-session-meta.json <<'EOF'
+{ ...the meta JSON below... }
+EOF
+```
+```bash
+cat > /tmp/gold-session-analysis.txt <<'EOF'
+# GOLD INTRADAY SESSION BRIEF — ...the full analysis text... 
+EOF
+```
+Quote the delimiter (`<<'EOF'`) so the shell does not expand `$`, backticks, or `!` inside your analysis prose.
+
+Meta JSON to place in `/tmp/gold-session-meta.json`:
 ```json
 {
   "session": "LONDON",
@@ -329,9 +394,9 @@ Field guide:
 | `nextHighImpactEvent` *(opt)* | `{ event, timeIso }` for the nearest upcoming HIGH-impact calendar event, or `null` if none. |
 | `smtDivergence` *(opt)* | `BULLISH` / `BEARISH` / `null` — copy the engine's `smt_divergence` value verbatim. |
 
-`/tmp/gold-session-analysis.txt`: the complete analysis output (everything from `# GOLD INTRADAY SESSION BRIEF` to the end of `[DISCLAIMER]`).
+`/tmp/gold-session-analysis.txt`: the complete analysis output (everything from `# GOLD INTRADAY SESSION BRIEF` to the end of `[DISCLAIMER]`), written with the second heredoc above.
 
-Write both files in the **same response** (parallel Write tool calls) — do not wait for one before starting the other.
+Write both files in the **same response** (two parallel Bash heredoc calls) — do not wait for one before starting the other.
 
 **Step 8c** — Run the save script:
 ```bash

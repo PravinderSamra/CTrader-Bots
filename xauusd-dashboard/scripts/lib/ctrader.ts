@@ -20,10 +20,12 @@ export const PIP_DIGITS: Record<string, number> = {
   US500: 5, GER40: 5, UK100: 5,
 }
 
-// Broker-assigned symbolIds captured from a full get_symbols dump (2026-07-06).
-// Stable/static per broker account — a venue essentially never renumbers IDs.
+// Broker-assigned symbolIds. This account trades the _SB (spread-bet) variants;
+// XAUUSD_SB = 241 (confirmed 2026-07-07 — the old 41 does NOT resolve and returns
+// no spot). Any entry that drifts is self-healed at runtime by fetchCTraderPrices,
+// which re-resolves unpriced symbols via get_symbols (preferring enabled _SB IDs).
 export const KNOWN_SYMBOL_IDS: Record<string, number> = {
-  XAUUSD: 41, XAGUSD: 42,
+  XAUUSD: 241, XAGUSD: 42,
   EURUSD: 1, USDJPY: 4, USDCHF: 6, USDCNH: 60,
   GBPUSD: 2, USDCAD: 8, USDSEK: 29,
   US500: 115, GER40: 110, UK100: 113,

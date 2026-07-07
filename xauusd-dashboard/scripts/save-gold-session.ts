@@ -183,8 +183,13 @@ function main() {
 
     if (hasStagedChanges) {
       run(`git -C "${REPO_ROOT}" commit -m "chore: gold-session ${date} ${timeDisplay}"`)
+      // Rebase the current branch onto the latest main so the push fast-forwards,
+      // then push THIS commit (HEAD) to origin/main. Using `HEAD:main` (not
+      // `push origin main`) is essential when the working tree is on a feature
+      // branch — `git push origin main` would push the stale local `main` ref and
+      // silently fail to deploy the session that was just committed on HEAD.
       run(`git -C "${REPO_ROOT}" pull --rebase origin main`)
-      run(`git -C "${REPO_ROOT}" push -u origin main`)
+      run(`git -C "${REPO_ROOT}" push origin HEAD:main`)
       console.log('Committed and pushed to main — dashboard updates after GitHub Actions deploys (~1-2 min).')
     } else {
       console.log('No changes staged — session may already be committed.')

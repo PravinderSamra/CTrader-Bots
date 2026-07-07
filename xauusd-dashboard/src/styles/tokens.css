@@ -29,10 +29,10 @@
   --amber:     #D49038;
   --amber-dim: rgba(212, 144, 56, 0.11);
 
-  /* ── Text ── */
-  --text:       #CDD0DC;
-  --text-muted: #787B8A;
-  --text-dim:   #3E4158;
+  /* ── Text ── (brightened for legibility on the near-black bg) */
+  --text:       #D6D9E3;
+  --text-muted: #9AA1B6;
+  --text-dim:   #6E7488;
 
   /* ── Typography ── */
   --font:  'Space Grotesk', system-ui, -apple-system, sans-serif;
@@ -139,9 +139,9 @@
   --blue-dim:  rgba(74, 132, 212, 0.11);
   --amber:     #D49038;
   --amber-dim: rgba(212, 144, 56, 0.11);
-  --text:       #CDD0DC;
-  --text-muted: #787B8A;
-  --text-dim:   #3E4158;
+  --text:       #D6D9E3;
+  --text-muted: #9AA1B6;
+  --text-dim:   #6E7488;
   --shadow-sm:   0 1px 3px rgba(0, 0, 0, 0.35);
   --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.4);
   --shadow-lg:   0 8px 24px rgba(0, 0, 0, 0.5);

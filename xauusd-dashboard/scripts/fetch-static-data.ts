@@ -595,43 +595,68 @@ async function fetchCTraderPrices(): Promise<SnapshotPrices | null> {
       return null
     }
 
-    // Symbol map — use the known-stable IDs directly to avoid the ~1.5MB get_symbols
-    // dump (see KNOWN_SYMBOL_IDS comment above). Only fall back to a live get_symbols
-    // call if one of the symbols we need isn't in the known map.
+    // Symbol map — start from the known-stable IDs to avoid the ~1.5MB get_symbols
+    // dump on the common path, but self-heal any drifted/wrong ID at runtime.
     const symMap: Record<string, number> = { ...KNOWN_SYMBOL_IDS }
-    const missing = SYMS.filter(s => symMap[s] == null)
-    if (missing.length > 0) {
-      console.log(`CTrader: ${missing.length} symbol(s) not in KNOWN_SYMBOL_IDS (${missing.join(', ')}) — falling back to get_symbols`)
-      const symRaw = await callTool('get_symbols', {})
-      const symbols = (symRaw as { symbols?: Array<{ symbolName: string; symbolId: number; enabled?: boolean }> })?.symbols ?? []
-      console.log(`CTrader symbols count: ${symbols.length}`)
-      const missingSet = new Set(missing)
-      const symEnabledMap: Record<string, boolean> = {}
+    let symbolsDump: Array<{ symbolName: string; symbolId: number; enabled?: boolean }> | null = null
+
+    // Resolve base symbols from a get_symbols dump, preferring enabled and _SB
+    // (spread-bet) variants — this account trades the _SB instruments.
+    async function resolveViaGetSymbols(targets: string[]): Promise<void> {
+      if (targets.length === 0) return
+      if (!symbolsDump) {
+        const symRaw = await callTool('get_symbols', {})
+        symbolsDump = (symRaw as { symbols?: Array<{ symbolName: string; symbolId: number; enabled?: boolean }> })?.symbols ?? []
+        console.log(`CTrader symbols count: ${symbolsDump.length}`)
+      }
       const suffixRe = /(_SBE|_SB|-F_SBE|-F_SB|-PERP_SBE|-PERP_SB|-PERP|-F)$/
-      for (const s of symbols) {
+      const targetSet = new Set(targets.map(t => t.toUpperCase()))
+      const chosen: Record<string, { id: number; enabled: boolean; sb: boolean }> = {}
+      for (const s of symbolsDump) {
         if (!s.symbolName || !s.symbolId) continue
-        const base = s.symbolName.replace(suffixRe, '').toUpperCase()
-        const upperName = s.symbolName.toUpperCase()
-        // Only fill in symbols we don't already have a known-good ID for — never let
-        // a suffixed variant (e.g. XAUUSD_SB) clobber an already-resolved base entry.
-        if (missingSet.has(upperName)) symMap[upperName] = symMap[upperName] ?? s.symbolId
-        if (missingSet.has(base) && (symEnabledMap[base] === undefined || s.enabled)) {
-          symMap[base] = s.symbolId
-          symEnabledMap[base] = !!s.enabled
-        }
+        const upper = s.symbolName.toUpperCase()
+        const base = upper.replace(suffixRe, '')
+        if (!targetSet.has(base)) continue
+        const sb = /_SBE?$/.test(upper)
+        const cur = chosen[base]
+        const better = !cur
+          || (!!s.enabled && !cur.enabled)
+          || (!!s.enabled === cur.enabled && sb && !cur.sb)
+        if (better) chosen[base] = { id: s.symbolId, enabled: !!s.enabled, sb }
+      }
+      for (const [base, v] of Object.entries(chosen)) {
+        symMap[base] = v.id
+        console.log(`CTrader: resolved ${base} → ${v.id} (enabled=${v.enabled}, sb=${v.sb})`)
       }
     }
-    console.log(`CTrader symMap XAUUSD=${symMap['XAUUSD']} EURUSD=${symMap['EURUSD']}`)
 
-    const ids = SYMS.map(s => symMap[s]).filter((id): id is number => id != null)
-    console.log(`CTrader requesting spot prices for ids: ${JSON.stringify(ids)}`)
-
-    // Spot prices
-    const spotRaw = await callTool('get_spot_prices', { symbolId: ids })
-    console.log(`CTrader get_spot_prices raw: ${JSON.stringify(spotRaw)?.slice(0, 300)}`)
-    const spots = (spotRaw as { prices?: Array<{ symbolId: number; bid?: number; ask?: number }> })?.prices ?? []
     const spotMap: Record<number, { bid?: number; ask?: number }> = {}
-    for (const s of spots) spotMap[s.symbolId] = s
+    async function fetchSpots(idList: number[]): Promise<void> {
+      if (idList.length === 0) return
+      const spotRaw = await callTool('get_spot_prices', { symbolId: idList })
+      const spots = (spotRaw as { prices?: Array<{ symbolId: number; bid?: number; ask?: number }> })?.prices ?? []
+      for (const s of spots) spotMap[s.symbolId] = s
+    }
+    const hasPrice = (sym: string): boolean => {
+      const id = symMap[sym]; if (!id) return false
+      const sp = spotMap[id]; return !!sp && (!!sp.bid || !!sp.ask)
+    }
+
+    // 1) Resolve anything not in the known map, then fetch spots.
+    await resolveViaGetSymbols(SYMS.filter(s => symMap[s] == null))
+    await fetchSpots(SYMS.map(s => symMap[s]).filter((id): id is number => id != null))
+
+    // 2) Self-heal: any symbol still unpriced has a stale/wrong hardcoded ID —
+    // re-resolve those via get_symbols and re-fetch just the newly-mapped IDs.
+    const unpriced = SYMS.filter(s => !hasPrice(s))
+    if (unpriced.length > 0) {
+      console.log(`CTrader: ${unpriced.length} symbol(s) unpriced (${unpriced.join(',')}) — re-resolving via get_symbols`)
+      const before = new Set(Object.values(symMap))
+      await resolveViaGetSymbols(unpriced)
+      const newIds = unpriced.map(s => symMap[s]).filter((id): id is number => id != null && !before.has(id))
+      await fetchSpots(newIds)
+    }
+    console.log(`CTrader symMap XAUUSD=${symMap['XAUUSD']}(${hasPrice('XAUUSD') ? 'priced' : 'NO PRICE'}) EURUSD=${symMap['EURUSD']}`)
 
     const pip = (sym: string) => PIP_DIGITS[sym] ?? 5
     const mid = (sym: string): number | null => {
