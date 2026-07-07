@@ -29,12 +29,47 @@ const INDEX_FILE = path.join(DATA_DIR, 'index.json')
 const REPO_ROOT  = path.join(__dirname, '../..')
 const MAX_DAYS   = 3
 
+type PriceZone = 'DISCOUNT' | 'PREMIUM' | 'EQUILIBRIUM' | 'OTE'
+
+type KeyLevelKind =
+  | 'BSL' | 'SSL' | 'PDH' | 'PDL' | 'PWH' | 'PWL'
+  | 'ASIAN_HIGH' | 'ASIAN_LOW' | 'POC' | 'INVALIDATION' | 'DRAW' | 'OTHER'
+
+interface KeyLevel {
+  price: number
+  kind:  KeyLevelKind
+  note?: string
+}
+
+interface StructuredTradeIdea {
+  direction: 'LONG' | 'SHORT'
+  status:    'ACTIVE' | 'WAIT' | 'NO_TRADE'
+  entryLow?:  number
+  entryHigh?: number
+  stop?:      number
+  targets?:   number[]
+  rr?:        number
+  setupType?: string
+}
+
 interface SessionMeta {
   session:     string   // LONDON | NEW_YORK | OVERLAP | ASIAN
   bias:        string   // BULLISH | BEARISH | NEUTRAL
   biasScore:   number   // -5 to +5
   probability: number   // 0-100
   confidence:  number   // 1-10
+
+  // ── Optional structured fields (Phase 2) — populated by the skill from the
+  //    engine output. Absent on pre-Phase-2 records; the UI falls back to
+  //    regex-parsing the analysis text when a field is missing. ──
+  priceAtAnalysis?:     number
+  drawOnLiquidity?:     number       // primary target level
+  invalidation?:        number
+  priceZone?:           PriceZone
+  equilibrium?:         number
+  keyLevels?:           KeyLevel[]
+  tradeIdea?:           StructuredTradeIdea | null
+  nextHighImpactEvent?: { event: string; timeIso: string } | null
 }
 
 interface SessionRecord extends SessionMeta {
@@ -44,11 +79,20 @@ interface SessionRecord extends SessionMeta {
   analysis:  string
 }
 
-interface IndexEntry extends SessionMeta {
-  date:      string
-  time:      string
-  filename:  string   // YYYY-MM-DD/HH-MM.json
-  timestamp: string
+// Index stays lean — only what the sidebar needs. Heavy detail (keyLevels,
+// full tradeIdea) lives in the per-session file, not the rolling index.
+interface IndexEntry {
+  date:        string
+  time:        string
+  filename:    string   // YYYY-MM-DD/HH-MM.json
+  timestamp:   string
+  session:     string
+  bias:        string
+  biasScore:   number
+  probability: number
+  confidence:  number
+  priceZone?:  PriceZone
+  tradeIdea?:  { direction: 'LONG' | 'SHORT'; status: 'ACTIVE' | 'WAIT' | 'NO_TRADE' } | null
 }
 
 interface SessionIndex {
@@ -107,7 +151,11 @@ function main() {
 
   const entry: IndexEntry = {
     date, time: timeDisplay, filename: `${date}/${hhmm}.json`,
-    ...meta, timestamp: now.toISOString(),
+    timestamp: now.toISOString(),
+    session: meta.session, bias: meta.bias, biasScore: meta.biasScore,
+    probability: meta.probability, confidence: meta.confidence,
+    ...(meta.priceZone ? { priceZone: meta.priceZone } : {}),
+    ...(meta.tradeIdea ? { tradeIdea: { direction: meta.tradeIdea.direction, status: meta.tradeIdea.status } } : {}),
   }
 
   const cutoff    = new Date()

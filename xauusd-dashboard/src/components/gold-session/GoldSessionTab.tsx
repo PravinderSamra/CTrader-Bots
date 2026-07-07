@@ -1,7 +1,11 @@
 import { useState, useMemo } from 'react'
 import { useGoldSessionIndex, useGoldSession } from '../../hooks/useGoldSessions'
 import { BiasGauge } from '../briefing/BiasGauge'
-import type { GoldSessionEntry } from '../../types/dashboard'
+import type { GoldSessionEntry, GoldSessionRecord, StructuredTradeIdea } from '../../types/dashboard'
+import {
+  parsePriceInRange, parseSections, parseKVRows, parseLevelLines, valueColor, parseProbability,
+  type PriceInRange, type KVRow,
+} from './parsers'
 import styles from './GoldSessionTab.module.css'
 
 // ── Sidebar utilities ────────────────────────────────────────────────────────
@@ -39,102 +43,16 @@ function groupByDate(sessions: GoldSessionEntry[]): [string, GoldSessionEntry[]]
   return [...map.entries()]
 }
 
-// ── Price-in-range parser ────────────────────────────────────────────────────
+// ── Structured-or-regex resolvers (Phase 2: prefer meta fields, fall back to text) ──
 
-interface PriceInRange { status: string; level: string }
-
-function parsePriceInRange(analysis: string): PriceInRange | null {
-  // Extract the full "Current Price vs Equilibrium" line first
-  const lineMatch = analysis.match(/Current Price vs Equilibrium[^\n]*/i)
-  if (!lineMatch) return null
-  const line = lineMatch[0]
-
-  // Match only the known status keywords (stops H1/M5 prefixes returning "H"/"M")
-  const statusMatch = line.match(/\b(DISCOUNT|PREMIUM|EQUILIBRIUM|OTE)\b/i)
-  if (!statusMatch) return null
-
-  // Extract a price level if present on the same line
-  const priceMatch = line.match(/([\$]?[\d,]{4,}(?:\.\d+)?)/i)
-  const level = priceMatch ? priceMatch[1].trim() : ''
-
-  return { status: statusMatch[1].toUpperCase(), level }
-}
-
-// ── Analysis parser ──────────────────────────────────────────────────────────
-
-interface Section {
-  title: string
-  body: string
-}
-
-interface KVRow {
-  label: string
-  value: string
-  subs: string[]
-}
-
-function parseSections(text: string): Section[] {
-  const sections: Section[] = []
-  let title = ''
-  let bodyLines: string[] = []
-
-  for (const line of text.split('\n')) {
-    if (line.startsWith('## ')) {
-      if (title) sections.push({ title, body: bodyLines.join('\n').trim() })
-      title = line.replace(/^##\s+/, '').trim()
-      bodyLines = []
-    } else if (!line.startsWith('# ')) {
-      bodyLines.push(line)
+function resolvePriceZone(session: GoldSessionRecord): PriceInRange | null {
+  if (session.priceZone) {
+    return {
+      status: session.priceZone,
+      level: session.equilibrium != null ? String(session.equilibrium) : '',
     }
   }
-  if (title) sections.push({ title, body: bodyLines.join('\n').trim() })
-  return sections
-}
-
-function parseKVRows(body: string): KVRow[] {
-  const rows: KVRow[] = []
-  let current: KVRow | null = null
-
-  for (const line of body.split('\n')) {
-    const kvMatch = line.match(/^-\s+\*\*(.+?)\*\*[:\s]*(.*)?$/)
-    if (kvMatch) {
-      if (current) rows.push(current)
-      current = {
-        label: kvMatch[1].replace(/:$/, '').trim(),
-        value: (kvMatch[2] ?? '').trim(),
-        subs: [],
-      }
-    } else if (line.match(/^\s{2,}\S/) && current) {
-      current.subs.push(line.trim())
-    }
-  }
-  if (current) rows.push(current)
-  return rows
-}
-
-function parseLevelLines(body: string): { price: string; desc: string }[] {
-  return body
-    .split('\n')
-    .filter(l => l.trim().startsWith('- '))
-    .map(line => {
-      const content = line.replace(/^-\s+/, '').trim()
-      const dash = content.indexOf(' — ')
-      return dash > -1
-        ? { price: content.slice(0, dash).trim(), desc: content.slice(dash + 3).trim() }
-        : { price: content, desc: '' }
-    })
-}
-
-function valueColor(value: string): string | undefined {
-  const upper = value.toUpperCase()
-  if (/\bBULLISH\b/.test(upper)) return 'var(--green)'
-  if (/\bBEARISH\b/.test(upper)) return 'var(--red)'
-  if (/\bNEUTRAL\b/.test(upper)) return 'var(--amber)'
-  if (/\bTRANSITIONAL\b/.test(upper)) return 'var(--amber)'
-  if (/\bACTIVE\b/.test(upper)) return 'var(--green)'
-  if (/\bNot applicable\b/i.test(value)) return 'var(--text-dim)'
-  if (/\bUNAVAILABLE\b/.test(upper)) return 'var(--text-dim)'
-  return undefined
+  return parsePriceInRange(session.analysis)
 }
 
 // ── Inline bold renderer ─────────────────────────────────────────────────────
@@ -203,12 +121,27 @@ function KVCard({ title, rows }: { title: string; rows: KVRow[] }) {
   )
 }
 
-function TradeCard({ body }: { body: string }) {
-  const isNoTrade = /NO TRADE/i.test(body.slice(0, 150))
+function TradeCard({ body, structured }: { body: string; structured?: StructuredTradeIdea | null }) {
+  // Prefer the structured tradeIdea meta field; fall back to parsing the text.
+  const isNoTrade = structured
+    ? structured.status === 'NO_TRADE'
+    : /NO TRADE/i.test(body.slice(0, 150))
   const dirMatch = body.match(/\*\*Direction:\*\*\s*(LONG|SHORT)/i)
-  const direction = dirMatch?.[1]?.toUpperCase()
+  const direction = structured && structured.status !== 'NO_TRADE'
+    ? structured.direction
+    : dirMatch?.[1]?.toUpperCase()
 
-  const variant = isNoTrade ? 'no-trade' : direction === 'LONG' ? 'long' : direction === 'SHORT' ? 'short' : 'watch'
+  const variant = structured
+    ? (structured.status === 'NO_TRADE' ? 'no-trade'
+       : structured.status === 'WAIT'   ? 'watch'
+       : structured.direction === 'LONG' ? 'long' : 'short')
+    : (isNoTrade ? 'no-trade' : direction === 'LONG' ? 'long' : direction === 'SHORT' ? 'short' : 'watch')
+
+  const badgeText = isNoTrade
+    ? 'No Trade'
+    : structured
+      ? (structured.status === 'WAIT' ? 'Watch' : structured.direction)
+      : (direction ?? 'Watch')
 
   const rows = parseKVRows(body)
 
@@ -226,7 +159,7 @@ function TradeCard({ body }: { body: string }) {
       <div className={styles.tradeHeader}>
         <CardTitle>Trade Idea</CardTitle>
         <span className={styles.tradeBadge} data-variant={variant}>
-          {isNoTrade ? 'No Trade' : direction ?? 'Watch'}
+          {badgeText}
         </span>
       </div>
 
@@ -273,17 +206,7 @@ function TradeCard({ body }: { body: string }) {
 }
 
 function ProbCard({ body }: { body: string }) {
-  const primaryMatch = body.match(/\*\*Primary Scenario:\s*(\d+)%\*\*\s*[—–]\s*(\w+)/)
-  const secondaryMatch = body.match(/\*\*Secondary Scenario:\s*(\d+)%\*\*\s*[—–]\s*(\w+)/)
-  const confidenceMatch = body.match(/\*\*Confidence Level:\*\*\s*(\w+)/)
-  const invalidationMatch = body.match(/\*\*Key Invalidation Level:\*\*\s*([\$\d,\.–\s]+)/)
-
-  const primaryPct = primaryMatch ? parseInt(primaryMatch[1]) : null
-  const primaryBias = primaryMatch ? primaryMatch[2] : null
-  const secondaryPct = secondaryMatch ? parseInt(secondaryMatch[1]) : null
-  const secondaryBias = secondaryMatch ? secondaryMatch[2] : null
-  const confidence = confidenceMatch ? confidenceMatch[1].toUpperCase() : null
-  const invalidation = invalidationMatch ? invalidationMatch[1].trim() : null
+  const { primaryPct, primaryBias, secondaryPct, secondaryBias, confidence, invalidation } = parseProbability(body)
 
   const biasColor = (bias: string | null) => {
     if (bias === 'BULLISH') return 'var(--green)'
@@ -432,7 +355,8 @@ function ProseBody({ body }: { body: string }) {
   )
 }
 
-function AnalysisRenderer({ analysis }: { analysis: string }) {
+function AnalysisRenderer({ session }: { session: GoldSessionRecord }) {
+  const analysis = session.analysis
   const sections = useMemo(() => parseSections(analysis), [analysis])
 
   if (sections.length < 2) {
@@ -492,7 +416,7 @@ function AnalysisRenderer({ analysis }: { analysis: string }) {
       )}
 
       {/* Trade Idea */}
-      {tradeIdea && <TradeCard body={tradeIdea.body} />}
+      {tradeIdea && <TradeCard body={tradeIdea.body} structured={session.tradeIdea} />}
 
       {/* Probability */}
       {probability && <ProbCard body={probability.body} />}
@@ -656,7 +580,7 @@ export function GoldSessionTab() {
                   <div className={styles.statValue}>{session.confidence}<span className={styles.statDenom}>/10</span></div>
                 </div>
                 {(() => {
-                  const pir = parsePriceInRange(session.analysis)
+                  const pir = resolvePriceZone(session)
                   if (!pir) return null
                   const cls = pir.status === 'DISCOUNT' ? styles.pirDiscount
                     : pir.status === 'PREMIUM' ? styles.pirPremium
@@ -676,7 +600,7 @@ export function GoldSessionTab() {
             </div>
 
             {/* Structured analysis */}
-            <AnalysisRenderer analysis={session.analysis} />
+            <AnalysisRenderer session={session} />
           </div>
         )}
       </div>
