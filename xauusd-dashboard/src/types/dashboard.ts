@@ -159,10 +159,46 @@ export interface SessionInfo {
 
 // ── Gold-Session AI history ────────────────────────────────────────────
 
-export interface GoldSessionRecord {
+export type PriceZone = 'DISCOUNT' | 'PREMIUM' | 'EQUILIBRIUM' | 'OTE'
+
+export type KeyLevelKind =
+  | 'BSL' | 'SSL' | 'PDH' | 'PDL' | 'PWH' | 'PWL'
+  | 'ASIAN_HIGH' | 'ASIAN_LOW' | 'POC' | 'INVALIDATION' | 'DRAW' | 'OTHER'
+
+export interface KeyLevel {
+  price: number
+  kind:  KeyLevelKind
+  note?: string
+}
+
+export interface StructuredTradeIdea {
+  direction:  'LONG' | 'SHORT'
+  status:     'ACTIVE' | 'WAIT' | 'NO_TRADE'
+  entryLow?:  number
+  entryHigh?: number
+  stop?:      number
+  targets?:   number[]
+  rr?:        number
+  setupType?: string
+}
+
+// Optional structured fields shared by record + index (Phase 2). Absent on
+// pre-Phase-2 records — consumers fall back to regex-parsing `analysis`.
+export interface StructuredSessionFields {
+  priceAtAnalysis?:     number
+  drawOnLiquidity?:     number
+  invalidation?:        number
+  priceZone?:           PriceZone
+  equilibrium?:         number
+  keyLevels?:           KeyLevel[]
+  tradeIdea?:           StructuredTradeIdea | null
+  nextHighImpactEvent?: { event: string; timeIso: string } | null
+}
+
+export interface GoldSessionRecord extends StructuredSessionFields {
   timestamp:   string   // ISO
   date:        string   // YYYY-MM-DD
-  time:        string   // HH:MM (UTC)
+  time:        string   // HH:MM (UK local, carries BST/GMT)
   session:     string   // LONDON | NEW_YORK | OVERLAP | ASIAN
   bias:        string   // BULLISH | BEARISH | NEUTRAL
   biasScore:   number   // -5 to +5
@@ -181,6 +217,8 @@ export interface GoldSessionEntry {
   probability: number
   confidence:  number
   timestamp:   string
+  priceZone?:  PriceZone
+  tradeIdea?:  { direction: 'LONG' | 'SHORT'; status: 'ACTIVE' | 'WAIT' | 'NO_TRADE' } | null
 }
 
 export interface GoldSessionIndex {

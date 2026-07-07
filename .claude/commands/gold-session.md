@@ -264,9 +264,38 @@ After printing the full analysis to the chat, save it to the **Gold-Session AI**
   "bias": "BULLISH",
   "biasScore": 2,
   "probability": 65,
-  "confidence": 7
+  "confidence": 7,
+
+  "priceAtAnalysis": 4161.77,
+  "priceZone": "OTE",
+  "equilibrium": 4151.42,
+  "drawOnLiquidity": 4167.53,
+  "invalidation": 4150.00,
+  "keyLevels": [
+    { "price": 4186.36, "kind": "BSL", "note": "H1 buy-side liquidity" },
+    { "price": 4167.53, "kind": "DRAW", "note": "primary target" },
+    { "price": 4151.42, "kind": "POC", "note": "H1 equilibrium / POC" },
+    { "price": 4144.84, "kind": "ASIAN_LOW", "note": "swept" },
+    { "price": 4150.00, "kind": "INVALIDATION" }
+  ],
+  "tradeIdea": {
+    "direction": "LONG",
+    "status": "WAIT",
+    "entryLow": 4157.15,
+    "entryHigh": 4161.72,
+    "stop": 4150.00,
+    "targets": [4167.53, 4186.36],
+    "rr": 2.4,
+    "setupType": "OTE"
+  },
+  "nextHighImpactEvent": { "event": "US CPI", "timeIso": "2026-07-08T12:30:00Z" }
 }
 ```
+**The first five fields are required.** The rest are **optional structured fields** — populate
+them from the engine output / your analysis so the dashboard can render the Price-Zone pill,
+trade badge, and (in later phases) a liquidity map and R:R bar *without* re-parsing your prose.
+If you cannot determine a field, omit it (the UI falls back to parsing the analysis text).
+
 Field guide:
 | Field | How to derive it |
 |---|---|
@@ -275,6 +304,14 @@ Field guide:
 | `biasScore` | −5 to +5 integer: HIGH bullish = +4/+5, medium = +2/+3, neutral = 0, medium bearish = −2/−3, HIGH bearish = −4/−5 |
 | `probability` | Primary scenario percentage from your Probability Assessment (e.g. 65) |
 | `confidence` | Map Confidence Level: HIGH → 8, MEDIUM → 5, LOW → 3 |
+| `priceAtAnalysis` *(opt)* | The current mid price you analysed at (from the spot/engine `current_price`). |
+| `priceZone` *(opt)* | `DISCOUNT` / `PREMIUM` / `EQUILIBRIUM` / `OTE` — the H1 read from the engine's `h1.premium_discount.status` (the OTE zone wins if price sits inside it). |
+| `equilibrium` *(opt)* | `h1.premium_discount.equilibrium` — the 50% of the H1 dealing range. |
+| `drawOnLiquidity` *(opt)* | Your PRIMARY Draw on Liquidity level (the nearest high-strength pool in the bias direction). |
+| `invalidation` *(opt)* | The Key Invalidation Level price. |
+| `keyLevels` *(opt)* | Array of `{ price, kind, note? }`. `kind` ∈ `BSL SSL PDH PDL PWH PWL ASIAN_HIGH ASIAN_LOW POC INVALIDATION DRAW OTHER`. Source BSL/SSL from `h1.liquidity_pools`, ASIAN_HIGH/LOW from the Asian range, POC from `h1.volume_profile.poc`, plus one `DRAW` (= drawOnLiquidity) and one `INVALIDATION`. Include 4–8 of the most relevant levels. |
+| `tradeIdea` *(opt)* | `{ direction, status, entryLow?, entryHigh?, stop?, targets?, rr?, setupType? }`. `status` = `ACTIVE` (entry live now), `WAIT` (valid setup but outside trading window / awaiting trigger), or `NO_TRADE` (H1/M5 conflict or no setup). If your brief omits the Trade Idea section entirely, set `"tradeIdea": null`. |
+| `nextHighImpactEvent` *(opt)* | `{ event, timeIso }` for the nearest upcoming HIGH-impact calendar event, or `null` if none. |
 
 `/tmp/gold-session-analysis.txt`: the complete analysis output (everything from `# GOLD INTRADAY SESSION BRIEF` to the end of `[DISCLAIMER]`).
 
