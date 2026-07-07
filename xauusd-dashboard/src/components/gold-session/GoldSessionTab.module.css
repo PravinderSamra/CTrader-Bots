@@ -557,6 +557,32 @@
 .tradeBadge[data-variant="no-trade"] { background: var(--surface-2); color: var(--text-dim); }
 .tradeBadge[data-variant="watch"]    { background: var(--amber-dim); color: var(--amber); border-color: transparent; }
 
+/* R:R bar */
+.rrWrap {
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-2);
+}
+
+.rrSvg {
+  width: 100%;
+  height: auto;
+  max-width: 380px;
+  display: block;
+  overflow: visible;
+}
+
+.rrRisk   { fill: var(--red);   opacity: 0.55; }
+.rrReward { fill: var(--green); opacity: 0.55; }
+
+.rrStopMark   { stroke: var(--red);  stroke-width: 2; }
+.rrEntryMark  { stroke: var(--gold); stroke-width: 2; }
+.rrTargetMark { stroke: var(--green); stroke-width: 1.5; }
+
+.rrTick    { font-family: var(--mono); font-size: 9px; font-weight: 600; text-anchor: start; }
+.rrTickMid { font-family: var(--mono); font-size: 9px; font-weight: 700; text-anchor: middle; }
+.rrTickEnd { font-family: var(--mono); font-size: 9px; font-weight: 600; text-anchor: middle; }
+
 /* NO TRADE content */
 .noTradeContent {
   display: flex;
@@ -852,4 +878,53 @@
   color: var(--text-muted);
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .tab {
+    flex-direction: column;
+    overflow: visible;
+  }
+
+  /* Sidebar → horizontal scroll strip of session chips above the content. */
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    align-items: stretch;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 8px 12px;
+    gap: 6px;
+    scrollbar-width: none;
+  }
+  .sidebar::-webkit-scrollbar { display: none; }
+  .sidebarTitle,
+  .dateHeader { display: none; }
+  .dateGroup { display: flex; gap: 6px; margin-bottom: 0; }
+  .entry {
+    width: auto;
+    white-space: nowrap;
+    border-left: none;
+    border-bottom: 2px solid transparent;
+    border-radius: var(--radius);
+    background: var(--surface-2);
+    padding: 6px 10px;
+  }
+  .entryActive { border-left: none; border-bottom-color: var(--gold); }
+  .trackCard { display: none; }   /* per-entry glyphs still convey outcomes */
+
+  .view { padding: 16px 14px 40px; }
+  .sessionView { max-width: none; }
+  .primaryGrid { grid-template-columns: 1fr; }
+
+  .gaugeRow { flex-direction: column; align-items: stretch; gap: 16px; }
+  .statPills { justify-content: space-between; }
+  .card, .tradeCard { padding: 16px 16px; }
+  .kvLabel { width: 44%; }
 }

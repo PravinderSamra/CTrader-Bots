@@ -1,4 +1,5 @@
 import type { CTraderPrices } from '../../types/dashboard'
+import { TileSpark } from '../common/TileSpark'
 import styles from './Tile.module.css'
 
 function fmt(v: number, dp = 3): string {
@@ -34,6 +35,7 @@ export function DollarTile({ prices }: Props) {
         <div className={`${styles.change} ${cls(dxy.changePct)}`}>
           {isLive && dxy.changePct !== 0 ? `${arrow(dxy.changePct)} ${dxy.changePct >= 0 ? '+' : ''}${fmt(dxy.changePct, 2)}%` : ''}
         </div>
+        <TileSpark metric="dxy" label="DXY 7-day trend" />
       </div>
 
       <hr className="tile-divider" />

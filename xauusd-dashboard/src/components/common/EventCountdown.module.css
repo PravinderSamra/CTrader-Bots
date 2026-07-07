@@ -1,0 +1,43 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  font-size: 10px;
+  white-space: nowrap;
+  max-width: 220px;
+}
+
+.soon {
+  border-color: rgba(212, 144, 56, 0.4);
+  background: var(--amber-dim);
+}
+
+.icon {
+  font-size: 8px;
+  color: var(--amber);
+  flex-shrink: 0;
+}
+
+.name {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.soon .name { color: var(--amber); }
+
+.time {
+  font-family: var(--mono);
+  font-weight: 600;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.soon .time { color: var(--amber); }

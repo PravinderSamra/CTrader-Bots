@@ -63,7 +63,7 @@ export function App() {
 
   return (
     <div className={styles.app}>
-      <Header prices={prices} onRefresh={handleRefresh} lastRefresh={lastRefresh} openPosition={openPosition} snapshotGeneratedAt={snapshot?.generatedAt ?? null} />
+      <Header prices={prices} onRefresh={handleRefresh} lastRefresh={lastRefresh} openPosition={openPosition} snapshotGeneratedAt={snapshot?.generatedAt ?? null} calendar={calendar} />
 
       <SessionTimeline />
 
