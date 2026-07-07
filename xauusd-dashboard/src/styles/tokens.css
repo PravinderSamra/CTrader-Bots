@@ -46,11 +46,18 @@
   --radius-sm: 4px;
   --radius:    6px;
   --radius-lg: 10px;
+  --radius-xl: 14px;
 
   /* ── Depth ── */
   --shadow-sm:   0 1px 3px rgba(0, 0, 0, 0.35);
-  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.4);
-  --shadow-lg:   0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-lg:   0 8px 32px rgba(0, 0, 0, 0.6);
+  --shadow-gold: 0 0 0 1px rgba(201, 149, 42, 0.20), 0 4px 16px rgba(0, 0, 0, 0.5);
+
+  /* ── Glass / glow ── */
+  --glass-border: rgba(255, 255, 255, 0.09);
+  --glass-top:    rgba(255, 255, 255, 0.05);
+  --card-glow:    rgba(201, 149, 42, 0.08);
 }
 
 /* ── Light mode (warm ivory — parchment) ── */
