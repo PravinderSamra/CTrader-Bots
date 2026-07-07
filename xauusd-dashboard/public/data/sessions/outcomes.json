@@ -1,4 +1,96 @@
 {
-  "updatedAt": "",
-  "outcomes": []
+  "updatedAt": "2026-07-07T17:52:39.976Z",
+  "outcomes": [
+    {
+      "filename": "2026-07-01/14-40.json",
+      "date": "2026-07-01",
+      "time": "15:40 BST",
+      "session": "LONDON",
+      "bias": "BULLISH",
+      "probability": 70,
+      "confidence": 5,
+      "result": "NO_CALL",
+      "resolvedAt": "2026-07-07T17:52:39.976Z",
+      "maxFavourable": null,
+      "maxAdverse": null
+    },
+    {
+      "filename": "2026-06-30/21-48.json",
+      "date": "2026-06-30",
+      "time": "21:48",
+      "session": "NEW_YORK",
+      "bias": "BEARISH",
+      "probability": 65,
+      "confidence": 5,
+      "result": "NO_CALL",
+      "resolvedAt": "2026-07-07T17:52:39.976Z",
+      "maxFavourable": null,
+      "maxAdverse": null
+    },
+    {
+      "filename": "2026-07-06/11-55.json",
+      "date": "2026-07-06",
+      "time": "12:55 BST",
+      "session": "LONDON",
+      "bias": "BEARISH",
+      "probability": 58,
+      "confidence": 3,
+      "result": "NO_CALL",
+      "resolvedAt": "2026-07-07T17:52:39.975Z",
+      "maxFavourable": null,
+      "maxAdverse": null
+    },
+    {
+      "filename": "2026-07-06/08-07.json",
+      "date": "2026-07-06",
+      "time": "09:07 BST",
+      "session": "LONDON",
+      "bias": "BEARISH",
+      "probability": 65,
+      "confidence": 3,
+      "result": "NO_CALL",
+      "resolvedAt": "2026-07-07T17:52:39.975Z",
+      "maxFavourable": null,
+      "maxAdverse": null
+    },
+    {
+      "filename": "2026-07-07/08-03.json",
+      "date": "2026-07-07",
+      "time": "09:03 BST",
+      "session": "LONDON",
+      "bias": "NEUTRAL",
+      "probability": 45,
+      "confidence": 3,
+      "result": "NO_CALL",
+      "resolvedAt": "2026-07-07T17:52:39.974Z",
+      "maxFavourable": null,
+      "maxAdverse": null
+    },
+    {
+      "filename": "2026-07-06/20-19.json",
+      "date": "2026-07-06",
+      "time": "21:19 BST",
+      "session": "ASIAN",
+      "bias": "BULLISH",
+      "probability": 72,
+      "confidence": 5,
+      "result": "NO_CALL",
+      "resolvedAt": "2026-07-07T17:52:39.974Z",
+      "maxFavourable": null,
+      "maxAdverse": null
+    },
+    {
+      "filename": "2026-07-07/12-41.json",
+      "date": "2026-07-07",
+      "time": "13:41 BST",
+      "session": "NEW_YORK",
+      "bias": "BEARISH",
+      "probability": 55,
+      "confidence": 3,
+      "result": "NO_CALL",
+      "resolvedAt": "2026-07-07T17:52:39.973Z",
+      "maxFavourable": null,
+      "maxAdverse": null
+    }
+  ]
 }

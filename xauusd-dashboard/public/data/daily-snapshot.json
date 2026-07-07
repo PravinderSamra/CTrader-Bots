@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-07T15:40:42.866Z",
+  "generatedAt": "2026-07-07T17:52:39.259Z",
   "yields": {
     "US10Y": 4.49,
     "US2Y": 4.14,
@@ -69,31 +69,25 @@
       "headline": "Trump says he will lift Turkey sanctions, decide on selling F-35s - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-07T13:42:45.000Z",
-      "hoursAgo": 2
+      "hoursAgo": 4.2
     },
     {
-      "headline": "Trump says U.S. will lift sanctions on Turkey, possibly sell F-35 fighter jets - Reuters",
+      "headline": "Trump says U.S. will lift sanctions on Turkey, heaps praise on Erdogan - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-07T03:35:00.000Z",
-      "hoursAgo": 12.1
+      "hoursAgo": 14.3
     },
     {
       "headline": "Gold slips as stronger dollar weighs; focus on Fed minutes and Gulf tensions - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-07T02:57:00.000Z",
-      "hoursAgo": 12.7
+      "hoursAgo": 14.9
     },
     {
       "headline": "Israeli interest rates could fall to at least 3%, central bank governor says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-06T17:56:54.000Z",
-      "hoursAgo": 21.7
-    },
-    {
-      "headline": "ECB's Schnabel says Iran shock is not over - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-07-06T17:23:00.000Z",
-      "hoursAgo": 22.3
+      "hoursAgo": 23.9
     }
   ],
   "briefing": null
