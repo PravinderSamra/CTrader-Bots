@@ -9,8 +9,10 @@
  * token and skip.
  */
 
-export const CTRADER_URL   = process.env.CTRADER_MCP_URL   || 'https://mcp.ctrader.com/trading/mcp'
-export const CTRADER_TOKEN = process.env.CTRADER_MCP_TOKEN || ''
+// .trim() both — a trailing newline in the GitHub secret would corrupt the URL
+// or make the Authorization Bearer header invalid.
+export const CTRADER_URL   = (process.env.CTRADER_MCP_URL   || 'https://mcp.ctrader.com/trading/mcp').trim()
+export const CTRADER_TOKEN = (process.env.CTRADER_MCP_TOKEN || '').trim()
 
 // All cTrader _SB spread-bet instruments use 10^5 pipettes (verified empirically).
 export const PIP_DIGITS: Record<string, number> = {

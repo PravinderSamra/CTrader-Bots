@@ -65,10 +65,16 @@ jobs:
         run: |
           git config user.name  "xauusd-data-bot"
           git config user.email "xauusd-data-bot@noreply.github.com"
-          git add xauusd-dashboard/public/data/daily-snapshot.json xauusd-dashboard/public/data/sessions/
+          # Stage the WHOLE data dir — the fetch/resolve scripts also write
+          # history.json and outcomes.json. Staging only snapshot+sessions left
+          # history.json unstaged, which made `git pull --rebase` abort with
+          # "cannot pull with rebase: You have unstaged changes" and silently
+          # skipped every deploy (observed 2026-07-07). --autostash is a belt-
+          # and-braces guard against any other stray working-tree change.
+          git add xauusd-dashboard/public/data/
           if ! git diff --staged --quiet; then
             git commit -m "chore: XAUUSD data snapshot $(date -u +%Y-%m-%dT%H:%M)Z"
-            git pull --rebase origin main
+            git pull --rebase --autostash origin main
             git push origin main
           else
             echo "No data changes to commit"

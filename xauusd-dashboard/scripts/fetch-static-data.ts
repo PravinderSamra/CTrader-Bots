@@ -830,7 +830,10 @@ async function fetchNewsItems(): Promise<NewsItem[]> {
 
 // ── Anthropic daily briefing ────────────────────────────────────────────────
 
-const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY ?? ''
+// .trim() defends against a trailing newline in the GitHub secret — an
+// untrimmed \n makes Headers.append throw "invalid header value" and silently
+// nulls every briefing (observed 2026-07-07).
+const ANTHROPIC_KEY = (process.env.ANTHROPIC_API_KEY ?? '').trim()
 const BRIEFING_MODEL = 'claude-sonnet-4-6'
 
 const BRIEFING_SYSTEM_PROMPT = `You are a senior gold trading analyst and market intelligence advisor.
