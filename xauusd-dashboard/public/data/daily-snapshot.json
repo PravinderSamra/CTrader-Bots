@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-07T09:25:27.042Z",
+  "generatedAt": "2026-07-07T12:22:48.558Z",
   "yields": {
     "US10Y": 4.49,
     "US2Y": 4.14,
@@ -66,10 +66,22 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Gold slips as stronger dollar weighs; focus on Fed minutes and Gulf tensions - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-07-07T02:57:00.000Z",
+      "hoursAgo": 9.4
+    },
+    {
+      "headline": "Israeli interest rates could fall to at least 3%, central bank governor says - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-07-06T17:56:54.000Z",
+      "hoursAgo": 18.4
+    },
+    {
       "headline": "ECB's Schnabel says Iran shock is not over - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-06T17:23:00.000Z",
-      "hoursAgo": 16
+      "hoursAgo": 19
     }
   ],
   "briefing": null
