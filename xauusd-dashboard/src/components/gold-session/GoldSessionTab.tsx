@@ -615,7 +615,10 @@ export function GoldSessionTab() {
             </div>
 
             {/* Gauge + stats */}
-            <div className={styles.gaugeRow}>
+            <div
+              className={styles.gaugeRow}
+              data-bias={session.bias}
+            >
               <div className={styles.gaugeWrap}>
                 <BiasGauge
                   score={session.biasScore}

@@ -10,6 +10,18 @@
   position: sticky;
   top: 0;
   z-index: 100;
+  /* Gold top-accent gradient */
+  border-top: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: -2px; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--gold) 30%, var(--gold-light) 50%, var(--gold) 70%, transparent 100%);
+  pointer-events: none;
 }
 
 .left {

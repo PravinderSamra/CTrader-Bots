@@ -202,10 +202,16 @@
   gap: 32px;
   padding: 18px 22px;
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border: 1px solid var(--glass-border);
+  border-top: 3px solid var(--text-dim);
+  border-radius: var(--radius-xl);
   box-shadow: var(--shadow-sm);
+  transition: border-top-color 0.4s ease;
 }
+
+.gaugeRow[data-bias="BULLISH"] { border-top-color: var(--green); }
+.gaugeRow[data-bias="BEARISH"] { border-top-color: var(--red);   }
+.gaugeRow[data-bias="NEUTRAL"] { border-top-color: var(--amber); }
 
 .gaugeWrap {
   flex: 1;
@@ -295,10 +301,17 @@
 
 .card {
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border: 1px solid var(--glass-border);
+  border-top: 1px solid var(--glass-top);
+  border-radius: var(--radius-xl);
   padding: 20px 22px;
   box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-card);
+  border-color: rgba(201, 149, 42, 0.14);
 }
 
 .cardTitle {
@@ -420,11 +433,16 @@
 
 .tradeCard {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1px solid var(--glass-border);
   border-left: 3px solid var(--text-dim);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   padding: 20px 22px;
   box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease;
+}
+
+.tradeCard:hover {
+  box-shadow: var(--shadow-card);
 }
 
 .tradeCard[data-variant="long"]     { border-left-color: var(--green); }
@@ -654,10 +672,16 @@
 
 .collapsible {
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border: 1px solid var(--glass-border);
+  border-top: 1px solid var(--glass-top);
+  border-radius: var(--radius-xl);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease;
+}
+
+.collapsible:hover {
+  box-shadow: var(--shadow-card);
 }
 
 .collapsibleSummary {
