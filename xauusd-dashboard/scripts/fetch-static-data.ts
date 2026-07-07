@@ -12,6 +12,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import * as https from 'https'
 import { fileURLToPath } from 'url'
+import { mcpFetch, CTRADER_URL, CTRADER_TOKEN, PIP_DIGITS, KNOWN_SYMBOL_IDS } from './lib/ctrader'
 
 // ESM shim — tsx runs as ESM on GitHub Actions runners
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -549,74 +550,8 @@ async function fetchCOT(existingSnapshot: Partial<Snapshot>): Promise<Snapshot['
 }
 
 // ── CTrader MCP prices ─────────────────────────────────────────────────────
-
-const CTRADER_URL   = process.env.CTRADER_MCP_URL   || 'https://mcp.ctrader.com/trading/mcp'
-const CTRADER_TOKEN = process.env.CTRADER_MCP_TOKEN || ''
-
-// All CTrader _SB spread-bet instruments use 10^5 pipettes (verified empirically)
-const PIP_DIGITS: Record<string, number> = {
-  XAUUSD: 5, XAGUSD: 5,
-  EURUSD: 5, USDJPY: 5, USDCHF: 5, USDCNH: 5,
-  GBPUSD: 5, USDCAD: 5, USDSEK: 5,
-  US500: 5, GER40: 5, UK100: 5,
-}
-
-// Broker-assigned symbolIds for the 12 instruments this script needs, captured from a
-// full get_symbols dump (2026-07-06). These are stable/static per broker account — a
-// venue essentially never renumbers its symbol IDs. We use them directly instead of
-// calling get_symbols on every run because that endpoint returns the ENTIRE symbol
-// universe (~57k lines / ~1.5MB for this account), which has been observed to fail to
-// parse over the MCP SSE transport (see mcpFetch's multi-line "data:" handling below) —
-// silently yielding a null price snapshot for a run rather than an explicit error.
-// If CTrader ever changes an ID (e.g. account/broker migration), fetchCTraderPrices
-// falls back to a live get_symbols call for just the missing entries.
-const KNOWN_SYMBOL_IDS: Record<string, number> = {
-  XAUUSD: 41, XAGUSD: 42,
-  EURUSD: 1, USDJPY: 4, USDCHF: 6, USDCNH: 60,
-  GBPUSD: 2, USDCAD: 8, USDSEK: 29,
-  US500: 115, GER40: 110, UK100: 113,
-}
-
-async function mcpFetch(body: object, sessionId?: string): Promise<{ data: unknown; sessionId: string | null }> {
-  const headers: Record<string, string> = {
-    Authorization: `Bearer ${CTRADER_TOKEN}`,
-    'Content-Type': 'application/json',
-    Accept: 'application/json, text/event-stream',
-  }
-  if (sessionId) headers['Mcp-Session-Id'] = sessionId
-
-  const ctrl = new AbortController()
-  const timer = setTimeout(() => ctrl.abort(), 20000)
-  try {
-    const res = await fetch(CTRADER_URL, { method: 'POST', headers, body: JSON.stringify(body), signal: ctrl.signal })
-    const newSid = res.headers.get('Mcp-Session-Id') ?? res.headers.get('mcp-session-id') ?? sessionId ?? null
-    const text = await res.text()
-
-    if (!res.ok) {
-      console.error(`CTrader MCP HTTP ${res.status}: ${text.slice(0, 200)}`)
-      return { data: null, sessionId: newSid }
-    }
-
-    // SSE events are separated by a blank line, and a single event's payload can span
-    // multiple physical "data:" lines for large results (e.g. get_symbols' ~1.5MB dump).
-    // Rejoin all data lines within an event before parsing — trying only the first
-    // physical "data:" line (as this used to) silently fails on any multi-line payload.
-    for (const event of text.split(/\r?\n\r?\n/)) {
-      const dataLines = event.split(/\r?\n/).filter(l => l.startsWith('data:')).map(l => l.replace(/^data:\s?/, ''))
-      if (dataLines.length === 0) continue
-      try { return { data: JSON.parse(dataLines.join('\n')), sessionId: newSid } } catch { /* try next event */ }
-    }
-    try { return { data: JSON.parse(text), sessionId: newSid } } catch { /* ignore */ }
-    // An empty body is the expected response to a JSON-RPC *notification* (e.g.
-    // notifications/initialized) — only warn when there was actual unparseable content.
-    if (text.length > 0) {
-      console.error(`CTrader MCP: failed to parse response (${text.length} chars): ${text.slice(0, 200)}${text.length > 200 ? '…' : ''}`)
-    }
-    return { data: null, sessionId: newSid }
-  } finally {
-    clearTimeout(timer)
-  }
-}
+// Low-level transport (mcpFetch), auth constants, PIP_DIGITS and KNOWN_SYMBOL_IDS
+// now live in scripts/lib/ctrader.ts and are shared with resolve-gold-sessions.ts.
 
 interface McpBar { high?: number; low?: number; open?: number }
 

@@ -206,6 +206,7 @@ export interface GoldSessionRecord extends StructuredSessionFields {
   probability: number   // 0-100 (primary scenario)
   confidence:  number   // 1-10
   analysis:    string   // full plain-text analysis output
+  outcome?:    SessionOutcome   // written back by the resolver once scored
 }
 
 export interface GoldSessionEntry {
@@ -225,4 +226,39 @@ export interface GoldSessionEntry {
 export interface GoldSessionIndex {
   updatedAt: string
   sessions:  GoldSessionEntry[]
+}
+
+// ── Outcome tracking / calibration (Phase 4) ───────────────────────────────
+
+export type SessionResult =
+  | 'WIN' | 'LOSS'
+  | 'EXPIRED_FAVOURABLE' | 'EXPIRED_ADVERSE' | 'EXPIRED_FLAT'
+  | 'NO_CALL'
+
+export interface SessionOutcome {
+  result:        SessionResult
+  resolvedAt:    string
+  maxFavourable: number | null
+  maxAdverse:    number | null
+  barsSeen:      number
+}
+
+export interface OutcomeRow {
+  filename:      string
+  date:          string
+  time:          string
+  session:       string
+  bias:          string
+  probability:   number
+  confidence:    number
+  priceZone?:    string
+  result:        SessionResult
+  resolvedAt:    string
+  maxFavourable: number | null
+  maxAdverse:    number | null
+}
+
+export interface OutcomesIndex {
+  updatedAt: string
+  outcomes:  OutcomeRow[]
 }

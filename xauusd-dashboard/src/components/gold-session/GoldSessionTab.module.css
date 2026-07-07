@@ -102,6 +102,80 @@
 .biasDown { font-family: var(--mono); font-size: 11px; color: var(--red);   }
 .biasFlat { font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
 
+/* ── Outcome glyphs ── */
+.outWin, .outLoss, .outExpired {
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+  width: 12px;
+  text-align: center;
+}
+.outWin     { color: var(--green); }
+.outLoss    { color: var(--red);   }
+.outExpired { color: var(--text-dim); font-weight: 400; }
+
+/* ── Track Record card (sidebar footer) ── */
+.trackCard {
+  margin: 16px 12px 0;
+  padding: 12px 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--glass-border);
+  border-top: 2px solid var(--gold);
+  border-radius: var(--radius-lg);
+}
+
+.trackTitle {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.trackHeadline {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.trackCalled { color: var(--text-muted); }
+.trackDot    { color: var(--text-dim); }
+.trackHitGood { color: var(--green); }
+.trackHitBad  { color: var(--red);   }
+
+.trackEdge {
+  font-size: 10px;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-top: 4px;
+}
+
+.trackBias {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-2);
+}
+
+.trackBiasRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.trackBiasLabel { color: var(--text-muted); flex: 1; }
+.trackBiasVal   { font-family: var(--mono); font-weight: 600; color: var(--text); }
+.trackBiasN     { font-family: var(--mono); font-size: 10px; color: var(--text-dim); }
+
 /* ═══════════════════════════════════════════
    MAIN VIEW
    ═══════════════════════════════════════════ */

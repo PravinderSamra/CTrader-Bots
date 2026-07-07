@@ -51,11 +51,21 @@ jobs:
           FINNHUB_API_KEY:          ${{ secrets.FINNHUB_API_KEY }}
           ANTHROPIC_API_KEY:        ${{ secrets.ANTHROPIC_API_KEY }}
 
+      - name: Resolve gold-session outcomes
+        # Scores past /gold-session predictions against realised XAUUSD H1 price and
+        # writes outcomes back into the session files + outcomes.json (the calibration
+        # archive). No-op when the cTrader token is unset. Never fails the run.
+        continue-on-error: true
+        run: cd xauusd-dashboard && npx tsx scripts/resolve-gold-sessions.ts
+        env:
+          CTRADER_MCP_URL:          ${{ secrets.VITE_CTRADER_MCP_URL }}
+          CTRADER_MCP_TOKEN:        ${{ secrets.VITE_CTRADER_MCP_TOKEN }}
+
       - name: Commit updated snapshot
         run: |
           git config user.name  "xauusd-data-bot"
           git config user.email "xauusd-data-bot@noreply.github.com"
-          git add xauusd-dashboard/public/data/daily-snapshot.json
+          git add xauusd-dashboard/public/data/daily-snapshot.json xauusd-dashboard/public/data/sessions/
           if ! git diff --staged --quiet; then
             git commit -m "chore: XAUUSD data snapshot $(date -u +%Y-%m-%dT%H:%M)Z"
             git pull --rebase origin main

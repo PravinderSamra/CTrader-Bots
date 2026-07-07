@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
-import { useGoldSessionIndex, useGoldSession } from '../../hooks/useGoldSessions'
+import { useGoldSessionIndex, useGoldSession, useSessionOutcomes } from '../../hooks/useGoldSessions'
 import { BiasGauge } from '../briefing/BiasGauge'
-import type { GoldSessionEntry, GoldSessionRecord, StructuredTradeIdea } from '../../types/dashboard'
+import type { GoldSessionEntry, GoldSessionRecord, StructuredTradeIdea, OutcomeRow, SessionResult } from '../../types/dashboard'
 import {
   parsePriceInRange, parseSections, parseKVRows, parseLevelLines, valueColor, parseProbability,
   type PriceInRange, type KVRow,
@@ -32,6 +32,88 @@ function biasArrow(bias: string) {
   if (bias === 'BULLISH') return <span className={styles.biasUp}>▲</span>
   if (bias === 'BEARISH') return <span className={styles.biasDown}>▼</span>
   return <span className={styles.biasFlat}>–</span>
+}
+
+// ── Outcome glyph + track-record stats ───────────────────────────────────────
+
+function OutcomeGlyph({ result }: { result?: SessionResult }) {
+  if (!result || result === 'NO_CALL') return null
+  if (result === 'WIN')  return <span className={styles.outWin} title="Target hit before invalidation">✓</span>
+  if (result === 'LOSS') return <span className={styles.outLoss} title="Invalidation hit first">✗</span>
+  return <span className={styles.outExpired} title={`Expired: ${result.replace('EXPIRED_', '').toLowerCase()}`}>○</span>
+}
+
+interface TrackStats {
+  decided: number
+  wins: number
+  winRate: number | null
+  avgProbability: number | null
+  byBias: { bias: string; decided: number; winRate: number }[]
+}
+
+function computeTrackStats(outcomes: OutcomeRow[]): TrackStats {
+  // Most recent 30 scored (exclude NO_CALL); win rate over WIN/LOSS only.
+  const scored = outcomes
+    .filter(o => o.result !== 'NO_CALL')
+    .sort((a, b) => b.resolvedAt.localeCompare(a.resolvedAt))
+    .slice(0, 30)
+
+  const decidedRows = scored.filter(o => o.result === 'WIN' || o.result === 'LOSS')
+  const wins = decidedRows.filter(o => o.result === 'WIN').length
+  const decided = decidedRows.length
+  const winRate = decided > 0 ? Math.round((wins / decided) * 100) : null
+  const avgProbability = decided > 0
+    ? Math.round(decidedRows.reduce((s, o) => s + o.probability, 0) / decided)
+    : null
+
+  const byBias = (['BULLISH', 'BEARISH'] as const).map(bias => {
+    const rows = decidedRows.filter(o => o.bias === bias)
+    const w = rows.filter(o => o.result === 'WIN').length
+    return { bias, decided: rows.length, winRate: rows.length > 0 ? Math.round((w / rows.length) * 100) : 0 }
+  }).filter(b => b.decided > 0)
+
+  return { decided, wins, winRate, avgProbability, byBias }
+}
+
+function TrackRecord({ outcomes }: { outcomes: OutcomeRow[] }) {
+  const stats = computeTrackStats(outcomes)
+  if (stats.decided === 0) return null
+
+  const edge = stats.winRate != null && stats.avgProbability != null
+    ? stats.winRate - stats.avgProbability
+    : null
+
+  return (
+    <div className={styles.trackCard}>
+      <div className={styles.trackTitle}>Track Record · last {stats.decided}</div>
+      <div className={styles.trackHeadline}>
+        <span className={styles.trackCalled}>Called {stats.avgProbability}%</span>
+        <span className={styles.trackDot}>·</span>
+        <span className={stats.winRate! >= 50 ? styles.trackHitGood : styles.trackHitBad}>
+          Hit {stats.winRate}%
+        </span>
+      </div>
+      {edge != null && (
+        <div className={styles.trackEdge}>
+          {edge >= 0 ? 'Calibrated / beating' : 'Below'} its own probability by {Math.abs(edge)}pts
+        </div>
+      )}
+      {stats.byBias.length > 0 && (
+        <div className={styles.trackBias}>
+          {stats.byBias.map(b => (
+            <div key={b.bias} className={styles.trackBiasRow}>
+              <span className={b.bias === 'BULLISH' ? styles.biasUp : styles.biasDown}>
+                {b.bias === 'BULLISH' ? '▲' : '▼'}
+              </span>
+              <span className={styles.trackBiasLabel}>{b.bias === 'BULLISH' ? 'Long' : 'Short'}</span>
+              <span className={styles.trackBiasVal}>{b.winRate}%</span>
+              <span className={styles.trackBiasN}>({b.decided})</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
 }
 
 function groupByDate(sessions: GoldSessionEntry[]): [string, GoldSessionEntry[]][] {
@@ -475,6 +557,7 @@ function AnalysisRenderer({ session }: { session: GoldSessionRecord }) {
 
 export function GoldSessionTab() {
   const { index, loading: indexLoading } = useGoldSessionIndex()
+  const { byFilename: outcomeByFile, outcomes } = useSessionOutcomes()
   const [selectedFilename, setSelectedFilename] = useState<string | null>(null)
 
   const sessions   = index?.sessions ?? []
@@ -512,10 +595,13 @@ export function GoldSessionTab() {
                   {s.session.replace('_', ' ')}
                 </span>
                 {biasArrow(s.bias)}
+                <OutcomeGlyph result={outcomeByFile.get(s.filename)?.result} />
               </button>
             ))}
           </div>
         ))}
+
+        <TrackRecord outcomes={outcomes} />
       </aside>
 
       {/* ── Main view ── */}
