@@ -431,12 +431,21 @@ function LevelsCard({ body }: { body: string }) {
     <div className={styles.card}>
       <CardTitle>Key Levels to Watch</CardTitle>
       <div className={styles.levelsGrid}>
-        {levels.map((lvl, i) => (
-          <div key={i} className={styles.levelRow}>
-            <code className={styles.levelPrice}>{lvl.price}</code>
-            {lvl.desc && <span className={styles.levelDesc}>{lvl.desc}</span>}
-          </div>
-        ))}
+        {levels.map((lvl, i) => {
+          // Some KEY LEVELS lines are bold sub-headers ("- **Short zone:** …")
+          // rather than "price — desc"; render those as prose so the ** becomes
+          // bold instead of showing literally.
+          const isProse = lvl.desc === '' && /\*\*/.test(lvl.price)
+          if (isProse) {
+            return <p key={i} className={styles.levelProse}><Inline text={lvl.price} /></p>
+          }
+          return (
+            <div key={i} className={styles.levelRow}>
+              <code className={styles.levelPrice}><Inline text={lvl.price} /></code>
+              {lvl.desc && <span className={styles.levelDesc}><Inline text={lvl.desc} /></span>}
+            </div>
+          )
+        })}
       </div>
     </div>
   )

@@ -767,6 +767,16 @@
   line-height: 1.5;
 }
 
+.levelProse {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border-2);
+}
+.levelProse:last-child { border-bottom: none; }
+.levelProse strong { color: var(--text); font-weight: 600; }
+
 /* ═══════════════════════════════════════════
    COLLAPSIBLES
    ═══════════════════════════════════════════ */
