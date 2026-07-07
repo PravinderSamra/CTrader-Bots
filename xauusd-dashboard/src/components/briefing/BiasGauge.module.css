@@ -5,7 +5,10 @@
 
 .svg {
   width: 100%;
+  max-width: 300px;
   height: auto;
+  display: block;
+  margin-inline: auto;
   overflow: visible;
 }
 

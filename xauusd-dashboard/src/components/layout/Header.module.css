@@ -73,6 +73,14 @@
 .live    { background: var(--green-dim); color: var(--green); }
 .offline { background: var(--red-dim);   color: var(--red); }
 
+.snapshotAge {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  align-self: center;
+  letter-spacing: 0.02em;
+}
+
 .right {
   display: flex;
   flex-direction: column;

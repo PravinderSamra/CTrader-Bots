@@ -622,7 +622,7 @@ export function GoldSessionTab() {
                 {session.session.replace('_', ' ')}
               </span>
               <span className={styles.viewDate}>{dateLabel(session.date)}</span>
-              <span className={styles.viewTime}>{session.time} UTC</span>
+              <span className={styles.viewTime}>{session.time}</span>
             </div>
 
             {/* Gauge + stats */}

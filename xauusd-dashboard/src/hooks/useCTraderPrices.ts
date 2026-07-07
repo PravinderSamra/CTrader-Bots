@@ -141,7 +141,7 @@ function makePrice(spot: SpotEntry, openRaw: number | undefined, symbol: string)
 function emptyPrices(status: CTraderPrices['status']): CTraderPrices {
   const z: PricePoint = { price: 0, changeDay: 0, changePct: 0 }
   return {
-    XAUUSD: z, XAGUSD: z, goldSilverRatio: 0,
+    XAUUSD: z, XAUUSD_spread: null, XAGUSD: z, goldSilverRatio: 0,
     DXY: z, EURUSD: 0, USDJPY: 0, USDCHF: 0, USDCNH: 0,
     GBPUSD: 0, USDCAD: 0, USDSEK: 0,
     US500: z, GER40: z, UK100: z,
@@ -183,6 +183,7 @@ export function pricesFromSnapshot(sp: SnapshotPrices): CTraderPrices {
   const dxyPrice = parseFloat(computeDXY(eur, jpy, gbp, cad, sek, chf).toFixed(2))
   return {
     XAUUSD: pt(sp.XAUUSD),
+    XAUUSD_spread: null,
     XAGUSD: pt(sp.XAGUSD),
     goldSilverRatio: sp.goldSilverRatio ?? 0,
     DXY: pt(dxyPrice),
@@ -239,13 +240,13 @@ export function useCTraderPrices(): CTraderPrices {
       const spotMap: Record<number, { bid?: number; ask?: number }> = {}
       for (const s of spots) spotMap[s.symbolId] = s
 
-      // Today's open — fetch D_1 bars for each
+      // Today's open — fetch D_1 bars for all symbols in parallel (was serial: 12 round-trips).
       const todayOpen: Record<string, number> = {}
       const now = new Date()
       const from = new Date(now.getTime() - 24 * 3600 * 1000)
-      for (const sym of SYMBOLS) {
+      await Promise.all(SYMBOLS.map(async sym => {
         const symId = getSymbolId(sym, smap)
-        if (!symId) continue
+        if (!symId) return
         const barsRaw = await callTool('get_trendbars', {
           symbolId: symId, period: 'D_1',
           fromTimestamp: from.toISOString(),
@@ -254,7 +255,7 @@ export function useCTraderPrices(): CTraderPrices {
         const bars = (barsRaw as { trendbars?: Bar[]; bars?: Bar[] })?.trendbars
           ?? (barsRaw as { trendbars?: Bar[]; bars?: Bar[] })?.bars ?? []
         if (bars.length > 0) todayOpen[sym] = bars[bars.length - 1].open ?? 0
-      }
+      }))
 
       // ADR from 15 daily bars for XAUUSD
       const xauId = getSymbolId('XAUUSD', smap)
@@ -280,6 +281,11 @@ export function useCTraderPrices(): CTraderPrices {
 
       const xau = makePrice(getSpot('XAUUSD'), todayOpen['XAUUSD'], 'XAUUSD')
       const xag = makePrice(getSpot('XAGUSD'), todayOpen['XAGUSD'], 'XAGUSD')
+
+      const xauSpot = getSpot('XAUUSD')
+      const xauSpread = xauSpot.bid != null && xauSpot.ask != null
+        ? rawToDisplay(xauSpot.ask, 'XAUUSD') - rawToDisplay(xauSpot.bid, 'XAUUSD')
+        : null
 
       const rawEUR = getSpot('EURUSD')
       const eur = rawEUR.bid != null ? rawToDisplay((rawEUR.bid + (rawEUR.ask ?? rawEUR.bid)) / 2, 'EURUSD') : 0
@@ -314,6 +320,7 @@ export function useCTraderPrices(): CTraderPrices {
 
       setPrices({
         XAUUSD: xau,
+        XAUUSD_spread: xauSpread,
         XAGUSD: xag,
         goldSilverRatio: xag.price > 0 ? Math.round((xau.price / xag.price) * 10) / 10 : 0,
         DXY: dxy,

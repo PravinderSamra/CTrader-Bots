@@ -10,6 +10,7 @@ export interface PricePoint {
 
 export interface CTraderPrices {
   XAUUSD: PricePoint
+  XAUUSD_spread: number | null   // ask − bid in display units; null when unavailable (snapshot fallback)
   XAGUSD: PricePoint
   goldSilverRatio: number
   DXY: PricePoint
