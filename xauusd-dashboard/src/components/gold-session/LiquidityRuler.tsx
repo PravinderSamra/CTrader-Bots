@@ -22,6 +22,7 @@ interface Placed {
   color: string
   dashed: boolean
   draw: boolean
+  isCurrent: boolean
 }
 
 function kindColor(price: number, kind: KeyLevel['kind'], current: number): string {
@@ -44,24 +45,31 @@ export function LiquidityRuler({ levels, current }: Props) {
   const span = max - min
 
   const y = (p: number) => PAD + ((max - p) / span) * (H - 2 * PAD)
+  const curY = y(current)
 
-  // Sort high→low, place labels with a minimum vertical gap to avoid overlap.
-  const sorted = [...levels].sort((a, b) => b.price - a.price)
-  const placed: Placed[] = sorted.map(l => ({
-    price: l.price, kind: l.kind, note: l.note,
-    y: y(l.price), labelY: y(l.price),
-    color: kindColor(l.price, l.kind, current),
-    dashed: l.kind === 'INVALIDATION',
-    draw: l.kind === 'DRAW',
-  }))
+  // Combined label set (levels + the current-price row) sorted high→low, then
+  // de-collided together so the "PRICE NOW" gutter price never overlaps a level
+  // label when price sits right on a level.
+  const items: Placed[] = [
+    ...levels.map(l => ({
+      price: l.price, kind: l.kind, note: l.note,
+      y: y(l.price), labelY: y(l.price),
+      color: kindColor(l.price, l.kind, current),
+      dashed: l.kind === 'INVALIDATION',
+      draw: l.kind === 'DRAW',
+      isCurrent: false,
+    })),
+    { price: current, kind: 'OTHER' as KeyLevel['kind'], y: curY, labelY: curY, color: 'var(--gold)', dashed: false, draw: false, isCurrent: true },
+  ].sort((a, b) => a.y - b.y)
+
   const MIN_GAP = 18
-  for (let i = 1; i < placed.length; i++) {
-    if (placed[i].labelY - placed[i - 1].labelY < MIN_GAP) {
-      placed[i].labelY = placed[i - 1].labelY + MIN_GAP
+  for (let i = 1; i < items.length; i++) {
+    if (items[i].labelY - items[i - 1].labelY < MIN_GAP) {
+      items[i].labelY = items[i - 1].labelY + MIN_GAP
     }
   }
-
-  const curY = y(current)
+  const placed = items.filter(it => !it.isCurrent)
+  const curLabelY = items.find(it => it.isCurrent)!.labelY
 
   const fmtPrice = (p: number) => p.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 
@@ -75,7 +83,10 @@ export function LiquidityRuler({ levels, current }: Props) {
         {/* Current price band + line (full width, gold) */}
         <line x1={SPINE_X - 8} y1={curY} x2={W - 8} y2={curY} className={styles.currentLine} />
         <circle cx={SPINE_X} cy={curY} r={4} className={styles.currentDot} />
-        <text x={SPINE_X - 12} y={curY + 3} className={styles.currentPrice}>{fmtPrice(current)}</text>
+        {Math.abs(curLabelY - curY) > 1 && (
+          <line x1={SPINE_X - 4} y1={curY} x2={SPINE_X - 10} y2={curLabelY} stroke="var(--gold)" strokeWidth={1} opacity={0.5} />
+        )}
+        <text x={SPINE_X - 12} y={curLabelY + 3} className={styles.currentPrice}>{fmtPrice(current)}</text>
         <text x={W - 8} y={curY - 6} className={styles.currentTag}>PRICE NOW</text>
 
         {/* Levels */}
