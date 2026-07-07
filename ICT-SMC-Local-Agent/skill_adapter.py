@@ -107,6 +107,67 @@ def _liq_to_dict(p) -> dict:
     }
 
 
+def _reference_levels(d1: list[Candle]) -> dict:
+    """
+    Standing ICT reference liquidity from daily candles: previous day high/low,
+    previous (completed) week high/low, and today's daily open. The last d1
+    candle is treated as the current (possibly partial) day.
+    """
+    if not d1 or len(d1) < 2:
+        return {}
+
+    out: dict = {
+        "daily_open":    d1[-1].open,
+        "prev_day_high": d1[-2].high,
+        "prev_day_low":  d1[-2].low,
+    }
+
+    # Previous completed ISO week high/low.
+    weeks: dict = {}
+    for c in d1:
+        y, w, _ = c.timestamp.isocalendar()
+        weeks.setdefault((y, w), []).append(c)
+    keys = sorted(weeks.keys())
+    if len(keys) >= 2:
+        prev_week = weeks[keys[-2]]
+        out["prev_week_high"] = max(c.high for c in prev_week)
+        out["prev_week_low"]  = min(c.low  for c in prev_week)
+
+    return out
+
+
+def _smt_divergence(xau_m5: list[Candle], proxy_m5: list[Candle]) -> str | None:
+    """
+    Smart-Money-Technique divergence between XAUUSD and a positively-correlated
+    USD proxy (EURUSD — both rise as the dollar weakens).
+
+      Gold prints a LOWER low while the proxy prints a HIGHER low  → BULLISH SMT
+        (gold's new low is unconfirmed by USD strength — likely a false break).
+      Gold prints a HIGHER high while the proxy prints a LOWER high → BEARISH SMT.
+
+    Returns "BULLISH" / "BEARISH" / None. Needs ≥2 confirmed swings per side.
+    """
+    if len(xau_m5) < 6 or len(proxy_m5) < 6:
+        return None
+
+    x_highs, x_lows = structure.find_swing_points(xau_m5)
+    p_highs, p_lows = structure.find_swing_points(proxy_m5)
+
+    if len(x_lows) >= 2 and len(p_lows) >= 2:
+        gold_ll  = x_lows[-1][1] < x_lows[-2][1]
+        proxy_hl = p_lows[-1][1] > p_lows[-2][1]
+        if gold_ll and proxy_hl:
+            return "BULLISH"
+
+    if len(x_highs) >= 2 and len(p_highs) >= 2:
+        gold_hh  = x_highs[-1][1] > x_highs[-2][1]
+        proxy_lh = p_highs[-1][1] < p_highs[-2][1]
+        if gold_hh and proxy_lh:
+            return "BEARISH"
+
+    return None
+
+
 def _analyse_timeframe(candles: list[Candle], include_volume_profile: bool = False, include_asian: bool = False) -> dict:
     if not candles:
         return {}
@@ -119,6 +180,8 @@ def _analyse_timeframe(candles: list[Candle], include_volume_profile: bool = Fal
         "fvgs": [_fvg_to_dict(f) for f in structure.detect_fvgs(candles)[:10]],
         "order_blocks": [_ob_to_dict(ob) for ob in structure.detect_order_blocks(candles)[:10]],
         "liquidity_pools": [_liq_to_dict(p) for p in structure.find_liquidity_pools(candles, current_price)],
+        "structure_breaks": structure.detect_structure_breaks(candles),
+        "displacement": structure.detect_displacement(candles),
     }
 
     if include_volume_profile:
@@ -145,6 +208,10 @@ def main():
     h1 = _parse_candles(payload.get("h1", []), "1h", symbol)
     m5 = _parse_candles(payload.get("m5", []), "5m", symbol)
     m1 = _parse_candles(payload.get("m1", []), "1m", symbol)
+    # Optional inputs (Phase 3): daily candles for reference levels, and an
+    # EURUSD M5 series for SMT divergence. Absent → those sections are omitted.
+    d1  = _parse_candles(payload.get("d1", []), "1d", symbol)
+    smt = _parse_candles(payload.get("smt_symbol_m5", []), "5m", "PROXY")
 
     if not h1 or not m5 or not m1:
         print(json.dumps({"error": "Missing or unparsable h1/m5/m1 candle data — cannot analyse."}), file=sys.stdout)
@@ -171,6 +238,8 @@ def main():
             "minutes_until_kz_closes": sessions.minutes_until_kill_zone_closes(),
             "bias_notes": bias_notes,
         },
+        "reference_levels": _reference_levels(d1),
+        "smt_divergence": _smt_divergence(m5, smt) if smt else None,
         "h1": h1_ctx,
         "m5": m5_ctx,
         "m1": m1_ctx,

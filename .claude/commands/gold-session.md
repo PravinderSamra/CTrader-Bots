@@ -35,6 +35,8 @@ Once Phase A completes and symbolId is known, call all of the following in one r
 - `mcp__ctrader__get_trendbars` period `H_1` with `fromTimestamp` = `spotTimestamp - 360_000_000` (100 hours back) and `toTimestamp` = `spotTimestamp`.
 - `mcp__ctrader__get_trendbars` period `M_5` with `fromTimestamp` = `spotTimestamp - 30_000_000` (500 minutes back) and `toTimestamp` = `spotTimestamp`.
 - `mcp__ctrader__get_trendbars` period `M_1` with `fromTimestamp` = `spotTimestamp - 3_600_000` (60 minutes back) and `toTimestamp` = `spotTimestamp`.
+- `mcp__ctrader__get_trendbars` period `D_1` with `fromTimestamp` = `spotTimestamp - 1_900_800_000` (22 days back) and `toTimestamp` = `spotTimestamp` — supplies the engine's reference levels (PDH/PDL, PWH/PWL, daily open).
+- **SMT proxy (EURUSD M5):** `mcp__ctrader__get_trendbars` for `symbolId: 1` (EURUSD — known-stable on this broker; `pipDigits: 5`), period `M_5`, `fromTimestamp` = `spotTimestamp - 30_000_000` and `toTimestamp` = `spotTimestamp`. This is the positively-correlated USD proxy for the SMT-divergence check. If it fails, omit it — SMT is skipped, everything else proceeds.
 
 **⚠️ API quirk:** The `count`-only form (`count=100` without timestamps) fails with `INVALID_REQUEST: fromTimestamp must not be null` on this deployment. Always use explicit `fromTimestamp`+`toTimestamp` ranges as shown above.
 
@@ -44,15 +46,17 @@ Never proceed to Phase C on partial/missing trendbar data — if any Phase B cal
 
 #### Phase C1 — Fire both at once in one response
 
-- **Structure engine:** divide every H_1/M_5/M_1 `open/high/low/close` by `10^pipDigits` to get display prices, then build:
+- **Structure engine:** divide every D_1/H_1/M_5/M_1 (and the EURUSD M5 proxy) `open/high/low/close` by `10^pipDigits` to get display prices, then build:
   ```json
-  {"symbol": "XAUUSD", "current_price": <mid of bid/ask>, "h1": [...], "m5": [...], "m1": [...]}
+  {"symbol": "XAUUSD", "current_price": <mid of bid/ask>,
+   "h1": [...], "m5": [...], "m1": [...],
+   "d1": [...], "smt_symbol_m5": [...]}
   ```
-  where each candle is `{"timestamp": <integer ms epoch>, "open": ..., "high": ..., "low": ..., "close": ..., "volume": ...}`. **Use plain integers for timestamps — do NOT wrap them in str().** Write to a temp file and run:
+  where each candle is `{"timestamp": <integer ms epoch>, "open": ..., "high": ..., "low": ..., "close": ..., "volume": ...}`. **Use plain integers for timestamps — do NOT wrap them in str().** `d1` = the D_1 series (divide XAU by `10^5`); `smt_symbol_m5` = the EURUSD M5 series (divide by `10^5`). Both are optional — omit a key if that fetch failed. Write to a temp file and run:
   ```bash
   python3 /home/user/CTrader-Bots/ICT-SMC-Local-Agent/skill_adapter.py < /tmp/gold_session_input.json
   ```
-  Returns per-timeframe: trend, premium/discount + OTE zone, graded FVGs (A+/A/B/C/SKIP), quality-scored OBs (1–5), BSL/SSL liquidity pools, H1 volume profile (POC/VAH/VAL/LVNs), Asian range + London-sweep flag, live session/kill-zone/bias notes. Treat as ground truth for structure levels. If the script errors or returns `{"error": ...}`, note the degradation and continue with manual trendbar analysis.
+  Returns per-timeframe: trend, premium/discount + OTE zone, graded FVGs (A+/A/B/C/SKIP), quality-scored OBs (1–5), BSL/SSL liquidity pools, H1 volume profile (POC/VAH/VAL/LVNs), Asian range + London-sweep flag, live session/kill-zone/bias notes. **New (Phase 3):** each timeframe now also carries `structure_breaks` (`last_bos`/`last_choch`, each `{type, direction, level, timestamp}`) and a `displacement` boolean; top-level `reference_levels` (`daily_open`, `prev_day_high/low`, `prev_week_high/low`) and `smt_divergence` (`BULLISH`/`BEARISH`/`null`). Treat as ground truth for structure levels. If the script errors or returns `{"error": ...}`, note the degradation and continue with manual trendbar analysis.
 
 - **TradingView schema retry (mandatory):** Call `ToolSearch` with query `select:mcp__tradingview-mcp__recognize_market_pattern` in the same response as the structure engine Bash call. By this point, Phase A+B have elapsed (~20–40 s) — the MCP server has had time to initialise, making this the reliable load point. If ToolSearch still returns nothing, mark the cross-check as UNAVAILABLE and proceed to analysis.
 
@@ -88,13 +92,14 @@ Two notes on macro snapshot fields (relevant to STEP 5 analysis):
 
 **STEP 1 — STRUCTURAL READING (H1 → M5 → M1, in that order)**
 - Use the engine's `h1.trend`/`m5.trend`/`m1.trend` (HH/HL → BULLISH, LH/LL → BEARISH, otherwise NEUTRAL) as your starting regime classification, then confirm or refine it visually against the raw candles — the engine is a 20-candle structural heuristic, not a substitute for judgement on protected highs/lows.
-- On H1: classify the regime (bullish/bearish/transitional), identify the current protected high/low from the raw swing structure, note any BOS/CHoCH. The engine's `h1.liquidity_pools` (BSL/SSL with test counts) mark candidate swing highs/lows to check against.
-- On M5: same reading, cross-checked against `m5.trend`. Explicitly check it agrees with the H1 regime. If it conflicts, flag NO TRADE and explain why.
-- On M1: identify the precise entry-timeframe structure (`m1.trend`, `m1.fvgs`) only once H1+M5 agree on direction.
+- On H1: classify the regime (bullish/bearish/transitional), identify the current protected high/low from the raw swing structure, note any BOS/CHoCH. **Cite the engine's `h1.structure_breaks` directly** — `last_bos` (continuation) and `last_choch` (character change), each with its `level` and `timestamp` — instead of eyeballing breaks manually; still confirm the level against the raw candles. The engine's `h1.liquidity_pools` (BSL/SSL with test counts) mark candidate swing highs/lows to check against.
+- On M5: same reading, cross-checked against `m5.trend` and `m5.structure_breaks`. Explicitly check it agrees with the H1 regime. If it conflicts, flag NO TRADE and explain why.
+- On M1: identify the precise entry-timeframe structure (`m1.trend`, `m1.fvgs`, `m1.structure_breaks`) only once H1+M5 agree on direction. **`m5.displacement` / `m1.displacement` = `true`** means a range-expansion leg just printed — that is your entry-confirmation signal (a displacement candle out of the entry zone), so weight it when timing the M1 entry.
 
 **STEP 2 — LIQUIDITY MAPPING**
 - Use `h1.liquidity_pools` and `m5.liquidity_pools` (BSL above / SSL below current price, with test_count and HIGH/MEDIUM/LOW strength) as the primary liquidity map — these are unswept swing highs/lows already filtered by the engine.
-- Determine the DRAW ON LIQUIDITY (primary algorithmic target) — generally the nearest HIGH-strength pool in the direction the regime favours.
+- **Add the standing reference levels from `reference_levels`** — `prev_day_high`/`prev_day_low` (PDH/PDL), `prev_week_high`/`prev_week_low` (PWH/PWL), and `daily_open`. PDH/PDL and PWH/PWL are among the most-targeted draws on liquidity in ICT; note where price sits relative to each and whether any have already been swept this session.
+- Determine the DRAW ON LIQUIDITY (primary algorithmic target) — generally the nearest HIGH-strength pool (or unswept PDH/PDL/PWH/PWL) in the direction the regime favours.
 - Note any liquidity sweeps already completed: `h1.asian_range_note` and `session.bias_notes` flag whether London/NY has already swept the Asian high or low, and their phase.
 
 **STEP 3 — PD ARRAY IDENTIFICATION**
@@ -125,12 +130,18 @@ Two notes on macro snapshot fields (relevant to STEP 5 analysis):
 - If session is ASIA or OFF-HOURS, state plainly that this is outside the trader's stated trading hours — still report the analysis, but mark any trade idea as "WAIT FOR LONDON/NY OPEN" rather than an actionable now-entry.
 - Report `session.minutes_until_kz_closes` if a kill zone is active, and surface `session.bias_notes` (midnight-open premium/discount bias, Asian sweep status, kill-zone status) verbatim alongside your own read.
 - Note any Judas Swing or AMD (Accumulation-Manipulation-Distribution) phase visible on M5/M1.
+- **Weekly profile (ICT day-of-week bias):** state today's weekday and the statistical tendency it carries, and factor it into conviction:
+  - **Monday** — often sets the week's initial range; a Monday low/high is frequently retested, but the weekly extreme is usually *not* set today.
+  - **Tuesday / Wednesday** — the weekly high or low is statistically most likely to form here (London open Tue/Wed especially). A trend day is most probable.
+  - **Thursday** — often completes the weekly move / delivers the reversal if Tue–Wed trended.
+  - **Friday** — position-squaring, lower conviction; beware fake-outs into the weekly close, especially after 12:00 ET.
 - **UK time (mandatory):** Convert all timestamps to UK local time for display. UK observes BST (UTC+1) from the last Sunday in March to the last Sunday in October, and GMT (UTC+0) the rest of the year. Express times as `HH:MM BST` or `HH:MM GMT` throughout the output — never UTC-only. Quick rule: if the current UTC date is between 25 March and 25 October (approximate), UK = UTC+1 (BST); otherwise UK = UTC+0 (GMT). Kill zone reference times in UK local: London KZ 07:00–10:00 BST / 07:00–10:00 GMT · NY KZ 13:30–16:00 BST / 13:30–16:00 GMT · Silver Bullet 1: 09:00–10:00 BST · Silver Bullet 2: 16:00–17:00 BST (adjust by −1h for GMT season).
 
 **STEP 7 — CROSS-CHECK**
 - State the `recognize_market_pattern` result (pattern type, confidence, suggested entry/stop/TP) alongside your ICT read.
 - If they agree on direction: note this as a confidence booster.
 - If they disagree: lower your confidence and explain the disagreement rather than picking a winner silently.
+- **SMT divergence** (`smt_divergence` from the engine, gold vs EURUSD): `BULLISH` = gold made a lower low the dollar-proxy did not confirm (bullish reversal signal); `BEARISH` = gold made a higher high the proxy did not confirm (bearish reversal signal); `null` = no divergence / not computed. When SMT agrees with the ICT bias, treat it as a genuine confluence booster (+confidence); when it conflicts, lower confidence and say so. If `null`, state that SMT was flat or unavailable.
 
 ---
 
@@ -151,12 +162,14 @@ Two notes on macro snapshot fields (relevant to STEP 5 analysis):
 - **Regime Change Phase:** [Not applicable / Phase 1 Break / Phase 2 Awaiting Retest / Phase 3 Confirmed]
 
 ## STRUCTURE
-- **Recent BOS/CHoCH:** [H1 and M5]
+- **Recent BOS/CHoCH:** [H1 and M5 — cite engine `structure_breaks`: type, level, timestamp]
+- **Displacement:** [M5/M1 `displacement` flag — present/absent, relevance to entry timing]
 - **Market Structure Phase:** [Accumulation / Manipulation / Distribution]
 
 ## LIQUIDITY MAP
 - **BSL Above:** [levels]
 - **SSL Below:** [levels]
+- **Reference Levels:** [PDH/PDL, PWH/PWL, daily open from `reference_levels` — note swept/unswept]
 - **PRIMARY Draw on Liquidity:** [level]
 - **Sweeps Identified:** [describe]
 
@@ -182,6 +195,7 @@ Two notes on macro snapshot fields (relevant to STEP 5 analysis):
 - **Pattern Detected:** [type, confidence]
 - **Suggested Entry/Stop/TP:** [if provided]
 - **Agreement with ICT Read:** [CONFIRMS / CONFLICTS — explain]
+- **SMT Divergence (gold vs EURUSD):** [BULLISH / BEARISH / none — from `smt_divergence`; state whether it confirms or conflicts with the ICT bias]
 
 ## PROBABILITY ASSESSMENT
 - **Primary Scenario:** [XX%] — [BULLISH / BEARISH]
@@ -288,7 +302,8 @@ After printing the full analysis to the chat, save it to the **Gold-Session AI**
     "rr": 2.4,
     "setupType": "OTE"
   },
-  "nextHighImpactEvent": { "event": "US CPI", "timeIso": "2026-07-08T12:30:00Z" }
+  "nextHighImpactEvent": { "event": "US CPI", "timeIso": "2026-07-08T12:30:00Z" },
+  "smtDivergence": "BULLISH"
 }
 ```
 **The first five fields are required.** The rest are **optional structured fields** — populate
@@ -309,9 +324,10 @@ Field guide:
 | `equilibrium` *(opt)* | `h1.premium_discount.equilibrium` — the 50% of the H1 dealing range. |
 | `drawOnLiquidity` *(opt)* | Your PRIMARY Draw on Liquidity level (the nearest high-strength pool in the bias direction). |
 | `invalidation` *(opt)* | The Key Invalidation Level price. |
-| `keyLevels` *(opt)* | Array of `{ price, kind, note? }`. `kind` ∈ `BSL SSL PDH PDL PWH PWL ASIAN_HIGH ASIAN_LOW POC INVALIDATION DRAW OTHER`. Source BSL/SSL from `h1.liquidity_pools`, ASIAN_HIGH/LOW from the Asian range, POC from `h1.volume_profile.poc`, plus one `DRAW` (= drawOnLiquidity) and one `INVALIDATION`. Include 4–8 of the most relevant levels. |
+| `keyLevels` *(opt)* | Array of `{ price, kind, note? }`. `kind` ∈ `BSL SSL PDH PDL PWH PWL ASIAN_HIGH ASIAN_LOW POC INVALIDATION DRAW OTHER`. Source BSL/SSL from `h1.liquidity_pools`, **PDH/PDL/PWH/PWL from `reference_levels`** (`prev_day_high`/`prev_day_low`/`prev_week_high`/`prev_week_low`), ASIAN_HIGH/LOW from the Asian range, POC from `h1.volume_profile.poc`, plus one `DRAW` (= drawOnLiquidity) and one `INVALIDATION`. Include 4–8 of the most relevant levels. |
 | `tradeIdea` *(opt)* | `{ direction, status, entryLow?, entryHigh?, stop?, targets?, rr?, setupType? }`. `status` = `ACTIVE` (entry live now), `WAIT` (valid setup but outside trading window / awaiting trigger), or `NO_TRADE` (H1/M5 conflict or no setup). If your brief omits the Trade Idea section entirely, set `"tradeIdea": null`. |
 | `nextHighImpactEvent` *(opt)* | `{ event, timeIso }` for the nearest upcoming HIGH-impact calendar event, or `null` if none. |
+| `smtDivergence` *(opt)* | `BULLISH` / `BEARISH` / `null` — copy the engine's `smt_divergence` value verbatim. |
 
 `/tmp/gold-session-analysis.txt`: the complete analysis output (everything from `# GOLD INTRADAY SESSION BRIEF` to the end of `[DISCLAIMER]`).
 
