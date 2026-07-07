@@ -1,4 +1,4 @@
-import { useState, useCallback, lazy, Suspense } from 'react'
+import { useState, useCallback, useMemo, lazy, Suspense } from 'react'
 import { useCTraderPrices, pricesFromSnapshot } from './hooks/useCTraderPrices'
 import { useOpenPosition } from './hooks/useOpenPosition'
 import { useDailySnapshot } from './hooks/useFredData'
@@ -17,6 +17,8 @@ import { PositioningTile } from './components/tiles/PositioningTile'
 import { FlowsTile } from './components/tiles/FlowsTile'
 import { BriefingPanel } from './components/briefing/BriefingPanel'
 import { GoldSessionTab } from './components/gold-session/GoldSessionTab'
+import { getSession } from './utils/sessions'
+import { Boundary } from './components/layout/Boundary'
 import styles from './App.module.css'
 
 // Lazy-loaded: the Firebase SDK it pulls in is sizeable, and the Macro Dashboard /
@@ -24,14 +26,6 @@ import styles from './App.module.css'
 const PravzellaTab = lazy(() => import('./components/pravzella/PravzellaTab').then(m => ({ default: m.PravzellaTab })))
 
 type DashTab = 'dashboard' | 'gold-session' | 'pravzella'
-
-function getSessionLabel(utcH: number): string {
-  if (utcH >= 13 && utcH < 16) return 'OVERLAP'
-  if (utcH >= 8 && utcH < 16) return 'LONDON'
-  if (utcH >= 16 && utcH < 21) return 'NEW_YORK'
-  if (utcH >= 0 && utcH < 8) return 'ASIAN'
-  return 'OFF'
-}
 
 export function App() {
   const [activeTab, setActiveTab] = useState<DashTab>('dashboard')
@@ -48,10 +42,13 @@ export function App() {
   const newsItems = snapshot?.newsItems ?? []
   const vix = snapshot?.marketVolatility?.VIX ?? null
 
-  const riskTone = aggregateData(
-    prices, snapshot, calendar, newsItems, vix,
-    getSessionLabel(new Date().getUTCHours()),
-  ).marketVolatility.riskTone
+  const riskTone = useMemo(
+    () => aggregateData(
+      prices, snapshot, calendar, newsItems, vix,
+      getSession().key,
+    ).marketVolatility.riskTone,
+    [prices, snapshot, calendar, newsItems, vix],
+  )
 
   const handleRefresh = useCallback(() => {
     setRefreshKey(k => k + 1)
@@ -66,7 +63,7 @@ export function App() {
 
   return (
     <div className={styles.app}>
-      <Header prices={prices} onRefresh={handleRefresh} lastRefresh={lastRefresh} openPosition={openPosition} />
+      <Header prices={prices} onRefresh={handleRefresh} lastRefresh={lastRefresh} openPosition={openPosition} snapshotGeneratedAt={snapshot?.generatedAt ?? null} />
 
       <SessionTimeline />
 
@@ -93,6 +90,7 @@ export function App() {
 
       {activeTab === 'dashboard' && (
         <main className={styles.main}>
+          <Boundary label="Macro Dashboard">
           <MacroStrip prices={prices} snapshot={snapshot} />
           {/* Row 1: Yields | Dollar | Calendar */}
           <div className={styles.grid3}>
@@ -125,20 +123,25 @@ export function App() {
 
           {/* Briefing panel — full width */}
           <BriefingPanel briefing={snapshot?.briefing ?? null} newsItems={newsItems} />
+          </Boundary>
         </main>
       )}
 
       {activeTab === 'gold-session' && (
         <div className={styles.sessionPane}>
-          <GoldSessionTab />
+          <Boundary label="Gold-Session AI">
+            <GoldSessionTab />
+          </Boundary>
         </div>
       )}
 
       {activeTab === 'pravzella' && (
         <div className={styles.sessionPane}>
-          <Suspense fallback={<div className={styles.tabLoading}>Loading…</div>}>
-            <PravzellaTab />
-          </Suspense>
+          <Boundary label="Pravzella">
+            <Suspense fallback={<div className={styles.tabLoading}>Loading…</div>}>
+              <PravzellaTab />
+            </Suspense>
+          </Boundary>
         </div>
       )}
 

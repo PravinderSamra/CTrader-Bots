@@ -57,6 +57,14 @@ export function GoldTile({ prices, gvz }: Props) {
             {gvzCtx && <span className={`badge badge-muted ${styles.badgeInline}`}>{gvzCtx}</span>}
           </span>
         </div>
+        {prices.XAUUSD_spread != null && (
+          <div className="tile-row">
+            <span className="tile-label">Spread</span>
+            <span className={`tile-val mono ${prices.XAUUSD_spread > 0.5 ? 'down' : 'flat'}`}>
+              ${prices.XAUUSD_spread.toFixed(2)}
+            </span>
+          </div>
+        )}
       </div>
 
       <hr className="tile-divider" />

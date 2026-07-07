@@ -199,7 +199,7 @@
 .gaugeRow {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 24px;
   padding: 18px 22px;
   background: var(--surface);
   border: 1px solid var(--glass-border);
@@ -214,14 +214,15 @@
 .gaugeRow[data-bias="NEUTRAL"] { border-top-color: var(--amber); }
 
 .gaugeWrap {
-  flex: 1;
+  flex: 0 1 320px;
   min-width: 0;
 }
 
 .statPills {
   display: flex;
   gap: 28px;
-  flex-shrink: 0;
+  flex: 1;
+  justify-content: flex-end;
 }
 
 .statPill {

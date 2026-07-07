@@ -1,27 +1,54 @@
 import { useState, useEffect } from 'react'
+import {
+  sessionSegmentsUtc, killZoneBandsUtc, getSession, getKillZone,
+  type SessionKey,
+} from '../../utils/sessions'
+import { ukTimeString } from '../../utils/time'
 import styles from './SessionTimeline.module.css'
 
-// Sessions in UTC minutes (fixed reference — Header.tsx uses same boundaries)
-const SESSIONS = [
-  { name: 'ASIAN',    start:    0, end:  8*60, cls: styles.segAsian    },
-  { name: 'LONDON',   start:  8*60, end: 13*60, cls: styles.segLondon   },
-  { name: 'OVERLAP',  start: 13*60, end: 16*60, cls: styles.segOverlap  },
-  { name: 'NY',       start: 16*60, end: 21*60, cls: styles.segNY       },
-  { name: 'OFF',      start: 21*60, end: 24*60, cls: styles.segAsian    },
-]
+const SEG_CLASS: Record<SessionKey, string> = {
+  ASIAN:    styles.segAsian,
+  LONDON:   styles.segLondon,
+  OVERLAP:  styles.segOverlap,
+  NEW_YORK: styles.segNY,
+  OFF:      styles.segAsian,
+}
 
-// Kill zone bands in UTC minutes (approximate, DST can shift ±60min but close enough for visual)
-const KZ_BANDS = [
-  { name: 'London KZ',  start:  7*60, end: 10*60, cls: styles.kzLondon  },
-  { name: 'NY KZ',      start: 12*60+30, end: 16*60, cls: styles.kzNY   },
-  { name: 'Lon Close',  start: 14*60, end: 15*60, cls: styles.kzClose   },
-]
+const LBL_CLASS: Record<SessionKey, string> = {
+  ASIAN:    styles.lblAsian,
+  LONDON:   styles.lblLondon,
+  OVERLAP:  styles.lblOverlap,
+  NEW_YORK: styles.lblNY,
+  OFF:      styles.lblAsian,
+}
+
+// Only the three major bands render on the bar (Silver Bullets / Asia KZ would clutter).
+const KZ_CLASS: Record<string, string> = {
+  'London KZ':    styles.kzLondon,
+  'NY KZ':        styles.kzNY,
+  'London Close': styles.kzClose,
+}
 
 function pct(mins: number) { return (mins / (24 * 60)) * 100 }
 
-function labelForMinutes(utcMins: number): string {
-  const h = Math.floor(utcMins / 60) % 24
-  return `${String(h).padStart(2,'0')}:00`
+function fmtUtc(mins: number): string {
+  const m = ((Math.round(mins) % 1440) + 1440) % 1440
+  const h = Math.floor(m / 60)
+  return `${String(h).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`
+}
+
+// A UTC-minute span that may wrap past midnight → one or two [start,width] rects in %.
+function rects(startMin: number, endMin: number): { left: number; width: number }[] {
+  if (startMin <= endMin) return [{ left: pct(startMin), width: pct(endMin - startMin) }]
+  return [
+    { left: pct(startMin), width: pct(1440 - startMin) },
+    { left: 0, width: pct(endMin) },
+  ]
+}
+
+function midpoint(startMin: number, endMin: number): number {
+  const end = endMin >= startMin ? endMin : endMin + 1440
+  return ((startMin + end) / 2) % 1440
 }
 
 export function SessionTimeline() {
@@ -34,35 +61,42 @@ export function SessionTimeline() {
   const utcMins = now.getUTCHours() * 60 + now.getUTCMinutes()
   const nowPct  = pct(utcMins)
 
-  const activeSeg = SESSIONS.find(s => utcMins >= s.start && utcMins < s.end) ?? SESSIONS[SESSIONS.length - 1]
-  const activeKZ  = KZ_BANDS.find(kz => utcMins >= kz.start && utcMins < kz.end)
+  const segments = sessionSegmentsUtc(now)
+  const bands    = killZoneBandsUtc(now).filter(b => KZ_CLASS[b.name])
+
+  const session = getSession(now)
+  const kz      = getKillZone(now)
 
   return (
     <div className={styles.shell}>
       <div className={styles.barWrap}>
         {/* Session segments */}
-        {SESSIONS.map(s => (
-          <div
-            key={s.name}
-            className={`${styles.seg} ${s.cls}`}
-            style={{ left: `${pct(s.start)}%`, width: `${pct(s.end - s.start)}%` }}
-            title={s.name}
-          />
-        ))}
+        {segments.map(s =>
+          rects(s.startUtcMin, s.endUtcMin).map((r, i) => (
+            <div
+              key={`${s.key}-${i}`}
+              className={`${styles.seg} ${SEG_CLASS[s.key]}`}
+              style={{ left: `${r.left}%`, width: `${r.width}%` }}
+              title={s.label}
+            />
+          ))
+        )}
 
         {/* Kill zone overlays */}
-        {KZ_BANDS.map(kz => (
-          <div
-            key={kz.name}
-            className={`${styles.kz} ${kz.cls}`}
-            style={{ left: `${pct(kz.start)}%`, width: `${pct(kz.end - kz.start)}%` }}
-            title={kz.name}
-          />
-        ))}
+        {bands.map(b =>
+          rects(b.startUtcMin, b.endUtcMin).map((r, i) => (
+            <div
+              key={`${b.name}-${i}`}
+              className={`${styles.kz} ${KZ_CLASS[b.name]}`}
+              style={{ left: `${r.left}%`, width: `${r.width}%` }}
+              title={b.name}
+            />
+          ))
+        )}
 
-        {/* Hour ticks */}
-        {[4, 8, 12, 13, 16, 21].map(h => (
-          <div key={h} className={styles.tick} style={{ left: `${pct(h * 60)}%` }} />
+        {/* Boundary ticks at each session start */}
+        {segments.map(s => (
+          <div key={`tick-${s.key}`} className={styles.tick} style={{ left: `${pct(s.startUtcMin)}%` }} />
         ))}
 
         {/* Now cursor */}
@@ -71,19 +105,20 @@ export function SessionTimeline() {
 
       {/* Labels */}
       <div className={styles.labels}>
-        <span className={`${styles.lbl} ${styles.lblAsian}`}   style={{ left: `${pct(4 * 60)}%` }}>ASIAN</span>
-        <span className={`${styles.lbl} ${styles.lblLondon}`}  style={{ left: `${pct(10.5 * 60)}%` }}>LONDON</span>
-        <span className={`${styles.lbl} ${styles.lblOverlap}`} style={{ left: `${pct(14.5 * 60)}%` }}>OVR</span>
-        <span className={`${styles.lbl} ${styles.lblNY}`}      style={{ left: `${pct(18.5 * 60)}%` }}>NEW YORK</span>
-
-        {/* Boundary times */}
-        {[0, 8, 13, 16, 21].map(h => (
+        {segments.map(s => (
           <span
-            key={h}
-            className={styles.timeLbl}
-            style={{ left: `${pct(h * 60)}%` }}
+            key={`lbl-${s.key}`}
+            className={`${styles.lbl} ${LBL_CLASS[s.key]}`}
+            style={{ left: `${pct(midpoint(s.startUtcMin, s.endUtcMin))}%` }}
           >
-            {labelForMinutes(h * 60)}
+            {s.key === 'NEW_YORK' ? 'NEW YORK' : s.key === 'OVERLAP' ? 'OVR' : s.label.toUpperCase()}
+          </span>
+        ))}
+
+        {/* Boundary times (UTC axis) */}
+        {segments.map(s => (
+          <span key={`t-${s.key}`} className={styles.timeLbl} style={{ left: `${pct(s.startUtcMin)}%` }}>
+            {fmtUtc(s.startUtcMin)}
           </span>
         ))}
       </div>
@@ -92,9 +127,9 @@ export function SessionTimeline() {
       <div className={styles.nowLabel}>
         <span className={styles.nowDot} />
         <span className={styles.nowText}>
-          {activeKZ ? activeKZ.name : activeSeg.name}
+          {kz.active ? kz.name : session.label}
         </span>
-        <span className={styles.nowUtc}>{labelForMinutes(utcMins)} GMT</span>
+        <span className={styles.nowUtc}>{ukTimeString(now)}</span>
       </div>
     </div>
   )
