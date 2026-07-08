@@ -641,29 +641,44 @@ def detect_displacement(
 
 def find_asian_range(candles_1h: List[Candle]) -> dict:
     """
-    Find the Asian session range (20:00–05:00 ET) from 1H candles.
-    Returns asian_high, asian_low, midnight_open, and whether London swept a side.
+    Find the Asian session range (20:00 ET prior day → 02:00 ET, i.e. Tokyo
+    through the London open) from 1H candles, then check whether the London
+    session has since swept either side.
+
+    Windows are anchored to ABSOLUTE ET datetimes derived from the latest candle,
+    NOT to hour-of-day alone. XAUUSD has a daily gap, so the trailing candles can
+    straddle two ET days; bucketing purely by `et.hour` (the old approach) misfiled
+    a *previous-day* London-morning candle (e.g. 04:00 ET, hour < 5) as "Asian" and
+    compared against the *previous* day's London high — producing a bogus Asian high
+    and a false "swept" flag (observed 2026-07-08: asian_high 4139.06 from Tue 04:00
+    ET, false HIGH sweep vs Tue's 4180 London high, when the true overnight Asian
+    high was ~4134 and price never swept it).
     """
     from zoneinfo import ZoneInfo
+    from datetime import datetime, timedelta
     _NY = ZoneInfo("America/New_York")
 
     if not candles_1h:
         return {}
 
-    # Look at the last 24 hours of 1H candles
-    recent_24 = candles_1h[-24:]
+    def et(c):
+        return c.timestamp.astimezone(_NY)
 
-    asian_candles = []
-    midnight_candle = None
+    # Anchor on the most recent candle's ET wall-clock. Before 18:00 ET we are in
+    # a trading day whose Asian range ran the PREVIOUS night, so anchor to the prior
+    # calendar day's 20:00 ET; from 18:00 ET a new Asian session has begun tonight.
+    anchor = et(candles_1h[-1])
+    start_date = anchor.date() if anchor.hour >= 18 else anchor.date() - timedelta(days=1)
+    asian_start = datetime(start_date.year, start_date.month, start_date.day, 20, 0, tzinfo=_NY)
+    asian_end   = asian_start + timedelta(hours=6)   # 02:00 ET — London open
+    london_cut  = min(anchor, asian_start + timedelta(hours=15))  # up to 11:00 ET
 
-    for c in recent_24:
-        et = c.timestamp.astimezone(_NY)
-        h = et.hour
-        # Asian session: 20:00–05:00 ET (spans midnight)
-        if h >= 20 or h < 5:
-            asian_candles.append(c)
-        if h == 0 and midnight_candle is None:
-            midnight_candle = c
+    asian_candles  = [c for c in candles_1h if asian_start <= et(c) < asian_end]
+    london_candles = [c for c in candles_1h if asian_end <= et(c) <= london_cut]
+    midnight_candle = next(
+        (c for c in candles_1h if et(c).date() == asian_end.date() and et(c).hour == 0),
+        None,
+    )
 
     if not asian_candles:
         return {}
@@ -672,14 +687,8 @@ def find_asian_range(candles_1h: List[Candle]) -> dict:
     asian_low  = min(c.low  for c in asian_candles)
     midnight_open = midnight_candle.open if midnight_candle else None
 
-    # Check if London session has swept either side
-    london_candles = []
-    for c in recent_24:
-        et = c.timestamp.astimezone(_NY)
-        h = et.hour
-        if 2 <= h < 11:
-            london_candles.append(c)
-
+    # A sweep requires a London candle to trade BEYOND the (correctly scoped) Asian
+    # extreme. London candles are strictly after the Asian window closes.
     asian_swept = None
     if london_candles:
         lon_high = max(c.high for c in london_candles)

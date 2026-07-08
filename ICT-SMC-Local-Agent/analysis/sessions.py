@@ -21,9 +21,12 @@ from zoneinfo import ZoneInfo
 
 _NY = ZoneInfo("America/New_York")
 
-# Session boundaries in ET (hour, minute)
+# Session boundaries in ET (hour, minute). current_session() returns the FIRST
+# match, so ASIA must NOT overlap LONDON — otherwise 02:00–05:00 ET (the London
+# killzone) mislabels as "ASIA" (observed 2026-07-08: session "ASIA" while the
+# active kill zone was "LONDON KZ"). ASIA therefore ends at the London open (02:00).
 _SESSIONS = {
-    "ASIA":   ((20, 0), (5, 0)),    # 20:00 prior day → 05:00
+    "ASIA":   ((20, 0), (2, 0)),    # 20:00 prior day → 02:00 (London open)
     "LONDON": ((2, 0),  (11, 0)),
     "NEW YORK": ((7, 0), (16, 0)),
 }
@@ -38,7 +41,7 @@ _KILL_ZONES = {
 }
 
 _SESSION_LABELS = {
-    "ASIA":      "ASIA SESSION (20:00–05:00 ET)",
+    "ASIA":      "ASIA SESSION (20:00–02:00 ET)",
     "LONDON":    "LONDON SESSION (02:00–11:00 ET)",
     "NEW YORK":  "NEW YORK SESSION (07:00–16:00 ET)",
 }
