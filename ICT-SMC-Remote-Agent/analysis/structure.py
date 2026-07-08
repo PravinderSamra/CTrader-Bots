@@ -358,48 +358,72 @@ def detect_order_blocks(candles: List[Candle]) -> List[OrderBlock]:
 
 def find_liquidity_pools(candles: List[Candle], current_price: float) -> List[LiquidityPool]:
     """
-    Identify unswept swing highs (BSL — Buy Side Liquidity) and
-    swing lows (SSL — Sell Side Liquidity) in recent price action.
-    These are where stop orders cluster — primary trade targets.
+    Identify UNSWEPT swing highs (BSL — Buy Side Liquidity) and swing lows
+    (SSL — Sell Side Liquidity) in recent price action — where resting stops
+    cluster and price is drawn.
+
+    Two fixes (2026-07-08):
+    - Cluster tolerance: swing levels within 0.25× the average bar range count
+      as tests of the SAME pool (equal highs / equal lows). The old dict keyed
+      by exact 5-dp price meant two tests virtually never matched on gold, so
+      every pool reported test_count=1 → strength LOW, making the HIGH/MEDIUM
+      grading dead weight.
+    - Swept-level removal: the old code computed max/min "to remove swept
+      levels" but never filtered anything. A level price has since traded
+      through is spent liquidity and is now excluded.
     """
     if len(candles) < 10:
         return []
 
     recent = candles[-100:]
-    highs: dict[float, int] = {}
-    lows:  dict[float, int] = {}
+    avg_range = sum(c.high - c.low for c in recent) / len(recent)
+    tol = max(avg_range * 0.25, 1e-9)
 
+    swing_highs: List[Tuple[int, float]] = []
+    swing_lows:  List[Tuple[int, float]] = []
     for i in range(2, len(recent) - 2):
         c = recent[i]
-        # Swing high: higher than 2 candles either side
         if (c.high > recent[i-1].high and c.high > recent[i-2].high and
                 c.high > recent[i+1].high and c.high > recent[i+2].high):
-            rounded = round(c.high, 5)
-            highs[rounded] = highs.get(rounded, 0) + 1
-
-        # Swing low: lower than 2 candles either side
+            swing_highs.append((i, c.high))
         if (c.low < recent[i-1].low and c.low < recent[i-2].low and
                 c.low < recent[i+1].low and c.low < recent[i+2].low):
-            rounded = round(c.low, 5)
-            lows[rounded] = lows.get(rounded, 0) + 1
+            swing_lows.append((i, c.low))
 
-    # Remove swept levels (price has already traded through them)
-    all_prices = [c.high for c in recent] + [c.low for c in recent]
-    max_price = max(all_prices)
-    min_price = min(all_prices)
+    def cluster_unswept(swings: List[Tuple[int, float]], is_high: bool) -> List[Tuple[float, int]]:
+        """Greedy proximity clustering; drop clusters price later swept."""
+        out: List[Tuple[float, int]] = []
+        used = [False] * len(swings)
+        for a in range(len(swings)):
+            if used[a]:
+                continue
+            used[a] = True
+            idxs   = [swings[a][0]]
+            prices = [swings[a][1]]
+            for b in range(a + 1, len(swings)):
+                if not used[b] and abs(swings[b][1] - prices[0]) <= tol:
+                    used[b] = True
+                    idxs.append(swings[b][0])
+                    prices.append(swings[b][1])
+            extreme = max(prices) if is_high else min(prices)
+            later = recent[max(idxs) + 1:]
+            swept = (any(c.high > extreme for c in later) if is_high
+                     else any(c.low < extreme for c in later))
+            if not swept:
+                out.append((extreme, len(idxs)))
+        return out
 
-    pools = []
-    for price, count in highs.items():
+    pools: List[LiquidityPool] = []
+    sym = recent[-1].symbol
+    for price, count in cluster_unswept(swing_highs, True):
         if price > current_price:
             pools.append(LiquidityPool(
-                symbol=recent[-1].symbol, price=price,
-                direction="BSL", test_count=count,
+                symbol=sym, price=round(price, 5), direction="BSL", test_count=count,
             ))
-    for price, count in lows.items():
+    for price, count in cluster_unswept(swing_lows, False):
         if price < current_price:
             pools.append(LiquidityPool(
-                symbol=recent[-1].symbol, price=price,
-                direction="SSL", test_count=count,
+                symbol=sym, price=round(price, 5), direction="SSL", test_count=count,
             ))
 
     pools.sort(key=lambda p: abs(p.price - current_price))

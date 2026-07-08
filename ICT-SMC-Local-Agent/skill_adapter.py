@@ -31,7 +31,7 @@ from datetime import datetime, timezone
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from data.models import Candle
-from analysis import structure, sessions
+from analysis import structure, sessions, patterns
 
 
 def _parse_candles(raw_candles: list, timeframe: str, symbol: str) -> list[Candle]:
@@ -240,6 +240,10 @@ def main():
         },
         "reference_levels": _reference_levels(d1),
         "smt_divergence": _smt_divergence(m5, smt) if smt else None,
+        # Local candlestick cross-check on M5 — deterministic stand-in for the
+        # flaky tradingview-mcp recognize_market_pattern stdio server, so the
+        # STEP 7 cross-check is always present regardless of MCP availability.
+        "pattern_check": patterns.recognize_pattern(m5),
         "h1": h1_ctx,
         "m5": m5_ctx,
         "m1": m1_ctx,
