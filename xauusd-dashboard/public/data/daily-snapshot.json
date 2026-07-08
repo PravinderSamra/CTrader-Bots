@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-08T12:14:52.200Z",
+  "generatedAt": "2026-07-08T15:10:38.257Z",
   "yields": {
     "US10Y": 4.48,
     "US2Y": 4.13,
@@ -22,8 +22,8 @@
     "probHike": 0
   },
   "marketVolatility": {
-    "GVZ": 25.33,
-    "VIX": 15.57
+    "GVZ": 26.21,
+    "VIX": 16.13
   },
   "positioning": {
     "cotNetLong": -14945,
@@ -34,30 +34,30 @@
     "openInterestChange": 2852
   },
   "etfFlows": {
-    "gldTonnes": 1148.6,
-    "gldWoWChange": -4.4,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1157.6,
+    "gldWoWChange": 9,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4072.655,
-    "XAGUSD": 58.822,
-    "EURUSD": 1.14024,
-    "USDJPY": 162.4965,
-    "USDCHF": 0.80866,
-    "USDCNH": 6.80534,
-    "GBPUSD": 1.33475,
-    "USDCAD": 1.41848,
-    "USDSEK": 9.69143,
-    "US500": 7460,
-    "GER40": 25042.75,
-    "UK100": 10554.8,
+    "XAUUSD": 4041.18,
+    "XAGUSD": 57.8215,
+    "EURUSD": 1.14078,
+    "USDJPY": 162.624,
+    "USDCHF": 0.80909,
+    "USDCNH": 6.80898,
+    "GBPUSD": 1.33687,
+    "USDCAD": 1.41701,
+    "USDSEK": 9.71762,
+    "US500": 7442.6,
+    "GER40": 24933.75,
+    "UK100": 10478.85,
     "ADR_14day": 104.1,
-    "ADR_usedToday": 93.4,
-    "goldSilverRatio": 69.2
+    "ADR_usedToday": 100.1,
+    "goldSilverRatio": 69.9
   },
   "dollarLiquidity": {
     "stlfsi": -0.6445,
-    "nfci": -0.504
+    "nfci": -0.515
   },
   "geopoliticalRisk": {
     "gpr": 173.6,
@@ -69,49 +69,49 @@
       "headline": "Fed meeting minutes to show 'family fight' over rates. The squabble could drag on for a while",
       "source": "CNBC",
       "publishedAt": "2026-07-08T11:40:31.000Z",
-      "hoursAgo": 0.6
+      "hoursAgo": 3.5
     },
     {
-      "headline": "Dollar around one-week high as Trump says Iran MOU 'over' - Reuters",
+      "headline": "US container imports jumped 8% in June ahead of higher fuel costs and tariff increases - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-07-08T09:35:12.000Z",
-      "hoursAgo": 2.7
+      "publishedAt": "2026-07-08T09:07:43.000Z",
+      "hoursAgo": 6
     },
     {
-      "headline": "Gold falls over 1% as oil jumps after Trump says Iran peace deal 'over' - Reuters",
+      "headline": "Gold drifts lower after Trump says deal with Iran 'over' - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-08T01:28:00.000Z",
-      "hoursAgo": 10.8
+      "hoursAgo": 13.7
+    },
+    {
+      "headline": "Dollar steady around one-week high after Trump says Iran MOU 'over' - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-07-08T00:08:00.000Z",
+      "hoursAgo": 15
     },
     {
       "headline": "South Korea, US and Japan agree to cooperate on SMR deployment, Seoul says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-07T22:20:10.000Z",
-      "hoursAgo": 13.9
+      "hoursAgo": 16.8
     },
     {
       "headline": "EXCLUSIVE BOJ dissenter Asada needs demand-driven inflation before backing rate hike - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-07T21:37:43.000Z",
-      "hoursAgo": 14.6
+      "hoursAgo": 17.5
     },
     {
       "headline": "US reinstates sanctions on Iranian oil sales after LNG, oil tanker attacks - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-07T21:06:09.000Z",
-      "hoursAgo": 15.1
+      "hoursAgo": 18.1
     },
     {
       "headline": "The implications of Amazon's $25B bond sale, and Microsoft's evolving AI model strategy",
       "source": "CNBC",
       "publishedAt": "2026-07-07T18:50:31.000Z",
-      "hoursAgo": 17.4
-    },
-    {
-      "headline": "Trump says he will lift Turkey sanctions, decide on selling F-35s - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-07-07T13:42:45.000Z",
-      "hoursAgo": 22.5
+      "hoursAgo": 20.3
     }
   ],
   "briefing": null
