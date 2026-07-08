@@ -190,7 +190,16 @@ function main() {
       // `push origin main`) is essential when the working tree is on a feature
       // branch — `git push origin main` would push the stale local `main` ref and
       // silently fail to deploy the session that was just committed on HEAD.
-      run(`git -C "${REPO_ROOT}" pull --rebase origin main`)
+      //
+      // BOT_ID must ALSO wrap this rebase: whenever origin/main has moved (common —
+      // the hourly data-fetch workflow pushes independently), the rebase REPLAYS the
+      // commit just made above, and `git rebase` sets the COMMITTER of the replayed
+      // commit from the ambient ad-hoc `user.name`/`user.email` config — NOT from the
+      // `-c` override scoped to the earlier `commit` invocation, which only applied to
+      // that one command. Author is preserved from the original commit, so without
+      // this the result is a split identity (author=gold-session-bot, committer=
+      // whatever the local config happened to be) — observed 2026-07-08.
+      run(`git -C "${REPO_ROOT}" ${BOT_ID} pull --rebase origin main`)
       run(`git -C "${REPO_ROOT}" push origin HEAD:main`)
       console.log('Committed and pushed to main — dashboard updates after GitHub Actions deploys (~1-2 min).')
     } else {
