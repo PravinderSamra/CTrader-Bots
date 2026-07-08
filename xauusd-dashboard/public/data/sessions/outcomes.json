@@ -1,6 +1,20 @@
 {
-  "updatedAt": "2026-07-07T17:52:39.976Z",
+  "updatedAt": "2026-07-08T08:39:03.871Z",
   "outcomes": [
+    {
+      "filename": "2026-07-07/19-18.json",
+      "date": "2026-07-07",
+      "time": "20:18 BST",
+      "session": "NEW_YORK",
+      "bias": "BEARISH",
+      "probability": 62,
+      "confidence": 5,
+      "priceZone": "DISCOUNT",
+      "result": "EXPIRED_ADVERSE",
+      "resolvedAt": "2026-07-08T08:39:03.869Z",
+      "maxFavourable": 17.4,
+      "maxAdverse": 21.23
+    },
     {
       "filename": "2026-07-01/14-40.json",
       "date": "2026-07-01",
