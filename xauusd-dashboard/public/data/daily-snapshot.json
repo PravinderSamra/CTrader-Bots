@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-07-08T19:09:14.531Z",
+  "generatedAt": "2026-07-08T20:57:44.690Z",
   "yields": {
-    "US10Y": 4.48,
-    "US2Y": 4.13,
-    "realYield10Y": 2.24,
-    "realYield5Y": 1.94,
-    "curve2s10s": 35,
+    "US10Y": 4.55,
+    "US2Y": 4.19,
+    "realYield10Y": 2.3,
+    "realYield5Y": 1.99,
+    "curve2s10s": 36,
     "breakeven10Y": 2.25,
     "breakeven5Y": 2.28,
     "forward5y5y": 2.22,
     "dayOverDay": {
-      "US10Y": -0.01,
-      "US2Y": -0.01,
-      "realYield10Y": -0.02
+      "US10Y": 0.07,
+      "US2Y": 0.06,
+      "realYield10Y": 0.06
     }
   },
   "fedExpectations": {
@@ -34,26 +34,26 @@
     "openInterestChange": 2852
   },
   "etfFlows": {
-    "gldTonnes": 1144.1,
-    "gldWoWChange": -5.9,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1147.3,
+    "gldWoWChange": 3.2,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4088.615,
-    "XAGUSD": 58.6135,
-    "EURUSD": 1.14278,
-    "USDJPY": 162.4595,
-    "USDCHF": 0.80737,
-    "USDCNH": 6.80442,
-    "GBPUSD": 1.34035,
-    "USDCAD": 1.41657,
-    "USDSEK": 9.68656,
-    "US500": 7479.8,
-    "GER40": 25035.75,
-    "UK100": 10488.5,
+    "XAUUSD": 4077.415,
+    "XAGUSD": 58.3235,
+    "EURUSD": 1.14162,
+    "USDJPY": 162.6405,
+    "USDCHF": 0.80858,
+    "USDCNH": 6.80637,
+    "GBPUSD": 1.33869,
+    "USDCAD": 1.41745,
+    "USDSEK": 9.70027,
+    "US500": 7467.85,
+    "GER40": 25032.75,
+    "UK100": 10493.5,
     "ADR_14day": 104.1,
     "ADR_usedToday": 112.2,
-    "goldSilverRatio": 69.8
+    "goldSilverRatio": 69.9
   },
   "dollarLiquidity": {
     "stlfsi": -0.7246,
@@ -66,59 +66,59 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "How Iran's 'golden weapon' of Hormuz became a bigger priority than its long-disputed nuclear programme - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-07-08T16:21:39.000Z",
+      "hoursAgo": 4.6
+    },
+    {
+      "headline": "Poland's zloty pulls back from 19-month low after interest rates unchanged - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-07-08T14:55:47.000Z",
+      "hoursAgo": 6
+    },
+    {
       "headline": "India battery storage tariffs seen rising as higher costs squeeze low-priced projects - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-08T13:13:56.000Z",
-      "hoursAgo": 5.9
+      "hoursAgo": 7.7
     },
     {
       "headline": "Fed meeting minutes to show 'family fight' over rates. The squabble could drag on for a while",
       "source": "CNBC",
       "publishedAt": "2026-07-08T11:40:31.000Z",
-      "hoursAgo": 7.5
+      "hoursAgo": 9.3
     },
     {
       "headline": "Airbus trims jet industry demand forecast after Iran war, tariffs - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-08T11:05:08.000Z",
-      "hoursAgo": 8.1
+      "hoursAgo": 9.9
     },
     {
       "headline": "US container imports jumped 8% in June ahead of higher fuel costs and tariff increases - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-08T09:07:43.000Z",
-      "hoursAgo": 10
+      "hoursAgo": 11.8
     },
     {
       "headline": "Gold drifts lower after Trump says deal with Iran 'over' - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-08T01:28:00.000Z",
-      "hoursAgo": 17.7
+      "hoursAgo": 19.5
     },
     {
       "headline": "Dollar slips after touching one-week high as Iran deal in question - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-08T00:08:00.000Z",
-      "hoursAgo": 19
-    },
-    {
-      "headline": "South Korea, US and Japan agree to cooperate on SMR deployment, Seoul says - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-07-07T22:20:10.000Z",
       "hoursAgo": 20.8
-    },
-    {
-      "headline": "EXCLUSIVE BOJ dissenter Asada needs demand-driven inflation before backing rate hike - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-07-07T21:37:43.000Z",
-      "hoursAgo": 21.5
     }
   ],
   "briefing": {
-    "biasScore": -1,
+    "biasScore": 1,
     "biasLabel": "NEUTRAL",
     "confidence": 4,
-    "briefing": "REGIME LINE: Gold is sitting in a complicated spot right now. Geopolitical risk [the level of global tension that pushes investors toward safe-haven assets like gold] remains elevated with a reading of 173.6, which is historically high — but the dollar (DXY at 100.97) is holding firm, real yields [the return on government bonds after accounting for inflation] are still relatively high at 2.24%, and the market sees a 76% chance the Federal Reserve holds rates steady at its July 29th meeting. High real yields are typically a headwind for gold because they make holding bonds more attractive than holding a non-interest-paying metal. RECENT CATALYSTS: The most relevant headline from today is from about 17–18 hours ago — Reuters reported that gold drifted lower after Trump declared the Iran deal 'over,' and separately that the dollar slipped after touching a one-week high on the same Iran uncertainty. These two headlines together paint a picture of a market that briefly spiked on geopolitical fear, then faded — a classic 'buy the rumour, sell the news' [prices rise on anticipation, then fall when the event is confirmed] move. Nothing in the last few hours looks particularly market-moving; the Fed minutes commentary about a 'family fight' over rates (7.5 hours ago) suggests internal disagreement at the Fed, which adds uncertainty but no clear direction. DIRECTIONAL BIAS: CHOPPY to mildly bearish. Today's range has already exceeded the 14-day average daily range [the typical distance gold travels in a day] — price has moved 112.2 points versus an average of 104.1 — meaning the bulk of today's move is very likely already done. The bigger picture is mixed: geopolitical risk is bullish for gold, but ETF outflows [investors pulling money out of gold funds] have been negative for three straight weeks, large traders are net short [betting on price falling] according to the latest positioning data, and real yields remain elevated. There is no clear catalyst in the next few hours to break price decisively in either direction. CONFIDENCE SCORE: 4/10. The conflicting signals — high geopolitical risk vs. outflows, crowded short positioning vs. dollar stability — make this a genuinely difficult read. Confidence would rise if price broke clearly above 4,100 on strong momentum (bullish flip) or if the dollar strengthened further toward 101.50+ alongside falling gold ETF holdings (bearish conviction). EVENT RISK: The calendar is empty for today, which means no scheduled data releases to cause sudden moves this session — that is slightly unusual and means price action may be thin and choppy into the close. There are no upcoming high-impact events flagged for later this week in the data provided, though the Fed meeting on July 29th is approaching and markets may start to trade more cautiously as that date nears. KEY LEVELS: With today's range already stretched beyond the ADR, meaningful extensions beyond current levels are unlikely this session. Watch 4,100 as a clean round-number resistance [a price ceiling where sellers tend to appear], and 4,060–4,050 as nearby support [a price floor where buyers tend to step in]. TRADE INTEGRATION: This is NOT a high-quality window for new trend-following trades. The daily range is already exhausted, positioning is messy, and there is no fresh catalyst driving momentum. If you are already in a trade from earlier in the session, manage it carefully with a tight stop [a price level where you exit to limit losses]. For new entries, patience is your edge — wait for a clean pullback [a temporary move against the trend] into a key level during tomorrow's London open before committing. Remember: when the daily range is already exceeded, chasing price is one of the most common and costly beginner mistakes — protect your account by sitting on your hands tonight.",
-    "generatedAt": "2026-07-08T19:09:38.300Z"
+    "briefing": "RIGHT NOW, the two biggest forces pushing and pulling gold are geopolitical tension in the Middle East (specifically the Iran-Hormuz situation) and a slightly stronger US dollar alongside rising bond yields [bond yields = the interest rate the US government pays to borrow money — when yields rise, holding gold, which pays no interest, becomes less attractive]. These forces are working against each other, which is why gold feels stuck. RECENT CATALYSTS: About 19–20 hours ago, headlines broke that Trump declared the Iran nuclear deal 'over,' which initially caused gold to drift lower — likely because a collapsed deal (rather than active escalation) briefly reduced the panic premium built into prices. Then about 4–5 hours ago, Reuters published a piece framing Iran's ability to block the Strait of Hormuz [a critical oil shipping channel] as a bigger strategic threat than its nuclear programme, keeping a low-level fear bid under gold. Neither story has produced a clean directional push today. DIRECTIONAL BIAS: The bias is very slightly bullish but is essentially CHOPPY. Gold has already exceeded its average daily range [ADR — the typical distance price travels in a day] by moving 112 points against a 14-day average of 104 points, meaning the bulk of today's move is likely done. ETF flows [big investment funds buying/selling gold] have been flowing INTO gold for three consecutive weeks, and geopolitical risk readings are elevated, both supportive of price over time. However, yields rose today (US 10-year up 0.07%), the dollar held firm around 101, and the Fed is overwhelmingly expected to hold rates at its July 29 meeting (76% probability), which caps the upside. CONFIDENCE: 4/10. The view shifts bullish if Iran-Hormuz tensions escalate further into tomorrow's headlines, or bearish if yields continue climbing and the dollar pushes back above 102. EVENT RISK: The calendar for today is empty — no scheduled US data releases to watch tonight. There are no high-impact events flagged for later this week in the data provided, though with the FOMC meeting on July 29 approaching, markets may begin trading cautiously in the coming sessions as traders await Fed signals. KEY LEVELS: Gold is sitting at $4,077 after having already travelled 112 points today — well above its normal daily range — so the fuel for a large new move tonight is limited. Watch $4,050 as a near-term support area [a price floor where buyers may step in] and $4,100 as near-term resistance [a ceiling where sellers may appear]. TRADE INTEGRATION: Given that today's ADR is already exceeded, the late New York session is a poor window for new trend-following trades. Position size should be reduced or new entries avoided entirely until the next session resets the daily range. Wait for London open tomorrow when fresh liquidity [new buying and selling activity] enters the market and gives cleaner signals. Remember: when the day's average range is already used up, chasing a move is like arriving at a race after the finish line.",
+    "generatedAt": "2026-07-08T20:58:05.538Z"
   }
 }
