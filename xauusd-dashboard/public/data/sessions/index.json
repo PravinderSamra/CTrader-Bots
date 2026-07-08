@@ -1,6 +1,18 @@
 {
-  "updatedAt": "2026-07-08T14:10:57.392Z",
+  "updatedAt": "2026-07-08T16:25:44.972Z",
   "sessions": [
+    {
+      "date": "2026-07-08",
+      "time": "17:25 BST",
+      "filename": "2026-07-08/16-25.json",
+      "timestamp": "2026-07-08T16:25:44.972Z",
+      "session": "NEW_YORK",
+      "bias": "NEUTRAL",
+      "biasScore": -2,
+      "probability": 58,
+      "confidence": 3,
+      "priceZone": "DISCOUNT"
+    },
     {
       "date": "2026-07-08",
       "time": "15:10 BST",
