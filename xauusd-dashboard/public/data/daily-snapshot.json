@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-08T08:39:02.649Z",
+  "generatedAt": "2026-07-08T10:55:24.065Z",
   "yields": {
     "US10Y": 4.48,
     "US2Y": 4.13,
@@ -34,26 +34,26 @@
     "openInterestChange": 2852
   },
   "etfFlows": {
-    "gldTonnes": 1149,
-    "gldWoWChange": -12.5,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1153,
+    "gldWoWChange": 4,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4071.175,
-    "XAGUSD": 59.1555,
-    "EURUSD": 1.14084,
-    "USDJPY": 162.4225,
-    "USDCHF": 0.80777,
-    "USDCNH": 6.80466,
-    "GBPUSD": 1.33431,
-    "USDCAD": 1.41692,
-    "USDSEK": 9.71735,
-    "US500": 7435.1,
-    "GER40": 24953.75,
-    "UK100": 10503.15,
-    "ADR_14day": null,
-    "ADR_usedToday": null,
-    "goldSilverRatio": 68.8
+    "XAUUSD": 4057.295,
+    "XAGUSD": 58.6185,
+    "EURUSD": 1.14101,
+    "USDJPY": 162.4675,
+    "USDCHF": 0.80787,
+    "USDCNH": 6.80379,
+    "GBPUSD": 1.33486,
+    "USDCAD": 1.41676,
+    "USDSEK": 9.68764,
+    "US500": 7441.3,
+    "GER40": 24964.75,
+    "UK100": 10509,
+    "ADR_14day": 104.1,
+    "ADR_usedToday": 93.4,
+    "goldSilverRatio": 69.2
   },
   "dollarLiquidity": {
     "stlfsi": -0.6445,
@@ -66,52 +66,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Gold gains as markets await Fed minutes, US-Iran strikes cap rise - Reuters",
+      "headline": "Gold slips as oil jumps after Trump says Iran peace deal 'over' - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-08T01:28:00.000Z",
-      "hoursAgo": 7.2
+      "hoursAgo": 9.5
     },
     {
-      "headline": "Dollar near week-high as US and Iran trade strikes; RBNZ hike hoists kiwi - Reuters",
+      "headline": "Dollar around one-week high as Trump says Iran MOU 'over' - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-08T00:08:00.000Z",
-      "hoursAgo": 8.5
+      "hoursAgo": 10.8
     },
     {
       "headline": "South Korea, US and Japan agree to cooperate on SMR deployment, Seoul says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-07T22:20:10.000Z",
-      "hoursAgo": 10.3
+      "hoursAgo": 12.6
     },
     {
       "headline": "EXCLUSIVE BOJ dissenter Asada needs demand-driven inflation before backing rate hike - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-07T21:37:43.000Z",
-      "hoursAgo": 11
+      "hoursAgo": 13.3
     },
     {
       "headline": "US reinstates sanctions on Iranian oil sales after LNG, oil tanker attacks - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-07T21:06:09.000Z",
-      "hoursAgo": 11.5
+      "hoursAgo": 13.8
     },
     {
       "headline": "The implications of Amazon's $25B bond sale, and Microsoft's evolving AI model strategy",
       "source": "CNBC",
       "publishedAt": "2026-07-07T18:50:31.000Z",
-      "hoursAgo": 13.8
+      "hoursAgo": 16.1
     },
     {
       "headline": "Trump says he will lift Turkey sanctions, decide on selling F-35s - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-07T13:42:45.000Z",
-      "hoursAgo": 18.9
+      "hoursAgo": 21.2
     },
     {
       "headline": "Fed's Williams tells Fox Business he's more sanguine on inflation due to energy price retreat - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-07T13:33:46.000Z",
-      "hoursAgo": 19.1
+      "hoursAgo": 21.4
     }
   ],
   "briefing": null
