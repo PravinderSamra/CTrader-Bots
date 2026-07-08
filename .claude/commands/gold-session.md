@@ -144,7 +144,7 @@ Two notes on macro snapshot fields (relevant to STEP 5 analysis):
 ## ANALYSIS PROTOCOL
 
 **STEP 1 — STRUCTURAL READING (H1 → M5 → M1, in that order)**
-- Use the engine's `h1.trend`/`m5.trend`/`m1.trend` (HH/HL → BULLISH, LH/LL → BEARISH, otherwise NEUTRAL) as your starting regime classification, then confirm or refine it visually against the raw candles — the engine is a 20-candle structural heuristic, not a substitute for judgement on protected highs/lows.
+- Use the engine's `h1.trend`/`m5.trend`/`m1.trend` as your starting regime classification, then confirm or refine it visually against the raw candles. Since 2026-07-08 this label is computed from **confirmed fractal swing structure** (last two swing highs AND lows both stepping up → BULLISH; both stepping down → BEARISH; mixed → NEUTRAL; one-way moves with too few swings fall back to net displacement in average-bar-range units). It cannot be flipped by a single closing candle, so treat a disagreement between your visual read and the engine label as a signal to re-examine — do not silently override the engine. NEUTRAL is a valid, common answer meaning "structure is mixed — stand aside".
 - On H1: classify the regime (bullish/bearish/transitional), identify the current protected high/low from the raw swing structure, note any BOS/CHoCH. **Cite the engine's `h1.structure_breaks` directly** — `last_bos` (continuation) and `last_choch` (character change), each with its `level` and `timestamp` — instead of eyeballing breaks manually; still confirm the level against the raw candles. The engine's `h1.liquidity_pools` (BSL/SSL with test counts) mark candidate swing highs/lows to check against.
 - On M5: same reading, cross-checked against `m5.trend` and `m5.structure_breaks`. Explicitly check it agrees with the H1 regime. If it conflicts, flag NO TRADE and explain why.
 - On M1: identify the precise entry-timeframe structure (`m1.trend`, `m1.fvgs`, `m1.structure_breaks`) only once H1+M5 agree on direction. **`m5.displacement` / `m1.displacement` = `true`** means a range-expansion leg just printed — that is your entry-confirmation signal (a displacement candle out of the entry zone), so weight it when timing the M1 entry.
@@ -375,6 +375,21 @@ Meta JSON to place in `/tmp/gold-session-meta.json`:
 them from the engine output / your analysis so the dashboard can render the Price-Zone pill,
 trade badge, and (in later phases) a liquidity map and R:R bar *without* re-parsing your prose.
 If you cannot determine a field, omit it (the UI falls back to parsing the analysis text).
+
+**⚠️ DERIVE META DETERMINISTICALLY — cross-session consistency rule.** Two different chat
+sessions running this skill on the same market data must save the same record. Anchor every
+derivable field to the ENGINE OUTPUT, not to free-form judgement:
+
+| Field | Deterministic rule |
+|---|---|
+| `bias` | From engine trends: `h1.trend`==`m5.trend`==BULLISH → `BULLISH`; both BEARISH → `BEARISH`; anything else → `NEUTRAL`. Only deviate when you cite a concrete engine fact (e.g. confirmed sweep + SMT) in the brief, and say so explicitly. |
+| `biasScore` | NEUTRAL → 0 (or ±1 if leaning with a stated reason); one-timeframe agreement → ±2; H1+M5 aligned → ±3; aligned + displacement + sweep confluence → ±4/±5. |
+| `probability` | Compute additively from the PROBABILITY SCORING RULES table (base 50, list each +/− applied). Do not freehand a number. |
+| `priceZone` / `equilibrium` | Copy from `h1.premium_discount` verbatim (OTE wins if price is inside it). |
+| `smtDivergence` | Copy `smt_divergence` verbatim — never infer it. |
+| `keyLevels` | Source only from engine fields: `h1.liquidity_pools`, `reference_levels`, `h1.asian_range`, `h1.volume_profile.poc`, `structure_breaks` levels. No hand-drawn levels. |
+| `priceAtAnalysis` | The exact mid you fed the engine as `current_price`. |
+| `tradeIdea.status` | `NO_TRADE` whenever `bias` is NEUTRAL or H1/M5 conflict; `WAIT` when a setup exists but the trigger/window is missing; `ACTIVE` only with an M1 trigger inside the trading window. |
 
 Field guide:
 | Field | How to derive it |

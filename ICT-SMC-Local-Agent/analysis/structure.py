@@ -514,16 +514,40 @@ def approximate_volume_profile(candles: List[Candle], bins: int = 50) -> dict:
 # ── Trend Detection ───────────────────────────────────────────────────────────
 
 def detect_trend(candles: List[Candle], lookback: int = 20) -> str:
-    """Simple HH/HL (bullish) or LH/LL (bearish) trend detection."""
-    if len(candles) < lookback + 1:
+    """
+    Swing-structure trend: BULLISH only when the last two CONFIRMED swing highs
+    AND lows both step up (HH+HL); BEARISH only when both step down (LH+LL);
+    anything mixed or structurally unclear is NEUTRAL.
+
+    The previous implementation compared just the final candle against the
+    candle `lookback//2` bars ago — a single corrective bounce on the last bar
+    could flip a whole down-session to "BULLISH" (observed 2026-07-08: M5
+    closed -8.3 pts over the window with a lower swing low at 4114.77, yet one
+    up-candle at the end reported BULLISH). Confirmed fractal swings can't be
+    repainted by the newest candle, so the label is stable run-to-run.
+    """
+    if len(candles) < 5:
         return "NEUTRAL"
-    subset = candles[-lookback:]
-    highs = [c.high for c in subset]
-    lows  = [c.low  for c in subset]
-    mid   = lookback // 2
-    if highs[-1] > highs[mid] and lows[-1] > lows[mid]:
+    subset = candles[-max(lookback, 10):]
+    swing_highs, swing_lows = find_swing_points(subset, wing=2)
+    if len(swing_highs) < 2 or len(swing_lows) < 2:
+        # Strong one-way moves confirm few fractal swings (every bar beats its
+        # neighbours). Classify those by net displacement in average-bar-range
+        # units — deterministic and immune to a single closing bar.
+        net = subset[-1].close - subset[0].close
+        avg_range = sum(c.high - c.low for c in subset) / len(subset)
+        if avg_range <= 0:
+            return "NEUTRAL"
+        if net > 1.5 * avg_range:
+            return "BULLISH"
+        if net < -1.5 * avg_range:
+            return "BEARISH"
+        return "NEUTRAL"
+    (_, prev_h), (_, last_h) = swing_highs[-2], swing_highs[-1]
+    (_, prev_l), (_, last_l) = swing_lows[-2],  swing_lows[-1]
+    if last_h > prev_h and last_l > prev_l:
         return "BULLISH"
-    if highs[-1] < highs[mid] and lows[-1] < lows[mid]:
+    if last_h < prev_h and last_l < prev_l:
         return "BEARISH"
     return "NEUTRAL"
 

@@ -562,7 +562,7 @@ function AnalysisRenderer({ session }: { session: GoldSessionRecord }) {
 
       {/* Liquidity Ruler (structured) — falls back to the text KV card otherwise */}
       {session.keyLevels && session.keyLevels.length > 0 && session.priceAtAnalysis != null ? (
-        <LiquidityRuler levels={session.keyLevels} current={session.priceAtAnalysis} />
+        <LiquidityRuler levels={session.keyLevels} current={session.priceAtAnalysis} asOf={session.time} />
       ) : liquidity ? (
         <KVCard title="Liquidity Map" rows={parseKVRows(liquidity.body)} />
       ) : null}

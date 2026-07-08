@@ -4,6 +4,10 @@ import styles from './LiquidityRuler.module.css'
 interface Props {
   levels: KeyLevel[]
   current: number
+  /** Display time of the analysis snapshot (e.g. "08:56 BST"). The ruler shows
+   *  the price frozen at analysis time, NOT the live price — labelling it
+   *  "PRICE NOW" on an old record misled users into thinking the map was live. */
+  asOf?: string
 }
 
 const W = 520
@@ -32,7 +36,7 @@ function kindColor(price: number, kind: KeyLevel['kind'], current: number): stri
   return price >= current ? 'var(--red)' : 'var(--green)'
 }
 
-export function LiquidityRuler({ levels, current }: Props) {
+export function LiquidityRuler({ levels, current, asOf }: Props) {
   // Build the value set (levels + current price) and scale it.
   const prices = [...levels.map(l => l.price), current].filter(p => Number.isFinite(p))
   if (prices.length < 2) return null
@@ -87,7 +91,7 @@ export function LiquidityRuler({ levels, current }: Props) {
           <line x1={SPINE_X - 4} y1={curY} x2={SPINE_X - 10} y2={curLabelY} stroke="var(--gold)" strokeWidth={1} opacity={0.5} />
         )}
         <text x={SPINE_X - 12} y={curLabelY + 3} className={styles.currentPrice}>{fmtPrice(current)}</text>
-        <text x={W - 8} y={curY - 6} className={styles.currentTag}>PRICE NOW</text>
+        <text x={W - 8} y={curY - 6} className={styles.currentTag}>{asOf ? `PRICE @ ${asOf}` : 'PRICE @ ANALYSIS'}</text>
 
         {/* Levels */}
         {placed.map((p, i) => {
