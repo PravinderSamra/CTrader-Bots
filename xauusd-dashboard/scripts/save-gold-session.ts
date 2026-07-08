@@ -173,16 +173,18 @@ function main() {
   console.log(`Index updated (${index.sessions.length} session${index.sessions.length !== 1 ? 's' : ''}, last ${MAX_DAYS} days)`)
 
   // Git commit + push
+  // Attribute the data commit to the bot identity PER-COMMAND (`git -c ...`),
+  // NOT via `git config` — a persistent local config leaks the bot identity into
+  // the repo and mislabels any subsequent human/Claude commits as gold-session-bot.
+  const BOT_ID = `-c user.name="gold-session-bot" -c user.email="gold-session-bot@noreply.github.com"`
   try {
-    run(`git -C "${REPO_ROOT}" config user.name "gold-session-bot"`)
-    run(`git -C "${REPO_ROOT}" config user.email "gold-session-bot@noreply.github.com"`)
     run(`git -C "${REPO_ROOT}" add xauusd-dashboard/public/data/sessions/`)
 
     let hasStagedChanges = false
     try { run(`git -C "${REPO_ROOT}" diff --staged --quiet`); } catch { hasStagedChanges = true }
 
     if (hasStagedChanges) {
-      run(`git -C "${REPO_ROOT}" commit -m "chore: gold-session ${date} ${timeDisplay}"`)
+      run(`git -C "${REPO_ROOT}" ${BOT_ID} commit -m "chore: gold-session ${date} ${timeDisplay}"`)
       // Rebase the current branch onto the latest main so the push fast-forwards,
       // then push THIS commit (HEAD) to origin/main. Using `HEAD:main` (not
       // `push origin main`) is essential when the working tree is on a feature
