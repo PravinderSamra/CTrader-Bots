@@ -15,27 +15,28 @@ Data gathering is structured into phases by dependency. Within each phase, fire 
 
 ### Phase A — No dependencies (fire all at once immediately)
 
-**⚠️ Load the cTrader tool schemas first.** In the Claude Code CLI the `mcp__ctrader__*` tools are **deferred** — they appear by name in a `<system-reminder>` list but their schemas are NOT loaded, so calling them directly fails with `InputValidationError`. Before the first cTrader call of the run, load them in one `ToolSearch`:
+**✅ PREFERRED cTrader path — the one-command HTTP fetch (use this by default).** The `mcp__ctrader__*` MCP tools are unreliable (the stdio/SSE connector frequently fails to register in remote sessions or drops mid-run). The cTrader server reached **directly over HTTPS is stable**, so the reliable way to get ALL cTrader data — spot, positions, balance, and every trendbar — is one script:
 
+```bash
+python3 /home/user/CTrader-Bots/ICT-SMC-Local-Agent/ctrader_http_fetch.py
 ```
-ToolSearch  query: select:mcp__ctrader__get_spot_prices,mcp__ctrader__get_trendbars,mcp__ctrader__get_positions,mcp__ctrader__get_balance,mcp__ctrader__get_symbols
-```
 
-Only after that result comes back are the tools callable. (If `ToolSearch` returns nothing for these names — the `ctrader` server never registered as a session connector — use the direct-HTTP fallback described in the symbolId bullet below.) You can fire this `ToolSearch` in the same response as the TradingView pre-load `ToolSearch` at the end of Phase A.
+It prints a JSON summary (spot bid/ask/mid + high/low, positions, balance, `trendbar_counts`) for your ACCOUNT CONTEXT section, and — crucially — **writes `/tmp/gold_session_input.json` and the raw `/tmp/gs_*.json` files directly**, already pipette-divided and assembled. That means when you use this path you **skip the Phase B cTrader tool calls AND the Phase C1 heredoc assembly entirely** — go straight to running `skill_adapter.py` on the input it produced. It reads the token from `$CTRADER_MCP_SLUG`, uses a persistent keep-alive connection, purges stale temp files first, and exits non-zero with a clear message on any failure (including `HTTP 401` = expired token, a credential issue, not retryable). Run it in the same response as the macro-snapshot fetch below.
 
-Call all of the following in one response:
+- **If the HTTP script fails** (non-zero exit): read its stderr. `HTTP 401` → the `CTRADER_MCP_SLUG` token is expired, report it as a credential issue and stop (no record). Insufficient trendbars / market closed → report and stop. Do NOT fall back to fabricating data or reusing old files — a failed fetch means a failure report and NO dashboard record (enforced: `skill_adapter.py` and `save-gold-session.ts` both reject stale data).
 
-- **Resolve symbolId — try the known-stable ID first, skip `get_symbols` if possible.** `XAUUSD` on this account's broker is `symbolId: 241` (`XAUUSD_SB`), `pipDigits: 5` (confirmed empirically 2026-07-07 via direct HTTP call — divide raw bid by `10^5` and it lands in the $3000–5000 gold range). Note: symbolId `41` appeared in earlier versions of this doc but does not resolve on this account — always use `241`. Try `mcp__ctrader__get_spot_prices` directly with `symbolId: 241` first; if that returns a sane price, skip `get_symbols` entirely. Only fall back to `mcp__ctrader__get_symbols` if `symbolId: 241` stops resolving (e.g. broker/account migration changed IDs) — that response is very large (~57k lines / ~1.5MB) and both the CTrader MCP transport and this account's own `xauusd-dashboard` data-fetch script have independently hit parsing failures on payloads that size (see 2026-07-06 incident: `fetch-static-data.ts`'s SSE parser silently returned `null` on it — fixed in that script by hardcoding known symbolIds instead of calling `get_symbols` on every run; same logic applies here). If you do fall back to it, extract just the rows you need rather than scanning inline: `python3 -c "import sys,json; d=json.load(sys.stdin); [print(s['symbolId'],s.get('pipDigits'),s['symbolName']) for s in d.get('symbols',[]) if 'XAU' in s.get('symbolName','')]"`.
-  - **If `get_symbols` succeeds (or is skipped) but `get_spot_prices`/`get_trendbars` still fail or return null**, check for an upstream `HTTP 401` embedded in the error/response text — this means the *broker session itself* is unauthorized (a `CTRADER_MCP_TOKEN`/session-credential problem), a completely different failure mode from the large-payload parsing issue above and not fixable by retrying or by any code change here. Report it plainly as a credential issue rather than retrying blindly.
-  - **If the `mcp__ctrader__*` tools don't resolve at all** (not listed by `ToolSearch`, not in `ListConnectors`) — this happened 2026-07-07 in the Claude Code web/remote environment, where the project's `.mcp.json`-declared `ctrader` HTTP server never registered as a session connector — fall back to calling the cTrader MCP endpoint directly over HTTP instead of waiting on the tool namespace. See `/home/user/CTrader-Bots/ctrader-mcp-integration-guide.md` for the working Python `http.client` implementation (Lessons 1–7); the required token is already in the `CTRADER_MCP_SLUG` env var. Build the same `get_balance`/`get_positions`/`get_spot_prices`/`get_trendbars` calls through that script instead of the `mcp__ctrader__*` names. Trendbar timestamps over raw HTTP must be ISO 8601 strings (e.g. `"2026-07-07T07:24:11Z"`), not millisecond integers.
-- `mcp__ctrader__get_positions` → check existing exposure on this symbol.
-- `mcp__ctrader__get_balance` → account balance/equity/free margin for position sizing.
+**Alternative — the `mcp__ctrader__*` tools (only if they happen to be loaded and you prefer them).** These are deferred: load their schemas first with `ToolSearch query: select:mcp__ctrader__get_spot_prices,mcp__ctrader__get_trendbars,mcp__ctrader__get_positions,mcp__ctrader__get_balance`. `XAUUSD` on this broker is `symbolId: 241` (`XAUUSD_SB`), `pipDigits: 5`; EURUSD is `symbolId: 1`. If any call errors, returns null, or the tools don't load — **just use the HTTP script above instead**; it is the primary path, not a last resort. (If you ever need to re-resolve a symbolId, `get_symbols` returns ~1.5MB and has caused SSE parse failures — avoid it; extract with `python3 -c "import sys,json; d=json.load(sys.stdin); [print(s['symbolId'],s.get('pipDigits'),s['symbolName']) for s in d.get('symbols',[]) if 'XAU' in s.get('symbolName','')]"`.)
+
+Also fire in this Phase A response:
+
 - **Fetch macro snapshot:** `https://pravindersamra.github.io/CTrader-Bots/xauusd-dashboard/data/daily-snapshot.json` (DXY/yields/Fed/COT/ETF flows/STLFSI4/NFCI/GPR/VIX/GVZ/economicCalendar/newsItems — refreshed hourly during London/NY hours; treat `generatedAt` as "as of last refresh". If fetch fails or data is >4h stale during session hours / >24h stale outside, say so and proceed without it. An empty array `[]` for `economicCalendar` or `newsItems` means "fetcher ran but found nothing" — report it as "no events/no catalysts" rather than "unavailable".)
   - **If the snapshot is stale beyond threshold, diagnose — don't just report it.** The refresh pipeline is `.github/workflows/xauusd-daily-fetch.yml` (hourly, cron `0 6-20 * * 1-5`, runs `xauusd-dashboard/scripts/fetch-static-data.ts`). Check its recent run history with `mcp__github__actions_list` (`method: list_workflow_runs`, `resource_id: xauusd-daily-fetch.yml`) — a run of consecutive `failure` conclusions (not just missed schedule) means the fetch script itself is broken (e.g. a TypeScript syntax error — this happened 2026-06-30→07-06 from an unescaped backtick inside a template literal, breaking every run for 6 days) and needs a code fix, not a wait. If you have `mcp__github__actions_run_trigger` (`method: run_workflow`) available and confirm/fix the underlying issue, you can force an immediate refresh instead of waiting for the next cron tick — useful for verifying a fix actually resolves things in production.
 - **Finnhub (if API key is in environment):** pull economic calendar and recent headlines for additional event-risk context. If no key, skip and note it — the macro snapshot's `economicCalendar` and `newsItems` fields already cover this.
 - **Pre-load TradingView schema (optional, best-effort):** Call `ToolSearch` with query `select:mcp__tradingview-mcp__recognize_market_pattern`. Fire this in the same response as the other Phase A calls. **This is now a nice-to-have, not a dependency** — the structure engine emits its own deterministic `pattern_check` cross-check (see Phase C1), so if ToolSearch returns nothing, carry on; Phase C has one optional retry and the analysis never blocks on this server (it is a stdio process that frequently fails to register in remote sessions, and unlike cTrader it has no HTTP endpoint to fall back to).
 
-### Phase B — Requires symbolId from Phase A (fire all at once)
+### Phase B — Trendbars (SKIP THIS ENTIRELY if you used the Phase A HTTP script)
+
+**If you ran `ctrader_http_fetch.py` in Phase A, all of Phase B is already done** — the script fetched every trendbar and wrote `/tmp/gold_session_input.json` and `/tmp/gs_*.json`. Skip straight to Phase C1 and run the engine on that input. Phase B below applies ONLY if you are using the `mcp__ctrader__*` tools directly instead.
 
 Once Phase A completes and symbolId is known, call all of the following in one response:
 
@@ -54,7 +55,13 @@ Never proceed to Phase C on partial/missing trendbar data — if any Phase B cal
 
 #### Phase C1 — Fire both at once in one response
 
-- **Structure engine:** divide every D_1/H_1/M_5/M_1 (and the EURUSD M5 proxy) `open/high/low/close` by `10^pipDigits` to get display prices, then build:
+- **Structure engine.** **If you used the Phase A HTTP script, `/tmp/gold_session_input.json` already exists — skip all the assembly below and run the engine directly:**
+  ```bash
+  python3 /home/user/CTrader-Bots/ICT-SMC-Local-Agent/skill_adapter.py < /tmp/gold_session_input.json
+  ```
+  Everything from here to the `PY` block is only for the manual `mcp__ctrader__*` path (assembling the input by hand from tool outputs):
+
+  divide every D_1/H_1/M_5/M_1 (and the EURUSD M5 proxy) `open/high/low/close` by `10^pipDigits` to get display prices, then build:
   ```json
   {"symbol": "XAUUSD", "current_price": <mid of bid/ask>,
    "h1": [...], "m5": [...], "m1": [...],
