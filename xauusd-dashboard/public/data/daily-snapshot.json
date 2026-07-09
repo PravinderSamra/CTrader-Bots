@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-09T07:53:38.824Z",
+  "generatedAt": "2026-07-09T09:22:45.671Z",
   "yields": {
     "US10Y": 4.55,
     "US2Y": 4.19,
@@ -34,26 +34,26 @@
     "openInterestChange": 2852
   },
   "etfFlows": {
-    "gldTonnes": 1138.4,
-    "gldWoWChange": -8.9,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1138.3,
+    "gldWoWChange": -0.1,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4109.365,
-    "XAGUSD": 59.257,
-    "EURUSD": 1.14347,
-    "USDJPY": 162.3405,
-    "USDCHF": 0.80654,
-    "USDCNH": 6.79823,
-    "GBPUSD": 1.3415,
-    "USDCAD": 1.41803,
-    "USDSEK": 9.66873,
-    "US500": 7509,
-    "GER40": 25058.65,
-    "UK100": 10431.55,
+    "XAUUSD": 4109.705,
+    "XAGUSD": 59.22,
+    "EURUSD": 1.14275,
+    "USDJPY": 162.423,
+    "USDCHF": 0.80758,
+    "USDCNH": 6.79819,
+    "GBPUSD": 1.3414,
+    "USDCAD": 1.41854,
+    "USDSEK": 9.68254,
+    "US500": 7494,
+    "GER40": 24977.65,
+    "UK100": 10415.55,
     "ADR_14day": 106.5,
-    "ADR_usedToday": 57,
-    "goldSilverRatio": 69.3
+    "ADR_usedToday": 63.4,
+    "goldSilverRatio": 69.4
   },
   "dollarLiquidity": {
     "stlfsi": -0.7246,
@@ -66,59 +66,59 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Gold eases as Middle East hostilities revive inflation fears - Reuters",
+      "headline": "Gold rises from one-week low as softer dollar lends support - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-09T01:32:00.000Z",
-      "hoursAgo": 6.4
+      "hoursAgo": 7.8
+    },
+    {
+      "headline": "Dollar stands tall as new Gulf attacks fuel oil price surge, Fed hike bets - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-07-09T01:21:00.000Z",
+      "hoursAgo": 8
     },
     {
       "headline": "Oil rises more than a dollar per barrel as US launches fresh strikes against Iran - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-08T22:23:53.000Z",
-      "hoursAgo": 9.5
+      "hoursAgo": 11
     },
     {
       "headline": "Investors get inflation 'wake-up call' as Trump fires up oil prices - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-08T16:54:23.000Z",
-      "hoursAgo": 15
+      "hoursAgo": 16.5
     },
     {
       "headline": "How Iran's 'golden weapon' of Hormuz became a bigger priority than its long-disputed nuclear programme - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-08T16:21:39.000Z",
-      "hoursAgo": 15.5
+      "hoursAgo": 17
     },
     {
       "headline": "Poland's zloty pulls back from 19-month low after interest rates unchanged - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-08T14:55:47.000Z",
-      "hoursAgo": 17
+      "hoursAgo": 18.4
     },
     {
       "headline": "India battery storage tariffs seen rising as higher costs squeeze low-priced projects - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-08T13:13:56.000Z",
-      "hoursAgo": 18.7
+      "hoursAgo": 20.1
     },
     {
       "headline": "Fed meeting minutes to show 'family fight' over rates. The squabble could drag on for a while",
       "source": "CNBC",
       "publishedAt": "2026-07-08T11:40:31.000Z",
-      "hoursAgo": 20.2
-    },
-    {
-      "headline": "Airbus trims jet industry demand forecast after Iran war, tariffs - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-07-08T11:05:08.000Z",
-      "hoursAgo": 20.8
+      "hoursAgo": 21.7
     }
   ],
   "briefing": {
     "biasScore": 1,
-    "biasLabel": "NEUTRAL",
-    "confidence": 4,
-    "briefing": "Right now, two big forces are pulling gold in opposite directions, which is why price action feels messy. On one hand, the US launching fresh strikes against Iran (reported about 9.5 hours ago) and ongoing Middle East hostilities are serious geopolitical risk events — and gold is traditionally a 'safe haven' asset, meaning people buy it when they fear war or instability. On the other hand, that same conflict is pushing oil prices sharply higher, which is reigniting inflation fears [inflation = the general rise in prices across the economy]. Higher inflation can push the Federal Reserve [America's central bank] to keep interest rates elevated longer, and higher interest rates make gold less attractive because gold pays no income. This competing push-and-pull is the dominant theme right now. The most market-moving recent headlines are the US Iran strikes (9.5 hours ago) and the Reuters piece on gold easing despite Middle East tensions (6.4 hours ago) — that 'easing' tells you the inflation/rate-fear side is currently winning over the safe-haven demand. The directional bias is NEUTRAL-to-slightly-bullish: geopolitical risk remains genuinely elevated (the Geopolitical Risk Index [a measure of global conflict stress] sits at 173.6, which is historically high), but the gold-versus-rates tug-of-war is creating chop [sideways, unpredictable price movement]. Confidence is 4/10 — if Iran tensions escalate further or oil spikes again, gold could break higher; if bond yields [the return investors earn on US government debt] keep rising, gold faces downward pressure. The calendar shows NO scheduled economic events today, which removes one source of volatility but also removes a clear directional trigger. Importantly, there is no high-impact event flagged for later this week in the data provided, though the Fed meeting minutes (referenced in a CNBC piece 20 hours ago) remain a background concern for rate-path expectations. On levels: gold is at $4,109. The 14-day Average Daily Range [the typical size of a daily price swing, averaged over two weeks] is $106.50, and today has already used $57 of that — meaning roughly $49 of 'typical' daily movement may remain. Key levels to watch are the $4,080 area as near-term support [a price floor where buyers tend to step in] and $4,140–$4,150 as resistance [a ceiling where sellers tend to appear]. For trade integration: this is an Asian session snapshot, before London and New York open — your preferred trading windows. Given the mixed signals and no clear catalyst or fresh trend impulse, this is NOT a high-conviction window. If you trade at all, keep position size small (quarter or half your normal size) and wait for the 1H chart to confirm a clear higher-high / higher-low structure before committing. Remember: when two big forces are fighting each other, patient traders win by waiting for one side to clearly take control.",
-    "generatedAt": "2026-07-09T07:53:58.234Z"
+    "biasLabel": "BULLISH",
+    "confidence": 5,
+    "briefing": "RIGHT NOW, gold is being pulled in two directions at once — a softer dollar is giving it a lift, but rising oil prices and growing expectations that the Federal Reserve [America's central bank] might keep interest rates higher for longer are acting as a brake. The dominant forces today are Middle East geopolitical risk [the fear that conflict will disrupt global markets] and inflation concerns driven by an oil price spike. RECENT CATALYSTS: About 11 hours ago, Reuters reported fresh US military strikes against Iran, which sent oil prices sharply higher. Around 8 hours ago, a follow-up report noted that Gulf attacks are fuelling 'Fed hike bets' [market expectations that the Fed will raise rates], which pushed the dollar higher. Then, roughly 7–8 hours ago, gold bounced off a one-week low as the dollar softened slightly, giving gold a short-term floor. These two forces — geopolitical fear supporting gold, but a stronger dollar and higher rate expectations resisting it — are creating a tug-of-war. DIRECTIONAL BIAS: Lean MILDLY BULLISH from here. Gold has already bounced from a week's low and geopolitical risk remains elevated, which historically supports gold. However, the dollar and rate expectations cap the upside, so don't expect a clean trending move — expect choppy, hesitant price action. CONFIDENCE SCORE: 5/10. Confidence is low because the dollar and rate-hike fears could easily win this battle if oil keeps rising and pushes inflation worries higher. The bias flips bearish if the dollar strengthens further or oil triggers more Fed hawkishness [central bank language signalling higher rates]. EVENT RISK: The calendar data shows NO scheduled economic events today, which means no sudden data-driven spikes to worry about this session — but that also means geopolitical headlines remain the dominant driver, and those can hit without warning. No major high-impact events are flagged later this week in the data either, though the FOMC meeting minutes referenced in a headline (~22 hours ago) suggest internal Fed debate over rates is live and could resurface. KEY LEVELS: Gold is currently at $4,109.70. The 14-day average daily range [the typical distance price travels in a day] is $106.50, and today's move has already consumed $63.40 of that — meaning roughly $43 of average range remains. Watch $4,130–4,140 as near-term resistance [a ceiling price tends to struggle against] and $4,080–4,085 as support [a floor where buyers have stepped in before]. TRADE INTEGRATION: This is a reduced-conviction window. The mild bullish bias means buying dips [waiting for price to pull back before entering] is preferred over chasing price upward, but keep position size small [risk less than you normally would] given the conflicting forces. Wait for the 5M chart to show a clear pullback into a previous support zone before committing, and use the 1M for a precise entry trigger. The one thing to remember today: gold wants to go up on fear, but the dollar wants to push it back down — wait for the 5M to show you who is winning before you trade.",
+    "generatedAt": "2026-07-09T09:23:06.513Z"
   }
 }
