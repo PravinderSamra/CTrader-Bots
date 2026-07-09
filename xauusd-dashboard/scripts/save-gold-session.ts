@@ -17,6 +17,7 @@
  */
 
 import * as fs from 'fs'
+import * as os from 'os'
 import * as path from 'path'
 import { fileURLToPath } from 'url'
 import { execSync } from 'child_process'
@@ -176,10 +177,6 @@ function main() {
   fs.writeFileSync(sessionFile, JSON.stringify(record, null, 2))
   console.log(`Session saved: ${path.relative(REPO_ROOT, sessionFile)}`)
 
-  // Load + update index (rolling MAX_DAYS window)
-  let index: SessionIndex = { updatedAt: '', sessions: [] }
-  try { index = JSON.parse(fs.readFileSync(INDEX_FILE, 'utf8')) as SessionIndex } catch { /* fresh index */ }
-
   const entry: IndexEntry = {
     date, time: timeDisplay, filename: `${date}/${hhmm}.json`,
     timestamp: now.toISOString(),
@@ -193,51 +190,96 @@ function main() {
   cutoff.setUTCDate(cutoff.getUTCDate() - MAX_DAYS)
   const cutoffStr = cutoff.toISOString().slice(0, 10)
 
-  index.sessions = [
-    ...index.sessions.filter(s => s.date >= cutoffStr && s.filename !== entry.filename),
-    entry,
-  ].sort((a, b) => b.timestamp.localeCompare(a.timestamp))
-  index.updatedAt = now.toISOString()
+  // Rebuild the rolling index by unioning `entry` onto a given base index JSON.
+  // The base is always origin/main's CURRENT index.json (see the push loop
+  // below) — never the local working copy, which can be arbitrarily stale.
+  function buildIndex(baseIndexJson: string): SessionIndex {
+    let idx: SessionIndex = { updatedAt: '', sessions: [] }
+    try { idx = JSON.parse(baseIndexJson) as SessionIndex } catch { /* empty base */ }
+    idx.sessions = [
+      ...idx.sessions.filter(s => s.date >= cutoffStr && s.filename !== entry.filename),
+      entry,
+    ].sort((a, b) => b.timestamp.localeCompare(a.timestamp))
+    idx.updatedAt = now.toISOString()
+    return idx
+  }
 
-  fs.writeFileSync(INDEX_FILE, JSON.stringify(index, null, 2))
-  console.log(`Index updated (${index.sessions.length} session${index.sessions.length !== 1 ? 's' : ''}, last ${MAX_DAYS} days)`)
-
-  // Git commit + push
-  // Attribute the data commit to the bot identity PER-COMMAND (`git -c ...`),
-  // NOT via `git config` — a persistent local config leaks the bot identity into
-  // the repo and mislabels any subsequent human/Claude commits as gold-session-bot.
+  // ── Conflict-proof commit + push to main ───────────────────────────────────
+  // The old approach committed on the feature branch then `git pull --rebase
+  // origin main`. index.json is a rolling window that BOTH this save and the
+  // concurrent hourly data-fetch workflow rewrite, so the rebase routinely hit
+  // a merge conflict on index.json and left the push half-done — the session
+  // file landed but the index never updated, so the dashboard showed nothing
+  // (observed 2026-07-09, Haiku run). Instructions can't fix that; the push has
+  // to be conflict-proof by construction.
+  //
+  // Fix: never rebase. Build the commit directly on top of the true tip of
+  // origin/main using plumbing, so index.json is rewritten FROM origin/main's
+  // copy (not merged with it) and no conflict is possible:
+  //   1. fetch origin/main
+  //   2. index := buildIndex(origin/main's index.json) + our entry
+  //   3. seed a temp git index from origin/main's tree, `git add` exactly our
+  //      two files (session + index) → the tree = origin/main's tree with those
+  //      two paths overlaid, nothing else from the working tree can leak in
+  //   4. commit-tree with origin/main as the sole parent (BOT_ID on commit-tree
+  //      sets BOTH author and committer, so no split-identity replay)
+  //   5. push the new commit to main as a PLAIN (non-force) update — a true
+  //      fast-forward when origin/main hasn't moved; cleanly REJECTED (not
+  //      merged) if it raced, which sends us back to step 1 on the new tip.
   const BOT_ID = `-c user.name="gold-session-bot" -c user.email="gold-session-bot@noreply.github.com"`
-  try {
-    run(`git -C "${REPO_ROOT}" add xauusd-dashboard/public/data/sessions/`)
+  const GIT      = `git -C "${REPO_ROOT}"`
+  const REL_SESSION = `xauusd-dashboard/public/data/sessions/${date}/${hhmm}.json`
+  const REL_INDEX   = `xauusd-dashboard/public/data/sessions/index.json`
+  const TMP_INDEX   = path.join(os.tmpdir(), `gs_git_index_${process.pid}`)
 
-    let hasStagedChanges = false
-    try { run(`git -C "${REPO_ROOT}" diff --staged --quiet`); } catch { hasStagedChanges = true }
+  function sleep(sec: number) { try { execSync(`sleep ${sec}`) } catch { /* best effort */ } }
 
-    if (hasStagedChanges) {
-      run(`git -C "${REPO_ROOT}" ${BOT_ID} commit -m "chore: gold-session ${date} ${timeDisplay}"`)
-      // Rebase the current branch onto the latest main so the push fast-forwards,
-      // then push THIS commit (HEAD) to origin/main. Using `HEAD:main` (not
-      // `push origin main`) is essential when the working tree is on a feature
-      // branch — `git push origin main` would push the stale local `main` ref and
-      // silently fail to deploy the session that was just committed on HEAD.
-      //
-      // BOT_ID must ALSO wrap this rebase: whenever origin/main has moved (common —
-      // the hourly data-fetch workflow pushes independently), the rebase REPLAYS the
-      // commit just made above, and `git rebase` sets the COMMITTER of the replayed
-      // commit from the ambient ad-hoc `user.name`/`user.email` config — NOT from the
-      // `-c` override scoped to the earlier `commit` invocation, which only applied to
-      // that one command. Author is preserved from the original commit, so without
-      // this the result is a split identity (author=gold-session-bot, committer=
-      // whatever the local config happened to be) — observed 2026-07-08.
-      run(`git -C "${REPO_ROOT}" ${BOT_ID} pull --rebase origin main`)
-      run(`git -C "${REPO_ROOT}" push origin HEAD:main`)
-      console.log('Committed and pushed to main — dashboard updates after GitHub Actions deploys (~1-2 min).')
-    } else {
-      console.log('No changes staged — session may already be committed.')
+  let pushed = false
+  let sessionCount = 0
+  let shortSha = ''
+  let lastErr = ''
+  for (let attempt = 0; attempt < 5 && !pushed; attempt++) {
+    try {
+      run(`${GIT} fetch origin main`)
+
+      // Base the index on origin/main's current copy (empty on first-ever run).
+      let baseIndex = ''
+      try { baseIndex = run(`${GIT} show origin/main:${REL_INDEX}`) } catch { /* no index yet */ }
+      const index = buildIndex(baseIndex)
+      sessionCount = index.sessions.length
+      fs.writeFileSync(INDEX_FILE, JSON.stringify(index, null, 2))
+
+      // Stage exactly our two files into a temp index seeded from origin/main.
+      try { fs.rmSync(TMP_INDEX) } catch { /* not present */ }
+      const withIdx = `${GIT} -c "core.hooksPath=/dev/null"`
+      const IDXENV  = { ...process.env, GIT_INDEX_FILE: TMP_INDEX }
+      const runIdx  = (cmd: string) => execSync(cmd, { stdio: 'pipe', env: IDXENV }).toString().trim()
+      runIdx(`${withIdx} read-tree origin/main`)
+      runIdx(`${withIdx} add "${REL_SESSION}" "${REL_INDEX}"`)
+      const tree   = runIdx(`${withIdx} write-tree`)
+      const parent = run(`${GIT} rev-parse origin/main`)
+      const commit = run(`${GIT} ${BOT_ID} commit-tree ${tree} -p ${parent} -m "chore: gold-session ${date} ${timeDisplay}"`)
+
+      // Plain (non-force) push: fast-forward if origin/main is still `parent`,
+      // rejected if it raced — never a force, so a concurrent push is never
+      // clobbered. Rejection throws → we loop and rebuild on the new tip.
+      run(`${GIT} push origin ${commit}:main`)
+      shortSha = commit.slice(0, 7)
+      pushed = true
+    } catch (err) {
+      lastErr = (err as Error).message
+      if (attempt < 4) sleep(1 + attempt)  // brief backoff before rebuilding on the new tip
+    } finally {
+      try { fs.rmSync(TMP_INDEX) } catch { /* */ }
     }
-  } catch (err) {
-    console.error('Git operation failed:', (err as Error).message)
-    console.error('Session file saved locally. Retry with: git push origin main')
+  }
+
+  if (pushed) {
+    console.log(`Index updated (${sessionCount} session${sessionCount !== 1 ? 's' : ''}, last ${MAX_DAYS} days)`)
+    console.log(`Committed and pushed to main (${shortSha}) — dashboard updates after GitHub Actions deploys (~1-2 min).`)
+  } else {
+    console.error('Git push to main failed after 5 attempts:', lastErr)
+    console.error(`Session file saved locally at ${path.relative(REPO_ROOT, sessionFile)}. Retry the save, or push manually.`)
     process.exit(1)
   }
 }
