@@ -217,6 +217,34 @@ def main():
         print(json.dumps({"error": "Missing or unparsable h1/m5/m1 candle data — cannot analyse."}), file=sys.stdout)
         sys.exit(1)
 
+    # ── Freshness gate ────────────────────────────────────────────────────────
+    # Refuse to analyse stale candles. On 2026-07-09 a session whose live fetch
+    # failed recycled the previous day's data (from old temp files / prior saved
+    # records) and published a "fresh" brief built on it — wrong Asian range,
+    # phantom sweeps, day-old structure. Instructions alone didn't prevent it,
+    # so the engine now mechanically rejects inputs whose newest candle is older
+    # than the timeframe's tolerance. Limits are generous enough for normal run
+    # latency and the daily 17:00–18:00 ET trading break, but far below the
+    # hours-to-days gap of any stale-reuse scenario. (Weekend note: gold is
+    # closed Fri 21:00 UTC → Sun 22:00 UTC, so a weekend run trips this gate by
+    # design — there is no live session to analyse.)
+    _LIMITS_MIN = {"m1": 45, "m5": 90, "h1": 180}
+    _now = datetime.now(timezone.utc)
+    data_age = {}
+    for _name, _series in (("h1", h1), ("m5", m5), ("m1", m1)):
+        _age = (_now - _series[-1].timestamp).total_seconds() / 60
+        data_age[_name] = round(_age, 1)
+    stale = {n: a for n, a in data_age.items() if a > _LIMITS_MIN[n]}
+    if stale:
+        print(json.dumps({
+            "error": "STALE DATA — refusing to analyse. Newest candle age (minutes): "
+                     + ", ".join(f"{n}={a}" for n, a in stale.items())
+                     + f" (limits: {_LIMITS_MIN}). Re-fetch live trendbars from cTrader; "
+                       "NEVER reuse a previous run's temp files or previously saved session records.",
+            "data_age_minutes": data_age,
+        }))
+        sys.exit(1)
+
     if current_price is None:
         current_price = m1[-1].close
 
@@ -232,6 +260,7 @@ def main():
     output = {
         "symbol": symbol,
         "current_price": current_price,
+        "data_age_minutes": data_age,
         "session": {
             "current_session": sessions.current_session(),
             "active_kill_zone": sessions.active_kill_zone(),

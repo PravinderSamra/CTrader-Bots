@@ -117,6 +117,36 @@ function main() {
   const meta     = JSON.parse(fs.readFileSync(metaPath, 'utf8')) as SessionMeta
   const analysis = fs.readFileSync(analysisPath, 'utf8').trim()
 
+  // ── Freshness gate ─────────────────────────────────────────────────────────
+  // This script is the single choke point through which every record reaches
+  // the dashboard, so it verifies the analysis was actually built from a fresh
+  // engine run. On 2026-07-09 a session whose cTrader fetch failed fabricated a
+  // "fresh" brief from the previous day's saved records and published it —
+  // wrong Asian range, phantom sweeps, day-old structure timestamps. The skill
+  // docs already forbade that; a mechanical check is what actually stops it.
+  // /tmp/gold_session_input.json is the canonical engine input the skill just
+  // assembled (STEP 0 Phase C1); require it to exist and its newest M1/M5/H1
+  // candle to be recent. No fresh engine input → no publish.
+  const ENGINE_INPUT = process.argv[4] ?? '/tmp/gold_session_input.json'
+  const MAX_INPUT_AGE_MIN = 60
+  try {
+    const inp = JSON.parse(fs.readFileSync(ENGINE_INPUT, 'utf8')) as Record<string, Array<{ timestamp: number }>>
+    let newest = 0
+    for (const key of ['m1', 'm5', 'h1']) {
+      for (const bar of inp[key] ?? []) newest = Math.max(newest, bar.timestamp ?? 0)
+    }
+    const ageMin = (Date.now() - newest) / 60_000
+    if (!newest || ageMin > MAX_INPUT_AGE_MIN) {
+      console.error(`REFUSING TO SAVE: engine input at ${ENGINE_INPUT} has newest candle ${Math.round(ageMin)} min old (limit ${MAX_INPUT_AGE_MIN}).`)
+      console.error('The analysis was not built from a fresh engine run. Re-run STEP 0 (fetch live trendbars, assemble input, run skill_adapter.py) and try again.')
+      process.exit(1)
+    }
+  } catch {
+    console.error(`REFUSING TO SAVE: cannot read engine input at ${ENGINE_INPUT}.`)
+    console.error('Every dashboard record must come from a fresh skill_adapter.py run in this session — never from previously saved records or another run’s output.')
+    process.exit(1)
+  }
+
   const now  = new Date()
   const date = now.toISOString().slice(0, 10)
 

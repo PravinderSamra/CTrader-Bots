@@ -48,7 +48,7 @@ Once Phase A completes and symbolId is known, call all of the following in one r
 
 **⚠️ API quirk:** The `count`-only form (`count=100` without timestamps) fails with `INVALID_REQUEST: fromTimestamp must not be null` on this deployment. Always use explicit `fromTimestamp`+`toTimestamp` ranges as shown above.
 
-Never proceed to Phase C on partial/missing trendbar data — if any Phase B call fails, report the failure and stop rather than guessing prices.
+Never proceed to Phase C on partial/missing trendbar data — if any Phase B call fails, report the failure and stop rather than guessing prices. **In particular, NEVER reconstruct an "analysis" from previously saved session records (`public/data/sessions/…`), old temp files, or numbers remembered from conversation context — those are yesterday's market.** This is now mechanically enforced in two places: `skill_adapter.py` refuses inputs whose newest candle is stale (M1 >45 min / M5 >90 / H1 >180), and `save-gold-session.ts` refuses to publish unless `/tmp/gold_session_input.json` exists with candles <60 min old (2026-07-09 incident: a session whose cTrader fetch failed published a brief rebuilt from the prior day's records — wrong Asian range, phantom sweeps). If data cannot be fetched, the correct output is a failure report and NO dashboard record.
 
 ### Phase C — Requires trendbar data from Phase B (two sub-steps)
 
@@ -64,6 +64,13 @@ Never proceed to Phase C on partial/missing trendbar data — if any Phase B cal
 
   **Do NOT hand-transcribe candles or hand-divide by 10^5 — it is slow and error-prone across hundreds of bars.** Instead, dump each raw trendbar tool result verbatim to its own file and let Python do the division and assembly. Write the raw JSON that each `get_trendbars` returned (the object containing the `trendbars`/`bars` array, exactly as the tool gave it) to files via heredoc, then run a small assembler:
   ```bash
+  # FIRST: purge any temp files from previous runs. The same container can host
+  # multiple sessions, so stale gs_*.json / gold_session_input.json from an
+  # earlier run WILL be silently picked up by the assembler if a heredoc write
+  # fails. (2026-07-09 incident: a session recycled the prior day's data into a
+  # published record.)
+  rm -f /tmp/gs_h1.json /tmp/gs_m5.json /tmp/gs_m1.json /tmp/gs_d1.json /tmp/gs_smt.json /tmp/gold_session_input.json /tmp/engine_out*.json
+
   # One heredoc per timeframe — paste the raw tool output between the EOF markers.
   cat > /tmp/gs_h1.json  <<'EOF'
   { ...raw H_1 get_trendbars result... }
