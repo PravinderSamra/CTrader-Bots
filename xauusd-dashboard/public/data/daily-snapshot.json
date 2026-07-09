@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-09T17:48:31.875Z",
+  "generatedAt": "2026-07-09T19:23:36.021Z",
   "yields": {
     "US10Y": 4.55,
     "US2Y": 4.19,
@@ -35,25 +35,25 @@
   },
   "etfFlows": {
     "gldTonnes": 1130.8,
-    "gldWoWChange": -1.9,
-    "trend3W": "OUTFLOW"
+    "gldWoWChange": null,
+    "trend3W": null
   },
   "snapshotPrices": {
-    "XAUUSD": 4136.825,
-    "XAGUSD": 60.4485,
-    "EURUSD": 1.14374,
-    "USDJPY": 162.295,
-    "USDCHF": 0.80607,
-    "USDCNH": 6.79472,
-    "GBPUSD": 1.34144,
-    "USDCAD": 1.41648,
-    "USDSEK": 9.65433,
-    "US500": 7546.8,
-    "GER40": 25145.65,
-    "UK100": 10473.9,
+    "XAUUSD": 4123.735,
+    "XAGUSD": 59.961,
+    "EURUSD": 1.14316,
+    "USDJPY": 162.3695,
+    "USDCHF": 0.80688,
+    "USDCNH": 6.79601,
+    "GBPUSD": 1.34151,
+    "USDCAD": 1.41683,
+    "USDSEK": 9.66044,
+    "US500": 7539,
+    "GER40": 25120.65,
+    "UK100": 10452.4,
     "ADR_14day": 106.5,
     "ADR_usedToday": 83.8,
-    "goldSilverRatio": 68.4
+    "goldSilverRatio": 68.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.7246,
@@ -69,44 +69,50 @@
       "headline": "Anthropic appoints former Fed Chair Ben Bernanke to its independent trust",
       "source": "CNBC",
       "publishedAt": "2026-07-09T17:23:40.000Z",
-      "hoursAgo": 0.4
+      "hoursAgo": 2
+    },
+    {
+      "headline": "Fed's Williams expects energy prices to abate even as Iran war flares - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-07-09T16:51:45.000Z",
+      "hoursAgo": 2.5
     },
     {
       "headline": "Goldman Sachs wins $70 billion in asset management deals with Verizon, Lockheed Martin",
       "source": "CNBC",
       "publishedAt": "2026-07-09T14:11:19.000Z",
-      "hoursAgo": 3.6
+      "hoursAgo": 5.2
     },
     {
       "headline": "Bank of Japan sees growing inflation pressures from Iran war - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-09T05:14:00.000Z",
-      "hoursAgo": 12.6
+      "hoursAgo": 14.2
     },
     {
       "headline": "Gold ticks higher on easing dollar, focus on Middle East flare-up - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-09T01:32:00.000Z",
-      "hoursAgo": 16.3
+      "hoursAgo": 17.9
     },
     {
-      "headline": "Dollar drifts with oil; Gulf tensions, Fed minutes in focus - Reuters",
+      "headline": "Dollar dips as labor market remains stable, US-Iran tensions rise - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-09T01:21:00.000Z",
-      "hoursAgo": 16.5
+      "hoursAgo": 18
     },
     {
       "headline": "Oil rises more than a dollar per barrel as US launches fresh strikes against Iran - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-08T22:23:53.000Z",
-      "hoursAgo": 19.4
+      "hoursAgo": 21
     }
   ],
   "briefing": {
     "biasScore": 3,
     "biasLabel": "BULLISH",
     "confidence": 6,
-    "briefing": "RIGHT NOW, the dominant force driving gold is a combination of active geopolitical conflict (a real-world crisis that pushes investors toward safe assets like gold) and a slightly soft US dollar — both of which favour gold moving higher. The geopolitical risk reading of 173.6 is elevated, and that backdrop is clearly reflected in recent headlines. About 19 hours ago, Reuters reported fresh US military strikes against Iran, which is the single most important catalyst in this snapshot — armed conflict in the Middle East historically sends money rushing into gold as a 'safe haven' [a store of value people buy when they're scared]. Around 16 hours ago, additional Reuters headlines confirmed gold was already ticking higher on an easing dollar alongside that Middle East flare-up, and about 12 hours ago Reuters noted the Bank of Japan is seeing growing inflation pressures tied to the Iran war, suggesting this conflict is now rippling into global economic thinking. The Bernanke/Anthropic headline and the Goldman Sachs deals are corporate stories with no direct gold relevance — ignore those. The DIRECTIONAL BIAS is cautiously BULLISH [leaning toward price going up] for the rest of today's New York session. Gold is already at $4,136.82, the dollar (DXY at 100.88) is not showing strength, real yields [the return on US bonds after stripping out inflation] have ticked up slightly which is normally a mild headwind for gold, but geopolitical fear is overriding that for now. CONFIDENCE is 6/10. What would change this view: a sudden ceasefire announcement or de-escalation in the Middle East, or a sharp dollar rally on surprise Fed commentary, would quickly flip the picture. On CONVICTION SIZE: the calendar shows no scheduled economic events today, which removes one source of sudden volatility — that's a mild green light for trading. However, the calendar field is entirely empty for the rest of the week too, which is unusual; treat that as a data gap rather than confirmation there are no events, and stay alert for unscheduled headlines. KEY LEVELS to watch: gold has used approximately 83.8 of its average daily range of 106.5 points [the typical distance price travels in a full day], meaning roughly 22–23 points of 'room' may remain — not a lot of runway left today, so chasing new highs late in the session carries real risk of a reversal. Look for pullbacks [short dips against the main trend] into structure on the 5-minute chart as potential long [buy] entries rather than jumping in at current highs. One concern to flag: the Commitments of Traders [a weekly report showing how large professional traders are positioned] shows a net short position [big traders are betting on price going DOWN], which is a contrarian signal worth watching — but crowded shorts can also fuel sharp squeezes upward if bad news keeps coming. TRADE INTEGRATION: this is a reasonable window for trend-following longs [buys] with reduced size, given limited daily range remaining and the absence of confirmed calendar events; wait for a 5-minute pullback and a 1-minute entry confirmation before executing. Screenshot this: geopolitical fear is in the driver's seat today — trade WITH gold going up, but only on dips, because most of today's move may already be done.",
-    "generatedAt": "2026-07-09T17:48:52.371Z"
+    "briefing": "Right now, the two biggest forces driving gold are an active military conflict between the US and Iran, and a slightly softer US dollar — both of which typically push gold higher as investors seek safety. The Iran war story has been building for over a day: about 21 hours ago Reuters reported fresh US airstrikes against Iran, oil spiked over a dollar per barrel, and about 18 hours ago the dollar dipped as that geopolitical tension offset otherwise stable US jobs data. Around 2.5 hours ago, Fed official Williams said he expects energy prices to cool even as the Iran conflict flares — that's a mild dovish [leaning toward lower interest rates] signal, which is also modestly supportive for gold since lower rates reduce the appeal of holding dollars over gold. The Anthropic/Bernanke story is unrelated to markets and can be ignored. Directional bias leans BULLISH [favouring price going up]: geopolitical risk is elevated (the GPR index, a measure of global conflict stress, sits at 173.6 — well above normal), the dollar is soft (DXY at 100.92), and financial conditions are loose (the stress indexes are negative, meaning money is flowing freely). However, real yields [the return on US bonds after inflation] have crept up 0.06% today to 2.3%, which acts as a gentle brake on gold's upside. The calendar is empty today — no scheduled news events to cause sudden spikes or reversals, which is actually helpful for clean trend-following setups. The main event risk this week: the calendar shows no flagged events in the JSON, but the next Fed meeting is July 29, and markets are pricing a 76% chance of no rate cut, so any surprise Fed-speaker commentary could shift things quickly. On levels: gold is at $4,123. The 14-day average daily range [how far price typically moves in a day] is $106.50, and today's range used is already $83.80 — meaning roughly $22–23 of typical daily movement may remain. That's a narrow window, so chasing big moves late in the New York session carries real risk of getting caught in a reversal. For trade integration: the 1H trend is bullish, conditions favour longs [buy trades], but with 79% of today's average range already consumed, size down and wait for a clean 5M pullback into a key level before entering — don't chase. Confidence is 6/10; a strong dollar bounce or a de-escalation headline on Iran would flip this bias quickly. The one thing to remember: gold has a tailwind today from war risk and a soft dollar, but most of today's move is already done — patience over chasing.",
+    "generatedAt": "2026-07-09T19:23:52.956Z"
   }
 }
