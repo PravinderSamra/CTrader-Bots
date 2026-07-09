@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-08T20:57:44.690Z",
+  "generatedAt": "2026-07-09T07:53:38.824Z",
   "yields": {
     "US10Y": 4.55,
     "US2Y": 4.19,
@@ -7,8 +7,8 @@
     "realYield5Y": 1.99,
     "curve2s10s": 36,
     "breakeven10Y": 2.25,
-    "breakeven5Y": 2.28,
-    "forward5y5y": 2.22,
+    "breakeven5Y": 2.31,
+    "forward5y5y": 2.19,
     "dayOverDay": {
       "US10Y": 0.07,
       "US2Y": 0.06,
@@ -34,26 +34,26 @@
     "openInterestChange": 2852
   },
   "etfFlows": {
-    "gldTonnes": 1147.3,
-    "gldWoWChange": 3.2,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1138.4,
+    "gldWoWChange": -8.9,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4077.415,
-    "XAGUSD": 58.3235,
-    "EURUSD": 1.14162,
-    "USDJPY": 162.6405,
-    "USDCHF": 0.80858,
-    "USDCNH": 6.80637,
-    "GBPUSD": 1.33869,
-    "USDCAD": 1.41745,
-    "USDSEK": 9.70027,
-    "US500": 7467.85,
-    "GER40": 25032.75,
-    "UK100": 10493.5,
-    "ADR_14day": 104.1,
-    "ADR_usedToday": 112.2,
-    "goldSilverRatio": 69.9
+    "XAUUSD": 4109.365,
+    "XAGUSD": 59.257,
+    "EURUSD": 1.14347,
+    "USDJPY": 162.3405,
+    "USDCHF": 0.80654,
+    "USDCNH": 6.79823,
+    "GBPUSD": 1.3415,
+    "USDCAD": 1.41803,
+    "USDSEK": 9.66873,
+    "US500": 7509,
+    "GER40": 25058.65,
+    "UK100": 10431.55,
+    "ADR_14day": 106.5,
+    "ADR_usedToday": 57,
+    "goldSilverRatio": 69.3
   },
   "dollarLiquidity": {
     "stlfsi": -0.7246,
@@ -66,51 +66,51 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Gold eases as Middle East hostilities revive inflation fears - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-07-09T01:32:00.000Z",
+      "hoursAgo": 6.4
+    },
+    {
+      "headline": "Oil rises more than a dollar per barrel as US launches fresh strikes against Iran - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-07-08T22:23:53.000Z",
+      "hoursAgo": 9.5
+    },
+    {
+      "headline": "Investors get inflation 'wake-up call' as Trump fires up oil prices - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-07-08T16:54:23.000Z",
+      "hoursAgo": 15
+    },
+    {
       "headline": "How Iran's 'golden weapon' of Hormuz became a bigger priority than its long-disputed nuclear programme - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-08T16:21:39.000Z",
-      "hoursAgo": 4.6
+      "hoursAgo": 15.5
     },
     {
       "headline": "Poland's zloty pulls back from 19-month low after interest rates unchanged - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-08T14:55:47.000Z",
-      "hoursAgo": 6
+      "hoursAgo": 17
     },
     {
       "headline": "India battery storage tariffs seen rising as higher costs squeeze low-priced projects - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-08T13:13:56.000Z",
-      "hoursAgo": 7.7
+      "hoursAgo": 18.7
     },
     {
       "headline": "Fed meeting minutes to show 'family fight' over rates. The squabble could drag on for a while",
       "source": "CNBC",
       "publishedAt": "2026-07-08T11:40:31.000Z",
-      "hoursAgo": 9.3
+      "hoursAgo": 20.2
     },
     {
       "headline": "Airbus trims jet industry demand forecast after Iran war, tariffs - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-08T11:05:08.000Z",
-      "hoursAgo": 9.9
-    },
-    {
-      "headline": "US container imports jumped 8% in June ahead of higher fuel costs and tariff increases - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-07-08T09:07:43.000Z",
-      "hoursAgo": 11.8
-    },
-    {
-      "headline": "Gold drifts lower after Trump says deal with Iran 'over' - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-07-08T01:28:00.000Z",
-      "hoursAgo": 19.5
-    },
-    {
-      "headline": "Dollar slips after touching one-week high as Iran deal in question - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-07-08T00:08:00.000Z",
       "hoursAgo": 20.8
     }
   ],
@@ -118,7 +118,7 @@
     "biasScore": 1,
     "biasLabel": "NEUTRAL",
     "confidence": 4,
-    "briefing": "RIGHT NOW, the two biggest forces pushing and pulling gold are geopolitical tension in the Middle East (specifically the Iran-Hormuz situation) and a slightly stronger US dollar alongside rising bond yields [bond yields = the interest rate the US government pays to borrow money — when yields rise, holding gold, which pays no interest, becomes less attractive]. These forces are working against each other, which is why gold feels stuck. RECENT CATALYSTS: About 19–20 hours ago, headlines broke that Trump declared the Iran nuclear deal 'over,' which initially caused gold to drift lower — likely because a collapsed deal (rather than active escalation) briefly reduced the panic premium built into prices. Then about 4–5 hours ago, Reuters published a piece framing Iran's ability to block the Strait of Hormuz [a critical oil shipping channel] as a bigger strategic threat than its nuclear programme, keeping a low-level fear bid under gold. Neither story has produced a clean directional push today. DIRECTIONAL BIAS: The bias is very slightly bullish but is essentially CHOPPY. Gold has already exceeded its average daily range [ADR — the typical distance price travels in a day] by moving 112 points against a 14-day average of 104 points, meaning the bulk of today's move is likely done. ETF flows [big investment funds buying/selling gold] have been flowing INTO gold for three consecutive weeks, and geopolitical risk readings are elevated, both supportive of price over time. However, yields rose today (US 10-year up 0.07%), the dollar held firm around 101, and the Fed is overwhelmingly expected to hold rates at its July 29 meeting (76% probability), which caps the upside. CONFIDENCE: 4/10. The view shifts bullish if Iran-Hormuz tensions escalate further into tomorrow's headlines, or bearish if yields continue climbing and the dollar pushes back above 102. EVENT RISK: The calendar for today is empty — no scheduled US data releases to watch tonight. There are no high-impact events flagged for later this week in the data provided, though with the FOMC meeting on July 29 approaching, markets may begin trading cautiously in the coming sessions as traders await Fed signals. KEY LEVELS: Gold is sitting at $4,077 after having already travelled 112 points today — well above its normal daily range — so the fuel for a large new move tonight is limited. Watch $4,050 as a near-term support area [a price floor where buyers may step in] and $4,100 as near-term resistance [a ceiling where sellers may appear]. TRADE INTEGRATION: Given that today's ADR is already exceeded, the late New York session is a poor window for new trend-following trades. Position size should be reduced or new entries avoided entirely until the next session resets the daily range. Wait for London open tomorrow when fresh liquidity [new buying and selling activity] enters the market and gives cleaner signals. Remember: when the day's average range is already used up, chasing a move is like arriving at a race after the finish line.",
-    "generatedAt": "2026-07-08T20:58:05.538Z"
+    "briefing": "Right now, two big forces are pulling gold in opposite directions, which is why price action feels messy. On one hand, the US launching fresh strikes against Iran (reported about 9.5 hours ago) and ongoing Middle East hostilities are serious geopolitical risk events — and gold is traditionally a 'safe haven' asset, meaning people buy it when they fear war or instability. On the other hand, that same conflict is pushing oil prices sharply higher, which is reigniting inflation fears [inflation = the general rise in prices across the economy]. Higher inflation can push the Federal Reserve [America's central bank] to keep interest rates elevated longer, and higher interest rates make gold less attractive because gold pays no income. This competing push-and-pull is the dominant theme right now. The most market-moving recent headlines are the US Iran strikes (9.5 hours ago) and the Reuters piece on gold easing despite Middle East tensions (6.4 hours ago) — that 'easing' tells you the inflation/rate-fear side is currently winning over the safe-haven demand. The directional bias is NEUTRAL-to-slightly-bullish: geopolitical risk remains genuinely elevated (the Geopolitical Risk Index [a measure of global conflict stress] sits at 173.6, which is historically high), but the gold-versus-rates tug-of-war is creating chop [sideways, unpredictable price movement]. Confidence is 4/10 — if Iran tensions escalate further or oil spikes again, gold could break higher; if bond yields [the return investors earn on US government debt] keep rising, gold faces downward pressure. The calendar shows NO scheduled economic events today, which removes one source of volatility but also removes a clear directional trigger. Importantly, there is no high-impact event flagged for later this week in the data provided, though the Fed meeting minutes (referenced in a CNBC piece 20 hours ago) remain a background concern for rate-path expectations. On levels: gold is at $4,109. The 14-day Average Daily Range [the typical size of a daily price swing, averaged over two weeks] is $106.50, and today has already used $57 of that — meaning roughly $49 of 'typical' daily movement may remain. Key levels to watch are the $4,080 area as near-term support [a price floor where buyers tend to step in] and $4,140–$4,150 as resistance [a ceiling where sellers tend to appear]. For trade integration: this is an Asian session snapshot, before London and New York open — your preferred trading windows. Given the mixed signals and no clear catalyst or fresh trend impulse, this is NOT a high-conviction window. If you trade at all, keep position size small (quarter or half your normal size) and wait for the 1H chart to confirm a clear higher-high / higher-low structure before committing. Remember: when two big forces are fighting each other, patient traders win by waiting for one side to clearly take control.",
+    "generatedAt": "2026-07-09T07:53:58.234Z"
   }
 }
