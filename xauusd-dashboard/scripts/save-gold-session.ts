@@ -1,17 +1,27 @@
 #!/usr/bin/env tsx
 /**
- * Save a /gold-session analysis to the dashboard's Gold-Session AI tab.
+ * Save a /gold-session or /uk100-session analysis to the dashboard's
+ * Gold-Session AI / UK100 AI tab.
  *
  * Usage (from xauusd-dashboard/):
  *   npx tsx scripts/save-gold-session.ts /tmp/gold-session-meta.json /tmp/gold-session-analysis.txt
+ *   npx tsx scripts/save-gold-session.ts /tmp/uk100-session-meta.json /tmp/uk100-session-analysis.txt --instrument=uk100
  *
  * Args:
  *   1. Path to a JSON file with: { session, bias, biasScore, probability, confidence }
  *   2. Path to a plain-text file containing the full analysis output
+ *   3. (optional) engine input path override — defaults to the instrument's
+ *      canonical /tmp path (see ENGINE_INPUT below)
+ *   --instrument=uk100  (optional flag, any position) — routes everything to
+ *      the UK100 data dir/bot identity/commit prefix instead of gold's. Absent
+ *      → behaves byte-identically to the original gold-only script.
  *
- * Writes:
+ * Writes (gold, default):
  *   public/data/sessions/<YYYY-MM-DD>/<HH-MM>.json
  *   public/data/sessions/index.json  (rolling 3-day window)
+ * Writes (--instrument=uk100):
+ *   public/data/uk100/sessions/<YYYY-MM-DD>/<HH-MM>.json
+ *   public/data/uk100/sessions/index.json  (rolling 3-day window)
  *
  * Then commits and pushes to origin main so the dashboard deploys automatically.
  */
@@ -25,8 +35,6 @@ import { execSync } from 'child_process'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname  = path.dirname(__filename)
 
-const DATA_DIR   = path.join(__dirname, '../public/data/sessions')
-const INDEX_FILE = path.join(DATA_DIR, 'index.json')
 const REPO_ROOT  = path.join(__dirname, '../..')
 const MAX_DAYS   = 3
 
@@ -53,6 +61,17 @@ interface StructuredTradeIdea {
   setupType?: string
 }
 
+// UK100-only (§6.2 of UK100-BUILD-PLAN.md) — the 15-min Opening Range
+// Breakout decision-table output. Absent on gold records.
+interface OrbPlaybook {
+  direction:   'LONG_ONLY' | 'SHORT_ONLY' | 'BOTH_OK' | 'STAND_ASIDE'
+  dayType:     'EVENT_DRIVEN' | 'TREND_EXPECTED' | 'RANGE_EXPECTED'
+  reasoning:   string
+  keyLevels:   { label: string; price: number }[]
+  invalidation: string
+  eventRisk?:  string
+}
+
 interface SessionMeta {
   session:     string   // LONDON | NEW_YORK | OVERLAP | ASIAN
   bias:        string   // BULLISH | BEARISH | NEUTRAL
@@ -72,6 +91,7 @@ interface SessionMeta {
   tradeIdea?:           StructuredTradeIdea | null
   nextHighImpactEvent?: { event: string; timeIso: string } | null
   smtDivergence?:       'BULLISH' | 'BEARISH' | null
+  orbPlaybook?:         OrbPlaybook | null
 }
 
 interface SessionRecord extends SessionMeta {
@@ -107,11 +127,28 @@ function run(cmd: string) {
 }
 
 function main() {
-  const metaPath     = process.argv[2]
-  const analysisPath = process.argv[3]
+  // --instrument=uk100 can appear in any position; strip it out before
+  // treating the rest of argv as the original positional args, so the gold
+  // path (flag absent) parses byte-identically to before this flag existed.
+  const rawArgs: string[] = []
+  let instrument: 'gold' | 'uk100' = 'gold'
+  for (const a of process.argv.slice(2)) {
+    const m = a.match(/^--instrument=(gold|uk100)$/)
+    if (m) { instrument = m[1] as 'gold' | 'uk100'; continue }
+    rawArgs.push(a)
+  }
+  const isUk100 = instrument === 'uk100'
+
+  const DATA_DIR   = isUk100
+    ? path.join(__dirname, '../public/data/uk100/sessions')
+    : path.join(__dirname, '../public/data/sessions')
+  const INDEX_FILE = path.join(DATA_DIR, 'index.json')
+
+  const metaPath     = rawArgs[0]
+  const analysisPath = rawArgs[1]
 
   if (!metaPath || !analysisPath) {
-    console.error('Usage: save-gold-session.ts <meta.json> <analysis.txt>')
+    console.error('Usage: save-gold-session.ts <meta.json> <analysis.txt> [engine-input.json] [--instrument=uk100]')
     process.exit(1)
   }
 
@@ -125,10 +162,11 @@ function main() {
   // "fresh" brief from the previous day's saved records and published it —
   // wrong Asian range, phantom sweeps, day-old structure timestamps. The skill
   // docs already forbade that; a mechanical check is what actually stops it.
-  // /tmp/gold_session_input.json is the canonical engine input the skill just
-  // assembled (STEP 0 Phase C1); require it to exist and its newest M1/M5/H1
-  // candle to be recent. No fresh engine input → no publish.
-  const ENGINE_INPUT = process.argv[4] ?? '/tmp/gold_session_input.json'
+  // /tmp/{gold,uk100}_session_input.json is the canonical engine input the
+  // skill just assembled (STEP 0 Phase C1); require it to exist and its
+  // newest M1/M5/H1 candle to be recent. No fresh engine input → no publish.
+  const DEFAULT_ENGINE_INPUT = isUk100 ? '/tmp/uk100_session_input.json' : '/tmp/gold_session_input.json'
+  const ENGINE_INPUT = rawArgs[2] ?? DEFAULT_ENGINE_INPUT
   const MAX_INPUT_AGE_MIN = 60
   try {
     const inp = JSON.parse(fs.readFileSync(ENGINE_INPUT, 'utf8')) as Record<string, Array<{ timestamp: number }>>
@@ -226,10 +264,13 @@ function main() {
   //   5. push the new commit to main as a PLAIN (non-force) update — a true
   //      fast-forward when origin/main hasn't moved; cleanly REJECTED (not
   //      merged) if it raced, which sends us back to step 1 on the new tip.
-  const BOT_ID = `-c user.name="gold-session-bot" -c user.email="gold-session-bot@noreply.github.com"`
+  const botName = isUk100 ? 'uk100-session-bot' : 'gold-session-bot'
+  const BOT_ID = `-c user.name="${botName}" -c user.email="${botName}@noreply.github.com"`
   const GIT      = `git -C "${REPO_ROOT}"`
-  const REL_SESSION = `xauusd-dashboard/public/data/sessions/${date}/${hhmm}.json`
-  const REL_INDEX   = `xauusd-dashboard/public/data/sessions/index.json`
+  const sessionsSubdir = isUk100 ? 'uk100/sessions' : 'sessions'
+  const REL_SESSION = `xauusd-dashboard/public/data/${sessionsSubdir}/${date}/${hhmm}.json`
+  const REL_INDEX   = `xauusd-dashboard/public/data/${sessionsSubdir}/index.json`
+  const commitPrefix = isUk100 ? 'uk100-session' : 'gold-session'
   const TMP_INDEX   = path.join(os.tmpdir(), `gs_git_index_${process.pid}`)
 
   function sleep(sec: number) { try { execSync(`sleep ${sec}`) } catch { /* best effort */ } }
@@ -258,7 +299,7 @@ function main() {
       runIdx(`${withIdx} add "${REL_SESSION}" "${REL_INDEX}"`)
       const tree   = runIdx(`${withIdx} write-tree`)
       const parent = run(`${GIT} rev-parse origin/main`)
-      const commit = run(`${GIT} ${BOT_ID} commit-tree ${tree} -p ${parent} -m "chore: gold-session ${date} ${timeDisplay}"`)
+      const commit = run(`${GIT} ${BOT_ID} commit-tree ${tree} -p ${parent} -m "chore: ${commitPrefix} ${date} ${timeDisplay}"`)
 
       // Plain (non-force) push: fast-forward if origin/main is still `parent`,
       // rejected if it raced — never a force, so a concurrent push is never

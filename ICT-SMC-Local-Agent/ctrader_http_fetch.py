@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-cTrader direct-HTTP fetcher for the /gold-session skill.
+cTrader direct-HTTP fetcher for the /gold-session and /uk100-session skills.
 
 WHY THIS EXISTS
     The `mcp__ctrader__*` MCP tools are flaky — the stdio/SSE connector
@@ -12,17 +12,20 @@ WHY THIS EXISTS
     session NEVER has to fall back to fabricating data when the MCP is down.
 
 USAGE (from anywhere)
-    python3 ICT-SMC-Local-Agent/ctrader_http_fetch.py
-    # then run the engine:
-    python3 ICT-SMC-Local-Agent/skill_adapter.py < /tmp/gold_session_input.json
+    python3 ICT-SMC-Local-Agent/ctrader_http_fetch.py                    # gold (default)
+    python3 ICT-SMC-Local-Agent/ctrader_http_fetch.py --instrument uk100 # UK100
+    # then run the matching engine:
+    python3 ICT-SMC-Local-Agent/skill_adapter.py  < /tmp/gold_session_input.json
+    python3 ICT-SMC-Local-Agent/uk100_adapter.py  < /tmp/uk100_session_input.json
 
 WHAT IT DOES
     - Reads the account token from $CTRADER_MCP_SLUG (preferred) or
       $CTRADER_MCP_TOKEN. Fails loudly if neither is set.
-    - Fetches: spot (XAUUSD 241, EURUSD 1), positions, balance, and trendbars
-      H_1 / M_5 / M_1 / D_1 for gold plus M_5 for the EURUSD SMT proxy.
-    - Writes raw per-timeframe files to /tmp/gs_*.json AND the assembled,
-      pipette-divided engine input to /tmp/gold_session_input.json.
+    - Fetches: spot (main + proxy symbolId, per INSTRUMENTS), positions,
+      balance, and trendbars H_1 / M_5 / M_1 / D_1 for the main instrument
+      plus M_5 for the SMT-proxy cross-check.
+    - Writes raw per-timeframe files to /tmp/{pfx}_*.json AND the assembled,
+      pipette-divided engine input to the instrument's input path.
     - Prints a JSON summary (spot, mid, positions, balance, bar counts) to
       stdout for the ACCOUNT CONTEXT / Phase B section of the brief.
     - Exits non-zero with a clear message on any failure — the correct
@@ -30,39 +33,57 @@ WHAT IT DOES
       recycled data.
 
 The output timestamps are genuine cTrader candle times, so the freshness gates
-in skill_adapter.py and save-gold-session.ts pass naturally on a live pull and
-trip only when the market is genuinely stale (weekend / holiday).
+in skill_adapter.py/uk100_adapter.py and save-gold-session.ts pass naturally
+on a live pull and trip only when the market is genuinely stale (weekend /
+holiday).
 """
 
+import argparse
 import http.client
 import json
 import os
 import ssl
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from urllib.parse import urlparse
+from zoneinfo import ZoneInfo
 
 _HOST = "mcp.ctrader.com"
 _PATH = "/trading/mcp"
+_LDN = ZoneInfo("Europe/London")
 
-# Broker symbolIds on this account (Pepperstone _SB variants). XAUUSD=241
-# confirmed; EURUSD=1 for the SMT proxy. pipDigits=5 for both.
-_SYM_XAU = 241
-_SYM_EUR = 1
+# Broker symbolIds on this account. pipDigits=5 for everything below (verified
+# per-instrument — see ctrader-mcp-integration-guide.md and UK100-BUILD-PLAN.md §1.1).
+# "proxy" is the SMT-divergence cross-check symbol: EURUSD is positively
+# correlated with XAUUSD (both rise as the dollar weakens); GBPUSD is the
+# UK100 proxy but the read is INVERTED (weak GBP lifts FTSE) — uk100_adapter.py
+# accounts for that with a dedicated _smt_divergence_inverse, not this script.
+# "orb_context": uk100 only — the general 500-min M5 window below does not
+# reach back to the 22:00-prev-day/08:00-cash-open ORB window when the skill
+# runs later in the day, so two extra targeted fetches supply it (same fix
+# already applied on the TS side in fetch-uk100-data.ts after hitting the
+# cTrader get_trendbars 100-bar silent cap on a single wide window).
+INSTRUMENTS = {
+    "gold":  {"main": 241, "proxy": 1, "proxy_symbol": "EURUSD", "pfx": "gs", "input": "/tmp/gold_session_input.json", "symbol": "XAUUSD", "orb_context": False},
+    "uk100": {"main": 113, "proxy": 2, "proxy_symbol": "GBPUSD", "pfx": "uk", "input": "/tmp/uk100_session_input.json", "symbol": "UK100", "orb_context": True},
+}
 _PIP = 10 ** 5
 
 # Trendbar windows (ms back from spot) → matches the skill's Phase B ranges.
-_TF = [
-    ("h1",  "H_1", 360_000_000,   _SYM_XAU),
-    ("m5",  "M_5", 30_000_000,    _SYM_XAU),
-    ("m1",  "M_1", 3_600_000,     _SYM_XAU),
-    ("d1",  "D_1", 1_900_800_000, _SYM_XAU),
-    ("smt", "M_5", 30_000_000,    _SYM_EUR),  # EURUSD proxy
-]
+# uk100 additionally needs a wider H_1 window (overnight range spans 22:00→08:00
+# London = up to 10h) — handled via _tf_for() below rather than hardcoding here.
+def _tf_for(cfg: dict) -> list:
+    h1_back = 360_000_000 if cfg["symbol"] == "XAUUSD" else 396_000_000  # 100h / 110h
+    return [
+        ("h1",  "H_1", h1_back,       cfg["main"]),
+        ("m5",  "M_5", 30_000_000,    cfg["main"]),
+        ("m1",  "M_1", 3_600_000,     cfg["main"]),
+        ("d1",  "D_1", 1_900_800_000, cfg["main"]),
+        ("smt", "M_5", 30_000_000,    cfg["proxy"]),
+    ]
 
 _TMP = "/tmp"
-_INPUT_PATH = os.path.join(_TMP, "gold_session_input.json")
 
 
 def _die(msg: str, code: int = 1):
@@ -178,10 +199,18 @@ def _iso(ms: int) -> str:
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--instrument", choices=sorted(INSTRUMENTS), default="gold")
+    args = parser.parse_args()
+    cfg = INSTRUMENTS[args.instrument]
+    pfx = cfg["pfx"]
+    input_path = cfg["input"]
+    main_sym, proxy_sym = cfg["main"], cfg["proxy"]
+
     # Purge any previous run's temp files so a partial failure can never leave
     # stale data behind for the assembler to pick up.
-    for f in ("gs_h1.json", "gs_m5.json", "gs_m1.json", "gs_d1.json", "gs_smt.json",
-              "gold_session_input.json"):
+    for f in (f"{pfx}_h1.json", f"{pfx}_m5.json", f"{pfx}_m1.json", f"{pfx}_d1.json",
+              f"{pfx}_smt.json", f"{pfx}_orb_h1.json", f"{pfx}_orb_m5.json", os.path.basename(input_path)):
         try:
             os.remove(os.path.join(_TMP, f))
         except OSError:
@@ -190,25 +219,25 @@ def main():
     cli = _Client(_token())
     cli.init()
 
-    spot = cli.call("get_spot_prices", {"symbolId": [_SYM_XAU, _SYM_EUR]})
+    spot = cli.call("get_spot_prices", {"symbolId": [main_sym, proxy_sym]})
     prices = {p["symbolId"]: p for p in spot.get("prices", [])} if isinstance(spot, dict) else {}
-    xau = prices.get(_SYM_XAU)
-    if not xau or not xau.get("bid"):
-        _die(f"no spot price for XAUUSD (symbolId {_SYM_XAU}): {str(spot)[:200]}")
-    spot_ts = xau.get("timestamp") or int(time.time() * 1000)
-    bid, ask = xau["bid"], xau.get("ask", xau["bid"])
+    main_px = prices.get(main_sym)
+    if not main_px or not main_px.get("bid"):
+        _die(f"no spot price for {cfg['symbol']} (symbolId {main_sym}): {str(spot)[:200]}")
+    spot_ts = main_px.get("timestamp") or int(time.time() * 1000)
+    bid, ask = main_px["bid"], main_px.get("ask", main_px["bid"])
     mid = round((bid + ask) / 2 / _PIP, 5)
 
     positions = cli.call("get_positions", {})
     balance = cli.call("get_balance", {})
 
     counts = {}
-    for key, period, back, symid in _TF:
+    for key, period, back, symid in _tf_for(cfg):
         res = cli.call("get_trendbars", {
             "symbolId": symid, "period": period,
             "fromTimestamp": _iso(spot_ts - back), "toTimestamp": _iso(spot_ts),
         })
-        with open(os.path.join(_TMP, f"gs_{key}.json"), "w") as fh:
+        with open(os.path.join(_TMP, f"{pfx}_{key}.json"), "w") as fh:
             json.dump(res, fh)
         bars = res.get("trendbars", res.get("bars", [])) if isinstance(res, dict) else []
         counts[key] = len(bars)
@@ -216,9 +245,37 @@ def main():
     if counts.get("h1", 0) < 2 or counts.get("m5", 0) < 2 or counts.get("m1", 0) < 2:
         _die(f"insufficient trendbar data (counts={counts}). Market may be closed, or the fetch partially failed.")
 
+    # ORB-context extra fetches (uk100 only) — exact timestamp windows, well
+    # under the 100-bar cap, so the overnight range and ORB range are always
+    # complete regardless of what time of day the skill runs.
+    if cfg.get("orb_context"):
+        spot_dt = datetime.fromtimestamp(spot_ts / 1000, tz=timezone.utc).astimezone(_LDN)
+        cash_open = spot_dt.replace(hour=8, minute=0, second=0, microsecond=0)
+        overnight_from_ms = int((cash_open - timedelta(hours=10)).timestamp() * 1000)
+        overnight_to_ms = min(spot_ts, int(cash_open.timestamp() * 1000))
+        orb_from_ms = int(cash_open.timestamp() * 1000)
+        orb_to_ms = int((cash_open + timedelta(minutes=15)).timestamp() * 1000)
+
+        res_h1 = cli.call("get_trendbars", {
+            "symbolId": main_sym, "period": "H_1",
+            "fromTimestamp": _iso(overnight_from_ms), "toTimestamp": _iso(overnight_to_ms),
+        })
+        with open(os.path.join(_TMP, f"{pfx}_orb_h1.json"), "w") as fh:
+            json.dump(res_h1, fh)
+
+        if spot_ts >= orb_from_ms:
+            res_orb_m5 = cli.call("get_trendbars", {
+                "symbolId": main_sym, "period": "M_5",
+                "fromTimestamp": _iso(orb_from_ms), "toTimestamp": _iso(min(spot_ts, orb_to_ms)),
+            })
+        else:
+            res_orb_m5 = {"trendbars": []}  # cash open hasn't happened yet today
+        with open(os.path.join(_TMP, f"{pfx}_orb_m5.json"), "w") as fh:
+            json.dump(res_orb_m5, fh)
+
     # Assemble the engine input (divide OHLC by 10^5, keep ms-epoch timestamps).
     def load(key):
-        d = json.load(open(os.path.join(_TMP, f"gs_{key}.json")))
+        d = json.load(open(os.path.join(_TMP, f"{pfx}_{key}.json")))
         bars = d.get("trendbars") or d.get("bars") or []
         out = []
         for b in bars:
@@ -230,25 +287,34 @@ def main():
                         "low": b["low"] / _PIP, "close": c / _PIP, "volume": b.get("volume", 0)})
         return out
 
-    payload = {"symbol": "XAUUSD", "current_price": mid}
+    payload = {"symbol": cfg["symbol"], "current_price": mid}
     keymap = {"h1": "h1", "m5": "m5", "m1": "m1", "d1": "d1", "smt": "smt_symbol_m5"}
     for key in ("h1", "m5", "m1", "d1", "smt"):
         series = load(key)
         if series:
             payload[keymap[key]] = series
-    with open(_INPUT_PATH, "w") as fh:
+
+    if cfg.get("orb_context"):
+        orb_h1_series = load("orb_h1")
+        orb_m5_series = load("orb_m5")
+        if orb_h1_series:
+            payload["orb_h1"] = orb_h1_series
+        if orb_m5_series:
+            payload["orb_m5"] = orb_m5_series
+
+    with open(input_path, "w") as fh:
         json.dump(payload, fh)
 
-    eur = prices.get(_SYM_EUR)
+    proxy_px = prices.get(proxy_sym)
     summary = {
         "ok": True,
-        "engine_input": _INPUT_PATH,
+        "engine_input": input_path,
         "spot_ts": spot_ts,
         "spot_iso": _iso(spot_ts),
-        "XAUUSD": {"bid": round(bid / _PIP, 2), "ask": round(ask / _PIP, 2), "mid": mid,
-                   "high": round(xau["high"] / _PIP, 2) if xau.get("high") else None,
-                   "low": round(xau["low"] / _PIP, 2) if xau.get("low") else None},
-        "EURUSD_mid": round((eur["bid"] + eur.get("ask", eur["bid"])) / 2 / _PIP, 5) if eur else None,
+        cfg["symbol"]: {"bid": round(bid / _PIP, 2), "ask": round(ask / _PIP, 2), "mid": mid,
+                        "high": round(main_px["high"] / _PIP, 2) if main_px.get("high") else None,
+                        "low": round(main_px["low"] / _PIP, 2) if main_px.get("low") else None},
+        f"{cfg['proxy_symbol']}_mid": round((proxy_px["bid"] + proxy_px.get("ask", proxy_px["bid"])) / 2 / _PIP, 5) if proxy_px else None,
         "trendbar_counts": counts,
         "positions": positions,
         "balance": balance,
