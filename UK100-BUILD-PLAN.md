@@ -16,21 +16,25 @@ A **UK100** top-level tab on the existing XAUUSD dashboard with two sub-tabs: **
 
 ## 1. VERIFIED FACTS (live-checked 2026-07-10 — trust these, do not re-verify)
 
-### 1.1 cTrader symbols (Pepperstone spread-bet account; all prices = raw ÷ 10^5)
+### 1.1 cTrader symbols (Pepperstone account; all prices = raw ÷ 10^5)
 
-| Purpose | Symbol | symbolId | Verified live price | Status |
+**CFD symbol IDs are the primary set** — the user trades UK100 as a CFD and wants CFD pricing. Verified 2026-07-10: the CFD IDs return live quotes on the existing token, and side-by-side comparison with the `_SB` (spread-bet) variants shows **identical prices to within spread noise** (UK100 CFD 10487.6 = UK100_SB 10487.6; both wrappers price off the same underlying feed). The `_SB` IDs are documented as fallbacks only.
+
+| Purpose | Symbol | symbolId | Verified live price | Fallback (`_SB`) |
 |---|---|---|---|---|
-| The instrument | `UK100_SB` | **217** | 10480.8 | enabled ✔ |
-| GBP driver | `GBPUSD` | **2** | 1.3409 | enabled ✔ (already in gold pipeline) |
-| GBP/EUR (derive GBPEUR = 1/EURGBP) | `EURGBP_SB` | **175** | 0.85188 | enabled ✔ |
-| US futures proxy | `US500_SB` | **220** | (in gold pipeline as 115→self-heals; use 220) | enabled ✔ |
-| US tech proxy | `NAS100_SB` | **205** | 29555.4 | enabled ✔ |
-| Energy sector driver | `Brent_SB` | **253** | 76.24 | enabled ✔ |
-| Miners driver / China proxy | `Copper_SB` | **2359** | 6.2813 ($/lb — reconciles with FRED $13,483/t) | enabled ✔ |
-| Risk regime | `VIX_SB` | **408** | 16.96 (matches FRED VIXCLS 15.84 prior close) | enabled ✔ |
-| Dollar index (bonus — live DXY exists) | `USDX_SB` | **235** | 100.906 | enabled ✔ |
+| The instrument | `UK100` | **113** | 10487.6 | 217 |
+| GBP driver | `GBPUSD` | **2** | 1.3409 (already in gold pipeline) | — |
+| GBP/EUR (derive GBPEUR = 1/EURGBP) | `EURGBP` | **9** | 0.852 | 175 |
+| US futures proxy | `US500` | **115** | 7550.7 (already in gold pipeline) | 220 |
+| US tech proxy | `NAS100` | **116** | 29691.1 | 205 |
+| Energy sector driver | `SpotBrent` | **249** | 76.045 | 253 (`Brent_SB`) |
+| Miners driver / China proxy | `Copper` | **109** | 6.2812 ($/lb — reconciles with FRED $13,483/t) | 2359 |
+| Risk regime | `VIX` | **152** | 16.81 (matches FRED VIXCLS prior close) | 408 |
+| Dollar index (bonus — live DXY exists) | `USDX` | **101** | 100.821 | 235 |
 
-Notes: `get_symbols` returns 6,426 rows (~1.5MB) — **never call it in the pipeline**; use the IDs above (self-heal fallback in `scripts/lib/ctrader.ts` covers drift). Non-SB variants (e.g. `UK100`=113, `VIX`=152) are **disabled** on this account. `scripts/lib/ctrader.ts` `KNOWN_SYMBOL_IDS` currently maps `UK100: 113` — update it to `217` as part of Phase 2a (safe; 113 only works via self-heal today).
+Notes: `get_symbols` returns 6,426 rows (~1.5MB) — **never call it in the pipeline**; use the IDs above (self-heal fallback in `scripts/lib/ctrader.ts` covers drift; if a CFD ID ever stops pricing, the listed `_SB` ID is the drop-in replacement at an identical price). The CFD symbols are flagged `enabled: false` for *trading* on this (spread-bet) account but stream quotes fine — this pipeline only reads prices, never trades. `scripts/lib/ctrader.ts` already maps `UK100: 113` and `US500: 115` — **no change needed for those**; Phase 2a only ADDS `NAS100: 116, BRENT: 249, COPPER: 109, VIX: 152, USDX: 101, EURGBP: 9`.
+
+> If exact chart-matching against a *different broker's* CFD account (e.g. FTMO) is ever wanted, that account's cTrader API token can be added as a separate GitHub secret and the fetch pointed at it — symbol IDs are broker-specific and would need one re-resolution pass. Not needed for v1: Pepperstone CFD pricing is what the plan uses.
 
 ### 1.2 Bank of England IADB (keyless daily CSV — all verified returning current data)
 
@@ -219,7 +223,7 @@ export interface OrbPlaybook {              // written by /uk100-session into me
 
 ### Data pipeline
 - ● `xauusd-dashboard/scripts/fetch-uk100-data.ts` (~500 lines) — structure mirrors `fetch-static-data.ts`: tolerant per-source fetchers (each failure → `null` field + console.error, never a crash), assembled snapshot, mechanical bias (§5), `orbContext` (§6), Anthropic briefing call (reuse the exact request pattern incl. `.trim()` on the key and the retry), write `public/data/uk100/daily-snapshot.json`. Reuses `scripts/lib/ctrader.ts` (`fetchCTraderPrices` extended or called with the §1.1 map). cTrader D_1+M5 bars for UK100 (for day%, overnight range, prior-day levels, ADR14): copy the trendbar call from `resolve-gold-sessions.ts`.
-- ◐ `xauusd-dashboard/scripts/lib/ctrader.ts` — add `UK100: 217` fix + new symbols `{ NAS100: 205, BRENT: 253, COPPER: 2359, VIX: 408, USDX: 235, EURGBP: 175 }` to `KNOWN_SYMBOL_IDS`/`PIP_DIGITS`.
+- ◐ `xauusd-dashboard/scripts/lib/ctrader.ts` — `UK100: 113` and `US500: 115` already correct; ADD `{ NAS100: 116, BRENT: 249, COPPER: 109, VIX: 152, USDX: 101, EURGBP: 9 }` (CFD IDs, §1.1) to `KNOWN_SYMBOL_IDS`/`PIP_DIGITS`.
 - ◐ `.github/workflows/xauusd-daily-fetch.yml` — one new step after "Fetch daily data snapshot", same env block: `run: cd xauusd-dashboard && npx tsx scripts/fetch-uk100-data.ts`, with `continue-on-error: true` (UK100 failure must not block the gold snapshot). No changes to commit/build/deploy steps.
 
 ### Engine & skill
@@ -227,7 +231,7 @@ export interface OrbPlaybook {              // written by /uk100-session into me
   ```python
   INSTRUMENTS = {
     "gold":  {"main": 241, "proxy": 1,  "pfx": "gs",  "input": "/tmp/gold_session_input.json"},
-    "uk100": {"main": 217, "proxy": 2,  "pfx": "uk",  "input": "/tmp/uk100_session_input.json"},
+    "uk100": {"main": 113, "proxy": 2,  "pfx": "uk",  "input": "/tmp/uk100_session_input.json"},  # UK100 CFD (fallback 217 _SB, identical price)
   }  # proxy for uk100 = GBPUSD (inverse SMT: GBP up should confirm UK100 down)
   ```
   Temp files become `/tmp/{pfx}_h1.json` etc. Gold default = current behaviour byte-identical.
@@ -310,7 +314,7 @@ Day type: `EVENT_DRIVEN` if any HIGH event 07:00-16:30; else `TREND_EXPECTED` if
 | Persona/target | XAUUSD desk analyst → UK100 (FTSE 100) index desk analyst; trader profile: trades the 15-min ORB at London cash open, long/short per playbook |
 | Phase A HTTP script | `python3 …/ctrader_http_fetch.py --instrument uk100`; env/401/fallback language identical |
 | Phase A macro snapshot | fetch `…/xauusd-dashboard/data/uk100/daily-snapshot.json` (plus keep the gold snapshot fetch as OPTIONAL cross-asset context) |
-| Phase B (MCP fallback path) | symbolIds: 217 main / 2 proxy (GBPUSD M5); same explicit from/to timestamp rule |
+| Phase B (MCP fallback path) | symbolIds: 113 main (UK100 CFD) / 2 proxy (GBPUSD M5); same explicit from/to timestamp rule |
 | Phase C engine | `python3 …/uk100_adapter.py < /tmp/uk100_session_input.json` |
 | Kill zones / session table | replace gold's map with §6 London map + the intraday table from the research doc §3 (07:00 UK data → 08:00 open → 09:30 EZ → 13:30 US data → 14:30 US open → 16:30 close), all times Europe/London with BST/GMT rule |
 | Liquidity mapping step | replace "Asia high/low swept" with: overnight H/L, prior-day H/L, cash-open range, pre-US consolidation range — from `orb` + `reference_levels` engine blocks |
