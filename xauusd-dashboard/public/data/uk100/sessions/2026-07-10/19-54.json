@@ -1,0 +1,27 @@
+{
+  "session": "LONDON",
+  "bias": "NEUTRAL",
+  "biasScore": 0,
+  "probability": 50,
+  "confidence": 5,
+  "orbPlaybook": {
+    "direction": "STAND_ASIDE",
+    "dayType": "RANGE_EXPECTED",
+    "reasoning": "Test sandbox record — not a real trading signal.",
+    "keyLevels": [
+      {
+        "label": "ORB High",
+        "price": 10494.7
+      },
+      {
+        "label": "ORB Low",
+        "price": 10471.7
+      }
+    ],
+    "invalidation": "N/A — sandbox test record"
+  },
+  "timestamp": "2026-07-10T19:54:46.045Z",
+  "date": "2026-07-10",
+  "time": "20:54 BST",
+  "analysis": "SANDBOX TEST — UK100 session save dry run."
+}
