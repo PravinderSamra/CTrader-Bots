@@ -1,82 +1,78 @@
 /**
- * UK100 snapshot types — frontend consumption of daily-snapshot.json
- * Mirrors the backend Uk100Snapshot structure from fetch-uk100-data.ts
+ * UK100 snapshot types — frontend consumption of public/data/uk100/daily-snapshot.json
+ * Mirrors the backend Uk100Snapshot structure from scripts/fetch-uk100-data.ts exactly.
  */
 
-export interface Uk100FxBlock {
-  gbpusd: number | null
-  gbpusdDayPct: number | null
-  eurusd: number | null
-  eurusdDayPct: number | null
-  gbpusdOpen: number | null
-  gbpusdTrend: 'UP' | 'DOWN' | 'FLAT' | null
+export type FtseImpact = 'BULLISH' | 'BEARISH' | 'NEUTRAL'
+
+export interface Uk100Prices {
+  UK100: number | null; GBPUSD: number | null; GBPEUR: number | null
+  US500: number | null; NAS100: number | null; BRENT: number | null; COPPER: number | null
+  VIX: number | null; USDX: number | null; XAUUSD: number | null
+  UK100_dayPct: number | null
 }
 
-export interface Uk100RatesBlock {
-  gilt20y: number | null
-  gilt20yDayBp: number | null
-  gilt20yTrend: 'UP' | 'DOWN' | 'FLAT' | null
-  realYield5y: number | null
-  realYield10y: number | null
-  bankRateEst: number | null
+export interface FxBlock {
+  gbpUsdDayPct: number | null
+  gbpUsd20dPercentile: number | null
+  sterlingEri: number | null
+  sterlingEriDayChange: number | null
+  ftseImpactFromGbp: FtseImpact
+}
+
+export interface UkRatesBlock {
+  bankRate: number | null
+  sonia: number | null
+  soniaMinusBankRate: number | null
+  gilt5y: number | null; gilt10y: number | null; gilt20y: number | null
+  gilt10yDayBp: number | null; gilt20yDayBp: number | null
+  slope5s20s: number | null
+  giltUst10ySpread: number | null
   longEndStress: boolean
-  giltSelloffRisk: string | null
+  nextMpcDate: string | null
+  daysToMpc: number | null
 }
 
-export interface Uk100UsLinkageBlock {
-  sp500: number | null
-  sp500DayPct: number | null
-  nas100: number | null
-  nas100DayPct: number | null
-  us500: number | null
-  us500DayPct: number | null
-  usTrend: 'UP' | 'DOWN' | 'FLAT' | null
+export interface UsLinkageBlock {
+  us500DayPct: number | null; nas100DayPct: number | null
+  vix: number | null
+  vixRegime: 'CALM' | 'ELEVATED' | 'STRESS'
+  us10y: number | null
+  usdx: number | null
 }
 
-export interface Uk100CommoditiesBlock {
-  brent: number | null
-  brentDayPct: number | null
-  copper: number | null
-  copperDayPct: number | null
-  brentTrend: 'UP' | 'DOWN' | 'FLAT' | null
-  copperTrend: 'UP' | 'DOWN' | 'FLAT' | null
+export interface CommoditiesBlock {
+  brentDayPct: number | null; copperDayPct: number | null; goldDayPct: number | null
+  brent20dTrend: 'UP' | 'DOWN' | 'FLAT'
 }
 
-export interface Uk100PositioningBlock {
-  gbpCotNetLong: number | null
-  gbpCotWeekChange: number | null
-  gbpCrowding: string | null
-  gbpCotUpdated: string | null
+export interface PositioningBlock {
+  gbpCotNetLong: number | null; gbpCotWoWChange: number | null
+  crowding: 'CROWDED_LONG' | 'CROWDED_SHORT' | 'BALANCED' | null
+  reportDate: string | null
+  ftseReadthrough: FtseImpact
 }
 
-export interface Uk100SectorRead {
+export interface SectorRead {
   sector: 'ENERGY' | 'MINERS' | 'BANKS' | 'PHARMA' | 'STAPLES'
-  signal: 'STRONG_BUY' | 'BUY' | 'NEUTRAL' | 'SELL' | 'STRONG_SELL'
-  confidence: number
-  drivers: string[]
+  weightNote: string
+  driver: string
+  read: FtseImpact | 'IDIOSYNCRATIC'
+  detail: string
 }
 
 export interface Uk100CalendarEvent {
-  time: string
-  country: string
-  event: string
-  impact: 'HIGH' | 'MEDIUM' | 'LOW'
-  daysFromToday: number
-  hoursFromNow?: number
+  event: string; region: 'UK' | 'US' | 'EZ'; impact: 'HIGH' | 'MEDIUM' | 'LOW'
+  timeIso: string; timeLondon: string
+  daysFromToday: number; prior?: string; consensus?: string
 }
 
 export interface Uk100NewsItem {
-  headline: string
-  hoursAgo: number
-  source: string
-  sentiment?: 'POSITIVE' | 'NEGATIVE' | 'NEUTRAL'
+  headline: string; source: string; hoursAgo: number; url?: string
 }
 
 export interface BiasDriver {
-  component: string
-  weight: number
-  value: number
-  signal: 'BULLISH' | 'BEARISH' | 'NEUTRAL'
+  name: string; impact: FtseImpact; weight: number; detail: string
 }
 
 export interface BiasBlock {
@@ -84,41 +80,47 @@ export interface BiasBlock {
   label: 'BULLISH' | 'BEARISH' | 'NEUTRAL'
   conviction: 'LOW' | 'MEDIUM' | 'HIGH'
   drivers: BiasDriver[]
+  eventSuppressed: boolean
+}
+
+export interface OrbEventWindow {
+  event: string; timeLondon: string; impact: string
 }
 
 export interface OrbContext {
-  mode: 'PRE_OPEN' | 'ORB_FORMING' | 'POST_ORB' | 'CLOSED'
   computedAt: string
+  mode: 'PRE_OPEN' | 'ORB_FORMING' | 'POST_ORB' | 'CLOSED'
   cashOpenLondon: string
-  overnightHigh: number | null
-  overnightLow: number | null
-  priorDayHigh: number | null
-  priorDayLow: number | null
-  priorClose: number | null
-  gapPts: number | null
-  gapPct: number | null
-  orbHigh: number | null
-  orbLow: number | null
-  orbBrokenDirection: 'UP' | 'DOWN' | null
-  eventWindows: { event: string; hoursFromNow: number }[]
-  adr14: number | null
-  adrUsedPct: number | null
+  overnightHigh: number | null; overnightLow: number | null
+  priorDayHigh: number | null; priorDayLow: number | null; priorClose: number | null
+  gapPts: number | null; gapPct: number | null
+  orbHigh: number | null; orbLow: number | null
+  orbBrokenDirection: 'UP' | 'DOWN' | 'NONE' | null
+  eventWindows: OrbEventWindow[]
+  adr14: number | null; adrUsedPct: number | null
+}
+
+export interface Uk100RiskTone {
+  score: number; label: FtseImpact; rationale: string
+}
+
+export interface Uk100Briefing {
+  biasScore: number; biasLabel: string; confidence: number; briefing: string; generatedAt: string
 }
 
 export interface Uk100Snapshot {
-  timestamp: string
   generatedAt: string
-  uk100: number | null
-  fx: Uk100FxBlock
-  rates: Uk100RatesBlock
-  usLinkage: Uk100UsLinkageBlock
-  commodities: Uk100CommoditiesBlock
-  positioning: Uk100PositioningBlock
-  sectors: Uk100SectorRead[]
+  prices: Uk100Prices
+  fx: FxBlock
+  ukRates: UkRatesBlock
+  usLinkage: UsLinkageBlock
+  commodities: CommoditiesBlock
+  positioning: PositioningBlock
+  sectorPanel: SectorRead[]
   economicCalendar: Uk100CalendarEvent[]
   newsItems: Uk100NewsItem[]
+  riskTone: Uk100RiskTone | null
   bias: BiasBlock
   orbContext: OrbContext
-  briefing: string | null
-  riskTone: string | null
+  briefing: Uk100Briefing | null
 }

@@ -17,6 +17,7 @@ import { PositioningTile } from './components/tiles/PositioningTile'
 import { FlowsTile } from './components/tiles/FlowsTile'
 import { BriefingPanel } from './components/briefing/BriefingPanel'
 import { GoldSessionTab } from './components/gold-session/GoldSessionTab'
+import { Uk100Tab } from './components/uk100/Uk100Tab'
 import { getSession } from './utils/sessions'
 import { Boundary } from './components/layout/Boundary'
 import styles from './App.module.css'
@@ -25,7 +26,7 @@ import styles from './App.module.css'
 // Gold-Session AI tabs (the vast majority of page loads) never touch it.
 const PravzellaTab = lazy(() => import('./components/pravzella/PravzellaTab').then(m => ({ default: m.PravzellaTab })))
 
-type DashTab = 'dashboard' | 'gold-session' | 'pravzella'
+type DashTab = 'dashboard' | 'gold-session' | 'uk100' | 'pravzella'
 
 export function App() {
   const [activeTab, setActiveTab] = useState<DashTab>('dashboard')
@@ -81,6 +82,12 @@ export function App() {
           Gold-Session AI
         </button>
         <button
+          className={`${styles.tabBtn} ${activeTab === 'uk100' ? styles.tabBtnActive : ''}`}
+          onClick={() => setActiveTab('uk100')}
+        >
+          UK100
+        </button>
+        <button
           className={`${styles.tabBtn} ${activeTab === 'pravzella' ? styles.tabBtnActive : ''}`}
           onClick={() => setActiveTab('pravzella')}
         >
@@ -131,6 +138,14 @@ export function App() {
         <div className={styles.sessionPane}>
           <Boundary label="Gold-Session AI">
             <GoldSessionTab />
+          </Boundary>
+        </div>
+      )}
+
+      {activeTab === 'uk100' && (
+        <div className={styles.sessionPane}>
+          <Boundary label="UK100">
+            <Uk100Tab />
           </Boundary>
         </div>
       )}
