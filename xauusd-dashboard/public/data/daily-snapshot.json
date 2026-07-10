@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-07-10T19:17:05.425Z",
+  "generatedAt": "2026-07-10T21:00:46.697Z",
   "yields": {
-    "US10Y": 4.56,
-    "US2Y": 4.21,
+    "US10Y": 4.54,
+    "US2Y": 4.16,
     "realYield10Y": 2.31,
-    "realYield5Y": 2,
-    "curve2s10s": 35,
+    "realYield5Y": 1.99,
+    "curve2s10s": 38,
     "breakeven10Y": 2.23,
     "breakeven5Y": 2.28,
     "forward5y5y": 2.18,
     "dayOverDay": {
-      "US10Y": 0.01,
-      "US2Y": 0.02,
-      "realYield10Y": 0.01
+      "US10Y": -0.02,
+      "US2Y": -0.05,
+      "realYield10Y": 0
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-07-29",
-    "probCut": 32,
-    "probHold": 68,
+    "probCut": 12,
+    "probHold": 88,
     "probHike": 0
   },
   "marketVolatility": {
@@ -26,32 +26,32 @@
     "VIX": 15.84
   },
   "positioning": {
-    "cotNetLong": -14945,
-    "cotWoWChange": 0,
+    "cotNetLong": -15463,
+    "cotWoWChange": -518,
     "crowding": "CROWDED_SHORT",
-    "reportDate": "2026-06-30T00:00:00.000",
-    "openInterest": 64821,
-    "openInterestChange": 2852
+    "reportDate": "2026-07-07T00:00:00.000",
+    "openInterest": 70782,
+    "openInterestChange": 5961
   },
   "etfFlows": {
-    "gldTonnes": 1140.2,
-    "gldWoWChange": 0.5,
-    "trend3W": "FLAT"
+    "gldTonnes": 1135.6,
+    "gldWoWChange": -4.6,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4102.695,
-    "XAGUSD": 59.664,
-    "EURUSD": 1.1416,
-    "USDJPY": 161.7115,
-    "USDCHF": 0.80863,
-    "USDCNH": 6.78177,
-    "GBPUSD": 1.33971,
-    "USDCAD": 1.41538,
-    "USDSEK": 9.66583,
-    "US500": 7576.7,
-    "GER40": 25130.15,
-    "UK100": 10535.3,
-    "ADR_14day": 104.6,
+    "XAUUSD": 4119.425,
+    "XAGUSD": 59.873,
+    "EURUSD": 1.14144,
+    "USDJPY": 161.7365,
+    "USDCHF": 0.80874,
+    "USDCNH": 6.78196,
+    "GBPUSD": 1.33963,
+    "USDCAD": 1.41561,
+    "USDSEK": 9.66742,
+    "US500": 7580.15,
+    "GER40": 25117.15,
+    "UK100": 10523.3,
+    "ADR_14day": 99.9,
     "ADR_usedToday": 61.8,
     "goldSilverRatio": 68.8
   },
@@ -66,29 +66,35 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Fed report cites 'stepped-up' inflation due to tariffs, Iran war, AI buildout - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-07-10T16:30:28.000Z",
+      "hoursAgo": 4.5
+    },
+    {
       "headline": "Turkey says it hopes to achieve result on lifting U.S. sanctions soon - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-10T15:19:43.000Z",
-      "hoursAgo": 4
+      "hoursAgo": 5.7
     },
     {
       "headline": "ECB is back to square one as US-Iran war resumes - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-10T07:29:44.000Z",
-      "hoursAgo": 11.8
+      "hoursAgo": 13.5
     },
     {
       "headline": "Gold under pressure as Middle East tensions lift rate-hike bets - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-10T03:13:00.000Z",
-      "hoursAgo": 16.1
+      "hoursAgo": 17.8
     }
   ],
   "briefing": {
     "biasScore": -1,
     "biasLabel": "NEUTRAL",
     "confidence": 4,
-    "briefing": "REGIME LINE: Gold is caught in a genuine tug-of-war right now. On one side, a resuming US-Iran conflict (reported ~12 hours ago) is a classic 'safe-haven' driver — meaning people normally buy gold when war risk rises. On the other side, that same conflict is apparently pushing up expectations that central banks may raise interest rates [higher interest rates make gold less attractive because it pays no income], which is pushing gold lower. These two forces are largely cancelling each other out, which explains the messy, choppy price action you are probably seeing. RECENT CATALYSTS: The biggest headline is from Reuters about 12 hours ago: the US-Iran war has reportedly resumed, and the ECB (Europe's central bank) is reassessing its policy path as a result. A second Reuters story from 16 hours ago confirmed gold is under pressure because markets are pricing in possible rate hikes on the back of this conflict. A Turkey sanctions headline (~4 hours ago) is geopolitically interesting but unlikely to be the primary driver of gold moves today. DIRECTIONAL BIAS: With real yields [the return investors get after adjusting for inflation] sitting at 2.31% — which is quite high and genuinely weighs on gold — and the dollar (DXY) holding above 100, the path of least resistance leans very slightly DOWNWARD for gold in the near term. However, war escalation risk is a genuine wildcard that could flip this fast. Gold is at $4,102, having used about 62 of its average daily range of ~105 points already today, meaning roughly 43 points of typical movement may remain. CONFIDENCE SCORE: 4/10. This is a low-conviction read. What would change the view: any major de-escalation headline in the Middle East would be bearish for gold (removes safe-haven demand); conversely, a serious military escalation or surprise Fed pivot language would be strongly bullish. EVENT RISK: The economic calendar provided is empty — no scheduled data releases are showing for today or the rest of this week in the snapshot, which is unusual. Always double-check your own economic calendar before trading, as this data may be incomplete. KEY LEVELS: Watch $4,080 as nearby support [a price floor where buyers have previously stepped in] and $4,130 as resistance [a ceiling where sellers tend to appear]. With ~43 points of ADR remaining, a move to either of those levels is plausible in the remaining New York session. TRADE INTEGRATION: This is NOT a high-conviction window for trend-following trades. The conflicting forces between war risk and rate-hike pressure mean the 1H trend signal is likely muddled. If you do trade, use reduced position size (think half your normal), wait for a clean 5M break of structure [a clear higher-high or lower-low on the 5-minute chart] before considering entry, and keep stops tight. Sitting on your hands is a completely valid trade today. When geopolitics and interest-rate forces are pulling in opposite directions, the most disciplined move is often to wait for one side to clearly win.",
-    "generatedAt": "2026-07-10T19:17:23.997Z"
+    "briefing": "Right now, gold is caught in a genuine tug-of-war. On one side, geopolitical fear — a resumed US-Iran war and high global risk readings (the GPR, a measure of geopolitical stress, sits at 173.6, which is elevated) — would normally push money INTO gold as a safe haven. On the other side, that same conflict is forcing the Federal Reserve to flag 'stepped-up' inflation due to tariffs, the Iran war, and AI energy demand (per a Reuters report from about 4.5 hours ago). Higher inflation from these sources means the Fed may need to keep interest rates high for longer, which makes holding gold less attractive because gold pays no interest. That rate-hike pressure story was directly cited as the reason gold was 'under pressure' in a headline from ~18 hours ago, and it still appears to be the dominant force. The dollar (DXY at 100.97) is holding steady, which also acts as a gentle headwind for gold. DIRECTIONAL BIAS: CHOPPY to mildly bearish. The competing forces — fear pushing up, rate expectations pushing down — are roughly balanced, making clean trending moves harder to find. CONFIDENCE: 4/10. This view would change quickly if geopolitical escalation intensifies sharply (bullish flip) or if Fed speakers explicitly rule out rate hikes (also bullish). No scheduled economic events appear in today's calendar, so there is no data-release risk to manage today — the calendar is empty. KEY LEVELS: Gold is at $4,119. The 14-day average daily range [how far price typically moves in a day] is about $100, and today has already used roughly $62 of that, meaning only around $38 of 'normal' movement may remain in today's session. Watch $4,100 as nearby support and $4,140 as near-term resistance. TRADE INTEGRATION: With markets now in the OFF session and competing forces creating chop, this is NOT a good window for trend-following trades — wait for London open tomorrow, look for a clear 1H trend direction first, and keep position size small given the low confidence environment. When the news is fighting itself, the safest trade is often no trade.",
+    "generatedAt": "2026-07-10T21:01:01.437Z"
   }
 }

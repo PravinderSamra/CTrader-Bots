@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-07-10T19:17:26.999Z",
+  "generatedAt": "2026-07-10T21:01:16.639Z",
   "prices": {
-    "UK100": 10535.3,
-    "GBPUSD": 1.33964,
-    "GBPEUR": 1.17353,
-    "US500": 7575.9,
-    "NAS100": 29812.95,
-    "BRENT": 76.22,
-    "COPPER": 6.2999,
+    "UK100": 10523.3,
+    "GBPUSD": 1.33963,
+    "GBPEUR": 1.17361,
+    "US500": 7580.15,
+    "NAS100": 29838.5,
+    "BRENT": 76.16,
+    "COPPER": 6.3026,
     "VIX": 16.74,
-    "USDX": 100.986,
-    "XAUUSD": 4102.47,
-    "UK100_dayPct": 0.75
+    "USDX": 101.001,
+    "XAUUSD": 4119.425,
+    "UK100_dayPct": 0.63
   },
   "fx": {
     "gbpUsdDayPct": -0.09,
@@ -30,44 +30,44 @@
     "gilt10yDayBp": 14,
     "gilt20yDayBp": 12,
     "slope5s20s": 1.25,
-    "giltUst10ySpread": 0.48,
+    "giltUst10ySpread": 0.5,
     "longEndStress": true,
     "nextMpcDate": "2026-07-30",
     "daysToMpc": 20
   },
   "usLinkage": {
-    "us500DayPct": 0.49,
-    "nas100DayPct": 0.38,
+    "us500DayPct": 0.55,
+    "nas100DayPct": 0.46,
     "vix": 16.74,
     "vixRegime": "ELEVATED",
-    "us10y": 4.56,
-    "usdx": 100.986
+    "us10y": 4.54,
+    "usdx": 101.001
   },
   "commodities": {
-    "brentDayPct": -0.05,
-    "copperDayPct": 0.57,
-    "goldDayPct": -0.52,
+    "brentDayPct": -0.12,
+    "copperDayPct": 0.62,
+    "goldDayPct": -0.1,
     "brent20dTrend": "DOWN"
   },
   "positioning": {
-    "gbpCotNetLong": -105203,
-    "gbpCotWoWChange": 0,
+    "gbpCotNetLong": -89991,
+    "gbpCotWoWChange": 15212,
     "crowding": "CROWDED_SHORT",
-    "reportDate": "2026-06-30T00:00:00.000",
+    "reportDate": "2026-07-07T00:00:00.000",
     "ftseReadthrough": "BEARISH"
   },
   "sectorPanel": [
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent -0.05%",
+      "driver": "Brent -0.12%",
       "read": "NEUTRAL",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper +0.57%",
+      "driver": "Copper +0.62%",
       "read": "NEUTRAL",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
@@ -94,7 +94,20 @@
     }
   ],
   "economicCalendar": [],
-  "newsItems": [],
+  "newsItems": [
+    {
+      "headline": "Fed report cites 'stepped-up' inflation due to tariffs, Iran war, AI buildout - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPWmpCaExTSktkWXFGQjlDZ2pzOHlSNm0xcXJqcWJGUkdNaWRlSnJldzhzSUZaT2drZy1RZVM5TmVJbGltTHhUU3hzeFpvbGZjbmlJWkxjejUwZVY0UTFscU45ekt2LWlBZUM3c1dtc2R1VE05OXA3NmxCVUxBVVFUQ0ZuSm0zejV6ZlE?oc=5",
+      "hoursAgo": 4.5
+    },
+    {
+      "headline": "Gold under pressure as Middle East tensions lift rate-hike bets - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQY0V5Q0tTaFY3eWtUQUwydFZrcHA4dzI1blE1ZHNzRGRmcV9TVXNoVWxNQ2pXTHpvenpyYUM4X2tnZXcxT1JIUG1lWGQwS1kxWVJ3aHAweGl2Z1FEa1VaYjlLUi1BQ3RoRXBSUU1aWWpwTFRfbWJQbk5lUExMd2lBdDNWZC1COVpRTkhEWURwR3JJTUU1MDE1Q2NLaHVxaXpOMmR6SU5Kck1Pdnoz?oc=5",
+      "hoursAgo": 17.8
+    }
+  ],
   "riskTone": null,
   "bias": {
     "score": 3,
@@ -111,7 +124,7 @@
         "name": "US futures",
         "weight": 2.5,
         "impact": "BULLISH",
-        "detail": "US500 +0.49% today"
+        "detail": "US500 +0.55% today"
       },
       {
         "name": "VIX regime",
@@ -123,13 +136,13 @@
         "name": "Brent",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "Brent -0.05% (energy majors)"
+        "detail": "Brent -0.12% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
         "impact": "BULLISH",
-        "detail": "Copper +0.57% (miners/China)"
+        "detail": "Copper +0.62% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -153,7 +166,7 @@
     "eventSuppressed": false
   },
   "orbContext": {
-    "computedAt": "2026-07-10T19:17:26.999Z",
+    "computedAt": "2026-07-10T21:01:16.639Z",
     "mode": "CLOSED",
     "cashOpenLondon": "08:00 BST",
     "overnightHigh": 10498.5,
@@ -161,8 +174,8 @@
     "priorDayHigh": 10514.2,
     "priorDayLow": 10380.4,
     "priorClose": 10457,
-    "gapPts": 78.3,
-    "gapPct": 0.75,
+    "gapPts": 66.3,
+    "gapPct": 0.63,
     "orbHigh": 10494.7,
     "orbLow": 10471.7,
     "orbBrokenDirection": "UP",
