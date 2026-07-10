@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-10T09:20:05.564Z",
+  "generatedAt": "2026-07-10T12:20:20.639Z",
   "yields": {
     "US10Y": 4.56,
     "US2Y": 4.21,
@@ -34,23 +34,23 @@
     "openInterestChange": 2852
   },
   "etfFlows": {
-    "gldTonnes": 1140.6,
-    "gldWoWChange": 6.2,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1138.7,
+    "gldWoWChange": -1.9,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4101.33,
-    "XAGUSD": 59.522,
+    "XAUUSD": 4108.045,
+    "XAGUSD": 59.6645,
     "EURUSD": 1.14315,
-    "USDJPY": 161.699,
-    "USDCHF": 0.80649,
-    "USDCNH": 6.78066,
-    "GBPUSD": 1.34126,
-    "USDCAD": 1.41694,
-    "USDSEK": 9.6514,
-    "US500": 7534.7,
-    "GER40": 25134.15,
-    "UK100": 10476.35,
+    "USDJPY": 161.822,
+    "USDCHF": 0.80671,
+    "USDCNH": 6.77879,
+    "GBPUSD": 1.34241,
+    "USDCAD": 1.41517,
+    "USDSEK": 9.63499,
+    "US500": 7540.7,
+    "GER40": 25121.15,
+    "UK100": 10471.9,
     "ADR_14day": 104.6,
     "ADR_usedToday": 40.5,
     "goldSilverRatio": 68.9
@@ -66,35 +66,35 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Gold heads for weekly drop as Gulf attacks reinforce rate-hike bets - Reuters",
+      "headline": "Gold set for weekly loss as US-Iran tensions fuel rate-hike fears - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-10T03:13:00.000Z",
-      "hoursAgo": 6.1
+      "hoursAgo": 9.1
     },
     {
       "headline": "Anthropic appoints former Fed Chair Ben Bernanke to its independent trust",
       "source": "CNBC",
       "publishedAt": "2026-07-09T17:23:40.000Z",
-      "hoursAgo": 15.9
+      "hoursAgo": 18.9
     },
     {
       "headline": "Fed's Williams expects energy prices to abate even as Iran war flares - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-09T16:51:45.000Z",
-      "hoursAgo": 16.5
+      "hoursAgo": 19.5
     },
     {
       "headline": "Goldman Sachs wins $70 billion in asset management deals with Verizon, Lockheed Martin",
       "source": "CNBC",
       "publishedAt": "2026-07-09T14:11:19.000Z",
-      "hoursAgo": 19.1
+      "hoursAgo": 22.1
     }
   ],
   "briefing": {
-    "biasScore": -2,
-    "biasLabel": "BEARISH",
-    "confidence": 5,
-    "briefing": "Right now, the dominant forces pressing on gold are a recovering US dollar (DXY sitting at 100.86) and a market that is increasingly betting the Federal Reserve will NOT cut interest rates anytime soon — in fact, the most important story is that traders are now pricing in a possible rate HIKE following military escalation in the Gulf region. Higher interest rates make gold less attractive because gold pays no income, so when rates rise or might rise, money tends to leave gold and go into yield-bearing assets instead. The most market-moving headline came roughly 6 hours ago via Reuters: 'Gold heads for weekly drop as Gulf attacks reinforce rate-hike bets.' This tells us that a geopolitical flare-up — normally a driver of gold buying as a safe haven — is actually being interpreted as inflationary, which is pushing rate expectations HIGHER and hurting gold. A second headline from 16.5 hours ago confirms the Fed's Williams is downplaying energy-price concerns from the Iran conflict, which reduces the case for emergency rate cuts. The Bernanke and Goldman headlines are not market-moving for gold. Directional bias is mildly BEARISH [meaning we expect gold to drift lower or struggle to rise] for now, because the combination of sticky rate expectations, a firm dollar, and gold already down on the week all point to seller pressure. However, confidence is limited — geopolitical risk remains genuinely elevated (the GPR [Geopolitical Risk Index] sits at a high 173.6), ETF flows [money pouring into gold funds] have been positive for three straight weeks, and the COT [Commitment of Traders, a report showing how big professional traders are positioned] shows professional traders are actually net SHORT [betting on a price fall] — a 'crowded short' setup that can snap back violently if any good news for gold emerges. Confidence score: 5/10. What would flip the view bullish: a ceasefire or de-escalation headline, a surprise soft US inflation print, or any dovish Fed commentary. There are NO scheduled economic events on today's calendar, so price action will be driven purely by headlines and technical flows. With no calendar risk today, that is not necessarily a green light — the absence of data can mean thin, choppy price action. Looking at levels: gold is currently around $4,101. The 14-day Average Daily Range [the typical distance price travels in a day] is roughly $104.60, and we have already used $40.50 of that today — meaning there is approximately $64 of average range remaining. Key levels to watch are the $4,080–$4,075 area as nearby support [a floor where buyers have previously stepped in], and $4,120–$4,130 as resistance [a ceiling where sellers are likely to push back]. A clean break and hold below $4,080 on the 1H chart would strengthen the bearish case. Trade integration: given the mild bearish bias but only medium confidence, this is NOT a high-conviction window for aggressive trades. If you are a trend-following trader, wait for the 1H chart to confirm a clear lower-high structure [price making a series of lower peaks, confirming a downtrend] before looking for sell signals on the 5-minute chart — do NOT force trades into choppy, headline-driven price action with no catalysts on the calendar. Keep position size small. If price makes a decisive hourly close below $4,080, that is your cleaner signal to begin looking for short [sell] setups. Remember: no calendar event today means the headlines ARE the market — stay patient and let the setup come to you.",
-    "generatedAt": "2026-07-10T09:20:27.055Z"
+    "biasScore": -1,
+    "biasLabel": "NEUTRAL",
+    "confidence": 4,
+    "briefing": "Right now, the two biggest forces pulling on gold are a moderately firm US Dollar (the DXY — an index measuring dollar strength against other currencies — sits at 100.84) and a geopolitical wildcard: an active US-Iran conflict that is simultaneously pushing energy prices higher AND raising fears the Federal Reserve [the US central bank] may need to keep interest rates elevated to fight any resulting inflation. That tension is the defining regime for gold today. On recent catalysts, a Reuters headline from about 9 hours ago stated gold is on track for a weekly loss precisely because those US-Iran war tensions are fuelling 'rate-hike fears' — higher rates make gold less attractive because it pays no interest. Separately, Fed official Williams was quoted ~19.5 hours ago saying he expects energy prices to eventually calm down, which slightly reduces the rate-fear panic, but markets don't fully believe it yet. Directionally, the bias leans very mildly bearish [favouring price going down] for the short term. Gold has used roughly 40 of its average 104-point daily range [the typical distance price travels in a day], meaning there is still ~64 points of potential movement remaining today — but without a clear bullish catalyst, that remaining range could easily be used to the downside. Positioning data [how large traders are currently placed] shows the market is 'crowded short' [lots of traders already betting on falling prices], and ETF outflows [investors pulling money out of gold funds] have continued for three straight weeks — both mild headwinds. Confidence is 4/10: the crowded-short positioning means a sharp snap-back rally [sudden price jump caused by short-sellers closing positions] is a real risk at any moment, especially with geopolitical uncertainty elevated (the Geopolitical Risk Index reads a high 173.6). The view flips bullish if price reclaims and holds above a session high on the 1H chart, or if a fresh Iran escalation headline drops. There are no scheduled economic news events on today's calendar — the calendar data returned empty — so there is no specific news-driven time to be cautious about intraday, which is unusual and means price action may be driven purely by momentum and headlines. For trade integration, this is a tricky window: the mild bearish lean means SHORT trades [selling gold, expecting it to fall] are slightly more aligned with the current flow, but the crowded-short positioning and high geopolitical risk index make large or aggressive positions dangerous — keep size small (half your normal risk at most) and only act on a clean 5-minute chart signal that confirms momentum, not against it. Remember: when the market is already full of sellers AND a war is active, price can reverse violently in either direction, so tight stop-losses [the price level where you exit a losing trade automatically] are essential. The one thing to screenshot today: gold's enemy right now is rate-hike fear — if you hear any news that reduces that fear, be ready for gold to jump.",
+    "generatedAt": "2026-07-10T12:20:40.061Z"
   }
 }
