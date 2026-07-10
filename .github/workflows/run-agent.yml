@@ -22,8 +22,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 concurrency:
   group: gex-agent-deploy
@@ -32,9 +30,6 @@ concurrency:
 jobs:
   run-agent-and-deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Checkout repository
@@ -72,6 +67,14 @@ jobs:
           fi
 
       - name: Commit updated data files to repository
+        # NOTE: no Pages-deploy step here by design. This push (path
+        # `GEX&OI/dashboard/data/**`) is inside deploy-dashboard.yml's trigger
+        # paths, so it fires that workflow automatically, which builds the
+        # COMPLETE site (gex-oi + chart-analysis + xauusd-dashboard). This job
+        # used to build and deploy its own `_site` containing only gex-oi and
+        # chart-analysis — every run silently wiped xauusd-dashboard off
+        # GitHub Pages (observed 2026-07-10: the 09:28 UTC cron overwrote a
+        # good deploy from 07:33 UTC and took the whole dashboard down).
         run: |
           git config user.name "GEX Agent Bot"
           git config user.email "gex-agent@noreply.github.com"
@@ -83,86 +86,3 @@ jobs:
           else
             echo "No data changes to commit."
           fi
-
-      - name: Build site structure
-        run: |
-          mkdir -p _site/gex-oi
-          mkdir -p _site/chart-analysis
-
-          cp -r "GEX&OI/dashboard/." _site/gex-oi/
-          cp "Chart-Analysis-Agent/index.html" _site/chart-analysis/index.html
-
-          cat > _site/index.html << 'EOF'
-          <!DOCTYPE html>
-          <html lang="en">
-          <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>CTrader Bots — Dashboards</title>
-            <style>
-              * { box-sizing: border-box; margin: 0; padding: 0; }
-              body {
-                font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-                background: #0a0e17; color: #e8ecf4;
-                min-height: 100vh;
-                display: flex; flex-direction: column;
-                align-items: center; justify-content: center;
-                padding: 40px 20px;
-              }
-              .logo { font-size: 13px; font-weight: 700; letter-spacing: 1.5px;
-                      text-transform: uppercase; color: #38bdf8; margin-bottom: 8px; }
-              h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 6px; }
-              .sub { font-size: 13px; color: #8896b0; margin-bottom: 48px; }
-              .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-                      gap: 16px; width: 100%; max-width: 760px; }
-              a.card {
-                background: #151d2e; border: 1px solid #1e2d45; border-radius: 10px;
-                padding: 24px; text-decoration: none; color: inherit;
-                transition: border-color 0.18s, transform 0.18s;
-                display: flex; flex-direction: column; gap: 8px;
-              }
-              a.card:hover { border-color: #38bdf8; transform: translateY(-2px); }
-              a.card.gold:hover { border-color: #F0B429; }
-              .card-icon { font-size: 28px; }
-              .card-title { font-size: 15px; font-weight: 700; color: #e8ecf4; }
-              .card-desc { font-size: 12px; color: #8896b0; line-height: 1.5; }
-              .card-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.6px;
-                          padding: 3px 8px; border-radius: 4px; width: fit-content;
-                          text-transform: uppercase; }
-              .tag-blue { background: rgba(56,189,248,0.12); color: #38bdf8; }
-              .tag-gold { background: rgba(240,180,41,0.15); color: #F0B429; }
-            </style>
-          </head>
-          <body>
-            <div class="logo">CTrader Bots</div>
-            <h1>Trading Dashboards</h1>
-            <p class="sub">Select a dashboard below</p>
-            <div class="grid">
-              <a class="card" href="gex-oi/">
-                <div class="card-icon">📊</div>
-                <div class="card-title">GEX &amp; OI Dashboard</div>
-                <div class="card-desc">Gamma Exposure &amp; Open Interest analysis for US500, XAUUSD, GER40, UK100</div>
-                <div class="card-tag tag-blue">Live</div>
-              </a>
-              <a class="card gold" href="chart-analysis/">
-                <div class="card-icon">⚡</div>
-                <div class="card-title">SMC/ICT Chart Analysis Agent</div>
-                <div class="card-desc">Upload a chart screenshot for full institutional-grade ICT/SMC analysis with probability scores and trade ideas</div>
-                <div class="card-tag tag-gold">AI Agent</div>
-              </a>
-            </div>
-          </body>
-          </html>
-          EOF
-
-      - name: Setup Pages
-        uses: actions/configure-pages@1f0c5cde4bc74cd7e1254d0cb4de8d49e9068c7d # v4.0.0
-
-      - name: Upload site artifact
-        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
-        with:
-          path: "_site"
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
