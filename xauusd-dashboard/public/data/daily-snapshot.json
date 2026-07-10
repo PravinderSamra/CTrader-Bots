@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-10T15:26:49.639Z",
+  "generatedAt": "2026-07-10T17:41:28.794Z",
   "yields": {
     "US10Y": 4.56,
     "US2Y": 4.21,
@@ -34,26 +34,26 @@
     "openInterestChange": 2852
   },
   "etfFlows": {
-    "gldTonnes": 1139.5,
-    "gldWoWChange": 0.8,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1139.7,
+    "gldWoWChange": 0.2,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4105.295,
-    "XAGUSD": 59.8105,
-    "EURUSD": 1.14335,
-    "USDJPY": 161.497,
-    "USDCHF": 0.80668,
-    "USDCNH": 6.77972,
-    "GBPUSD": 1.34196,
-    "USDCAD": 1.41356,
-    "USDSEK": 9.63942,
-    "US500": 7558.9,
-    "GER40": 25086.15,
-    "UK100": 10490.7,
+    "XAUUSD": 4104.65,
+    "XAGUSD": 59.64,
+    "EURUSD": 1.14216,
+    "USDJPY": 161.5775,
+    "USDCHF": 0.80794,
+    "USDCNH": 6.78122,
+    "GBPUSD": 1.34017,
+    "USDCAD": 1.41399,
+    "USDSEK": 9.65432,
+    "US500": 7567.7,
+    "GER40": 25126.15,
+    "UK100": 10526.8,
     "ADR_14day": 104.6,
     "ADR_usedToday": 61.8,
-    "goldSilverRatio": 68.6
+    "goldSilverRatio": 68.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.7246,
@@ -66,29 +66,23 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Gold set for weekly loss as US-Iran tensions fuel rate-hike fears - Reuters",
+      "headline": "ECB is back to square one as US-Iran war resumes - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-07-10T07:29:44.000Z",
+      "hoursAgo": 10.2
+    },
+    {
+      "headline": "Gold under pressure as Middle East tensions lift rate-hike bets - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-10T03:13:00.000Z",
-      "hoursAgo": 12.2
-    },
-    {
-      "headline": "Anthropic appoints former Fed Chair Ben Bernanke to its independent trust",
-      "source": "CNBC",
-      "publishedAt": "2026-07-09T17:23:40.000Z",
-      "hoursAgo": 22.1
-    },
-    {
-      "headline": "Fed's Williams expects energy prices to abate even as Iran war flares - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-07-09T16:51:45.000Z",
-      "hoursAgo": 22.6
+      "hoursAgo": 14.5
     }
   ],
   "briefing": {
     "biasScore": -1,
     "biasLabel": "NEUTRAL",
     "confidence": 4,
-    "briefing": "Right now, gold is being pulled in two directions at once — geopolitical tension from the US-Iran conflict is pushing investors toward safe-haven assets like gold, but the fear that this same conflict could cause energy prices to spike and force the Federal Reserve (the US central bank) to keep interest rates higher for longer is acting as a brake on gold's rally. Higher interest rates make the US dollar more attractive compared to gold, which pays no interest, so this dynamic is creating a tug-of-war. The most relevant headline from this snapshot, published about 12 hours ago by Reuters, states that gold is on track for a weekly loss specifically because US-Iran tensions are stoking rate-hike fears — a clear sign that the inflation narrative is currently winning the argument over the safe-haven narrative. A second headline from roughly 22 hours ago shows Fed official Williams downplaying the energy price threat, suggesting the Fed doesn't feel pressured to act yet, but markets are not fully convinced. Given all this, the directional bias for gold from here is CHOPPY to mildly BEARISH [meaning price more likely drifts lower or goes sideways rather than making a strong move up]. The DXY (a measure of the US dollar's strength against other currencies) sits at 100.8, which is not dramatically strong, but real yields [the return investors get after adjusting for inflation] remain elevated at 2.31%, which historically weighs on gold. Confidence in this view is 4/10 — the conflicting forces make strong conviction difficult. What would change this view: a de-escalation in Iran tensions removing rate-hike fears, or a dovish Fed signal [a hint that rate cuts are coming], would likely send gold higher; a sharp dollar rally would push it lower. There are no scheduled economic events listed in today's calendar, so there is no immediate data risk to manage, though traders should note the calendar appears empty for the entire week — meaning any market-moving events may come from unscheduled headlines or geopolitical developments, so staying alert to news is especially important today. On levels: gold is currently trading at $4,105. The 14-day Average Daily Range [a measure of how far gold typically moves in a single day] is $104.60, and roughly $61.80 of that has already been used today, leaving approximately $42–43 of potential movement remaining in either direction before the day's typical range is exhausted — so large new positions chasing a breakout right now carry extra risk. Positioning data [from the Commitments of Traders report dated June 30] shows large traders are net short [betting on gold falling], which is a contrarian warning that a short squeeze [a sudden sharp rally forcing short-sellers to buy] is possible if a bullish catalyst emerges, but for now that data is two weeks old and shows no change week-over-week. For trade integration: this is NOT an ideal window for high-conviction trend-following longs [buy trades]. The weekly loss trajectory, rate-hike fears, and conflicting narratives suggest keeping position size small, waiting for the 1H chart to show a cleaner trend direction, and only engaging if price gives a clear Smart Money signal [like a liquidity sweep followed by a strong reversal candle] rather than forcing a trade in choppy conditions. Remember: when the market can't decide which story to believe, the safest trade is often no trade at all — protect your capital for when the picture is clearer.",
-    "generatedAt": "2026-07-10T15:27:14.994Z"
+    "briefing": "Right now, gold is caught in a tug-of-war between two opposing forces: geopolitical fear (which normally pushes gold UP as a safe haven [an asset people buy when they're scared]) and rising interest rate expectations (which push gold DOWN because higher rates make holding gold — which pays no interest — less attractive). The dominant force at this moment appears to be the rate-hike concern. About 14.5 hours ago, Reuters reported that Middle East tensions from a resuming US-Iran conflict are paradoxically lifting bets that central banks will hike [raise] rates, putting gold under pressure — which is an unusual but important dynamic. Then roughly 10 hours ago, Reuters followed up noting the ECB [European Central Bank] is being thrown back to 'square one' by this conflict, adding to global uncertainty. Neither headline is giving gold a clean directional push, which explains the messy price action. The directional bias here is NEUTRAL leaning slightly BEARISH [favouring price going down], because real yields [interest rates after subtracting inflation] are sitting at 2.31% — a high level that historically weighs on gold — and the Fed [US Federal Reserve] market currently sees a 68% chance of NO rate cut at the July 29th meeting, meaning cheap money isn't coming soon to boost gold. However, the Geopolitical Risk index is elevated at 173.6 and the crowd is actually positioned SHORT [betting on price falling], which is a contrarian warning that a sharp squeeze upward is possible if fear escalates. Confidence is 4/10 — this is a low-conviction environment. What would flip the view bullish is a major escalation headline driving panic buying, or the DXY [US Dollar index] breaking below 100. What would confirm more downside is yields pushing higher. There are NO scheduled economic events on today's calendar, so price action will be purely news-driven. The 14-day Average Daily Range [the typical daily price swing over two weeks] is 104.6 points, and today has already used 61.8 of that — meaning roughly 43 points of 'typical' movement may remain in the session, though this can always be exceeded. Key levels to watch: $4,104 is current price — a break and hold below $4,080 would suggest sellers are in control, while a reclaim above $4,130 opens the door to bullish momentum. For trade integration, this is NOT a high-conviction window for beginners — the conflicting signals and news-driven environment make clean ICT setups [price patterns based on institutional order flow] harder to read; if you do trade, reduce your normal position size by at least half and wait for a clear 1H candle close above or below a key level before committing. When the crowd is all short but news keeps pulling in both directions, patience is your edge — sit on your hands until the market picks a lane.",
+    "generatedAt": "2026-07-10T17:41:46.910Z"
   }
 }
