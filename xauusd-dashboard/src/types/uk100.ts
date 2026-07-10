@@ -3,6 +3,8 @@
  * Mirrors the backend Uk100Snapshot structure from scripts/fetch-uk100-data.ts exactly.
  */
 
+import type { KeyLevel, PriceZone, StructuredTradeIdea } from './dashboard'
+
 export type FtseImpact = 'BULLISH' | 'BEARISH' | 'NEUTRAL'
 
 export interface Uk100Prices {
@@ -123,4 +125,61 @@ export interface Uk100Snapshot {
   bias: BiasBlock
   orbContext: OrbContext
   briefing: Uk100Briefing | null
+}
+
+// ── UK100 AI Session history (Phase 2c/2d) ─────────────────────────────────
+// Written by save-gold-session.ts --instrument=uk100; read by useUk100Sessions.
+
+export interface OrbPlaybook {
+  direction:    'LONG_ONLY' | 'SHORT_ONLY' | 'BOTH_OK' | 'STAND_ASIDE'
+  dayType:      'EVENT_DRIVEN' | 'TREND_EXPECTED' | 'RANGE_EXPECTED'
+  reasoning:    string
+  keyLevels:    { label: string; price: number }[]
+  invalidation: string
+  eventRisk?:   string
+}
+
+// Same optional structured fields as GoldSessionRecord (StructuredSessionFields
+// in dashboard.ts), plus orbPlaybook. Kept as a separate interface (not
+// `extends`) to avoid importing dashboard.ts's whole gold-specific surface.
+export interface Uk100SessionRecord {
+  timestamp:   string   // ISO
+  date:        string   // YYYY-MM-DD
+  time:        string   // HH:MM (UK local, carries BST/GMT)
+  session:     string   // LONDON | ASIAN (UK100 has no NEW_YORK/OVERLAP equivalent)
+  bias:        string   // BULLISH | BEARISH | NEUTRAL
+  biasScore:   number   // -10 to +10 (mechanical bias engine range)
+  probability: number   // 0-100 (primary scenario)
+  confidence:  number   // 1-10
+  analysis:    string   // full plain-text analysis output
+
+  priceAtAnalysis?:     number
+  drawOnLiquidity?:     number
+  invalidation?:        number
+  priceZone?:           PriceZone
+  equilibrium?:         number
+  keyLevels?:           KeyLevel[]
+  tradeIdea?:           StructuredTradeIdea | null
+  nextHighImpactEvent?: { event: string; timeIso: string } | null
+  smtDivergence?:       'BULLISH' | 'BEARISH' | null
+  orbPlaybook?:         OrbPlaybook | null
+}
+
+export interface Uk100SessionEntry {
+  date:        string
+  time:        string
+  filename:    string   // YYYY-MM-DD/HH-MM.json (relative to uk100/sessions/)
+  timestamp:   string
+  session:     string
+  bias:        string
+  biasScore:   number
+  probability: number
+  confidence:  number
+  priceZone?:  PriceZone
+  tradeIdea?:  { direction: 'LONG' | 'SHORT'; status: 'ACTIVE' | 'WAIT' | 'NO_TRADE' } | null
+}
+
+export interface Uk100SessionIndex {
+  updatedAt: string
+  sessions:  Uk100SessionEntry[]
 }

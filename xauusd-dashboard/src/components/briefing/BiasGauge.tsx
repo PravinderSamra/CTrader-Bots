@@ -1,9 +1,11 @@
 import styles from './BiasGauge.module.css'
 
 interface Props {
-  score: number       // -5 to +5
+  score: number       // -max to +max
   label: 'BEARISH' | 'NEUTRAL' | 'BULLISH'
   confidence: number  // 1–10
+  max?: number        // gauge full-scale value (default 5 — gold's -5..+5 range;
+                       // UK100's mechanical bias engine uses -10..+10, pass max={10})
 }
 
 const CX = 110
@@ -28,18 +30,18 @@ function arcPoint(cx: number, cy: number, r: number, svgAngleDeg: number): [numb
 }
 
 // Tick mark at score positions drawn as short arcs (outer→inner)
-function tickLine(score: number): string {
-  // SVG angle: score=-5 → 180°, score=0 → 270°, score=+5 → 0°/360°
-  const svgAngle = 270 + (score / 5) * 90
+function tickLine(score: number, max: number): string {
+  // SVG angle: score=-max → 180°, score=0 → 270°, score=+max → 0°/360°
+  const svgAngle = 270 + (score / max) * 90
   const [x1, y1] = arcPoint(CX, CY, R_OUTER + 4, svgAngle)
   const [x2, y2] = arcPoint(CX, CY, R_INNER - 4, svgAngle)
   return `M ${x1} ${y1} L ${x2} ${y2}`
 }
 
-export function BiasGauge({ score, label, confidence }: Props) {
+export function BiasGauge({ score, label, confidence, max = 5 }: Props) {
   // SVG rotation: 0° = up (neutral), -90° = bearish (left), +90° = bullish (right)
-  const needleDeg = (score / 5) * 90
-  const labelCls = score < -1 ? styles.bearish : score > 1 ? styles.bullish : styles.neutral
+  const needleDeg = (score / max) * 90
+  const labelCls = score < -max * 0.2 ? styles.bearish : score > max * 0.2 ? styles.bullish : styles.neutral
   const scoreSign = score > 0 ? '+' : ''
 
   return (
@@ -73,11 +75,11 @@ export function BiasGauge({ score, label, confidence }: Props) {
           clipPath="url(#trackClip)"
         />
 
-        {/* Score ticks at -5, -3, 0, +3, +5 */}
-        {[-5, -3, 0, 3, 5].map(s => (
+        {/* Score ticks at -max, -0.6max, 0, +0.6max, +max */}
+        {[-max, -max * 0.6, 0, max * 0.6, max].map(s => (
           <path
             key={s}
-            d={tickLine(s)}
+            d={tickLine(s, max)}
             className={s === 0 ? styles.tickMajor : styles.tick}
           />
         ))}

@@ -9,6 +9,7 @@ import { Uk100PositioningTile } from '../uk100-tiles/Uk100PositioningTile'
 import { Uk100OrbTile } from '../uk100-tiles/Uk100OrbTile'
 import { Uk100SectorTile } from '../uk100-tiles/Uk100SectorTile'
 import { Uk100CalendarTile } from '../uk100-tiles/Uk100CalendarTile'
+import { AiSubTab } from './AiSubTab'
 import styles from './Uk100Tab.module.css'
 
 type SubTab = 'macro' | 'ai'
@@ -59,12 +60,7 @@ export function Uk100Tab() {
         </main>
       )}
 
-      {subTab === 'ai' && (
-        <div className={styles.aiPlaceholder}>
-          <div>UK100 AI Session — coming in Phase 2c/2d</div>
-          <div>Run /uk100-session to generate an ORB playbook once the skill is built.</div>
-        </div>
-      )}
+      {subTab === 'ai' && <AiSubTab />}
     </div>
   )
 }
