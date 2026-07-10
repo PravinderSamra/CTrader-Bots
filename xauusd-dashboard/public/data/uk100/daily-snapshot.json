@@ -1,0 +1,174 @@
+{
+  "generatedAt": "2026-07-10T15:34:12.982Z",
+  "prices": {
+    "UK100": 10491.6,
+    "GBPUSD": 1.342,
+    "GBPEUR": 1.17379,
+    "US500": 7556.2,
+    "NAS100": 29750.85,
+    "BRENT": 75.895,
+    "COPPER": 6.3008,
+    "VIX": 16.84,
+    "USDX": 100.831,
+    "XAUUSD": 4102.37,
+    "UK100_dayPct": 0.33
+  },
+  "fx": {
+    "gbpUsdDayPct": 0.08,
+    "gbpUsd20dPercentile": null,
+    "sterlingEri": 85.6288,
+    "sterlingEriDayChange": -0.01,
+    "ftseImpactFromGbp": "NEUTRAL"
+  },
+  "ukRates": {
+    "bankRate": 3.75,
+    "sonia": 3.7303,
+    "soniaMinusBankRate": -0.02,
+    "gilt5y": 4.4699,
+    "gilt10y": 5.0356,
+    "gilt20y": 5.7244,
+    "gilt10yDayBp": 14,
+    "gilt20yDayBp": 12,
+    "slope5s20s": 1.25,
+    "giltUst10ySpread": null,
+    "longEndStress": true,
+    "nextMpcDate": "2026-07-30",
+    "daysToMpc": 20
+  },
+  "usLinkage": {
+    "us500DayPct": 0.23,
+    "nas100DayPct": 0.17,
+    "vix": 16.84,
+    "vixRegime": "ELEVATED",
+    "us10y": null,
+    "usdx": 100.831
+  },
+  "commodities": {
+    "brentDayPct": -0.47,
+    "copperDayPct": 0.59,
+    "goldDayPct": -0.52,
+    "brent20dTrend": "FLAT"
+  },
+  "positioning": {
+    "gbpCotNetLong": -105203,
+    "gbpCotWoWChange": 0,
+    "crowding": "CROWDED_SHORT",
+    "reportDate": "2026-06-30T00:00:00.000",
+    "ftseReadthrough": "BEARISH"
+  },
+  "sectorPanel": [
+    {
+      "sector": "ENERGY",
+      "weightNote": "Shell, BP — top-5 index weights",
+      "driver": "Brent -0.47%",
+      "read": "NEUTRAL",
+      "detail": "Higher oil lifts the energy majors directly."
+    },
+    {
+      "sector": "MINERS",
+      "weightNote": "Rio, Glencore, Anglo, Antofagasta",
+      "driver": "Copper +0.59%",
+      "read": "NEUTRAL",
+      "detail": "Copper is the fast proxy for China demand + global growth."
+    },
+    {
+      "sector": "BANKS",
+      "weightNote": "HSBC, Barclays, NatWest, StanChart",
+      "driver": "20Y gilt blowout",
+      "read": "BEARISH",
+      "detail": "Fiscal-stress long-end sell-off overrides the normal rotation lift."
+    },
+    {
+      "sector": "PHARMA",
+      "weightNote": "AstraZeneca (often largest single weight), GSK",
+      "driver": "Idiosyncratic / single-stock",
+      "read": "IDIOSYNCRATIC",
+      "detail": "AZN alone can swing the index on stock-specific news — low macro-sensitivity, high single-stock risk."
+    },
+    {
+      "sector": "STAPLES",
+      "weightNote": "Unilever, Diageo, BAT, Reckitt",
+      "driver": "GBP impact: NEUTRAL",
+      "read": "NEUTRAL",
+      "detail": "USD/EUR earners — takes the GBP sign-flip, softened toward neutral vs the index-level read."
+    }
+  ],
+  "economicCalendar": [],
+  "newsItems": [],
+  "riskTone": null,
+  "bias": {
+    "score": 0,
+    "label": "NEUTRAL",
+    "conviction": "LOW",
+    "drivers": [
+      {
+        "name": "GBP",
+        "weight": 3,
+        "impact": "NEUTRAL",
+        "detail": "GBP/USD +0.08% → FTSE headwind (sign-flipped)"
+      },
+      {
+        "name": "US futures",
+        "weight": 2.5,
+        "impact": "BULLISH",
+        "detail": "US500 +0.23% today"
+      },
+      {
+        "name": "VIX regime",
+        "weight": 1.5,
+        "impact": "NEUTRAL",
+        "detail": "VIX 16.84 — ELEVATED regime"
+      },
+      {
+        "name": "Brent",
+        "weight": 1.5,
+        "impact": "BEARISH",
+        "detail": "Brent -0.47% (energy majors)"
+      },
+      {
+        "name": "Copper (China proxy)",
+        "weight": 1.5,
+        "impact": "BULLISH",
+        "detail": "Copper +0.59% (miners/China)"
+      },
+      {
+        "name": "Gilts / rotation",
+        "weight": 1,
+        "impact": "BEARISH",
+        "detail": "20Y gilt +12bp — fiscal-stress override"
+      },
+      {
+        "name": "GBP COT (proxy, contrarian)",
+        "weight": 1,
+        "impact": "BEARISH",
+        "detail": "GBP positioning: CROWDED_SHORT"
+      },
+      {
+        "name": "Risk tone",
+        "weight": 1,
+        "impact": "NEUTRAL",
+        "detail": "Risk-tone classifier not yet wired (Phase 2e)"
+      }
+    ],
+    "eventSuppressed": false
+  },
+  "orbContext": {
+    "computedAt": "2026-07-10T15:34:12.982Z",
+    "mode": "CLOSED",
+    "cashOpenLondon": "08:00 BST",
+    "overnightHigh": 10498.5,
+    "overnightLow": 10438.8,
+    "priorDayHigh": 10514.2,
+    "priorDayLow": 10380.4,
+    "priorClose": 10457,
+    "gapPts": 34.6,
+    "gapPct": 0.33,
+    "orbHigh": 10494.7,
+    "orbLow": 10471.7,
+    "orbBrokenDirection": "NONE",
+    "eventWindows": [],
+    "adr14": 133.4,
+    "adrUsedPct": 49
+  },
+  "briefing": null
+}

@@ -15,22 +15,33 @@ export const CTRADER_URL   = (process.env.CTRADER_MCP_URL   || 'https://mcp.ctra
 export const CTRADER_TOKEN = (process.env.CTRADER_MCP_TOKEN || '').trim()
 
 // All cTrader _SB spread-bet instruments use 10^5 pipettes (verified empirically).
+// The plain-CFD symbols added for UK100 (NAS100/BRENT/COPPER/VIX/USDX/EURGBP) were
+// verified 2026-07-10 to divide by the same 10^5 (see UK100-BUILD-PLAN.md §1.1).
 export const PIP_DIGITS: Record<string, number> = {
   XAUUSD: 5, XAGUSD: 5,
   EURUSD: 5, USDJPY: 5, USDCHF: 5, USDCNH: 5,
   GBPUSD: 5, USDCAD: 5, USDSEK: 5,
   US500: 5, GER40: 5, UK100: 5,
+  NAS100: 5, BRENT: 5, COPPER: 5, VIX: 5, USDX: 5, EURGBP: 5,
 }
 
 // Broker-assigned symbolIds. This account trades the _SB (spread-bet) variants;
 // XAUUSD_SB = 241 (confirmed 2026-07-07 — the old 41 does NOT resolve and returns
 // no spot). Any entry that drifts is self-healed at runtime by fetchCTraderPrices,
 // which re-resolves unpriced symbols via get_symbols (preferring enabled _SB IDs).
+//
+// UK100 build additions (2026-07-10, see UK100-BUILD-PLAN.md §1.1): these are the
+// plain-CFD symbolIds, not _SB — the user trades UK100 as a CFD, and live
+// verification showed CFD and _SB prices identical to within spread noise (both
+// wrappers price off the same underlying feed). Fallback _SB IDs if a CFD ID ever
+// stops pricing: NAS100→205, BRENT→253 (Brent_SB), COPPER→2359, VIX→408, USDX→235,
+// EURGBP→175.
 export const KNOWN_SYMBOL_IDS: Record<string, number> = {
   XAUUSD: 241, XAGUSD: 42,
   EURUSD: 1, USDJPY: 4, USDCHF: 6, USDCNH: 60,
   GBPUSD: 2, USDCAD: 8, USDSEK: 29,
   US500: 115, GER40: 110, UK100: 113,
+  NAS100: 116, BRENT: 249, COPPER: 109, VIX: 152, USDX: 101, EURGBP: 9,
 }
 
 /**

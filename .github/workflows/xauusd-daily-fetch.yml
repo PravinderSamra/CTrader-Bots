@@ -51,6 +51,19 @@ jobs:
           FINNHUB_API_KEY:          ${{ secrets.FINNHUB_API_KEY }}
           ANTHROPIC_API_KEY:        ${{ secrets.ANTHROPIC_API_KEY }}
 
+      - name: Fetch UK100 data snapshot
+        # Phase 2a of UK100-BUILD-PLAN.md. continue-on-error: a UK100 fetch
+        # failure must never block the gold snapshot/deploy — same reasoning
+        # as the resolver step below.
+        continue-on-error: true
+        run: cd xauusd-dashboard && npx tsx scripts/fetch-uk100-data.ts
+        env:
+          FRED_API_KEY:             ${{ secrets.FRED_API_KEY }}
+          CTRADER_MCP_URL:          ${{ secrets.VITE_CTRADER_MCP_URL }}
+          CTRADER_MCP_TOKEN:        ${{ secrets.VITE_CTRADER_MCP_TOKEN }}
+          FINNHUB_API_KEY:          ${{ secrets.FINNHUB_API_KEY }}
+          ANTHROPIC_API_KEY:        ${{ secrets.ANTHROPIC_API_KEY }}
+
       - name: Resolve gold-session outcomes
         # Scores past /gold-session predictions against realised XAUUSD H1 price and
         # writes outcomes back into the session files + outcomes.json (the calibration
