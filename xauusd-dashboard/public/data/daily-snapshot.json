@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-10T17:41:28.794Z",
+  "generatedAt": "2026-07-10T19:17:05.425Z",
   "yields": {
     "US10Y": 4.56,
     "US2Y": 4.21,
@@ -34,23 +34,23 @@
     "openInterestChange": 2852
   },
   "etfFlows": {
-    "gldTonnes": 1139.7,
-    "gldWoWChange": 0.2,
+    "gldTonnes": 1140.2,
+    "gldWoWChange": 0.5,
     "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4104.65,
-    "XAGUSD": 59.64,
-    "EURUSD": 1.14216,
-    "USDJPY": 161.5775,
-    "USDCHF": 0.80794,
-    "USDCNH": 6.78122,
-    "GBPUSD": 1.34017,
-    "USDCAD": 1.41399,
-    "USDSEK": 9.65432,
-    "US500": 7567.7,
-    "GER40": 25126.15,
-    "UK100": 10526.8,
+    "XAUUSD": 4102.695,
+    "XAGUSD": 59.664,
+    "EURUSD": 1.1416,
+    "USDJPY": 161.7115,
+    "USDCHF": 0.80863,
+    "USDCNH": 6.78177,
+    "GBPUSD": 1.33971,
+    "USDCAD": 1.41538,
+    "USDSEK": 9.66583,
+    "US500": 7576.7,
+    "GER40": 25130.15,
+    "UK100": 10535.3,
     "ADR_14day": 104.6,
     "ADR_usedToday": 61.8,
     "goldSilverRatio": 68.8
@@ -66,23 +66,29 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Turkey says it hopes to achieve result on lifting U.S. sanctions soon - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-07-10T15:19:43.000Z",
+      "hoursAgo": 4
+    },
+    {
       "headline": "ECB is back to square one as US-Iran war resumes - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-10T07:29:44.000Z",
-      "hoursAgo": 10.2
+      "hoursAgo": 11.8
     },
     {
       "headline": "Gold under pressure as Middle East tensions lift rate-hike bets - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-10T03:13:00.000Z",
-      "hoursAgo": 14.5
+      "hoursAgo": 16.1
     }
   ],
   "briefing": {
     "biasScore": -1,
     "biasLabel": "NEUTRAL",
     "confidence": 4,
-    "briefing": "Right now, gold is caught in a tug-of-war between two opposing forces: geopolitical fear (which normally pushes gold UP as a safe haven [an asset people buy when they're scared]) and rising interest rate expectations (which push gold DOWN because higher rates make holding gold — which pays no interest — less attractive). The dominant force at this moment appears to be the rate-hike concern. About 14.5 hours ago, Reuters reported that Middle East tensions from a resuming US-Iran conflict are paradoxically lifting bets that central banks will hike [raise] rates, putting gold under pressure — which is an unusual but important dynamic. Then roughly 10 hours ago, Reuters followed up noting the ECB [European Central Bank] is being thrown back to 'square one' by this conflict, adding to global uncertainty. Neither headline is giving gold a clean directional push, which explains the messy price action. The directional bias here is NEUTRAL leaning slightly BEARISH [favouring price going down], because real yields [interest rates after subtracting inflation] are sitting at 2.31% — a high level that historically weighs on gold — and the Fed [US Federal Reserve] market currently sees a 68% chance of NO rate cut at the July 29th meeting, meaning cheap money isn't coming soon to boost gold. However, the Geopolitical Risk index is elevated at 173.6 and the crowd is actually positioned SHORT [betting on price falling], which is a contrarian warning that a sharp squeeze upward is possible if fear escalates. Confidence is 4/10 — this is a low-conviction environment. What would flip the view bullish is a major escalation headline driving panic buying, or the DXY [US Dollar index] breaking below 100. What would confirm more downside is yields pushing higher. There are NO scheduled economic events on today's calendar, so price action will be purely news-driven. The 14-day Average Daily Range [the typical daily price swing over two weeks] is 104.6 points, and today has already used 61.8 of that — meaning roughly 43 points of 'typical' movement may remain in the session, though this can always be exceeded. Key levels to watch: $4,104 is current price — a break and hold below $4,080 would suggest sellers are in control, while a reclaim above $4,130 opens the door to bullish momentum. For trade integration, this is NOT a high-conviction window for beginners — the conflicting signals and news-driven environment make clean ICT setups [price patterns based on institutional order flow] harder to read; if you do trade, reduce your normal position size by at least half and wait for a clear 1H candle close above or below a key level before committing. When the crowd is all short but news keeps pulling in both directions, patience is your edge — sit on your hands until the market picks a lane.",
-    "generatedAt": "2026-07-10T17:41:46.910Z"
+    "briefing": "REGIME LINE: Gold is caught in a genuine tug-of-war right now. On one side, a resuming US-Iran conflict (reported ~12 hours ago) is a classic 'safe-haven' driver — meaning people normally buy gold when war risk rises. On the other side, that same conflict is apparently pushing up expectations that central banks may raise interest rates [higher interest rates make gold less attractive because it pays no income], which is pushing gold lower. These two forces are largely cancelling each other out, which explains the messy, choppy price action you are probably seeing. RECENT CATALYSTS: The biggest headline is from Reuters about 12 hours ago: the US-Iran war has reportedly resumed, and the ECB (Europe's central bank) is reassessing its policy path as a result. A second Reuters story from 16 hours ago confirmed gold is under pressure because markets are pricing in possible rate hikes on the back of this conflict. A Turkey sanctions headline (~4 hours ago) is geopolitically interesting but unlikely to be the primary driver of gold moves today. DIRECTIONAL BIAS: With real yields [the return investors get after adjusting for inflation] sitting at 2.31% — which is quite high and genuinely weighs on gold — and the dollar (DXY) holding above 100, the path of least resistance leans very slightly DOWNWARD for gold in the near term. However, war escalation risk is a genuine wildcard that could flip this fast. Gold is at $4,102, having used about 62 of its average daily range of ~105 points already today, meaning roughly 43 points of typical movement may remain. CONFIDENCE SCORE: 4/10. This is a low-conviction read. What would change the view: any major de-escalation headline in the Middle East would be bearish for gold (removes safe-haven demand); conversely, a serious military escalation or surprise Fed pivot language would be strongly bullish. EVENT RISK: The economic calendar provided is empty — no scheduled data releases are showing for today or the rest of this week in the snapshot, which is unusual. Always double-check your own economic calendar before trading, as this data may be incomplete. KEY LEVELS: Watch $4,080 as nearby support [a price floor where buyers have previously stepped in] and $4,130 as resistance [a ceiling where sellers tend to appear]. With ~43 points of ADR remaining, a move to either of those levels is plausible in the remaining New York session. TRADE INTEGRATION: This is NOT a high-conviction window for trend-following trades. The conflicting forces between war risk and rate-hike pressure mean the 1H trend signal is likely muddled. If you do trade, use reduced position size (think half your normal), wait for a clean 5M break of structure [a clear higher-high or lower-low on the 5-minute chart] before considering entry, and keep stops tight. Sitting on your hands is a completely valid trade today. When geopolitics and interest-rate forces are pulling in opposite directions, the most disciplined move is often to wait for one side to clearly win.",
+    "generatedAt": "2026-07-10T19:17:23.997Z"
   }
 }

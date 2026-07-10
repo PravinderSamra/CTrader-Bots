@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-07-10T17:41:51.355Z",
+  "generatedAt": "2026-07-10T19:17:26.999Z",
   "prices": {
-    "UK100": 10526.1,
-    "GBPUSD": 1.34017,
-    "GBPEUR": 1.17336,
-    "US500": 7567.7,
-    "NAS100": 29838.75,
-    "BRENT": 76.045,
-    "COPPER": 6.2974,
-    "VIX": 16.84,
-    "USDX": 100.921,
-    "XAUUSD": 4104.01,
-    "UK100_dayPct": 0.66
+    "UK100": 10535.3,
+    "GBPUSD": 1.33964,
+    "GBPEUR": 1.17353,
+    "US500": 7575.9,
+    "NAS100": 29812.95,
+    "BRENT": 76.22,
+    "COPPER": 6.2999,
+    "VIX": 16.74,
+    "USDX": 100.986,
+    "XAUUSD": 4102.47,
+    "UK100_dayPct": 0.75
   },
   "fx": {
-    "gbpUsdDayPct": -0.05,
+    "gbpUsdDayPct": -0.09,
     "gbpUsd20dPercentile": 68,
     "sterlingEri": 85.6288,
     "sterlingEriDayChange": -0.01,
@@ -36,17 +36,17 @@
     "daysToMpc": 20
   },
   "usLinkage": {
-    "us500DayPct": 0.38,
-    "nas100DayPct": 0.46,
-    "vix": 16.84,
+    "us500DayPct": 0.49,
+    "nas100DayPct": 0.38,
+    "vix": 16.74,
     "vixRegime": "ELEVATED",
     "us10y": 4.56,
-    "usdx": 100.921
+    "usdx": 100.986
   },
   "commodities": {
-    "brentDayPct": -0.28,
-    "copperDayPct": 0.53,
-    "goldDayPct": -0.48,
+    "brentDayPct": -0.05,
+    "copperDayPct": 0.57,
+    "goldDayPct": -0.52,
     "brent20dTrend": "DOWN"
   },
   "positioning": {
@@ -60,14 +60,14 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent -0.28%",
+      "driver": "Brent -0.05%",
       "read": "NEUTRAL",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper +0.53%",
+      "driver": "Copper +0.57%",
       "read": "NEUTRAL",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
@@ -94,49 +94,42 @@
     }
   ],
   "economicCalendar": [],
-  "newsItems": [
-    {
-      "headline": "BP CEO says company must sharpen financial discipline - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxOZGJmSENUeG41TjJkN1FoX3hBUXdabzFOdU9YdGE5MndJLUQzak5DXzBGR0lVNGcyaTdsNUNpWlBhMGJ5QXdFQmlsYkRYUUZVTk9OX2FRQzdJazFEN3dQaXBqcmJYRWF5cmJWbUl5RDhzNGJWcXdURjBERThMbUxhY2h1S1BpZXBCMmZ0amR3eEI2NkJRZEpkMHVNQVcyRzBvWUNOT3BTOVpONllXTlVwUXVpalZReHpjY1lsLWlkTzRtNHdR?oc=5",
-      "hoursAgo": 22.8
-    }
-  ],
+  "newsItems": [],
   "riskTone": null,
   "bias": {
-    "score": 1,
-    "label": "NEUTRAL",
-    "conviction": "LOW",
+    "score": 3,
+    "label": "BULLISH",
+    "conviction": "MEDIUM",
     "drivers": [
       {
         "name": "GBP",
         "weight": 3,
-        "impact": "NEUTRAL",
-        "detail": "GBP/USD -0.05% → FTSE tailwind (sign-flipped)"
+        "impact": "BULLISH",
+        "detail": "GBP/USD -0.09% → FTSE tailwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
         "impact": "BULLISH",
-        "detail": "US500 +0.38% today"
+        "detail": "US500 +0.49% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 16.84 — ELEVATED regime"
+        "detail": "VIX 16.74 — ELEVATED regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
-        "impact": "BEARISH",
-        "detail": "Brent -0.28% (energy majors)"
+        "impact": "NEUTRAL",
+        "detail": "Brent -0.05% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
         "impact": "BULLISH",
-        "detail": "Copper +0.53% (miners/China)"
+        "detail": "Copper +0.57% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -160,7 +153,7 @@
     "eventSuppressed": false
   },
   "orbContext": {
-    "computedAt": "2026-07-10T17:41:51.355Z",
+    "computedAt": "2026-07-10T19:17:26.999Z",
     "mode": "CLOSED",
     "cashOpenLondon": "08:00 BST",
     "overnightHigh": 10498.5,
@@ -168,14 +161,14 @@
     "priorDayHigh": 10514.2,
     "priorDayLow": 10380.4,
     "priorClose": 10457,
-    "gapPts": 69.1,
-    "gapPct": 0.66,
+    "gapPts": 78.3,
+    "gapPct": 0.75,
     "orbHigh": 10494.7,
     "orbLow": 10471.7,
     "orbBrokenDirection": "UP",
     "eventWindows": [],
     "adr14": 133.4,
-    "adrUsedPct": 69
+    "adrUsedPct": 74
   },
   "briefing": null
 }
