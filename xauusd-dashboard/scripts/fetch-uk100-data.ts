@@ -23,6 +23,7 @@ import * as path from 'path'
 import * as https from 'https'
 import { fileURLToPath } from 'url'
 import { CTraderClient, KNOWN_SYMBOL_IDS, PIP_DIGITS } from './lib/ctrader'
+import { mergeCalendars, nextMpcDate, UK_STATIC_CALENDAR_2026, type Uk100CalendarEvent } from './lib/calendar'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -86,12 +87,6 @@ interface SectorRead {
   driver: string
   read: FtseImpact | 'IDIOSYNCRATIC'
   detail: string
-}
-
-interface Uk100CalendarEvent {
-  event: string; region: 'UK' | 'US' | 'EZ'; impact: 'HIGH' | 'MEDIUM' | 'LOW'
-  timeIso: string; timeLondon: string
-  daysFromToday: number; prior?: string; consensus?: string
 }
 
 interface Uk100NewsItem { headline: string; source: string; hoursAgo: number; url?: string }
@@ -536,41 +531,44 @@ function daysBetween(dateStr: string, fromStr: string): number {
 }
 
 async function fetchUk100Calendar(): Promise<Uk100CalendarEvent[]> {
-  console.log('Fetching UK100 economic calendar (Finnhub)...')
-  if (!FINNHUB_KEY) { console.log('Finnhub: FINNHUB_API_KEY not set — skipping calendar'); return [] }
-  try {
-    const { from, to } = weekAheadRange()
-    const url = `https://finnhub.io/api/v1/calendar/economic?from=${from}&to=${to}&token=${FINNHUB_KEY}`
-    const raw = await httpGet(url)
-    // TEMP DIAGNOSTIC (UK100-V2-PLAN.md Phase A2 §1.2) — economicCalendar has
-    // been empty in every production snapshot observed across 9 hourly runs
-    // spanning 4 different weekdays (gold's identical Finnhub call shows the
-    // same pattern), so this is not a UK100-specific regionFromCountry bug.
-    // This log pins down WHY (premium-gate error body vs genuinely-empty
-    // array vs malformed JSON) before the fix lands; remove once confirmed.
-    console.log(`Finnhub calendar raw response (first 300 chars): ${raw.slice(0, 300)}`)
-    const data = JSON.parse(raw) as { economicCalendar?: FinnhubEvent[] }
-    console.log(`Finnhub calendar: economicCalendar key present=${data.economicCalendar != null}, length=${data.economicCalendar?.length ?? 'n/a'}`)
-    if (!data.economicCalendar) return []
-    return data.economicCalendar
-      .map(e => ({ e, region: regionFromCountry(e.country, e.currency) }))
-      .filter((x): x is { e: FinnhubEvent; region: 'UK' | 'US' | 'EZ' } => x.region != null)
-      .map(({ e, region }) => {
-        const date = e.time?.slice(0, 10) || from
-        const timeIso = e.time ?? `${date}T00:00:00Z`
-        return {
-          event: e.event, region, impact: normaliseImpact(e.impact, e.event),
-          timeIso, timeLondon: londonTimeLabel(timeIso),
-          daysFromToday: daysBetween(date, from),
-          prior: e.prev != null ? String(e.prev) : undefined,
-          consensus: e.estimate != null ? String(e.estimate) : undefined,
-        } satisfies Uk100CalendarEvent
-      })
-      .sort((a, b) => a.timeIso.localeCompare(b.timeIso))
-  } catch (err) {
-    console.error('UK100 calendar fetch failed:', err)
-    return []
+  console.log('Fetching UK100 economic calendar (Finnhub + static ONS fallback)...')
+  const { from, to } = weekAheadRange()
+  let finnhubEvents: Uk100CalendarEvent[] = []
+  if (!FINNHUB_KEY) {
+    console.log('Finnhub: FINNHUB_API_KEY not set — using static UK calendar only')
+  } else {
+    try {
+      const url = `https://finnhub.io/api/v1/calendar/economic?from=${from}&to=${to}&token=${FINNHUB_KEY}`
+      const raw = await httpGet(url)
+      const data = JSON.parse(raw) as { economicCalendar?: FinnhubEvent[]; error?: string }
+      if (data.error) {
+        // Confirmed premium-gated on this account's key (see the
+        // UK_STATIC_CALENDAR_2026 comment in scripts/lib/calendar.ts) —
+        // not a mapping bug.
+        console.log(`Finnhub calendar: premium-gated ("${data.error}") — using static UK calendar only`)
+      } else if (data.economicCalendar) {
+        finnhubEvents = data.economicCalendar
+          .map(e => ({ e, region: regionFromCountry(e.country, e.currency) }))
+          .filter((x): x is { e: FinnhubEvent; region: 'UK' | 'US' | 'EZ' } => x.region != null)
+          .map(({ e, region }) => {
+            const date = e.time?.slice(0, 10) || from
+            const timeIso = e.time ?? `${date}T00:00:00Z`
+            return {
+              event: e.event, region, impact: normaliseImpact(e.impact, e.event),
+              timeIso, timeLondon: londonTimeLabel(timeIso),
+              daysFromToday: daysBetween(date, from),
+              prior: e.prev != null ? String(e.prev) : undefined,
+              consensus: e.estimate != null ? String(e.estimate) : undefined,
+            } satisfies Uk100CalendarEvent
+          })
+      } else {
+        console.log('Finnhub calendar: response had neither economicCalendar nor error — using static UK calendar only')
+      }
+    } catch (err) {
+      console.error('Finnhub calendar fetch failed:', err)
+    }
   }
+  return mergeCalendars(finnhubEvents, UK_STATIC_CALENDAR_2026, from)
 }
 
 // ── News (Finnhub) — FTSE-relevant keyword filter ───────────────────────────
@@ -605,21 +603,6 @@ async function fetchUk100News(): Promise<Uk100NewsItem[]> {
     console.error('UK100 news fetch failed:', err)
     return []
   }
-}
-
-// ── BoE MPC dates 2026 (from bankofengland.co.uk/monetary-policy, fetched
-//    2026-07-10 per the plan's instruction to WebFetch rather than invent). ──
-
-const MPC_DATES_2026 = [
-  '2026-02-05', '2026-03-19', '2026-04-30', '2026-06-18',
-  '2026-07-30', '2026-09-17', '2026-11-05', '2026-12-17',
-]
-
-function nextMpcDate(): { date: string | null; daysToMpc: number | null } {
-  const todayStr = new Date().toISOString().slice(0, 10)
-  const next = MPC_DATES_2026.find(d => d >= todayStr)
-  if (!next) return { date: null, daysToMpc: null }
-  return { date: next, daysToMpc: daysBetween(next, todayStr) }
 }
 
 // ── §5 Mechanical bias engine ────────────────────────────────────────────────
