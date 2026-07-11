@@ -1,6 +1,6 @@
 #!/usr/bin/env tsx
 /**
- * UK100 Data Fetcher — Phase 2a of UK100-BUILD-PLAN.md.
+ * UK100 Data Fetcher — Phases 2a/2e of UK100-BUILD-PLAN.md.
  * Runs as an additional step inside the existing xauusd-daily-fetch.yml workflow
  * (hourly, 06:00-20:00 GMT Mon-Fri), with continue-on-error so a UK100 failure
  * never blocks the gold snapshot.
@@ -8,8 +8,11 @@
  * Fetches: cTrader UK100/GBP/US-linkage/commodity prices + bars, BoE IADB gilt
  * strip, FRED context series, GBP COT (FTSE proxy), Finnhub calendar/news.
  * Computes the mechanical bias engine (§5 of the plan) and ORB context (§6.1).
- * Anthropic risk-tone + briefing are wired in Phase 2e — this phase writes null
- * for both and the bias engine treats a null risk-tone component as 0.
+ * Anthropic risk-tone classifier (news → score/label/rationale) feeds the bias
+ * engine's "Risk tone" driver, and the Anthropic daily briefing runs last over
+ * the fully-assembled snapshot — same two-call pattern as fetch-static-data.ts's
+ * gold briefing. Both are null when ANTHROPIC_API_KEY is absent (the bias
+ * engine treats a null risk-tone component as 0, same as before Phase 2e).
  *
  * Each fetch is wrapped in try/catch — partial failures write null, never crash.
  * Writes xauusd-dashboard/public/data/uk100/daily-snapshot.json
@@ -748,7 +751,8 @@ export function computeBias(input: {
     })
   }
 
-  // Risk tone (Anthropic classifier) — null in Phase 2a, wired Phase 2e
+  // Risk tone (Anthropic classifier over recent news — null when
+  // ANTHROPIC_API_KEY is absent or there's no news to classify)
   {
     const w = 1.0
     const comp = input.riskToneLabel === 'BULLISH' ? 1 : input.riskToneLabel === 'BEARISH' ? -1 : 0
@@ -756,7 +760,7 @@ export function computeBias(input: {
     drivers.push({
       name: 'Risk tone', weight: w,
       impact: input.riskToneLabel ?? 'NEUTRAL',
-      detail: input.riskToneLabel ? `Risk-tone classifier: ${input.riskToneLabel}` : 'Risk-tone classifier not yet wired (Phase 2e)',
+      detail: input.riskToneLabel ? `Risk-tone classifier: ${input.riskToneLabel}` : 'Risk-tone classifier unavailable (no API key or no news)',
     })
   }
 
@@ -864,6 +868,133 @@ function computeOrbContext(input: {
   }
 }
 
+// ── Anthropic risk-tone classifier + daily briefing (Phase 2e) ─────────────
+// Same key-sourcing pattern as fetch-static-data.ts: .trim() defends against
+// a trailing newline in the GitHub secret, which makes Headers.append throw
+// "invalid header value" and silently nulls the result (observed 2026-07-07
+// on the gold briefing — same failure mode applies here).
+const ANTHROPIC_KEY = (process.env.ANTHROPIC_API_KEY ?? '').trim()
+const ANTHROPIC_MODEL = 'claude-sonnet-4-6'
+
+const RISK_TONE_SYSTEM_PROMPT = `You are a risk-sentiment classifier for a UK100 (FTSE 100) index trading desk.
+Given a list of recent news headlines (last 24h, tagged with hoursAgo), classify the overall market risk tone.
+UK100 is a risk-asset equity index: RISK-ON conditions (calm markets, easing tension, dovish central banks, strong growth data) are typically BULLISH for it; RISK-OFF conditions (geopolitical escalation, financial stress, hawkish surprises, recession fear) are typically BEARISH.
+If the headlines contain nothing clearly risk-relevant, return NEUTRAL with a low score and say so in the rationale — do not invent significance.
+Return ONLY this JSON, no other text: { "score": number from -5 (strong risk-off) to +5 (strong risk-on), "label": "BULLISH" | "BEARISH" | "NEUTRAL", "rationale": "one sentence, under 200 characters" }`
+
+async function fetchUk100RiskTone(newsItems: Uk100NewsItem[]): Promise<Uk100Snapshot['riskTone']> {
+  console.log('Classifying risk tone (Anthropic)...')
+  if (!ANTHROPIC_KEY) { console.log('Anthropic: ANTHROPIC_API_KEY env var not set — skipping risk-tone'); return null }
+  if (newsItems.length === 0) { console.log('Risk-tone: no newsItems — skipping'); return null }
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'x-api-key': ANTHROPIC_KEY,
+        'anthropic-version': '2023-06-01',
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: ANTHROPIC_MODEL,
+        max_tokens: 300,
+        system: RISK_TONE_SYSTEM_PROMPT,
+        messages: [
+          { role: 'user', content: `Recent headlines:\n\n${JSON.stringify(newsItems, null, 2)}` },
+        ],
+      }),
+    })
+
+    if (!response.ok) {
+      console.error(`Anthropic risk-tone API error ${response.status}: ${(await response.text()).slice(0, 200)}`)
+      return null
+    }
+
+    const body = await response.json() as { content: Array<{ type: string; text: string }> }
+    const text = body.content.find(c => c.type === 'text')?.text ?? ''
+    const cleaned = text.replace(/^```json?\s*/i, '').replace(/\s*```$/, '').trim()
+    const parsed = JSON.parse(cleaned) as { score: number; label: FtseImpact; rationale: string }
+    console.log(`Risk tone: ${parsed.label} (${parsed.score})`)
+    return parsed
+  } catch (err) {
+    console.error('Risk-tone classification failed:', err)
+    return null
+  }
+}
+
+const BRIEFING_SYSTEM_PROMPT = `You are a senior UK100 (FTSE 100) index trading analyst and market intelligence advisor.
+Your job is to write a daily intelligence briefing for a trader who trades the 15-minute Opening Range Breakout (ORB) at London cash open (08:00), long or short per a mechanical ORB playbook, using the 1H chart for trend and the 5M chart for the ORB and signals.
+
+You will receive a structured JSON snapshot of the current UK100 market data. The snapshot is refreshed roughly hourly during London/NY hours, so "recent" means since your last update, not necessarily since midnight.
+
+CRITICAL — GBP sign-flip: UK100 and GBP are INVERSELY correlated. Weak GBP (GBPUSD falling) is BULLISH for UK100 (lifts the index's dollar/euro-earning multinationals); strong GBP is BEARISH. Always state the GBP move and its FTSE implication using this inverted relationship — never reason about it the way you would DXY vs gold.
+
+The snapshot includes:
+- \`sectorPanel\`: five sectors (ENERGY, MINERS, BANKS, PHARMA, STAPLES) each with a read and explanation — cite these directly rather than re-deriving them. PHARMA is flagged IDIOSYNCRATIC (AstraZeneca is often the single largest index weight and can swing the index on stock-specific news alone).
+- \`usLinkage.vixRegime\`: CALM / ELEVATED / STRESS — treat STRESS as a defensive damper on conviction, not a directional signal.
+- \`ukRates.longEndStress\`: true when the 20-year gilt has sold off sharply — this is a fiscal-stress signal that overrides the normal "higher yields help bank stocks" rotation logic and is bearish for the index overall.
+- \`orbContext\`: today's opening-range mechanics — cash open time, overnight range, ORB high/low, gap, and how much of the 14-day average daily range has already been used today.
+- \`calendar\`: this week's UK/US/EZ economic events, each tagged with \`daysFromToday\`. \`newsItems\`: recent headlines tagged with \`hoursAgo\`.
+
+Write a SINGLE flowing briefing paragraph (200–300 words) using PLAIN, BEGINNER-FRIENDLY language. Avoid jargon wherever possible. When you use a financial term, briefly explain what it means in brackets.
+
+Your briefing MUST follow this structure within the single paragraph:
+1. GBP SIGN-FLIP FIRST: state the GBPUSD move and what it means for UK100 (inverted).
+2. REGIME LINE: which forces (sectors, gilts, US linkage, risk tone) are most relevant right now and why.
+3. RECENT CATALYSTS: name any headline from the last few hours that plausibly explains a sterling, gilt, or index move (cite hoursAgo). If nothing looks market-moving, say so.
+4. DIRECTIONAL BIAS with plain reasoning: is UK100 likely to favour UP, DOWN, or CHOPPY from here, and why.
+5. CONFIDENCE SCORE: express confidence as X/10. Explain what would change the view.
+6. ORB RELEVANCE: one sentence on what today's macro picture means specifically for the 08:00 opening-range trade — does the setup favour a clean trend day, a fakeout/sweep-then-reverse day, or a stand-aside day.
+7. EVENT RISK: any scheduled news today (time in UK local), and a build-up caution line if a HIGH-impact event is later this week.
+8. KEY LEVELS: the most important price levels to watch, referencing \`orbContext\` (overnight high/low, ORB high/low) and \`adr14\`/how much range is already used today.
+
+End with one sentence a trader can screenshot and remember.
+
+CRITICAL RULES:
+- Use plain English. Do NOT make up data — only use what is in the JSON. If a field is null or an array is empty, say so.
+- Never say "in conclusion" or "to summarise".
+- Return your response as JSON:
+  { "biasScore": number from -10 to +10 (negative = bearish, positive = bullish — match the snapshot's own bias.score scale), "biasLabel": "BEARISH" | "NEUTRAL" | "BULLISH", "confidence": number 1-10, "briefing": "your paragraph here" }`
+
+async function generateUk100Briefing(snapshot: Omit<Uk100Snapshot, 'briefing'>): Promise<Uk100Snapshot['briefing']> {
+  console.log('Generating UK100 daily briefing (Anthropic)...')
+  if (!ANTHROPIC_KEY) { console.log('Anthropic: ANTHROPIC_API_KEY env var not set — skipping briefing'); return null }
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'x-api-key': ANTHROPIC_KEY,
+        'anthropic-version': '2023-06-01',
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: ANTHROPIC_MODEL,
+        max_tokens: 1200,
+        system: BRIEFING_SYSTEM_PROMPT,
+        messages: [
+          { role: 'user', content: `Here is today's UK100 market data snapshot:\n\n${JSON.stringify(snapshot, null, 2)}` },
+        ],
+      }),
+    })
+
+    if (!response.ok) {
+      console.error(`Anthropic briefing API error ${response.status}: ${(await response.text()).slice(0, 200)}`)
+      return null
+    }
+
+    const body = await response.json() as { content: Array<{ type: string; text: string }> }
+    const text = body.content.find(c => c.type === 'text')?.text ?? ''
+    const cleaned = text.replace(/^```json?\s*/i, '').replace(/\s*```$/, '').trim()
+    const parsed = JSON.parse(cleaned) as Omit<NonNullable<Uk100Snapshot['briefing']>, 'generatedAt'>
+    console.log(`UK100 briefing generated: bias=${parsed.biasLabel} score=${parsed.biasScore} confidence=${parsed.confidence}`)
+    return { ...parsed, generatedAt: new Date().toISOString() }
+  } catch (err) {
+    console.error('UK100 briefing generation failed:', err)
+    return null
+  }
+}
+
 // ── Main ─────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -947,6 +1078,11 @@ async function main() {
 
   const eventSuppressed = calendar.some(e => e.impact === 'HIGH' && e.daysFromToday === 0)
 
+  // Risk tone feeds the bias engine's "Risk tone" driver, so it must resolve
+  // before computeBias runs (same reason gold's briefing runs last: everything
+  // else needs to already be settled).
+  const riskTone = await fetchUk100RiskTone(newsItems)
+
   const bias = computeBias({
     gbpUsdDayPct, sterlingEriDayChange,
     us500DayPct: usLinkage.us500DayPct, nas100DayPct: usLinkage.nas100DayPct,
@@ -954,7 +1090,7 @@ async function main() {
     brentDayPct: commodities.brentDayPct, copperDayPct: commodities.copperDayPct,
     gilt10yDayBp, gilt20yDayBp,
     cotCrowding: positioning.crowding,
-    riskToneLabel: null, // wired Phase 2e
+    riskToneLabel: riskTone?.label ?? null,
     eventSuppressed,
   })
 
@@ -965,7 +1101,7 @@ async function main() {
 
   const orbContext = computeOrbContext({ ctrader, uk100Price: ctrader?.prices.UK100 ?? null, calendar })
 
-  const snapshot: Uk100Snapshot = {
+  const snapshotWithoutBriefing: Omit<Uk100Snapshot, 'briefing'> = {
     generatedAt: new Date().toISOString(),
     prices: ctrader?.prices ?? {
       UK100: null, GBPUSD: null, GBPEUR: null, US500: null, NAS100: null, BRENT: null,
@@ -973,14 +1109,18 @@ async function main() {
     },
     fx, ukRates, usLinkage, commodities, positioning, sectorPanel,
     economicCalendar: calendar, newsItems,
-    riskTone: null,      // wired Phase 2e
+    riskTone,
     bias, orbContext,
-    briefing: null,      // wired Phase 2e
   }
+
+  const briefing = await generateUk100Briefing(snapshotWithoutBriefing)
+  const snapshot: Uk100Snapshot = { ...snapshotWithoutBriefing, briefing }
 
   fs.writeFileSync(outPath, JSON.stringify(snapshot, null, 2))
   console.log(`UK100 snapshot written: ${path.relative(path.join(__dirname, '../..'), outPath)}`)
   console.log(`Bias: ${bias.label} (score=${bias.score}, conviction=${bias.conviction})`)
+  console.log(`Risk tone: ${riskTone ? `${riskTone.label} (${riskTone.score})` : 'null'}`)
+  console.log(`Briefing: ${briefing ? `${briefing.biasLabel} ${briefing.biasScore} (conf ${briefing.confidence})` : 'null'}`)
 }
 
 main().catch(err => {
