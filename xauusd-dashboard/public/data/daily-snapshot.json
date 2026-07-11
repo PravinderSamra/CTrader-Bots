@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-11T12:04:11.472Z",
+  "generatedAt": "2026-07-11T20:08:33.351Z",
   "yields": {
     "US10Y": 4.54,
     "US2Y": 4.16,
@@ -35,8 +35,8 @@
   },
   "etfFlows": {
     "gldTonnes": 982.3,
-    "gldWoWChange": -153.3,
-    "trend3W": "OUTFLOW"
+    "gldWoWChange": 0,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
     "XAUUSD": 4119.425,
@@ -51,8 +51,8 @@
     "US500": 7580.15,
     "GER40": 25117.15,
     "UK100": 10523.3,
-    "ADR_14day": null,
-    "ADR_usedToday": null,
+    "ADR_14day": 99.9,
+    "ADR_usedToday": 61.8,
     "goldSilverRatio": 68.8
   },
   "dollarLiquidity": {
@@ -64,31 +64,12 @@
     "gprDate": "2026-06"
   },
   "economicCalendar": [],
-  "newsItems": [
-    {
-      "headline": "US issues fresh Iran-related sanctions as conflict flares - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-07-10T18:49:00.000Z",
-      "hoursAgo": 17.3
-    },
-    {
-      "headline": "Fed report cites 'stepped-up' inflation due to tariffs, Iran war, AI buildout - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-07-10T16:30:28.000Z",
-      "hoursAgo": 19.6
-    },
-    {
-      "headline": "Turkey says it hopes to achieve result on lifting U.S. sanctions soon - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-07-10T15:19:43.000Z",
-      "hoursAgo": 20.7
-    }
-  ],
+  "newsItems": [],
   "briefing": {
-    "biasScore": 3,
-    "biasLabel": "BULLISH",
-    "confidence": 6,
-    "briefing": "Right now, gold is being driven by a combination of geopolitical tension [conflicts between nations that push investors toward safe assets like gold], sticky inflation fears [prices rising faster than the central bank wants], and a dollar that is holding up reasonably well but isn't surging — that mix keeps the floor under gold prices firm. Looking at recent headlines, the most relevant catalyst from the last 24 hours is the Fed report (roughly 19–20 hours ago) explicitly citing 'stepped-up' inflation from tariffs, the Iran conflict, and AI-related spending — this is meaningful because it suggests the Federal Reserve [the US central bank that sets interest rates] sees inflation staying elevated, which weakens the case for rate cuts and keeps real yields [what you earn on bonds after inflation is stripped out] high; however, it also signals an uncertain economic environment that tends to support gold as a safe haven [an asset people buy when they're nervous about the world]. Fresh Iran sanctions (17 hours ago) add a layer of geopolitical risk premium [extra price support because of global instability] on top of that. Gold is currently trading at $4,119 and the directional bias leans BULLISH — the geopolitical risk index is elevated at 173, the dollar (DXY at ~101) is soft but not collapsing, short-term yields are ticking down slightly (2-year down 0.05%), and inflation expectations [what the market thinks inflation will be in future] remain anchored above 2.2%, all of which are conditions where gold typically holds up or grinds higher. That said, confidence is a moderate 6/10 — large speculators [professional traders tracked in the CoT, or Commitment of Traders report] are actually net short [betting the price will fall] and ETF [exchange-traded fund, a gold-backed investment product] outflows have been heavy (-153 tonnes in the past week), meaning the 'smart money' positioning is not aligned with the bullish read, which adds caution. If the dollar strengthens sharply above 102 or real yields spike higher, the bullish view weakens quickly. There are no scheduled economic events on the calendar today based on available data, which removes one layer of uncertainty — but be aware that a quiet calendar can also mean thinner, choppier price action. Since ADR data [the average daily price range, telling us how much gold typically moves in a day] is unavailable in this snapshot, avoid over-targeting large moves and stick to levels clearly visible on your 1H chart. Key levels to watch: $4,100 is a logical support zone [a price area where buyers previously stepped in] — if price pulls back there and holds, that is your area to look for a 5-minute signal to go long [buy]. Resistance [a price ceiling where sellers may push back] to watch is the $4,135–$4,150 area. For trade integration, the 1H trend structure appears to favour bulls given the macro backdrop, so trend-following long setups [buying after a small dip back into a key level] are appropriate — but given mixed institutional positioning, keep size modest (risk no more than 0.5–1% of your account per trade) and wait for a clear 5M confirmation signal rather than chasing price at current highs. Remember: when gold has geopolitical tailwinds but institutional money is short, wait for price to come to YOUR level — never chase a move that's already happened.",
-    "generatedAt": "2026-07-11T12:04:33.824Z"
+    "biasScore": 1,
+    "biasLabel": "NEUTRAL",
+    "confidence": 3,
+    "briefing": "Right now the most relevant forces are a moderately firm US Dollar (the DXY index, which measures dollar strength against other currencies, sits at ~101) combined with elevated real yields [the return on US bonds after accounting for inflation, currently 2.31%] — both of which typically act as headwinds for gold since gold pays no interest. That said, gold is already trading at an extraordinarily high level near $4,119, which tells us there are powerful longer-term forces (likely geopolitical risk and central bank demand) keeping it supported. On the news front, there are zero news items in today's snapshot and zero calendar events loaded — meaning no scheduled data releases have been flagged and no unscheduled headlines are available to explain today's price action. Without fresh catalysts, any intraday moves are likely driven by order flow and technical positioning rather than a clear fundamental story. The directional bias is very mildly bullish — gold is not showing signs of a major breakdown — but the lack of a clean narrative, plus the fact that specs [large professional traders tracked by the COT report, a weekly positioning survey] are actually net short right now (meaning many big players are betting on a fall), makes this a low-conviction environment. The ADR [average daily range, how far gold typically moves in a day] is roughly $100; with about $62 already used today, only around $38 of typical movement likely remains this session — so the big move for today may already be behind us. Confidence is 3/10 — fresh news, a break above $4,130 or below $4,095, or a surprise geopolitical headline would immediately change this view. There are no scheduled events to warn you about today based on available data, and no high-impact events flagged later this week. Given all of this, this is NOT a strong window for trend-following trades — sit on your hands, watch the levels, and wait for a clear setup with real catalysts behind it. Remember: no setup is a setup — protecting your capital on quiet, low-information days is just as important as taking trades on high-conviction days.",
+    "generatedAt": "2026-07-11T20:08:47.757Z"
   }
 }

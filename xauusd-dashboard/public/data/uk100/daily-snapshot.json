@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-11T12:04:38.647Z",
+  "generatedAt": "2026-07-11T20:08:50.752Z",
   "prices": {
     "UK100": 10523.3,
     "GBPUSD": 1.33963,
@@ -11,10 +11,10 @@
     "VIX": 16.74,
     "USDX": 101.001,
     "XAUUSD": 4119.425,
-    "UK100_dayPct": null
+    "UK100_dayPct": 0.63
   },
   "fx": {
-    "gbpUsdDayPct": null,
+    "gbpUsdDayPct": -0.09,
     "gbpUsd20dPercentile": 68,
     "sterlingEri": 85.6288,
     "sterlingEriDayChange": -0.01,
@@ -37,7 +37,7 @@
   },
   "usLinkage": {
     "us500DayPct": 0.55,
-    "nas100DayPct": null,
+    "nas100DayPct": 0.46,
     "vix": 16.74,
     "vixRegime": "ELEVATED",
     "us10y": 4.54,
@@ -45,7 +45,7 @@
   },
   "commodities": {
     "brentDayPct": -0.12,
-    "copperDayPct": null,
+    "copperDayPct": 0.62,
     "goldDayPct": -0.1,
     "brent20dTrend": "DOWN"
   },
@@ -67,7 +67,7 @@
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper unavailable",
+      "driver": "Copper +0.62%",
       "read": "NEUTRAL",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
@@ -94,29 +94,18 @@
     }
   ],
   "economicCalendar": [],
-  "newsItems": [
-    {
-      "headline": "Fed report cites 'stepped-up' inflation due to tariffs, Iran war, AI buildout - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPWmpCaExTSktkWXFGQjlDZ2pzOHlSNm0xcXJqcWJGUkdNaWRlSnJldzhzSUZaT2drZy1RZVM5TmVJbGltTHhUU3hzeFpvbGZjbmlJWkxjejUwZVY0UTFscU45ekt2LWlBZUM3c1dtc2R1VE05OXA3NmxCVUxBVVFUQ0ZuSm0zejV6ZlE?oc=5",
-      "hoursAgo": 19.6
-    }
-  ],
-  "riskTone": {
-    "score": -2,
-    "label": "BEARISH",
-    "rationale": "Fed flagging stepped-up inflation from tariffs, Iran war & AI is mildly risk-off, suggesting hawkish persistence and geopolitical stress."
-  },
+  "newsItems": [],
+  "riskTone": null,
   "bias": {
-    "score": 0,
-    "label": "NEUTRAL",
-    "conviction": "LOW",
+    "score": 3,
+    "label": "BULLISH",
+    "conviction": "MEDIUM",
     "drivers": [
       {
         "name": "GBP",
         "weight": 3,
-        "impact": "NEUTRAL",
-        "detail": "GBP/USD unavailable"
+        "impact": "BULLISH",
+        "detail": "GBP/USD -0.09% → FTSE tailwind (sign-flipped)"
       },
       {
         "name": "US futures",
@@ -139,8 +128,8 @@
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
-        "impact": "NEUTRAL",
-        "detail": "Copper unavailable"
+        "impact": "BULLISH",
+        "detail": "Copper +0.62% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -157,35 +146,35 @@
       {
         "name": "Risk tone",
         "weight": 1,
-        "impact": "BEARISH",
-        "detail": "Risk-tone classifier: BEARISH"
+        "impact": "NEUTRAL",
+        "detail": "Risk-tone classifier unavailable (no API key or no news)"
       }
     ],
     "eventSuppressed": false
   },
   "orbContext": {
-    "computedAt": "2026-07-11T12:04:38.647Z",
-    "mode": "POST_ORB",
+    "computedAt": "2026-07-11T20:08:50.752Z",
+    "mode": "CLOSED",
     "cashOpenLondon": "08:00 BST",
     "overnightHigh": null,
     "overnightLow": null,
-    "priorDayHigh": null,
-    "priorDayLow": null,
-    "priorClose": null,
-    "gapPts": null,
-    "gapPct": null,
+    "priorDayHigh": 10514.2,
+    "priorDayLow": 10380.4,
+    "priorClose": 10457,
+    "gapPts": 66.3,
+    "gapPct": 0.63,
     "orbHigh": null,
     "orbLow": null,
     "orbBrokenDirection": null,
     "eventWindows": [],
-    "adr14": null,
-    "adrUsedPct": null
+    "adr14": 133.4,
+    "adrUsedPct": 74
   },
   "briefing": {
-    "biasScore": 0,
-    "biasLabel": "NEUTRAL",
-    "confidence": 3,
-    "briefing": "Starting with the GBP sign-flip (the key rule that a weaker pound is actually good for the FTSE because most big UK companies earn in dollars and euros): the sterling effective rate [a basket measuring the pound against many currencies at once] is down a tiny -0.01% on the day, and the snapshot flags the GBP impact on the index as NEUTRAL, so currency is giving no useful push in either direction today. The dominant regime force right now is the UK government bond (gilt) market, where the 20-year gilt has sold off sharply — yields [the return demanded by lenders] are up +12 basis points [hundredths of a percent] on the day to 5.72%, and the `longEndStress` flag is active; this is a fiscal-stress signal that overrides the normal idea that higher rates help bank stocks, making BANKS the clearest bearish weight on the index at present. The VIX [Wall Street's fear gauge] sits at 16.74 in an ELEVATED regime, which is not panic territory but does cap upside conviction. On the positive side, the S&P 500 is up +0.55% today, providing a modest tailwind. The only meaningful recent headline — a Fed report flagging 'stepped-up' inflation from tariffs, the Iran war, and AI investment (published roughly 20 hours ago) — reinforces a mildly risk-off [investors preferring safety over growth assets] tone, suggesting the US central bank stays tighter for longer. PHARMA is flagged IDIOSYNCRATIC, meaning AstraZeneca alone could swing the whole index on any stock-specific news, so watch for any AZN headlines. Directional bias leans NEUTRAL/CHOPPY: gilts and risk tone pull down, US futures pull up, and GBP gives nothing — the forces roughly cancel. Confidence is 3/10 because day-change percentages for UK100 and GBPUSD are unavailable, ORB levels (high, low, overnight range) are all null, and the 14-day average daily range data is missing — that data vacuum makes any precise level-based conviction impossible. What would change the view: a decisive gilt rally [yields falling back] would remove the bearish bank-sector drag and lift the bias to bullish; a VIX spike above 20 or a sharp AZN move would force an immediate reassessment. For the 08:00 ORB trade specifically, the absence of ORB high/low data and the conflicting macro forces (gilt stress vs US futures strength) suggest today is a fakeout/sweep risk day rather than a clean trend breakout day — wait for a confirmed break with follow-through rather than chasing the first move. The economic calendar in the snapshot is empty, so no scheduled UK or US data releases are flagged for today; however, the Fed inflation narrative and gilt stress building this week warrant caution into any surprise data or gilt auction that could hit mid-session. Key levels to watch: UK100 spot is at 10,523 — with ORB high/low, overnight range, and ADR data all unavailable in today's snapshot, traders must lean on the live 5-minute chart to define the opening range manually at the 08:00 candle high and low, and treat prior round numbers (10,500 and 10,550) as the nearest reference boundaries. The one thing to remember today: gilt stress is the bear, US futures are the bull, and with no ORB data to anchor the trade, patience beats aggression.",
-    "generatedAt": "2026-07-11T12:05:02.566Z"
+    "biasScore": 3,
+    "biasLabel": "BULLISH",
+    "confidence": 5,
+    "briefing": "Starting with the currency picture: GBP/USD slipped a modest -0.09% today, and because the pound and UK100 move in opposite directions (a weaker pound makes the index's many overseas-earning companies worth more in sterling terms), this acts as a small tailwind for the FTSE — the model rates this GBP impact as NEUTRAL-to-supportive overall, so it is not a strong push either way. The biggest risk sitting in the background right now is the gilt [UK government bond] market: the 20-year gilt yield has surged +12 basis points [a basis point is one-hundredth of one percent] today, reaching 5.72% — this is flagged as a long-end stress signal, meaning markets are worried about UK government borrowing costs, and that is explicitly dragging on bank stocks (HSBC, Barclays, NatWest, StanChart) which are a significant chunk of the index. Countering that drag, US equity markets are up around half a percent today (S&P 500 +0.55%), and copper — a useful barometer of global growth appetite — is up +0.62%, giving miners a gentle lift. VIX [the 'fear gauge' for US markets] sits at 16.74, which is in the ELEVATED regime, meaning there is enough background nervousness to keep traders cautious but it is not at crisis levels. No economic data events or news headlines are available in this snapshot, so there are no fresh catalysts to explain today's moves — the +0.63% gain on UK100 appears driven by the US market lead and currency effect rather than any domestic trigger. Positioning data (the COT report, which shows how big speculative traders are positioned) shows a crowded short [many traders betting on GBP falling], which is a contrarian bullish flag — heavily one-sided short bets often unwind sharply upward. Overall the bias leans BULLISH at a modest 3/10 score, but confidence is limited to 5/10: the long-end gilt stress is a genuine headwind, no fresh news is available to confirm direction, and the economic calendar in the snapshot is empty so we cannot rule out surprise data. What would flip this view bearish: gilt yields pushing materially higher, a sudden GBP rally above recent highs, or a US equity reversal overnight. For the 08:00 London ORB trade specifically: the index has already used roughly 74% of its 14-day average daily range [the typical distance the index travels in a day, averaged over two weeks] — with the prior day's range spanning 10,380 to 10,514 and today gapping up ~66 points to around 10,523, there is limited room left to run, which leans toward a fakeout or sweep-then-reverse day rather than a clean trending breakout, so treat ORB signals with extra care and tighter targets. No scheduled UK or US data events appear in the snapshot for today or the coming days, so there is no specific time-based event risk to flag — but monitor gilt auctions and any MPC [Bank of England rate-setting committee] commentary given the next decision is 19 days away on 30 July. Key levels to respect: prior day high 10,514 (now acting as support after the gap), prior day low 10,380 as the major downside reference, and current price around 10,523 — with overnight high/low data unavailable and no ORB levels set yet (market is closed), watch the first 15-minute candle at 08:00 BST carefully for your range. The one thing to take into tomorrow: the gilt market's fiscal stress signal is the sleeper bear in an otherwise modestly bullish setup — if yields keep rising at the open, banks drag, and the ORB long is harder to trust.",
+    "generatedAt": "2026-07-11T20:09:15.711Z"
   }
 }
