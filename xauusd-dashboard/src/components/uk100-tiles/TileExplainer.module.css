@@ -1,0 +1,46 @@
+.explainer {
+  margin-top: 10px;
+  border-top: 1px solid var(--border-2);
+  padding-top: 6px;
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  list-style: none;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  user-select: none;
+  transition: color 0.15s;
+}
+
+.summary::-webkit-details-marker { display: none; }
+
+.summary:hover { color: var(--gold); }
+
+.explainer[open] .summary { color: var(--gold); }
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 9px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.body {
+  margin: 8px 0 2px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-muted);
+}

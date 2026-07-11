@@ -1,4 +1,6 @@
 import type { BiasBlock } from '../../types/uk100'
+import { TileExplainer } from './TileExplainer'
+import { explainBias } from './explainers'
 import styles from '../tiles/Tile.module.css'
 
 function labelBadge(label: string): string {
@@ -63,6 +65,8 @@ export function Uk100BiasTile({ bias }: Props) {
       {!bias && (
         <div className="data-null">Snapshot not yet generated — run GitHub Action</div>
       )}
+
+      <TileExplainer text={explainBias(bias)} />
     </div>
   )
 }

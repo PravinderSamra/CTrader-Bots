@@ -1,4 +1,6 @@
 import type { PositioningBlock } from '../../types/uk100'
+import { TileExplainer } from './TileExplainer'
+import { explainPositioning } from './explainers'
 import styles from '../tiles/Tile.module.css'
 
 function crowdingBadge(crowding: string | null): string {
@@ -54,6 +56,8 @@ export function Uk100PositioningTile({ positioning }: Props) {
       {!positioning && (
         <div className="data-null">Snapshot not yet generated — run GitHub Action</div>
       )}
+
+      <TileExplainer text={explainPositioning(positioning)} />
     </div>
   )
 }

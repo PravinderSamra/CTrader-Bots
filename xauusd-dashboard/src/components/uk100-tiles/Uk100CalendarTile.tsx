@@ -1,4 +1,6 @@
 import type { Uk100CalendarEvent, Uk100NewsItem } from '../../types/uk100'
+import { TileExplainer } from './TileExplainer'
+import { explainCalendar } from './explainers'
 import styles from '../tiles/Tile.module.css'
 
 function dayLabel(daysFromToday: number): string {
@@ -69,6 +71,8 @@ export function Uk100CalendarTile({ events, news }: Props) {
           </div>
         </>
       )}
+
+      <TileExplainer text={explainCalendar(events)} />
     </div>
   )
 }

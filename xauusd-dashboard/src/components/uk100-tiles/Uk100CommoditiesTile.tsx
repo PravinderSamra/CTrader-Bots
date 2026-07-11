@@ -1,4 +1,6 @@
 import type { CommoditiesBlock, Uk100Prices } from '../../types/uk100'
+import { TileExplainer } from './TileExplainer'
+import { explainCommodities } from './explainers'
 import styles from '../tiles/Tile.module.css'
 
 function fmt(v: number | null, dp = 2): string {
@@ -68,6 +70,8 @@ export function Uk100CommoditiesTile({ commodities, prices }: Props) {
       {!commodities && (
         <div className="data-null">Snapshot not yet generated — run GitHub Action</div>
       )}
+
+      <TileExplainer text={explainCommodities(commodities)} />
     </div>
   )
 }

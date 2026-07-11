@@ -1,4 +1,6 @@
 import type { SectorRead } from '../../types/uk100'
+import { TileExplainer } from './TileExplainer'
+import { explainSectors } from './explainers'
 import styles from '../tiles/Tile.module.css'
 
 function readBadge(read: string): string {
@@ -30,6 +32,8 @@ export function Uk100SectorTile({ sectors }: Props) {
           </div>
         ))}
       </div>
+
+      <TileExplainer text={explainSectors(sectors)} />
     </div>
   )
 }

@@ -1,4 +1,6 @@
 import type { FxBlock, Uk100Prices } from '../../types/uk100'
+import { TileExplainer } from './TileExplainer'
+import { explainFx } from './explainers'
 import styles from '../tiles/Tile.module.css'
 
 function fmt(v: number | null, dp = 2): string {
@@ -69,6 +71,8 @@ export function Uk100FxTile({ fx, prices }: Props) {
       {!fx && (
         <div className="data-null">Snapshot not yet generated — run GitHub Action</div>
       )}
+
+      <TileExplainer text={explainFx(fx)} />
     </div>
   )
 }
