@@ -7,12 +7,31 @@
  * Auth: reads CTRADER_MCP_URL / CTRADER_MCP_TOKEN from the environment (same as
  * the workflow already provides). No token → callers should detect the empty
  * token and skip.
+ *
+ * Session resilience (UK100-V2-PLAN.md Phase A1): the cTrader MCP sits behind a
+ * load balancer, and the session created by `initialize` lives on one backend —
+ * plain per-request `fetch()` calls round-robin across backends, so any request
+ * landing on a different backend than the one holding the session 404s with
+ * "Session not found; re-initialize" (observed live 2026-07-11, alternating
+ * success/failure across sequential calls). Two independent mitigations:
+ *   1. `dispatcher` pins every request through undici's keep-alive Agent with
+ *      `connections: 1`, so all requests from one process serialise onto the
+ *      SAME TCP connection (mirrors ctrader_http_fetch.py's Lesson-1 fix).
+ *   2. `CTraderClient.callTool` detects the session-loss signature and
+ *      transparently re-initializes + replays, bounded at 3 total attempts.
  */
+
+import { Agent } from 'undici'
 
 // .trim() both — a trailing newline in the GitHub secret would corrupt the URL
 // or make the Authorization Bearer header invalid.
 export const CTRADER_URL   = (process.env.CTRADER_MCP_URL   || 'https://mcp.ctrader.com/trading/mcp').trim()
 export const CTRADER_TOKEN = (process.env.CTRADER_MCP_TOKEN || '').trim()
+
+// Single pinned connection per process — see the module docstring. Shared across
+// every mcpFetch call (both the CTraderClient class and fetch-static-data.ts's
+// own inline closure), since it's keyed on nothing but the process lifetime.
+const pinnedAgent = new Agent({ keepAliveTimeout: 30_000, connections: 1 })
 
 // All cTrader _SB spread-bet instruments use 10^5 pipettes (verified empirically).
 // The plain-CFD symbols added for UK100 (NAS100/BRENT/COPPER/VIX/USDX/EURGBP) were
@@ -50,7 +69,7 @@ export const KNOWN_SYMBOL_IDS: Record<string, number> = {
  * lines within an event before parsing (parsing only the first line silently
  * fails on any multi-line payload).
  */
-export async function mcpFetch(body: object, sessionId?: string): Promise<{ data: unknown; sessionId: string | null }> {
+export async function mcpFetch(body: object, sessionId?: string): Promise<{ data: unknown; sessionId: string | null; httpStatus: number | null }> {
   const headers: Record<string, string> = {
     Authorization: `Bearer ${CTRADER_TOKEN}`,
     'Content-Type': 'application/json',
@@ -61,25 +80,37 @@ export async function mcpFetch(body: object, sessionId?: string): Promise<{ data
   const ctrl = new AbortController()
   const timer = setTimeout(() => ctrl.abort(), 20000)
   try {
-    const res = await fetch(CTRADER_URL, { method: 'POST', headers, body: JSON.stringify(body), signal: ctrl.signal })
+    const res = await fetch(CTRADER_URL, {
+      method: 'POST', headers, body: JSON.stringify(body), signal: ctrl.signal,
+      // @ts-expect-error — Node's global fetch is undici under the hood and
+      // accepts `dispatcher`, but the DOM lib types (used for the ambient
+      // fetch signature) don't declare it. Pinning every request onto one
+      // keep-alive connection is the fix for the load-balancer session-loss
+      // bug documented in this file's module docstring.
+      dispatcher: pinnedAgent,
+    })
     const newSid = res.headers.get('Mcp-Session-Id') ?? res.headers.get('mcp-session-id') ?? sessionId ?? null
     const text = await res.text()
 
     if (!res.ok) {
       console.error(`CTrader MCP HTTP ${res.status}: ${text.slice(0, 200)}`)
-      return { data: null, sessionId: newSid }
+      // Still attempt to parse the body — on this deployment a non-2xx response
+      // IS the JSON-RPC error object (e.g. "Session not found; re-initialize"),
+      // and callers need to see it to detect and recover from session loss.
+      try { return { data: JSON.parse(text), sessionId: newSid, httpStatus: res.status } } catch { /* not JSON */ }
+      return { data: null, sessionId: newSid, httpStatus: res.status }
     }
 
     for (const event of text.split(/\r?\n\r?\n/)) {
       const dataLines = event.split(/\r?\n/).filter(l => l.startsWith('data:')).map(l => l.replace(/^data:\s?/, ''))
       if (dataLines.length === 0) continue
-      try { return { data: JSON.parse(dataLines.join('\n')), sessionId: newSid } } catch { /* try next event */ }
+      try { return { data: JSON.parse(dataLines.join('\n')), sessionId: newSid, httpStatus: res.status } } catch { /* try next event */ }
     }
-    try { return { data: JSON.parse(text), sessionId: newSid } } catch { /* ignore */ }
+    try { return { data: JSON.parse(text), sessionId: newSid, httpStatus: res.status } } catch { /* ignore */ }
     if (text.length > 0) {
       console.error(`CTrader MCP: failed to parse response (${text.length} chars): ${text.slice(0, 200)}${text.length > 200 ? '…' : ''}`)
     }
-    return { data: null, sessionId: newSid }
+    return { data: null, sessionId: newSid, httpStatus: res.status }
   } finally {
     clearTimeout(timer)
   }
@@ -116,12 +147,31 @@ export class CTraderClient {
     return true
   }
 
+  /** True when a JSON-RPC error is the load-balancer session-loss signature
+   * (see this file's module docstring) — recoverable by re-initializing. */
+  private isSessionLoss(err: unknown): boolean {
+    const e = err as { code?: number; message?: string } | undefined
+    return e?.code === -32000 || /session not found/i.test(e?.message ?? '')
+  }
+
   async callTool(name: string, args: object): Promise<unknown> {
-    const { data } = await mcpFetch(
-      { jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name, arguments: args } },
-      this.sessionId ?? undefined,
-    )
-    const parsed = data as Record<string, unknown> | undefined
+    const MAX_ATTEMPTS = 3 // initial + 2 re-init retries — bounded so a dead
+                            // backend can never hang the hourly workflow.
+    let parsed: Record<string, unknown> | undefined
+    for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+      const { data } = await mcpFetch(
+        { jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name, arguments: args } },
+        this.sessionId ?? undefined,
+      )
+      parsed = data as Record<string, unknown> | undefined
+      const err = parsed?.error as { code?: number; message?: string } | undefined
+      if (err && this.isSessionLoss(err) && attempt < MAX_ATTEMPTS) {
+        console.error(`CTrader MCP: ${name} lost its session (attempt ${attempt}/${MAX_ATTEMPTS}) — re-initializing and retrying`)
+        await this.init()
+        continue
+      }
+      break
+    }
     if (parsed?.error) {
       console.error(`CTrader MCP: ${name} returned JSON-RPC error: ${JSON.stringify(parsed.error).slice(0, 300)}`)
       return null
