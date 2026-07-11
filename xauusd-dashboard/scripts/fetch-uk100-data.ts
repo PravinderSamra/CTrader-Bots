@@ -542,7 +542,15 @@ async function fetchUk100Calendar(): Promise<Uk100CalendarEvent[]> {
     const { from, to } = weekAheadRange()
     const url = `https://finnhub.io/api/v1/calendar/economic?from=${from}&to=${to}&token=${FINNHUB_KEY}`
     const raw = await httpGet(url)
+    // TEMP DIAGNOSTIC (UK100-V2-PLAN.md Phase A2 §1.2) — economicCalendar has
+    // been empty in every production snapshot observed across 9 hourly runs
+    // spanning 4 different weekdays (gold's identical Finnhub call shows the
+    // same pattern), so this is not a UK100-specific regionFromCountry bug.
+    // This log pins down WHY (premium-gate error body vs genuinely-empty
+    // array vs malformed JSON) before the fix lands; remove once confirmed.
+    console.log(`Finnhub calendar raw response (first 300 chars): ${raw.slice(0, 300)}`)
     const data = JSON.parse(raw) as { economicCalendar?: FinnhubEvent[] }
+    console.log(`Finnhub calendar: economicCalendar key present=${data.economicCalendar != null}, length=${data.economicCalendar?.length ?? 'n/a'}`)
     if (!data.economicCalendar) return []
     return data.economicCalendar
       .map(e => ({ e, region: regionFromCountry(e.country, e.currency) }))
