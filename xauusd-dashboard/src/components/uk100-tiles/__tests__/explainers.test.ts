@@ -3,7 +3,7 @@ import {
   explainBias, explainFx, explainRates, explainUsLinkage,
   explainCommodities, explainEuropeanTape, explainPositioning, explainOrb, explainSectors, explainCalendar,
 } from '../explainers'
-import type { FxBlock, UkRatesBlock, OrbContext, BiasBlock, EuropeanTapeBlock } from '../../../types/uk100'
+import type { FxBlock, UkRatesBlock, OrbContext, BiasBlock, EuropeanTapeBlock, UsLinkageBlock } from '../../../types/uk100'
 
 // The GBP sign-flip is the one rule the whole UK100 section is built on and
 // the easiest to state backwards in prose — these tests pin the direction.
@@ -56,6 +56,27 @@ describe('explainRates', () => {
   it('flags an imminent MPC decision', () => {
     const text = explainRates({ ...base, daysToMpc: 3 })
     expect(text).toMatch(/rate decision in 3 days/i)
+  })
+})
+
+describe('explainUsLinkage — B2 VIX vocabulary tolerance', () => {
+  const base: UsLinkageBlock = {
+    us500DayPct: 0.1, nas100DayPct: 0.1, vix: 18, vixRegime: 'NORMAL', us10y: 4.4, usdx: 100,
+  }
+  it('STRESS reads as genuinely stressed', () => {
+    expect(explainUsLinkage({ ...base, vixRegime: 'STRESS' })).toMatch(/stressed territory/i)
+  })
+  it('CALM reads as a supportive backdrop', () => {
+    expect(explainUsLinkage({ ...base, vixRegime: 'CALM' })).toMatch(/is calm/i)
+  })
+  it('NORMAL reads as normal caution, not calm and not stressed', () => {
+    const text = explainUsLinkage({ ...base, vixRegime: 'NORMAL' })
+    expect(text).toMatch(/normal caution/i)
+    expect(text).not.toMatch(/stressed territory/i)
+  })
+  it('an unrecognised legacy value (e.g. pre-B2 ELEVATED) is tolerated as the middle band, not a crash', () => {
+    const text = explainUsLinkage({ ...base, vixRegime: 'ELEVATED' as UsLinkageBlock['vixRegime'] })
+    expect(text).toMatch(/normal caution/i)
   })
 })
 

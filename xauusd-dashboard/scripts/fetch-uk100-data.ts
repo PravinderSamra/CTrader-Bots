@@ -65,7 +65,7 @@ interface UkRatesBlock {
 interface UsLinkageBlock {
   us500DayPct: number | null; nas100DayPct: number | null
   vix: number | null
-  vixRegime: 'CALM' | 'ELEVATED' | 'STRESS'
+  vixRegime: 'CALM' | 'NORMAL' | 'STRESS'
   us10y: number | null
   usdx: number | null
 }
@@ -314,6 +314,7 @@ interface CtraderResult {
   priorDayHigh: number | null; priorDayLow: number | null; priorClose: number | null
   overnightHigh: number | null; overnightLow: number | null
   orbHigh: number | null; orbLow: number | null
+  postOrbCloses: number[]
   adr14: number | null; adrUsedPct: number | null
   us500DayPct: number | null; nas100DayPct: number | null
   brentDayPct: number | null; copperDayPct: number | null; goldDayPct: number | null
@@ -357,6 +358,7 @@ async function fetchCtraderData(): Promise<CtraderResult | null> {
     let orbHigh: number | null = null, orbLow: number | null = null
     let adr14: number | null = null, adrUsedPct: number | null = null
     let uk100D1Bars: Trendbar[] = []
+    let postOrbCloses: number[] = []
 
     if (uk100Id) {
       const now = Date.now()
@@ -419,6 +421,19 @@ async function fetchCtraderData(): Promise<CtraderResult | null> {
           orbHigh = Math.max(...orbBars.map(b => b.high)) / 1e5
           orbLow  = Math.min(...orbBars.map(b => b.low)) / 1e5
         }
+      }
+
+      // B3 (UK100-V2-PLAN.md §4): post-ORB M5 closes, 08:15 -> 16:30 London
+      // (99 bars, under the 100-bar cap), so orbBrokenDirection below can be
+      // the engine's own "first M5 close outside the range, sticky" rule
+      // instead of a current-price snapshot that flips back to NONE on any
+      // later reclaim (UK100-SESSION-REVIEW-2026-07-13.md §3.10 — live proof
+      // 2026-07-13: the hourly snapshot would have flipped DOWN -> NONE on
+      // an intrabar reclaim while the engine correctly held DOWN).
+      const postOrbCapMs = londonMidnightUtc + 16.5 * 3_600_000
+      if (now >= cashOpenMs + 20 * 60 * 1000) {
+        const postOrbBars = await client.getTrendbars(uk100Id, 'M_5', orbEndMs, Math.min(now, postOrbCapMs))
+        postOrbCloses = postOrbBars.map(b => b.close / 1e5)
       }
     }
 
@@ -539,7 +554,7 @@ async function fetchCtraderData(): Promise<CtraderResult | null> {
 
     return {
       prices, priorDayHigh, priorDayLow, priorClose, overnightHigh, overnightLow,
-      orbHigh, orbLow, adr14, adrUsedPct,
+      orbHigh, orbLow, postOrbCloses, adr14, adrUsedPct,
       us500DayPct, nas100DayPct, brentDayPct, copperDayPct, goldDayPct, gbpUsdDayPct,
       ger40DayPct, eustx50DayPct, eurUsdDayPct, ftseDaxCorr20d, ftseSx5eCorr20d, tapeAgreement, preOpenLead,
     }
@@ -735,10 +750,13 @@ function clampScore(x: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, x))
 }
 
-function vixRegime(vix: number | null): 'CALM' | 'ELEVATED' | 'STRESS' {
+// B2 (UK100-V2-PLAN.md §4): one VIX vocabulary across the dashboard —
+// CALM < 15, NORMAL 15-25, STRESS > 25. Math unchanged, only the middle
+// band's name (was 'ELEVATED').
+function vixRegime(vix: number | null): 'CALM' | 'NORMAL' | 'STRESS' {
   if (vix == null) return 'CALM'
   if (vix < 15) return 'CALM'
-  if (vix <= 25) return 'ELEVATED'
+  if (vix <= 25) return 'NORMAL'
   return 'STRESS'
 }
 
@@ -791,7 +809,10 @@ export function computeBias(input: {
     weightedSum += comp * w
     drivers.push({
       name: 'GBP', weight: w,
-      impact: comp > 0.3 ? 'BULLISH' : comp < -0.3 ? 'BEARISH' : 'NEUTRAL',
+      // B1 (UK100-V2-PLAN.md §4): |comp| >= 0.8 label floor, not >0.3 —
+      // score arithmetic (weightedSum) is unchanged, only the human-facing
+      // label. Floor works out to +-0.2% GBP/USD day%.
+      impact: comp >= 0.8 ? 'BULLISH' : comp <= -0.8 ? 'BEARISH' : 'NEUTRAL',
       detail: input.gbpUsdDayPct != null
         ? `GBP/USD ${input.gbpUsdDayPct >= 0 ? '+' : ''}${input.gbpUsdDayPct}% → FTSE ${comp >= 0 ? 'tailwind' : 'headwind'} (sign-flipped)`
         : 'GBP/USD unavailable',
@@ -812,7 +833,8 @@ export function computeBias(input: {
     weightedSum += comp * w
     drivers.push({
       name: 'US futures', weight: w,
-      impact: comp > 0.3 ? 'BULLISH' : comp < -0.3 ? 'BEARISH' : 'NEUTRAL',
+      // B1: |comp| >= 0.8 label floor. Floor works out to +-0.3% US500 day%.
+      impact: comp >= 0.8 ? 'BULLISH' : comp <= -0.8 ? 'BEARISH' : 'NEUTRAL',
       detail: input.us500DayPct != null ? `US500 ${input.us500DayPct >= 0 ? '+' : ''}${input.us500DayPct}% today` : 'US500 unavailable',
     })
   }
@@ -821,7 +843,7 @@ export function computeBias(input: {
   {
     const w = 1.5
     const regime = vixRegime(input.vix)
-    const comp = regime === 'CALM' ? 1 : regime === 'ELEVATED' ? 0 : -1
+    const comp = regime === 'CALM' ? 1 : regime === 'NORMAL' ? 0 : -1
     weightedSum += comp * w
     drivers.push({
       name: 'VIX regime', weight: w,
@@ -837,7 +859,8 @@ export function computeBias(input: {
     weightedSum += comp * w
     drivers.push({
       name: 'Brent', weight: w,
-      impact: comp > 0.3 ? 'BULLISH' : comp < -0.3 ? 'BEARISH' : 'NEUTRAL',
+      // B1: |comp| >= 0.8 label floor. Floor works out to +-0.6% Brent day%.
+      impact: comp >= 0.8 ? 'BULLISH' : comp <= -0.8 ? 'BEARISH' : 'NEUTRAL',
       detail: input.brentDayPct != null ? `Brent ${input.brentDayPct >= 0 ? '+' : ''}${input.brentDayPct}% (energy majors)` : 'Brent unavailable',
     })
   }
@@ -849,7 +872,8 @@ export function computeBias(input: {
     weightedSum += comp * w
     drivers.push({
       name: 'Copper (China proxy)', weight: w,
-      impact: comp > 0.3 ? 'BULLISH' : comp < -0.3 ? 'BEARISH' : 'NEUTRAL',
+      // B1: |comp| >= 0.8 label floor. Floor works out to +-0.6% Copper day%.
+      impact: comp >= 0.8 ? 'BULLISH' : comp <= -0.8 ? 'BEARISH' : 'NEUTRAL',
       detail: input.copperDayPct != null ? `Copper ${input.copperDayPct >= 0 ? '+' : ''}${input.copperDayPct}% (miners/China)` : 'Copper unavailable',
     })
   }
@@ -995,6 +1019,21 @@ function computeSectorPanel(input: {
 
 // ── §6.1 ORB context — mechanical, always present ───────────────────────────
 
+// B3 (UK100-V2-PLAN.md §4): sticky orbBrokenDirection, matching the Python
+// engine's own definition exactly — first M5 close outside the ORB range
+// after 08:15, chronological, sticky. A current-price snapshot flips back
+// to NONE on any later reclaim (evidence-backed: UK100-SESSION-REVIEW-
+// 2026-07-13.md §3.10, a live 2026-07-13 DOWN->NONE flip the engine itself
+// did not make). Bars that break up then close back inside the range must
+// still report 'UP' — the scan stops at the FIRST match, not the latest.
+export function firstCloseOutside(closes: number[], orbHigh: number, orbLow: number): 'UP' | 'DOWN' | 'NONE' {
+  for (const close of closes) {
+    if (close > orbHigh) return 'UP'
+    if (close < orbLow) return 'DOWN'
+  }
+  return 'NONE'
+}
+
 function computeOrbContext(input: {
   ctrader: CtraderResult | null
   uk100Price: number | null
@@ -1011,11 +1050,12 @@ function computeOrbContext(input: {
   const gapPts = input.uk100Price != null && priorClose != null ? Math.round((input.uk100Price - priorClose) * 10) / 10 : null
   const gapPct = input.uk100Price != null && priorClose ? Math.round((input.uk100Price - priorClose) / priorClose * 10000) / 100 : null
 
+  // Null-safe when the post-ORB series is absent (PRE_OPEN, or the fetch
+  // failed) — keep the existing null semantics for "unknown" rather than
+  // falling back to a current-price comparison.
   let orbBrokenDirection: OrbContext['orbBrokenDirection'] = null
-  if (c?.orbHigh != null && c?.orbLow != null && input.uk100Price != null) {
-    if (input.uk100Price > c.orbHigh) orbBrokenDirection = 'UP'
-    else if (input.uk100Price < c.orbLow) orbBrokenDirection = 'DOWN'
-    else orbBrokenDirection = 'NONE'
+  if (c && c.orbHigh != null && c.orbLow != null && c.postOrbCloses.length > 0) {
+    orbBrokenDirection = firstCloseOutside(c.postOrbCloses, c.orbHigh, c.orbLow)
   }
 
   const eventWindows = input.calendar
@@ -1303,7 +1343,13 @@ async function main() {
   console.log(`Briefing: ${briefing ? `${briefing.biasLabel} ${briefing.biasScore} (conf ${briefing.confidence})` : 'null'}`)
 }
 
-main().catch(err => {
-  console.error('UK100 fetch failed:', err)
-  process.exit(1)
-})
+// Only run when invoked directly (not when imported for unit tests) —
+// same guard as resolve-gold-sessions.ts, needed so B1/B3's pure functions
+// (computeBias, firstCloseOutside) can be unit-tested without triggering a
+// live fetch on import.
+if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
+  main().catch(err => {
+    console.error('UK100 fetch failed:', err)
+    process.exit(1)
+  })
+}

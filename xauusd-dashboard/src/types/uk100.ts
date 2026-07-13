@@ -38,7 +38,12 @@ export interface UkRatesBlock {
 export interface UsLinkageBlock {
   us500DayPct: number | null; nas100DayPct: number | null
   vix: number | null
-  vixRegime: 'CALM' | 'ELEVATED' | 'STRESS'
+  // B2 (UK100-V2-PLAN.md §4): canonical vocabulary is CALM/NORMAL/STRESS.
+  // Old snapshots (pre-B2) can still carry the retired 'ELEVATED' string
+  // until the next hourly overwrite — consumers (explainUsLinkage,
+  // Uk100UsLinkageTile) must tolerate any unrecognised value as the middle
+  // band, not crash, so this type is not treated as exhaustive at runtime.
+  vixRegime: 'CALM' | 'NORMAL' | 'STRESS'
   us10y: number | null
   usdx: number | null
 }

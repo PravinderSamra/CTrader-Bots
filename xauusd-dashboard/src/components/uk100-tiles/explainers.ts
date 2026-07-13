@@ -67,10 +67,14 @@ export function explainRates(rates: UkRatesBlock | null): string {
 
 export function explainUsLinkage(us: UsLinkageBlock | null): string {
   if (!us) return 'The UK index rarely fights the giant US market for long — when America rallies or sells off, London usually follows. No US data yet today.'
+  // B2: canonical vocabulary is CALM/NORMAL/STRESS. Any value that isn't
+  // exactly STRESS or CALM (including the retired 'ELEVATED' string on
+  // not-yet-overwritten old snapshots) falls into the normal/middle branch
+  // rather than crashing or silently reading as calm.
   const vixNote =
     us.vixRegime === 'STRESS' ? ' The "fear index" (VIX) is in genuinely stressed territory — rallies are less trustworthy and moves get violent; trade smaller.'
-    : us.vixRegime === 'ELEVATED' ? ` The "fear index" (VIX, ${us.vix?.toFixed(1) ?? '—'}) is a touch above calm — normal caution applies.`
-    : ' The "fear index" (VIX) is calm — a supportive backdrop for steady moves.'
+    : us.vixRegime === 'CALM' ? ' The "fear index" (VIX) is calm — a supportive backdrop for steady moves.'
+    : ` The "fear index" (VIX, ${us.vix?.toFixed(1) ?? '—'}) is a touch above calm — normal caution applies.`
   if (us.us500DayPct == null) return `The UK index tends to follow the big US market.${vixNote}`
   if (us.us500DayPct >= 0.3) {
     return `The UK index rarely fights the US market for long. US futures are UP ${us.us500DayPct.toFixed(2)}% today, so the pull from America is positive — it supports UK upward moves.${vixNote}`

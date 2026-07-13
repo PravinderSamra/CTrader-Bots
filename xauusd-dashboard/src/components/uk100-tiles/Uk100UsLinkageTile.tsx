@@ -19,9 +19,11 @@ function cls(v: number | null): string {
   if (v < -0.05) return 'down'
   return 'flat'
 }
+// B2: STRESS -> red, NORMAL -> muted (per V2 plan); CALM and any
+// unrecognised legacy value (e.g. pre-B2 'ELEVATED') also fall to muted
+// rather than crashing.
 function vixBadge(regime: string): string {
   if (regime === 'STRESS') return 'badge-red'
-  if (regime === 'ELEVATED') return 'badge-amber'
   return 'badge-muted'
 }
 

@@ -220,7 +220,7 @@ drivers), weighted and summed, then divided by 1.35 and clamped to `[-10, +10]`:
 |---|---|---|
 | GBP (sign-flipped) | 3.0 | `-gbpUsdDayPct / 0.5 × 2`, clamped ±2. Halved if sterling ERI disagrees in sign with cable. |
 | US futures | 2.5 | `us500DayPct / 0.75 × 2`, clamped ±2, +0.5 bonus if NAS100 agrees in sign. |
-| VIX regime | 1.5 | CALM → +1, ELEVATED → 0, STRESS → **−1 only** (a damper, never a full −2 direction call). |
+| VIX regime | 1.5 | CALM → +1, NORMAL → 0, STRESS → **−1 only** (a damper, never a full −2 direction call). |
 | Brent | 1.5 | `brentDayPct / 1.5 × 2`, clamped ±2. |
 | Copper (China proxy) | 1.5 | `copperDayPct / 1.5 × 2`, clamped ±2. |
 | Gilts / rotation | 1.0 | 10Y ±≤3bp → 0; +4..8bp → +1 (banks rotation). **20Y ≥ +8bp forces −2 and sets `longEndStress`** (fiscal-stress override). |

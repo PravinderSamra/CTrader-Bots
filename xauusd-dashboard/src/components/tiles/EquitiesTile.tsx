@@ -36,7 +36,9 @@ export function EquitiesTile({ prices, vix, riskTone, dollarLiquidity, geopoliti
     : 'badge-muted'
   const toneLabel = tone === 'RISK_OFF' ? 'RISK-OFF' : tone === 'RISK_ON' ? 'RISK-ON' : 'NEUTRAL'
 
-  const vixCtx = vix == null ? null : vix > 25 ? 'ELEVATED' : vix > 15 ? 'NORMAL' : 'CALM'
+  // B2 (UK100-V2-PLAN.md §4): one VIX vocabulary across the dashboard —
+  // CALM/NORMAL/STRESS, matching the UK100 tab's vixRegime() exactly.
+  const vixCtx = vix == null ? null : vix > 25 ? 'STRESS' : vix > 15 ? 'NORMAL' : 'CALM'
   const vixCls = vix == null ? 'flat' : vix > 25 ? 'down' : vix > 15 ? 'flat' : 'up'
 
   const stlfsi = dollarLiquidity?.stlfsi ?? null

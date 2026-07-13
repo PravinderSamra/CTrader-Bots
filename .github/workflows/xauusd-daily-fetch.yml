@@ -7,6 +7,14 @@ on:
     # prints, etc.) and the week-ahead economic calendar stay current intraday,
     # not just once per day. Produces ~14 commits/day to the snapshot file.
     - cron: '0 6-20 * * 1-5'
+    # B4 (UK100-V2-PLAN.md §4): extra UK100 ORB-window run at 08:20 London,
+    # 5 minutes after the 08:00-08:15 opening-range bars close, so
+    # orbBrokenDirection/orbContext are fresh right when the ORB playbook
+    # needs them rather than waiting for the next top-of-hour tick. Two UTC
+    # entries cover both DST states — 07:20Z = 08:20 London in BST (summer),
+    # 08:20Z = 08:20 London in GMT (winter); the off-season sibling run is
+    # harmless (one extra refresh, ~30-60 min from the real 08:20 local).
+    - cron: '20 7,8 * * 1-5'
   workflow_dispatch:           # Triggerable manually from GitHub UI
 
 permissions:
