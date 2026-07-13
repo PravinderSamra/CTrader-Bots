@@ -1,0 +1,21 @@
+{
+  "updatedAt": "2026-07-13T13:46:57.959Z",
+  "sessions": [
+    {
+      "date": "2026-07-13",
+      "time": "14:46 BST",
+      "filename": "2026-07-13/13-46.json",
+      "timestamp": "2026-07-13T13:46:57.959Z",
+      "session": "LONDON",
+      "bias": "NEUTRAL",
+      "biasScore": 0,
+      "probability": 62,
+      "confidence": 5,
+      "priceZone": "OTE",
+      "tradeIdea": {
+        "direction": "LONG",
+        "status": "ACTIVE"
+      }
+    }
+  ]
+}
