@@ -112,7 +112,7 @@ describe('null-safety — every explainer returns usable text with no data', () 
 
 describe('explainEuropeanTape', () => {
   const base: EuropeanTapeBlock = {
-    eurostoxx50DayPct: 0.4, dax40DayPct: 0.5,
+    eurostoxx50DayPct: 0.4, dax40DayPct: 0.5, eurUsdDayPct: 0.1,
     ftseDaxCorr20d: 0.6, ftseSx5eCorr20d: 0.65,
     tapeAgreement: 'ALIGNED', preOpenLead: 'NONE',
   }
@@ -133,6 +133,14 @@ describe('explainEuropeanTape', () => {
   it('a pre-open lead is surfaced explicitly', () => {
     expect(explainEuropeanTape({ ...base, preOpenLead: 'UP' })).toMatch(/broken UP/i)
     expect(explainEuropeanTape({ ...base, preOpenLead: 'DOWN' })).toMatch(/broken DOWN/i)
+  })
+  it('a strong euro is read as a headwind for exporters (F9)', () => {
+    const text = explainEuropeanTape({ ...base, eurUsdDayPct: 0.5 })
+    expect(text).toMatch(/headwind for DAX\/Euro Stoxx exporters/i)
+  })
+  it('a weak euro is read as a tailwind for exporters (F9)', () => {
+    const text = explainEuropeanTape({ ...base, eurUsdDayPct: -0.5 })
+    expect(text).toMatch(/tailwind for DAX\/Euro Stoxx exporters/i)
   })
 })
 

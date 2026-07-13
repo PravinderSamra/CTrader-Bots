@@ -126,7 +126,12 @@ export function explainEuropeanTape(e: EuropeanTapeBlock | null): string {
     e.preOpenLead === 'UP' ? ' Before the FTSE opening range even forms, the European futures have already broken UP through their own overnight range — an early lean to the upside.'
     : e.preOpenLead === 'DOWN' ? ' Before the FTSE opening range even forms, the European futures have already broken DOWN through their own overnight range — an early lean to the downside.'
     : ''
-  return `${why} Today ${sx5e} and ${dax}.${agreementNote}${leadNote}`
+  const eurNote =
+    e.eurUsdDayPct == null ? ''
+    : e.eurUsdDayPct >= 0.3 ? ` A stronger euro (EUR/USD +${e.eurUsdDayPct.toFixed(2)}%) is a headwind for DAX/Euro Stoxx exporters, so today's European move is arguably a bit better than the raw index numbers suggest.`
+    : e.eurUsdDayPct <= -0.3 ? ` A weaker euro (EUR/USD ${e.eurUsdDayPct.toFixed(2)}%) is a tailwind for DAX/Euro Stoxx exporters, so some of today's European move is currency-driven rather than pure risk appetite.`
+    : ''
+  return `${why} Today ${sx5e} and ${dax}.${agreementNote}${leadNote}${eurNote}`
 }
 
 export function explainPositioning(p: PositioningBlock | null): string {

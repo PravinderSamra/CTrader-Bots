@@ -50,6 +50,7 @@ export interface CommoditiesBlock {
 
 export interface EuropeanTapeBlock {
   eurostoxx50DayPct: number | null; dax40DayPct: number | null
+  eurUsdDayPct: number | null
   ftseDaxCorr20d: number | null; ftseSx5eCorr20d: number | null
   tapeAgreement: 'ALIGNED' | 'SPLIT' | 'DIVERGING'
   preOpenLead: 'UP' | 'DOWN' | 'NONE'

@@ -244,9 +244,10 @@ of a fixed `1.35`.
 
 ### European tape (`europeanTape` block)
 
-`{ eurostoxx50DayPct, dax40DayPct, ftseDaxCorr20d, ftseSx5eCorr20d, tapeAgreement,
-preOpenLead }`, surfaced in the `Uk100EuropeanTapeTile`. Euro Stoxx 50 is the
-primary read (tied-best measured correlate to FTSE); DAX is the second confirm.
+`{ eurostoxx50DayPct, dax40DayPct, eurUsdDayPct, ftseDaxCorr20d, ftseSx5eCorr20d,
+tapeAgreement, preOpenLead }`, surfaced in the `Uk100EuropeanTapeTile`. Euro Stoxx
+50 is the primary read (tied-best measured correlate to FTSE); DAX is the second
+confirm.
 
 - **Correlations** (`ftseDaxCorr20d`/`ftseSx5eCorr20d`): Pearson correlation of
   daily log returns over the last 20 date-matched trading days (`scripts/lib/stats.ts`
@@ -264,6 +265,13 @@ primary read (tied-best measured correlate to FTSE); DAX is the second confirm.
 - **`preOpenLead`**: before FTSE's own ORB has formed (pre-08:15 London), whether
   GER40/EUSTX50 have already broken their own overnight H1 range — `UP`/`DOWN` if
   both agree or only one is directional, `NONE` on conflict or no data.
+- **`eurUsdDayPct`** (F9): the EUR analog of the GBP sign-flip — a strong EUR is a
+  headwind for DAX/Euro Stoxx exporters, modulating how much of a European-tape
+  move is currency-driven vs. pure risk appetite. The existing `GBPEUR` price
+  doubles as the decoupling tell (flat EUR/GBP + tape moving together = shared
+  risk beta; EUR/GBP moving on the day = expect FTSE and the European complex to
+  diverge). Bund yield / BTP–Bund spread (the sovereign-rates analog to the gilt
+  strip) remains deferred — no clean free source found yet.
 
 **Sector panel** (`computeSectorPanel()`): ENERGY = sign(Brent, ±0.5%); MINERS =
 sign(Copper, ±0.75%); BANKS = `longEndStress` → BEARISH, else sign(10Y gilt bp,

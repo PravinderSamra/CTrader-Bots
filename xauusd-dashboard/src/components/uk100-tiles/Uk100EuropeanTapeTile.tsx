@@ -49,6 +49,13 @@ export function Uk100EuropeanTapeTile({ europeanTape }: Props) {
             {arrow(europeanTape?.dax40DayPct ?? null)}
           </span>
         </div>
+        <div className="tile-row">
+          <span className="tile-label">EUR/USD</span>
+          <span className={`tile-val mono ${cls(europeanTape?.eurUsdDayPct ?? null)}`}>
+            {europeanTape?.eurUsdDayPct != null ? `${europeanTape.eurUsdDayPct >= 0 ? '+' : ''}${fmt(europeanTape.eurUsdDayPct)}%` : '—'}
+            {arrow(europeanTape?.eurUsdDayPct ?? null)}
+          </span>
+        </div>
         <hr className="tile-divider" />
         <div className="tile-row">
           <span className="tile-label">20d corr (SX5E)</span>

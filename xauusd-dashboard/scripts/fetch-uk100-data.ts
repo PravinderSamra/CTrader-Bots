@@ -81,6 +81,7 @@ interface CommoditiesBlock {
 // tape for the agreement/divergence signal.
 interface EuropeanTapeBlock {
   eurostoxx50DayPct: number | null; dax40DayPct: number | null
+  eurUsdDayPct: number | null
   ftseDaxCorr20d: number | null; ftseSx5eCorr20d: number | null
   tapeAgreement: 'ALIGNED' | 'SPLIT' | 'DIVERGING'
   preOpenLead: 'UP' | 'DOWN' | 'NONE'
@@ -306,7 +307,7 @@ function boeLatestTwo(rows: BoeRow[], code: string): [number | null, number | nu
 
 // ── cTrader — prices + bars for UK100 and the driver symbols (§1.1) ────────
 
-const UK100_SYMS = ['UK100', 'GBPUSD', 'EURGBP', 'US500', 'NAS100', 'BRENT', 'COPPER', 'VIX', 'USDX', 'XAUUSD', 'GER40', 'EUSTX50']
+const UK100_SYMS = ['UK100', 'GBPUSD', 'EURGBP', 'US500', 'NAS100', 'BRENT', 'COPPER', 'VIX', 'USDX', 'XAUUSD', 'GER40', 'EUSTX50', 'EURUSD']
 
 interface CtraderResult {
   prices: Uk100Prices
@@ -317,7 +318,7 @@ interface CtraderResult {
   us500DayPct: number | null; nas100DayPct: number | null
   brentDayPct: number | null; copperDayPct: number | null; goldDayPct: number | null
   gbpUsdDayPct: number | null
-  ger40DayPct: number | null; eustx50DayPct: number | null
+  ger40DayPct: number | null; eustx50DayPct: number | null; eurUsdDayPct: number | null
   ftseDaxCorr20d: number | null; ftseSx5eCorr20d: number | null
   tapeAgreement: EuropeanTapeBlock['tapeAgreement']
   preOpenLead: EuropeanTapeBlock['preOpenLead']
@@ -502,6 +503,10 @@ async function fetchCtraderData(): Promise<CtraderResult | null> {
     const copperDayPct = await dayPctFor('COPPER')
     const goldDayPct   = await dayPctFor('XAUUSD')
     const gbpUsdDayPct = await dayPctFor('GBPUSD')
+    // EUR/USD day% (F9, UK100-SESSION-REVIEW-2026-07-13.md §4A/§5): the EUR
+    // sign-flip analog — a strong EUR is a headwind for DAX/SX5E exporters,
+    // so it modulates how bullish a European-tape rally really is.
+    const eurUsdDayPct = await dayPctFor('EURUSD')
 
     const uk100DayPct = dayPct(uk100Mid, priorClose)
 
@@ -530,13 +535,13 @@ async function fetchCtraderData(): Promise<CtraderResult | null> {
     }
 
     console.log(`CTrader UK100: ${prices.UK100}, GBPUSD: ${prices.GBPUSD}, dayPct: ${uk100DayPct}`)
-    console.log(`European tape: GER40 ${ger40DayPct}%, EUSTX50 ${eustx50DayPct}%, corr(DAX)=${ftseDaxCorr20d}, corr(SX5E)=${ftseSx5eCorr20d}, agreement=${tapeAgreement}, preOpenLead=${preOpenLead}`)
+    console.log(`European tape: GER40 ${ger40DayPct}%, EUSTX50 ${eustx50DayPct}%, EURUSD ${eurUsdDayPct}%, corr(DAX)=${ftseDaxCorr20d}, corr(SX5E)=${ftseSx5eCorr20d}, agreement=${tapeAgreement}, preOpenLead=${preOpenLead}`)
 
     return {
       prices, priorDayHigh, priorDayLow, priorClose, overnightHigh, overnightLow,
       orbHigh, orbLow, adr14, adrUsedPct,
       us500DayPct, nas100DayPct, brentDayPct, copperDayPct, goldDayPct, gbpUsdDayPct,
-      ger40DayPct, eustx50DayPct, ftseDaxCorr20d, ftseSx5eCorr20d, tapeAgreement, preOpenLead,
+      ger40DayPct, eustx50DayPct, eurUsdDayPct, ftseDaxCorr20d, ftseSx5eCorr20d, tapeAgreement, preOpenLead,
     }
   } catch (err) {
     console.error('CTrader UK100 fetch failed:', err)
@@ -1235,6 +1240,7 @@ async function main() {
 
   const europeanTape: EuropeanTapeBlock = {
     eurostoxx50DayPct: ctrader?.eustx50DayPct ?? null, dax40DayPct: ctrader?.ger40DayPct ?? null,
+    eurUsdDayPct: ctrader?.eurUsdDayPct ?? null,
     ftseDaxCorr20d: ctrader?.ftseDaxCorr20d ?? null, ftseSx5eCorr20d: ctrader?.ftseSx5eCorr20d ?? null,
     tapeAgreement: ctrader?.tapeAgreement ?? 'ALIGNED', preOpenLead: ctrader?.preOpenLead ?? 'NONE',
   }
