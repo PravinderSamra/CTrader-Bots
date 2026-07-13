@@ -23,7 +23,7 @@ import * as path from 'path'
 import * as https from 'https'
 import { fileURLToPath } from 'url'
 import { CTraderClient, KNOWN_SYMBOL_IDS, PIP_DIGITS } from './lib/ctrader'
-import { mergeCalendars, nextMpcDate, UK_STATIC_CALENDAR_2026, type Uk100CalendarEvent } from './lib/calendar'
+import { mergeCalendars, nextMpcDate, UK_STATIC_CALENDAR_2026, US_STATIC_CALENDAR_2026, type Uk100CalendarEvent } from './lib/calendar'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -531,11 +531,11 @@ function daysBetween(dateStr: string, fromStr: string): number {
 }
 
 async function fetchUk100Calendar(): Promise<Uk100CalendarEvent[]> {
-  console.log('Fetching UK100 economic calendar (Finnhub + static ONS fallback)...')
+  console.log('Fetching UK100 economic calendar (Finnhub + static UK/US fallback)...')
   const { from, to } = weekAheadRange()
   let finnhubEvents: Uk100CalendarEvent[] = []
   if (!FINNHUB_KEY) {
-    console.log('Finnhub: FINNHUB_API_KEY not set — using static UK calendar only')
+    console.log('Finnhub: FINNHUB_API_KEY not set — using static UK+US calendar only')
   } else {
     try {
       const url = `https://finnhub.io/api/v1/calendar/economic?from=${from}&to=${to}&token=${FINNHUB_KEY}`
@@ -545,7 +545,7 @@ async function fetchUk100Calendar(): Promise<Uk100CalendarEvent[]> {
         // Confirmed premium-gated on this account's key (see the
         // UK_STATIC_CALENDAR_2026 comment in scripts/lib/calendar.ts) —
         // not a mapping bug.
-        console.log(`Finnhub calendar: premium-gated ("${data.error}") — using static UK calendar only`)
+        console.log(`Finnhub calendar: premium-gated ("${data.error}") — using static UK+US calendar only`)
       } else if (data.economicCalendar) {
         finnhubEvents = data.economicCalendar
           .map(e => ({ e, region: regionFromCountry(e.country, e.currency) }))
@@ -562,13 +562,13 @@ async function fetchUk100Calendar(): Promise<Uk100CalendarEvent[]> {
             } satisfies Uk100CalendarEvent
           })
       } else {
-        console.log('Finnhub calendar: response had neither economicCalendar nor error — using static UK calendar only')
+        console.log('Finnhub calendar: response had neither economicCalendar nor error — using static UK+US calendar only')
       }
     } catch (err) {
       console.error('Finnhub calendar fetch failed:', err)
     }
   }
-  return mergeCalendars(finnhubEvents, UK_STATIC_CALENDAR_2026, from)
+  return mergeCalendars(finnhubEvents, [...UK_STATIC_CALENDAR_2026, ...US_STATIC_CALENDAR_2026], from)
 }
 
 // ── News (Finnhub) — FTSE-relevant keyword filter ───────────────────────────
