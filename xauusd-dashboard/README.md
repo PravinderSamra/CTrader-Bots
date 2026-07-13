@@ -184,9 +184,17 @@ It:
 | VIX | 152 | Risk-regime damper |
 | USDX | 101 | Context only |
 | EURGBP | 9 | Context only |
+| GER40 | 110 | European tape (second confirm) |
+| EUSTX50 | 124 | European tape (primary read, tied-best correlate) |
 
 Verified 2026-07-10 (`UK100-BUILD-PLAN.md` §1.1) — CFD and `_SB` prices are
 identical to within spread noise; the user trades UK100 as a CFD.
+
+**cTrader `D_1` trendbar requests have a hard 30-calendar-day cap** — 30 days back
+succeeds, 31+ silently returns zero bars with a `"Time range"` parse-failure error
+(live-verified 2026-07-13 while widening the European-tape correlation window; not
+documented anywhere upstream). Any new `D_1` window (UK100's own or a new symbol's)
+must stay ≤30 days.
 
 ### BoE IADB series codes
 
@@ -218,12 +226,44 @@ drivers), weighted and summed, then divided by 1.35 and clamped to `[-10, +10]`:
 | Gilts / rotation | 1.0 | 10Y ±≤3bp → 0; +4..8bp → +1 (banks rotation). **20Y ≥ +8bp forces −2 and sets `longEndStress`** (fiscal-stress override). |
 | GBP COT (contrarian) | 1.0 | CROWDED_LONG → +1, CROWDED_SHORT → −1. |
 | Risk tone (Anthropic) | 1.0 | classifier label → ±1. |
+| European tape (SX5E/DAX) | 2.5 → 1.0, time-of-day ramp | Average of Euro Stoxx 50/DAX day% (or whichever is available), `/ 0.75 × 2`, clamped ±2. |
 
 Label: score ≥ +3 BULLISH, ≤ −3 BEARISH, else NEUTRAL. Conviction: `|score| ≥ 6`
 HIGH, `3–5` MEDIUM, else LOW — capped at MEDIUM whenever `eventSuppressed` is true
 (a HIGH-impact event today). Every component writes a `drivers[]` entry with a
 human-readable detail string, even when its input is null (e.g. "COT data
 unavailable") — the bias score is never silently wrong, it's visibly incomplete.
+
+**European-tape driver weight is time-of-day ramped**, not fixed: `2.5` before
+14:30 London (European cash markets still leading the session), decaying linearly
+to `1.0` from 15:30 London onward (US cash open dominates by then) — see
+`europeanTapeWeight()` in `fetch-uk100-data.ts` (PROVISIONAL, user-set 2026-07-13).
+Because this driver's weight varies, the divisor is dynamic too:
+`1.35 × (totalWeight / 13.0)` where `totalWeight = 13.0 + europeanWeight`, instead
+of a fixed `1.35`.
+
+### European tape (`europeanTape` block)
+
+`{ eurostoxx50DayPct, dax40DayPct, ftseDaxCorr20d, ftseSx5eCorr20d, tapeAgreement,
+preOpenLead }`, surfaced in the `Uk100EuropeanTapeTile`. Euro Stoxx 50 is the
+primary read (tied-best measured correlate to FTSE); DAX is the second confirm.
+
+- **Correlations** (`ftseDaxCorr20d`/`ftseSx5eCorr20d`): Pearson correlation of
+  daily log returns over the last 20 date-matched trading days (`scripts/lib/stats.ts`
+  — `dailyReturnsByDate()` buckets bars by ISO date, `pairByDate()` intersects two
+  symbols' date sets so mismatched UK/DE/EU trading calendars don't misalign
+  positionally, `pearson()` returns `null` below a 15-pair floor).
+- **`tapeAgreement`**: `ALIGNED` when Euro Stoxx 50 and DAX agree with each other
+  and with FTSE's own day% sign; `SPLIT` when Euro Stoxx 50 and DAX disagree with
+  each other (the European tape is internally conflicted); `DIVERGING` when Euro
+  Stoxx 50 and DAX agree with each other but FTSE is moving the opposite way (FTSE
+  is trading its own story — a GBP or sector-specific driver, not the pan-European
+  macro tape). The skill (`uk100-session.md` STEP 5) is explicit that this must
+  never be read as a naive "tape up ⇒ buy" — `DIVERGING` is a warning to treat
+  European-tape-based confidence as unreliable, not a confirmation.
+- **`preOpenLead`**: before FTSE's own ORB has formed (pre-08:15 London), whether
+  GER40/EUSTX50 have already broken their own overnight H1 range — `UP`/`DOWN` if
+  both agree or only one is directional, `NONE` on conflict or no data.
 
 **Sector panel** (`computeSectorPanel()`): ENERGY = sign(Brent, ±0.5%); MINERS =
 sign(Copper, ±0.75%); BANKS = `longEndStress` → BEARISH, else sign(10Y gilt bp,

@@ -5,6 +5,7 @@ import { Uk100FxTile } from '../uk100-tiles/Uk100FxTile'
 import { Uk100RatesTile } from '../uk100-tiles/Uk100RatesTile'
 import { Uk100UsLinkageTile } from '../uk100-tiles/Uk100UsLinkageTile'
 import { Uk100CommoditiesTile } from '../uk100-tiles/Uk100CommoditiesTile'
+import { Uk100EuropeanTapeTile } from '../uk100-tiles/Uk100EuropeanTapeTile'
 import { Uk100PositioningTile } from '../uk100-tiles/Uk100PositioningTile'
 import { Uk100OrbTile } from '../uk100-tiles/Uk100OrbTile'
 import { Uk100SectorTile } from '../uk100-tiles/Uk100SectorTile'
@@ -53,9 +54,10 @@ export function Uk100Tab() {
             <Uk100OrbTile orb={snapshot?.orbContext ?? null} />
           </div>
 
-          <div className={styles.grid2}>
+          <div className={styles.grid3}>
             <Uk100SectorTile sectors={snapshot?.sectorPanel ?? []} />
             <Uk100CalendarTile events={snapshot?.economicCalendar ?? []} news={snapshot?.newsItems ?? []} />
+            <Uk100EuropeanTapeTile europeanTape={snapshot?.europeanTape ?? null} />
           </div>
         </main>
       )}

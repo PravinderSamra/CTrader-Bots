@@ -13,7 +13,7 @@
    ═══════════════════════════════════════════ */
 
 import type {
-  BiasBlock, FxBlock, UkRatesBlock, UsLinkageBlock, CommoditiesBlock,
+  BiasBlock, FxBlock, UkRatesBlock, UsLinkageBlock, CommoditiesBlock, EuropeanTapeBlock,
   PositioningBlock, SectorRead, OrbContext, Uk100CalendarEvent,
 } from '../../types/uk100'
 
@@ -101,6 +101,32 @@ export function explainCommodities(c: CommoditiesBlock | null): string {
     : net <= -0.7 ? 'Net effect today: a drag on the index.'
     : 'Net effect today: roughly neutral.'
   return `${why} Today ${oil}, and ${copper}. ${verdict}`
+}
+
+export function explainEuropeanTape(e: EuropeanTapeBlock | null): string {
+  const why = 'The Continent trades the same cash-session hours as London and moves the UK index more closely than Wall Street does before the US opens.'
+  if (!e) return `${why} No European data yet today.`
+  const sx5e =
+    e.eurostoxx50DayPct == null ? 'Euro Stoxx 50 is unreported'
+    : e.eurostoxx50DayPct >= 0.3 ? `Euro Stoxx 50 is up ${e.eurostoxx50DayPct.toFixed(2)}%`
+    : e.eurostoxx50DayPct <= -0.3 ? `Euro Stoxx 50 is down ${Math.abs(e.eurostoxx50DayPct).toFixed(2)}%`
+    : 'Euro Stoxx 50 is roughly flat'
+  const dax =
+    e.dax40DayPct == null ? 'the DAX is unreported'
+    : e.dax40DayPct >= 0.3 ? `the DAX is up ${e.dax40DayPct.toFixed(2)}%`
+    : e.dax40DayPct <= -0.3 ? `the DAX is down ${Math.abs(e.dax40DayPct).toFixed(2)}%`
+    : 'the DAX is roughly flat'
+  const agreementNote =
+    e.tapeAgreement === 'DIVERGING'
+      ? " The FTSE isn't tracking the rest of Europe today — it's trading its own story (often a commodity or UK-specific move), so treat the usual 'follow Europe' read as unreliable right now."
+      : e.tapeAgreement === 'SPLIT'
+        ? ' The DAX and Euro Stoxx 50 disagree with each other today, so the European tape itself is sending a mixed signal — weight it less than usual.'
+        : ' The FTSE is broadly tracking the rest of Europe today, which adds confidence to whichever direction the tape is leaning.'
+  const leadNote =
+    e.preOpenLead === 'UP' ? ' Before the FTSE opening range even forms, the European futures have already broken UP through their own overnight range — an early lean to the upside.'
+    : e.preOpenLead === 'DOWN' ? ' Before the FTSE opening range even forms, the European futures have already broken DOWN through their own overnight range — an early lean to the downside.'
+    : ''
+  return `${why} Today ${sx5e} and ${dax}.${agreementNote}${leadNote}`
 }
 
 export function explainPositioning(p: PositioningBlock | null): string {

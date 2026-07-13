@@ -36,11 +36,14 @@ const pinnedAgent = new Agent({ keepAliveTimeout: 30_000, connections: 1 })
 // All cTrader _SB spread-bet instruments use 10^5 pipettes (verified empirically).
 // The plain-CFD symbols added for UK100 (NAS100/BRENT/COPPER/VIX/USDX/EURGBP) were
 // verified 2026-07-10 to divide by the same 10^5 (see UK100-BUILD-PLAN.md §1.1).
+// EUSTX50 added 2026-07-13 (UK100-SESSION-REVIEW-2026-07-13.md F8) — same class
+// as GER40/UK100, pipDigits 5 confirmed via the same ctrader_http_fetch.py
+// symbol-resolution path used to verify the others.
 export const PIP_DIGITS: Record<string, number> = {
   XAUUSD: 5, XAGUSD: 5,
   EURUSD: 5, USDJPY: 5, USDCHF: 5, USDCNH: 5,
   GBPUSD: 5, USDCAD: 5, USDSEK: 5,
-  US500: 5, GER40: 5, UK100: 5,
+  US500: 5, GER40: 5, UK100: 5, EUSTX50: 5,
   NAS100: 5, BRENT: 5, COPPER: 5, VIX: 5, USDX: 5, EURGBP: 5,
 }
 
@@ -55,11 +58,13 @@ export const PIP_DIGITS: Record<string, number> = {
 // wrappers price off the same underlying feed). Fallback _SB IDs if a CFD ID ever
 // stops pricing: NAS100→205, BRENT→253 (Brent_SB), COPPER→2359, VIX→408, USDX→235,
 // EURGBP→175.
+// EUSTX50 = 124 (plain CFD, verified live 2026-07-13 via get_symbols — the
+// European-tape driver's primary symbol, UK100-SESSION-REVIEW-2026-07-13.md F8).
 export const KNOWN_SYMBOL_IDS: Record<string, number> = {
   XAUUSD: 241, XAGUSD: 42,
   EURUSD: 1, USDJPY: 4, USDCHF: 6, USDCNH: 60,
   GBPUSD: 2, USDCAD: 8, USDSEK: 29,
-  US500: 115, GER40: 110, UK100: 113,
+  US500: 115, GER40: 110, UK100: 113, EUSTX50: 124,
   NAS100: 116, BRENT: 249, COPPER: 109, VIX: 152, USDX: 101, EURGBP: 9,
 }
 
@@ -117,6 +122,7 @@ export async function mcpFetch(body: object, sessionId?: string): Promise<{ data
 }
 
 export interface Trendbar {
+  timestamp: number // ms epoch — added for F8's date-keyed correlation pairing (scripts/lib/stats.ts); additive, existing positional consumers are unaffected
   open: number
   high: number
   low: number
@@ -200,6 +206,7 @@ export class CTraderClient {
     return bars
       .filter(b => b.high != null && b.low != null)
       .map(b => ({
+        timestamp: b.timestamp ?? 0,
         open:  b.open ?? b.close ?? 0,
         high:  b.high,
         low:   b.low,

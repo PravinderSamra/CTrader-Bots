@@ -48,6 +48,13 @@ export interface CommoditiesBlock {
   brent20dTrend: 'UP' | 'DOWN' | 'FLAT'
 }
 
+export interface EuropeanTapeBlock {
+  eurostoxx50DayPct: number | null; dax40DayPct: number | null
+  ftseDaxCorr20d: number | null; ftseSx5eCorr20d: number | null
+  tapeAgreement: 'ALIGNED' | 'SPLIT' | 'DIVERGING'
+  preOpenLead: 'UP' | 'DOWN' | 'NONE'
+}
+
 export interface PositioningBlock {
   gbpCotNetLong: number | null; gbpCotWoWChange: number | null
   crowding: 'CROWDED_LONG' | 'CROWDED_SHORT' | 'BALANCED' | null
@@ -117,6 +124,7 @@ export interface Uk100Snapshot {
   ukRates: UkRatesBlock
   usLinkage: UsLinkageBlock
   commodities: CommoditiesBlock
+  europeanTape: EuropeanTapeBlock
   positioning: PositioningBlock
   sectorPanel: SectorRead[]
   economicCalendar: Uk100CalendarEvent[]

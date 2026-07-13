@@ -22,8 +22,9 @@ import * as fs from 'fs'
 import * as path from 'path'
 import * as https from 'https'
 import { fileURLToPath } from 'url'
-import { CTraderClient, KNOWN_SYMBOL_IDS, PIP_DIGITS } from './lib/ctrader'
+import { CTraderClient, KNOWN_SYMBOL_IDS, PIP_DIGITS, type Trendbar } from './lib/ctrader'
 import { mergeCalendars, nextMpcDate, UK_STATIC_CALENDAR_2026, US_STATIC_CALENDAR_2026, type Uk100CalendarEvent } from './lib/calendar'
+import { pearson, dailyReturnsByDate, pairByDate } from './lib/stats'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -74,6 +75,17 @@ interface CommoditiesBlock {
   brent20dTrend: 'UP' | 'DOWN' | 'FLAT'
 }
 
+// European-tape driver (UK100-SESSION-REVIEW-2026-07-13.md §4A/F8) — Euro
+// Stoxx 50 as the primary European-tape read (measured r=0.68-0.75 vs UK100,
+// tied-best correlate and the pan-Eurozone benchmark), GER40 as the second
+// tape for the agreement/divergence signal.
+interface EuropeanTapeBlock {
+  eurostoxx50DayPct: number | null; dax40DayPct: number | null
+  ftseDaxCorr20d: number | null; ftseSx5eCorr20d: number | null
+  tapeAgreement: 'ALIGNED' | 'SPLIT' | 'DIVERGING'
+  preOpenLead: 'UP' | 'DOWN' | 'NONE'
+}
+
 interface PositioningBlock {
   gbpCotNetLong: number | null; gbpCotWoWChange: number | null
   crowding: 'CROWDED_LONG' | 'CROWDED_SHORT' | 'BALANCED' | null
@@ -121,6 +133,7 @@ interface Uk100Snapshot {
   ukRates: UkRatesBlock
   usLinkage: UsLinkageBlock
   commodities: CommoditiesBlock
+  europeanTape: EuropeanTapeBlock
   positioning: PositioningBlock
   sectorPanel: SectorRead[]
   economicCalendar: Uk100CalendarEvent[]
@@ -293,7 +306,7 @@ function boeLatestTwo(rows: BoeRow[], code: string): [number | null, number | nu
 
 // ── cTrader — prices + bars for UK100 and the driver symbols (§1.1) ────────
 
-const UK100_SYMS = ['UK100', 'GBPUSD', 'EURGBP', 'US500', 'NAS100', 'BRENT', 'COPPER', 'VIX', 'USDX', 'XAUUSD']
+const UK100_SYMS = ['UK100', 'GBPUSD', 'EURGBP', 'US500', 'NAS100', 'BRENT', 'COPPER', 'VIX', 'USDX', 'XAUUSD', 'GER40', 'EUSTX50']
 
 interface CtraderResult {
   prices: Uk100Prices
@@ -304,6 +317,10 @@ interface CtraderResult {
   us500DayPct: number | null; nas100DayPct: number | null
   brentDayPct: number | null; copperDayPct: number | null; goldDayPct: number | null
   gbpUsdDayPct: number | null
+  ger40DayPct: number | null; eustx50DayPct: number | null
+  ftseDaxCorr20d: number | null; ftseSx5eCorr20d: number | null
+  tapeAgreement: EuropeanTapeBlock['tapeAgreement']
+  preOpenLead: EuropeanTapeBlock['preOpenLead']
 }
 
 async function fetchCtraderData(): Promise<CtraderResult | null> {
@@ -338,11 +355,23 @@ async function fetchCtraderData(): Promise<CtraderResult | null> {
     let overnightHigh: number | null = null, overnightLow: number | null = null
     let orbHigh: number | null = null, orbLow: number | null = null
     let adr14: number | null = null, adrUsedPct: number | null = null
+    let uk100D1Bars: Trendbar[] = []
 
     if (uk100Id) {
       const now = Date.now()
-      // D_1 bars — prior-day levels + ADR14 (last 20 days back).
-      const d1Bars = await client.getTrendbars(uk100Id, 'D_1', now - 20 * 24 * 3600 * 1000, now)
+      // D_1 bars — prior-day levels + ADR14. Widened from 20->30 calendar
+      // days (F8, UK100-SESSION-REVIEW-2026-07-13.md) so the European-tape
+      // correlation below has enough overlapping trading days after UK/DE/EU
+      // holiday mismatches — the prior-day/ADR14 logic just below is
+      // end-relative (.slice(-15,-1), [len-2]) so the wider window is a no-op
+      // for it. 30 IS THE MAX: live-verified 2026-07-13 that get_trendbars
+      // D_1 silently rejects (returns 0 bars, logs a "Time range" parse
+      // failure) any window over 30 calendar days — 30 gives 21 bars, 31
+      // gives 0. UK100-V2-PLAN.md's D1 spec (not yet built) proposed 32 days
+      // for the same reason; that number needs correcting to 30 when D1 is
+      // implemented.
+      const d1Bars = await client.getTrendbars(uk100Id, 'D_1', now - 30 * 24 * 3600 * 1000, now)
+      uk100D1Bars = d1Bars
       if (d1Bars.length >= 2) {
         const prior = d1Bars[d1Bars.length - 2]
         priorDayHigh = prior.high / 1e5
@@ -395,6 +424,64 @@ async function fetchCtraderData(): Promise<CtraderResult | null> {
     const dayPct = (cur: number | null, prior: number | null) =>
       cur != null && prior ? Math.round((cur - prior) / prior * 10000) / 100 : null
 
+    // European-tape driver (F8): Euro Stoxx 50 primary, GER40 secondary. One
+    // wide D_1 fetch per symbol serves both day% (last two bars) and the
+    // 20-day rolling correlation against UK100's own D_1 series above — no
+    // second, narrower fetch needed.
+    const ger40Id = idFor('GER40')
+    const eustx50Id = idFor('EUSTX50')
+    const ger40D1Bars = ger40Id ? await client.getTrendbars(ger40Id, 'D_1', Date.now() - 30 * 24 * 3600 * 1000, Date.now()) : []
+    const eustx50D1Bars = eustx50Id ? await client.getTrendbars(eustx50Id, 'D_1', Date.now() - 30 * 24 * 3600 * 1000, Date.now()) : []
+
+    const ger40DayPct = ger40D1Bars.length >= 2
+      ? dayPct(mid('GER40'), ger40D1Bars[ger40D1Bars.length - 2].close / 1e5) : null
+    const eustx50DayPct = eustx50D1Bars.length >= 2
+      ? dayPct(mid('EUSTX50'), eustx50D1Bars[eustx50D1Bars.length - 2].close / 1e5) : null
+
+    const toDated = (bars: Trendbar[]) => bars.map(b => ({ timestamp: b.timestamp, close: b.close / 1e5 }))
+    const uk100Returns = dailyReturnsByDate(toDated(uk100D1Bars))
+    const ftseDaxCorr20d = ger40D1Bars.length
+      ? (() => { const { xs, ys } = pairByDate(uk100Returns, dailyReturnsByDate(toDated(ger40D1Bars)), 20); return pearson(xs, ys) })()
+      : null
+    const ftseSx5eCorr20d = eustx50D1Bars.length
+      ? (() => { const { xs, ys } = pairByDate(uk100Returns, dailyReturnsByDate(toDated(eustx50D1Bars)), 20); return pearson(xs, ys) })()
+      : null
+
+    // Pre-open lead (§4A(a)): only meaningful before the FTSE's own ORB has
+    // formed — DAX/SX5E futures trade the pre-market and can show direction
+    // while the FTSE ORB is still building. Reuses the same London-time
+    // boundaries UK100's own overnight-range fetch above computes.
+    let preOpenLead: EuropeanTapeBlock['preOpenLead'] = 'NONE'
+    {
+      const now = Date.now()
+      const ld = londonNow()
+      const offsetH = londonOffsetHours(new Date())
+      const londonMidnightUtc = Date.UTC(ld.getUTCFullYear(), ld.getUTCMonth(), ld.getUTCDate()) - offsetH * 3_600_000
+      const cashOpenMs = londonMidnightUtc + 8 * 3_600_000
+      const orbEndMsLocal = londonMidnightUtc + 8.25 * 3_600_000
+      const overnightStartMsLocal = cashOpenMs - 10 * 3_600_000
+      if (now >= overnightStartMsLocal && now < orbEndMsLocal) {
+        const breakDir = async (id: number | undefined, sym: string): Promise<'UP' | 'DOWN' | 'NONE'> => {
+          if (!id) return 'NONE'
+          const bars = await client.getTrendbars(id, 'H_1', overnightStartMsLocal, Math.min(now, cashOpenMs))
+          if (!bars.length) return 'NONE'
+          const hi = Math.max(...bars.map(b => b.high)) / 1e5
+          const lo = Math.min(...bars.map(b => b.low)) / 1e5
+          const cur = mid(sym)
+          if (cur == null) return 'NONE'
+          if (cur > hi) return 'UP'
+          if (cur < lo) return 'DOWN'
+          return 'NONE'
+        }
+        const ger40Lead = await breakDir(ger40Id, 'GER40')
+        const eustx50Lead = await breakDir(eustx50Id, 'EUSTX50')
+        if (ger40Lead !== 'NONE' && ger40Lead === eustx50Lead) preOpenLead = ger40Lead
+        else if (ger40Lead !== 'NONE' && eustx50Lead === 'NONE') preOpenLead = ger40Lead
+        else if (eustx50Lead !== 'NONE' && ger40Lead === 'NONE') preOpenLead = eustx50Lead
+        // else both NONE, or conflicting (one UP one DOWN) — stays NONE
+      }
+    }
+
     // US500/NAS100/Brent/Copper/Gold day% and GBP day% — use D_1 bars per symbol.
     // Sequential, not Promise.all: the MCP session is stateful and concurrent
     // tool calls on one sessionId raced and threw "Session not found" (observed
@@ -418,6 +505,23 @@ async function fetchCtraderData(): Promise<CtraderResult | null> {
 
     const uk100DayPct = dayPct(uk100Mid, priorClose)
 
+    // Tape agreement (§4A): SPLIT when GER40/EUSTX50 disagree with EACH
+    // OTHER (the European tape is itself internally conflicted, a weak
+    // signal either way); DIVERGING when they agree with each other but
+    // UK100 moves the opposite way (FTSE trading its own idiosyncratic
+    // story, e.g. a commodity-driven day — §4A(b)'s decoupling case);
+    // ALIGNED otherwise (the default/normal beta-tracking case).
+    const classifySign = (pct: number | null): -1 | 0 | 1 => pct == null ? 0 : pct > 0.15 ? 1 : pct < -0.15 ? -1 : 0
+    const tapeAgreement: EuropeanTapeBlock['tapeAgreement'] = (() => {
+      const g = classifySign(ger40DayPct)
+      const e = classifySign(eustx50DayPct)
+      const f = classifySign(uk100DayPct)
+      if (g !== 0 && e !== 0 && g !== e) return 'SPLIT'
+      const euroSign = g !== 0 ? g : e
+      if (euroSign !== 0 && f !== 0 && euroSign !== f) return 'DIVERGING'
+      return 'ALIGNED'
+    })()
+
     const prices: Uk100Prices = {
       UK100: uk100Mid, GBPUSD: gbpUsd, GBPEUR: eurGbp ? Math.round(1 / eurGbp * 100000) / 100000 : null,
       US500: mid('US500'), NAS100: mid('NAS100'), BRENT: mid('BRENT'), COPPER: mid('COPPER'),
@@ -426,11 +530,13 @@ async function fetchCtraderData(): Promise<CtraderResult | null> {
     }
 
     console.log(`CTrader UK100: ${prices.UK100}, GBPUSD: ${prices.GBPUSD}, dayPct: ${uk100DayPct}`)
+    console.log(`European tape: GER40 ${ger40DayPct}%, EUSTX50 ${eustx50DayPct}%, corr(DAX)=${ftseDaxCorr20d}, corr(SX5E)=${ftseSx5eCorr20d}, agreement=${tapeAgreement}, preOpenLead=${preOpenLead}`)
 
     return {
       prices, priorDayHigh, priorDayLow, priorClose, overnightHigh, overnightLow,
       orbHigh, orbLow, adr14, adrUsedPct,
       us500DayPct, nas100DayPct, brentDayPct, copperDayPct, goldDayPct, gbpUsdDayPct,
+      ger40DayPct, eustx50DayPct, ftseDaxCorr20d, ftseSx5eCorr20d, tapeAgreement, preOpenLead,
     }
   } catch (err) {
     console.error('CTrader UK100 fetch failed:', err)
@@ -631,6 +737,25 @@ function vixRegime(vix: number | null): 'CALM' | 'ELEVATED' | 'STRESS' {
   return 'STRESS'
 }
 
+/**
+ * European-tape driver weight, time-of-day ramped: 2.5 pre-14:30 London (the
+ * European cash session out-correlates the US tape intraday — measured
+ * r=0.68-0.75 vs UK100, UK100-SESSION-REVIEW-2026-07-13.md §4A), linearly
+ * decaying to 1.0 across 14:30-15:30 as the US tape (US futures driver,
+ * weight 2.5) takes over, held at 1.0 after 15:30. Pure function of the
+ * London hour so it's independently testable and doesn't hide a `new Date()`
+ * call inside computeBias.
+ *
+ * PROVISIONAL (user-set 2026-07-13): recalibrate from F7 resolver outcomes
+ * once enough UK100 session data exists — this is a starting prior, not a
+ * measured optimum.
+ */
+export function europeanTapeWeight(londonHour: number): number {
+  if (londonHour < 14.5) return 2.5
+  if (londonHour >= 15.5) return 1.0
+  return 2.5 - (londonHour - 14.5) * 1.5
+}
+
 export function computeBias(input: {
   gbpUsdDayPct: number | null; sterlingEriDayChange: number | null
   us500DayPct: number | null; nas100DayPct: number | null
@@ -640,6 +765,8 @@ export function computeBias(input: {
   cotCrowding: 'CROWDED_LONG' | 'CROWDED_SHORT' | 'BALANCED' | null
   riskToneLabel: FtseImpact | null
   eventSuppressed: boolean
+  ger40DayPct: number | null; eustx50DayPct: number | null
+  nowLondonHour: number
 }): BiasBlock {
   const drivers: BiasDriver[] = []
   let weightedSum = 0
@@ -768,7 +895,39 @@ export function computeBias(input: {
     })
   }
 
-  const score = clampScore(Math.round(weightedSum / 1.35), -10, 10)
+  // European tape (SX5E/DAX), time-of-day weighted 2.5→1.0 — see
+  // europeanTapeWeight()'s docstring. Euro Stoxx 50 is primary (tied-best
+  // measured correlate); averaged with GER40 when both are available for a
+  // steadier read, falls back to whichever one is present. Uses the same
+  // |comp| ≥ 0.8 label floor B1 later applies to the other continuous
+  // drivers — built in after the label-noise finding, not before it.
+  const europeanWeight = europeanTapeWeight(input.nowLondonHour)
+  {
+    const w = europeanWeight
+    const g = input.ger40DayPct, e = input.eustx50DayPct
+    let comp = 0
+    if (e != null && g != null) comp = clampScore((e + g) / 2 / 0.75 * 2, -2, 2)
+    else if (e != null) comp = clampScore(e / 0.75 * 2, -2, 2)
+    else if (g != null) comp = clampScore(g / 0.75 * 2, -2, 2)
+    weightedSum += comp * w
+    drivers.push({
+      name: 'European tape (SX5E/DAX)', weight: Math.round(w * 100) / 100,
+      impact: comp >= 0.8 ? 'BULLISH' : comp <= -0.8 ? 'BEARISH' : 'NEUTRAL',
+      detail: e != null || g != null
+        ? `SX5E ${e != null ? `${e >= 0 ? '+' : ''}${e}%` : '—'} / DAX ${g != null ? `${g >= 0 ? '+' : ''}${g}%` : '—'}`
+        : 'European tape unavailable',
+    })
+  }
+
+  // Total driver weight scales with the European tape's time-varying weight
+  // (13.0 fixed-weight drivers + europeanWeight, vs the flat 13.0 before this
+  // driver existed), so the divisor is recomputed the same way V2 Phase D2's
+  // GER40 spec already anticipated for a flat addition (divisor scaled
+  // proportionally to total weight, 1.35 × totalWeight/13) — just evaluated
+  // per-call since totalWeight now varies through the day.
+  const totalWeight = 13.0 + europeanWeight
+  const divisor = 1.35 * (totalWeight / 13.0)
+  const score = clampScore(Math.round(weightedSum / divisor), -10, 10)
   const label: BiasBlock['label'] = score >= 3 ? 'BULLISH' : score <= -3 ? 'BEARISH' : 'NEUTRAL'
   let conviction: BiasBlock['conviction'] = Math.abs(score) >= 6 ? 'HIGH' : Math.abs(score) >= 3 ? 'MEDIUM' : 'LOW'
   if (input.eventSuppressed && conviction === 'HIGH') conviction = 'MEDIUM'
@@ -1074,6 +1233,12 @@ async function main() {
     goldDayPct: ctrader?.goldDayPct ?? null, brent20dTrend,
   }
 
+  const europeanTape: EuropeanTapeBlock = {
+    eurostoxx50DayPct: ctrader?.eustx50DayPct ?? null, dax40DayPct: ctrader?.ger40DayPct ?? null,
+    ftseDaxCorr20d: ctrader?.ftseDaxCorr20d ?? null, ftseSx5eCorr20d: ctrader?.ftseSx5eCorr20d ?? null,
+    tapeAgreement: ctrader?.tapeAgreement ?? 'ALIGNED', preOpenLead: ctrader?.preOpenLead ?? 'NONE',
+  }
+
   const positioning: PositioningBlock = {
     gbpCotNetLong: gbpCot.cotNetLong, gbpCotWoWChange: gbpCot.cotWoWChange,
     crowding: gbpCot.crowding, reportDate: gbpCot.reportDate,
@@ -1087,6 +1252,9 @@ async function main() {
   // else needs to already be settled).
   const riskTone = await fetchUk100RiskTone(newsItems)
 
+  const nowLondon = londonNow()
+  const nowLondonHour = nowLondon.getUTCHours() + nowLondon.getUTCMinutes() / 60
+
   const bias = computeBias({
     gbpUsdDayPct, sterlingEriDayChange,
     us500DayPct: usLinkage.us500DayPct, nas100DayPct: usLinkage.nas100DayPct,
@@ -1096,6 +1264,8 @@ async function main() {
     cotCrowding: positioning.crowding,
     riskToneLabel: riskTone?.label ?? null,
     eventSuppressed,
+    ger40DayPct: europeanTape.dax40DayPct, eustx50DayPct: europeanTape.eurostoxx50DayPct,
+    nowLondonHour,
   })
 
   const sectorPanel = computeSectorPanel({
@@ -1111,7 +1281,7 @@ async function main() {
       UK100: null, GBPUSD: null, GBPEUR: null, US500: null, NAS100: null, BRENT: null,
       COPPER: null, VIX: null, USDX: null, XAUUSD: null, UK100_dayPct: null,
     },
-    fx, ukRates, usLinkage, commodities, positioning, sectorPanel,
+    fx, ukRates, usLinkage, commodities, europeanTape, positioning, sectorPanel,
     economicCalendar: calendar, newsItems,
     riskTone,
     bias, orbContext,

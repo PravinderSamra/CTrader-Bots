@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest'
 import {
   explainBias, explainFx, explainRates, explainUsLinkage,
-  explainCommodities, explainPositioning, explainOrb, explainSectors, explainCalendar,
+  explainCommodities, explainEuropeanTape, explainPositioning, explainOrb, explainSectors, explainCalendar,
 } from '../explainers'
-import type { FxBlock, UkRatesBlock, OrbContext, BiasBlock } from '../../../types/uk100'
+import type { FxBlock, UkRatesBlock, OrbContext, BiasBlock, EuropeanTapeBlock } from '../../../types/uk100'
 
 // The GBP sign-flip is the one rule the whole UK100 section is built on and
 // the easiest to state backwards in prose — these tests pin the direction.
@@ -98,6 +98,7 @@ describe('null-safety — every explainer returns usable text with no data', () 
     expect(explainRates(null)).toBeTruthy()
     expect(explainUsLinkage(null)).toBeTruthy()
     expect(explainCommodities(null)).toBeTruthy()
+    expect(explainEuropeanTape(null)).toBeTruthy()
     expect(explainPositioning(null)).toBeTruthy()
     expect(explainOrb(null)).toBeTruthy()
     expect(explainSectors([])).toBeTruthy()
@@ -106,6 +107,32 @@ describe('null-safety — every explainer returns usable text with no data', () 
 
   it('empty calendar still warns about the usual release slots', () => {
     expect(explainCalendar([])).toMatch(/07:00 and 13:30/i)
+  })
+})
+
+describe('explainEuropeanTape', () => {
+  const base: EuropeanTapeBlock = {
+    eurostoxx50DayPct: 0.4, dax40DayPct: 0.5,
+    ftseDaxCorr20d: 0.6, ftseSx5eCorr20d: 0.65,
+    tapeAgreement: 'ALIGNED', preOpenLead: 'NONE',
+  }
+  it('ALIGNED reads as confidence-adding, not a naive "tape up = buy"', () => {
+    const text = explainEuropeanTape(base)
+    expect(text).toMatch(/tracking the rest of Europe/i)
+    expect(text).toMatch(/adds confidence/i)
+  })
+  it('DIVERGING warns the FTSE is trading its own story, not the tape', () => {
+    const text = explainEuropeanTape({ ...base, tapeAgreement: 'DIVERGING' })
+    expect(text).toMatch(/trading its own story/i)
+    expect(text).toMatch(/unreliable/i)
+  })
+  it('SPLIT flags the European tape itself as internally conflicted', () => {
+    const text = explainEuropeanTape({ ...base, tapeAgreement: 'SPLIT' })
+    expect(text).toMatch(/disagree with each other/i)
+  })
+  it('a pre-open lead is surfaced explicitly', () => {
+    expect(explainEuropeanTape({ ...base, preOpenLead: 'UP' })).toMatch(/broken UP/i)
+    expect(explainEuropeanTape({ ...base, preOpenLead: 'DOWN' })).toMatch(/broken DOWN/i)
   })
 })
 
