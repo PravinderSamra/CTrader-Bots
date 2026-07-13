@@ -82,6 +82,17 @@ jobs:
           CTRADER_MCP_URL:          ${{ secrets.VITE_CTRADER_MCP_URL }}
           CTRADER_MCP_TOKEN:        ${{ secrets.VITE_CTRADER_MCP_TOKEN }}
 
+      - name: Resolve uk100-session outcomes
+        # F7 (UK100-SESSION-REVIEW-2026-07-13.md §5 / UK100-V2-PLAN.md Phase C2):
+        # same as the gold resolver above, scored against realised UK100 H1 price
+        # into public/data/uk100/sessions/outcomes.json. No-op when the cTrader
+        # token is unset. Never fails the run.
+        continue-on-error: true
+        run: cd xauusd-dashboard && npx tsx scripts/resolve-uk100-sessions.ts
+        env:
+          CTRADER_MCP_URL:          ${{ secrets.VITE_CTRADER_MCP_URL }}
+          CTRADER_MCP_TOKEN:        ${{ secrets.VITE_CTRADER_MCP_TOKEN }}
+
       - name: Commit updated snapshot
         run: |
           git config user.name  "xauusd-data-bot"

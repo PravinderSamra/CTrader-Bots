@@ -235,12 +235,22 @@ export type SessionResult =
   | 'EXPIRED_FAVOURABLE' | 'EXPIRED_ADVERSE' | 'EXPIRED_FLAT'
   | 'NO_CALL'
 
+// F7 (UK100-SESSION-REVIEW-2026-07-13.md §5): the chronological sequence of
+// target/stop touches on a resolved trade — e.g. a run to T1 then T2 before
+// eventually reversing into the stop. UK100-only; gold's resolver leaves
+// SessionOutcome.hits undefined.
+export interface HitEvent {
+  level:     string   // 'T1' | 'T2' | ... | 'STOP'
+  timestamp: string
+}
+
 export interface SessionOutcome {
   result:        SessionResult
   resolvedAt:    string
   maxFavourable: number | null
   maxAdverse:    number | null
   barsSeen:      number
+  hits?:         HitEvent[]
 }
 
 export interface OutcomeRow {
@@ -256,6 +266,9 @@ export interface OutcomeRow {
   resolvedAt:    string
   maxFavourable: number | null
   maxAdverse:    number | null
+  // F7: UK100-only — orbPlaybook.direction at analysis time (nullable), so
+  // calibration can later slice win-rates by playbook direction.
+  orbDirection?: string | null
 }
 
 export interface OutcomesIndex {

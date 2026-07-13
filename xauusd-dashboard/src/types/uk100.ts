@@ -3,7 +3,7 @@
  * Mirrors the backend Uk100Snapshot structure from scripts/fetch-uk100-data.ts exactly.
  */
 
-import type { KeyLevel, PriceZone, StructuredTradeIdea } from './dashboard'
+import type { KeyLevel, PriceZone, StructuredTradeIdea, SessionOutcome } from './dashboard'
 
 export type FtseImpact = 'BULLISH' | 'BEARISH' | 'NEUTRAL'
 
@@ -177,6 +177,7 @@ export interface Uk100SessionRecord {
   nextHighImpactEvent?: { event: string; timeIso: string } | null
   smtDivergence?:       'BULLISH' | 'BEARISH' | null
   orbPlaybook?:         OrbPlaybook | null
+  outcome?:             SessionOutcome   // written back by the resolver once scored (F7)
 }
 
 export interface Uk100SessionEntry {

@@ -344,10 +344,53 @@ always populate it when the brief's `## ORB PLAYBOOK` section is present.
 The bias engine's weights (§ above) are **v1 priors**, not fitted coefficients —
 they encode a reasonable starting judgement about which macro forces matter most
 for UK100, not a backtested optimum. Log bias-vs-outcome daily once the skill is
-in regular use and recalibrate the weights after ~4 weeks of data. An
-`resolve-uk100-sessions.ts` outcome resolver (mirroring gold's
-`resolve-gold-sessions.ts`) is a natural next step for this but is intentionally
-**not** part of v1.
+in regular use and recalibrate the weights after ~4 weeks of data (the resolver
+below is the data source for that recalibration).
+
+### `resolve-uk100-sessions.ts` — outcome resolver & Track Record (F7)
+
+Mirrors gold's `resolve-gold-sessions.ts` (same WIN/LOSS/EXPIRED_*/NO_CALL
+semantics, same conservative both-in-one-bar=loss rule, same 4h `MIN_AGE_MS` /
+21-day `MAX_LOOKBACK_DAYS`), scored against UK100 H1 bars into
+`public/data/uk100/sessions/outcomes.json`. Two UK100-specific differences:
+
+- **Directional gate keys off `tradeIdea.status === 'ACTIVE'`, not `bias`.**
+  UK100's ORB playbook can produce a genuine ACTIVE LONG/SHORT call while
+  `bias` itself reads NEUTRAL (the ORB decision table trades structure/session
+  mechanics, not the macro bias score) — gold's bias-is-the-call model would
+  silently skip these. The base WIN/LOSS/EXPIRED result still comes from
+  `drawOnLiquidity`/`invalidation`, same as gold.
+- **Scoring window caps at the same-day 16:30 London cash close**
+  (`cashCloseCutoffMs()`, a local copy of `save-gold-session.ts`'s
+  `ukOffsetHours()` pattern), in addition to gold's flat 8h window — an ORB
+  call is strictly intraday, so bars after the close must not score it.
+
+**Level-hit sequence (`hits`).** Each outcome also carries the chronological
+sequence of `tradeIdea.targets` (T1/T2/...) and `stop` touches — e.g.
+`[{level:"T1",...},{level:"T2",...},{level:"STOP",...}]` — computed
+independently of the WIN/LOSS result by `classifyHits()`. A trade can run to
+two targets before eventually reversing into the stop, which a single
+first-touch result can't express; the base result stays anchored to
+`drawOnLiquidity`/`invalidation` for gold-compatible semantics, `hits` is the
+richer trace. Same conservative rule: a bar touching both an unhit target and
+the stop counts only the stop, and the scan ends there.
+
+`outcomes.json` rows also carry `orbDirection` (the record's
+`orbPlaybook.direction` at analysis time, nullable) so win-rates can later be
+sliced by playbook direction — including confirming that `STAND_ASIDE` days
+were genuinely worth skipping. `HitEvent`, `SessionOutcome.hits`, and
+`OutcomeRow.orbDirection` are additive fields on the shared
+`src/types/dashboard.ts` types (gold's own resolver leaves them undefined).
+
+Wired into `xauusd-daily-fetch.yml` as a `continue-on-error: true` step
+alongside gold's resolver — same trigger, same env, never fails the run.
+
+**Track Record UI**: `useUk100SessionOutcomes()` (mirrors gold's
+`useSessionOutcomes`) + an `OutcomeGlyph`/`TrackRecord` pair copied into
+`AiSubTab.tsx` (same pattern as gold's `GoldSessionTab.tsx` — consolidation is
+a later phase, not done here). One UI difference: the win-rate breakdown
+groups by `orbDirection` (Long-only/Short-only/Both-OK) instead of `bias`,
+since UK100's bias is frequently NEUTRAL even on a real call.
 
 ---
 
@@ -402,4 +445,4 @@ This dashboard was originally built with the Anthropic, Finnhub, and cTrader API
 - `ALPHA_VANTAGE_API_KEY` is configured as a secret but not currently used by `fetch-static-data.ts`.
 - Session-label logic in `App.tsx` (`getSessionLabel`) uses fixed UTC-hour buckets and is not DST-aware, unlike the `analysis/sessions.py` convention used by the ICT/SMC agents — fine for a dashboard label, not used for trading decisions.
 - Pravzella tab limitations (open positions not tracked yet, no R-multiple metrics, Zella Score is a custom approximation, no journaling yet) are documented separately in `PRAVZELLA.md`'s own "Known limitations" section.
-- The UK100 bias engine's weights are v1 priors, not backtested coefficients — see "Recalibration note" in the UK100 tab section above. There is no `resolve-uk100-sessions.ts` outcome tracker yet, so the UK100 AI Session tab has no gold-style Track Record calibration card.
+- The UK100 bias engine's weights are v1 priors, not backtested coefficients — see "Recalibration note" in the UK100 tab section above. `resolve-uk100-sessions.ts` (F7) now scores sessions and feeds a gold-style Track Record card, but the weights themselves haven't yet been recalibrated against that data — that's still a future pass once enough resolved sessions accumulate.

@@ -1,8 +1,9 @@
 import { useState, useMemo } from 'react'
-import { useUk100SessionIndex, useUk100Session } from '../../hooks/useUk100Sessions'
+import { useUk100SessionIndex, useUk100Session, useUk100SessionOutcomes } from '../../hooks/useUk100Sessions'
 import { BiasGauge } from '../briefing/BiasGauge'
 import { OrbPlaybookCard } from './OrbPlaybookCard'
 import type { Uk100SessionEntry, Uk100SessionRecord } from '../../types/uk100'
+import type { OutcomeRow, SessionResult } from '../../types/dashboard'
 import {
   parsePriceInRange, parseSections, parseKVRows, parseLevelLines, valueColor, parseProbability,
   type PriceInRange, type KVRow,
@@ -27,6 +28,99 @@ function biasArrow(bias: string) {
   if (bias === 'BULLISH') return <span className={styles.biasUp}>▲</span>
   if (bias === 'BEARISH') return <span className={styles.biasDown}>▼</span>
   return <span className={styles.biasFlat}>–</span>
+}
+
+// ── Outcome glyph + track-record stats (C3, UK100-V2-PLAN.md §5 Phase C3) ──
+// Mirrors GoldSessionTab.tsx's OutcomeGlyph/TrackRecord exactly (copied, not
+// exported/shared, per the plan — consolidation is a later phase), with one
+// UK100-specific change: the breakdown groups by `orbDirection`
+// (LONG_ONLY/SHORT_ONLY/BOTH_OK) instead of `bias` — UK100's bias label is
+// frequently NEUTRAL even on a genuine ORB-playbook call (see
+// resolve-uk100-sessions.ts's file header), so a bias-only breakdown would
+// silently drop most rows; orbDirection is always populated on a scored call.
+
+function OutcomeGlyph({ result }: { result?: SessionResult }) {
+  if (!result || result === 'NO_CALL') return null
+  if (result === 'WIN')  return <span className={styles.outWin} title="Target hit before invalidation">✓</span>
+  if (result === 'LOSS') return <span className={styles.outLoss} title="Invalidation hit first">✗</span>
+  return <span className={styles.outExpired} title={`Expired: ${result.replace('EXPIRED_', '').toLowerCase()}`}>○</span>
+}
+
+interface TrackStats {
+  decided: number
+  wins: number
+  winRate: number | null
+  avgProbability: number | null
+  byOrbDirection: { direction: string; decided: number; winRate: number }[]
+}
+
+function computeTrackStats(outcomes: OutcomeRow[]): TrackStats {
+  // Most recent 30 scored (exclude NO_CALL); win rate over WIN/LOSS only.
+  const scored = outcomes
+    .filter(o => o.result !== 'NO_CALL')
+    .sort((a, b) => b.resolvedAt.localeCompare(a.resolvedAt))
+    .slice(0, 30)
+
+  const decidedRows = scored.filter(o => o.result === 'WIN' || o.result === 'LOSS')
+  const wins = decidedRows.filter(o => o.result === 'WIN').length
+  const decided = decidedRows.length
+  const winRate = decided > 0 ? Math.round((wins / decided) * 100) : null
+  const avgProbability = decided > 0
+    ? Math.round(decidedRows.reduce((s, o) => s + o.probability, 0) / decided)
+    : null
+
+  const byOrbDirection = (['LONG_ONLY', 'SHORT_ONLY', 'BOTH_OK'] as const).map(direction => {
+    const rows = decidedRows.filter(o => o.orbDirection === direction)
+    const w = rows.filter(o => o.result === 'WIN').length
+    return { direction, decided: rows.length, winRate: rows.length > 0 ? Math.round((w / rows.length) * 100) : 0 }
+  }).filter(b => b.decided > 0)
+
+  return { decided, wins, winRate, avgProbability, byOrbDirection }
+}
+
+function orbDirectionLabel(d: string): string {
+  if (d === 'LONG_ONLY') return 'Long-only'
+  if (d === 'SHORT_ONLY') return 'Short-only'
+  if (d === 'BOTH_OK') return 'Both-OK'
+  return d
+}
+
+function TrackRecord({ outcomes }: { outcomes: OutcomeRow[] }) {
+  const stats = computeTrackStats(outcomes)
+  if (stats.decided === 0) return null
+
+  const edge = stats.winRate != null && stats.avgProbability != null
+    ? stats.winRate - stats.avgProbability
+    : null
+
+  return (
+    <div className={styles.trackCard}>
+      <div className={styles.trackTitle}>Track Record · last {stats.decided}</div>
+      <div className={styles.trackHeadline}>
+        <span className={styles.trackCalled}>Called {stats.avgProbability}%</span>
+        <span className={styles.trackDot}>·</span>
+        <span className={stats.winRate! >= 50 ? styles.trackHitGood : styles.trackHitBad}>
+          Hit {stats.winRate}%
+        </span>
+      </div>
+      {edge != null && (
+        <div className={styles.trackEdge}>
+          {edge >= 0 ? 'Calibrated / beating' : 'Below'} its own probability by {Math.abs(edge)}pts
+        </div>
+      )}
+      {stats.byOrbDirection.length > 0 && (
+        <div className={styles.trackBias}>
+          {stats.byOrbDirection.map(b => (
+            <div key={b.direction} className={styles.trackBiasRow}>
+              <span className={styles.trackBiasLabel}>{orbDirectionLabel(b.direction)}</span>
+              <span className={styles.trackBiasVal}>{b.winRate}%</span>
+              <span className={styles.trackBiasN}>({b.decided})</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
 }
 
 function groupByDate(sessions: Uk100SessionEntry[]): [string, Uk100SessionEntry[]][] {
@@ -367,6 +461,7 @@ function AnalysisRenderer({ session }: { session: Uk100SessionRecord }) {
 
 export function AiSubTab() {
   const { index, loading: indexLoading } = useUk100SessionIndex()
+  const { byFilename: outcomeByFile, outcomes } = useUk100SessionOutcomes()
   const [selectedFilename, setSelectedFilename] = useState<string | null>(null)
 
   const sessions   = index?.sessions ?? []
@@ -401,10 +496,13 @@ export function AiSubTab() {
                 <span className={styles.entryTime}>{s.time}</span>
                 <span className={`${styles.entryBadge} ${styles.badgeLondon}`}>{s.session}</span>
                 {biasArrow(s.bias)}
+                <OutcomeGlyph result={outcomeByFile.get(s.filename)?.result} />
               </button>
             ))}
           </div>
         ))}
+
+        <TrackRecord outcomes={outcomes} />
       </aside>
 
       <div className={styles.view}>
