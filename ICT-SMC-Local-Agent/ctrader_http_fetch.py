@@ -24,6 +24,11 @@ WHAT IT DOES
     - Fetches: spot (main + proxy symbolId, per INSTRUMENTS), positions,
       balance, and trendbars H_1 / M_5 / M_1 / D_1 for the main instrument
       plus M_5 for the SMT-proxy cross-check.
+    - uk100 only (INSTRUMENTS["uk100"]["us_tape"]): one extra get_spot_prices
+      call for US500/NAS100/VIX, printed in the summary under "us_tape".
+      Fixes UK100-SESSION-REVIEW-2026-07-13.md §3.7 — the macro snapshot's
+      US-linkage numbers can be ~2h stale by the time a session runs during
+      US_OVERLAP (14:30+ London); this gives the skill a live US read instead.
     - Writes raw per-timeframe files to /tmp/{pfx}_*.json AND the assembled,
       pipette-divided engine input to the instrument's input path.
     - Prints a JSON summary (spot, mid, positions, balance, bar counts) to
@@ -66,7 +71,10 @@ _LDN = ZoneInfo("Europe/London")
 # cTrader get_trendbars 100-bar silent cap on a single wide window).
 INSTRUMENTS = {
     "gold":  {"main": 241, "proxy": 1, "proxy_symbol": "EURUSD", "pfx": "gs", "input": "/tmp/gold_session_input.json", "symbol": "XAUUSD", "orb_context": False},
-    "uk100": {"main": 113, "proxy": 2, "proxy_symbol": "GBPUSD", "pfx": "uk", "input": "/tmp/uk100_session_input.json", "symbol": "UK100", "orb_context": True},
+    "uk100": {"main": 113, "proxy": 2, "proxy_symbol": "GBPUSD", "pfx": "uk", "input": "/tmp/uk100_session_input.json", "symbol": "UK100", "orb_context": True,
+              # Live US-linkage spots (§3.7 fix) — US500/NAS100/VIX, same
+              # symbolIds as xauusd-dashboard's KNOWN_SYMBOL_IDS.
+              "us_tape": {115: "US500", 116: "NAS100", 152: "VIX"}},
 }
 _PIP = 10 ** 5
 
@@ -228,6 +236,15 @@ def main():
     bid, ask = main_px["bid"], main_px.get("ask", main_px["bid"])
     mid = round((bid + ask) / 2 / _PIP, 5)
 
+    # Live US-linkage tape (uk100 only) — one extra call, same connection.
+    # Best-effort: a failure here never aborts the run (the macro snapshot's
+    # US500/NAS100/VIX day% is still available as a fallback in the skill).
+    us_tape_cfg = cfg.get("us_tape") or {}
+    us_tape_prices = {}
+    if us_tape_cfg:
+        us_spot = cli.call("get_spot_prices", {"symbolId": list(us_tape_cfg.keys())})
+        us_tape_prices = {p["symbolId"]: p for p in us_spot.get("prices", [])} if isinstance(us_spot, dict) else {}
+
     positions = cli.call("get_positions", {})
     balance = cli.call("get_balance", {})
 
@@ -319,6 +336,20 @@ def main():
         "positions": positions,
         "balance": balance,
     }
+
+    # Live US-linkage tape (§3.7 fix) — quote this during US_OVERLAP instead
+    # of the macro snapshot's day% numbers, which can be ~2h stale by then.
+    if us_tape_cfg:
+        us_tape_summary = {}
+        for sid, name in us_tape_cfg.items():
+            px = us_tape_prices.get(sid)
+            if px and px.get("bid"):
+                b, a = px["bid"], px.get("ask", px["bid"])
+                us_tape_summary[name] = {"bid": round(b / _PIP, 2), "ask": round(a / _PIP, 2), "mid": round((b + a) / 2 / _PIP, 2)}
+            else:
+                us_tape_summary[name] = None
+        summary["us_tape"] = us_tape_summary
+
     print(json.dumps(summary, indent=2, default=str))
 
 
