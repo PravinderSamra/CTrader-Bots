@@ -178,10 +178,16 @@ def _analyse_timeframe(candles: list[Candle], include_volume_profile: bool = Fal
         return {}
 
     current_price = candles[-1].close
+    trend = structure.detect_trend(candles, lookback=min(20, len(candles) - 1)) if len(candles) > 1 else "NEUTRAL"
     result: dict = {
         "candle_count": len(candles),
-        "trend": structure.detect_trend(candles, lookback=min(20, len(candles) - 1)) if len(candles) > 1 else "NEUTRAL",
-        "premium_discount": structure.calculate_premium_discount(candles, lookback=min(50, len(candles))),
+        "trend": trend,
+        # Pass the trend just computed above rather than letting
+        # calculate_premium_discount re-derive its own over a different
+        # lookback window — a second independent derivation is a source of
+        # drift, and the OTE-zone direction (UK100-SESSION-REVIEW-2026-07-13.md
+        # §3.1) must agree with the trend this TF's structure read reports.
+        "premium_discount": structure.calculate_premium_discount(candles, lookback=min(50, len(candles)), trend=trend),
         "fvgs": [_fvg_to_dict(f) for f in structure.detect_fvgs(candles)[:10]],
         "order_blocks": [_ob_to_dict(ob) for ob in structure.detect_order_blocks(candles)[:10]],
         "liquidity_pools": [_liq_to_dict(p) for p in structure.find_liquidity_pools(candles, current_price)],

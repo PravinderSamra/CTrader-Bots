@@ -135,13 +135,14 @@ Report `session.current_session` and `session.bias_notes` (gap direction, ORB br
 
 **STEP 3 — PD ARRAY IDENTIFICATION**
 - Use `h1.order_blocks`/`m5.order_blocks` (quality 1–5, `preceded_by_liq_grab`) and `h1.fvgs`/`m5.fvgs` (graded A+/A/B/C/SKIP) as the PD array inventory — discard SKIP.
-- Determine which arrays sit in discount (bullish setups) or premium (bearish setups) via `h1.premium_discount.status`.
+- Determine which arrays sit in discount (bullish setups) or premium (bearish setups) using `h1.premium_discount` (`range_high`/`range_low`/`equilibrium` — an array below `equilibrium` is discount, above is premium).
 - Note the Consequent Encroachment (`ce`) of significant FVGs.
 
 **STEP 4 — PREMIUM/DISCOUNT ANALYSIS**
-- Use `h1.premium_discount` directly (range_high/range_low/equilibrium/ote_low/ote_high/status).
-- State whether current price is in premium, equilibrium, discount, or OTE.
-- Confirm any proposed entry aligns with the correct side of the range.
+- Use `h1.premium_discount` directly (range_high/range_low/equilibrium/trend/ote_direction/ote_low/ote_high/status).
+- **The OTE zone is direction-aware, not a fixed side of the range.** `ote_direction` is `"LONGS"` (discount-side retracement, live only when `trend` is BULLISH and price sits in it), `"SHORTS"` (premium-side retracement, live only when `trend` is BEARISH and price sits in it), or `null` (no live directional OTE — NEUTRAL trend, or price outside both fib zones). `ote_low`/`ote_high` still resolve to the matching-`ote_direction` zone when non-null; when `null`, treat them as informational only, not a signal. **Never call the OTE zone "the highest-probability LONG zone" outright — check `ote_direction` first**, and for the ORB Playbook (STEP 8), an OTE-for-SHORTS zone must never be cited as support for a LONG_ONLY row. (This replaced an engine bug where the zone was always the premium side and unconditionally labelled for longs — the exact failure mode that shipped a LONG in H1 premium on 2026-07-13, see `UK100-SESSION-REVIEW-2026-07-13.md` §3.1.)
+- State whether current price is in premium, equilibrium, discount, or a live OTE zone, and which direction that OTE serves if any.
+- Confirm any proposed entry aligns with the correct side of the range AND, if inside an OTE zone, that `ote_direction` matches the proposed trade direction.
 
 **STEP 5 — MACRO REGIME (from the UK100 daily snapshot — qualifies, never overrides, the ICT read)**
 - **GBP sign-flip first, always:** state `fx.gbpUsdDayPct` and `fx.ftseImpactFromGbp` (already sign-flipped for you) before anything else. Weak GBP (≤−0.5% day%) is BULLISH for FTSE; strong GBP (≥+0.5%) is BEARISH.
@@ -408,7 +409,7 @@ Meta JSON to place in `/tmp/uk100-session-meta.json`:
 | `bias` | Copy `bias.label` from the macro snapshot verbatim. |
 | `biasScore` | Copy `bias.score` from the macro snapshot verbatim (already −10..+10; do not rescale). |
 | `probability` | Compute additively from the PROBABILITY SCORING RULES table (base 50, list each +/− applied). Do not freehand a number. |
-| `priceZone` / `equilibrium` | Copy from `h1.premium_discount` verbatim (OTE wins if price is inside it). |
+| `priceZone` / `equilibrium` | Copy from `h1.premium_discount` verbatim — `priceZone: "OTE"` only when `ote_direction` is non-null (i.e. price sits inside the OTE zone that matches the current `trend`); otherwise `PREMIUM`/`DISCOUNT`/`EQUILIBRIUM` per `status`. Never set `OTE` when `ote_direction` is `null`. |
 | `smtDivergence` | Copy `smt_divergence` verbatim — never infer it. |
 | `keyLevels` | Source only from engine fields: `h1.liquidity_pools`, `reference_levels`, `orb` (ORB high/low, overnight high/low), `h1.volume_profile.poc`. No hand-drawn levels. |
 | `priceAtAnalysis` | The exact mid you fed the engine as `current_price`. |

@@ -76,16 +76,18 @@ def _build_context(inst: dict, candles_1h: List[Candle], candles_1d: List[Candle
     name = inst["name"]
     price = candles_1h[-1].close
 
+    # Trend (computed first so premium/discount can share it — see structure.py's
+    # calculate_premium_discount docstring on why re-deriving a second trend
+    # over a different window is a source of drift)
+    htf_trend   = structure.detect_trend(candles_1d, lookback=20) if candles_1d else "N/A"
+    intra_trend = structure.detect_trend(candles_1h, lookback=20)
+
     # Structure analysis on 1H
-    pd  = structure.calculate_premium_discount(candles_1h, lookback=50)
+    pd  = structure.calculate_premium_discount(candles_1h, lookback=50, trend=intra_trend)
     fvgs = structure.detect_fvgs(candles_1h)
     obs  = structure.detect_order_blocks(candles_1h)
     liq  = structure.find_liquidity_pools(candles_1h, price)
     vp   = structure.approximate_volume_profile(candles_1h)
-
-    # Trend
-    htf_trend   = structure.detect_trend(candles_1d, lookback=20) if candles_1d else "N/A"
-    intra_trend = structure.detect_trend(candles_1h, lookback=20)
 
     # Session levels
     asian = structure.find_asian_range(candles_1h)

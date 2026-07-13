@@ -435,10 +435,34 @@ def find_liquidity_pools(candles: List[Candle], current_price: float) -> List[Li
 def calculate_premium_discount(
     candles: List[Candle],
     lookback: int = 50,
+    trend: Optional[str] = None,
 ) -> dict:
     """
-    Calculates the range equilibrium (50% level), OTE zone (61.8%–78.6%),
-    and whether current price is in premium, discount, or OTE.
+    Calculates the range equilibrium (50% level) and the OTE (Optimal Trade
+    Entry, 61.8%–78.6% Fibonacci retracement) zone appropriate to the CURRENT
+    impulse direction, plus whether current price is in premium, discount,
+    or that OTE zone.
+
+    Which side of the range the OTE sits on depends on which way the impulse
+    leg ran: a retrace UP into 61.8%–78.6% of the range (the classic
+    "premium" fib zone) is the OTE for SHORTS, expecting continuation down;
+    the OTE for LONGS is the mirror zone in DISCOUNT, 61.8%–78.6% of the way
+    back down from the high. The previous version always computed the
+    premium-side zone and unconditionally labelled it "highest-probability
+    LONG zone" regardless of direction — backwards whenever the leg was
+    bullish, and live-verified wrong on 2026-07-13: a LONG shipped in H1
+    premium labelled "OTE ZONE ... LONG zone" (UK100-SESSION-REVIEW-2026-07-13.md
+    §3.1). `ote_low`/`ote_high` still resolve to a single zone (backward
+    compat for callers that read only those two fields — e.g. main.py's
+    report), now correctly matching `trend`; `ote_for_longs`/`ote_for_shorts`
+    expose both zones explicitly, and `ote_direction` states which one (if
+    either) is a live recommendation right now.
+
+    `trend` lets the caller pass its own already-computed `detect_trend(...)`
+    result for the SAME candle series (the adapters compute a per-timeframe
+    trend anyway, and re-deriving a second, possibly-different one here would
+    be its own source of drift) — falls back to an internal `detect_trend`
+    call over `lookback` when omitted.
     """
     recent = candles[-lookback:]
     high = max(c.high for c in recent)
@@ -446,26 +470,50 @@ def calculate_premium_discount(
     eq   = (high + low) / 2.0
     current = candles[-1].close
 
-    # OTE zone: 61.8%–78.6% Fibonacci retracement from the range
-    # For a bullish range (targeting the high from the low):
-    ote_low  = low + (high - low) * 0.618
-    ote_high = low + (high - low) * 0.786
+    if trend is None:
+        trend = detect_trend(candles, lookback=min(lookback, 20))
 
-    in_ote = ote_low <= current <= ote_high
+    # OTE for SHORTS: premium-side retracement, 61.8%–78.6% UP from the low.
+    shorts_low  = low + (high - low) * 0.618
+    shorts_high = low + (high - low) * 0.786
+    # OTE for LONGS: discount-side retracement, the mirror zone 61.8%–78.6%
+    # of the way back DOWN from the high.
+    longs_low  = high - (high - low) * 0.786
+    longs_high = high - (high - low) * 0.618
 
-    if in_ote:
-        status = f"OTE ZONE (Optimal Trade Entry) — {ote_low:.5f}–{ote_high:.5f}. Highest-probability LONG zone."
-    elif current > eq:
-        status = "PREMIUM — above equilibrium. Look for SHORTS."
+    in_shorts_ote = shorts_low <= current <= shorts_high
+    in_longs_ote  = longs_low  <= current <= longs_high
+
+    if trend == "BEARISH" and in_shorts_ote:
+        ote_direction = "SHORTS"
+        ote_low, ote_high = shorts_low, shorts_high
+        status = f"OTE ZONE for SHORTS (premium retracement) — {ote_low:.5f}–{ote_high:.5f}. Highest-probability SHORT entry."
+    elif trend == "BULLISH" and in_longs_ote:
+        ote_direction = "LONGS"
+        ote_low, ote_high = longs_low, longs_high
+        status = f"OTE ZONE for LONGS (discount retracement) — {ote_low:.5f}–{ote_high:.5f}. Highest-probability LONG entry."
     else:
-        status = "DISCOUNT — below equilibrium. Look for LONGS."
+        ote_direction = None
+        # No live directional OTE (NEUTRAL trend, or price outside both fib
+        # zones) — ote_low/ote_high still resolve to whichever zone would
+        # apply if this trend firmed up, so backward-compat callers reading
+        # those two fields unconditionally never see a mismatched pair.
+        ote_low, ote_high = (shorts_low, shorts_high) if trend == "BEARISH" else (longs_low, longs_high)
+        if current > eq:
+            status = "PREMIUM — above equilibrium. Look for SHORTS."
+        else:
+            status = "DISCOUNT — below equilibrium. Look for LONGS."
 
     return {
         "range_high": high,
         "range_low":  low,
         "equilibrium": eq,
+        "trend": trend,
+        "ote_direction": ote_direction,
         "ote_low": ote_low,
         "ote_high": ote_high,
+        "ote_for_longs": {"low": longs_low, "high": longs_high},
+        "ote_for_shorts": {"low": shorts_low, "high": shorts_high},
         "status": status,
     }
 

@@ -171,13 +171,14 @@ Two notes on macro snapshot fields (relevant to STEP 5 analysis):
 
 **STEP 3 — PD ARRAY IDENTIFICATION**
 - Use `h1.order_blocks`/`m5.order_blocks` (quality 1–5, `preceded_by_liq_grab` flag) and `h1.fvgs`/`m5.fvgs` (graded A+/A/B/C/SKIP, with `context_flags` of `liq.grab`/`post-BOS`) as the PD array inventory — discard anything graded SKIP. Identify Breaker Blocks and Mitigation Blocks manually from the raw candles if visible (the engine does not grade these).
-- Determine which arrays sit in discount (bullish setups) or premium (bearish setups) using `h1.premium_discount.status`.
+- Determine which arrays sit in discount (bullish setups) or premium (bearish setups) using `h1.premium_discount` (`range_high`/`range_low`/`equilibrium` — an array below `equilibrium` is discount, above is premium).
 - Note the Consequent Encroachment (`ce` field — the midpoint) of significant FVGs.
 
 **STEP 4 — PREMIUM/DISCOUNT ANALYSIS**
-- Use `h1.premium_discount` (range_high/range_low/equilibrium/ote_low/ote_high/status) directly — this is the equilibrium (50%) of the most recent H1 dealing range plus the 61.8–78.6% OTE zone.
-- State whether current price is in premium, equilibrium, discount, or the OTE zone per the engine's `status` string.
-- Confirm any proposed entry aligns with the correct side of the range.
+- Use `h1.premium_discount` (range_high/range_low/equilibrium/trend/ote_direction/ote_low/ote_high/status) directly — this is the equilibrium (50%) of the most recent H1 dealing range plus the OTE (61.8–78.6% Fibonacci retracement) zone **appropriate to the current trend direction**.
+- **The OTE zone is direction-aware, not a fixed side of the range.** `ote_direction` is `"LONGS"` (discount-side retracement, live only when `trend` is BULLISH and price sits in it), `"SHORTS"` (premium-side retracement, live only when `trend` is BEARISH and price sits in it), or `null` (no live directional OTE right now — either the trend is NEUTRAL, or price is outside both fib zones). `ote_low`/`ote_high` always resolve to the zone matching `ote_direction` when non-null; when `null` they still report the zone that *would* apply if the trend firmed up — do not treat that as a live signal. **Never call the OTE zone "the highest-probability LONG zone" outright — check `ote_direction` first.** (This replaced an engine bug where the zone was always the premium side and unconditionally labelled for longs — see `UK100-SESSION-REVIEW-2026-07-13.md` §3.1 for the live-verified failure mode.)
+- State whether current price is in premium, equilibrium, discount, or a live OTE zone per the engine's `status` string, and which direction that OTE serves if any.
+- Confirm any proposed entry aligns with the correct side of the range AND, if inside an OTE zone, that `ote_direction` matches the proposed trade direction — an OTE-for-SHORTS zone is not a long entry.
 
 **STEP 5 — MACRO REGIME (from the daily snapshot — qualifies, never overrides, the ICT read)**
 - DXY direction and what it implies for gold (inverse relationship, but note divergences).
@@ -400,7 +401,7 @@ derivable field to the ENGINE OUTPUT, not to free-form judgement:
 | `bias` | From engine trends: `h1.trend`==`m5.trend`==BULLISH → `BULLISH`; both BEARISH → `BEARISH`; anything else → `NEUTRAL`. Only deviate when you cite a concrete engine fact (e.g. confirmed sweep + SMT) in the brief, and say so explicitly. |
 | `biasScore` | NEUTRAL → 0 (or ±1 if leaning with a stated reason); one-timeframe agreement → ±2; H1+M5 aligned → ±3; aligned + displacement + sweep confluence → ±4/±5. |
 | `probability` | Compute additively from the PROBABILITY SCORING RULES table (base 50, list each +/− applied). Do not freehand a number. |
-| `priceZone` / `equilibrium` | Copy from `h1.premium_discount` verbatim (OTE wins if price is inside it). |
+| `priceZone` / `equilibrium` | Copy from `h1.premium_discount` verbatim — `priceZone: "OTE"` only when `ote_direction` is non-null (i.e. price sits inside the OTE zone that matches the current `trend`); otherwise `PREMIUM`/`DISCOUNT`/`EQUILIBRIUM` per `status`. Never set `OTE` when `ote_direction` is `null`. |
 | `smtDivergence` | Copy `smt_divergence` verbatim — never infer it. |
 | `keyLevels` | Source only from engine fields: `h1.liquidity_pools`, `reference_levels`, `h1.asian_range`, `h1.volume_profile.poc`, `structure_breaks` levels. No hand-drawn levels. |
 | `priceAtAnalysis` | The exact mid you fed the engine as `current_price`. |
@@ -415,7 +416,7 @@ Field guide:
 | `probability` | Primary scenario percentage from your Probability Assessment (e.g. 65) |
 | `confidence` | Map Confidence Level: HIGH → 8, MEDIUM → 5, LOW → 3 |
 | `priceAtAnalysis` *(opt)* | The current mid price you analysed at (from the spot/engine `current_price`). |
-| `priceZone` *(opt)* | `DISCOUNT` / `PREMIUM` / `EQUILIBRIUM` / `OTE` — the H1 read from the engine's `h1.premium_discount.status` (the OTE zone wins if price sits inside it). |
+| `priceZone` *(opt)* | `DISCOUNT` / `PREMIUM` / `EQUILIBRIUM` / `OTE` — the H1 read from the engine's `h1.premium_discount.status`. `OTE` only when `ote_direction` is non-null (the zone matches the live `trend`, e.g. discount-side OTE while BULLISH); a price sitting in the "wrong-side" fib zone for the current trend is PREMIUM/DISCOUNT, not OTE. |
 | `equilibrium` *(opt)* | `h1.premium_discount.equilibrium` — the 50% of the H1 dealing range. |
 | `drawOnLiquidity` *(opt)* | Your PRIMARY Draw on Liquidity level (the nearest high-strength pool in the bias direction). |
 | `invalidation` *(opt)* | The Key Invalidation Level price. |
