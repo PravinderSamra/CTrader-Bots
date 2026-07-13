@@ -1,0 +1,20 @@
+{
+  "updatedAt": "2026-07-13T19:14:31.629Z",
+  "outcomes": [
+    {
+      "filename": "2026-07-13/13-46.json",
+      "date": "2026-07-13",
+      "time": "14:46 BST",
+      "session": "LONDON",
+      "bias": "NEUTRAL",
+      "probability": 62,
+      "confidence": 5,
+      "priceZone": "OTE",
+      "orbDirection": "BOTH_OK",
+      "result": "LOSS",
+      "resolvedAt": "2026-07-13T19:14:31.628Z",
+      "maxFavourable": 22.9,
+      "maxAdverse": 23.7
+    }
+  ]
+}
