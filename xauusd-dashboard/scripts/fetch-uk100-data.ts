@@ -470,13 +470,26 @@ async function fetchGbpCot(prevData: CotResult): Promise<CotResult> {
       noncomm_positions_short_all?: string
     }>
     if (!rows.length) throw new Error('empty GBP COT response')
-    const latest = rows[0]
+    // The API is already asked for the 2 most recent reports (see $limit=2
+    // above), so week-over-week is computed report-over-report from THIS
+    // response, not against prevData.cotNetLong from a previous run of the
+    // script. The old run-over-run comparison read the same report against
+    // itself on every hourly run once the report was >5 days old (the
+    // freshness-skip window lapses well before CFTC publishes the next one),
+    // making gbpCotWoWChange silently read 0 (UK100-SESSION-REVIEW-2026-07-13.md
+    // §3.9 — the live 2026-07-13 snapshot showed exactly this: report
+    // 2026-07-07, WoW 0). Require both rows; a malformed/short response falls
+    // through to the catch below like any other fetch failure.
+    if (rows.length < 2) throw new Error(`GBP COT response had only ${rows.length} row(s), need 2 for week-over-week`)
+    const [latest, prior] = rows
     const longPos = parseInt(latest.noncomm_positions_long_all ?? '0')
     const shortPos = parseInt(latest.noncomm_positions_short_all ?? '0')
     const net = longPos - shortPos
-    const wow = prevData.cotNetLong != null ? net - prevData.cotNetLong : null
+    const priorLongPos = parseInt(prior.noncomm_positions_long_all ?? '0')
+    const priorShortPos = parseInt(prior.noncomm_positions_short_all ?? '0')
+    const wow = net - (priorLongPos - priorShortPos)
     const crowding: CotResult['crowding'] = net > 60000 ? 'CROWDED_LONG' : net < -20000 ? 'CROWDED_SHORT' : 'BALANCED'
-    console.log(`GBP COT: long=${longPos.toLocaleString()} short=${shortPos.toLocaleString()} net=${net.toLocaleString()}`)
+    console.log(`GBP COT: long=${longPos.toLocaleString()} short=${shortPos.toLocaleString()} net=${net.toLocaleString()} wow=${wow.toLocaleString()} (vs report ${prior.report_date_as_yyyy_mm_dd})`)
     return { cotNetLong: net, cotWoWChange: wow, crowding, reportDate: latest.report_date_as_yyyy_mm_dd ?? null }
   } catch (err) {
     console.error('GBP COT fetch failed:', err)

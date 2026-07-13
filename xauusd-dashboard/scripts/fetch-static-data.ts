@@ -516,7 +516,21 @@ async function fetchCOT(existingSnapshot: Partial<Snapshot>): Promise<Snapshot['
     // CFTC public Socrata API — Legacy Futures-Only COT (non-commercial positions, COMEX Gold)
     const url =
       'https://publicreporting.cftc.gov/resource/jun7-fc8e.json' +
-      '?$where=market_and_exchange_names%20like%20%27%25GOLD%25%27' +
+      // Exact contract match (088691 = "GOLD - COMMODITY EXCHANGE INC.",
+      // verified live 2026-07-13) — the previous `LIKE '%GOLD%'` filter also
+      // matches "MICRO GOLD - COMMODITY EXCHANGE INC." (a much smaller,
+      // separate contract) and CFTC returns both under the same report date,
+      // so a plain $limit=2 ORDER BY date DESC could return one row of each
+      // contract instead of two weeks of the SAME contract — verified this
+      // was happening live: MICRO GOLD sorted first, so `net`/`crowding` had
+      // silently been MICRO GOLD's much smaller position all along, and
+      // week-over-week (once fixed to be report-over-report, see below)
+      // computed a nonsense delta between two different instruments
+      // (observed live: wow=-198628 comparing MICRO GOLD 07-07 vs GOLD
+      // 07-07 — same date, different contracts). Matches UK100's GBP COT
+      // query's precise cftc_contract_market_code filter for the same
+      // reason.
+      "?$where=cftc_contract_market_code='088691'" +
       '&$order=report_date_as_yyyy_mm_dd%20DESC' +
       '&$limit=2' +
       '&$select=report_date_as_yyyy_mm_dd,noncomm_positions_long_all,noncomm_positions_short_all,open_interest_all,change_in_open_interest_all'
@@ -529,16 +543,29 @@ async function fetchCOT(existingSnapshot: Partial<Snapshot>): Promise<Snapshot['
       change_in_open_interest_all?: string
     }>
     if (!rows.length) throw new Error('empty COT response')
+    // The API is already asked for the 2 most recent reports (see $limit=2
+    // above), so week-over-week is computed report-over-report from THIS
+    // response, not against prevData.cotNetLong from a previous run of the
+    // script. The old run-over-run comparison read the same report against
+    // itself on every hourly run once the report was >5 days old (the
+    // freshness-skip window lapses well before CFTC publishes the next one),
+    // making cotWoWChange silently read 0 — same bug found and fixed for
+    // UK100's GBP COT block, UK100-SESSION-REVIEW-2026-07-13.md §3.9. Require
+    // both rows; a malformed/short response falls through to the catch below
+    // like any other fetch failure.
+    if (rows.length < 2) throw new Error(`COT response had only ${rows.length} row(s), need 2 for week-over-week`)
 
-    const latest   = rows[0]
+    const [latest, prior] = rows
     const longPos  = parseInt(latest.noncomm_positions_long_all  ?? '0')
     const shortPos = parseInt(latest.noncomm_positions_short_all ?? '0')
     const net      = longPos - shortPos
-    const wow      = prevData.cotNetLong != null ? net - prevData.cotNetLong : null
+    const priorLongPos  = parseInt(prior.noncomm_positions_long_all  ?? '0')
+    const priorShortPos = parseInt(prior.noncomm_positions_short_all ?? '0')
+    const wow = net - (priorLongPos - priorShortPos)
     const crowding: Snapshot['positioning']['crowding'] = net > 200000 ? 'CROWDED_LONG' : net < 100000 ? 'CROWDED_SHORT' : 'NEUTRAL'
     const openInterest = latest.open_interest_all != null ? parseInt(latest.open_interest_all) : null
     const openInterestChange = latest.change_in_open_interest_all != null ? parseInt(latest.change_in_open_interest_all) : null
-    console.log(`COT: long=${longPos.toLocaleString()} short=${shortPos.toLocaleString()} net=${net.toLocaleString()} OI=${openInterest?.toLocaleString()} OIchg=${openInterestChange}`)
+    console.log(`COT: long=${longPos.toLocaleString()} short=${shortPos.toLocaleString()} net=${net.toLocaleString()} wow=${wow.toLocaleString()} (vs report ${prior.report_date_as_yyyy_mm_dd}) OI=${openInterest?.toLocaleString()} OIchg=${openInterestChange}`)
     return {
       cotNetLong: net, cotWoWChange: wow, crowding, reportDate: latest.report_date_as_yyyy_mm_dd ?? null,
       openInterest, openInterestChange,
