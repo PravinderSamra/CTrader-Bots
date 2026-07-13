@@ -130,6 +130,40 @@ Net: **directionally strong, mechanically sloppy at the edges.** First-touch sco
 
 ---
 
+## 4A. EUROPEAN CORRELATION STUDY (measured live 2026-07-13 — motivates F8/F9)
+
+Prompted by the user's observation that UK100 rises and falls with GER40 and the Euro Stoxx 50 daily. **Measured, not assumed** — UK100 log-return Pearson correlation against each reference, pulled live from cTrader (`get_trendbars`, this account):
+
+| Reference (broker symbolId) | H_1, ~15d (n≈99) | M_5, today (n=99) |
+|---|---|---|
+| **Euro Stoxx 50** — `EUSTX50` (124) | **+0.68** | +0.73 |
+| CAC 40 — `FRA40` (125) | +0.68 | — |
+| DAX — `GER40` (110) | +0.64 | **+0.75** |
+| S&P 500 — `US500` (115) | +0.55 | +0.48 |
+| GBP/USD (2) | +0.06 | — |
+| EUR/USD (1) | +0.14 | — |
+
+*(D_1 correlation not tabled: `get_trendbars D_1` silently returns empty on windows wider than the production 22-day pull, a known cap quirk — the intraday timeframe is the relevant one for an ORB/intraday tool anyway, and daily FTSE/DAX/SX5E correlation is textbook ~0.7–0.85 in normal regimes. Re-measure over a 22-day D_1 window if a daily figure is wanted.)*
+
+**Findings:**
+1. **The European complex out-correlates the US tape intraday.** Euro Stoxx 50 ≈ CAC ≈ DAX all cluster at r≈0.64–0.68 (H1) / 0.73–0.75 (M5) — materially tighter than S&P 500 (0.48–0.55) and an order of magnitude tighter than GBP/EUR FX. The user's intuition is correct and then some: at the 08:00 London open the FTSE trades the **European cash-session risk pulse**, not the (thin Globex) US tape.
+2. **Euro Stoxx 50 is the single best / tied-best correlate** and is the pan-Eurozone benchmark — the cleanest read of "European risk on/off." It is available here as a plain CFD (`EUSTX50`, symbolId **124**, pipDigits 5 — same class as US500/GER40/UK100). CAC 40 (`FRA40`, **125**) is near-collinear with it (adds little marginal signal).
+3. **GBP intraday r≈0.06 confirms the sign-flip design is right.** GBP's effect on FTSE is *conditional/regime* (big on GBP-driven days, ~zero otherwise), NOT linear co-movement — which is exactly why the weight-3 GBP driver is a sign-flipped conditional, not a correlation term. It also means the bias engine currently weights its *least* intraday-informative macro input (GBP, w3.0) highest while having **no European-tape input at all** — the biggest single gap this study exposes.
+
+**Why this is more than "add another correlated number to the bias sum" (it would be partly circular — the European tape *is* European beta).** The value is in three non-circular uses:
+- **(a) Pre-open lead.** DAX/SX5E open the same 08:00 London / 09:00 CET, but STOXX (FESX) and DAX (FDAX) **futures trade the pre-market and lead** the FTSE open. "European tape already broke UP through its overnight range while the FTSE ORB is still forming" is a genuine, non-circular directional lead for the 08:00 ORB.
+- **(b) Divergence / decoupling detector.** When FTSE is *not* tracking the complex — a commodity-driven outperformance day (today: Brent +3.36%, FTSE firmer than the read-through), or a UK-specific gilt/political shock — that decoupling is itself the signal: it says the FTSE is trading its own idiosyncratic story and the European-beta assumption is off. A rolling DAX↔FTSE / SX5E↔FTSE correlation (same `pearson()` the V2 plan already specs for GBP↔FTSE) quantifies "is the link live right now."
+- **(c) Multi-tape conviction gate.** DAX + SX5E + US futures all agreeing on direction ⇒ higher-probability ORB break in that direction; split ⇒ lower. Time-of-day-weighted: **European tape dominates pre-14:30 London; US tape dominates post-14:30** (dovetails with F2a/F3's US_OVERLAP handling).
+
+**Implication for V2 Phase D.** The plan currently specs only a GER40 driver at weight 2.0. This study says: make **Euro Stoxx 50 the primary European-tape driver** (co-equal with or ahead of DAX), keep DAX as the second tape for the agree/diverge signal, and enter the European-tape driver at a weight reflecting its measured explanatory power (≥2.0, i.e. at least the US-futures 2.5 tier for the pre-14:30 window) — with the final weight **validated against the Phase C resolver data**, not hard-coded on faith (same empirical discipline as the rest of the project). Do **not** cut the GBP weight: its conditional value is real; it's just orthogonal to this.
+
+Additional EUR-side data points worth adding while touching this area (lower priority, listed in F9):
+- **EUR/USD day%** — the EUR analog of the GBP sign-flip: a strong EUR is a headwind for DAX/SX5E exporters, so it modulates how bullish a European-tape rally really is for the read-through.
+- **EUR/GBP** (already carried as `GBPEUR`) as the decoupling tell: when it's flat and FTSE+complex move together = shared risk beta; when it moves = expect FTSE and the European complex to diverge.
+- **Bund yield / BTP–Bund spread** — European sovereign-rates analog to the gilt strip already pulled; SX5E is bank-heavy so it matters. Nice-to-have, not blocking.
+
+---
+
 ## 5. FIX LIST (execute in this order)
 
 | # | What | Files | Effort | Priority |
@@ -141,8 +175,10 @@ Net: **directionally strong, mechanically sloppy at the edges.** First-touch sco
 | F5 | COT WoW report-over-report (UK100 + check gold) | `fetch-uk100-data.ts`, possibly `fetch-static-data.ts` | 30m | P2 |
 | F6 | = **V2 Phase B unchanged** (label thresholds, VIX vocab, sticky `orbBrokenDirection`, 08:20 cron) — §3.10 upgraded B3 from "planned" to "evidence-backed" | per V2 plan | per V2 plan | P1 |
 | F7 | = **V2 Phase C** (resolver) with one enrichment: record the *chronological sequence* of level hits (e.g. `hits: ["T1","T2","STOP"]` + timestamps) rather than a single first-touch outcome — today's T1→T2→STOP sequence is the canonical test case; keep the conservative both-in-one-bar=loss rule from the V2 plan | per V2 plan + this note | +30m over V2 est. | P2 |
+| F8 | **European-tape driver (§4A, supersedes V2 Phase D's GER40-only spec).** Add **Euro Stoxx 50** (`EUSTX50`, symbolId **124**, pipDigits 5) to `KNOWN_SYMBOL_IDS`/`PIP_DIGITS` and to the UK100 fetch (spot + day% + a short intraday series for correlation); keep **GER40** (110) as the second tape. New snapshot block `europeanTape`: `{ eurostoxx50DayPct, dax40DayPct, ftseDaxCorr20d, ftseSx5eCorr20d, tapeAgreement: 'ALIGNED'|'SPLIT'|'DIVERGING', preOpenLead: 'UP'|'DOWN'|'NONE' }` (reuse the V2 `pearson()`; `preOpenLead` from the European tape's own overnight-range break at UK100 fetch time when mode=PRE_OPEN/OPENING_HOUR). Bias engine: add a **European-tape driver**, weight ≥2.0, *time-of-day weighted* (full weight pre-14:30 London, reduced post-14:30 as the US tape takes over — pairs with F2a/F3); final weight a TODO to be recalibrated from F7 resolver data, not faith-fixed. Skill STEP 5 gains a European-tape paragraph (cite `europeanTape`, use the divergence/lead reads per §4A(a)–(c), never as a naive "tape up ⇒ buy"). New macro tile `Uk100EuropeanTapeTile`. Unit-test the correlation + agreement/divergence classification (pure fns). Gold untouched. | `xauusd-dashboard/scripts/lib/ctrader.ts`, `fetch-uk100-data.ts`, `src/types/uk100.ts`, a new tile + explainer + test, README | 2.5–3.5h | P1 |
+| F9 | **EUR-side context (optional, while F8 is open).** `eurUsdDayPct` (EUR/USD id 1 — the EUR sign-flip analog: strong EUR = DAX/SX5E exporter headwind, modulates read-through) surfaced in the European-tape read; use existing `GBPEUR` as the decoupling tell (flat EUR/GBP + complex moving together = shared beta; moving = expect divergence). **Bund yield / BTP–Bund spread** (European sovereign-rates analog to the gilt strip) is a further nice-to-have — only if a clean free source is found, else defer. | `fetch-uk100-data.ts`, skill STEP 5 | 45m–1h | P2/P3 |
 
-Then V2 Phases D/E/F continue as written. Screenshot verification of the AI sub-tab (old task #84) remains blocked by the sandbox's TLS-intercepting proxy (Chromium won't trust the CA; `libnss3-tools` uninstallable) — verify via the deployed JSON endpoints instead, as done today, or screenshot from a local machine.
+Then V2 Phases D/E/F continue as written (**F8 replaces Phase D's GER40 sub-item; the rest of Phase D — GBP↔FTSE correlation, volume confirmation, riskFraction — stands**). Screenshot verification of the AI sub-tab (old task #84) remains blocked by the sandbox's TLS-intercepting proxy (Chromium won't trust the CA; `libnss3-tools` uninstallable) — verify via the deployed JSON endpoints instead, as done today, or screenshot from a local machine.
 
 ### Execution rules (unchanged from V2, restated)
 - Each fix ends: `npx tsc --noEmit` + `npm run build` + `npx vitest run` green (where TS touched), workflow YAML parses, **gold regression** where shared code is touched (`fetch-static-data.ts` shape-check; for F1 also run `skill_adapter.py` on a gold fixture) → descriptive commit → push to `claude/xauusd-intelligence-dashboard-t5jnzh` → fast-forward push to `main`. Never force-push main.
@@ -154,7 +190,7 @@ Then V2 Phases D/E/F continue as written. Screenshot verification of the AI sub-
 
 ## 6. HANDOFF PROMPT (give this to the builder model)
 
-> Execute `UK100-SESSION-REVIEW-2026-07-13.md` §5, fixes F1–F5 in order (F6/F7 = existing UK100-V2-PLAN.md Phases B and C — continue into them afterwards using the V2 plan text plus this doc's F6/F7 notes). Read the review doc fully first; it is self-contained — do not re-derive the diagnoses, but re-verify each fix against the evidence cited in §3. Work on branch `claude/xauusd-intelligence-dashboard-t5jnzh`. Each fix ends with the full verify → commit → push → fast-forward-main cycle from §5's execution rules, so you can stop after any fix with nothing half-wired. F1 modifies the shared engine: mirror `analysis/structure.py` byte-identically to `ICT-SMC-Remote-Agent`, and regression-test BOTH `skill_adapter.py` (gold) and `uk100_adapter.py` (UK100) on live-fetched fixtures before committing. F4's calendar dates must each be WebFetch-verified against federalreserve.gov / bls.gov / bea.gov — wrong dates are worse than missing dates.
+> Execute `UK100-SESSION-REVIEW-2026-07-13.md` §5, fixes F1–F5 in order, then F8 and F9 (F6/F7 = existing UK100-V2-PLAN.md Phases B and C — do those in sequence too; F8 supersedes V2 Phase D's GER40-only European driver, the rest of Phase D still stands). Read the review doc fully first — it is self-contained; do not re-derive the diagnoses, but re-verify each fix against the evidence cited in §3 and the measured correlations in §4A. Work on branch `claude/xauusd-intelligence-dashboard-t5jnzh`. Each fix ends with the full verify → commit → push → fast-forward-main cycle from §5's execution rules, so you can stop after any fix with nothing half-wired. F1 modifies the shared engine: mirror `analysis/structure.py` byte-identically to `ICT-SMC-Remote-Agent`, and regression-test BOTH `skill_adapter.py` (gold) and `uk100_adapter.py` (UK100) on live-fetched fixtures before committing. F4's calendar dates must each be WebFetch-verified against federalreserve.gov / bls.gov / bea.gov — wrong dates are worse than missing dates. F8 adds Euro Stoxx 50 (`EUSTX50`, symbolId 124) as the primary European-tape driver — its bias-engine weight is a TODO to be recalibrated from F7 resolver data, not a faith-fixed constant; wire the plumbing/tile/tests now and mark the weight provisional.
 
 ---
 
@@ -163,3 +199,4 @@ Then V2 Phases D/E/F continue as written. Screenshot verification of the AI sub-
 1. **Management style for the resolver (F7):** should the Track Record score first-touch (T1 before stop = win, gold's convention) or sequence-aware partial credit (T1+T2 banked, runner stopped = larger win)? Today's trade is a win under both, but the conventions diverge on other shapes. Default if unanswered: first-touch, matching gold.
 2. **Late-session policy strictness (F2a):** the proposed rule still allows WAIT-status ideas after 14:30 London. If you'd rather have a hard NO-NEW-TRADES cutoff (e.g. 15:30 London), say so — one-line change.
 3. **US calendar scope (F4):** FOMC/CPI/NFP/PCE proposed. Add ISM/JOLTS/Retail Sales? Each adds noise to `eventSuppressed`; the four proposed are the ones that reliably move UK100.
+4. **European-tape weighting (F8):** the measured intraday correlation (§4A) says the European tape deserves a bias-engine weight at least on par with the US-futures 2.5 driver for the pre-14:30 window — but I've left the exact number as a resolver-validated TODO rather than hard-coding it. If you'd prefer a concrete starting weight to run with now (e.g. 2.5 pre-14:30 decaying to ~1.0 post-14:30), say so and it goes in as the provisional constant. Also: keep CAC 40 (`FRA40`, 125) out (near-collinear with Euro Stoxx 50) unless you specifically want a third confirmation tape.
