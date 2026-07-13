@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-07-13T14:08:32.919Z",
+  "generatedAt": "2026-07-13T17:07:59.569Z",
   "prices": {
-    "UK100": 10492.05,
-    "GBPUSD": 1.33806,
-    "GBPEUR": 1.17225,
-    "US500": 7552.5,
-    "NAS100": 29387.95,
-    "BRENT": 78.713,
-    "COPPER": 6.3429,
-    "VIX": 17.08,
-    "USDX": 101.053,
-    "XAUUSD": 4034.325,
-    "UK100_dayPct": -0.29
+    "UK100": 10487,
+    "GBPUSD": 1.33651,
+    "GBPEUR": 1.17339,
+    "US500": 7530.5,
+    "NAS100": 29342.05,
+    "BRENT": 80.558,
+    "COPPER": 6.302,
+    "VIX": 17.28,
+    "USDX": 101.248,
+    "XAUUSD": 3996.835,
+    "UK100_dayPct": -0.34
   },
   "fx": {
-    "gbpUsdDayPct": -0.12,
+    "gbpUsdDayPct": -0.23,
     "gbpUsd20dPercentile": 68,
     "sterlingEri": 85.7564,
     "sterlingEriDayChange": 0.13,
@@ -36,17 +36,17 @@
     "daysToMpc": 17
   },
   "usLinkage": {
-    "us500DayPct": -0.36,
-    "nas100DayPct": -1.51,
-    "vix": 17.08,
+    "us500DayPct": -0.65,
+    "nas100DayPct": -1.66,
+    "vix": 17.28,
     "vixRegime": "ELEVATED",
     "us10y": 4.54,
-    "usdx": 101.053
+    "usdx": 101.248
   },
   "commodities": {
-    "brentDayPct": 3.37,
-    "copperDayPct": 0.66,
-    "goldDayPct": -2.06,
+    "brentDayPct": 5.79,
+    "copperDayPct": 0.01,
+    "goldDayPct": -2.97,
     "brent20dTrend": "DOWN"
   },
   "positioning": {
@@ -60,14 +60,14 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent +3.37%",
+      "driver": "Brent +5.79%",
       "read": "BULLISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper +0.66%",
+      "driver": "Copper +0.01%",
       "read": "NEUTRAL",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
@@ -108,54 +108,54 @@
       "headline": "London's FTSE 100 muted as Iran escalates strikes on US bases - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxONV9YYXpONTBaSkVUYjBPdUhqYmRVMTJ1Y3lnaVI2eVN4TElWVVM3dWJTVENqT1MyVVZGUkRYTEdVZnYwdklDYnRxNHZPaGpzdzdyTlZFcmstZ0J6dU9PR0Q1R21aYWNlLURuMTlfSHF6eVZTOXRsMDAtX0k5WmNTaVhjazlLUU1CZDlSOGJJek12ZG9PdHZtbE12YjhyalR4?oc=5",
-      "hoursAgo": 4.1
+      "hoursAgo": 7.1
     },
     {
       "headline": "Gold extends decline as Middle East tensions bolster higher-for-longer rate view - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxQclJuSi1YOVNaUjRBaVVhUkY3bjhqa2paOEZrM0FES0pvZ1BpTm1waUtGb2RHdzhhcHNVRWRxM2dGdXVkS1prcEZRdzhDQjhLLVpYNnlKWDdPekxsWHgxU016NlVzTllUZ1AtSWFMajhrcmRXcUFWNThJVjdLYWlpakZEVHI1eWFmS3pSS3RWelgwY1NUVXpaZ2RuV2RKdkVxckxoNlRpOEo?oc=5",
-      "hoursAgo": 9.9
+      "hoursAgo": 12.9
     }
   ],
   "riskTone": {
     "score": -3,
     "label": "BEARISH",
-    "rationale": "Iran escalating strikes on US bases signals geopolitical risk-off; higher-for-longer rate fears add hawkish headwind, both bearish for UK100."
+    "rationale": "Iran escalating strikes on US bases signals geopolitical risk-off; higher-for-longer rate fears add hawkish headwind, both pressuring UK100."
   },
   "bias": {
-    "score": 0,
+    "score": -2,
     "label": "NEUTRAL",
     "conviction": "LOW",
     "drivers": [
       {
         "name": "GBP",
         "weight": 3,
-        "impact": "NEUTRAL",
-        "detail": "GBP/USD -0.12% → FTSE tailwind (sign-flipped)"
+        "impact": "BULLISH",
+        "detail": "GBP/USD -0.23% → FTSE tailwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
         "impact": "BEARISH",
-        "detail": "US500 -0.36% today"
+        "detail": "US500 -0.65% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 17.08 — ELEVATED regime"
+        "detail": "VIX 17.28 — ELEVATED regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
         "impact": "BULLISH",
-        "detail": "Brent +3.37% (energy majors)"
+        "detail": "Brent +5.79% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
-        "impact": "BULLISH",
-        "detail": "Copper +0.66% (miners/China)"
+        "impact": "NEUTRAL",
+        "detail": "Copper +0.01% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -179,16 +179,16 @@
     "eventSuppressed": false
   },
   "orbContext": {
-    "computedAt": "2026-07-13T14:08:32.919Z",
-    "mode": "POST_ORB",
+    "computedAt": "2026-07-13T17:07:59.569Z",
+    "mode": "CLOSED",
     "cashOpenLondon": "08:00 BST",
     "overnightHigh": 10526.3,
     "overnightLow": 10443.2,
     "priorDayHigh": 10537.3,
     "priorDayLow": 10438.8,
     "priorClose": 10522.4,
-    "gapPts": -30.4,
-    "gapPct": -0.29,
+    "gapPts": -35.4,
+    "gapPct": -0.34,
     "orbHigh": 10526.3,
     "orbLow": 10482,
     "orbBrokenDirection": "NONE",
@@ -197,10 +197,10 @@
     "adrUsedPct": 62
   },
   "briefing": {
-    "biasScore": 0,
+    "biasScore": -2,
     "biasLabel": "NEUTRAL",
     "confidence": 4,
-    "briefing": "Starting with sterling (the most important signal for FTSE 100): GBPUSD is down just -0.12% today, which by the index's inverted relationship with the pound (weaker pound makes the overseas earnings of UK multinationals worth more in sterling terms) is a mild tailwind for UK100 — but the snapshot rates this as effectively NEUTRAL given how small the move is. The dominant forces today are pulling in opposite directions, which explains the messy, directionless picture: on the bullish side, Brent crude is surging +3.37%, directly lifting Shell and BP (top-5 index weights), and copper is up +0.66%, giving miners a gentle nudge; on the bearish side, US equities are soft (S&P 500 -0.36%, Nasdaq -1.51%), VIX [a measure of how nervous US markets are] sits at 17.08 in an ELEVATED regime meaning caution is warranted, and professional futures traders are heavily 'crowded short' [meaning a lot of big money is already betting against the pound, which the snapshot reads as a bearish signal for FTSE]. The biggest headline from the last few hours (4.1 hours ago, Reuters) is that Iran has escalated strikes on US bases — a classic geopolitical risk-off event [meaning investors tend to avoid risky assets and move to safety] that is keeping sentiment cautious and directly explains why gold is falling (-2.06%, as a 'higher-for-longer rates' narrative competes with the safe-haven bid) and why UK100 is slightly negative on the day (-0.29%). The 20-year gilt yield is actually falling 5bp today (long-end stress flag is false), so there is no UK fiscal-crisis signal to worry about. Directional bias is CHOPPY/NEUTRAL: energy is pulling the index up, geopolitics and weak US markets are pulling it down, and there is no clean dominant force. Confidence is 4/10 — the geopolitical situation could deteriorate rapidly (bearish) or de-escalate (bullish), and AstraZeneca (often the single largest index weight) carries idiosyncratic risk that could swing the index independently of everything else. For the 08:00 ORB trade specifically: the opening range (ORB high 10,526 / ORB low 10,482, a 44-point range) has so far produced NO breakout in either direction ('NONE'), which combined with the tug-of-war between energy bulls and geopolitical bears strongly suggests a fakeout/chop day rather than a clean trend breakout — traders should be very cautious about chasing moves and should wait for a confirmed break with follow-through. Roughly 62% of the 14-day average daily range [the typical distance the index travels in a day, here 133 points] has already been used, meaning there are about 50 points of 'budget' left, so large trending moves are less likely from here. No scheduled UK economic events fall today, but traders must note a HIGH-impact UK GDP Monthly Estimate (a measure of how fast the economy grew) is due on Thursday 16 July at 07:00 BST — just before the London open — so position sizing later this week should be reduced ahead of that release. Key levels: overnight high 10,526 and ORB high 10,526 are the same level and act as the upside line in the sand; overnight low 10,443 and ORB low 10,482 define the downside; prior day high 10,537 is just above and prior day low 10,439 just below as wider reference points. The one thing to remember today: energy is the bull, geopolitics is the bear, and with no ORB break yet and 62% of the daily range already used, the smart play is to wait for a decisive move rather than force a trade.",
-    "generatedAt": "2026-07-13T14:08:59.170Z"
+    "briefing": "GBP/USD is down 0.23% today, which — because of the inverse relationship between sterling and the FTSE 100 — is a mild tailwind for the index (a weaker pound makes the dollar and euro earnings of UK multinationals worth more in sterling terms), though the system rates the net FX impact as NEUTRAL given the small move and the Sterling ERI [a broad measure of the pound against a basket of currencies] barely shifting. The regime right now is a tug-of-war: the standout bullish force is Brent crude surging +5.79%, which directly lifts Shell and BP — the two biggest energy stocks in the index — and the ENERGY sector is flagged BULLISH; pulling the other way, US equities are soft (S&P 500 -0.65%, Nasdaq -1.66%), the VIX [a measure of expected market volatility, sometimes called the 'fear index'] sits at 17.28 in ELEVATED territory, and the broader risk tone is scored BEARISH. Banks are flagged BEARISH as 10-year gilt yields fell 6 basis points today, which slightly squeezes the profit margin banks earn on loans. Gilts are NOT in long-end stress, which removes one major worry. The key catalyst comes from Reuters roughly 7 hours ago: Iran escalating strikes on US bases — a classic geopolitical risk-off [investors moving away from riskier assets] headline that explains why the index gapped down 35 points from Friday's close and why safe-haven gold had already been bid before reversing (-2.97% today, suggesting some of that fear trade is unwinding). PHARMA (AstraZeneca) carries idiosyncratic risk — watch for any AZN-specific news that could independently swing the index. The directional bias is NEUTRAL to mildly bearish: the energy tailwind is real but not enough on its own to flip sentiment when geopolitical fear, soft US markets, and elevated VIX are all pressing down. Confidence is 4/10 — the Iran headline introduces unpredictable headline risk in either direction, and if tensions de-escalate, the index could bounce sharply; if they worsen, energy stocks won't save it. For the 08:00 ORB trade, 62% of the 14-day average daily range [the typical distance the index travels in a day, averaged over two weeks] has already been used up, the overnight range spans 10443 to 10526, and with a gap-down open and conflicting forces, today looks more like a fakeout/sweep-then-reverse day than a clean trend breakout — treat initial ORB breaks with scepticism and wait for a retest of the breakout level before committing. No scheduled UK data releases fall today; however, UK GDP Monthly Estimate at 07:00 BST on Wednesday (3 days away, HIGH impact) means conviction should be kept light as the week progresses and you should consider cutting position size ahead of that number. Key levels: ORB high 10526 and overnight high 10526.3 are essentially the same resistance; ORB low 10482 is the first downside pivot; prior day low 10438.8 is the line in the sand below that; prior close 10522.4 acts as the reference point for whether today's gap-down holds or fills. The one thing to remember today: Brent's surge keeps energy stocks fighting, but Iran headlines and a tired daily range make clean ORB trends unlikely — size down and wait for confirmation before trusting any break.",
+    "generatedAt": "2026-07-13T17:08:22.350Z"
   }
 }
