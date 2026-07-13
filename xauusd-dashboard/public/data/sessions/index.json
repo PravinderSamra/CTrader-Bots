@@ -1,6 +1,22 @@
 {
-  "updatedAt": "2026-07-10T07:33:13.952Z",
+  "updatedAt": "2026-07-13T08:14:10.576Z",
   "sessions": [
+    {
+      "date": "2026-07-13",
+      "time": "09:14 BST",
+      "filename": "2026-07-13/08-14.json",
+      "timestamp": "2026-07-13T08:14:10.576Z",
+      "session": "LONDON",
+      "bias": "BULLISH",
+      "biasScore": 3,
+      "probability": 75,
+      "confidence": 8,
+      "priceZone": "PREMIUM",
+      "tradeIdea": {
+        "direction": "LONG",
+        "status": "ACTIVE"
+      }
+    },
     {
       "date": "2026-07-10",
       "time": "08:33 BST",
@@ -12,116 +28,6 @@
       "probability": 35,
       "confidence": 5,
       "priceZone": "DISCOUNT"
-    },
-    {
-      "date": "2026-07-09",
-      "time": "22:48 BST",
-      "filename": "2026-07-09/21-48.json",
-      "timestamp": "2026-07-09T21:48:42.516Z",
-      "session": "LONDON",
-      "bias": "BULLISH",
-      "biasScore": 3,
-      "probability": 65,
-      "confidence": 7,
-      "priceZone": "OTE",
-      "tradeIdea": {
-        "direction": "LONG",
-        "status": "WAIT"
-      }
-    },
-    {
-      "date": "2026-07-08",
-      "time": "17:25 BST",
-      "filename": "2026-07-08/16-25.json",
-      "timestamp": "2026-07-08T16:25:44.972Z",
-      "session": "NEW_YORK",
-      "bias": "NEUTRAL",
-      "biasScore": -2,
-      "probability": 58,
-      "confidence": 3,
-      "priceZone": "DISCOUNT"
-    },
-    {
-      "date": "2026-07-08",
-      "time": "15:10 BST",
-      "filename": "2026-07-08/14-10.json",
-      "timestamp": "2026-07-08T14:10:57.392Z",
-      "session": "LONDON",
-      "bias": "NEUTRAL",
-      "biasScore": -1,
-      "probability": 55,
-      "confidence": 3,
-      "priceZone": "DISCOUNT"
-    },
-    {
-      "date": "2026-07-08",
-      "time": "08:56 BST",
-      "filename": "2026-07-08/07-56.json",
-      "timestamp": "2026-07-08T07:56:21.842Z",
-      "session": "LONDON",
-      "bias": "BULLISH",
-      "biasScore": 2,
-      "probability": 60,
-      "confidence": 5,
-      "priceZone": "DISCOUNT",
-      "tradeIdea": {
-        "direction": "LONG",
-        "status": "WAIT"
-      }
-    },
-    {
-      "date": "2026-07-08",
-      "time": "08:26 BST",
-      "filename": "2026-07-08/07-26.json",
-      "timestamp": "2026-07-08T07:26:26.117Z",
-      "session": "LONDON",
-      "bias": "BEARISH",
-      "biasScore": -2,
-      "probability": 60,
-      "confidence": 3,
-      "priceZone": "DISCOUNT",
-      "tradeIdea": {
-        "direction": "SHORT",
-        "status": "NO_TRADE"
-      }
-    },
-    {
-      "date": "2026-07-07",
-      "time": "20:18 BST",
-      "filename": "2026-07-07/19-18.json",
-      "timestamp": "2026-07-07T19:18:47.583Z",
-      "session": "NEW_YORK",
-      "bias": "BEARISH",
-      "biasScore": -2,
-      "probability": 62,
-      "confidence": 5,
-      "priceZone": "DISCOUNT",
-      "tradeIdea": {
-        "direction": "SHORT",
-        "status": "WAIT"
-      }
-    },
-    {
-      "date": "2026-07-07",
-      "time": "13:41 BST",
-      "filename": "2026-07-07/12-41.json",
-      "session": "NEW_YORK",
-      "bias": "BEARISH",
-      "biasScore": -2,
-      "probability": 55,
-      "confidence": 3,
-      "timestamp": "2026-07-07T12:41:18.252Z"
-    },
-    {
-      "date": "2026-07-07",
-      "time": "09:03 BST",
-      "filename": "2026-07-07/08-03.json",
-      "session": "LONDON",
-      "bias": "NEUTRAL",
-      "biasScore": -1,
-      "probability": 45,
-      "confidence": 3,
-      "timestamp": "2026-07-07T08:03:57.353Z"
     }
   ]
 }
