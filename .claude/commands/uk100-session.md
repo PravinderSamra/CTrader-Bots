@@ -84,7 +84,7 @@ Never proceed to Phase C on partial/missing trendbar data — if any Phase B cal
 
 Two notes on the macro snapshot's calendar/news fields (relevant to STEP 5):
 - `economicCalendar` spans the whole current week, region-tagged UK/US/EZ — use `daysFromToday > 0` and `impact: "HIGH"` to flag build-up caution.
-- `newsItems` covers the last 24h — scan for same-session catalysts (BoE/gilt/sterling/index-constituent headlines) explaining recent moves.
+- `newsItems` covers the last 24h — scan for same-session catalysts (BoE/gilt/sterling/index-constituent headlines) explaining recent moves. **Maintenance note:** an empty `[]` on a quiet day (thin news + a strict keyword filter) is normal and not worth investigating on its own. If it stays empty for roughly a week of runs, diagnose it the same way the Phase A2 calendar premium-gate was diagnosed — log the raw Finnhub response length/body once in `fetch-uk100-data.ts` — rather than assuming the filter is simply strict.
 
 ---
 
@@ -180,6 +180,8 @@ Using the mechanical `bias` (from the macro snapshot) and the H1 structure trend
 | 5 | `bias.label` = NEUTRAL and both macro and structure are genuinely mixed | `BOTH_OK` (take the ORB break in either direction, half size) |
 | 6 | `bias` and H1 structure are in outright conflict (e.g. bias BULLISH but H1 trend BEARISH) | `STAND_ASIDE` (no edge) |
 
+**US_OVERLAP time gate (applies on top of whichever row above matched — it does not decide Direction, it caps how the setup may be traded):** once London time is past 14:30 (the `session.current_session` is `US_OVERLAP`), any NEW setup identified from this point on is capped at `tradeIdea.status: "WAIT"` maximum — **never `ACTIVE`**, regardless of how clean the M1 trigger looks — and its targets are capped at the nearest liquidity pool only (no T3-class stretch target). The brief's ORB PLAYBOOK section must state the remaining-session context explicitly (e.g. "US_OVERLAP, ~Xh to 16:30 BST cash close — no fresh ACTIVE entries this late"). This closes the gap that shipped a fresh `ACTIVE` LONG at 14:45 BST 15 minutes after the US cash open on 2026-07-13, stopped out ~30 minutes later on exactly the US-session reversal this skill's own London Session Map already warns about (`UK100-SESSION-REVIEW-2026-07-13.md` §3.2). An already-open position from before 14:30 is unaffected — this gate only blocks *new* `ACTIVE` entries.
+
 Determine **day type**:
 - `EVENT_DRIVEN` — any HIGH-impact event scheduled 07:00–16:30 today.
 - else `TREND_EXPECTED` — `|bias.score| ≥ 5` AND the gap (`orbContext.gapPct`) is in the same direction as the bias AND the overnight range is comfortably below the ADR14 norm (i.e. the move hasn't already happened overnight).
@@ -189,7 +191,9 @@ Write **`reasoning`** (2–4 sentences) encoding these tactical rules where they
 - Gap >0.4% against the bias direction → warn of a likely gap-fill before any ORB trade in the bias direction.
 - Price opened inside the prior day's range with both PDH and PDL still unswept → expect a liquidity run at one extreme before the real trend break; prefer the **second** ORB break attempt, not the first.
 - US data at 13:30 → the morning move is often complete by 13:00; don't chase pre-US chop.
-- US cash open at 14:30 can reverse the day — book partials before it.
+- US cash open at 14:30 can reverse the day — book partials before it (see the US_OVERLAP time gate above — this is the same risk that gate exists for).
+- **Remaining-range target cap:** any target level more than `adr14 × (1 − adrUsedPct/100)` points from entry (i.e. beyond what's left of a typical day's range, from the macro snapshot's `orbContext.adr14`/`adrUsedPct`) may only be listed as a labelled "stretch, requires displacement" target — never as T1/T2, and never counted in the `rr` calculation or position sizing. (2026-07-13 shipped a T3 36pts out with only ~50pts of ADR14 left and a grade-A bearish FVG sitting in the path — never approached; `UK100-SESSION-REVIEW-2026-07-13.md` §3.5.)
+- **Flatten at an opposing FVG, don't hold through it:** when the primary target is an A/A+/grade-B FVG or OB in the *opposite* direction to the trade (e.g. a LONG's T2 sits inside a bearish FVG) AND the session is already past OPENING_HOUR, prefer `tradeIdea.status: "WAIT"` or explicitly instruct "flatten at T2, no runner" rather than proposing a T3 beyond it — the opposing PD array is itself the more likely reversal point, not a level to trade through (§3.11).
 
 Set **`invalidation`** to a concrete price (e.g. "ORB long invalid on M5 close back inside the range / below the overnight low"), and **`eventRisk`** to the specific event that kills the setup, if any (e.g. "US CPI 13:30 — flatten by 13:15").
 
@@ -207,7 +211,7 @@ This entire block feeds both the `## ORB PLAYBOOK` section of the printed brief 
 
 ## ACCOUNT CONTEXT
 - **Open Positions on Symbol:** [None / describe]
-- **Account Balance / Equity / Free Margin:** [from get_balance]
+- **Account Balance / Equity / Free Margin:** [from get_balance — **`get_balance` returns money in cents, with a `moneyDigits` field stating the divisor's power of 10 (`moneyDigits: 2` → divide by 100)**. E.g. `{"balance": 4646598, "moneyDigits": 2}` = £46,465.98, not £4,646,598. Always divide before printing.]
 
 ## REGIME ASSESSMENT
 - **H1 Regime:** [BULLISH / BEARISH / TRANSITIONAL]
@@ -265,13 +269,15 @@ This entire block feeds both the `## ORB PLAYBOOK` section of the printed brief 
 
 ## PROBABILITY ASSESSMENT
 - **Primary Scenario:** [XX%] — [BULLISH / BEARISH]
+- **Primary Arithmetic:** [50 (base) +NN [reason] +NN [reason] −NN [reason] ... = XX%] — **mandatory, every +/− line item you applied, in order.** A brief that prints the Primary Scenario percentage without this line is non-compliant and must not be saved (`UK100-SESSION-REVIEW-2026-07-13.md` §3.3 — 62% shipped 2026-07-13 with no arithmetic shown, and at least one likely-claimed credit rested on the OTE-zone mislabel that §3.1/F1 has since fixed).
 - **Secondary Scenario:** [XX%] — [opposite]
+- **Secondary Arithmetic:** [same format as Primary Arithmetic]
 - **Confidence Level:** [HIGH / MEDIUM / LOW]
 - **Key Invalidation Level:** [price]
 
 ## TRADE IDEA — PRIMARY (omit entirely if ORB Playbook Direction is STAND_ASIDE, or H1/M5 conflict)
 - **Direction:** [LONG / SHORT — must match the ORB Playbook direction, or BOTH_OK's chosen side]
-- **Setup Type:** [ORB Break / OTE / OB Retest / FVG Entry / Sweep Reversal / Other]
+- **Setup Type:** [ORB Break / Failed-Break Reclaim / OTE / OB Retest / FVG Entry / Sweep Reversal / Other] — **Failed-Break Reclaim**: price breaks the ORB one way, fails to reach the overnight extreme on that side, and closes back inside the ORB range; the trade is in the *reclaim* direction, opposite the initial break. Do not label this "ORB Break" — that name belongs to a trade in the break's own direction (`UK100-SESSION-REVIEW-2026-07-13.md` §3.6 — 2026-07-13's LONG after a DOWN break was mislabelled "ORB Break").
 - **Entry Zone:** [price range]
 - **Stop Loss:** [price + rationale]
 - **Target 1 / 2 / 3:** [liquidity pools]
@@ -289,7 +295,7 @@ This entire block feeds both the `## ORB PLAYBOOK` section of the printed brief 
 
 ## PROBABILITY SCORING RULES
 
-Base probability starts at **50%**.
+Base probability starts at **50%**. **The resulting arithmetic (base + every line item applied) is a mandatory printed field (see PROBABILITY ASSESSMENT's `Primary Arithmetic`/`Secondary Arithmetic` above) — never freehand a percentage.**
 
 **ADD (+):**
 - +15% H1 structure aligns with trade direction
@@ -308,6 +314,7 @@ Base probability starts at **50%**.
 - -20% Trading against a confirmed (3-phase) regime change
 - -15% Entry at or beyond equilibrium on the wrong side
 - -10% PRE_US or POST_CLOSE window (thin, low-conviction)
+- -10% US_OVERLAP window (past 14:30 London) for a newly-identified setup — pairs with the US_OVERLAP time gate in STEP 8; this is on top of that gate's hard `WAIT`-max status cap, not instead of it
 - -10% No overnight/ORB sweep before setup
 - -10% recognize_market_pattern / pattern_check cross-check conflicts with direction
 - -8% Protected high/low broken and retested with rejection against the trade
@@ -329,6 +336,8 @@ Base probability starts at **50%**.
 - Never reason about a GBP move using gold's DXY sign convention — GBP up is BEARISH for UK100, not bullish.
 - Never use standard TA terminology (support/resistance, overbought/oversold) in the ICT sections — ICT terminology only.
 - Never fabricate macro, calendar, or pattern-recognition data that a tool call failed to return — say it's unavailable instead.
+- Never mark a newly-identified setup `ACTIVE` once `session.current_session` is `US_OVERLAP` — `WAIT` is the ceiling, regardless of trigger quality (the US_OVERLAP time gate, STEP 8).
+- Never print a Primary/Secondary Scenario percentage without its Arithmetic line shown alongside it.
 
 ---
 
@@ -413,7 +422,8 @@ Meta JSON to place in `/tmp/uk100-session-meta.json`:
 | `smtDivergence` | Copy `smt_divergence` verbatim — never infer it. |
 | `keyLevels` | Source only from engine fields: `h1.liquidity_pools`, `reference_levels`, `orb` (ORB high/low, overnight high/low), `h1.volume_profile.poc`. No hand-drawn levels. |
 | `priceAtAnalysis` | The exact mid you fed the engine as `current_price`. |
-| `tradeIdea.status` | `NO_TRADE` whenever `orbPlaybook.direction` is `STAND_ASIDE`; `WAIT` when a setup exists but the trigger/window is missing; `ACTIVE` only with an M1 trigger inside the trading window. |
+| `tradeIdea.status` | `NO_TRADE` whenever `orbPlaybook.direction` is `STAND_ASIDE`; `WAIT` when a setup exists but the trigger/window is missing; `ACTIVE` only with an M1 trigger inside the trading window; also capped at `WAIT` (never `ACTIVE`) by the US_OVERLAP time gate in STEP 8 regardless of trigger quality. |
+| `tradeIdea.rr` | **Always the R:R to Target 1** — `(target1 − entryMid) / (entryMid − stop)` for a long, sign-mirrored for a short — never to T2/T3. Same definition as `/gold-session`'s `tradeIdea.rr` (shared field, kept unambiguous for the resolver/UI). Describe R:R to further targets in prose if useful, not in this field. |
 | `orbPlaybook` | Apply STEP 8's decision table mechanically — `direction`/`dayType` are deterministic outputs of the table, not judgement calls. `reasoning`/`invalidation`/`eventRisk` are the only free-text parts, and must be consistent with the table's output. |
 
 Field guide (fields shared with `/gold-session`):
@@ -435,3 +445,21 @@ cd /home/user/CTrader-Bots/xauusd-dashboard && npx tsx scripts/save-gold-session
 Confirm the output shows `Session saved` (under `public/data/uk100/sessions/…`), `Index updated`, and `Committed and pushed to main (<sha>)`. The UK100 AI sub-tab on the dashboard will show the entry after GitHub Actions deploys (~1–2 min).
 
 **Do NOT perform any manual git recovery.** The save script owns the entire commit-and-push: it rebuilds `index.json` from the current `origin/main` and builds the commit directly on top of that tip via plumbing (`commit-tree`), so it CANNOT hit a rebase/merge conflict, and it internally re-fetches and retries up to 5× if another push races it. If the script exits non-zero, it prints why: `HTTP 401`/stale-input → a data problem (report it, no record); a genuine push failure after 5 retries → report the printed error verbatim and stop. Never hand-edit `index.json`, never `git rebase`, never `git push --force`, never re-run with `--no-verify` — just re-run the same command once, and if it still fails, report the failure. A missing dashboard entry is always better than a hand-patched one.
+
+**Step 9d — if this session has its own repo checkout on a feature branch** (as opposed to a throwaway/detached environment): the save script above pushes its commit **directly to `origin/main` via plumbing, without touching this session's local branch or working tree.** That leaves the local checkout behind `origin/main` with the just-saved session files showing as *untracked* on disk (their content was written locally before the push, but the branch ref never moved) — this trips a clean "no untracked files" repo-hygiene check if one runs at the end of the session. Fix it once, after STEP 9c succeeds:
+```bash
+git fetch origin main --quiet
+```
+Then verify the untracked files are byte-identical to what the save script just pushed before touching anything (never assume — check):
+```bash
+git diff origin/main -- xauusd-dashboard/public/data/uk100/sessions/
+```
+If that diff is empty (it should be — same content, just not yet tracked locally), fast-forward the local checkout onto `origin/main`:
+```bash
+git merge --ff-only origin/main
+```
+If `git merge --ff-only` refuses because the now-tracked paths would be overwritten, remove the local untracked copies first (only after the byte-identical check above passed) and retry the merge. Then push this session's own feature branch so it stays in sync:
+```bash
+git push origin <branch-name>
+```
+Never `git reset --hard`, never force-push, never skip the byte-identical check before removing anything.
