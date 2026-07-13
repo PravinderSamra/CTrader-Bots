@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-07-13T19:13:45.846Z",
+  "generatedAt": "2026-07-13T20:50:41.267Z",
   "yields": {
-    "US10Y": 4.54,
-    "US2Y": 4.16,
-    "realYield10Y": 2.31,
-    "realYield5Y": 1.99,
-    "curve2s10s": 38,
+    "US10Y": 4.56,
+    "US2Y": 4.21,
+    "realYield10Y": 2.32,
+    "realYield5Y": 2.02,
+    "curve2s10s": 35,
     "breakeven10Y": 2.24,
     "breakeven5Y": 2.28,
     "forward5y5y": 2.2,
     "dayOverDay": {
-      "US10Y": -0.02,
-      "US2Y": -0.05,
-      "realYield10Y": 0
+      "US10Y": 0.02,
+      "US2Y": 0.05,
+      "realYield10Y": 0.01
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-07-29",
-    "probCut": 12,
-    "probHold": 88,
+    "probCut": 16,
+    "probHold": 84,
     "probHike": 0
   },
   "marketVolatility": {
@@ -34,26 +34,26 @@
     "openInterestChange": 6341
   },
   "etfFlows": {
-    "gldTonnes": 1012,
-    "gldWoWChange": -0.6,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1011.8,
+    "gldWoWChange": -0.2,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 3998.565,
-    "XAGUSD": 57.4825,
-    "EURUSD": 1.13828,
-    "USDJPY": 162.4475,
-    "USDCHF": 0.81458,
-    "USDCNH": 6.78507,
-    "GBPUSD": 1.33539,
-    "USDCAD": 1.41564,
-    "USDSEK": 9.71288,
-    "US500": 7519.2,
-    "GER40": 25004.55,
-    "UK100": 10489.8,
+    "XAUUSD": 3999.225,
+    "XAGUSD": 57.6035,
+    "EURUSD": 1.13799,
+    "USDJPY": 162.4675,
+    "USDCHF": 0.81478,
+    "USDCNH": 6.78573,
+    "GBPUSD": 1.33444,
+    "USDCAD": 1.41578,
+    "USDSEK": 9.72122,
+    "US500": 7508.7,
+    "GER40": 25017.55,
+    "UK100": 10491.8,
     "ADR_14day": 96.7,
     "ADR_usedToday": 115.4,
-    "goldSilverRatio": 69.6
+    "goldSilverRatio": 69.4
   },
   "dollarLiquidity": {
     "stlfsi": -0.7246,
@@ -69,32 +69,32 @@
       "headline": "No EU agreement yet on 21st Russian sanctions package, Kallas says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-13T06:21:00.000Z",
-      "hoursAgo": 12.9
+      "hoursAgo": 14.5
     },
     {
       "headline": "Gold extends decline as Middle East tensions bolster higher-for-longer rate view - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-13T04:15:00.000Z",
-      "hoursAgo": 15
+      "hoursAgo": 16.6
     },
     {
       "headline": "Dollar mostly flat amid escalating US-Iran tension, yen slides on pension doubts - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-13T00:29:00.000Z",
-      "hoursAgo": 18.7
+      "hoursAgo": 20.4
     },
     {
-      "headline": "Tech stocks skid, bond yields rise as Gulf conflict sends oil surging - Reuters",
+      "headline": "Stocks slip, oil rallies and bond yields rise as Gulf conflict escalates - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-13T00:25:00.000Z",
-      "hoursAgo": 18.8
+      "hoursAgo": 20.4
     }
   ],
   "briefing": {
     "biasScore": -1,
     "biasLabel": "NEUTRAL",
     "confidence": 4,
-    "briefing": "RIGHT NOW, the two forces pulling gold in opposite directions are geopolitical fear (which normally pushes gold UP as a safe-haven asset) and the 'higher-for-longer' interest-rate narrative (which pushes gold DOWN, because higher rates make holding gold — which pays no interest — less attractive). RECENT CATALYSTS: About 15 hours ago, Reuters reported that gold was actually declining despite Middle East tensions, specifically because those same tensions are being read as a reason for the Fed to keep rates elevated. About 18–19 hours ago, headlines confirmed US-Iran tensions are escalating and oil is surging, yet the US Dollar stayed mostly flat — which is unusual and suggests markets are genuinely uncertain about direction. The EU sanctions stalemate on Russia (reported ~13 hours ago) adds background geopolitical noise but hasn't been a strong market mover. DIRECTIONAL BIAS: CHOPPY to mildly bearish in the short term. Gold is near $3,999 — just under the psychologically huge $4,000 level — but has already moved $115 today against a 14-day average daily range [how much gold typically moves in a day] of only $97, meaning today's range is already exhausted. That alone is a major red flag for taking new trades. CONFIDENCE: 4/10. The conflicting signals — geopolitical fear vs. rate fears — make conviction very low. A confirmed break and hold above $4,000 would flip the bias bullish; a sharp drop below $3,970 would confirm short-side momentum. EVENT RISK: The calendar shows no scheduled news events today, which removes one risk — but also means any sudden geopolitical headline (Iran, Russia) could spike price without warning. No major high-impact events are flagged later this week in the data provided. KEY LEVELS: $4,000 is the ceiling to watch; $3,970 and $3,950 are the support levels [price floors where buyers may step in] below. With today's range already at $115 versus a $97 average, the ADR [average daily range — a measure of how far price normally travels in one day] is fully used up, meaning big sustained moves from here are statistically unlikely today. TRADE INTEGRATION: This is NOT a good window for new trend-following trades. The daily range is spent, the bias is unclear, and price is coiling under a major psychological level — these are exactly the conditions that chew up beginners. Sit on your hands, mark $4,000 and $3,950 on your chart, and wait for tomorrow's London open to give you a cleaner picture. When the daily range is already blown past its average, the market is telling you the easy money has been made today — protect your capital and wait for a fresh setup.",
-    "generatedAt": "2026-07-13T19:14:03.086Z"
+    "briefing": "RIGHT NOW, the dominant forces pushing and pulling gold are a tug-of-war between rising geopolitical fear (which normally lifts gold as a safe haven) and an interest-rate environment that is actively working against it — real yields [the return on bonds after stripping out inflation] are sitting at a high 2.32%, making bonds an attractive alternative to holding gold, which pays nothing. The most relevant recent headline — from about 16–17 hours ago — is a Reuters report that Middle East tensions are actually reinforcing the 'higher-for-longer' rate view, meaning traders believe the Federal Reserve will keep rates elevated, which strengthens the dollar and hurts gold. A separate headline from the same time notes dollar firmness and rising bond yields tied to Gulf conflict escalation, which is an unusual dynamic where fear is boosting the dollar MORE than it is boosting gold. The Fed meeting on July 29 currently shows only a 16% chance of a rate cut [a reduction in borrowing costs that would weaken the dollar and help gold], meaning the market is firmly in 'hold' mode. DIRECTIONAL BIAS: NEUTRAL-to-SLIGHTLY-BEARISH. Gold is at $3,999 — flirting with the psychologically important $4,000 level — but critically, today's actual price movement has already travelled 115.4 points, which is LARGER than the 14-day average daily range [ADR] of 96.7 points. This means the day's typical move is already exhausted and the price engine is running on fumes — chasing a move here is high risk. CONFIDENCE: 4/10. A confirmed break and daily close above $4,000 would flip the bias bullish; a rejection and drop through $3,960 would confirm bearish momentum. EVENT RISK: The calendar data shows no scheduled economic news today, and no high-impact events are listed for the week — however, with geopolitical headlines still active around US-Iran and Gulf tensions, unscheduled news remains a live risk that could cause sudden spikes. KEY LEVELS: Watch $4,000 as hard resistance [a price ceiling where sellers tend to show up] and $3,960–$3,950 as the first meaningful support zone [a floor where buyers tend to step in]. TRADE INTEGRATION: With ADR already exceeded and no clear directional catalyst in the last few hours, this is NOT a good window for new trend-following entries — sit on your hands, protect your capital, and wait for the next session's clean setup. The golden rule for today: when the day's average move is already done, the smart trader does nothing.",
+    "generatedAt": "2026-07-13T20:50:57.294Z"
   }
 }
