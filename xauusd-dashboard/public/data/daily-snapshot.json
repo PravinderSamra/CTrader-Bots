@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-13T11:53:17.918Z",
+  "generatedAt": "2026-07-13T14:08:11.452Z",
   "yields": {
     "US10Y": 4.54,
     "US2Y": 4.16,
@@ -22,8 +22,8 @@
     "probHike": 0
   },
   "marketVolatility": {
-    "GVZ": 25.33,
-    "VIX": 15.84
+    "GVZ": 23.95,
+    "VIX": 15.03
   },
   "positioning": {
     "cotNetLong": -15463,
@@ -34,26 +34,26 @@
     "openInterestChange": 5961
   },
   "etfFlows": {
-    "gldTonnes": 997,
-    "gldWoWChange": 4.4,
+    "gldTonnes": 1003.3,
+    "gldWoWChange": 6.3,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4058.74,
-    "XAGUSD": 58.5425,
-    "EURUSD": 1.14279,
-    "USDJPY": 162.1205,
-    "USDCHF": 0.8094,
-    "USDCNH": 6.78008,
-    "GBPUSD": 1.33939,
-    "USDCAD": 1.41322,
-    "USDSEK": 9.64793,
+    "XAUUSD": 4033.215,
+    "XAGUSD": 57.962,
+    "EURUSD": 1.14148,
+    "USDJPY": 162.264,
+    "USDCHF": 0.81102,
+    "USDCNH": 6.78165,
+    "GBPUSD": 1.3382,
+    "USDCAD": 1.41413,
+    "USDSEK": 9.66537,
     "US500": 7551.5,
-    "GER40": 25123.55,
-    "UK100": 10478.95,
+    "GER40": 25100.55,
+    "UK100": 10492.45,
     "ADR_14day": 96.7,
-    "ADR_usedToday": 57.9,
-    "goldSilverRatio": 69.3
+    "ADR_usedToday": 68.7,
+    "goldSilverRatio": 69.6
   },
   "dollarLiquidity": {
     "stlfsi": -0.7246,
@@ -66,23 +66,29 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Gold extends decline as Middle East tensions bolster higher-for-longer rate view - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-07-13T04:15:00.000Z",
+      "hoursAgo": 9.9
+    },
+    {
       "headline": "Dollar wavers amid renewed Iran attacks, yen slides on pensions doubts - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-13T00:29:00.000Z",
-      "hoursAgo": 11.4
+      "hoursAgo": 13.7
     },
     {
-      "headline": "Shares skid, bond yields rise as Gulf conflict sends oil surging - Reuters",
+      "headline": "Tech stocks skid, bond yields rise as Gulf conflict sends oil surging - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-13T00:25:00.000Z",
-      "hoursAgo": 11.5
+      "hoursAgo": 13.7
     }
   ],
   "briefing": {
-    "biasScore": 3,
-    "biasLabel": "BULLISH",
-    "confidence": 6,
-    "briefing": "The dominant force in gold right now is a combination of genuine geopolitical fear and a softening US dollar — both of which traditionally push gold higher. About 11-12 hours ago, Reuters reported renewed Iranian attacks in the Gulf region, causing oil prices to surge and equity markets to slide (meaning stocks fell sharply). This kind of geopolitical shock is exactly the environment where gold gets bought as a 'safe haven' [a place investors park money when they're scared]. At the same time, the Dollar Index (DXY) sits at 100.92 — not collapsing, but not strong either — and short-term US interest rates (the 2-year yield) have quietly dipped 5 basis points [a tiny but meaningful fall, meaning bond markets are becoming slightly less hawkish]. The Fed is almost certain to hold rates unchanged at its July 29th meeting (88% probability), so there's no imminent catalyst to strengthen the dollar aggressively. Gold ETF flows [funds that hold physical gold on behalf of investors] have shown three straight weeks of inflows, adding another layer of bullish support underneath price. Importantly, the professional trader positioning data (COT report, dated July 7th) shows large funds are actually net short gold [betting on price falling] — this is contrarian-bullish, meaning if price keeps rising, those short sellers may be forced to buy back, accelerating the move up. With today's 14-day Average Daily Range at 96.7 points and only 57.9 points already used, there's roughly 38-39 points of potential move remaining today — that's a meaningful window. There are no scheduled economic events in today's calendar, which removes one major source of choppy, unpredictable price action and gives trend-followers a cleaner environment. Confidence is 6/10 — geopolitical headlines can reverse fast, and the elevated real yield [the interest rate after subtracting inflation, currently 2.31%] remains a genuine headwind for gold longer-term. If the dollar rallies back above 101.50 or the geopolitical situation de-escalates quickly, the bullish case weakens. For trade integration: this IS a reasonable window for long [buy] setups aligned with the uptrend — use the 1H chart to confirm trend structure, wait for a 5M signal (like a fair value gap fill or order block reaction), then refine entry on the 1M. Keep position size modest given the geopolitical uncertainty, and be aware that without a news catalyst to confirm continuation, you may see consolidation [sideways price movement]. Remember: when the world is scared and the dollar is soft, gold tends to be the safest direction to trade.",
-    "generatedAt": "2026-07-13T11:53:34.757Z"
+    "biasScore": -1,
+    "biasLabel": "NEUTRAL",
+    "confidence": 4,
+    "briefing": "Right now, the dominant forces pulling gold in opposite directions are geopolitical fear (which normally pushes gold UP as a safe-haven asset) and the 'higher-for-longer' interest rate narrative (which pushes gold DOWN, because higher rates make holding gold less attractive compared to earning interest elsewhere). About 10 hours ago, Reuters reported that gold is actually declining despite rising Middle East tensions — specifically renewed Iran attacks — because markets are interpreting the conflict as a reason for central banks to keep rates elevated longer, which strengthens the bearish [downward] case for gold. Around 14 hours ago, two more headlines flagged a wavering dollar and surging oil prices linked to the same Gulf conflict, creating a noisy, mixed-signal environment. The directional bias here is very slightly bearish [leaning toward lower prices], but with low conviction — gold is caught in a genuine tug-of-war and price action is likely to stay choppy [moving sideways or erratically without a clean trend]. Confidence is 4/10. What would change this view: a clear break and hold above recent highs would flip the bias bullish; a sharp dollar rally or a hawkish Fed comment would strengthen the bearish case. On event risk — the calendar for today shows no scheduled news events at all, so there are no specific data releases to time your trades around. However, the geopolitical situation (GPR [Geopolitical Risk index] is elevated at 173.6) means surprise headlines could hit at any moment, making size management critical. On levels — the 14-day ADR [Average Daily Range, how much gold typically moves in a day] is 96.7 points, and today has already used 68.7 of those points, meaning roughly 28 points of typical daily movement may remain — not a lot of runway left for new trades. ETF inflows [money flowing into gold funds, a sign of institutional buying] have been positive for three straight weeks, which is a mild longer-term bullish signal, but large speculators are currently net short [betting on prices falling], which adds downside pressure. Given the conflicting signals, choppy price action, a nearly-consumed daily range, and zero scheduled catalysts to create directional momentum, this is not a high-conviction window for trend-following trades — if you trade at all, use reduced position size and wait for a clean 1H structure to form first. Remember: when the market can't decide, your job is to wait, not guess.",
+    "generatedAt": "2026-07-13T14:08:27.525Z"
   }
 }
