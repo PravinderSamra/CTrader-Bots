@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-07-13T08:51:19.266Z",
+  "generatedAt": "2026-07-13T11:53:37.518Z",
   "prices": {
-    "UK100": 10500.45,
-    "GBPUSD": 1.34005,
-    "GBPEUR": 1.17151,
-    "US500": 7553.2,
-    "NAS100": 29524.3,
-    "BRENT": 77.993,
-    "COPPER": 6.2906,
+    "UK100": 10478.45,
+    "GBPUSD": 1.3395,
+    "GBPEUR": 1.17204,
+    "US500": 7552.2,
+    "NAS100": 29549.8,
+    "BRENT": 78.708,
+    "COPPER": 6.338,
     "VIX": 17.13,
-    "USDX": 100.858,
-    "XAUUSD": 4077.005,
-    "UK100_dayPct": -0.21
+    "USDX": 100.93,
+    "XAUUSD": 4057.88,
+    "UK100_dayPct": -0.42
   },
   "fx": {
-    "gbpUsdDayPct": 0.03,
+    "gbpUsdDayPct": -0.01,
     "gbpUsd20dPercentile": 68,
     "sterlingEri": 85.7564,
     "sterlingEriDayChange": 0.13,
@@ -36,17 +36,17 @@
     "daysToMpc": 17
   },
   "usLinkage": {
-    "us500DayPct": -0.35,
-    "nas100DayPct": -1.05,
+    "us500DayPct": -0.37,
+    "nas100DayPct": -0.96,
     "vix": 17.13,
     "vixRegime": "ELEVATED",
     "us10y": 4.54,
-    "usdx": 100.858
+    "usdx": 100.93
   },
   "commodities": {
-    "brentDayPct": 2.43,
-    "copperDayPct": -0.17,
-    "goldDayPct": -1.03,
+    "brentDayPct": 3.36,
+    "copperDayPct": 0.58,
+    "goldDayPct": -1.49,
     "brent20dTrend": "DOWN"
   },
   "positioning": {
@@ -60,14 +60,14 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent +2.43%",
+      "driver": "Brent +3.36%",
       "read": "BULLISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper -0.17%",
+      "driver": "Copper +0.58%",
       "read": "NEUTRAL",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
@@ -106,7 +106,7 @@
   "newsItems": [],
   "riskTone": null,
   "bias": {
-    "score": -2,
+    "score": 0,
     "label": "NEUTRAL",
     "conviction": "LOW",
     "drivers": [
@@ -114,13 +114,13 @@
         "name": "GBP",
         "weight": 3,
         "impact": "NEUTRAL",
-        "detail": "GBP/USD +0.03% → FTSE headwind (sign-flipped)"
+        "detail": "GBP/USD -0.01% → FTSE tailwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
         "impact": "BEARISH",
-        "detail": "US500 -0.35% today"
+        "detail": "US500 -0.37% today"
       },
       {
         "name": "VIX regime",
@@ -132,13 +132,13 @@
         "name": "Brent",
         "weight": 1.5,
         "impact": "BULLISH",
-        "detail": "Brent +2.43% (energy majors)"
+        "detail": "Brent +3.36% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
-        "impact": "NEUTRAL",
-        "detail": "Copper -0.17% (miners/China)"
+        "impact": "BULLISH",
+        "detail": "Copper +0.58% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -162,7 +162,7 @@
     "eventSuppressed": false
   },
   "orbContext": {
-    "computedAt": "2026-07-13T08:51:19.266Z",
+    "computedAt": "2026-07-13T11:53:37.518Z",
     "mode": "POST_ORB",
     "cashOpenLondon": "08:00 BST",
     "overnightHigh": 10526.3,
@@ -170,20 +170,20 @@
     "priorDayHigh": 10537.3,
     "priorDayLow": 10438.8,
     "priorClose": 10522.4,
-    "gapPts": -21.9,
-    "gapPct": -0.21,
+    "gapPts": -43.9,
+    "gapPct": -0.42,
     "orbHigh": 10526.3,
     "orbLow": 10482,
-    "orbBrokenDirection": "NONE",
+    "orbBrokenDirection": "DOWN",
     "eventWindows": [],
     "adr14": 133,
     "adrUsedPct": 62
   },
   "briefing": {
-    "biasScore": -2,
+    "biasScore": 0,
     "biasLabel": "NEUTRAL",
     "confidence": 4,
-    "briefing": "Sterling (GBPUSD) is essentially flat today, up just +0.03%, which under the normal FTSE sign-flip rule [weak pound helps UK100 because its multinationals earn dollars and euros, worth more when converted back] would be a very mild headwind — but the move is so tiny that the system rates it NEUTRAL with negligible index impact. The broader regime picture is mixed and pulling in opposite directions: Energy is the standout bright spot, with Brent crude up a strong +2.43%, which is directly bullish for Shell and BP [top-5 index weights that move closely with oil prices]; against that, US markets are softer — the S&P 500 is down -0.35% and the Nasdaq is down a more meaningful -1.05%, which drags on global risk appetite [how willing investors are to hold riskier assets]. The VIX [a fear gauge — higher means more uncertainty] sits at 17.13, in ELEVATED territory, meaning conviction on any directional trade is dampened. Gilt yields [the interest rate the UK government pays on its debt] have eased slightly, with the 10-year down 6 basis points, and long-end stress is absent — so no fiscal alarm bells. Copper is flat, leaving Miners neutral. No news headlines are available in the snapshot to explain the -21.9 point gap down from Friday's close, so we cannot attribute the opening weakness to a specific catalyst. Positioning data [from the Commitment of Traders report, dated 7 July] shows GBP is heavily short [most traders are betting against it], which is contrarily bearish for FTSE per the snapshot's own read-through. Directional bias leans mildly BEARISH — the US drag and crowded-short GBP positioning outweigh the oil boost — but conviction is LOW (4/10) because Energy is a genuine counter-force and the moves are all small. What would change the view: a clear break of the ORB high at 10526 with volume would flip this toward bullish; a break below the ORB low at 10482 and then the overnight low at 10443 would confirm the bear case. For the ORB trade specifically: the index gapped down -21.9 points (-0.21%) at the open, the opening range has been set between 10482 and 10526 (a 44-point range), and with 62% of the 14-day average daily range [133 points] already used today, there is limited room left for a clean trend extension — this favours a choppy or fakeout day rather than a high-conviction breakout. The ORB has not yet broken in either direction (orbBrokenDirection: NONE as of this snapshot). The only scheduled event risk this week is UK GDP Monthly Estimate on Wednesday 16 July at 07:00 BST — a HIGH-impact release that prints before the open, so build caution into any position held overnight on Tuesday. Watch 10526 (ORB high / overnight high) as the bull trigger and 10482 / 10443 as the bear levels — with range already 62% consumed, chase only the cleanest, highest-conviction breaks.",
-    "generatedAt": "2026-07-13T08:51:40.392Z"
+    "briefing": "Sterling (GBPUSD) is virtually flat on the day, down just -0.01%, which under the FTSE sign-flip rule — where a weaker pound helps big UK exporters earn more in dollar terms — reads as essentially neutral for the index, and the data confirms this with the GBP impact labelled NEUTRAL. The regime picture is genuinely mixed: energy is the standout bright spot, with Brent crude surging +3.36% today, which directly lifts Shell and BP (two of the index's top-five heavyweights) and is the strongest single bullish force in today's data; miners are neutral as copper is up a modest +0.58%, suggesting neither strong nor weak China demand signals; banks are under mild pressure because gilt yields [the interest rate the UK government pays to borrow money] have fallen 6 basis points [a basis point is one hundredth of one percent], and falling yields tend to compress the profit margins banks earn on loans — though the long-end stress flag is OFF, so there is no fiscal crisis signal here. No news headlines have been provided in the snapshot, so there are no specific catalysts to cite from recent hours. US markets are a modest drag, with the S&P 500 down -0.37% and the Nasdaq off -0.96%, and the VIX [a measure of expected US market volatility] sits at 17.13, which the model classifies as ELEVATED — this is not a full stress signal but it does mean conviction on any directional trade should be kept modest. Speculative positioning in sterling [per weekly CFTC Commitment of Traders data] is heavily net-short [traders are betting the pound falls], which is a contrarian signal that could support a GBP bounce and therefore act as a mild FTSE headwind if it unwinds — though this is a slow-moving signal. Putting it together, ENERGY pulling UP versus US weakness and bank pressure pulling DOWN, with miners and GBP both neutral, the index is caught in a genuine tug-of-war, and the overall directional bias is NEUTRAL with LOW conviction. The ORB [Opening Range Breakout — a trade that triggers when price moves decisively above or below the first candle's range after 08:00] has already broken DOWN through the lower boundary of the 08:00 range (ORB Low: 10,482, current price: 10,478), so the mechanical signal fired short; however, with 62% of the 14-day average daily range [the typical distance the index travels in a full session, here 133 points] already consumed, there is meaningfully less room for the short to run before the day's typical move is exhausted — making this more of a fakeout/chop environment than a clean trend day. The key levels to respect are: overnight high 10,526 and ORB high 10,526 (resistance above), overnight low 10,443 (support below), and prior-day low 10,439 as the deeper floor; a recapture of 10,482 (the ORB Low) would invalidate the short signal. Look ahead: UK GDP Monthly Estimate is due Thursday 16 July at 07:00 BST — a HIGH-impact release that could sharply move sterling and gilts before the ORB forms that day, so reduce size or stand aside if the number is due close to your entry window. Today's scheduled calendar is empty of events. With 62% of the day's range already used and no clear macro catalyst to extend the move, treat any short continuation with tight stops and reduced size — the energy bid is a real headwind for bears.",
+    "generatedAt": "2026-07-13T11:54:01.375Z"
   }
 }
