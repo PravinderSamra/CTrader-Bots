@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-14T17:04:12.722Z",
+  "generatedAt": "2026-07-14T19:04:01.873Z",
   "yields": {
     "US10Y": 4.56,
     "US2Y": 4.21,
@@ -34,26 +34,26 @@
     "openInterestChange": 6341
   },
   "etfFlows": {
-    "gldTonnes": 996.5,
-    "gldWoWChange": 6.7,
+    "gldTonnes": 998,
+    "gldWoWChange": 1.5,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4060.665,
-    "XAGUSD": 58.6965,
-    "EURUSD": 1.14303,
-    "USDJPY": 162.1385,
-    "USDCHF": 0.80874,
-    "USDCNH": 6.77279,
-    "GBPUSD": 1.3387,
-    "USDCAD": 1.40644,
-    "USDSEK": 9.65311,
-    "US500": 7545.6,
-    "GER40": 25115.05,
-    "UK100": 10496.3,
+    "XAUUSD": 4054.67,
+    "XAGUSD": 58.64,
+    "EURUSD": 1.14246,
+    "USDJPY": 162.1785,
+    "USDCHF": 0.80904,
+    "USDCNH": 6.77341,
+    "GBPUSD": 1.33825,
+    "USDCAD": 1.40662,
+    "USDSEK": 9.65805,
+    "US500": 7545.9,
+    "GER40": 25069.05,
+    "UK100": 10481.3,
     "ADR_14day": 98.4,
     "ADR_usedToday": 119.2,
-    "goldSilverRatio": 69.2
+    "goldSilverRatio": 69.1
   },
   "dollarLiquidity": {
     "stlfsi": -0.7246,
@@ -64,25 +64,12 @@
     "gprDate": "2026-06"
   },
   "economicCalendar": [],
-  "newsItems": [
-    {
-      "headline": "Stocks gain on softer inflation, bank results while oil rises on US-Iran hostilities - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-07-14T15:47:03.000Z",
-      "hoursAgo": 1.3
-    },
-    {
-      "headline": "Wall St rises on cooler inflation data, big bank earnings - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-07-14T14:20:03.000Z",
-      "hoursAgo": 2.7
-    },
-    {
-      "headline": "Gold bounces off two-week low, markets await US inflation data - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-07-14T03:19:00.000Z",
-      "hoursAgo": 13.8
-    }
-  ],
-  "briefing": null
+  "newsItems": [],
+  "briefing": {
+    "biasScore": 2,
+    "biasLabel": "BULLISH",
+    "confidence": 5,
+    "briefing": "Right now, gold is being supported by a combination of loose financial conditions [meaning money is relatively easy to borrow and risk appetite is healthy], steady physical demand through ETF inflows [exchange-traded funds that hold real gold — when they buy more, it signals investor demand is growing], and elevated geopolitical risk [the GPR index, which measures global political tension, sits at 173.6, a high reading that typically pushes investors toward gold as a safe haven]. The dollar [DXY] is hovering around 100.91, which is neither strongly bullish nor bearish for gold right now. On the news front, the snapshot contains zero news headlines and zero calendar events for today — there is simply nothing to report, which means there is no fresh catalyst driving price in either direction right now. Despite that quiet backdrop, gold has already moved 119.2 points today against a 14-day average daily range of 98.4 points — meaning today's candle has already exceeded its typical daily movement by about 21%, so the bulk of today's directional move has very likely already happened. The directional bias leans mildly bullish given the supportive structural backdrop — strong speculative positioning [183,165 net long contracts, meaning big traders are heavily betting on gold rising], three consecutive weeks of ETF inflows, loose financial conditions, and high geopolitical tension all favour gold buyers — but with no fresh catalyst and the daily range already overextended, chasing new entries today is a low-quality idea. Confidence is 5/10; a sharp dollar rally or a risk-on surge [stocks rising strongly, fear dropping] would flip this view bearish. No scheduled events are on the calendar today or this week based on available data, so there is no specific event-risk window to flag, though always check your own economic calendar for any late additions. Key levels to watch: $4,054 is current price; a clean pullback toward the $4,000–$4,010 psychological zone [round numbers often act as support] on the 1H chart would be the healthiest area for a buying opportunity, while a break below $3,980 would suggest the short-term trend is weakening. For trade management, today is a low-conviction window — the range is stretched, there are no catalysts, and the session is winding down — so either sit on your hands or use very small position sizes if a clean 5M structure presents itself. When the daily range is already blown out, patience is your edge — wait for tomorrow's fresh range to reset before hunting for your best setups.",
+    "generatedAt": "2026-07-14T19:04:18.890Z"
+  }
 }
