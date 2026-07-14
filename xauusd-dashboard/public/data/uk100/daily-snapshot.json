@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-07-14T11:19:08.501Z",
+  "generatedAt": "2026-07-14T13:11:07.875Z",
   "prices": {
-    "UK100": 10451.35,
-    "GBPUSD": 1.33722,
-    "GBPEUR": 1.1737,
-    "US500": 7510.1,
-    "NAS100": 29401.4,
-    "BRENT": 87.064,
-    "COPPER": 6.3962,
-    "VIX": 17.75,
-    "USDX": 101.175,
-    "XAUUSD": 4022.685,
-    "UK100_dayPct": -0.38
+    "UK100": 10502.55,
+    "GBPUSD": 1.34081,
+    "GBPEUR": 1.17118,
+    "US500": 7537.6,
+    "NAS100": 29584.2,
+    "BRENT": 86.969,
+    "COPPER": 6.4127,
+    "VIX": 17.5,
+    "USDX": 100.72,
+    "XAUUSD": 4078.26,
+    "UK100_dayPct": 0.11
   },
   "fx": {
-    "gbpUsdDayPct": 0.19,
+    "gbpUsdDayPct": 0.46,
     "gbpUsd20dPercentile": 89,
     "sterlingEri": 85.6419,
     "sterlingEriDayChange": -0.11,
@@ -36,23 +36,23 @@
     "daysToMpc": 16
   },
   "usLinkage": {
-    "us500DayPct": 0,
-    "nas100DayPct": 0.63,
-    "vix": 17.75,
+    "us500DayPct": 0.36,
+    "nas100DayPct": 1.26,
+    "vix": 17.5,
     "vixRegime": "NORMAL",
     "us10y": 4.56,
-    "usdx": 101.175
+    "usdx": 100.72
   },
   "commodities": {
-    "brentDayPct": 4.52,
-    "copperDayPct": 1.63,
-    "goldDayPct": 0.54,
+    "brentDayPct": 4.41,
+    "copperDayPct": 1.89,
+    "goldDayPct": 1.93,
     "brent20dTrend": "DOWN"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": -0.16,
-    "dax40DayPct": -0.34,
-    "eurUsdDayPct": 0.12,
+    "eurostoxx50DayPct": 0.33,
+    "dax40DayPct": 0.07,
+    "eurUsdDayPct": 0.6,
     "ftseDaxCorr20d": 0.64,
     "ftseSx5eCorr20d": 0.49,
     "tapeAgreement": "ALIGNED",
@@ -69,14 +69,14 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent +4.52%",
+      "driver": "Brent +4.41%",
       "read": "BULLISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper +1.63%",
+      "driver": "Copper +1.89%",
       "read": "BULLISH",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
@@ -125,54 +125,54 @@
       "headline": "Gold recovers from two-week low ahead of US inflation - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOVWR0RmE4MVpQTF82M1c5VDlkYjBXQU1KRWNNdjQ5N2RrRlpHM1B2dmowSk1WQV9MQUJyYzRiVHl3aVE1dmVHb0RMZG9mOWN6alJmcjdhX0tGSmh3R0FoNXZ0dVM0c1R0QnBnRUl4VVBidWRJdDNUb1QyUkFOWkloU2tVOUs0RnhwbEFZSS1MWlc3aHhIMTkwMmVKV1JaeWk0RF9j?oc=5",
-      "hoursAgo": 8
+      "hoursAgo": 9.9
     },
     {
       "headline": "UK's FTSE 100 flat as energy gains counter mining losses amid US-Iran flare-up - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxONV9YYXpONTBaSkVUYjBPdUhqYmRVMTJ1Y3lnaVI2eVN4TElWVVM3dWJTVENqT1MyVVZGUkRYTEdVZnYwdklDYnRxNHZPaGpzdzdyTlZFcmstZ0J6dU9PR0Q1R21aYWNlLURuMTlfSHF6eVZTOXRsMDAtX0k5WmNTaVhjazlLUU1CZDlSOGJJek12ZG9PdHZtbE12YjhyalR4?oc=5",
-      "hoursAgo": 18.9
+      "hoursAgo": 20.8
     }
   ],
   "riskTone": {
     "score": -1,
     "label": "NEUTRAL",
-    "rationale": "FTSE 100 flat with mixed sector moves; US-Iran tension adds mild risk-off, offset by energy gains; no strong directional signal."
+    "rationale": "US-Iran flare-up adds mild risk-off pressure; gold recovery and flat FTSE suggest contained anxiety, no strong directional signal."
   },
   "bias": {
-    "score": 1,
-    "label": "NEUTRAL",
-    "conviction": "LOW",
+    "score": 4,
+    "label": "BULLISH",
+    "conviction": "MEDIUM",
     "drivers": [
       {
         "name": "GBP",
         "weight": 3,
-        "impact": "NEUTRAL",
-        "detail": "GBP/USD +0.19% → FTSE headwind (sign-flipped)"
+        "impact": "BEARISH",
+        "detail": "GBP/USD +0.46% → FTSE headwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
-        "impact": "NEUTRAL",
-        "detail": "US500 +0% today"
+        "impact": "BULLISH",
+        "detail": "US500 +0.36% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 17.75 — NORMAL regime"
+        "detail": "VIX 17.5 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
         "impact": "BULLISH",
-        "detail": "Brent +4.52% (energy majors)"
+        "detail": "Brent +4.41% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
         "impact": "BULLISH",
-        "detail": "Copper +1.63% (miners/China)"
+        "detail": "Copper +1.89% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -196,13 +196,13 @@
         "name": "European tape (SX5E/DAX)",
         "weight": 2.5,
         "impact": "NEUTRAL",
-        "detail": "SX5E -0.16% / DAX -0.34%"
+        "detail": "SX5E +0.33% / DAX +0.07%"
       }
     ],
     "eventSuppressed": true
   },
   "orbContext": {
-    "computedAt": "2026-07-14T11:19:08.501Z",
+    "computedAt": "2026-07-14T13:11:07.875Z",
     "mode": "POST_ORB",
     "cashOpenLondon": "08:00 BST",
     "overnightHigh": 10499.9,
@@ -210,8 +210,8 @@
     "priorDayHigh": 10526.3,
     "priorDayLow": 10443.2,
     "priorClose": 10490.9,
-    "gapPts": -39.5,
-    "gapPct": -0.38,
+    "gapPts": 11.6,
+    "gapPct": 0.11,
     "orbHigh": 10488,
     "orbLow": 10447.4,
     "orbBrokenDirection": "DOWN",
@@ -223,13 +223,13 @@
       }
     ],
     "adr14": 128.1,
-    "adrUsedPct": 69
+    "adrUsedPct": 72
   },
   "briefing": {
-    "biasScore": 1,
-    "biasLabel": "NEUTRAL",
-    "confidence": 4,
-    "briefing": "Sterling (GBPUSD) is up +0.19% today, which — because UK100 and GBP move in opposite directions — is a mild headwind for the FTSE 100; a stronger pound makes the index's overseas dollar-earners (like Shell, Unilever, AstraZeneca) worth less when translated back into sterling, so this is a small drag on the index. That said, the GBP impact is rated NEUTRAL overall, so it is not the dominant force today. The real story in the regime is a tug-of-war: Energy (Shell, BP) is strongly bullish with Brent crude up a striking +4.52% — almost certainly linked to the US-Iran tensions flagged in a Reuters headline from roughly 19 hours ago — and Miners (Rio, Glencore, Anglo) are also bullish with copper up +1.63%, suggesting markets still see reasonable global growth. However, those gains are being offset by a slightly soggy European tape (DAX -0.34%, EuroStoxx -0.16%), a small gap-down open of roughly -39 points this morning, and positioning data showing that big speculative traders are heavily 'crowded short' on GBP, which the model flags as a bearish read-through for FTSE. Gilt yields (the interest rate the UK government pays to borrow money) are marginally lower today — down 2 basis points on the 10-year — and long-end stress is absent, so there is no fiscal alarm signal. The most important catalyst still ahead is US CPI (inflation data) at 13:30 BST today — a HIGH-impact release that could jolt the dollar, gilts, and the whole index in either direction. Build-up caution: UK GDP data arrives Wednesday at 07:00 BST, just before London cash open, and could set the tone for the second half of the week. Directional bias is very slightly bullish (score +1) purely because energy and miners — two of the heaviest index sectors — are providing genuine commodity-driven support, but conviction is LOW because the ORB already broke downward this morning and 69% of the average daily range (128 points) has already been consumed, leaving only about 40 points of typical range remaining — meaning the index is statistically closer to its daily 'ceiling' of movement than its floor. Key levels to watch: overnight high 10499.9 and prior-day high 10526.3 as resistance above; ORB low 10447.4 and overnight low 10414.8 as support below; the current price of 10451.35 is sitting just above the ORB low after the downside break. Today's ORB break was to the downside, but with energy surging and CPI looming at 13:30 BST, this looks more like a fakeout or chop day than a clean trend — the macro picture is too mixed and the event risk too close to press a directional ORB trade with confidence; standing aside or using very tight risk management until after 13:30 is the prudent call. Confidence: 4/10 — a hotter-than-expected US CPI print could slam risk assets and confirm the downside ORB break, while a softer print could reverse it entirely and push energy-led gains to the fore. Screenshot this: the ORB broke down but energy is screaming higher — wait for 13:30 CPI before trusting any direction.",
-    "generatedAt": "2026-07-14T11:19:30.617Z"
+    "biasScore": 4,
+    "biasLabel": "BULLISH",
+    "confidence": 5,
+    "briefing": "Starting with the currency picture: GBP/USD is up +0.46% today, sitting at the 89th percentile of its 20-day range — meaning sterling is unusually strong right now. Because UK100 and GBP move in opposite directions (a stronger pound makes FTSE's dollar-earning giants like Shell, HSBC and Unilever worth less in sterling terms), this is a headwind for the index, and the snapshot flags it as a BEARISH drag. Despite that, the broader picture tilts bullish: Brent crude is up a striking +4.41%, which is directly positive for Shell and BP — the energy sector is flagged BULLISH and these are top-5 index weights. Copper is up +1.89%, lifting the miners (Rio, Glencore, Anglo) — also BULLISH. US futures are modestly positive (S&P 500 +0.36%), and the VIX [a measure of expected US market volatility] sits at 17.5, a NORMAL regime that doesn't dampen risk appetite. UK gilts [government bonds] have edged slightly lower in yield (-2bp on the 10-year), with no long-end stress signal, so there's no fiscal alarm ringing today. The most relevant recent headline (Reuters, ~21 hours ago) cited a US-Iran flare-up as the likely driver behind oil's surge — geo-political tension lifted Brent and kept FTSE roughly flat as energy gains offset mining weakness earlier; that dynamic has since shifted more constructively. No fresh market-moving headlines in the last few hours. The overall directional bias is BULLISH (score +4/10), with the oil and copper commodity complex doing most of the heavy lifting, but the strong GBP acts as a meaningful offset, keeping the index up only +0.11% on the day. Confidence is 5/10 — the big wildcard is US CPI [Consumer Price Inflation — a key measure of how fast prices are rising], which prints at 13:30 BST today and is HIGH impact; a hot reading could spike the dollar, push GBP lower (which would actually help FTSE via the sign-flip), but could also spook US equity futures and drag UK100 down with them — the net effect is genuinely uncertain. On the ORB [Opening Range Breakout — a trade that buys or sells when price moves outside the first 30-minute price range after market open]: the range broke DOWNWARD at the open, which means a short trade was triggered, but with 72% of the 14-day average daily range [the typical daily price swing, averaged over two weeks — ADR14 is 128.1 points] already consumed by 13:11 BST, there is limited room left for further downside extension; any ORB short taken at the open would now be approaching its natural range limit, making new entries unattractive. The ORB high sits at 10,488 and low at 10,447, with price currently at 10,502 — notably, price has already reclaimed above the ORB high, suggesting the initial downside break may have been a fakeout (a false move that quickly reverses). Today looks more like a fakeout/sweep-then-reverse day than a clean trend day, and the 13:30 CPI print makes it a stand-aside environment for new ORB entries. For scheduled events: US CPI is at 13:30 BST today — treat the 30 minutes either side as a no-trade zone. Looking ahead, UK GDP Monthly Estimate prints at 07:00 BST on Wednesday (16 July), a HIGH-impact release that will set the tone for Wednesday's open and could reset the week's directional bias entirely — prepare for potential overnight gaps heading into that session. Key levels: overnight high 10,499.9 and overnight low 10,414.8 define the broader range; ORB high 10,488 is now acting as support after the reclaim; prior day high 10,526.3 is the next upside target; with 72% of ADR used, expect slowing momentum and possible mean-reversion into the close. The single thing to remember today: energy and copper are doing the heavy lifting for the bulls, but with CPI in 20 minutes and 72% of the daily range already spent, this is a day to watch, not chase.",
+    "generatedAt": "2026-07-14T13:11:34.829Z"
   }
 }
