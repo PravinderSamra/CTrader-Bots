@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-14T13:10:43.053Z",
+  "generatedAt": "2026-07-14T15:17:21.794Z",
   "yields": {
     "US10Y": 4.56,
     "US2Y": 4.21,
@@ -22,8 +22,8 @@
     "probHike": 0
   },
   "marketVolatility": {
-    "GVZ": 23.95,
-    "VIX": 15.03
+    "GVZ": 26.93,
+    "VIX": 17.16
   },
   "positioning": {
     "cotNetLong": 183165,
@@ -34,26 +34,26 @@
     "openInterestChange": 6341
   },
   "etfFlows": {
-    "gldTonnes": 992.2,
-    "gldWoWChange": -13.7,
+    "gldTonnes": 989.8,
+    "gldWoWChange": -2.4,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4078.585,
-    "XAGUSD": 59.096,
+    "XAUUSD": 4088.35,
+    "XAGUSD": 59.3085,
     "EURUSD": 1.14484,
-    "USDJPY": 161.8965,
-    "USDCHF": 0.80787,
-    "USDCNH": 6.77254,
-    "GBPUSD": 1.34078,
-    "USDCAD": 1.40644,
-    "USDSEK": 9.61999,
-    "US500": 7536.6,
-    "GER40": 25032.05,
-    "UK100": 10501.6,
+    "USDJPY": 161.9135,
+    "USDCHF": 0.80712,
+    "USDCNH": 6.77065,
+    "GBPUSD": 1.34061,
+    "USDCAD": 1.40516,
+    "USDSEK": 9.62355,
+    "US500": 7550.1,
+    "GER40": 25172.05,
+    "UK100": 10515,
     "ADR_14day": 98.4,
     "ADR_usedToday": 119.2,
-    "goldSilverRatio": 69
+    "goldSilverRatio": 68.9
   },
   "dollarLiquidity": {
     "stlfsi": -0.7246,
@@ -66,17 +66,17 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Gold recovers from two-week low ahead of US inflation - Reuters",
+      "headline": "Gold bounces off two-week low, markets await US inflation data - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-14T03:19:00.000Z",
-      "hoursAgo": 9.9
+      "hoursAgo": 12
     }
   ],
   "briefing": {
     "biasScore": 1,
     "biasLabel": "NEUTRAL",
     "confidence": 4,
-    "briefing": "Right now, gold is caught in a tug-of-war between some supportive longer-term forces and a set of short-term headwinds that are keeping a lid on big moves. On the bullish side, geopolitical risk [a measure of global tension and conflict that drives demand for safe-haven assets like gold] remains elevated at 173.6, and the dollar [measured by the DXY index] is relatively soft at 100.72, which normally helps gold since they tend to move in opposite directions. However, real yields [the return investors get on US government bonds after stripping out inflation — high real yields make gold less attractive because gold pays no interest] are sitting at 2.32%, which is genuinely high and acts as a drag on gold prices. The only notable headline from the last 24 hours came roughly 10 hours ago via Reuters, noting that gold was recovering from a two-week low ahead of US inflation data — suggesting the market had already sold off recently and is now cautiously bouncing. Nothing more market-moving has crossed the wires since then. The directional bias is a very mild lean toward gold going UP from here, purely because price appears to be recovering from a recent dip, the dollar is not surging, and geopolitical tension provides a floor — but conviction is low. Confidence is 4/10. What would change this view: a stronger-than-expected US inflation print would likely push yields higher and knock gold back down; conversely, a soft inflation number could give gold a meaningful push higher. Critically, there is NO scheduled economic news on today's calendar based on available data, so watch for any unscheduled headlines. Looking at the ADR [Average Daily Range — the typical number of dollars gold moves in a single day, based on the last 14 sessions], the 14-day average is 98.4 points, but today gold has already moved 119.2 points — meaning price has already exceeded its typical daily range. This is a major caution flag: most of the day's movement has likely already happened, and chasing new trades into thin air carries extra risk of a sharp reversal. Key levels to watch: the area around 4,030–4,040 (recent two-week low support [a price floor where buyers stepped in]) and resistance [a price ceiling where sellers tend to appear] near 4,100–4,110. For trade integration: because today's range is already stretched well beyond the daily average, this is NOT an ideal window for new trend-following entries — especially longs. If you're already in a trade from lower levels, manage your stops [protective exit orders] tightly. Wait for price to consolidate [move sideways and settle] before looking for a fresh 5M signal. Screenshot this: when gold has already moved more than its average daily range, sit on your hands and wait — the best trades come from patience, not chasing.",
-    "generatedAt": "2026-07-14T13:11:01.153Z"
+    "briefing": "Right now, gold is being pulled in two directions at once — and that tension is the most important thing to understand today. On one side, real yields [the return investors get on government bonds after accounting for inflation] are sitting at 2.32%, which is relatively high and normally acts like a ceiling on gold prices because bonds become a more attractive place to park money. On the other side, geopolitical risk [a measure of global tension and conflict] is elevated at 173.6, which historically supports gold as a 'safe haven' asset. The only meaningful headline in the last 24 hours came 12 hours ago via Reuters, noting that gold bounced off a two-week low while markets awaited US inflation data — suggesting the recent dip attracted some buyers, but there's no fresh explosive catalyst driving price right now. Given all this, the directional bias is a very cautious, slight lean UP — price found support at a two-week low, large traders [per the COT report, which tracks professional positioning] remain net-long by over 183,000 contracts, and the dollar [measured by the DXY index at 100.71] is not showing aggressive strength. However, the ETF flow picture [gold-backed funds have been seeing outflows for three consecutive weeks] and the Fed's low probability of a rate cut [only 16% chance at the July 29th meeting] limit any strong upside conviction. Confidence is 4/10 — this is a low-conviction environment. What would change the view: a hot US inflation print would likely push the dollar up and gold down sharply, while a soft inflation reading could send gold higher quickly. There are no scheduled events on the economic calendar for today, so no specific time-based risk windows to flag. Looking at the ADR [Average Daily Range, a measure of how far price typically moves in a day]: the 14-day average is 98.4 points, but price has already moved 119.2 points today — meaning gold has already exceeded its typical daily range, which is a serious caution flag. For trade integration: this is NOT a good window for fresh trend-following entries. The daily range is already exhausted, market positioning is crowded-neutral, and there is no clear catalyst. If you do trade, use reduced position size and only take the clearest 1H structure signals. Remember this: when gold has already moved more than its average daily range, the smart play is usually to wait, not to chase.",
+    "generatedAt": "2026-07-14T15:17:38.053Z"
   }
 }
