@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-14T07:48:27.125Z",
+  "generatedAt": "2026-07-14T09:18:13.427Z",
   "yields": {
     "US10Y": 4.56,
     "US2Y": 4.21,
@@ -34,26 +34,26 @@
     "openInterestChange": 6341
   },
   "etfFlows": {
-    "gldTonnes": 1005.9,
-    "gldWoWChange": -5.9,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1006.8,
+    "gldWoWChange": 0.9,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4022.685,
-    "XAGUSD": 57.9695,
-    "EURUSD": 1.1395,
-    "USDJPY": 162.338,
-    "USDCHF": 0.814,
-    "USDCNH": 6.77994,
-    "GBPUSD": 1.33628,
-    "USDCAD": 1.41078,
-    "USDSEK": 9.6906,
-    "US500": 7513.4,
-    "GER40": 24941.05,
-    "UK100": 10421.4,
+    "XAUUSD": 4019.4,
+    "XAGUSD": 58.093,
+    "EURUSD": 1.13994,
+    "USDJPY": 162.2305,
+    "USDCHF": 0.81231,
+    "USDCNH": 6.78035,
+    "GBPUSD": 1.33757,
+    "USDCAD": 1.40872,
+    "USDSEK": 9.67854,
+    "US500": 7516.6,
+    "GER40": 24977.05,
+    "UK100": 10430.65,
     "ADR_14day": 98.4,
     "ADR_usedToday": 50.1,
-    "goldSilverRatio": 69.4
+    "goldSilverRatio": 69.2
   },
   "dollarLiquidity": {
     "stlfsi": -0.7246,
@@ -69,14 +69,14 @@
       "headline": "Gold recovers from two-week low ahead of US inflation - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-14T03:19:00.000Z",
-      "hoursAgo": 4.5
+      "hoursAgo": 6
     }
   ],
   "briefing": {
-    "biasScore": 1,
-    "biasLabel": "NEUTRAL",
-    "confidence": 4,
-    "briefing": "Right now, the biggest forces shaping gold are a firm US dollar (DXY at 101.16), rising bond yields [bond yields = the interest rate the US government pays to borrow money — higher yields usually hurt gold because gold pays no interest], and a market that is not yet convinced the Federal Reserve will cut interest rates anytime soon (only a 16% chance of a cut priced in for the July 29th meeting). These factors create a headwind for gold, even though it sits at a still-elevated $4,022. On the news front, the only relevant headline from the last few hours (4.5 hours ago via Reuters) says gold is recovering from a two-week low ahead of US inflation data — that word 'recovering' tells you price dipped recently and is bouncing, but hasn't broken out with any conviction. No other market-moving catalysts are visible in the news feed right now. The directional bias leans very slightly bullish [favoring prices moving up] simply because price is bouncing off a short-term low, but the overall environment — high real yields [real yield = bond yield minus inflation, a key headwind for gold], ETF outflows [investors pulling money out of gold funds, three-week trend], and an 84% chance the Fed holds rates steady — keeps the bigger picture cautious and choppy. Confidence is low at 4/10; a clear break and hold above $4,035–$4,040 would strengthen the bullish case, while a drop back below $4,000 would flip bias bearish. On scheduled events, the calendar is empty today per the data, but the Reuters headline strongly hints US inflation data (CPI) is due imminently — watch for that release during the London/New York overlap as it can cause sharp, fast moves. The ADR [Average Daily Range — how much gold typically moves in one day] over 14 days is 98.4 points, and today has already used 50.1 points, meaning roughly 48 points of average movement may remain — there is still room for a meaningful move, but not enormous runway. Given the choppy, low-conviction environment, this is NOT an ideal window for aggressive trend-following trades; if you do trade, keep position size small and wait for a clean 5-minute structure break with confluence on the 1-hour chart before entering. Remember: when the market is waiting on big news, patience is your edge.",
-    "generatedAt": "2026-07-14T07:48:42.927Z"
+    "biasScore": 2,
+    "biasLabel": "BULLISH",
+    "confidence": 5,
+    "briefing": "Right now, gold is being pulled in two directions: a relatively firm US dollar (the DXY index, which measures dollar strength, sits at 101.09) and still-elevated real yields [meaning the return on US government bonds after stripping out inflation, currently 2.32%] are headwinds that naturally weigh on gold — but strong geopolitical stress [the GPR risk index, a measure of global conflict and tension, reads a high 173.6], steady ETF inflows into gold funds over the past three weeks, and large speculative buying positions in the futures market are all providing support underneath price. The one headline worth noting arrived about 6 hours ago via Reuters: gold is described as 'recovering from a two-week low ahead of US inflation data,' which tells us two things — price recently dipped to find buyers, and traders are cautious ahead of an inflation print. That inflation report appears to be the dominant near-term catalyst right now. With gold at $4,019 and having bounced off recent lows, the directional bias leans modestly BULLISH, but only gently — the recovery is tentative, not decisive, and the market feels like it is holding its breath waiting for the inflation data. Confidence is 5/10: a softer-than-expected inflation reading would weaken the dollar and likely push gold higher, while a hotter print could send gold back down toward — or through — that two-week low. On levels: the 14-day Average Daily Range [a measure of how far price typically moves each day] is 98.4 points, and today has already used up about 50 of those points, meaning roughly 48 points of 'normal' daily movement may remain. Watch $4,019 as current price and be aware that a move above the day's high or a break below the recent two-week low would be the clearest signal of direction. The calendar shows no scheduled events today, but the inflation data referenced in the news is almost certainly the key risk — if it lands today during New York session, treat the 30 minutes either side as a no-trade zone. For trade integration: this is a reduced-conviction environment — if you must trade, keep position size small (half your normal size or less), only take setups that are clearly WITH the prevailing 1H uptrend structure, and avoid chasing price into the inflation release. Wait for the dust to settle after any data print before committing. The one thing to screenshot and remember today: gold has bounced but hasn't broken out — wait for the inflation data to clear before trading with full conviction.",
+    "generatedAt": "2026-07-14T09:18:31.596Z"
   }
 }
