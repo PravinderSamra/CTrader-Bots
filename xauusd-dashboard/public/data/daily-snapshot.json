@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-14T09:18:13.427Z",
+  "generatedAt": "2026-07-14T09:48:01.725Z",
   "yields": {
     "US10Y": 4.56,
     "US2Y": 4.21,
@@ -35,25 +35,25 @@
   },
   "etfFlows": {
     "gldTonnes": 1006.8,
-    "gldWoWChange": 0.9,
-    "trend3W": "INFLOW"
+    "gldWoWChange": null,
+    "trend3W": null
   },
   "snapshotPrices": {
-    "XAUUSD": 4019.4,
-    "XAGUSD": 58.093,
-    "EURUSD": 1.13994,
-    "USDJPY": 162.2305,
-    "USDCHF": 0.81231,
-    "USDCNH": 6.78035,
-    "GBPUSD": 1.33757,
-    "USDCAD": 1.40872,
-    "USDSEK": 9.67854,
-    "US500": 7516.6,
-    "GER40": 24977.05,
-    "UK100": 10430.65,
+    "XAUUSD": 4019.26,
+    "XAGUSD": 58.0385,
+    "EURUSD": 1.13973,
+    "USDJPY": 162.201,
+    "USDCHF": 0.81228,
+    "USDCNH": 6.77999,
+    "GBPUSD": 1.33777,
+    "USDCAD": 1.4085,
+    "USDSEK": 9.68146,
+    "US500": 7515.1,
+    "GER40": 24988.05,
+    "UK100": 10435.35,
     "ADR_14day": 98.4,
     "ADR_usedToday": 50.1,
-    "goldSilverRatio": 69.2
+    "goldSilverRatio": 69.3
   },
   "dollarLiquidity": {
     "stlfsi": -0.7246,
@@ -69,14 +69,14 @@
       "headline": "Gold recovers from two-week low ahead of US inflation - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-14T03:19:00.000Z",
-      "hoursAgo": 6
+      "hoursAgo": 6.5
     }
   ],
   "briefing": {
-    "biasScore": 2,
-    "biasLabel": "BULLISH",
-    "confidence": 5,
-    "briefing": "Right now, gold is being pulled in two directions: a relatively firm US dollar (the DXY index, which measures dollar strength, sits at 101.09) and still-elevated real yields [meaning the return on US government bonds after stripping out inflation, currently 2.32%] are headwinds that naturally weigh on gold — but strong geopolitical stress [the GPR risk index, a measure of global conflict and tension, reads a high 173.6], steady ETF inflows into gold funds over the past three weeks, and large speculative buying positions in the futures market are all providing support underneath price. The one headline worth noting arrived about 6 hours ago via Reuters: gold is described as 'recovering from a two-week low ahead of US inflation data,' which tells us two things — price recently dipped to find buyers, and traders are cautious ahead of an inflation print. That inflation report appears to be the dominant near-term catalyst right now. With gold at $4,019 and having bounced off recent lows, the directional bias leans modestly BULLISH, but only gently — the recovery is tentative, not decisive, and the market feels like it is holding its breath waiting for the inflation data. Confidence is 5/10: a softer-than-expected inflation reading would weaken the dollar and likely push gold higher, while a hotter print could send gold back down toward — or through — that two-week low. On levels: the 14-day Average Daily Range [a measure of how far price typically moves each day] is 98.4 points, and today has already used up about 50 of those points, meaning roughly 48 points of 'normal' daily movement may remain. Watch $4,019 as current price and be aware that a move above the day's high or a break below the recent two-week low would be the clearest signal of direction. The calendar shows no scheduled events today, but the inflation data referenced in the news is almost certainly the key risk — if it lands today during New York session, treat the 30 minutes either side as a no-trade zone. For trade integration: this is a reduced-conviction environment — if you must trade, keep position size small (half your normal size or less), only take setups that are clearly WITH the prevailing 1H uptrend structure, and avoid chasing price into the inflation release. Wait for the dust to settle after any data print before committing. The one thing to screenshot and remember today: gold has bounced but hasn't broken out — wait for the inflation data to clear before trading with full conviction.",
-    "generatedAt": "2026-07-14T09:18:31.596Z"
+    "biasScore": 1,
+    "biasLabel": "NEUTRAL",
+    "confidence": 4,
+    "briefing": "Right now, the two biggest forces shaping gold are a moderately firm US dollar (DXY around 101) paired with real yields [the interest rate after stripping out inflation, which makes holding gold less attractive when high] sitting at 2.32% — both of these act as headwinds for gold. However, geopolitical stress remains elevated (the GPR risk index is at 173.6, well above normal), which historically provides a floor under gold prices and keeps buyers interested on dips. The only notable headline in the last 24 hours came from Reuters about 6.5 hours ago, noting gold is recovering from a two-week low ahead of US inflation data — this tells us price recently dipped and is attempting to bounce, likely as traders position cautiously before a key data release. There is no US inflation print on today's calendar (the calendar shows no scheduled events today), but the headline strongly implies a CPI [Consumer Price Index, the main inflation report] release is coming very soon, probably tomorrow or later this week — and that kind of uncertainty typically keeps price choppy and range-bound in the lead-up. With gold already having used roughly 50 of its average 98-point daily range today, about half the expected daily move is already done, meaning the remaining runway for a big directional push today is limited. Positioning from large traders [the COT report, showing what big futures players hold] remains net-long but barely changed week-over-week, suggesting no strong new conviction in either direction — crowding is rated NEUTRAL. The directional bias leans very slightly bullish given the bounce off lows and geopolitical support, but confidence is low at 4/10 — if the upcoming inflation data comes in hotter than expected, the dollar could spike and gold could sell off hard, flipping this view bearish quickly. For a trend-following trader using ICT concepts: wait for the 1H chart to clearly confirm higher highs and higher lows before committing, use reduced position size given the data uncertainty ahead, and avoid chasing moves late in the London session when daily range is half-consumed. The golden rule for today: if you can't see a clear trend on the 1-hour chart AND you don't know what the inflation number will be, the safest trade is no trade.",
+    "generatedAt": "2026-07-14T09:48:16.628Z"
   }
 }
