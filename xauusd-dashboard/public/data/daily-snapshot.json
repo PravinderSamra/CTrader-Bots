@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-15T09:51:49.798Z",
+  "generatedAt": "2026-07-15T11:22:40.351Z",
   "yields": {
     "US10Y": 4.62,
     "US2Y": 4.26,
@@ -34,26 +34,26 @@
     "openInterestChange": 6341
   },
   "etfFlows": {
-    "gldTonnes": 1004.8,
-    "gldWoWChange": 1,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1004.4,
+    "gldWoWChange": -0.4,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4027.09,
-    "XAGUSD": 58.252,
-    "EURUSD": 1.14183,
-    "USDJPY": 162.3415,
-    "USDCHF": 0.81074,
-    "USDCNH": 6.77665,
-    "GBPUSD": 1.33908,
-    "USDCAD": 1.40592,
-    "USDSEK": 9.67652,
-    "US500": 7562.5,
-    "GER40": 24963.55,
-    "UK100": 10501.75,
+    "XAUUSD": 4029.04,
+    "XAGUSD": 57.9435,
+    "EURUSD": 1.14166,
+    "USDJPY": 162.3605,
+    "USDCHF": 0.81085,
+    "USDCNH": 6.77583,
+    "GBPUSD": 1.3398,
+    "USDCAD": 1.40673,
+    "USDSEK": 9.68002,
+    "US500": 7557.8,
+    "GER40": 24950.55,
+    "UK100": 10487.2,
     "ADR_14day": 100.1,
     "ADR_usedToday": 44.4,
-    "goldSilverRatio": 69.1
+    "goldSilverRatio": 69.5
   },
   "dollarLiquidity": {
     "stlfsi": -0.7246,
@@ -68,21 +68,21 @@
     {
       "headline": "US Russia sanctions bill eases threat of tariffs on China and India - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-07-14T21:57:31.000Z",
-      "hoursAgo": 11.9
+      "publishedAt": "2026-07-14T19:07:00.000Z",
+      "hoursAgo": 16.3
     },
     {
       "headline": "Trump says he thinks Iran and Hezbollah will be added to Russia sanctions bill - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-14T16:37:06.000Z",
-      "hoursAgo": 17.2
+      "hoursAgo": 18.8
     }
   ],
   "briefing": {
     "biasScore": 2,
     "biasLabel": "BULLISH",
     "confidence": 5,
-    "briefing": "Right now, gold is being held up by a combination of genuine safe-haven demand [people buying gold as a safe store of value when the world feels uncertain] and a dollar that looks tired rather than strong — the DXY [a measure of the US dollar's strength against other currencies] is sitting at 100.96, which is relatively soft and generally supportive for gold prices. The two headlines doing the work overnight are both geopolitical: around 12 hours ago, Reuters reported that a US-Russia sanctions bill was moving forward but with softer tariff threats on China and India — a slight relief for global trade tension — and about 17 hours ago, Trump floated adding Iran and Hezbollah to that same bill, which keeps the geopolitical heat [global political uncertainty] elevated. Elevated geopolitical risk tends to attract buyers into gold as a safe asset, and the GPR reading [Geopolitical Risk Index] of 173.6 confirms that background tension is genuinely high. Real yields [the return investors get after accounting for inflation] have ticked up slightly today by 0.04%, which is a mild headwind for gold since higher real yields make holding gold less attractive, but not enough to flip the overall picture. Institutional positioning [what large professional traders are holding] remains net long [betting on price going up] with a small increase week-over-week, and ETF flows [money going into gold-backed funds] have been trending positive for three weeks — both confirm the broader uptrend is intact. Confidence in today's bullish lean is 5/10 — the geopolitical catalyst is real but not fresh, and rising real yields create friction. If real yields keep climbing or the dollar bounces sharply above 101.50, the bullish case weakens quickly. The calendar is empty today with no scheduled economic data, which means price will be driven purely by flow and news — that can mean sharper, less predictable moves. The 14-day ADR [Average Daily Range — how far gold typically moves in a day] is about 100 points, and we've already used 44 of those today, so roughly 56 points of typical range remain — enough room for a meaningful move but don't expect fireworks if momentum fades into the New York open. For trade integration: the 1H trend is still pointing upward, making this a valid window for looking for long [buy] setups on the 5M chart during London and New York overlap, but size down [trade smaller than normal] given the moderate confidence — wait for a clear pullback into a key level before entering rather than chasing price. Watch the $4,000 round number as major support below, and $4,050–4,060 as the next resistance area [price ceiling] to target. Remember: in a slow news day, patience beats aggression — wait for price to come to your level, not the other way around.",
-    "generatedAt": "2026-07-15T09:52:08.502Z"
+    "briefing": "Right now, the dominant forces shaping gold are a still-elevated geopolitical risk environment (the GPR index, which measures global political tension, sits at 173.6 — a high reading that historically supports gold as a safe haven), moderately firm US bond yields (the 10-year Treasury yield is at 4.62%, up 0.06% overnight, which is a mild headwind for gold since higher yields make bonds more attractive vs. gold), and a US Dollar (DXY) hovering just under 101 — not particularly strong or weak, keeping pressure relatively neutral. On recent catalysts: two geopolitical headlines from Reuters roughly 16–19 hours ago describe a US sanctions bill against Russia that also eases tariff pressure on China and India, while Trump floated expanding those sanctions to Iran and Hezbollah. These headlines are ambiguous for gold — easing trade tensions can reduce safe-haven demand, but widening geopolitical conflict keeps it alive — so neither is a clean directional driver. The directional bias leans modestly BULLISH: gold is trading at $4,029, geopolitical risk remains elevated, market positioning (large traders are still net-long 183,000 contracts) is supportive, and financial conditions remain loose (the stress index is negative, meaning money is flowing freely). However, real yields [bond yields adjusted for inflation] are relatively high at 2.36%, which historically limits how far gold can run without a fresh catalyst. Confidence is 5/10 — this is a cautious bullish lean, not a high-conviction setup. What would change the view: a meaningful Dollar rally above 102, or a sharp further spike in real yields, would turn the bias neutral-to-bearish; a geopolitical escalation or Dollar breakdown would boost confidence sharply. On scheduled events: the calendar data shows NO economic releases today, so there is no news-driven volatility to manage intraday — that is actually a cleaner environment for technical setups. No major high-impact events appear in the coming days either based on available data, so there is no obvious reason for markets to sit cautiously range-bound ahead of a big release. On key levels: with a 14-day Average Daily Range [typical daily price move] of $100 and today's range already using up $44 of that, roughly $56 of average move remains — meaning price has room to push in either direction but is not in the early stages of a fresh leg. Watch $4,000 as a major psychological support floor; a hold there on any pullback would favour buys. To the upside, $4,050–$4,060 is the next logical resistance zone where sellers may appear. For trade integration: London session is active and conditions are not hostile, but with no news catalyst today and moderate confidence, this is a reduced-size, patient window — wait for a clean 1H trend confirmation and a 5M pullback into a point of interest [a price level where smart money previously acted] before committing. One thing to remember: no news today means cleaner chart setups, but 'cleaner' doesn't mean 'easier' — only take the trade if your entry level aligns with the trend, not just because price is moving.",
+    "generatedAt": "2026-07-15T11:23:03.414Z"
   }
 }
