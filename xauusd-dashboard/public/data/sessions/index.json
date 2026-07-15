@@ -1,6 +1,22 @@
 {
-  "updatedAt": "2026-07-13T08:14:10.576Z",
+  "updatedAt": "2026-07-15T14:21:13.553Z",
   "sessions": [
+    {
+      "date": "2026-07-15",
+      "time": "15:21 BST",
+      "filename": "2026-07-15/14-21.json",
+      "timestamp": "2026-07-15T14:21:13.553Z",
+      "session": "LONDON",
+      "bias": "NEUTRAL",
+      "biasScore": 0,
+      "probability": 30,
+      "confidence": 3,
+      "priceZone": "OTE",
+      "tradeIdea": {
+        "direction": "LONG",
+        "status": "WAIT"
+      }
+    },
     {
       "date": "2026-07-13",
       "time": "09:14 BST",
@@ -16,18 +32,6 @@
         "direction": "LONG",
         "status": "ACTIVE"
       }
-    },
-    {
-      "date": "2026-07-10",
-      "time": "08:33 BST",
-      "filename": "2026-07-10/07-33.json",
-      "timestamp": "2026-07-10T07:33:13.952Z",
-      "session": "LONDON",
-      "bias": "NEUTRAL",
-      "biasScore": 0,
-      "probability": 35,
-      "confidence": 5,
-      "priceZone": "DISCOUNT"
     }
   ]
 }
