@@ -1,6 +1,20 @@
 {
-  "updatedAt": "2026-07-13T14:09:00.483Z",
+  "updatedAt": "2026-07-15T18:57:27.093Z",
   "outcomes": [
+    {
+      "filename": "2026-07-15/14-21.json",
+      "date": "2026-07-15",
+      "time": "15:21 BST",
+      "session": "LONDON",
+      "bias": "NEUTRAL",
+      "probability": 30,
+      "confidence": 3,
+      "priceZone": "OTE",
+      "result": "NO_CALL",
+      "resolvedAt": "2026-07-15T18:57:27.091Z",
+      "maxFavourable": null,
+      "maxAdverse": null
+    },
     {
       "filename": "2026-07-13/08-14.json",
       "date": "2026-07-13",

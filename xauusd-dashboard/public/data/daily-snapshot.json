@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-15T17:06:59.611Z",
+  "generatedAt": "2026-07-15T18:56:31.296Z",
   "yields": {
     "US10Y": 4.62,
     "US2Y": 4.26,
@@ -34,26 +34,26 @@
     "openInterestChange": 6341
   },
   "etfFlows": {
-    "gldTonnes": 1002,
-    "gldWoWChange": 2,
-    "trend3W": "INFLOW"
+    "gldTonnes": 995.9,
+    "gldWoWChange": -6.1,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4038.66,
-    "XAGUSD": 56.9635,
-    "EURUSD": 1.14474,
-    "USDJPY": 162.1315,
-    "USDCHF": 0.80636,
-    "USDCNH": 6.76966,
-    "GBPUSD": 1.35359,
-    "USDCAD": 1.40442,
-    "USDSEK": 9.6264,
-    "US500": 7547.8,
-    "GER40": 24984.55,
-    "UK100": 10459.7,
+    "XAUUSD": 4063.42,
+    "XAGUSD": 57.9985,
+    "EURUSD": 1.14691,
+    "USDJPY": 162.0325,
+    "USDCHF": 0.80458,
+    "USDCNH": 6.76727,
+    "GBPUSD": 1.3539,
+    "USDCAD": 1.40419,
+    "USDSEK": 9.58955,
+    "US500": 7560,
+    "GER40": 25015.55,
+    "UK100": 10480.2,
     "ADR_14day": 100.1,
-    "ADR_usedToday": 56.6,
-    "goldSilverRatio": 70.9
+    "ADR_usedToday": 63.3,
+    "goldSilverRatio": 70.1
   },
   "dollarLiquidity": {
     "stlfsi": -0.882,
@@ -69,26 +69,26 @@
       "headline": "Jim Cramer sees more upside for Goldman and addresses Wells Fargo's biggest question",
       "source": "CNBC",
       "publishedAt": "2026-07-15T15:29:49.000Z",
-      "hoursAgo": 1.6
+      "hoursAgo": 3.4
     },
     {
       "headline": "Buffett says Trump's pick of Kevin Warsh for Fed chair was 'good choice'",
       "source": "CNBC",
       "publishedAt": "2026-07-15T12:14:44.000Z",
-      "hoursAgo": 4.9
+      "hoursAgo": 6.7
     },
     {
       "headline": "US Russia sanctions bill eases threat of tariffs on China and India - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-14T19:07:00.000Z",
-      "hoursAgo": 22
+      "hoursAgo": 23.8
     }
   ],
   "briefing": {
-    "biasScore": 2,
-    "biasLabel": "BULLISH",
-    "confidence": 5,
-    "briefing": "Right now, the dominant forces shaping gold are a moderately weak US Dollar (the DXY index, which measures the dollar against a basket of currencies, sits at 100.61 — a lower dollar generally helps gold prices rise), elevated real yields [the return on bonds after stripping out inflation] at 2.36% which would normally press gold lower, and persistently high geopolitical risk [a measure of global tensions and conflict] at 173.6, which keeps demand for gold as a 'safe haven' asset alive. Reviewing the recent headlines: a story from about 5 hours ago flagged Warren Buffett's endorsement of Kevin Warsh as the next Fed Chair — Warsh is widely seen as hawkish [meaning he'd likely favour higher interest rates, which could strengthen the dollar and weaken gold], so this is a mild headwind for gold if confirmed. A Reuters story from 22 hours ago about a Russia sanctions bill potentially easing tariff pressure on China and India is modestly risk-positive [meaning investors feel safer taking on risk], which can slightly reduce gold's safe-haven premium. The Jim Cramer headline has no clear gold or dollar relevance. Putting it together, the directional bias is cautiously BULLISH — gold is near $4,038, still in a clear longer-term uptrend, and neither the dollar nor yields are spiking aggressively. However, rising yields, the Warsh Fed Chair narrative, and a nearly risk-neutral environment cap conviction. Confidence is 5/10 — a sharp dollar rally or further yield increases above 4.70% on the 10-year would flip this view bearish. The calendar shows NO scheduled economic events today, so there is no immediate news risk — this is actually a clean window for setups, though lower volatility can mean choppier, tighter price action. The 14-day Average Daily Range [the typical daily price swing] is $100, and today has already used $56.60 of that, meaning roughly $43 of movement potential remains for the session — plan your targets accordingly. Key levels to watch: $4,050–$4,060 as nearby resistance [a price ceiling where sellers may appear], and $4,010–$4,000 as a support zone [a price floor where buyers may step in]; a clean break above $4,060 with a 5M bullish signal would be the highest-quality long entry, while a drop below $4,000 would invalidate the near-term bullish case. For trade integration: this is an acceptable window for trend-following long [buy] setups, but given roughly half the day's range is already used and conviction is moderate, keep position size small and wait for a clear 5M pullback into structure before committing. Remember: with half the day's range already used, chasing price here is low-probability — be patient and wait for price to come to a clean level before entering.",
-    "generatedAt": "2026-07-15T17:07:18.713Z"
+    "biasScore": -1,
+    "biasLabel": "NEUTRAL",
+    "confidence": 4,
+    "briefing": "Right now, the two biggest forces pulling on gold are rising US bond yields and a dollar that is holding its ground — both of which tend to work against gold. The 10-year US Treasury yield [the interest rate the government pays on long-term borrowing, which competes with gold as a 'safe' asset] has crept up 0.06% today to 4.62%, and real yields [what you actually earn after inflation is stripped out] are sitting at a high 2.36% — when real yields are this elevated, gold has to work hard to attract buyers. Looking at recent headlines, nothing in the last few hours is a clear market-mover for gold: the Cramer/Goldman comment (3.4 hours ago) is stock-market noise, Warren Buffett's approval of Kevin Warsh as future Fed chair (6.7 hours ago) is mildly dollar-supportive because Warsh is seen as hawkish [favouring higher interest rates, which strengthen the dollar and pressure gold], and the Russia-sanctions/China-tariff story (nearly 24 hours ago) has likely already been digested by the market. The directional bias leans very slightly bearish [expecting price to fall] for gold right now, simply because yields are rising, the dollar is stable near 100.47, and ETF [exchange-traded fund — a fund that holds physical gold] flows have been negative for three straight weeks, suggesting big institutional buyers are not rushing in. That said, geopolitical risk [GPR at 173.6, a measure of global tension] remains elevated, which provides a floor of support. Confidence is 4/10 — this is a low-conviction environment. What would change the view: a sharp drop in yields, a weaker dollar print, or a fresh geopolitical shock could flip gold bullish quickly. The calendar shows no scheduled economic events today, so expect price to be driven by technicals and any surprise headlines. There are no high-impact events flagged later this week in the data provided, though the Fed meeting on July 29 is approaching and markets are pricing a 92% chance of no rate change [the Fed keeping borrowing costs where they are], which limits big directional surprises for now. On price levels, gold is at $4,063 with a 14-day average daily range [the typical distance price travels in a full day] of $100.10 — it has already moved $63.30 of that today, meaning roughly $37 of average daily movement may remain. Key levels to watch: $4,100 as the upside target where sellers may step in, and $4,030–$4,020 as the support zone [a price area where buyers have previously stepped in] below. For trade integration, this is NOT a high-conviction window — the trend on the 1H chart needs confirmation, yields are working against longs [buy trades], and most of the day's expected range has already been consumed, so size down or sit on your hands and wait for a cleaner setup tomorrow. When in doubt, smaller size protects your account while you wait for the market to show its hand.",
+    "generatedAt": "2026-07-15T18:56:51.241Z"
   }
 }
