@@ -2,6 +2,8 @@ import { useState, useMemo } from 'react'
 import { useUk100SessionIndex, useUk100Session, useUk100SessionOutcomes } from '../../hooks/useUk100Sessions'
 import { BiasGauge } from '../briefing/BiasGauge'
 import { OrbPlaybookCard } from './OrbPlaybookCard'
+import { TldrCard } from './TldrCard'
+import { synthesizeTldr } from './tldr'
 import type { Uk100SessionEntry, Uk100SessionRecord } from '../../types/uk100'
 import type { OutcomeRow, SessionResult } from '../../types/dashboard'
 import {
@@ -529,6 +531,11 @@ export function AiSubTab() {
               <span className={styles.viewDate}>{dateLabel(session.date)}</span>
               <span className={styles.viewTime}>{session.time}</span>
             </div>
+
+            {(() => {
+              const bullets = synthesizeTldr(session)
+              return bullets.length > 0 ? <TldrCard bullets={bullets} /> : null
+            })()}
 
             <div className={styles.gaugeRow} data-bias={session.bias}>
               <div className={styles.gaugeWrap}>

@@ -181,6 +181,12 @@ export interface OrbPlaybook {
   eventRisk?:   string
 }
 
+// TL;DR (G3, UK100-ORB-INTEL-TLDR-DESIGN.md §3) — a top-of-session summary of
+// the AI brief. Written deterministically by the skill; a client-side
+// synthesizeTldr() fallback covers records saved before this field existed.
+export type TldrTag = 'STRUCTURE' | 'REGIME' | 'PLAN' | 'LEVELS' | 'NEWS' | 'RISK'
+export interface TldrBullet { tag: TldrTag; text: string }
+
 // Same optional structured fields as GoldSessionRecord (StructuredSessionFields
 // in dashboard.ts), plus orbPlaybook. Kept as a separate interface (not
 // `extends`) to avoid importing dashboard.ts's whole gold-specific surface.
@@ -205,6 +211,7 @@ export interface Uk100SessionRecord {
   nextHighImpactEvent?: { event: string; timeIso: string } | null
   smtDivergence?:       'BULLISH' | 'BEARISH' | null
   orbPlaybook?:         OrbPlaybook | null
+  tldr?:                TldrBullet[]     // G3 — top-of-session summary bullets
   outcome?:             SessionOutcome   // written back by the resolver once scored (F7)
 }
 

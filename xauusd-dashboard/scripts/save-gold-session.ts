@@ -72,6 +72,12 @@ interface OrbPlaybook {
   eventRisk?:  string
 }
 
+// TL;DR (G3, UK100-ORB-INTEL-TLDR-DESIGN.md §3) — UK100-only top-of-session
+// summary. Gold records simply omit it. Passes through the record spread below
+// untouched, same as every other structured meta field.
+type TldrTag = 'STRUCTURE' | 'REGIME' | 'PLAN' | 'LEVELS' | 'NEWS' | 'RISK'
+interface TldrBullet { tag: TldrTag; text: string }
+
 interface SessionMeta {
   session:     string   // LONDON | NEW_YORK | OVERLAP | ASIAN
   bias:        string   // BULLISH | BEARISH | NEUTRAL
@@ -92,6 +98,7 @@ interface SessionMeta {
   nextHighImpactEvent?: { event: string; timeIso: string } | null
   smtDivergence?:       'BULLISH' | 'BEARISH' | null
   orbPlaybook?:         OrbPlaybook | null
+  tldr?:                TldrBullet[]     // G3 — UK100-only top-of-session summary
 }
 
 interface SessionRecord extends SessionMeta {

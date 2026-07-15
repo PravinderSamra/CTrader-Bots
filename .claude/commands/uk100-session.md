@@ -211,6 +211,17 @@ This entire block feeds both the `## ORB PLAYBOOK` section of the printed brief 
 
 # UK100 INTRADAY SESSION BRIEF — [YYYY-MM-DD] — [HH:MM BST|GMT] / [HH:MM UTC] — [SESSION WINDOW]
 
+## TL;DR
+A top-of-brief summary — **exactly one bullet per tag, in this fixed order**, each a condensed restatement of a section below (never contradicting it). Derive each deterministically so two sessions on the same data produce the same bullets:
+- **STRUCTURE** — H1 + M5 regime and the most recent structural event with its UK-local timestamp, from the engine's `structure_breaks` (e.g. "H1 NEUTRAL / M5 BULLISH — sweep-and-reclaim day; first bearish M1 crack 15:05 BST").
+- **REGIME** — the mechanical `bias.score`/`label`/`conviction` verbatim + the STEP 5 macro-verdict clause (e.g. "Bias NEUTRAL +1, LOW conviction — macro genuinely mixed").
+- **PLAN** — ORB playbook direction + day type + the single actionable sentence of the day, consistent with STEP 8 (e.g. "BOTH_OK half size — prefer the fade toward 10502 over chasing PDH; WAIT status, US_OVERLAP gate active").
+- **LEVELS** — the 2–3 most decision-relevant prices only, each with a one-word role ("10533 invalidation · 10502 T1 · 10545 PDH draw").
+- **NEWS** — the top same-session catalyst with `hoursAgo` + source, or the literal phrase "No market-moving news identified" (from `newsItems`).
+- **RISK** — the next HIGH-impact event with its UK-local time, or "No high-impact events this week".
+
+Optionally ONE extra bullet (any tag) when something material doesn't fit above — **hard cap 7 bullets**. This section is the source of truth for the `tldr` meta array (STEP 9): copy it verbatim.
+
 ## ACCOUNT CONTEXT
 - **Open Positions on Symbol:** [None / describe]
 - **Account Balance / Equity / Free Margin:** [from get_balance — **`get_balance` returns money in cents, with a `moneyDigits` field stating the divisor's power of 10 (`moneyDigits: 2` → divide by 100)**. E.g. `{"balance": 4646598, "moneyDigits": 2}` = £46,465.98, not £4,646,598. Always divide before printing.]
@@ -340,6 +351,7 @@ Base probability starts at **50%**. **The resulting arithmetic (base + every lin
 - Never fabricate macro, calendar, or pattern-recognition data that a tool call failed to return — say it's unavailable instead.
 - Never mark a newly-identified setup `ACTIVE` once `session.current_session` is `US_OVERLAP` — `WAIT` is the ceiling, regardless of trigger quality (the US_OVERLAP time gate, STEP 8).
 - Never print a Primary/Secondary Scenario percentage without its Arithmetic line shown alongside it.
+- Never print a brief without the `## TL;DR` section, and never let the TL;DR contradict the sections it summarises (it is a restatement, not a second opinion).
 
 ---
 
@@ -408,10 +420,18 @@ Meta JSON to place in `/tmp/uk100-session-meta.json`:
     ],
     "invalidation": "ORB long invalid on M5 close back inside the range / below the overnight low (10438.8)",
     "eventRisk": "US CPI 13:30 — flatten or reduce by 13:15 if still open"
-  }
+  },
+  "tldr": [
+    { "tag": "STRUCTURE", "text": "H1 NEUTRAL / M5 BULLISH — sweep-and-reclaim day; first bearish M1 crack 15:05 BST" },
+    { "tag": "REGIME", "text": "Bias NEUTRAL +1, LOW conviction — macro genuinely mixed" },
+    { "tag": "PLAN", "text": "BOTH_OK half size — prefer the fade toward 10502 over chasing PDH; WAIT status, US_OVERLAP gate active" },
+    { "tag": "LEVELS", "text": "10533 invalidation · 10502 T1 · 10545 PDH draw" },
+    { "tag": "NEWS", "text": "No market-moving news identified" },
+    { "tag": "RISK", "text": "UK GDP Monthly Estimate — tomorrow 07:00 BST (HIGH impact)" }
+  ]
 }
 ```
-**The first five fields are required.** The rest are **optional structured fields**, including `orbPlaybook` — populate them from the engine output / your STEP 8 analysis. If you cannot determine a field, omit it (the UI falls back to parsing the analysis text for everything except `orbPlaybook`, which has no text-parsing fallback — always populate it when the ORB Playbook section is present in the brief).
+**The first five fields are required.** The rest are **optional structured fields**, including `orbPlaybook` and `tldr` — populate them from the engine output / your STEP 8 analysis. If you cannot determine a field, omit it (the UI falls back to parsing the analysis text for everything except `orbPlaybook` and `tldr`, which have no text-parsing fallback — always populate them; `tldr` has a partial `synthesizeTldr()` fallback from the other structured fields, but STRUCTURE/NEWS are lost if you omit it).
 
 **⚠️ DERIVE META DETERMINISTICALLY — cross-session consistency rule.** Two different chat sessions running this skill on the same market data must save the same record. Anchor every derivable field to the ENGINE OUTPUT / MACRO SNAPSHOT, not to free-form judgement:
 
@@ -427,6 +447,7 @@ Meta JSON to place in `/tmp/uk100-session-meta.json`:
 | `tradeIdea.status` | `NO_TRADE` whenever `orbPlaybook.direction` is `STAND_ASIDE`; `WAIT` when a setup exists but the trigger/window is missing; `ACTIVE` only with an M1 trigger inside the trading window; also capped at `WAIT` (never `ACTIVE`) by the US_OVERLAP time gate in STEP 8 regardless of trigger quality. |
 | `tradeIdea.rr` | **Always the R:R to Target 1** — `(target1 − entryMid) / (entryMid − stop)` for a long, sign-mirrored for a short — never to T2/T3. Same definition as `/gold-session`'s `tradeIdea.rr` (shared field, kept unambiguous for the resolver/UI). Describe R:R to further targets in prose if useful, not in this field. |
 | `orbPlaybook` | Apply STEP 8's decision table mechanically — `direction`/`dayType` are deterministic outputs of the table, not judgement calls. `reasoning`/`invalidation`/`eventRisk` are the only free-text parts, and must be consistent with the table's output. |
+| `tldr` | Mirror the printed `## TL;DR` section verbatim — same order, same texts, one `{tag, text}` object per printed bullet. Never write a `tldr` that differs from what the brief printed. |
 
 Field guide (fields shared with `/gold-session`):
 | Field | How to derive it |
