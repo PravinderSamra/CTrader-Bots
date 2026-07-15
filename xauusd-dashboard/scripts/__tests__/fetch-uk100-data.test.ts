@@ -166,6 +166,7 @@ describe('computeOrbIntel — R1 fakeout/reclaim (2026-07-15 worked example)', (
     expect(r1.severity).toBe('STRONG')
     expect(r1.direction).toBe('FAVOURS_LONG')
     expect(r1.source).toBe('STRUCTURE')
+    expect(r1.rule).toBe('R1')   // J0 — per-rule attribution for the journal
     expect(intel.stanceLine).toMatch(/Fade day/)
     expect(intel.aiStanceLine).toBeNull()
     expect(intel.baseRateNote).toBeNull()

@@ -127,6 +127,7 @@ export interface OrbIntelSignal {
   direction: OrbIntelDirection
   severity:  OrbIntelSeverity
   source:    OrbIntelSource
+  rule:      string   // 'R1'…'R13' (+ 'R8b'/'R11b') — for per-rule journal scoring (J0)
   text:      string
 }
 

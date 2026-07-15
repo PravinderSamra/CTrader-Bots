@@ -141,6 +141,7 @@ interface OrbIntelSignal {
   direction: OrbIntelDirection
   severity:  OrbIntelSeverity
   source:    OrbIntelSource
+  rule:      string   // 'R1'…'R13' (plus 'R8b'/'R11b' for the independent sub-signals) — for per-rule journal scoring (J0)
   text:      string
 }
 
@@ -1201,10 +1202,10 @@ export function computeOrbIntel(input: OrbIntelInput): OrbIntel {
   const postOrb = o.mode === 'POST_ORB' || o.mode === 'CLOSED'
   if (postOrb && price != null && o.orbHigh != null && o.orbLow != null) {
     if (o.orbBrokenDirection === 'DOWN' && price > o.orbHigh) {
-      r1Signal = { direction: 'FAVOURS_LONG', severity: 'STRONG', source: 'STRUCTURE',
+      r1Signal = { direction: 'FAVOURS_LONG', severity: 'STRONG', source: 'STRUCTURE', rule: 'R1',
         text: `ORB broke DOWN but price has fully reclaimed the range (back above ${o.orbHigh}) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.` }
     } else if (o.orbBrokenDirection === 'UP' && price < o.orbLow) {
-      r1Signal = { direction: 'FAVOURS_SHORT', severity: 'STRONG', source: 'STRUCTURE',
+      r1Signal = { direction: 'FAVOURS_SHORT', severity: 'STRONG', source: 'STRUCTURE', rule: 'R1',
         text: `ORB broke UP but price has fully reclaimed the range (back below ${o.orbLow}) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.` }
     }
   }
@@ -1217,11 +1218,11 @@ export function computeOrbIntel(input: OrbIntelInput): OrbIntel {
     const label = biasUp ? 'BULLISH' : 'BEARISH'
     if (brokeUp !== biasUp) {
       // R2 — against the bias
-      signals.push({ direction: 'BREAKOUT_SUSPECT', severity: 'CAUTION', source: 'STRUCTURE',
+      signals.push({ direction: 'BREAKOUT_SUSPECT', severity: 'CAUTION', source: 'STRUCTURE', rule: 'R2',
         text: `ORB broke ${o.orbBrokenDirection} against a ${label} macro bias (${score >= 0 ? '+' : ''}${score}) — counter-bias breaks fail more often; treat continuation as suspect.` })
     } else {
       // R3 — with the bias
-      signals.push({ direction: biasUp ? 'FAVOURS_LONG' : 'FAVOURS_SHORT', severity: 'INFO', source: 'STRUCTURE',
+      signals.push({ direction: biasUp ? 'FAVOURS_LONG' : 'FAVOURS_SHORT', severity: 'INFO', source: 'STRUCTURE', rule: 'R3',
         text: `ORB break ${o.orbBrokenDirection} is aligned with the ${label} macro bias (${score >= 0 ? '+' : ''}${score}) — continuation has the backdrop behind it.` })
     }
   }
@@ -1229,7 +1230,7 @@ export function computeOrbIntel(input: OrbIntelInput): OrbIntel {
   // R4 — range budget spent.
   if (o.adrUsedPct != null && o.adrUsedPct >= 70) {
     const strong = o.adrUsedPct >= 90
-    signals.push({ direction: 'BREAKOUT_SUSPECT', severity: strong ? 'STRONG' : 'CAUTION', source: 'RANGE',
+    signals.push({ direction: 'BREAKOUT_SUSPECT', severity: strong ? 'STRONG' : 'CAUTION', source: 'RANGE', rule: 'R4',
       text: `${o.adrUsedPct}% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.` })
   }
 
@@ -1238,10 +1239,10 @@ export function computeOrbIntel(input: OrbIntelInput): OrbIntel {
     const gapUp = o.gapPct > 0
     const biasUp = score >= 3
     if (Math.abs(o.gapPct) >= 0.4 && gapUp !== biasUp) {
-      signals.push({ direction: 'BREAKOUT_SUSPECT', severity: 'CAUTION', source: 'GAP',
+      signals.push({ direction: 'BREAKOUT_SUSPECT', severity: 'CAUTION', source: 'GAP', rule: 'R5',
         text: `Gapped ${gapUp ? 'UP' : 'DOWN'} ${o.gapPct >= 0 ? '+' : ''}${o.gapPct}% against a ${biasUp ? 'bullish' : 'bearish'} bias${o.priorClose != null ? ` — a gap-fill toward prior close (${o.priorClose}) is the favoured first move` : ''}, not continuation.` })
     } else if (Math.abs(o.gapPct) >= 0.25 && gapUp === biasUp && o.overnightHigh != null && o.overnightLow != null && o.adr14 != null && (o.overnightHigh - o.overnightLow) < 0.5 * o.adr14) {
-      signals.push({ direction: biasUp ? 'FAVOURS_LONG' : 'FAVOURS_SHORT', severity: 'INFO', source: 'GAP',
+      signals.push({ direction: biasUp ? 'FAVOURS_LONG' : 'FAVOURS_SHORT', severity: 'INFO', source: 'GAP', rule: 'R6',
         text: `Gap ${gapUp ? 'up' : 'down'} in the bias direction with a tight overnight range — trend-day conditions; the first ORB break ${biasUp ? 'long' : 'short'} carries the setup.` })
     }
   }
@@ -1249,59 +1250,59 @@ export function computeOrbIntel(input: OrbIntelInput): OrbIntel {
   // R7 — the obvious draw sits beyond what's left of a typical day's range.
   if (budget != null && price != null) {
     if (score >= 0 && o.priorDayHigh != null && price < o.priorDayHigh && (o.priorDayHigh - price) > budget) {
-      signals.push({ direction: 'NEUTRAL', severity: 'CAUTION', source: 'RANGE',
+      signals.push({ direction: 'NEUTRAL', severity: 'CAUTION', source: 'RANGE', rule: 'R7',
         text: `The obvious draw (PDH ${o.priorDayHigh}) sits beyond what's left of a typical day's range — targets past it are stretch-only today.` })
     } else if (score < 0 && o.priorDayLow != null && price > o.priorDayLow && (price - o.priorDayLow) > budget) {
-      signals.push({ direction: 'NEUTRAL', severity: 'CAUTION', source: 'RANGE',
+      signals.push({ direction: 'NEUTRAL', severity: 'CAUTION', source: 'RANGE', rule: 'R7',
         text: `The obvious draw (PDL ${o.priorDayLow}) sits beyond what's left of a typical day's range — targets past it are stretch-only today.` })
     }
   }
 
   // R8 — European tape.
   if (et.tapeAgreement === 'DIVERGING') {
-    signals.push({ direction: 'BREAKOUT_SUSPECT', severity: 'CAUTION', source: 'TAPE',
+    signals.push({ direction: 'BREAKOUT_SUSPECT', severity: 'CAUTION', source: 'TAPE', rule: 'R8',
       text: `FTSE is diverging from a united European tape — it's trading its own story today; tape-based confirmation is unreliable.` })
   } else if (et.tapeAgreement === 'SPLIT') {
-    signals.push({ direction: 'NEUTRAL', severity: 'INFO', source: 'TAPE',
+    signals.push({ direction: 'NEUTRAL', severity: 'INFO', source: 'TAPE', rule: 'R8',
       text: `The European tape is split (Euro Stoxx and DAX disagree) — no clean cross-market lead; weight the tape less than usual.` })
   } else if (et.tapeAgreement === 'ALIGNED' && et.eurostoxx50DayPct != null && Math.abs(et.eurostoxx50DayPct) > 0.15) {
     const up = et.eurostoxx50DayPct > 0
-    signals.push({ direction: up ? 'FAVOURS_LONG' : 'FAVOURS_SHORT', severity: 'INFO', source: 'TAPE',
+    signals.push({ direction: up ? 'FAVOURS_LONG' : 'FAVOURS_SHORT', severity: 'INFO', source: 'TAPE', rule: 'R8',
       text: `FTSE is tracking a ${up ? 'firmer' : 'softer'} European tape (Euro Stoxx ${et.eurostoxx50DayPct >= 0 ? '+' : ''}${et.eurostoxx50DayPct}%) — the cross-market lean is ${up ? 'up' : 'down'}.` })
   }
   if ((o.mode === 'PRE_OPEN' || o.mode === 'ORB_FORMING') && (et.preOpenLead === 'UP' || et.preOpenLead === 'DOWN')) {
-    signals.push({ direction: et.preOpenLead === 'UP' ? 'FAVOURS_LONG' : 'FAVOURS_SHORT', severity: 'INFO', source: 'TAPE',
+    signals.push({ direction: et.preOpenLead === 'UP' ? 'FAVOURS_LONG' : 'FAVOURS_SHORT', severity: 'INFO', source: 'TAPE', rule: 'R8b',
       text: `European futures already broke ${et.preOpenLead} through their overnight range pre-open — an early lean for a ${et.preOpenLead === 'UP' ? 'upside' : 'downside'} resolution.` })
   }
 
   // R9 — US tape / VIX.
   if (us.vixRegime === 'STRESS') {
-    signals.push({ direction: 'BREAKOUT_SUSPECT', severity: 'STRONG', source: 'TAPE',
+    signals.push({ direction: 'BREAKOUT_SUSPECT', severity: 'STRONG', source: 'TAPE', rule: 'R9',
       text: `VIX in STRESS — violent reversals both ways; cut size and distrust breakouts in either direction.` })
   } else if (nowLondonHour >= 13.5 && us.us500DayPct != null && Math.abs(us.us500DayPct) >= 0.3) {
     const up = us.us500DayPct > 0
-    signals.push({ direction: up ? 'FAVOURS_LONG' : 'FAVOURS_SHORT', severity: 'INFO', source: 'TAPE',
+    signals.push({ direction: up ? 'FAVOURS_LONG' : 'FAVOURS_SHORT', severity: 'INFO', source: 'TAPE', rule: 'R9',
       text: `Past 13:30 with US futures ${us.us500DayPct >= 0 ? '+' : ''}${us.us500DayPct}% — the 14:30 US handoff argues ${up ? 'for' : 'against'} holding longs into the US open.` })
   }
 
   // R10 — sterling at a 20-day extreme.
   if (fx.gbpUsd20dPercentile != null && fx.gbpUsdDayPct != null) {
     if (fx.gbpUsd20dPercentile >= 85 && fx.gbpUsdDayPct > 0) {
-      signals.push({ direction: 'BREAKOUT_SUSPECT', severity: 'CAUTION', source: 'FX',
+      signals.push({ direction: 'BREAKOUT_SUSPECT', severity: 'CAUTION', source: 'FX', rule: 'R10',
         text: `Sterling is at the ${fx.gbpUsd20dPercentile}th percentile of its 20-day range and still rising — a persistent FX headwind capping upside breaks (weak GBP is what lifts FTSE).` })
     } else if (fx.gbpUsd20dPercentile <= 15 && fx.gbpUsdDayPct < 0) {
-      signals.push({ direction: 'FAVOURS_LONG', severity: 'INFO', source: 'FX',
+      signals.push({ direction: 'FAVOURS_LONG', severity: 'INFO', source: 'FX', rule: 'R10',
         text: `Sterling is at the ${fx.gbpUsd20dPercentile}th percentile of its 20-day range and falling — a weak-GBP tailwind for the index's dollar earners.` })
     }
   }
 
   // R11 — fiscal stress / COT.
   if (ukRates.longEndStress) {
-    signals.push({ direction: 'FAVOURS_SHORT', severity: 'STRONG', source: 'RATES',
+    signals.push({ direction: 'FAVOURS_SHORT', severity: 'STRONG', source: 'RATES', rule: 'R11',
       text: `20Y gilt +${ukRates.gilt20yDayBp}bp — a fiscal-stress selloff; this historically drags the whole index regardless of the banks rotation.` })
   }
   if (positioning.crowding === 'CROWDED_SHORT') {
-    signals.push({ direction: 'BREAKOUT_SUSPECT', severity: 'INFO', source: 'POSITIONING',
+    signals.push({ direction: 'BREAKOUT_SUSPECT', severity: 'INFO', source: 'POSITIONING', rule: 'R11b',
       text: `GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE).` })
   }
 
@@ -1314,19 +1315,19 @@ export function computeOrbIntel(input: OrbIntelInput): OrbIntel {
     const call = ts.direction ? `${ts.direction}${drawClause}` : 'NO TRADE'
     const meta = [ts.status, ts.probability != null ? `${ts.probability}%` : null].filter(Boolean).join(', ')
     const playbook = ts.orbDirection ? ` — playbook ${ts.orbDirection}` : ''
-    r12Signal = { direction: dir, severity: 'INFO', source: 'AI',
+    r12Signal = { direction: dir, severity: 'INFO', source: 'AI', rule: 'R12',
       text: `Today's ${ts.time} AI session read: ${call}${meta ? ` (${meta})` : ''}${playbook}.` }
     signals.push(r12Signal)
   }
 
   // R13 — event windows.
   if (o.eventWindows.length > 0) {
-    signals.push({ direction: 'BREAKOUT_SUSPECT', severity: 'CAUTION', source: 'EVENT',
+    signals.push({ direction: 'BREAKOUT_SUSPECT', severity: 'CAUTION', source: 'EVENT', rule: 'R13',
       text: `${o.eventWindows.map(e => `${e.event} @ ${e.timeLondon}`).join(', ')} today — pre-release breaks are positioning, not conviction.` })
   } else {
     const tomorrowHigh = calendar.find(e => e.impact === 'HIGH' && e.daysFromToday === 1)
     if (tomorrowHigh && nowLondonHour >= 14) {
-      signals.push({ direction: 'NEUTRAL', severity: 'INFO', source: 'EVENT',
+      signals.push({ direction: 'NEUTRAL', severity: 'INFO', source: 'EVENT', rule: 'R13',
         text: `${tomorrowHigh.event} prints tomorrow ${tomorrowHigh.timeLondon} — late-session moves today are as likely pre-event de-risking as conviction.` })
     }
   }
