@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-15T18:56:31.296Z",
+  "generatedAt": "2026-07-15T20:04:26.222Z",
   "yields": {
     "US10Y": 4.62,
     "US2Y": 4.26,
@@ -34,26 +34,26 @@
     "openInterestChange": 6341
   },
   "etfFlows": {
-    "gldTonnes": 995.9,
-    "gldWoWChange": -6.1,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 997.1,
+    "gldWoWChange": 1.2,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4063.42,
-    "XAGUSD": 57.9985,
-    "EURUSD": 1.14691,
-    "USDJPY": 162.0325,
-    "USDCHF": 0.80458,
-    "USDCNH": 6.76727,
-    "GBPUSD": 1.3539,
-    "USDCAD": 1.40419,
-    "USDSEK": 9.58955,
-    "US500": 7560,
-    "GER40": 25015.55,
-    "UK100": 10480.2,
+    "XAUUSD": 4058.475,
+    "XAGUSD": 57.7685,
+    "EURUSD": 1.14636,
+    "USDJPY": 162.2165,
+    "USDCHF": 0.80511,
+    "USDCNH": 6.76823,
+    "GBPUSD": 1.35363,
+    "USDCAD": 1.40429,
+    "USDSEK": 9.58616,
+    "US500": 7574.8,
+    "GER40": 24998.55,
+    "UK100": 10472.7,
     "ADR_14day": 100.1,
     "ADR_usedToday": 63.3,
-    "goldSilverRatio": 70.1
+    "goldSilverRatio": 70.3
   },
   "dollarLiquidity": {
     "stlfsi": -0.882,
@@ -69,26 +69,20 @@
       "headline": "Jim Cramer sees more upside for Goldman and addresses Wells Fargo's biggest question",
       "source": "CNBC",
       "publishedAt": "2026-07-15T15:29:49.000Z",
-      "hoursAgo": 3.4
+      "hoursAgo": 4.6
     },
     {
       "headline": "Buffett says Trump's pick of Kevin Warsh for Fed chair was 'good choice'",
       "source": "CNBC",
       "publishedAt": "2026-07-15T12:14:44.000Z",
-      "hoursAgo": 6.7
-    },
-    {
-      "headline": "US Russia sanctions bill eases threat of tariffs on China and India - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-07-14T19:07:00.000Z",
-      "hoursAgo": 23.8
+      "hoursAgo": 7.8
     }
   ],
   "briefing": {
-    "biasScore": -1,
-    "biasLabel": "NEUTRAL",
-    "confidence": 4,
-    "briefing": "Right now, the two biggest forces pulling on gold are rising US bond yields and a dollar that is holding its ground — both of which tend to work against gold. The 10-year US Treasury yield [the interest rate the government pays on long-term borrowing, which competes with gold as a 'safe' asset] has crept up 0.06% today to 4.62%, and real yields [what you actually earn after inflation is stripped out] are sitting at a high 2.36% — when real yields are this elevated, gold has to work hard to attract buyers. Looking at recent headlines, nothing in the last few hours is a clear market-mover for gold: the Cramer/Goldman comment (3.4 hours ago) is stock-market noise, Warren Buffett's approval of Kevin Warsh as future Fed chair (6.7 hours ago) is mildly dollar-supportive because Warsh is seen as hawkish [favouring higher interest rates, which strengthen the dollar and pressure gold], and the Russia-sanctions/China-tariff story (nearly 24 hours ago) has likely already been digested by the market. The directional bias leans very slightly bearish [expecting price to fall] for gold right now, simply because yields are rising, the dollar is stable near 100.47, and ETF [exchange-traded fund — a fund that holds physical gold] flows have been negative for three straight weeks, suggesting big institutional buyers are not rushing in. That said, geopolitical risk [GPR at 173.6, a measure of global tension] remains elevated, which provides a floor of support. Confidence is 4/10 — this is a low-conviction environment. What would change the view: a sharp drop in yields, a weaker dollar print, or a fresh geopolitical shock could flip gold bullish quickly. The calendar shows no scheduled economic events today, so expect price to be driven by technicals and any surprise headlines. There are no high-impact events flagged later this week in the data provided, though the Fed meeting on July 29 is approaching and markets are pricing a 92% chance of no rate change [the Fed keeping borrowing costs where they are], which limits big directional surprises for now. On price levels, gold is at $4,063 with a 14-day average daily range [the typical distance price travels in a full day] of $100.10 — it has already moved $63.30 of that today, meaning roughly $37 of average daily movement may remain. Key levels to watch: $4,100 as the upside target where sellers may step in, and $4,030–$4,020 as the support zone [a price area where buyers have previously stepped in] below. For trade integration, this is NOT a high-conviction window — the trend on the 1H chart needs confirmation, yields are working against longs [buy trades], and most of the day's expected range has already been consumed, so size down or sit on your hands and wait for a cleaner setup tomorrow. When in doubt, smaller size protects your account while you wait for the market to show its hand.",
-    "generatedAt": "2026-07-15T18:56:51.241Z"
+    "biasScore": 2,
+    "biasLabel": "BULLISH",
+    "confidence": 5,
+    "briefing": "Right now, the dominant forces shaping gold are a firm but not aggressive US dollar (the DXY [an index measuring the dollar against a basket of major currencies] sitting at 100.51), rising bond yields [the interest rate the US government pays on its debt — higher yields usually hurt gold because bonds become more attractive], and a market that is almost certain (92%) the Federal Reserve will hold interest rates steady at its July 29th meeting. Despite those headwinds, gold is trading at a very elevated $4,058, which tells you the structural buying pressure — from geopolitical risk [the GPR index, a measure of global political tension, is elevated at 173.6], steady ETF inflows [investors adding physical gold to funds like GLD for three straight weeks], and large professional traders holding significant long positions [183,165 net long contracts in the latest COT report, meaning big money is still betting on higher prices] — continues to outweigh those negatives. On recent catalysts, the two news items from today are not gold-market movers: one is about bank stocks and the other is Warren Buffett commenting on a potential Fed Chair pick (Kevin Warsh, about 8 hours ago) — worth noting because a hawkish [favours higher interest rates] Fed chair nominee can be mildly negative for gold long-term, but it hasn't triggered any obvious sell-off today, so treat it as background noise for now. The directional bias leans mildly BULLISH — price is elevated, big money hasn't sold, and safe-haven demand remains real — but with real yields [bond yields after stripping out inflation] at a high 2.36% and yields ticking up today, gold faces genuine resistance [a price ceiling where sellers tend to cluster] to pushing much further without a fresh catalyst. Confidence is 5/10: the trend is intact, but high real yields and a near-certain rate hold create friction. What would change the view bearish: a meaningful DXY rally above 102 or a sharp spike in real yields. The economic calendar shows NO scheduled events today, which is actually a double-edged sword — no catalyst to push price higher, but also no data shock to knock it down. With no events on the calendar for the rest of the week either (the calendar data is empty), there is no specific build-up caution needed this week, though always watch for surprise headlines. On key levels: the 14-day Average Daily Range [typical daily price swing over the last two weeks] is about $100, and today has already used roughly $63 of that, meaning only around $37 of typical movement is left for the session — so the easy money for today's range has likely already been made, and chasing a big breakout this late in the day carries more risk. For trade integration: if you are already in a long trade [a buy position] from an earlier setup today, there is modest room to let it run toward the top of today's range, but opening a new full-size long position this late in the New York session — with limited ADR remaining and no fresh bullish catalyst — is low-conviction. If you do enter, use reduced position size and keep your stop [the price level where you exit to limit losses] tight. Remember: the trend is your friend, but only enter when the setup is clear — chasing price late in the session is how beginners give back their profits.",
+    "generatedAt": "2026-07-15T20:04:48.755Z"
   }
 }
