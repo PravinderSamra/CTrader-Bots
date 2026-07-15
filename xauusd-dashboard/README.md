@@ -334,6 +334,43 @@ above the (now-collapsible) range numbers. Two layers:
   briefing Anthropic call (no extra API call); `null`/`[]` without a key, and the
   tile degrades to the mechanical layer. `baseRateNote` is reserved for the
   not-yet-built Phase E ORB backtest and is always null for now.
+- Each mechanical signal also carries a `rule` id (`R1`…`R13`, plus `R8b`/`R11b`
+  for two independent sub-signals) — the tile ignores it; the journal uses it.
+
+### ORB intel journal (`orb-journal/`)
+
+The forward-looking, live-collected complement to the (unbuilt) Phase E backtest:
+every hourly fetch appends its final `orbIntel` read + the market context it was
+computed from to a dated `public/data/uk100/orb-journal/YYYY-MM-DD.json`
+(`{ date, entries: [...] }`, ~14 entries/day, never pruned). `resolve-orb-journal.ts`
+(a `continue-on-error` workflow step) later scores each entry against realised
+UK100 H1 price so **"what was flagged" vs "what happened" is a computed field**.
+
+- **Entry**: `{ at, londonTime, mode, price, stance, stanceLine, signals,
+  aiStanceLine, aiBullets, bias, orb:{…context…}, outcome }`. `outcome` starts
+  null. Tokenless/local runs are skipped (no null-price entries).
+- **Outcome** (written by the resolver): forward returns (`fwd1hPct`/`fwd3hPct`),
+  `toClosePct`, up/down excursions, a per-stance `verdict`, and per-signal
+  `signalVerdicts` keyed by rule. Scoring window = `at → min(at+8h, same-day
+  16:30 London)`; reads published within 30 min of the close are `UNSCORABLE`.
+  Verdict thresholds: directional stances/signals RIGHT at `toClose ≥ +0.15%`,
+  WRONG at `≤ −0.15%`, else FLAT (short side mirrored; `FADE_FAVOURED` takes its
+  side from its R1 signal); `BREAKOUT_SUSPECT` signals are RIGHT when both
+  excursions stayed under 0.25% (the breakout went nowhere), WRONG at ≥ 0.40%.
+- **`scoreboard.json`**: per-stance and per-rule hit rates (`n`/`right`/`wrong`/
+  `flat`) over the full resolved history, plus a breakouts-suspect no-extension
+  rate. This is the learning artifact — the skill (`uk100-session.md` STEP 8)
+  cites a stance/rule rate **only at `n ≥ 20`**, never small-n.
+- **Digest**: `npx tsx scripts/orb-journal-digest.ts [YYYY-MM-DD]` prints a human
+  markdown table of a day's reads (time, stance, top signal, verdict, to-close%).
+
+**For future recalibration** — periodic review sessions (the
+`UK100-SESSION-REVIEW-*` pattern) should read `orb-journal/` + `scoreboard.json`
+as **primary evidence** when retuning the R-rule thresholds, the PROVISIONAL
+`europeanTapeWeight`, and the bias weights: replace priors with measured rates,
+the discipline the plan docs defer "until there is data" — this journal is that
+data. Once `scoreboard.json`'s `entriesScored ≥ 100`, the ORB tile's reserved
+`baseRateNote` may be populated from it (a later change, not yet wired).
 
 ### `/uk100-session` — the AI skill
 
