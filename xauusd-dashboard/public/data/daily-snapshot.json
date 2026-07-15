@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-07-15T15:19:32.720Z",
+  "generatedAt": "2026-07-15T17:06:59.611Z",
   "yields": {
-    "US10Y": null,
+    "US10Y": 4.62,
     "US2Y": 4.26,
-    "realYield10Y": null,
-    "realYield5Y": null,
-    "curve2s10s": null,
+    "realYield10Y": 2.36,
+    "realYield5Y": 2.06,
+    "curve2s10s": 36,
     "breakeven10Y": 2.25,
     "breakeven5Y": 2.28,
     "forward5y5y": 2.22,
     "dayOverDay": {
-      "US10Y": null,
+      "US10Y": 0.06,
       "US2Y": 0.05,
-      "realYield10Y": null
+      "realYield10Y": 0.04
     }
   },
   "fedExpectations": {
@@ -23,7 +23,7 @@
   },
   "marketVolatility": {
     "GVZ": 25.02,
-    "VIX": null
+    "VIX": 16.5
   },
   "positioning": {
     "cotNetLong": 183165,
@@ -34,29 +34,29 @@
     "openInterestChange": 6341
   },
   "etfFlows": {
-    "gldTonnes": 1000,
-    "gldWoWChange": 3.9,
+    "gldTonnes": 1002,
+    "gldWoWChange": 2,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4046.41,
-    "XAGUSD": 57.749,
-    "EURUSD": 1.14364,
-    "USDJPY": 162.1775,
-    "USDCHF": 0.80683,
-    "USDCNH": 6.77156,
-    "GBPUSD": 1.34767,
-    "USDCAD": 1.40535,
-    "USDSEK": 9.638,
-    "US500": 7559.5,
-    "GER40": 25019.55,
-    "UK100": 10504.75,
+    "XAUUSD": 4038.66,
+    "XAGUSD": 56.9635,
+    "EURUSD": 1.14474,
+    "USDJPY": 162.1315,
+    "USDCHF": 0.80636,
+    "USDCNH": 6.76966,
+    "GBPUSD": 1.35359,
+    "USDCAD": 1.40442,
+    "USDSEK": 9.6264,
+    "US500": 7547.8,
+    "GER40": 24984.55,
+    "UK100": 10459.7,
     "ADR_14day": 100.1,
     "ADR_usedToday": 56.6,
-    "goldSilverRatio": 70.1
+    "goldSilverRatio": 70.9
   },
   "dollarLiquidity": {
-    "stlfsi": -0.7246,
+    "stlfsi": -0.882,
     "nfci": -0.538
   },
   "geopoliticalRisk": {
@@ -66,29 +66,29 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Jim Cramer sees more upside for Goldman and addresses Wells Fargo's biggest question",
+      "source": "CNBC",
+      "publishedAt": "2026-07-15T15:29:49.000Z",
+      "hoursAgo": 1.6
+    },
+    {
       "headline": "Buffett says Trump's pick of Kevin Warsh for Fed chair was 'good choice'",
       "source": "CNBC",
       "publishedAt": "2026-07-15T12:14:44.000Z",
-      "hoursAgo": 3.1
+      "hoursAgo": 4.9
     },
     {
       "headline": "US Russia sanctions bill eases threat of tariffs on China and India - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-14T19:07:00.000Z",
-      "hoursAgo": 20.2
-    },
-    {
-      "headline": "Trump says he thinks Iran and Hezbollah will be added to Russia sanctions bill - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-07-14T16:37:06.000Z",
-      "hoursAgo": 22.7
+      "hoursAgo": 22
     }
   ],
   "briefing": {
-    "biasScore": 1,
+    "biasScore": 2,
     "biasLabel": "BULLISH",
     "confidence": 5,
-    "briefing": "Right now the most relevant forces for gold are a moderately weak US dollar (the DXY — an index measuring dollar strength against other currencies — sits at 100.74, which is relatively soft), a geopolitical risk index that remains elevated at 173.6 (meaning global tensions are still high, which historically supports gold as a safe-haven), and steady inflows into gold ETFs [funds that hold physical gold] for three consecutive weeks, which shows real-money buyers are still active. On recent news, the most notable headline from about 3 hours ago is Warren Buffett publicly endorsing Kevin Warsh as Trump's pick for Fed Chair — Warsh is considered a hawkish candidate [meaning he favours higher interest rates], which could eventually be dollar-positive and gold-negative if confirmed; however, markets haven't dramatically repriced yet, so this is a watch item rather than a clear trigger. A Reuters report from roughly 20 hours ago noted a Russia sanctions bill that eases tariff threats on China and India — this slightly reduces global trade tension, which can take a little safe-haven demand away from gold. The directional bias leans mildly BULLISH: the dollar is soft, geopolitical risk is high, and ETF flows remain supportive, but the Warsh news introduces uncertainty. Confidence is 5/10 — this would shift lower if dollar strength picks up on Warsh speculation, or shift higher if geopolitical news escalates. There are NO scheduled economic events on the calendar for today, which is actually helpful — it means price can move more freely on trend rather than news spikes. The calendar is completely empty for the rest of the week too, so there is no major data build-up caution needed right now. On key levels: the 14-day average daily range [the typical daily price swing] is about 100 points, and today has already used roughly 56.6 of those points, meaning only around 43–44 points of typical movement may remain in today's session — price is already more than halfway through its expected daily range, so chasing large moves from here carries more risk. Watch 4046 as the current pivot; a hold above it keeps the short-term structure bullish, while a break below 4020–4010 would suggest the trend is weakening. For trade integration: this is a reasonable window for cautious trend-following long [buy] setups using your 1H trend, 5M signal, and 1M entry process, but reduce your normal position size by around 30–40% given that much of today's range is already used and the Warsh news adds uncertainty. Remember: with more than half the day's expected range already consumed, the best move is to wait for a clean pullback to a key level rather than buying into extended price.",
-    "generatedAt": "2026-07-15T15:19:51.254Z"
+    "briefing": "Right now, the dominant forces shaping gold are a moderately weak US Dollar (the DXY index, which measures the dollar against a basket of currencies, sits at 100.61 — a lower dollar generally helps gold prices rise), elevated real yields [the return on bonds after stripping out inflation] at 2.36% which would normally press gold lower, and persistently high geopolitical risk [a measure of global tensions and conflict] at 173.6, which keeps demand for gold as a 'safe haven' asset alive. Reviewing the recent headlines: a story from about 5 hours ago flagged Warren Buffett's endorsement of Kevin Warsh as the next Fed Chair — Warsh is widely seen as hawkish [meaning he'd likely favour higher interest rates, which could strengthen the dollar and weaken gold], so this is a mild headwind for gold if confirmed. A Reuters story from 22 hours ago about a Russia sanctions bill potentially easing tariff pressure on China and India is modestly risk-positive [meaning investors feel safer taking on risk], which can slightly reduce gold's safe-haven premium. The Jim Cramer headline has no clear gold or dollar relevance. Putting it together, the directional bias is cautiously BULLISH — gold is near $4,038, still in a clear longer-term uptrend, and neither the dollar nor yields are spiking aggressively. However, rising yields, the Warsh Fed Chair narrative, and a nearly risk-neutral environment cap conviction. Confidence is 5/10 — a sharp dollar rally or further yield increases above 4.70% on the 10-year would flip this view bearish. The calendar shows NO scheduled economic events today, so there is no immediate news risk — this is actually a clean window for setups, though lower volatility can mean choppier, tighter price action. The 14-day Average Daily Range [the typical daily price swing] is $100, and today has already used $56.60 of that, meaning roughly $43 of movement potential remains for the session — plan your targets accordingly. Key levels to watch: $4,050–$4,060 as nearby resistance [a price ceiling where sellers may appear], and $4,010–$4,000 as a support zone [a price floor where buyers may step in]; a clean break above $4,060 with a 5M bullish signal would be the highest-quality long entry, while a drop below $4,000 would invalidate the near-term bullish case. For trade integration: this is an acceptable window for trend-following long [buy] setups, but given roughly half the day's range is already used and conviction is moderate, keep position size small and wait for a clear 5M pullback into structure before committing. Remember: with half the day's range already used, chasing price here is low-probability — be patient and wait for price to come to a clean level before entering.",
+    "generatedAt": "2026-07-15T17:07:18.713Z"
   }
 }
