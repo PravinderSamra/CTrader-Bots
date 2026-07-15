@@ -157,6 +157,46 @@ interface OrbIntel {
   baseRateNote: string | null
 }
 
+// ── ORB intel journal (J1, UK100-ORB-JOURNAL-DESIGN.md §2) — every hourly
+//    fetch appends its orbIntel + the context it was computed from; the
+//    resolver (J2) later fills `outcome`. Mirrored in src/types/uk100.ts.
+interface OrbJournalOutcome {
+  resolvedAt:  string
+  fwd1hPct:    number | null
+  fwd3hPct:    number | null
+  toClosePct:  number
+  maxUpPct:    number
+  maxDownPct:  number
+  verdict:     'RIGHT' | 'WRONG' | 'FLAT' | 'UNSCORABLE' | null
+  signalVerdicts: { rule: string; verdict: 'RIGHT' | 'WRONG' | 'FLAT' }[]
+}
+
+interface OrbJournalEntry {
+  at:           string   // ISO timestamp of the fetch run
+  londonTime:   string   // "HH:MM BST|GMT"
+  mode:         OrbContext['mode']
+  price:        number   // UK100 mid at publish time
+  stance:       OrbIntelStance
+  stanceLine:   string
+  signals:      OrbIntelSignal[]
+  aiStanceLine: string | null
+  aiBullets:    string[]
+  bias:         { score: number; label: string }
+  orb: {
+    orbHigh: number | null; orbLow: number | null
+    orbBrokenDirection: OrbContext['orbBrokenDirection']
+    overnightHigh: number | null; overnightLow: number | null
+    priorDayHigh: number | null; priorDayLow: number | null
+    gapPct: number | null; adr14: number | null; adrUsedPct: number | null
+  }
+  outcome:      OrbJournalOutcome | null
+}
+
+interface OrbJournalDay {
+  date:    string   // London calendar date, YYYY-MM-DD
+  entries: OrbJournalEntry[]
+}
+
 interface Uk100Snapshot {
   generatedAt: string
   prices: Uk100Prices
@@ -1407,6 +1447,58 @@ function readTodaySessionEcho(): TodaySessionEcho | null {
   }
 }
 
+// ── ORB journal writer (J1) ─────────────────────────────────────────────────
+// Pure merge — create a fresh day (London date derived from the entry) or
+// append to an existing one, preserving all prior entries. Unit-tested.
+export function appendJournalEntry(existing: OrbJournalDay | null, entry: OrbJournalEntry): OrbJournalDay {
+  if (existing) return { date: existing.date, entries: [...existing.entries, entry] }
+  const at = new Date(entry.at)
+  const date = new Date(at.getTime() + londonOffsetHours(at) * 3_600_000).toISOString().slice(0, 10)
+  return { date, entries: [entry] }
+}
+
+// Read-modify-write the day file. Skips entirely when there's no live UK100
+// price (tokenless/local runs must not pollute the journal). Best-effort:
+// a journal failure never breaks the snapshot.
+function appendOrbJournal(input: { ctrader: CtraderResult | null; orbIntel: OrbIntel; orbContext: OrbContext; bias: BiasBlock }): void {
+  const price = input.ctrader?.prices.UK100 ?? null
+  if (!input.ctrader || price == null) { console.log('ORB journal: skipped (no live price)'); return }
+  try {
+    const now = new Date()
+    const o = input.orbContext
+    const entry: OrbJournalEntry = {
+      at: now.toISOString(),
+      londonTime: londonTimeLabel(now.toISOString()),
+      mode: o.mode,
+      price,
+      stance: input.orbIntel.stance,
+      stanceLine: input.orbIntel.stanceLine,
+      signals: input.orbIntel.signals,
+      aiStanceLine: input.orbIntel.aiStanceLine,
+      aiBullets: input.orbIntel.aiBullets,
+      bias: { score: input.bias.score, label: input.bias.label },
+      orb: {
+        orbHigh: o.orbHigh, orbLow: o.orbLow, orbBrokenDirection: o.orbBrokenDirection,
+        overnightHigh: o.overnightHigh, overnightLow: o.overnightLow,
+        priorDayHigh: o.priorDayHigh, priorDayLow: o.priorDayLow,
+        gapPct: o.gapPct, adr14: o.adr14, adrUsedPct: o.adrUsedPct,
+      },
+      outcome: null,
+    }
+    const dir = path.join(__dirname, '../public/data/uk100/orb-journal')
+    fs.mkdirSync(dir, { recursive: true })
+    const dateLondon = londonNow().toISOString().slice(0, 10)
+    const file = path.join(dir, `${dateLondon}.json`)
+    let existing: OrbJournalDay | null = null
+    try { existing = JSON.parse(fs.readFileSync(file, 'utf8')) as OrbJournalDay } catch { /* new day */ }
+    const day = appendJournalEntry(existing, entry)
+    fs.writeFileSync(file, JSON.stringify(day, null, 2))
+    console.log(`ORB journal: appended entry (${day.entries.length} today, stance=${entry.stance})`)
+  } catch (err) {
+    console.error('ORB journal append failed:', err)
+  }
+}
+
 // ── Anthropic risk-tone classifier + daily briefing (Phase 2e) ─────────────
 // Same key-sourcing pattern as fetch-static-data.ts: .trim() defends against
 // a trailing newline in the GitHub secret, which makes Headers.append throw
@@ -1706,6 +1798,12 @@ async function main() {
   const snapshot: Uk100Snapshot = { ...snapshotWithoutBriefing, orbIntel: orbIntelFinal, briefing }
 
   fs.writeFileSync(outPath, JSON.stringify(snapshot, null, 2))
+
+  // ORB journal (J1) — append this run's final read to the dated day file so
+  // the resolver (J2) can later score flagged-vs-happened. After the snapshot
+  // write so the entry carries the merged aiStanceLine/aiBullets.
+  appendOrbJournal({ ctrader, orbIntel: orbIntelFinal, orbContext, bias })
+
   console.log(`UK100 snapshot written: ${path.relative(path.join(__dirname, '../..'), outPath)}`)
   console.log(`Bias: ${bias.label} (score=${bias.score}, conviction=${bias.conviction})`)
   console.log(`ORB intel: ${orbIntelFinal.stance}, aiBullets=${orbIntelFinal.aiBullets.length}`)

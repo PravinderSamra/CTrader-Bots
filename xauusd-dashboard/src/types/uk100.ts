@@ -143,6 +143,46 @@ export interface OrbIntel {
   baseRateNote: string | null
 }
 
+// ── ORB intel journal (J1/J2, UK100-ORB-JOURNAL-DESIGN.md) — mirror of the
+//    script-local types in scripts/fetch-uk100-data.ts; consumed by the digest
+//    CLI and any future scoreboard UI. ──
+export interface OrbJournalOutcome {
+  resolvedAt:  string
+  fwd1hPct:    number | null
+  fwd3hPct:    number | null
+  toClosePct:  number
+  maxUpPct:    number
+  maxDownPct:  number
+  verdict:     'RIGHT' | 'WRONG' | 'FLAT' | 'UNSCORABLE' | null
+  signalVerdicts: { rule: string; verdict: 'RIGHT' | 'WRONG' | 'FLAT' }[]
+}
+
+export interface OrbJournalEntry {
+  at:           string
+  londonTime:   string
+  mode:         OrbContext['mode']
+  price:        number
+  stance:       OrbIntelStance
+  stanceLine:   string
+  signals:      OrbIntelSignal[]
+  aiStanceLine: string | null
+  aiBullets:    string[]
+  bias:         { score: number; label: string }
+  orb: {
+    orbHigh: number | null; orbLow: number | null
+    orbBrokenDirection: OrbContext['orbBrokenDirection']
+    overnightHigh: number | null; overnightLow: number | null
+    priorDayHigh: number | null; priorDayLow: number | null
+    gapPct: number | null; adr14: number | null; adrUsedPct: number | null
+  }
+  outcome:      OrbJournalOutcome | null
+}
+
+export interface OrbJournalDay {
+  date:    string
+  entries: OrbJournalEntry[]
+}
+
 export interface Uk100RiskTone {
   score: number; label: FtseImpact; rationale: string
 }

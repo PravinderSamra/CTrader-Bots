@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { computeBias, firstCloseOutside, computeOrbIntel, isoWeekKey, tradingDayIsoWeekKey, type OrbIntelInput } from '../fetch-uk100-data'
+import { computeBias, firstCloseOutside, computeOrbIntel, isoWeekKey, tradingDayIsoWeekKey, appendJournalEntry, type OrbIntelInput } from '../fetch-uk100-data'
+import type { OrbJournalDay, OrbJournalEntry } from '../../src/types/uk100'
 
 // B1 (UK100-V2-PLAN.md §4): label thresholds for the four continuous
 // drivers (GBP, US futures, Brent, Copper) moved from |comp| > 0.3 to
@@ -329,5 +330,38 @@ describe('tradingDayIsoWeekKey — session-open stamp compensation', () => {
 
   it('is a no-op for a midnight-same-day stamping convention', () => {
     expect(tradingDayIsoWeekKey(Date.UTC(2026, 6, 6, 0, 0))).toBe(wk28)
+  })
+})
+
+// J1 — the ORB journal's pure append/merge.
+describe('appendJournalEntry — journal day merge', () => {
+  function entry(at: string, stance: OrbJournalEntry['stance'] = 'MIXED'): OrbJournalEntry {
+    return {
+      at, londonTime: '10:00 BST', mode: 'POST_ORB', price: 10500, stance,
+      stanceLine: 'x', signals: [], aiStanceLine: null, aiBullets: [],
+      bias: { score: 0, label: 'NEUTRAL' },
+      orb: { orbHigh: null, orbLow: null, orbBrokenDirection: null, overnightHigh: null, overnightLow: null, priorDayHigh: null, priorDayLow: null, gapPct: null, adr14: null, adrUsedPct: null },
+      outcome: null,
+    }
+  }
+
+  it('creates a fresh day keyed by the entry\'s London date when none exists', () => {
+    const day = appendJournalEntry(null, entry('2026-07-16T09:00:00.000Z'))
+    expect(day.date).toBe('2026-07-16')
+    expect(day.entries).toHaveLength(1)
+  })
+
+  it('appends to an existing day and preserves prior entries in order', () => {
+    const d0: OrbJournalDay = appendJournalEntry(null, entry('2026-07-16T08:00:00.000Z', 'LONG_FAVOURED'))
+    const d1 = appendJournalEntry(d0, entry('2026-07-16T09:00:00.000Z', 'FADE_FAVOURED'))
+    expect(d1.date).toBe('2026-07-16')
+    expect(d1.entries.map(e => e.stance)).toEqual(['LONG_FAVOURED', 'FADE_FAVOURED'])
+  })
+
+  it('does not mutate the input day', () => {
+    const d0 = appendJournalEntry(null, entry('2026-07-16T08:00:00.000Z'))
+    const before = d0.entries.length
+    appendJournalEntry(d0, entry('2026-07-16T09:00:00.000Z'))
+    expect(d0.entries).toHaveLength(before)
   })
 })
