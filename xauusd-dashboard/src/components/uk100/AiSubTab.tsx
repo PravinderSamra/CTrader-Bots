@@ -449,7 +449,10 @@ function AnalysisRenderer({ session }: { session: Uk100SessionRecord }) {
             !t.includes('LIQUIDITY MAP') && !t.includes('KEY PD ARRAYS') && !t.includes('TRADE IDEA') &&
             !t.includes('PROBABILITY') && !t.includes('KEY LEVELS') && !t.includes('MACRO REGIME') &&
             !t.includes('SESSION CONTEXT') && !t.includes('CROSS-CHECK') && !t.includes('MARKET NARRATIVE') &&
-            !t.includes('ORB PLAYBOOK')
+            !t.includes('ORB PLAYBOOK') &&
+            // TL;DR renders structurally via TldrCard at the top of the view
+            // (G3) — showing the printed section again here would duplicate it.
+            !t.includes('TL;DR')
           )
         })
         .map(sec => (

@@ -226,6 +226,18 @@ export function isoWeekKey(d: Date): string {
   return `${date.getUTCFullYear()}-W${String(week).padStart(2, '0')}`
 }
 
+// ISO-week key for a D_1 bar's TRADING day. cTrader stamps UK100 D_1 bars at
+// the session open — 21:00 UTC of the PRIOR calendar day (22:00 London BST;
+// verified 2026-07-15 against live bars: Monday 06 Jul's bar is stamped
+// Sun 05 Jul 21:00Z). Bucketing the raw stamp therefore throws every Monday
+// bar into the previous ISO week (Sunday is that week's last day). Shifting
+// +12h maps a 21:00/22:00-prior-day stamp onto its actual trading day (and is
+// a no-op for a 00:00-same-day convention), so the week bucket is right under
+// either stamping scheme.
+export function tradingDayIsoWeekKey(tsMs: number): string {
+  return isoWeekKey(new Date(tsMs + 12 * 3_600_000))
+}
+
 function londonTimeLabel(iso: string): string {
   const d = new Date(iso)
   const offsetH = londonOffsetHours(d)
@@ -436,14 +448,14 @@ async function fetchCtraderData(): Promise<CtraderResult | null> {
           adrUsedPct = Math.round((today.high - today.low) / 1e5 / adr14 * 100)
         }
 
-        // Previous-ISO-week high/low (F-E) — bucket the D_1 bars by London ISO
-        // week, take the week before the current one. Null when fewer than 3
-        // bars land in it (holiday-shortened week / thin data).
+        // Previous-ISO-week high/low (F-E) — bucket the D_1 bars by their
+        // TRADING day's ISO week (tradingDayIsoWeekKey compensates for the
+        // 21:00Z-prior-day session-open stamp, which otherwise threw every
+        // Monday bar into the previous week — caught in the G1 review), take
+        // the week before the current one. Null when fewer than 3 bars land
+        // in it (holiday-shortened week / thin data).
         const prevWeekKey = isoWeekKey(new Date(londonNow().getTime() - 7 * 86_400_000))
-        const prevWeekBars = d1Bars.filter(b => {
-          const bd = new Date(b.timestamp + londonOffsetHours(new Date(b.timestamp)) * 3_600_000)
-          return isoWeekKey(bd) === prevWeekKey
-        })
+        const prevWeekBars = d1Bars.filter(b => tradingDayIsoWeekKey(b.timestamp) === prevWeekKey)
         if (prevWeekBars.length >= 3) {
           prevWeekHigh = Math.max(...prevWeekBars.map(b => b.high)) / 1e5
           prevWeekLow  = Math.min(...prevWeekBars.map(b => b.low)) / 1e5

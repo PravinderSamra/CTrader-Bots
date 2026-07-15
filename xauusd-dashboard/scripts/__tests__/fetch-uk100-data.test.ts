@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { computeBias, firstCloseOutside, computeOrbIntel, isoWeekKey, type OrbIntelInput } from '../fetch-uk100-data'
+import { computeBias, firstCloseOutside, computeOrbIntel, isoWeekKey, tradingDayIsoWeekKey, type OrbIntelInput } from '../fetch-uk100-data'
 
 // B1 (UK100-V2-PLAN.md §4): label thresholds for the four continuous
 // drivers (GBP, US futures, Brent, Copper) moved from |comp| > 0.3 to
@@ -302,5 +302,31 @@ describe('isoWeekKey', () => {
     const mon = isoWeekKey(new Date(Date.UTC(2026, 6, 6)))
     const fri = isoWeekKey(new Date(Date.UTC(2026, 6, 10)))
     expect(mon).toBe(fri)
+  })
+})
+
+// Post-G1 review fix: cTrader stamps UK100 D_1 bars at the session open —
+// 21:00 UTC of the PRIOR calendar day (live-verified 2026-07-15). The raw
+// stamp therefore ISO-buckets every Monday bar into the previous week;
+// tradingDayIsoWeekKey compensates. Timestamps below are LITERAL live bars.
+describe('tradingDayIsoWeekKey — session-open stamp compensation', () => {
+  const wk28 = isoWeekKey(new Date(Date.UTC(2026, 6, 8))) // Wed 08 Jul, plain W28 reference
+
+  it('Monday 06 Jul trading day (stamped Sun 05 Jul 21:00Z) buckets into ITS OWN week (W28)', () => {
+    expect(tradingDayIsoWeekKey(1783285200000)).toBe(wk28)
+    // …whereas the raw stamp would have mis-bucketed it into W27 — the bug this fixes.
+    expect(isoWeekKey(new Date(1783285200000))).not.toBe(wk28)
+  })
+
+  it('mid-week bars keep their week (Tue 07 Jul trading day, stamped Mon 06 Jul 21:00Z)', () => {
+    expect(tradingDayIsoWeekKey(1783371600000)).toBe(wk28)
+  })
+
+  it('the NEXT Monday (13 Jul, stamped Sun 12 Jul 21:00Z) does NOT leak into W28', () => {
+    expect(tradingDayIsoWeekKey(1783890000000)).not.toBe(wk28)
+  })
+
+  it('is a no-op for a midnight-same-day stamping convention', () => {
+    expect(tradingDayIsoWeekKey(Date.UTC(2026, 6, 6, 0, 0))).toBe(wk28)
   })
 })

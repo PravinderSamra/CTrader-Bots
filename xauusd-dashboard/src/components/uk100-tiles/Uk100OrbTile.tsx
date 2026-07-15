@@ -81,8 +81,10 @@ export function Uk100OrbTile({ orb, intel }: Props) {
         </>
       )}
 
-      {/* ── Range numbers demoted into a collapsible (intel is primary) ── */}
-      <details className={styles.rangeDetails}>
+      {/* ── Range numbers demoted into a collapsible (intel is primary).
+             Defaults open when no intel layer exists (a snapshot published
+             before G1) so the tile never renders effectively empty. ── */}
+      <details className={styles.rangeDetails} open={!intel}>
         <summary>Range numbers</summary>
         <div className={styles.rows}>
           <div className="tile-row">
