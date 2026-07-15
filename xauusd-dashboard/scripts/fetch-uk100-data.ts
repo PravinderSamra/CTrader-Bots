@@ -1460,6 +1460,7 @@ The snapshot includes:
 - \`usLinkage.vixRegime\`: CALM / ELEVATED / STRESS — treat STRESS as a defensive damper on conviction, not a directional signal.
 - \`ukRates.longEndStress\`: true when the 20-year gilt has sold off sharply — this is a fiscal-stress signal that overrides the normal "higher yields help bank stocks" rotation logic and is bearish for the index overall.
 - \`orbContext\`: today's opening-range mechanics — cash open time, overnight range, ORB high/low, gap, and how much of the 14-day average daily range has already been used today.
+- \`orbIntel.signals\`: a MECHANICAL read of the opening-range setup already computed for you — a list of \`{ direction, severity, source, text }\` plus a \`stance\`. These are deterministic rules (fakeout/reclaim, range budget, gap dynamics, tape, GBP extreme, etc.). Do NOT repeat them — your job is to ADD cross-field synthesis they do not already state (e.g. how two or three of these forces combine into one read).
 - \`calendar\`: this week's UK/US/EZ economic events, each tagged with \`daysFromToday\`. \`newsItems\`: recent headlines tagged with \`hoursAgo\`.
 
 Write a SINGLE flowing briefing paragraph (200–300 words) using PLAIN, BEGINNER-FRIENDLY language. Avoid jargon wherever possible. When you use a financial term, briefly explain what it means in brackets.
@@ -1476,15 +1477,28 @@ Your briefing MUST follow this structure within the single paragraph:
 
 End with one sentence a trader can screenshot and remember.
 
+You must ALSO produce an \`orbIntel\` object — a short synthesis of the opening-range read that ADDS to (never repeats) the mechanical \`orbIntel.signals\` already in the snapshot:
+- \`stanceLine\`: ONE sentence in the form "Due to X, Y and Z, <the read>" (e.g. "Due to a crowded-short pound, a split European tape and 78% of the daily range already spent, upside breaks look poorly supported today.").
+- \`bullets\`: 2–4 bullets, each ≤ 30 words, each citing at least one concrete number from the snapshot, each covering CROSS-FIELD synthesis the mechanical signals do not already say. No invented data.
+
 CRITICAL RULES:
 - Use plain English. Do NOT make up data — only use what is in the JSON. If a field is null or an array is empty, say so.
 - Never say "in conclusion" or "to summarise".
 - Return your response as JSON:
-  { "biasScore": number from -10 to +10 (negative = bearish, positive = bullish — match the snapshot's own bias.score scale), "biasLabel": "BEARISH" | "NEUTRAL" | "BULLISH", "confidence": number 1-10, "briefing": "your paragraph here" }`
+  { "biasScore": number from -10 to +10 (negative = bearish, positive = bullish — match the snapshot's own bias.score scale), "biasLabel": "BEARISH" | "NEUTRAL" | "BULLISH", "confidence": number 1-10, "briefing": "your paragraph here", "orbIntel": { "stanceLine": "your one-sentence synthesis", "bullets": ["...", "..."] } }`
 
-async function generateUk100Briefing(snapshot: Omit<Uk100Snapshot, 'briefing'>): Promise<Uk100Snapshot['briefing']> {
+// The briefing call also carries the ORB-intel AI overlay (G2) — no extra API
+// call. Both are best-effort: null/[] on any failure so the tile falls back to
+// the mechanical layer.
+interface BriefingResult {
+  briefing: Uk100Snapshot['briefing']
+  orbIntelOverlay: { stanceLine: string | null; bullets: string[] }
+}
+const EMPTY_OVERLAY: BriefingResult['orbIntelOverlay'] = { stanceLine: null, bullets: [] }
+
+async function generateUk100Briefing(snapshot: Omit<Uk100Snapshot, 'briefing'>): Promise<BriefingResult> {
   console.log('Generating UK100 daily briefing (Anthropic)...')
-  if (!ANTHROPIC_KEY) { console.log('Anthropic: ANTHROPIC_API_KEY env var not set — skipping briefing'); return null }
+  if (!ANTHROPIC_KEY) { console.log('Anthropic: ANTHROPIC_API_KEY env var not set — skipping briefing'); return { briefing: null, orbIntelOverlay: EMPTY_OVERLAY } }
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -1496,7 +1510,7 @@ async function generateUk100Briefing(snapshot: Omit<Uk100Snapshot, 'briefing'>):
       },
       body: JSON.stringify({
         model: ANTHROPIC_MODEL,
-        max_tokens: 1200,
+        max_tokens: 1500,
         system: BRIEFING_SYSTEM_PROMPT,
         messages: [
           { role: 'user', content: `Here is today's UK100 market data snapshot:\n\n${JSON.stringify(snapshot, null, 2)}` },
@@ -1506,18 +1520,29 @@ async function generateUk100Briefing(snapshot: Omit<Uk100Snapshot, 'briefing'>):
 
     if (!response.ok) {
       console.error(`Anthropic briefing API error ${response.status}: ${(await response.text()).slice(0, 200)}`)
-      return null
+      return { briefing: null, orbIntelOverlay: EMPTY_OVERLAY }
     }
 
     const body = await response.json() as { content: Array<{ type: string; text: string }> }
     const text = body.content.find(c => c.type === 'text')?.text ?? ''
     const cleaned = text.replace(/^```json?\s*/i, '').replace(/\s*```$/, '').trim()
-    const parsed = JSON.parse(cleaned) as Omit<NonNullable<Uk100Snapshot['briefing']>, 'generatedAt'>
+    const parsed = JSON.parse(cleaned) as Omit<NonNullable<Uk100Snapshot['briefing']>, 'generatedAt'> & {
+      orbIntel?: { stanceLine?: string; bullets?: string[] }
+    }
     console.log(`UK100 briefing generated: bias=${parsed.biasLabel} score=${parsed.biasScore} confidence=${parsed.confidence}`)
-    return { ...parsed, generatedAt: new Date().toISOString() }
+    // Tolerate the orbIntel field being absent or malformed (older cached
+    // prompt, model noncompliance) — never fail the snapshot on it.
+    const overlay = {
+      stanceLine: typeof parsed.orbIntel?.stanceLine === 'string' ? parsed.orbIntel.stanceLine : null,
+      bullets: Array.isArray(parsed.orbIntel?.bullets) ? parsed.orbIntel!.bullets.filter((b): b is string => typeof b === 'string') : [],
+    }
+    return {
+      briefing: { biasScore: parsed.biasScore, biasLabel: parsed.biasLabel, confidence: parsed.confidence, briefing: parsed.briefing, generatedAt: new Date().toISOString() },
+      orbIntelOverlay: overlay,
+    }
   } catch (err) {
     console.error('UK100 briefing generation failed:', err)
-    return null
+    return { briefing: null, orbIntelOverlay: EMPTY_OVERLAY }
   }
 }
 
@@ -1661,12 +1686,16 @@ async function main() {
     bias, orbContext, orbIntel,
   }
 
-  const briefing = await generateUk100Briefing(snapshotWithoutBriefing)
-  const snapshot: Uk100Snapshot = { ...snapshotWithoutBriefing, briefing }
+  const { briefing, orbIntelOverlay } = await generateUk100Briefing(snapshotWithoutBriefing)
+  // Merge the AI overlay (G2) into the mechanical orbIntel; the tile prefers
+  // aiStanceLine when present and falls back to the mechanical stanceLine.
+  const orbIntelFinal: OrbIntel = { ...orbIntel, aiStanceLine: orbIntelOverlay.stanceLine, aiBullets: orbIntelOverlay.bullets }
+  const snapshot: Uk100Snapshot = { ...snapshotWithoutBriefing, orbIntel: orbIntelFinal, briefing }
 
   fs.writeFileSync(outPath, JSON.stringify(snapshot, null, 2))
   console.log(`UK100 snapshot written: ${path.relative(path.join(__dirname, '../..'), outPath)}`)
   console.log(`Bias: ${bias.label} (score=${bias.score}, conviction=${bias.conviction})`)
+  console.log(`ORB intel: ${orbIntelFinal.stance}, aiBullets=${orbIntelFinal.aiBullets.length}`)
   console.log(`Risk tone: ${riskTone ? `${riskTone.label} (${riskTone.score})` : 'null'}`)
   console.log(`Briefing: ${briefing ? `${briefing.biasLabel} ${briefing.biasScore} (conf ${briefing.confidence})` : 'null'}`)
 }
