@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-07-15T13:14:49.720Z",
+  "generatedAt": "2026-07-15T15:19:32.720Z",
   "yields": {
-    "US10Y": 4.62,
+    "US10Y": null,
     "US2Y": 4.26,
-    "realYield10Y": 2.36,
-    "realYield5Y": 2.06,
-    "curve2s10s": 36,
+    "realYield10Y": null,
+    "realYield5Y": null,
+    "curve2s10s": null,
     "breakeven10Y": 2.25,
     "breakeven5Y": 2.28,
     "forward5y5y": 2.22,
     "dayOverDay": {
-      "US10Y": 0.06,
+      "US10Y": null,
       "US2Y": 0.05,
-      "realYield10Y": 0.04
+      "realYield10Y": null
     }
   },
   "fedExpectations": {
@@ -22,8 +22,8 @@
     "probHike": 0
   },
   "marketVolatility": {
-    "GVZ": 26.93,
-    "VIX": 17.16
+    "GVZ": 25.02,
+    "VIX": null
   },
   "positioning": {
     "cotNetLong": 183165,
@@ -34,26 +34,26 @@
     "openInterestChange": 6341
   },
   "etfFlows": {
-    "gldTonnes": 996.1,
-    "gldWoWChange": -8.3,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1000,
+    "gldWoWChange": 3.9,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4062.325,
-    "XAGUSD": 58.4985,
-    "EURUSD": 1.14273,
-    "USDJPY": 162.2365,
-    "USDCHF": 0.80912,
-    "USDCNH": 6.77126,
-    "GBPUSD": 1.34269,
-    "USDCAD": 1.40568,
-    "USDSEK": 9.65969,
-    "US500": 7563.8,
-    "GER40": 25006.55,
-    "UK100": 10510.3,
+    "XAUUSD": 4046.41,
+    "XAGUSD": 57.749,
+    "EURUSD": 1.14364,
+    "USDJPY": 162.1775,
+    "USDCHF": 0.80683,
+    "USDCNH": 6.77156,
+    "GBPUSD": 1.34767,
+    "USDCAD": 1.40535,
+    "USDSEK": 9.638,
+    "US500": 7559.5,
+    "GER40": 25019.55,
+    "UK100": 10504.75,
     "ADR_14day": 100.1,
     "ADR_usedToday": 56.6,
-    "goldSilverRatio": 69.4
+    "goldSilverRatio": 70.1
   },
   "dollarLiquidity": {
     "stlfsi": -0.7246,
@@ -69,26 +69,26 @@
       "headline": "Buffett says Trump's pick of Kevin Warsh for Fed chair was 'good choice'",
       "source": "CNBC",
       "publishedAt": "2026-07-15T12:14:44.000Z",
-      "hoursAgo": 1
+      "hoursAgo": 3.1
     },
     {
       "headline": "US Russia sanctions bill eases threat of tariffs on China and India - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-14T19:07:00.000Z",
-      "hoursAgo": 18.1
+      "hoursAgo": 20.2
     },
     {
       "headline": "Trump says he thinks Iran and Hezbollah will be added to Russia sanctions bill - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-14T16:37:06.000Z",
-      "hoursAgo": 20.6
+      "hoursAgo": 22.7
     }
   ],
   "briefing": {
-    "biasScore": -1,
-    "biasLabel": "NEUTRAL",
-    "confidence": 4,
-    "briefing": "Right now, the two biggest forces pushing and pulling on gold are rising bond yields [the interest rate the US government pays on its debt — higher yields make holding gold, which pays nothing, less attractive] and a geopolitical risk backdrop that remains elevated [GPR at 173.6, well above normal, meaning there's still meaningful fear in the world that tends to support gold as a safe haven]. The dollar (DXY at 100.86) is sitting in neutral territory — not weak enough to give gold a serious tailwind, not strong enough to crush it. On recent headlines: about 1 hour ago, Warren Buffett endorsed Kevin Warsh as Fed Chair [the person who controls US interest rate policy]. Warsh is widely considered hawkish [meaning he leans toward keeping rates higher for longer], and a hawkish Fed Chair is generally bad for gold because higher rates make the dollar more attractive and increase the opportunity cost of holding gold. This is the most market-moving headline in the snapshot and is a mild bearish [price-falling] catalyst for gold right now. The Russia sanctions story (~18 hours ago) easing tariff threats on China and India slightly reduces global trade tension, which can modestly soften safe-haven demand for gold. Taking everything together, the directional bias is NEUTRAL leaning slightly bearish in the near term — yields are rising (10Y up 0.06 today, real yield [yield after stripping out inflation] at a high 2.36%), ETF flows have been outflows for three straight weeks [meaning big investors are slowly selling gold funds], and the Warsh headline adds a small headwind. However, gold is at $4,062, geopolitical risk is still high, and large traders [COT positioning] remain net long [betting on higher prices], so the uptrend hasn't broken. Confidence is 4/10 — the Warsh appointment creates genuine uncertainty about the Fed's future direction, and without a clear price catalyst today the picture is murky. What would change the view bullish: a sharp dollar drop, a geopolitical escalation headline, or yields reversing lower. What would flip it more bearish: yields continuing to climb and price breaking below recent support. On event risk: the calendar in today's snapshot is empty, meaning no scheduled data releases are flagged for today — so there's no specific news-driven spike to prepare for this session, though unscheduled headlines (especially anything Fed Chair related) could move the market quickly. On key levels: the 14-day Average Daily Range [the typical daily price movement over the past two weeks] is $100.1, and price has already used $56.6 of that today, meaning roughly $43 of typical daily movement may remain — so large new moves are less likely in this session without a fresh catalyst. Watch $4,040 as near-term support [a floor where buyers might step in] and $4,080–$4,090 as resistance [a ceiling where sellers may push back]. For trade integration: this is NOT a high-conviction window for trend-following longs — the Warsh headline, rising real yields, and three weeks of ETF outflows create enough headwinds that chasing gold higher here carries meaningful risk; if you must trade, keep position size small [half your normal size or less] and wait for a clear 1H bullish structure [higher highs and higher lows on the hourly chart] to reassert itself before adding conviction. When the big institutions (central banks, ETFs) are quietly selling while the news turns hawkish on the Fed, the smart move for a trend-follower is to wait for clarity, not chase the trade.",
-    "generatedAt": "2026-07-15T13:15:12.237Z"
+    "biasScore": 1,
+    "biasLabel": "BULLISH",
+    "confidence": 5,
+    "briefing": "Right now the most relevant forces for gold are a moderately weak US dollar (the DXY — an index measuring dollar strength against other currencies — sits at 100.74, which is relatively soft), a geopolitical risk index that remains elevated at 173.6 (meaning global tensions are still high, which historically supports gold as a safe-haven), and steady inflows into gold ETFs [funds that hold physical gold] for three consecutive weeks, which shows real-money buyers are still active. On recent news, the most notable headline from about 3 hours ago is Warren Buffett publicly endorsing Kevin Warsh as Trump's pick for Fed Chair — Warsh is considered a hawkish candidate [meaning he favours higher interest rates], which could eventually be dollar-positive and gold-negative if confirmed; however, markets haven't dramatically repriced yet, so this is a watch item rather than a clear trigger. A Reuters report from roughly 20 hours ago noted a Russia sanctions bill that eases tariff threats on China and India — this slightly reduces global trade tension, which can take a little safe-haven demand away from gold. The directional bias leans mildly BULLISH: the dollar is soft, geopolitical risk is high, and ETF flows remain supportive, but the Warsh news introduces uncertainty. Confidence is 5/10 — this would shift lower if dollar strength picks up on Warsh speculation, or shift higher if geopolitical news escalates. There are NO scheduled economic events on the calendar for today, which is actually helpful — it means price can move more freely on trend rather than news spikes. The calendar is completely empty for the rest of the week too, so there is no major data build-up caution needed right now. On key levels: the 14-day average daily range [the typical daily price swing] is about 100 points, and today has already used roughly 56.6 of those points, meaning only around 43–44 points of typical movement may remain in today's session — price is already more than halfway through its expected daily range, so chasing large moves from here carries more risk. Watch 4046 as the current pivot; a hold above it keeps the short-term structure bullish, while a break below 4020–4010 would suggest the trend is weakening. For trade integration: this is a reasonable window for cautious trend-following long [buy] setups using your 1H trend, 5M signal, and 1M entry process, but reduce your normal position size by around 30–40% given that much of today's range is already used and the Warsh news adds uncertainty. Remember: with more than half the day's expected range already consumed, the best move is to wait for a clean pullback to a key level rather than buying into extended price.",
+    "generatedAt": "2026-07-15T15:19:51.254Z"
   }
 }
