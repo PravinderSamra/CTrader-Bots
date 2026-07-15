@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-07-15T09:22:58.475Z",
+  "generatedAt": "2026-07-15T09:52:14.247Z",
   "prices": {
-    "UK100": 10501.25,
-    "GBPUSD": 1.3395,
-    "GBPEUR": 1.17255,
-    "US500": 7566.5,
-    "NAS100": 29753.6,
-    "BRENT": 85.435,
-    "COPPER": 6.4118,
-    "VIX": 17.32,
-    "USDX": 100.934,
-    "XAUUSD": 4030.5,
-    "UK100_dayPct": 0.22
+    "UK100": 10502.25,
+    "GBPUSD": 1.33906,
+    "GBPEUR": 1.17276,
+    "US500": 7562.5,
+    "NAS100": 29725.9,
+    "BRENT": 85.545,
+    "COPPER": 6.3948,
+    "VIX": 17.37,
+    "USDX": 100.974,
+    "XAUUSD": 4027.61,
+    "UK100_dayPct": 0.23
   },
   "fx": {
-    "gbpUsdDayPct": 0.03,
+    "gbpUsdDayPct": 0,
     "gbpUsd20dPercentile": 89,
     "sterlingEri": 85.6172,
     "sterlingEriDayChange": -0.02,
@@ -36,26 +36,26 @@
     "daysToMpc": 15
   },
   "usLinkage": {
-    "us500DayPct": 0.25,
-    "nas100DayPct": 0.56,
-    "vix": 17.32,
+    "us500DayPct": 0.2,
+    "nas100DayPct": 0.47,
+    "vix": 17.37,
     "vixRegime": "NORMAL",
     "us10y": 4.62,
-    "usdx": 100.934
+    "usdx": 100.974
   },
   "commodities": {
-    "brentDayPct": -0.24,
-    "copperDayPct": 0.37,
-    "goldDayPct": -0.55,
+    "brentDayPct": -0.11,
+    "copperDayPct": 0.11,
+    "goldDayPct": -0.62,
     "brent20dTrend": "DOWN"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": 0.52,
-    "dax40DayPct": -0.12,
-    "eurUsdDayPct": 0.03,
-    "ftseDaxCorr20d": 0.64,
+    "eurostoxx50DayPct": 0.28,
+    "dax40DayPct": -0.35,
+    "eurUsdDayPct": -0.02,
+    "ftseDaxCorr20d": 0.63,
     "ftseSx5eCorr20d": 0.5,
-    "tapeAgreement": "ALIGNED",
+    "tapeAgreement": "SPLIT",
     "preOpenLead": "NONE"
   },
   "positioning": {
@@ -69,14 +69,14 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent -0.24%",
+      "driver": "Brent -0.11%",
       "read": "NEUTRAL",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper +0.37%",
+      "driver": "Copper +0.11%",
       "read": "NEUTRAL",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
@@ -117,54 +117,48 @@
       "headline": "US Russia sanctions bill eases threat of tariffs on China and India - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQQktFMlI0T1BvR192M1JmY0ZQRmdwc0JQRHhiYUMzWG02R1ozUGFrMFE3amJFWDZvbkhkTTJjZC1hRG5xRmM2WDB3MU5SUnlsbXFnSHU0NnFpOTVtalZPNk4zdWlkcmIySTJpbGJIVGFKdDJtYTdOaGdIcWNvcmowcHNKNFVtX0MwTFV2UnQwTUhZTmc0emFiZE1jdkVZQlBv?oc=5",
-      "hoursAgo": 11.4
-    },
-    {
-      "headline": "S&P 500 and Nasdaq end higher on cool inflation data, solid bank earnings - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxPNUZzZmRoMHJILU51eUxkVEo5UmFGNUx3WjUwSU9qX0k5Zzk0Ulk0MUY3aGZQc0pTVUpQb0F4MUNiQ2RwY1F4ekptWjBJTkExaWhqRE9sLTRNTU84a09pS2lUV19wLTJ4LXgtU0VXY2RHQ3RHampMUE5MTVVQTjYzM1I4V1lfdVc2UFZGOHdPY1BOVEhWUDcxTVBkX3R4QzZON18xejctM09QU3VxbXprSDRWQXJhMVAzbjUxR3JR?oc=5",
-      "hoursAgo": 23.9
+      "hoursAgo": 11.9
     }
   ],
   "riskTone": {
-    "score": 3,
+    "score": 1,
     "label": "BULLISH",
-    "rationale": "Cool US inflation, solid bank earnings, and easing tariff threats via Russia sanctions bill all support risk-on sentiment for UK100."
+    "rationale": "Easing sanctions/tariff threat on China/India reduces trade war risk, mildly risk-on for global equities including FTSE 100."
   },
   "bias": {
-    "score": 3,
-    "label": "BULLISH",
-    "conviction": "MEDIUM",
+    "score": 2,
+    "label": "NEUTRAL",
+    "conviction": "LOW",
     "drivers": [
       {
         "name": "GBP",
         "weight": 3,
         "impact": "NEUTRAL",
-        "detail": "GBP/USD +0.03% → FTSE headwind (sign-flipped)"
+        "detail": "GBP/USD +0% → FTSE tailwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
         "impact": "BULLISH",
-        "detail": "US500 +0.25% today"
+        "detail": "US500 +0.2% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 17.32 — NORMAL regime"
+        "detail": "VIX 17.37 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "Brent -0.24% (energy majors)"
+        "detail": "Brent -0.11% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "Copper +0.37% (miners/China)"
+        "detail": "Copper +0.11% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -188,13 +182,13 @@
         "name": "European tape (SX5E/DAX)",
         "weight": 2.5,
         "impact": "NEUTRAL",
-        "detail": "SX5E +0.52% / DAX -0.12%"
+        "detail": "SX5E +0.28% / DAX -0.35%"
       }
     ],
     "eventSuppressed": false
   },
   "orbContext": {
-    "computedAt": "2026-07-15T09:22:58.475Z",
+    "computedAt": "2026-07-15T09:52:14.247Z",
     "mode": "POST_ORB",
     "cashOpenLondon": "08:00 BST",
     "overnightHigh": 10490.6,
@@ -202,20 +196,20 @@
     "priorDayHigh": 10545.1,
     "priorDayLow": 10411.7,
     "priorClose": 10478.2,
-    "gapPts": 23,
-    "gapPct": 0.22,
+    "gapPts": 24,
+    "gapPct": 0.23,
     "orbHigh": 10471.3,
     "orbLow": 10449,
     "orbBrokenDirection": "DOWN",
     "eventWindows": [],
     "adr14": 130.9,
-    "adrUsedPct": 59
+    "adrUsedPct": 61
   },
   "briefing": {
-    "biasScore": 3,
-    "biasLabel": "BULLISH",
-    "confidence": 5,
-    "briefing": "Starting with sterling (GBP): GBPUSD is almost flat today, up just +0.03%, which the snapshot flags as NEUTRAL for UK100 — meaning the currency isn't meaningfully helping or hurting the index right now via the usual sign-flip (where a weaker pound boosts big multinationals that earn in dollars). The key forces shaping today's session are a broadly supportive backdrop: banks are the standout bullish sector, because the 10-year gilt yield [the UK government's borrowing rate over 10 years, a benchmark for bank profitability] has risen 8 basis points [hundredths of a percent], which helps banks earn more on their lending — HSBC, Barclays, NatWest and StanChart are all big index weights. Long-end gilt stress is NOT flagged, so this yield rise looks like a healthy rotation rather than a fiscal alarm bell. Energy (Brent oil -0.24%) and miners (copper +0.37%) are both reading NEUTRAL, meaning they're neither a tailwind nor a drag. Pharma remains idiosyncratic — AstraZeneca can swing the index on its own, and no specific AZN catalyst is visible in the data today. On the US side, the S&P 500 is up +0.25% today and the VIX [a 'fear gauge' for US markets] sits at 17.32 in NORMAL regime — no stress signal. The recent catalysts (from the last 24 hours) include cool US inflation data and solid US bank earnings lifting Wall Street overnight (23.9 hours ago), and a Reuters report that a Russia sanctions bill is easing tariff threats on China and India (11.4 hours ago) — both are genuinely risk-positive reads for UK100 via improved global growth sentiment and commodity demand. GBP positioning data (futures traders are crowded short sterling [meaning many are betting the pound falls], a contrarian BEARISH signal for FTSE because a short squeeze in GBP could hurt the index) is the main bearish offset. Directional bias leans mildly BULLISH — the macro backdrop is supportive, US equities are constructive, and gilts are helping banks — but conviction is only MEDIUM because sterling is near 89th percentile of its 20-day range [close to its recent highs], crowded short positioning could unwind sharply, and UK GDP data drops at 07:00 BST tomorrow which could reprice everything. Confidence: 5/10 — the GDP print tomorrow is the single biggest variable; a weak number could flip the script quickly, while a beat would add fuel. On the ORB specifically: the 08:00 opening range broke DOWN (ORB low at 10,449, ORB high at 10,471.3), yet UK100 has since recovered to 10,501 — above the overnight high of 10,490.6 — meaning the initial bearish break has FAILED and price has reversed above structure; this is a classic fakeout/sweep-then-reverse pattern, and the bullish macro backdrop supports treating the failed breakdown as a long signal rather than chasing any fresh short. Event risk today appears light (no scheduled UK/US events flagged for today), but TOMORROW's UK GDP Monthly Estimate at 07:00 BST is HIGH-impact and arrives just one hour before the cash open — traders should size down or stand aside on any pre-GDP positions. Key levels to watch: ORB high 10,471.3 (now support after the failed breakdown), overnight high 10,490.6 (also flipped to support), current price 10,501.25, prior day high 10,545.1 (next meaningful resistance), and ORB low 10,449 / overnight low 10,431.2 as the invalidation zone if bulls lose control; with 14-day average daily range [how far the index typically moves in a day] at 130.9 points and 59% already used, roughly 54 points of range remain — enough for a meaningful move but not a full trend day. The one thing to remember today: the ORB broke down and then snapped back above 10,490 — in a bullish macro environment, failed breakdowns are often the trade, but tomorrow's GDP at 07:00 means tonight is not the night to hold large positions overnight.",
-    "generatedAt": "2026-07-15T09:23:25.504Z"
+    "biasScore": 2,
+    "biasLabel": "NEUTRAL",
+    "confidence": 4,
+    "briefing": "Sterling (GBPUSD) is flat on the day at 1.3391, sitting at its 89th percentile over the past 20 days — meaning GBP is historically expensive right now — but since GBP and UK100 move in opposite directions (a stronger pound hurts FTSE's many overseas earners when their foreign profits are converted back to sterling), this elevated GBP level is a mild headwind for the index, though today's zero-percent daily move means it is currently a neutral force rather than an active drag. The dominant regime driver today is banks: the 10-year UK government borrowing cost (gilt yield) has risen 8 basis points [bp = hundredths of one percent], which directly widens the gap between what banks charge on loans versus what they pay on deposits — so HSBC, Barclays, NatWest and StanChart are the sector most likely to be pulling the index higher, and long-end gilt stress is absent, so this is a clean, positive rotation signal rather than a fiscal-alarm signal. Copper is barely positive (+0.11%) and Brent is barely negative (-0.11%), leaving miners and energy majors in neutral territory. AstraZeneca — often the single heaviest stock in the index — carries idiosyncratic risk today, meaning any stock-specific news on AZN alone could override all other signals, so watch for any pharma headlines. The key recent catalyst (about 12 hours ago) was a Reuters report that a US Russia-sanctions bill also reduces the threat of tariffs on China and India — a trade-war de-escalation that is mildly positive for global equities and helped set a risk-on tone overnight. The ORB [Opening Range Breakout — the price band formed in the first 15 minutes of the London cash session at 08:00] set a high of 10,471 and a low of 10,449; the market has already broken that range to the DOWNSIDE, meaning the mechanical ORB signal fired short. However, price has since climbed back to 10,502 — above the overnight high of 10,491 — suggesting the initial downside break may have been a fakeout [a false move that traps traders in the wrong direction]. With 61% of the 14-day average daily range [the typical daily price swing, here 130.9 points] already used up, there is still roughly 51 points of statistical range remaining, but the market has already done most of its day's work. Directional bias is NEUTRAL leaning very slightly bullish: US equities are up 0.20%, European tape is split (EuroStoxx up, DAX down), and the overall risk tone is gently constructive — but conviction is LOW because there is no strong single-directional force. Confidence: 4/10; the view would shift bullish if price holds above the overnight high of 10,491 on a pullback, or bearish if it breaks back below the ORB high of 10,471 and fails to recover. For the ORB trade specifically, today looks like a fakeout/sweep-then-reverse day rather than a clean trend day — the downside break already failed and price is above range, so late entries in either direction carry significant fade risk. EVENT RISK: tomorrow (Wednesday 16 July) at 07:00 BST — one hour before cash open — UK GDP Monthly Estimate prints as a HIGH-impact release; any surprise in either direction could gap the market and invalidate overnight levels, so size down overnight positions and treat tomorrow's ORB with extra caution. Key levels to watch: ORB high 10,471 and ORB low 10,449 as the original mechanical range; overnight high 10,491 as the near-term bull/bear line; prior day high 10,545 as the next meaningful resistance above; and prior day low 10,412 as deep support below — with range 61% consumed, respect that the big move may already be behind us today. If price cannot hold above the overnight high of 10,491, the ORB fakeout trade favours a drift back toward 10,449–10,471, but tomorrow's GDP print at 07:00 is the real event to watch.",
+    "generatedAt": "2026-07-15T09:52:40.664Z"
   }
 }
