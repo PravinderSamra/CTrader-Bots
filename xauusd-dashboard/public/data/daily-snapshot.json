@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-07-14T20:51:02.946Z",
+  "generatedAt": "2026-07-15T07:51:44.781Z",
   "yields": {
     "US10Y": 4.62,
     "US2Y": 4.26,
     "realYield10Y": 2.36,
     "realYield5Y": 2.06,
     "curve2s10s": 36,
-    "breakeven10Y": 2.26,
-    "breakeven5Y": 2.31,
-    "forward5y5y": 2.21,
+    "breakeven10Y": 2.25,
+    "breakeven5Y": 2.28,
+    "forward5y5y": 2.22,
     "dayOverDay": {
       "US10Y": 0.06,
       "US2Y": 0.05,
@@ -34,25 +34,25 @@
     "openInterestChange": 6341
   },
   "etfFlows": {
-    "gldTonnes": 999.3,
-    "gldWoWChange": 1.3,
+    "gldTonnes": 1005.7,
+    "gldWoWChange": 6.4,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4049.425,
-    "XAGUSD": 58.6235,
-    "EURUSD": 1.14207,
-    "USDJPY": 162.252,
-    "USDCHF": 0.80937,
-    "USDCNH": 6.77388,
-    "GBPUSD": 1.33892,
-    "USDCAD": 1.40602,
-    "USDSEK": 9.66402,
-    "US500": 7543.65,
-    "GER40": 25056.05,
-    "UK100": 10479.1,
-    "ADR_14day": 98.4,
-    "ADR_usedToday": 119.2,
+    "XAUUSD": 4023.465,
+    "XAGUSD": 58.189,
+    "EURUSD": 1.14235,
+    "USDJPY": 162.258,
+    "USDCHF": 0.8097,
+    "USDCNH": 6.77276,
+    "GBPUSD": 1.3405,
+    "USDCAD": 1.40527,
+    "USDSEK": 9.66845,
+    "US500": 7561.5,
+    "GER40": 24915.55,
+    "UK100": 10451.6,
+    "ADR_14day": 100.1,
+    "ADR_usedToday": 42.2,
     "goldSilverRatio": 69.1
   },
   "dollarLiquidity": {
@@ -66,35 +66,29 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "S&P 500 and Nasdaq end higher on cool inflation data, solid bank earnings - Reuters",
+      "headline": "US Russia sanctions bill eases threat of tariffs on China and India - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-07-14T20:01:16.000Z",
-      "hoursAgo": 0.8
+      "publishedAt": "2026-07-14T21:57:31.000Z",
+      "hoursAgo": 9.9
     },
     {
       "headline": "Trump says he thinks Iran and Hezbollah will be added to Russia sanctions bill - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-14T16:37:06.000Z",
-      "hoursAgo": 4.2
+      "hoursAgo": 15.2
     },
     {
-      "headline": "Gold bounces off two-week low, markets await US inflation data - Reuters",
+      "headline": "S&P 500 and Nasdaq end higher on cool inflation data, solid bank earnings - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-07-14T03:19:00.000Z",
-      "hoursAgo": 17.5
-    },
-    {
-      "headline": "Stocks gain on softer inflation, bank results while oil rises on US-Iran hostilities - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-07-14T01:27:00.000Z",
-      "hoursAgo": 19.4
+      "publishedAt": "2026-07-14T09:30:00.000Z",
+      "hoursAgo": 22.4
     }
   ],
   "briefing": {
-    "biasScore": 1,
-    "biasLabel": "NEUTRAL",
-    "confidence": 4,
-    "briefing": "Right now, gold is being pulled in opposite directions by two competing forces: inflation data that came in cool (lower than expected), which normally hurts gold because it reduces the urgency for the Federal Reserve to cut interest rates, and rising geopolitical tension in the Middle East, which normally pushes money into gold as a safe haven. The most relevant recent headline — breaking roughly 1 hour ago — was the S&P 500 and Nasdaq closing higher on that cool inflation print and solid bank earnings. When stocks rally hard like this, investors tend to feel less nervous and move money out of safe havens like gold. About 4 hours ago, Trump's comments on expanding Russia sanctions to include Iran and Hezbollah added a geopolitical wildcard that partially offsets the bearish [negative for gold] pressure from the inflation data. Gold bounced off a two-week low earlier today (per the 17-hour-old headline), which tells you buyers stepped in at lower prices — a sign of underlying demand. The directional bias from here is NEUTRAL to very slightly bullish [favouring higher prices], because safe-haven demand is keeping a floor under gold even as cool inflation reduces the case for rate cuts. Real yields [the return on bonds after subtracting inflation] are elevated at 2.36%, which is a genuine headwind [obstacle] for gold — gold pays no interest, so high real yields make bonds more attractive by comparison. The DXY [the US Dollar Index, measuring the dollar's strength against other currencies] sits at 100.93, which is relatively weak and gives gold some breathing room. Confidence is 4/10 — the competing forces are almost equally matched today. A fresh geopolitical escalation involving Iran would flip this more bullish; a stronger dollar or a surprise hawkish [favouring higher interest rates] Fed comment would push it lower. The calendar shows NO scheduled economic events for today, so there is no immediate news risk to manage — that is actually helpful for clean intraday setups. Looking at the ADR [Average Daily Range, the typical distance price moves in a day over the last 14 days]: the 14-day ADR is 98.4 points, but price has already moved 119.2 points today — meaning the day's typical move has already been exceeded. This is a critical warning: the majority of the day's energy has likely already been spent, and chasing new trades late in the New York session carries higher risk of getting caught in a reversal or choppy, directionless price action [market moving sideways with no clear trend]. Key levels to watch: the recent two-week low (referenced in the news as a bounce point) acts as a support zone [a price area where buyers have stepped in before], and the current price of $4,049 sits in what could be a short-term equilibrium [a balanced price level neither side is strongly pushing away from]. Given that today's range has already exceeded the ADR and the competing forces are roughly balanced, this is NOT a high-conviction window for new trend-following trades — if you do trade, keep position size very small and wait for a clean 1H structure signal with a 5M confirmation rather than forcing a setup. The single thing to remember today: when the day's average range has already been exceeded, the smart move is usually to watch, not trade.",
-    "generatedAt": "2026-07-14T20:51:23.701Z"
+    "biasScore": 2,
+    "biasLabel": "BULLISH",
+    "confidence": 6,
+    "briefing": "Right now, gold is being supported by a mix of genuine safe-haven demand [buying an asset like gold when the world feels uncertain] and a dollar that is holding relatively firm but not strengthening aggressively — that combination is keeping gold elevated near $4,023 without a strong push in either direction at the open. Looking at recent headlines, the most relevant catalyst from the past 24 hours is a Reuters report from roughly 10 hours ago noting that a US-Russia sanctions bill may ease tariff pressure on China and India — this is a geopolitical wildcard [an unpredictable event that can shake markets] because expanded sanctions that rope in Iran and Hezbollah (flagged by Trump roughly 15 hours ago) could spike global tension and push money into gold as a safe store of value. Separately, cool inflation data and strong bank earnings from about 22 hours ago lifted US stocks, which is a mild headwind [something working against a move] for gold since risk-on mood [investors feeling confident and buying riskier assets] can reduce safe-haven demand. The directional bias is modestly BULLISH: gold remains in an elevated price environment, ETF flows have been positive for three straight weeks [institutions are adding gold holdings], large speculators are net-long [more people are betting on gold rising than falling] at 183,165 contracts, and geopolitical risk readings remain elevated at 173.6. However, real yields [what bonds pay after stripping out inflation] are meaningfully positive at 2.36% — this is the main reason we cannot call this a strong bull signal, because high real yields make gold less attractive relative to bonds. Confidence is 6/10; a break above yesterday's high or a flare-up in sanctions/geopolitical headlines would raise conviction, while a DXY push above 102 or a drop back below $3,990 would flip the view cautious. The calendar is empty today with no scheduled data events noted in the snapshot, so there is no specific time-based news risk to manage — but keep an eye on any developing sanctions headlines since those have been the dominant unscheduled driver this week. The 14-day average daily range [how far gold typically moves in a day] is 100.1 points, and today has already used 42.2 of that — roughly 42% — meaning there is still room for a meaningful move of around 58 points, but the easy money for the day is not gone yet. For trade integration: this is a reasonable window for cautious trend-following long [buy] setups on the 1H chart if price is holding above a clean structure level [a clear prior high or low that acted as support/resistance]; use reduced size given the geopolitical uncertainty introducing two-way risk, and wait for a 5M signal before entering rather than chasing. Remember: trade the trend that is already in motion, not the one you wish were happening.",
+    "generatedAt": "2026-07-15T07:52:04.298Z"
   }
 }
