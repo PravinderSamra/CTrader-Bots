@@ -51,7 +51,7 @@ export function Uk100Tab() {
           <div className={styles.grid3}>
             <Uk100CommoditiesTile commodities={snapshot?.commodities ?? null} prices={snapshot?.prices ?? null} />
             <Uk100PositioningTile positioning={snapshot?.positioning ?? null} />
-            <Uk100OrbTile orb={snapshot?.orbContext ?? null} />
+            <Uk100OrbTile orb={snapshot?.orbContext ?? null} intel={snapshot?.orbIntel ?? null} />
           </div>
 
           <div className={styles.grid3}>

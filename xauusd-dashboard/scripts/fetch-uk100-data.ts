@@ -120,11 +120,40 @@ interface OrbContext {
   cashOpenLondon: string
   overnightHigh: number | null; overnightLow: number | null
   priorDayHigh: number | null; priorDayLow: number | null; priorClose: number | null
+  prevWeekHigh: number | null; prevWeekLow: number | null
   gapPts: number | null; gapPct: number | null
   orbHigh: number | null; orbLow: number | null
   orbBrokenDirection: 'UP' | 'DOWN' | 'NONE' | null
   eventWindows: { event: string; timeLondon: string; impact: string }[]
   adr14: number | null; adrUsedPct: number | null
+}
+
+// ── ORB intelligence (G1, UK100-ORB-INTEL-TLDR-DESIGN.md §2) — a synthesis
+//    layer over the fields the snapshot already carries. Layer 1 (mechanical
+//    computeOrbIntel) always renders; Layer 2 (aiStanceLine/aiBullets) comes
+//    from the existing briefing call in G2 and is null/[] without an API key.
+type OrbIntelDirection = 'FAVOURS_LONG' | 'FAVOURS_SHORT' | 'BREAKOUT_SUSPECT' | 'NEUTRAL'
+type OrbIntelSeverity  = 'INFO' | 'CAUTION' | 'STRONG'
+type OrbIntelSource    =
+  'STRUCTURE' | 'RANGE' | 'GAP' | 'TAPE' | 'FX' | 'RATES' | 'POSITIONING' | 'EVENT' | 'AI'
+
+interface OrbIntelSignal {
+  direction: OrbIntelDirection
+  severity:  OrbIntelSeverity
+  source:    OrbIntelSource
+  text:      string
+}
+
+type OrbIntelStance =
+  'LONG_FAVOURED' | 'SHORT_FAVOURED' | 'FADE_FAVOURED' | 'BREAKOUTS_SUSPECT' | 'MIXED'
+
+interface OrbIntel {
+  stance:       OrbIntelStance
+  stanceLine:   string
+  signals:      OrbIntelSignal[]
+  aiStanceLine: string | null
+  aiBullets:    string[]
+  baseRateNote: string | null
 }
 
 interface Uk100Snapshot {
@@ -142,6 +171,7 @@ interface Uk100Snapshot {
   riskTone: { score: number; label: FtseImpact; rationale: string } | null
   bias: BiasBlock
   orbContext: OrbContext
+  orbIntel: OrbIntel
   briefing: { biasScore: number; biasLabel: string; confidence: number; briefing: string; generatedAt: string } | null
 }
 
@@ -180,6 +210,20 @@ function londonOffsetHours(d: Date): number {
 function londonNow(): Date {
   const now = new Date()
   return new Date(now.getTime() + londonOffsetHours(now) * 3_600_000)
+}
+
+// ISO-week key (e.g. "2026-W28") for a London-local Date (UTC fields hold the
+// London wall clock). Used by fetchCtraderData to bucket D_1 bars into weeks
+// for the previous-week high/low (F-E of UK100-ORB-INTEL-TLDR-DESIGN.md).
+export function isoWeekKey(d: Date): string {
+  const date = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()))
+  const dayNum = (date.getUTCDay() + 6) % 7            // Mon=0 … Sun=6
+  date.setUTCDate(date.getUTCDate() - dayNum + 3)      // move to the week's Thursday
+  const firstThursday = new Date(Date.UTC(date.getUTCFullYear(), 0, 4))
+  const firstDayNum = (firstThursday.getUTCDay() + 6) % 7
+  firstThursday.setUTCDate(firstThursday.getUTCDate() - firstDayNum + 3)
+  const week = 1 + Math.round((date.getTime() - firstThursday.getTime()) / (7 * 86_400_000))
+  return `${date.getUTCFullYear()}-W${String(week).padStart(2, '0')}`
 }
 
 function londonTimeLabel(iso: string): string {
@@ -312,6 +356,7 @@ const UK100_SYMS = ['UK100', 'GBPUSD', 'EURGBP', 'US500', 'NAS100', 'BRENT', 'CO
 interface CtraderResult {
   prices: Uk100Prices
   priorDayHigh: number | null; priorDayLow: number | null; priorClose: number | null
+  prevWeekHigh: number | null; prevWeekLow: number | null
   overnightHigh: number | null; overnightLow: number | null
   orbHigh: number | null; orbLow: number | null
   postOrbCloses: number[]
@@ -354,6 +399,7 @@ async function fetchCtraderData(): Promise<CtraderResult | null> {
 
     const uk100Id = idFor('UK100')
     let priorDayHigh: number | null = null, priorDayLow: number | null = null, priorClose: number | null = null
+    let prevWeekHigh: number | null = null, prevWeekLow: number | null = null
     let overnightHigh: number | null = null, overnightLow: number | null = null
     let orbHigh: number | null = null, orbLow: number | null = null
     let adr14: number | null = null, adrUsedPct: number | null = null
@@ -388,6 +434,19 @@ async function fetchCtraderData(): Promise<CtraderResult | null> {
         const today = d1Bars[d1Bars.length - 1]
         if (today && adr14) {
           adrUsedPct = Math.round((today.high - today.low) / 1e5 / adr14 * 100)
+        }
+
+        // Previous-ISO-week high/low (F-E) — bucket the D_1 bars by London ISO
+        // week, take the week before the current one. Null when fewer than 3
+        // bars land in it (holiday-shortened week / thin data).
+        const prevWeekKey = isoWeekKey(new Date(londonNow().getTime() - 7 * 86_400_000))
+        const prevWeekBars = d1Bars.filter(b => {
+          const bd = new Date(b.timestamp + londonOffsetHours(new Date(b.timestamp)) * 3_600_000)
+          return isoWeekKey(bd) === prevWeekKey
+        })
+        if (prevWeekBars.length >= 3) {
+          prevWeekHigh = Math.max(...prevWeekBars.map(b => b.high)) / 1e5
+          prevWeekLow  = Math.min(...prevWeekBars.map(b => b.low)) / 1e5
         }
       }
 
@@ -553,7 +612,7 @@ async function fetchCtraderData(): Promise<CtraderResult | null> {
     console.log(`European tape: GER40 ${ger40DayPct}%, EUSTX50 ${eustx50DayPct}%, EURUSD ${eurUsdDayPct}%, corr(DAX)=${ftseDaxCorr20d}, corr(SX5E)=${ftseSx5eCorr20d}, agreement=${tapeAgreement}, preOpenLead=${preOpenLead}`)
 
     return {
-      prices, priorDayHigh, priorDayLow, priorClose, overnightHigh, overnightLow,
+      prices, priorDayHigh, priorDayLow, priorClose, prevWeekHigh, prevWeekLow, overnightHigh, overnightLow,
       orbHigh, orbLow, postOrbCloses, adr14, adrUsedPct,
       us500DayPct, nas100DayPct, brentDayPct, copperDayPct, goldDayPct, gbpUsdDayPct,
       ger40DayPct, eustx50DayPct, eurUsdDayPct, ftseDaxCorr20d, ftseSx5eCorr20d, tapeAgreement, preOpenLead,
@@ -1068,11 +1127,270 @@ function computeOrbContext(input: {
     cashOpenLondon: `08:00 ${londonOffsetHours(now) === 1 ? 'BST' : 'GMT'}`,
     overnightHigh: c?.overnightHigh ?? null, overnightLow: c?.overnightLow ?? null,
     priorDayHigh: c?.priorDayHigh ?? null, priorDayLow: c?.priorDayLow ?? null, priorClose,
+    prevWeekHigh: c?.prevWeekHigh ?? null, prevWeekLow: c?.prevWeekLow ?? null,
     gapPts, gapPct,
     orbHigh: c?.orbHigh ?? null, orbLow: c?.orbLow ?? null,
     orbBrokenDirection,
     eventWindows,
     adr14: c?.adr14 ?? null, adrUsedPct: c?.adrUsedPct ?? null,
+  }
+}
+
+// ── §2 ORB intelligence — the mechanical rules engine (G1) ──────────────────
+// A pure, unit-testable synthesis layer over fields the snapshot already
+// carries (UK100-ORB-INTEL-TLDR-DESIGN.md §2.3). Every rule either pushes one
+// signal or nothing; thresholds are deliberate — do not re-tune here.
+
+// The same-day /uk100-session record echo (rule R12). Read from disk in main()
+// so computeOrbIntel stays pure; null when there is no same-day session.
+export interface TodaySessionEcho {
+  time:         string
+  direction:    'LONG' | 'SHORT' | null   // tradeIdea.direction (null on NO_TRADE)
+  status:       string | null             // tradeIdea.status
+  probability:  number | null
+  orbDirection: string | null             // orbPlaybook.direction
+  draw:         number | null             // drawOnLiquidity (primary target)
+}
+
+export interface OrbIntelInput {
+  orbContext:   OrbContext
+  bias:         BiasBlock
+  europeanTape: EuropeanTapeBlock
+  usLinkage:    UsLinkageBlock
+  fx:           FxBlock
+  ukRates:      UkRatesBlock
+  positioning:  PositioningBlock
+  calendar:     Uk100CalendarEvent[]
+  uk100Price:   number | null
+  nowLondonHour: number
+  todaySession: TodaySessionEcho | null
+}
+
+const SOURCE_PRIORITY: Record<OrbIntelSource, number> = {
+  STRUCTURE: 0, RANGE: 1, GAP: 2, TAPE: 3, RATES: 4, FX: 5, EVENT: 6, POSITIONING: 7, AI: 8,
+}
+const SEVERITY_RANK: Record<OrbIntelSeverity, number> = { STRONG: 3, CAUTION: 2, INFO: 1 }
+
+function rankSignals(signals: OrbIntelSignal[]): OrbIntelSignal[] {
+  return [...signals].sort((a, b) =>
+    SEVERITY_RANK[b.severity] - SEVERITY_RANK[a.severity] ||
+    SOURCE_PRIORITY[a.source] - SOURCE_PRIORITY[b.source])
+}
+
+export function computeOrbIntel(input: OrbIntelInput): OrbIntel {
+  const { orbContext: o, bias, europeanTape: et, usLinkage: us, fx, ukRates, positioning, calendar, uk100Price, nowLondonHour, todaySession } = input
+  const signals: OrbIntelSignal[] = []
+  const score = bias.score
+  const price = uk100Price
+  const budget = o.adr14 != null && o.adrUsedPct != null ? o.adr14 * (1 - o.adrUsedPct / 100) : null
+
+  // R1 — Fakeout / reclaim: the break was swept and fully reclaimed.
+  let r1Signal: OrbIntelSignal | null = null
+  const postOrb = o.mode === 'POST_ORB' || o.mode === 'CLOSED'
+  if (postOrb && price != null && o.orbHigh != null && o.orbLow != null) {
+    if (o.orbBrokenDirection === 'DOWN' && price > o.orbHigh) {
+      r1Signal = { direction: 'FAVOURS_LONG', severity: 'STRONG', source: 'STRUCTURE',
+        text: `ORB broke DOWN but price has fully reclaimed the range (back above ${o.orbHigh}) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.` }
+    } else if (o.orbBrokenDirection === 'UP' && price < o.orbLow) {
+      r1Signal = { direction: 'FAVOURS_SHORT', severity: 'STRONG', source: 'STRUCTURE',
+        text: `ORB broke UP but price has fully reclaimed the range (back below ${o.orbLow}) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.` }
+    }
+  }
+  if (r1Signal) signals.push(r1Signal)
+
+  // R2 / R3 — counter-bias vs with-bias break (only when R1 did not fire).
+  if (!r1Signal && o.mode === 'POST_ORB' && (o.orbBrokenDirection === 'UP' || o.orbBrokenDirection === 'DOWN') && Math.abs(score) >= 3) {
+    const brokeUp = o.orbBrokenDirection === 'UP'
+    const biasUp = score >= 3
+    const label = biasUp ? 'BULLISH' : 'BEARISH'
+    if (brokeUp !== biasUp) {
+      // R2 — against the bias
+      signals.push({ direction: 'BREAKOUT_SUSPECT', severity: 'CAUTION', source: 'STRUCTURE',
+        text: `ORB broke ${o.orbBrokenDirection} against a ${label} macro bias (${score >= 0 ? '+' : ''}${score}) — counter-bias breaks fail more often; treat continuation as suspect.` })
+    } else {
+      // R3 — with the bias
+      signals.push({ direction: biasUp ? 'FAVOURS_LONG' : 'FAVOURS_SHORT', severity: 'INFO', source: 'STRUCTURE',
+        text: `ORB break ${o.orbBrokenDirection} is aligned with the ${label} macro bias (${score >= 0 ? '+' : ''}${score}) — continuation has the backdrop behind it.` })
+    }
+  }
+
+  // R4 — range budget spent.
+  if (o.adrUsedPct != null && o.adrUsedPct >= 70) {
+    const strong = o.adrUsedPct >= 90
+    signals.push({ direction: 'BREAKOUT_SUSPECT', severity: strong ? 'STRONG' : 'CAUTION', source: 'RANGE',
+      text: `${o.adrUsedPct}% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.` })
+  }
+
+  // R5 / R6 — gap dynamics, only in the pre-/opening window (London hour < 9).
+  if (nowLondonHour < 9 && o.gapPct != null && Math.abs(score) >= 3) {
+    const gapUp = o.gapPct > 0
+    const biasUp = score >= 3
+    if (Math.abs(o.gapPct) >= 0.4 && gapUp !== biasUp) {
+      signals.push({ direction: 'BREAKOUT_SUSPECT', severity: 'CAUTION', source: 'GAP',
+        text: `Gapped ${gapUp ? 'UP' : 'DOWN'} ${o.gapPct >= 0 ? '+' : ''}${o.gapPct}% against a ${biasUp ? 'bullish' : 'bearish'} bias${o.priorClose != null ? ` — a gap-fill toward prior close (${o.priorClose}) is the favoured first move` : ''}, not continuation.` })
+    } else if (Math.abs(o.gapPct) >= 0.25 && gapUp === biasUp && o.overnightHigh != null && o.overnightLow != null && o.adr14 != null && (o.overnightHigh - o.overnightLow) < 0.5 * o.adr14) {
+      signals.push({ direction: biasUp ? 'FAVOURS_LONG' : 'FAVOURS_SHORT', severity: 'INFO', source: 'GAP',
+        text: `Gap ${gapUp ? 'up' : 'down'} in the bias direction with a tight overnight range — trend-day conditions; the first ORB break ${biasUp ? 'long' : 'short'} carries the setup.` })
+    }
+  }
+
+  // R7 — the obvious draw sits beyond what's left of a typical day's range.
+  if (budget != null && price != null) {
+    if (score >= 0 && o.priorDayHigh != null && price < o.priorDayHigh && (o.priorDayHigh - price) > budget) {
+      signals.push({ direction: 'NEUTRAL', severity: 'CAUTION', source: 'RANGE',
+        text: `The obvious draw (PDH ${o.priorDayHigh}) sits beyond what's left of a typical day's range — targets past it are stretch-only today.` })
+    } else if (score < 0 && o.priorDayLow != null && price > o.priorDayLow && (price - o.priorDayLow) > budget) {
+      signals.push({ direction: 'NEUTRAL', severity: 'CAUTION', source: 'RANGE',
+        text: `The obvious draw (PDL ${o.priorDayLow}) sits beyond what's left of a typical day's range — targets past it are stretch-only today.` })
+    }
+  }
+
+  // R8 — European tape.
+  if (et.tapeAgreement === 'DIVERGING') {
+    signals.push({ direction: 'BREAKOUT_SUSPECT', severity: 'CAUTION', source: 'TAPE',
+      text: `FTSE is diverging from a united European tape — it's trading its own story today; tape-based confirmation is unreliable.` })
+  } else if (et.tapeAgreement === 'SPLIT') {
+    signals.push({ direction: 'NEUTRAL', severity: 'INFO', source: 'TAPE',
+      text: `The European tape is split (Euro Stoxx and DAX disagree) — no clean cross-market lead; weight the tape less than usual.` })
+  } else if (et.tapeAgreement === 'ALIGNED' && et.eurostoxx50DayPct != null && Math.abs(et.eurostoxx50DayPct) > 0.15) {
+    const up = et.eurostoxx50DayPct > 0
+    signals.push({ direction: up ? 'FAVOURS_LONG' : 'FAVOURS_SHORT', severity: 'INFO', source: 'TAPE',
+      text: `FTSE is tracking a ${up ? 'firmer' : 'softer'} European tape (Euro Stoxx ${et.eurostoxx50DayPct >= 0 ? '+' : ''}${et.eurostoxx50DayPct}%) — the cross-market lean is ${up ? 'up' : 'down'}.` })
+  }
+  if ((o.mode === 'PRE_OPEN' || o.mode === 'ORB_FORMING') && (et.preOpenLead === 'UP' || et.preOpenLead === 'DOWN')) {
+    signals.push({ direction: et.preOpenLead === 'UP' ? 'FAVOURS_LONG' : 'FAVOURS_SHORT', severity: 'INFO', source: 'TAPE',
+      text: `European futures already broke ${et.preOpenLead} through their overnight range pre-open — an early lean for a ${et.preOpenLead === 'UP' ? 'upside' : 'downside'} resolution.` })
+  }
+
+  // R9 — US tape / VIX.
+  if (us.vixRegime === 'STRESS') {
+    signals.push({ direction: 'BREAKOUT_SUSPECT', severity: 'STRONG', source: 'TAPE',
+      text: `VIX in STRESS — violent reversals both ways; cut size and distrust breakouts in either direction.` })
+  } else if (nowLondonHour >= 13.5 && us.us500DayPct != null && Math.abs(us.us500DayPct) >= 0.3) {
+    const up = us.us500DayPct > 0
+    signals.push({ direction: up ? 'FAVOURS_LONG' : 'FAVOURS_SHORT', severity: 'INFO', source: 'TAPE',
+      text: `Past 13:30 with US futures ${us.us500DayPct >= 0 ? '+' : ''}${us.us500DayPct}% — the 14:30 US handoff argues ${up ? 'for' : 'against'} holding longs into the US open.` })
+  }
+
+  // R10 — sterling at a 20-day extreme.
+  if (fx.gbpUsd20dPercentile != null && fx.gbpUsdDayPct != null) {
+    if (fx.gbpUsd20dPercentile >= 85 && fx.gbpUsdDayPct > 0) {
+      signals.push({ direction: 'BREAKOUT_SUSPECT', severity: 'CAUTION', source: 'FX',
+        text: `Sterling is at the ${fx.gbpUsd20dPercentile}th percentile of its 20-day range and still rising — a persistent FX headwind capping upside breaks (weak GBP is what lifts FTSE).` })
+    } else if (fx.gbpUsd20dPercentile <= 15 && fx.gbpUsdDayPct < 0) {
+      signals.push({ direction: 'FAVOURS_LONG', severity: 'INFO', source: 'FX',
+        text: `Sterling is at the ${fx.gbpUsd20dPercentile}th percentile of its 20-day range and falling — a weak-GBP tailwind for the index's dollar earners.` })
+    }
+  }
+
+  // R11 — fiscal stress / COT.
+  if (ukRates.longEndStress) {
+    signals.push({ direction: 'FAVOURS_SHORT', severity: 'STRONG', source: 'RATES',
+      text: `20Y gilt +${ukRates.gilt20yDayBp}bp — a fiscal-stress selloff; this historically drags the whole index regardless of the banks rotation.` })
+  }
+  if (positioning.crowding === 'CROWDED_SHORT') {
+    signals.push({ direction: 'BREAKOUT_SUSPECT', severity: 'INFO', source: 'POSITIONING',
+      text: `GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE).` })
+  }
+
+  // R12 — same-day AI session echo.
+  let r12Signal: OrbIntelSignal | null = null
+  if (todaySession) {
+    const ts = todaySession
+    const dir: OrbIntelDirection = ts.direction === 'LONG' ? 'FAVOURS_LONG' : ts.direction === 'SHORT' ? 'FAVOURS_SHORT' : 'NEUTRAL'
+    const drawClause = ts.direction && ts.draw != null ? ` toward ${ts.draw}` : ''
+    const call = ts.direction ? `${ts.direction}${drawClause}` : 'NO TRADE'
+    const meta = [ts.status, ts.probability != null ? `${ts.probability}%` : null].filter(Boolean).join(', ')
+    const playbook = ts.orbDirection ? ` — playbook ${ts.orbDirection}` : ''
+    r12Signal = { direction: dir, severity: 'INFO', source: 'AI',
+      text: `Today's ${ts.time} AI session read: ${call}${meta ? ` (${meta})` : ''}${playbook}.` }
+    signals.push(r12Signal)
+  }
+
+  // R13 — event windows.
+  if (o.eventWindows.length > 0) {
+    signals.push({ direction: 'BREAKOUT_SUSPECT', severity: 'CAUTION', source: 'EVENT',
+      text: `${o.eventWindows.map(e => `${e.event} @ ${e.timeLondon}`).join(', ')} today — pre-release breaks are positioning, not conviction.` })
+  } else {
+    const tomorrowHigh = calendar.find(e => e.impact === 'HIGH' && e.daysFromToday === 1)
+    if (tomorrowHigh && nowLondonHour >= 14) {
+      signals.push({ direction: 'NEUTRAL', severity: 'INFO', source: 'EVENT',
+        text: `${tomorrowHigh.event} prints tomorrow ${tomorrowHigh.timeLondon} — late-session moves today are as likely pre-event de-risking as conviction.` })
+    }
+  }
+
+  // ── Stance aggregation (§2.4) — computed from the FULL signal set. ──
+  const strongOpposes = (favourLong: boolean) => signals.some(s =>
+    s.severity === 'STRONG' && (s.direction === (favourLong ? 'FAVOURS_SHORT' : 'FAVOURS_LONG') || s.direction === 'BREAKOUT_SUSPECT'))
+  const suspectCount = signals.filter(s => s.direction === 'BREAKOUT_SUSPECT' && SEVERITY_RANK[s.severity] >= SEVERITY_RANK.CAUTION).length
+
+  let stance: OrbIntelStance
+  if (r1Signal) {
+    stance = 'FADE_FAVOURED'
+  } else if (score >= 3 && !strongOpposes(true)) {
+    stance = 'LONG_FAVOURED'
+  } else if (score <= -3 && !strongOpposes(false)) {
+    stance = 'SHORT_FAVOURED'
+  } else if (suspectCount >= 2) {
+    stance = 'BREAKOUTS_SUSPECT'
+  } else {
+    stance = 'MIXED'
+  }
+
+  const STANCE_PHRASE: Record<OrbIntelStance, string> = {
+    LONG_FAVOURED: 'Backdrop favours upside breaks',
+    SHORT_FAVOURED: 'Backdrop favours downside breaks',
+    FADE_FAVOURED: 'Fade day — the ORB break was a trap',
+    BREAKOUTS_SUSPECT: 'Breakouts suspect in both directions today',
+    MIXED: 'No clean edge — mixed signals',
+  }
+
+  // ── Rank & cap at 6, always keeping R1 and R12 (§2.5). ──
+  const ranked = rankSignals(signals)
+  let capped = ranked
+  if (ranked.length > 6) {
+    const forced = [r1Signal, r12Signal].filter((s): s is OrbIntelSignal => s != null)
+    const others = ranked.filter(s => !forced.includes(s))
+    capped = rankSignals([...forced, ...others.slice(0, 6 - forced.length)])
+  }
+
+  const stanceLine = capped.length > 0
+    ? `${STANCE_PHRASE[stance]} — ${capped[0].text}`
+    : STANCE_PHRASE[stance]
+
+  return { stance, stanceLine, signals: capped, aiStanceLine: null, aiBullets: [], baseRateNote: null }
+}
+
+// Read today's latest /uk100-session record for rule R12. Best-effort — any
+// failure (no index, no same-day entry, unreadable file) returns null and the
+// rule simply doesn't fire. Runs in main(), keeping computeOrbIntel pure.
+function readTodaySessionEcho(): TodaySessionEcho | null {
+  try {
+    const sessionsDir = path.join(__dirname, '../public/data/uk100/sessions')
+    const indexPath = path.join(sessionsDir, 'index.json')
+    const index = JSON.parse(fs.readFileSync(indexPath, 'utf8')) as { sessions?: Array<{ date: string; time: string; filename: string; timestamp: string }> }
+    const todayLondon = londonNow().toISOString().slice(0, 10)
+    const todays = (index.sessions ?? []).filter(s => s.date === todayLondon)
+    if (todays.length === 0) return null
+    todays.sort((a, b) => b.timestamp.localeCompare(a.timestamp))
+    const latest = todays[0]
+    const rec = JSON.parse(fs.readFileSync(path.join(sessionsDir, latest.filename), 'utf8')) as {
+      tradeIdea?: { direction?: 'LONG' | 'SHORT'; status?: string } | null
+      probability?: number
+      orbPlaybook?: { direction?: string } | null
+      drawOnLiquidity?: number
+    }
+    const noTrade = rec.tradeIdea?.status === 'NO_TRADE' || !rec.tradeIdea
+    return {
+      time: latest.time,
+      direction: noTrade ? null : (rec.tradeIdea?.direction ?? null),
+      status: rec.tradeIdea?.status ?? null,
+      probability: rec.probability ?? null,
+      orbDirection: rec.orbPlaybook?.direction ?? null,
+      draw: rec.drawOnLiquidity ?? null,
+    }
+  } catch {
+    return null
   }
 }
 
@@ -1321,6 +1639,16 @@ async function main() {
 
   const orbContext = computeOrbContext({ ctrader, uk100Price: ctrader?.prices.UK100 ?? null, calendar })
 
+  // ORB intelligence (G1) — synthesised from the assembled blocks above plus
+  // today's AI session echo (R12). Runs before the briefing call so the
+  // briefing prompt (G2) can see the mechanical signals and add synthesis.
+  const orbIntel = computeOrbIntel({
+    orbContext, bias, europeanTape, usLinkage, fx, ukRates, positioning,
+    calendar, uk100Price: ctrader?.prices.UK100 ?? null, nowLondonHour,
+    todaySession: readTodaySessionEcho(),
+  })
+  console.log(`ORB intel: ${orbIntel.stance} (${orbIntel.signals.length} signals)`)
+
   const snapshotWithoutBriefing: Omit<Uk100Snapshot, 'briefing'> = {
     generatedAt: new Date().toISOString(),
     prices: ctrader?.prices ?? {
@@ -1330,7 +1658,7 @@ async function main() {
     fx, ukRates, usLinkage, commodities, europeanTape, positioning, sectorPanel,
     economicCalendar: calendar, newsItems,
     riskTone,
-    bias, orbContext,
+    bias, orbContext, orbIntel,
   }
 
   const briefing = await generateUk100Briefing(snapshotWithoutBriefing)

@@ -85,6 +85,7 @@ describe('explainOrb — mode awareness', () => {
     computedAt: '', mode: 'POST_ORB', cashOpenLondon: '08:00 BST',
     overnightHigh: 10498.5, overnightLow: 10438.8,
     priorDayHigh: 10514.2, priorDayLow: 10380.4, priorClose: 10457,
+    prevWeekHigh: 10726.7, prevWeekLow: 10380.4,
     gapPts: 34.6, gapPct: 0.33, orbHigh: 10494.7, orbLow: 10471.7,
     orbBrokenDirection: 'UP', eventWindows: [], adr14: 133.4, adrUsedPct: 49,
   }

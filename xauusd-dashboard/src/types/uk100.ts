@@ -108,11 +108,38 @@ export interface OrbContext {
   cashOpenLondon: string
   overnightHigh: number | null; overnightLow: number | null
   priorDayHigh: number | null; priorDayLow: number | null; priorClose: number | null
+  prevWeekHigh: number | null; prevWeekLow: number | null
   gapPts: number | null; gapPct: number | null
   orbHigh: number | null; orbLow: number | null
   orbBrokenDirection: 'UP' | 'DOWN' | 'NONE' | null
   eventWindows: OrbEventWindow[]
   adr14: number | null; adrUsedPct: number | null
+}
+
+// ── ORB intelligence (G1, UK100-ORB-INTEL-TLDR-DESIGN.md §2) — mirror of the
+//    script-local types in scripts/fetch-uk100-data.ts. ──
+export type OrbIntelDirection = 'FAVOURS_LONG' | 'FAVOURS_SHORT' | 'BREAKOUT_SUSPECT' | 'NEUTRAL'
+export type OrbIntelSeverity  = 'INFO' | 'CAUTION' | 'STRONG'
+export type OrbIntelSource    =
+  'STRUCTURE' | 'RANGE' | 'GAP' | 'TAPE' | 'FX' | 'RATES' | 'POSITIONING' | 'EVENT' | 'AI'
+
+export interface OrbIntelSignal {
+  direction: OrbIntelDirection
+  severity:  OrbIntelSeverity
+  source:    OrbIntelSource
+  text:      string
+}
+
+export type OrbIntelStance =
+  'LONG_FAVOURED' | 'SHORT_FAVOURED' | 'FADE_FAVOURED' | 'BREAKOUTS_SUSPECT' | 'MIXED'
+
+export interface OrbIntel {
+  stance:       OrbIntelStance
+  stanceLine:   string
+  signals:      OrbIntelSignal[]
+  aiStanceLine: string | null
+  aiBullets:    string[]
+  baseRateNote: string | null
 }
 
 export interface Uk100RiskTone {
@@ -138,6 +165,7 @@ export interface Uk100Snapshot {
   riskTone: Uk100RiskTone | null
   bias: BiasBlock
   orbContext: OrbContext
+  orbIntel: OrbIntel
   briefing: Uk100Briefing | null
 }
 

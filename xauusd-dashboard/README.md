@@ -297,6 +297,44 @@ candles **08:00–08:15**; overnight range = **22:00 (prev day) → 08:00**.
   `.claude/commands/uk100-session.md` STEP 8 and `UK100-BUILD-PLAN.md` §6.2 —
   it is not re-derived here to avoid two sources of truth drifting apart.
 
+`orbContext` also now carries **`prevWeekHigh`/`prevWeekLow`** (previous ISO
+week's high/low, bucketed from the 30-day D_1 pull; null when <3 bars land in
+that week).
+
+### ORB intelligence (`orbIntel` block)
+
+`computeOrbIntel()` in `fetch-uk100-data.ts` — a pure, unit-tested synthesis
+layer that turns the fields the snapshot already carries into a plain-English
+"due to X, breakouts long may not be sustained" read, rendered on the ORB tile
+above the (now-collapsible) range numbers. Two layers:
+
+- **Mechanical (always present)**: 13 deterministic rules emit ranked
+  `signals` (≤6), each `{ direction, severity, source, text }`, plus a `stance`
+  (`LONG_FAVOURED` / `SHORT_FAVOURED` / `FADE_FAVOURED` / `BREAKOUTS_SUSPECT` /
+  `MIXED`) and a fallback `stanceLine`. The rules, condensed:
+
+  | Rule | Fires on | Read |
+  |---|---|---|
+  | R1 fakeout/reclaim | ORB broke one way, price fully reclaimed the range | STRONG fade — the break was a sweep, trade the reclaim |
+  | R2 / R3 | ORB break against / with the macro bias (\|score\|≥3) | counter-bias breaks suspect; with-bias breaks backed |
+  | R4 range budget | `adrUsedPct` ≥70 (≥90 STRONG) | little fuel left; favour fades over chasing |
+  | R5 / R6 gap | gap ≥0.4% against bias / ≥0.25% with bias + tight overnight (opening window) | gap-fill favoured / trend-day setup |
+  | R7 draw beyond fuel | PDH/PDL further than the remaining range budget | targets past it are stretch-only |
+  | R8 European tape | `tapeAgreement` DIVERGING/SPLIT/ALIGNED, `preOpenLead` | tape unreliable / split / directional lean |
+  | R9 US tape / VIX | VIX STRESS, or post-13:30 US futures move | cut size / US-handoff lean |
+  | R10 GBP extreme | sterling ≥85th (≤15th) 20-day percentile | FX head/tailwind (weak GBP lifts FTSE) |
+  | R11 fiscal / COT | `longEndStress`, `crowding` CROWDED_SHORT | fiscal-stress drag / squeeze risk |
+  | R12 AI echo | today's `/uk100-session` record exists | surfaces its direction/status/probability |
+  | R13 event | today's event windows, or a HIGH-impact print tomorrow | pre-release breaks are positioning |
+
+  Stance aggregation: R1 → `FADE_FAVOURED`; else a clean \|bias\|≥3 with no
+  opposing STRONG signal → `LONG`/`SHORT_FAVOURED`; else ≥2 CAUTION-or-worse
+  breakout-suspect signals → `BREAKOUTS_SUSPECT`; else `MIXED`.
+- **AI overlay (G2)**: `aiStanceLine`/`aiBullets` come from the existing hourly
+  briefing Anthropic call (no extra API call); `null`/`[]` without a key, and the
+  tile degrades to the mechanical layer. `baseRateNote` is reserved for the
+  not-yet-built Phase E ORB backtest and is always null for now.
+
 ### `/uk100-session` — the AI skill
 
 `.claude/commands/uk100-session.md` is `/gold-session`'s sibling: same core
