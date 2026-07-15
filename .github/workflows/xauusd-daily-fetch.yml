@@ -93,6 +93,17 @@ jobs:
           CTRADER_MCP_URL:          ${{ secrets.VITE_CTRADER_MCP_URL }}
           CTRADER_MCP_TOKEN:        ${{ secrets.VITE_CTRADER_MCP_TOKEN }}
 
+      - name: Resolve ORB intel journal
+        # J2 (UK100-ORB-JOURNAL-DESIGN.md §3): score the hourly orbIntel reads
+        # journalled by the fetch step against realised UK100 H1 price and
+        # regenerate public/data/uk100/orb-journal/scoreboard.json. No-op when
+        # the cTrader token is unset. Never fails the run.
+        continue-on-error: true
+        run: cd xauusd-dashboard && npx tsx scripts/resolve-orb-journal.ts
+        env:
+          CTRADER_MCP_URL:          ${{ secrets.VITE_CTRADER_MCP_URL }}
+          CTRADER_MCP_TOKEN:        ${{ secrets.VITE_CTRADER_MCP_TOKEN }}
+
       - name: Commit updated snapshot
         run: |
           git config user.name  "xauusd-data-bot"
