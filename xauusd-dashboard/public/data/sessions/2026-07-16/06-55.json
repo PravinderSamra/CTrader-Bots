@@ -1,0 +1,76 @@
+{
+  "session": "LONDON",
+  "bias": "BULLISH",
+  "biasScore": 3,
+  "probability": 71,
+  "confidence": 5,
+  "priceAtAnalysis": 4028.695,
+  "priceZone": "DISCOUNT",
+  "equilibrium": 4057.1,
+  "drawOnLiquidity": 4053.02,
+  "invalidation": 4022.95,
+  "keyLevels": [
+    {
+      "price": 4053.02,
+      "kind": "DRAW",
+      "note": "Primary target, H1 equilibrium + M5 FVG CE"
+    },
+    {
+      "price": 4045.98,
+      "kind": "BSL",
+      "note": "M5 BSL intermediate"
+    },
+    {
+      "price": 4036.52,
+      "kind": "BSL",
+      "note": "M5 BSL HIGH-strength (4 tests), T1"
+    },
+    {
+      "price": 4033.06,
+      "kind": "OTHER",
+      "note": "M5 CHoCH bullish, M1 confirmation level"
+    },
+    {
+      "price": 4028.695,
+      "kind": "OTHER",
+      "note": "Current price, entry zone"
+    },
+    {
+      "price": 4027.08,
+      "kind": "DRAW",
+      "note": "M5 A-grade BULL FVG CE"
+    },
+    {
+      "price": 4024.36,
+      "kind": "ASIAN_LOW",
+      "note": "Swept by London, manipulation complete"
+    },
+    {
+      "price": 4022.95,
+      "kind": "INVALIDATION",
+      "note": "M5 session low, stop loss"
+    }
+  ],
+  "tradeIdea": {
+    "direction": "LONG",
+    "status": "ACTIVE",
+    "entryLow": 4029,
+    "entryHigh": 4032,
+    "stop": 4022.95,
+    "targets": [
+      4036.52,
+      4045.98,
+      4053.02
+    ],
+    "rr": 3.45,
+    "setupType": "London KZ Sweep Reversal + HAMMER"
+  },
+  "nextHighImpactEvent": null,
+  "smtDivergence": null,
+  "sessionPhase": "London KZ active (2h); M1 retest phase; Phase 2 regime change confirmation pending",
+  "regimeStatus": "H1 BEARISH (with bullish BOS+CHoCH Phase 1/2 signals); M5 NEUTRAL bullish break; M1 ultra-fresh retest",
+  "timestamp": "2026-07-16T06:55:02.841Z",
+  "date": "2026-07-16",
+  "time": "07:55 BST",
+  "analysis": "# GOLD INTRADAY SESSION BRIEF — 2026-07-16 — 07:51 BST / 06:51 UTC — LONDON SESSION\n\n## ACCOUNT CONTEXT\n- **Open Positions on Symbol:** None\n- **Account Balance / Equity / Free Margin:** £46,465.98 (all free margin available)\n\n## REGIME ASSESSMENT\n- **H1 Regime:** BEARISH (weakening structure, but with bullish BOS at 4034.07 and CHoCH at 4061.86 — Phase 1/2 regime change attempt)\n- **M5 Regime:** NEUTRAL (transitional — CHoCH BULLISH at 4033.06 just 46 min ago; BOS BULLISH at 4036.87 just 2h ago)\n- **M1 Regime:** NEUTRAL (ultra-recent: CHoCH BULLISH at 4027.08 just 6 min ago; BOS BEARISH at 4028.03 just 17 min ago)\n- **Protected High / Low (H1):** Protected High at 4080.79 (2 tests); Protected Low at 4034.07 (recent BOS bullish, defined by the break)\n- **Regime Change Phase:** **Phase 2 Retest** — H1 attempted bearish, printed bullish BOS+CHoCH (Phase 1), now M5 has broken the BOS (4036.87) and retesting on M1; awaiting Phase 3 rejection confirmation\n\n## STRUCTURE\n- **Recent BOS/CHoCH:**\n  - **H1:** CHoCH BULLISH at 4061.86 (2026-07-15T12:00 = yesterday, 18.8h ago); BOS BULLISH at 4034.07 (2026-07-14T12:00 = 2 days ago)\n  - **M5:** BOS BULLISH at 4036.87 (2026-07-16T04:10 = 2.7h ago); CHoCH BULLISH at 4033.06 (2026-07-16T06:05 = 46 min ago, FRESH)\n  - **M1:** CHoCH BULLISH at 4027.08 (2026-07-16T06:45 = 6 min ago, ultra-fresh); BOS BEARISH at 4028.03 (2026-07-16T06:34 = 17 min ago)\n- **Displacement:** M5 displacement FALSE; M1 displacement FALSE (no range expansion candles, consolidation phase)\n- **Market Structure Phase:** **Accumulation-Manipulation-Distribution:** Asian low swept (manipulation), now retesting on M5 after bullish break (accumulation phase, M1 retest)\n\n## LIQUIDITY MAP\n- **BSL Above (Unswept):**\n  - M5: 4036.52 (HIGH strength, 4 tests) — Critical resistance\n  - M5: 4045.98 (LOW), 4060.92 (MEDIUM), 4062.0 (MEDIUM)\n  - H1: 4065.45 (MEDIUM), 4080.79 (MEDIUM, PDH)\n- **SSL Below (Current Price):**\n  - M1: 4022.95 (LOW, M5 session low)\n  - H1: 4013.76 (MEDIUM), 3983.93 (MEDIUM, PDL)\n- **Reference Levels:**\n  - Daily Open: 4064.21 (SWEPT upward Thursday session)\n  - PDH: 4080.79 (unswept, 2 tests)\n  - PDL: 4017.45 (unswept)\n  - PWH: 4180.47 (unswept, weekly target)\n  - PWL: 3986.61 (unswept)\n- **PRIMARY Draw on Liquidity:** 4036.52 (M5 BSL, HIGH strength, 4-test zone) — intermediate target; then 4053.02 (H1 equilibrium / M5 A-grade BEAR FVG CE) as secondary\n- **Sweeps Identified:** \n  - ✓ Asian low swept (4024.36 on M5) by London open — classic manipulation setup, reversal expected\n  - Daily open swept upward to 4064.21 during London morning\n  - M5 bearish FVG at 4050.41–4055.63 (A-grade, 0% touched) provides overhead resistance\n\n## KEY PD ARRAYS\n- **Bullish PD Arrays (Fresh, Untouched):**\n  - M5 A-grade BULL FVG: 4027.08–4027.77 (CE 4027.425) — FRESH (6 min ago), untouched, liquidity grab context\n  - M5 B-grade BULL FVG: Multiple B/C grade zones below at 4029.14–4031.29, 4024.54–4026.02 (partially filled, some touch history)\n- **Bearish PD Arrays (Overhead):**\n  - M5 A-grade BEAR FVG: 4050.41–4055.63 (CE 4051.82) — untouched, post-BOS context\n  - M5 A-grade BEAR FVG: 4053.67–4055.27 (CE 4054.47) — untouched, post-BOS context\n  - H1 A-grade BEAR FVG: 4050.41–4055.63 (CE 4053.02) — untouched, liquidity grab context\n- **Current Price vs Equilibrium:**\n  - All timeframes show DISCOUNT: H1 equilibrium 4057.1 vs price 4028.695 (28.4 pips in discount); M5 equilibrium 4030.365 vs price 4028.695 (slight discount); M1 equilibrium 4029.735 vs price 4028.695 (at equilibrium edge)\n  - Per Axiom 4: LONG in discount is correct side; LONGS here are bias-aligned\n\n## MACRO REGIME\n- **DXY:** Implied 100.51 (neutral, slightly stronger than yesterday) — stable, not a headwind\n- **Real Yields:** 10Y at 2.36%, up 0.04 today (same as yesterday) — headwind for gold, but stable overnight\n- **Fed Expectations:** 92% HOLD, next meeting 2026-07-29 — stable, no imminent cut\n- **COT Positioning:** Net long 183,165 (same as yesterday); NEUTRAL crowding; OI +6,341 — steady institutional long bias\n- **ETF Flows:** TREND REVERSED — GLD now in 3-week INFLOW (997.1 tonnes, +1.2 WoW) — institutional buying pressure resumed (major positive)\n- **Dollar Liquidity Stress:** STLFSI -0.882 (low stress); NFCI -0.538 (stable) — no crisis\n- **Geopolitical Risk (GPR):** 173.6 (elevated, same as yesterday) — provides baseline safe-haven bid\n- **VIX / GVZ:** VIX 16.5 (calmer, down from 17.16), GVZ 25.02 (down from 26.93) — lower volatility\n- **Recent Catalysts:** Buffett/Warsh Fed Chair headline (7.8h ago, ~16h old now) — stale, impact fading; Banking sector story — not gold-relevant; No fresh overnight catalysts in Asia session\n- **Build-Up Caution:** Economic calendar is EMPTY — no HIGH-impact events scheduled for the rest of the week\n- **Macro Verdict:** SLIGHTLY SUPPORTS structural bias — ETF inflows resumed (institutional buying), geopolitical risk elevated, macro backdrop shifted from yesterday's \"outflow bearish\" to \"inflow bullish\"\n- **Snapshot Freshness:** Generated 2026-07-15T20:04:26Z (10.5 hours old at analysis time 06:51 UTC Thursday) — acceptable for overnight hours\n\n## SESSION CONTEXT\n- **Current Session:** LONDON (from engine `session.current_session`)\n- **UK Time:** 07:51 BST (Thursday morning, London open phase)\n- **Kill Zone:** LONDON KZ active — opened 07:00 BST, closes at ~10:00 BST (127 minutes from analysis time) — PRIME SETUP WINDOW (London Open KZ historically highest setup probability)\n- **Trading Window Status:** ACTIVE — within London KZ (trader's stated LONDON/NY hours)\n- **Weekly Profile (Thursday):** Thursday often completes the weekly move or delivers reversals if Tue–Wed trended. Yesterday (Wednesday) was a choppy down day; Thursday can show reversal into Friday close.\n\n## CROSS-CHECK\n- **Pattern Detected:** HAMMER (bullish reversal candlestick), confidence 0.65 (good)\n- **Direction:** BULLISH\n- **Agreement with ICT Read:** CONFIRMS — HAMMER pattern + London KZ + Asian low swept + M5 fresh bullish break all align to bullish reversal setup\n- **RSI-14:** 43.3 (mid-range, room to run higher)\n- **Volatility:** MEDIUM (typical for intraday)\n- **SMT Divergence (gold vs EURUSD):** null (no divergence — EURUSD M5 and gold M5 in tandem)\n\n## PROBABILITY ASSESSMENT\n- **Primary Scenario:** [71%] — M1 consolidates and bounces above 4033.06; price runs to 4036.52 and beyond to 4045–4053 zone; H1 bullish break confirmed\n- **Secondary Scenario:** [29%] — M1 breaks below 4022.95; price retraces to 4017–4020 zone; setup invalidated\n- **Confidence Level:** MEDIUM (strong setup, but H1 trend officially BEARISH; waiting for Axiom 7 confirmation via regime change completion)\n- **Key Invalidation Level:** 4022.95 (M5 session low / M1 SSL — below this, bullish setup invalidated)\n\n## TRADE IDEA — PRIMARY (STATUS: ACTIVE with M1 trigger confirmation)\n- **Direction:** LONG\n- **Setup Type:** London KZ Asian Sweep Reversal + A-Grade FVG Fill + HAMMER Pattern\n- **Entry Zone:** 4029–4032 (M1 retest zone, within M1 OTE 4031.34–4033.62)\n  - Trigger: M1 must close above 4033.06 (M5 CHoCH) to confirm\n- **Stop Loss:** 4022.95 (M5 session low, M1 SSL support; below this = setup invalid)\n- **Target 1:** 4036.52 (M5 BSL HIGH-strength, +6.8 pips)\n- **Target 2:** 4045.98 (M5 BSL, +16.3 pips)\n- **Target 3:** 4053.02 (H1 equilibrium, +23.3 pips) — PRIMARY DRAW\n- **Risk-Sized Position:** 0.65 lots (£464.66 risk per trade; 6.75 pips risk; R:R 1:3.45)\n- **Entry Trigger:** M1 must close back above 4033.06 to activate (retest rejection confirmation)\n- **Probability:** 71% (LONG reversal into London KZ)\n\n## KEY LEVELS TO WATCH\n| Price | Level Type | Action |\n|-------|-----------|--------|\n| 4053.02 | Primary target, H1 eq. | Hold on breakout; scale out if resistance |\n| 4045.98 | M5 BSL intermediate | Partial profit zone |\n| 4036.52 | M5 BSL HIGH (4 tests), T1 | First TP; must break to continue |\n| 4033.06 | M5 CHoCH (6 min old) | MUST HOLD above to activate trade |\n| 4028.695 | Current price | Decision point for entry trigger |\n| 4027.08–4027.77 | M5 A-grade BULL FVG | Support below entry |\n| 4022.95 | M5 low / INVALIDATION | Below this = setup dead |\n\n## MARKET NARRATIVE\n\nSmart money has completed the manipulation phase (Asian low swept at 4024.36), and now the London open is showing a reversal setup: price bounced off the low on a HAMMER pattern at the exact ICT discount zone (below equilibrium on all timeframes), while the M5 and M1 have both printed fresh bullish structures (CHoCH 6 min ago on M1, 46 min ago on M5). The M5 is consolidating (trend = NEUTRAL) within a fresh bullish breakout, which means the M1 retest is expected — this is the second phase of the 3-phase regime change (Phase 2: Retest). The H1 trend is bearish, but it carries bullish BOS + CHoCH signals that, combined with the Asian sweep + HAMMER + London KZ timing, suggest a regime flip is underway. Retail trap risk is entering too early before the M1 confirms back above 4033.06. Smart trade: wait for M1 to reject the low and close back into the entry zone, then buy the bounce. Macro also improved overnight (ETF inflows resumed, real yields stable). With LONDON KZ active (highest probability kill zone), this is a high-conviction window — but only with M1 confirmation trigger.\n\n---\n\n## DISCLAIMER\n\nThis analysis is provided for educational and informational purposes only. It is not financial advice. Trading forex and commodities involves substantial risk of loss. Past performance does not guarantee future results. Always use stop-losses, trade with position size appropriate to your risk tolerance, and consult a licensed financial advisor before trading. The trader is solely responsible for all trading decisions and outcomes. This session brief reflects market conditions as of 2026-07-16T06:51Z."
+}
