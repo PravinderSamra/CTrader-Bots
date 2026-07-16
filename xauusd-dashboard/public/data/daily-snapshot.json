@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-16T07:57:16.005Z",
+  "generatedAt": "2026-07-16T09:29:05.370Z",
   "yields": {
     "US10Y": 4.58,
     "US2Y": 4.18,
@@ -34,26 +34,26 @@
     "openInterestChange": 6341
   },
   "etfFlows": {
-    "gldTonnes": 1004.2,
-    "gldWoWChange": 0,
-    "trend3W": "FLAT"
+    "gldTonnes": 1003.3,
+    "gldWoWChange": -0.9,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4029.76,
-    "XAGUSD": 56.854,
-    "EURUSD": 1.14714,
-    "USDJPY": 162.0645,
-    "USDCHF": 0.80602,
-    "USDCNH": 6.76826,
-    "GBPUSD": 1.35365,
-    "USDCAD": 1.40462,
-    "USDSEK": 9.60333,
-    "US500": 7558.7,
-    "GER40": 24865.05,
-    "UK100": 10446.3,
+    "XAUUSD": 4033.39,
+    "XAGUSD": 57.0445,
+    "EURUSD": 1.14641,
+    "USDJPY": 162.141,
+    "USDCHF": 0.80705,
+    "USDCNH": 6.76806,
+    "GBPUSD": 1.35128,
+    "USDCAD": 1.40457,
+    "USDSEK": 9.61257,
+    "US500": 7569.2,
+    "GER40": 24886.05,
+    "UK100": 10461.05,
     "ADR_14day": 98.3,
     "ADR_usedToday": 42.5,
-    "goldSilverRatio": 70.9
+    "goldSilverRatio": 70.7
   },
   "dollarLiquidity": {
     "stlfsi": -0.882,
@@ -66,23 +66,29 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Gold falls as Mideast conflict dims easing inflation hopes - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-07-16T04:19:00.000Z",
+      "hoursAgo": 5.2
+    },
+    {
       "headline": "Jim Cramer sees more upside for Goldman and addresses Wells Fargo's biggest question",
       "source": "CNBC",
       "publishedAt": "2026-07-15T15:29:49.000Z",
-      "hoursAgo": 16.5
+      "hoursAgo": 18
     },
     {
       "headline": "Buffett says Trump's pick of Kevin Warsh for Fed chair was 'good choice'",
       "source": "CNBC",
       "publishedAt": "2026-07-15T12:14:44.000Z",
-      "hoursAgo": 19.7
+      "hoursAgo": 21.2
     }
   ],
   "briefing": {
-    "biasScore": 2,
+    "biasScore": 1,
     "biasLabel": "BULLISH",
     "confidence": 5,
-    "briefing": "Right now, gold is being supported by a combination of falling bond yields [the interest rate the US government pays to borrow money — when yields fall, gold becomes more attractive because it has no yield to compare against], a softer US Dollar [DXY at 100.48, which is relatively weak], and elevated geopolitical risk [the GPR index sits at 173.6, meaning global tension is above normal, which traditionally pushes money into gold as a 'safe haven']. The 10-year real yield [the return on US bonds after stripping out inflation — the most important competitor to gold] dropped 3 basis points overnight and sits at 2.33%, a modest tailwind for gold. On recent news, there is honestly nothing market-moving to flag in the last few hours — a Jim Cramer banking comment from 16.5 hours ago and a Warren Buffett quote about a potential future Fed Chair nominee (Kevin Warsh) from nearly 20 hours ago are the only headlines available, and neither directly drives a dollar or gold move today. The directional bias leans mildly BULLISH — gold at $4,029 is in record territory, yields are easing slightly, the dollar is soft, and speculative positioning [large traders are net-long 183,165 contracts, meaning the crowd is betting on higher prices] remains constructive. However, ETF flows [money moving in or out of gold funds] are flat for three straight weeks, which suggests big institutional buyers are not adding aggressively right now, capping conviction. Confidence is 5/10 — the trend is up but momentum evidence is thin this morning and we are in the quieter Asian session. What would change this view: a sharp Dollar rally or a spike in US yields would flip the bias bearish quickly. There are NO calendar events showing for today, which is unusual — an empty calendar can mean a quieter, choppier session, but also means no scheduled landmines to dodge. No high-impact events are flagged for later this week in the data either, so there is no specific build-up caution needed beyond normal awareness. On key levels: the 14-day Average Daily Range [the typical distance gold travels in a day] is 98.3 points, and price has already used 42.5 of those points today, meaning roughly 55 points of typical daily movement may remain — watch for potential resistance near $4,055–4,060 and support back around $3,987–4,000. For trade integration: this is the Asian session, which is typically the quietest and least reliable for ICT-style trend trades — wait for the London open (8:00 AM GMT) to see if price forms a clear higher-low structure on the 1H chart before committing; keep position size small given moderate confidence, and only buy pullbacks into structure, not breakouts into thin air. If the trend is your friend, patience is your best trade management tool.",
-    "generatedAt": "2026-07-16T07:57:35.045Z"
+    "briefing": "Right now the most important forces shaping gold are a slightly weakening US dollar (DXY at 100.55, which is relatively soft), falling bond yields [bond yields = the interest rate the US government pays to borrow money; when they fall, gold becomes more attractive because holding cash pays you less], and an elevated geopolitical risk reading of 173.6 — meaning global tensions are still high and investors often buy gold as a 'safe haven' [a safe haven = an asset people rush to when the world feels dangerous]. The headline that stands out from the news feed is a Reuters story from about 5 hours ago saying 'Gold falls as Mideast conflict dims easing inflation hopes' — this is slightly confusing on the surface, because conflict usually supports gold, but the framing here suggests markets are worried that ongoing tensions could keep inflation sticky, which would push the US Federal Reserve [the Fed = America's central bank, which controls interest rates] to keep rates high for longer, and higher rates tend to weigh on gold. That gives us a cautious, mixed picture. The directional bias leans mildly BULLISH overall — real yields [real yields = bond interest rates adjusted for inflation] are falling slightly today (down 0.03), the dollar is soft, and geopolitical risk remains elevated, all of which are tailwinds for gold — but the session has already used about 42.5 of the average daily range [ADR = the typical number of points gold moves in one day, currently 98.3 points over 14 days], meaning roughly 56 points of potential movement remains today, so significant upside from here in this single session is limited. Confidence is 5/10 — the conflicting signals from the Reuters headline and the lack of strong momentum make this a 'wait and watch' environment rather than a high-conviction setup. The COT report [Commitment of Traders = a weekly snapshot showing how large professional traders are positioned] shows net long positioning [net long = more buyers than sellers] at 183,165 contracts with a slight increase of 955 this week, and open interest is rising, which mildly supports bulls, but ETF flows [ETFs = funds that hold physical gold; outflows mean investors are selling] have been negative for three straight weeks, which is a warning sign. There are NO scheduled economic events in today's calendar, so no data-driven volatility spikes are expected — this is actually a clean session for following the trend if price sets up properly. The key levels to watch are the current price around $4,033, with the ADR suggesting a likely range ceiling near $4,055–4,060 and floor support around $4,015 for today's session. The Kevin Warsh Fed chair story (21 hours ago) is worth noting — Warsh is seen as more 'hawkish' [hawkish = favouring higher interest rates] than the current Fed, and if this nomination story gains traction it could be a slow-burning headwind for gold. For trade execution: this is a reasonable window to look for long [buy] setups IF the 1H chart confirms an uptrend structure — use reduced size given the mixed signals, wait for a clean 5M pullback into a 'discount zone' [a price area that looks cheap relative to recent highs], and confirm entry on the 1M chart. Do not chase price if it has already run; with less than half the ADR remaining, the reward-to-risk shrinks quickly. Remember: no setup that matches your rules = no trade, and that is always the right decision.",
+    "generatedAt": "2026-07-16T09:29:27.026Z"
   }
 }

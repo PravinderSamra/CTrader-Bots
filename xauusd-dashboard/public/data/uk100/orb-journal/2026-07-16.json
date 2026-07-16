@@ -117,6 +117,75 @@
         "adrUsedPct": 45
       },
       "outcome": null
+    },
+    {
+      "at": "2026-07-16T09:29:59.868Z",
+      "londonTime": "10:29 BST",
+      "mode": "POST_ORB",
+      "price": 10462.85,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — ORB broke UP against a BEARISH macro bias (-4) — counter-bias breaks fail more often; treat continuation as suspect.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "STRUCTURE",
+          "rule": "R2",
+          "text": "ORB broke UP against a BEARISH macro bias (-4) — counter-bias breaks fail more often; treat continuation as suspect."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "UK GDP Monthly Estimate @ 07:00 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.36%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "AI",
+          "rule": "R12",
+          "text": "Today's 08:39 BST AI session read: SHORT toward 10429.6 (WAIT, 80%) — playbook SHORT_ONLY."
+        }
+      ],
+      "aiStanceLine": "Due to an upside ORB break running counter to a -4 bearish macro bias, Brent crude down 1.74% crushing the top-5 energy names, and a softer DAX/Euro Stoxx tape all pointing the same way, the upside break looks poorly supported and a fade back toward ORB low 10,429.6 is the higher-probability play.",
+      "aiBullets": [
+        "Energy is the swing factor: Brent -1.74% hits Shell and BP directly; with energy among the top-5 index weights, this sector drag alone is enough to cap any sustained upside run from the ORB high of 10,465.2.",
+        "Only 45% of the 14-day ADR (126.3pts) is used — roughly 69 points of range remain, meaning a full round-trip from ORB high back to overnight low (10,482.6 → 10,426.3, a 56-point move) is still within today's statistical budget.",
+        "GBP is at the 89th percentile of its 20-day range and sits in a crowded-short positioning regime — a sterling short-squeeze would strengthen GBP, which is bearish for FTSE via the sign-flip, paradoxically reinforcing the downside bias rather than relieving it.",
+        "The UK GDP print at 07:00 BST (pre-ORB) means the 08:00 opening range was set after a high-impact data release, so the ORB itself is already a post-data structure — any upside break is fighting both the data reaction and the -4 macro bias simultaneously."
+      ],
+      "bias": {
+        "score": -4,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10465.2,
+        "orbLow": 10429.6,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10482.6,
+        "overnightLow": 10426.3,
+        "priorDayHigh": 10536.2,
+        "priorDayLow": 10431.2,
+        "gapPct": -0.09,
+        "adr14": 126.3,
+        "adrUsedPct": 45
+      },
+      "outcome": null
     }
   ]
 }
