@@ -324,6 +324,82 @@
         "adrUsedPct": 46
       },
       "outcome": null
+    },
+    {
+      "at": "2026-07-16T14:54:09.743Z",
+      "londonTime": "15:54 BST",
+      "mode": "POST_ORB",
+      "price": 10517.55,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — ORB broke UP against a BEARISH macro bias (-4) — counter-bias breaks fail more often; treat continuation as suspect.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "STRUCTURE",
+          "rule": "R2",
+          "text": "ORB broke UP against a BEARISH macro bias (-4) — counter-bias breaks fail more often; treat continuation as suspect."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "71% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10431.2) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is diverging from a united European tape — it's trading its own story today; tape-based confirmation is unreliable."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "UK GDP Monthly Estimate @ 07:00 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "AI",
+          "rule": "R12",
+          "text": "Today's 08:39 BST AI session read: SHORT toward 10429.6 (WAIT, 80%) — playbook SHORT_ONLY."
+        }
+      ],
+      "aiStanceLine": "Due to a counter-bias upside ORB break against a -4 macro score, 71% of the 126.3-point ADR already consumed, and a FTSE-Europe divergence that strips away cross-market confirmation, the upside break looks structurally unsupported and a rollback toward 10,429–10,431 is the higher-probability path.",
+      "aiBullets": [
+        "Price has gapped +45.8pts (0.44%) above the prior close and broken the ORB to the upside, yet sits only ~52pts below the prior-day high of 10,536.2 — with just 29% of ADR remaining, the reward-to-risk on further longs is thin.",
+        "Brent crude -0.82% drags the top-5 weighted energy names (Shell, BP) while copper -0.46% softens miners — two of the index's heaviest sector blocks are headwinds, compounding the case against the upside break holding.",
+        "COT (Commitment of Traders — large-fund positioning data) shows GBP net short at -89,991 contracts but improving by +15,212 week-on-week; a continued short squeeze (forced buying by those losing short bets) in sterling would strengthen the pound and mechanically pressure UK100 earnings multiples.",
+        "FTSE is diverging from DAX (-0.68%) and EuroStoxx50 (-0.39%) with a 20-day FTSE-DAX correlation of 0.66 — when FTSE outperforms Europe on a bearish backdrop, it often reflects a GDP-surprise positioning unwind rather than genuine demand, increasing fakeout risk above ORB high 10,465.2."
+      ],
+      "bias": {
+        "score": -4,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10465.2,
+        "orbLow": 10429.6,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10482.6,
+        "overnightLow": 10426.3,
+        "priorDayHigh": 10536.2,
+        "priorDayLow": 10431.2,
+        "gapPct": 0.44,
+        "adr14": 126.3,
+        "adrUsedPct": 71
+      },
+      "outcome": null
     }
   ]
 }
