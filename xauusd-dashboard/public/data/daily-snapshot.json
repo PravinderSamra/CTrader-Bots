@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-16T09:29:05.370Z",
+  "generatedAt": "2026-07-16T10:05:24.000Z",
   "yields": {
     "US10Y": 4.58,
     "US2Y": 4.18,
@@ -34,26 +34,26 @@
     "openInterestChange": 6341
   },
   "etfFlows": {
-    "gldTonnes": 1003.3,
-    "gldWoWChange": -0.9,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1004,
+    "gldWoWChange": 0.7,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4033.39,
-    "XAGUSD": 57.0445,
-    "EURUSD": 1.14641,
-    "USDJPY": 162.141,
-    "USDCHF": 0.80705,
-    "USDCNH": 6.76806,
-    "GBPUSD": 1.35128,
-    "USDCAD": 1.40457,
-    "USDSEK": 9.61257,
-    "US500": 7569.2,
-    "GER40": 24886.05,
-    "UK100": 10461.05,
+    "XAUUSD": 4030.525,
+    "XAGUSD": 56.796,
+    "EURUSD": 1.14652,
+    "USDJPY": 162.183,
+    "USDCHF": 0.80732,
+    "USDCNH": 6.769,
+    "GBPUSD": 1.35069,
+    "USDCAD": 1.404,
+    "USDSEK": 9.61238,
+    "US500": 7562.9,
+    "GER40": 24863.05,
+    "UK100": 10471.05,
     "ADR_14day": 98.3,
     "ADR_usedToday": 42.5,
-    "goldSilverRatio": 70.7
+    "goldSilverRatio": 71
   },
   "dollarLiquidity": {
     "stlfsi": -0.882,
@@ -69,26 +69,26 @@
       "headline": "Gold falls as Mideast conflict dims easing inflation hopes - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-16T04:19:00.000Z",
-      "hoursAgo": 5.2
+      "hoursAgo": 5.8
     },
     {
       "headline": "Jim Cramer sees more upside for Goldman and addresses Wells Fargo's biggest question",
       "source": "CNBC",
       "publishedAt": "2026-07-15T15:29:49.000Z",
-      "hoursAgo": 18
+      "hoursAgo": 18.6
     },
     {
       "headline": "Buffett says Trump's pick of Kevin Warsh for Fed chair was 'good choice'",
       "source": "CNBC",
       "publishedAt": "2026-07-15T12:14:44.000Z",
-      "hoursAgo": 21.2
+      "hoursAgo": 21.8
     }
   ],
   "briefing": {
     "biasScore": 1,
     "biasLabel": "BULLISH",
     "confidence": 5,
-    "briefing": "Right now the most important forces shaping gold are a slightly weakening US dollar (DXY at 100.55, which is relatively soft), falling bond yields [bond yields = the interest rate the US government pays to borrow money; when they fall, gold becomes more attractive because holding cash pays you less], and an elevated geopolitical risk reading of 173.6 — meaning global tensions are still high and investors often buy gold as a 'safe haven' [a safe haven = an asset people rush to when the world feels dangerous]. The headline that stands out from the news feed is a Reuters story from about 5 hours ago saying 'Gold falls as Mideast conflict dims easing inflation hopes' — this is slightly confusing on the surface, because conflict usually supports gold, but the framing here suggests markets are worried that ongoing tensions could keep inflation sticky, which would push the US Federal Reserve [the Fed = America's central bank, which controls interest rates] to keep rates high for longer, and higher rates tend to weigh on gold. That gives us a cautious, mixed picture. The directional bias leans mildly BULLISH overall — real yields [real yields = bond interest rates adjusted for inflation] are falling slightly today (down 0.03), the dollar is soft, and geopolitical risk remains elevated, all of which are tailwinds for gold — but the session has already used about 42.5 of the average daily range [ADR = the typical number of points gold moves in one day, currently 98.3 points over 14 days], meaning roughly 56 points of potential movement remains today, so significant upside from here in this single session is limited. Confidence is 5/10 — the conflicting signals from the Reuters headline and the lack of strong momentum make this a 'wait and watch' environment rather than a high-conviction setup. The COT report [Commitment of Traders = a weekly snapshot showing how large professional traders are positioned] shows net long positioning [net long = more buyers than sellers] at 183,165 contracts with a slight increase of 955 this week, and open interest is rising, which mildly supports bulls, but ETF flows [ETFs = funds that hold physical gold; outflows mean investors are selling] have been negative for three straight weeks, which is a warning sign. There are NO scheduled economic events in today's calendar, so no data-driven volatility spikes are expected — this is actually a clean session for following the trend if price sets up properly. The key levels to watch are the current price around $4,033, with the ADR suggesting a likely range ceiling near $4,055–4,060 and floor support around $4,015 for today's session. The Kevin Warsh Fed chair story (21 hours ago) is worth noting — Warsh is seen as more 'hawkish' [hawkish = favouring higher interest rates] than the current Fed, and if this nomination story gains traction it could be a slow-burning headwind for gold. For trade execution: this is a reasonable window to look for long [buy] setups IF the 1H chart confirms an uptrend structure — use reduced size given the mixed signals, wait for a clean 5M pullback into a 'discount zone' [a price area that looks cheap relative to recent highs], and confirm entry on the 1M chart. Do not chase price if it has already run; with less than half the ADR remaining, the reward-to-risk shrinks quickly. Remember: no setup that matches your rules = no trade, and that is always the right decision.",
-    "generatedAt": "2026-07-16T09:29:27.026Z"
+    "briefing": "Right now, the dominant forces shaping gold are a slightly weak US dollar (the DXY index, which measures dollar strength, sits at 100.55 — a relatively soft level), gently falling bond yields [yields are the interest rate the US government pays on its debt; when yields fall, gold becomes more attractive because it costs less to 'miss out' on that interest], and an elevated geopolitical risk reading of 173.6 — well above normal — which keeps safe-haven demand [buying assets seen as safe during uncertainty] simmering in the background. On recent catalysts, the most relevant headline broke about 5.8 hours ago via Reuters: 'Gold falls as Mideast conflict dims easing inflation hopes.' This is a nuanced one — the story suggests Middle East tensions are actually keeping inflation expectations elevated, which reduces the chance of the Fed cutting interest rates soon, and that uncertainty briefly pushed gold lower this morning. The Warren Buffett/Kevin Warsh Fed chair comment (roughly 22 hours ago) is worth noting: Warsh is considered a hawkish [favouring higher interest rates] pick, which is mildly dollar-positive and therefore a small headwind for gold longer-term — but markets haven't reacted dramatically. The directional bias leans mildly BULLISH: the dollar is soft, real yields [bond yields after subtracting inflation] are dipping slightly day-over-day, large professional traders (COT positioning) remain heavily net long [betting prices will rise] with open interest growing, and ETF [exchange-traded fund] gold holdings have been in a three-week inflow trend. However, today's morning dip and the confusing inflation/conflict narrative keeps conviction modest. Confidence is 5/10 — a cleaner pullback into a clean support level on the 1H chart before buying would raise that. What would flip the view bearish: a strong dollar bounce above 101.50 or a sharp spike in real yields back above 2.40%. There are NO scheduled economic events on today's calendar — the calendar data is empty — so there is no specific news risk time to guard against today, which actually gives London and New York session traders a cleaner backdrop without sudden data-driven whipsaws [sharp reversals]. That said, always be alert to unscheduled geopolitical headlines given the elevated GPR reading. On levels: gold is at $4,030. The 14-day average daily range [the typical distance price travels in a full day] is $98.30, and today has already used $42.50 of that — meaning roughly $55 of average range remains. Watch $4,000 as a big round-number support below and $4,060–4,080 as the zone where sellers may reappear. For trade integration: this is an acceptable window for cautious trend-following long [buy] setups IF the 1H chart shows price holding above a recent swing low and the 5M chart offers a clean pullback entry — but keep position size small given the 5/10 confidence and the confusing morning headline. Wait for the market to show its hand rather than chasing the open. The golden rule today: only buy a dip you can clearly see on the 1H chart — don't chase a move that's already halfway through its daily range.",
+    "generatedAt": "2026-07-16T10:05:45.656Z"
   }
 }
