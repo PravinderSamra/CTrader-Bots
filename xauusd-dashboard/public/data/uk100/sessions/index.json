@@ -1,6 +1,22 @@
 {
-  "updatedAt": "2026-07-15T14:26:31.542Z",
+  "updatedAt": "2026-07-16T07:39:03.947Z",
   "sessions": [
+    {
+      "date": "2026-07-16",
+      "time": "08:39 BST",
+      "filename": "2026-07-16/07-39.json",
+      "timestamp": "2026-07-16T07:39:03.947Z",
+      "session": "LONDON",
+      "bias": "BEARISH",
+      "biasScore": -3,
+      "probability": 80,
+      "confidence": 5,
+      "priceZone": "DISCOUNT",
+      "tradeIdea": {
+        "direction": "SHORT",
+        "status": "WAIT"
+      }
+    },
     {
       "date": "2026-07-15",
       "time": "15:26 BST",

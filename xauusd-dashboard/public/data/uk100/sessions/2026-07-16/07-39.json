@@ -1,0 +1,130 @@
+{
+  "session": "LONDON",
+  "bias": "BEARISH",
+  "biasScore": -3,
+  "probability": 80,
+  "confidence": 5,
+  "priceAtAnalysis": 10460.65,
+  "priceZone": "DISCOUNT",
+  "equilibrium": 10478.4,
+  "drawOnLiquidity": 10429.6,
+  "invalidation": 10505.2,
+  "keyLevels": [
+    {
+      "price": 10465.2,
+      "kind": "OTHER",
+      "note": "ORB high"
+    },
+    {
+      "price": 10429.6,
+      "kind": "OTHER",
+      "note": "ORB low"
+    },
+    {
+      "price": 10482.6,
+      "kind": "OTHER",
+      "note": "overnight high"
+    },
+    {
+      "price": 10426.3,
+      "kind": "OTHER",
+      "note": "overnight low"
+    },
+    {
+      "price": 10536.2,
+      "kind": "PDH",
+      "note": "prior day high"
+    },
+    {
+      "price": 10431.2,
+      "kind": "PDL",
+      "note": "prior day low"
+    },
+    {
+      "price": 10494.15,
+      "kind": "OTHER",
+      "note": "H1 bearish FVG CE / OTE-for-shorts zone"
+    }
+  ],
+  "tradeIdea": {
+    "direction": "SHORT",
+    "status": "WAIT",
+    "entryLow": 10488,
+    "entryHigh": 10496,
+    "stop": 10508,
+    "targets": [
+      10429.6,
+      10426.3
+    ],
+    "rr": 3.9,
+    "setupType": "OTE"
+  },
+  "nextHighImpactEvent": {
+    "event": "BoE Rate Decision (MPC)",
+    "timeIso": "2026-07-30T11:00:00Z"
+  },
+  "smtDivergence": null,
+  "orbPlaybook": {
+    "direction": "SHORT_ONLY",
+    "dayType": "EVENT_DRIVEN",
+    "reasoning": "Bias is BEARISH (-3, MEDIUM conviction) with H1 structure also BEARISH (CHoCH 10482.7, 15 Jul), so the mechanical table calls SHORT_ONLY; today is EVENT_DRIVEN off the 07:00 BST UK GDP print, already released and priced into the current overnight range. Price is currently in H1 discount (10460.65 vs equilibrium 10478.4) and M5/M1 have just posted a fresh bullish CHoCH/BOS with displacement off the session low - don't chase a short from here; prefer the retracement into the H1 bearish FVG/OTE-for-shorts confluence around 10483-10505 before fading it. 45% of the 126.3pt ADR14 is already used, so the target is sized to the ORB low (10429.6) rather than stretching for the PDH/PDL extremes.",
+    "keyLevels": [
+      {
+        "label": "ORB High",
+        "price": 10465.2
+      },
+      {
+        "label": "ORB Low",
+        "price": 10429.6
+      },
+      {
+        "label": "Overnight High",
+        "price": 10482.6
+      },
+      {
+        "label": "Overnight Low",
+        "price": 10426.3
+      },
+      {
+        "label": "PDH",
+        "price": 10536.2
+      },
+      {
+        "label": "PDL",
+        "price": 10431.2
+      }
+    ],
+    "invalidation": "Short invalid on an M5 close back above 10505.2 (top of the H1 bearish FVG) with displacement.",
+    "eventRisk": "None further today - UK GDP (07:00 BST) already released; next HIGH-impact print is the 30 Jul MPC decision (14 days out)."
+  },
+  "tldr": [
+    {
+      "tag": "STRUCTURE",
+      "text": "H1 BEARISH (CHoCH 10482.7 @ 16:00 BST 15 Jul) / M5 NEUTRAL with a fresh bullish CHoCH 10462.7 @ 08:05 BST and displacement; M1 BULLISH off a fresh BOS 10465.4 @ 08:30 BST - a near-term bounce inside the still-bearish H1 regime."
+    },
+    {
+      "tag": "REGIME",
+      "text": "Bias BEARISH -3, MEDIUM conviction (event-suppressed around today's 07:00 BST UK GDP print) - Brent -1.26% and a crowded GBP short are the bearish drivers, partly offset by +8bp gilts helping banks."
+    },
+    {
+      "tag": "PLAN",
+      "text": "SHORT_ONLY (mechanical) but WAIT - price sits in H1 discount, the wrong side for a fresh short; want the bounce to tag the 10483-10505 bearish FVG/OTE zone before fading it toward the ORB low."
+    },
+    {
+      "tag": "LEVELS",
+      "text": "10505 invalidation (bear FVG top) · 10492 entry (FVG/OTE zone) · 10429.6 ORB-low T1."
+    },
+    {
+      "tag": "NEWS",
+      "text": "No market-moving news identified."
+    },
+    {
+      "tag": "RISK",
+      "text": "No further HIGH-impact events today (UK GDP 07:00 BST already released); next MPC decision 30 Jul BST (14 days out)."
+    }
+  ],
+  "timestamp": "2026-07-16T07:39:03.947Z",
+  "date": "2026-07-16",
+  "time": "08:39 BST",
+  "analysis": "# UK100 INTRADAY SESSION BRIEF — 2026-07-16 — 08:32 BST / 07:32 UTC — OPENING_HOUR\n\n## TL;DR\n- **STRUCTURE** — H1 BEARISH (CHoCH 10482.7 @ 16:00 BST 15 Jul) / M5 NEUTRAL with a fresh bullish CHoCH 10462.7 @ 08:05 BST and displacement; M1 BULLISH off a fresh BOS 10465.4 @ 08:30 BST — a near-term bounce inside the still-bearish H1 regime.\n- **REGIME** — Bias BEARISH −3, MEDIUM conviction (event-suppressed around today's 07:00 BST UK GDP print) — Brent −1.26% and a crowded GBP short are the bearish drivers, partly offset by +8bp gilts helping banks.\n- **PLAN** — SHORT_ONLY (mechanical) but WAIT — price sits in H1 discount, the wrong side for a fresh short; want the bounce to tag the 10483–10505 bearish FVG/OTE zone before fading it toward the ORB low.\n- **LEVELS** — 10505 invalidation (bear FVG top) · 10492 entry (FVG/OTE zone) · 10429.6 ORB-low T1.\n- **NEWS** — No market-moving news identified.\n- **RISK** — No further HIGH-impact events today (UK GDP 07:00 BST already released); next MPC decision 30 Jul BST (14 days out).\n\n## ACCOUNT CONTEXT\n- **Open Positions on Symbol:** None\n- **Account Balance / Equity / Free Margin:** £46,465.98 / £46,465.98 / £46,465.98\n\n## REGIME ASSESSMENT\n- **H1 Regime:** BEARISH\n- **M5 Regime:** NEUTRAL — but its most recent event (CHoCH 10462.7, 08:05 BST) is BULLISH, and it carries a live displacement flag; conflicts in spirit with the H1 bearish read, addressed below.\n- **Protected High / Low (H1):** Protected high 10482.7 (last CHoCH, 16:00 BST 15 Jul) — must hold for the bearish regime to remain valid. Continuation trigger (last BOS) 10419.7 (09:00 BST 14 Jul).\n- **Regime Change Phase:** Not applicable on H1 — no test of the 10482.7 protected high yet (price 10460.65 is well below it). The M5 CHoCH is a lower-timeframe event, not an H1 regime change.\n\n## STRUCTURE\n- **Recent BOS/CHoCH:** H1 — last BOS BEARISH 10419.7 (14 Jul), last CHoCH BEARISH 10482.7 (15 Jul 16:00 BST). M5 — last BOS BEARISH 10445.3 (16 Jul 07:25 BST), last CHoCH BULLISH 10462.7 (16 Jul 08:05 BST). M1 — last BOS BULLISH 10465.4 (16 Jul 08:30 BST), last CHoCH BULLISH 10456.2 (16 Jul 08:05 BST).\n- **Displacement:** M5 = true (the bounce off the session low was an impulsive expansion leg). H1 = false, M1 = false.\n- **Market Structure Phase:** Manipulation — this morning's dip into the overnight low, followed by an M5 displacement bounce, looks like the manipulation leg; Distribution would follow if/when price reaches the premium FVG zone and rejects.\n\n## LIQUIDITY MAP\n- **Overnight Range:** 10426.3–10482.6 — UNSWEPT, price (10460.65) still sits inside it.\n- **ORB Range:** 10429.6–10465.2 — intact, no break yet (`orb_broken_direction: null`); price sits near the top of the range.\n- **Reference Levels:** PDH 10536.2 · PDL 10431.2 · PWH 10739.6 · PWL 10380.4 · Daily Open 10468.8 · ADR14 126.3pts, ~45% already used today.\n- **PRIMARY Draw on Liquidity:** SSL 10429.6/10426.3 (ORB low / overnight low cluster, MEDIUM strength) — the bearish-bias draw, and today's T1.\n\n## KEY PD ARRAYS\n- **Bullish/Bearish OBs:** None detected at H1 or M5 this run.\n- **Bullish/Bearish FVGs:** H1 bearish Grade-B FVG 10483.1–10505.2 (CE 10494.15, RECENT) — the premium supply zone the short setup targets. H1 bearish Grade-C FVG 10477.8–10481.6 (CE 10479.7) sits right at equilibrium. M5 fresh bullish Grade-A FVG 10450.0–10460.4 (CE 10455.2) and Grade-B 10460.5–10462.3 (CE 10461.4, post-BOS) are the immediate support fuelling the current bounce.\n- **Current Price vs Equilibrium:** 10460.65 vs equilibrium 10478.4 → **DISCOUNT** (below equilibrium; no live OTE zone — `ote_direction` is null since the BEARISH H1 trend and current discount location don't align to a directional OTE).\n\n## MACRO REGIME\n- **GBP Sign-Flip:** GBPUSD −0.01% day, `ftseImpactFromGbp` NEUTRAL — flat today, but sterling still sits at the 89th 20-day percentile, a latent headwind if it squeezes higher.\n- **US Linkage:** US500 −0.03%, NAS100 −0.24%, VIX 17.18 (NORMAL regime). Live spot tape (07:32 UTC): US500 7566.2, NAS100 29404.95, VIX 17.18 — consistent with the snapshot, no material staleness gap since US_OVERLAP hasn't started.\n- **UK Rates & Gilts:** Bank rate 3.75%, 10Y gilt +8bp, 20Y +6bp, `longEndStress` false. Next MPC decision 30 Jul (14 days out).\n- **Commodities:** Brent −1.26% (bearish for Shell/BP), Copper +0.09% (neutral, China proxy flat).\n- **Sector Panel:** ENERGY BEARISH (Brent −1.26%) · MINERS NEUTRAL (Copper +0.09%) · BANKS BULLISH (10Y gilt +8bp) · PHARMA IDIOSYNCRATIC (AZN/GSK single-stock risk) · STAPLES NEUTRAL (GBP impact neutral today).\n- **GBP Positioning (COT):** CROWDED_SHORT (−89,991 net, WoW +15,212) → BEARISH readthrough for FTSE (contrarian: a sterling short-squeeze is the latent risk, and strong GBP hurts FTSE).\n- **Mechanical Bias:** score −3, label BEARISH, conviction MEDIUM. Top material drivers: Brent −1.26% (bearish, energy), GBP COT crowded-short (bearish, contrarian), partially offset by +8bp gilts (bullish, banks). GBP-today and the European tape are both NEUTRAL contributors.\n- **Recent Catalysts:** None in `newsItems` (empty). Today's scheduled driver — UK GDP Monthly Estimate, 07:00 BST — has already printed and is priced into the overnight range.\n- **Build-Up Caution:** No further HIGH-impact events flagged this week beyond today's (already-released) UK GDP.\n- **Macro Verdict:** SUPPORTS the H1 bearish structural bias overall (Brent weighing on energy majors, GBP COT bearish readthrough), tempered by a neutral GBP-today/European tape and a bullish gilts-for-banks offset — net supportive but only MEDIUM conviction, consistent with the −3 score.\n- **Snapshot Freshness:** generatedAt 2026-07-16T07:11:28Z (~08:11 BST). Note: this morning's scheduled 06:00/07:00 UTC fetch ticks did not fire (GitHub Actions scheduler quirk, not a code fault — the workflow YAML and cron are valid and the repo is active); a manual `workflow_dispatch` was triggered this session to force the refresh, which completed successfully.\n\n## SESSION CONTEXT\n- **Current Window:** OPENING_HOUR\n- **UK Time:** 08:32 BST\n- **Session Bias Notes:** \"Current session: OPENING_HOUR (08:32 BST).\" · \"Gap DOWN -11.1pts (-0.11%) vs prior close 10471.8.\" · \"ORB (10429.6–10465.2) intact — no break yet.\" · \"Price still INSIDE the overnight range — no sweep yet.\"\n\n## CROSS-CHECK\n- **Pattern Detected (primary, `pattern_check`):** SHOOTING_STAR, confidence 0.65, RSI-14 59.4, volatility MEDIUM — direction BEARISH.\n- **Secondary (recognize_market_pattern):** Skipped this session — the TradingView MCP schema did not load via `ToolSearch`.\n- **Agreement with ICT Read:** CONFIRMS the bearish structural/macro bias, though the M5/M1 bounce is the near-term countertrend risk already flagged above.\n- **SMT Divergence (UK100 vs GBPUSD, inverted read):** None (`smt_divergence: null` this run).\n\n## ORB PLAYBOOK\n- **Direction:** SHORT_ONLY\n- **Day Type:** EVENT_DRIVEN\n- **Reasoning:** Bias is BEARISH (−3, MEDIUM conviction) with H1 structure also BEARISH (CHoCH 10482.7, 15 Jul), so the mechanical table calls SHORT_ONLY; today is EVENT_DRIVEN off the 07:00 BST UK GDP print, already released and priced into the current overnight range. Price is currently in H1 discount (10460.65 vs equilibrium 10478.4) and M5/M1 have just posted a fresh bullish CHoCH/BOS with displacement off the session low — don't chase a short from here; prefer the retracement into the H1 bearish FVG/OTE-for-shorts confluence around 10483–10505 before fading it. 45% of the 126.3pt ADR14 is already used, so the target is sized to the ORB low (10429.6) rather than stretching for the PDH/PDL extremes.\n- **Key Levels:** ORB High 10465.2 · ORB Low 10429.6 · Overnight High 10482.6 · Overnight Low 10426.3 · PDH 10536.2 · PDL 10431.2\n- **Invalidation:** Short invalid on an M5 close back above 10505.2 (top of the H1 bearish FVG) with displacement — that would mean the bounce has real conviction, not just a liquidity grab.\n- **Event Risk:** None further today — UK GDP (07:00 BST) already released; next HIGH-impact print is the 30 Jul MPC decision (14 days out).\n\n## PROBABILITY ASSESSMENT\n- **Primary Scenario:** 80% — BEARISH\n- **Primary Arithmetic:** 50 (base) +15 [H1 structure aligns with the short] +10 [entry zone sits in premium — correct PD side] +10 [OPENING_HOUR window] +8 [FVG/OTE confluence at the entry zone] +7 [H1 protected high 10482.7 intact] +5 [pattern_check SHOOTING_STAR confirms bearish] +5 [macro bias −3 BEARISH supports] +5 [ORB Playbook unambiguous SHORT_ONLY] −25 [M5 CHoCH + M1 BOS/trend just flipped bullish — real conflict with H1] −10 [no overnight/ORB sweep yet before the setup] = 80%\n- **Secondary Scenario:** 57% — BULLISH\n- **Secondary Arithmetic:** 50 (base) +10 [current discount zone is the correct side for a fresh long] +10 [OPENING_HOUR window] +8 [fresh M5 Grade-A bull FVG right at current price] +7 [M1 bullish CHoCH/BOS levels intact] −10 [pattern_check cross-check conflicts, bearish] −8 [macro bias conflicts, BEARISH] −10 [no overnight/ORB sweep before this long setup either] = 57%\n- **Confidence Level:** MEDIUM\n- **Key Invalidation Level:** 10505.2 (top of the H1 bearish FVG — invalidates the short thesis)\n\n## TRADE IDEA — PRIMARY\n- **Direction:** SHORT\n- **Setup Type:** OTE\n- **Entry Zone:** 10488–10496 (H1 bearish FVG / OTE-for-shorts confluence)\n- **Stop Loss:** 10508 (above the H1 bearish FVG top 10505.2 + buffer — a close through here means the bounce has real displacement, not just a liquidity grab)\n- **Target 1:** 10429.6 (ORB low / M1 SSL, MEDIUM strength)\n- **Target 2:** 10426.3 (overnight low, adjacent to PDL 10431.2)\n- **Target 3 (stretch, requires displacement):** 10411.7 (H1 SSL) — beyond today's remaining ADR14 budget (~69.5pts from entry); not counted in R:R or sizing.\n- **Risk-Sized Position:** Balance £46,465.98; 1% risk = £464.66; stop distance ≈16pts (10508 − 10492 mid-entry) → ≈£29/point. (TradingView risk-sizing tool unavailable this session — MCP schema did not load — so this is a manual calc.)\n- **Entry Trigger Required:** M1 bearish rejection / CHoCH once price tags the 10488–10496 zone — do not short on touch alone.\n- **Probability:** 80%\n\n## KEY LEVELS TO WATCH\n- 10505.2 / 10508 — full invalidation (H1 bearish FVG top + buffer)\n- 10478.4 — H1 equilibrium\n- 10465.2 / 10429.6 — ORB high / low\n- 10426.3 — overnight low\n- 10536.2 — PDH (upside stretch draw if the bearish thesis fails outright)\n\n## MARKET NARRATIVE\nUK100 gapped down into the 07:00 BST UK GDP print, dipped toward the overnight low, and has since staged a sharp M5/M1 bullish bounce with real displacement — but that bounce is unfolding inside a still-bearish H1 regime and a bearish, MEDIUM-conviction macro backdrop (Brent down on the energy majors, GBP a crowded short that could squeeze). The highest-quality read isn't to chase the bounce in either direction: let it run into the 10483–10505 premium/FVG confluence, where the H1 bearish story should reassert itself, and look for a rejection back toward the ORB low. With 45% of today's typical range already spent and no further scheduled catalysts, this looks like a range-bound-to-lower day rather than a trending one — patience for the retest beats forcing an entry from discount."
+}
