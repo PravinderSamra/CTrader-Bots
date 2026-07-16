@@ -48,6 +48,75 @@
         "adrUsedPct": 45
       },
       "outcome": null
+    },
+    {
+      "at": "2026-07-16T07:58:14.739Z",
+      "londonTime": "08:58 BST",
+      "mode": "POST_ORB",
+      "price": 10446.05,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — UK GDP Monthly Estimate @ 07:00 BST today — pre-release breaks are positioning, not conviction.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "UK GDP Monthly Estimate @ 07:00 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "GAP",
+          "rule": "R6",
+          "text": "Gap down in the bias direction with a tight overnight range — trend-day conditions; the first ORB break short carries the setup."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.57%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "AI",
+          "rule": "R12",
+          "text": "Today's 08:39 BST AI session read: SHORT toward 10429.6 (WAIT, 80%) — playbook SHORT_ONLY."
+        }
+      ],
+      "aiStanceLine": "Due to a GDP-driven gap-down open of -25.7 pts, a 45% range already consumed, and crowded-short GBP positioning creating latent squeeze risk, short ORB breaks carry directional support but demand confirmed hold below 10429.6 before trusting the move.",
+      "aiBullets": [
+        "Energy is the single largest bearish drag: Brent -1.34% hits Shell and BP (top-5 weights) directly, while copper's +0.07% flatness means miners offer no offsetting index lift today.",
+        "With 45% of the 14-day ADR (126.3 pts) already used and the overnight range only 56.3 pts wide, there is ~69 pts of average range left — sufficient for an ORB trend run, but not a wide-open blank canvas.",
+        "The FTSE-DAX 20-day correlation sits at 0.7, and DAX is -0.55% today — historically this alignment raises the probability that any ORB short break extends rather than reverses intraday.",
+        "GBP COT net short is -89,991 contracts but improved +15,212 week-on-week — the short base is shrinking, meaning a GBP squeeze is becoming more plausible and could produce a false upside ORB break (strong GBP = bearish FTSE)."
+      ],
+      "bias": {
+        "score": -5,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10465.2,
+        "orbLow": 10429.6,
+        "orbBrokenDirection": "NONE",
+        "overnightHigh": 10482.6,
+        "overnightLow": 10426.3,
+        "priorDayHigh": 10536.2,
+        "priorDayLow": 10431.2,
+        "gapPct": -0.25,
+        "adr14": 126.3,
+        "adrUsedPct": 45
+      },
+      "outcome": null
     }
   ]
 }
