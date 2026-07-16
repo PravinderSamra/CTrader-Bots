@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-16T16:10:38.438Z",
+  "generatedAt": "2026-07-16T17:59:10.392Z",
   "yields": {
     "US10Y": 4.58,
     "US2Y": 4.18,
@@ -34,26 +34,26 @@
     "openInterestChange": 6341
   },
   "etfFlows": {
-    "gldTonnes": 1012.7,
-    "gldWoWChange": null,
-    "trend3W": null
+    "gldTonnes": 1015.5,
+    "gldWoWChange": 2.8,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3997.045,
-    "XAGUSD": 56.0695,
-    "EURUSD": 1.1441,
-    "USDJPY": 162.4455,
-    "USDCHF": 0.80841,
-    "USDCNH": 6.77413,
-    "GBPUSD": 1.34761,
-    "USDCAD": 1.40399,
-    "USDSEK": 9.64628,
-    "US500": 7552.5,
-    "GER40": 24886.85,
-    "UK100": 10556.6,
+    "XAUUSD": 3984.96,
+    "XAGUSD": 55.704,
+    "EURUSD": 1.14367,
+    "USDJPY": 162.4115,
+    "USDCHF": 0.80889,
+    "USDCNH": 6.77414,
+    "GBPUSD": 1.34696,
+    "USDCAD": 1.40532,
+    "USDSEK": 9.65034,
+    "US500": 7539.2,
+    "GER40": 24891.05,
+    "UK100": 10562.9,
     "ADR_14day": 98.3,
     "ADR_usedToday": 91.1,
-    "goldSilverRatio": 71.3
+    "goldSilverRatio": 71.5
   },
   "dollarLiquidity": {
     "stlfsi": -0.882,
@@ -69,14 +69,14 @@
       "headline": "Gold falls 2% as escalating Middle East tensions reinforce US rate-hike bets - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-16T04:19:00.000Z",
-      "hoursAgo": 11.9
+      "hoursAgo": 13.7
     }
   ],
   "briefing": {
     "biasScore": -1,
     "biasLabel": "NEUTRAL",
     "confidence": 4,
-    "briefing": "Right now, gold is caught in a tug-of-war between forces pulling in opposite directions. On one side, you have a geopolitical risk index [a measure of global conflict and instability] sitting at an elevated 173.6, which normally pushes investors toward gold as a 'safe haven' [an asset people buy when they're scared]. On the other side, the Federal Reserve [America's central bank] is widely expected to hold interest rates steady at its July 29th meeting — markets currently price only an 8% chance of a cut — and higher rates make holding gold less attractive because gold pays no interest. The one meaningful headline in our news feed is from Reuters, published roughly 12 hours ago, reporting that gold dropped about 2% as Middle East tensions paradoxically strengthened bets on a US rate hike. This is the main catalyst explaining today's price action. At roughly $3,997, gold is hovering just below the psychologically important $4,000 level. Looking at the ADR [Average Daily Range — how far price typically moves in a day], the 14-day average is 98.3 points, and today's move has already consumed 91.1 of those points. That means the market has very little 'fuel' left for today — expect the price to chop sideways or make only small moves from here. The dollar [DXY at 100.74] is relatively stable, yields [interest rates on US government bonds] dipped slightly today which is mildly supportive for gold, but not enough to shift the picture meaningfully. Confidence in any directional bias is low — 4/10 — because the Reuters headline muddles the usual logic (geopolitical fear should push gold UP, but instead traders used it to price in higher rates, pushing gold DOWN). The bias would flip bullish if price reclaims and holds above $4,000 convincingly, or if the Fed narrative softens. There are no scheduled economic events on today's calendar, so no data surprises to watch for this afternoon. The calendar is completely empty for the rest of this week too, meaning there is no major upcoming event forcing the market into a cautious holding pattern — but that also means no obvious catalyst to restart a strong trend. For a trend-following trader using ICT/Smart Money concepts, this is a LOW-CONVICTION window: the 1H trend context has been disrupted by today's sharp drop, the daily range is nearly used up, and there is no fresh catalyst. If you do trade, use smaller-than-normal position sizes and wait for the 1H chart to re-establish a clear trend direction before committing. Remember: when the daily range is almost used up, the easiest trade is usually no trade at all.",
-    "generatedAt": "2026-07-16T16:10:55.423Z"
+    "briefing": "Right now the two most relevant forces pulling on gold are a firm US dollar (DXY sitting at 100.78) and US bond yields [the interest rate the US government pays to borrow money] that are actually edging slightly lower on the day — US 10-year yields dropped 4 basis points and 2-year yields dropped 8 basis points today. Falling yields are normally a tailwind for gold because gold pays no interest, so it looks relatively more attractive when rates drop. However, the dollar is not giving much ground, which is capping any upside. The only newsworthy headline in the last 24 hours came roughly 14 hours ago (Reuters) reporting that gold fell about 2% as Middle East tensions apparently strengthened expectations for US rate hikes — that early-session selloff has already done its damage and is now baked into price. Nothing else in the news feed looks freshly market-moving. Given that gold is trading at roughly 3,985 and the 14-day Average Daily Range [the typical size of a daily price swing] is 98 points while today has already used 91 of those points, the market has almost used up its expected daily movement — meaning a large fresh directional move today is unlikely, and price may chop or drift sideways into the close. Positioning data [how large traders are currently placed in the market] shows a mildly rising net-long [more buyers than sellers] stance with inflows into gold ETFs [exchange-traded funds that hold physical gold] continuing for three weeks, which supports a soft bullish undertone structurally. However, the Fed [US central bank] is pricing in a 92% chance of no rate cut at the July 29 meeting, which keeps the dollar supported and limits gold's upside enthusiasm. Confidence in any directional bias is low at 4/10 — this would shift meaningfully bullish if the dollar breaks below 100, or bearish if yields spike back up. The calendar shows no scheduled economic events today, and the calendar data has no high-impact events listed for later this week, so there is no obvious build-up caution needed beyond normal vigilance. Key levels to watch: the 3,975 area as nearby support [a price floor where buyers tend to appear] and 4,000 as a major psychological resistance [a ceiling where sellers may push back]. With only roughly 7 ADR points statistically left in today's range, this is a low-conviction window — if you trade at all, keep position size very small, wait for a clean 5-minute structure signal on a pullback toward 3,975, and do not chase price. Remember: when the daily range is nearly exhausted, patience beats action every time.",
+    "generatedAt": "2026-07-16T17:59:27.573Z"
   }
 }
