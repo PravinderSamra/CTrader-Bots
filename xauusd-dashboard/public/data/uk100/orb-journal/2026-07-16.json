@@ -738,6 +738,91 @@
         "verdict": "UNSCORABLE",
         "signalVerdicts": []
       }
+    },
+    {
+      "at": "2026-07-16T19:14:06.777Z",
+      "londonTime": "20:14 BST",
+      "mode": "CLOSED",
+      "price": 10556.7,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 119% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "119% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10431.2) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is diverging from a united European tape — it's trading its own story today; tape-based confirmation is unreliable."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "UK GDP Monthly Estimate @ 07:00 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -0.65% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "AI",
+          "rule": "R12",
+          "text": "Today's 08:39 BST AI session read: SHORT toward 10429.6 (WAIT, 80%) — playbook SHORT_ONLY."
+        }
+      ],
+      "aiStanceLine": "Due to 119% of the 14-day ADR (126.3 pts) already consumed, a bearish commodity sweep hitting both Energy and Miners simultaneously, and FTSE diverging from a softly-negative European tape, any ORB breakout in either direction tomorrow starts with an empty tank and unreliable confirmation.",
+      "aiBullets": [
+        "Energy and Miners — together among the heaviest index weights — are both bearish (Brent -1.61%, Copper -1.37%); a rare double-sector drag that historically compresses upside ORB follow-through even when the pound is weak.",
+        "GBP COT positioning is CROWDED_SHORT at -89,991 net contracts but improved 15,212 week-on-week — a short squeeze in sterling would flip the 0.51% pound tailwind into a headwind, undermining any long ORB that relies on FX support.",
+        "The ORB break was UP to 10465.2, yet the current price (10556.7) sits 91 points above the ORB high — with only ~6 points of typical daily range left (ADR 126.3, 119% used), mean-reversion back toward the ORB band is the higher-probability path.",
+        "European tape agreement is DIVERGING (ftseDaxCorr20d 0.65 but tapeAgreement flagged DIVERGING today), meaning cross-market momentum signals — normally a useful ORB filter — cannot be trusted for directional confirmation at tomorrow's open."
+      ],
+      "bias": {
+        "score": -7,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10465.2,
+        "orbLow": 10429.6,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10482.6,
+        "overnightLow": 10426.3,
+        "priorDayHigh": 10536.2,
+        "priorDayLow": 10431.2,
+        "gapPct": 0.81,
+        "adr14": 126.3,
+        "adrUsedPct": 119
+      },
+      "outcome": {
+        "resolvedAt": "2026-07-16T19:14:08.916Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }

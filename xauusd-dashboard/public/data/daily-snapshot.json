@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-16T17:59:10.392Z",
+  "generatedAt": "2026-07-16T19:13:04.603Z",
   "yields": {
     "US10Y": 4.58,
     "US2Y": 4.18,
@@ -34,26 +34,26 @@
     "openInterestChange": 6341
   },
   "etfFlows": {
-    "gldTonnes": 1015.5,
-    "gldWoWChange": 2.8,
+    "gldTonnes": 1016.9,
+    "gldWoWChange": 1.4,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3984.96,
-    "XAGUSD": 55.704,
-    "EURUSD": 1.14367,
-    "USDJPY": 162.4115,
-    "USDCHF": 0.80889,
-    "USDCNH": 6.77414,
-    "GBPUSD": 1.34696,
-    "USDCAD": 1.40532,
-    "USDSEK": 9.65034,
-    "US500": 7539.2,
-    "GER40": 24891.05,
-    "UK100": 10562.9,
+    "XAUUSD": 3979.47,
+    "XAGUSD": 55.5535,
+    "EURUSD": 1.14386,
+    "USDJPY": 162.406,
+    "USDCHF": 0.8089,
+    "USDCNH": 6.77463,
+    "GBPUSD": 1.34703,
+    "USDCAD": 1.40483,
+    "USDSEK": 9.65364,
+    "US500": 7523.2,
+    "GER40": 24877.05,
+    "UK100": 10555.6,
     "ADR_14day": 98.3,
     "ADR_usedToday": 91.1,
-    "goldSilverRatio": 71.5
+    "goldSilverRatio": 71.6
   },
   "dollarLiquidity": {
     "stlfsi": -0.882,
@@ -66,17 +66,23 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "We're trimming our hedge on lower rates, which may take longer to materialize",
+      "source": "CNBC",
+      "publishedAt": "2026-07-16T18:20:40.000Z",
+      "hoursAgo": 0.9
+    },
+    {
       "headline": "Gold falls 2% as escalating Middle East tensions reinforce US rate-hike bets - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-16T04:19:00.000Z",
-      "hoursAgo": 13.7
+      "hoursAgo": 14.9
     }
   ],
   "briefing": {
     "biasScore": -1,
     "biasLabel": "NEUTRAL",
     "confidence": 4,
-    "briefing": "Right now the two most relevant forces pulling on gold are a firm US dollar (DXY sitting at 100.78) and US bond yields [the interest rate the US government pays to borrow money] that are actually edging slightly lower on the day — US 10-year yields dropped 4 basis points and 2-year yields dropped 8 basis points today. Falling yields are normally a tailwind for gold because gold pays no interest, so it looks relatively more attractive when rates drop. However, the dollar is not giving much ground, which is capping any upside. The only newsworthy headline in the last 24 hours came roughly 14 hours ago (Reuters) reporting that gold fell about 2% as Middle East tensions apparently strengthened expectations for US rate hikes — that early-session selloff has already done its damage and is now baked into price. Nothing else in the news feed looks freshly market-moving. Given that gold is trading at roughly 3,985 and the 14-day Average Daily Range [the typical size of a daily price swing] is 98 points while today has already used 91 of those points, the market has almost used up its expected daily movement — meaning a large fresh directional move today is unlikely, and price may chop or drift sideways into the close. Positioning data [how large traders are currently placed in the market] shows a mildly rising net-long [more buyers than sellers] stance with inflows into gold ETFs [exchange-traded funds that hold physical gold] continuing for three weeks, which supports a soft bullish undertone structurally. However, the Fed [US central bank] is pricing in a 92% chance of no rate cut at the July 29 meeting, which keeps the dollar supported and limits gold's upside enthusiasm. Confidence in any directional bias is low at 4/10 — this would shift meaningfully bullish if the dollar breaks below 100, or bearish if yields spike back up. The calendar shows no scheduled economic events today, and the calendar data has no high-impact events listed for later this week, so there is no obvious build-up caution needed beyond normal vigilance. Key levels to watch: the 3,975 area as nearby support [a price floor where buyers tend to appear] and 4,000 as a major psychological resistance [a ceiling where sellers may push back]. With only roughly 7 ADR points statistically left in today's range, this is a low-conviction window — if you trade at all, keep position size very small, wait for a clean 5-minute structure signal on a pullback toward 3,975, and do not chase price. Remember: when the daily range is nearly exhausted, patience beats action every time.",
-    "generatedAt": "2026-07-16T17:59:27.573Z"
+    "briefing": "REGIME LINE: Gold is currently being pulled in opposite directions — geopolitical tension in the Middle East is pushing some money into gold as a safe haven [meaning investors buy it when they feel unsafe], but the expectation that the US Federal Reserve will keep interest rates high for longer is pushing back against that, because higher rates make holding gold (which pays no interest) less attractive. The dollar (DXY at 100.77) is holding firm, which also puts pressure on gold prices. RECENT CATALYSTS: About 15 hours ago, Reuters reported that gold fell 2% as Middle East tensions were being used to justify bets on a US rate hike — an unusual dynamic where bad news didn't help gold as much as you'd expect. More recently (about 1 hour ago), a CNBC headline noted that investors are trimming their hedges [reducing protective positions] against lower rates, suggesting the market is giving up on near-term rate cuts. Both items point toward a 'higher rates for longer' story that keeps a lid on gold. DIRECTIONAL BIAS: CHOPPY TO SLIGHTLY BEARISH. Gold has already used 91.1 of its average daily 98.3-point range [the typical distance price travels in a day], meaning today's big move is mostly done. There is very little daily range left to trade. There is no strong new catalyst to drive a fresh leg up or a clean breakdown, so expect messy, sideways price action into the close. CONFIDENCE SCORE: 4/10. Confidence is low because geopolitical news can escalate or de-escalate without warning and flip gold sharply. If a major Middle East headline breaks tonight, this view becomes invalid. EVENT RISK: The calendar data shows no scheduled news events today — so no specific data releases to fear. However, always check for unscheduled geopolitical headlines, as those have been the primary driver this session. There are no upcoming high-impact events flagged later this week in the data provided. KEY LEVELS: Gold is currently at $3,979. Watch the $4,000 round-number level [psychologically important and where many orders cluster] as resistance above. With only about 7 points of ADR left today, a breakout above $4,000 tonight would be unusual and suspicious — treat it cautiously. TRADE INTEGRATION: This is a POOR window for new trend-following trades today. The daily range is nearly exhausted, there is no clear directional momentum, and recent news is mixed. If you are already in a long trade [a buy position], consider whether your target is still reachable given the limited range left. New entries should wait for a fresh session open with a clean 1H structure. Remember: when the day's typical range is nearly used up, sitting on your hands IS the trade.",
+    "generatedAt": "2026-07-16T19:13:25.292Z"
   }
 }
