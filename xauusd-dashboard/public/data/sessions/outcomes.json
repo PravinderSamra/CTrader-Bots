@@ -1,6 +1,20 @@
 {
-  "updatedAt": "2026-07-15T18:57:27.093Z",
+  "updatedAt": "2026-07-16T12:15:49.924Z",
   "outcomes": [
+    {
+      "filename": "2026-07-16/06-55.json",
+      "date": "2026-07-16",
+      "time": "07:55 BST",
+      "session": "LONDON",
+      "bias": "BULLISH",
+      "probability": 71,
+      "confidence": 5,
+      "priceZone": "DISCOUNT",
+      "result": "LOSS",
+      "resolvedAt": "2026-07-16T12:15:49.923Z",
+      "maxFavourable": 7.82,
+      "maxAdverse": 5.75
+    },
     {
       "filename": "2026-07-15/14-21.json",
       "date": "2026-07-15",

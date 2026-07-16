@@ -255,6 +255,75 @@
         "adrUsedPct": 45
       },
       "outcome": null
+    },
+    {
+      "at": "2026-07-16T12:15:48.704Z",
+      "londonTime": "13:15 BST",
+      "mode": "POST_ORB",
+      "price": 10468.65,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — ORB broke UP against a BEARISH macro bias (-6) — counter-bias breaks fail more often; treat continuation as suspect.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "STRUCTURE",
+          "rule": "R2",
+          "text": "ORB broke UP against a BEARISH macro bias (-6) — counter-bias breaks fail more often; treat continuation as suspect."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "UK GDP Monthly Estimate @ 07:00 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.87%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "AI",
+          "rule": "R12",
+          "text": "Today's 08:39 BST AI session read: SHORT toward 10429.6 (WAIT, 80%) — playbook SHORT_ONLY."
+        }
+      ],
+      "aiStanceLine": "Due to an upside ORB break firing against a -6 bearish macro score, a DAX/Euro Stoxx tape both down ~0.9%, and crowded-short GBP positioning that makes a sterling squeeze a live slap for any FTSE rally, the upside break looks like a fakeout candidate rather than a genuine trend trigger.",
+      "aiBullets": [
+        "ORB broke UP to 10,465.2 yet the prior-day high sits at 10,536.2 — there is only ~71 points of clear air above before a major resistance cluster, shrinking the reward-to-risk for longs given 46% of the 126.3pt ADR is already consumed.",
+        "The 20-day FTSE-DAX correlation is 0.69; with DAX -0.94% and Euro Stoxx -0.87% today, cross-market gravity argues the UK upside break is a divergence likely to close to the downside, not a leadership signal.",
+        "GBP COT net-short is -89,991 contracts — historically a contrarian bullish sterling signal; a squeeze that pushes GBPUSD higher would, via sign-flip, act as a direct headwind for FTSE multinationals, compounding any fade of the upside break.",
+        "UK GDP printed at 07:00 BST (one hour pre-open), meaning the ORB formed in the immediate post-data volatility window — such breaks are often positioning squeezes unwinding, not durable directional moves, consistent with the R13 event-flag already raised."
+      ],
+      "bias": {
+        "score": -6,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10465.2,
+        "orbLow": 10429.6,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10482.6,
+        "overnightLow": 10426.3,
+        "priorDayHigh": 10536.2,
+        "priorDayLow": 10431.2,
+        "gapPct": -0.03,
+        "adr14": 126.3,
+        "adrUsedPct": 46
+      },
+      "outcome": null
     }
   ]
 }
