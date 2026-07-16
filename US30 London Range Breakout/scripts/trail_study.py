@@ -33,9 +33,11 @@ SCHEMES = {
     "step1p0": dict(trail_mode="step", trail_step=1.0),
     "step1p5": dict(trail_mode="step", trail_step=1.5),
     "step2p0": dict(trail_mode="step", trail_step=2.0),
+    "step2p5": dict(trail_mode="step", trail_step=2.5),
 }
 SCHEME_LABEL = {"static": "Static (no trail)", "be1": "Breakeven @1R",
-                "step1p0": "Step 1.0R", "step1p5": "Step 1.5R", "step2p0": "Step 2.0R"}
+                "step1p0": "Step 1.0R", "step1p5": "Step 1.5R",
+                "step2p0": "Step 2.0R", "step2p5": "Step 2.5R"}
 # fine grid for the optimum-increment curve
 CURVE_STEPS = [0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0, 2.5, 3.0]
 

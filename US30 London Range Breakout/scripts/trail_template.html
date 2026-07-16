@@ -1,0 +1,270 @@
+<title>Stop-Loss Management — London Range Breakout</title>
+<style>
+  :root{
+    --paper:#f5f6f8;--panel:#fff;--panel2:#fbfcfd;--ink:#14181f;--muted:#5c6675;
+    --line:#e2e6ec;--line2:#eef1f5;--accent:#a9761f;--accent-soft:#f0e6d2;--steel:#345b7d;
+    --profit:#16794c;--loss:#c0433d;--bar:#8aa0b8;--barhi:#a9761f;
+    --serif:ui-serif,"Iowan Old Style","Palatino Linotype",Georgia,serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+    --shadow:0 1px 2px rgba(20,24,31,.04),0 4px 16px rgba(20,24,31,.05);
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --paper:#0f1319;--panel:#161c24;--panel2:#131922;--ink:#e8ecf2;--muted:#94a1b3;
+    --line:#242e3a;--line2:#1c242e;--accent:#d6a75a;--accent-soft:#2a2415;--steel:#6fa0cc;
+    --profit:#35b87d;--loss:#e0645d;--bar:#4a5a6d;--barhi:#d6a75a;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.35);}}
+  :root[data-theme="light"]{--paper:#f5f6f8;--panel:#fff;--panel2:#fbfcfd;--ink:#14181f;--muted:#5c6675;
+    --line:#e2e6ec;--line2:#eef1f5;--accent:#a9761f;--accent-soft:#f0e6d2;--steel:#345b7d;
+    --profit:#16794c;--loss:#c0433d;--bar:#8aa0b8;--barhi:#a9761f;
+    --shadow:0 1px 2px rgba(20,24,31,.04),0 4px 16px rgba(20,24,31,.05);}
+  :root[data-theme="dark"]{--paper:#0f1319;--panel:#161c24;--panel2:#131922;--ink:#e8ecf2;--muted:#94a1b3;
+    --line:#242e3a;--line2:#1c242e;--accent:#d6a75a;--accent-soft:#2a2415;--steel:#6fa0cc;
+    --profit:#35b87d;--loss:#e0645d;--bar:#4a5a6d;--barhi:#d6a75a;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.35);}
+  *{box-sizing:border-box}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.5;margin:0;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:48px 24px 80px}
+  .num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .pos{color:var(--profit)}.neg{color:var(--loss)}
+  header.top{border-bottom:2px solid var(--ink);padding-bottom:22px;margin-bottom:20px}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 10px}
+  h1{font-family:var(--serif);font-weight:600;font-size:clamp(28px,5vw,42px);line-height:1.06;margin:0;letter-spacing:-.01em;text-wrap:balance}
+  .sub{color:var(--muted);font-size:15px;margin:12px 0 0;max-width:66ch}
+  .finding{background:var(--accent-soft);border:1px solid var(--accent);border-radius:10px;padding:16px 20px;margin:22px 0 8px}
+  .finding b{color:var(--ink)}
+  .finding .h{font-family:var(--serif);font-size:17px;font-weight:600;margin:0 0 6px}
+  .finding p{margin:0;font-size:13.5px;color:var(--ink)}
+  h2{font-family:var(--serif);font-weight:600;font-size:22px;margin:40px 0 4px;letter-spacing:-.01em}
+  h2 .n{color:var(--accent);font-family:var(--mono);font-size:15px;margin-right:9px}
+  .lede{color:var(--muted);font-size:14px;margin:0 0 16px;max-width:74ch}
+  .controls{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin:14px 0 20px;position:sticky;top:0;
+    background:var(--paper);padding:14px 0;z-index:5;border-bottom:1px solid var(--line)}
+  .clabel{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:-8px}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel)}
+  .seg button{font-family:var(--sans);font-size:13px;font-weight:600;color:var(--muted);background:transparent;border:0;
+    padding:8px 14px;cursor:pointer;border-right:1px solid var(--line)}
+  .seg button:last-child{border-right:0}
+  .seg button.on{background:var(--ink);color:var(--paper)}
+  .seg.rr button.on{background:var(--accent);color:#fff}
+  .seg.mode button.on{background:var(--steel);color:#fff}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow)}
+  .chartcard{padding:20px 20px 12px;overflow-x:auto}
+  .chartcard svg{display:block;min-width:640px;width:100%;height:auto}
+  .gl{stroke:var(--line2);stroke-width:1}.axis{stroke:var(--line);stroke-width:1}
+  .barr{fill:var(--bar)}.barhi{fill:var(--barhi)}
+  .statln{stroke:var(--steel);stroke-width:1.5;stroke-dasharray:5 4}
+  .recln{fill:none;stroke:var(--accent);stroke-width:1.8}
+  .lbl{fill:var(--muted);font-family:var(--mono);font-size:10px}
+  .lblc{fill:var(--ink);font-family:var(--mono);font-size:9.5px}
+  .tag{fill:var(--ink);font-family:var(--sans);font-size:10px;font-weight:600}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin:8px 2px 0;padding:0 4px 4px}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+  .sw.ln{width:16px;height:0;border-top:2px solid}
+  .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);background:var(--panel);margin-bottom:8px}
+  table{width:100%;border-collapse:collapse;min-width:600px}
+  th,td{padding:10px 13px;text-align:right;border-bottom:1px solid var(--line2);font-size:13.5px}
+  th:first-child,td:first-child{text-align:left}
+  thead th{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;background:var(--panel2)}
+  td.num,td.money{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  tbody tr:hover{background:var(--panel2)}
+  tr.best td{background:var(--accent-soft)}
+  tr.best td:first-child{font-weight:700}
+  .schemetag{font-size:9px;font-weight:700;letter-spacing:.05em;color:var(--accent);margin-left:6px}
+  tfoot td{font-weight:700;border-top:2px solid var(--line);background:var(--panel2);font-family:var(--mono)}
+  tfoot td:first-child{font-family:var(--sans)}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:6px 0 18px}
+  .kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:15px 17px;box-shadow:var(--shadow)}
+  .kpi .k{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .kpi .v{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:24px;font-weight:600;margin-top:5px}
+  .kpi .s{font-size:12px;color:var(--muted);margin-top:2px}
+  .takeaways{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:14px}
+  .tk{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;box-shadow:var(--shadow)}
+  .tk .h{font-weight:700;font-size:13.5px;margin-bottom:3px}.tk .b{color:var(--muted);font-size:13px}
+  .yr .p{color:var(--muted);font-size:10px;margin-left:5px;font-weight:400}
+  .foot{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+  .foot code{font-family:var(--mono);background:var(--panel2);padding:1px 6px;border-radius:4px;border:1px solid var(--line)}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <p class="eyebrow">Risk Engineering · Stop-Loss Movement Study</p>
+    <h1>Stop-Loss Management — how far to trail</h1>
+    <p class="sub">Testing step / ratchet trailing stops against a static stop on the preferred US30 &amp; NAS100
+      configurations, across 2.0R–3.5R targets, over three years. $100,000 account, $100 risk/trade, net of
+      dealing spread. The curve finds the best step increment.</p>
+  </header>
+
+  <div class="finding">
+    <p class="h" id="findingH"></p>
+    <p id="findingP"></p>
+  </div>
+
+  <div class="controls">
+    <span class="clabel">Instrument</span><div class="seg" id="instSeg"></div>
+    <span class="clabel">Target</span><div class="seg rr" id="rrSeg"></div>
+    <span class="clabel">View</span><div class="seg mode" id="modeSeg"></div>
+  </div>
+
+  <h2><span class="n">01</span>Curve fit — profit &amp; recovery vs trailing step</h2>
+  <p class="lede" id="curveLede"></p>
+  <div class="card chartcard"><svg id="curve" viewBox="0 0 960 340" preserveAspectRatio="xMidYMid meet"></svg></div>
+  <div class="legend">
+    <span><i class="sw" style="background:var(--bar)"></i>Net $ by step</span>
+    <span><i class="sw" style="background:var(--barhi)"></i>Best step</span>
+    <span><i class="sw ln" style="border-color:var(--steel)"></i>Static (no trail)</span>
+    <span><i class="sw ln" style="border-color:var(--accent)"></i>Recovery factor (right axis)</span>
+  </div>
+
+  <h2><span class="n">02</span>Scheme comparison</h2>
+  <p class="lede">Same entries and target; only the stop-management rule differs. Δ is versus the static stop.
+    “Trail exits” are trades stopped at breakeven-or-better after the stop moved.</p>
+  <div class="tblwrap"><table id="cmp"></table></div>
+
+  <h2><span class="n">03</span>Dollar breakdown — selected scheme</h2>
+  <div class="controls" style="position:static;border:0;padding:4px 0 0">
+    <span class="clabel">Scheme</span><div class="seg" id="schemeSeg"></div>
+  </div>
+  <div class="kpis" id="kpis"></div>
+  <div class="tblwrap"><table id="yearly"></table></div>
+
+  <div class="takeaways" id="takeaways"></div>
+
+  <div class="foot"><p><strong>Method.</strong> Step trail: at each <em>k</em>×(step) of favourable movement the stop
+    ratchets to (<em>k</em>−1)×(step) — so a 1.0R step means breakeven at +1R, +1R at +2R, and so on. Breakeven@1R
+    moves the stop to entry once +1R is reached, then holds. Bar-by-bar M5 simulation with a <strong>pessimistic
+    intrabar rule</strong> (a bar is never allowed to raise its own stop, and a bar spanning both stop and target is
+    counted as a stop) — results are conservative. 1R = $100; dollars net of dealing spread. Backtest on 3 yrs of
+    cTrader M5, not live. Source: <code>scripts/trail_study.py</code>.</p></div>
+</div>
+
+<script>
+const DATA = /*INJECT*/{}/*END*/;
+const state={inst:'US30',rr:'3.0',mode:'net',scheme:'static'};
+const fmt=(v,s=true)=>{const g=v<0?'-':(s&&v>0?'+':'');return g+'$'+Math.abs(v).toLocaleString('en-US',{maximumFractionDigits:0});};
+const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;};
+const D=()=>DATA.data[state.inst][state.rr];
+const S=(sk)=>D().schemes[sk][state.mode];
+const schemeKeys=()=>Object.keys(DATA.schemes);
+
+function seg(id,items,key,lab){const b=document.getElementById(id);b.innerHTML='';
+  items.forEach(it=>{const x=el('button',state[key]===it?'on':'',lab?lab(it):it);x.dataset.v=it;
+    x.onclick=()=>{state[key]=it;document.querySelectorAll('#'+id+' button').forEach(q=>q.classList.toggle('on',q.dataset.v===it));renderAll();};b.appendChild(x);});}
+
+function bestStep(){return D().curve.reduce((a,c)=>c.net_usd>a.net_usd?c:a);}
+
+function renderFinding(){
+  const inst=state.inst, opt=bestStep(), sref=D().static_ref;
+  const gain=opt.net_usd-sref.net_usd;
+  let h,p;
+  if(inst==='NAS100'){
+    h='NAS100: don’t trail — let winners run to target.';
+    p=`Every trailing scheme <b>reduces</b> profit here; the equity is in the runners. Static returns `+
+      `<b>${fmt(sref.net_usd)}</b> net; the best trail (${opt.step}R step) manages only ${fmt(opt.net_usd)}. `+
+      `Tight trailing (0.5–1.0R) — including the classic “breakeven then +1R” — cuts profit by 40–65%.`;
+  } else {
+    h=`US30: a loose ${opt.step}R trail beats a static stop.`;
+    p=`On US30 the best step is <b>${opt.step}R</b> → <b>${fmt(opt.net_usd)}</b> net vs ${fmt(sref.net_usd)} static `+
+      `(${gain>=0?'+':''}${fmt(gain)}), while also cutting drawdown. But <b>tight</b> trailing (0.25–1.0R) still `+
+      `destroys 40–60% of profit — protect only large gains, never small ones.`;
+  }
+  document.getElementById('findingH').innerHTML=h;
+  document.getElementById('findingP').innerHTML=p;
+}
+
+function renderCurve(){
+  const cur=D().curve, sref=D().static_ref;
+  const W=960,H=340,pL=52,pR=54,pT=20,pB=46,iw=W-pL-pR,ih=H-pT-pB;
+  const opt=bestStep();
+  const vals=cur.map(c=>c.net_usd).concat([sref.net_usd]);
+  const vmax=Math.max(...vals,1),vmin=Math.min(...vals,0),span=(vmax-vmin)||1;
+  const recs=cur.map(c=>c.recovery||0);const rmax=Math.max(...recs,1);
+  const n=cur.length,bw=iw/n;
+  const y=v=>pT+((vmax-v)/span)*ih;
+  let s='';
+  for(let g=0;g<=4;g++){const yy=pT+ih*g/4,val=vmax-span*g/4;
+    s+=`<line class="gl" x1="${pL}" y1="${yy}" x2="${W-pR}" y2="${yy}"/>`;
+    s+=`<text class="lbl" x="${pL-7}" y="${yy+3}" text-anchor="end">${fmt(val,false)}</text>`;
+    s+=`<text class="lbl" x="${W-pR+7}" y="${yy+3}" text-anchor="start" fill="var(--accent)">${(rmax-rmax*g/4).toFixed(1)}</text>`;}
+  // bars
+  cur.forEach((c,i)=>{const x=pL+bw*i+bw*0.15,w=bw*0.7,yy=y(c.net_usd),y0=y(Math.max(0,vmin));
+    const hi=(c.step===opt.step);
+    s+=`<rect class="${hi?'barhi':'barr'}" x="${x}" y="${Math.min(yy,y0)}" width="${w}" height="${Math.max(1,Math.abs(yy-y0))}"><title>step ${c.step}R: ${fmt(c.net_usd)} net · recovery ${c.recovery} · maxDD ${fmt(c.maxdd_usd)}</title></rect>`;
+    s+=`<text class="lblc" x="${x+w/2}" y="${H-pB+14}" text-anchor="middle">${c.step}</text>`;
+    if(hi)s+=`<text class="tag" x="${x+w/2}" y="${yy-6}" text-anchor="middle" fill="var(--accent)">best</text>`;});
+  s+=`<text class="lbl" x="${pL+iw/2}" y="${H-8}" text-anchor="middle">trailing step size (R)  —  wider →</text>`;
+  // static reference line
+  const sy=y(sref.net_usd);
+  s+=`<line class="statln" x1="${pL}" y1="${sy}" x2="${W-pR}" y2="${sy}"/>`;
+  s+=`<text class="lbl" x="${pL+4}" y="${sy-5}" fill="var(--steel)">static ${fmt(sref.net_usd)}</text>`;
+  // recovery line (right axis)
+  const ry=v=>pT+((rmax-v)/rmax)*ih;
+  let path=cur.map((c,i)=>`${i?'L':'M'}${(pL+bw*i+bw/2).toFixed(1)},${ry(c.recovery||0).toFixed(1)}`).join(' ');
+  s+=`<path class="recln" d="${path}"/>`;
+  cur.forEach((c,i)=>{s+=`<circle cx="${pL+bw*i+bw/2}" cy="${ry(c.recovery||0)}" r="2.4" fill="var(--accent)"/>`;});
+  document.getElementById('curve').innerHTML=s;
+  document.getElementById('curveLede').innerHTML=
+    `${state.inst} · ${state.rr}R target · ${state.mode==='net'?'net of costs':'gross'}. Bars = 3-yr net profit at each `+
+    `step size; dashed line = static stop; gold line = recovery factor (profit ÷ max drawdown).`;
+}
+
+function renderCmp(){
+  const t=document.getElementById('cmp');
+  const rows=schemeKeys(); const statN=S('static').total_usd;
+  const best=rows.reduce((a,b)=>S(b).total_usd>S(a).total_usd?b:a);
+  let h='<thead><tr><th>Stop scheme</th><th>Trades</th><th>Win %</th><th>Exp R</th><th>Net $</th>'+
+        '<th>Δ vs static</th><th>Trail exits</th><th>Max DD</th><th>Recovery</th></tr></thead><tbody>';
+  rows.forEach(sk=>{const d=S(sk);const dv=d.total_usd-statN;
+    h+=`<tr class="${sk===best?'best':''}"><td>${DATA.schemes[sk]}${sk===best?'<span class="schemetag">BEST $</span>':''}</td>`+
+       `<td class="num">${d.trades}</td><td class="num">${d.win_pct}%</td><td class="num">${d.exp_R.toFixed(3)}</td>`+
+       `<td class="money ${d.total_usd>=0?'pos':'neg'}">${fmt(d.total_usd)}</td>`+
+       `<td class="money ${dv>=0?'pos':'neg'}">${sk==='static'?'—':fmt(dv)}</td>`+
+       `<td class="num">${d.trail_exits}</td>`+
+       `<td class="money neg">${fmt(d.maxdd_usd)}</td><td class="num">${d.recovery??'—'}</td></tr>`;});
+  h+='</tbody>';t.innerHTML=h;
+}
+
+function renderScheme(){
+  seg('schemeSeg',schemeKeys(),'scheme',sk=>DATA.schemes[sk]);
+  const d=S(state.scheme),yr=d.yearly;
+  const maxLoss=Math.max(...yr.map(r=>r.longest_loss_streak));
+  const k=[['3-yr net P&L',fmt(d.total_usd),`${d.win_pct}% win · ${d.be} breakeven`,d.total_usd>=0?'pos':'neg'],
+    ['vs static',fmt(d.total_usd-S('static').total_usd),state.scheme==='static'?'baseline':'difference',(d.total_usd-S('static').total_usd)>=0?'pos':'neg'],
+    ['Max drawdown',fmt(d.maxdd_usd),'peak-to-trough','neg'],
+    ['Recovery factor',d.recovery??'—','profit ÷ drawdown',''],
+    ['Longest loss streak',maxLoss,'consecutive','neg']];
+  const box=document.getElementById('kpis');box.innerHTML='';
+  k.forEach(([kk,v,sx,c])=>{const e=el('div','kpi');e.innerHTML=`<div class="k">${kk}</div><div class="v ${c}">${v}</div><div class="s">${sx}</div>`;box.appendChild(e);});
+  // yearly table
+  let h='<thead><tr><th>Year</th><th>Trades</th><th>Won</th><th>Lost</th><th>Win %</th><th>Win streak</th>'+
+        '<th>Loss streak</th><th>Net P&L</th><th>Balance</th></tr></thead><tbody>';
+  yr.forEach(r=>{const part=(r.year==2023||r.year==2026)?'<span class="p">part</span>':'';
+    h+=`<tr><td class="yr">${r.year} ${part}</td><td class="num">${r.trades}</td><td class="num">${r.wins}</td>`+
+       `<td class="num">${r.losses}</td><td class="num">${r.win_pct}%</td><td class="num">${r.longest_win_streak}</td>`+
+       `<td class="num">${r.longest_loss_streak}</td><td class="money ${r.usd>=0?'pos':'neg'}">${fmt(r.usd)}</td>`+
+       `<td class="money">$${Math.round(r.account_end).toLocaleString()}</td></tr>`;});
+  const tt=yr.reduce((a,r)=>({t:a.t+r.trades,w:a.w+r.wins,l:a.l+r.losses,u:a.u+r.usd}),{t:0,w:0,l:0,u:0});
+  h+=`</tbody><tfoot><tr><td>3-yr total</td><td>${tt.t}</td><td>${tt.w}</td><td>${tt.l}</td>`+
+     `<td>${(tt.w/tt.t*100).toFixed(0)}%</td><td>—</td><td>—</td><td class="${tt.u>=0?'pos':'neg'}">${fmt(tt.u)}</td>`+
+     `<td>$${Math.round(100000+tt.u).toLocaleString()}</td></tr></tfoot>`;
+  document.getElementById('yearly').innerHTML=h;
+}
+
+function renderTakeaways(){
+  const box=document.getElementById('takeaways');
+  const items=[
+    ['Tight trailing kills the edge','Steps of 0.25–1.0R (incl. “breakeven then +1R”) cut net profit 40–65% on both instruments — they stop out the runners the strategy relies on.'],
+    ['US30 rewards a loose trail','Only after a large gain (~2–2.5R) does protecting profit help — it beats the static stop on return and lowers drawdown.'],
+    ['NAS100: leave it static','Its post-breakout trend is clean; any stop movement before target costs money. Keep the fixed stop and full target.'],
+    ['Drawdown vs profit is a dial','The tightest trail gives the smallest drawdown but the lowest return. Choose the step for your risk appetite, not a fixed rule.']];
+  box.innerHTML='';
+  items.forEach(([h,b])=>{const e=el('div','tk');e.innerHTML=`<div class="h">${h}</div><div class="b">${b}</div>`;box.appendChild(e);});
+}
+
+function renderAll(){renderFinding();renderCurve();renderCmp();renderScheme();renderTakeaways();}
+seg('instSeg',Object.keys(DATA.data),'inst');
+seg('rrSeg',DATA.rrs.map(r=>r.toFixed(1)),'rr',r=>r+'R');
+seg('modeSeg',['gross','net'],'mode',m=>m==='net'?'After costs':'Gross');
+renderAll();
+</script>
