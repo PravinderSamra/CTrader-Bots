@@ -1,0 +1,53 @@
+{
+  "date": "2026-07-16",
+  "entries": [
+    {
+      "at": "2026-07-16T07:11:59.959Z",
+      "londonTime": "08:11 BST",
+      "mode": "ORB_FORMING",
+      "price": 10457.55,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — UK GDP Monthly Estimate @ 07:00 BST today — pre-release breaks are positioning, not conviction.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "UK GDP Monthly Estimate @ 07:00 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to a GDP print landing 60 minutes before cash open seeding pre-positioned volatility, crowded GBP shorts that could reverse and press FTSE lower on any sterling squeeze, and Brent already down -1.26% dragging two top-5 index weights, opening-range breaks in either direction carry elevated fakeout risk today.",
+      "aiBullets": [
+        "GDP printed at 07:00 BST — 60 minutes before the ORB forms — meaning the 10,426–10,483 overnight range already partially prices the outcome; first breaks may exhaust rather than extend.",
+        "Brent -1.26% weighs directly on Shell and BP (top-5 index weights), giving the short side a fundamental anchor even before any ORB mechanics play out.",
+        "GBP COT net-short of -89,991 contracts is at the 89th percentile of 20-day positioning — a crowded short that can unwind sharply, sending sterling up and FTSE perversely lower via the sign-flip, threatening upside ORB breaks.",
+        "With 45% of the 126.3-point 14-day average daily range already used and no further scheduled data today, range budget supports a move but the GDP-driven pre-open noise argues for waiting for a clean ORB level retest before entry."
+      ],
+      "bias": {
+        "score": -3,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": null,
+        "orbLow": null,
+        "orbBrokenDirection": null,
+        "overnightHigh": 10482.6,
+        "overnightLow": 10426.3,
+        "priorDayHigh": 10536.2,
+        "priorDayLow": 10431.2,
+        "gapPct": -0.14,
+        "adr14": 126.3,
+        "adrUsedPct": 45
+      },
+      "outcome": null
+    }
+  ]
+}

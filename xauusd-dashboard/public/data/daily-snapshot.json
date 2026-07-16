@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-07-15T20:04:26.222Z",
+  "generatedAt": "2026-07-16T07:11:01.468Z",
   "yields": {
-    "US10Y": 4.62,
-    "US2Y": 4.26,
-    "realYield10Y": 2.36,
-    "realYield5Y": 2.06,
-    "curve2s10s": 36,
-    "breakeven10Y": 2.25,
-    "breakeven5Y": 2.28,
-    "forward5y5y": 2.22,
+    "US10Y": 4.58,
+    "US2Y": 4.18,
+    "realYield10Y": 2.33,
+    "realYield5Y": 2.03,
+    "curve2s10s": 40,
+    "breakeven10Y": 2.23,
+    "breakeven5Y": 2.25,
+    "forward5y5y": 2.21,
     "dayOverDay": {
-      "US10Y": 0.06,
-      "US2Y": 0.05,
-      "realYield10Y": 0.04
+      "US10Y": -0.04,
+      "US2Y": -0.08,
+      "realYield10Y": -0.03
     }
   },
   "fedExpectations": {
@@ -34,26 +34,26 @@
     "openInterestChange": 6341
   },
   "etfFlows": {
-    "gldTonnes": 997.1,
-    "gldWoWChange": 1.2,
+    "gldTonnes": 1004.2,
+    "gldWoWChange": 7.1,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4058.475,
-    "XAGUSD": 57.7685,
-    "EURUSD": 1.14636,
-    "USDJPY": 162.2165,
-    "USDCHF": 0.80511,
-    "USDCNH": 6.76823,
-    "GBPUSD": 1.35363,
-    "USDCAD": 1.40429,
-    "USDSEK": 9.58616,
-    "US500": 7574.8,
-    "GER40": 24998.55,
-    "UK100": 10472.7,
-    "ADR_14day": 100.1,
-    "ADR_usedToday": 63.3,
-    "goldSilverRatio": 70.3
+    "XAUUSD": 4029.495,
+    "XAGUSD": 57.1185,
+    "EURUSD": 1.14675,
+    "USDJPY": 162.0555,
+    "USDCHF": 0.80588,
+    "USDCNH": 6.76915,
+    "GBPUSD": 1.3537,
+    "USDCAD": 1.40433,
+    "USDSEK": 9.59111,
+    "US500": 7570.8,
+    "GER40": 24977.05,
+    "UK100": 10460.05,
+    "ADR_14day": 98.3,
+    "ADR_usedToday": 42.5,
+    "goldSilverRatio": 70.5
   },
   "dollarLiquidity": {
     "stlfsi": -0.882,
@@ -69,20 +69,20 @@
       "headline": "Jim Cramer sees more upside for Goldman and addresses Wells Fargo's biggest question",
       "source": "CNBC",
       "publishedAt": "2026-07-15T15:29:49.000Z",
-      "hoursAgo": 4.6
+      "hoursAgo": 15.7
     },
     {
       "headline": "Buffett says Trump's pick of Kevin Warsh for Fed chair was 'good choice'",
       "source": "CNBC",
       "publishedAt": "2026-07-15T12:14:44.000Z",
-      "hoursAgo": 7.8
+      "hoursAgo": 18.9
     }
   ],
   "briefing": {
-    "biasScore": 2,
+    "biasScore": 3,
     "biasLabel": "BULLISH",
-    "confidence": 5,
-    "briefing": "Right now, the dominant forces shaping gold are a firm but not aggressive US dollar (the DXY [an index measuring the dollar against a basket of major currencies] sitting at 100.51), rising bond yields [the interest rate the US government pays on its debt — higher yields usually hurt gold because bonds become more attractive], and a market that is almost certain (92%) the Federal Reserve will hold interest rates steady at its July 29th meeting. Despite those headwinds, gold is trading at a very elevated $4,058, which tells you the structural buying pressure — from geopolitical risk [the GPR index, a measure of global political tension, is elevated at 173.6], steady ETF inflows [investors adding physical gold to funds like GLD for three straight weeks], and large professional traders holding significant long positions [183,165 net long contracts in the latest COT report, meaning big money is still betting on higher prices] — continues to outweigh those negatives. On recent catalysts, the two news items from today are not gold-market movers: one is about bank stocks and the other is Warren Buffett commenting on a potential Fed Chair pick (Kevin Warsh, about 8 hours ago) — worth noting because a hawkish [favours higher interest rates] Fed chair nominee can be mildly negative for gold long-term, but it hasn't triggered any obvious sell-off today, so treat it as background noise for now. The directional bias leans mildly BULLISH — price is elevated, big money hasn't sold, and safe-haven demand remains real — but with real yields [bond yields after stripping out inflation] at a high 2.36% and yields ticking up today, gold faces genuine resistance [a price ceiling where sellers tend to cluster] to pushing much further without a fresh catalyst. Confidence is 5/10: the trend is intact, but high real yields and a near-certain rate hold create friction. What would change the view bearish: a meaningful DXY rally above 102 or a sharp spike in real yields. The economic calendar shows NO scheduled events today, which is actually a double-edged sword — no catalyst to push price higher, but also no data shock to knock it down. With no events on the calendar for the rest of the week either (the calendar data is empty), there is no specific build-up caution needed this week, though always watch for surprise headlines. On key levels: the 14-day Average Daily Range [typical daily price swing over the last two weeks] is about $100, and today has already used roughly $63 of that, meaning only around $37 of typical movement is left for the session — so the easy money for today's range has likely already been made, and chasing a big breakout this late in the day carries more risk. For trade integration: if you are already in a long trade [a buy position] from an earlier setup today, there is modest room to let it run toward the top of today's range, but opening a new full-size long position this late in the New York session — with limited ADR remaining and no fresh bullish catalyst — is low-conviction. If you do enter, use reduced position size and keep your stop [the price level where you exit to limit losses] tight. Remember: the trend is your friend, but only enter when the setup is clear — chasing price late in the session is how beginners give back their profits.",
-    "generatedAt": "2026-07-15T20:04:48.755Z"
+    "confidence": 6,
+    "briefing": "REGIME LINE: Gold is trading in a structurally bullish environment right now, driven by a combination of loose financial conditions [meaning money is easy to borrow and markets are not stressed], elevated geopolitical risk [global political tensions that push investors toward safe-haven assets like gold], and steady inflows into gold ETFs [exchange-traded funds that hold physical gold — when these rise, it signals real institutional demand]. The dollar [measured by the DXY index] sits at 100.49, which is relatively weak historically, and that typically supports gold prices since gold is priced in dollars. Real yields [the return investors get after adjusting for inflation] have dipped slightly overnight, which is also a mild tailwind for gold. RECENT CATALYSTS: There are no market-moving headlines in the last few hours worth citing. The two news items available — Jim Cramer commenting on bank stocks (15.7 hours ago) and Warren Buffett endorsing Kevin Warsh as a potential Fed Chair candidate (18.9 hours ago) — are not immediate catalysts for gold, though the Warsh mention is worth monitoring: he is considered a hawkish [favouring higher interest rates] pick, and if confirmed, markets may eventually reprice rate expectations higher, which could create headwinds for gold down the road. DIRECTIONAL BIAS: The bias leans BULLISH. Gold at $4,029 is supported by weak dollar, falling yields, strong ETF inflows over three consecutive weeks, and high geopolitical risk readings. Large professional traders [tracked via the COT report — a weekly snapshot of futures positioning] remain heavily net-long [betting prices will rise], with positioning nudging slightly higher week-on-week. The crowding reading is neutral, meaning the trade is not dangerously overcrowded yet. CONFIDENCE SCORE: 6/10. The main risks that could flip this view are a surprise hawkish Fed signal, a sharp dollar rally, or real yields spiking higher. The Warsh/Fed Chair narrative could gain momentum and pressure gold if it starts moving markets more forcefully. EVENT RISK: The economic calendar is completely empty today, which means no scheduled data shocks to worry about during London or New York sessions — this is actually a cleaner environment for trend-following trades. There are no high-impact events flagged later this week in the data provided, so no obvious build-up caution period is needed at this time. KEY LEVELS: Gold is at $4,029. The 14-day Average Daily Range [the typical distance price travels in a single day] is $98.3, and today has already used $42.5 of that — meaning roughly $56 of average daily movement may still remain. Watch for resistance near the $4,050–$4,060 zone if price pushes higher, and support around $3,990–$4,000 as the round-number floor. TRADE INTEGRATION: This is a reasonable window for bullish trend-following setups during London and New York sessions. With no news risk today, clean 1H structure, and roughly half the daily range still available, you can look for 5M bullish signals [such as a break of structure to the upside or a fair value gap fill] above key support with a 1M entry to tighten your risk. Keep position size moderate — confidence is 6/10, not a high-conviction day. If price is already extended and has broken significantly above recent highs, wait for a pullback [a temporary dip back toward a support level] rather than chasing. Remember: a quiet calendar day with bullish structure is your best friend — no news means price is more likely to follow its natural trend.",
+    "generatedAt": "2026-07-16T07:11:24.217Z"
   }
 }
