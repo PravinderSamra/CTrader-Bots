@@ -47,7 +47,25 @@
         "adr14": 126.3,
         "adrUsedPct": 45
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-16T16:11:37.376Z",
+        "fwd1hPct": 0.08,
+        "fwd3hPct": 0.14,
+        "toClosePct": 0.95,
+        "maxUpPct": 1.12,
+        "maxDownPct": -0.21,
+        "verdict": "WRONG",
+        "signalVerdicts": [
+          {
+            "rule": "R13",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          }
+        ]
+      }
     },
     {
       "at": "2026-07-16T07:58:14.739Z",
@@ -116,7 +134,37 @@
         "adr14": 126.3,
         "adrUsedPct": 45
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-16T16:11:37.489Z",
+        "fwd1hPct": 0.27,
+        "fwd3hPct": 0.24,
+        "toClosePct": 1.06,
+        "maxUpPct": 1.23,
+        "maxDownPct": -0.1,
+        "verdict": "WRONG",
+        "signalVerdicts": [
+          {
+            "rule": "R13",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R6",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R8",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R12",
+            "verdict": "WRONG"
+          }
+        ]
+      }
     },
     {
       "at": "2026-07-16T09:29:59.868Z",
@@ -185,7 +233,37 @@
         "adr14": 126.3,
         "adrUsedPct": 45
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-16T16:11:37.601Z",
+        "fwd1hPct": 0.09,
+        "fwd3hPct": -0.18,
+        "toClosePct": 0.9,
+        "maxUpPct": 1.07,
+        "maxDownPct": -0.26,
+        "verdict": "WRONG",
+        "signalVerdicts": [
+          {
+            "rule": "R2",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R13",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R8",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R12",
+            "verdict": "WRONG"
+          }
+        ]
+      }
     },
     {
       "at": "2026-07-16T10:06:22.927Z",
@@ -254,7 +332,37 @@
         "adr14": 126.3,
         "adrUsedPct": 45
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-16T16:11:37.712Z",
+        "fwd1hPct": 0,
+        "fwd3hPct": 0.05,
+        "toClosePct": 0.82,
+        "maxUpPct": 0.99,
+        "maxDownPct": -0.33,
+        "verdict": "WRONG",
+        "signalVerdicts": [
+          {
+            "rule": "R2",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R13",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R8",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R12",
+            "verdict": "WRONG"
+          }
+        ]
+      }
     },
     {
       "at": "2026-07-16T12:15:48.704Z",
@@ -323,7 +431,37 @@
         "adr14": 126.3,
         "adrUsedPct": 46
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-16T16:11:37.821Z",
+        "fwd1hPct": 0.07,
+        "fwd3hPct": 0.84,
+        "toClosePct": 0.84,
+        "maxUpPct": 1.01,
+        "maxDownPct": -0.31,
+        "verdict": "WRONG",
+        "signalVerdicts": [
+          {
+            "rule": "R2",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R13",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R8",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R12",
+            "verdict": "WRONG"
+          }
+        ]
+      }
     },
     {
       "at": "2026-07-16T14:54:09.743Z",
@@ -399,7 +537,122 @@
         "adr14": 126.3,
         "adrUsedPct": 71
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-16T16:11:37.933Z",
+        "fwd1hPct": 0.37,
+        "fwd3hPct": null,
+        "toClosePct": 0.37,
+        "maxUpPct": 0.54,
+        "maxDownPct": -0.06,
+        "verdict": "WRONG",
+        "signalVerdicts": [
+          {
+            "rule": "R2",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R4",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R8",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R13",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R12",
+            "verdict": "WRONG"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-07-16T16:11:34.678Z",
+      "londonTime": "17:11 BST",
+      "mode": "CLOSED",
+      "price": 10555.7,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 117% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "117% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10431.2) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is diverging from a united European tape — it's trading its own story today; tape-based confirmation is unreliable."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "UK GDP Monthly Estimate @ 07:00 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "AI",
+          "rule": "R12",
+          "text": "Today's 08:39 BST AI session read: SHORT toward 10429.6 (WAIT, 80%) — playbook SHORT_ONLY."
+        }
+      ],
+      "aiStanceLine": "Due to 117% of the 14-day average daily range already consumed, a gap-up of 84 points above the prior close (0.8%), and FTSE diverging from a modestly lower European tape, any ORB breakout in either direction today is poorly supported and the mechanical read favours fading moves back into the established range rather than chasing continuation.",
+      "aiBullets": [
+        "The 84-point gap (0.8%) alone consumed roughly 67% of a typical 126-point daily range before the ORB even formed — combining with the 117% total used means virtually no statistical range budget survives for a trending breakout trade.",
+        "FTSE is up 0.8% on the day yet EuroStoxx50 is -0.12% and DAX is -0.44% — this divergence (20-day FTSE/DAX correlation 0.65) suggests index-specific or sterling-driven distortion rather than genuine broad risk appetite, undermining breakout conviction.",
+        "GBP speculative positioning is 'crowded short' at -89,991 net contracts but shifted +15,212 contracts week-on-week — any squeeze that rapidly lifts GBPUSD would flip the current GBP tailwind into a headwind for FTSE, threatening any long ORB break.",
+        "Gold dropped ~2% on US rate-hike bets (Reuters, ~12 hours ago) while VIX sits at 17.33 — the risk tone is BEARISH without being in STRESS, meaning the short-side bias has enough macro backing to watch the ORB low (10,429.6) as the more credible directional target if price fades back."
+      ],
+      "bias": {
+        "score": -4,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10465.2,
+        "orbLow": 10429.6,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10482.6,
+        "overnightLow": 10426.3,
+        "priorDayHigh": 10536.2,
+        "priorDayLow": 10431.2,
+        "gapPct": 0.8,
+        "adr14": 126.3,
+        "adrUsedPct": 117
+      },
+      "outcome": {
+        "resolvedAt": "2026-07-16T16:11:37.933Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }

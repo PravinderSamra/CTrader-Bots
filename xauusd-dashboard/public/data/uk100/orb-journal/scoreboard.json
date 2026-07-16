@@ -1,0 +1,63 @@
+{
+  "updatedAt": "2026-07-16T16:11:37.934Z",
+  "entriesScored": 6,
+  "byStance": {
+    "SHORT_FAVOURED": {
+      "n": 6,
+      "right": 0,
+      "wrong": 6,
+      "flat": 0,
+      "avgToClosePct": 0.82
+    }
+  },
+  "byRule": {
+    "R13": {
+      "n": 6,
+      "right": 0,
+      "wrong": 6,
+      "flat": 0
+    },
+    "R11b": {
+      "n": 5,
+      "right": 0,
+      "wrong": 5,
+      "flat": 0
+    },
+    "R6": {
+      "n": 1,
+      "right": 0,
+      "wrong": 1,
+      "flat": 0
+    },
+    "R8": {
+      "n": 5,
+      "right": 0,
+      "wrong": 5,
+      "flat": 0
+    },
+    "R12": {
+      "n": 5,
+      "right": 0,
+      "wrong": 5,
+      "flat": 0
+    },
+    "R2": {
+      "n": 4,
+      "right": 0,
+      "wrong": 4,
+      "flat": 0
+    },
+    "R4": {
+      "n": 1,
+      "right": 0,
+      "wrong": 1,
+      "flat": 0
+    }
+  },
+  "breakoutsSuspect": {
+    "n": 0,
+    "noExtensionRate": 0,
+    "avgMaxUpPct": 0,
+    "avgMaxDownPct": 0
+  }
+}
