@@ -720,6 +720,84 @@
         "verdict": "UNSCORABLE",
         "signalVerdicts": []
       }
+    },
+    {
+      "at": "2026-07-17T20:00:09.413Z",
+      "londonTime": "21:00 BST",
+      "mode": "CLOSED",
+      "price": 10569.5,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 101% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "101% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10426.3) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.36%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -0.83% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to 101% of the 14-day ADR already consumed, a crowded-short GBP at the 89th percentile of its recent range threatening a sterling squeeze, and the ORB already broken upward into a soft European tape, fresh directional trades lack both range fuel and macro conviction — fades of early extremes are structurally more attractive than breakout chases today.",
+      "aiBullets": [
+        "The ORB broke UP (high 10585.8) yet the European tape is aligned lower (SX5E -0.36%, DAX -0.17%, 20-day FTSE-SX5E correlation 0.52) — that cross-market divergence makes the upside break look unconvincing rather than confirmed.",
+        "Brent +2.72% is a genuine bullish offset for FTSE via energy majors, but copper -0.33% signals muted global growth demand — the commodity complex is split, diluting the commodity-sector tailwind.",
+        "GBP at the 89th percentile of its 20-day range with net COT short of -89,991 contracts (but improving by +15,212 week-on-week) means any further GBP squeeze would flip from FTSE-neutral to a FTSE headwind via the sign-flip, a tail risk for long ORB holders.",
+        "With the overnight range spanning 117.2 points (10487–10604.2) against an ADR14 of 128.1pts, almost the full typical day's movement has already occurred in the overnight session alone — leaving under 11 points of statistical range budget for London cash hours."
+      ],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10585.8,
+        "orbLow": 10530.6,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10604.2,
+        "overnightLow": 10487,
+        "priorDayHigh": 10576.4,
+        "priorDayLow": 10426.3,
+        "gapPct": 0.1,
+        "adr14": 128.1,
+        "adrUsedPct": 101
+      },
+      "outcome": {
+        "resolvedAt": "2026-07-17T20:00:11.599Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
