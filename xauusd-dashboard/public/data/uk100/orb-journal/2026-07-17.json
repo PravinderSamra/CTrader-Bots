@@ -69,6 +69,75 @@
         "adrUsedPct": 91
       },
       "outcome": null
+    },
+    {
+      "at": "2026-07-17T09:23:14.165Z",
+      "londonTime": "10:23 BST",
+      "mode": "POST_ORB",
+      "price": 10550.9,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 101% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "101% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "STRUCTURE",
+          "rule": "R2",
+          "text": "ORB broke UP against a BEARISH macro bias (-7) — counter-bias breaks fail more often; treat continuation as suspect."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10426.3) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.78%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to 101% of the 14-day average daily range already consumed, a counter-bias upside ORB break against a -7 bearish macro score, and a softer European tape with DAX and Euro Stoxx both down around 0.8%, any continuation of the upside break lacks credibility and fade setups back toward ORB low 10,530 are structurally better-supported than fresh longs.",
+      "aiBullets": [
+        "Price at 10,550.9 sits just 20 points below the ORB high (10,585.8) and 21 points above the ORB low (10,530.6) — the index is parked mid-range with no directional conviction despite the upside break.",
+        "With adrUsedPct at 101% and the prior day low (10,426) sitting 125 points below current price — nearly one full additional average day's range away — downside targets beyond ORB low are a stretch today.",
+        "The GBP crowded-short reading (net position -89,991 contracts, 89th percentile) means a sterling snap-back is a latent risk; as GBP rises it becomes bearish for FTSE, adding a second source of pressure on any long breakout trade.",
+        "US500 -0.84% and NAS100 -1.84% today alongside a 20-day FTSE-DAX correlation of 0.65 means the cross-market lean is firmly down, directly undermining the credibility of the ORB's upside break direction."
+      ],
+      "bias": {
+        "score": -7,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10585.8,
+        "orbLow": 10530.6,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10604.2,
+        "overnightLow": 10487,
+        "priorDayHigh": 10576.4,
+        "priorDayLow": 10426.3,
+        "gapPct": -0.07,
+        "adr14": 128.1,
+        "adrUsedPct": 101
+      },
+      "outcome": null
     }
   ]
 }

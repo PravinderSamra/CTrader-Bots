@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17T07:53:27.203Z",
+  "generatedAt": "2026-07-17T09:22:17.917Z",
   "yields": {
     "US10Y": 4.55,
     "US2Y": 4.13,
@@ -34,26 +34,26 @@
     "openInterestChange": 6341
   },
   "etfFlows": {
-    "gldTonnes": 1012.9,
-    "gldWoWChange": -5,
+    "gldTonnes": 1011.9,
+    "gldWoWChange": -1,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3995.06,
-    "XAGUSD": 55.581,
-    "EURUSD": 1.14472,
-    "USDJPY": 162.255,
-    "USDCHF": 0.80702,
-    "USDCNH": 6.77765,
-    "GBPUSD": 1.34639,
-    "USDCAD": 1.40286,
-    "USDSEK": 9.64754,
-    "US500": 7472.6,
-    "GER40": 24838.55,
-    "UK100": 10600.95,
+    "XAUUSD": 3998.935,
+    "XAGUSD": 55.6795,
+    "EURUSD": 1.14406,
+    "USDJPY": 162.4405,
+    "USDCHF": 0.80693,
+    "USDCNH": 6.77897,
+    "GBPUSD": 1.34374,
+    "USDCAD": 1.40316,
+    "USDSEK": 9.66008,
+    "US500": 7462.7,
+    "GER40": 24684.55,
+    "UK100": 10550.5,
     "ADR_14day": 96.3,
     "ADR_usedToday": 37.5,
-    "goldSilverRatio": 71.9
+    "goldSilverRatio": 71.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.882,
@@ -69,20 +69,20 @@
       "headline": "Gold heads for biggest weekly loss in six as Middle East war fans inflation worries - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-17T03:34:00.000Z",
-      "hoursAgo": 4.3
+      "hoursAgo": 5.8
     },
     {
       "headline": "We're trimming our hedge on lower rates, which may take longer to materialize",
       "source": "CNBC",
       "publishedAt": "2026-07-16T18:20:40.000Z",
-      "hoursAgo": 13.5
+      "hoursAgo": 15
     }
   ],
   "briefing": {
     "biasScore": -2,
     "biasLabel": "BEARISH",
     "confidence": 5,
-    "briefing": "Right now the most important forces shaping gold are a combination of sticky inflation fears, a surprisingly resilient US dollar, and very high real yields [meaning the interest you earn on US bonds after accounting for inflation — high real yields make gold, which pays nothing, less attractive to hold]. The DXY [the US Dollar Index, a measure of dollar strength] is sitting at 100.69 and real yields are still elevated at 2.32%, both of which create a headwind for gold prices. On the news front, a Reuters headline from about 4 hours ago noted that gold is on track for its biggest weekly loss in six weeks — the reason cited is a Middle East escalation that is ironically fanning inflation worries rather than safe-haven [crisis-driven] buying, suggesting traders are more focused on the 'rates stay higher for longer' narrative right now than on running to gold for safety. A second headline from around 13.5 hours ago on CNBC mentioned investors trimming bets on lower interest rates, which also adds pressure on gold. The directional bias here leans modestly BEARISH [favouring lower prices] — gold has already used about 37.5 of its average daily 96-point range, meaning roughly 59 points of typical daily movement could still occur, but with price near 3,995 and the weekly trend showing losses, any intraday bounce should be treated with suspicion unless the 1H chart clearly forms a lower-high [a peak that is lower than the previous one, confirming sellers are in control]. Confidence is 5/10 — the geopolitical risk index is elevated at 173.6, which could spark sudden safe-haven demand and flip this quickly; if headlines from the Middle East escalate sharply, that changes everything. There are no scheduled economic events on today's calendar per the data provided, so there is no specific news-driven time to avoid — but the quiet calendar can itself produce choppy, directionless price action [price moving sideways without a clear trend], so patience matters. Key levels to watch: 4,000 is a major psychological round number [a price that traders pay extra attention to simply because it's a clean figure] acting as resistance [a ceiling price has struggled to break above] — a clean rejection there on the 1H chart keeps the bearish case alive; below, 3,970–3,960 would be the first meaningful support zone [a floor area where buyers may step in]. Open interest [the total number of active contracts in the market] rose by over 6,000 this week even as price fell, which typically means new sellers are entering — a bearish signal. ETF outflows [investors pulling money out of gold-backed funds] have continued for three straight weeks, reinforcing that institutional demand is cooling. For trade integration: this is still the Asian session, not yet London or New York, so wait for those sessions to open before acting — use the London open to see whether sellers defend the 4,000 level; if the 1H trend remains in a series of lower highs and lower lows, look for 5M bearish signals [such as a sharp drop followed by a weak pullback] to sell into, but keep position size small given the 5/10 confidence and the unpredictable geopolitical backdrop. When price is near a big round number like 4,000 with a weak weekly trend behind it, patience beats speed every time.",
-    "generatedAt": "2026-07-17T07:53:48.509Z"
+    "briefing": "Right now, the dominant forces pulling gold around are a resilient US dollar (DXY sitting at 100.77), stubbornly high real yields [real yield = the return on bonds after stripping out inflation, and when this is high, bonds become more attractive than gold], and fading safe-haven demand despite elevated geopolitical risk. Real 10-year yields are at 2.32% — that's a meaningful headwind for gold because gold pays no interest. The Fed [US central bank] is overwhelmingly expected to hold rates steady at its July 29th meeting (92% probability), meaning there's no rate-cut catalyst on the near horizon to weaken the dollar and push gold higher. On the news front, a Reuters headline from about 6 hours ago flagged that gold is on track for its biggest weekly loss in six weeks, with Middle East tensions ironically fanning inflation fears rather than pure safe-haven buying — a confusing mix that is creating choppiness. A CNBC piece from 15 hours ago noted investors trimming bets on lower rates, which is dollar-supportive and gold-negative. The directional bias here leans mildly bearish [price more likely to fall than rise] in the short term — sellers appear in control, and the weekly loss trend suggests institutional money [large banks and funds] is not aggressively buying dips right now. Confidence is 5/10 because price is still near the psychologically important $4,000 level and ETF outflows [investors withdrawing money from gold funds] are only modest. What would flip the view bullish: a surprise geopolitical escalation, a sudden dollar sell-off, or a break and hold above $4,000. Today's calendar is empty — no scheduled economic news to watch — which means price movement will be driven purely by momentum and order flow [the actual buying and selling activity in the market]. The 14-day average daily range [how far gold typically moves in a day] is 96.3 points, and today has already used 37.5 of those points, meaning roughly 59 points of average movement may remain — enough for a meaningful trade, but not a huge runway. Given the bearish lean but lack of a strong trigger, this is a reduced-size, lower-conviction session — if you're trend-following, only consider short [sell] setups on the 1H chart that are clearly below recent swing highs, and wait for the 5M to confirm a lower-high structure before entering. Remember: when gold is grinding lower near a big round number like $4,000, patience beats aggression — wait for price to show you its hand before committing.",
+    "generatedAt": "2026-07-17T09:22:35.635Z"
   }
 }
