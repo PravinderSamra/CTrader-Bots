@@ -68,7 +68,33 @@
         "adr14": 128.1,
         "adrUsedPct": 91
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-17T17:02:17.983Z",
+        "fwd1hPct": -0.51,
+        "fwd3hPct": -0.35,
+        "toClosePct": -0.06,
+        "maxUpPct": 0.15,
+        "maxDownPct": -0.8,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R2",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R8",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          }
+        ]
+      }
     },
     {
       "at": "2026-07-17T09:23:14.165Z",
@@ -137,7 +163,33 @@
         "adr14": 128.1,
         "adrUsedPct": 101
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-17T17:02:18.112Z",
+        "fwd1hPct": -0.05,
+        "fwd3hPct": 0.07,
+        "toClosePct": 0.41,
+        "maxUpPct": 0.41,
+        "maxDownPct": -0.34,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R2",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R8",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          }
+        ]
+      }
     },
     {
       "at": "2026-07-17T09:49:14.639Z",
@@ -206,7 +258,33 @@
         "adr14": 128.1,
         "adrUsedPct": 101
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-17T17:02:18.241Z",
+        "fwd1hPct": 0.09,
+        "fwd3hPct": 0.31,
+        "toClosePct": 0.39,
+        "maxUpPct": 0.39,
+        "maxDownPct": -0.36,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R2",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-07-17T11:16:38.220Z",
@@ -275,7 +353,33 @@
         "adr14": 128.1,
         "adrUsedPct": 101
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-17T17:02:18.369Z",
+        "fwd1hPct": 0.2,
+        "fwd3hPct": 0.29,
+        "toClosePct": 0.53,
+        "maxUpPct": 0.54,
+        "maxDownPct": -0.21,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R2",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R8",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          }
+        ]
+      }
     },
     {
       "at": "2026-07-17T13:07:56.156Z",
@@ -351,7 +455,37 @@
         "adr14": 128.1,
         "adrUsedPct": 101
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-17T17:02:18.497Z",
+        "fwd1hPct": 0.23,
+        "fwd3hPct": null,
+        "toClosePct": 0.48,
+        "maxUpPct": 0.48,
+        "maxDownPct": 0.08,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R2",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R8",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R9",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          }
+        ]
+      }
     },
     {
       "at": "2026-07-17T15:07:48.372Z",
@@ -429,6 +563,77 @@
       },
       "outcome": {
         "resolvedAt": "2026-07-17T15:07:50.657Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
+    },
+    {
+      "at": "2026-07-17T17:02:15.748Z",
+      "londonTime": "18:02 BST",
+      "mode": "CLOSED",
+      "price": 10554.2,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 101% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "101% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10426.3) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -0.41% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to 101% of the 14-day average daily range already consumed, a crowded-short sterling at the 89th percentile that could snap back and weigh on FTSE, and US futures -0.41% late in the session, any fresh breakout attempt — long or short — is running on empty and lacks the structural fuel to follow through.",
+      "aiBullets": [
+        "Price at 10554.2 sits almost exactly mid-range between ORB high 10585.8 and ORB low 10530.6 — neither side has established dominance, making a clean directional fade harder to time than the 101% ADR usage alone suggests.",
+        "Brent +2.71% supports energy heavyweights (Shell, BP) and could anchor the index near the ORB low rather than allowing a clean slide to the prior-day low at 10426.3, which is already beyond a full ADR away.",
+        "The Gulf of Aden tanker seizure (2 hours ago) keeps geopolitical risk premium in crude alive — if Brent holds or extends gains into tomorrow's open, energy's top-5 index weight provides a structural floor that competes directly with the bearish US-futures signal.",
+        "GBP COT net short of -89,991 contracts with a week-on-week cover of +15,212 signals active short-covering — if sterling squeezes higher toward its 20-day high percentile, the sign-flip turns that into an unexpected FTSE headwind even if tomorrow's macro looks constructive."
+      ],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10585.8,
+        "orbLow": 10530.6,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10604.2,
+        "overnightLow": 10487,
+        "priorDayHigh": 10576.4,
+        "priorDayLow": 10426.3,
+        "gapPct": -0.04,
+        "adr14": 128.1,
+        "adrUsedPct": 101
+      },
+      "outcome": {
+        "resolvedAt": "2026-07-17T17:02:18.497Z",
         "fwd1hPct": null,
         "fwd3hPct": null,
         "toClosePct": 0,

@@ -23,5 +23,13 @@
   "timestamp": "2026-07-10T19:54:46.045Z",
   "date": "2026-07-10",
   "time": "20:54 BST",
-  "analysis": "SANDBOX TEST — UK100 session save dry run."
+  "analysis": "SANDBOX TEST — UK100 session save dry run.",
+  "outcome": {
+    "result": "NO_CALL",
+    "resolvedAt": "2026-07-17T17:02:16.876Z",
+    "maxFavourable": null,
+    "maxAdverse": null,
+    "barsSeen": 0,
+    "hits": []
+  }
 }
