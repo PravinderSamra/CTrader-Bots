@@ -1,0 +1,74 @@
+{
+  "date": "2026-07-17",
+  "entries": [
+    {
+      "at": "2026-07-17T07:54:27.003Z",
+      "londonTime": "08:54 BST",
+      "mode": "POST_ORB",
+      "price": 10599.95,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 91% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "91% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "STRUCTURE",
+          "rule": "R2",
+          "text": "ORB broke UP against a BEARISH macro bias (-6) — counter-bias breaks fail more often; treat continuation as suspect."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10426.3) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is diverging from a united European tape — it's trading its own story today; tape-based confirmation is unreliable."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to 91% of the 128-point ADR already consumed, an upside ORB break firing directly against a -6 bearish macro score, and a crowded GBP short that could snap sterling higher and squeeze FTSE back down, today's opening-range trade is a stand-aside or fade setup — not a trend-follow.",
+      "aiBullets": [
+        "Only ~11 points of typical daily range remain (ADR14 128.1pts, 91% used) — the gap between ORB high 10585.8 and overnight high 10604.2 is just 18pts, meaning any long breakout runs into a brick wall almost immediately.",
+        "The ORB broke UP (+41.2pt gap open, price now 10599.95) yet the macro bias is -6 BEARISH, driven by US500 -0.72% and copper -0.71% — counter-bias breaks statistically fail more often, and both commodity proxies confirm the bear case.",
+        "GBP COT net short stands at -89,991 contracts (crowded short) but showed +15,212 week-on-week covering — any short-squeeze in sterling is a direct headwind for FTSE via the sign-flip, adding asymmetric downside risk to long ORB trades.",
+        "European tape is DIVERGING (DAX -0.19%, EuroStoxx absent) and FTSE's 20-day correlation with DAX is only 0.64 — cross-market confirmation for either direction is weak, reducing breakout reliability further beyond the range-budget constraint."
+      ],
+      "bias": {
+        "score": -6,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10585.8,
+        "orbLow": 10530.6,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10604.2,
+        "overnightLow": 10487,
+        "priorDayHigh": 10576.4,
+        "priorDayLow": 10426.3,
+        "gapPct": 0.39,
+        "adr14": 128.1,
+        "adrUsedPct": 91
+      },
+      "outcome": null
+    }
+  ]
+}
