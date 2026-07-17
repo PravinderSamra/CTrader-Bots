@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17T17:01:18.818Z",
+  "generatedAt": "2026-07-17T18:54:21.482Z",
   "yields": {
     "US10Y": 4.55,
     "US2Y": 4.13,
@@ -34,26 +34,26 @@
     "openInterestChange": 6341
   },
   "etfFlows": {
-    "gldTonnes": 1007.5,
-    "gldWoWChange": -2.7,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1009.3,
+    "gldWoWChange": 1.8,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4016.545,
-    "XAGUSD": 56.1045,
-    "EURUSD": 1.14378,
-    "USDJPY": 162.438,
-    "USDCHF": 0.80731,
-    "USDCNH": 6.77857,
-    "GBPUSD": 1.34564,
-    "USDCAD": 1.40105,
-    "USDSEK": 9.65016,
-    "US500": 7492.8,
-    "GER40": 24877.55,
-    "UK100": 10552,
+    "XAUUSD": 4009.42,
+    "XAGUSD": 56.084,
+    "EURUSD": 1.14359,
+    "USDJPY": 162.4345,
+    "USDCHF": 0.80751,
+    "USDCNH": 6.77874,
+    "GBPUSD": 1.34545,
+    "USDCAD": 1.40113,
+    "USDSEK": 9.64958,
+    "US500": 7466.3,
+    "GER40": 24818.55,
+    "UK100": 10538.2,
     "ADR_14day": 96.3,
     "ADR_usedToday": 64.1,
-    "goldSilverRatio": 71.6
+    "goldSilverRatio": 71.5
   },
   "dollarLiquidity": {
     "stlfsi": -0.882,
@@ -69,26 +69,20 @@
       "headline": "Suspected pirates seize tanker off Yemen coast in Gulf of Aden, sources say - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-17T15:01:56.000Z",
-      "hoursAgo": 2
+      "hoursAgo": 3.9
     },
     {
       "headline": "Gold set for biggest weekly drop in six on inflation, rate-hike worries - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-17T03:34:00.000Z",
-      "hoursAgo": 13.5
-    },
-    {
-      "headline": "We're trimming our hedge on lower rates, which may take longer to materialize",
-      "source": "CNBC",
-      "publishedAt": "2026-07-16T18:20:40.000Z",
-      "hoursAgo": 22.7
+      "hoursAgo": 15.3
     }
   ],
   "briefing": {
     "biasScore": -2,
     "biasLabel": "BEARISH",
     "confidence": 5,
-    "briefing": "RIGHT NOW, the most important forces shaping gold are rising concerns about inflation and the possibility that interest rates could stay higher for longer — both of which tend to make gold less attractive because higher rates mean bonds pay better returns, pulling money away from gold. The headline from Reuters about 13 hours ago confirmed this directly: gold is on track for its biggest weekly drop in six weeks, driven exactly by these inflation and rate-hike worries. A second Reuters story from just 2 hours ago reported a suspected pirate tanker seizure in the Gulf of Aden — this is a geopolitical risk event [meaning world tension that can spike demand for safe-haven assets like gold], but so far it appears to be a localised incident and has not meaningfully reversed the week's downward pressure. The CNBC piece from roughly 23 hours ago noted investors are trimming [reducing] their bets on lower interest rates arriving soon, which reinforces the bearish [downward] backdrop. The directional bias here leans mildly BEARISH: the Federal Reserve [America's central bank] is almost certainly holding rates steady at their July 29th meeting (92% probability), real yields [the return on bonds after inflation] remain elevated at 2.32%, the dollar (DXY at 100.75) is holding firm, and ETF [exchange-traded fund, a fund that holds physical gold] outflows have been consistent for three weeks — all of these are headwinds for gold. CONFIDENCE is 5/10 — the geopolitical wildcard and gold already sitting at historically high levels ($4,016) create uncertainty; a sharp escalation in the Gulf or surprise dollar weakness could flip sentiment fast. There are NO scheduled economic events on today's calendar, so there's no data risk for the remainder of this session — the calendar is empty for today. The most important price levels to watch are $4,000 as a major psychological support [a price level where buyers tend to step in] and $4,050–$4,060 as near-term resistance [a ceiling where sellers tend to appear]. The 14-day average daily range [typical day's price movement] is 96.3 points, and today has already used 64.1 of those points — meaning roughly 32 points of typical movement may remain, which limits how much upside a late-session long [buy] trade could realistically capture. For trade integration: this is NOT a high-conviction window for trend-following buys — the 1H trend is under pressure and the weekly narrative is bearish, so only look for short [sell] setups on the 5M chart if price rejects resistance around $4,040–$4,060, and keep position size small given the geopolitical uncertainty. Remember this: when rates stay high and bond returns look good, gold tends to struggle — so trade with that current until something changes.",
-    "generatedAt": "2026-07-17T17:01:37.035Z"
+    "briefing": "Right now the most powerful forces weighing on gold are rising worries about inflation staying sticky and the possibility of interest rate hikes — when rates rise, gold (which pays no interest) becomes less attractive compared to bonds and savings accounts, so money tends to flow away from it. Those concerns are front and centre today. Looking at recent headlines, about 15 hours ago Reuters reported that gold is on track for its biggest weekly drop in six weeks, driven squarely by those inflation and rate-hike fears — that's a meaningful piece of context and likely explains why price has already moved lower into the $4,009 area. More recently, about 4 hours ago, Reuters reported a suspected pirate seizure of a tanker off Yemen in the Gulf of Aden — geopolitical incidents like this can sometimes give gold a short-term safe-haven boost [meaning traders buy gold when the world feels less safe], but so far the broader downward pressure appears to be outweighing that. The directional bias leans BEARISH [favouring further price drops] because rate expectations are firmly 'hold' at 92% for the July 29th Fed meeting, real yields [what bonds actually earn after inflation] remain elevated at 2.32%, and the weekly trend is clearly pointing down. Confidence is 5/10 — the bearish case is real, but the pirate/geopolitical wildcard and still-elevated gold volatility (GVZ at 26.65) mean surprise spikes are possible. On scheduled news, the calendar is empty for today, which means no major data releases to trade around — that's actually a caution sign in itself because thin-catalyst sessions can produce erratic, choppy moves. The 14-day Average Daily Range [the typical daily distance price travels] is about 96 points, and today has already used roughly 64 of those points, meaning only around 32 points of 'typical' movement may remain for the session — that limits how far a new trade can realistically run today. For trade integration: this is a REDUCED-SIZE window. The weekly trend is bearish and you should only be looking for short [sell] setups on the 1H, confirmed on the 5M, with precise entry on the 1M — but with limited ADR remaining and no news catalyst to drive a clean move, keep position size small and manage risk tightly. If price bounces sharply above $4,030–$4,040 on geopolitical headlines, that changes the short-term picture. Remember: when most of today's normal price range is already used up, the smart move is to wait for tomorrow's fresh range rather than chase what's left.",
+    "generatedAt": "2026-07-17T18:54:37.877Z"
   }
 }
