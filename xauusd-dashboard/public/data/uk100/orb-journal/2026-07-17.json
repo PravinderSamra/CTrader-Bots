@@ -352,6 +352,91 @@
         "adrUsedPct": 101
       },
       "outcome": null
+    },
+    {
+      "at": "2026-07-17T15:07:48.372Z",
+      "londonTime": "16:07 BST",
+      "mode": "POST_ORB",
+      "price": 10557.95,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 101% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "101% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "STRUCTURE",
+          "rule": "R2",
+          "text": "ORB broke UP against a BEARISH macro bias (-4) — counter-bias breaks fail more often; treat continuation as suspect."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10426.3) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.62%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -0.72% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to 101% of the 14-day average daily range already consumed, a counter-bias upside ORB break against a -4 bearish macro score, and a softening US futures handoff (S&P -0.72%) approaching the 14:30 New York open, any fresh directional breakout today is more likely to reverse than extend — the asymmetric play is fading moves back toward the ORB midpoint (~10558) rather than chasing.",
+      "aiBullets": [
+        "The ORB broke UP (to 10585.8) against a BEARISH bias of -4 AND with 101% of the ADR already used — two independent strike-outs that together make the upside break even less trustworthy than either alone.",
+        "Brent +1.3% (bullish energy) partially offsets the bearish European tape (SX5E -0.62%), creating a sector tug-of-war that argues for chop rather than a clean trending day.",
+        "Gold's drop on rate-hike fears (11.6 hours ago) and trimmed rate-cut hedges (20.8 hours ago) both tighten the ceiling on risk appetite, capping the upside even if the crowded GBP short (-89,991 net) were to squeeze sterling lower.",
+        "Current price (10557.95) has already retraced inside the ORB after the upside break — this reclaim failure is the clearest real-time confirmation that the break lacked conviction and the mechanical stance (BREAKOUTS_SUSPECT) is being validated in live price action."
+      ],
+      "bias": {
+        "score": -4,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10585.8,
+        "orbLow": 10530.6,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10604.2,
+        "overnightLow": 10487,
+        "priorDayHigh": 10576.4,
+        "priorDayLow": 10426.3,
+        "gapPct": -0.01,
+        "adr14": 128.1,
+        "adrUsedPct": 101
+      },
+      "outcome": {
+        "resolvedAt": "2026-07-17T15:07:50.657Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
