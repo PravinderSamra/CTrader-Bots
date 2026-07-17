@@ -138,6 +138,75 @@
         "adrUsedPct": 101
       },
       "outcome": null
+    },
+    {
+      "at": "2026-07-17T09:49:14.639Z",
+      "londonTime": "10:49 BST",
+      "mode": "POST_ORB",
+      "price": 10553,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 101% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "101% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "STRUCTURE",
+          "rule": "R2",
+          "text": "ORB broke UP against a BEARISH macro bias (-7) — counter-bias breaks fail more often; treat continuation as suspect."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10426.3) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.81%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to 101% of the 14-day average daily range already consumed, an upside ORB break that runs directly counter to a -7 bearish bias score, and a European tape aligned lower by 0.8%+, any continuation of the upside break looks very poorly supported and the higher-probability play is a drift or fade back into the 10530–10585 opening range.",
+      "aiBullets": [
+        "The ORB broke UP to 10585.8, yet the macro bias scores -7 (HIGH conviction bearish) — historically, counter-bias breaks with this gap in conviction fail more often than they follow through.",
+        "With 101% of the 128-point ADR14 already used, the index would need to exceed its typical full-day move just to test the prior-day high at 10576.4 — there is almost no range budget left for new breakouts.",
+        "Copper is down 1.08% (bearish for miners) while Brent is up 0.62% (bullish for energy) — the sector split means index-level directional conviction is diluted, adding to choppy rather than trending conditions.",
+        "GBP is at the 89th percentile of its 20-day range and a crowded short (-89,991 net contracts, CoT report 10 July); any short-squeeze bounce in sterling would flip to a headwind for the index, undermining the one mild bullish input currently in play."
+      ],
+      "bias": {
+        "score": -7,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10585.8,
+        "orbLow": 10530.6,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10604.2,
+        "overnightLow": 10487,
+        "priorDayHigh": 10576.4,
+        "priorDayLow": 10426.3,
+        "gapPct": -0.05,
+        "adr14": 128.1,
+        "adrUsedPct": 101
+      },
+      "outcome": null
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17T09:22:17.917Z",
+  "generatedAt": "2026-07-17T09:48:20.771Z",
   "yields": {
     "US10Y": 4.55,
     "US2Y": 4.13,
@@ -34,26 +34,26 @@
     "openInterestChange": 6341
   },
   "etfFlows": {
-    "gldTonnes": 1011.9,
-    "gldWoWChange": -1,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1012.9,
+    "gldWoWChange": 1,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3998.935,
-    "XAGUSD": 55.6795,
-    "EURUSD": 1.14406,
-    "USDJPY": 162.4405,
-    "USDCHF": 0.80693,
-    "USDCNH": 6.77897,
-    "GBPUSD": 1.34374,
-    "USDCAD": 1.40316,
-    "USDSEK": 9.66008,
-    "US500": 7462.7,
-    "GER40": 24684.55,
-    "UK100": 10550.5,
+    "XAUUSD": 3995.145,
+    "XAGUSD": 55.561,
+    "EURUSD": 1.14392,
+    "USDJPY": 162.414,
+    "USDCHF": 0.80764,
+    "USDCNH": 6.77869,
+    "GBPUSD": 1.34408,
+    "USDCAD": 1.40342,
+    "USDSEK": 9.66366,
+    "US500": 7465.8,
+    "GER40": 24681.55,
+    "UK100": 10556,
     "ADR_14day": 96.3,
     "ADR_usedToday": 37.5,
-    "goldSilverRatio": 71.8
+    "goldSilverRatio": 71.9
   },
   "dollarLiquidity": {
     "stlfsi": -0.882,
@@ -69,20 +69,20 @@
       "headline": "Gold heads for biggest weekly loss in six as Middle East war fans inflation worries - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-17T03:34:00.000Z",
-      "hoursAgo": 5.8
+      "hoursAgo": 6.2
     },
     {
       "headline": "We're trimming our hedge on lower rates, which may take longer to materialize",
       "source": "CNBC",
       "publishedAt": "2026-07-16T18:20:40.000Z",
-      "hoursAgo": 15
+      "hoursAgo": 15.5
     }
   ],
   "briefing": {
-    "biasScore": -2,
-    "biasLabel": "BEARISH",
-    "confidence": 5,
-    "briefing": "Right now, the dominant forces pulling gold around are a resilient US dollar (DXY sitting at 100.77), stubbornly high real yields [real yield = the return on bonds after stripping out inflation, and when this is high, bonds become more attractive than gold], and fading safe-haven demand despite elevated geopolitical risk. Real 10-year yields are at 2.32% — that's a meaningful headwind for gold because gold pays no interest. The Fed [US central bank] is overwhelmingly expected to hold rates steady at its July 29th meeting (92% probability), meaning there's no rate-cut catalyst on the near horizon to weaken the dollar and push gold higher. On the news front, a Reuters headline from about 6 hours ago flagged that gold is on track for its biggest weekly loss in six weeks, with Middle East tensions ironically fanning inflation fears rather than pure safe-haven buying — a confusing mix that is creating choppiness. A CNBC piece from 15 hours ago noted investors trimming bets on lower rates, which is dollar-supportive and gold-negative. The directional bias here leans mildly bearish [price more likely to fall than rise] in the short term — sellers appear in control, and the weekly loss trend suggests institutional money [large banks and funds] is not aggressively buying dips right now. Confidence is 5/10 because price is still near the psychologically important $4,000 level and ETF outflows [investors withdrawing money from gold funds] are only modest. What would flip the view bullish: a surprise geopolitical escalation, a sudden dollar sell-off, or a break and hold above $4,000. Today's calendar is empty — no scheduled economic news to watch — which means price movement will be driven purely by momentum and order flow [the actual buying and selling activity in the market]. The 14-day average daily range [how far gold typically moves in a day] is 96.3 points, and today has already used 37.5 of those points, meaning roughly 59 points of average movement may remain — enough for a meaningful trade, but not a huge runway. Given the bearish lean but lack of a strong trigger, this is a reduced-size, lower-conviction session — if you're trend-following, only consider short [sell] setups on the 1H chart that are clearly below recent swing highs, and wait for the 5M to confirm a lower-high structure before entering. Remember: when gold is grinding lower near a big round number like $4,000, patience beats aggression — wait for price to show you its hand before committing.",
-    "generatedAt": "2026-07-17T09:22:35.635Z"
+    "biasScore": -1,
+    "biasLabel": "NEUTRAL",
+    "confidence": 4,
+    "briefing": "Right now, gold is caught in a tug-of-war between two opposing forces: a weakening US dollar (which normally pushes gold higher) and rising inflation worries tied to the Middle East conflict (which is making investors nervous and causing some to reduce their bets on interest-rate cuts, which hurts gold). The most relevant headline comes from Reuters, published about 6 hours ago, reporting that gold is heading for its biggest weekly loss in six weeks — this tells us sellers have been in control recently, and that's the dominant short-term reality you need to respect. A second headline from CNBC, about 15 hours ago, noted that some large investors are 'trimming their hedge on lower rates' — meaning they're pulling back from bets that the Federal Reserve [the US central bank] will cut rates soon, which reduces one key reason to hold gold. The Fed's own meeting odds back this up: markets currently price only an 8% chance of a rate cut on July 29th, meaning nearly everyone expects rates to stay high, which tends to weigh on gold. With price sitting near $3,995 and the 14-day average daily range [how much gold typically moves in a day] sitting at about $96, but only $37.50 of that range used today so far, there is room for more movement in either direction — though the weekly downtrend pressure suggests any bounces may be short-lived. Confidence in any directional bias is low (4/10) because the calendar today is completely empty of scheduled news events, which means price could drift or chop without a clear catalyst; if a geopolitical escalation headline or a surprise Fed official comment emerges, that would shift the view quickly. Large speculative traders [as shown in the COT report, a weekly survey of big-money positions] remain net-long [betting on higher prices] but the position barely grew this week, suggesting no fresh enthusiasm. For your trading today, this is a reduced-conviction environment — if you do trade, keep position size smaller than normal and only take clean setups where the 1H trend direction is crystal clear before dropping to the 5M for a signal. Remember: when the weekly trend is down and the reason is murky, patience is your edge.",
+    "generatedAt": "2026-07-17T09:48:37.022Z"
   }
 }
