@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17T11:15:43.243Z",
+  "generatedAt": "2026-07-17T13:06:58.170Z",
   "yields": {
     "US10Y": 4.55,
     "US2Y": 4.13,
@@ -34,26 +34,26 @@
     "openInterestChange": 6341
   },
   "etfFlows": {
-    "gldTonnes": 1013.6,
-    "gldWoWChange": 0.7,
+    "gldTonnes": 1019.1,
+    "gldWoWChange": 5.5,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3992.26,
-    "XAGUSD": 55.333,
-    "EURUSD": 1.14289,
-    "USDJPY": 162.3495,
-    "USDCHF": 0.8077,
-    "USDCNH": 6.77963,
-    "GBPUSD": 1.34376,
-    "USDCAD": 1.40352,
-    "USDSEK": 9.66339,
-    "US500": 7471.1,
-    "GER40": 24746.55,
-    "UK100": 10537.95,
+    "XAUUSD": 3970.615,
+    "XAGUSD": 55.1815,
+    "EURUSD": 1.14274,
+    "USDJPY": 162.4095,
+    "USDCHF": 0.80788,
+    "USDCNH": 6.78116,
+    "GBPUSD": 1.34302,
+    "USDCAD": 1.40215,
+    "USDSEK": 9.66559,
+    "US500": 7455.3,
+    "GER40": 24751.55,
+    "UK100": 10543.95,
     "ADR_14day": 96.3,
-    "ADR_usedToday": 37.5,
-    "goldSilverRatio": 72.1
+    "ADR_usedToday": 48.5,
+    "goldSilverRatio": 72
   },
   "dollarLiquidity": {
     "stlfsi": -0.882,
@@ -66,23 +66,29 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Gold heads for biggest weekly loss in six as Middle East war fans inflation worries - Reuters",
+      "headline": "Suspected pirates seize tanker off Yemen coast in Gulf of Aden, sources say - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-07-17T10:12:35.000Z",
+      "hoursAgo": 2.9
+    },
+    {
+      "headline": "Gold rises but heads for weekly loss on inflation and rate hike worries - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-17T03:34:00.000Z",
-      "hoursAgo": 7.7
+      "hoursAgo": 9.5
     },
     {
       "headline": "We're trimming our hedge on lower rates, which may take longer to materialize",
       "source": "CNBC",
       "publishedAt": "2026-07-16T18:20:40.000Z",
-      "hoursAgo": 16.9
+      "hoursAgo": 18.8
     }
   ],
   "briefing": {
-    "biasScore": -1,
+    "biasScore": 1,
     "biasLabel": "NEUTRAL",
     "confidence": 4,
-    "briefing": "Right now, the most important forces pulling gold around are a slightly firmer US Dollar (the DXY index, which measures the dollar's strength against other currencies, sits at 100.83), elevated real yields (real yield means the return investors get after adjusting for inflation — at 2.32% on 10-year bonds, that's still relatively high, which makes gold less attractive since gold pays no interest), and some genuine geopolitical tension keeping a floor under prices. That tension comes through clearly in the Reuters headline from about 8 hours ago: gold is heading for its biggest weekly loss in six weeks, with Middle East conflict stoking inflation worries — a somewhat contradictory signal, since war usually lifts gold, but here it's also lifting inflation fears which push yields and the dollar higher, weighing on gold simultaneously. The CNBC item from ~17 hours ago, noting funds are trimming bets on lower interest rates, reinforces a 'rates stay higher for longer' mood, which typically pressures gold. Taken together, the directional bias leans VERY SLIGHTLY bearish (favouring gold going down), but the picture is messy and choppy — NOT clean enough to trade with strong conviction. Confidence is 4/10; what would flip this bullish is a sharp dollar selloff, a surprise geopolitical escalation driving safe-haven demand, or Fed officials hinting at cuts sooner than July 29th. The calendar is completely empty today — no scheduled data releases — which removes one risk but also means price may drift without a clear catalyst. The 14-day Average Daily Range [the typical size of gold's daily move] is 96.3 points, but only 37.5 points have been used today, meaning there is roughly 59 points of potential movement still available — price could make a meaningful move in either direction this session. Key levels to watch are the psychological $4,000 round number as overhead resistance [a price ceiling the market keeps rejecting] and the $3,960–$3,970 zone as nearby support [a floor where buyers have previously stepped in]. For trade integration: this is a LOW conviction window — the trend on the 1H chart needs to be confirmed before entering; wait for a clear lower high on 1H if bearish, and do NOT chase. If you do trade, use reduced position size given the choppy weekly backdrop. Remember: no news today is not the same as no risk — when the calendar is empty, price can whipsaw on thin participation, so patience is your edge.",
-    "generatedAt": "2026-07-17T11:16:00.366Z"
+    "briefing": "Right now the dominant forces pulling on gold are a tug-of-war between geopolitical fear (which pushes gold UP) and stubborn interest-rate pressure (which pushes gold DOWN). The most relevant recent headline broke about 3 hours ago: Reuters reported a suspected pirate attack on a tanker off Yemen in the Gulf of Aden. Geopolitical shocks like this typically give gold a short-term lift because traders rush to safety — but notice that a headline from roughly 9.5 hours ago confirms gold is actually on track for a weekly LOSS, weighed down by inflation and rate-hike worries. That tells you the safety bid is not powerful enough right now to overpower the rate narrative. The Fed meeting is July 29th and markets are pricing a 92% chance of no rate cut — when rates are expected to stay high, gold becomes less attractive because it pays no interest, so the dollar tends to stay firm (DXY is sitting at 100.84). Real yields [the return on bonds after stripping out inflation] are elevated at 2.32%, which is another headwind for gold. That said, ETF flows [large institutional funds that buy physical gold] have been flowing IN for three straight weeks, and speculative traders are still net-long [betting on higher prices] at healthy levels, so the underlying trend still leans bullish on the bigger picture. Confidence in any directional call today is LOW — 4/10 — because we are caught between competing forces and there are NO scheduled economic events in the calendar today that could provide a clear catalyst. What would change the view bullish: a major escalation in the Yemen situation or a surprise dovish [rate-cut-friendly] comment from a Fed official. What would flip it bearish: dollar strength pushing above 102. The 14-day average daily range [how far price typically moves in a day] is 96.3 points, and today has already used 48.5 of those points — meaning roughly half the day's expected movement has already happened, so large new moves are statistically less likely this session. Key levels to watch: $3,950 as near-term support [a price floor where buyers may step in] and $3,995–$4,000 as the resistance zone [a ceiling where sellers tend to appear] above current price of $3,970. For trade integration: this is NOT a high-conviction window — the session overlap is active but the conflicting signals, high real yields, and no clear catalyst suggest sizing down [trading smaller than usual] or sitting on your hands until price gives a clean 1H trend signal. Remember: when the market is sending mixed messages, your job is to wait, not force a trade.",
+    "generatedAt": "2026-07-17T13:07:16.051Z"
   }
 }
