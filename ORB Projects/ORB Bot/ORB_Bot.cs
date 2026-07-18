@@ -750,10 +750,23 @@ namespace cAlgo.Robots
  // which is legitimate but surprising -> prominent WARNING.
  private void ValidateOrbWindowAlignment()
  {
- // Derive the ORB bar length from the two most recent bars (falls back gracefully).
+ // Derive the ORB bar length as the MINIMUM delta over the last up-to-10 consecutive bar pairs.
+ // Using the last two bars alone is unsafe: if the bot starts right after a weekend/session gap
+ // (e.g. Monday pre-open or just after the Sunday reopen), that single delta can span ~49 hours
+ // of market closure and falsely trip the "window shorter than one ORB bar" hard-stop. The
+ // minimum over several recent pairs is gap-robust (at least one recent pair is gap-free).
  TimeSpan orbBarLen = TimeSpan.Zero;
  if (_orbBars != null && _orbBars.Count >= 2)
- orbBarLen = _orbBars.OpenTimes[_orbBars.Count - 1] - _orbBars.OpenTimes[_orbBars.Count - 2];
+ {
+ int pairs = 0;
+ for (int i = _orbBars.Count - 1; i >= 1 && pairs < 10; i--, pairs++)
+ {
+ TimeSpan delta = _orbBars.OpenTimes[i] - _orbBars.OpenTimes[i - 1];
+ if (delta <= TimeSpan.Zero) continue; // ignore non-positive/degenerate deltas
+ if (orbBarLen == TimeSpan.Zero || delta < orbBarLen)
+ orbBarLen = delta;
+ }
+ }
 
  TimeSpan windowLen = _orbEndUtcToday - _orbStartUtcToday;
 
@@ -2697,8 +2710,11 @@ volumeInUnits = Symbol.NormalizeVolumeInUnits(volumeInUnits, RoundingMode.Down);
  const double attachPadPips = 2.0;
  double attachSlPips = Math.Max(estimatedRiskPips + attachPadPips, MinRiskPips);
  if (attachSlPips <= 0) attachSlPips = Math.Max(attachPadPips, 1.0);
- double attachTpPips = effectiveTpR * estimatedRiskPips + attachPadPips;
- if (attachTpPips <= 0) attachTpPips = attachSlPips; // guard: never a zero/negative TP distance
+
+ // Phase 1.5 FIX 2: when there is no positive take-profit target (effectiveTpR <= 0), attach an
+ // SL ONLY. Attaching a tiny padded TP here would near-instantly close the trade in profit noise.
+ bool hasTpTarget = effectiveTpR > 0;
+ double? attachTpPips = hasTpTarget ? (double?)(effectiveTpR * estimatedRiskPips + attachPadPips) : null;
 
  var result = ExecuteMarketOrder(tradeType, SymbolName, volumeInUnits, label, attachSlPips, attachTpPips);
 
@@ -2733,7 +2749,11 @@ volumeInUnits = Symbol.NormalizeVolumeInUnits(volumeInUnits, RoundingMode.Down);
  double tpPriceApplied = tpPrice;
  double riskPipsApplied = initialRiskPipsActual;
 
- var protectResult = ModifyPosition(position, slPrice, tpPrice, ProtectionType.Absolute, false, StopTriggerMethod.Trade);
+ // Phase 1.5 FIX 2: with no positive TP target, refine SL only (null TP) so we don't set a
+ // degenerate take-profit at/near the entry price.
+ double? refineTpPrice = hasTpTarget ? (double?)tpPrice : null;
+
+ var protectResult = ModifyPosition(position, slPrice, refineTpPrice, ProtectionType.Absolute, false, StopTriggerMethod.Trade);
 
  if (!protectResult.IsSuccessful)
  {

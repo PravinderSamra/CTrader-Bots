@@ -165,3 +165,24 @@ There is no cTrader/.NET compiler in this environment. The file was verified str
 no dangling references to removed fields) and every new API call matches a pattern already present in
 the original file (`ExecuteMarketOrder` pip overload, `ModifyPosition`, `Timer.Start/Stop`, `OnTimer`,
 `RunningMode`, `Chart.*`). It has NOT been compiled.
+
+---
+
+## Phase 1.5 review fixes (2026-07-18)
+
+Reviewer (Fable 5) verified all 14 A-items against the full diff; 13 passed as
+implemented. Two adjustments were applied (implemented by Opus; finalized/committed by
+the reviewer after the implementer session hit a usage limit mid-task):
+
+1. **ValidateOrbWindowAlignment gap robustness (defect fix).** The ORB bar length was
+   derived from the last two bars' open-time delta, which spans the market closure if the
+   bot starts right after a weekend/session gap (~49h) and falsely triggered the
+   "window shorter than one ORB bar" hard-stop on valid configurations. Now derived as
+   the MINIMUM positive delta over the last up-to-10 consecutive bar pairs (gap-immune).
+2. **SL-only attach when no TP target (edge-case hardening).** With `effectiveTpR <= 0`,
+   the attach-at-entry logic previously fell back to a ~2-pip TP, which would close the
+   trade in profit noise almost immediately. Now: `takeProfitPips = null` at
+   `ExecuteMarketOrder`, and the initial refinement also passes a null TP
+   (`refineTpPrice`), leaving the position SL-protected with no degenerate target.
+
+Post-fix structural verification: braces 831/831, code-only parens 1132/1132.
