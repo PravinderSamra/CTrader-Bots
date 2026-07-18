@@ -1937,7 +1937,7 @@ namespace cAlgo.Robots
  if (!volPass)
  {
  // Diagnostics: makes threshold tuning in backtest logs easy.
- Log("VOLUME FILTER: {0} breakout at {1:HH:mm} rejected. vol={2:F0} < required {3}x avg({4})={5:F1}",
+ LogWarn("VOLUME FILTER: {0} breakout at {1:HH:mm} rejected. vol={2:F0} < required {3}x avg({4})={5:F1}",
  (direction == TradeType.Buy) ? "LONG" : "SHORT",
  _confirmBars.OpenTimes[evalBarIndex], volEvalV, VolumeMultiplier, VolumeLookbackBars, volReq);
  return;
