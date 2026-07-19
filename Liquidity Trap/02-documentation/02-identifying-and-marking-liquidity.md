@@ -90,6 +90,8 @@ From the gold 1m entry (Video 2, [40:49]–[41:35]) — the whole vocabulary red
 
 Each cycle of *sweep one side, respect the other, move away* prints one more confirmed pool. You mark the confirmed side, note the swept side as an LB, and trail your attention to the **last unswept level at the extreme**: "we run that last level of liquidity... not just this low, not this one, not this one — if you trail your eyes all the way to the extreme, it's going to be this low down here" (Video 2, [38:46]–[39:09]). The extreme-most confirmed pool is the one whose sweep arms the entry (file 03).
 
+*Visual reconstruction (Video 2 gold 1m, Tue 27 Jan '26):* the whole grammar is on-screen in the zoomed entry frames. The 1m engineered-liquidity red box sits at ~5,078–5,082 ("not an area I'd be trading from"); the buildup's candidate lows step down to the **last level at ~5,050–5,051**; the 09:19 stab-wick below it (low ~5,047.3, hand-underlined on the chart) is the wick-LB "deemed not to hold liquidity"; the 10:00 restab through the level is the entry (5,051.19, stop 5,046.2 with CFD breathing room beyond the wick). The frame-by-frame zoom draws a circle on **each** low-respecting-low pair and the red-box respect just before the stab — the best labelling reference in the corpus for a detector (`../03-images/Video2/shot_008.jpg` [39:25], `shot_002.jpg` (fullscreen, wick underlined), `shot_027.jpg` [41:23] (circled grammar), `shot_001.jpg` (clean 1m levels)).
+
 ## F. Marking checklist (condensed)
 
 Before considering any trade, the chart should show, in your own markings:
