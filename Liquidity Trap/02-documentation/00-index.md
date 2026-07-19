@@ -10,7 +10,7 @@ All claims in these docs cite transcripts in `../01-transcripts/` as `(Video N, 
 - **Video 2 (V2)** — `video2_transcript.md` — Chart Fanatics ep. 2 with Marco, 11 chapters: names and formalizes the setup as the **"Da Vinci model"**, adds the engineered-liquidity arming condition, gold/NQ/USDJPY examples (Jul 2026).
 - **Video 3 (V3)** — `video3_transcript.md` — Inter Equity Trading: an independent-in-name 16-minute NQ walkthrough using Marco's exact vocabulary and rules on 4H/1H only (Jan 2026).
 
-Chart screenshots for resolving visual ambiguities live in `../03-images/` (Video3 complete: 28 shots + manifest; Video1/Video2 pending).
+Chart screenshots for resolving visual ambiguities live in `../03-images/` (Video3 complete: 28 shots + manifest; Video2 complete: 36 files; Video1 pending).
 
 ## The nine files
 
@@ -41,5 +41,5 @@ Chart screenshots for resolving visual ambiguities live in `../03-images/` (Vide
 - **Citations are the contract.** Every concrete rule carries a `(Video N, [MM:SS])` pointer into `../01-transcripts/`. If you extend these docs, keep that convention; if a claim has no citation, treat it as analysis, not source material.
 - **Don't hallucinate beyond the sources.** The transcripts are the ground truth. Where they are ambiguous, file 07 records the ambiguity instead of papering over it — preserve that discipline. Unquantified parameters (respect tolerance, equal-lows band, stop buffers, risk %) are *genuinely unspecified*, not accidentally omitted.
 - **The one-paragraph version of the strategy** (from file 03 §0): the market induces retail entries whose stops build a liquidity pool; price sweeps the pool (the trap), then reverses toward the opposite confirmed pool. You enter the moment the pool is swept — long below swept lows, short above swept highs — with a structural stop behind a no-liquidity extreme (liquidity block) and the opposing pool as target. The two gates that make it a system rather than a pattern: only *market-confirmed* levels count (respect-and-move-away, file 01 §5), and the bias lockout (no longs after a high is taken until the low-side pool is swept, file 02 §D).
-- **Pending work:** collect Video1/Video2 screenshots into `../03-images/`, resolve file 07's items (Video3's are ready now), pin down file 08 §J's twelve decisions with the user, then build the bot in the four phases of file 08 §I — validating the level detector against the screenshots before any order is ever placed.
+- **Pending work:** collect Video1 screenshots into `../03-images/`, resolve file 07's items (Video2's and Video3's are ready now), pin down file 08 §J's twelve decisions with the user, then build the bot in the four phases of file 08 §I — validating the level detector against the screenshots before any order is ever placed.
 - **Verification caveat:** all performance figures ($500K+ payouts, "incredible" win rate, the 1:19s) are self-reported on sponsor-funded shows (file 04 §7). Nothing here has been backtested; file 08 Phase 3 exists for that reason.

@@ -2,7 +2,7 @@
 
 The transcripts are audio-only captures of chart/whiteboard walkthroughs. The speakers constantly point ("here", "this level", "like this", "check this out") at things the captions cannot see. This file catalogues the moments where a visual reference would **materially change or clarify** understanding — i.e., where the docs in files 01–04 had to interpolate from context — so a future pass can resolve them against screenshots.
 
-**Screenshot status:** stills are being collected from Google Drive into `../03-images/`. `Video3/` is complete (28 shots + `manifest.json`); `Video1/` and `Video2/` are pending. When resolving an item below, match its timestamp against the relevant video's manifest, update the affected doc file(s), and strike the item here.
+**Screenshot status:** stills are being collected from Google Drive into `../03-images/`. `Video3/` is complete (28 shots + `manifest.json`) and `Video2/` is complete (36 files); `Video1/` is pending. When resolving an item below, match its timestamp against the relevant video's manifest, update the affected doc file(s), and strike the item here.
 
 Citations are `(Video N, [MM:SS])` into `../01-transcripts/`.
 
@@ -49,7 +49,7 @@ These are the highest-value unknowns because they are *parameters* every chart e
 
 ## C. Video 2 (Chart Fanatics ep. 2 — Da Vinci model)
 
-*Screenshots pending (`../03-images/Video2/` empty).*
+*Screenshots COLLECTED — `../03-images/Video2/` (36 files). Ready to resolve against the shots.*
 
 | # | Timestamp | Moment | What's unresolved / why it matters |
 |---|---|---|---|
