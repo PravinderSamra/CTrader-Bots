@@ -35,6 +35,7 @@ After the engineered-liquidity retrace begins, the market typically breaks a min
 ### Rule 1.5 — A liquidity block (or equivalent no-liquidity extreme) should sit beyond the entry
 The sweep should deliver price into (or at least toward) a level that holds **no** liquidity — a prior sweep-wick low ("LB") — because that is why the reversal is possible there: "this reaction is possible — why? We have spiked liquidity; there shouldn't be any liquidity below this low right now" (V1 [44:03]–[44:44]); "there's no liquidity below this low, therefore why would we run this low? We tap into these areas, take entries off them" (V3 [12:15]); "we have another low that has spiked out previous lows... I always buy once the lows are taken out — stop goes below this low from the left-hand side" (V2 [51:49]–[52:12]).
 - **Divergence in emphasis:** V3 makes the LB an explicit checklist item ("liquidity block below — everything checks the boxes", V3 [5:56]) and reuses it as the entry zone itself ("anywhere below this black line is a valid buy — why? LB below", V3 [9:59]). V2 treats it primarily as the stop anchor and skips trades when the LB is too far (see Rule 4.3). V1 expresses it as "no liquidity below this low → safe place to take the entry / put the stop" (V1 [76:22]–[76:54]) without the LB name.
+- *Visual confirmation of the entry-zone depth (V3 shots):* in entry #1 the swept liquidity line is 19,923.75 and the LB directly below it spans 19,828.00–19,923.75 (~96 NQ points, ~0.5%); the entry limit fills at the LB's **top edge** (19,829–19,830) (`../03-images/Video3/shot_012.jpg` [5:51], `shot_014.jpg` [6:09], `shot_017.jpg` [6:59]). In entry #3 the "anywhere below this black line" zone runs from the line at ~20,767.50 down ~135 points to the stop just beyond the 15m LB at 20,632.25 (`shot_021.jpg` [10:37]). So "valid buy anywhere below the line" in practice means: the band between the swept level and the far side of the LB beneath it — roughly 100–135 points on NQ in these 1H/15m cases.
 
 ## 2. The trigger — entry rules
 
@@ -51,7 +52,7 @@ The sweep should deliver price into (or at least toward) a level that holds **no
 Best case, entry fills right at the stab of the level with the LB just beyond (V2 [39:09]: "your entry as soon as the low gets stabbed... stop loss goes below the low"). You do not need the absolute extreme: "you don't need the very top... you don't need the very bottom... direction and bias is what pays the profits" (V1 [52:21]–[52:59]); a non-extreme fill still yielded ~1:5 vs 1:12 in the gold example (V2 [42:48]–[43:33]).
 
 ### Rule 2.3 — Lower-timeframe confirmation variant (when the direct stop is too wide)
-When the swept structure's LB is far away ("the stop loss is too big, the RR is shot... I just don't take those trades", V2 [35:05]–[35:25]), drop to the lower timeframe and wait for the **same model to print fractally there**: the LTF builds its own buildup → sweeps its own last level of internal liquidity into a LTF liquidity block → enter on that LTF stab with a tight LTF stop (gold 1m example, V2 [36:55]–[39:32]). "Higher time frame for direction and then it happens again on the lower time frame for entry" (V2 [39:32]–[40:00]; same idea V1 [31:14]: "your execution would come off a more fractal confirmation using the same mindset, same model"; V3 [15:11]–[15:54]: LTF refinement is how "the RRs drastically increase"). V3's milder version of the same fix: refine the LB on a lower timeframe (4H LB too big → 1H LB shrinks the SL, V3 [8:05]–[8:41]).
+When the swept structure's LB is far away ("the stop loss is too big, the RR is shot... I just don't take those trades", V2 [35:05]–[35:25]), drop to the lower timeframe and wait for the **same model to print fractally there**: the LTF builds its own buildup → sweeps its own last level of internal liquidity into a LTF liquidity block → enter on that LTF stab with a tight LTF stop (gold 1m example, V2 [36:55]–[39:32]). "Higher time frame for direction and then it happens again on the lower time frame for entry" (V2 [39:32]–[40:00]; same idea V1 [31:14]: "your execution would come off a more fractal confirmation using the same mindset, same model"; V3 [15:11]–[15:54]: LTF refinement is how "the RRs drastically increase"). V3's milder version of the same fix: refine the LB on a lower timeframe (4H LB too big → 1H LB shrinks the SL, V3 [8:05]–[8:41]). *Visual: the refined 1H-LB stop for V3's entry #2 is 404.75 points (1.98%) — entry 20,446.75, stop 20,042.00, giving RR 7.2 to the 23,363 target (`../03-images/Video3/shot_028.jpg` [9:00], `shot_024.jpg` [9:11]); the rejected unrefined 4H-LB stop is never shown numerically on screen.*
 
 ### Rule 2.4 — Timing filters on the trigger (V1 only; V2/V3 silent)
 - Trade a fixed session window; Marco trades New York, marks 9:30 stock open, looks for entries **after** the open (V1 [42:02]–[43:25], [49:30]–[50:00]: "I have a specific time window... what happens outside of the time window is completely irrelevant to me").
@@ -68,6 +69,8 @@ When the swept structure's LB is far away ("the stop loss is too big, the RR is 
 > "When liquidity is taken, stop covering liquidity block. Liquidity taken, stop below liquidity block — all the way up into this last entry." (V3 [14:41])
 
 All three sources are in full agreement: the stop is *structural* — behind the LB / the left-hand low that the sweep tapped — never a fixed pip/tick count, never inside the swept range.
+
+*Visual nuance (V3 shots):* "stop covering the liquidity block" does not always mean strictly beyond its far edge. V3's entry #5 stop sits at 21,432.25 — **inside the lower half** of the HTF LB (21,396.00–21,522.75), covering most but not all of it (`../03-images/Video3/shot_026.jpg` [15:13], `shot_019.jpg` [14:28]). Entry #1's stop (19,295.25) is placed below the deeper *left-hand low*, ~530 points beyond the LB used for entry (`shot_014.jpg`, `shot_017.jpg`). So the anchor is chosen case-by-case: sometimes the LB's interior, sometimes a deeper left-hand low — but always behind structure that swept liquidity.
 
 ### Rule 3.2 — Instrument-specific buffer
 - **Futures:** stop can sit "literally a tick or two above the high" because everyone trades one centralized feed (V1 [68:28]–[69:02]).
@@ -127,7 +130,19 @@ Each add has its own local invalidation: "now that we've traded below this low, 
 | 7 | V2 [46:03]–[54:57] | Gold 15m | Three stacked entries; every bearish reaction = engineered liquidity; 1:7.5, 1:7 | 1:7+ |
 | 8 | V2 [55:02]–[63:11] | NQ 5m (replay) | HTF passive limit entry at pool, stop under LB, "don't need to look at the chart"; second entry into LB | ~1:4–1:5; 1:3.5 |
 | 9 | V2 [64:40]–[69:17] | USDJPY HTF (live trade that week) | Bearish Da Vinci, limit entry while asleep at engineered-liquidity high/LB, $6,600 realized + partials running | ~1:5 shown |
-| 10 | V3 [0:43]–[16:33] | NQ weekly→4H→1H | Entire long campaign off weekly equal-highs draw; five entries, each "liquidity taken → stop below LB" | 1:6, 1:7, 1:19, 1:14, 1:3.6 (V3 [15:54]) |
+| 10 | V3 [0:43]–[16:33] | NQ weekly→4H→1H | Entire long campaign off weekly equal-highs draw; five entries, each "liquidity taken → stop below LB" | 1:6, 1:7, 1:19, 1:14, 1:3.6 (V3 [15:54]) — pairing resolved below |
+
+**V3's five entries, fully reconstructed from the screenshots** (all prices are NQH2026 chart values; target for all = weekly equal highs 23,359–23,364):
+
+| Entry | Swept level | Entry price | Stop | Stop distance | RR (on-screen) | Evidence |
+|---|---|---|---|---|---|---|
+| 1 | 19,923.75 (1H low) | 19,829–19,830 (top of LB 19,828–19,924) | 19,295.25 (below left-hand low) | 533.75 pts | 6.62 → the "1:6" | `../03-images/Video3/shot_012.jpg`, `shot_014.jpg`, `shot_017.jpg` |
+| 2 | 20,446.50 (1H low) | 20,446.75 | 20,042.00 (below refined 1H LB) | 404.75 pts | 7.2 → the "1:7" | `shot_028.jpg`, `shot_024.jpg` |
+| 3 | ~20,767.50 (black line, 15m) | 20,767.50 | 20,632.25 (below 15m LB) | 135.25 pts | ≈19.2 → the "1:19" | `shot_015.jpg`, `shot_021.jpg` |
+| 4 | tap into left-hand LB | 21,522.75 (top of blue-box LB 21,396–21,523) | 21,396.00 (LB bottom) | 126.75 pts | ≈14.5 → the "1:14" | `shot_002.jpg`, `shot_018.jpg` |
+| 5 | 21,849.00 (1H low under 20-hour red-box buildup) | 21,850.25 | 21,432.25 (inside/covering HTF LB) | 418.00 pts | 3.63 → the "1:3.6" | `shot_019.jpg`, `shot_026.jpg`, `shot_025.jpg` (overview) |
+
+The five RR figures at V3 [15:54] map to the five entries **in chronological order**.
 
 ---
 

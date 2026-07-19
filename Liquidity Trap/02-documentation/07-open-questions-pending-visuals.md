@@ -71,21 +71,21 @@ These are the highest-value unknowns because they are *parameters* every chart e
 
 ## D. Video 3 (Inter Equity Trading — NQ weekly→4H/1H)
 
-*Screenshots COLLECTED — `../03-images/Video3/` has 28 shots + `manifest.json`. These items are ready to resolve now; they're listed so the resolution pass has explicit targets.*
+*Screenshots COLLECTED and RECONCILED (2026-07-19). All 28 shots carry the YouTube playbar timestamp, so matches are exact. Note: the shot_NNN numbering follows Drive upload time, which is scrambled relative to capture order — the original iPhone filenames (IMG_1035–1062 in `manifest.json`) give the true chronological order.*
 
-| # | Timestamp | Moment | What to confirm from the shots |
+| # | Timestamp | Moment | Resolution |
 |---|---|---|---|
-| D1 | [0:43]–[1:52] | Weekly: "I'm going to mark on this high right here... this high respecting this high to the left" (equal highs = macro draw) | Which weekly highs form the pool; their spread (feeds A2). |
-| D2 | [1:52]–[2:27] | "This wick right here tapped into something on the left... you can call it like a chain"; red box on the tapped area | The chain-of-lows structure and what the red box encloses (V3's atypical red-box use, feeds A5). |
-| D3 | [2:27]–[3:06] | "What do we have right below?... A liquidity block. So we can plot on a blue box. Look how the market taps into this area" | The HTF LB's boundaries and how deep the tap went before reversing. |
-| D4 | [4:11]–[4:47] | 4H: "if I mark out this area that we've tapped into once... this high respects this whole area here" | Respect against an *area* rather than a line — the strongest evidence for zone-based (not line-based) respect logic (feeds A1/A4). |
-| D5 | [5:24]–[6:31] | Entry #1: blue line low, "coincidence right below we have a liquidity block"; "boom. Entry, stop-loss" and targets dragged to the weekly highs | Exact entry level vs LB vs stop — the template trade (file 02 §F checklist's source). |
-| D6 | [7:05]–[8:05] | "Another buildup of liquidity" red box; "we print this low and we go long... there's liquidity above this high. Now, this is not an area we want to be selling from" | Which high acquired liquidity and why selling it was forbidden (bias lockout in the wild). |
-| D7 | [8:05]–[9:16] | The too-big 4H LB → refined 1H LB: "that shrinks our SL quite a bit" | Both LBs' sizes — quantifies the refinement RR gain (file 03 §2.3; V3 [15:54] says only one refinement used 15m). |
-| D8 | [9:16]–[10:38] | "Look at the engineered liquidity we have at the highs"; 15m LB; "anywhere below this black line... is a valid buy" | The engineered zone; the black line's level; the depth of the valid-buy zone (feeds A6). |
-| D9 | [11:09]–[12:51] | "We have a liquidity block left for us... we have tapped into this liquidity block perfectly" | The left-hand LB that caught the deeper trap — with intraday targets marked on the way up. |
-| D10 | [13:29]–[15:11] | Final entry: blue line low, red box tapped "once, twice, three times... over 20 hours of price action", HTF LB stop anchor | The 20-hour buildup's box and which LB anchored the last stop. |
-| D11 | [15:54] | RR summary overlay: "a 1:6, we have a 1:7, a 1:19 here, a 1:14, and a 1:3.6" | Map each RR figure to its entry (the transcript gives five numbers for five entries but not the pairing) — needed for file 03 §7 row 10 and any backtest reconciliation. |
+| D1 | [0:43]–[1:52] | Weekly equal highs = macro draw | **RESOLVED** — see file 02 §B.3. Two weekly wick highs (Dec '24 / Feb '25, NQH2026 chart) marked as a single line, drawn at 23,397 then finalized at 23,364.25; tips within ~30–40 pts (~0.15%). `shot_004.jpg` [1:18], `shot_010.jpg` [1:55]. |
+| D2 | [1:52]–[2:27] | Chain of tapped lows + red box | **RESOLVED** — see file 02 §C step 3. The chain is the cluster of 2024 lows ~18,400–19,300; one wide red box covers the whole cluster — confirming V3's atypical red-box use (feeds A5). `shot_011.jpg` [2:30], `shot_027.jpg` [3:04]. |
+| D3 | [2:27]–[3:06] | HTF LB boundaries and tap depth | **RESOLVED** — see file 02 §C step 4. Blue box with top edge at 17,894.75; April '25 wick tapped ~1,400 pts into it (low ~16,4xx) before reversing. `shot_027.jpg` [3:04], `shot_020.jpg` [3:34]. |
+| D4 | [4:11]–[4:47] | Respect against an *area* | **RESOLVED** — see file 02 §B.1. Red box top 20,751.75; the respecting high printed 20,545.75, ~200 pts *inside* the box — zone-based respect confirmed, no touch required (feeds A1/A4). `shot_003.jpg` [4:42], `shot_005.jpg` [4:46], `shot_014.jpg`. |
+| D5 | [5:24]–[6:31] | Entry #1 geometry | **RESOLVED** — see file 03 §1.5 note + §7 table. Liquidity line 19,923.75; LB 19,828–19,924 (~96 pts); entry at LB top 19,829–19,830; stop 19,295.25 (below left-hand low, 533.75 pts); target 23,364.25; RR 6.62. `shot_012.jpg` [5:51], `shot_014.jpg` [6:09], `shot_017.jpg` [6:59]. |
+| D6 | [7:05]–[8:05] | Which high acquired liquidity; sell forbidden | **RESOLVED** — see file 02 §D note. High marked 20,899.00 after respect at 20,839.75 (~59 pts); selling forbidden because the low side had just been taken. `shot_016.jpg` [8:01], `shot_023.jpg` [8:32]. |
+| D7 | [8:05]–[9:16] | 4H LB vs refined 1H LB sizes | **PARTIALLY RESOLVED** — see file 03 §2.3 note. Refined stop = 404.75 pts (entry 20,446.75, stop 20,042.00, RR 7.2). The rejected 4H LB is never shown with on-screen numbers, so the RR *gain* from refinement can't be quantified. `shot_028.jpg` [9:00], `shot_024.jpg` [9:11]. |
+| D8 | [9:16]–[10:38] | Black line / valid-buy depth | **RESOLVED** — see file 03 §1.5 note + §7 table. Engineered-liquidity red boxes at ~20,870–20,960 (15m); black line ~20,767.50; stop beyond 15m LB at 20,632.25 → valid-buy band ≈135 pts, bounded below by the LB's far side (feeds A6). `shot_015.jpg` [9:59], `shot_021.jpg` [10:37]. |
+| D9 | [11:09]–[12:51] | Left-hand LB tap | **RESOLVED** — see file 03 §7 table. Blue-box LB 21,396.00–21,522.75 (~127 pts); wick tapped it precisely; entry at box top, stop at box bottom; intraday target lines ~21,980 and ~22,270. `shot_002.jpg` (fullscreen), `shot_018.jpg` [13:29]. |
+| D10 | [13:29]–[15:11] | 20-hour buildup box + last stop anchor | **RESOLVED** — see file 03 §3.1 note + §7 table. Red buildup box from the 21,849.00 line up to ~22,000 (May 27–29); entry 21,850.25; stop 21,432.25 sits *inside the lower half* of the HTF LB (21,396–21,523) — "covering" the LB, not strictly beyond it. `shot_019.jpg` [14:28], `shot_026.jpg` [15:13]. |
+| D11 | [15:54] | RR-to-entry pairing | **RESOLVED** — see file 03 §7 (new sub-table). The five figures map chronologically: E1 = 6.62 ("1:6"), E2 = 7.2 ("1:7"), E3 ≈ 19.2 ("1:19"), E4 ≈ 14.5 ("1:14"), E5 = 3.63 ("1:3.6"). On-screen position-tool readouts in `shot_017.jpg`, `shot_024.jpg`, `shot_021.jpg`, `shot_002.jpg`, `shot_026.jpg`. |
 
 ## E. Non-visual open questions (no screenshot will answer these)
 
