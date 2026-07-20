@@ -532,6 +532,91 @@
         "verdict": "UNSCORABLE",
         "signalVerdicts": []
       }
+    },
+    {
+      "at": "2026-07-20T19:27:30.595Z",
+      "londonTime": "20:27 BST",
+      "mode": "CLOSED",
+      "price": 10448.1,
+      "stance": "FADE_FAVOURED",
+      "stanceLine": "Fade day — the ORB break was a trap — ORB broke UP but price has fully reclaimed the range (back below 10512.5) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "STRUCTURE",
+          "rule": "R1",
+          "text": "ORB broke UP but price has fully reclaimed the range (back below 10512.5) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "110% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDH 10616.2) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.67%) — the cross-market lean is down."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "INFO",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "UK Labour Market Report prints tomorrow 07:00 BST — late-session moves today are as likely pre-event de-risking as conviction."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to 110% of the 14-day ADR already consumed, a confirmed false upside break back below ORB low 10512.5, and a HIGH-impact UK jobs report at 07:00 BST tomorrow compressing any remaining conviction, today's ORB offers no clean edge on either side.",
+      "aiBullets": [
+        "Price at 10448.1 is now -64 points below the ORB low of 10512.5 — the reclaim is not marginal; it is a full structural rejection that aligns with the bearish European tape (SX5E -0.67%), compounding the short case.",
+        "The 14-day ADR is 132.8 pts and 110% is already used, meaning the prior-week low of 10411.7 is only ~36 pts away — that level, not the ORB, is now the relevant draw for any continuation short.",
+        "GBP COT net-short stands at -72,474 contracts but covered 17,517 this week — a squeeze back toward the 89th-percentile GBPUSD level would strengthen sterling and act as an additional headwind on any FTSE upside attempt.",
+        "The gap down of -120.5 pts (-1.14%) was followed by an ORB break UP that failed — gap-fade buyers got trapped; the dominant flow since has been sellers, consistent with the bearish risk-tone score of -2."
+      ],
+      "bias": {
+        "score": 2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10559.2,
+        "orbLow": 10512.5,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10577.1,
+        "overnightLow": 10512.5,
+        "priorDayHigh": 10616.2,
+        "priorDayLow": 10487,
+        "gapPct": -1.14,
+        "adr14": 132.8,
+        "adrUsedPct": 110
+      },
+      "outcome": {
+        "resolvedAt": "2026-07-20T19:27:32.781Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
