@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-07-17T20:57:10.348Z",
+  "generatedAt": "2026-07-20T08:42:19.958Z",
   "yields": {
     "US10Y": 4.57,
     "US2Y": 4.16,
     "realYield10Y": 2.35,
     "realYield5Y": 2.04,
     "curve2s10s": 41,
-    "breakeven10Y": 2.22,
-    "breakeven5Y": 2.24,
-    "forward5y5y": 2.2,
+    "breakeven10Y": 2.24,
+    "breakeven5Y": 2.27,
+    "forward5y5y": 2.21,
     "dayOverDay": {
       "US10Y": 0.02,
       "US2Y": 0.03,
@@ -26,19 +26,35 @@
     "VIX": 16.73
   },
   "positioning": {
-    "cotNetLong": 183165,
-    "cotWoWChange": 955,
+    "cotNetLong": 175931,
+    "cotWoWChange": -7234,
     "crowding": "NEUTRAL",
-    "reportDate": "2026-07-07T00:00:00.000",
-    "openInterest": 506482,
-    "openInterestChange": 6341
+    "reportDate": "2026-07-14T00:00:00.000",
+    "openInterest": 522185,
+    "openInterestChange": 15702
   },
   "etfFlows": {
-    "gldTonnes": 1007.8,
-    "gldWoWChange": null,
-    "trend3W": null
+    "gldTonnes": 1005.8,
+    "gldWoWChange": -2,
+    "trend3W": "OUTFLOW"
   },
-  "snapshotPrices": null,
+  "snapshotPrices": {
+    "XAUUSD": 4023.09,
+    "XAGUSD": 56.9975,
+    "EURUSD": 1.14426,
+    "USDJPY": 162.3605,
+    "USDCHF": 0.80651,
+    "USDCNH": 6.7667,
+    "GBPUSD": 1.34705,
+    "USDCAD": 1.40231,
+    "USDSEK": 9.64695,
+    "US500": 7477.1,
+    "GER40": 24916.05,
+    "UK100": 10561,
+    "ADR_14day": 87.8,
+    "ADR_usedToday": 47.4,
+    "goldSilverRatio": 70.6
+  },
   "dollarLiquidity": {
     "stlfsi": -0.882,
     "nfci": -0.538
@@ -50,23 +66,29 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Suspected pirates seize tanker off Yemen coast in Gulf of Aden, sources say - Reuters",
+      "headline": "Gold steady as markets assess Middle East escalation, Fed hike bets - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-07-17T15:01:56.000Z",
-      "hoursAgo": 5.9
+      "publishedAt": "2026-07-20T01:40:00.000Z",
+      "hoursAgo": 7
     },
     {
-      "headline": "Gold set for biggest weekly drop since early June on inflation, rate-hike worries - Reuters",
+      "headline": "Dollar drifts as US-Iran conflict intensifies, Brent hits $90 - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-07-17T03:34:00.000Z",
-      "hoursAgo": 17.4
+      "publishedAt": "2026-07-19T23:46:00.000Z",
+      "hoursAgo": 8.9
+    },
+    {
+      "headline": "26-year-old quit her corporate job to become a seamstress at Yellowstone National Park for $19.25/hour",
+      "source": "CNBC",
+      "publishedAt": "2026-07-19T14:30:01.000Z",
+      "hoursAgo": 18.2
     }
   ],
   "briefing": {
-    "biasScore": -1,
-    "biasLabel": "NEUTRAL",
-    "confidence": 3,
-    "briefing": "Right now the most relevant forces on gold are rising bond yields [the interest rate the US government pays on its debt — higher yields make gold less attractive because gold pays no income], a Fed [US central bank] that markets are almost certain will hold rates steady at its July 29th meeting (96% probability of no change, with a tiny 4% chance of a rate HIKE), and a geopolitical risk index sitting at an elevated 173.6, which keeps some safe-haven demand [buying gold as protection against world instability] alive. On recent catalysts: Reuters reported roughly 6 hours ago that suspected pirates seized a tanker in the Gulf of Aden near Yemen — this kind of shipping disruption is a mild geopolitical flare-up that can nudge gold slightly higher, but historically these episodes don't sustain big moves unless they escalate. More importantly, a headline from about 17 hours ago flagged that gold is on course for its biggest weekly drop since early June, driven by inflation and rate-hike worries — that is a meaningful bearish signal [price falling] heading into the weekend close. Directional bias from here is NEUTRAL leaning slightly bearish: yields ticked up again today (10-year up 0.02%, real yield [yield after stripping out inflation] at 2.35%), which is headwind for gold, and the weekly drop narrative adds downward pressure. However, elevated geopolitical risk and still-healthy large-trader positioning (183,165 net long contracts, barely changed week-on-week) prevent a strong bearish call. Confidence is 3/10 — critically, ALL live price data (gold spot price, DXY dollar index, ADR daily range data) returned null in this snapshot, meaning there is no current price, no live trend confirmation, and no way to measure how much of today's range has already been used. That alone makes trade decisions highly risky right now. There are no scheduled economic events on today's calendar. Build-up caution: none flagged for later this week either, though the Fed meeting on July 29th (12 days away) may increasingly weigh on sentiment as it approaches. Key levels cannot be calculated without live price data — do not guess. On trade integration: this is NOT a good window to enter new trades. The combination of missing live prices, end-of-week positioning [traders closing trades before the weekend], a bearish weekly narrative, and no confirmed trend direction on the 1H chart means the risk of getting caught in a bad move is too high. Wait for live data to restore and for a clear 1H trend structure before committing any capital. The golden rule for today: no price data means no trade — protect your account first, opportunities come every day.",
-    "generatedAt": "2026-07-17T20:57:27.241Z"
+    "biasScore": 2,
+    "biasLabel": "BULLISH",
+    "confidence": 6,
+    "briefing": "Right now, gold is being pulled in two directions at once — geopolitical fear is pushing it higher, while rising U.S. interest rate expectations are creating a headwind [a headwind means a force working against the move]. The most relevant forces today are the intensifying US-Iran conflict and what appears to be a small but real shift in market thinking about whether the Federal Reserve might raise rates again. On the news front, two Reuters headlines from the last 7–9 hours tell the story: one from roughly 9 hours ago reported that the dollar is drifting as the US-Iran conflict escalates and oil hit $90 a barrel — that kind of geopolitical shock typically sends money into gold as a safe-haven [safe-haven means an asset people buy when they're scared]. A follow-up headline 7 hours ago confirmed gold is holding steady but acknowledged that some traders are now pricing in Fed rate hike bets, which is the main reason gold hasn't already pushed sharply higher. The third headline from CNBC is irrelevant to markets. Directional bias leans modestly BULLISH [meaning we expect price to drift upward rather than fall], because the geopolitical risk backdrop — with a GPR [Geopolitical Risk index] reading of 173.6, which is elevated — and a weak dollar (DXY [the Dollar Index, measuring dollar strength] at 100.71) generally favour gold. However, real yields [the return on government bonds after adjusting for inflation] are at 2.35%, which is quite high and limits how far gold can rally without fresh fear catalysts. Confidence is 6/10 — this would flip to bearish if the dollar rebounds sharply or if headlines shift toward a de-escalation in the Middle East. There are no scheduled economic events on the calendar today, which removes one risk but also removes a potential catalyst for a clean directional move. Later in the week, watch for any Fed speaker commentary or geopolitical updates that could jolt price. On levels: gold is at $4,023, the 14-day average daily range [how much price typically moves in a day] is $87.80, and price has already used $47.40 of that today — meaning roughly $40 of typical daily movement remains, so big explosive moves from here today are less likely. For trade integration: this is an acceptable window for cautious long [buy] setups on the 1H chart if you can identify a clear uptrend structure, but keep position size [the amount you risk per trade] modest given the competing forces. Wait for a clean pullback [a temporary dip against the trend] on the 5M chart before entering, and confirm the 1H trend is still making higher highs and higher lows. Remember: geopolitical fear can reverse fast, so always use a stop-loss [an automatic exit if price moves against you]. When geopolitics and a weak dollar both point the same way, gold tends to follow — but stay small until one force clearly wins.",
+    "generatedAt": "2026-07-20T08:42:38.368Z"
   }
 }

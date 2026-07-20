@@ -1,89 +1,89 @@
 {
-  "generatedAt": "2026-07-17T20:57:32.576Z",
+  "generatedAt": "2026-07-20T08:42:44.147Z",
   "prices": {
-    "UK100": 10569.5,
-    "GBPUSD": 1.34556,
-    "GBPEUR": 1.17636,
-    "US500": 7455.5,
-    "NAS100": 28566.4,
-    "BRENT": 87.597,
-    "COPPER": 6.2946,
-    "VIX": 18.25,
-    "USDX": 100.778,
-    "XAUUSD": 4016.7,
-    "UK100_dayPct": 0.1
+    "UK100": 10561.15,
+    "GBPUSD": 1.34709,
+    "GBPEUR": 1.1772,
+    "US500": 7477,
+    "NAS100": 28693.85,
+    "BRENT": 87.379,
+    "COPPER": 6.3456,
+    "VIX": 17.95,
+    "USDX": 100.718,
+    "XAUUSD": 4022.75,
+    "UK100_dayPct": -0.07
   },
   "fx": {
-    "gbpUsdDayPct": -0.18,
+    "gbpUsdDayPct": 0.12,
     "gbpUsd20dPercentile": 89,
-    "sterlingEri": 86.171,
-    "sterlingEriDayChange": 0.06,
+    "sterlingEri": 85.9179,
+    "sterlingEriDayChange": -0.25,
     "ftseImpactFromGbp": "NEUTRAL"
   },
   "ukRates": {
     "bankRate": 3.75,
     "sonia": 3.7308,
     "soniaMinusBankRate": -0.02,
-    "gilt5y": 4.4653,
-    "gilt10y": 5.0138,
-    "gilt20y": 5.6934,
-    "gilt10yDayBp": 0,
-    "gilt20yDayBp": 0,
-    "slope5s20s": 1.23,
-    "giltUst10ySpread": 0.44,
+    "gilt5y": 4.4912,
+    "gilt10y": 5.0376,
+    "gilt20y": 5.7154,
+    "gilt10yDayBp": 2,
+    "gilt20yDayBp": 2,
+    "slope5s20s": 1.22,
+    "giltUst10ySpread": 0.47,
     "longEndStress": false,
     "nextMpcDate": "2026-07-30",
-    "daysToMpc": 13
+    "daysToMpc": 10
   },
   "usLinkage": {
-    "us500DayPct": -0.94,
-    "nas100DayPct": -1.4,
-    "vix": 18.25,
+    "us500DayPct": 0.29,
+    "nas100DayPct": 0.45,
+    "vix": 17.95,
     "vixRegime": "NORMAL",
     "us10y": 4.57,
-    "usdx": 100.778
+    "usdx": 100.718
   },
   "commodities": {
-    "brentDayPct": 3.04,
-    "copperDayPct": -0.33,
-    "goldDayPct": 1.01,
+    "brentDayPct": -0.23,
+    "copperDayPct": 0.83,
+    "goldDayPct": 0.16,
     "brent20dTrend": "UP"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": -0.36,
-    "dax40DayPct": -0.17,
-    "eurUsdDayPct": -0.04,
-    "ftseDaxCorr20d": 0.65,
-    "ftseSx5eCorr20d": 0.52,
+    "eurostoxx50DayPct": 0.25,
+    "dax40DayPct": 0.29,
+    "eurUsdDayPct": 0.04,
+    "ftseDaxCorr20d": 0.64,
+    "ftseSx5eCorr20d": 0.5,
     "tapeAgreement": "ALIGNED",
     "preOpenLead": "NONE"
   },
   "positioning": {
-    "gbpCotNetLong": -89991,
-    "gbpCotWoWChange": 15212,
+    "gbpCotNetLong": -72474,
+    "gbpCotWoWChange": 17517,
     "crowding": "CROWDED_SHORT",
-    "reportDate": "2026-07-07T00:00:00.000",
+    "reportDate": "2026-07-14T00:00:00.000",
     "ftseReadthrough": "BEARISH"
   },
   "sectorPanel": [
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent +3.04%",
-      "read": "BULLISH",
+      "driver": "Brent -0.23%",
+      "read": "NEUTRAL",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper -0.33%",
-      "read": "NEUTRAL",
+      "driver": "Copper +0.83%",
+      "read": "BULLISH",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
     {
       "sector": "BANKS",
       "weightNote": "HSBC, Barclays, NatWest, StanChart",
-      "driver": "10Y gilt +0bp",
+      "driver": "10Y gilt +2bp",
       "read": "NEUTRAL",
       "detail": "Yields up helps bank net interest margins."
     },
@@ -109,74 +109,78 @@
       "impact": "HIGH",
       "timeIso": "2026-07-21T06:00:00.000Z",
       "timeLondon": "07:00 BST",
+      "daysFromToday": 1
+    },
+    {
+      "event": "UK CPI",
+      "region": "UK",
+      "impact": "HIGH",
+      "timeIso": "2026-07-22T06:00:00.000Z",
+      "timeLondon": "07:00 BST",
+      "daysFromToday": 2
+    },
+    {
+      "event": "UK Retail Sales",
+      "region": "UK",
+      "impact": "HIGH",
+      "timeIso": "2026-07-24T06:00:00.000Z",
+      "timeLondon": "07:00 BST",
       "daysFromToday": 4
     }
   ],
   "newsItems": [
     {
-      "headline": "FAA lets Boeing sign off on 737 Max, 787 airworthiness certificates again",
+      "headline": "26-year-old quit her corporate job to become a seamstress at Yellowstone National Park for $19.25/hour",
       "source": "CNBC",
-      "url": "https://www.cnbc.com/2026/07/17/faa-boeing-737-max-787.html",
-      "hoursAgo": 3
-    },
-    {
-      "headline": "Suspected pirates seize tanker off Yemen coast in Gulf of Aden, sources say - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxQeVFJX2dfYlJkR3pBRlZVa2Z2cUN5eWJYd251LWZCTml6QVZhU0ZGT2RnNVQ3RVkwVkpaS1dYa2ZZXzF3eG9XQURfWXpuZ0FuRTBxMVZfU1NZZk5MUlpFRDlnakpSb1BRRUc0U1ZhMktSdTNROE1NVEowMGhDTnVQRU1fOHlVMTYtblJHRFZxdXhtUjF1clZTRm9qRVItRWowVTJzOHZrY3lKeEJ4ZmlYQUQydUd0aVF0NVRZRFVBQU1WZGtROE95bzF2dFI?oc=5",
-      "hoursAgo": 5.9
-    },
-    {
-      "headline": "Gold set for biggest weekly drop since early June on inflation, rate-hike worries - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPWE9UR3M4eEdZWDhiT2EyMnFxejhVbjV3Z3p3NGZaZmdwaXZHODI1MVh5dHY1YVNPVFBjZW81S2dDZzY3a3RTSi1SSkdReDBMOUFmSEVTVlhhcDZ0ZDY2RnJFVHRNLVBRMkJocXdOX1RpOGNqeUZrbzFlMW5SY0lsbXREaEhpOEFuQVlBZGtLZ1NNOTFsTVlqOFU0cUkwSmRjUlJXXzN0SHQ2SkluQ0E2bXFJWUk?oc=5",
-      "hoursAgo": 17.4
+      "url": "https://www.cnbc.com/2026/07/19/26-year-old-quit-her-corporate-job-to-become-a-seamstress-at-yellowstone.html",
+      "hoursAgo": 18.2
     }
   ],
   "riskTone": {
-    "score": -1,
+    "score": 0,
     "label": "NEUTRAL",
-    "rationale": "Mixed signals: Boeing FAA approval mildly positive, Yemen piracy adds geopolitical risk, gold drop hints rate-hike fears. Net effect near neutral."
+    "rationale": "Single lifestyle/human-interest headline with no market, macro, or geopolitical relevance to UK100 risk sentiment."
   },
   "bias": {
-    "score": -2,
-    "label": "NEUTRAL",
-    "conviction": "LOW",
+    "score": 3,
+    "label": "BULLISH",
+    "conviction": "MEDIUM",
     "drivers": [
       {
         "name": "GBP",
         "weight": 3,
         "impact": "NEUTRAL",
-        "detail": "GBP/USD -0.18% → FTSE tailwind (sign-flipped)"
+        "detail": "GBP/USD +0.12% → FTSE headwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
-        "impact": "BEARISH",
-        "detail": "US500 -0.94% today"
+        "impact": "BULLISH",
+        "detail": "US500 +0.29% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 18.25 — NORMAL regime"
+        "detail": "VIX 17.95 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
-        "impact": "BULLISH",
-        "detail": "Brent +3.04% (energy majors)"
+        "impact": "NEUTRAL",
+        "detail": "Brent -0.23% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
-        "impact": "NEUTRAL",
-        "detail": "Copper -0.33% (miners/China)"
+        "impact": "BULLISH",
+        "detail": "Copper +0.83% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
         "weight": 1,
         "impact": "NEUTRAL",
-        "detail": "10Y gilt +0bp"
+        "detail": "10Y gilt +2bp"
       },
       {
         "name": "GBP COT (proxy, contrarian)",
@@ -192,64 +196,57 @@
       },
       {
         "name": "European tape (SX5E/DAX)",
-        "weight": 1,
+        "weight": 2.5,
         "impact": "NEUTRAL",
-        "detail": "SX5E -0.36% / DAX -0.17%"
+        "detail": "SX5E +0.25% / DAX +0.29%"
       }
     ],
     "eventSuppressed": false
   },
   "orbContext": {
-    "computedAt": "2026-07-17T20:57:32.575Z",
-    "mode": "CLOSED",
+    "computedAt": "2026-07-20T08:42:44.146Z",
+    "mode": "POST_ORB",
     "cashOpenLondon": "08:00 BST",
-    "overnightHigh": 10604.2,
-    "overnightLow": 10487,
-    "priorDayHigh": 10576.4,
-    "priorDayLow": 10426.3,
-    "priorClose": 10558.8,
-    "prevWeekHigh": 10739.6,
-    "prevWeekLow": 10380.4,
-    "gapPts": 10.7,
-    "gapPct": 0.1,
-    "orbHigh": 10585.8,
-    "orbLow": 10530.6,
+    "overnightHigh": 10577.1,
+    "overnightLow": 10512.5,
+    "priorDayHigh": 10616.2,
+    "priorDayLow": 10487,
+    "priorClose": 10568.6,
+    "prevWeekHigh": 10616.2,
+    "prevWeekLow": 10411.7,
+    "gapPts": -7.5,
+    "gapPct": -0.07,
+    "orbHigh": 10559.2,
+    "orbLow": 10512.5,
     "orbBrokenDirection": "UP",
     "eventWindows": [],
-    "adr14": 128.1,
-    "adrUsedPct": 101
+    "adr14": 132.8,
+    "adrUsedPct": 49
   },
   "orbIntel": {
-    "stance": "MIXED",
-    "stanceLine": "No clean edge — mixed signals — 101% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+    "stance": "LONG_FAVOURED",
+    "stanceLine": "Backdrop favours upside breaks — Sterling is at the 89th percentile of its 20-day range and still rising — a persistent FX headwind capping upside breaks (weak GBP is what lifts FTSE).",
     "signals": [
       {
         "direction": "BREAKOUT_SUSPECT",
-        "severity": "STRONG",
-        "source": "RANGE",
-        "rule": "R4",
-        "text": "101% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
-      },
-      {
-        "direction": "NEUTRAL",
         "severity": "CAUTION",
-        "source": "RANGE",
-        "rule": "R7",
-        "text": "The obvious draw (PDL 10426.3) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        "source": "FX",
+        "rule": "R10",
+        "text": "Sterling is at the 89th percentile of its 20-day range and still rising — a persistent FX headwind capping upside breaks (weak GBP is what lifts FTSE)."
       },
       {
-        "direction": "FAVOURS_SHORT",
+        "direction": "FAVOURS_LONG",
+        "severity": "INFO",
+        "source": "STRUCTURE",
+        "rule": "R3",
+        "text": "ORB break UP is aligned with the BULLISH macro bias (+3) — continuation has the backdrop behind it."
+      },
+      {
+        "direction": "FAVOURS_LONG",
         "severity": "INFO",
         "source": "TAPE",
         "rule": "R8",
-        "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.36%) — the cross-market lean is down."
-      },
-      {
-        "direction": "FAVOURS_SHORT",
-        "severity": "INFO",
-        "source": "TAPE",
-        "rule": "R9",
-        "text": "Past 13:30 with US futures -0.94% — the 14:30 US handoff argues against holding longs into the US open."
+        "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.25%) — the cross-market lean is up."
       },
       {
         "direction": "BREAKOUT_SUSPECT",
@@ -259,20 +256,20 @@
         "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
       }
     ],
-    "aiStanceLine": "Due to 101% of the 14-day ADR already consumed, a softer US session (-0.94% S&P, -1.4% Nasdaq) dragging into tomorrow's open, and a crowded-short GBP position that could spike sterling and blindside upside FTSE breaks, any ORB breakout at 08:00 carries unusually high fakeout risk from the outset.",
+    "aiStanceLine": "Due to copper's +0.83% bid lifting miners, a calm 17.95 VIX and an aligned European tape, the upside ORB break has genuine cross-market support — but with sterling at the 89th percentile and 49% of the 132.8-point daily range already consumed, the runway for a clean trend continuation is narrower than the headline bias suggests.",
     "aiBullets": [
-      "Energy's Brent spike (+3.04%) may artificially inflate the overnight range (high 10604.2), making the ORB high look stronger than the sector breadth justifies — copper -0.33% and banks flat offer no confirmation.",
-      "At 101% ADR14 used (128.1-pt typical range), the distance from ORB low (10530.6) to overnight low (10487.0) — just 43.6 pts — is the only realistic intraday target left without stretching into rare-territory moves.",
-      "GBP is in the 89th percentile of its 20-day range and crowded short; a short-squeeze would strengthen sterling and act as an additional headwind layered on top of the already-exhausted range budget.",
-      "The ORB already broke UP today, yet UK100 sits at 10569.5 — below the ORB high of 10585.8 — suggesting the upside break has not been sustained, reinforcing the fade-over-chase read for tomorrow's setup."
+      "Miners are the single clearest bullish sector today (copper +0.83%), and because Rio, Glencore and Anglo are top index weights, sector strength here punches above its weight for index direction.",
+      "49% of the 14-day average daily range (132.8 pts) is already used — even with a clean long signal, the remaining ~68 points of statistical room limits profit potential and raises the risk of a mid-session stall near 10577–10616.",
+      "The crowded-short GBP positioning (net -72,474 contracts, per COT data from 14 July) means a short-squeeze bounce in sterling is a latent risk that could flip the FX tailwind into a headwind mid-trade, independent of any macro news.",
+      "Tomorrow's UK Labour Market Report (07:00 BST) and Wednesday's CPI both arrive before the next London open — holding overnight breakout longs into those events introduces event risk that is not priced into today's calm VIX read."
     ],
     "baseRateNote": null
   },
   "briefing": {
-    "biasScore": -2,
-    "biasLabel": "NEUTRAL",
-    "confidence": 4,
-    "briefing": "Starting with the currency picture: GBPUSD fell -0.18% today, which — because UK100 and the pound move in opposite directions — is a mild tailwind for the FTSE (a weaker pound makes the overseas earnings of big UK multinationals worth more when converted back to sterling). However, the system rates this impact as NEUTRAL because the move is too small to be a meaningful driver. The dominant regime forces right now are a sharply higher oil price (Brent +3.04%), which is directly bullish for Shell and BP — the top-five index heavyweights — offset by a softer US session (S&P 500 -0.94%, Nasdaq -1.4%) that is pulling risk appetite down. European peers are also modestly lower (Euro Stoxx -0.36%, DAX -0.17%), so the cross-market lean is gently negative. Gilt yields are unchanged and there is no long-end stress, so no fiscal alarm to worry about. On recent headlines: a piracy incident seizing a tanker off Yemen (roughly 6 hours ago) likely contributed to the spike in Brent crude — that is the single most plausible catalyst for the energy sector pop. The Boeing FAA approval (3 hours ago) is a US-specific story with no direct FTSE read-through. Gold's weekly drop (17 hours ago) reflects lingering rate-hike fears rather than a fresh catalyst. The directional bias leans very slightly negative (score -2) because US futures weakness and a soft European tape outweigh the energy tailwind, though conviction is LOW — energy is fighting the tape, AstraZeneca (the single largest index weight) carries idiosyncratic risk that could swing the index either way, and GBP positioning data show a crowded short (meaning many traders have already bet on a weaker pound), which is a contrarian warning: if those traders rush to close their bets, the pound could spike upward — and that would be bearish for FTSE. Confidence is 4/10 — the view would change if Brent extends further, if AZN releases material stock-specific news, or if US futures reverse tonight. For the 08:00 ORB trade: the single most important fact is that 101% of the typical 14-day average daily range [the normal distance the index travels in one day, based on the last 14 sessions] has already been consumed — meaning the index has already moved as much as a typical full day before London cash even opens tomorrow, so breakouts in either direction are likely to be poorly fuelled and prone to reversing back into the range. On the calendar, there are no scheduled UK or US events today. However, the UK Labour Market Report drops at 07:00 BST on Tuesday 21 July — just one hour before the ORB window — which is a HIGH-impact event: employment data can move sterling sharply and distort the opening range entirely, so traders should treat next Tuesday's 08:00 ORB with extra caution. Key levels: overnight high 10604.2, overnight low 10487.0; today's ORB high (the top of the first 15-minute candle at open) was 10585.8 and ORB low was 10530.6; the breakout direction was UP, but with the range already exhausted at 101% of ADR14 [128.1 points], that upside break deserves significant scepticism. The prior-day high of 10576.4 is also a near-term reference. Trader's screenshot line: With 101% of a typical day's range already spent and US futures down nearly 1%, tomorrow's ORB breakouts are more likely traps than trends — lean on fades, not chases.",
-    "generatedAt": "2026-07-17T20:58:05.028Z"
+    "biasScore": 3,
+    "biasLabel": "BULLISH",
+    "confidence": 5,
+    "briefing": "Starting with the currency picture — GBPUSD is up +0.12% today and sitting at the 89th percentile of its 20-day range, meaning sterling is unusually strong right now. Because UK100 and GBP move in opposite directions (a stronger pound hurts the many FTSE companies that earn dollars and euros abroad, making those overseas profits worth less when converted back), this is a quiet but real headwind for the index — and the system correctly flags it as NEUTRAL rather than a full tailwind. The regime picture is modestly constructive despite that: miners (copper +0.83% is a signal that global growth demand is holding up, lifting Rio, Glencore and others) are the standout bullish sector, US equities (S&P 500 +0.29%, Nasdaq +0.45%) are grinding higher, the VIX — a measure of how nervous US investors are — sits at 17.95 in a normal, calm regime, and European markets (DAX, EuroStoxx) are both up around 0.25-0.29% and aligned in the same direction as FTSE. Gilts (UK government bonds) are barely moving (+2 basis points on the 10-year), and crucially there is no long-end stress signal, so no fiscal alarm bells ringing. On headlines: the only news item in the feed is a 18-hour-old human-interest story from CNBC with zero market relevance — so no fresh catalyst is driving today's moves. Directional bias leans modestly BULLISH: the ORB (opening range breakout — where the first 15 minutes of trade sets a high and low and the break of those levels signals a direction) has already broken to the UPSIDE, European peers are aligned, and copper is supportive of the miners. However, the crowded short positioning in sterling (meaning many traders are already betting the pound falls) is a two-edged risk — if those bets unwind and sterling rallies sharply, that becomes a more meaningful FTSE drag. Confidence is 5/10: the bullish signals are real but individually small, the GBP headwind is persistent, and a packed UK data week (Labour Market Report tomorrow at 07:00 BST, CPI on Wednesday at 07:00 BST) means the fundamental picture could shift materially before any trend has time to develop. For the ORB trade specifically, today looks like a moderate-conviction long setup — the upside break is aligned with the macro lean and a calm European tape — but the sterling ceiling and roughly 49% of the 14-day average daily range (about 65 of 132.8 points) already used by open suggest limited fuel for a large continuation move. Key levels to watch: ORB high 10559.2 (the breakout level, now acting as support to hold), ORB low 10512.5 (would signal the upside break has failed if reclaimed), overnight high 10577.1 (first upside target beyond the ORB), prior day high 10616.2 (the bigger level above). With UK Labour data at 07:00 BST tomorrow and CPI on Wednesday, treat any position sizing conservatively into the close — those prints could reprice both sterling and rate expectations overnight. If copper were to reverse or sterling break sharply above 1.35, the bullish case weakens quickly.",
+    "generatedAt": "2026-07-20T08:43:14.411Z"
   }
 }

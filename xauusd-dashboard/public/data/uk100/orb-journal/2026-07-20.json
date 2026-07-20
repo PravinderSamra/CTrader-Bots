@@ -1,0 +1,67 @@
+{
+  "date": "2026-07-20",
+  "entries": [
+    {
+      "at": "2026-07-20T08:43:14.411Z",
+      "londonTime": "09:43 BST",
+      "mode": "POST_ORB",
+      "price": 10561.15,
+      "stance": "LONG_FAVOURED",
+      "stanceLine": "Backdrop favours upside breaks — Sterling is at the 89th percentile of its 20-day range and still rising — a persistent FX headwind capping upside breaks (weak GBP is what lifts FTSE).",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 89th percentile of its 20-day range and still rising — a persistent FX headwind capping upside breaks (weak GBP is what lifts FTSE)."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "STRUCTURE",
+          "rule": "R3",
+          "text": "ORB break UP is aligned with the BULLISH macro bias (+3) — continuation has the backdrop behind it."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.25%) — the cross-market lean is up."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to copper's +0.83% bid lifting miners, a calm 17.95 VIX and an aligned European tape, the upside ORB break has genuine cross-market support — but with sterling at the 89th percentile and 49% of the 132.8-point daily range already consumed, the runway for a clean trend continuation is narrower than the headline bias suggests.",
+      "aiBullets": [
+        "Miners are the single clearest bullish sector today (copper +0.83%), and because Rio, Glencore and Anglo are top index weights, sector strength here punches above its weight for index direction.",
+        "49% of the 14-day average daily range (132.8 pts) is already used — even with a clean long signal, the remaining ~68 points of statistical room limits profit potential and raises the risk of a mid-session stall near 10577–10616.",
+        "The crowded-short GBP positioning (net -72,474 contracts, per COT data from 14 July) means a short-squeeze bounce in sterling is a latent risk that could flip the FX tailwind into a headwind mid-trade, independent of any macro news.",
+        "Tomorrow's UK Labour Market Report (07:00 BST) and Wednesday's CPI both arrive before the next London open — holding overnight breakout longs into those events introduces event risk that is not priced into today's calm VIX read."
+      ],
+      "bias": {
+        "score": 3,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": 10559.2,
+        "orbLow": 10512.5,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10577.1,
+        "overnightLow": 10512.5,
+        "priorDayHigh": 10616.2,
+        "priorDayLow": 10487,
+        "gapPct": -0.07,
+        "adr14": 132.8,
+        "adrUsedPct": 49
+      },
+      "outcome": null
+    }
+  ]
+}
