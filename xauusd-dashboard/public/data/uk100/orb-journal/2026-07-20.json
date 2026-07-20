@@ -62,6 +62,68 @@
         "adrUsedPct": 49
       },
       "outcome": null
+    },
+    {
+      "at": "2026-07-20T10:22:12.259Z",
+      "londonTime": "11:22 BST",
+      "mode": "POST_ORB",
+      "price": 10546.7,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — The obvious draw (PDH 10616.2) sits beyond what's left of a typical day's range — targets past it are stretch-only today.",
+      "signals": [
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDH 10616.2) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is diverging from a united European tape — it's trading its own story today; tape-based confirmation is unreliable."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 89th percentile of its 20-day range and still rising — a persistent FX headwind capping upside breaks (weak GBP is what lifts FTSE)."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to 49% of the daily range already consumed, sterling pinned at the 89th percentile of its 20-day range, and a crowded GBP short sitting as a latent squeeze risk, the upside ORB break looks poorly supported for follow-through — the odds favour a fade or chop rather than a clean trend continuation.",
+      "aiBullets": [
+        "With 49% of the 14-day ADR (132.8pts) already used, only ~68pts of typical range remains — the prior day high at 10616.2 is ~57pts above current price, making it a stretch target that consumes almost all remaining budget.",
+        "FTSE is diverging from both the DAX (+0.25%) and EuroStoxx50 (+0.15%) on a day when the 20-day FTSE-DAX correlation sits at 0.63 — that divergence weakens the usual cross-market confirmation that gives ORB breaks conviction.",
+        "The GBP COT net-short position of -72,474 contracts improved by +17,517 week-on-week — the short squeeze is already unwinding, meaning the FX headwind on FTSE (strong GBP = lower FTSE) could intensify if this continues into tomorrow's UK Labour data.",
+        "US-Iran headlines (~10.6 hours ago) pushed the risk-tone score to -2 (BEARISH) while gold sits above $4,021 — geopolitical caution reduces the probability that any ORB upside break extends cleanly through the overnight high of 10577.1."
+      ],
+      "bias": {
+        "score": 2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10559.2,
+        "orbLow": 10512.5,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10577.1,
+        "overnightLow": 10512.5,
+        "priorDayHigh": 10616.2,
+        "priorDayLow": 10487,
+        "gapPct": -0.21,
+        "adr14": 132.8,
+        "adrUsedPct": 49
+      },
+      "outcome": null
     }
   ]
 }

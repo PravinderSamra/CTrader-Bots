@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-20T08:42:19.958Z",
+  "generatedAt": "2026-07-20T10:21:15.323Z",
   "yields": {
     "US10Y": 4.57,
     "US2Y": 4.16,
@@ -34,26 +34,26 @@
     "openInterestChange": 15702
   },
   "etfFlows": {
-    "gldTonnes": 1005.8,
-    "gldWoWChange": -2,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1006.1,
+    "gldWoWChange": 0.3,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4023.09,
-    "XAGUSD": 56.9975,
-    "EURUSD": 1.14426,
-    "USDJPY": 162.3605,
-    "USDCHF": 0.80651,
-    "USDCNH": 6.7667,
-    "GBPUSD": 1.34705,
-    "USDCAD": 1.40231,
-    "USDSEK": 9.64695,
-    "US500": 7477.1,
-    "GER40": 24916.05,
-    "UK100": 10561,
+    "XAUUSD": 4021.97,
+    "XAGUSD": 56.9195,
+    "EURUSD": 1.14317,
+    "USDJPY": 162.394,
+    "USDCHF": 0.80776,
+    "USDCNH": 6.76928,
+    "GBPUSD": 1.34692,
+    "USDCAD": 1.4024,
+    "USDSEK": 9.65882,
+    "US500": 7480.8,
+    "GER40": 24903.05,
+    "UK100": 10545.9,
     "ADR_14day": 87.8,
     "ADR_usedToday": 47.4,
-    "goldSilverRatio": 70.6
+    "goldSilverRatio": 70.7
   },
   "dollarLiquidity": {
     "stlfsi": -0.882,
@@ -66,29 +66,35 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "U.S. Treasury yields edge higher as Wall Street monitors Middle East tensions",
+      "source": "CNBC",
+      "publishedAt": "2026-07-20T09:25:54.000Z",
+      "hoursAgo": 0.9
+    },
+    {
       "headline": "Gold steady as markets assess Middle East escalation, Fed hike bets - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-20T01:40:00.000Z",
-      "hoursAgo": 7
+      "hoursAgo": 8.7
     },
     {
-      "headline": "Dollar drifts as US-Iran conflict intensifies, Brent hits $90 - Reuters",
+      "headline": "Dollar drifts as US-Iran conflict intensifies; sterling edges higher - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-19T23:46:00.000Z",
-      "hoursAgo": 8.9
+      "hoursAgo": 10.6
     },
     {
       "headline": "26-year-old quit her corporate job to become a seamstress at Yellowstone National Park for $19.25/hour",
       "source": "CNBC",
       "publishedAt": "2026-07-19T14:30:01.000Z",
-      "hoursAgo": 18.2
+      "hoursAgo": 19.9
     }
   ],
   "briefing": {
     "biasScore": 2,
     "biasLabel": "BULLISH",
     "confidence": 6,
-    "briefing": "Right now, gold is being pulled in two directions at once — geopolitical fear is pushing it higher, while rising U.S. interest rate expectations are creating a headwind [a headwind means a force working against the move]. The most relevant forces today are the intensifying US-Iran conflict and what appears to be a small but real shift in market thinking about whether the Federal Reserve might raise rates again. On the news front, two Reuters headlines from the last 7–9 hours tell the story: one from roughly 9 hours ago reported that the dollar is drifting as the US-Iran conflict escalates and oil hit $90 a barrel — that kind of geopolitical shock typically sends money into gold as a safe-haven [safe-haven means an asset people buy when they're scared]. A follow-up headline 7 hours ago confirmed gold is holding steady but acknowledged that some traders are now pricing in Fed rate hike bets, which is the main reason gold hasn't already pushed sharply higher. The third headline from CNBC is irrelevant to markets. Directional bias leans modestly BULLISH [meaning we expect price to drift upward rather than fall], because the geopolitical risk backdrop — with a GPR [Geopolitical Risk index] reading of 173.6, which is elevated — and a weak dollar (DXY [the Dollar Index, measuring dollar strength] at 100.71) generally favour gold. However, real yields [the return on government bonds after adjusting for inflation] are at 2.35%, which is quite high and limits how far gold can rally without fresh fear catalysts. Confidence is 6/10 — this would flip to bearish if the dollar rebounds sharply or if headlines shift toward a de-escalation in the Middle East. There are no scheduled economic events on the calendar today, which removes one risk but also removes a potential catalyst for a clean directional move. Later in the week, watch for any Fed speaker commentary or geopolitical updates that could jolt price. On levels: gold is at $4,023, the 14-day average daily range [how much price typically moves in a day] is $87.80, and price has already used $47.40 of that today — meaning roughly $40 of typical daily movement remains, so big explosive moves from here today are less likely. For trade integration: this is an acceptable window for cautious long [buy] setups on the 1H chart if you can identify a clear uptrend structure, but keep position size [the amount you risk per trade] modest given the competing forces. Wait for a clean pullback [a temporary dip against the trend] on the 5M chart before entering, and confirm the 1H trend is still making higher highs and higher lows. Remember: geopolitical fear can reverse fast, so always use a stop-loss [an automatic exit if price moves against you]. When geopolitics and a weak dollar both point the same way, gold tends to follow — but stay small until one force clearly wins.",
-    "generatedAt": "2026-07-20T08:42:38.368Z"
+    "briefing": "Right now, gold is being pulled in two directions at once: geopolitical fear (which pushes money INTO gold as a safe haven [a place to park money when the world feels uncertain]) is supporting prices, while slightly rising US Treasury yields [the interest rate the US government pays on its debt — higher yields make the dollar more attractive and can weigh on gold] are creating a modest headwind. The dominant force at this moment appears to be Middle East risk, specifically the US-Iran conflict that intensified roughly 10–11 hours ago according to Reuters headlines — the dollar is actually drifting lower despite rising yields, which is a classic sign that fear-driven safe-haven demand is the real story here. There was no fresh scheduled economic data today (the calendar is empty), so the market is being driven purely by geopolitical news flow and positioning. The directional bias leans mildly BULLISH [expecting price to rise] for gold: a weakening dollar, elevated geopolitical risk (the GPR index [a measure of global political danger] sits at a very high 173.6), and loose financial conditions (the stress indexes are both negative, meaning money is flowing freely) all point toward further gold strength. However, confidence is a moderate 6/10 — real yields [the interest rate after stripping out inflation] are still meaningfully positive at 2.35%, which is a genuine drag on gold, and there is a small but notable 4% market expectation of a Fed RATE HIKE [when the central bank raises borrowing costs, typically dollar-positive and gold-negative] at the July 29th meeting, which could cap gains. If Middle East headlines de-escalate or the Fed hike probability climbs higher, flip to neutral or bearish immediately. There are no scheduled news events today, so watch for unplanned geopolitical headlines as the primary risk. On levels: gold is at $4,021.97 — the 14-day average daily range [how much price typically moves in a full day] is $87.80, and price has already used $47.40 of that today, leaving roughly $40 of typical movement available. This means a big fresh breakout run today is statistically less likely — the bulk of today's range may already be behind us. For trade integration: the London session is currently active and conditions are acceptable for cautious long [buy] setups aligned with the uptrend on the 1H chart, but keep position size SMALL given that more than half the daily range has been consumed and the only real catalyst is unscheduled news flow. Wait for a clean 5-minute pullback [price dipping back toward a support level] before entering rather than chasing price at current highs. Remember: geopolitical fear is gold's engine right now — if headlines go quiet, so might the move.",
+    "generatedAt": "2026-07-20T10:21:33.713Z"
   }
 }
