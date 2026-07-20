@@ -61,7 +61,33 @@
         "adr14": 132.8,
         "adrUsedPct": 49
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-20T15:46:40.437Z",
+        "fwd1hPct": -0.18,
+        "fwd3hPct": -0.19,
+        "toClosePct": -0.53,
+        "maxUpPct": 0.27,
+        "maxDownPct": -0.63,
+        "verdict": "WRONG",
+        "signalVerdicts": [
+          {
+            "rule": "R10",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R3",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R8",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          }
+        ]
+      }
     },
     {
       "at": "2026-07-20T10:22:12.259Z",
@@ -123,7 +149,29 @@
         "adr14": 132.8,
         "adrUsedPct": 49
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-20T15:46:40.615Z",
+        "fwd1hPct": 0.28,
+        "fwd3hPct": -0.27,
+        "toClosePct": -0.39,
+        "maxUpPct": 0.4,
+        "maxDownPct": -0.49,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R8",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R10",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          }
+        ]
+      }
     },
     {
       "at": "2026-07-20T11:37:56.610Z",
@@ -185,7 +233,33 @@
         "adr14": 132.8,
         "adrUsedPct": 58
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-20T15:46:40.791Z",
+        "fwd1hPct": -0.63,
+        "fwd3hPct": -0.75,
+        "toClosePct": -0.75,
+        "maxUpPct": -0.08,
+        "maxDownPct": -0.86,
+        "verdict": "WRONG",
+        "signalVerdicts": [
+          {
+            "rule": "R10",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R3",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R8",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          }
+        ]
+      }
     },
     {
       "at": "2026-07-20T13:50:48.438Z",
@@ -261,7 +335,118 @@
         "adr14": 132.8,
         "adrUsedPct": 58
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-20T15:46:40.968Z",
+        "fwd1hPct": -0.18,
+        "fwd3hPct": null,
+        "toClosePct": -0.18,
+        "maxUpPct": 0.11,
+        "maxDownPct": -0.29,
+        "verdict": "WRONG",
+        "signalVerdicts": [
+          {
+            "rule": "R3",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R9",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-07-20T15:46:37.562Z",
+      "londonTime": "16:46 BST",
+      "mode": "CLOSED",
+      "price": 10505.6,
+      "stance": "FADE_FAVOURED",
+      "stanceLine": "Fade day — the ORB break was a trap — ORB broke UP but price has fully reclaimed the range (back below 10512.5) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "STRUCTURE",
+          "rule": "R1",
+          "text": "ORB broke UP but price has fully reclaimed the range (back below 10512.5) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "71% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDH 10616.2) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.17%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures +0.36% — the 14:30 US handoff argues for holding longs into the US open."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "INFO",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "UK Labour Market Report prints tomorrow 07:00 BST — late-session moves today are as likely pre-event de-risking as conviction."
+        }
+      ],
+      "aiStanceLine": "Due to a failed upside ORB break (price reclaimed below 10512.5), 71% of the 132.8-point ADR already consumed, and UK Labour Market data printing at 07:00 BST tomorrow, any new breakout attempt today is likely to be a low-conviction trap rather than the start of a trend move.",
+      "aiBullets": [
+        "Copper +1.2% makes miners bullish but the index is still -0.6% on the day — sector strength is not translating to index recovery, suggesting heavier selling elsewhere (likely large-caps like AZN or financials) is capping any bounce.",
+        "GBP sits at the 89th percentile of its 20-day range and is CROWDED_SHORT (net -72,474 contracts, improved by +17,517 w/w) — a short-squeeze in sterling would flip the GBP tailwind to a headwind for FTSE, directly undermining any long ORB trade.",
+        "With current price at 10505.6 below the ORB low of 10512.5 and only ~38 points of ADR remaining, the prior day low at 10487 is the realistic downside target — chasing shorts below there has almost no range budget support.",
+        "US futures are +0.36% (S&P) and +0.91% (Nasdaq) past the 15:00 BST mark, which historically supports FTSE into the US afternoon session — this is the one cross-market force that could temporarily halt the fade bias near ORB low support."
+      ],
+      "bias": {
+        "score": 5,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": 10559.2,
+        "orbLow": 10512.5,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10577.1,
+        "overnightLow": 10512.5,
+        "priorDayHigh": 10616.2,
+        "priorDayLow": 10487,
+        "gapPct": -0.6,
+        "adr14": 132.8,
+        "adrUsedPct": 71
+      },
+      "outcome": {
+        "resolvedAt": "2026-07-20T15:46:40.969Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
