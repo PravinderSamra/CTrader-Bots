@@ -124,6 +124,68 @@
         "adrUsedPct": 49
       },
       "outcome": null
+    },
+    {
+      "at": "2026-07-20T11:37:56.610Z",
+      "londonTime": "12:37 BST",
+      "mode": "POST_ORB",
+      "price": 10585.05,
+      "stance": "LONG_FAVOURED",
+      "stanceLine": "Backdrop favours upside breaks — Sterling is at the 89th percentile of its 20-day range and still rising — a persistent FX headwind capping upside breaks (weak GBP is what lifts FTSE).",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 89th percentile of its 20-day range and still rising — a persistent FX headwind capping upside breaks (weak GBP is what lifts FTSE)."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "STRUCTURE",
+          "rule": "R3",
+          "text": "ORB break UP is aligned with the BULLISH macro bias (+3) — continuation has the backdrop behind it."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.49%) — the cross-market lean is up."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to 58% of the 14-day average daily range (132.8 pts) already consumed, GBP sitting at its 89th 20-day percentile, and the prior day high at 10616.2 only ~31 points above current price, the upside break is technically valid but range-exhausted and FX-capped — favour longs with tight trailing stops rather than open-ended trend expectations.",
+      "aiBullets": [
+        "With 58% of ADR14 (132.8 pts) spent and price at 10585, only ~55 points of typical daily range remain — a clean trend extension to new highs becomes statistically thin from here.",
+        "The ORB broke UP through 10559.2 but current price (10585) is already above the overnight high (10577.1); the next structural ceiling is the prior day high at 10616.2, just 31 points away — a natural profit-taking magnet that could stall longs.",
+        "Copper +1.05% (bullish miners) and US500 +0.6% both support the upside break, but Brent -1.64% subtracts from FTSE's two largest sector weights (Shell, BP), creating an internal index tug-of-war that limits clean directional follow-through.",
+        "GBP COT positioning is a crowded short with net shorts at -72,474 contracts but short interest reduced by 17,517 week-on-week — any further short-squeeze in sterling (GBP already at 89th percentile) would hit FTSE's dollar-earner multinationals and undermine the ORB long thesis mid-trade."
+      ],
+      "bias": {
+        "score": 3,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": 10559.2,
+        "orbLow": 10512.5,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10577.1,
+        "overnightLow": 10512.5,
+        "priorDayHigh": 10616.2,
+        "priorDayLow": 10487,
+        "gapPct": 0.16,
+        "adr14": 132.8,
+        "adrUsedPct": 58
+      },
+      "outcome": null
     }
   ]
 }
