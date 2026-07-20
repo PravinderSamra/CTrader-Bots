@@ -617,6 +617,91 @@
         "verdict": "UNSCORABLE",
         "signalVerdicts": []
       }
+    },
+    {
+      "at": "2026-07-20T21:03:10.813Z",
+      "londonTime": "22:03 BST",
+      "mode": "CLOSED",
+      "price": 10453.9,
+      "stance": "FADE_FAVOURED",
+      "stanceLine": "Fade day — the ORB break was a trap — ORB broke UP but price has fully reclaimed the range (back below 10512.5) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "STRUCTURE",
+          "rule": "R1",
+          "text": "ORB broke UP but price has fully reclaimed the range (back below 10512.5) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "110% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDH 10616.2) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.62%) — the cross-market lean is down."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "INFO",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "UK Labour Market Report prints tomorrow 07:00 BST — late-session moves today are as likely pre-event de-risking as conviction."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to 110% of the 14-day ADR already consumed, a confirmed upside fakeout (price now below ORB low 10512.5), and a HIGH-impact UK jobs print landing at 07:00 BST tomorrow — one hour before the opening range — today's ORB is a stand-aside/fade setup with almost no case for chasing a fresh directional break.",
+      "aiBullets": [
+        "Price at 10453.9 is trading ~60 points below the ORB low of 10512.5 — the index has already moved through the entire typical day's range (ADR14 = 132.8pts, 110% used), so any new 08:00 long break would be buying an exhausted move with virtually no statistical range budget remaining.",
+        "The gap down of -114.7 points (-1.09%) consumed most of the day's range before London even opened, meaning the ORB itself formed in already-compressed conditions — breakout reliability is structurally lower on large-gap days when ADR is nearly spent.",
+        "Copper +1.25% and Brent +0.88% provide genuine sector support for miners and energy (together well over 20% of the index), but the European tape (SX5E -0.62%, 20-day FTSE/SX5E correlation 0.52) is pulling in the opposite direction — the two forces partially cancel, reinforcing a choppy rather than trending open.",
+        "GBP is a CROWDED_SHORT (net -72,474 contracts, 89th percentile over 20 days) — any positive surprise in tomorrow's 07:00 UK Labour Market Report could spark a GBP short-squeeze, which via the sign-flip would be a fresh headwind for the index, adding pre-event uncertainty to the 08:00 ORB window."
+      ],
+      "bias": {
+        "score": 1,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10559.2,
+        "orbLow": 10512.5,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10577.1,
+        "overnightLow": 10512.5,
+        "priorDayHigh": 10616.2,
+        "priorDayLow": 10487,
+        "gapPct": -1.09,
+        "adr14": 132.8,
+        "adrUsedPct": 110
+      },
+      "outcome": {
+        "resolvedAt": "2026-07-20T21:03:13.038Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
