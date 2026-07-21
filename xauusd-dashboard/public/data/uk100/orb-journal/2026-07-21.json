@@ -68,7 +68,33 @@
         "adr14": 134.4,
         "adrUsedPct": 64
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-21T16:19:49.505Z",
+        "fwd1hPct": 0.21,
+        "fwd3hPct": 0.18,
+        "toClosePct": 0.72,
+        "maxUpPct": 0.75,
+        "maxDownPct": -0.15,
+        "verdict": "RIGHT",
+        "signalVerdicts": [
+          {
+            "rule": "R10",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R13",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          }
+        ]
+      }
     },
     {
       "at": "2026-07-21T09:42:02.427Z",
@@ -144,7 +170,37 @@
         "adr14": 134.4,
         "adrUsedPct": 86
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-21T16:19:49.618Z",
+        "fwd1hPct": 0,
+        "fwd3hPct": -0.13,
+        "toClosePct": 0.55,
+        "maxUpPct": 0.58,
+        "maxDownPct": -0.32,
+        "verdict": "RIGHT",
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R13",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R3",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          }
+        ]
+      }
     },
     {
       "at": "2026-07-21T10:58:25.223Z",
@@ -220,7 +276,37 @@
         "adr14": 134.4,
         "adrUsedPct": 92
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-21T16:19:49.731Z",
+        "fwd1hPct": -0.03,
+        "fwd3hPct": 0.16,
+        "toClosePct": 0.48,
+        "maxUpPct": 0.51,
+        "maxDownPct": -0.39,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R13",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R3",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          }
+        ]
+      }
     },
     {
       "at": "2026-07-21T12:23:33.273Z",
@@ -296,7 +382,37 @@
         "adr14": 134.4,
         "adrUsedPct": 92
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-21T16:19:49.844Z",
+        "fwd1hPct": -0.09,
+        "fwd3hPct": 0.58,
+        "toClosePct": 0.58,
+        "maxUpPct": 0.61,
+        "maxDownPct": -0.28,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R13",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R3",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          }
+        ]
+      }
     },
     {
       "at": "2026-07-21T14:57:42.523Z",
@@ -372,7 +488,115 @@
         "adr14": 134.4,
         "adrUsedPct": 97
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-21T16:19:49.959Z",
+        "fwd1hPct": 0.29,
+        "fwd3hPct": null,
+        "toClosePct": 0.29,
+        "maxUpPct": 0.32,
+        "maxDownPct": -0.11,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R13",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R3",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R9",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-07-21T16:19:46.870Z",
+      "londonTime": "17:19 BST",
+      "mode": "CLOSED",
+      "price": 10597.2,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 122% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "122% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "UK Labour Market Report @ 07:00 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +1.56%) — the cross-market lean is up."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures +0.87% — the 14:30 US handoff argues for holding longs into the US open."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to 122% of the 14-day average daily range (134 pts) already consumed, a 144-point gap at the open that front-ran the Labour Market Report, and GBP sitting at the 89th percentile in a crowded-short position, any ORB breakout today is launching from an exhausted runway with a latent reversal risk if sterling squeezes.",
+      "aiBullets": [
+        "Today's 144-point gap (1.38%) was almost certainly pre-Labour-Market-Report positioning — the ORB itself (10,472–10,520) is now 77+ points below current price (10,597), so the 'breakout' is stale and not tradeable at current levels.",
+        "At 122% of ADR14 (134 pts) already used, the statistical probability of a further sustained trend extension is very low — the gap alone consumed 107% of a typical full day's range before London even opened.",
+        "GBP at the 89th 20-day percentile while sitting in a crowded-short COT position (net short 72,474 contracts) creates asymmetric snap risk: a short-squeeze in sterling would flip the GBP tailwind into a headwind for the index precisely when bulls are most extended.",
+        "European tape alignment (Euro Stoxx +1.56%, DAX +1.32%, 20-day FTSE/SX5E correlation 0.64) supports the bull bias structurally, but with tomorrow's UK CPI at 07:00 BST acting as a hard ceiling on overnight conviction, any late-day long extension carries binary event risk."
+      ],
+      "bias": {
+        "score": 10,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": 10520.2,
+        "orbLow": 10472.9,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10520.2,
+        "overnightLow": 10433.8,
+        "priorDayHigh": 10589.4,
+        "priorDayLow": 10443.1,
+        "gapPct": 1.38,
+        "adr14": 134.4,
+        "adrUsedPct": 122
+      },
+      "outcome": {
+        "resolvedAt": "2026-07-21T16:19:49.959Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
