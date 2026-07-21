@@ -675,6 +675,84 @@
         "verdict": "UNSCORABLE",
         "signalVerdicts": []
       }
+    },
+    {
+      "at": "2026-07-21T20:15:35.911Z",
+      "londonTime": "21:15 BST",
+      "mode": "CLOSED",
+      "price": 10595.6,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 126% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "126% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "UK Labour Market Report @ 07:00 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +1.67%) — the cross-market lean is up."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures +0.83% — the 14:30 US handoff argues for holding longs into the US open."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to 126% of the 14-day average daily range (134 pts) already consumed, a 1.36% gap open sitting above both the overnight high and prior day high, and tomorrow's UK CPI at 07:00 BST hitting one hour before cash open, any 08:00 breakout faces an exhausted range budget and a live macro grenade — favour standing aside or fading rather than chasing.",
+      "aiBullets": [
+        "Today's total move has already exceeded the 134-point ADR14 by 26%, leaving statistically minimal 'fuel' for a fresh directional ORB — the mechanical range rule alone makes this a stand-aside day.",
+        "The 142.6-point gap (1.36%) opens the index above the prior day high of 10,589 and the overnight high of 10,520; gap-above-prior-high opens historically resolve through mean-reversion once early momentum fades, compounding the fakeout risk.",
+        "GBP COT positioning is a crowded short (net -72,474 contracts, though improving by +17,517 week-on-week) — a sterling short-squeeze, if triggered by tomorrow's CPI beat, converts directly into an index headwind via the sign-flip, making upside ORB longs doubly exposed.",
+        "With UK CPI (HIGH impact) at 07:00 BST tomorrow — 60 minutes before the ORB window — the opening range itself will be shaped by a macro print, not overnight drift; the ORB high/low will mean very little without knowing which way CPI surprises."
+      ],
+      "bias": {
+        "score": 10,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": 10520.2,
+        "orbLow": 10472.9,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10520.2,
+        "overnightLow": 10433.8,
+        "priorDayHigh": 10589.4,
+        "priorDayLow": 10443.1,
+        "gapPct": 1.36,
+        "adr14": 134.4,
+        "adrUsedPct": 126
+      },
+      "outcome": {
+        "resolvedAt": "2026-07-21T20:15:38.158Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
