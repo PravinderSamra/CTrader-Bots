@@ -47,3 +47,29 @@ Six mechanical implementations covering rotation, magnetism, responsive fading, 
 ## 5. Verdict
 
 Session volume profile on XAUUSD is a **map, not a signal**. Its levels are genuinely gravitational (touch rates 65–85%) but mechanically trading toward or away from them — in all six configurations including the POC→VA-edge rotation — nets zero or worse after costs. Keep profiles on the chart for targets and for the ORB gap-trap filter; allocate zero risk to standalone profile entries. The consistent pattern across this whole research project holds: **edges live in scheduled flows, expansion events, and stored structural energy — not in static levels.**
+
+---
+
+## 6. The recommended SVP strategy — "Profile-Filtered ORB" (added after §1–5)
+
+Since no standalone SVP entry survived testing, the mechanically successful use of SVP is as **map + filter + targets around the validated NY ORB trigger**. Backtested (scripts output below, 2021–2026, $0.40/oz costs):
+
+| Variant | n | Win% | avgR | maxDD |
+|---|---|---|---|---|
+| ORB baseline | 1,251 | 42.3 | +0.083 | −27.5R |
+| **ORB + SVP gap-trap filter** | **947** | **43.0** | **+0.109** | **−23.4R** |
+| + 50% partial at prior POC in path | 947 | 43.9 | +0.089 | −19.2R |
+
+The filter version is +31% expectancy per trade with 24% fewer trades and fixes the weak 2026 (−0.01 → +0.04 avgR). The POC-partial variant trades ~0.02R expectancy for ~18% less drawdown — optional smoothing.
+
+**Mechanical steps (UK summer clock; −1h in winter):**
+1. **11pm** — dealing day starts. Build yesterday's session profile; mark **POC, VAH, VAL**; maintain the list of **naked POCs** from prior days.
+2. **Reopen classification** — note the day's open vs prior value area: **inside / above / below**.
+3. **8am** — add Asia High/Low and PDH/PDL to the map (targets only).
+4. **2:00pm** — mark the 1:30–2:00pm opening range (OR). Sanity: skip the day if OR > 0.5×ATR20 or < 0.04×ATR20.
+5. **Place OCO stop orders** at OR-high (buy) and OR-low (sell), **except**: day opened **above** value → no sell order; opened **below** value → no buy order (the gap-trap filter). Inside-value opens keep both.
+6. On fill, cancel the other side. **Stop = far side of the OR.** No take-profit, no trailing.
+7. *Optional:* if the prior POC (or nearest naked POC) lies beyond entry in the trade direction, exit 50% there; run the rest.
+8. **Flat at 9pm** (8pm winter) or at the stop. One trade per day. Risk 0.5–1% of equity on the OR stop distance, sized daily off ATR20.
+
+Everything else on the profile chart — VAH/VAL rotation trades, POC magnet trades, 80%-rule trades — remains untraded per §3.
