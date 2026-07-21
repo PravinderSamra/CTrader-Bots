@@ -297,6 +297,82 @@
         "adrUsedPct": 92
       },
       "outcome": null
+    },
+    {
+      "at": "2026-07-21T14:57:42.523Z",
+      "londonTime": "15:57 BST",
+      "mode": "POST_ORB",
+      "price": 10558.45,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 97% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "97% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDH 10589.4) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "UK Labour Market Report @ 07:00 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "STRUCTURE",
+          "rule": "R3",
+          "text": "ORB break UP is aligned with the BULLISH macro bias (+10) — continuation has the backdrop behind it."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +1.25%) — the cross-market lean is up."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures +0.6% — the 14:30 US handoff argues for holding longs into the US open."
+        }
+      ],
+      "aiStanceLine": "Due to 97% of the 134.4-point ADR already consumed, a 105.5-point gap-up at open absorbing most of the day's available move, and tomorrow's UK CPI creating overnight positioning risk, the ORB upside break is macro-aligned but range-exhausted — fade attempts into the opening range are more attractive than new long entries at current levels.",
+      "aiBullets": [
+        "The 105.5pt gap-up (1.01%) at open consumed 78% of the 134.4pt ADR14 before a single candle printed — the ORB itself (10472.9–10520.2, a 47.3pt range) then used nearly all remaining budget.",
+        "Prior day high at 10589.4 sits roughly 31pts above current price (10558.45), but only ~4pts of ADR remain unused — making PDH a stretch target the range budget cannot statistically support today.",
+        "GBP COT positioning is CROWDED_SHORT (net -72,474 contracts) yet improved 17,517 WoW — a short-squeeze [rapid unwinding of bearish bets] in sterling would flip the FX tailwind to a headwind mid-session without any macro catalyst.",
+        "European tape is ALIGNED (SX5E +1.25%, DAX +0.99%) and correlated 0.61–0.67 with FTSE over 20 days — but with the US handoff already priced into futures (+0.6%), cross-market support is known, not incremental."
+      ],
+      "bias": {
+        "score": 10,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": 10520.2,
+        "orbLow": 10472.9,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10520.2,
+        "overnightLow": 10433.8,
+        "priorDayHigh": 10589.4,
+        "priorDayLow": 10443.1,
+        "gapPct": 1.01,
+        "adr14": 134.4,
+        "adrUsedPct": 97
+      },
+      "outcome": null
     }
   ]
 }
