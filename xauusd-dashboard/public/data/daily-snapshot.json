@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-21T10:57:29.846Z",
+  "generatedAt": "2026-07-21T12:22:30.679Z",
   "yields": {
     "US10Y": 4.55,
     "US2Y": 4.18,
@@ -34,26 +34,26 @@
     "openInterestChange": 15702
   },
   "etfFlows": {
-    "gldTonnes": 995.7,
-    "gldWoWChange": -0.4,
-    "trend3W": "FLAT"
+    "gldTonnes": 996.8,
+    "gldWoWChange": 1.1,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4064.22,
-    "XAGUSD": 58.9315,
-    "EURUSD": 1.14215,
-    "USDJPY": 162.6845,
-    "USDCHF": 0.81003,
-    "USDCNH": 6.76635,
-    "GBPUSD": 1.34158,
-    "USDCAD": 1.40609,
-    "USDSEK": 9.67156,
-    "US500": 7483.7,
-    "GER40": 24942.55,
-    "UK100": 10539.95,
+    "XAUUSD": 4059.705,
+    "XAGUSD": 58.959,
+    "EURUSD": 1.14172,
+    "USDJPY": 162.77,
+    "USDCHF": 0.81066,
+    "USDCNH": 6.76689,
+    "GBPUSD": 1.33936,
+    "USDCAD": 1.40749,
+    "USDSEK": 9.67632,
+    "US500": 7474.7,
+    "GER40": 24884.55,
+    "UK100": 10527.95,
     "ADR_14day": 85,
     "ADR_usedToday": 84.5,
-    "goldSilverRatio": 69
+    "goldSilverRatio": 68.9
   },
   "dollarLiquidity": {
     "stlfsi": -0.882,
@@ -69,20 +69,20 @@
       "headline": "Lebanon's Aoun to meet Trump at White House, hoping to generate pressure on Israel - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-21T06:06:00.000Z",
-      "hoursAgo": 4.9
+      "hoursAgo": 6.3
     },
     {
-      "headline": "Gold rises 1% as hopes for US-Iran diplomacy pause oil rally - Reuters",
+      "headline": "Gold rises as diplomatic efforts offer hope of de-escalation in Middle East - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-21T04:08:00.000Z",
-      "hoursAgo": 6.8
+      "hoursAgo": 8.2
     }
   ],
   "briefing": {
-    "biasScore": 3,
-    "biasLabel": "BULLISH",
-    "confidence": 6,
-    "briefing": "Right now, gold is being pushed higher primarily by geopolitical tension in the Middle East rather than by traditional financial drivers like interest rates or the dollar. The US Dollar Index (DXY — a measure of how strong the dollar is against other currencies) sits at roughly 100.95, which is relatively neutral and not applying serious downward pressure on gold. Real yields (the return on US bonds after accounting for inflation) have nudged slightly lower today, which is mildly supportive for gold since lower real yields make gold — which pays no interest — comparatively more attractive. The most relevant recent headline broke about 6–7 hours ago: Reuters reported that gold rose 1% as hopes for US-Iran diplomacy briefly paused an oil rally, meaning traders rotated attention to gold as a safe-haven asset (a store of value people buy when they feel uncertain or nervous). A second headline from about 5 hours ago noted Lebanon's President is meeting Trump at the White House to pressure Israel — keeping Middle East uncertainty in focus. These geopolitical catalysts are the dominant engine right now. The directional bias leans BULLISH (favouring gold going up) because geopolitical risk remains elevated (the GPR index sits at 173.6, which is historically high), the dollar is not strengthening aggressively, and real yields are drifting slightly lower. However, confidence is moderate at 6/10 — geopolitical headlines can reverse quickly if a diplomatic breakthrough is announced, which would remove the safe-haven premium almost immediately. There are no scheduled economic events on today's calendar, so no data-driven surprises are expected this session. Critically, the ADR (Average Daily Range — how far gold typically moves in a day over the last 14 sessions) is 85 points, and today's price has already moved 84.5 points — meaning the daily range is essentially used up. This is the most important number you need to see right now: gold has almost no room left in today's typical range, which means chasing new entries here carries a high risk of immediate reversal or choppy sideways action. Key levels to watch: $4,064 is current price; a hold above $4,050 keeps buyers in control, while a drop below $4,030 would suggest the move is fading. For trade integration — because the daily range is nearly exhausted, this is NOT an ideal window to take fresh trend-following buys at current prices; wait for a pullback into a 1H demand zone [an area on the chart where buyers previously stepped in strongly] before committing, and keep position size small given geopolitical news can flip fast. The single most important thing to remember today: the daily range is almost fully used — patience beats chasing.",
-    "generatedAt": "2026-07-21T10:57:45.928Z"
+    "biasScore": 1,
+    "biasLabel": "NEUTRAL",
+    "confidence": 4,
+    "briefing": "Right now, gold is being pulled in two directions at once — geopolitical tension in the Middle East is keeping buyers interested, but the price has almost completely used up its expected daily range, which limits how much new movement is likely today. The most relevant force right now is the mix of safe-haven demand [when traders buy gold as protection against world events] and a fairly stable US dollar sitting at 101, which isn't giving gold a strong push in either direction. On the news side, two Reuters headlines are worth noting: about 8 hours ago, a report said gold was rising on hopes of Middle East de-escalation, and about 6 hours ago came news that Lebanon's president is meeting Trump at the White House to discuss pressure on Israel. This suggests the market has already reacted to these headlines — meaning the move may already be priced in rather than still ahead of us. Looking at the numbers: gold is trading near $4,059, the 14-day average daily range [how much gold typically moves in a single day] is about $85, and today it has already moved $84.50 of that. That is almost the full daily budget used up, which is a major caution flag — there is very little statistical room left for a clean trending move today. Speculative positioning [how big traders are leaning] remains net-long but dropped by over 7,000 contracts last week, suggesting some large players are trimming bets. ETF inflows [money flowing into gold funds] remain a gentle tailwind. Real yields [what bonds pay after inflation] ticked down slightly, which is mildly supportive for gold. The Federal Reserve is almost universally expected to hold rates steady on July 29th — that certainty removes one potential catalyst. There are no scheduled economic events on today's calendar. Confidence in any directional bias is low at 4/10, primarily because today's range is essentially exhausted — the setup that would change this view is a fresh geopolitical headline overnight that resets momentum, or tomorrow's price action establishing a new intraday range. For trade integration: this is not a good window for new trend-following entries — the daily range being 99% consumed means any new trade carries serious risk of immediately running out of room to move in your favour; sit on your hands, watch how price behaves at $4,059–$4,070 resistance and $4,030–$4,020 support, and wait for tomorrow's fresh range. Screenshot this: when today's daily range is already used up, the smartest trade is no trade at all.",
+    "generatedAt": "2026-07-21T12:22:48.413Z"
   }
 }

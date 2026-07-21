@@ -221,6 +221,82 @@
         "adrUsedPct": 92
       },
       "outcome": null
+    },
+    {
+      "at": "2026-07-21T12:23:33.273Z",
+      "londonTime": "13:23 BST",
+      "mode": "POST_ORB",
+      "price": 10527.95,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 92% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "92% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDH 10589.4) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "UK Labour Market Report @ 07:00 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "STRUCTURE",
+          "rule": "R3",
+          "text": "ORB break UP is aligned with the BULLISH macro bias (+10) — continuation has the backdrop behind it."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.96%) — the cross-market lean is up."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to 92% of the 134.4-point ADR already consumed, a 75-point gap-up baking in most of the bullish commodity tailwind at the open, and UK CPI landing at 07:00 tomorrow creating overnight repositioning risk, upside continuation from here is a low-fuel, high-event-risk proposition — today favours range fades over breakout chases.",
+      "aiBullets": [
+        "Price at 10,527.95 is only ~61 points below the prior day high of 10,589.4, yet with ~8 points of typical range left (8% of 134.4 ADR), reaching that level today is a statistical stretch — reward-to-range-budget ratio is poor for new longs.",
+        "The 75-point gap-up at 08:00 accounts for 56% of the full 134.4 ADR on its own, meaning the ORB's bullish break upward was largely a gap-fill story, not fresh intraday buying power — momentum chasers above 10,520 face a thin fuel environment.",
+        "GBP is at the 89th percentile of its 20-day range while also sitting in a crowded-short positioning extreme (net -72,474 contracts); a short-squeeze in sterling would trigger the sign-flip bearish pressure on FTSE precisely where upside breakout traders would be longest.",
+        "European tape is ALIGNED bullish (EuroStoxx +0.96%, DAX +0.66%, 20-day FTSE/SX5E correlation 0.59), providing macro cover for the up-break — but that alignment also means a broad European fade into the afternoon would remove the index's key external support simultaneously."
+      ],
+      "bias": {
+        "score": 10,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": 10520.2,
+        "orbLow": 10472.9,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10520.2,
+        "overnightLow": 10433.8,
+        "priorDayHigh": 10589.4,
+        "priorDayLow": 10443.1,
+        "gapPct": 0.72,
+        "adr14": 134.4,
+        "adrUsedPct": 92
+      },
+      "outcome": null
     }
   ]
 }
