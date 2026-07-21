@@ -1,0 +1,79 @@
+=== 1. VARIANCE RATIOS VR(q) on 5m log returns (VR>1 trending, <1 mean-reverting) ===
+  q=  2 (  10min): VR=0.992
+  q=  4 (  20min): VR=1.012
+  q=  8 (  40min): VR=0.998
+  q= 16 (  80min): VR=0.973
+  q= 32 ( 160min): VR=0.978
+  q= 64 ( 320min): VR=0.989
+  q=128 ( 640min): VR=0.966
+
+by session (q=8 -> 40min):
+  Asia 22-07    VR(8)=1.056  VR(32)=1.019
+  London 07-12  VR(8)=0.945  VR(32)=0.905
+  NY 12-21      VR(8)=1.031  VR(32)=0.940
+by year (q=8):
+  2021: VR(8)=1.054  VR(64)=1.018
+  2022: VR(8)=0.937  VR(64)=0.932
+  2023: VR(8)=1.018  VR(64)=1.087
+  2024: VR(8)=0.989  VR(64)=1.004
+  2025: VR(8)=1.025  VR(64)=0.985
+  2026: VR(8)=0.988  VR(64)=0.887
+
+=== 2. HURST EXPONENT (aggregated variance method, 5m base) ===
+  H = 0.497  (0.5 = random walk)
+  2022: H = 0.492
+  2024: H = 0.503
+  2026: H = 0.491
+
+=== 3. VOLATILITY CLUSTERING ===
+ACF of |5m ret|: lag1=0.354 lag12(1h)=0.262 lag288(1d)=0.193
+ACF of daily range: lag1=0.787 lag5=0.590 lag20=0.481
+next-day range ~ ATR5+ATR20: R^2 = 0.580   (direction R^2 for comparison: ~0.00)
+
+=== 4. JUMP DYNAMICS (1m |ret| > 4*rolling-1d sigma) ===
+N jumps=9,609 (0.55% of bars; Gaussian would be 0.006%)
+jump timing (top hours UTC): 13:00=20.4%, 14:00=17.4%, 12:00=13.8%, 15:00=8.7%, 18:00=4.8%
+  post-jump  5m drift (jump dir): -0.44bp  t=-2.36  cont.rate=46.1%
+  post-jump 15m drift (jump dir): -0.17bp  t=-0.61  cont.rate=47.1%
+  post-jump 30m drift (jump dir): -0.23bp  t=-0.64  cont.rate=47.1%
+  post-jump 60m drift (jump dir): -0.71bp  t=-1.61  cont.rate=48.2%
+P(next jump within 60min of a jump) = 67.5% (uniform would be ~32.7%)
+
+=== 5. ORNSTEIN-UHLENBECK FIT, ASIA SESSION (5m, vs session cum-VWAP) ===
+  ddev = -0.0197 * dev  ->  mean-reversion half-life ~ 174 minutes
+  |dev|>1.0sd: N=85,724  next-5m move toward VWAP: 13.38 cents avg
+  |dev|>1.5sd: N=61,497  next-5m move toward VWAP: 15.74 cents avg
+  |dev|>2.0sd: N=38,701  next-5m move toward VWAP: 17.52 cents avg
+
+=== 6. TAIL EXPONENT (Hill, 5m returns, top 1%) ===
+  right tail alpha = 2.80  (<3 = infinite skew/kurt territory; equities ~3)
+  left tail alpha = 2.76  (<3 = infinite skew/kurt territory; equities ~3)
+
+=== 7. RUNS: P(next same sign | k consecutive same-sign bars) ===
+  15m k=2: P(cont)=48.1%  N=56,845
+  15m k=3: P(cont)=47.6%  N=27,344
+  15m k=4: P(cont)=48.4%  N=13,015
+  15m k=5: P(cont)=47.6%  N=6,296
+  1h k=2: P(cont)=48.1%  N=14,365
+  1h k=3: P(cont)=48.1%  N=6,914
+  1h k=4: P(cont)=47.9%  N=3,329
+  1h k=5: P(cont)=49.2%  N=1,596
+
+=== 8. TREND-DAY ANATOMY (daily bars, dealing day) ===
+close in top/bottom 10% of range: 21.7% of days (uniform: 20%)
+close in top/bottom 25%: 53.4% (uniform: 50%)
+
+range used by 15:00 (xATR) -> additional range added after 15:00 (xATR):
+             days  mean_ext  med_ext
+bucket                              
+(0.0, 0.5]    177      0.19     0.11
+(0.5, 0.75]   411      0.15     0.08
+(0.75, 1.0]   363      0.16     0.06
+(1.0, 1.5]    246      0.18     0.09
+(1.5, 10.0]    73      0.30     0.12
+
+=== 9. COMPRESSION -> EXPANSION ===
+after a <0.6xATR day (N=180): next-day range = 0.89xATR
+after a >1.4xATR day (N=204): next-day range = 1.27xATR
+after NR4 day (N=273): next-day range = 0.97xATR vs all-day avg 1.03xATR
+corr(today r_atr, next r_atr) = 0.299
