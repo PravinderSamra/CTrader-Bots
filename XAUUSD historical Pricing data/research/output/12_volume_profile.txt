@@ -1,0 +1,25 @@
+profiles built: 1270 days | median VA width = 14.8$ (43% of ATR)
+
+=== 1. OPEN LOCATION vs PRIOR VALUE AREA ===
+open location: inside=52.1%  above=24.6%  below=23.3%
+  open inside (N=661): P(touch prior POC same day) = 84.6%
+  open  above (N=312): P(touch prior POC same day) = 41.3%
+  open  below (N=296): P(touch prior POC same day) = 50.0%
+
+=== 2. MAGNET / ACCEPTANCE when open OUTSIDE prior VA ===
+days opening outside VA: 608 (48% of days)
+P(price returns to nearer VA edge)          = 74.0%
+P(reaches prior POC)                        = 45.6%
+P(acceptance: 2 consecutive 15m closes in VA) = 65.3%
+'80% rule': P(full rotation to FAR edge | accepted) = 33.8%  (N=397; failed-out first: 40.3%; rest = neither by close)
+
+=== 3. POC ROTATION (user example) ===
+days touching prior POC: 1269 (100%)
+after first POC touch, first VA edge hit: vah=52.8%, val=45.9%, neither=1.3%
+displacement-confirm (move 30% of half-VA off POC): P(reach that edge before re-crossing POC by 30%) = 79.3% (N=1269)
+
+=== 4. NAKED POC REVISITS ===
+P(POC revisited next day) = 65.9%
+P(revisited within 5 days) = 82.7%
+P(revisited within 20 days) = 90.7%
+still naked after 20 days: 9.3%
