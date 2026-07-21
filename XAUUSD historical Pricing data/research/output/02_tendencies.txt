@@ -1,0 +1,44 @@
+=== A) RETURN AUTOCORRELATION (lag-1, log returns) ===
+ 1m: ac1 = -0.0084   (N=1,762,481)
+ 5m: ac1 = -0.0007   (N=352,922)
+15m: ac1 = -0.0029   (N=117,758)
+ 1h: ac1 = -0.0165   (N=29,497)
+
+5m lag-1 autocorr by session:
+  Asia 22-07    ac1 = +0.0030
+  London 07-12  ac1 = -0.0046
+  NY 12-21      ac1 = +0.0002
+
+5m autocorr by year (regime stability):
+  2021: ac1 = -0.0233
+  2022: ac1 = -0.0231
+  2023: ac1 = +0.0079
+  2024: ac1 = -0.0029
+  2025: ac1 = +0.0025
+  2026: ac1 = +0.0077
+
+After a large 5m bar (|ret| > 3*rolling sigma), next-30m in same direction:
+  N=5,112  continuation rate=46.9%  mean aligned fwd ret=+0.05 bp
+
+=== B) ASIAN RANGE (22:00-06:59 UTC) vs REST OF DAY ===
+days: 1290
+P(break Asian high during Lon/NY)      = 68.8%
+P(break Asian low)                     = 62.6%
+P(break BOTH sides)                    = 34.7%
+P(break at least one side)             = 96.7%
+one-side-only days: 799 (62%)  up-only 439, down-only 360
+  up-only days:   close beyond Asian high by day end: 69.0%
+  down-only days: close beyond Asian low  by day end: 70.3%
+London breaks Asian HI first (N=564): closes through 49.8% | closes past range MID (reversal) 32.1% | closes through OPPOSITE side 17.9%
+London breaks Asian LO first (N=478): closes through 50.0% | closes past range MID (reversal) 33.3% | closes through OPPOSITE side 22.8%
+(no London break of either side: N=248)
+
+=== C) PRIOR-DAY HIGH/LOW ===
+P(touch PDH) = 52.1%   P(touch PDL) = 44.4%   P(touch either) = 85.6%   P(inside day) = 14.4%
+P(close above PDH | touched PDH) = 52.6%
+P(close below PDL | touched PDL) = 48.8%
+
+=== D) ROUND NUMBERS ($100 levels) — magnet or barrier? ===
+time spent within $3 of a $100 level: 4.8% (uniform would be ~6%)
+abs 30m fwd move | near $100 lvl: 10.93 bp  vs elsewhere: 10.02 bp
+after crossing a $100 level, mean 30m follow-through in cross direction: +0.89 bp (N=3,308)
