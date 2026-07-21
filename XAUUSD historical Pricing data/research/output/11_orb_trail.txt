@@ -1,0 +1,27 @@
+ORB static far-side stop (baseline): n=1252 win%=42.3 avgR=+0.083 totR=+104.3 maxDD=-27.5R
+      size   mean
+year             
+2021    95 -0.119
+2022   255  0.183
+2023   252  0.118
+2024   257  0.033
+2025   254  0.125
+2026   139 -0.010
+ORB + chandelier ratchet 2.5*ATR5m: n=1252 win%=37.8 avgR=+0.018 totR=+22.7 maxDD=-26.0R
+      size   mean
+year             
+2021    95 -0.036
+2022   255  0.066
+2023   252  0.060
+2024   257 -0.027
+2025   254  0.026
+2026   139 -0.040
+ORB + chandelier ratchet 4.0*ATR5m: n=1252 win%=41.2 avgR=+0.059 totR=+74.2 maxDD=-23.7R
+      size   mean
+year             
+2021    95 -0.029
+2022   255  0.145
+2023   252  0.078
+2024   257  0.004
+2025   254  0.105
+2026   139 -0.053
