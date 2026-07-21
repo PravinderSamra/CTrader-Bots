@@ -145,6 +145,82 @@
         "adrUsedPct": 86
       },
       "outcome": null
+    },
+    {
+      "at": "2026-07-21T10:58:25.223Z",
+      "londonTime": "11:58 BST",
+      "mode": "POST_ORB",
+      "price": 10538.8,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 92% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "92% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDH 10589.4) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "UK Labour Market Report @ 07:00 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "STRUCTURE",
+          "rule": "R3",
+          "text": "ORB break UP is aligned with the BULLISH macro bias (+9) — continuation has the backdrop behind it."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +1.27%) — the cross-market lean is up."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to 92% of the 134.4-point ADR already consumed, a crowded-short pound sitting at its 89th percentile that could squeeze GBP higher at any moment, and UK CPI arriving tomorrow at 07:00 BST, any fresh upside break above 10520.2 is a low-conviction, low-fuel trade that risks a sharp reversal if sterling snaps back.",
+      "aiBullets": [
+        "The upside ORB break (+85.8pt gap plus further extension) has already absorbed nearly the entire 134.4pt ADR14 — only ~11pts of 'typical' range remain, making the prior day high at 10589.4 a stretch-only target roughly 50pts away.",
+        "GBP COT net short of -72,474 contracts improved by +17,517 week-on-week — the squeeze is in progress, and if sterling re-accelerates higher from its 89th-percentile reading, the sign-flip turns from neutral tailwind to active headwind for the index.",
+        "Copper +2.91% and Brent +0.83% together span two of the index's heaviest commodity sectors (miners and energy majors); this commodity surge is the primary reason the bullish bias reached +9 despite sterling crowding risk.",
+        "Tomorrow's UK CPI (07:00 BST, HIGH impact, 1 day away) creates a pre-positioned risk window — with the Bank Rate at 3.75% and an MPC meeting in 9 days, a hot print could reprice rate-cut odds and spike gilt yields, turning today's -2bp gilt move sharply into reverse."
+      ],
+      "bias": {
+        "score": 9,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": 10520.2,
+        "orbLow": 10472.9,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10520.2,
+        "overnightLow": 10433.8,
+        "priorDayHigh": 10589.4,
+        "priorDayLow": 10443.1,
+        "gapPct": 0.82,
+        "adr14": 134.4,
+        "adrUsedPct": 92
+      },
+      "outcome": null
     }
   ]
 }
