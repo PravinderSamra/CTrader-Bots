@@ -214,6 +214,82 @@
         "adrUsedPct": 123
       },
       "outcome": null
+    },
+    {
+      "at": "2026-07-22T12:26:24.887Z",
+      "londonTime": "13:26 BST",
+      "mode": "POST_ORB",
+      "price": 10729.35,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 126% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "126% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "RATES",
+          "rule": "R11",
+          "text": "20Y gilt +9bp — a fiscal-stress selloff; this historically drags the whole index regardless of the banks rotation."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10433.8) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "UK CPI @ 07:00 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "AI",
+          "rule": "R12",
+          "text": "Today's 09:48 BST AI session read: LONG toward 10680.9 (WAIT, 67%) — playbook BOTH_OK."
+        }
+      ],
+      "aiStanceLine": "Due to 126% of the 14-day ADR already consumed, a 20-year gilt blowout of +9bp triggering the fiscal-stress override, and the index already 141 points above the ORB high, any further upside break is chasing an exhausted move into a headwind from long-end rates.",
+      "aiBullets": [
+        "The gap of +134.6 points (1.27%) alone consumed 96% of the 140.2-point ADR before a single ORB candle formed — the upside ORB break had almost no range budget from the moment cash opened.",
+        "Gilt fiscal stress (20Y +9bp to 5.78%) is bearish for the whole index via the longEndStress override, contradicting the bullish direction of the ORB break — these two forces are pulling in opposite directions, reducing trend-day conviction.",
+        "At 10729 the index sits 141 points above the ORB high (10587.5) and 115 points above the prior week high (10616.2) — both levels are now beneath the market and offer no nearby magnet to anchor a continuation target.",
+        "The crowded-short GBP positioning (89th percentile, CoT net -72,474 contracts) means a sterling short-squeeze — which would be a FTSE headwind via the sign-flip — is a live tail risk that could accelerate any reversal from these stretched levels."
+      ],
+      "bias": {
+        "score": -1,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10587.5,
+        "orbLow": 10557.2,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10613.6,
+        "overnightLow": 10557.2,
+        "priorDayHigh": 10603.1,
+        "priorDayLow": 10433.8,
+        "gapPct": 1.27,
+        "adr14": 140.2,
+        "adrUsedPct": 126
+      },
+      "outcome": null
     }
   ]
 }
