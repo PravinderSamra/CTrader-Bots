@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-22T08:09:41.089Z",
+  "generatedAt": "2026-07-22T09:39:39.230Z",
   "yields": {
     "US10Y": 4.6,
     "US2Y": 4.21,
@@ -34,26 +34,26 @@
     "openInterestChange": 15702
   },
   "etfFlows": {
-    "gldTonnes": 983.4,
-    "gldWoWChange": -7.3,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 983.3,
+    "gldWoWChange": -0.1,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4114.73,
-    "XAGUSD": 59.256,
-    "EURUSD": 1.14067,
-    "USDJPY": 163.0375,
-    "USDCHF": 0.81217,
-    "USDCNH": 6.77548,
-    "GBPUSD": 1.3377,
-    "USDCAD": 1.40949,
-    "USDSEK": 9.71897,
-    "US500": 7484,
-    "GER40": 25134.05,
-    "UK100": 10631.5,
+    "XAUUSD": 4115.21,
+    "XAGUSD": 59.3725,
+    "EURUSD": 1.14112,
+    "USDJPY": 163.005,
+    "USDCHF": 0.812,
+    "USDCNH": 6.77328,
+    "GBPUSD": 1.33713,
+    "USDCAD": 1.40966,
+    "USDSEK": 9.70754,
+    "US500": 7486.7,
+    "GER40": 25158.05,
+    "UK100": 10685.65,
     "ADR_14day": 85.2,
     "ADR_usedToday": 64.9,
-    "goldSilverRatio": 69.4
+    "goldSilverRatio": 69.3
   },
   "dollarLiquidity": {
     "stlfsi": -0.882,
@@ -66,29 +66,29 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Gold hits two-week high as Fed outlook, Mideast conflict stay in focus - Reuters",
+      "headline": "Gold touches two-week high as investors monitor Mideast developments - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-22T01:51:00.000Z",
-      "hoursAgo": 6.3
+      "hoursAgo": 7.8
     },
     {
       "headline": "Goldman Sachs creates private markets platform as rich investors seek the next SpaceX and Stripe",
       "source": "CNBC",
       "publishedAt": "2026-07-21T18:23:32.000Z",
-      "hoursAgo": 13.8
+      "hoursAgo": 15.3
     },
     {
       "headline": "Emirates' Clark uses Farnborough to air industry frustrations over jets, engines - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-21T10:38:20.000Z",
-      "hoursAgo": 21.5
+      "hoursAgo": 23
     }
   ],
   "briefing": {
-    "biasScore": 3,
+    "biasScore": 2,
     "biasLabel": "BULLISH",
-    "confidence": 6,
-    "briefing": "Right now, the dominant forces shaping gold are a cautious Fed [the US central bank], lingering Middle East tensions, and a moderately soft US dollar — all of which tend to support higher gold prices. About 6 hours ago, Reuters reported that gold hit a two-week high, citing the Fed outlook and ongoing Mideast conflict as the key drivers; this is the only genuinely market-moving headline in the last 24 hours, as the other two news items (Goldman Sachs private markets and an aviation story) are completely unrelated to gold or the dollar. The directional bias leans BULLISH from here: the dollar index [DXY, a measure of how strong the dollar is] sits at 101.14, which is relatively weak, and weak dollars typically lift gold since gold is priced in dollars; real yields [the return on bonds after stripping out inflation] are modestly elevated but have not been rising sharply enough to suppress gold, and geopolitical risk remains elevated at 173.6 on the GPR index [a measure of global conflict tension]. Confidence is 6/10 — the bullish case is clear but ETF flows [money moving into or out of gold funds] have been in outflow for three straight weeks and large speculative traders slightly trimmed their bullish bets last week, which is a mild warning sign. There are no scheduled economic events on the calendar for today, so there is no specific news risk to manage this session — this is actually a clean window for trend-following. On price levels: the 14-day average daily range [typical daily price movement] is 85.2 points, and today has already used 64.9 of those points, meaning only about 20 points of typical movement may remain — so chasing a breakout late in the London session carries real risk of hitting the day's ceiling. Watch 4130 as the next resistance zone [a price level where sellers may emerge] and 4090–4095 as the key support area [a floor where buyers have previously stepped in]. For trade integration: the 1H trend is pointing upward, which gives you the green light to look for long [buy] setups on the 5M and 1M charts, but given the limited ADR remaining today, keep position size conservative and do not force an entry if price has already run hard — patience into New York open may offer a better-value pullback [a small dip back toward support]. Today's golden rule: when most of the day's expected move is already done, wait for a pullback rather than chasing the high.",
-    "generatedAt": "2026-07-22T08:09:57.967Z"
+    "confidence": 5,
+    "briefing": "Right now, the most relevant forces for gold are a moderately weak US dollar (the DXY — an index measuring dollar strength against major currencies — sits at 101.11, which is relatively low and generally supportive of gold), elevated geopolitical risk (the GPR index, which measures global political tension, reads 173.6 — a high level that historically pushes investors toward gold as a 'safe haven' asset), and real yields [the return on US government bonds after adjusting for inflation] that are rising slightly today (up 0.04%), which is a mild headwind for gold since higher real yields make bonds more attractive relative to gold. On the news side, the most relevant headline broke about 7-8 hours ago via Reuters: gold touched a two-week high as investors monitor Middle East developments — this kind of geopolitical worry is a classic driver of gold buying and likely explains the morning push higher. The other two headlines (Goldman Sachs private markets, airline industry) have no obvious connection to gold or the dollar and can be ignored. Given all this, the directional bias leans modestly BULLISH — geopolitical tension is real, the dollar is soft, and price is already printing two-week highs — but the rising real yields and a very strong Fed hold probability (88% chance of no rate cut at the July 29th meeting) act as a brake on any explosive upside. Confidence is 5/10; if real yields continue rising or geopolitical news cools, the bullish case weakens quickly. On scheduled events: the calendar data shows no economic releases today, so there is no specific news risk to manage during London or New York sessions — this is actually a slightly cleaner environment for technical trading. There are no high-impact events listed for later this week in the data, though the Fed meeting on July 29th is close enough that some traders may start positioning cautiously into next week. On key levels: gold is at $4,115. The 14-day Average Daily Range [the average size of gold's daily price move over the last two weeks] is $85.20, and today has already used $64.90 of that — meaning roughly $20 of 'typical' daily movement may remain. This suggests the big move for today is largely done, and chasing a breakout higher from here carries more risk. Watch $4,115 as current resistance and $4,080–$4,090 as a potential support zone [a price area where buyers have previously stepped in] for a pullback entry. For trade integration: the 1H trend appears to favour buyers given the two-week high, but with most of the ADR consumed and no fresh catalyst, this is a lower-conviction window — if you trade, use reduced position size and wait for a 5M pullback into a clear level rather than buying into extended price. Remember: when most of today's expected move is already used up, patience beats aggression — wait for price to come to you.",
+    "generatedAt": "2026-07-22T09:39:59.262Z"
   }
 }

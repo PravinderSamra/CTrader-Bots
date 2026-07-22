@@ -62,6 +62,82 @@
         "adrUsedPct": 56
       },
       "outcome": null
+    },
+    {
+      "at": "2026-07-22T09:40:44.139Z",
+      "londonTime": "10:40 BST",
+      "mode": "POST_ORB",
+      "price": 10685.3,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 123% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "123% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "RATES",
+          "rule": "R11",
+          "text": "20Y gilt +9bp — a fiscal-stress selloff; this historically drags the whole index regardless of the banks rotation."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10433.8) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "UK CPI @ 07:00 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.18%) — the cross-market lean is up."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "AI",
+          "rule": "R12",
+          "text": "Today's 09:48 BST AI session read: LONG toward 10680.9 (WAIT, 67%) — playbook BOTH_OK."
+        }
+      ],
+      "aiStanceLine": "Due to UK CPI having already detonated the range (123% of the 14-day ADR consumed pre-briefing), a fiscal-stress gilt spike of 9bp on the 20-year, and the current price (10685) sitting 72 points above the overnight high with no macro tailwind from GBP or copper, any continuation of the upside ORB break is structurally unsupported and fade setups back toward the 10613–10587 zone are the higher-probability play.",
+      "aiBullets": [
+        "Price at 10685 is 97.5 points above the ORB high of 10587.5 — yet 123% of the 140-point ADR14 is already spent, meaning statistically there is negative range budget remaining for trend continuation.",
+        "The 20Y gilt at 5.78% (+9bp today) combined with US500 -0.22% creates a dual macro headwind that the energy sector's Brent +1.82% boost only partially offsets — sector balance tilts net-bearish for the index.",
+        "GBP COT positioning is CROWDED_SHORT (-72,474 net contracts) but shifted +17,517 week-on-week — short-covering risk means a sudden GBP squeeze could add an unexpected bullish impulse to the index via the inverse sign-flip, the one scenario that reopens upside.",
+        "The ORB range itself (10587.5 high / 10557.2 low, a 30-point span) is narrow relative to the 140-point ADR14, suggesting pre-CPI compression that has since fully resolved — the information edge of the ORB setup has already been priced by 09:40 BST."
+      ],
+      "bias": {
+        "score": -1,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10587.5,
+        "orbLow": 10557.2,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10613.6,
+        "overnightLow": 10557.2,
+        "priorDayHigh": 10603.1,
+        "priorDayLow": 10433.8,
+        "gapPct": 0.86,
+        "adr14": 140.2,
+        "adrUsedPct": 123
+      },
+      "outcome": null
     }
   ]
 }
