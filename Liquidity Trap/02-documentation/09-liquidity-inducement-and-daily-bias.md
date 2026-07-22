@@ -154,6 +154,44 @@ Liquidity builds slowly and is consumed fast — quantified twice: "from the poi
 
 ## 4. Both-sides / ping-pong range trading
 
+Files 01–04 treat each setup as one-directional. IET 2026-04-28 "Ping Pong" demonstrates trading **both legs of the same day** — the trap move down, then the reversal up — as two independent instances of the same model, chained. This is the practical realization of file 03 §4.4 ("the target sweep may arm the next setup") with the missing operating rules.
+
+### 4.1 The worked NQ day (all cites IET 2026-04-28 "Ping Pong")
+
+1. **Context:** price already below old lows → "any sells automatically will be deemed low probability... you need to pair it with time" ([01:02]–[01:22]). The short is taken anyway *because* the time qualifier holds (stock open).
+2. **Leg 1 (short), pre-framed before it happens:** liquidity above the respected high ("tapped into this area once, twice, causing that sell-off — there's going to be liquidity above this high", [02:42]); equal lows below as target ("look at those equals the market left for us", [03:02]); "in order for me to look for a sell, I definitely need to see price above this high" ([02:42]–[03:02]). Stock-open volatility spikes the high → sellers trapped → LB above ("we have induced sellers and trapped them. We have no reason to run above that high... we're going to use this level as an area where we can place our stop loss", [04:42]–[05:02]). Entry at the stab: ~200 ticks/51 points stop, "down to these internal lows you're already achieving over a 1:3, and the full target down to the lows... almost a 1:5" ([05:02]–[05:22]).
+3. **Hinge:** the sell-off completes into the low-side pool at **10:00 a.m.** — "10:00 a.m. has now opened up and we are spiking out lows, trapping buyers, leaving internal highs intact" ([06:02]–[06:22]). The short's *target consumption* is simultaneously the long's *arming sweep*.
+4. **Leg 2 (long):** requirements re-verified from scratch — buildup below the low ("we are building a significant amount of liquidity below that low", [07:02]–[07:22]), LB to the left, time confluence ("we just swept out the previous 4-hour candle. Look at the time. 10:30", [07:22]), and a reason to go up ("we left an internal high... **if we didn't leave these highs, most likely I probably wouldn't be looking for this buy back up**. This is logic, reasoning for price to go back long up to here", [07:42]–[08:02]). Entry 10:50, target hit 16 minutes later ([08:22]–[08:43]).
+
+### 4.2 The extractable rules
+
+- **Each leg must independently satisfy the full model** (pool, trap, LB, target, time). The reversal long is *not* taken merely because the short's target was hit — the internal highs left behind are its precondition ([07:42]).
+- **The against-sequence leg needs a time excuse; the with-sequence leg doesn't.** Low-probability grading (§3.3) is overridden only by session-structure timing (stock open / 10:00 a.m. H4 roll) ([01:02]–[01:22], [08:43]–[09:03]).
+- **Stock-open moves are presumed traps:** "if price action delivers an entry in and around stock open, that move is typically going to be a trap move, and once the trap move is complete, aka the sell in this scenario, then you can look for that reversal" ([08:43]–[09:03]). I.e., the first NY move is faded, then ridden back.
+- **Rarity disclaimer:** "these days do not come often" ([08:43]). The default remains one-directional.
+- Range-context version of both-sides bookkeeping: in "no man's land" both edge pools are marked and *either* break is tradeable — "wait for one of them to get taken, and react accordingly... I waited for price to move bullish and run the sellers" (IET 2026-05-13 "Advanced Gold" [04:26]–[04:46]); the flip side is monitored even mid-trade: "I always like to look at it from the flip side too, just in case I'm incorrect... look at all these lows we've been building — could possibly provide us another buy opportunity after taking the lows out" (IET 2026-06-30 "Live Gold $9k" [01:43]–[02:23]).
+
+## 5. Stacking / scaling entries
+
+V1's scale-ins (file 04 §4) were adds to a live position below fresh mini-sweeps. IET 2026-05-05 "Stacking Entries" teaches a different structure: **sequential full entries in the same direction, each a complete standalone setup, justified by one shared surviving target** — closer to file 03 §7 row 7's stacked gold entries (V2) than to V1's adds.
+
+### 5.1 The governing rule (the new content)
+
+> "**If you guys want to learn how to stack entries, you need to understand: if our target is left intact, all that means is we have another opportunity to sell.**" (IET 2026-05-05 "Stacking Entries" [08:13]–[08:33])
+
+And its guard: "as long as what? Our target stays intact. This is very important. **If we stay above this low, sell setups are still active**, they're still valid" ([05:52]–[06:12], said of staying-*above* the target lows in the sell case). The stack closes when the shared target is consumed: "now that these lows have been taken, we're out of our positions. These are done. Our sells are completed" ([09:33]–[09:53]).
+
+### 5.2 The worked USDCAD stack (both cites IET 2026-05-05)
+
+- **Entry #1 (Asia, passive):** internal high respected → liquidity above; sweep leaves an LB; "once price did this, all I did was set a limit... Stop goes above the high. Let's open this up though for spread... this is almost a one-to-eight opportunity... even to this structural low, still a one-to-4.6" ([02:52]–[03:32]). Taken asleep, managed by nobody ("I'm sleeping, so it doesn't matter what happens... I have a stop loss set and I have a target set", [04:52]).
+- **Between entries:** post-trap reactions are re-labeled traps that *feed* the next entry: "since we have taken out the highs, you have to deem these areas as traps. If we do react off them, these bullish reactions will only provide us **another opportunity to sell**" ([05:32]–[05:52]).
+- **Entry #2 (New York, next day):** a fresh respected high prints; the question asked is the standard checklist — "we have a level of liquidity. Awesome. We want to sell above it, of course. But do we have a liquidity block to take our entry off of?" — and the answer is **entry #1's own LB, reused**: "last night, aka our initial entry, left a liquidity block... New York opens up. We get a spike up and, look at that, right into our area" ([06:52]–[07:33]). Stop above the high "with breathing room... you forex guys know you need to be leaving breathing room for spread" ([07:33]).
+- **Targets for the stack:** the engineered buyer liquidity built on the way up — "all of this buyer liquidity that was engineered on the way up, you want to use that as your target" ([07:53]).
+
+### 5.3 Reconciliation with V1's scale-ins (my analysis)
+
+Compatible but distinct layers: V1 adds contracts *inside one trade* on fresh LTF sweeps with per-add invalidation (file 04 §4); IET stacks *separate trades over hours/days* under one HTF target, each with its own full arming sequence and stop. The shared invariants: every add/stack requires its own sweep-plus-LB, and everything dies when the shared target is consumed. The Masterclass NQ trade and TTE 13 show the same pattern intraday — "entry, build, entry, build, entry... all three of these entries repeatable, the exact same thing over and over" with per-entry LBs and RRs 1:4/1:8/1:8 (IET 2026-02-17 "Training The Eyes 13" [07:12]–[08:33]).
+
 ## 5. Stacking / scaling entries
 
 ## 6. Confirmations of existing rules (brief)
