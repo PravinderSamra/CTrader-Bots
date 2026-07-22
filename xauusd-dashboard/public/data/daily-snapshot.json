@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-07-21T20:14:35.820Z",
+  "generatedAt": "2026-07-22T08:09:41.089Z",
   "yields": {
-    "US10Y": 4.55,
-    "US2Y": 4.18,
-    "realYield10Y": 2.31,
-    "realYield5Y": 2.01,
-    "curve2s10s": 37,
-    "breakeven10Y": 2.25,
+    "US10Y": 4.6,
+    "US2Y": 4.21,
+    "realYield10Y": 2.35,
+    "realYield5Y": 2.05,
+    "curve2s10s": 39,
+    "breakeven10Y": 2.26,
     "breakeven5Y": 2.28,
-    "forward5y5y": 2.22,
+    "forward5y5y": 2.24,
     "dayOverDay": {
-      "US10Y": -0.02,
-      "US2Y": 0.02,
-      "realYield10Y": -0.04
+      "US10Y": 0.05,
+      "US2Y": 0.03,
+      "realYield10Y": 0.04
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-07-29",
-    "probCut": 8,
-    "probHold": 92,
+    "probCut": 12,
+    "probHold": 88,
     "probHike": 0
   },
   "marketVolatility": {
@@ -34,26 +34,26 @@
     "openInterestChange": 15702
   },
   "etfFlows": {
-    "gldTonnes": 990.7,
-    "gldWoWChange": -3.2,
+    "gldTonnes": 983.4,
+    "gldWoWChange": -7.3,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4084.395,
-    "XAGUSD": 58.723,
-    "EURUSD": 1.14011,
-    "USDJPY": 163.227,
-    "USDCHF": 0.81271,
-    "USDCNH": 6.76886,
-    "GBPUSD": 1.33788,
-    "USDCAD": 1.41056,
-    "USDSEK": 9.70767,
-    "US500": 7506.7,
-    "GER40": 25078.55,
-    "UK100": 10595.6,
-    "ADR_14day": 85,
-    "ADR_usedToday": 86.7,
-    "goldSilverRatio": 69.6
+    "XAUUSD": 4114.73,
+    "XAGUSD": 59.256,
+    "EURUSD": 1.14067,
+    "USDJPY": 163.0375,
+    "USDCHF": 0.81217,
+    "USDCNH": 6.77548,
+    "GBPUSD": 1.3377,
+    "USDCAD": 1.40949,
+    "USDSEK": 9.71897,
+    "US500": 7484,
+    "GER40": 25134.05,
+    "UK100": 10631.5,
+    "ADR_14day": 85.2,
+    "ADR_usedToday": 64.9,
+    "goldSilverRatio": 69.4
   },
   "dollarLiquidity": {
     "stlfsi": -0.882,
@@ -66,35 +66,29 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Gold hits two-week high as Fed outlook, Mideast conflict stay in focus - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-07-22T01:51:00.000Z",
+      "hoursAgo": 6.3
+    },
+    {
       "headline": "Goldman Sachs creates private markets platform as rich investors seek the next SpaceX and Stripe",
       "source": "CNBC",
       "publishedAt": "2026-07-21T18:23:32.000Z",
-      "hoursAgo": 1.9
+      "hoursAgo": 13.8
     },
     {
       "headline": "Emirates' Clark uses Farnborough to air industry frustrations over jets, engines - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-21T10:38:20.000Z",
-      "hoursAgo": 9.6
-    },
-    {
-      "headline": "Gold gains on hopes of de-escalation in Middle East conflict - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-07-21T04:08:00.000Z",
-      "hoursAgo": 16.1
-    },
-    {
-      "headline": "Dollar steady as investors weigh Middle East jitters against softer inflation data - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-07-21T01:35:00.000Z",
-      "hoursAgo": 18.7
+      "hoursAgo": 21.5
     }
   ],
   "briefing": {
-    "biasScore": 1,
-    "biasLabel": "NEUTRAL",
-    "confidence": 4,
-    "briefing": "Right now, the dominant forces pulling on gold are a slightly weaker US dollar (the DXY, which measures dollar strength against a basket of currencies, sits at 101.19), high but gently easing real yields (the 'real yield' is the return investors get after accounting for inflation — at 2.31% on the 10-year, it is still historically high, which usually works against gold), and a modest geopolitical risk backdrop. On the news front, the most relevant headline came roughly 16 hours ago when Reuters reported that gold gained on hopes of de-escalation in the Middle East conflict — that kind of headline typically gives gold a short-lived safe-haven lift, but de-escalation news actually removes a support pillar for gold rather than adding one, so this may have already faded. A second headline from about 19 hours ago noted the dollar was steady as investors weighed Middle East uncertainty against softer inflation data — softer inflation tends to reduce pressure on the Fed to keep rates high, which is mildly supportive for gold. No other headlines in the last 24 hours appear market-moving. Directional bias is NEUTRAL leaning very slightly bullish: gold is trading at $4,084, the Fed is almost certain to hold rates at its July 29th meeting (92% probability), ETF flows [money flowing into gold-backed funds] have been negative for three weeks running, and large speculative traders trimmed their bullish bets last week — none of this screams a strong directional push. Confidence is 4/10; a clear break above recent highs or a fresh geopolitical escalation headline would shift the bias higher, while a dollar rally or a hawkish Fed comment could push it lower. The calendar data shows no scheduled economic events today, and there are no upcoming high-impact events flagged for later this week, which removes a major source of pre-event caution — but it also removes a clear catalyst to spark a big move. On levels, the 14-day Average Daily Range [the typical daily price swing] is $85, and today's range has already used $86.70 of that — meaning the market has essentially hit its average daily move, so a large new directional push today is unlikely and chasing moves at this stage carries extra risk. For trade integration: given the exhausted daily range, neutral positioning, and lack of fresh catalysts, this is a low-conviction environment — if you do trade, reduce your position size and wait for a clean pullback [a temporary dip in an uptrend] on the 5-minute chart before entering, rather than chasing price at current levels. When the daily range is already fully used up, patience is your edge — wait for tomorrow's fresh range to open up before pressing new trades.",
-    "generatedAt": "2026-07-21T20:14:52.946Z"
+    "biasScore": 3,
+    "biasLabel": "BULLISH",
+    "confidence": 6,
+    "briefing": "Right now, the dominant forces shaping gold are a cautious Fed [the US central bank], lingering Middle East tensions, and a moderately soft US dollar — all of which tend to support higher gold prices. About 6 hours ago, Reuters reported that gold hit a two-week high, citing the Fed outlook and ongoing Mideast conflict as the key drivers; this is the only genuinely market-moving headline in the last 24 hours, as the other two news items (Goldman Sachs private markets and an aviation story) are completely unrelated to gold or the dollar. The directional bias leans BULLISH from here: the dollar index [DXY, a measure of how strong the dollar is] sits at 101.14, which is relatively weak, and weak dollars typically lift gold since gold is priced in dollars; real yields [the return on bonds after stripping out inflation] are modestly elevated but have not been rising sharply enough to suppress gold, and geopolitical risk remains elevated at 173.6 on the GPR index [a measure of global conflict tension]. Confidence is 6/10 — the bullish case is clear but ETF flows [money moving into or out of gold funds] have been in outflow for three straight weeks and large speculative traders slightly trimmed their bullish bets last week, which is a mild warning sign. There are no scheduled economic events on the calendar for today, so there is no specific news risk to manage this session — this is actually a clean window for trend-following. On price levels: the 14-day average daily range [typical daily price movement] is 85.2 points, and today has already used 64.9 of those points, meaning only about 20 points of typical movement may remain — so chasing a breakout late in the London session carries real risk of hitting the day's ceiling. Watch 4130 as the next resistance zone [a price level where sellers may emerge] and 4090–4095 as the key support area [a floor where buyers have previously stepped in]. For trade integration: the 1H trend is pointing upward, which gives you the green light to look for long [buy] setups on the 5M and 1M charts, but given the limited ADR remaining today, keep position size conservative and do not force an entry if price has already run hard — patience into New York open may offer a better-value pullback [a small dip back toward support]. Today's golden rule: when most of the day's expected move is already done, wait for a pullback rather than chasing the high.",
+    "generatedAt": "2026-07-22T08:09:57.967Z"
   }
 }
