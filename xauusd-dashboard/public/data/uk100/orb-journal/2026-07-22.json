@@ -61,7 +61,29 @@
         "adr14": 140.2,
         "adrUsedPct": 56
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-22T16:19:21.720Z",
+        "fwd1hPct": 0.43,
+        "fwd3hPct": 0.81,
+        "toClosePct": 0.88,
+        "maxUpPct": 1.21,
+        "maxDownPct": 0.35,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R10",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R13",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          }
+        ]
+      }
     },
     {
       "at": "2026-07-22T09:40:44.139Z",
@@ -137,7 +159,37 @@
         "adr14": 140.2,
         "adrUsedPct": 123
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-22T16:19:21.862Z",
+        "fwd1hPct": 0.28,
+        "fwd3hPct": 0.52,
+        "toClosePct": 0.36,
+        "maxUpPct": 0.69,
+        "maxDownPct": -0.15,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R13",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R12",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-07-22T10:59:52.830Z",
@@ -213,7 +265,41 @@
         "adr14": 140.2,
         "adrUsedPct": 123
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-22T16:19:22.001Z",
+        "fwd1hPct": 0.21,
+        "fwd3hPct": 0.27,
+        "toClosePct": 0.14,
+        "maxUpPct": 0.47,
+        "maxDownPct": -0.23,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R13",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R8",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R12",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-07-22T12:26:24.887Z",
@@ -289,7 +375,37 @@
         "adr14": 140.2,
         "adrUsedPct": 126
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-22T16:19:22.149Z",
+        "fwd1hPct": 0.11,
+        "fwd3hPct": -0.05,
+        "toClosePct": -0.05,
+        "maxUpPct": 0.28,
+        "maxDownPct": -0.21,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R13",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R12",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-07-22T14:58:27.696Z",
@@ -365,7 +481,122 @@
         "adr14": 140.2,
         "adrUsedPct": 144
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-22T16:19:22.295Z",
+        "fwd1hPct": -0.14,
+        "fwd3hPct": null,
+        "toClosePct": -0.14,
+        "maxUpPct": 0,
+        "maxDownPct": -0.3,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R13",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R12",
+            "verdict": "FLAT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-07-22T16:19:18.955Z",
+      "londonTime": "17:19 BST",
+      "mode": "CLOSED",
+      "price": 10723.4,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 144% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "144% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "RATES",
+          "rule": "R11",
+          "text": "20Y gilt +9bp — a fiscal-stress selloff; this historically drags the whole index regardless of the banks rotation."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "UK CPI @ 07:00 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.5%) — the cross-market lean is up."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "AI",
+          "rule": "R12",
+          "text": "Today's 09:48 BST AI session read: LONG toward 10680.9 (WAIT, 67%) — playbook BOTH_OK."
+        }
+      ],
+      "aiStanceLine": "Due to 144% of the 14-day average daily range already consumed, a 9bp fiscal-stress gilt blowout in banks, and a 128.7-point gap up already baked in from the 07:00 CPI event, any fresh ORB breakout attempt faces a near-empty tank and a macro headwind that makes fades toward the 10,600 prior-day high cluster the higher-probability play.",
+      "aiBullets": [
+        "Current price at 10,723.4 sits 135.9 points above the ORB high of 10,587.5 — the index has already travelled almost one full 14-day ADR (140.2pts) beyond the opening range, making any long breakout chase extraordinarily late.",
+        "The 128.7-point gap up (1.21%) at the open was almost certainly CPI-driven positioning rather than sustained demand — gap-fill risk toward prior close 10,594.7 is elevated now that the news catalyst is past.",
+        "Banks sector is BEARISH due to 20Y gilt +9bp fiscal-stress override, yet the index is up 1.21% — this divergence between index level and a top-weight sector suggests the rally is narrow and fragile.",
+        "GBP COT net short of -72,474 contracts is CROWDED_SHORT, but improved by +17,517 week-on-week — a continued short-cover squeeze in sterling could cap or reverse upside in FTSE, adding asymmetric risk to long ORB breaks."
+      ],
+      "bias": {
+        "score": 2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10587.5,
+        "orbLow": 10557.2,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10613.6,
+        "overnightLow": 10557.2,
+        "priorDayHigh": 10603.1,
+        "priorDayLow": 10433.8,
+        "gapPct": 1.21,
+        "adr14": 140.2,
+        "adrUsedPct": 144
+      },
+      "outcome": {
+        "resolvedAt": "2026-07-22T16:19:22.295Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }

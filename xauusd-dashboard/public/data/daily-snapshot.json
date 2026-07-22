@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-22T14:57:35.046Z",
+  "generatedAt": "2026-07-22T16:18:15.598Z",
   "yields": {
     "US10Y": 4.6,
     "US2Y": 4.21,
@@ -34,26 +34,26 @@
     "openInterestChange": 15702
   },
   "etfFlows": {
-    "gldTonnes": 975.7,
-    "gldWoWChange": -4.2,
+    "gldTonnes": 974.1,
+    "gldWoWChange": -1.6,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4147.26,
-    "XAGUSD": 60.201,
-    "EURUSD": 1.14083,
-    "USDJPY": 163.111,
-    "USDCHF": 0.81361,
-    "USDCNH": 6.77487,
-    "GBPUSD": 1.33751,
-    "USDCAD": 1.40867,
-    "USDSEK": 9.69578,
-    "US500": 7501.2,
-    "GER40": 25176.05,
-    "UK100": 10736.6,
+    "XAUUSD": 4154.37,
+    "XAGUSD": 60.14,
+    "EURUSD": 1.14075,
+    "USDJPY": 163.113,
+    "USDCHF": 0.81417,
+    "USDCNH": 6.77464,
+    "GBPUSD": 1.33665,
+    "USDCAD": 1.40924,
+    "USDSEK": 9.69956,
+    "US500": 7523.2,
+    "GER40": 25204.05,
+    "UK100": 10722,
     "ADR_14day": 85.2,
-    "ADR_usedToday": 86.6,
-    "goldSilverRatio": 68.9
+    "ADR_usedToday": 89.3,
+    "goldSilverRatio": 69.1
   },
   "dollarLiquidity": {
     "stlfsi": -0.882,
@@ -69,20 +69,20 @@
       "headline": "Gold firms to two-week peak on softer dollar; Fed outlook in focus - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-22T01:51:00.000Z",
-      "hoursAgo": 13.1
+      "hoursAgo": 14.5
     },
     {
       "headline": "Goldman Sachs creates private markets platform as rich investors seek the next SpaceX and Stripe",
       "source": "CNBC",
       "publishedAt": "2026-07-21T18:23:32.000Z",
-      "hoursAgo": 20.6
+      "hoursAgo": 21.9
     }
   ],
   "briefing": {
     "biasScore": 2,
     "biasLabel": "BULLISH",
     "confidence": 5,
-    "briefing": "REGIME LINE: Gold is being driven by a moderately soft US Dollar (DXY at 101.13, meaning the dollar index is relatively weak), rising bond yields [the interest rate governments pay on their debt — normally a headwind for gold, but being offset here], and an elevated geopolitical risk reading of 173.6, which suggests ongoing global uncertainty that tends to push investors toward gold as a safe haven. RECENT CATALYSTS: The only gold-relevant headline is from Reuters, published roughly 13 hours ago, noting that gold firmed to a two-week high on a softer dollar. There are no fresh headlines in the last few hours that would explain a specific push or pull in price right now — so the current level of ~$4,147 appears to be consolidating after that earlier move. DIRECTIONAL BIAS: The bias leans modestly UP. The dollar is soft, geopolitical risk is elevated, and gold is already at a two-week high, which confirms short-term bullish momentum [prices moving higher]. However, real yields [bond yields after stripping out inflation] are sitting at 2.35%, which is quite high — high real yields make gold less attractive, acting as a ceiling on how far gold can run. The ETF [exchange-traded fund, a way big institutions buy gold] flows show three weeks of outflows, meaning large players have been quietly selling — this tempers enthusiasm. CONFIDENCE SCORE: 5/10. The view shifts bearish if DXY bounces above 102 or real yields climb further; it strengthens bullish if dollar weakness continues and price holds above $4,130. EVENT RISK: The calendar is completely empty for today — no scheduled economic news to watch. There are also no upcoming high-impact events visible in this week's calendar data, so there is no major 'event risk build-up' caution needed right now. KEY LEVELS: Today's ADR [Average Daily Range — the typical distance price travels in one day over the last 14 days] is 85.2 points, and price has already moved 86.6 points today — meaning today's typical range is essentially USED UP. This is a critical warning: chasing a move now risks buying near the day's high with very little room left before a natural reversal. Watch $4,130 as near-term support and $4,160–4,165 as the next resistance zone. TRADE INTEGRATION: Because today's daily range is already exhausted, this is NOT a good window to enter new long [buy] trades with full size — the risk/reward is poor. If you are already in a long trade from earlier, consider protecting profits with a tight stop. Wait for either a pullback to a clean level like $4,120–4,130 on the 5-minute chart, or for tomorrow's fresh range to open. Keep position size small given the 5/10 confidence. REMEMBER: When the daily range is already used up, patience beats bravery — wait for price to come to you, not the other way around.",
-    "generatedAt": "2026-07-22T14:57:53.239Z"
+    "briefing": "REGIME LINE: Gold is being driven right now by a softer US Dollar (meaning the dollar has weakened, which typically pushes gold higher since they tend to move in opposite directions) and ongoing uncertainty around what the Federal Reserve will do next with interest rates. The dollar index (DXY) sits at 101.15 — relatively weak territory — while real yields [the return investors get on US bonds after accounting for inflation] are elevated at 2.35%, which would normally be a headwind for gold. The fact that gold is pushing toward $4,154 despite high real yields tells you the dollar weakness and safe-haven demand [buying gold as protection against uncertainty] are winning the tug-of-war right now. RECENT CATALYSTS: The only directly relevant headline is from Reuters, published roughly 14.5 hours ago, noting gold firming to a two-week peak on a softer dollar. The Goldman Sachs private markets story from 22 hours ago has no meaningful relevance to gold or the dollar today. Nothing fresh has broken in the last few hours, so this move is likely running on existing momentum rather than a new shock. DIRECTIONAL BIAS: Bias leans mildly BULLISH — price has already pushed to a two-week high, the dollar is soft, and geopolitical risk [GPR at 173.6, reflecting elevated global tensions] continues to underpin demand. However, real yields are still high, ETF flows [money moving in and out of gold-backed funds] have been negative for three weeks running, and large speculative traders [COT net longs] trimmed their bullish bets by over 7,000 contracts last week — all reasons to stay cautious rather than aggressive. CONFIDENCE SCORE: 5/10. The bullish lean could reverse quickly if the dollar strengthens, yields spike further, or risk appetite improves sharply. EVENT RISK: The calendar provided shows no scheduled news events today — no Fed speakers, no data releases. That's actually a caution flag of its own: thin news days can produce choppy, stop-hunting [sudden sharp moves designed to trigger trader stop-losses] price action, especially late in the New York session. No major high-impact events appear in the calendar for the rest of the week either, though the Fed meeting is one week away (July 29) — markets may start trading cautiously into that window as soon as tomorrow. KEY LEVELS: With a 14-day average daily range [the typical distance price travels in one day] of $85.20 and today's range already at $89.30, price has already exceeded its average daily move. This is critical — it means the bulk of today's directional energy is likely spent. Avoid chasing new entries expecting another large leg today. Watch $4,154 as the current peak; a clean hold above this could signal further extension, while a rejection could see price drift back toward the $4,120–$4,130 zone. TRADE INTEGRATION: Given that today's ADR is already exhausted, the 1H trend is bullish, but entering new long trades [buying positions] right now carries poor risk-to-reward [the ratio of potential profit vs potential loss]. The smarter play is to wait for a pullback [a temporary price dip] into a 1H demand zone [a price area where buyers previously stepped in strongly], then look for a 5M signal to confirm buying interest before entering on the 1M chart — this is the ICT approach working as designed. Keep position size small given moderate confidence and a Fed meeting building on the horizon. Screenshot this: When the day's average range is already exceeded, patience beats participation — wait for price to come to you, not the other way around.",
+    "generatedAt": "2026-07-22T16:18:39.493Z"
   }
 }
