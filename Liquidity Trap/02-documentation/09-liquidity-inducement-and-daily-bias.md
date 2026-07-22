@@ -101,6 +101,57 @@ The operational habit for using old LBs: "what I like to do is grab the whole ar
 
 ## 3. The daily-bias method — deriving intraday bias from liquidity only
 
+The channel never says the phrase "daily bias" (§0 note), but it teaches a complete, repeatable method for deriving each day's tradeable direction from liquidity alone — "purely just direction and bias in the market" (IET 2026-01-31 "Training The Eyes 12" [05:49]). Assembled procedure:
+
+### 3.1 Higher timeframe first, or nothing
+
+"I really want you guys to get used to starting off on the higher. **If you don't see anything on the higher, anything relevant, then you shouldn't be going to the lower time frame**" (IET 2026-07-21 "Correct Liquidity" [01:06]). Every trade breakdown in the corpus starts daily/4H → 1H → 15m/5m/1m (e.g., "I always build my narrative from the higher down to the lower", IET 2026-02-24 "$6,600 UJ" [00:42]; the whole of IET 2026-04-14 "Step By Step"). Timeframe choice is pragmatic: "whatever time frame makes sense in that given moment is what you need to be using... sometimes the 4-hour will make more sense, sometimes the daily does" (IET 2026-03-03 "All You Need" [00:42]); when a chart is "squeezed up" and unreadable, go *down* one timeframe to open it up (IET 2026-02-24 [01:42]; 2026-03-17 [02:24]).
+
+### 3.2 The two-lines doctrine (the actual bias algorithm)
+
+Mark the confirmed pool above and the confirmed pool below; everything between is noise:
+
+> "Look how we've essentially trapped price with two lines. That's it. We have these lows intact down here and we have these highs intact up here... we're not interested in price unless it takes these highs out or we take out these lows. Look at the clarity you can now have. **Everything in between here is now just going to be known as noise**." (IET 2026-07-21 "Correct Liquidity" [11:47]–[12:27])
+
+The in-between region is named: "I call this like **no man's land**... very choppy price action. This is where build-up of liquidity happens. I'm typically not trading in here. I want to see price either above or below... I will wait days if I have to, or weeks" (IET 2026-05-13 "Advanced Gold" [02:05]–[02:25]); "we plotted on the highs, we plotted on the lows. Anything in between here is going to be gross... This is building massive amounts of liquidity for retail. We stay away from that" (IET 2026-04-07 "Why You Can't Trade" [05:46]–[06:06]). The waiting rule: "mark out the lows, mark out the highs, **wait for one of them to get taken, and react accordingly**" (IET 2026-05-13 [04:26]–[04:46]).
+
+This packages file 02's marking procedure into a daily decision rule: the day's bias is *conditional* until one of the two lines breaks; the break defines both the trap just completed and the draw toward the other line.
+
+### 3.3 Bias assignment once a side is taken
+
+- Taken side → that direction is done: "now that we've taken out all of the liquidity to the upside, you can anticipate a reaction back down" (IET 2026-01-31 "Training The Eyes 12" [02:26]–[02:33] inline tags); "now that we've taken out these lows, your eyes have to glue towards these highs. This is the next point of liquidity" (IET 2026-01-31 [05:53]–[05:59]).
+- Lockout with a probability grading (new nuance): trades against the sequence aren't merely forbidden, they're *downgraded* — "since we are trading below old lows already, **sells will automatically be deemed lower probability**. Doesn't mean a sell can't occur, and it doesn't mean you can't take any sells. However, you need to pair it with time" (IET 2026-04-28 "Ping Pong" [01:02]–[01:22]); "once price starts taking out this high, buys should be out of your mind. 100%... I don't care if we actually move up and take out the high once more. Automatically, it's going to be lower probability" (IET 2026-07-14 "You Don't Know Liquidity" [12:36]–[12:56]). This softens V1's absolute lockout (file 02 §D) into a probability filter with a stated exception channel (time confluence) — a genuine refinement.
+- Bias holds only while the target pool survives: "**as long as the highs stay intact, whatever happens below this high, buys are valid. Cuz that's the target**" (IET 2026-06-30 "Live Gold $9k" [04:04]); "once that target's taken, the sell is invalid" (IET 2026-04-07 [03:02]–[03:22]); "let's just say price takes the highs — you don't even have a buy target anymore. However, price still sells off, takes the lows. Why would you buy right here? That makes no sense because there's no reason for price to go higher anymore. We took the liquidity" (IET 2026-07-21 [11:07]–[11:27]). After the run completes: "the highs are taken... **buys are definitely off the cards now**" (IET 2026-06-30 [12:14]).
+
+### 3.4 The previous-day-high/low frame (the daily bias in candle form)
+
+The daily candle apparatus, absent from files 01–04, supplies the concrete "what do I expect today" call (IET 2026-07-07 "Liquidity Logic" throughout):
+
+- **After a wild outside day** (spiked both Monday's high and the lows): "typically this following day is going to be no trading for me... I anticipate price to have more of an inside day, meaning we're going to trade below previous daily high and above previous daily low. And typically in those conditions... it's just going to be small in-and-out scalpy kind of trades... I'm usually on the brakes" (IET 2026-07-07 [02:43]–[03:23]).
+- **Next-day script from the daily chart alone:** "since Wednesday has closed up, we have a PDL that we have yet to run... I don't believe Tuesday's low needs to get ran. Why? We just ran that level of liquidity. This low can act as a liquidity block. So what I'm anticipating just off the daily chart alone is Thursday to open up, we spike down below Wednesday's low, we hold Tuesday's [low], we use it as an LB, and eventually we can trade higher... Wednesday's high could be an intraday target; if you have more of a swing target, possibly Tuesday's high" (IET 2026-07-07 [07:23]–[08:03]). The play captured "the whole daily range, from PDL to PDH... a 1:9" (IET 2026-07-07 [10:23]–[10:43]).
+- **The same candle logic is fractal:** the identical read executed on the 30-minute chart — previous 30m candle's low left unran, next candle spikes it → entry ("same thing's now happening on the 30-minute chart... the next candle comes in and boom, we spike out the previous 30-minute low. Boom, that is your entry", IET 2026-07-07 [10:03]–[10:23]).
+- **Day-boundary confluence:** "Friday's high, Friday's low. Great, great confluence. We've talked about this a million times on the channel. Monday spikes above Friday['s high]. Boom. We now have a great target to the downside, aka Friday's low" (IET 2026-07-14 "You Don't Know Liquidity" [17:36]); the trade thesis "price to trade above Monday's high... then sell off into Friday's low and eventually lows in the left-hand side" (IET 2026-07-07 [02:03]–[02:23]).
+- **No-trade calendar days:** "if there ever is a bank holiday, do not trade, guys. Do not trade... It is just simply a no trading day" (IET 2026-07-14 [09:56]–[10:16]).
+
+### 3.5 The H4-candle / 10:00 a.m. model (the flagship timing-plus-bias rule)
+
+A fully specified model, new relative to files 01–04 (V1 only *observed* a 4H-close entry at 10:00; here it is systematized) (all IET 2026-02-10 "Simple Strategy"):
+
+1. The reference candle is the **6:00 a.m.–10:00 a.m. (NY) H4 candle**: "we're going to be talking about the 6 a.m. to 10:00 a.m. H4 candle... Typically, I am trading only New York session" ([01:27]–[02:07]).
+2. At **10:00 a.m.** the next H4 candle opens — "a very, very powerful time, especially in the futures market" ([01:47]–[02:07]).
+3. Bullish case: **longs only below the previous H4 low, only around/after 10:00** — "once we trade below previous 4-hour low, this is when you want to start looking for longs... We are not longing until that low is taken out. Once the low is taken out, longs are active. It's a very strict rule for this model" ([02:47]–[03:27]).
+4. The sell-off into the sweep is pre-classified: "typically we'll view this whole sell-off from high to low being false... That's what we usually call the **10:00 a.m. reversal**" ([07:47]–[08:07]).
+5. The entry still requires the standard plumbing — an LB and a stop covering the left-hand low: "we need to make sure there's actually a proper entry... my stop loss always covers this low to the left-hand side" ([05:47]–[07:27]).
+6. Mechanical target option: **the previous H4 high** — "you can just target that H4 high. Very systematic, very repeatable. It's a stupid simple strict model that you can use on a daily basis" ([08:27]–[08:47]) — or liquidity targets beyond it.
+
+Corroboration across the corpus: the both-sides day pivots at 10:00/10:30 with "we just swept out the previous 4-hour candle. Look at the time" (IET 2026-04-28 "Ping Pong" [07:22]); "if price action delivers an entry in and around stock open, that move is typically going to be a trap move, and once the trap move is complete... then you can look for that reversal" (IET 2026-04-28 [08:43]–[09:03]); a 10:00 a.m. sell-off runs the marked internal level "what a coincidence" (IET 2026-07-21 [07:06]–[07:26]); the gold short whose "clean time... was perfect. To the minute" — the 9:00 a.m. simultaneous 5m/1H/4H(CFD) candle open spikes the high and closes back below → the **only** situation where a candle-closure entry is allowed: "the only time I ever take a candle closure entry is when I have a time confluence to a T, and it has to be perfect" (IET 2026-07-14 [19:18]–[19:58]).
+
+**Note (my analysis):** this makes *time* a first-class arming input in IET's system in a way files 01–04 only hinted at through V1's session filter: stock open (9:30), 10:00 a.m. H4 roll, Asia open (8:00 p.m. — used as the "great timing confluence" for the Asia entry in IET 2026-07-07 [09:03], [11:03]–[11:23]), and day boundaries all act as trigger qualifiers.
+
+### 3.6 Time asymmetry of build vs run (expectation-setting)
+
+Liquidity builds slowly and is consumed fast — quantified twice: "from the point where we started building liquidity: 5 days of price action. And then all it took was 18 hours for us to swallow all of that price action up" (IET 2026-06-09 "Everything Liquidity" [12:06]); "4 and a half days basically, we had a build-up... rapid move back down: 19 hours. So 25% of the time" (IET 2026-06-09 [15:26]–[15:46]). Setups can take "four days... seven days, eight hours of waiting" to arm (IET 2026-04-07 [05:46], [08:29]–[08:49]) — and marked levels stay valid meanwhile ("leave the lows marked on or leave the highs marked on. It will be used in the future", IET 2026-04-07 [01:02]–[01:22]; the Thursday internal lows used "24 hours later, and it aligns perfectly with news", IET 2026-07-21 [14:29]–[14:49]).
+
 ## 4. Both-sides / ping-pong range trading
 
 ## 5. Stacking / scaling entries
