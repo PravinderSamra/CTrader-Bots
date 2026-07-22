@@ -682,6 +682,91 @@
         "verdict": "UNSCORABLE",
         "signalVerdicts": []
       }
+    },
+    {
+      "at": "2026-07-22T20:08:37.267Z",
+      "londonTime": "21:08 BST",
+      "mode": "CLOSED",
+      "price": 10705.9,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 144% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "144% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "RATES",
+          "rule": "R11",
+          "text": "20Y gilt +9bp — a fiscal-stress selloff; this historically drags the whole index regardless of the banks rotation."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10433.8) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 89th percentile of its 20-day range and still rising — a persistent FX headwind capping upside breaks (weak GBP is what lifts FTSE)."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "UK CPI @ 07:00 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "AI",
+          "rule": "R12",
+          "text": "Today's 09:48 BST AI session read: LONG toward 10680.9 (WAIT, 67%) — playbook BOTH_OK."
+        }
+      ],
+      "aiStanceLine": "Due to a 144%-exhausted daily range, a 9bp long-end gilt blowout creating index-wide fiscal drag, and sterling pinned at the 89th 20-day percentile capping FX tailwinds, any ORB break — up or down — is poorly supported by both fuel and fundamentals today.",
+      "aiBullets": [
+        "The 111-point gap up (+1.05%) consumed on open likely reflects CPI positioning — with ADR at 140.2pts and 144% already used, the index has moved ~202pts today, leaving negative range budget for fresh ORB follow-through.",
+        "Gilt long-end stress (20Y +9bp to 5.78%) and energy bullishness (Brent +1.25%) are pulling the index in opposite directions across its two largest sector clusters — this sector conflict argues for chop rather than trend.",
+        "Sterling at the 89th 20-day percentile conflicts directly with the AI session LONG signal toward 10,680.9 — the FX headwind historically caps FTSE upside precisely when GBP is this elevated in its recent range.",
+        "Friday's UK Retail Sales (HIGH impact, 07:00 BST) creates a 2-day event shadow: any ORB long held into the week risks being caught on the wrong side of a second high-impact UK data release with gilts already under pressure."
+      ],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10587.5,
+        "orbLow": 10557.2,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10613.6,
+        "overnightLow": 10557.2,
+        "priorDayHigh": 10603.1,
+        "priorDayLow": 10433.8,
+        "gapPct": 1.05,
+        "adr14": 140.2,
+        "adrUsedPct": 144
+      },
+      "outcome": {
+        "resolvedAt": "2026-07-22T20:08:39.504Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
