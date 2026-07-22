@@ -67,6 +67,38 @@ Each inducement is annotated the moment it happens, because it defines where the
 
 ## 2. Liquidity blocks as taught by IET
 
+The 2026-03-10 video is a dedicated LB lecture — the richest single treatment of the concept in the whole corpus, materially deeper than file 02 §B's non-level note. Everything in file 01 §5b is confirmed; the following is new or sharper.
+
+### 2.1 Formation, by diagram
+
+Bearish LB: uptrend printing new highs → "grabbing a low here, inducing sellers. Why does this induce sellers? They are going to view this to be a BOS. This level is going to be a trap for them... and then we stab out the liquidity, and boom, that is where the liquidity block is now created" (IET 2026-03-10 "Liquidity Blocks" [01:12]–[01:32]). "Since we have swept out previous liquidity, now we view this high right here to hold no liquidity, meaning we don't have a reason to run above it" (IET 2026-03-10 [01:52]–[02:12]). Bullish is the stated inversion ([02:12]–[02:52]). Same object as V1's "no liquidity above this high" and V2/V3's LB — full agreement.
+
+### 2.2 The LB's job, stated as a hard precondition (extension)
+
+The sharpest formulation in any source: **"All the liquidity block does for you essentially is provide you a level to place your stop loss... aka no liquidity block, no stop loss. So, we need an LB to take an entry, of course"** (IET 2026-03-10 [04:52]–[05:12]). This upgrades file 03 §1.5 ("should sit beyond the entry", divergence noted between V2/V3 emphasis) into an explicit necessary condition: no LB → no trade. Restated on gold: "we're not just selling above highs... we need to make sure there's a liquidity block. This provides us our actual entry. In other words, it actually provides us a level for us to place our stop loss" (IET 2026-03-17 "$10k in 4 min" [03:44]–[04:04]).
+
+### 2.3 Priority order: liquidity first, LB second (extension)
+
+"Liquidity blocks is not the end all be all. Liquidity will always be priority, period... From a priority perspective, you have liquidity being up here, and then liquidity blocks being number two... If you don't [understand liquidity first], all you're going to be doing is plotting on highs and lows that have been taken out, taking entries left, right, and center, and you are going to accumulate a lot of unnecessary losses" (IET 2026-03-10 [03:52]–[04:12]). I.e., the LB is an *entry-plumbing* object subordinate to the bias/target logic — "you need to build a story first in your trade, aka the bias, the direction, which comes from liquidity, and then we will use the liquidity blocks for our entries" (IET 2026-03-10 [08:33]).
+
+### 2.4 Not every LB is traded (new discrimination)
+
+"Not every LB we're going to be taking entries off of... just because it's an LB does not mean we're going to enter off it. But it's important to identify them because you can anticipate this false reaction here, this pullback" (IET 2026-03-10 [05:32]–[06:12]). Untraded LBs still earn their keep as *expected-reaction markers* — spots where a counter-move can stall without invalidating the bias ("yes, it didn't sell all the way to the downside, but it still provided us a reaction in the market, and that alone is so important", [07:53]). The tradeable subset is the LBs that sit at the completion of the full induce→trap grammar with a confirmed target beyond (§1.2).
+
+### 2.5 Stop placement inside/beyond the LB (confirms + tightens file 03 §3)
+
+- "Use the low as the level to place your stop loss... I see a lot of people getting greedy or just placing it in random levels. No, you want to keep it as repeatable and systematic as possible" (IET 2026-03-10 [07:12]).
+- "Stop loss is going to go just above our liquidity block. **That will never change**" (IET 2026-05-13 "Advanced Gold" [06:46]–[07:06]); "the stop loss is going to be below our low to the left. That will always stay the same" (IET 2026-04-28 "Ping Pong" [07:22]).
+- Deep-stab tolerance — do not roll early: "price can sometimes stab in, give a false reaction and then stab in higher and then the move occurs... you roll your stop loss above that high [too early], price takes you out, comes deeper into the liquidity block... Remember, stop loss needs to stay above this high" (IET 2026-02-24 "$6,600 UJ" [05:24]–[05:44]); "it actually ended up just coming for the extreme up here and then the move starts occurring... you roll that stop loss out of pure fear [and you're out]" (IET 2026-02-24 [06:44]–[07:04]). Confirms file 03 §6's re-stab expectation and file 04 §2.4's no-fear-rolls rule, now tied specifically to LB depth.
+
+### 2.6 Imbalance ≈ liquidity block (new equivalence)
+
+Twice the channel identifies the LB zone with the *imbalance* the sweep leaves: "we sell off to the downside, leaving this imbalance area, **otherwise known as a liquidity block**" (IET 2026-03-03 "All You Need" [04:02]); "keep in mind we still have an imbalance above. The important part here is this is our liquidity block. That's why our stop loss is above it" (IET 2026-05-05 "Stacking Entries" [03:52]). Entry limits are parked "right in the imbalance" (IET 2026-03-03 [07:12]). Files 01–06 treat FVG/imbalance purely as a retail trap-zone concept; IET *repurposes* the displacement-gap geometry as the practical way to box the no-liquidity area behind a sweep. Divergence in vocabulary, not logic — but a bot could use the sweep candle's imbalance to bound the LB zone.
+
+### 2.7 Workflow: drag the box to current price
+
+The operational habit for using old LBs: "what I like to do is grab the whole area... drag it all the way over to current price action... as soon as price taps into it, we have a level to put our stop loss" (IET 2026-05-13 "Advanced Gold" [06:26]–[07:06]); same drag-over in the UJ trade ("we can take entries anywhere in this area. All we need to do is grab a box, grab this whole area and drag this across", IET 2026-02-24 [05:04]). LBs persist across sessions: the Asia-created LB served the New York re-entry ("in Asia... aka our initial entry, left a liquidity block. This whole area here... New York opens up. We get a spike up and look at that, right into our area", IET 2026-05-05 [06:52]–[07:33]).
+
 ## 3. The daily-bias method — deriving intraday bias from liquidity only
 
 ## 4. Both-sides / ping-pong range trading
