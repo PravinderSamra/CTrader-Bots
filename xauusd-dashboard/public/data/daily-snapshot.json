@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-22T16:18:15.598Z",
+  "generatedAt": "2026-07-22T18:03:12.285Z",
   "yields": {
     "US10Y": 4.6,
     "US2Y": 4.21,
@@ -34,23 +34,23 @@
     "openInterestChange": 15702
   },
   "etfFlows": {
-    "gldTonnes": 974.1,
-    "gldWoWChange": -1.6,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 978,
+    "gldWoWChange": 3.9,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4154.37,
-    "XAGUSD": 60.14,
-    "EURUSD": 1.14075,
-    "USDJPY": 163.113,
-    "USDCHF": 0.81417,
-    "USDCNH": 6.77464,
-    "GBPUSD": 1.33665,
+    "XAUUSD": 4137.7,
+    "XAGUSD": 59.909,
+    "EURUSD": 1.14105,
+    "USDJPY": 163.1615,
+    "USDCHF": 0.81459,
+    "USDCNH": 6.77555,
+    "GBPUSD": 1.33725,
     "USDCAD": 1.40924,
-    "USDSEK": 9.69956,
-    "US500": 7523.2,
-    "GER40": 25204.05,
-    "UK100": 10722,
+    "USDSEK": 9.70332,
+    "US500": 7508.2,
+    "GER40": 25169.05,
+    "UK100": 10733.9,
     "ADR_14day": 85.2,
     "ADR_usedToday": 89.3,
     "goldSilverRatio": 69.1
@@ -69,20 +69,20 @@
       "headline": "Gold firms to two-week peak on softer dollar; Fed outlook in focus - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-22T01:51:00.000Z",
-      "hoursAgo": 14.5
+      "hoursAgo": 16.2
     },
     {
       "headline": "Goldman Sachs creates private markets platform as rich investors seek the next SpaceX and Stripe",
       "source": "CNBC",
       "publishedAt": "2026-07-21T18:23:32.000Z",
-      "hoursAgo": 21.9
+      "hoursAgo": 23.7
     }
   ],
   "briefing": {
-    "biasScore": 2,
+    "biasScore": 3,
     "biasLabel": "BULLISH",
-    "confidence": 5,
-    "briefing": "REGIME LINE: Gold is being driven right now by a softer US Dollar (meaning the dollar has weakened, which typically pushes gold higher since they tend to move in opposite directions) and ongoing uncertainty around what the Federal Reserve will do next with interest rates. The dollar index (DXY) sits at 101.15 — relatively weak territory — while real yields [the return investors get on US bonds after accounting for inflation] are elevated at 2.35%, which would normally be a headwind for gold. The fact that gold is pushing toward $4,154 despite high real yields tells you the dollar weakness and safe-haven demand [buying gold as protection against uncertainty] are winning the tug-of-war right now. RECENT CATALYSTS: The only directly relevant headline is from Reuters, published roughly 14.5 hours ago, noting gold firming to a two-week peak on a softer dollar. The Goldman Sachs private markets story from 22 hours ago has no meaningful relevance to gold or the dollar today. Nothing fresh has broken in the last few hours, so this move is likely running on existing momentum rather than a new shock. DIRECTIONAL BIAS: Bias leans mildly BULLISH — price has already pushed to a two-week high, the dollar is soft, and geopolitical risk [GPR at 173.6, reflecting elevated global tensions] continues to underpin demand. However, real yields are still high, ETF flows [money moving in and out of gold-backed funds] have been negative for three weeks running, and large speculative traders [COT net longs] trimmed their bullish bets by over 7,000 contracts last week — all reasons to stay cautious rather than aggressive. CONFIDENCE SCORE: 5/10. The bullish lean could reverse quickly if the dollar strengthens, yields spike further, or risk appetite improves sharply. EVENT RISK: The calendar provided shows no scheduled news events today — no Fed speakers, no data releases. That's actually a caution flag of its own: thin news days can produce choppy, stop-hunting [sudden sharp moves designed to trigger trader stop-losses] price action, especially late in the New York session. No major high-impact events appear in the calendar for the rest of the week either, though the Fed meeting is one week away (July 29) — markets may start trading cautiously into that window as soon as tomorrow. KEY LEVELS: With a 14-day average daily range [the typical distance price travels in one day] of $85.20 and today's range already at $89.30, price has already exceeded its average daily move. This is critical — it means the bulk of today's directional energy is likely spent. Avoid chasing new entries expecting another large leg today. Watch $4,154 as the current peak; a clean hold above this could signal further extension, while a rejection could see price drift back toward the $4,120–$4,130 zone. TRADE INTEGRATION: Given that today's ADR is already exhausted, the 1H trend is bullish, but entering new long trades [buying positions] right now carries poor risk-to-reward [the ratio of potential profit vs potential loss]. The smarter play is to wait for a pullback [a temporary price dip] into a 1H demand zone [a price area where buyers previously stepped in strongly], then look for a 5M signal to confirm buying interest before entering on the 1M chart — this is the ICT approach working as designed. Keep position size small given moderate confidence and a Fed meeting building on the horizon. Screenshot this: When the day's average range is already exceeded, patience beats participation — wait for price to come to you, not the other way around.",
-    "generatedAt": "2026-07-22T16:18:39.493Z"
+    "confidence": 6,
+    "briefing": "RIGHT NOW, the most relevant forces for gold are a slightly soft US dollar [the DXY, a measure of dollar strength, sits at 101.14 which is relatively weak], elevated geopolitical risk [a GPR reading of 173.6 — this index measures global tension, and anything well above 100 signals meaningful fear-driven demand for safe assets like gold], and a market that has largely priced out any interest rate cuts from the Federal Reserve in the near term [88% probability of no change at the July 29th meeting]. These three forces together create a mixed but cautiously bullish backdrop. LOOKING AT RECENT HEADLINES, a Reuters piece from roughly 16 hours ago flagged gold pushing to a two-week high on dollar softness, which aligns with price currently sitting at $4,137.70. The Goldman Sachs private markets story from ~24 hours ago has no meaningful relevance to gold. Nothing in the news feed suggests a sudden shock or rumor-driven catalyst in the last few hours — the move appears to be an organic, dollar-driven grind higher rather than a panic spike. DIRECTIONAL BIAS leans modestly BULLISH: the dollar is soft, geopolitical risk is elevated, ETF flows into gold funds have been consistently positive for three weeks [meaning real money is steadily buying physical-backed gold products], and open interest is rising [more new positions being opened], which suggests the uptrend has participation behind it. However, large speculative traders [the COT report, a weekly snapshot of big player positioning] trimmed their bullish bets by over 7,000 contracts last week, which is a mild warning that some smart money is lightening up near highs — tempering excitement. CONFIDENCE is 6/10. What would change the view: a sharp dollar rally, a surprise hawkish comment from a Fed official, or gold breaking below the $4,080–$4,100 zone on the 1H chart would flip the bias to neutral or bearish. EVENT RISK: the calendar data shows NO scheduled news events today [the calendar field is empty], so there are no data-release landmines to dodge this session — that is actually a clean environment for trend-following setups. Looking ahead, the next Federal Reserve meeting is on July 29th [7 days away], and as that date gets closer markets may start trading more cautiously and range-bound [sideways, choppy price action] in the day or two before, so keep that in mind as the week progresses. KEY LEVELS: with a 14-day Average Daily Range [the typical daily price swing] of $85.20 and today's range already at $89.30, today's expected move has actually been EXCEEDED — meaning the market has already done its typical daily work. This significantly reduces the probability of a large additional move today and raises the risk of mean reversion [price snapping back toward the middle]. Watch $4,120 as near-term support and $4,155–$4,160 as the next resistance zone to the upside. TRADE INTEGRATION: because today's ADR has already been used up [89.3 vs 85.2 average], this is a LOW-CONVICTION window for new trend-following entries — you are essentially chasing a move that is statistically extended for the day. If you are going to trade, use smaller-than-normal size, wait for a clean pullback on the 5M chart into a logical support area [a prior area where buyers stepped in], and only enter if the 1H trend structure remains intact with higher highs and higher lows. Do not chase breakouts into new highs this late in the daily range. The one thing to remember today: the daily candle's fuel is already spent, so wait for a pullback rather than buying the top.",
+    "generatedAt": "2026-07-22T18:03:35.212Z"
   }
 }
