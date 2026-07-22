@@ -57,6 +57,13 @@ Filled-in level spec per reference 02 §D:
     "confidence": "medium"
   },
 
+  "daily_range": {
+    "adr": 70.0,
+    "used_today": 15.0,
+    "remaining_est": 55.0,
+    "note": "Early NY on an up-displacement day; ~53pt path to the equal highs is within reach. The weekly high 5180 (~123pt) is swing_context, not today's target."
+  },
+
   "levels": [
     {
       "id": "L1",
@@ -64,11 +71,12 @@ Filled-in level spec per reference 02 §D:
       "side": "buy_side",
       "role": "draw",
       "zone": [5109.8, 5095.2],
+      "reach": "intraday",
       "label": "Equal highs 5095.2-5109.8 (buy-side target, 4H, respected)",
       "tf_origin": "4H",
       "status": "respected",
       "color_hint": "green",
-      "note": "Left-hand high 5109.8 respected twice (5104.6, 5106.1). Full target."
+      "note": "Left-hand high 5109.8 respected twice (5104.6, 5106.1). ~53pt away, within today's ~55pt reach -> the actionable full target."
     },
     {
       "id": "L2",
@@ -153,6 +161,19 @@ Filled-in level spec per reference 02 §D:
       "status": "intact",
       "color_hint": "gray",
       "note": "Sits just above L3; secondary internal reference on the way to L1."
+    },
+    {
+      "id": "L9",
+      "type": "pool_target",
+      "side": "buy_side",
+      "role": "swing_context",
+      "price": 5180.0,
+      "reach": "swing",
+      "label": "Weekly high 5180.0 (buy-side, swing extension - NOT today's target)",
+      "tf_origin": "1W",
+      "status": "intact",
+      "color_hint": "gray",
+      "note": "The bigger draw beyond the equal highs. ~123pt away, outside today's ~55pt reach -> drawn muted, never used as an intraday target (soft scope, ref 03 C.4)."
     }
   ],
 
@@ -199,6 +220,8 @@ arms only on a stab of 5,057.2 into the 1m LB, ideally at/after 10:00.
 - Pools that matter: equal highs 5,095.2–5,109.8 (target), buildup low 5,057.2
   (sweep = trigger), engineered high 5,082.4 (partial).
 - Stop reference: 1m LB 5,051.2–5,047.3; stop 5,046.2 with CFD spread room.
+- Reach: target ~53 pts away, within today's ~55 pt budget → **intraday-valid**;
+  the weekly high 5,180 is drawn as *swing context*, not today's target.
 - Waiting for: the 10:00 stab below 5,057.2 with rejection back up.
 
 **Setup:** as `S1` above — entry band 5,057.2 → 5,051.2, stop 5,046.2, partial

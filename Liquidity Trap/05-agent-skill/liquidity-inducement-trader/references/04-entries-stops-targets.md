@@ -95,6 +95,13 @@ all** (doc 09 §7 item 1).
 - **Internal partial → external full:** nearest opposing internal pool
   (engineered highs/lows, structural points, PDH/PDL, prior H4 high) is the
   partial point; the HTF external pool finishes the trade (doc 03 §4.2).
+- **Intraday scope (soft scope, reference 03 §C.4):** the `external_full` target
+  must be the nearest **in-reach** (`reach: "intraday"`) opposing pool — a pool
+  price can realistically hit *today*. A confirmed pool beyond today's range is
+  marked `swing_context` and is **not** the trade target. If the only external
+  pool is a swing, run the trade as **partial-only to the nearest in-reach
+  internal pool** and be flat by session end; if nothing is in reach, it's a
+  swing setup, not an intraday one — no trade today.
 - Partial only where the RR at that level justifies paying yourself
   (≈ **1:5+**); otherwise risk-off only (doc 09 §7 item 3). When partialing:
   small — ~20–25%, majority held to target (doc 04 §3).

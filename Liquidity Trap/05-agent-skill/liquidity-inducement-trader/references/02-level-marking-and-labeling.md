@@ -25,6 +25,13 @@ lone retail POI with no liquidity logic. (A swept pool *re-acquires* target
 status only if price later respects it again and moves away — update its
 `status` then.)
 
+**Intraday scope (soft scope).** This is an *intraday* desk. A `pool_target`
+that is a confirmed pool but sits **beyond today's realistic reach** (see
+reference 03 §C.4) is still marked — the bigger picture matters — but it takes
+`role: "swing_context"`, is drawn muted, and is **never used as a setup's
+actionable target.** The trade's target is always the nearest in-reach pool.
+Only downgrade the *object's role*, never delete it.
+
 ## B. Labelling convention
 
 Every drawn object gets a label of the form:
@@ -84,14 +91,22 @@ Emit one JSON object per analysis run. Your TradingView connection draws each
     "confidence": "high" | "medium" | "low"
   },
 
+  "daily_range": {                         // intraday reachability budget (reference 03 §C.4)
+    "adr": 45.0,                           // typical daily range for this symbol (recent avg)
+    "used_today": 18.0,                    // range already travelled this session
+    "remaining_est": 27.0,                 // rough headroom left today (adr - used, floored at 0)
+    "note": "targets beyond ~remaining_est from current price are swing_context, not today's target"
+  },
+
   "levels": [
     {
       "id": "L1",
       "type": "pool_target" | "liquidity_block" | "engineered_liquidity" | "inducement" | "trap_zone" | "structure",
       "side": "buy_side" | "sell_side" | "n/a",
-      "role": "draw" | "target" | "stop_anchor" | "entry_zone" | "arming" | "expected_reaction" | "context",
+      "role": "draw" | "target" | "swing_context" | "stop_anchor" | "entry_zone" | "arming" | "expected_reaction" | "context",
       "price": 4042.40,                    // for a single-line level; omit if zone-only
       "zone": [4021.34, 4016.81],          // [top, bottom] for a box; omit if line-only
+      "reach": "intraday" | "swing",       // pool_target only: is it reachable today? (reference 03 §C.4)
       "label": "PDH 4042.40 (buy-side target, 1D, respected)",
       "tf_origin": "1D",
       "status": "intact" | "respected" | "swept",
@@ -135,6 +150,14 @@ Emit one JSON object per analysis run. Your TradingView connection draws each
 - `verdict` must honour the §2 gates in SKILL.md: only `armed` if all gates pass;
   otherwise `watching` (setup forming) or `no_trade` (no valid setup / no-man's-
   land / outside session).
+- **Intraday target scoping (soft scope).** A setup's `external_full` target
+  **must** reference a level with `reach: "intraday"`. Any confirmed pool beyond
+  today's reach is marked `role: "swing_context"`, `reach: "swing"`, drawn muted,
+  and **never** appears in a setup's `targets[]`. If the *only* draw in the bias
+  direction is `swing`, the setup is at most partial-only (out by session end) —
+  say so in `note`; if there is also no in-reach partial, `verdict` is `no_trade`
+  (right idea, wrong day). This scopes trades to the session without hiding the
+  bigger map. See reference 03 §C.4 and reference 04 §C.
 - If a pool the bias depends on is **off-screen** (e.g. HTF draw below the
   visible range), say so in `commentary` and set `confidence` accordingly — do
   not fabricate a level you cannot see.

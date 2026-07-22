@@ -39,6 +39,11 @@ schema itself.
 - [ ] Which side was just swept? Momentum? Gaps/imbalances in the path?
       "Nothing beyond" pools?
 - [ ] Probability the draw is reached first; with-sequence or against-sequence.
+- [ ] **Intraday reachability (soft scope, reference 03 §C.4):** estimate
+      today's reach budget (`daily_range`: ADR vs used); tag each target pool
+      `reach: intraday | swing`; re-role out-of-reach pools as `swing_context`
+      (drawn, muted, never the trade target). Actionable target = nearest
+      in-reach pool. Only-draw-is-swing → partial-only or no-trade today.
 - [ ] No-man's-land check: if price is stranded mid-range, the verdict is
       no-trade/watching — name both lines and the break you await.
 

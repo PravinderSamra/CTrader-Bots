@@ -192,10 +192,54 @@ leg's arming sweep (doc 09 §4):
 - Mid-trade, monitor the flip side "just in case I'm incorrect" — the lows
   being built under you are someone's next buy opportunity (doc 09 §4.2).
 
-### C.4 What to tell the user
+### C.4 Intraday reachability — soft scope (targets must be day-sized)
+
+This is an **intraday** desk. The strategy is fractal, so the same structure
+produces both intraday *and* multi-day swing targets — but a trade idea whose
+target price cannot realistically print **today** is not an intraday setup. Soft
+scope keeps the full map visible while making sure the *actionable target is
+always day-sized.* It never deletes a valid pool; it only re-roles the ones out
+of reach.
+
+**Step 1 — estimate today's reach budget.** From the bars you already pulled:
+- `adr` = the instrument's recent typical daily range (a rough average of the
+  last ~10–20 daily candles' high–low; use round working figures — e.g. gold
+  often ~$30–60, UK100 often ~60–110 pts, NAS100 futures several hundred).
+- `used_today` = current session high − session low so far.
+- `remaining_est` = `max(adr − used_today, small floor)` — rough headroom left.
+  Widen it on a strong trend/high-momentum day, tighten it late in the session
+  or on an inside day (doc 09 §3.4 "inside day → on the brakes").
+
+**Step 2 — classify every `pool_target` by reach** from the *current price*:
+- Distance to the pool `≲ remaining_est` (with a little tolerance) → `reach:
+  "intraday"`. Eligible to be a trade target.
+- Distance clearly `> remaining_est`, or it needs multiple sessions given
+  momentum → `reach: "swing"`, `role: "swing_context"`. Still drawn (muted), so
+  you see where the bigger draw is — but it is **not** today's target.
+
+**Step 3 — pick the actionable target = the nearest `intraday` pool in the bias
+direction.** Internal in-reach pools are partials; the nearest in-reach external
+pool is the full target (reference 04 §C). Any `swing_context` pool beyond it is
+context only.
+
+**Step 4 — if the only draw in the bias direction is `swing`:** the honest read
+is *right idea, wrong day.* Either (a) take the trade for a **partial-only**,
+in-reach internal pool and be flat by session end, noting it in the setup
+`note`; or (b) if there is no in-reach pool at all, `verdict: no_trade` — "the
+setup is a swing, not an intraday trade; standing down for today." Do **not**
+dangle a target price won't reach in the session.
+
+This is a *soft* scope, not a gate: it never blocks a genuinely in-reach setup,
+it just prevents swing-distance targets from being presented as intraday trades.
+Reachability is a *probability filter on the target*, always stated with the
+usual "nothing is 100%" caveat — a fast trend day can exceed ADR, and that's
+fine to note as upside, never as the planned target.
+
+### C.5 What to tell the user
 
 For each run, the movement read should state, in one or two sentences: the
 draw, the path (which internal pools/LBs lie between here and there), the
 probability grade (with-sequence vs against-sequence, time qualifier present or
-not), and the single event you are waiting for. If price is in no-man's-land,
-say exactly that and name both lines.
+not), whether the target is **in today's reach** (soft scope, §C.4), and the
+single event you are waiting for. If price is in no-man's-land, say exactly that
+and name both lines.

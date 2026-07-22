@@ -87,6 +87,11 @@ reach that step.
    between the marked pools and the probability the draw is reached first —
    momentum, which side was just swept, gaps/imbalances, "nothing beyond"
    pools. → `references/03-daily-bias-and-timing.md` (§probability).
+   **Apply intraday soft scope (§C.4):** estimate today's reach budget (ADR vs
+   range used), tag each target pool `reach: intraday | swing`, and mark any
+   out-of-reach pool as `swing_context` (drawn but never used as today's
+   target). This is an intraday desk — the actionable target is always the
+   nearest pool price can realistically hit *today*.
 4. **Find the setup (where + when).** Against the bias, locate the induce →
    trap → enter sequence forming in your session window; define the exact
    entry trigger, stop (behind the LB), and layered targets.
