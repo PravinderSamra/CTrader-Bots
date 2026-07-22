@@ -72,3 +72,61 @@ The whole model compressed into adjacent-candle anatomy (all cites IET 2026-03-2
 - **Confirmed by:** C4's stab holding *above* the C2-wick LB — "the wick could come all the way down here if it wants... everything is valid above this low" ([02:42], [04:02]–[04:22]).
 - **Invalidated / not it when:** C4 only *respects* C3's low without trading below — "are we buying that? We're not buying that. We need price to trade below this low" ([05:02]–[05:22]); or price closes through the C2 LB (stop).
 - **Action:** buy the C3-low break, stop below the C2-wick LB ("stop loss below the low" [03:02]–[03:22]); bearish is the stated mirror (candle-2 high LB, sell the candle-3-high break, "stop loss above the liquidity block" [08:22]–[08:42]). Observed instances: daily ([03:42]–[04:42]), 4H ([04:42]–[05:42]), 15m ([06:02]–[07:22]), plus the sell case ([07:42]–[09:23]). This same anatomy underlies the PDL/prev-30m-low entries of file 09 §3.4.
+
+### P8 — Continuation vs reversal read
+
+The recurring "which move is this?" discrimination, resolved by one question: **has the level where the early traders live been taken yet?**
+
+- **Read as continuation/pullback (false move):** counter-move that has *not* taken the opposing arming level. "Watch this. We did not take out the highs. So this bearish movement should just be what? A pullback. Why? Because we have not taken out the highs yet" (IET 2026-07-21 "Correct Liquidity" [15:29]–[15:49]). Same read in a bearish market approaching a low: "when price approaches lows and respects the lows, anticipate false moves away and then continuations to the downside" (IET 2026-07-14 "You Don't Know Liquidity" [07:15]–[07:35]). Reactions inside marked trap zones are pre-classified false (IET 2026-04-21 [10:04]; IET 2026-01-31 [02:38]–[02:44]).
+- **Read as reversal-capable:** the move *has* consumed the arming level (trap complete, P6) while a confirmed target survives on the other side — "once we take out these highs, who have been induced? Buyers. Therefore, overall, we want to see price back at these lows" (IET 2026-07-14 [05:14]–[05:34]).
+- **Read as exhaustion / stand down:** the move consumed the *target* pool itself — bias void until new liquidity builds ("you don't even have a buy target anymore... there's no reason for price to go higher anymore. We took the liquidity", IET 2026-07-21 [11:07]–[11:27]; "once the target's taken, the sell is invalid", IET 2026-04-07 [03:02]–[03:22]).
+- **Tie-breaker inputs:** time (stock-open moves presumed traps, file 09 §3.5); the probability grade (against-sequence trades "automatically lower probability", IET 2026-07-14 [12:36]); and the 4H-candle nature veto (bullish 4H close whose successor *respects* instead of runs the prior low = "red flag... I personally just like to sit out", IET 2026-07-21 [09:27]–[10:07]).
+
+### P9 — Respected-LB reaction (tradeable bounce vs. mere reaction)
+
+- **Looks like:** price taps into an old LB (dragged forward from the left) and reacts away — sometimes violently — without any fresh trap grammar around it.
+- **Means:** the market found nothing beyond the LB (as expected), but no early traders were trapped, so there is no fuel story.
+- **Confirmed by:** the tap occurring at the LB's edge/interior with a same-bar or next-bar rejection ("look how we tap right into that liquidity block and move away. Did this whole move just occur because of the liquidity block? No. You need to pair it with liquidity", IET 2026-03-10 [04:32]–[05:12]).
+- **Invalidated / not it when:** treated as an automatic entry — that is exactly the warned-against use ("we aren't just taking entries off liquidity blocks", IET 2026-03-10 [03:52]).
+- **Action:** anticipate the reaction so it doesn't shake you out of positions or lure you in ("it's important to identify — yes, this is an LB, but no, it's not an LB we would take an entry off of", IET 2026-03-10 [05:52]); only trade it when P6's full grammar surrounds it. "Just because you anticipate a reaction to occur does not mean you need to be taking a trade" (IET 2026-06-30 [04:44]–[05:04]).
+
+### P10 — No man's land (the do-not-trade range)
+
+- **Looks like:** choppy, squeezed, inconsistent price action between two marked pools; overlapping highs/lows with no clean displacement. "Look how inconsistent, look how rangy it is. This is accumulating liquidity" (IET 2026-06-09 [10:26]).
+- **Means:** liquidity is being *built*, not resolved — both edge pools are growing; retail is being loaded in both directions.
+- **Confirmed by:** the two-lines frame: pools marked above and below, price in between (file 09 §3.2).
+- **Invalidated / not it when:** either edge line breaks (that break is P2 or P6 depending on who lives beyond it).
+- **Action:** no trading inside — "this is very choppy price action... I'm typically not trading in here. I want to see price either above or below. I will wait days... or weeks" (IET 2026-05-13 "Advanced Gold" [02:05]–[02:25]); "anything in between here is going to be gross... We stay away from that" (IET 2026-04-07 [05:46]–[06:06]); "everything in between here is now just going to be known as noise" (IET 2026-07-21 [12:07]–[12:27]). Expect resolution to be fast relative to the build (18h vs 5 days; 19h vs 4.5 days — IET 2026-06-09 [12:06], [15:26]).
+
+### P11 — Session-time trap patterns (stock open / 10:00 a.m. / Asia open)
+
+- **Looks like:** a directional burst at a session timestamp — 9:30 stock open, the 10:00 a.m. H4 candle roll, or Asia open (8:00 p.m. NY) — running a marked level.
+- **Means:** the session move is presumed to be the trap leg: "if price action delivers an entry in and around stock open, that move is typically going to be a trap move, and once the trap move is complete... then you can look for that reversal" (IET 2026-04-28 "Ping Pong" [08:43]–[09:03]); "typically we'll view this whole sell-off from high to low being false... the 10:00 a.m. reversal" (IET 2026-02-10 "Simple Strategy" [07:47]–[08:07]).
+- **Confirmed by:** the burst consuming a pre-marked level into an LB with the opposing target intact; extra weight when multiple candle opens align ("the next 5-minute candle, aka the next hourly candle, aka the next 4-hour candle... spikes the high... to the minute", IET 2026-07-14 [19:38]–[19:58]).
+- **Invalidated / not it when:** the burst takes the *target* side, or no level was marked in its path.
+- **Action:** fade per P6 once complete; the only sanctioned candle-closure entry lives here (perfect time confluence + engulfing close back through the level, IET 2026-07-14 [19:38]–[20:18]). Longs below the prior H4 low only at/after 10:00 (file 09 §3.5).
+
+### P12 — Day-boundary patterns (PDH/PDL frame)
+
+- **Inside day (skip):** after a day that spiked both extremes, expect trading inside prior day's range — "typically this following day is going to be no trading for me... small in-and-out scalpy kind of trades" (IET 2026-07-07 "Liquidity Logic" [02:43]–[03:23]).
+- **PDL spike-and-hold (long script):** new day opens, spikes prior day's low, holds an older daily-level LB → long targeting PDH — "Thursday to open up, we spike down below Wednesday's low, we hold Tuesday's, we use it as an LB, and eventually we can trade higher" (IET 2026-07-07 [07:23]–[08:03]); captures "the whole daily range, from PDL to PDH" ([10:23]–[10:43]).
+- **Day-boundary sweep pairs:** Monday above Friday's high → target Friday's low ("Friday's high, Friday's low. Great, great confluence... Monday spikes above Friday. Boom. We now have a great target", IET 2026-07-14 [17:36]).
+- **Bank holiday (skip):** "if there ever is a bank holiday, do not trade, guys. Do not trade" (IET 2026-07-14 [09:56]–[10:16]).
+- **Fractal note:** the same spike-prior-candle-extreme script applies at any bar size (prev-30m-low entry, IET 2026-07-07 [10:03]–[10:23]).
+
+## 2. Recognition checklist (condensed)
+
+Run top-down on any chart; each line names the pattern involved:
+
+1. **HTF scan (daily/4H):** most recent displacement — what did it clear, what did it leave? Mark P1 pools both sides; mark P4 LBs at sweep extremes. Nothing relevant → don't descend (IET 2026-07-21 [01:06]).
+2. **Frame the range (P10):** two lines — nearest confirmed pool above and below. Price in between = no man's land; wait.
+3. **Day context (P12):** yesterday's shape (outside day → expect inside day; PDL/PDH unran → today's script), holidays.
+4. **Who was induced last (P2)?** Find the latest internal-level break; write "buyers/sellers induced" at it; pre-draw their trap zone; deem reactions there false.
+5. **Where is the buildup (P3)?** Trail to the extreme-most unswept rung of the ladder pressing a line. That level's break is the arming event.
+6. **Is the setup entry-capable (P4)?** LB present beyond the armed level? No LB → no entry, regardless of everything else; either wait for an LTF confirmation (fractal P6/P7) or stand down.
+7. **Is the target side alive (P8)?** Confirmed pool in the trade direction, not yet consumed. Target gone → bias void.
+8. **Trigger (P6/P7/P11):** the armed level trades through — at a preferred time qualifier if against-sequence — enter at the stab / limit in the LB, stop beyond the LB (+spread room on CFD), targets at engineered pools then the external pool.
+9. **Manage:** BE/risk-off when the first opposing pool is consumed (partial only if RR at that level justifies it); optionally trail behind freshly-minted LBs; stack another entry only while the shared target survives (file 09 §5, §7.3–7.4).
+10. **After target consumption:** trades in the old direction are off the cards; re-run the checklist from step 1 (IET 2026-06-30 [12:14]).
+
+**Labelling drill for a detector (or a student):** on replay, at each bar close, tag any new instance of P1–P12 and state the induced side + trap zone *before* advancing — the exact exercise the series performs on GBPUSD daily (IET 2026-01-31, whole video), NQ 1-minute (IET 2026-02-17, three consecutive entries each with the P4→P6 tags, RRs 1:4/1:8/1:8 at [08:13]–[08:33]), and gold/NQ/EURUSD breakdowns throughout the corpus.
