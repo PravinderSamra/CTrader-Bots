@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-22T12:25:21.083Z",
+  "generatedAt": "2026-07-22T14:57:35.046Z",
   "yields": {
     "US10Y": 4.6,
     "US2Y": 4.21,
@@ -22,8 +22,8 @@
     "probHike": 0
   },
   "marketVolatility": {
-    "GVZ": 25.37,
-    "VIX": 18.65
+    "GVZ": 23.94,
+    "VIX": 17.05
   },
   "positioning": {
     "cotNetLong": 175931,
@@ -34,30 +34,30 @@
     "openInterestChange": 15702
   },
   "etfFlows": {
-    "gldTonnes": 979.9,
-    "gldWoWChange": -2.9,
+    "gldTonnes": 975.7,
+    "gldWoWChange": -4.2,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4129.47,
-    "XAGUSD": 59.503,
-    "EURUSD": 1.14095,
-    "USDJPY": 163.0685,
-    "USDCHF": 0.8122,
-    "USDCNH": 6.7747,
-    "GBPUSD": 1.33669,
-    "USDCAD": 1.40864,
-    "USDSEK": 9.70805,
-    "US500": 7475.7,
-    "GER40": 25104.05,
-    "UK100": 10728.85,
+    "XAUUSD": 4147.26,
+    "XAGUSD": 60.201,
+    "EURUSD": 1.14083,
+    "USDJPY": 163.111,
+    "USDCHF": 0.81361,
+    "USDCNH": 6.77487,
+    "GBPUSD": 1.33751,
+    "USDCAD": 1.40867,
+    "USDSEK": 9.69578,
+    "US500": 7501.2,
+    "GER40": 25176.05,
+    "UK100": 10736.6,
     "ADR_14day": 85.2,
-    "ADR_usedToday": 64.9,
-    "goldSilverRatio": 69.4
+    "ADR_usedToday": 86.6,
+    "goldSilverRatio": 68.9
   },
   "dollarLiquidity": {
     "stlfsi": -0.882,
-    "nfci": -0.538
+    "nfci": -0.552
   },
   "geopoliticalRisk": {
     "gpr": 173.6,
@@ -66,23 +66,23 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Gold climbs to two-week high as investors watch Middle East conflict - Reuters",
+      "headline": "Gold firms to two-week peak on softer dollar; Fed outlook in focus - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-22T01:51:00.000Z",
-      "hoursAgo": 10.6
+      "hoursAgo": 13.1
     },
     {
       "headline": "Goldman Sachs creates private markets platform as rich investors seek the next SpaceX and Stripe",
       "source": "CNBC",
       "publishedAt": "2026-07-21T18:23:32.000Z",
-      "hoursAgo": 18
+      "hoursAgo": 20.6
     }
   ],
   "briefing": {
-    "biasScore": 3,
+    "biasScore": 2,
     "biasLabel": "BULLISH",
-    "confidence": 6,
-    "briefing": "Right now, the dominant force driving gold is a mix of geopolitical fear and a moderately weak US dollar — the two ingredients that most reliably push gold higher. The geopolitical risk reading (GPR, which measures how much global conflict and tension is in the news) sits at an elevated 173.6, and the dollar index (DXY, a measure of how strong the dollar is against other currencies) is sitting at 101.13, which is relatively soft — a weaker dollar makes gold cheaper for foreign buyers, which tends to lift demand. The most relevant recent headline is from Reuters, published about 10–11 hours ago, reporting that gold climbed to a two-week high as investors watch the Middle East conflict — this is a classic 'fear trade' [meaning money flowing into gold as a safe haven when the world feels uncertain]. The Goldman Sachs private markets story has no direct relevance to gold or the dollar, so we set it aside. Directional bias is cautiously BULLISH: price has already made a strong move toward a two-week high, real yields [the return investors get on US government bonds after adjusting for inflation] are elevated at 2.35%, which is a headwind for gold, and ETF flows [money moving into or out of gold funds] have been outflows for three weeks — meaning some large investors are actually reducing their gold holdings, which adds a ceiling. The Fed [US central bank] is overwhelmingly expected to hold rates unchanged at their July 29 meeting (88% probability), so no rate-cut tailwind is coming soon. Confidence is 6/10 — the bullish case rests mainly on geopolitical fear and dollar softness, but high real yields and ETF outflows mean this rally could stall or reverse if the Middle East situation cools. The calendar for today appears empty of scheduled economic data, which removes a source of volatility but also removes a catalyst for a fresh directional move. Looking ahead, July 29 is the Federal Reserve meeting — a HIGH-impact event just one week away — meaning price could start trading in a tighter, more cautious range [choppier, with smaller swings] as traders wait to see whether the Fed signals any change in policy. On key levels: the 14-day average daily range (ADR) is 85.2 points, meaning on a typical day gold moves about 85 dollars. Today it has already moved 64.9 of those points — leaving only about 20 dollars of 'typical' range remaining for the day. That means the big move has likely already happened today; chasing a new long [a buy trade] here carries a meaningful risk that price has run out of fuel for the session. The best trade integration guidance: if you are a trend-following buyer, the 1H chart bias is bullish, but with less than 25% of the average daily range remaining, this is NOT an ideal time to enter a new long position today. Wait for a pullback [price dipping back toward a recent support level] on the 5M chart, ideally during the New York session open, before looking for a clean signal. Keep position size conservative given the mixed backdrop — bullish structure, but strong headwinds from real yields and ETF outflows. Remember: the best trade is often the one you wait for — let price come to your level, not the other way around.",
-    "generatedAt": "2026-07-22T12:25:42.533Z"
+    "confidence": 5,
+    "briefing": "REGIME LINE: Gold is being driven by a moderately soft US Dollar (DXY at 101.13, meaning the dollar index is relatively weak), rising bond yields [the interest rate governments pay on their debt — normally a headwind for gold, but being offset here], and an elevated geopolitical risk reading of 173.6, which suggests ongoing global uncertainty that tends to push investors toward gold as a safe haven. RECENT CATALYSTS: The only gold-relevant headline is from Reuters, published roughly 13 hours ago, noting that gold firmed to a two-week high on a softer dollar. There are no fresh headlines in the last few hours that would explain a specific push or pull in price right now — so the current level of ~$4,147 appears to be consolidating after that earlier move. DIRECTIONAL BIAS: The bias leans modestly UP. The dollar is soft, geopolitical risk is elevated, and gold is already at a two-week high, which confirms short-term bullish momentum [prices moving higher]. However, real yields [bond yields after stripping out inflation] are sitting at 2.35%, which is quite high — high real yields make gold less attractive, acting as a ceiling on how far gold can run. The ETF [exchange-traded fund, a way big institutions buy gold] flows show three weeks of outflows, meaning large players have been quietly selling — this tempers enthusiasm. CONFIDENCE SCORE: 5/10. The view shifts bearish if DXY bounces above 102 or real yields climb further; it strengthens bullish if dollar weakness continues and price holds above $4,130. EVENT RISK: The calendar is completely empty for today — no scheduled economic news to watch. There are also no upcoming high-impact events visible in this week's calendar data, so there is no major 'event risk build-up' caution needed right now. KEY LEVELS: Today's ADR [Average Daily Range — the typical distance price travels in one day over the last 14 days] is 85.2 points, and price has already moved 86.6 points today — meaning today's typical range is essentially USED UP. This is a critical warning: chasing a move now risks buying near the day's high with very little room left before a natural reversal. Watch $4,130 as near-term support and $4,160–4,165 as the next resistance zone. TRADE INTEGRATION: Because today's daily range is already exhausted, this is NOT a good window to enter new long [buy] trades with full size — the risk/reward is poor. If you are already in a long trade from earlier, consider protecting profits with a tight stop. Wait for either a pullback to a clean level like $4,120–4,130 on the 5-minute chart, or for tomorrow's fresh range to open. Keep position size small given the 5/10 confidence. REMEMBER: When the daily range is already used up, patience beats bravery — wait for price to come to you, not the other way around.",
+    "generatedAt": "2026-07-22T14:57:53.239Z"
   }
 }

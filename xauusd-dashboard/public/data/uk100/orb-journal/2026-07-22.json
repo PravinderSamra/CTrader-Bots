@@ -290,6 +290,82 @@
         "adrUsedPct": 126
       },
       "outcome": null
+    },
+    {
+      "at": "2026-07-22T14:58:27.696Z",
+      "londonTime": "15:58 BST",
+      "mode": "POST_ORB",
+      "price": 10738.7,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 144% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "144% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "RATES",
+          "rule": "R11",
+          "text": "20Y gilt +9bp — a fiscal-stress selloff; this historically drags the whole index regardless of the banks rotation."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10433.8) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "UK CPI @ 07:00 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.42%) — the cross-market lean is up."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "AI",
+          "rule": "R12",
+          "text": "Today's 09:48 BST AI session read: LONG toward 10680.9 (WAIT, 67%) — playbook BOTH_OK."
+        }
+      ],
+      "aiStanceLine": "Due to 144% of the 14-day average daily range (140.2 pts) already consumed, a fiscal-stress 20Y gilt blow-out of +9bp pressing banks lower, and an energy sector tailwind from Brent +1.38% that is pulling the index higher simultaneously, the setup is a genuine stand-aside or aggressive fade-only day — the competing forces leave no clean trend direction and no range budget for sustained follow-through.",
+      "aiBullets": [
+        "The 144-pt gap at open (1.36%) alone has consumed more than one full average day's range (adr14 = 140.2 pts), meaning any ORB break at 10,587.5 / 10,557.2 has statistically negative expected continuation — fading the ORB extremes back toward mid-range is historically higher probability.",
+        "Long-end gilt stress (20Y +9bp, 10Y +8bp, slope 5s20s = 1.24%) is a cross-sector drag that specifically cancels the 'higher yields lift bank stocks' rotation — BANKS read BEARISH, which removes a major index weight from the bull camp and skews any upside break toward thin participation.",
+        "European tape alignment (DAX +0.4%, SX5E +0.42%, FTSE-DAX 20d correlation 0.7) supports the upside break direction already taken, but with 144% of adr14 used the cross-market confirmation arrives too late to back a fresh long with sensible risk-reward.",
+        "GBP COT net short of -72,474 contracts (CROWDED_SHORT, reported 14 July) creates a potential snap-back risk for sterling — any surprise from UK CPI data this morning that squeezes shorts could strengthen GBP and paradoxically weigh on the index via the sign-flip, adding a second reason to avoid chasing today's gap-up."
+      ],
+      "bias": {
+        "score": -1,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10587.5,
+        "orbLow": 10557.2,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10613.6,
+        "overnightLow": 10557.2,
+        "priorDayHigh": 10603.1,
+        "priorDayLow": 10433.8,
+        "gapPct": 1.36,
+        "adr14": 140.2,
+        "adrUsedPct": 144
+      },
+      "outcome": null
     }
   ]
 }

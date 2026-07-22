@@ -1,6 +1,21 @@
 {
-  "updatedAt": "2026-07-17T17:02:16.877Z",
+  "updatedAt": "2026-07-22T14:58:29.143Z",
   "outcomes": [
+    {
+      "filename": "2026-07-22/08-48.json",
+      "date": "2026-07-22",
+      "time": "09:48 BST",
+      "session": "LONDON",
+      "bias": "NEUTRAL",
+      "probability": 67,
+      "confidence": 5,
+      "priceZone": "PREMIUM",
+      "orbDirection": "BOTH_OK",
+      "result": "NO_CALL",
+      "resolvedAt": "2026-07-22T14:58:29.141Z",
+      "maxFavourable": null,
+      "maxAdverse": null
+    },
     {
       "filename": "2026-07-10/19-54.json",
       "date": "2026-07-10",
