@@ -368,6 +368,11 @@ Base probability starts at **50%**. **The resulting arithmetic (base + every lin
 
 After printing the full analysis to the chat, save it to the **UK100 AI** sub-tab on the dashboard so it appears in the 3-day history.
 
+**🔴 THIS STEP IS MANDATORY AND IS THE ONLY THING THAT MAKES A SCAN REVIEWABLE LATER. A scan is NOT complete when the brief is printed to chat — it is complete only when the record is confirmed committed on `origin/main`.** This environment is an ephemeral, often re-cloned container: a brief that lives only in chat text (and `/tmp`) is *lost* the moment the session ends, so a later "how did that scan play out?" review has nothing to compare against (this exact loss happened to the 2026-07-22 morning scan). Therefore:
+- Never end your turn, and never describe the scan as "done"/"complete", until STEP 9c has printed `Committed and pushed to main (<sha>)` **and** the STEP 9c-verify command below confirms the record on `origin/main`.
+- If data-gathering succeeded and you printed a brief, running STEP 9 is not optional and not deferrable — do it in the same turn, before any commentary about the setup.
+- The only legitimate reason to skip STEP 9 is a STEP 0 data failure that meant no brief should exist at all (HTTP 401 / stale-input / market closed) — in that case there is deliberately no record. A *successful* scan with no saved record is always a bug in your execution, never an acceptable outcome.
+
 **Two-file approach** (keeps JSON simple, no escaping of the long analysis text):
 
 **Steps 9a + 9b — Write both files with `cat` heredocs, NOT the Write tool.** `/tmp/uk100-session-meta.json` and `/tmp/uk100-session-analysis.txt` may already exist from a prior run, and the Write tool refuses to overwrite a file it has not Read this session. Use Bash heredocs instead. Fire both in the same response (two parallel Bash calls):
@@ -475,6 +480,13 @@ cd /home/user/CTrader-Bots/xauusd-dashboard && npx tsx scripts/save-gold-session
 ```
 
 Confirm the output shows `Session saved` (under `public/data/uk100/sessions/…`), `Index updated`, and `Committed and pushed to main (<sha>)`. The UK100 AI sub-tab on the dashboard will show the entry after GitHub Actions deploys (~1–2 min).
+
+**STEP 9c-verify (mandatory persistence gate — do not skip).** `Committed and pushed to main` in the script's own stdout is necessary but not sufficient proof — confirm the record is actually on the remote before treating the scan as complete, so a later post-scan review is guaranteed to find it:
+```bash
+cd /home/user/CTrader-Bots && DATE=$(date -u +%Y-%m-%d) && git fetch origin main --quiet && \
+git ls-tree -r --name-only origin/main -- "xauusd-dashboard/public/data/uk100/sessions/$DATE/" | tail -1
+```
+It must print today's saved record path (e.g. `xauusd-dashboard/public/data/uk100/sessions/2026-07-22/08-48.json`). **If it prints nothing, the record did NOT persist** — re-run STEP 9c once; if it still doesn't appear on `origin/main`, report the failure explicitly (do not claim the scan saved). Only after this confirms may you report the scan complete.
 
 **Do NOT perform any manual git recovery.** The save script owns the entire commit-and-push: it rebuilds `index.json` from the current `origin/main` and builds the commit directly on top of that tip via plumbing (`commit-tree`), so it CANNOT hit a rebase/merge conflict, and it internally re-fetches and retries up to 5× if another push races it. If the script exits non-zero, it prints why: `HTTP 401`/stale-input → a data problem (report it, no record); a genuine push failure after 5 retries → report the printed error verbatim and stop. Never hand-edit `index.json`, never `git rebase`, never `git push --force`, never re-run with `--no-verify` — just re-run the same command once, and if it still fails, report the failure. A missing dashboard entry is always better than a hand-patched one.
 
