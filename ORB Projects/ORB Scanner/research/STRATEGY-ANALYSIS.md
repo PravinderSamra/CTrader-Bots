@@ -139,7 +139,9 @@ A catalyst is *necessary but not sufficient* — if it's already priced in, inst
 
 ## 7. Adaptations required for the cTrader data source
 
-The paper uses CRSP + IQFeed share-volume data. Our data source is the cTrader Open API via MCP (HTTP). Differences that must be handled:
+> **FTMO addendum (2026-07-23):** the account is an FTMO prop-firm cTrader account. The universe is FTMO's fixed 45-US-stock Equities CFD list, and because FTMO stock CFDs trade 09:35–16:00 ET the opening-range bar must be measured from an external equity feed — see `FTMO-UNIVERSE.md` (which supersedes the universe-related rows below) and SKILL-SPEC §4.1. Leverage cap is 3.33× (not the paper's 4×). Real share volume from the external feed means RelVol and the 1M-share filter now apply literally, removing the tick-volume proxy caveat below.
+
+The paper uses CRSP + IQFeed share-volume data. Our execution venue is the cTrader Open API via MCP (HTTP). Differences that must be handled:
 
 | Paper assumes | cTrader reality | Adaptation |
 |---|---|---|

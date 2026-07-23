@@ -1,0 +1,1159 @@
+{
+ "meta": {
+  "source": "https://ftmo.com/wp-json/ftmo/symbols (public symbols API behind https://ftmo.com/en/symbols/)",
+  "snapshotDate": "2026-07-23",
+  "note": "FTMO Equities CFD universe. sessionUTC sampled 2026-07-20 (US summer time). 'scannable' = US-listed with real exchange volume, eligible for the ORB US scan. Re-verify against get_symbols on the live FTMO cTrader account during Phase 2 audit.",
+  "totalEquities": 59
+ },
+ "symbols": [
+  {
+   "code": "AAPL",
+   "name": "Apple",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "ADSGn",
+   "name": "Adidas AG",
+   "currency": "EUR",
+   "listing": "EU",
+   "scannable": false,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T07:05:00.000000Z",
+    "end": "2026-07-20T15:30:00.000000Z"
+   },
+   "flags": [
+    "eu-listed-different-session"
+   ]
+  },
+  {
+   "code": "AIRF",
+   "name": "Air France KLM",
+   "currency": "EUR",
+   "listing": "EU",
+   "scannable": false,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T07:05:00.000000Z",
+    "end": "2026-07-20T15:30:00.000000Z"
+   },
+   "flags": [
+    "eu-listed-different-session"
+   ]
+  },
+  {
+   "code": "ALVG",
+   "name": "Allianz",
+   "currency": "EUR",
+   "listing": "EU",
+   "scannable": false,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T07:05:00.000000Z",
+    "end": "2026-07-20T15:30:00.000000Z"
+   },
+   "flags": [
+    "eu-listed-different-session"
+   ]
+  },
+  {
+   "code": "AMD",
+   "name": "Advanced Micro Devices",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "AMZN",
+   "name": "Amazon Com",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "ARM",
+   "name": "Arm Holdings Inc",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "ASML",
+   "name": "ASML Holding",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "AVGO",
+   "name": "Broadcom",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "AZN",
+   "name": "AstraZeneca PLC",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "BA",
+   "name": "Boeing Co",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "BABA",
+   "name": "Alibaba Group",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "BAC",
+   "name": "Bank of America",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "BAYGn",
+   "name": "Bayer",
+   "currency": "EUR",
+   "listing": "EU",
+   "scannable": false,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T07:05:00.000000Z",
+    "end": "2026-07-20T15:30:00.000000Z"
+   },
+   "flags": [
+    "eu-listed-different-session"
+   ]
+  },
+  {
+   "code": "BMW",
+   "name": "BMW AG",
+   "currency": "EUR",
+   "listing": "EU",
+   "scannable": false,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T07:05:00.000000Z",
+    "end": "2026-07-20T15:30:00.000000Z"
+   },
+   "flags": [
+    "eu-listed-different-session"
+   ]
+  },
+  {
+   "code": "BRK.B",
+   "name": "Berkshire Hathaway Inc Class B",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "CSCO",
+   "name": "Cisco Systems",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "CVX",
+   "name": "Chevron",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "DBKGn",
+   "name": "Deutsche Bank",
+   "currency": "EUR",
+   "listing": "EU",
+   "scannable": false,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T07:05:00.000000Z",
+    "end": "2026-07-20T15:30:00.000000Z"
+   },
+   "flags": [
+    "eu-listed-different-session"
+   ]
+  },
+  {
+   "code": "DIS",
+   "name": "Walt Disney",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "FDX",
+   "name": "FedEx",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "GE",
+   "name": "General Aerospace",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "GM",
+   "name": "General Motors",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "GME",
+   "name": "GameStop",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "GOOG",
+   "name": "Alphabet Class C",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "IBE",
+   "name": "Iberdrola",
+   "currency": "EUR",
+   "listing": "EU",
+   "scannable": false,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T07:05:00.000000Z",
+    "end": "2026-07-20T15:30:00.000000Z"
+   },
+   "flags": [
+    "eu-listed-different-session"
+   ]
+  },
+  {
+   "code": "IBM",
+   "name": "IBM Corp",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "INTC",
+   "name": "Intel Corp",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "JNJ",
+   "name": "Johnson and Johnson",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "JPM",
+   "name": "JPMorgan Chase",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "KO",
+   "name": "Coca-Cola",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "LMT",
+   "name": "Lockheed Martin",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "LVMH",
+   "name": "LVMH",
+   "currency": "EUR",
+   "listing": "EU",
+   "scannable": false,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T07:05:00.000000Z",
+    "end": "2026-07-20T15:30:00.000000Z"
+   },
+   "flags": [
+    "eu-listed-different-session"
+   ]
+  },
+  {
+   "code": "MBG",
+   "name": "Mercedes-Benz Group AG",
+   "currency": "EUR",
+   "listing": "EU",
+   "scannable": false,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T07:05:00.000000Z",
+    "end": "2026-07-20T15:30:00.000000Z"
+   },
+   "flags": [
+    "eu-listed-different-session"
+   ]
+  },
+  {
+   "code": "MCD",
+   "name": "McDonald's",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "META",
+   "name": "Meta Platforms",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "MSFT",
+   "name": "Microsoft",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "MSTR",
+   "name": "MicroStrategy",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "NFLX",
+   "name": "Netflix",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "NKE",
+   "name": "Nike",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "NVDA",
+   "name": "NVIDIA",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "PFE",
+   "name": "Pfizer",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "PLTR",
+   "name": "Palantir Technologies",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "QCOM",
+   "name": "Qualcomm",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "RACE",
+   "name": "Ferrari",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "RTX",
+   "name": "Raytheon Technologies",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "SAN",
+   "name": "Banco Santander",
+   "currency": "EUR",
+   "listing": "EU",
+   "scannable": false,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 4,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T07:05:00.000000Z",
+    "end": "2026-07-20T15:30:00.000000Z"
+   },
+   "flags": [
+    "eu-listed-different-session"
+   ]
+  },
+  {
+   "code": "SBUX",
+   "name": "Starbucks",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "SIEGn",
+   "name": "Siemens AG",
+   "currency": "EUR",
+   "listing": "EU",
+   "scannable": false,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T07:05:00.000000Z",
+    "end": "2026-07-20T15:30:00.000000Z"
+   },
+   "flags": [
+    "eu-listed-different-session"
+   ]
+  },
+  {
+   "code": "SNOW",
+   "name": "Snowflake Inc",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "SPCX",
+   "name": "SpaceX",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": false,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": [
+    "synthetic-private-company-no-exchange-volume"
+   ]
+  },
+  {
+   "code": "T",
+   "name": "AT&T",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "TSLA",
+   "name": "Tesla",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "TTE",
+   "name": "TotalEnergies",
+   "currency": "EUR",
+   "listing": "EU",
+   "scannable": false,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T07:05:00.000000Z",
+    "end": "2026-07-20T15:30:00.000000Z"
+   },
+   "flags": [
+    "eu-listed-different-session"
+   ]
+  },
+  {
+   "code": "V",
+   "name": "Visa",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "VOWG_p",
+   "name": "Volkswagen",
+   "currency": "EUR",
+   "listing": "EU",
+   "scannable": false,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T07:05:00.000000Z",
+    "end": "2026-07-20T15:30:00.000000Z"
+   },
+   "flags": [
+    "eu-listed-different-session"
+   ]
+  },
+  {
+   "code": "WMT",
+   "name": "Walmart",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "XOM",
+   "name": "Exxon Mobil",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  },
+  {
+   "code": "ZM",
+   "name": "Zoom Video Communications",
+   "currency": "USD",
+   "listing": "US",
+   "scannable": true,
+   "leverageStandard": 3.33,
+   "leverageSwing": 1,
+   "commission": 0.004,
+   "commissionType": "percent",
+   "digits": 2,
+   "contractSize": 1,
+   "maxTradeVolume": 10000,
+   "sessionUTCSample": {
+    "start": "2026-07-20T13:35:00.000000Z",
+    "end": "2026-07-20T20:00:00.000000Z"
+   },
+   "flags": []
+  }
+ ]
+}
