@@ -61,7 +61,29 @@
         "adr14": 140.2,
         "adrUsedPct": 56
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-23T20:55:50.686Z",
+        "fwd1hPct": 0.43,
+        "fwd3hPct": 0.81,
+        "toClosePct": 0.88,
+        "maxUpPct": 1.21,
+        "maxDownPct": 0.35,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R10",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R13",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     }
   ]
 }

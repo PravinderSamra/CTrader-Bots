@@ -69,7 +69,7 @@
         "adrUsedPct": 64
       },
       "outcome": {
-        "resolvedAt": "2026-07-21T16:19:49.505Z",
+        "resolvedAt": "2026-07-23T20:55:49.984Z",
         "fwd1hPct": 0.21,
         "fwd3hPct": 0.18,
         "toClosePct": 0.72,
@@ -79,11 +79,11 @@
         "signalVerdicts": [
           {
             "rule": "R10",
-            "verdict": "WRONG"
+            "verdict": "FLAT"
           },
           {
             "rule": "R13",
-            "verdict": "WRONG"
+            "verdict": "FLAT"
           },
           {
             "rule": "R8",
@@ -91,7 +91,7 @@
           },
           {
             "rule": "R11b",
-            "verdict": "WRONG"
+            "verdict": "FLAT"
           }
         ]
       }
@@ -171,7 +171,7 @@
         "adrUsedPct": 86
       },
       "outcome": {
-        "resolvedAt": "2026-07-21T16:19:49.618Z",
+        "resolvedAt": "2026-07-23T20:55:50.131Z",
         "fwd1hPct": 0,
         "fwd3hPct": -0.13,
         "toClosePct": 0.55,
@@ -181,11 +181,11 @@
         "signalVerdicts": [
           {
             "rule": "R4",
-            "verdict": "WRONG"
+            "verdict": "FLAT"
           },
           {
             "rule": "R13",
-            "verdict": "WRONG"
+            "verdict": "FLAT"
           },
           {
             "rule": "R3",
@@ -197,7 +197,7 @@
           },
           {
             "rule": "R11b",
-            "verdict": "WRONG"
+            "verdict": "FLAT"
           }
         ]
       }
@@ -277,7 +277,7 @@
         "adrUsedPct": 92
       },
       "outcome": {
-        "resolvedAt": "2026-07-21T16:19:49.731Z",
+        "resolvedAt": "2026-07-23T20:55:50.270Z",
         "fwd1hPct": -0.03,
         "fwd3hPct": 0.16,
         "toClosePct": 0.48,
@@ -287,11 +287,11 @@
         "signalVerdicts": [
           {
             "rule": "R4",
-            "verdict": "WRONG"
+            "verdict": "FLAT"
           },
           {
             "rule": "R13",
-            "verdict": "WRONG"
+            "verdict": "FLAT"
           },
           {
             "rule": "R3",
@@ -303,7 +303,7 @@
           },
           {
             "rule": "R11b",
-            "verdict": "WRONG"
+            "verdict": "FLAT"
           }
         ]
       }
@@ -383,7 +383,7 @@
         "adrUsedPct": 92
       },
       "outcome": {
-        "resolvedAt": "2026-07-21T16:19:49.844Z",
+        "resolvedAt": "2026-07-23T20:55:50.406Z",
         "fwd1hPct": -0.09,
         "fwd3hPct": 0.58,
         "toClosePct": 0.58,
@@ -393,11 +393,11 @@
         "signalVerdicts": [
           {
             "rule": "R4",
-            "verdict": "WRONG"
+            "verdict": "FLAT"
           },
           {
             "rule": "R13",
-            "verdict": "WRONG"
+            "verdict": "FLAT"
           },
           {
             "rule": "R3",
@@ -409,7 +409,7 @@
           },
           {
             "rule": "R11b",
-            "verdict": "WRONG"
+            "verdict": "FLAT"
           }
         ]
       }
@@ -489,7 +489,7 @@
         "adrUsedPct": 97
       },
       "outcome": {
-        "resolvedAt": "2026-07-21T16:19:49.959Z",
+        "resolvedAt": "2026-07-23T20:55:50.543Z",
         "fwd1hPct": 0.29,
         "fwd3hPct": null,
         "toClosePct": 0.29,
@@ -499,11 +499,11 @@
         "signalVerdicts": [
           {
             "rule": "R4",
-            "verdict": "FLAT"
+            "verdict": "RIGHT"
           },
           {
             "rule": "R13",
-            "verdict": "FLAT"
+            "verdict": "RIGHT"
           },
           {
             "rule": "R3",

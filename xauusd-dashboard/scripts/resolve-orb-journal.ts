@@ -44,6 +44,10 @@ const UK100_ID    = KNOWN_SYMBOL_IDS.UK100
 const UK100_SCALE = 10 ** (PIP_DIGITS.UK100 ?? 5)
 
 const DRY = process.argv.includes('--dry')
+// --rescore: recompute outcomes that are already resolved (used after a verdict-
+// logic change — e.g. the ADR-relative BREAKOUT_SUSPECT fix — to correct the
+// frozen historical scoreboard rather than only affecting future entries).
+const RESCORE = process.argv.includes('--rescore')
 const round2 = (n: number) => Math.round(n * 100) / 100
 
 // ── Local type copies (scripts keep their own, per repo convention) ──
@@ -121,7 +125,18 @@ export function stanceVerdict(stance: string, r1dir: string | null, toClosePct: 
   return 'FLAT'
 }
 
-export function signalVerdict(direction: string, toClosePct: number, maxUpPct: number, maxDownPct: number): Verdict | null {
+// Default ADR (% of price) used only when a journal entry predates the `orb.adr14`
+// field or it's null — roughly UK100's 14-day norm, so the fallback still scales
+// the BREAKOUT_SUSPECT thresholds sanely rather than reverting to the old bug.
+const DEFAULT_ADR_PCT = 1.2
+
+export function signalVerdict(
+  direction: string,
+  toClosePct: number,
+  maxUpPct: number,
+  maxDownPct: number,
+  adrPct: number | null = null,
+): Verdict | null {
   if (direction === 'FAVOURS_LONG' || direction === 'FAVOURS_SHORT') {
     const signed = direction === 'FAVOURS_LONG' ? toClosePct : -toClosePct
     if (signed >= 0.15) return 'RIGHT'
@@ -129,8 +144,17 @@ export function signalVerdict(direction: string, toClosePct: number, maxUpPct: n
     return 'FLAT'
   }
   if (direction === 'BREAKOUT_SUSPECT') {
-    if (maxUpPct < 0.25 && Math.abs(maxDownPct) < 0.25) return 'RIGHT'   // breakouts indeed went nowhere
-    if (maxUpPct >= 0.40 || Math.abs(maxDownPct) >= 0.40) return 'WRONG' // a real extension happened
+    // BREAKOUT_SUSPECT predicts "the break won't follow through — expect a
+    // compressed/range day". Judge that on the day's REALISED RANGE relative to
+    // its ADR, NOT absolute % — the old fixed 0.25%/0.40% thresholds were
+    // calibrated for a low-vol instrument and mis-scored UK100 (ADR ≈1.28%),
+    // where a normal range day still swings 0.6–0.9% intraday, so a genuine
+    // flat-close range day (e.g. 2026-07-17, closed −0.06%) was force-marked
+    // WRONG by an intraday wick. ADR-relative fixes that.
+    const adr = adrPct && adrPct > 0 ? adrPct : DEFAULT_ADR_PCT
+    const span = maxUpPct - maxDownPct   // maxDownPct is signed ≤ 0 → high-to-low realised range, %
+    if (span <= 0.55 * adr) return 'RIGHT'   // compressed vs ADR — the break was indeed suspect
+    if (span >= 1.0  * adr) return 'WRONG'   // a full-ADR (or more) expansion happened
     return 'FLAT'
   }
   return null   // NEUTRAL signals are not scored
@@ -138,10 +162,12 @@ export function signalVerdict(direction: string, toClosePct: number, maxUpPct: n
 
 /** Score a scorable entry (window complete) against its H1 bars. */
 export function computeOutcome(
-  entry: { at: string; price: number; stance: string; signals: JournalSignal[] },
+  entry: { at: string; price: number; stance: string; signals: JournalSignal[]; orb?: { adr14?: number | null } },
   bars: { timestamp: number; high: number; low: number; close: number }[],
   cutoffMs: number,
 ): JournalOutcome {
+  // ADR as a % of entry price, for ADR-relative BREAKOUT_SUSPECT scoring.
+  const adrPct = entry.orb?.adr14 && entry.price ? (entry.orb.adr14 / entry.price) * 100 : null
   const entryMs = Date.parse(entry.at)
   const entryPrice = entry.price
   const pct = (v: number) => round2((v - entryPrice) / entryPrice * 100)
@@ -162,7 +188,7 @@ export function computeOutcome(
 
   const verdict = stanceVerdict(entry.stance, r1Direction(entry.signals), toClosePct)
   const signalVerdicts = entry.signals
-    .map(s => ({ rule: s.rule, verdict: signalVerdict(s.direction, toClosePct, maxUpPct, maxDownPct) }))
+    .map(s => ({ rule: s.rule, verdict: signalVerdict(s.direction, toClosePct, maxUpPct, maxDownPct, adrPct) }))
     .filter((x): x is { rule: string; verdict: Verdict } => x.verdict !== null)
 
   return {
@@ -248,7 +274,8 @@ async function main() {
     let changed = false
 
     for (const entry of day.entries) {
-      if (entry.outcome) continue
+      if (entry.outcome && !RESCORE) continue
+      if (entry.outcome && entry.outcome.verdict === 'UNSCORABLE') continue   // window was too short — nothing to recompute
       const entryMs = Date.parse(entry.at)
       if (!Number.isFinite(entryMs)) continue
       const cutoffMs = windowEndMs(entryMs)
