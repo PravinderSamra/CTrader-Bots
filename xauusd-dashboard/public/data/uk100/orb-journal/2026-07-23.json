@@ -1,0 +1,67 @@
+{
+  "date": "2026-07-23",
+  "entries": [
+    {
+      "at": "2026-07-23T08:14:03.445Z",
+      "londonTime": "09:14 BST",
+      "mode": "POST_ORB",
+      "price": 10699.35,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — 20Y gilt +9bp — a fiscal-stress selloff; this historically drags the whole index regardless of the banks rotation.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "RATES",
+          "rule": "R11",
+          "text": "20Y gilt +9bp — a fiscal-stress selloff; this historically drags the whole index regardless of the banks rotation."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10557.2) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.53%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to a 20-year gilt yield at 5.78% (+9bp, fiscal-stress override), a European tape uniformly lower (DAX -0.49%, SX5E -0.53%), and 59% of the 136-point daily range already consumed, downside breaks carry more conviction today but the remaining range budget caps realistic targets well above the prior day's low at 10557.2.",
+      "aiBullets": [
+        "Energy (Brent +2.52%) is the only heavyweight sector pulling bullish — but banks are explicitly BEARISH due to the gilt blowout, so the sector panel is split 1-bull vs 1-bear among the two largest index weights, reducing clean trend-day probability.",
+        "GBP at the 89th percentile of its 20-day range is rich, not weak — this removes the normal 'weak pound lifts multinationals' tailwind and means staples/pharma FX tailwinds are absent today.",
+        "With the ORB spanning 64.1 points (10642.8–10706.9) and only ~56 points of the 14-day ADR (136pts × 41% remaining) left, a downside break targeting the prior day's low at 10557.2 would require ~86 points from the ORB low — 53% more than the day's remaining budget.",
+        "US500 -0.41% and European tape ALIGNED lower create a 'correlated peer' drag (20-day FTSE/DAX correlation 0.69), making a sustained upside ORB break the lower-probability path without a catalyst reversal."
+      ],
+      "bias": {
+        "score": -5,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10706.9,
+        "orbLow": 10642.8,
+        "orbBrokenDirection": "NONE",
+        "overnightHigh": 10723,
+        "overnightLow": 10642.8,
+        "priorDayHigh": 10759,
+        "priorDayLow": 10557.2,
+        "gapPct": -0.05,
+        "adr14": 136,
+        "adrUsedPct": 59
+      },
+      "outcome": null
+    }
+  ]
+}

@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-07-22T20:07:43.613Z",
+  "generatedAt": "2026-07-23T08:13:07.758Z",
   "yields": {
-    "US10Y": 4.6,
-    "US2Y": 4.21,
-    "realYield10Y": 2.35,
-    "realYield5Y": 2.05,
-    "curve2s10s": 39,
-    "breakeven10Y": 2.26,
-    "breakeven5Y": 2.28,
-    "forward5y5y": 2.24,
+    "US10Y": 4.63,
+    "US2Y": 4.26,
+    "realYield10Y": 2.37,
+    "realYield5Y": 2.09,
+    "curve2s10s": 37,
+    "breakeven10Y": 2.28,
+    "breakeven5Y": 2.3,
+    "forward5y5y": 2.26,
     "dayOverDay": {
-      "US10Y": 0.05,
-      "US2Y": 0.03,
-      "realYield10Y": 0.04
+      "US10Y": 0.03,
+      "US2Y": 0.05,
+      "realYield10Y": 0.02
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-07-29",
-    "probCut": 12,
-    "probHold": 88,
+    "probCut": 0,
+    "probHold": 100,
     "probHike": 0
   },
   "marketVolatility": {
@@ -34,26 +34,26 @@
     "openInterestChange": 15702
   },
   "etfFlows": {
-    "gldTonnes": 979,
-    "gldWoWChange": 1,
+    "gldTonnes": 988.5,
+    "gldWoWChange": 9.5,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4133.195,
-    "XAGUSD": 59.6445,
-    "EURUSD": 1.14122,
-    "USDJPY": 163.143,
-    "USDCHF": 0.81438,
-    "USDCNH": 6.77496,
-    "GBPUSD": 1.33753,
-    "USDCAD": 1.40844,
-    "USDSEK": 9.69502,
-    "US500": 7500.6,
-    "GER40": 25149.05,
-    "UK100": 10705.9,
-    "ADR_14day": 85.2,
-    "ADR_usedToday": 89.3,
-    "goldSilverRatio": 69.3
+    "XAUUSD": 4093.69,
+    "XAGUSD": 58.9095,
+    "EURUSD": 1.1422,
+    "USDJPY": 163.3745,
+    "USDCHF": 0.81481,
+    "USDCNH": 6.7703,
+    "GBPUSD": 1.33751,
+    "USDCAD": 1.40734,
+    "USDSEK": 9.70112,
+    "US500": 7475.2,
+    "GER40": 25028.55,
+    "UK100": 10700.15,
+    "ADR_14day": 86.5,
+    "ADR_usedToday": 50.8,
+    "goldSilverRatio": 69.5
   },
   "dollarLiquidity": {
     "stlfsi": -0.7011,
@@ -66,17 +66,17 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Gold firms to two-week peak on softer dollar; Fed outlook in focus - Reuters",
+      "headline": "Euro heads for one-week high ahead of ECB policy decision - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-07-22T01:51:00.000Z",
-      "hoursAgo": 18.3
+      "publishedAt": "2026-07-23T00:50:00.000Z",
+      "hoursAgo": 7.4
     }
   ],
   "briefing": {
     "biasScore": 3,
     "biasLabel": "BULLISH",
     "confidence": 6,
-    "briefing": "Right now, gold is being pushed higher by a combination of a weaker US dollar and steady demand from investors seeking safety — the Geopolitical Risk index [a measure of global tension that tends to drive money into gold] sits at an elevated 173.6, financial conditions remain loose [meaning money is easy to borrow and risk appetite is healthy], and GLD [the world's largest gold ETF, or fund] has seen three straight weeks of inflows [fresh money coming in to buy gold]. The only notable headline in the last 24 hours came 18 hours ago via Reuters, noting gold reached a two-week high as the dollar softened — this aligns with the DXY [the US Dollar Index, which measures dollar strength] sitting at 101.11, a relatively weak level that generally helps gold since gold is priced in dollars. No fresh market-moving news has broken in the last few hours, so no sudden catalysts are at play right now. Given all of this, the directional bias favours gold continuing UPWARD — a soft dollar, elevated geopolitical risk, persistent ETF buying, and loose financial conditions all point the same way. That said, real yields [the return on bonds after stripping out inflation] are still fairly high at 2.35%, which is a headwind [something working against] gold, as higher real yields make bonds more attractive versus gold. Confidence is 6/10 — this would weaken if the dollar rebounds sharply or if Fed officials signal rate cuts are further away than markets expect. The calendar shows NO scheduled economic events today, which removes immediate news risk and gives London/New York trend-following trades a cleaner window. However, the Fed meeting is just one week away (July 29), and markets may start trading cautiously or ranging [moving sideways without clear direction] in the coming days as traders wait for that decision. On levels: the 14-day Average Daily Range [typical daily price movement] is 85.2 points, but today's range has already used 89.3 points — meaning price has already moved MORE than its average daily distance, so significant additional movement today is less likely and the risk of a reversal or choppy close is higher. Watch the $4,133 area as current price and any pullback toward $4,090–$4,100 as a potential area where buyers [demand zones in ICT terms] may step in. For trade integration: the trend on the 1H chart appears bullish, but because today's ADR is already exceeded, reduce position size [trade smaller than normal] and only take high-quality 5M setups with tight stops — avoid chasing price higher from current levels. Remember: when the daily range is already used up, patience beats aggression.",
-    "generatedAt": "2026-07-22T20:08:01.497Z"
+    "briefing": "Gold is sitting at $4,093 during the London session, and the broader environment still leans in favour of the bulls [buyers who expect price to rise]. The most relevant forces right now are a weakening US Dollar [DXY at 101.08, which is relatively low — a weaker dollar typically makes gold cheaper for foreign buyers, supporting demand], elevated geopolitical risk [GPR at 173.6, meaning global tension is high enough to keep safe-haven demand alive], and steady inflows into gold ETFs [funds that hold physical gold — three consecutive weeks of buying signals institutional confidence]. On recent headlines, the only notable item from the last few hours is a Reuters story from roughly 7 hours ago noting the Euro is pushing toward a one-week high ahead of today's ECB [European Central Bank] policy decision. A stronger Euro almost always means a weaker Dollar, which is a mild tailwind [supporting force] for gold — so that headline is worth noting even if it's not a dramatic mover. Bond yields [the interest rate the US government pays on its debt] ticked up slightly overnight — US 10-year at 4.63% — and real yields [what you earn after adjusting for inflation] remain elevated at 2.37%, which is a headwind [opposing force] for gold since higher real yields make holding gold less attractive versus bonds. The Fed [US Federal Reserve] is 100% expected to hold rates unchanged at their July 29th meeting, removing any near-term rate-cut excitement. Directional bias is cautiously bullish: the dollar is soft, ETF money is flowing in, and geopolitical risk is elevated, but high real yields and reduced speculative positioning [large traders cut their bullish bets by 7,234 contracts last week] are keeping a lid on enthusiasm. Confidence is 6/10 — a surprise hawkish ECB tone today or a dollar bounce could quickly flatten that view. The economic calendar for today appears empty based on available data, but the ECB decision is the key event to watch during London/New York overlap — expect potential sharp moves in EUR/USD and by extension the dollar around the announcement. On price levels: the 14-day average daily range [typical daily price swing] is $86.50, and today has already used $50.80 of that, meaning roughly $35 of typical movement remains — be cautious chasing breakouts late in the day. Watch $4,080 as near-term support [a floor where buyers may step in] and $4,115–$4,120 as the next resistance zone [a ceiling where sellers may appear]. For trade integration: this is a reasonable window for trend-following longs [buy trades] on London/NY pullbacks into 1H demand zones, but keep position size modest given that over half the day's expected range is already used and the ECB could introduce sharp, unpredictable swings — wait for a clean 5M structure shift [a clear change in short-term price direction signalling buyers are in control] before committing. When more than half the day's average range is already used, patience beats aggression — let price come to you.",
+    "generatedAt": "2026-07-23T08:13:29.841Z"
   }
 }
