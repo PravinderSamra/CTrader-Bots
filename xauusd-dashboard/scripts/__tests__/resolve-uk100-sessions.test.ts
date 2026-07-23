@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { classify, classifyHits, cashCloseCutoffMs, firstFillIndex } from '../resolve-uk100-sessions'
+import { classify, classifyHits, cashCloseCutoffMs, firstFillIndex, recordLean, biasVerdictFor } from '../resolve-uk100-sessions'
 
 describe('cashCloseCutoffMs', () => {
   it('resolves 16:30 BST (summer, UTC+1) for a July analysis time', () => {
@@ -183,5 +183,22 @@ describe('classify — WAIT-fill scoring (the 2026-07-16 miss the resolver used 
     const postFill = [{ open: 10490, high: 10497, low: 10425, close: 10430 }]
     const out = classify(shortRec, postFill, ts + 4 * 3600_000, cutoffMs, 10488)
     expect(out?.result).toBe('WIN')
+  })
+})
+
+describe('recordLean / biasVerdictFor — bias-direction accuracy', () => {
+  it('lean is the bias label, else the trade direction, else null', () => {
+    expect(recordLean('BULLISH')).toBe('BULLISH')
+    expect(recordLean('BEARISH', 'LONG')).toBe('BEARISH')    // explicit bias wins
+    expect(recordLean('NEUTRAL', 'SHORT')).toBe('BEARISH')   // NEUTRAL → fall back to trade dir
+    expect(recordLean('NEUTRAL', 'LONG')).toBe('BULLISH')
+    expect(recordLean('NEUTRAL')).toBeNull()
+  })
+  it('grades the lean against the session close with a ±0.15% dead-band', () => {
+    // 2026-07-23: BEARISH, price 10675.35 → close ~10580 → RIGHT
+    expect(biasVerdictFor('BEARISH', 10675.35, 10580)).toBe('RIGHT')
+    expect(biasVerdictFor('BEARISH', 10675.35, 10720)).toBe('WRONG')   // rose → bearish wrong
+    expect(biasVerdictFor('BULLISH', 10000, 10005)).toBe('FLAT')       // +0.05% < 0.15%
+    expect(biasVerdictFor('BULLISH', 10000, 10200)).toBe('RIGHT')
   })
 })
