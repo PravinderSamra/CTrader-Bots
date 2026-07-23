@@ -187,6 +187,17 @@ export function computeExpansionState(
 }
 
 async function main() {
+  // Self-managing freshness: the baseline changes slowly, so skip the ~45
+  // fetches when the existing profile is < 7 days old (unless --force). Lets
+  // the daily workflow call this every run cheaply — it no-ops when fresh.
+  if (!process.argv.includes('--force') && !DRY) {
+    try {
+      const existing = JSON.parse(fs.readFileSync(OUT_FILE, 'utf8')) as IntradayProfile
+      const ageDays = (Date.now() - Date.parse(existing.generatedAt)) / 86_400_000
+      if (ageDays < 7) { console.log(`Intraday profile is ${ageDays.toFixed(1)}d old (< 7d) — skipping rebuild.`); return }
+    } catch { /* no profile yet — build it */ }
+  }
+
   const client = new CTraderClient()
   if (!UK100_ID) { console.error('UK100 symbolId unknown — aborting.'); process.exit(1) }
   if (!(await client.init())) {

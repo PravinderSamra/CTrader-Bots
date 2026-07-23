@@ -59,6 +59,18 @@ jobs:
           FINNHUB_API_KEY:          ${{ secrets.FINNHUB_API_KEY }}
           ANTHROPIC_API_KEY:        ${{ secrets.ANTHROPIC_API_KEY }}
 
+      - name: Refresh UK100 intraday profile
+        # Part B: the per-hour range/volume completion baseline that powers
+        # orbContext.expansionState. Self-managing — the script no-ops when the
+        # profile is < 7 days old, so running it every tick is cheap. Must
+        # precede the fetch step so expansionState is computed against a fresh
+        # baseline. continue-on-error: never blocks the snapshot/deploy.
+        continue-on-error: true
+        run: cd xauusd-dashboard && npx tsx scripts/build-uk100-intraday-profile.ts
+        env:
+          CTRADER_MCP_URL:          ${{ secrets.VITE_CTRADER_MCP_URL }}
+          CTRADER_MCP_TOKEN:        ${{ secrets.VITE_CTRADER_MCP_TOKEN }}
+
       - name: Fetch UK100 data snapshot
         # Phase 2a of UK100-BUILD-PLAN.md. continue-on-error: a UK100 fetch
         # failure must never block the gold snapshot/deploy — same reasoning
