@@ -618,6 +618,91 @@
         "verdict": "UNSCORABLE",
         "signalVerdicts": []
       }
+    },
+    {
+      "at": "2026-07-23T20:17:41.434Z",
+      "londonTime": "21:17 BST",
+      "mode": "CLOSED",
+      "price": 10595.8,
+      "stance": "FADE_FAVOURED",
+      "stanceLine": "Fade day — the ORB break was a trap — ORB broke UP but price has fully reclaimed the range (back below 10642.8) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "STRUCTURE",
+          "rule": "R1",
+          "text": "ORB broke UP but price has fully reclaimed the range (back below 10642.8) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "104% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10557.2) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.64%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -1.17% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "INFO",
+          "source": "AI",
+          "rule": "R12",
+          "text": "Today's 09:56 BST AI session read: NO TRADE (NO_TRADE, 65%) — playbook SHORT_ONLY."
+        }
+      ],
+      "aiStanceLine": "Due to 104% of the 14-day average daily range already consumed, a confirmed fakeout above the ORB high (price reclaimed below 10642.8) and a UK Retail Sales release at 07:00 BST — one hour before cash open — tomorrow's ORB setup carries a high risk of data-driven whipsaw with no range budget to absorb it.",
+      "aiBullets": [
+        "Range exhaustion meets a data event: with 104% of the ADR14 (136 pts) already spent, any retail sales surprise at 07:00 BST could gap price into territory where there is statistically no remaining daily fuel to sustain a trend.",
+        "The failed upside ORB break (price swept above 10706.9 then closed back below ORB low 10642.8) combined with US500 -1.17% and Euro Stoxx -1.64% creates a macro backdrop that validates the structural short read, not just the technical fakeout alone.",
+        "Sterling's CROWDED_SHORT positioning (89th percentile, net short -72,474 contracts) is a contrarian wildcard: a strong UK Retail Sales print tomorrow could spark a GBP squeeze, which — via the sign-flip — would be bearish for FTSE and could amplify any downside ORB continuation.",
+        "Energy is the only significant bullish offset (Brent +4.05%, ENERGY sector read BULLISH), but Shell and BP alone cannot override the combined drag of miners, a risk-off European tape and an already-exhausted daily range."
+      ],
+      "bias": {
+        "score": -4,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10706.9,
+        "orbLow": 10642.8,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10723,
+        "overnightLow": 10642.8,
+        "priorDayHigh": 10759,
+        "priorDayLow": 10557.2,
+        "gapPct": -1.02,
+        "adr14": 136,
+        "adrUsedPct": 104
+      },
+      "outcome": {
+        "resolvedAt": "2026-07-23T20:17:43.631Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }

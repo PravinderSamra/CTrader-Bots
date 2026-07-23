@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-07-23T19:00:40.020Z",
+  "generatedAt": "2026-07-23T20:16:42.338Z",
   "yields": {
-    "US10Y": 4.63,
-    "US2Y": 4.26,
-    "realYield10Y": 2.37,
-    "realYield5Y": 2.09,
-    "curve2s10s": 37,
+    "US10Y": 4.67,
+    "US2Y": 4.31,
+    "realYield10Y": 2.39,
+    "realYield5Y": 2.11,
+    "curve2s10s": 36,
     "breakeven10Y": 2.28,
     "breakeven5Y": 2.3,
     "forward5y5y": 2.26,
     "dayOverDay": {
-      "US10Y": 0.03,
+      "US10Y": 0.04,
       "US2Y": 0.05,
       "realYield10Y": 0.02
     }
@@ -18,8 +18,8 @@
   "fedExpectations": {
     "nextMeeting": "2026-07-29",
     "probCut": 0,
-    "probHold": 100,
-    "probHike": 0
+    "probHold": 96,
+    "probHike": 4
   },
   "marketVolatility": {
     "GVZ": 24.02,
@@ -34,26 +34,26 @@
     "openInterestChange": 15702
   },
   "etfFlows": {
-    "gldTonnes": 999.6,
-    "gldWoWChange": 0.2,
+    "gldTonnes": 999.3,
+    "gldWoWChange": -0.3,
     "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4048.19,
-    "XAGUSD": 57.6295,
-    "EURUSD": 1.13781,
-    "USDJPY": 163.7845,
-    "USDCHF": 0.81684,
-    "USDCNH": 6.77802,
-    "GBPUSD": 1.33186,
-    "USDCAD": 1.40759,
-    "USDSEK": 9.76439,
-    "US500": 7396.2,
-    "GER40": 24758.55,
-    "UK100": 10589.2,
+    "XAUUSD": 4049.545,
+    "XAGUSD": 57.614,
+    "EURUSD": 1.13779,
+    "USDJPY": 163.827,
+    "USDCHF": 0.81679,
+    "USDCNH": 6.77806,
+    "GBPUSD": 1.33164,
+    "USDCAD": 1.40864,
+    "USDSEK": 9.75264,
+    "US500": 7419.5,
+    "GER40": 24740.55,
+    "UK100": 10595.8,
     "ADR_14day": 86.5,
     "ADR_usedToday": 100.8,
-    "goldSilverRatio": 70.2
+    "goldSilverRatio": 70.3
   },
   "dollarLiquidity": {
     "stlfsi": -0.7011,
@@ -69,20 +69,20 @@
       "headline": "Traders see September rate hike as European Central Bank mulls energy price spike",
       "source": "CNBC",
       "publishedAt": "2026-07-23T13:25:57.000Z",
-      "hoursAgo": 5.6
+      "hoursAgo": 6.8
     },
     {
-      "headline": "Dollar hits new 40-year high versus yen, euro lower after ECB decision - Reuters",
+      "headline": "Dollar hits new 40-year high versus yen, euro softer after ECB stands pat on rates - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-23T00:50:00.000Z",
-      "hoursAgo": 18.2
+      "hoursAgo": 19.4
     }
   ],
   "briefing": {
     "biasScore": -2,
     "biasLabel": "BEARISH",
     "confidence": 4,
-    "briefing": "Right now, the most relevant forces pushing and pulling gold are a rising US dollar, climbing bond yields [the interest rate the US government pays on its debt — higher yields make gold less attractive since gold pays no interest], and a Federal Reserve that markets are 100% certain will hold rates steady at their July 29th meeting. The dollar strength story has been turbocharged by news out of Europe: about 18 hours ago Reuters reported the dollar hit a 40-year high against the Japanese yen with the euro also falling, and then roughly 5-6 hours ago CNBC flagged that traders are now pricing in a possible ECB [European Central Bank] rate hike in September due to an energy price spike — a hike would normally support the euro, but the headline seems to be creating noise rather than clarity, with the dollar remaining firm. A strong dollar is generally bad for gold because gold is priced in dollars — when the dollar rises, gold becomes more expensive for foreign buyers and tends to fall. Despite gold trading at a lofty $4,048, here is the critical piece of data: the 14-day Average Daily Range [the typical daily price swing] is 86.5 points, but today's range has already used 100.8 points — meaning the market has moved MORE than its average daily distance already. That strongly suggests today's directional momentum is largely exhausted and we are likely entering choppy, directionless price action for the remainder of this session. Real yields [bond yields adjusted for inflation] ticked up slightly today, another mild headwind for gold. GLD ETF flows are flat over three weeks and large traders reduced their net long positions by over 7,000 contracts in the latest report, suggesting waning bullish conviction. Confidence in any directional bias is just 4/10 — the main reason to stay cautious is that today's calendar is completely empty of scheduled news events, so there is no fresh catalyst likely to create a clean trending move. What would change this view: a sharp reversal in the dollar, a surprise geopolitical escalation, or gold reclaiming and holding above today's high. For a trend-following trader, this is NOT a good window for new trades — the daily range is used up, the dollar is strong, and there is no fresh news catalyst to drive a clean move. If you must trade, keep size very small and wait for a proper 1H structure shift [a clear change in the direction of price on the hourly chart] before committing. The golden rule for today: when the daily range is already exceeded, patient hands beat trigger-happy ones.",
-    "generatedAt": "2026-07-23T19:00:55.339Z"
+    "briefing": "Right now, the most important forces shaping gold are a resilient US dollar, rising bond yields [the interest rate governments pay on their debt — higher yields make gold less attractive because gold pays no interest], and a market that has already moved more than its average daily range. The dollar index (DXY) sits at 101.44 and the yen has weakened dramatically, which about 19 hours ago Reuters confirmed with a headline about the dollar hitting a 40-year high against the yen — a strong dollar typically pushes gold prices lower, all else equal. About 7 hours ago, CNBC reported that traders are pricing in a September rate hike from the European Central Bank due to an energy price spike; a more hawkish ECB [a central bank leaning toward raising rates, not cutting them] supports a stronger euro but also signals a global tightening mood that can weigh on risk assets and commodities including gold. Despite this, gold is still trading at a remarkable $4,049, so the underlying demand story hasn't collapsed — geopolitical risk (GPR at 173.6, which is elevated) and a high open interest reading suggest institutional players are still active in the market. Real yields [bond yields after stripping out inflation] are high at 2.39%, which is historically a headwind for gold. Directional bias leans mildly BEARISH from here, mostly because today's ADR [Average Daily Range — how far gold typically moves in a day] of $86.50 has already been exceeded by $100.80, meaning gold has moved MORE than its typical daily distance — this dramatically reduces the probability of a clean, low-risk trend-following trade developing in the remaining hours. There is no scheduled economic news today according to the calendar, and no high-impact events flagged for later this week, which removes one source of volatility but also removes a catalyst that could restart momentum. Fed expectations show a 96% chance of no rate change at the July 29th meeting, so that is unlikely to surprise markets. Confidence in this mild bearish lean is 4/10 — the lack of a fresh catalyst and the already-exhausted daily range make any directional conviction low; if price pulls back to a clear support level [a price zone where buyers have previously stepped in] and forms a buying signal on the 5-minute chart, a short-term long [a buy trade] could still work within the broader uptrend, but position size [the amount of money risked per trade] should be small given how extended the move already is. For trend-following trades using ICT methodology tonight, patience is your edge — wait for price to reset into a discount zone [a price level well below recent highs] before looking for bullish signals, and keep risk tight. Screenshot this: when gold has already moved past its average daily range, the smartest trade is often no trade — wait for tomorrow's fresh range.",
+    "generatedAt": "2026-07-23T20:17:01.761Z"
   }
 }
