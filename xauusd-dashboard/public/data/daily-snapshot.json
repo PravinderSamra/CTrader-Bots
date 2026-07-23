@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-23T13:25:57.599Z",
+  "generatedAt": "2026-07-23T15:48:32.061Z",
   "yields": {
     "US10Y": 4.63,
     "US2Y": 4.26,
@@ -22,8 +22,8 @@
     "probHike": 0
   },
   "marketVolatility": {
-    "GVZ": 23.94,
-    "VIX": 17.05
+    "GVZ": 24.02,
+    "VIX": 16.64
   },
   "positioning": {
     "cotNetLong": 175931,
@@ -34,26 +34,26 @@
     "openInterestChange": 15702
   },
   "etfFlows": {
-    "gldTonnes": 998.2,
-    "gldWoWChange": 9.5,
+    "gldTonnes": 999,
+    "gldWoWChange": 0.8,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4053.945,
-    "XAGUSD": 57.5215,
-    "EURUSD": 1.1375,
-    "USDJPY": 163.8025,
-    "USDCHF": 0.81725,
-    "USDCNH": 6.77722,
-    "GBPUSD": 1.33285,
-    "USDCAD": 1.4084,
-    "USDSEK": 9.75976,
-    "US500": 7416.2,
-    "GER40": 24768.55,
-    "UK100": 10604.85,
+    "XAUUSD": 4050.535,
+    "XAGUSD": 57.596,
+    "EURUSD": 1.13729,
+    "USDJPY": 163.8345,
+    "USDCHF": 0.81739,
+    "USDCNH": 6.77732,
+    "GBPUSD": 1.33076,
+    "USDCAD": 1.4091,
+    "USDSEK": 9.76826,
+    "US500": 7390.2,
+    "GER40": 24774.55,
+    "UK100": 10617.9,
     "ADR_14day": 86.5,
-    "ADR_usedToday": 100.3,
-    "goldSilverRatio": 70.5
+    "ADR_usedToday": 100.8,
+    "goldSilverRatio": 70.3
   },
   "dollarLiquidity": {
     "stlfsi": -0.7011,
@@ -66,17 +66,23 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Traders see September rate hike as European Central Bank mulls energy price spike",
+      "source": "CNBC",
+      "publishedAt": "2026-07-23T13:25:57.000Z",
+      "hoursAgo": 2.4
+    },
+    {
       "headline": "Dollar hits fresh 40-year high versus yen, edges higher against euro - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-23T00:50:00.000Z",
-      "hoursAgo": 12.6
+      "hoursAgo": 15
     }
   ],
   "briefing": {
     "biasScore": 2,
     "biasLabel": "BULLISH",
-    "confidence": 4,
-    "briefing": "RIGHT NOW, the dominant forces shaping gold are a tug-of-war between a strong dollar on one side and persistent safe-haven [assets people buy when worried, like gold] demand plus ongoing institutional buying on the other. The dollar (measured by the DXY index) sits at 101.44, which is relatively firm, and U.S. bond yields [the return investors get for lending money to the government] are nudging higher — the 10-year is at 4.63%, up slightly today — which normally acts as a headwind for gold. However, real yields [bond returns after stripping out inflation] at 2.37% are elevated but stable, and ETF [exchange-traded fund — a gold-backed product institutions use to invest] flows have been positive for three straight weeks, with nearly 10 tonnes added this week alone, suggesting large players are still accumulating. The only meaningful news headline in the last 24 hours came roughly 12–13 hours ago: the dollar hit a 40-year high against the Japanese yen, briefly boosting the dollar broadly. Gold has so far absorbed that pressure reasonably well, which itself is a quietly bullish [price-rising] signal. That said, the DIRECTIONAL BIAS leans modestly BULLISH — large money is still buying dips, geopolitical risk remains elevated (GPR index at 173.6, a historically high reading), and gold's resilience against today's dollar strength is constructive. CONFIDENCE is 4/10, however, because today's ADR [average daily range — how far gold typically moves in a day] of 86.5 points has already been exceeded, with price having moved 100.3 points today. This means the statistical 'fuel' for a big directional move today is largely spent — we are trading in overtime, and chasing new entries now carries higher risk of a reversal or chop [erratic sideways movement]. The Fed meeting on July 29th (six days away) is not in this week's calendar data, but markets are pricing zero chance of a rate cut — this is already known and mostly priced in. No scheduled economic events appear in today's calendar data, so there are no imminent data releases to navigate. KEY LEVELS to watch: $4,053 is current price; with the daily range already exhausted, respect $4,040–$4,030 as near-term support [a price floor where buyers have stepped in] and $4,070–$4,080 as near-term resistance [a price ceiling where sellers may appear]. TRADE INTEGRATION: Given the daily range is already over-extended, this is NOT an ideal window to initiate fresh trend-following longs [buy trades]. Wait for price to pull back [retrace toward a support level] and form a clean signal on the 5-minute chart before considering an entry — reduce position size to half your normal risk until the range resets tomorrow morning. Remember: when the daily range is already exceeded, the safest trade is often no trade — wait for tomorrow's fresh range.",
-    "generatedAt": "2026-07-23T13:26:16.606Z"
+    "confidence": 5,
+    "briefing": "RIGHT NOW, the dominant forces shaping gold are a strong but slightly complicated mix: a firm US dollar (the DXY index, which measures dollar strength against a basket of currencies, sits at 101.48), rising bond yields (the 10-year US Treasury is at 4.63%, up slightly today), and elevated geopolitical risk (the GPR index, which tracks global tension levels, is at 173.6 — historically high). Normally a strong dollar and rising yields act as headwinds for gold, but high real yields [the return on bonds after stripping out inflation] at 2.37% haven't stopped gold from trading near $4,050 — which itself signals underlying safe-haven demand is powerful. RECENT CATALYSTS: About 2.4 hours ago, CNBC reported that traders are pricing in a September rate HIKE from the European Central Bank due to an energy price spike — a hike would strengthen the euro against the dollar, which can indirectly support gold. Fifteen hours ago, Reuters flagged the dollar hitting a 40-year high against the Japanese yen (USD/JPY at 163.83), which reflects ongoing yen weakness rather than a broad dollar surge, so its direct negative impact on gold appears already absorbed. DIRECTIONAL BIAS: Today's picture leans mildly BULLISH, but with a major caution flag — gold's 14-day average daily range [how far price typically moves in a day] is 86.5 points, but today's move has already covered 100.8 points. That means the market has exceeded its average daily move, so most of the day's energy is likely spent. Chasing new longs [buy trades] from here carries significantly higher risk of a pullback. Large speculators (COT data, the weekly report showing professional positioning) remain heavily net-long at 175,931 contracts, though that fell by 7,234 last week — a mild caution sign that some smart money trimmed exposure. ETF flows into gold funds remain a 3-week inflow trend, and financial conditions [how easy or tight it is to borrow money in the economy] are loose (both FSI and NFCI are negative, meaning easy conditions), which historically supports gold. CONFIDENCE SCORE: 5/10. The trend is up but today's range is already exhausted, real yields are high, and the dollar remains firm — all of these could cap further upside today. The view would shift more bullish if gold pulls back to a clean level (around $4,020–$4,030 would be a natural retracement zone) and holds, giving a proper ICT setup. It would flip bearish if price breaks and closes on the 1H chart below $4,000. EVENT RISK: The economic calendar for today appears completely empty based on available data — no scheduled US or major global data releases to worry about this session. That's a double-edged sword: no catalyst to push gold sharply, but also no sudden reversal risk from a data surprise. KEY LEVELS: Watch $4,050 as current price and potential resistance; $4,020–$4,030 as a potential pullback zone where buyers may re-engage; $4,000 as a major psychological support level [round numbers attract attention]. With ADR already exceeded, expecting less than 20–30 additional points of directional move today is realistic. TRADE INTEGRATION: Given that today's average range has already been exceeded, this is NOT an ideal window to enter fresh trend-following long trades at current price — the move has largely played out. The better approach is to wait patiently for price to pull back into a lower area (around $4,020–$4,030 on the 5-minute chart) during the New York session, look for a bullish signal there on the 1-minute chart, and only then consider a buy with reduced size given the mixed fundamental backdrop. When the daily range is already exhausted, patience beats aggression every time.",
+    "generatedAt": "2026-07-23T15:48:56.643Z"
   }
 }

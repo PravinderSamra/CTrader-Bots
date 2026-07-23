@@ -61,7 +61,29 @@
         "adr14": 136,
         "adrUsedPct": 59
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-23T15:49:35.933Z",
+        "fwd1hPct": -0.15,
+        "fwd3hPct": -0.08,
+        "toClosePct": -0.77,
+        "maxUpPct": 0.09,
+        "maxDownPct": -0.95,
+        "verdict": "RIGHT",
+        "signalVerdicts": [
+          {
+            "rule": "R11",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          }
+        ]
+      }
     },
     {
       "at": "2026-07-23T09:38:10.655Z",
@@ -130,7 +152,29 @@
         "adr14": 136,
         "adrUsedPct": 59
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-23T15:49:36.067Z",
+        "fwd1hPct": 0.09,
+        "fwd3hPct": -0.48,
+        "toClosePct": -0.59,
+        "maxUpPct": 0.25,
+        "maxDownPct": -0.78,
+        "verdict": "RIGHT",
+        "signalVerdicts": [
+          {
+            "rule": "R2",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          }
+        ]
+      }
     },
     {
       "at": "2026-07-23T11:02:16.738Z",
@@ -199,7 +243,29 @@
         "adr14": 136,
         "adrUsedPct": 59
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-23T15:49:36.195Z",
+        "fwd1hPct": -0.62,
+        "fwd3hPct": -0.52,
+        "toClosePct": -0.71,
+        "maxUpPct": -0.02,
+        "maxDownPct": -0.9,
+        "verdict": "RIGHT",
+        "signalVerdicts": [
+          {
+            "rule": "R2",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          }
+        ]
+      }
     },
     {
       "at": "2026-07-23T13:26:52.876Z",
@@ -270,7 +336,118 @@
         "adr14": 136,
         "adrUsedPct": 92
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-07-23T15:49:36.324Z",
+        "fwd1hPct": 0.31,
+        "fwd3hPct": null,
+        "toClosePct": 0.11,
+        "maxUpPct": 0.42,
+        "maxDownPct": 0.03,
+        "verdict": "FLAT",
+        "signalVerdicts": [
+          {
+            "rule": "R1",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R4",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R8",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R9",
+            "verdict": "FLAT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-07-23T15:49:33.062Z",
+      "londonTime": "16:49 BST",
+      "mode": "CLOSED",
+      "price": 10618.3,
+      "stance": "FADE_FAVOURED",
+      "stanceLine": "Fade day — the ORB break was a trap — ORB broke UP but price has fully reclaimed the range (back below 10642.8) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "STRUCTURE",
+          "rule": "R1",
+          "text": "ORB broke UP but price has fully reclaimed the range (back below 10642.8) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "92% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10557.2) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.58%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -1.55% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "INFO",
+          "source": "AI",
+          "rule": "R12",
+          "text": "Today's 09:56 BST AI session read: NO TRADE (NO_TRADE, 65%) — playbook SHORT_ONLY."
+        }
+      ],
+      "aiStanceLine": "Due to 92% of the 136-point daily range already consumed, a confirmed upside fakeout reclaimed back below 10,642.8, and Wall Street futures down 1.55% approaching the US handoff, any residual breakout attempts today look like traps — the structural lean is short but the range budget makes chasing unattractive.",
+      "aiBullets": [
+        "The GBP tailwind (GBPUSD -0.5%, 89th percentile 20-day range — a historically large move) is partially offsetting the bearish tape, creating a split between index-level weakness and underlying FX support that reduces clean directional conviction for a trend trade.",
+        "Brent +4.56% is bullish for Shell/BP (top-5 index weights) while copper -2.26% hammers miners simultaneously — this sector tug-of-war narrows the index's net move and argues against a clean, one-sided ORB trend day tomorrow.",
+        "With only ~11 points of typical daily range remaining (136 × 8% = ~11pts) and the prior day low at 10,557.2 sitting well beyond that budget, downside targets beyond ORB low 10,642.8 are stretch-only and should not be used as primary exits.",
+        "Tomorrow's UK Retail Sales at 07:00 BST — one hour before cash open — is a HIGH-impact event that could reset the overnight range entirely; the mechanical ORB setup should be re-evaluated after that print rather than carried from tonight's levels."
+      ],
+      "bias": {
+        "score": -4,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10706.9,
+        "orbLow": 10642.8,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10723,
+        "overnightLow": 10642.8,
+        "priorDayHigh": 10759,
+        "priorDayLow": 10557.2,
+        "gapPct": -0.81,
+        "adr14": 136,
+        "adrUsedPct": 92
+      },
+      "outcome": {
+        "resolvedAt": "2026-07-23T15:49:36.324Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
