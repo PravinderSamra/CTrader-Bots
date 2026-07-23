@@ -1,6 +1,21 @@
 {
-  "updatedAt": "2026-07-22T14:58:29.143Z",
+  "updatedAt": "2026-07-23T13:26:54.319Z",
   "outcomes": [
+    {
+      "filename": "2026-07-23/08-56.json",
+      "date": "2026-07-23",
+      "time": "09:56 BST",
+      "session": "LONDON",
+      "bias": "BEARISH",
+      "probability": 65,
+      "confidence": 3,
+      "priceZone": "OTE",
+      "orbDirection": "SHORT_ONLY",
+      "result": "NO_CALL",
+      "resolvedAt": "2026-07-23T13:26:54.317Z",
+      "maxFavourable": null,
+      "maxAdverse": null
+    },
     {
       "filename": "2026-07-22/08-48.json",
       "date": "2026-07-22",
