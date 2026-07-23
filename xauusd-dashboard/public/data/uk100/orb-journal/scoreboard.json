@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-23T15:49:36.325Z",
+  "updatedAt": "2026-07-23T21:36:41.649Z",
   "entriesScored": 29,
   "byStance": {
     "SHORT_FAVOURED": {
@@ -7,35 +7,35 @@
       "right": 3,
       "wrong": 6,
       "flat": 0,
-      "avgToClosePct": 0.32
+      "avgToClosePct": 0.34
     },
     "LONG_FAVOURED": {
       "n": 5,
       "right": 2,
-      "wrong": 3,
-      "flat": 0,
-      "avgToClosePct": -0.04
+      "wrong": 2,
+      "flat": 1,
+      "avgToClosePct": 0.02
     },
     "FADE_FAVOURED": {
       "n": 1,
       "right": 0,
-      "wrong": 0,
-      "flat": 1,
-      "avgToClosePct": 0.11
+      "wrong": 1,
+      "flat": 0,
+      "avgToClosePct": 0.17
     }
   },
   "byRule": {
     "R13": {
       "n": 16,
-      "right": 0,
-      "wrong": 13,
-      "flat": 3
+      "right": 5,
+      "wrong": 5,
+      "flat": 6
     },
     "R11b": {
       "n": 24,
-      "right": 0,
-      "wrong": 21,
-      "flat": 3
+      "right": 4,
+      "wrong": 5,
+      "flat": 15
     },
     "R6": {
       "n": 1,
@@ -46,8 +46,8 @@
     "R8": {
       "n": 26,
       "right": 10,
-      "wrong": 13,
-      "flat": 3
+      "wrong": 11,
+      "flat": 5
     },
     "R12": {
       "n": 9,
@@ -57,15 +57,15 @@
     },
     "R2": {
       "n": 11,
-      "right": 0,
-      "wrong": 10,
-      "flat": 1
+      "right": 2,
+      "wrong": 3,
+      "flat": 6
     },
     "R4": {
       "n": 15,
-      "right": 0,
-      "wrong": 11,
-      "flat": 4
+      "right": 7,
+      "wrong": 0,
+      "flat": 8
     },
     "R9": {
       "n": 4,
@@ -76,14 +76,14 @@
     "R10": {
       "n": 5,
       "right": 0,
-      "wrong": 5,
-      "flat": 0
+      "wrong": 0,
+      "flat": 5
     },
     "R3": {
       "n": 7,
       "right": 4,
-      "wrong": 3,
-      "flat": 0
+      "wrong": 2,
+      "flat": 1
     },
     "R11": {
       "n": 5,
@@ -94,8 +94,8 @@
     "R1": {
       "n": 1,
       "right": 0,
-      "wrong": 0,
-      "flat": 1
+      "wrong": 1,
+      "flat": 0
     }
   },
   "breakoutsSuspect": {

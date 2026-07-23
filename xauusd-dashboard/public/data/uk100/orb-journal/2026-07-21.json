@@ -69,7 +69,7 @@
         "adrUsedPct": 64
       },
       "outcome": {
-        "resolvedAt": "2026-07-23T20:55:49.984Z",
+        "resolvedAt": "2026-07-23T21:36:39.836Z",
         "fwd1hPct": 0.21,
         "fwd3hPct": 0.18,
         "toClosePct": 0.72,
@@ -171,7 +171,7 @@
         "adrUsedPct": 86
       },
       "outcome": {
-        "resolvedAt": "2026-07-23T20:55:50.131Z",
+        "resolvedAt": "2026-07-23T21:36:39.974Z",
         "fwd1hPct": 0,
         "fwd3hPct": -0.13,
         "toClosePct": 0.55,
@@ -277,7 +277,7 @@
         "adrUsedPct": 92
       },
       "outcome": {
-        "resolvedAt": "2026-07-23T20:55:50.270Z",
+        "resolvedAt": "2026-07-23T21:36:40.110Z",
         "fwd1hPct": -0.03,
         "fwd3hPct": 0.16,
         "toClosePct": 0.48,
@@ -383,7 +383,7 @@
         "adrUsedPct": 92
       },
       "outcome": {
-        "resolvedAt": "2026-07-23T20:55:50.406Z",
+        "resolvedAt": "2026-07-23T21:36:40.243Z",
         "fwd1hPct": -0.09,
         "fwd3hPct": 0.58,
         "toClosePct": 0.58,
@@ -489,7 +489,7 @@
         "adrUsedPct": 97
       },
       "outcome": {
-        "resolvedAt": "2026-07-23T20:55:50.543Z",
+        "resolvedAt": "2026-07-23T21:36:40.381Z",
         "fwd1hPct": 0.29,
         "fwd3hPct": null,
         "toClosePct": 0.29,

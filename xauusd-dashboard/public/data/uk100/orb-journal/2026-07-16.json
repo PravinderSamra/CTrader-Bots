@@ -48,7 +48,7 @@
         "adrUsedPct": 45
       },
       "outcome": {
-        "resolvedAt": "2026-07-23T20:55:47.908Z",
+        "resolvedAt": "2026-07-23T21:36:37.752Z",
         "fwd1hPct": 0.08,
         "fwd3hPct": 0.14,
         "toClosePct": 0.95,
@@ -135,7 +135,7 @@
         "adrUsedPct": 45
       },
       "outcome": {
-        "resolvedAt": "2026-07-23T20:55:48.047Z",
+        "resolvedAt": "2026-07-23T21:36:37.894Z",
         "fwd1hPct": 0.27,
         "fwd3hPct": 0.24,
         "toClosePct": 1.06,
@@ -234,7 +234,7 @@
         "adrUsedPct": 45
       },
       "outcome": {
-        "resolvedAt": "2026-07-23T20:55:48.188Z",
+        "resolvedAt": "2026-07-23T21:36:38.033Z",
         "fwd1hPct": 0.09,
         "fwd3hPct": -0.18,
         "toClosePct": 0.9,
@@ -333,7 +333,7 @@
         "adrUsedPct": 45
       },
       "outcome": {
-        "resolvedAt": "2026-07-23T20:55:48.323Z",
+        "resolvedAt": "2026-07-23T21:36:38.174Z",
         "fwd1hPct": 0,
         "fwd3hPct": 0.05,
         "toClosePct": 0.82,
@@ -432,7 +432,7 @@
         "adrUsedPct": 46
       },
       "outcome": {
-        "resolvedAt": "2026-07-23T20:55:48.458Z",
+        "resolvedAt": "2026-07-23T21:36:38.311Z",
         "fwd1hPct": 0.07,
         "fwd3hPct": 0.84,
         "toClosePct": 0.84,
@@ -538,7 +538,7 @@
         "adrUsedPct": 71
       },
       "outcome": {
-        "resolvedAt": "2026-07-23T20:55:48.600Z",
+        "resolvedAt": "2026-07-23T21:36:38.450Z",
         "fwd1hPct": 0.37,
         "fwd3hPct": null,
         "toClosePct": 0.37,
