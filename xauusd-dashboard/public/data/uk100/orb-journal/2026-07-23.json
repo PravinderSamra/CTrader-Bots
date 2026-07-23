@@ -1,0 +1,708 @@
+{
+  "date": "2026-07-23",
+  "entries": [
+    {
+      "at": "2026-07-23T08:14:03.445Z",
+      "londonTime": "09:14 BST",
+      "mode": "POST_ORB",
+      "price": 10699.35,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — 20Y gilt +9bp — a fiscal-stress selloff; this historically drags the whole index regardless of the banks rotation.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "RATES",
+          "rule": "R11",
+          "text": "20Y gilt +9bp — a fiscal-stress selloff; this historically drags the whole index regardless of the banks rotation."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10557.2) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.53%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to a 20-year gilt yield at 5.78% (+9bp, fiscal-stress override), a European tape uniformly lower (DAX -0.49%, SX5E -0.53%), and 59% of the 136-point daily range already consumed, downside breaks carry more conviction today but the remaining range budget caps realistic targets well above the prior day's low at 10557.2.",
+      "aiBullets": [
+        "Energy (Brent +2.52%) is the only heavyweight sector pulling bullish — but banks are explicitly BEARISH due to the gilt blowout, so the sector panel is split 1-bull vs 1-bear among the two largest index weights, reducing clean trend-day probability.",
+        "GBP at the 89th percentile of its 20-day range is rich, not weak — this removes the normal 'weak pound lifts multinationals' tailwind and means staples/pharma FX tailwinds are absent today.",
+        "With the ORB spanning 64.1 points (10642.8–10706.9) and only ~56 points of the 14-day ADR (136pts × 41% remaining) left, a downside break targeting the prior day's low at 10557.2 would require ~86 points from the ORB low — 53% more than the day's remaining budget.",
+        "US500 -0.41% and European tape ALIGNED lower create a 'correlated peer' drag (20-day FTSE/DAX correlation 0.69), making a sustained upside ORB break the lower-probability path without a catalyst reversal."
+      ],
+      "bias": {
+        "score": -5,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10706.9,
+        "orbLow": 10642.8,
+        "orbBrokenDirection": "NONE",
+        "overnightHigh": 10723,
+        "overnightLow": 10642.8,
+        "priorDayHigh": 10759,
+        "priorDayLow": 10557.2,
+        "gapPct": -0.05,
+        "adr14": 136,
+        "adrUsedPct": 59
+      },
+      "outcome": {
+        "resolvedAt": "2026-07-23T15:49:35.933Z",
+        "fwd1hPct": -0.15,
+        "fwd3hPct": -0.08,
+        "toClosePct": -0.77,
+        "maxUpPct": 0.09,
+        "maxDownPct": -0.95,
+        "verdict": "RIGHT",
+        "signalVerdicts": [
+          {
+            "rule": "R11",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-07-23T09:38:10.655Z",
+      "londonTime": "10:38 BST",
+      "mode": "POST_ORB",
+      "price": 10680.35,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — ORB broke UP against a BEARISH macro bias (-5) — counter-bias breaks fail more often; treat continuation as suspect.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "STRUCTURE",
+          "rule": "R2",
+          "text": "ORB broke UP against a BEARISH macro bias (-5) — counter-bias breaks fail more often; treat continuation as suspect."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10557.2) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.75%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "INFO",
+          "source": "AI",
+          "rule": "R12",
+          "text": "Today's 09:56 BST AI session read: NO TRADE (NO_TRADE, 65%) — playbook SHORT_ONLY."
+        }
+      ],
+      "aiStanceLine": "Due to a counter-bias upside ORB break (macro bias -5), 59% of the 136-point ADR already consumed by 09:37 BST, and a fully aligned bearish European tape (SX5E -0.75% / DAX -0.63%), the upside continuation looks poorly supported and a fade back toward the ORB low at 10642.8 is the higher-probability path.",
+      "aiBullets": [
+        "With 59% of the 136-point ADR14 spent before 10:00 BST, only ~56 points of typical daily range remain — the prior day low at 10557.2 is already beyond that budget, making it a stretch-only target even if shorts work.",
+        "Brent's +3.33% surge is a genuine bullish offset for energy-heavy FTSE (Shell/BP are top-5 weights), creating a tug-of-war that could keep the index from a clean directional flush — a key reason the AI flags NO TRADE today.",
+        "GBP at the 89th percentile of its 20-day range is near an extreme: a crowded short (-72,474 net contracts, CoT data) risks a short-squeeze that would strengthen sterling and, via the sign-flip, hit any FTSE long — making upside ORB continuation doubly fragile.",
+        "Tomorrow's UK Retail Sales (07:00 BST, HIGH impact, daysFromToday=1) land one hour before cash open — today's afternoon positioning may be skewed defensively into that event, further suppressing clean trending behaviour for the remainder of this session."
+      ],
+      "bias": {
+        "score": -5,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10706.9,
+        "orbLow": 10642.8,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10723,
+        "overnightLow": 10642.8,
+        "priorDayHigh": 10759,
+        "priorDayLow": 10557.2,
+        "gapPct": -0.23,
+        "adr14": 136,
+        "adrUsedPct": 59
+      },
+      "outcome": {
+        "resolvedAt": "2026-07-23T15:49:36.067Z",
+        "fwd1hPct": 0.09,
+        "fwd3hPct": -0.48,
+        "toClosePct": -0.59,
+        "maxUpPct": 0.25,
+        "maxDownPct": -0.78,
+        "verdict": "RIGHT",
+        "signalVerdicts": [
+          {
+            "rule": "R2",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-07-23T11:02:16.738Z",
+      "londonTime": "12:02 BST",
+      "mode": "POST_ORB",
+      "price": 10693.35,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — ORB broke UP against a BEARISH macro bias (-4) — counter-bias breaks fail more often; treat continuation as suspect.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "STRUCTURE",
+          "rule": "R2",
+          "text": "ORB broke UP against a BEARISH macro bias (-4) — counter-bias breaks fail more often; treat continuation as suspect."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10557.2) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.77%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "INFO",
+          "source": "AI",
+          "rule": "R12",
+          "text": "Today's 09:56 BST AI session read: NO TRADE (NO_TRADE, 65%) — playbook SHORT_ONLY."
+        }
+      ],
+      "aiStanceLine": "Due to a counter-bias upside ORB break, a softening European tape pulling FTSE down via a 0.62 correlation, and 59% of the 136-point ADR already consumed, the upside move looks structurally thin and a drift back toward the overnight low of 10,642.8 is the higher-probability path.",
+      "aiBullets": [
+        "The ORB broke UP to 10,706.9, but current price at 10,693.35 is already retreating below that level — the break is showing no follow-through, consistent with the counter-bias failure pattern the mechanical signals flag.",
+        "With 59% of the 14-day average daily range (136 pts) used, only ~56 points of typical range remain — insufficient to reach the prior day low at 10,557.2 (148 pts away), so short targets must be modest, around the overnight low of 10,642.8.",
+        "Energy's +2.94% Brent surge is a genuine bullish offset: Shell and BP are top-5 index weights, meaning sector-level buying could keep the index from a clean directional slide even if the macro bias is bearish.",
+        "Tomorrow's 07:00 BST UK Retail Sales (HIGH impact, 1 day away) means any ORB trade held beyond today's session carries overnight event risk — position sizing should reflect that tomorrow's open could gap sharply on the data print."
+      ],
+      "bias": {
+        "score": -4,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10706.9,
+        "orbLow": 10642.8,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10723,
+        "overnightLow": 10642.8,
+        "priorDayHigh": 10759,
+        "priorDayLow": 10557.2,
+        "gapPct": -0.11,
+        "adr14": 136,
+        "adrUsedPct": 59
+      },
+      "outcome": {
+        "resolvedAt": "2026-07-23T15:49:36.195Z",
+        "fwd1hPct": -0.62,
+        "fwd3hPct": -0.52,
+        "toClosePct": -0.71,
+        "maxUpPct": -0.02,
+        "maxDownPct": -0.9,
+        "verdict": "RIGHT",
+        "signalVerdicts": [
+          {
+            "rule": "R2",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-07-23T13:26:52.876Z",
+      "londonTime": "14:26 BST",
+      "mode": "POST_ORB",
+      "price": 10605.3,
+      "stance": "FADE_FAVOURED",
+      "stanceLine": "Fade day — the ORB break was a trap — ORB broke UP but price has fully reclaimed the range (back below 10642.8) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "STRUCTURE",
+          "rule": "R1",
+          "text": "ORB broke UP but price has fully reclaimed the range (back below 10642.8) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "92% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10557.2) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.69%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -1.21% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "INFO",
+          "source": "AI",
+          "rule": "R12",
+          "text": "Today's 09:56 BST AI session read: NO TRADE (NO_TRADE, 65%) — playbook SHORT_ONLY."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -6,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10706.9,
+        "orbLow": 10642.8,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10723,
+        "overnightLow": 10642.8,
+        "priorDayHigh": 10759,
+        "priorDayLow": 10557.2,
+        "gapPct": -0.93,
+        "adr14": 136,
+        "adrUsedPct": 92
+      },
+      "outcome": {
+        "resolvedAt": "2026-07-23T15:49:36.324Z",
+        "fwd1hPct": 0.31,
+        "fwd3hPct": null,
+        "toClosePct": 0.11,
+        "maxUpPct": 0.42,
+        "maxDownPct": 0.03,
+        "verdict": "FLAT",
+        "signalVerdicts": [
+          {
+            "rule": "R1",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R4",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R8",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R9",
+            "verdict": "FLAT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-07-23T15:49:33.062Z",
+      "londonTime": "16:49 BST",
+      "mode": "CLOSED",
+      "price": 10618.3,
+      "stance": "FADE_FAVOURED",
+      "stanceLine": "Fade day — the ORB break was a trap — ORB broke UP but price has fully reclaimed the range (back below 10642.8) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "STRUCTURE",
+          "rule": "R1",
+          "text": "ORB broke UP but price has fully reclaimed the range (back below 10642.8) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "92% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10557.2) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.58%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -1.55% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "INFO",
+          "source": "AI",
+          "rule": "R12",
+          "text": "Today's 09:56 BST AI session read: NO TRADE (NO_TRADE, 65%) — playbook SHORT_ONLY."
+        }
+      ],
+      "aiStanceLine": "Due to 92% of the 136-point daily range already consumed, a confirmed upside fakeout reclaimed back below 10,642.8, and Wall Street futures down 1.55% approaching the US handoff, any residual breakout attempts today look like traps — the structural lean is short but the range budget makes chasing unattractive.",
+      "aiBullets": [
+        "The GBP tailwind (GBPUSD -0.5%, 89th percentile 20-day range — a historically large move) is partially offsetting the bearish tape, creating a split between index-level weakness and underlying FX support that reduces clean directional conviction for a trend trade.",
+        "Brent +4.56% is bullish for Shell/BP (top-5 index weights) while copper -2.26% hammers miners simultaneously — this sector tug-of-war narrows the index's net move and argues against a clean, one-sided ORB trend day tomorrow.",
+        "With only ~11 points of typical daily range remaining (136 × 8% = ~11pts) and the prior day low at 10,557.2 sitting well beyond that budget, downside targets beyond ORB low 10,642.8 are stretch-only and should not be used as primary exits.",
+        "Tomorrow's UK Retail Sales at 07:00 BST — one hour before cash open — is a HIGH-impact event that could reset the overnight range entirely; the mechanical ORB setup should be re-evaluated after that print rather than carried from tonight's levels."
+      ],
+      "bias": {
+        "score": -4,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10706.9,
+        "orbLow": 10642.8,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10723,
+        "overnightLow": 10642.8,
+        "priorDayHigh": 10759,
+        "priorDayLow": 10557.2,
+        "gapPct": -0.81,
+        "adr14": 136,
+        "adrUsedPct": 92
+      },
+      "outcome": {
+        "resolvedAt": "2026-07-23T15:49:36.324Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
+    },
+    {
+      "at": "2026-07-23T17:11:31.641Z",
+      "londonTime": "18:11 BST",
+      "mode": "CLOSED",
+      "price": 10597.3,
+      "stance": "FADE_FAVOURED",
+      "stanceLine": "Fade day — the ORB break was a trap — ORB broke UP but price has fully reclaimed the range (back below 10642.8) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "STRUCTURE",
+          "rule": "R1",
+          "text": "ORB broke UP but price has fully reclaimed the range (back below 10642.8) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "97% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10557.2) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.49%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -1.29% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "INFO",
+          "source": "AI",
+          "rule": "R12",
+          "text": "Today's 09:56 BST AI session read: NO TRADE (NO_TRADE, 65%) — playbook SHORT_ONLY."
+        }
+      ],
+      "aiStanceLine": "Due to a failed ORB upside sweep with 97% of the 136-point ADR already consumed, a coordinated European sell-off (DAX and Euro Stoxx both -1.45%/-1.49%) amplified by hawkish ECB expectations from an energy spike, and US futures dragging (-1.29%) into the US handoff window, today is a stand-aside or cautious-fade day — there is almost no range fuel left to support a clean new directional trade.",
+      "aiBullets": [
+        "The ORB broke UP to 10,706.9 but has since reclaimed fully back below 10,642.8 — combined with the -107.7pt gap down from prior close 10,705, price has now effectively erased the entire overnight range AND the false breakout, compressing both into a single bearish sweep pattern.",
+        "With 97% of the 136pt ADR already used, the prior day low at 10,557.2 sits roughly 40 points below current price (10,597) — that's beyond the remaining ~4pt of typical daily budget, making PDL a stretch target rather than a tradeable intraday objective.",
+        "Brent +4.84% is the sole sector tailwind (Energy: BULLISH) but is offset by Copper -2.36% (Miners: BEARISH) — these two large sector blocs are pulling in opposite directions, reducing net index momentum and favouring chop over trend.",
+        "UK Retail Sales print at 07:00 BST tomorrow (daysFromToday: 1, HIGH impact) means any short held overnight carries binary UK data risk — today's fade bias should be treated as intraday-only, with no overnight exposure advised."
+      ],
+      "bias": {
+        "score": -5,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10706.9,
+        "orbLow": 10642.8,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10723,
+        "overnightLow": 10642.8,
+        "priorDayHigh": 10759,
+        "priorDayLow": 10557.2,
+        "gapPct": -1.01,
+        "adr14": 136,
+        "adrUsedPct": 97
+      },
+      "outcome": {
+        "resolvedAt": "2026-07-23T17:11:33.913Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
+    },
+    {
+      "at": "2026-07-23T19:01:53.755Z",
+      "londonTime": "20:01 BST",
+      "mode": "CLOSED",
+      "price": 10589.3,
+      "stance": "FADE_FAVOURED",
+      "stanceLine": "Fade day — the ORB break was a trap — ORB broke UP but price has fully reclaimed the range (back below 10642.8) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "STRUCTURE",
+          "rule": "R1",
+          "text": "ORB broke UP but price has fully reclaimed the range (back below 10642.8) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "102% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10557.2) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.64%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -1.46% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "INFO",
+          "source": "AI",
+          "rule": "R12",
+          "text": "Today's 09:56 BST AI session read: NO TRADE (NO_TRADE, 65%) — playbook SHORT_ONLY."
+        }
+      ],
+      "aiStanceLine": "Due to 102% of the 14-day average daily range already consumed, a confirmed ORB-high-break reclaim below 10,642.8, and a split sector picture where energy's +4.4% Brent tailwind partially offsets copper's -2.61% miners drag, tomorrow's 07:00 Retail Sales print will set the opening range tone before the ORB clock even starts — size down and wait for confirmation.",
+      "aiBullets": [
+        "The gap down of -115.7 points (-1.08%) versus an adr14 of 136 points means the overnight gap alone consumed ~85% of a typical day's range before London even opened — buyers absorbing this gap had almost no daily-range budget left to work with.",
+        "Energy (Brent +4.4%) is a genuine sector-level counterweight to the broad sell-off, but miners (copper -2.61%) pull in the opposite direction — this sector tug-of-war reduces directional conviction and raises the probability of choppy, mean-reverting intraday price action rather than a clean trend.",
+        "GBP COT positioning is CROWDED_SHORT at -72,474 net contracts, yet the 20-day percentile is 89 — the currency has already moved most of the way; any surprise GBP bounce (short squeeze) would flip the sign-flip logic and become a BEARISH headwind for the index at exactly the wrong moment for longs.",
+        "UK Retail Sales at 07:00 BST tomorrow — 60 minutes before the 08:00 ORB window — means the mechanical ORB high/low will be defined by post-data volatility; a weak print widens the fade opportunity on any early upside sweep, a strong print risks invalidating the short-only stance entirely."
+      ],
+      "bias": {
+        "score": -4,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10706.9,
+        "orbLow": 10642.8,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10723,
+        "overnightLow": 10642.8,
+        "priorDayHigh": 10759,
+        "priorDayLow": 10557.2,
+        "gapPct": -1.08,
+        "adr14": 136,
+        "adrUsedPct": 102
+      },
+      "outcome": {
+        "resolvedAt": "2026-07-23T19:01:55.938Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
+    },
+    {
+      "at": "2026-07-23T20:17:41.434Z",
+      "londonTime": "21:17 BST",
+      "mode": "CLOSED",
+      "price": 10595.8,
+      "stance": "FADE_FAVOURED",
+      "stanceLine": "Fade day — the ORB break was a trap — ORB broke UP but price has fully reclaimed the range (back below 10642.8) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "STRUCTURE",
+          "rule": "R1",
+          "text": "ORB broke UP but price has fully reclaimed the range (back below 10642.8) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "104% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10557.2) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.64%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -1.17% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "INFO",
+          "source": "AI",
+          "rule": "R12",
+          "text": "Today's 09:56 BST AI session read: NO TRADE (NO_TRADE, 65%) — playbook SHORT_ONLY."
+        }
+      ],
+      "aiStanceLine": "Due to 104% of the 14-day average daily range already consumed, a confirmed fakeout above the ORB high (price reclaimed below 10642.8) and a UK Retail Sales release at 07:00 BST — one hour before cash open — tomorrow's ORB setup carries a high risk of data-driven whipsaw with no range budget to absorb it.",
+      "aiBullets": [
+        "Range exhaustion meets a data event: with 104% of the ADR14 (136 pts) already spent, any retail sales surprise at 07:00 BST could gap price into territory where there is statistically no remaining daily fuel to sustain a trend.",
+        "The failed upside ORB break (price swept above 10706.9 then closed back below ORB low 10642.8) combined with US500 -1.17% and Euro Stoxx -1.64% creates a macro backdrop that validates the structural short read, not just the technical fakeout alone.",
+        "Sterling's CROWDED_SHORT positioning (89th percentile, net short -72,474 contracts) is a contrarian wildcard: a strong UK Retail Sales print tomorrow could spark a GBP squeeze, which — via the sign-flip — would be bearish for FTSE and could amplify any downside ORB continuation.",
+        "Energy is the only significant bullish offset (Brent +4.05%, ENERGY sector read BULLISH), but Shell and BP alone cannot override the combined drag of miners, a risk-off European tape and an already-exhausted daily range."
+      ],
+      "bias": {
+        "score": -4,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10706.9,
+        "orbLow": 10642.8,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10723,
+        "overnightLow": 10642.8,
+        "priorDayHigh": 10759,
+        "priorDayLow": 10557.2,
+        "gapPct": -1.02,
+        "adr14": 136,
+        "adrUsedPct": 104
+      },
+      "outcome": {
+        "resolvedAt": "2026-07-23T20:17:43.631Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
+    }
+  ]
+}
