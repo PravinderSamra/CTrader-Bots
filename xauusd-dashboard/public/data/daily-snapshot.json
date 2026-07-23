@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-23T08:13:07.758Z",
+  "generatedAt": "2026-07-23T09:37:22.463Z",
   "yields": {
     "US10Y": 4.63,
     "US2Y": 4.26,
@@ -34,25 +34,25 @@
     "openInterestChange": 15702
   },
   "etfFlows": {
-    "gldTonnes": 988.5,
-    "gldWoWChange": 9.5,
-    "trend3W": "INFLOW"
+    "gldTonnes": 988.9,
+    "gldWoWChange": 0.4,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4093.69,
-    "XAGUSD": 58.9095,
-    "EURUSD": 1.1422,
-    "USDJPY": 163.3745,
-    "USDCHF": 0.81481,
-    "USDCNH": 6.7703,
-    "GBPUSD": 1.33751,
-    "USDCAD": 1.40734,
-    "USDSEK": 9.70112,
-    "US500": 7475.2,
-    "GER40": 25028.55,
-    "UK100": 10700.15,
+    "XAUUSD": 4092.135,
+    "XAGUSD": 58.863,
+    "EURUSD": 1.14122,
+    "USDJPY": 163.358,
+    "USDCHF": 0.81475,
+    "USDCNH": 6.76971,
+    "GBPUSD": 1.33757,
+    "USDCAD": 1.40783,
+    "USDSEK": 9.71033,
+    "US500": 7475,
+    "GER40": 24986.55,
+    "UK100": 10678.8,
     "ADR_14day": 86.5,
-    "ADR_usedToday": 50.8,
+    "ADR_usedToday": 54,
     "goldSilverRatio": 69.5
   },
   "dollarLiquidity": {
@@ -69,14 +69,14 @@
       "headline": "Euro heads for one-week high ahead of ECB policy decision - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-23T00:50:00.000Z",
-      "hoursAgo": 7.4
+      "hoursAgo": 8.8
     }
   ],
   "briefing": {
-    "biasScore": 3,
+    "biasScore": 2,
     "biasLabel": "BULLISH",
-    "confidence": 6,
-    "briefing": "Gold is sitting at $4,093 during the London session, and the broader environment still leans in favour of the bulls [buyers who expect price to rise]. The most relevant forces right now are a weakening US Dollar [DXY at 101.08, which is relatively low — a weaker dollar typically makes gold cheaper for foreign buyers, supporting demand], elevated geopolitical risk [GPR at 173.6, meaning global tension is high enough to keep safe-haven demand alive], and steady inflows into gold ETFs [funds that hold physical gold — three consecutive weeks of buying signals institutional confidence]. On recent headlines, the only notable item from the last few hours is a Reuters story from roughly 7 hours ago noting the Euro is pushing toward a one-week high ahead of today's ECB [European Central Bank] policy decision. A stronger Euro almost always means a weaker Dollar, which is a mild tailwind [supporting force] for gold — so that headline is worth noting even if it's not a dramatic mover. Bond yields [the interest rate the US government pays on its debt] ticked up slightly overnight — US 10-year at 4.63% — and real yields [what you earn after adjusting for inflation] remain elevated at 2.37%, which is a headwind [opposing force] for gold since higher real yields make holding gold less attractive versus bonds. The Fed [US Federal Reserve] is 100% expected to hold rates unchanged at their July 29th meeting, removing any near-term rate-cut excitement. Directional bias is cautiously bullish: the dollar is soft, ETF money is flowing in, and geopolitical risk is elevated, but high real yields and reduced speculative positioning [large traders cut their bullish bets by 7,234 contracts last week] are keeping a lid on enthusiasm. Confidence is 6/10 — a surprise hawkish ECB tone today or a dollar bounce could quickly flatten that view. The economic calendar for today appears empty based on available data, but the ECB decision is the key event to watch during London/New York overlap — expect potential sharp moves in EUR/USD and by extension the dollar around the announcement. On price levels: the 14-day average daily range [typical daily price swing] is $86.50, and today has already used $50.80 of that, meaning roughly $35 of typical movement remains — be cautious chasing breakouts late in the day. Watch $4,080 as near-term support [a floor where buyers may step in] and $4,115–$4,120 as the next resistance zone [a ceiling where sellers may appear]. For trade integration: this is a reasonable window for trend-following longs [buy trades] on London/NY pullbacks into 1H demand zones, but keep position size modest given that over half the day's expected range is already used and the ECB could introduce sharp, unpredictable swings — wait for a clean 5M structure shift [a clear change in short-term price direction signalling buyers are in control] before committing. When more than half the day's average range is already used, patience beats aggression — let price come to you.",
-    "generatedAt": "2026-07-23T08:13:29.841Z"
+    "confidence": 5,
+    "briefing": "Right now the most relevant forces for gold are a moderately weak US dollar [the DXY — a measure of how strong the dollar is against other major currencies — sits at 101.14, which is relatively low and historically supportive for gold] combined with elevated real yields [the 'real yield' is what you earn on US government bonds after adjusting for inflation — at 2.37% it's high, which usually makes bonds more attractive versus gold and acts as a headwind]. These two forces are pulling in opposite directions, creating a tug-of-war environment. On the news front, the only headline in the last 24 hours is from Reuters about 8 hours ago noting the Euro pushing toward a one-week high ahead of today's ECB [European Central Bank] policy decision — a stronger Euro typically means a weaker dollar, which is mildly supportive for gold. There are no other market-moving headlines to report; no geopolitical shocks, no Fed surprises. Gold is trading at $4,092, and given the weak-ish dollar and elevated geopolitical risk score of 173.6 [a reading above 100 suggests meaningful global tension], the path of least resistance is slightly UPWARD — but don't expect a strong directional move today. Confidence is 5/10 — real yields are high enough to cap major upside, and the ECB decision (due today, exact GMT time not specified in the data) could swing the Euro and dollar sharply in either direction, meaning gold could be choppy. If the ECB sounds dovish [meaning they hint at cutting interest rates], the Euro may fall, the dollar may strengthen, and gold could dip — that would change the view. On levels: the 14-day Average Daily Range [a measure of how far price typically moves in a day] is 86.5 points, and today's move so far is already 54 points — meaning roughly 32 points of average range may be left, so large breakout trades late in the day carry lower reward potential. With the ECB decision looming and only limited range remaining, this is a reduced-size, cautious session — wait for a clean pullback into a clear structure level on the 5-minute chart before considering any long [buy] entry, and keep position size smaller than normal. Watch $4,060 as nearby support and $4,120 as a potential resistance ceiling. When in doubt on an ECB day, smaller size and tighter patience always wins.",
+    "generatedAt": "2026-07-23T09:37:38.238Z"
   }
 }
