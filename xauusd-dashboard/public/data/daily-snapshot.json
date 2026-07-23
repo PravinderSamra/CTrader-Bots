@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-23T09:37:22.463Z",
+  "generatedAt": "2026-07-23T11:01:19.388Z",
   "yields": {
     "US10Y": 4.63,
     "US2Y": 4.26,
@@ -8,7 +8,7 @@
     "curve2s10s": 37,
     "breakeven10Y": 2.28,
     "breakeven5Y": 2.3,
-    "forward5y5y": 2.26,
+    "forward5y5y": null,
     "dayOverDay": {
       "US10Y": 0.03,
       "US2Y": 0.05,
@@ -34,26 +34,26 @@
     "openInterestChange": 15702
   },
   "etfFlows": {
-    "gldTonnes": 988.9,
-    "gldWoWChange": 0.4,
+    "gldTonnes": 988.7,
+    "gldWoWChange": -0.2,
     "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4092.135,
-    "XAGUSD": 58.863,
-    "EURUSD": 1.14122,
-    "USDJPY": 163.358,
-    "USDCHF": 0.81475,
-    "USDCNH": 6.76971,
-    "GBPUSD": 1.33757,
-    "USDCAD": 1.40783,
-    "USDSEK": 9.71033,
-    "US500": 7475,
-    "GER40": 24986.55,
-    "UK100": 10678.8,
+    "XAUUSD": 4092.79,
+    "XAGUSD": 58.698,
+    "EURUSD": 1.14037,
+    "USDJPY": 163.3735,
+    "USDCHF": 0.81509,
+    "USDCNH": 6.77081,
+    "GBPUSD": 1.33668,
+    "USDCAD": 1.40837,
+    "USDSEK": 9.72197,
+    "US500": 7482.2,
+    "GER40": 25021.55,
+    "UK100": 10696.35,
     "ADR_14day": 86.5,
-    "ADR_usedToday": 54,
-    "goldSilverRatio": 69.5
+    "ADR_usedToday": 54.9,
+    "goldSilverRatio": 69.7
   },
   "dollarLiquidity": {
     "stlfsi": -0.7011,
@@ -66,17 +66,17 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Euro heads for one-week high ahead of ECB policy decision - Reuters",
+      "headline": "Dollar hits fresh 40-year high versus yen, edges down against euro - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-23T00:50:00.000Z",
-      "hoursAgo": 8.8
+      "hoursAgo": 10.2
     }
   ],
   "briefing": {
     "biasScore": 2,
     "biasLabel": "BULLISH",
     "confidence": 5,
-    "briefing": "Right now the most relevant forces for gold are a moderately weak US dollar [the DXY — a measure of how strong the dollar is against other major currencies — sits at 101.14, which is relatively low and historically supportive for gold] combined with elevated real yields [the 'real yield' is what you earn on US government bonds after adjusting for inflation — at 2.37% it's high, which usually makes bonds more attractive versus gold and acts as a headwind]. These two forces are pulling in opposite directions, creating a tug-of-war environment. On the news front, the only headline in the last 24 hours is from Reuters about 8 hours ago noting the Euro pushing toward a one-week high ahead of today's ECB [European Central Bank] policy decision — a stronger Euro typically means a weaker dollar, which is mildly supportive for gold. There are no other market-moving headlines to report; no geopolitical shocks, no Fed surprises. Gold is trading at $4,092, and given the weak-ish dollar and elevated geopolitical risk score of 173.6 [a reading above 100 suggests meaningful global tension], the path of least resistance is slightly UPWARD — but don't expect a strong directional move today. Confidence is 5/10 — real yields are high enough to cap major upside, and the ECB decision (due today, exact GMT time not specified in the data) could swing the Euro and dollar sharply in either direction, meaning gold could be choppy. If the ECB sounds dovish [meaning they hint at cutting interest rates], the Euro may fall, the dollar may strengthen, and gold could dip — that would change the view. On levels: the 14-day Average Daily Range [a measure of how far price typically moves in a day] is 86.5 points, and today's move so far is already 54 points — meaning roughly 32 points of average range may be left, so large breakout trades late in the day carry lower reward potential. With the ECB decision looming and only limited range remaining, this is a reduced-size, cautious session — wait for a clean pullback into a clear structure level on the 5-minute chart before considering any long [buy] entry, and keep position size smaller than normal. Watch $4,060 as nearby support and $4,120 as a potential resistance ceiling. When in doubt on an ECB day, smaller size and tighter patience always wins.",
-    "generatedAt": "2026-07-23T09:37:38.238Z"
+    "briefing": "Right now, the most relevant forces pulling gold in different directions are: a dollar that is mixed (weak against the euro but at a 40-year high against the Japanese yen), real yields [the return on US government bonds after inflation is stripped out] that are elevated at 2.37% and nudging higher, and a geopolitical risk index [a measure of global tension and conflict] that remains very high at 173.6 — all while gold itself is sitting at $4,092. On the news front, the only headline in the last 24 hours worth noting came about 10 hours ago: Reuters reported the dollar hitting a fresh 40-year high against the yen. A stronger dollar can push gold lower because gold is priced in dollars, but the mixed dollar picture (yen strength vs. euro weakness) means this isn't a clean, one-directional dollar story right now. For directional bias, gold leans modestly bullish: geopolitical stress is elevated, financial conditions [how easy or tight it is to borrow money in the economy] remain loose (the stress indexes are negative, meaning markets are calm and liquid), and open interest [the total number of active gold futures contracts] just rose by over 15,000 — meaning fresh money is coming in, likely on the buy side. However, real yields are rising slightly, which is a headwind for gold, and large traders (per the COT report [a weekly snapshot of how big institutions are positioned]) reduced their bullish bets by over 7,000 contracts last week, which tempers enthusiasm. The ETF flow picture is flat over three weeks, so there's no strong institutional accumulation story to lean on either. Confidence is 5/10 — the bullish case exists but isn't clean. If real yields continue rising or the dollar broadly strengthens, the bias flips lower. On event risk: the economic calendar for today is completely empty per the data provided, which means no scheduled news shocks are expected — this can lead to slower, range-bound price action [price bouncing between a high and low without a clear direction]. There are no upcoming high-impact events flagged in the calendar data for later this week either, though traders should always independently verify for any Fed speakers or surprise data. On key levels: gold has already moved approximately $54.90 of its average daily range of $86.50, meaning roughly $31.60 of typical daily movement may remain. Price is therefore in the later portion of today's expected range — be cautious chasing moves at these levels. For trade integration: the 1H trend is the most important filter here. If the 1H chart shows higher highs and higher lows, look for 5M pullbacks into key areas [price temporarily moving against the trend before resuming] to find long entries on the 1M chart — but keep position size small given the moderate confidence and the fact that much of today's daily range may already be used up. Wait for a clear structure, not just a price level. Screenshot this: when most of the day's expected range is already used up, patience beats aggression — wait for the next session's fresh range.",
+    "generatedAt": "2026-07-23T11:01:40.007Z"
   }
 }

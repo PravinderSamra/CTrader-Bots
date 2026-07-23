@@ -131,6 +131,75 @@
         "adrUsedPct": 59
       },
       "outcome": null
+    },
+    {
+      "at": "2026-07-23T11:02:16.738Z",
+      "londonTime": "12:02 BST",
+      "mode": "POST_ORB",
+      "price": 10693.35,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — ORB broke UP against a BEARISH macro bias (-4) — counter-bias breaks fail more often; treat continuation as suspect.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "STRUCTURE",
+          "rule": "R2",
+          "text": "ORB broke UP against a BEARISH macro bias (-4) — counter-bias breaks fail more often; treat continuation as suspect."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10557.2) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.77%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "INFO",
+          "source": "AI",
+          "rule": "R12",
+          "text": "Today's 09:56 BST AI session read: NO TRADE (NO_TRADE, 65%) — playbook SHORT_ONLY."
+        }
+      ],
+      "aiStanceLine": "Due to a counter-bias upside ORB break, a softening European tape pulling FTSE down via a 0.62 correlation, and 59% of the 136-point ADR already consumed, the upside move looks structurally thin and a drift back toward the overnight low of 10,642.8 is the higher-probability path.",
+      "aiBullets": [
+        "The ORB broke UP to 10,706.9, but current price at 10,693.35 is already retreating below that level — the break is showing no follow-through, consistent with the counter-bias failure pattern the mechanical signals flag.",
+        "With 59% of the 14-day average daily range (136 pts) used, only ~56 points of typical range remain — insufficient to reach the prior day low at 10,557.2 (148 pts away), so short targets must be modest, around the overnight low of 10,642.8.",
+        "Energy's +2.94% Brent surge is a genuine bullish offset: Shell and BP are top-5 index weights, meaning sector-level buying could keep the index from a clean directional slide even if the macro bias is bearish.",
+        "Tomorrow's 07:00 BST UK Retail Sales (HIGH impact, 1 day away) means any ORB trade held beyond today's session carries overnight event risk — position sizing should reflect that tomorrow's open could gap sharply on the data print."
+      ],
+      "bias": {
+        "score": -4,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10706.9,
+        "orbLow": 10642.8,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10723,
+        "overnightLow": 10642.8,
+        "priorDayHigh": 10759,
+        "priorDayLow": 10557.2,
+        "gapPct": -0.11,
+        "adr14": 136,
+        "adrUsedPct": 59
+      },
+      "outcome": null
     }
   ]
 }
