@@ -12,27 +12,52 @@ cTrader bars*; your job is to turn facts into a decision. Fields:
 | `range.adr14` | 14-day average daily range | The day's fuel tank size. |
 | `range.adr_used_pct` | % of ADR already travelled today | Fuel gauge (reference 03). |
 | `range.remaining_budget` | ADR left today | **Reach filter**: targets within this are intraday. |
+| `range.min_target_dist` | 10% of ADR — the floor for a *tradeable* target | Anything nearer is noise: the move is smaller than the stop+spread it costs. |
 | `range.expansion_state` | ROOM_TO_EXPAND / MODERATE / LOW_FUEL / EXHAUSTED | Go/caution/fade signal. |
 | `volume.exec_relative` / `.state` | recent vs baseline tick volume; expanding/normal/drying_up | Is there participation behind the move? |
 | `named_levels` | PDH, PDL, prior_close, PWH, PWL, day_open, session_high/low | The day-frame reference pools. |
-| `pools_above` / `pools_below` | ranked lists of target pools each side, each with `price`, `dist`, `reach` (intraday/swing), `touches`, `kind` | The liquidity map. `touches` ≥ 2 = stronger (equal highs/lows). |
-| `draw_up` / `draw_down` | the nearest **in-reach** pool each side | Candidate targets. The one in the bias direction is usually *the* draw. |
-| `recent_sweep` | a just-swept level + reclaim side, or null | **Gate 2** (the trap). Null = no trap yet → at most *watching*. |
+| `pools_above` / `pools_below` | ranked target pools each side: `price`, **`zone` [low,high]**, `dist`, `reach`, `touches`, `kind`, **`too_close`** | The liquidity map. `touches` ≥ 2 = stronger. **Quote the `zone`, not `price`.** |
+| `draw_up` / `draw_down` | nearest **meaningful** in-reach pool each side (skips `too_close`) | Candidate targets. The one in the bias direction is usually *the* draw. |
+| `recent_sweep` | swept level + reclaim side + **`lb_zone`** + **`stop_beyond`**, or null | **Gate 2** (the trap). Null = no trap yet → at most *watching*. |
 | `no_mans_land` | true = price stranded mid-range | **Gate 6**. true → stand down. |
 | `warnings` / `error` | data issues | If `error` present, relay `detail` and stop. |
+
+## Everything is a zone, never a tick
+
+Pools, liquidity blocks and entries are **areas**. The analyzer gives you the
+band; use it:
+
+- A pool's `zone` `[low, high]` is where the liquidity sits — say
+  *"4,071–4,074"*, not *"4,071.91"*. `price` is only the midpoint for maths.
+- `recent_sweep.lb_zone` is the swept, no-liquidity extreme: **the entry area**
+  you're waiting for price to retest, and what the stop hides behind.
+- `recent_sweep.stop_beyond` is the stop level (extreme + buffer) — one price,
+  because a stop *is* a single line.
+- Targets are quoted as the far edge of the pool zone you're aiming into (exit
+  as it's being taken, not after).
+
+## Sanity-check the distances before you write an idea
+
+`too_close: true` (dist < `range.min_target_dist`) means that pool is **not a
+target** — reaching it wouldn't cover the stop and spread. If the draw in your
+bias direction is `too_close`, or the two draws are barely apart, the honest
+answer is **no tradeable structure yet**: name the further pool that *would* pay
+and wait for price to leave the compression. Never present two levels a few
+points apart as a trigger and a target — that is a round-trip in the noise.
 
 ## How the pieces map to a trade
 
 - **Direction** comes from `daily_bias` (reference 02).
 - **The target** is the `draw_*` in your bias direction — but only if its
-  `reach == "intraday"` (reference 03). A `swing`-reach draw is context, not
-  today's target.
+  `reach == "intraday"` **and** `too_close` is false (reference 03). A
+  `swing`-reach draw is context, not today's target.
 - **The trigger** is a sweep of the *near* pool on the opposite side of your
   entry (for a long: a sweep of a pool *below*, i.e. in `pools_below`), shown as
   `recent_sweep` with a bullish/bearish reclaim. No sweep yet → *watching*,
-  name the level you need taken.
-- **The stop** hides just beyond the swept extreme (the liquidity block) — for a
-  long, below the swept low; for a short, above the swept high.
+  name the zone you need taken.
+- **The stop** hides just beyond the swept extreme (the liquidity block) — use
+  `recent_sweep.stop_beyond`; for a long it sits below the swept low, for a
+  short above the swept high.
 - **Strength**: prefer pools with higher `touches`, draws with `trend_day_
   potential`, and `expansion_state` of ROOM_TO_EXPAND/MODERATE.
 

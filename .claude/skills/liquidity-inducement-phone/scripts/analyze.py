@@ -50,7 +50,8 @@ def _pivots(bars, k=2):
 
 def _cluster(levels, tol):
     """Cluster nearby price levels into pools. levels: list of floats.
-    Returns list of {price, touches} sorted by touches desc."""
+    Returns list of {price, low, high, touches} sorted by touches desc. A pool
+    is a ZONE (low..high), not a tick — you work an area, not an exact price."""
     if not levels:
         return []
     pts = sorted(levels)
@@ -60,7 +61,9 @@ def _cluster(levels, tol):
             clusters[-1].append(p)
         else:
             clusters.append([p])
-    out = [{"price": round(statistics.mean(c), 5), "touches": len(c)}
+    out = [{"price": round(statistics.mean(c), 5),
+            "low": round(min(c), 5), "high": round(max(c), 5),
+            "touches": len(c)}
            for c in clusters]
     out.sort(key=lambda x: (-x["touches"], x["price"]))
     return out
@@ -75,6 +78,16 @@ def _sma(closes, n):
     if len(closes) < n:
         n = len(closes)
     return sum(closes[-n:]) / n if n else 0.0
+
+
+def _zone(low, high, min_width):
+    """Return [low, high] widened to at least min_width, centred on the cluster.
+    Pools and liquidity blocks are areas to work in; a single-touch level still
+    gets a band so you don't chase an exact tick."""
+    mid = (low + high) / 2
+    if high - low < min_width:
+        low, high = mid - min_width / 2, mid + min_width / 2
+    return [round(low, 5), round(high, 5)]
 
 
 # ── the analysis ─────────────────────────────────────────────────────────────
@@ -192,6 +205,7 @@ def analyze(instrument, exec_period="M_5",
             if side == "sell" and val >= price:
                 continue
             out.append({"name": nm, "price": round(val, 5),
+                        "zone": _zone(val, val, tol_price),
                         "dist": round(abs(val - price), 5),
                         "reach": reach(abs(val - price)), "touches": 1,
                         "kind": "reference"})
@@ -209,7 +223,9 @@ def analyze(instrument, exec_period="M_5",
                         o["touches"] = max(o["touches"], c["touches"])
                 continue
             out.append({"name": f"equal_{'highs' if side=='buy' else 'lows'}",
-                        "price": val, "dist": round(abs(val - price), 5),
+                        "price": val,
+                        "zone": _zone(c["low"], c["high"], tol_price),
+                        "dist": round(abs(val - price), 5),
                         "reach": reach(abs(val - price)),
                         "touches": c["touches"], "kind": "equal_level"})
         out.sort(key=lambda x: x["dist"])
@@ -224,12 +240,22 @@ def analyze(instrument, exec_period="M_5",
     pools_above = pool_list(equal_highs, buy_named, "buy")
     pools_below = pool_list(equal_lows, sell_named, "sell")
 
-    # nearest in-reach pool each side = the actionable draws
+    # A pool sitting right on top of price is not a target: the move to it is
+    # smaller than the stop + spread it would cost, so it can never pay. Floor
+    # the draw at 10% of ADR and tag everything nearer as noise.
+    min_target_dist = round(adr14 * 0.10, 5) if adr14 else 0.0
+    for p in pools_above + pools_below:
+        p["too_close"] = p["dist"] < min_target_dist
+
+    # nearest MEANINGFUL in-reach pool each side = the actionable draws
     def nearest_reachable(pools):
-        for p in pools:
-            if p["reach"] in ("intraday", "unknown"):
+        in_reach = [p for p in pools if p["reach"] in ("intraday", "unknown")]
+        for p in in_reach:
+            if not p["too_close"]:
                 return p
-        return pools[0] if pools else None
+        # everything in reach is noise — surface the nearest, flagged, so the
+        # agent reports "no tradeable target" rather than a £3 draw
+        return in_reach[0] if in_reach else (pools[0] if pools else None)
     draw_up = nearest_reachable(pools_above)
     draw_down = nearest_reachable(pools_below)
 
@@ -239,15 +265,21 @@ def analyze(instrument, exec_period="M_5",
         recent = ex[-40:]
         rmax = max(b["high"] for b in recent[:-1])
         rmin = min(b["low"] for b in recent[:-1])
-        last = ex[-1]
-        # look for a bar that poked beyond a prior extreme then closed back
+        buf = tol_price * 0.5
+        # look for a bar that poked beyond a prior extreme then closed back.
+        # lb_zone = the swept, no-liquidity extreme: the band you enter into and
+        # hide the stop behind — an area, never a single tick.
         for b in reversed(recent[-6:]):
             if b["high"] > rmax and b["close"] < rmax:
                 sweep = {"side": "buy_side", "level": round(rmax, 5),
+                         "lb_zone": [round(rmax, 5), round(b["high"], 5)],
+                         "stop_beyond": round(b["high"] + buf, 5),
                          "note": "recent high swept and price closed back below (bearish reclaim)"}
                 break
             if b["low"] < rmin and b["close"] > rmin:
                 sweep = {"side": "sell_side", "level": round(rmin, 5),
+                         "lb_zone": [round(b["low"], 5), round(rmin, 5)],
+                         "stop_beyond": round(b["low"] - buf, 5),
                          "note": "recent low swept and price closed back above (bullish reclaim)"}
                 break
 
@@ -303,6 +335,7 @@ def analyze(instrument, exec_period="M_5",
             "adr14": adr14, "today_range": round(today_range, 5),
             "adr_used_pct": adr_used_pct, "remaining_budget": remaining_budget,
             "expansion_state": expansion_state,
+            "min_target_dist": min_target_dist,
         },
         "volume": {"exec_relative": rel_vol, "state": vol_state},
         "named_levels": named,
