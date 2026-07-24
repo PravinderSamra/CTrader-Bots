@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-24T07:15:45.665Z",
+  "generatedAt": "2026-07-24T08:09:08.816Z",
   "yields": {
     "US10Y": 4.67,
     "US2Y": 4.31,
@@ -34,26 +34,26 @@
     "openInterestChange": 15702
   },
   "etfFlows": {
-    "gldTonnes": 1000.5,
-    "gldWoWChange": 1.2,
-    "trend3W": "INFLOW"
+    "gldTonnes": 999.9,
+    "gldWoWChange": -0.6,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4044.515,
-    "XAGUSD": 58.211,
-    "EURUSD": 1.13936,
-    "USDJPY": 163.7055,
-    "USDCHF": 0.81606,
-    "USDCNH": 6.77607,
-    "GBPUSD": 1.33355,
-    "USDCAD": 1.40695,
-    "USDSEK": 9.73038,
-    "US500": 7418.8,
-    "GER40": 24890.55,
-    "UK100": 10640.95,
+    "XAUUSD": 4046.98,
+    "XAGUSD": 58.1085,
+    "EURUSD": 1.13872,
+    "USDJPY": 163.781,
+    "USDCHF": 0.81642,
+    "USDCNH": 6.77562,
+    "GBPUSD": 1.33342,
+    "USDCAD": 1.40755,
+    "USDSEK": 9.73592,
+    "US500": 7415.8,
+    "GER40": 24896.55,
+    "UK100": 10668,
     "ADR_14day": 87.5,
-    "ADR_usedToday": 28.7,
-    "goldSilverRatio": 69.5
+    "ADR_usedToday": 31.5,
+    "goldSilverRatio": 69.6
   },
   "dollarLiquidity": {
     "stlfsi": -0.7011,
@@ -69,26 +69,26 @@
       "headline": "Asian stocks skid as oil spike revives inflation fears, bonds take a hit - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-24T01:20:00.000Z",
-      "hoursAgo": 5.9
+      "hoursAgo": 6.8
     },
     {
       "headline": "Traders see September rate hike as European Central Bank mulls energy price spike",
       "source": "CNBC",
       "publishedAt": "2026-07-23T13:25:57.000Z",
-      "hoursAgo": 17.8
+      "hoursAgo": 18.7
     },
     {
       "headline": "Gold firms to two-week peak on softer dollar, Fed outlook in focus - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-23T09:22:39.000Z",
-      "hoursAgo": 21.9
+      "hoursAgo": 22.8
     }
   ],
   "briefing": {
     "biasScore": 1,
-    "biasLabel": "NEUTRAL",
-    "confidence": 4,
-    "briefing": "Right now the two biggest forces pulling on gold are a mildly soft US dollar (the DXY index, which measures the dollar's strength against other currencies, sits at 101.31 — relatively weak) and rising bond yields (the US 10-year yield ticked up 0.04% overnight to 4.67%), which tend to work against gold because higher yields make holding bonds more attractive than holding a non-interest-paying asset like gold. Those two forces are partially cancelling each other out, which is one reason the picture feels mixed. On the news front, the most relevant recent headline came roughly six hours ago when Reuters reported that an oil price spike is reviving inflation fears and hitting bonds — that kind of inflation anxiety can support gold as a store of value, but it also pushed yields higher, creating that tug-of-war. About 22 hours ago, Reuters also reported gold firming to a two-week peak on a softer dollar, which explains why price is currently elevated near $4,044. There are no scheduled economic events on today's calendar, so there is no obvious data-driven catalyst to drive a clean directional move. Given that only about $28.70 of the average daily range of $87.50 has been used so far, there is theoretically $58+ of movement still possible today — but without a clear trigger, that range could be consumed by choppy, two-sided price action rather than a clean trend. The directional bias is very mildly bullish — dollar softness, steady ETF inflows into gold over the past three weeks, and elevated geopolitical risk all tilt the scales slightly upward — but the rising real yields (the return on bonds after stripping out inflation, currently 2.39%) act as a meaningful ceiling on enthusiasm. Confidence is 4/10 — the Fed is almost certain to hold rates at their July 29th meeting (96% probability), which removes a major uncertainty, but without fresh news catalysts today, price could easily chop in either direction. With no calendar events today but the Fed meeting arriving in just five days, markets may begin trading cautiously and range-bound as traders wait for clarity on the rate outlook. Key levels to watch: $4,020 as near-term support (where buyers may step in) and $4,070–$4,080 as resistance (a ceiling price has struggled to break through). For trade integration, this is a low-conviction window — the trend on the 1H chart is mildly bullish, but without a news catalyst and with sessions still in Asian hours, waiting for London open and a clear 5M signal near a key support level is the smarter move; keep position size small until the picture clarifies. Remember: no catalyst, no conviction — wait for price to come to your level before committing.",
-    "generatedAt": "2026-07-24T07:16:03.661Z"
+    "biasLabel": "BULLISH",
+    "confidence": 5,
+    "briefing": "Right now, the dominant forces pulling gold in opposite directions are a slightly softer US dollar — which tends to make gold cheaper for foreign buyers and pushes its price up — and rising bond yields combined with reviving inflation fears, which can hurt gold by making interest-bearing assets more attractive. About 6.8 hours ago, Reuters reported that Asian stocks fell sharply after an oil price spike reignited inflation concerns and pushed bond yields higher (yields are the interest rate governments pay on their debt — when they rise, gold often faces headwinds). That headline is the most market-moving catalyst of the recent window, and it explains why gold's path higher feels hesitant despite the bullish setup from 22.8 hours ago when Reuters noted gold had firmed to a two-week peak on a softer dollar. Adding to the cautious picture, a CNBC story roughly 18.7 hours ago flagged that European traders are pricing in a September rate hike from the European Central Bank — rising rates anywhere tend to strengthen currencies and dampen gold appetite. The directional bias leans weakly bullish, because the dollar (DXY at 101.35) remains relatively soft and geopolitical risk is elevated (GPR index at 173.6, which is a measure of global political tension — high readings historically support gold as a safe haven). However, real yields [the return on bonds after adjusting for inflation] are also elevated at 2.39%, which is a genuine headwind for gold. Confidence is 5/10 — the conflicting signals between a weak dollar and rising yields create genuine two-way risk. The view would flip bearish if yields push materially higher or the dollar reverses upward. There are no scheduled economic events on today's calendar, so price action will be driven purely by momentum and any fresh headlines. The 14-day Average Daily Range [a measure of how far gold typically moves each day] is 87.5 points, and today's price has already moved 31.5 points, meaning roughly 56 points of average move may remain — enough room for a valid intraday trade but not an unusually wide opportunity. Open interest [the total number of active futures contracts] has risen by over 15,000 contracts recently while net long positioning [traders betting on price rising] ticked down by about 7,200 — this mixed signal suggests new money is entering but not uniformly bullish. ETF flows are in a three-week outflow trend, another mild bearish weight. For trade integration: this is a moderate-conviction environment — look for 1H trend confirmation of an uptrend before considering long setups on the 5M and 1M charts, keep position size small given the conflicting signals, and avoid chasing. Remember: when signals conflict, smaller size and tighter stops keep you safe until the market shows its hand.",
+    "generatedAt": "2026-07-24T08:09:26.270Z"
   }
 }

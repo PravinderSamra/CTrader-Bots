@@ -62,6 +62,82 @@
         "adrUsedPct": 55
       },
       "outcome": null
+    },
+    {
+      "at": "2026-07-24T08:10:07.873Z",
+      "londonTime": "09:10 BST",
+      "mode": "POST_ORB",
+      "price": 10669.25,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — ORB broke UP against a BEARISH macro bias (-3) — counter-bias breaks fail more often; treat continuation as suspect.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "STRUCTURE",
+          "rule": "R2",
+          "text": "ORB broke UP against a BEARISH macro bias (-3) — counter-bias breaks fail more often; treat continuation as suspect."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "72% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10580.9) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 89th percentile of its 20-day range and still rising — a persistent FX headwind capping upside breaks (weak GBP is what lifts FTSE)."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "UK Retail Sales @ 07:00 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "AI",
+          "rule": "R12",
+          "text": "Today's 08:21 BST AI session read: LONG toward 10715.3 (WAIT, 70%) — playbook BOTH_OK."
+        }
+      ],
+      "aiStanceLine": "Due to a strong pound at the 89th percentile of its 20-day range capping index upside, an oil-driven energy-sector drag (-1.68% Brent) removing a top-5 weight, and 72% of the 14-day ADR already consumed at only 09:00 BST with just 26% of typical volume done, the upside ORB break looks like a trap rather than a launchpad — fade on confirmation beats chasing.",
+      "aiBullets": [
+        "The gap-up of 74.4 pts (0.7%) opened price above the overnight high of 10,664.7 — but with 72% of the 138.5-pt ADR spent, only ~38 pts of typical range remain to sustain a trend; the prior day high at 10,723 is a stretch target requiring an above-average afternoon.",
+        "Europe (DAX +0.64%, SX5E +0.57%) and UK100 share a 20-day correlation of 0.73/0.67 — their alignment is supportive, but the FTSE-DAX gap (UK100 +0.7% vs DAX +0.64%) suggests UK100 may be pricing in the Retail Sales beat rather than leading on its own merit.",
+        "GBP COT (futures positioning data) shows -72,474 net short contracts but a +17,517 week-on-week improvement — a crowded short that is beginning to cover; a short-squeeze in sterling would amplify the index headwind further, reinforcing the SHORT_FAVOURED stance.",
+        "With the MPC meeting in 6 days (30 July) and the next Bank Rate decision live (currently 3.75%), traders are unlikely to build large directional index positions into this afternoon — reducing the probability of a sustained trend extension from the current 10,669 level."
+      ],
+      "bias": {
+        "score": -3,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10650.2,
+        "orbLow": 10581.6,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10664.7,
+        "overnightLow": 10566.3,
+        "priorDayHigh": 10723,
+        "priorDayLow": 10580.9,
+        "gapPct": 0.7,
+        "adr14": 138.5,
+        "adrUsedPct": 72
+      },
+      "outcome": null
     }
   ]
 }
