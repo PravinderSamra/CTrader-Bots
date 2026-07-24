@@ -366,6 +366,82 @@
         "adrUsedPct": 88
       },
       "outcome": null
+    },
+    {
+      "at": "2026-07-24T14:46:52.353Z",
+      "londonTime": "15:46 BST",
+      "mode": "POST_ORB",
+      "price": 10689.25,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 103% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "103% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "STRUCTURE",
+          "rule": "R2",
+          "text": "ORB broke UP against a BEARISH macro bias (-4) — counter-bias breaks fail more often; treat continuation as suspect."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10580.9) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 89th percentile of its 20-day range and still rising — a persistent FX headwind capping upside breaks (weak GBP is what lifts FTSE)."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "UK Retail Sales @ 07:00 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "AI",
+          "rule": "R12",
+          "text": "Today's 08:21 BST AI session read: LONG toward 10715.3 (WAIT, 70%) — playbook BOTH_OK."
+        }
+      ],
+      "aiStanceLine": "Due to 103% of the 14-day ADR already spent, an ORB upside break running directly counter to a -4 bearish macro score, and sterling pinned at the 89th percentile of its 20-day range acting as a persistent ceiling on multinational earnings translation, any remaining breakout attempts look very poorly supported and fades back toward the ORB midpoint (around 10616) are the higher-probability play for the rest of the session.",
+      "aiBullets": [
+        "European alignment (DAX +0.86%, SX5E +0.59%) is the one genuine bullish cross-field force — but with 91% of a typical day's volume already done, European buyers have likely already acted; late-session follow-through is thin.",
+        "The ORB broke UP (high 10650.2) yet the macro bias is -4 bearish and Brent is -2.54% — energy alone (Shell + BP, top-5 weights) creates a structural ceiling that contradicts the direction of the open break.",
+        "GBP COT positioning is CROWDED_SHORT (net -72,474 contracts, improving +17,517 week-on-week) — a contrarian squeeze in sterling would add further upside cap on FTSE via the sign-flip, not relief; the crowded short hasn't fully unwound.",
+        "Today's gap of +94.4 points (0.89%) was nearly the size of the full 14-day ADR (138.5 pts) by itself — meaning the overnight gap accounted for roughly 68% of a typical day's range before the cash session even opened, front-loading exhaustion risk."
+      ],
+      "bias": {
+        "score": -4,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10650.2,
+        "orbLow": 10581.6,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10664.7,
+        "overnightLow": 10566.3,
+        "priorDayHigh": 10723,
+        "priorDayLow": 10580.9,
+        "gapPct": 0.89,
+        "adr14": 138.5,
+        "adrUsedPct": 103
+      },
+      "outcome": null
     }
   ]
 }
