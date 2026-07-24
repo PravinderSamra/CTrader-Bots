@@ -1,0 +1,36 @@
+name: cTrader Liquidity Analysis
+
+# On-demand: runs the phone skill's deterministic analyzer inside CI, where the
+# cTrader token is injected from secrets (never printed). The JSON it emits
+# contains only prices/levels — safe to read back from the run logs.
+
+on:
+  workflow_dispatch:
+    inputs:
+      instrument:
+        description: "Instrument (e.g. UK100, XAUUSD, US30, NAS100, GER40)"
+        required: true
+        default: "UK100"
+      exec:
+        description: "Execution timeframe (M_5 or M_15)"
+        required: false
+        default: "M_5"
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run liquidity analyzer
+        working-directory: "Liquidity Trap/06-agent-skill-phone/liquidity-inducement-phone/scripts"
+        env:
+          CTRADER_MCP_TOKEN: ${{ secrets.VITE_CTRADER_MCP_TOKEN }}
+          INSTRUMENT: ${{ inputs.instrument }}
+          EXECTF: ${{ inputs.exec }}
+        run: |
+          echo "===ANALYSIS_START==="
+          python3 analyze.py "$INSTRUMENT" --exec "$EXECTF" --json
+          echo "===ANALYSIS_END==="
