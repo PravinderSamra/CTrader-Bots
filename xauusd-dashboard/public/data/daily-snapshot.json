@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-23T20:16:42.338Z",
+  "generatedAt": "2026-07-24T07:15:45.665Z",
   "yields": {
     "US10Y": 4.67,
     "US2Y": 4.31,
@@ -7,8 +7,8 @@
     "realYield5Y": 2.11,
     "curve2s10s": 36,
     "breakeven10Y": 2.28,
-    "breakeven5Y": 2.3,
-    "forward5y5y": 2.26,
+    "breakeven5Y": 2.29,
+    "forward5y5y": 2.27,
     "dayOverDay": {
       "US10Y": 0.04,
       "US2Y": 0.05,
@@ -34,26 +34,26 @@
     "openInterestChange": 15702
   },
   "etfFlows": {
-    "gldTonnes": 999.3,
-    "gldWoWChange": -0.3,
-    "trend3W": "FLAT"
+    "gldTonnes": 1000.5,
+    "gldWoWChange": 1.2,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4049.545,
-    "XAGUSD": 57.614,
-    "EURUSD": 1.13779,
-    "USDJPY": 163.827,
-    "USDCHF": 0.81679,
-    "USDCNH": 6.77806,
-    "GBPUSD": 1.33164,
-    "USDCAD": 1.40864,
-    "USDSEK": 9.75264,
-    "US500": 7419.5,
-    "GER40": 24740.55,
-    "UK100": 10595.8,
-    "ADR_14day": 86.5,
-    "ADR_usedToday": 100.8,
-    "goldSilverRatio": 70.3
+    "XAUUSD": 4044.515,
+    "XAGUSD": 58.211,
+    "EURUSD": 1.13936,
+    "USDJPY": 163.7055,
+    "USDCHF": 0.81606,
+    "USDCNH": 6.77607,
+    "GBPUSD": 1.33355,
+    "USDCAD": 1.40695,
+    "USDSEK": 9.73038,
+    "US500": 7418.8,
+    "GER40": 24890.55,
+    "UK100": 10640.95,
+    "ADR_14day": 87.5,
+    "ADR_usedToday": 28.7,
+    "goldSilverRatio": 69.5
   },
   "dollarLiquidity": {
     "stlfsi": -0.7011,
@@ -66,23 +66,29 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Asian stocks skid as oil spike revives inflation fears, bonds take a hit - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-07-24T01:20:00.000Z",
+      "hoursAgo": 5.9
+    },
+    {
       "headline": "Traders see September rate hike as European Central Bank mulls energy price spike",
       "source": "CNBC",
       "publishedAt": "2026-07-23T13:25:57.000Z",
-      "hoursAgo": 6.8
+      "hoursAgo": 17.8
     },
     {
-      "headline": "Dollar hits new 40-year high versus yen, euro softer after ECB stands pat on rates - Reuters",
+      "headline": "Gold firms to two-week peak on softer dollar, Fed outlook in focus - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-07-23T00:50:00.000Z",
-      "hoursAgo": 19.4
+      "publishedAt": "2026-07-23T09:22:39.000Z",
+      "hoursAgo": 21.9
     }
   ],
   "briefing": {
-    "biasScore": -2,
-    "biasLabel": "BEARISH",
+    "biasScore": 1,
+    "biasLabel": "NEUTRAL",
     "confidence": 4,
-    "briefing": "Right now, the most important forces shaping gold are a resilient US dollar, rising bond yields [the interest rate governments pay on their debt — higher yields make gold less attractive because gold pays no interest], and a market that has already moved more than its average daily range. The dollar index (DXY) sits at 101.44 and the yen has weakened dramatically, which about 19 hours ago Reuters confirmed with a headline about the dollar hitting a 40-year high against the yen — a strong dollar typically pushes gold prices lower, all else equal. About 7 hours ago, CNBC reported that traders are pricing in a September rate hike from the European Central Bank due to an energy price spike; a more hawkish ECB [a central bank leaning toward raising rates, not cutting them] supports a stronger euro but also signals a global tightening mood that can weigh on risk assets and commodities including gold. Despite this, gold is still trading at a remarkable $4,049, so the underlying demand story hasn't collapsed — geopolitical risk (GPR at 173.6, which is elevated) and a high open interest reading suggest institutional players are still active in the market. Real yields [bond yields after stripping out inflation] are high at 2.39%, which is historically a headwind for gold. Directional bias leans mildly BEARISH from here, mostly because today's ADR [Average Daily Range — how far gold typically moves in a day] of $86.50 has already been exceeded by $100.80, meaning gold has moved MORE than its typical daily distance — this dramatically reduces the probability of a clean, low-risk trend-following trade developing in the remaining hours. There is no scheduled economic news today according to the calendar, and no high-impact events flagged for later this week, which removes one source of volatility but also removes a catalyst that could restart momentum. Fed expectations show a 96% chance of no rate change at the July 29th meeting, so that is unlikely to surprise markets. Confidence in this mild bearish lean is 4/10 — the lack of a fresh catalyst and the already-exhausted daily range make any directional conviction low; if price pulls back to a clear support level [a price zone where buyers have previously stepped in] and forms a buying signal on the 5-minute chart, a short-term long [a buy trade] could still work within the broader uptrend, but position size [the amount of money risked per trade] should be small given how extended the move already is. For trend-following trades using ICT methodology tonight, patience is your edge — wait for price to reset into a discount zone [a price level well below recent highs] before looking for bullish signals, and keep risk tight. Screenshot this: when gold has already moved past its average daily range, the smartest trade is often no trade — wait for tomorrow's fresh range.",
-    "generatedAt": "2026-07-23T20:17:01.761Z"
+    "briefing": "Right now the two biggest forces pulling on gold are a mildly soft US dollar (the DXY index, which measures the dollar's strength against other currencies, sits at 101.31 — relatively weak) and rising bond yields (the US 10-year yield ticked up 0.04% overnight to 4.67%), which tend to work against gold because higher yields make holding bonds more attractive than holding a non-interest-paying asset like gold. Those two forces are partially cancelling each other out, which is one reason the picture feels mixed. On the news front, the most relevant recent headline came roughly six hours ago when Reuters reported that an oil price spike is reviving inflation fears and hitting bonds — that kind of inflation anxiety can support gold as a store of value, but it also pushed yields higher, creating that tug-of-war. About 22 hours ago, Reuters also reported gold firming to a two-week peak on a softer dollar, which explains why price is currently elevated near $4,044. There are no scheduled economic events on today's calendar, so there is no obvious data-driven catalyst to drive a clean directional move. Given that only about $28.70 of the average daily range of $87.50 has been used so far, there is theoretically $58+ of movement still possible today — but without a clear trigger, that range could be consumed by choppy, two-sided price action rather than a clean trend. The directional bias is very mildly bullish — dollar softness, steady ETF inflows into gold over the past three weeks, and elevated geopolitical risk all tilt the scales slightly upward — but the rising real yields (the return on bonds after stripping out inflation, currently 2.39%) act as a meaningful ceiling on enthusiasm. Confidence is 4/10 — the Fed is almost certain to hold rates at their July 29th meeting (96% probability), which removes a major uncertainty, but without fresh news catalysts today, price could easily chop in either direction. With no calendar events today but the Fed meeting arriving in just five days, markets may begin trading cautiously and range-bound as traders wait for clarity on the rate outlook. Key levels to watch: $4,020 as near-term support (where buyers may step in) and $4,070–$4,080 as resistance (a ceiling price has struggled to break through). For trade integration, this is a low-conviction window — the trend on the 1H chart is mildly bullish, but without a news catalyst and with sessions still in Asian hours, waiting for London open and a clear 5M signal near a key support level is the smarter move; keep position size small until the picture clarifies. Remember: no catalyst, no conviction — wait for price to come to your level before committing.",
+    "generatedAt": "2026-07-24T07:16:03.661Z"
   }
 }

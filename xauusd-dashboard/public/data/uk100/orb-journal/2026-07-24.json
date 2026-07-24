@@ -1,0 +1,67 @@
+{
+  "date": "2026-07-24",
+  "entries": [
+    {
+      "at": "2026-07-24T07:16:40.189Z",
+      "londonTime": "08:16 BST",
+      "mode": "POST_ORB",
+      "price": 10639.2,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — Sterling is at the 89th percentile of its 20-day range and still rising — a persistent FX headwind capping upside breaks (weak GBP is what lifts FTSE).",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 89th percentile of its 20-day range and still rising — a persistent FX headwind capping upside breaks (weak GBP is what lifts FTSE)."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "UK Retail Sales @ 07:00 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.52%) — the cross-market lean is up."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to sterling at the 89th percentile, Brent -1.4% already weighing on the two largest energy stocks, and 55% of the 14-day average daily range consumed before the cash open, both upside and downside breakouts face meaningful headwinds today.",
+      "aiBullets": [
+        "Energy drag meets range exhaustion: Brent -1.4% pressures Shell/BP (top-5 weights), but with 55% of the 138.5-pt ADR already used, there is limited room for energy-led downside to extend cleanly.",
+        "European alignment (DAX +0.61%, SX5E +0.52%) and copper +0.63% create a floor that conflicts with the risk-off headline backdrop — this cross-current makes a trending ORB day less likely than a chop-and-fade one.",
+        "UK Retail Sales at 07:00 BST (HIGH impact, today) landed before the ORB window — any post-data repositioning will be baked into the opening range itself, raising fakeout risk on the first 5-minute candle.",
+        "GBP COT shows a net short of -72,474 contracts but improved by +17,517 week-on-week — short-covering momentum in sterling, combined with the 89th-percentile spot reading, means an ORB long breakout faces a live FX squeeze risk that the tape alone does not capture."
+      ],
+      "bias": {
+        "score": -1,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10642.4,
+        "orbLow": 10581.6,
+        "orbBrokenDirection": null,
+        "overnightHigh": 10642.4,
+        "overnightLow": 10566.3,
+        "priorDayHigh": 10723,
+        "priorDayLow": 10580.9,
+        "gapPct": 0.42,
+        "adr14": 138.5,
+        "adrUsedPct": 55
+      },
+      "outcome": null
+    }
+  ]
+}
