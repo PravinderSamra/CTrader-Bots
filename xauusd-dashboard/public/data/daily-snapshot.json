@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-24T10:54:54.691Z",
+  "generatedAt": "2026-07-24T12:13:43.919Z",
   "yields": {
     "US10Y": 4.67,
     "US2Y": 4.31,
@@ -34,26 +34,26 @@
     "openInterestChange": 15702
   },
   "etfFlows": {
-    "gldTonnes": 997.1,
-    "gldWoWChange": -1.1,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 997.6,
+    "gldWoWChange": 0.5,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4058.365,
-    "XAGUSD": 58.406,
-    "EURUSD": 1.13825,
-    "USDJPY": 163.799,
-    "USDCHF": 0.81698,
-    "USDCNH": 6.77376,
-    "GBPUSD": 1.33221,
-    "USDCAD": 1.40788,
-    "USDSEK": 9.72719,
-    "US500": 7422.5,
-    "GER40": 24962.55,
-    "UK100": 10656.9,
+    "XAUUSD": 4056.135,
+    "XAGUSD": 58.5305,
+    "EURUSD": 1.13773,
+    "USDJPY": 163.814,
+    "USDCHF": 0.81747,
+    "USDCNH": 6.77308,
+    "GBPUSD": 1.33238,
+    "USDCAD": 1.40868,
+    "USDSEK": 9.71703,
+    "US500": 7427.8,
+    "GER40": 24980.55,
+    "UK100": 10666,
     "ADR_14day": 87.5,
     "ADR_usedToday": 41.8,
-    "goldSilverRatio": 69.5
+    "goldSilverRatio": 69.3
   },
   "dollarLiquidity": {
     "stlfsi": -0.7011,
@@ -69,26 +69,26 @@
       "headline": "Treasury yields retreat, 10-year hovers around January 2025 highs",
       "source": "CNBC",
       "publishedAt": "2026-07-24T09:00:31.000Z",
-      "hoursAgo": 1.9
+      "hoursAgo": 3.2
     },
     {
       "headline": "Asian stocks sink, bonds struggle as oil spike stokes rate risks - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-07-24T01:20:00.000Z",
-      "hoursAgo": 9.6
+      "hoursAgo": 10.9
     },
     {
       "headline": "Traders see September rate hike as European Central Bank mulls energy price spike",
       "source": "CNBC",
       "publishedAt": "2026-07-23T13:25:57.000Z",
-      "hoursAgo": 21.5
+      "hoursAgo": 22.8
     }
   ],
   "briefing": {
-    "biasScore": 1,
+    "biasScore": -1,
     "biasLabel": "NEUTRAL",
     "confidence": 4,
-    "briefing": "Right now, the two biggest forces pulling gold in opposite directions are elevated US bond yields [the interest rate the US government pays to borrow money — when yields are high, gold becomes less attractive because bonds pay more] and a geopolitical risk environment that remains genuinely elevated [the GPR index sits at 173.6, a level that historically supports gold as a 'safe haven']. The dollar [measured by DXY at 101.39] is middling — not strong enough to crush gold, but not weak enough to give it a clear lift either. On the news front, the most relevant headline from the last couple of hours (roughly 2 hours ago) is that Treasury yields are retreating slightly after hovering near January 2025 highs — a small easing in yields is a mild positive for gold, as it slightly reduces the 'cost' of holding a non-interest-paying asset. An oil spike flagged by Reuters about 10 hours ago is stoking broader 'rate risk' fears [the worry that higher energy prices force central banks to keep rates high longer], which is a headwind for gold. With no economic calendar events scheduled today and no scheduled events listed for the rest of the week, there's no obvious news catalyst to force a big directional move. Directional bias leans very slightly bullish [favouring gold going up] — yields are softening at the margin, the dollar isn't strengthening aggressively, and geopolitical stress is real — but conviction is low. Confidence is 4/10; a renewed surge in yields or a dollar breakout above 102–103 would flip this view bearish. On levels, gold is trading around $4,058. The 14-day average daily range [how far price typically moves in a full day] is $87.50, and today has already used $41.80 of that — meaning roughly $45 of typical daily movement may remain. Watch $4,030 as near-term support [a floor price tends to bounce from] and $4,080–$4,100 as the next resistance zone [a ceiling price struggles to push through]. For trade integration: this is a workable but cautious window for long [buy] setups on the 1H/5M charts, with reduced position size given the mixed signals — wait for a clean pullback to a 1H demand zone [an area where buyers previously stepped in strongly] before committing. Remember: when the story is mixed, trade smaller and demand a cleaner setup before pulling the trigger.",
-    "generatedAt": "2026-07-24T10:55:11.299Z"
+    "briefing": "Right now, the dominant forces pushing and pulling gold are rising bond yields [the interest rate governments pay on their debt — higher yields make holding gold, which pays no interest, less attractive] and a Dollar Index sitting around 101.42, which is neither extremely strong nor weak. The 10-year US yield has ticked up 0.04% today to 4.67%, and real yields [yields after stripping out expected inflation] are at a high 2.39% — historically, elevated real yields are a genuine headwind for gold because investors can earn a meaningful 'real' return in bonds instead. On the news side, the most relevant recent headline (3.2 hours ago, CNBC) notes that Treasury yields are retreating slightly from January 2025 highs — a small relief for gold — but an oil price spike reported roughly 11 hours ago (Reuters) is stoking fears that central banks may keep rates higher for longer, which is a net negative for gold. About 23 hours ago, traders began pricing in a European Central Bank rate hike in September due to energy prices — that could strengthen the euro against the dollar, which would normally be mild support for gold, but the effect here is limited. Pulling it all together, the directional bias is NEUTRAL with a very slight lean downward. Gold is sitting at $4,056, and with the 14-day Average Daily Range [the typical size of a full day's price move] at $87.50 but only $41.80 used so far today, there is roughly $45 of potential move left — so price could still travel meaningfully in either direction. The COT report [a weekly survey of how large professional traders are positioned] shows big speculators trimmed their bullish bets by 7,234 contracts last week, a mild warning sign, and ETF flows into gold have been flat for three weeks — no strong institutional conviction either way. Confidence in this neutral bias is 4/10; a clear break above $4,080 or below $4,030 would shift the picture. There are no scheduled economic events on today's calendar, which means price is being driven purely by these macro forces and any fresh headlines — watch for any surprise Fed commentary or geopolitical escalation. The calendar is empty for the rest of the week too, so there is no major event-risk caution to flag, though the Fed meeting falls on July 29 (next week) and markets are pricing a 96% chance of no change, with a surprising 4% chance of a hike. For trade execution: this is a low-conviction environment — if your 1H trend is not clearly pointing one direction, sit on your hands; if you do see a clean setup, use smaller-than-normal position size and keep stops tight, because choppy, range-bound price action [where price bounces back and forth without clear direction] punishes over-sized trades. The one thing to screenshot and remember: when real yields are above 2% and big money is reducing gold bets, let the 1H chart prove the trend before you touch the buy button.",
+    "generatedAt": "2026-07-24T12:14:04.001Z"
   }
 }

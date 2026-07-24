@@ -290,6 +290,82 @@
         "adrUsedPct": 88
       },
       "outcome": null
+    },
+    {
+      "at": "2026-07-24T12:14:46.526Z",
+      "londonTime": "13:14 BST",
+      "mode": "POST_ORB",
+      "price": 10666.55,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 88% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "88% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDH 10723) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 89th percentile of its 20-day range and still rising — a persistent FX headwind capping upside breaks (weak GBP is what lifts FTSE)."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "UK Retail Sales @ 07:00 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.83%) — the cross-market lean is up."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "AI",
+          "rule": "R12",
+          "text": "Today's 08:21 BST AI session read: LONG toward 10715.3 (WAIT, 70%) — playbook BOTH_OK."
+        }
+      ],
+      "aiStanceLine": "Due to 88% of the 14-day ADR (138.5pts) already spent, sterling sitting at its 89th 20-day percentile (a persistent FTSE cap), and conflicting forces between a bullish European tape (+0.97% DAX) and a bearish Brent (-2.24%), breakout extensions in either direction are poorly supported and fade-to-range setups carry better odds than trend-following today.",
+      "aiBullets": [
+        "The ORB broke UP through 10,650.2 but current price (10,666.55) is already 16pts above ORB high with only ~17pts of typical daily range left (ADR 138.5pts, 88% used) — almost no room to run before the day exhausts itself.",
+        "FTSE's 20-day correlation with the DAX is 0.74, and DAX is up +0.97% — this cross-market support is real, but it has already been largely priced in during the ORB session, limiting fresh impetus for afternoon longs.",
+        "GBP at the 89th percentile of its 20-day range with net speculative shorts at -72,474 contracts (most recently reduced by +17,517 week-on-week) — a short-squeeze in sterling remains the key tail risk that could surprise FTSE to the downside even if equities look fine.",
+        "Brent -2.24% is a direct drag on Shell and BP (top-5 index weights, sector read BEARISH) — this acts as an internal index brake even if European peers rally, meaning upside breaks are fighting a sector headwind worth watching on the 5M tape."
+      ],
+      "bias": {
+        "score": 1,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10650.2,
+        "orbLow": 10581.6,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10664.7,
+        "overnightLow": 10566.3,
+        "priorDayHigh": 10723,
+        "priorDayLow": 10580.9,
+        "gapPct": 0.68,
+        "adr14": 138.5,
+        "adrUsedPct": 88
+      },
+      "outcome": null
     }
   ]
 }
