@@ -24,7 +24,7 @@ ADSGn (Adidas), AIRF (Air France-KLM), ALVG (Allianz), BAYGn (Bayer), BMW, DBKGn
 | Spec | Value |
 |---|---|
 | Contract size | 1 share per unit |
-| Leverage (Standard account) | **1 : 3.33** (Swing account: 1 : 1) |
+| Leverage | Standard account 1 : 3.33 — **Swing account 1 : 1 (this project's account: $100k Swing → 1:1 binds)** |
 | Commission | 0.004 %-type per the API (cheap; exact per-side basis to confirm in audit) |
 | Price digits | 2 (SAN: 4) |
 | Max trade volume | per-symbol field in the JSON |
@@ -45,11 +45,11 @@ FTMO's US stock CFDs open at **13:35 UTC = 09:35 ET — five minutes after the c
 
 | Rule | Impact on ORB |
 |---|---|
-| Max daily loss 5% (of initial balance) | Top-3 picks at 1% risk each = 3% worst-case day. Compliant, but the skill must state aggregate open risk on every report; never suggest >3 concurrent full-risk positions; recommended per-trade risk on funded accounts: 0.5–1%. |
-| Max overall loss 10% | Same monitoring; advisory note only (we don't place orders yet). |
-| Leverage 1:3.33 on equities | **Tighter than the paper's 4×.** Sizing cap formula becomes `shares ≤ 3.33 × Equity / entry`. Binds more often on low-ATR% mega-caps → realised risk per trade often < 1%. Implemented in the engine. |
-| News-trading restriction (funded Standard accounts): no opening/closing trades ±2 min around **restricted macro events** on targeted instruments; violation = breach, no warning. Swing accounts exempt. | Stock CFDs' targeted events are shown in the FTMO client-area calendar. Company earnings land pre-market/after-hours, so 09:35+ entries rarely collide, but the skill must print a standing reminder to check the restricted-events calendar before acting on a pick (esp. FOMC/CPI days where equity CFDs may be targeted). |
-| Weekend holding ban (Standard funded) | Irrelevant — strategy is flat by 16:00 ET daily. |
+| Max daily loss 5% ($5,000 on the $100k account) | Nominal top-3 at 1% risk each = 3% worst-case day — compliant. In practice the 1:1 leverage cap (below) keeps realised risk far lower. Skill states aggregate open risk on every report. |
+| Max overall loss 10% ($10,000) | Same monitoring; advisory note only (we don't place orders yet). |
+| **Equities leverage 1:1 on Swing accounts** (confirmed for all 59 equities in FTMO's symbol data; Standard would be 3.33) | **The binding constraint.** Margin = 100% of notional, so total notional across open positions ≤ ~equity. The paper's 1%-risk sizing (`shares = 0.01E / 0.1ATR`, notional ≈ `0.1×E×price/ATR`) needs 3–6× equity of notional on typical mega-caps → unreachable. Realised per-trade risk under the cap ≈ `0.1×ATR/price × marginBudget`: e.g. AAPL ($220, ATR $4) ~0.18% per 1×E; TSLA ($250, ATR $12) ~0.48%; GME ($25, ATR $2) ~0.8%. Volatile, cheaper names get closest to full risk — conveniently the same names most likely to be in play. Engine sizes under a per-pick margin budget (default E/3) and reports which bound binds. |
+| News-trading restriction | **Exempt — Swing account.** No ±2-min rule. Skill notes macro-event days as context only, not compliance. |
+| Weekend holding ban | Exempt on Swing anyway; irrelevant — strategy is flat by 16:00 ET daily. |
 
 ## Strategic fit of this universe (honest assessment)
 

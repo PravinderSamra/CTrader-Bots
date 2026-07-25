@@ -1,6 +1,6 @@
 # ORB Scanner — Stocks-in-Play Opening Range Breakout Advisor
 
-Agent skill that scans the **full FTMO Equities CFD universe (45 US stocks)** at 09:35 ET, identifies **Stocks in Play** (abnormal opening-range Relative Volume ≥ 100%), and reports the **top 3 picks** with complete trade plans (direction, entry stop, ATR-based stop loss, risk sizing under FTMO's 3.33× equity leverage, EoD exit). Advisory only for now — no order placement. Account: FTMO prop firm on cTrader.
+Agent skill that scans the **full FTMO Equities CFD universe (45 US stocks)** at 09:35 ET, identifies **Stocks in Play** (abnormal opening-range Relative Volume ≥ 100%), and reports the **top 3 picks** with complete trade plans (direction, entry stop, ATR-based stop loss, risk sizing under the account's constraints, EoD exit). Advisory only for now — no order placement. Account: **FTMO $100k Swing** on cTrader (equities leverage 1:1; news-trading restriction exempt).
 
 Based on: Zarattini, Barbon & Aziz (2024), *A Profitable Day Trading Strategy For The U.S. Equity Market* — 5-minute ORB on top-20 RVOL stocks: **+1,637% net (2016–2023), Sharpe 2.81, alpha 36%/yr, beta ≈ 0** vs S&P 500 +198%.
 
@@ -36,6 +36,6 @@ Data source: cTrader Open API via remote MCP over persistent HTTP (see `/ctrader
 2. At 09:35 ET: RelVol = today's 5-min opening volume ÷ 14-day average of the same window. Keep ≥ 1.0, rank descending.
 3. First 5-min candle bullish → long-only buy-stop at OR high; bearish → short-only sell-stop at OR low; doji → skip.
 4. Stop loss 0.1 × ATR14 from fill; **no profit target**; exit 16:00 ET. One trade per stock per day; never flip direction.
-5. Size for 1% equity risk, 3.33× leverage cap (FTMO equities).
+5. Size for 1% equity risk, capped by FTMO Swing 1:1 equity leverage (margin usually binds → realised risk ~0.1–0.5%).
 
 The edge is the RVOL selection, not the breakout: identical rules on all stocks ≈ +3%/yr; on top-RVOL stocks ≈ +42%/yr. Expect ~20–25% per-trade win rate carried by unbounded trend-day winners — never add profit targets, never widen stops.

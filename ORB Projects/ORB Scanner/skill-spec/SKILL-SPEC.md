@@ -88,7 +88,8 @@ For each of the 45 universe symbols, from the **measurement feed**:
 8. Rank survivors by `relVol` descending. Top 3 = picks; ranks 4–10 = watch table.
 9. For each pick compute the trade plan:
    - `entry = ORH` (long) / `ORL` (short); `stopDistance = 0.1 × ATR14`; `SL = entry ∓ stopDistance`.
-   - `R` per share = `stopDistance`. Sizing for equity `E` (`--equity`, default 25000) and risk fraction `--risk-pct` (default 1.0): `shares = floor(riskPct×E / stopDistance)` capped by the **FTMO equity leverage 3.33×**: `floor(3.33×E / entry)`; report both figures and which bound binds. Also report aggregate risk across the top-3 (FTMO 5% daily-loss context).
+   - `R` per share = `stopDistance`. Sizing for equity `E` (`--equity`, default **100000** — the FTMO $100k Swing account) and risk fraction `--risk-pct` (default 1.0): `sharesRisk = floor(riskPct/100 × E / stopDistance)`.
+   - **Leverage cap — FTMO Swing equities = 1:1** (`--leverage`, default 1.0): margin is 100% of notional, shared across concurrent positions. Per-pick margin budget = `leverage × E × --margin-share` (default 1/3 so three picks fit): `sharesMargin = floor(marginBudget / entry)`. Final `shares = min(sharesRisk, sharesMargin)`; report both, which bound binds (`riskBound`/`marginBound`), realised risk % at final size, and aggregate notional + aggregate risk across the top-3 vs the FTMO 5% daily-loss limit. Expect margin to bind on most mega-caps (realised risk ~0.1–0.5%) — that is correct behaviour, print it plainly, never lever up to compensate.
    - Exit: EoD 16:00 ET, no target.
    - **Status field** from latest price: `pending` (entry not yet touched since 09:35), `triggered` (crossed entry; report current price, unrealised R, and % beyond entry), `stopped-would-be` (crossed entry then hit SL — replay/late scans), `late` (price > 1R beyond entry — chasing costs expectancy; advisory: do not chase).
 10. Write `runs/<stamp>.json` (schema §5) and print a compact human table to stdout.
@@ -107,7 +108,7 @@ Pure functions for ATR, TR, RVOL, direction, sizing, ET-time mapping. Unit tests
       "rank": 1, "symbol": "NVDA", "symbolId": 123, "direction": "long",
       "relVol": 8.4, "atr14": 2.31, "orHigh": 0.0, "orLow": 0.0, "orVolume": 0,
       "entry": 0.0, "stopLoss": 0.0, "stopDistance": 0.0, "ctraderBid": 0.0, "ctraderAsk": 0.0,
-      "sizing": {"equity": 25000, "riskPct": 1.0, "shares": 0, "leverageCapBinds": false, "leverageCap": 3.33},
+      "sizing": {"equity": 100000, "riskPct": 1.0, "leverage": 1.0, "marginShare": 0.333, "sharesRisk": 0, "sharesMargin": 0, "shares": 0, "binding": "marginBound", "realisedRiskPct": 0.0, "notional": 0.0},
       "exit": "EOD-16:00-ET", "status": "pending", "flags": [],
       "catalyst": null
     }
@@ -127,7 +128,7 @@ After the engine returns:
    - trading halt in effect or LULD-halt-prone (multiple halts already today);
    - `rvol-suspect` flag from the engine (split/corporate action);
    - `late` status (breakout already extended > 1R);
-   - **FTMO restricted-event day**: if a major macro release (FOMC/CPI/NFP) falls in today's session, remind the user to check the FTMO client-area restricted-events calendar before executing (funded Standard accounts: no open/close ±2 min around targeted events — breach risk).
+   - macro-event day (FOMC/CPI/NFP) noted as *context only* — the account is a **Swing** account, exempt from FTMO's news-trading restriction; volatility awareness, not compliance.
 3. Compose the report (template §7). Save as `runs/<stamp>.md`. Both files committed if the user asks to track runs.
 4. Never invent numbers. Every figure in the report must come from the engine JSON. If the engine failed for a symbol, say so.
 
@@ -141,7 +142,7 @@ Market: {open/closed}; data as of {ts}. Warnings: {...}
 ### 1. {SYM} — {LONG/SHORT} — RVOL {x.x}×
 Catalyst: {one line}
 Entry (stop order): {price} | SL: {price} ({0.1×ATR} = {d}) | Exit: EoD 16:00 ET
-Size @1% risk on £/${E}: {n} shares {(leverage-capped)} | Status: {pending/triggered(+x.xR)/late}
+Size: {n} shares (risk {realised}% — {risk-bound|margin-bound @1:1 Swing leverage}) | Notional: ${...} | Status: {pending/triggered(+x.xR)/late}
 Flags: {none | ...}
 
 ## Watch (ranks 4–10)      → compact table

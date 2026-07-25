@@ -29,7 +29,7 @@ Run `/orb-scanner` daily at 09:35 ET for ≥2 weeks (Routine can automate the tr
 Consume the picks JSON to place bracket stop orders via `create_order` (trading profile). Requires: user green-light, sizing rework for spread-bet/CFD stake maths, spread-cost expectancy re-validation, kill-switch and max-daily-loss guard.
 
 ## Open questions for the user
-1. ~~Which account?~~ **Answered: FTMO prop-firm cTrader account.** Remaining sub-question: Challenge/Verification or funded, and Standard or Swing? (Standard funded accounts carry the news-trading restriction; Swing is exempt.)
+1. ~~Which account?~~ **Answered: FTMO $100,000 Swing account** (2026-07-25). Consequences folded into spec: news-trading restriction does NOT apply (Swing exempt); equities leverage is **1:1** (FTMO symbol data confirms `leverageSwing: 1` on all 59 equities) → margin is the binding sizing constraint on most names; realised per-trade risk typically 0.1–0.5% instead of the paper's 1%. Engine defaults: `--equity 100000 --risk-pct 1.0 --leverage 1.0 --margin-share 1/3`.
 2. Scan automation: run as a scheduled Routine each trading day at 09:35 ET, or on-demand only?
-3. Account equity figure for sizing lines (FTMO account size, e.g. $100k?), and risk per trade on the prop account — paper uses 1%, but 0.5% is common practice under FTMO's 5% daily-loss cap. Default until told otherwise: FTMO balance from `get_balance`, 1% risk.
+3. ~~Equity for sizing~~ **Answered: $100,000** (live value can still be read from `get_balance` at scan time).
 4. Include the 13 EU stocks later as a separate 08:05 UTC scan (European open), or US-only permanently?
