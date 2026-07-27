@@ -57,10 +57,16 @@ def _cluster(levels, tol):
     makes it possible to ask whether price has since traded through it."""
     if not levels:
         return []
+    # Chaining guard: joining on distance-to-the-previous-point alone lets a
+    # run of levels each just inside tol drag a cluster arbitrarily wide — on
+    # gold that produced a "23-touch pool" spanning 17 points, which is a
+    # trading range, not a pool of stops. Cap the total span as well.
+    max_span = tol * 2
     pts = sorted(levels, key=lambda tp: tp[1])
     clusters = [[pts[0]]]
     for tp in pts[1:]:
-        if abs(tp[1] - clusters[-1][-1][1]) <= tol:
+        if (abs(tp[1] - clusters[-1][-1][1]) <= tol
+                and tp[1] - clusters[-1][0][1] <= max_span):
             clusters[-1].append(tp)
         else:
             clusters.append([tp])
@@ -373,14 +379,16 @@ def analyze(instrument, exec_period="M_5",
                 sweep = {"side": "buy_side", "level": round(rmax, 5),
                          "lb_zone": [round(rmax, 5), round(b["high"], 5)],
                          "stop_beyond": round(b["high"] + buf, 5),
-                         "bars_ago": k - 1,
+                         "bars_ago": k - 1, "bar_time": b["time"],
+                         "extreme": round(b["high"], 5),
                          "note": "recent high swept and price closed back below (bearish reclaim)"}
                 break
             if b["low"] < rmin and b["close"] > rmin:
                 sweep = {"side": "sell_side", "level": round(rmin, 5),
                          "lb_zone": [round(b["low"], 5), round(rmin, 5)],
                          "stop_beyond": round(b["low"] - buf, 5),
-                         "bars_ago": k - 1,
+                         "bars_ago": k - 1, "bar_time": b["time"],
+                         "extreme": round(b["low"], 5),
                          "note": "recent low swept and price closed back above (bullish reclaim)"}
                 break
 
@@ -410,14 +418,27 @@ def analyze(instrument, exec_period="M_5",
         # the recent swing extreme, which is not necessarily a pool at all.
         # Naming it separates "a real pool of stops was taken" from "an
         # incidental high/low was poked" — only the former is the trap.
+        # WHICH pool did this sweep take? Matching only the detector's own
+        # reference level missed pools the same bar cleared on its way — a
+        # sweep that consumed a 4-touch shelf reported pool_taken: null purely
+        # because the reference happened to be an incidental swing extreme.
+        # Consider every pool that predates the sweep bar and that the bar's
+        # extreme traded through.
         side_pools = (pools_below if sweep["side"] == "sell_side"
                       else pools_above)
-        taken = next((p for p in side_pools
-                      if p["zone"][0] <= sweep["level"] <= p["zone"][1]), None)
-        sweep["pool_taken"] = ({"name": taken["name"], "zone": taken["zone"],
-                                "touches": taken["touches"],
-                                "confirmed": taken["confirmed"]}
-                               if taken else None)
+        ext, t0 = sweep["extreme"], sweep["bar_time"]
+        cleared = [p for p in side_pools
+                   if p["last_time"] < t0
+                   and (ext > p["zone"][1] if sweep["side"] == "buy_side"
+                        else ext < p["zone"][0])]
+        # The strongest pool consumed is what makes the trap meaningful.
+        cleared.sort(key=lambda p: (-p["touches"], p["dist"]))
+        best = cleared[0] if cleared else None
+        sweep["pool_taken"] = ({"name": best["name"], "zone": best["zone"],
+                                "touches": best["touches"],
+                                "confirmed": best["confirmed"]}
+                               if best else None)
+        sweep["pools_cleared"] = len(cleared)
         if sweep["side"] == "sell_side":
             sweep["still_valid"] = bool(price > sweep["level"])
         else:

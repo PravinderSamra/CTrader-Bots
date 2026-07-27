@@ -168,6 +168,38 @@ for _f in ("session", "daily_bias", "range", "volume", "pools_above",
            "pools_below", "draw_up", "draw_down", "no_mans_land"):
     check(f"end-to-end: output contains '{_f}'", _f in _o6)
 
+
+# ── cluster chaining must not produce a pool wider than a real stop shelf ───
+# Single-linkage joined on distance-to-previous only, so levels each just
+# inside tol chained into a 17-point "23-touch pool" on gold — a range, not a
+# pool. Span is now capped at 2x tol.
+_chain = [(BASE, 4080 + 2.0 * i) for i in range(12)]   # 2.0 apart, tol ~2.5
+_cl = A._cluster(_chain, 2.5)
+check("cluster: chained levels do not form one giant pool",
+      max(c["high"] - c["low"] for c in _cl) <= 2.5 * 2 + 1e-6)
+check("cluster: chaining splits into several pools", len(_cl) > 1)
+# Genuinely tight levels must still cluster together.
+_tight = [(BASE, 4080 + 0.2 * i) for i in range(6)]
+check("cluster: tight levels still form a single pool",
+      len(A._cluster(_tight, 2.5)) == 1)
+
+# ── pool_taken must see pools the sweep bar cleared, not just its reference ──
+_exp = ([bar(i, 4086, 4088.05, 4084, 4086) for i in range(20)]
+        + [bar(20 + i, 4090, 4092.0, 4089, 4091) for i in range(6)]  # shelf ~4092
+        + [bar(26, 4091, 4099.0, 4090, 4089.5),   # clears the shelf, closes back
+           bar(27, 4089, 4090, 4087, 4088),
+           bar(28, 4088, 4089, 4086, 4087)])
+_d8 = daily(4065.33, 4087)
+_o8 = A.analyze("X", "M_5", d1=_d8, h1=_d8, ex=_exp, live=(4087, 4087.1))
+_sw8 = _o8["recent_sweep"]
+check("pool_taken: buy-side sweep detected", _sw8 is not None)
+if _sw8:
+    check("pool_taken: reports the pool the bar cleared",
+          _sw8["pool_taken"] is not None)
+    check("pool_taken: counts how many pools were cleared",
+          _sw8.get("pools_cleared", 0) >= 1)
+
+
 print(f"\n{_passed} passed, {len(_failed)} failed")
 if _failed:
     for _n in _failed:
