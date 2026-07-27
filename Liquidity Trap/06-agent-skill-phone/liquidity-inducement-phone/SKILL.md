@@ -78,6 +78,12 @@ the slug with `plant`/`environment` changed (guide Lesson 2).
    and what fuel/volume state would cut it short. A far pool does **not** veto
    a clean setup: take it as direction and manage out.
    → `references/05-managing-the-open-trade.md`
+7. **Add the London alternative.** Always produce a third block showing what a
+   London-window setup would be, labelled as the unvalidated window it is. If
+   there is no London setup, say so in one line rather than omitting it.
+   → `references/06-london-alternative.md`
+8. **Journal every idea** — primary, secondary and London alt, including
+   no-trade outcomes. → `references/07-trade-journal.md`
 
 **If asked about a position already open**, go straight to reference 05: where
 structure sits now, what fuel has done since entry, and whether the original
@@ -119,7 +125,9 @@ away." (Official playbook + research files 01/03/09.)
    run-in from ~London). Read this from the analyzer's **`session` block**
    (`in_trade_window`, `minutes_from_ny_open`), which is DST-correct. Never
    convert UTC to NY time yourself — the offset moves with DST and getting it
-   wrong mislabels the session. Outside the window, no trade.
+   wrong mislabels the session. Outside the window, no trade **for the primary
+   idea** — the London alternative (reference 06) relaxes *this gate only*, and
+   says so explicitly. Every other gate still applies to it in full.
 6. **Not no-man's-land** — `no_mans_land: true` means price is stranded
    mid-range: stand down until a line breaks.
 
@@ -153,6 +161,12 @@ reason.** A disciplined "no trade" is a correct answer.
   plan (reference 05). Never dangle a far target flat, with no plan attached.
 - **Every armed idea states its management**: trail points, partials, and the
   fuel/volume conditions that would end it early.
+- **Every idea is journalled**, no-trades included (reference 07). Writing the
+  entry is part of producing the idea, not an optional extra.
+- **Never make the user wait for a journal review.** If unreviewed entries have
+  built up, spawn a background subagent to run `journal_review.py` and deliver
+  the scan immediately; relay the review when it lands. The user has asked for
+  this, so it is expected here rather than something to confirm each time.
 - Always end: *nothing is 100%; this is analysis, not financial advice; no
   orders are placed by this skill.*
 - If data is missing/auth fails, say so plainly and stop. Don't invent levels.
