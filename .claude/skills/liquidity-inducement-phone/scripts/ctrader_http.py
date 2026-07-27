@@ -359,8 +359,12 @@ def fetch_ohlcv_paged(instrument: str, period: str = "M_5", days: int = 14,
             cur_end = min(oldest, cur_end - timedelta(minutes=step_min))
         else:
             # Weekend/holiday, or a window with no data: keep walking back.
+            # A full weekend is ~48h of closed market, which at these chunk
+            # sizes is several empty responses in a row — the tolerance has to
+            # clear that or paging stops at Monday's open and silently returns
+            # a single day.
             empties += 1
-            if empties >= 4:
+            if empties >= 20:
                 break
             cur_end = cur_start
 
