@@ -261,25 +261,35 @@ def analyze(instrument, exec_period="M_5",
 
     # ---- recent sweep / reclaim (last ~40 exec bars) ----
     sweep = None
-    if len(ex) >= 6:
+    if len(ex) >= 12:
         recent = ex[-40:]
-        rmax = max(b["high"] for b in recent[:-1])
-        rmin = min(b["low"] for b in recent[:-1])
         buf = tol_price * 0.5
-        # look for a bar that poked beyond a prior extreme then closed back.
+        # Look for a bar that poked beyond the prior extreme then closed back.
+        # The reference extreme MUST come from the bars before the candidate:
+        # computing it over a window that already contained the candidate made
+        # `low < rmin` unsatisfiable for every bar but the last, so any sweep
+        # more than one bar old was invisible.
         # lb_zone = the swept, no-liquidity extreme: the band you enter into and
         # hide the stop behind — an area, never a single tick.
-        for b in reversed(recent[-6:]):
+        for k in range(1, min(7, len(recent) - 4)):
+            b = recent[-k]
+            prior = recent[:-k]
+            if len(prior) < 5:
+                break
+            rmax = max(p["high"] for p in prior)
+            rmin = min(p["low"] for p in prior)
             if b["high"] > rmax and b["close"] < rmax:
                 sweep = {"side": "buy_side", "level": round(rmax, 5),
                          "lb_zone": [round(rmax, 5), round(b["high"], 5)],
                          "stop_beyond": round(b["high"] + buf, 5),
+                         "bars_ago": k - 1,
                          "note": "recent high swept and price closed back below (bearish reclaim)"}
                 break
             if b["low"] < rmin and b["close"] > rmin:
                 sweep = {"side": "sell_side", "level": round(rmin, 5),
                          "lb_zone": [round(b["low"], 5), round(rmin, 5)],
                          "stop_beyond": round(b["low"] - buf, 5),
+                         "bars_ago": k - 1,
                          "note": "recent low swept and price closed back above (bullish reclaim)"}
                 break
 
