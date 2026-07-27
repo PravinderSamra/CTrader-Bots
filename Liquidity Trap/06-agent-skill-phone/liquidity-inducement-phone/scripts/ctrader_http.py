@@ -152,10 +152,22 @@ def _call_tool(tool: str, arguments: dict) -> Optional[dict]:
 
     content = data["result"].get("content", [])
     if content and content[0].get("type") == "text":
+        text = content[0].get("text", "")
         try:
-            return json.loads(content[0]["text"])
+            return json.loads(text)
         except (json.JSONDecodeError, KeyError):
-            _last_error = f"{tool}: unparseable content"
+            # The server reports upstream failures as a *successful* JSON-RPC
+            # response whose text block is 'HTTP 401: {"error":...}' — not JSON,
+            # so it never hits the status checks above. Surface the text; the
+            # old "unparseable content" threw away the only useful diagnostic.
+            snippet = text.strip()[:200]
+            if "401" in snippet or "auth" in snippet.lower():
+                _last_error = (
+                    f"{tool}: cTrader authentication failed — the bearer slug "
+                    f"(CTRADER_MCP_TOKEN) is expired or invalid. Regenerate it "
+                    f"and update the secret. Server said: {snippet}")
+            else:
+                _last_error = f"{tool}: unparseable content — {snippet}"
             return None
     return data["result"]
 
