@@ -45,7 +45,7 @@ jobs:
           PLANT: ${{ inputs.plant }}
           ENVIRONMENT: ${{ inputs.environment }}
         run: |
-          python3 - <<'PY' >> "$GITHUB_ENV"
+          python3 - <<'PY'
           import base64, json, os
 
           raw = (os.environ.get("RAW_TOKEN") or "").strip()
@@ -67,11 +67,13 @@ jobs:
                   "No credentials: set CTRADER_RAW_TOKEN (the raw cTrader token) "
                   "or VITE_CTRADER_MCP_TOKEN (a full base64url slug).")
 
-          # ::add-mask:: keeps the slug out of the log even though it is derived
-          # from a secret rather than being one itself.
+          # ::add-mask:: is a workflow command and must go to stdout; only the
+          # KEY=VALUE pairs belong in $GITHUB_ENV. Masking first ensures the
+          # derived slug is redacted everywhere it could later appear.
           print(f"::add-mask::{slug}")
-          print(f"CTRADER_MCP_TOKEN={slug}")
-          print(f"SLUG_SOURCE={source}")
+          with open(os.environ["GITHUB_ENV"], "a") as fh:
+              fh.write(f"CTRADER_MCP_TOKEN={slug}\n")
+              fh.write(f"SLUG_SOURCE={source}\n")
           PY
 
       - name: Credential shape check
