@@ -501,8 +501,13 @@ def run_live(instrument, exec_period):
     if not d1:
         return {"error": "data fetch failed", "instrument": instrument,
                 "detail": ct.last_error()}
-    h1 = ct.fetch_ohlcv(instrument, "H_1", hours_back=120)
-    ex = ct.fetch_ohlcv(instrument, exec_period, hours_back=48)
+    # A single request returns only ~100 bars regardless of the window asked
+    # for. At M_5 that is ~8 hours, which silently made session_high/
+    # session_low the extremes of the last 8 hours while they were being used
+    # as the day's — so the day's real high or low could be missing entirely
+    # from the pool map. Page the exec series so it covers the whole session.
+    h1 = ct.fetch_ohlcv_paged(instrument, "H_1", days=6)
+    ex = ct.fetch_ohlcv_paged(instrument, exec_period, days=2)
     live = ct.get_live_price(instrument)
     return analyze(instrument, exec_period, d1=d1, h1=h1, ex=ex, live=live)
 
