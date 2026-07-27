@@ -78,18 +78,40 @@ jobs:
 
       - name: Credential shape check
         run: |
-          # Never prints the value — only whether it looks structurally right.
+          # Prints only non-sensitive structure: plant/environment (not secret)
+          # and a token fingerprint. The fingerprint is a truncated SHA-256, so
+          # the token itself never appears, but a changed secret is visible as a
+          # changed fingerprint — which is how you confirm an update landed.
           echo "Slug source: $SLUG_SOURCE"
-          case "$CTRADER_MCP_TOKEN" in
-            eyJwbGFudCI*)
-              echo "Slug prefix OK (decodes to a {\"plant\",...} object)." ;;
-            *)
-              echo "::error::Bearer does not start with 'eyJwbGFudCI', so it is not a"
-              echo "::error::valid slug — you have most likely stored the RAW cTrader"
-              echo "::error::token in VITE_CTRADER_MCP_TOKEN. Put the raw token in the"
-              echo "::error::CTRADER_RAW_TOKEN secret instead and this job will encode it."
-              exit 1 ;;
-          esac
+          python3 - <<'PY'
+          import base64, hashlib, json, os, sys
+
+          slug = os.environ["CTRADER_MCP_TOKEN"]
+          if not slug.startswith("eyJwbGFudCI"):
+              print("::error::Bearer does not start with 'eyJwbGFudCI', so it is not a")
+              print("::error::valid slug — the RAW cTrader token is most likely stored in")
+              print("::error::VITE_CTRADER_MCP_TOKEN. Put it in CTRADER_RAW_TOKEN instead")
+              print("::error::and this job will encode it for you.")
+              sys.exit(1)
+          try:
+              obj = json.loads(base64.urlsafe_b64decode(slug + "=" * (-len(slug) % 4)))
+          except Exception as exc:
+              print(f"::error::Slug is not decodable base64url JSON: {exc}")
+              sys.exit(1)
+
+          missing = [k for k in ("plant", "environment", "token") if not obj.get(k)]
+          if missing:
+              print(f"::error::Slug JSON is missing/empty key(s): {', '.join(missing)}")
+              sys.exit(1)
+
+          tok = obj["token"]
+          fp = hashlib.sha256(tok.encode()).hexdigest()[:8]
+          print(f"  plant       : {obj['plant']}")
+          print(f"  environment : {obj['environment']}")
+          print(f"  token       : {len(tok)} chars, fingerprint {fp}")
+          print("Slug structure OK. A 401 after this means the token is expired/revoked,")
+          print("or plant/environment do not match the account that issued it.")
+          PY
 
       - name: Run liquidity analyzer
         working-directory: "Liquidity Trap/06-agent-skill-phone/liquidity-inducement-phone/scripts"
