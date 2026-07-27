@@ -50,21 +50,25 @@ def _pivots(bars, k=2):
 
 
 def _cluster(levels, tol):
-    """Cluster nearby price levels into pools. levels: list of floats.
-    Returns list of {price, low, high, touches} sorted by touches desc. A pool
-    is a ZONE (low..high), not a tick — you work an area, not an exact price."""
+    """Cluster nearby price levels into pools. levels: list of (time, price).
+    Returns {price, low, high, touches, last_time} sorted by touches desc. A
+    pool is a ZONE (low..high), not a tick — you work an area, not an exact
+    price. last_time is when the pool was most recently touched, which is what
+    makes it possible to ask whether price has since traded through it."""
     if not levels:
         return []
-    pts = sorted(levels)
+    pts = sorted(levels, key=lambda tp: tp[1])
     clusters = [[pts[0]]]
-    for p in pts[1:]:
-        if abs(p - clusters[-1][-1]) <= tol:
-            clusters[-1].append(p)
+    for tp in pts[1:]:
+        if abs(tp[1] - clusters[-1][-1][1]) <= tol:
+            clusters[-1].append(tp)
         else:
-            clusters.append([p])
-    out = [{"price": round(statistics.mean(c), 5),
-            "low": round(min(c), 5), "high": round(max(c), 5),
-            "touches": len(c)}
+            clusters.append([tp])
+    out = [{"price": round(statistics.mean([p for _, p in c]), 5),
+            "low": round(min(p for _, p in c), 5),
+            "high": round(max(p for _, p in c), 5),
+            "touches": len(c),
+            "last_time": max(t for t, _ in c)}
            for c in clusters]
     out.sort(key=lambda x: (-x["touches"], x["price"]))
     return out
@@ -81,7 +85,12 @@ def _sma(closes, n):
     return sum(closes[-n:]) / n if n else 0.0
 
 
-_DAY_FRAME = {"PDH", "PDL", "PWH", "PWL", "prior_close"}
+# Day-frame reference pools (reference 01 §named_levels). The session extremes
+# belong here: the day's high and low are the most obvious resting liquidity
+# there is — "buy below lows, sell above highs" refers precisely to them — even
+# though each is a single print and so never reaches touches >= 2.
+_DAY_FRAME = {"PDH", "PDL", "PWH", "PWL", "prior_close",
+              "session_high", "session_low"}
 
 
 def _session(now):
@@ -213,14 +222,25 @@ def analyze(instrument, exec_period="M_5",
     h1 = h1 or []
     ex_hi, ex_lo = _pivots(ex, k=2)
     h1_hi, h1_lo = _pivots(h1, k=3)
-    equal_highs = _cluster([p for _, p in ex_hi] + [p for _, p in h1_hi], tol_price)
-    equal_lows = _cluster([p for _, p in ex_lo] + [p for _, p in h1_lo], tol_price)
+    equal_highs = _cluster([(ex[i]["time"], p) for i, p in ex_hi] +
+                           [(h1[i]["time"], p) for i, p in h1_hi], tol_price)
+    equal_lows = _cluster([(ex[i]["time"], p) for i, p in ex_lo] +
+                          [(h1[i]["time"], p) for i, p in h1_lo], tol_price)
 
     # today's developing session hi/lo (from exec bars in the current daily bar)
     day_start = today["time"]
     ex_today = [b for b in ex if b["time"] >= day_start] or ex[-30:] if ex else []
     sess_hi = round(max(b["high"] for b in ex_today), 5) if ex_today else today["high"]
     sess_lo = round(min(b["low"] for b in ex_today), 5) if ex_today else today["low"]
+    sess_hi_t = (max(ex_today, key=lambda b: b["high"])["time"]
+                 if ex_today else day_start)
+    sess_lo_t = (min(ex_today, key=lambda b: b["low"])["time"]
+                 if ex_today else day_start)
+    # When each level was established, so "has price been through it since?"
+    # is answerable. Prior day/week levels predate today entirely.
+    named_time = {"PDH": day_start, "PDL": day_start, "prior_close": day_start,
+                  "PWH": day_start, "PWL": day_start, "day_open": day_start,
+                  "session_high": sess_hi_t, "session_low": sess_lo_t}
 
     named = {
         "PDH": round(prior["high"], 5), "PDL": round(prior["low"], 5),
@@ -251,7 +271,8 @@ def analyze(instrument, exec_period="M_5",
                         "zone": _zone(val, val, tol_price),
                         "dist": round(abs(val - price), 5),
                         "reach": reach(abs(val - price)), "touches": 1,
-                        "kind": "reference"})
+                        "kind": "reference",
+                        "last_time": named_time.get(nm, day_start)})
             seen.append(val)
         for c in clusters:
             val = c["price"]
@@ -270,7 +291,8 @@ def analyze(instrument, exec_period="M_5",
                         "zone": _zone(c["low"], c["high"], tol_price),
                         "dist": round(abs(val - price), 5),
                         "reach": reach(abs(val - price)),
-                        "touches": c["touches"], "kind": "equal_level"})
+                        "touches": c["touches"], "kind": "equal_level",
+                        "last_time": c["last_time"]})
         out.sort(key=lambda x: x["dist"])
         return out
 
@@ -291,14 +313,32 @@ def analyze(instrument, exec_period="M_5",
     # highs/lows need touches >= 2, or it must be a day-frame level. A single
     # touch is one bar's extreme, not liquidity — it was being handed back as
     # the draw and having to be overridden by hand.
-    for p in pools_above + pools_below:
+    def already_swept(pool, side):
+        """Has price traded beyond this pool SINCE it was last touched? A level
+        already taken is a liquidity block (a stop anchor), not a target —
+        reference 01 §Strategy recap rule 1. The stops that rested there are
+        gone, so aiming at it is aiming at spent liquidity. Measured from the
+        pool's last touch, so a level re-formed after the day's extreme still
+        counts as live."""
+        after = [b for b in ex if b["time"] > pool["last_time"]]
+        if not after:
+            return False
+        lo, hi = pool["zone"]
+        if side == "sell":                      # pool sits below price
+            return min(b["low"] for b in after) < lo
+        return max(b["high"] for b in after) > hi
+
+    for p, side in ([(x, "buy") for x in pools_above] +
+                    [(x, "sell") for x in pools_below]):
         p["too_close"] = p["dist"] < min_target_dist
         p["confirmed"] = bool(p["touches"] >= 2 or p["name"] in _DAY_FRAME)
+        p["swept"] = already_swept(p, side)
 
-    # nearest CONFIRMED, meaningful, in-reach pool each side = the draws
+    # nearest CONFIRMED, UNSWEPT, meaningful, in-reach pool each side
     def nearest_reachable(pools):
         in_reach = [p for p in pools if p["reach"] in ("intraday", "unknown")]
-        tradeable = [p for p in in_reach if not p["too_close"]]
+        tradeable = [p for p in in_reach
+                     if not p["too_close"] and not p["swept"]]
         for p in tradeable:
             if p["confirmed"]:
                 return p

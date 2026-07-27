@@ -10,8 +10,11 @@ intraday setup**, trend-first, and present it phone-friendly.
    `draw_down` for shorts), reach `intraday` (reference 03). If it's `swing`,
    apply the draw-beyond-fuel rule. **If it's `too_close: true`, there is no
    target** — the pool is inside the noise. **If it's `confirmed: false`, it is
-   not a pool at all** — a single touch is one bar's extreme. In either case
-   skip to the next pool out that is in reach, not `too_close`, and confirmed;
+   not a pool at all** — a single touch is one bar's extreme. **If it's
+   `swept: true`, the liquidity is already gone** — price has been through it
+   since it formed, so it is a liquidity block now, not a draw. In each case
+   skip to the next pool out that is in reach, not `too_close`, unswept and
+   confirmed;
    if there isn't one, the answer is **no-trade / wait for the range to
    resolve**, not a few-point scalp.
 3. **Trigger = a sweep of the near opposite pool** (for a long: a pool in
