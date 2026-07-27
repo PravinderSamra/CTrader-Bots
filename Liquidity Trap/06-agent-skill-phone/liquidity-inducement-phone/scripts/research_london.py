@@ -101,10 +101,10 @@ def cluster(levels, tol):
              "touches": len(c), "last_i": max(x[0] for x in c)} for c in out]
 
 
-def replay(bars, tol, adr, spread):
+def replay(bars, tol, adr, spread, buf_frac=BUFFER_FRAC):
     """Score sweep+reclaim setups under the live skill's rules."""
     trades = []
-    buf = tol * BUFFER_FRAC
+    buf = tol * buf_frac
     min_dist = adr * MIN_TARGET_FRAC
     i = LOOKBACK
     while i < len(bars) - 2:
@@ -218,6 +218,9 @@ def main():
     ap.add_argument("symbol", nargs="?", default="XAUUSD")
     ap.add_argument("--days", type=int, default=45)
     ap.add_argument("--spread", type=float, default=0.30)
+    ap.add_argument("--sweep-buffer", action="store_true",
+                    help="re-run across stop-buffer multiples to test whether "
+                         "the stop is simply too tight for the instrument")
     args = ap.parse_args()
 
     bars = ct.fetch_ohlcv_paged(args.symbol, "M_5", days=args.days)
@@ -258,6 +261,29 @@ def main():
         ds = {t["time"].date() for t in results[wname]
               if t["outcome"] != "no_fill"}
         print(f"  {wname:16s} {len(ds)}/{len(days)} days")
+
+    if args.sweep_buffer:
+        print("\n" + "=" * 100)
+        print("STOP-BUFFER SENSITIVITY  (buffer = multiple x tol; live skill "
+              f"uses {BUFFER_FRAC})")
+        print("=" * 100)
+        for mult in (0.5, 1.0, 1.5, 2.0, 3.0):
+            row = {w: [] for w in WINDOWS}
+            for d in days:
+                for wname, (tz, start, end) in WINDOWS.items():
+                    seg = [b for b in bars
+                           if b["time"].astimezone(tz).date() == d
+                           and in_window(b, tz, start, end)]
+                    if len(seg) > LOOKBACK + 3:
+                        row[wname] += replay(seg, tol, adr, args.spread, mult)
+            allt = [t for w in WINDOWS for t in row[w]]
+            res = [t for t in allt if t["outcome"] in ("target", "stop")]
+            wins = [t for t in res if t["outcome"] == "target"]
+            tot = sum(t["r"] for t in res)
+            wr = 100 * len(wins) / len(res) if res else 0.0
+            print(f"  buffer={mult:>4}x tol ({mult*tol:5.2f} pts)  "
+                  f"resolved={len(res):<3} win={len(wins):<3} ({wr:4.0f}%)  "
+                  f"totalR={tot:+7.2f}")
 
     print("\nNOTE: entry requires an actual LB retest; sweeps must clear a "
           ">=2-touch pool; targets are confirmed pools past the noise floor; "
