@@ -8,15 +8,19 @@ This asks whether that gate costs a London-based trader real setups, by
 replaying historical M5 bars under the SAME rules the live skill applies.
 
 METHOD
-  For each session window on each day, walk bars forward:
+  Signals may only ORIGINATE in the session window, but a trade found there is
+  managed across the rest of the day rather than being cut off at the window
+  edge. For each window on each day, walk the day's bars forward:
    1. Detect a sweep+reclaim: a bar trades beyond the prior swing extreme and
       CLOSES back through it (same rule as analyze.py).
    2. Require the sweep to have cleared a CONFIRMED pool — a level with >= 2
       touches formed before the sweep. An incidental swing extreme is not a
       trap, and the live skill refuses it.
-   3. Entry is the LB retest, not the next bar: price must trade back into the
-      entry band within RETEST_BARS or the setup expires untaken. This is the
-      rule the live skill actually states.
+   3. Entry is the LB retest AND a rejection: price must trade back into the
+      entry band within RETEST_BARS and CLOSE back on the trade's side of it.
+      A bar that merely overlaps the band is not a retest — accepting those
+      filled shorts on bars driving straight up through the zone.
+      Fill is the rejection bar's close. No rejection -> no_fill.
    4. Stop = beyond the swept extreme + buffer. Target = the nearest opposing
       CONFIRMED, unswept pool at least MIN_TARGET_FRAC of ADR away.
    5. Reject anything below the RR floor before taking it.
@@ -101,7 +105,8 @@ def cluster(levels, tol):
              "touches": len(c), "last_i": max(x[0] for x in c)} for c in out]
 
 
-def replay(bars, tol, adr, spread, buf_frac=BUFFER_FRAC):
+def replay(bars, tol, adr, spread, buf_frac=BUFFER_FRAC,
+           signal_ok=None):
     """Score sweep+reclaim setups under the live skill's rules."""
     trades = []
     buf = tol * buf_frac
@@ -109,6 +114,12 @@ def replay(bars, tol, adr, spread, buf_frac=BUFFER_FRAC):
     i = LOOKBACK
     while i < len(bars) - 2:
         b = bars[i]
+        # Signals may only originate inside the session window; a trade found
+        # there is then managed on the day's bars, not cut off at the window
+        # edge. Truncating at the window was inflating the "open" count.
+        if signal_ok is not None and not signal_ok(b):
+            i += 1
+            continue
         prior = bars[i - LOOKBACK:i]
         rmax = max(p["high"] for p in prior)
         rmin = min(p["low"] for p in prior)
@@ -142,10 +153,20 @@ def replay(bars, tol, adr, spread, buf_frac=BUFFER_FRAC):
             band_lo, band_hi = extreme, extreme + tol
             stop = extreme - buf
 
+        # The retest must REJECT, not merely touch. Accepting any bar whose
+        # range overlapped the band filled shorts on bars that blew straight
+        # up through it — four of seven losers stopped on the next bar having
+        # never gone onside, median MFE 0.06R. Require the bar to trade into
+        # the band AND close back on the trade's side of it.
         entry_i = None
         for j in range(i + 1, min(i + 1 + RETEST_BARS, len(bars))):
             f = bars[j]
-            if f["low"] <= band_hi and f["high"] >= band_lo:
+            touched = f["low"] <= band_hi and f["high"] >= band_lo
+            if not touched:
+                continue
+            rejected = (f["close"] < band_lo if side == "short"
+                        else f["close"] > band_hi)
+            if rejected:
                 entry_i = j
                 break
         if entry_i is None:
@@ -154,7 +175,9 @@ def replay(bars, tol, adr, spread, buf_frac=BUFFER_FRAC):
             i += LOOKBACK // 2
             continue
 
-        entry = band_lo if side == "short" else band_hi
+        # Fill at the rejection bar's close — the first price actually
+        # actionable once the rejection is confirmed.
+        entry = bars[entry_i]["close"]
         entry = entry - spread / 2 if side == "short" else entry + spread / 2
 
         # --- target: nearest opposing confirmed, unswept pool --------------
@@ -254,11 +277,13 @@ def main():
     results = {w: [] for w in WINDOWS}
     for d in days:
         for wname, (tz, start, end) in WINDOWS.items():
-            seg = [b for b in bars
-                   if b["time"].astimezone(tz).date() == d
-                   and in_window(b, tz, start, end)]
-            if len(seg) > LOOKBACK + 3:
-                results[wname] += replay(seg, tol, adr, args.spread)
+            day = [b for b in bars if b["time"].astimezone(tz).date() == d]
+            seg = [b for b in day if in_window(b, tz, start, end)]
+            if len(seg) > LOOKBACK + 3 and len(day) > LOOKBACK + 3:
+                results[wname] += replay(
+                    day, tol, adr, args.spread,
+                    signal_ok=lambda b, tz=tz, s0=start, e0=end:
+                        in_window(b, tz, s0, e0))
 
     print("=" * 100)
     print(f"{'WINDOW':16s} across {len(days)} calendar days "
@@ -304,11 +329,14 @@ def main():
             row = {w: [] for w in WINDOWS}
             for d in days:
                 for wname, (tz, start, end) in WINDOWS.items():
-                    seg = [b for b in bars
-                           if b["time"].astimezone(tz).date() == d
-                           and in_window(b, tz, start, end)]
-                    if len(seg) > LOOKBACK + 3:
-                        row[wname] += replay(seg, tol, adr, args.spread, mult)
+                    day = [b for b in bars
+                           if b["time"].astimezone(tz).date() == d]
+                    seg = [b for b in day if in_window(b, tz, start, end)]
+                    if len(seg) > LOOKBACK + 3 and len(day) > LOOKBACK + 3:
+                        row[wname] += replay(
+                            day, tol, adr, args.spread, mult,
+                            signal_ok=lambda b, tz=tz, s0=start, e0=end:
+                                in_window(b, tz, s0, e0))
             allt = [t for w in WINDOWS for t in row[w]]
             res = [t for t in allt if t["outcome"] in ("target", "stop")]
             wins = [t for t in res if t["outcome"] == "target"]
