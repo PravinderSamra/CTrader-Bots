@@ -177,7 +177,14 @@ def replay(bars, tol, adr, spread, buf_frac=BUFFER_FRAC):
         rr = reward / risk
 
         outcome, r_mult = "open", 0.0
+        mfe, bars_held = 0.0, 0
         for f in bars[entry_i + 1:]:
+            bars_held += 1
+            # Max favourable excursion, in R. This is the diagnostic that
+            # separates "target was too far" (trades run well in favour then
+            # reverse) from "the premise is wrong" (trades never go onside).
+            fav = (f["high"] - entry) if side == "long" else (entry - f["low"])
+            mfe = max(mfe, fav / risk)
             hit_stop = f["low"] <= stop if side == "long" else f["high"] >= stop
             hit_tgt = f["high"] >= target if side == "long" else f["low"] <= target
             if hit_stop:                       # pessimistic if both
@@ -188,7 +195,9 @@ def replay(bars, tol, adr, spread, buf_frac=BUFFER_FRAC):
                 break
 
         trades.append({"time": b["time"], "side": side, "outcome": outcome,
-                       "r": r_mult, "rr_planned": rr,
+                       "r": r_mult, "rr_planned": rr, "mfe_r": round(mfe, 2),
+                       "bars_held": bars_held, "entry": round(entry, 2),
+                       "stop": round(stop, 2), "target": round(target, 2),
                        "pool_touches": max(p["touches"] for p in cleared)})
         i += LOOKBACK // 2
     return trades
@@ -218,6 +227,8 @@ def main():
     ap.add_argument("symbol", nargs="?", default="XAUUSD")
     ap.add_argument("--days", type=int, default=45)
     ap.add_argument("--spread", type=float, default=0.30)
+    ap.add_argument("--verbose", action="store_true",
+                    help="dump every filled trade with MFE, to see WHY it lost")
     ap.add_argument("--sweep-buffer", action="store_true",
                     help="re-run across stop-buffer multiples to test whether "
                          "the stop is simply too tight for the instrument")
@@ -261,6 +272,28 @@ def main():
         ds = {t["time"].date() for t in results[wname]
               if t["outcome"] != "no_fill"}
         print(f"  {wname:16s} {len(ds)}/{len(days)} days")
+
+    if args.verbose:
+        print("\n" + "=" * 100)
+        print("FILLED TRADES  (mfe_r = best unrealised gain, in R, before "
+              "the trade resolved)")
+        print("=" * 100)
+        allt = [t for w in WINDOWS for t in results[w]
+                if t["outcome"] != "no_fill"]
+        allt.sort(key=lambda t: t["time"])
+        for t in allt:
+            print(f"  {t['time']:%m-%d %H:%M} {t['side']:<5} "
+                  f"entry={t['entry']:<9} stop={t['stop']:<9} "
+                  f"tgt={t['target']:<9} plannedRR=1:{t['rr_planned']:.1f} "
+                  f"-> {t['outcome']:<6} mfe={t['mfe_r']:.2f}R "
+                  f"bars={t['bars_held']}")
+        res = [t for t in allt if t["outcome"] in ("target", "stop")]
+        if res:
+            mx = [t["mfe_r"] for t in res]
+            print(f"\n  resolved={len(res)}  median MFE={statistics.median(mx):.2f}R  "
+                  f"max MFE={max(mx):.2f}R  "
+                  f"reached >=1R: {sum(1 for m in mx if m >= 1)}/{len(mx)}  "
+                  f"reached >=2R: {sum(1 for m in mx if m >= 2)}/{len(mx)}")
 
     if args.sweep_buffer:
         print("\n" + "=" * 100)
