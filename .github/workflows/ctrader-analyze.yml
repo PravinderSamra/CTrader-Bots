@@ -1,8 +1,8 @@
 name: cTrader Liquidity Analysis
 
 # On-demand: runs the phone skill's deterministic analyzer inside CI, where the
-# cTrader token is injected from secrets (never printed). The JSON it emits
-# contains only prices/levels — safe to read back from the run logs.
+# cTrader credentials are injected from secrets (never printed). The JSON it
+# emits contains only prices/levels — safe to read back from the run logs.
 
 on:
   workflow_dispatch:
@@ -15,6 +15,14 @@ on:
         description: "Execution timeframe (M_5 or M_15)"
         required: false
         default: "M_5"
+      plant:
+        description: "cTrader plant (broker), e.g. pepperstoneuk"
+        required: false
+        default: "pepperstoneuk"
+      environment:
+        description: "Account environment: demo or live"
+        required: false
+        default: "demo"
 
 jobs:
   analyze:
@@ -24,10 +32,66 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+
+      # The MCP bearer is a *slug*: base64url({"plant","environment","token"}),
+      # not the raw cTrader token. Hand-assembling that is error-prone (and
+      # impossible on a phone), so build it here from CTRADER_RAW_TOKEN.
+      # If only the pre-built slug secret exists, that is used as-is.
+      - name: Build bearer slug
+        id: slug
+        env:
+          RAW_TOKEN: ${{ secrets.CTRADER_RAW_TOKEN }}
+          PREBUILT_SLUG: ${{ secrets.VITE_CTRADER_MCP_TOKEN }}
+          PLANT: ${{ inputs.plant }}
+          ENVIRONMENT: ${{ inputs.environment }}
+        run: |
+          python3 - <<'PY' >> "$GITHUB_ENV"
+          import base64, json, os
+
+          raw = (os.environ.get("RAW_TOKEN") or "").strip()
+          prebuilt = (os.environ.get("PREBUILT_SLUG") or "").strip()
+
+          if raw:
+              slug = base64.urlsafe_b64encode(json.dumps({
+                  "plant": os.environ["PLANT"].strip(),
+                  "environment": os.environ["ENVIRONMENT"].strip(),
+                  "token": raw,
+              }, separators=(",", ":")).encode()).decode().rstrip("=")
+              source = "built from CTRADER_RAW_TOKEN"
+          else:
+              slug = prebuilt
+              source = "pre-built VITE_CTRADER_MCP_TOKEN secret"
+
+          if not slug:
+              raise SystemExit(
+                  "No credentials: set CTRADER_RAW_TOKEN (the raw cTrader token) "
+                  "or VITE_CTRADER_MCP_TOKEN (a full base64url slug).")
+
+          # ::add-mask:: keeps the slug out of the log even though it is derived
+          # from a secret rather than being one itself.
+          print(f"::add-mask::{slug}")
+          print(f"CTRADER_MCP_TOKEN={slug}")
+          print(f"SLUG_SOURCE={source}")
+          PY
+
+      - name: Credential shape check
+        run: |
+          # Never prints the value — only whether it looks structurally right.
+          echo "Slug source: $SLUG_SOURCE"
+          case "$CTRADER_MCP_TOKEN" in
+            eyJwbGFudCI*)
+              echo "Slug prefix OK (decodes to a {\"plant\",...} object)." ;;
+            *)
+              echo "::error::Bearer does not start with 'eyJwbGFudCI', so it is not a"
+              echo "::error::valid slug — you have most likely stored the RAW cTrader"
+              echo "::error::token in VITE_CTRADER_MCP_TOKEN. Put the raw token in the"
+              echo "::error::CTRADER_RAW_TOKEN secret instead and this job will encode it."
+              exit 1 ;;
+          esac
+
       - name: Run liquidity analyzer
         working-directory: "Liquidity Trap/06-agent-skill-phone/liquidity-inducement-phone/scripts"
         env:
-          CTRADER_MCP_TOKEN: ${{ secrets.VITE_CTRADER_MCP_TOKEN }}
           INSTRUMENT: ${{ inputs.instrument }}
           EXECTF: ${{ inputs.exec }}
         run: |
