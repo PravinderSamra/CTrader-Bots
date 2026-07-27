@@ -1,0 +1,79 @@
+name: cTrader Research
+
+# On-demand research runs against historical bars. Separate from the analysis
+# workflow so experimental scripts can never break the live scan path.
+# Emits only aggregate statistics — no credentials, no raw account data.
+
+on:
+  workflow_dispatch:
+    inputs:
+      script:
+        description: "Research script to run (in the skill's scripts/ dir)"
+        required: true
+        default: "research_london.py"
+      symbol:
+        description: "Instrument (e.g. XAUUSD, UK100)"
+        required: false
+        default: "XAUUSD"
+      days:
+        description: "Days of history to replay"
+        required: false
+        default: "14"
+      plant:
+        description: "cTrader plant (broker)"
+        required: false
+        default: "pepperstoneuk"
+      environment:
+        description: "Account environment: demo or live"
+        required: false
+        default: "demo"
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Build bearer slug
+        env:
+          RAW_TOKEN: ${{ secrets.CTRADER_RAW_TOKEN }}
+          PREBUILT_SLUG: ${{ secrets.VITE_CTRADER_MCP_TOKEN }}
+          PLANT: ${{ inputs.plant }}
+          ENVIRONMENT: ${{ inputs.environment }}
+        run: |
+          python3 - <<'PY'
+          import base64, json, os
+          raw = (os.environ.get("RAW_TOKEN") or "").strip()
+          prebuilt = (os.environ.get("PREBUILT_SLUG") or "").strip()
+          if raw:
+              slug = base64.urlsafe_b64encode(json.dumps({
+                  "plant": os.environ["PLANT"].strip(),
+                  "environment": os.environ["ENVIRONMENT"].strip(),
+                  "token": raw,
+              }, separators=(",", ":")).encode()).decode().rstrip("=")
+          else:
+              slug = prebuilt
+          if not slug:
+              raise SystemExit("No credentials: set CTRADER_RAW_TOKEN or "
+                               "VITE_CTRADER_MCP_TOKEN.")
+          print(f"::add-mask::{slug}")
+          with open(os.environ["GITHUB_ENV"], "a") as fh:
+              fh.write(f"CTRADER_MCP_TOKEN={slug}\n")
+          PY
+
+      - name: Run research script
+        working-directory: "Liquidity Trap/06-agent-skill-phone/liquidity-inducement-phone/scripts"
+        env:
+          SCRIPT: ${{ inputs.script }}
+          SYMBOL: ${{ inputs.symbol }}
+          DAYS: ${{ inputs.days }}
+        run: |
+          case "$SCRIPT" in
+            *..*|/*) echo "::error::script must be a bare filename"; exit 1 ;;
+          esac
+          echo "===RESEARCH_START==="
+          python3 "$SCRIPT" "$SYMBOL" --days "$DAYS"
+          echo "===RESEARCH_END==="

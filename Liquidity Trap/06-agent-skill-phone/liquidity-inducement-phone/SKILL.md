@@ -130,8 +130,18 @@ reason.** A disciplined "no trade" is a correct answer.
 
 - Produce the format in `references/04` §Output: **bias line → fuel line →
   primary trade idea → (optional) secondary → what you're waiting for.**
+- **Quote every area as a band, `low`–`high`** — pools, liquidity blocks, entry
+  zones, sweep triggers, targets. Use the `zone` / `lb_zone` / `entry_zone`
+  arrays, never the midpoint. These get marked on a chart; a single number is
+  not actionable. The **stop is the only bare number**.
+- **Always give the fuel line with real numbers**: `adr_used_pct`,
+  `today_range` vs `adr14`, `remaining_budget`, `volume.state` +
+  `exec_relative`, `expansion_state` — then say what fraction of the remaining
+  budget the target consumes. Include this on no-trade outputs too; the fuel
+  state is often the reason there is no trade.
 - Targets must be **in today's reach** (reference 03). Never dangle a target
-  price won't hit this session.
+  price won't hit this session, and flag any target that would consume most of
+  the remaining budget as a stretch rather than quoting it flat.
 - Always end: *nothing is 100%; this is analysis, not financial advice; no
   orders are placed by this skill.*
 - If data is missing/auth fails, say so plainly and stop. Don't invent levels.

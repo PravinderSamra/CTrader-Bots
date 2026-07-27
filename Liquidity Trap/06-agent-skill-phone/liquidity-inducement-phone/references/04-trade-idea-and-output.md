@@ -61,16 +61,20 @@ Keep it tight and skimmable — this is a phone:
 
 ```
 <INSTRUMENT> — <bias label> day (score <n>)
-Time: <session.label>, <session.ny_local> NY (<minutes_from_ny_open> min from open)
+Time: <session.label>, <ny_local> NY (<minutes_from_ny_open> min from open)
 Bias: <one line: direction + why, from reasons + two-lines logic>
-Fuel: <adr_used%, expansion_state, volume state; is the draw in reach>
+Fuel: <adr_used_pct>% of ADR used (<today_range> of <adr14>) · <remaining_budget> pts left
+      volume <state> (<exec_relative>x) · <expansion_state>
+      Reach today: <what that budget realistically permits — name the pools it
+      does and does not cover>
 
 PRIMARY (<with-trend>):  <LONG/SHORT>
-  Trigger : <the sweep ZONE you need / that just happened>
-  Entry   : <entry_zone low–high, on the retest/rejection>
-  Stop    : <stop_beyond price> (just past the LB)
-  Target  : <target pool ZONE low–high> (RR ~1:<x>)  [+ partial at <internal> if ≈1:5]
-  Bigger draw (context, not today): <swing pool or "none">
+  Trigger : sweep of <low>–<high>  (pool: <name>, <touches> touches)
+  Entry   : <entry_zone low>–<high>  (retest/rejection)
+  Stop    : <stop_beyond>  — beyond the LB <lb_zone low>–<high>
+  Target  : <target zone low>–<high>  (<dist> pts = <n>% of remaining budget)
+  RR      : ~1:<x>   [+ partial at <internal zone low>–<high> if ~1:5]
+  Bigger draw (context, not today): <swing pool zone or "none">
   Invalidation: <price/condition>
   State   : ARMED / WATCHING / NO-TRADE — <reason if not armed>
 
@@ -78,6 +82,24 @@ SECONDARY (counter-trend, optional): <one line or "none today">
 
 Waiting for: <the single event that arms/kills this>
 ```
+
+### Two rules that are not optional
+
+**1. Every area is quoted as a band, `low`–`high`.** Pools, liquidity blocks,
+entry zones, sweep triggers and targets are all areas — quote the `zone` /
+`lb_zone` / `entry_zone` arrays, never the midpoint `price`. The user marks
+these on a chart, so a single number is not actionable. **The only bare number
+is the stop** (`stop_beyond`), because a stop genuinely is one line. If you
+catch yourself writing "target 4071.66", replace it with "4070.25–4072.82".
+
+**2. Every output carries the fuel line, with numbers.** State
+`adr_used_pct`, `today_range` vs `adr14`, `remaining_budget`, `volume.state`
+with `exec_relative`, and `expansion_state` — then **scope the target against
+that budget explicitly**: say what fraction of the remaining range the target
+consumes, and name any pool that is technically `intraday` but would eat most
+or all of it. A target at 100% of remaining budget is a stretch, not a plan;
+say so rather than quoting it flat. This applies to no-trade outputs too — the
+fuel state is often *why* there is no trade.
 
 Then one plain-English sentence of desk read, and the standard footer:
 *Nothing is 100%; analysis, not financial advice; no orders are placed.*
