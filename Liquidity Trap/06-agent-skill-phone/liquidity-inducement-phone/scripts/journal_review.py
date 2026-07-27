@@ -138,11 +138,38 @@ def score(entry, bars):
         out["r"] = round(pnl / risk, 2)
         out["bars_to_outcome"] = len(rest) - fill_i
     out["mfe_r"] = round(mfe, 2)
+    out["max_rr_reached"] = out["mfe_r"]
+    out["verdict"] = verdict_for(out)
     return out
+
+
+# How far in favour a trade must run before the direction is credited. A trade
+# that never clears 0.3R never worked; one that clears 1R was right and was
+# then given back. The gap between those two numbers is the whole argument for
+# managing rather than letting it run.
+DIRECTION_RIGHT = 1.0
+DIRECTION_MARGINAL = 0.3
+
+
+def verdict_for(r):
+    """Was the IDEA right, separately from whether the destination was hit?"""
+    if r["outcome"] == "target":
+        return "target_hit"
+    if not r.get("filled"):
+        return "not_taken"
+    mfe = r.get("mfe_r", 0.0)
+    if mfe >= DIRECTION_RIGHT:
+        # Direction and entry were right; only the exit failed.
+        return "direction_right_destination_missed"
+    if mfe >= DIRECTION_MARGINAL:
+        return "direction_marginal"
+    return "direction_wrong"
 
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("instrument", nargs="?",
+                    help="only review entries for this instrument")
     ap.add_argument("--journal", default=DEFAULT_JOURNAL)
     ap.add_argument("--month", help="YYYY-MM (default: all)")
     ap.add_argument("--write", action="store_true",
@@ -164,6 +191,8 @@ def main():
         changed = False
         for e in entries:
             if e.get("review"):
+                continue
+            if args.instrument and e["instrument"] != args.instrument:
                 continue
             bars = bars_for(e["instrument"], args.days)
             if not bars:
@@ -189,9 +218,11 @@ def main():
     print(f"\nreviewed {reviewed} entries")
     print("=" * 92)
     for e, r in scored:
-        print(f"  {e['as_of'][:16]} {e['instrument']:<7} {e['kind']:<10} "
+        print(f"  {e['as_of'][:16]} {e['instrument']:<7} {e['kind']:<11} "
               f"{str(e.get('direction')):<5} {e['state']:<8} -> "
-              f"{r['outcome']:<15} r={r['r']:+5.2f} mfe={r['mfe_r']:.2f}R")
+              f"{r['outcome']:<15} r={r['r']:+5.2f} "
+              f"maxRR={r.get('max_rr_reached', 0):.2f}R  "
+              f"{r.get('verdict', '-')}")
 
     filled = [r for _, r in scored if r["filled"]]
     if filled:
@@ -202,11 +233,28 @@ def main():
         print(f"filled={len(filled)}  win={len(wins)}  totalR={tot:+.2f}  "
               f"median MFE={statistics.median(mfes):.2f}R")
         # The management question: losers that were well onside first.
-        squandered = [r for r in filled
-                      if r["outcome"] == "stop" and r["mfe_r"] >= 1.5]
-        if squandered:
-            print(f"  {len(squandered)} stopped trades reached >=1.5R first — "
-                  f"that is management, not selection (reference 05)")
+        # The question this journal exists to answer: when a trade lost, was
+        # the IDEA wrong, or only the exit?
+        losers = [r for r in filled if r["outcome"] != "target"]
+        if losers:
+            right = [r for r in losers
+                     if r["verdict"] == "direction_right_destination_missed"]
+            marg = [r for r in losers if r["verdict"] == "direction_marginal"]
+            wrong = [r for r in losers if r["verdict"] == "direction_wrong"]
+            print("\nWHY THE LOSERS LOST")
+            rr_list = ", ".join(f"{r['mfe_r']:.1f}R" for r in right) or "-"
+            print(f"  direction right, destination missed : {len(right):<3}"
+                  f"  (max RR reached: {rr_list})")
+            print(f"  direction marginal (0.3-1.0R)       : {len(marg)}")
+            print(f"  direction wrong (<0.3R)             : {len(wrong)}")
+            if right:
+                give_back = sum(r["mfe_r"] for r in right)
+                print(f"\n  {len(right)}/{len(losers)} losses were correct calls that were "
+                      f"given back.")
+                print(f"  Those trades showed {give_back:.1f}R of unrealised profit in "
+                      f"total before stopping for {len(right)}R of loss.")
+                print("  That is an exit problem, not a selection problem "
+                      "(reference 05).")
     by_kind = {}
     for e, r in scored:
         by_kind.setdefault(e["kind"], []).append(r)
