@@ -104,6 +104,28 @@ check("LB: entry_zone is widened past the raw block",
       (_sw["entry_zone"][1] - _sw["entry_zone"][0]) > _sw["lb_width"])
 check("LB: stop stays behind the true extreme, not the widened zone",
       _sw["stop_beyond"] < _sw["lb_zone"][0])
+# A sell-side sweep is a LONG: the extreme is the low, so the entry band must
+# widen upward and never dip below the extreme (which is where the stop lives).
+check("LB: long entry_zone never crosses below the swept extreme",
+      _sw["entry_zone"][0] >= _sw["lb_zone"][0])
+check("LB: long entry_zone sits entirely above the stop",
+      _sw["entry_zone"][0] > _sw["stop_beyond"])
+
+# Mirror case: a buy-side sweep is a SHORT — the extreme is the high, so the
+# band must widen downward and stay under the stop.
+_exu = ([bar(i, 4086, 4088.05, 4084, 4086) for i in range(30)]
+        + [bar(30, 4087, 4093.93, 4086, 4087.5),   # stabs high, CLOSES back below
+           bar(31, 4087, 4088, 4085, 4086),
+           bar(32, 4086, 4087, 4085, 4086)])
+_d7 = daily(4065.33, 4086)
+_o7 = A.analyze("X", "M_5", d1=_d7, h1=_d7, ex=_exu, live=(4086, 4086.1))
+_sw7 = _o7["recent_sweep"]
+check("LB: buy-side sweep detected", _sw7 is not None and _sw7["side"] == "buy_side")
+if _sw7:
+    check("LB: short entry_zone never crosses above the swept extreme",
+          _sw7["entry_zone"][1] <= _sw7["lb_zone"][1])
+    check("LB: short entry_zone sits entirely below the stop",
+          _sw7["entry_zone"][1] < _sw7["stop_beyond"])
 
 # ── targets: spent liquidity must not be offered as a draw ─────────────────
 # Two pools, deliberately on opposite sides of the day's extreme:

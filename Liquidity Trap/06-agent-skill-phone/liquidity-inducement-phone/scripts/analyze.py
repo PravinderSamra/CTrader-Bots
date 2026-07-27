@@ -396,7 +396,16 @@ def analyze(instrument, exec_period="M_5",
         lo, hi = sweep["lb_zone"]
         sweep["lb_width"] = round(hi - lo, 5)
         sweep["thin_lb"] = bool(sweep["lb_width"] < tol_price)
-        sweep["entry_zone"] = _zone(lo, hi, tol_price)
+        # Widen a thin block into a workable entry band, but ONLY away from the
+        # swept extreme. Widening symmetrically pushed the band past the
+        # extreme to within a fraction of the stop, so the quoted "entry" could
+        # sit where the setup is already failing. The extreme stays the edge.
+        if sweep["side"] == "buy_side":        # short: the extreme is the high
+            sweep["entry_zone"] = [round(min(lo, hi - tol_price), 5),
+                                   round(hi, 5)]
+        else:                                  # long: the extreme is the low
+            sweep["entry_zone"] = [round(lo, 5),
+                                   round(max(hi, lo + tol_price), 5)]
         # WHICH pool did this sweep take? The detector fires on a poke beyond
         # the recent swing extreme, which is not necessarily a pool at all.
         # Naming it separates "a real pool of stops was taken" from "an
