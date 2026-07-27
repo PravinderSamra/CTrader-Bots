@@ -19,6 +19,10 @@ on:
         description: "Days of history to replay"
         required: false
         default: "14"
+      extra_args:
+        description: "Extra flags for the script (e.g. --sweep-buffer)"
+        required: false
+        default: ""
       plant:
         description: "cTrader plant (broker)"
         required: false
@@ -70,10 +74,18 @@ jobs:
           SCRIPT: ${{ inputs.script }}
           SYMBOL: ${{ inputs.symbol }}
           DAYS: ${{ inputs.days }}
+          EXTRA: ${{ inputs.extra_args }}
         run: |
           case "$SCRIPT" in
             *..*|/*) echo "::error::script must be a bare filename"; exit 1 ;;
           esac
+          # Only long flags are accepted, so the input cannot smuggle in shell.
+          for a in $EXTRA; do
+            case "$a" in
+              --*) ;;
+              *) echo "::error::extra_args accepts --flags only"; exit 1 ;;
+            esac
+          done
           echo "===RESEARCH_START==="
-          python3 "$SCRIPT" "$SYMBOL" --days "$DAYS"
+          python3 "$SCRIPT" "$SYMBOL" --days "$DAYS" $EXTRA
           echo "===RESEARCH_END==="
