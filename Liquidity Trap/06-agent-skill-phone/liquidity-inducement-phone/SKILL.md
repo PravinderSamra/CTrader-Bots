@@ -90,12 +90,18 @@ away." (Official playbook + research files 01/03/09.)
 
 ## Non-negotiable gates (all must pass before you call a trade "armed")
 
-1. **Confirmed pool in your target direction** — respected + moved away, or equal
-   highs/lows. Not every high/low has liquidity.
+1. **Confirmed, unswept pool in your target direction** — the analyzer decides
+   this for you: the pool must be **`confirmed: true`** (equal highs/lows with
+   `touches ≥ 2`, or a day-frame level incl. session high/low) and
+   **`swept: false`** (price has not traded through it since it formed). Not
+   every high/low has liquidity, and one already taken has none left.
 2. **The trap has happened AND still holds** — the near pool was actually swept
    (`recent_sweep`) **and `still_valid: true`**. Execute *after* liquidity is
    taken, never before. `still_valid: false` means price traded back through
    the swept level: the trap failed, the signal is dead, no trade.
+   Check **`pool_taken`**: if it is `null`, the sweep only poked an incidental
+   swing extreme, not a pool of stops — that is not the trap. Prefer
+   `pool_taken.confirmed: true`.
 3. **A liquidity block sits behind the entry** — the swept no-liquidity extreme
    your stop hides behind. No LB → no trade.
 4. **Bias lockout** — after a high is taken, don't buy until the paired low is

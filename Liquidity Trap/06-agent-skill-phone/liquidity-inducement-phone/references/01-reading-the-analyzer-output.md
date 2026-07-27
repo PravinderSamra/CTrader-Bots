@@ -42,6 +42,11 @@ band; use it:
 - `recent_sweep.stop_beyond` is the stop level (true extreme + buffer) — one
   price, because a stop *is* a single line. It is anchored to the **real**
   extreme, so a widened `entry_zone` never loosens your risk.
+- **`recent_sweep.pool_taken`** names the pool the sweep actually consumed, or
+  `null`. The detector fires on a poke beyond the recent swing extreme, which
+  is not necessarily a pool — `null` means an incidental high/low was poked and
+  **no real liquidity was taken**, so it is not the trap. A `pool_taken` with
+  `confirmed: true` and high `touches` is the strong version.
 - Targets are quoted as the far edge of the pool zone you're aiming into (exit
   as it's being taken, not after).
 
@@ -53,6 +58,31 @@ bias direction is `too_close`, or the two draws are barely apart, the honest
 answer is **no tradeable structure yet**: name the further pool that *would* pay
 and wait for price to leave the compression. Never present two levels a few
 points apart as a trigger and a target — that is a round-trip in the noise.
+
+## The cycle: one side gets taken, it becomes the block, you target the other
+
+The two draws are not two trade ideas — they are the two ends of one machine:
+
+1. **Both draws are live targets** while unswept. Price is between them.
+2. **One side gets swept.** Price takes that pool's stops and closes back
+   through it (`recent_sweep`, `still_valid: true`, ideally with a named
+   `pool_taken`).
+3. **That pool is now the liquidity block, not a target.** Its liquidity is
+   spent; `swept` flips to true and it drops out of draw selection on the next
+   run. Your stop hides behind it (`stop_beyond`), your entry is the retest of
+   `entry_zone`.
+4. **The opposing draw becomes the target.** You trade *away* from the swept
+   side, toward the pool that is still intact.
+
+So: sweep low → long toward the upper draw; sweep high → short toward the
+lower draw. Gate 4 (bias lockout) is the same rule stated defensively — after
+a high is taken you do not buy until the paired low is taken.
+
+Two things this does **not** mean:
+- A *break* is not a sweep. Price must close back through the level. A break
+  that holds is a breakout/breakdown — no trap, no LB, no trade.
+- The swept pool is not always a draw. `recent_sweep` fires on the recent swing
+  extreme; check `pool_taken` to see whether real liquidity was consumed.
 
 ## How the pieces map to a trade
 

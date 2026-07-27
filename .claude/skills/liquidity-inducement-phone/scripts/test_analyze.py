@@ -1,0 +1,153 @@
+#!/usr/bin/env python3
+"""
+test_analyze.py — regression suite for the liquidity analyzer.
+
+Every check here corresponds to a defect found during live use, where the
+analyzer returned a read that was wrong or unusable. They exist so those
+defects cannot come back silently in a later session.
+
+Run:  python3 test_analyze.py        (no token, no network — synthetic bars)
+"""
+
+import sys
+from datetime import datetime, timezone, timedelta
+
+import analyze as A
+
+BASE = datetime(2026, 7, 27, tzinfo=timezone.utc)
+_passed = 0
+_failed = []
+
+
+def bar(i, o, h, l, c, v=100):
+    return {"time": BASE + timedelta(minutes=5 * i), "open": o, "high": h,
+            "low": l, "close": c, "volume": v}
+
+
+def daily(low, close):
+    """20 closed daily bars + today's forming bar."""
+    out = [{"time": BASE - timedelta(days=n), "open": 4050, "high": 4100,
+            "low": 4020, "close": 4060, "volume": 1000}
+           for n in range(20, 0, -1)]
+    out.append({"time": BASE, "open": 4089, "high": 4106, "low": low,
+                "close": close, "volume": 900})
+    return out
+
+
+def check(name, cond):
+    global _passed
+    if cond:
+        _passed += 1
+        print(f"PASS  {name}")
+    else:
+        _failed.append(name)
+        print(f"FAIL  {name}")
+
+
+# ── session context: NY open moves with DST ─────────────────────────────────
+# Was computed by hand with the winter offset, so a move after the NY open was
+# reported as pre-open drift.
+check("session: summer NY open is 13:30 UTC",
+      A._session(datetime(2026, 7, 27, 13, 57, tzinfo=timezone.utc))
+      ["ny_open_utc"] == "13:30")
+check("session: winter NY open is 14:30 UTC",
+      A._session(datetime(2026, 1, 27, 13, 57, tzinfo=timezone.utc))
+      ["ny_open_utc"] == "14:30")
+check("session: NY lunch closes the trade window",
+      A._session(datetime(2026, 7, 27, 16, 22, tzinfo=timezone.utc))
+      ["in_trade_window"] is False)
+
+# ── sweep detection: must see a sweep older than the current bar ────────────
+# The reference extreme used to include the candidate bars, so only a sweep on
+# the newest bar could ever fire.
+_ex = ([bar(i, 4090, 4092, 4088, 4090) for i in range(30)]
+       + [bar(30, 4089, 4090, 4075.47, 4089),
+          bar(31, 4089, 4091, 4088.5, 4090),
+          bar(32, 4090, 4092, 4089, 4091),
+          bar(33, 4091, 4093, 4090, 4092)])
+_d = daily(4075.47, 4092)
+_o = A.analyze("X", "M_5", d1=_d, h1=_d, ex=_ex, live=(4092, 4093))
+check("sweep: a 3-bar-old sweep is detected",
+      _o["recent_sweep"] and _o["recent_sweep"]["bars_ago"] == 3)
+check("sweep: live reclaim keeps still_valid true",
+      _o["recent_sweep"]["still_valid"] is True)
+check("sweep: names the pool it consumed",
+      _o["recent_sweep"]["pool_taken"] is not None)
+
+# ── sweep invalidation: a dead trap must not read like a live one ───────────
+_ex2 = _ex[:31] + [bar(31, 4089, 4090, 4086, 4087),
+                   bar(32, 4087, 4088, 4080, 4081),
+                   bar(33, 4081, 4082, 4074.5, 4074.8)]
+_d2 = daily(4074.5, 4074.8)
+_o2 = A.analyze("X", "M_5", d1=_d2, h1=_d2, ex=_ex2, live=(4074.7, 4074.9))
+check("sweep: price back through the level -> still_valid false",
+      _o2["recent_sweep"]["still_valid"] is False)
+check("sweep: invalidated trap is labelled in the note",
+      "INVALIDATED" in _o2["recent_sweep"]["note"])
+
+_d3 = daily(4088, 4090)
+check("sweep: flat data produces no false positive",
+      A.analyze("X", "M_5", d1=_d3, h1=_d3,
+                ex=[bar(i, 4090, 4092, 4088, 4090) for i in range(34)],
+                live=(4090, 4091))["recent_sweep"] is None)
+
+# ── liquidity block: a shallow stab must stay workable ─────────────────────
+_exd = ([bar(i, 4078, 4080, 4075.92, 4078) for i in range(30)]
+        + [bar(30, 4077, 4078, 4075.47, 4078),
+           bar(31, 4078, 4082, 4077, 4081),
+           bar(32, 4081, 4086, 4080, 4085)])
+_d4 = daily(4075.47, 4083)
+_o4 = A.analyze("X", "M_5", d1=_d4, h1=_d4, ex=_exd, live=(4085, 4086))
+_sw = _o4["recent_sweep"]
+check("LB: a sub-noise-width block is flagged thin", _sw["thin_lb"] is True)
+check("LB: entry_zone is widened past the raw block",
+      (_sw["entry_zone"][1] - _sw["entry_zone"][0]) > _sw["lb_width"])
+check("LB: stop stays behind the true extreme, not the widened zone",
+      _sw["stop_beyond"] < _sw["lb_zone"][0])
+
+# ── targets: spent liquidity must not be offered as a draw ─────────────────
+# Two pools, deliberately on opposite sides of the day's extreme:
+#   ~4069  formed EARLY (bars 3 and 8), then taken out by the 4065.33 spike
+#   ~4076  formed LATE  (bar 16), after the spike, and never traded through
+# The early one must read swept, the late one must not — which is the whole
+# reason "swept" is measured from each pool's last touch rather than naively
+# against the session low.
+_LOWS = [4072, 4071, 4070, 4069, 4070, 4072, 4073, 4070, 4069, 4070,
+         4072, 4074, 4065.33, 4074, 4078, 4077, 4076, 4077, 4079, 4080,
+         4081, 4080]
+_exs = [bar(i, l + 2, l + 4, l, l + 3) for i, l in enumerate(_LOWS)]
+_d5 = daily(4065.33, 4082.48)
+_o5 = A.analyze("X", "M_5", d1=_d5, h1=_d5, ex=_exs, live=(4082.4, 4082.6))
+check("targets: a pool price traded through is marked swept",
+      any(p["swept"] for p in _o5["pools_below"]))
+check("targets: the draw is never a swept pool",
+      _o5["draw_down"]["swept"] is False)
+check("targets: session_low counts as a confirmed day-frame pool",
+      all(p["confirmed"] for p in _o5["pools_below"]
+          if p["name"] == "session_low"))
+check("targets: a single-touch swing level is not confirmed",
+      all(not p["confirmed"] for p in _o5["pools_below"]
+          if p["kind"] == "equal_level" and p["touches"] < 2))
+
+# The discriminating case: the SAME run must mark the pre-extreme pool swept
+# and the post-extreme pool live. A naive check against the session low would
+# wrongly condemn both.
+_eq = [p for p in _o5["pools_below"] if p["kind"] == "equal_level"]
+check("targets: pre-extreme pool is swept",
+      any(p["swept"] for p in _eq))
+check("targets: pool re-formed after the extreme stays unswept",
+      any(not p["swept"] for p in _eq))
+
+# ── end-to-end ─────────────────────────────────────────────────────────────
+_d6, _h6, _ex6, _live = A._synthetic()
+_o6 = A.analyze("XAUUSD", "M_5", d1=_d6, h1=_h6, ex=_ex6, live=_live)
+check("end-to-end: dry-run analysis returns no error", "error" not in _o6)
+for _f in ("session", "daily_bias", "range", "volume", "pools_above",
+           "pools_below", "draw_up", "draw_down", "no_mans_land"):
+    check(f"end-to-end: output contains '{_f}'", _f in _o6)
+
+print(f"\n{_passed} passed, {len(_failed)} failed")
+if _failed:
+    for _n in _failed:
+        print("  failed:", _n)
+    sys.exit(1)

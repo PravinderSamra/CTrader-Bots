@@ -113,6 +113,13 @@ jobs:
           print("or plant/environment do not match the account that issued it.")
           PY
 
+      # Guards the read itself: if the analyzer's logic has regressed, a wrong
+      # read is worse than no read, so this fails the job before any market
+      # data is fetched. Synthetic bars only — no token, no network.
+      - name: Analyzer regression tests
+        working-directory: "Liquidity Trap/06-agent-skill-phone/liquidity-inducement-phone/scripts"
+        run: python3 test_analyze.py
+
       - name: Run liquidity analyzer
         working-directory: "Liquidity Trap/06-agent-skill-phone/liquidity-inducement-phone/scripts"
         env:

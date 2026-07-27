@@ -38,8 +38,11 @@ For every candidate target, the analyzer already tags `reach`:
 - **`swing`** — beyond today's budget → **context only, never today's target.**
 
 Rules:
-1. The trade's target = the **nearest `intraday` pool** in the bias direction
-   (`draw_up`/`draw_down` are pre-selected as the nearest in-reach pool).
+1. The trade's target = the **nearest `intraday` pool** in the bias direction.
+   `draw_up`/`draw_down` are pre-selected as the nearest pool that is in reach
+   **and** `confirmed` **and** not `swept` **and** not `too_close` — so a
+   1-touch swing level, a level price has already traded through, or one
+   sitting inside the noise band is skipped for you (reference 01).
 2. A `swing` draw is mentioned as the bigger-picture magnet but is **not** the
    target — say "the bigger draw is X but it's beyond today's range."
 3. **Draw-beyond-fuel** (ORB R7): if the only pool in the bias direction is

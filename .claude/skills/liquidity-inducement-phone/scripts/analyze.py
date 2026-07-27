@@ -397,6 +397,18 @@ def analyze(instrument, exec_period="M_5",
         sweep["lb_width"] = round(hi - lo, 5)
         sweep["thin_lb"] = bool(sweep["lb_width"] < tol_price)
         sweep["entry_zone"] = _zone(lo, hi, tol_price)
+        # WHICH pool did this sweep take? The detector fires on a poke beyond
+        # the recent swing extreme, which is not necessarily a pool at all.
+        # Naming it separates "a real pool of stops was taken" from "an
+        # incidental high/low was poked" — only the former is the trap.
+        side_pools = (pools_below if sweep["side"] == "sell_side"
+                      else pools_above)
+        taken = next((p for p in side_pools
+                      if p["zone"][0] <= sweep["level"] <= p["zone"][1]), None)
+        sweep["pool_taken"] = ({"name": taken["name"], "zone": taken["zone"],
+                                "touches": taken["touches"],
+                                "confirmed": taken["confirmed"]}
+                               if taken else None)
         if sweep["side"] == "sell_side":
             sweep["still_valid"] = bool(price > sweep["level"])
         else:
