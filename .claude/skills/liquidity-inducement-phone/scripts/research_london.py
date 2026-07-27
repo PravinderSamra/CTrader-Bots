@@ -144,8 +144,9 @@ def main():
     ap.add_argument("--days", type=int, default=14)
     args = ap.parse_args()
 
-    hours = min(args.days * 24, 720)
-    bars = ct.fetch_ohlcv(args.symbol, "M_5", hours_back=hours)
+    # Must page: a single request returns only the most recent ~100 bars
+    # regardless of the window asked for.
+    bars = ct.fetch_ohlcv_paged(args.symbol, "M_5", days=args.days)
     if not bars:
         print({"error": "data fetch failed", "detail": ct.last_error()})
         sys.exit(2)

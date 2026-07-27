@@ -245,15 +245,23 @@ def detect_pip_digits(symbol_base: str, raw_price: float) -> int:
 
 
 # ── public read-only fetchers ────────────────────────────────────────────────
-def fetch_ohlcv(instrument: str, period: str = "H_1", hours_back: int = 100) -> list:
+def fetch_ohlcv(instrument: str, period: str = "H_1", hours_back: int = 100,
+                from_dt=None, to_dt=None) -> list:
     """OHLCV candles (oldest→newest). period in
     M_1 M_5 M_15 M_30 H_1 H_4 D_1 W_1. Each dict: time, open, high, low,
-    close, volume. Returns [] on failure (see last_error())."""
+    close, volume. Returns [] on failure (see last_error()).
+
+    NOTE: the server caps a single response at roughly 100 bars and returns
+    only the most recent slice — asking for a wider window does NOT get you
+    more history, it silently truncates. Use fetch_ohlcv_paged() when you need
+    a range that exceeds that cap.
+
+    from_dt/to_dt override hours_back when given."""
     sym_id = get_symbol_id(instrument)
     if sym_id is None:
         return []
-    to_dt = datetime.now(tz=timezone.utc)
-    from_dt = to_dt - timedelta(hours=min(hours_back, 720))
+    to_dt = to_dt or datetime.now(tz=timezone.utc)
+    from_dt = from_dt or (to_dt - timedelta(hours=min(hours_back, 720)))
     result = _call_tool("get_trendbars", {
         "symbolId": sym_id, "period": period,
         "fromTimestamp": from_dt.strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -310,3 +318,50 @@ def get_open_positions(instrument: Optional[str] = None) -> list:
         sid = get_symbol_id(instrument)
         positions = [p for p in positions if p.get("symbolId") == sid]
     return positions
+
+
+# Approximate minutes per bar, used to size paging chunks so each request
+# stays under the server's ~100-bar response cap.
+_PERIOD_MINUTES = {"M_1": 1, "M_5": 5, "M_15": 15, "M_30": 30,
+                   "H_1": 60, "H_4": 240, "D_1": 1440, "W_1": 10080}
+_MAX_BARS_PER_CALL = 90          # under the observed ~100 cap, with headroom
+
+
+def fetch_ohlcv_paged(instrument: str, period: str = "M_5", days: int = 14,
+                      max_calls: int = 80) -> list:
+    """Stitch a long history together despite the per-response bar cap.
+
+    A single get_trendbars returns only the most recent ~100 bars no matter how
+    wide a window you ask for, so anything needing real history has to walk
+    backwards in chunks. Gaps (weekends, holidays) return nothing; those are
+    stepped over rather than treated as the end of the data.
+
+    Returns candles oldest→newest, de-duplicated by timestamp.
+    """
+    step_min = _PERIOD_MINUTES.get(period, 5) * _MAX_BARS_PER_CALL
+    end = datetime.now(tz=timezone.utc)
+    floor = end - timedelta(days=days)
+    seen: dict = {}
+    cur_end, empties, calls = end, 0, 0
+
+    while cur_end > floor and calls < max_calls:
+        cur_start = max(floor, cur_end - timedelta(minutes=step_min))
+        chunk = fetch_ohlcv(instrument, period,
+                            from_dt=cur_start, to_dt=cur_end)
+        calls += 1
+        if chunk:
+            empties = 0
+            for b in chunk:
+                seen[b["time"]] = b
+            oldest = min(b["time"] for b in chunk)
+            # Step strictly past the oldest bar we got, else we loop forever
+            # on a chunk the server keeps clamping to the same slice.
+            cur_end = min(oldest, cur_end - timedelta(minutes=step_min))
+        else:
+            # Weekend/holiday, or a window with no data: keep walking back.
+            empties += 1
+            if empties >= 4:
+                break
+            cur_end = cur_start
+
+    return sorted(seen.values(), key=lambda c: c["time"])
