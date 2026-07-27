@@ -38,9 +38,26 @@ except Exception:
     sys.path.insert(0, __file__.rsplit("/", 1)[0])
     import ctrader_http as ct
 
-DEFAULT_JOURNAL = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.dirname(
-        os.path.dirname(os.path.abspath(__file__))))), "trade-journal")
+def _find_journal():
+    """Locate trade-journal/ by walking up from this file.
+
+    Counting ".." hops was wrong once already (it landed on
+    "Liquidity Trap/trade-journal" and the review silently reported "no
+    journal files"), and the count differs again in the .claude/skills
+    mirror. Searching upward works from either copy.
+    """
+    d = os.path.dirname(os.path.abspath(__file__))
+    while True:
+        cand = os.path.join(d, "trade-journal")
+        if os.path.isdir(cand):
+            return cand
+        parent = os.path.dirname(d)
+        if parent == d:
+            return cand          # not found: report the top-level guess
+        d = parent
+
+
+DEFAULT_JOURNAL = _find_journal()
 HORIZON_HOURS = 30          # how long an idea is given to play out
 _bars_cache: dict = {}
 
@@ -60,8 +77,36 @@ def in_zone(bar, zone):
     return bar["low"] <= zone[1] and bar["high"] >= zone[0]
 
 
+def excursion(bars, ref, direction):
+    """Best move in the idea's direction, in points, from a reference price.
+
+    Unfilled ideas still carry information: an idea that never triggered but
+    that price then ran 20 points in favour of was a right call with a wrong
+    entry, which is a different fix from a wrong call.
+    """
+    if not bars or ref is None or direction not in ("long", "short"):
+        return None
+    ext = (max(b["high"] for b in bars) if direction == "long"
+           else min(b["low"] for b in bars))
+    return round(ext - ref if direction == "long" else ref - ext, 3)
+
+
 def score(entry, bars):
-    """Walk forward from as_of and decide what became of this idea."""
+    """Walk forward from as_of and decide what became of this idea.
+
+    Every result carries `max_rr_reached` and `verdict`, including the ones
+    that never filled — the reporting reads those fields unconditionally.
+    """
+    out = _score_raw(entry, bars)
+    if out is None:
+        return None
+    out.setdefault("mfe_r", 0.0)
+    out["max_rr_reached"] = out["mfe_r"]
+    out["verdict"] = verdict_for(out)
+    return out
+
+
+def _score_raw(entry, bars):
     t0 = _parse(entry["as_of"])
     fwd = [b for b in bars
            if t0 < b["time"] <= t0 + timedelta(hours=HORIZON_HOURS)]
@@ -87,6 +132,8 @@ def score(entry, bars):
                 out["triggered"] = True
                 break
         if not out["triggered"]:
+            out["excursion_pts"] = excursion(
+                fwd, entry.get("price_at_idea"), direction)
             return out
     rest = fwd[i:]
 
@@ -94,11 +141,8 @@ def score(entry, bars):
     # whether it triggered and what the excursion was, but not an R figure.
     if not (entry_zone and stop and target and direction):
         out["outcome"] = "watch_only"
-        ref = entry.get("price_at_idea")
-        if ref:
-            ext = (max(b["high"] for b in rest) if direction == "long"
-                   else min(b["low"] for b in rest))
-            out["excursion_pts"] = round(abs(ext - ref), 3)
+        out["excursion_pts"] = excursion(
+            rest, entry.get("price_at_idea"), direction)
         return out
 
     fill_i = None
@@ -108,6 +152,8 @@ def score(entry, bars):
             break
     if fill_i is None:
         out["outcome"] = "no_fill"
+        out["excursion_pts"] = excursion(
+            rest, entry.get("price_at_idea"), direction)
         return out
     out["filled"] = True
 
@@ -138,8 +184,6 @@ def score(entry, bars):
         out["r"] = round(pnl / risk, 2)
         out["bars_to_outcome"] = len(rest) - fill_i
     out["mfe_r"] = round(mfe, 2)
-    out["max_rr_reached"] = out["mfe_r"]
-    out["verdict"] = verdict_for(out)
     return out
 
 
@@ -184,7 +228,10 @@ def main():
         print(f"no journal files in {args.journal}")
         return
 
-    reviewed, scored = 0, []
+    print(f"journal: {args.journal}")
+    print(f"files:   {', '.join(os.path.basename(f) for f in files)}")
+
+    reviewed, scored, too_recent = 0, [], []
     for path in files:
         lines = [l for l in open(path).read().splitlines() if l.strip()]
         entries = [json.loads(l) for l in lines]
@@ -200,7 +247,8 @@ def main():
                 continue
             r = score(e, bars)
             if r is None:
-                continue           # too recent to judge yet
+                too_recent.append(e)   # no forward bars yet
+                continue
             e["review"] = r
             changed = True
             reviewed += 1
@@ -211,18 +259,33 @@ def main():
                     fh.write(json.dumps(e, default=str) + "\n")
             print(f"updated {os.path.basename(path)}")
 
+    if too_recent:
+        print(f"\n{len(too_recent)} entries too recent to judge (no bars after "
+              f"as_of yet): "
+              + ", ".join(e["id"] for e in too_recent))
+
     if not scored:
         print("nothing new to review")
         return
 
+    # An idea logged minutes ago has barely any forward data; saying so beats
+    # presenting a 20-minute look-ahead as a verdict.
+    thin = [e["id"] for e, r in scored if r["bars_available"] < 24]
+    if thin:
+        print(f"\nWARNING: {len(thin)} entries have <2h of forward data — "
+              f"their verdicts are provisional: " + ", ".join(thin))
+
     print(f"\nreviewed {reviewed} entries")
     print("=" * 92)
     for e, r in scored:
+        exc = r.get("excursion_pts")
+        tail = (f"{r.get('verdict', '-')}" if r["filled"]
+                else (f"unfilled, moved {exc:+.1f}pts in favour"
+                      if exc is not None else "unfilled"))
         print(f"  {e['as_of'][:16]} {e['instrument']:<7} {e['kind']:<11} "
               f"{str(e.get('direction')):<5} {e['state']:<8} -> "
               f"{r['outcome']:<15} r={r['r']:+5.2f} "
-              f"maxRR={r.get('max_rr_reached', 0):.2f}R  "
-              f"{r.get('verdict', '-')}")
+              f"maxRR={r.get('max_rr_reached', 0):.2f}R  {tail}")
 
     filled = [r for _, r in scored if r["filled"]]
     if filled:

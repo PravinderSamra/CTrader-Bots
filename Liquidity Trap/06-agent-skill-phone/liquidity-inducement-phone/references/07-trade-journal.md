@@ -94,15 +94,39 @@ come first; how far in favour did it get (MFE). It fills:
 ```json
 "review": {
   "reviewed_at": "...", "triggered": true, "filled": true,
-  "outcome": "target",          // target | stop | expired | never_triggered
-  "r": 3.6, "mfe_r": 4.1, "bars_to_outcome": 22
+  "outcome": "target",          // target | stop | expired | no_fill
+                                // | never_triggered | watch_only
+  "r": 3.6, "mfe_r": 4.1, "max_rr_reached": 4.1,
+  "verdict": "target_hit",
+  "bars_to_outcome": 22, "bars_available": 340,
+  "excursion_pts": null         // unfilled ideas only
 }
 ```
 
-**`mfe_r` is the field that earns its keep.** A run of `outcome: stop` with
-`mfe_r` above 2 does not mean the ideas were wrong — it means the management
-was, which is precisely the failure the replay surfaced and reference 05 now
-addresses.
+**`max_rr_reached` (= `mfe_r`) is the field that earns its keep**, and
+`verdict` is what it buys. Judging an idea only on "did it reach the pool"
+throws away the difference between two very different failures:
+
+| `verdict` | meaning | what to fix |
+|---|---|---|
+| `target_hit` | destination reached | nothing |
+| `direction_right_destination_missed` | ran ≥1.0R in favour, then stopped | **the exit** — reference 05 |
+| `direction_marginal` | 0.3–1.0R | entry timing / LB quality |
+| `direction_wrong` | never cleared 0.3R | **selection** — the gates |
+| `not_taken` | never filled | see `excursion_pts` |
+
+A run of `outcome: stop` carrying `direction_right_destination_missed` does
+not mean the ideas were wrong — it means the management was. That is the whole
+argument for actively managing rather than letting trades run to a fixed pool.
+
+`excursion_pts` does the same job for ideas that never filled: an idea price
+then ran 20 points in favour of was a right call with a wrong entry, which is a
+different fix from a wrong call.
+
+**Read `bars_available` before trusting a verdict.** An idea logged minutes
+before the review has almost no forward data; the reviewer prints a warning
+for anything under 2 hours. Those verdicts are provisional — re-run the review
+the next day to settle them.
 
 ## Running the review without blocking a scan
 
