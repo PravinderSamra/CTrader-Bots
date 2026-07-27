@@ -73,6 +73,15 @@ the slug with `plant`/`environment` changed (guide Lesson 2).
    highest-probability idea — **with-trend primary**, counter-trend secondary if
    one exists — with entry/stop/target/RR/invalidation, then advise.
    → `references/04-trade-idea-and-output.md`
+6. **State how it will be managed.** Every armed idea carries a management plan
+   — where the stop trails to on structural breaks, where partials come off,
+   and what fuel/volume state would cut it short. A far pool does **not** veto
+   a clean setup: take it as direction and manage out.
+   → `references/05-managing-the-open-trade.md`
+
+**If asked about a position already open**, go straight to reference 05: where
+structure sits now, what fuel has done since entry, and whether the original
+target still fits inside the remaining budget.
 
 Core strategy rules (condensed) live in
 `references/01-reading-the-analyzer-output.md` §Strategy recap; the full research
@@ -139,9 +148,11 @@ reason.** A disciplined "no trade" is a correct answer.
   `exec_relative`, `expansion_state` — then say what fraction of the remaining
   budget the target consumes. Include this on no-trade outputs too; the fuel
   state is often the reason there is no trade.
-- Targets must be **in today's reach** (reference 03). Never dangle a target
-  price won't hit this session, and flag any target that would consume most of
-  the remaining budget as a stretch rather than quoting it flat.
+- Targets must be **in today's reach** (reference 03) — or, if the setup is
+  clean and the pool is far, taken as *direction* with an explicit management
+  plan (reference 05). Never dangle a far target flat, with no plan attached.
+- **Every armed idea states its management**: trail points, partials, and the
+  fuel/volume conditions that would end it early.
 - Always end: *nothing is 100%; this is analysis, not financial advice; no
   orders are placed by this skill.*
 - If data is missing/auth fails, say so plainly and stop. Don't invent levels.

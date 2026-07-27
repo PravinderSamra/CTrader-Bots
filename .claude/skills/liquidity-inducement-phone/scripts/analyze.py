@@ -356,6 +356,23 @@ def analyze(instrument, exec_period="M_5",
     draw_up = nearest_reachable(pools_above)
     draw_down = nearest_reachable(pools_below)
 
+    def path_to(draw, pools):
+        """Confirmed, unswept pools sitting BETWEEN price and the draw.
+
+        These are too near to aim at — that is why they are not the draw — but
+        they are the structure a trade travels through, so they are where the
+        stop trails to and where partials come off (reference 05). Ordered
+        outward from price."""
+        if not draw:
+            return []
+        return [{"zone": p["zone"], "touches": p["touches"], "name": p["name"],
+                 "dist": p["dist"]}
+                for p in pools
+                if p["dist"] < draw["dist"] and p["confirmed"]
+                and not p["swept"]]
+    path_up = path_to(draw_up, pools_above)
+    path_down = path_to(draw_down, pools_below)
+
     # ---- recent sweep / reclaim (last ~40 exec bars) ----
     sweep = None
     if len(ex) >= 12:
@@ -510,6 +527,8 @@ def analyze(instrument, exec_period="M_5",
         "pools_below": pools_below,
         "draw_up": draw_up,
         "draw_down": draw_down,
+        "path_up": path_up,
+        "path_down": path_down,
         "recent_sweep": sweep,
         "no_mans_land": nml,
         "warnings": warnings,

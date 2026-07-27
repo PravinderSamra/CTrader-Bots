@@ -200,6 +200,28 @@ if _sw8:
           _sw8.get("pools_cleared", 0) >= 1)
 
 
+# ── management path: the structure a trade travels through ─────────────────
+# too_close pools are useless as targets but are exactly the trail/partial
+# checkpoints (reference 05), so they must be surfaced in order.
+check("path: draw_up path contains only pools nearer than the draw",
+      all(p["dist"] < _o5["draw_up"]["dist"] for p in _o5["path_up"])
+      if _o5.get("draw_up") else True)
+check("path: draw_down path contains only pools nearer than the draw",
+      all(p["dist"] < _o5["draw_down"]["dist"] for p in _o5["path_down"])
+      if _o5.get("draw_down") else True)
+check("path: entries carry a zone and touch count",
+      all("zone" in p and "touches" in p
+          for p in _o5["path_up"] + _o5["path_down"]))
+check("end-to-end: output contains 'path_up'", "path_up" in _o6)
+check("end-to-end: output contains 'path_down'", "path_down" in _o6)
+# A swept level is a block, never a trail checkpoint.
+_allpaths = _o5["path_up"] + _o5["path_down"]
+_swept_zones = [p["zone"] for p in _o5["pools_below"] + _o5["pools_above"]
+                if p["swept"]]
+check("path: never includes a swept pool",
+      all(p["zone"] not in _swept_zones for p in _allpaths))
+
+
 print(f"\n{_passed} passed, {len(_failed)} failed")
 if _failed:
     for _n in _failed:
