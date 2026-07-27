@@ -79,13 +79,14 @@ jobs:
           case "$SCRIPT" in
             *..*|/*) echo "::error::script must be a bare filename"; exit 1 ;;
           esac
-          # Only long flags are accepted, so the input cannot smuggle in shell.
-          for a in $EXTRA; do
-            case "$a" in
-              --*) ;;
-              *) echo "::error::extra_args accepts --flags only"; exit 1 ;;
-            esac
-          done
+          # Restrict to a safe charset rather than to flags alone: the previous
+          # rule rejected flag VALUES ("--month 2026-07"), which made most
+          # options unusable. This still blocks every shell metacharacter.
+          case "$EXTRA" in
+            *[!A-Za-z0-9._:=/\ -]*)
+              echo "::error::extra_args may contain only letters, digits and . _ : = / -"
+              exit 1 ;;
+          esac
           echo "===RESEARCH_START==="
           python3 "$SCRIPT" "$SYMBOL" --days "$DAYS" $EXTRA
           echo "===RESEARCH_END==="
