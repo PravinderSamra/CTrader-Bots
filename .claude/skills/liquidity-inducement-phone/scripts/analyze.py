@@ -24,6 +24,7 @@ import json
 import argparse
 import statistics
 from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 
 try:
     import ctrader_http as ct
@@ -78,6 +79,48 @@ def _sma(closes, n):
     if len(closes) < n:
         n = len(closes)
     return sum(closes[-n:]) / n if n else 0.0
+
+
+_DAY_FRAME = {"PDH", "PDL", "PWH", "PWL", "prior_close"}
+
+
+def _session(now):
+    """Trading-session context with real DST handling. NY open is 09:30
+    America/New_York — 13:30 UTC in summer (EDT), 14:30 in winter (EST).
+    Computed here so nobody converts UTC by hand and drifts an hour."""
+    ny = now.astimezone(ZoneInfo("America/New_York"))
+    ldn = now.astimezone(ZoneInfo("Europe/London"))
+
+    def at(dt, h, m=0):
+        return dt.replace(hour=h, minute=m, second=0, microsecond=0)
+
+    ny_open, ny_close = at(ny, 9, 30), at(ny, 16, 0)
+    lunch_a, lunch_b = at(ny, 12, 0), at(ny, 13, 0)
+    ldn_open = at(ldn, 8, 0)
+    mins_from_open = round((ny - ny_open).total_seconds() / 60)
+
+    if ny.weekday() >= 5:
+        label = "WEEKEND"
+    elif ny_open <= ny <= ny_close:
+        if lunch_a <= ny < lunch_b:
+            label = "NY_LUNCH"
+        else:
+            label = "NY_MORNING" if ny < lunch_a else "NY_AFTERNOON"
+    elif ny < ny_open and ldn >= ldn_open:
+        label = "LONDON_PRE_NY"
+    elif ny > ny_close:
+        label = "POST_NY"
+    else:
+        label = "ASIA_EARLY"
+
+    return {
+        "label": label,
+        "ny_local": ny.strftime("%H:%M"),
+        "ny_open_utc": ny_open.astimezone(timezone.utc).strftime("%H:%M"),
+        "minutes_from_ny_open": mins_from_open,   # negative = until open
+        "in_trade_window": label in ("LONDON_PRE_NY", "NY_MORNING",
+                                     "NY_AFTERNOON"),
+    }
 
 
 def _zone(low, high, min_width):
@@ -244,17 +287,25 @@ def analyze(instrument, exec_period="M_5",
     # smaller than the stop + spread it would cost, so it can never pay. Floor
     # the draw at 10% of ADR and tag everything nearer as noise.
     min_target_dist = round(adr14 * 0.10, 5) if adr14 else 0.0
+    # "Only confirmed pools are targets" (reference 01 §Strategy recap): equal
+    # highs/lows need touches >= 2, or it must be a day-frame level. A single
+    # touch is one bar's extreme, not liquidity — it was being handed back as
+    # the draw and having to be overridden by hand.
     for p in pools_above + pools_below:
         p["too_close"] = p["dist"] < min_target_dist
+        p["confirmed"] = bool(p["touches"] >= 2 or p["name"] in _DAY_FRAME)
 
-    # nearest MEANINGFUL in-reach pool each side = the actionable draws
+    # nearest CONFIRMED, meaningful, in-reach pool each side = the draws
     def nearest_reachable(pools):
         in_reach = [p for p in pools if p["reach"] in ("intraday", "unknown")]
-        for p in in_reach:
-            if not p["too_close"]:
+        tradeable = [p for p in in_reach if not p["too_close"]]
+        for p in tradeable:
+            if p["confirmed"]:
                 return p
-        # everything in reach is noise — surface the nearest, flagged, so the
-        # agent reports "no tradeable target" rather than a £3 draw
+        # nothing confirmed in reach — surface the nearest tradeable one
+        # (flagged unconfirmed) so the agent can downgrade rather than invent
+        if tradeable:
+            return tradeable[0]
         return in_reach[0] if in_reach else (pools[0] if pools else None)
     draw_up = nearest_reachable(pools_above)
     draw_down = nearest_reachable(pools_below)
@@ -293,6 +344,27 @@ def analyze(instrument, exec_period="M_5",
                          "note": "recent low swept and price closed back above (bullish reclaim)"}
                 break
 
+    # A reclaim is only a live trap while price remains on the reclaimed side
+    # of the swept level. Once price trades back through it, the trap FAILED —
+    # reporting it unmarked made a dead signal read identically to a live one.
+    if sweep:
+        # lb_zone is the true no-liquidity pocket and stays factual, but a
+        # shallow stab can make it thinner than the instrument's own noise
+        # band — unworkable as an area to enter against. entry_zone widens it
+        # to tol_price for practical use; the stop still hides behind the real
+        # extreme, so widening never loosens risk.
+        lo, hi = sweep["lb_zone"]
+        sweep["lb_width"] = round(hi - lo, 5)
+        sweep["thin_lb"] = bool(sweep["lb_width"] < tol_price)
+        sweep["entry_zone"] = _zone(lo, hi, tol_price)
+        if sweep["side"] == "sell_side":
+            sweep["still_valid"] = bool(price > sweep["level"])
+        else:
+            sweep["still_valid"] = bool(price < sweep["level"])
+        if not sweep["still_valid"]:
+            sweep["note"] += (" [INVALIDATED: price has traded back through "
+                              "the swept level — this trap failed, do not act on it]")
+
     # ---- volume / expansion ----
     vol_state = "unknown"
     rel_vol = None
@@ -327,12 +399,15 @@ def analyze(instrument, exec_period="M_5",
         span = draw_up["price"] - draw_down["price"]
         if span > 0:
             pos = (price - draw_down["price"]) / span
-            nml = (0.30 < pos < 0.70) and sweep is None and \
+            live_sweep = sweep is not None and sweep.get("still_valid", True)
+            nml = (0.30 < pos < 0.70) and not live_sweep and \
                   (adr_used_pct is None or adr_used_pct < 70)
 
+    now = datetime.now(tz=timezone.utc)
     return {
         "instrument": instrument,
-        "as_of": datetime.now(tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "as_of": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "session": _session(now),
         "exec_period": exec_period,
         "price": price,
         "daily_bias": {

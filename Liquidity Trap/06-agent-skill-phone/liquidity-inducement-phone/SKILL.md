@@ -92,14 +92,19 @@ away." (Official playbook + research files 01/03/09.)
 
 1. **Confirmed pool in your target direction** — respected + moved away, or equal
    highs/lows. Not every high/low has liquidity.
-2. **The trap has happened** — the near pool was actually swept (`recent_sweep`).
-   Execute *after* liquidity is taken, never before.
+2. **The trap has happened AND still holds** — the near pool was actually swept
+   (`recent_sweep`) **and `still_valid: true`**. Execute *after* liquidity is
+   taken, never before. `still_valid: false` means price traded back through
+   the swept level: the trap failed, the signal is dead, no trade.
 3. **A liquidity block sits behind the entry** — the swept no-liquidity extreme
    your stop hides behind. No LB → no trade.
 4. **Bias lockout** — after a high is taken, don't buy until the paired low is
    swept (and vice versa).
 5. **Session window** — index/gold intraday = the New York session (and its
-   run-in from ~London). Outside it, no trade.
+   run-in from ~London). Read this from the analyzer's **`session` block**
+   (`in_trade_window`, `minutes_from_ny_open`), which is DST-correct. Never
+   convert UTC to NY time yourself — the offset moves with DST and getting it
+   wrong mislabels the session. Outside the window, no trade.
 6. **Not no-man's-land** — `no_mans_land: true` means price is stranded
    mid-range: stand down until a line breaks.
 

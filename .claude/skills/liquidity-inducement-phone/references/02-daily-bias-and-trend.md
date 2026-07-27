@@ -43,6 +43,9 @@ doctrine (docs 09 §3, 10 P8) — these can upgrade/downgrade the label:
 
 ## Step 3 — Time/session context (index & gold intraday)
 
+- **Use the analyzer's `session` block for all timing** — it is DST-correct
+  (NY open = 13:30 UTC in summer, 14:30 in winter). Never convert UTC to NY
+  time by hand; `minutes_from_ny_open` < 0 means the open is still ahead.
 - The setup should form in the **New York session** (≈ stock open, with its
   run-in from London). The against-trend leg specifically often needs a **time
   excuse** — the ~10:00 a.m. NY reversal / the H4 06:00–10:00 candle roll. The

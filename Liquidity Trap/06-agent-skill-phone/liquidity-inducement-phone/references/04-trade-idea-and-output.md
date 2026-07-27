@@ -9,14 +9,19 @@ intraday setup**, trend-first, and present it phone-friendly.
 2. **Target = the in-reach draw in that direction** (`draw_up` for longs,
    `draw_down` for shorts), reach `intraday` (reference 03). If it's `swing`,
    apply the draw-beyond-fuel rule. **If it's `too_close: true`, there is no
-   target** — the pool is inside the noise. Skip to the next pool out that is
-   both in reach and not `too_close`; if there isn't one, the answer is
-   **no-trade / wait for the range to resolve**, not a few-point scalp.
+   target** — the pool is inside the noise. **If it's `confirmed: false`, it is
+   not a pool at all** — a single touch is one bar's extreme. In either case
+   skip to the next pool out that is in reach, not `too_close`, and confirmed;
+   if there isn't one, the answer is **no-trade / wait for the range to
+   resolve**, not a few-point scalp.
 3. **Trigger = a sweep of the near opposite pool** (for a long: a pool in
    `pools_below` swept + bullish reclaim; for a short: `pools_above` swept +
    bearish reclaim). Look at `recent_sweep`:
-   - Sweep present, in the right place → the trap is set: **armed** (enter on
-     the retest of `lb_zone`) or just-triggered.
+   - Sweep present, **`still_valid: true`**, in the right place → the trap is
+     set: **armed** (enter on the retest of `lb_zone`) or just-triggered.
+   - **`still_valid: false`** → the trap **failed**: price has traded back
+     through the swept level. This is a **no-trade**, not a setup. Say the
+     reclaim failed and what that implies; never dress it up as armed.
    - No sweep yet → **watching**: name the **zone** you need swept.
 4. **Stop = `recent_sweep.stop_beyond`** — just past the swept extreme (the LB)
    with a spread buffer. For a long it's below the swept low; short, above the
@@ -53,12 +58,13 @@ Keep it tight and skimmable — this is a phone:
 
 ```
 <INSTRUMENT> — <bias label> day (score <n>)
+Time: <session.label>, <session.ny_local> NY (<minutes_from_ny_open> min from open)
 Bias: <one line: direction + why, from reasons + two-lines logic>
 Fuel: <adr_used%, expansion_state, volume state; is the draw in reach>
 
 PRIMARY (<with-trend>):  <LONG/SHORT>
   Trigger : <the sweep ZONE you need / that just happened>
-  Entry   : <lb_zone low–high, on the retest/rejection>
+  Entry   : <entry_zone low–high, on the retest/rejection>
   Stop    : <stop_beyond price> (just past the LB)
   Target  : <target pool ZONE low–high> (RR ~1:<x>)  [+ partial at <internal> if ≈1:5]
   Bigger draw (context, not today): <swing pool or "none">

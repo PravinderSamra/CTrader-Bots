@@ -16,9 +16,11 @@ cTrader bars*; your job is to turn facts into a decision. Fields:
 | `range.expansion_state` | ROOM_TO_EXPAND / MODERATE / LOW_FUEL / EXHAUSTED | Go/caution/fade signal. |
 | `volume.exec_relative` / `.state` | recent vs baseline tick volume; expanding/normal/drying_up | Is there participation behind the move? |
 | `named_levels` | PDH, PDL, prior_close, PWH, PWL, day_open, session_high/low | The day-frame reference pools. |
-| `pools_above` / `pools_below` | ranked target pools each side: `price`, **`zone` [low,high]**, `dist`, `reach`, `touches`, `kind`, **`too_close`** | The liquidity map. `touches` ≥ 2 = stronger. **Quote the `zone`, not `price`.** |
-| `draw_up` / `draw_down` | nearest **meaningful** in-reach pool each side (skips `too_close`) | Candidate targets. The one in the bias direction is usually *the* draw. |
-| `recent_sweep` | swept level + reclaim side + **`lb_zone`** + **`stop_beyond`**, or null | **Gate 2** (the trap). Null = no trap yet → at most *watching*. |
+| `pools_above` / `pools_below` | ranked target pools each side: `price`, **`zone` [low,high]**, `dist`, `reach`, `touches`, `kind`, **`too_close`**, **`confirmed`** | The liquidity map. **Quote the `zone`, not `price`.** |
+| `…[].confirmed` | true when `touches ≥ 2` or it is a day-frame level (PDH/PDL/PWH/PWL/prior_close) | **Only confirmed pools are targets.** A single-touch level is one bar's extreme, not liquidity. |
+| `draw_up` / `draw_down` | nearest **confirmed**, non-`too_close`, in-reach pool each side | Candidate targets. The one in the bias direction is usually *the* draw. If it comes back `confirmed: false`, nothing confirmed was in reach — downgrade, don't dress it up. |
+| `session` | DST-correct session context: `label`, `ny_local`, `ny_open_utc`, `minutes_from_ny_open` (neg = until open), `in_trade_window` | **Gate 5.** ALWAYS use this — never hand-convert UTC to NY time (the offset shifts with DST: open is 13:30 UTC in summer, 14:30 in winter). |
+| `recent_sweep` | swept level + reclaim side + **`lb_zone`** + **`stop_beyond`** + `bars_ago` + **`still_valid`**, or null | **Gate 2** (the trap). Null **or `still_valid: false`** = no live trap → at most *watching*. An invalidated reclaim means the trap FAILED — price traded back through the swept level; never present it as an active setup. |
 | `no_mans_land` | true = price stranded mid-range | **Gate 6**. true → stand down. |
 | `warnings` / `error` | data issues | If `error` present, relay `detail` and stop. |
 
@@ -29,10 +31,16 @@ band; use it:
 
 - A pool's `zone` `[low, high]` is where the liquidity sits — say
   *"4,071–4,074"*, not *"4,071.91"*. `price` is only the midpoint for maths.
-- `recent_sweep.lb_zone` is the swept, no-liquidity extreme: **the entry area**
-  you're waiting for price to retest, and what the stop hides behind.
-- `recent_sweep.stop_beyond` is the stop level (extreme + buffer) — one price,
-  because a stop *is* a single line.
+- `recent_sweep.lb_zone` is the swept, no-liquidity extreme — the factual band.
+  `lb_width` is how wide it actually is; **`thin_lb: true`** means the pocket is
+  narrower than the instrument's own noise band (a shallow stab), so it can't
+  be "worked" as an area.
+- **`recent_sweep.entry_zone`** is the practical band to quote as the entry —
+  `lb_zone` widened to the noise tolerance when it's thin. Use this for entry,
+  `lb_zone` when describing the structure.
+- `recent_sweep.stop_beyond` is the stop level (true extreme + buffer) — one
+  price, because a stop *is* a single line. It is anchored to the **real**
+  extreme, so a widened `entry_zone` never loosens your risk.
 - Targets are quoted as the far edge of the pool zone you're aiming into (exit
   as it's being taken, not after).
 
