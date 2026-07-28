@@ -1,0 +1,94 @@
+# Search space for ThreeDownDaysBot x XAUUSD.
+#
+# This is a HYPOTHESIS DOCUMENT, not a dump of every [Parameter]. The bot exposes
+# 32 parameters; 9 are searched here. Everything else is fixed on purpose, because
+# each extra free dimension is another way to fit noise.
+#
+# Review this file before the first real run — the ranges encode beliefs about the
+# strategy, and they are mine until you have agreed them.
+
+fixed:
+  # --- Entry: the structural shape of the trade is not up for optimisation ---
+  "Entry Mode": DailyBarOpen         # LateSession is a different strategy, not a parameter
+  "Late Entry Time (HH:mm:ss)": "15:50:00"
+  "Late Entry Window (minutes)": 10
+  "Selected Timezone": NewYork       # gold's daily close convention; changing it changes the bars
+
+  # --- Risk: policy, not edge ---
+  "Risk Amount": 100                 # fixed so R-multiples are comparable across trials
+  "Risk Currency Mode": AccountCurrency
+  "Max Daily Losses": 1
+  "Max Spread Pips": 5.0             # safety rail
+
+  # --- Stop-loss variants not under test in this study ---
+  "Fixed Stop Pips": 20.0
+  "Candle Stop Percent": 100.0
+  "ATR Stop Period": 10
+  "Swing Low Lookback": 10
+  "Min Stop Pips": 5.0               # safety rail against absurd size
+
+  # --- Dynamic stop: off. Trailing logic is a second study, with entry frozen ---
+  "Enable Dynamic Stop": false
+  "Dynamic Stop Mode": StepLockR
+  "Break Even Trigger R": 1.0
+  "Break Even Extra Pips": 0.0
+  "Dynamic Step R": 0.5
+  "Trail Distance R": 1.0
+
+  # --- Day filters: NEVER optimised. Two free bits that can only remove losing
+  #     days in hindsight (01-Research 4.1). Reported as a diagnostic instead. ---
+  "Skip Mondays": false
+  "Skip Fridays": false
+
+  # --- Logging ---
+  "Bot Label": "3DD"
+  "Enable Detailed Logging": false    # off for speed across ~1,600 runs
+
+search:
+  "Number Of Down Days":
+    {type: int, low: 2, high: 5}
+  "Require Price Below SMA5":
+    {type: bool}
+  "Require Trend Filter":
+    {type: bool}
+  "Trend SMA Period":
+    {type: int, low: 50, high: 300, step: 10, condition: "Require Trend Filter"}
+  "Stop Loss Mode":
+    {type: cat, choices: [AtrBased, CandleExtreme, LowestLowNDays]}
+  "ATR Stop Multiplier":
+    {type: float, low: 0.75, high: 3.0, step: 0.25}
+  "Exit Mode":
+    {type: cat, choices: [FirstUpCandle, SingleTP]}
+  "Take Profit R":
+    {type: float, low: 1.0, high: 4.0, step: 0.25}
+  "Max Hold Bars":
+    {type: int, low: 2, high: 10}
+
+constraints: []
+
+notes: |
+  Number Of Down Days — the core edge hypothesis: how much consecutive weakness
+    constitutes exhaustion. Below 2 is noise; above 5 fires too rarely to measure.
+  Require Price Below SMA5 — tests whether the "down days" trigger needs
+    confirmation that price is actually extended, or whether that filter just
+    removes trades without improving expectancy.
+  Require Trend Filter — tests the central question of whether this is a
+    buy-the-dip-in-uptrend strategy or a pure mean-reversion strategy.
+  Trend SMA Period — only meaningful when the trend filter is on. 50-300 spans
+    "intermediate trend" to "the classic 200". Step 10 keeps the grid honest;
+    single-day resolution here would be fitting noise.
+  Stop Loss Mode — three genuinely different risk geometries (volatility-scaled,
+    structural, and lookback-extreme). FixedPips and CandlePercent are excluded:
+    fixed pips does not travel across gold's 2021-2026 volatility regimes, and
+    CandlePercent overlaps CandleExtreme.
+  ATR Stop Multiplier — the volatility-scaling constant. Below 0.75 the stop sits
+    inside normal daily noise on gold; above 3.0 the position size becomes too
+    small for the risk budget to matter.
+  Exit Mode — FirstUpCandle (the original thesis: exit on the first sign of
+    reversal) versus SingleTP (a fixed R target). DynamicOnly is excluded because
+    the dynamic stop is switched off in this study.
+  Take Profit R — only binds under SingleTP. Below 1.0 the strategy cannot survive
+    its own win rate; above 4.0 a daily mean-reversion trade rarely reaches target.
+  Max Hold Bars — the time stop, in daily bars. This is the parameter most likely
+    to be fitting noise, so watch its plateau behaviour carefully: a sharp optimum
+    here is a red flag rather than a discovery.

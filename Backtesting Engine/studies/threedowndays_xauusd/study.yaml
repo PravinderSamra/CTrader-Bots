@@ -1,0 +1,87 @@
+# First study: ThreeDownDaysBot x XAUUSD.
+#
+# Chosen as the first target because it is the simplest bot (1,180 lines, 32
+# parameters) and its data is already in the repo — it validates the plumbing
+# cheaply. Be aware of its statistical limitation before reading any result:
+# a "3 consecutive down days" trigger on gold fires roughly 10-20 times a year,
+# so the 30-month out-of-sample window yields only ~40 trades. Sharpe, DSR and
+# PBO all have weak power at that sample size. Treat this study as a pipeline
+# shakedown; the ORB bot is where the statistics will actually bite.
+
+study: threedowndays_xauusd_v1
+
+# Pinned for reproducibility, and because ghcr's `latest` tag proved flaky
+# (03-Verification-Findings 2.3).
+ctrader_console_tag: "5.9.0.0"
+
+bot:
+  source: "3 Down Days/ThreeDownDaysBot.cs"
+  class_name: ThreeDownDaysBot
+  # The console image ships .NET runtime 6.0.10 only and no SDK; an .algo built
+  # for net8.0 will not load (03-Verification-Findings 3.2).
+  dotnet_target: net6.0
+
+market:
+  symbol: XAUUSD
+  # The bot reads TimeFrame.Daily and expects a daily chart. Data supplied to the
+  # backtester is still M1 (--data-mode=m1-csv); cTrader builds D1 bars from it.
+  # Token is case-sensitive: D1, not d1.
+  period: D1
+  data_glob: "XAUUSD historical Pricing data/data/XAUUSD_M_1_*.csv"
+
+account:
+  nominal_balance: 10000
+  currency: GBP
+  risk_per_trade: 100        # fixed, never searched — sizing is a policy decision
+
+execution:
+  # PLACEHOLDER — replace with your observed Pepperstone XAUUSD figures before
+  # any result is believed. Free execution is the most common way a backtest lies.
+  spread_pips:
+    realistic: 2.0
+    stressed: 4.0
+  # The CLI's --commission is documented as "commission per million", NOT per lot
+  # (03-Verification-Findings 3.3).
+  commission_per_million: 0.0
+  slippage_model:
+    dist: lognormal
+    median_pips: 0.5
+    p95_pips: 3.0
+
+windows:
+  # Actual first bar in the repo is 2021-07-18; 2021 is a half year
+  # (03-Verification-Findings 3.1).
+  data_start: 2021-07-18
+  # NOTHING at or after this date is touched before Stage 5. Yields a 12.5-month
+  # holdout (2025-07-01 -> 2026-07-16).
+  holdout_start: 2025-07-01
+  # Over 2021-07-18 -> 2025-07-01 this gives 5 complete folds; concatenated OOS
+  # spans 2023-01 -> 2025-07 (30 months).
+  wfa:
+    mode: rolling
+    is_months: 18
+    oos_months: 6
+    step_months: 6
+
+budgets:
+  # PROVISIONAL. Do not trust these until `engine smoke` has measured real
+  # runs/hour on a connected host — the M3 throughput gate
+  # (03-Verification-Findings 4.4). Total configurations implied here is roughly
+  # 800 + 5*150 + plateau probes ~= 1,600.
+  stage1_random: 200
+  stage1_tpe: 600
+  wfa_trials_per_fold: 150
+  mc_resamples: 5000
+
+gates:
+  # Deliberate override of the engine default (100/yr). A daily-bar mean-reversion
+  # trigger cannot produce 100 trades a year and it would be dishonest to pretend
+  # otherwise — but see the header note: the low trade count is a real weakness of
+  # this study, not a solved problem. Judge this bot primarily on expectancy in R.
+  min_trades_per_year: 12
+  max_dd_pct: 20
+  min_pf: 1.15
+  wfe_min: 0.5
+  dsr_min: 0.95
+  pbo_max: 0.25
+  plateau_retention: 0.7

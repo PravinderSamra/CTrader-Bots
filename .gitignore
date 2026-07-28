@@ -1,2 +1,17 @@
 **/__pycache__
 **/*.pyc
+
+# Backtesting engine: prepared market data is large and fully derivable from the
+# source CSVs plus study.yaml — the manifest records the hash that reproduces it.
+Backtesting Engine/data/prepared/
+Backtesting Engine/engine/.venv/
+Backtesting Engine/engine/*.egg-info/
+
+# Study run artefacts: trial databases and raw CLI output. Reports and the
+# recommended .cbotset are committed deliberately, not swept up here.
+Backtesting Engine/studies/*/runs/**/raw/
+Backtesting Engine/studies/*/runs/**/*.db
+
+# cTrader CLI credentials — never commit.
+**/ctrader_secrets.yaml
+**/pwd.txt
