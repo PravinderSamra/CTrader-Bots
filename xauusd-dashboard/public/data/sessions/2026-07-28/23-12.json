@@ -1,0 +1,82 @@
+{
+  "session": "ASIAN",
+  "bias": "BEARISH",
+  "biasScore": -2,
+  "probability": 45,
+  "confidence": 3,
+  "priceAtAnalysis": 4017.475,
+  "priceZone": "DISCOUNT",
+  "equilibrium": 4063.83,
+  "drawOnLiquidity": 4011.54,
+  "invalidation": 4022.59,
+  "keyLevels": [
+    {
+      "price": 4093.81,
+      "kind": "POC",
+      "note": "H1 volume-profile POC 4094.16 / bear FVG cluster — far overhead value"
+    },
+    {
+      "price": 4081.8,
+      "kind": "PDH",
+      "note": "prior day high"
+    },
+    {
+      "price": 4065.04,
+      "kind": "OTHER",
+      "note": "H1 Grade-A bear FVG CE (post-BOS) — main overhead supply"
+    },
+    {
+      "price": 4063.83,
+      "kind": "OTHER",
+      "note": "H1 equilibrium"
+    },
+    {
+      "price": 4041.87,
+      "kind": "OTHER",
+      "note": "volume-profile VAL — price is accepted BELOW value"
+    },
+    {
+      "price": 4034.84,
+      "kind": "OTHER",
+      "note": "H1 last bearish BOS level — full bearish invalidation"
+    },
+    {
+      "price": 4022.59,
+      "kind": "INVALIDATION",
+      "note": "M5 bearish CHoCH shelf — near-term invalidation of the bearish lean"
+    },
+    {
+      "price": 4019.03,
+      "kind": "BSL",
+      "note": "M1 buy-side liquidity, 3 tests MEDIUM — immediate bounce magnet"
+    },
+    {
+      "price": 4016.13,
+      "kind": "SSL",
+      "note": "M1 sell-side liquidity, 2 tests MEDIUM"
+    },
+    {
+      "price": 4011.54,
+      "kind": "PDL",
+      "note": "prior day low = H1 SSL — primary downside draw"
+    },
+    {
+      "price": 3999.71,
+      "kind": "PWL",
+      "note": "prior week low / round 4000 — stretch downside draw"
+    }
+  ],
+  "tradeIdea": {
+    "direction": "SHORT",
+    "status": "NO_TRADE",
+    "setupType": "None — H1 NEUTRAL, stand aside until London"
+  },
+  "nextHighImpactEvent": null,
+  "smtDivergence": null,
+  "sessionPhase": "OFF-HOURS (00:07 BST Wed 29 Jul) — outside the trader's London/NY windows; Asia has not yet built a range. Informational only, no now-entry.",
+  "regimeStatus": "H1 NEUTRAL (range 4011.54-4116.12, price in DISCOUNT below equilibrium 4063.83) / M5 BEARISH / M1 NEUTRAL turning up. Fresh bearish CHoCHs H1 4021.66 @ 23:00 BST + M5 4022.59 @ 23:15 BST, but M1 bullish BOS 4019.03 @ 23:57 BST - a stretched-low bounce forming inside a mixed HTF regime. MACRO LAYER UNAVAILABLE: the daily snapshot is 4.3 days stale (24 Jul) and un-refreshable - the hourly workflow has not completed a run since 24 Jul (every scheduled run queues and is cancelled). DXY/yields/Fed/COT/ETF/VIX context is therefore NOT part of this read.",
+  "timestamp": "2026-07-28T23:12:38.935Z",
+  "date": "2026-07-28",
+  "time": "00:12 BST",
+  "analysis": "# XAUUSD INTRADAY SESSION BRIEF — 2026-07-29 — 00:07 BST / 2026-07-28 23:07 UTC — OFF-HOURS (Asia opening)\n\n> **TWO STANDING CAVEATS — read these first.**\n> 1. **OFF-HOURS.** It is 00:07 BST Wednesday. This is outside the trader's stated London/NY windows and Asia has not yet built a range. Everything below is **informational for the London open — there is no actionable now-entry.**\n> 2. **MACRO LAYER UNAVAILABLE.** The daily snapshot is **4.3 days stale** (generatedAt 24 Jul 14:45Z) and could not be refreshed: the hourly workflow has not completed a run since 24 Jul — every scheduled run since queues and is cancelled without starting (see ORDER FLOW / PIPELINE note). DXY, real yields, Fed odds, COT, ETF flows, VIX/GVZ and the calendar are therefore **omitted, not estimated**. This read is structure-only.\n\n## ACCOUNT CONTEXT\n- **Open Positions on Symbol:** None\n- **Account Balance / Equity / Free Margin:** £99,784.17 / £99,784.17 / £99,784.17\n  - *Note:* this is a different balance from the £46,376.98 seen through 24 Jul — consistent with the refreshed cTrader credential pointing at a different account. Worth confirming before any sizing is acted on.\n\n## REGIME ASSESSMENT\n- **H1 Regime:** **NEUTRAL** — range 4011.54–4116.12, equilibrium 4063.83; price 4017.475 sits deep in **DISCOUNT**. Last BOS BEARISH 4034.84 (10:00 BST 28 Jul); last CHoCH **BEARISH 4021.66 (23:00 BST)** — character is bearish, but the swing structure is not yet an established downtrend.\n- **M5 Regime:** **BEARISH** — last BOS BULLISH 4027.94 (21:30 BST), last CHoCH **BEARISH 4022.59 (23:15 BST)**. Agrees in spirit with H1's bearish character but **conflicts with H1's NEUTRAL trend label** — the reason there is no trade below.\n- **M1 Regime:** NEUTRAL, but turning up — last CHoCH BULLISH 4017.97 (23:52 BST), last BOS BULLISH 4019.03 (23:57 BST). A small bounce is forming off the lows.\n- **Protected High / Low:** protected low **4011.54** (PDL = H1 SSL) — intact, and the level the whole bearish case is aiming at. Protected high 4116.12 (H1 range high), far above.\n- **Regime Change Phase:** Not applicable — H1 is ranging, not changing regime. The M1 turn is a lower-timeframe bounce, not a regime signal.\n\n## STRUCTURE\n- **Recent BOS/CHoCH:** H1 — BOS BEARISH 4034.84 (10:00 BST), CHoCH BEARISH 4021.66 (23:00 BST). M5 — BOS BULLISH 4027.94 (21:30 BST), CHoCH BEARISH 4022.59 (23:15 BST). M1 — CHoCH BULLISH 4017.97 (23:52 BST), BOS BULLISH 4019.03 (23:57 BST).\n- **Displacement:** H1 = false, M5 = false, M1 = false. **No range expansion anywhere** — the sell-off has been a grind, and there is no displacement leg to time an entry against.\n- **Market Structure Phase:** late Distribution / early Accumulation — price has been distributed down from the 4116 range high into the bottom of the H1 range and is now basing at the PDL. Which it becomes depends on whether 4011.54 holds.\n\n## LIQUIDITY MAP\n- **Asian Range:** not yet formed — Asia has only just opened (`asian_range_note: null`). No London sweep to assess.\n- **Reference Levels:** PDH **4081.80** · PDL **4011.54** · PWH **4166.03** · PWL **3999.71** · Daily Open 4027.88. Price is **below the daily open** and only ~6pts above the PDL.\n- **Liquidity Pools:** H1 — SSL 4011.54 (LOW), BSL 4030.48 / 4047.06 (LOW). M1 — **SSL 4016.13 (2 tests, MEDIUM)**, **BSL 4019.03 (3 tests, MEDIUM)**. The M1 pools straddle price tightly: 4019.03 is the immediate bounce magnet, 4016.13 the immediate downside stop-cluster.\n- **Volume Profile (H1):** POC **4094.16**, VAH 4112.98, **VAL 4041.87**. Price 4017.475 is **well below VAL** — accepted outside value to the downside. LVNs at 4012.59 / 4014.68 sit just beneath price (thin air toward the PDL); a further LVN at 4062.78 would let any recovery move quickly back toward value.\n- **PRIMARY Draw on Liquidity:** **SSL 4011.54 (PDL)**, then **PWL 3999.71 / the round 4000** beneath it. Counter-draw for a bounce: M1 BSL 4019.03, then the bear-FVG shelf 4018.82–4022.59.\n\n## KEY PD ARRAYS\n- **Order Blocks:** **none graded at H1 or M5** — there is no OB support to lean a long against.\n- **FVGs — note the asymmetry: every graded FVG is BEARISH.** H1: **4018.82–4022.59 (CE 4020.705, FRESH)** sitting immediately above price; 4030.41–4036.61 (CE 4033.51, FRESH, liq-grab); **4060.2–4069.88 (CE 4065.04, Grade-A, post-BOS)** — the main overhead supply; 4089.45–4093.81 (B). M5: 4021.12–4022.27 (A), 4023.49–4024.42 (A), 4025.15–4026.12 (B), 4031.5–4034.37 (A). **There is no bullish PD array anywhere on H1 or M5** — a bounce would be trading into supply the whole way.\n- **Current Price vs Equilibrium:** 4017.475 vs H1 equilibrium 4063.83 → **DISCOUNT**, ~46pts below. `ote_direction: null` — no live directional OTE (H1 trend is NEUTRAL), so the OTE bands (longs 4033.92–4051.49 / shorts 4076.17–4093.74) are **informational only**, not signals.\n\n## MACRO REGIME\n- **UNAVAILABLE — not estimated.** The daily snapshot (24 Jul 14:45Z) is 4.3 days stale, past the gold skill's >24h out-of-hours threshold, and a refresh is impossible right now (pipeline blocked, below). Per the skill's rules I am reporting it as unavailable rather than presenting 4-day-old DXY/yield/Fed/COT/ETF figures as current.\n- **For context only, and explicitly NOT part of the read:** as of 24 Jul the snapshot showed US10Y 4.67 / 10Y real 2.39, and GLD in a 3-week OUTFLOW trend (996.8t, −0.8 WoW). Four days of price action have happened since; treat these as historical.\n- **Macro Verdict:** **NO VERDICT POSSIBLE.** The structural read below stands on its own and carries no macro confirmation or contradiction — which is itself a reason to keep confidence LOW.\n\n## SESSION & TIME CONTEXT\n- **Current Session:** OFF-HOURS (engine) — 00:07 BST, Asia just opening; **no kill zone active**.\n- **Trading-hours check:** this is **outside** the trader's stated London/NY hours. Any idea here is **WAIT FOR LONDON OPEN**, never a now-entry.\n- **UK Time:** 00:07 BST (British Summer Time, UTC+1).\n- **Weekly Profile:** **Wednesday.** ICT tendency — Tuesday/Wednesday is where the weekly high or low most often forms, and a trend day is most probable. With price pressed against the PDL and the prior-week low 3999.71 just below, **today is a statistically likely day for the week's low to be set** — which cuts both ways: it favours a decisive sweep, then a reversal, rather than a slow grind lower.\n- **AMD Phase:** Accumulation-in-progress at the range low is the most defensible reading; the Manipulation leg (a sweep of 4011.54 / 3999.71) has **not** happened yet.\n\n## CROSS-CHECK\n- **Pattern (`pattern_check`):** **SHOOTING_STAR**, direction BEARISH, confidence 0.65 — but **RSI-14 29.2, flagged \"stretched low\"**, volatility MEDIUM. The pattern agrees with the bearish character while the stretched RSI simultaneously warns the downside is extended. That internal tension is the honest state of this chart.\n- **`recognize_market_pattern` (TradingView):** unavailable — the MCP server is not installed in this org. Primary check above always runs.\n- **SMT Divergence (XAUUSD vs EURUSD):** none (`smt_divergence: null`).\n\n## PROBABILITY ASSESSMENT\n- **Primary Scenario:** **45% — BEARISH** (continuation into the PDL/PWL liquidity beneath)\n- **Primary Arithmetic:** 50 (base) +5 [pattern_check SHOOTING_STAR confirms bearish] +5 [fresh bearish CHoCH on BOTH H1 4021.66 and M5 4022.59] +5 [entire graded FVG inventory is bearish — overhead supply only, no bullish array] +3 [price accepted below volume-profile VAL 4041.87] −15 [selling in H1 DISCOUNT — wrong side of equilibrium, Axiom 4] −8 [H1 trend is NEUTRAL, not BEARISH — no higher-timeframe alignment] = **45%**\n- **Secondary Scenario:** **30% — BULLISH** (bounce off the PDL back toward value)\n- **Secondary Arithmetic:** 50 (base) +10 [price in H1 DISCOUNT — correct side for a long] +7 [protected low 4011.54 intact; PWL 3999.71 below it] −10 [pattern_check conflicts — reads BEARISH] −10 [OFF-HOURS, thin liquidity] −10 [no SSL sweep yet to signal a reversal] −7 [H1 NEUTRAL + M5 BEARISH — no HTF support for a long] = **30%**\n- **Confidence Level:** **LOW** — H1 NEUTRAL, zero displacement on any timeframe, no macro layer, and off-hours liquidity.\n- **Key Invalidation Level:** **4022.59** (reclaim of the M5/H1 bearish CHoCH shelf 4021.66–4022.59 negates the near-term bearish lean); **4034.84** (H1 bearish BOS) is the fuller invalidation.\n\n## TRADE IDEA — NO TRADE\n**There is no trade here, and the reason is structural, not just timing.** The trader's rule is to trade only with the H1 trend; **H1 is NEUTRAL** while M5 is BEARISH and M1 is turning up — a three-way disagreement, which is the textbook stand-aside condition. Layered on top: it is OFF-HOURS with no kill zone, there is **no displacement** on any timeframe to time an entry against, and there is **no bullish PD array** to lean a discount-long on while every bear FVG sits overhead.\n\n**What to watch for at the London open instead:**\n- **Bearish continuation:** a sweep of **4011.54 (PDL)** that *fails to reclaim*, opening **3999.71 / round 4000**. Wants an M5 displacement leg down to be tradable — currently absent.\n- **Bullish reversal (the higher-quality setup if it appears):** a sweep of 4011.54 / 3999.71 that **grabs the sell-side then reclaims**, with an M5 bullish CHoCH above 4022.59. That is the classic Wednesday weekly-low pattern, and it would offer a discount long back toward the VAL 4041.87 / bear-FVG CE 4065.04. **Wait for the sweep — do not pre-empt it.**\n- Either way: **no entry before the London kill zone (07:00–10:00 BST)**, and re-run this scan then, when a refreshed macro layer should also be available.\n\n## KEY LEVELS TO WATCH\n- 4065.04 — H1 Grade-A bear FVG CE (main overhead supply) · 4063.83 H1 equilibrium\n- 4041.87 — volume-profile VAL (first upside objective on any genuine reversal)\n- 4034.84 — H1 bearish BOS (full bearish invalidation)\n- 4022.59 / 4021.66 — M5 + H1 bearish CHoCH shelf (near-term invalidation) · overlapping bear FVG 4018.82–4022.59\n- 4019.03 / 4016.13 — M1 BSL / SSL (immediate bounce magnet and stop cluster)\n- **4011.54 — PDL / H1 SSL: the pivot the whole session turns on**\n- 3999.71 — PWL / round 4000 (stretch downside draw)\n\n## MARKET NARRATIVE\nGold has been distributed steadily down from the 4116 H1 range high and now sits ~6pts above the prior-day low at 4017, deep in H1 discount and accepted below the volume-profile value area. The order flow is unambiguously bearish in character — fresh bearish CHoCHs on both H1 and M5, and an FVG inventory that is *entirely* bearish, meaning any rally trades into supply from the first tick. But the case against simply selling is just as clear: RSI is stretched at 29, price is at the wrong end of the range to be initiating shorts, M1 has already turned up, and there is no displacement anywhere to carry a move. The most likely resolution is that the sell-side beneath 4011.54 gets taken — and on a Wednesday, the day the weekly low most often prints, the higher-quality trade is far more likely to be the **reversal off that sweep** than the sweep itself. Stand aside through Asia, let the manipulation leg happen, and reassess at the London open with a refreshed macro layer.\n\n## PIPELINE NOTE (why the macro layer is missing)\nThe `xauusd-daily-fetch` workflow is firing on schedule but **no run has completed since #155 on 24 Jul 14:45Z**. Every run since queues and is then cancelled — the diagnostic signature is that each cancelled run's `updated_at` equals the *next* run's `created_at`, i.e. runs never pick up a runner and each pending run is evicted by the next one entering the concurrency group (`cancel-in-progress: false` protects in-progress runs, not pending ones). Run #173 has been `pending` since 20:59Z. This is an infrastructure problem — most commonly exhausted GitHub Actions minutes / a spending limit on a private repo, or a runner-availability issue — **not a code fault**, and it cannot be fixed from inside this session. Until it is resolved: the macro snapshot, the outcome resolvers, and the ORB journal are all frozen as of 24 Jul."
+}
