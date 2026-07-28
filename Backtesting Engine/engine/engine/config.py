@@ -109,6 +109,9 @@ class WfaConfig:
     is_months: int
     oos_months: int
     step_months: int
+    # Which end of the series absorbs the remainder. "end" finishes the last OOS
+    # window exactly at holdout_start, keeping the most recent months in play.
+    align: Literal["end", "start"] = "end"
 
 
 @dataclass(frozen=True)
@@ -249,11 +252,15 @@ def load_study(path: str | Path) -> StudyConfig:
     mode = wfa_raw.get("mode", "rolling")
     if mode not in ("rolling", "anchored"):
         raise ConfigError(f"windows.wfa.mode: expected rolling|anchored, got {mode!r}")
+    align = wfa_raw.get("align", "end")
+    if align not in ("end", "start"):
+        raise ConfigError(f"windows.wfa.align: expected end|start, got {align!r}")
     wfa = WfaConfig(
         mode=mode,
         is_months=int(_require(wfa_raw, "is_months", "windows.wfa")),
         oos_months=int(_require(wfa_raw, "oos_months", "windows.wfa")),
         step_months=int(_require(wfa_raw, "step_months", "windows.wfa")),
+        align=align,
     )
     if min(wfa.is_months, wfa.oos_months, wfa.step_months) <= 0:
         raise ConfigError("windows.wfa: is/oos/step months must all be > 0")

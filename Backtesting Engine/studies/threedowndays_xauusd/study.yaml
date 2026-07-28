@@ -55,13 +55,16 @@ windows:
   # NOTHING at or after this date is touched before Stage 5. Yields a 12.5-month
   # holdout (2025-07-01 -> 2026-07-16).
   holdout_start: 2025-07-01
-  # Over 2021-07-18 -> 2025-07-01 this gives 5 complete folds; concatenated OOS
-  # spans 2023-01 -> 2025-07 (30 months).
+  # Verified by engine.walkforward.generate_folds, not estimated: this yields
+  # 4 folds with a concatenated OOS of 2023-07-01 -> 2025-07-01 (24 months).
+  # align: end finishes the last OOS exactly at holdout_start, so the months
+  # nearest the holdout are used and the oldest data is dropped instead.
   wfa:
     mode: rolling
     is_months: 18
     oos_months: 6
     step_months: 6
+    align: end
 
 budgets:
   # PROVISIONAL. Do not trust these until `engine smoke` has measured real

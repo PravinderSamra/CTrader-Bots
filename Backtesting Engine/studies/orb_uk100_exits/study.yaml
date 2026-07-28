@@ -50,11 +50,18 @@ windows:
   # the fetch targets 5 years back from 2026-07-24.
   data_start: 2021-08-02
   holdout_start: 2025-07-01
+  # Verified by engine.walkforward.generate_folds: 4 folds, concatenated OOS
+  # 2023-07-01 -> 2025-07-01 (24 months). Note that is the honest sample every
+  # headline metric is computed on — an intraday ORB should produce several
+  # hundred trades in it, which is what makes Sharpe/DSR/PBO meaningful here.
+  # align: end finishes the last OOS exactly at holdout_start; with align:
+  # start this geometry would discard the five months of most recent data.
   wfa:
     mode: rolling
     is_months: 18
     oos_months: 6
     step_months: 6
+    align: end
 
 budgets:
   # PROVISIONAL until `engine throughput` has been run on the machine that will
