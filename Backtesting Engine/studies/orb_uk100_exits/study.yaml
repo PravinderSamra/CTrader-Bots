@@ -46,9 +46,9 @@ execution:
     p95_pips: 4.0
 
 windows:
-  # Set from the actual fetched series once `engine data-prepare` reports it;
-  # the fetch targets 5 years back from 2026-07-24.
-  data_start: 2021-08-02
+  # Verified against the fetched series: the first bar is 2021-07-29T22:57Z
+  # (a partial session), so the study starts at the first full day.
+  data_start: 2021-07-30
   holdout_start: 2025-07-01
   # Verified by engine.walkforward.generate_folds: 4 folds, concatenated OOS
   # 2023-07-01 -> 2025-07-01 (24 months). Note that is the honest sample every
