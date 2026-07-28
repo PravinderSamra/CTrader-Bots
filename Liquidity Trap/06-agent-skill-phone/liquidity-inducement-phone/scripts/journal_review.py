@@ -83,6 +83,13 @@ def excursion(bars, ref, direction):
     Unfilled ideas still carry information: an idea that never triggered but
     that price then ran 20 points in favour of was a right call with a wrong
     entry, which is a different fix from a wrong call.
+
+    Always pass the FULL forward window, never the post-trigger slice. Slicing
+    made the figure non-monotonic: one entry reclassified from never_triggered
+    to watch_only on a later review and its excursion *fell* from +5.0 to
+    +2.4pts on strictly more data, because the measurement window had silently
+    moved. Same anchor, same window, every time — otherwise two reviews of the
+    same entry are not comparable.
     """
     if not bars or ref is None or direction not in ("long", "short"):
         return None
@@ -142,7 +149,7 @@ def _score_raw(entry, bars):
     if not (entry_zone and stop and target and direction):
         out["outcome"] = "watch_only"
         out["excursion_pts"] = excursion(
-            rest, entry.get("price_at_idea"), direction)
+            fwd, entry.get("price_at_idea"), direction)
         return out
 
     fill_i = None
@@ -153,7 +160,7 @@ def _score_raw(entry, bars):
     if fill_i is None:
         out["outcome"] = "no_fill"
         out["excursion_pts"] = excursion(
-            rest, entry.get("price_at_idea"), direction)
+            fwd, entry.get("price_at_idea"), direction)
         return out
     out["filled"] = True
 

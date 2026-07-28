@@ -127,5 +127,17 @@ jobs:
           EXECTF: ${{ inputs.exec }}
         run: |
           echo "===ANALYSIS_START==="
-          python3 analyze.py "$INSTRUMENT" --exec "$EXECTF" --json
+          python3 analyze.py "$INSTRUMENT" --exec "$EXECTF" --json \
+            | tee "$RUNNER_TEMP/read.json"
           echo "===ANALYSIS_END==="
+
+      # The logs API returns only the TAIL of a job, and the two pool arrays
+      # alone are long enough to push price/session/bias/fuel out of reach —
+      # the header every gate depends on. Printing the digest LAST puts those
+      # fields in the part of the log a tail fetch always returns.
+      - name: Digest (read this first)
+        working-directory: "Liquidity Trap/06-agent-skill-phone/liquidity-inducement-phone/scripts"
+        run: |
+          echo "===DIGEST_START==="
+          python3 digest.py < "$RUNNER_TEMP/read.json"
+          echo "===DIGEST_END==="
