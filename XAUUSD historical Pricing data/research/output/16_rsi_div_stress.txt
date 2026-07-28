@@ -1,0 +1,124 @@
+
+==========================================================================
+### 5m  (N=66,020 pivot events)
+==========================================================================
+
+A. SIGNIFICANCE OF EACH CLASS EDGE (z vs that side's base rate)
+  highs: base=49.7% (N=32,891)
+    HH+RSI_HH    N=12,338 p=49.82%  edge=+0.08pp  z=+0.18  noise
+    HH+RSI_LH    N= 3,974 p=50.40%  edge=+0.66pp  z=+0.84  noise
+    LH+RSI_HH    N= 3,910 p=49.08%  edge=-0.66pp  z=-0.83  noise
+    LH+RSI_LH    N=12,669 p=49.66%  edge=-0.08pp  z=-0.19  noise
+  lows: base=50.1% (N=33,129)
+    HL+RSI_HL    N=13,057 p=50.41%  edge=+0.26pp  z=+0.60  noise
+    HL+RSI_LL    N= 4,254 p=50.12%  edge=-0.03pp  z=-0.04  noise
+    LL+RSI_HL    N= 3,666 p=50.22%  edge=+0.07pp  z=+0.09  noise
+    LL+RSI_LL    N=12,152 p=49.85%  edge=-0.29pp  z=-0.65  noise
+
+B. DIVERGENCE MAGNITUDE (regular divergences only)
+  highs by RSI-gap quartile (base 49.7%):
+            N     p%  edge_pp     z
+rsi_q                              
+Q1 small  994  50.30     0.56  0.35
+Q2        993  49.85     0.11  0.07
+Q3        993  50.76     1.02  0.64
+Q4 large  994  50.70     0.96  0.61
+  lows by RSI-gap quartile (base 50.1%):
+            N     p%  edge_pp     z
+rsi_q                              
+Q1 small  917  51.47     1.33  0.80
+Q2        916  47.49    -2.66 -1.61
+Q3        916  49.89    -0.26 -0.15
+Q4 large  917  52.02     1.87  1.13
+
+C. SESSION (regular divergences, 1-ATR race)
+  highs (base 49.7%):
+           N     p%  edge_pp     z
+sess                              
+Asia    1564  50.45     0.71  0.56
+London   910  49.67    -0.07 -0.04
+NY      1486  51.08     1.34  1.03
+close     14  21.43   -28.31 -2.12
+  lows (base 50.1%):
+           N     p%  edge_pp     z
+sess                              
+Asia    1457  49.62    -0.52 -0.40
+London   814  49.75    -0.39 -0.22
+NY      1369  51.21     1.06  0.78
+close     26  46.15    -3.99 -0.41
+
+D. TRIPLE vs DOUBLE DIVERGENCE
+  high  double: N=3,481 p=50.53% edge=+0.79pp z=+0.93
+  high  triple: N=  493 p=49.49% edge=-0.25pp z=-0.11
+  low   double: N=3,245 p=50.39% edge=+0.24pp z=+0.27
+  low   triple: N=  421 p=48.93% edge=-1.22pp z=-0.50
+
+E. COSTED BACKTEST — trade every regular divergence (entry=confirmation close, stop beyond pivot extreme)
+  TP=1.0: n=6,853 win%=48.7 avgR=-0.268 totR=-1836 maxDD=-1842R
+     by year: 2021:-0.368  2022:-0.326  2023:-0.386  2024:-0.268  2025:-0.146  2026:-0.089
+  TP=2.0: n=6,853 win%=34.1 avgR=-0.241 totR=-1652 maxDD=-1658R
+     by year: 2021:-0.354  2022:-0.297  2023:-0.364  2024:-0.243  2025:-0.110  2026:-0.059
+  TP=none (200-bar timeout): n=6,853 win%=13.2 avgR=-0.168 totR=-1153 maxDD=-1375R
+     by year: 2021:-0.130  2022:-0.249  2023:-0.491  2024:-0.286  2025:+0.149  2026:+0.149
+
+==========================================================================
+### 15m  (N=22,372 pivot events)
+==========================================================================
+
+A. SIGNIFICANCE OF EACH CLASS EDGE (z vs that side's base rate)
+  highs: base=50.1% (N=11,121)
+    HH+RSI_HH    N= 4,143 p=50.37%  edge=+0.32pp  z=+0.41  noise
+    HH+RSI_LH    N= 1,414 p=52.55%  edge=+2.49pp  z=+1.87  noise
+    LH+RSI_HH    N= 1,329 p=47.63%  edge=-2.43pp  z=-1.77  noise
+    LH+RSI_LH    N= 4,235 p=49.68%  edge=-0.38pp  z=-0.49  noise
+  lows: base=50.5% (N=11,251)
+    HL+RSI_HL    N= 4,449 p=51.74%  edge=+1.24pp  z=+1.65  noise
+    HL+RSI_LL    N= 1,438 p=50.83%  edge=+0.33pp  z=+0.25  noise
+    LL+RSI_HL    N= 1,267 p=50.36%  edge=-0.15pp  z=-0.10  noise
+    LL+RSI_LL    N= 4,097 p=49.08%  edge=-1.42pp  z=-1.81  noise
+
+B. DIVERGENCE MAGNITUDE (regular divergences only)
+  highs by RSI-gap quartile (base 50.1%):
+            N     p%  edge_pp     z
+rsi_q                              
+Q1 small  354  48.59    -1.47 -0.55
+Q2        353  48.73    -1.33 -0.50
+Q3        353  59.21     9.15  3.44
+Q4 large  354  53.67     3.61  1.36
+  lows by RSI-gap quartile (base 50.5%):
+            N     p%  edge_pp     z
+rsi_q                              
+Q1 small  317  47.32    -3.18 -1.13
+Q2        317  50.79     0.29  0.10
+Q3        316  49.68    -0.82 -0.29
+Q4 large  317  53.63     3.13  1.11
+
+C. SESSION (regular divergences, 1-ATR race)
+  highs (base 50.1%):
+          N     p%  edge_pp     z
+sess                             
+Asia    498  54.02     3.96  1.77
+London  340  51.76     1.71  0.63
+NY      568  51.58     1.53  0.73
+close     8  62.50    12.44  0.70
+  lows (base 50.5%):
+          N     p%  edge_pp     z
+sess                             
+Asia    475  49.89    -0.61 -0.26
+London  284  50.00    -0.50 -0.17
+NY      503  50.89     0.39  0.18
+close     5  60.00     9.50  0.42
+
+D. TRIPLE vs DOUBLE DIVERGENCE
+  high  double: N=1,243 p=52.61% edge=+2.56pp z=+1.80
+  high  triple: N=  171 p=52.05% edge=+1.99pp z=+0.52
+  low   double: N=1,103 p=50.41% edge=-0.09pp z=-0.06
+  low   triple: N=  164 p=50.00% edge=-0.50pp z=-0.13
+
+E. COSTED BACKTEST — trade every regular divergence (entry=confirmation close, stop beyond pivot extreme)
+  TP=1.0: n=2,382 win%=49.2 avgR=-0.158 totR=-377 maxDD=-378R
+     by year: 2021:-0.243  2022:-0.177  2023:-0.163  2024:-0.103  2025:-0.176  2026:-0.100
+  TP=2.0: n=2,382 win%=34.4 avgR=-0.115 totR=-274 maxDD=-285R
+     by year: 2021:-0.084  2022:-0.181  2023:-0.058  2024:-0.082  2025:-0.200  2026:-0.017
+  TP=none (200-bar timeout): n=2,382 win%=11.5 avgR=-0.204 totR=-485 maxDD=-668R
+     by year: 2021:-0.054  2022:-0.234  2023:-0.573  2024:-0.228  2025:-0.131  2026:+0.307
