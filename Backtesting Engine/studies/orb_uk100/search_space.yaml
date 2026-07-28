@@ -1,0 +1,189 @@
+# Search space for ORB Bot x UK100 — DRAFT, NEEDS YOUR REVIEW.
+#
+# The bot exposes 87 parameters. Nine are searched here. That ratio is the whole
+# point: every extra free dimension is another way to fit noise, and an
+# exhaustive grid over 87 parameters would exceed 10^9 combinations.
+#
+# Choosing which nine carry the edge is a strategy judgement, not a coding one.
+# Read the `notes` section at the bottom and tell me what you disagree with —
+# these ranges encode my assumptions about your strategy, not your knowledge of it.
+
+fixed:
+  # ── TIMEZONE: the single most important setting in this file ──────────────
+  # UK100-BUILD-PLAN.md is explicit: "UK100 session times are Europe/London
+  # wall-clock ... never hardcode UTC." The bot defaults to UseFixedUtcTimes=true,
+  # which would silently shift the opening range by an hour for the ~7 months a
+  # year that BST is in effect. That would not fail loudly — it would just
+  # backtest a different strategy than the one you trade.
+  "Use Fixed UTC Times": false
+  "Session Time Zone": EuropeLondon
+
+  # ── The opening range anchor ──────────────────────────────────────────────
+  # 08:00 London is the FTSE cash open. This is the strategy's definition, not
+  # a parameter — moving it would be a different hypothesis entirely.
+  "Range Start Time": "08:00:00"
+  "Trading Start Time": "00:00:00"
+
+  # ── Session housekeeping ─────────────────────────────────────────────────
+  "Enable Kill Switch": false
+  "Kill Switch Time": "23:59:00"
+  "Enable Close Positions Time": true
+  # Index CFD: do not carry an intraday breakout overnight through the close.
+  "Close Positions Time": "16:25:00"
+
+  # ── ORB mechanics: operational, not strategic ────────────────────────────
+  "ORB Bars TimeFrame": Minute
+  "Max ORB Range Pips": 200
+  "Min ORB Range Pips": 0.0
+  "Point Unit Mode": UsePipSizeAsPoint
+  "Enable ORB Backfill": true
+  "Enable ORB Self-Heal": true
+  "ORB Self-Heal Interval Seconds": 30
+  "Enable Post-Lock Confirm Replay": true
+  "Post-Lock Replay Confirm Bars": 1
+  "Post-Lock Replay Max Delay Minutes": 20
+
+  # ── Catch-up entry: off. A separate hypothesis, tested separately ────────
+  "Enable Catch-Up Entry": false
+  "Catch-Up Requires Confirmation Bars": true
+  "Catch-Up Max Distance Beyond Threshold Pips": 0.0
+
+  # ── Breakout mechanics not under test here ───────────────────────────────
+  "Confirmation Bars Count": 1
+  "Breakout Evaluation Moment": ClosedBarsOnly
+  "Candle Direction Requirement": NoPreference
+  "Allow Long": true
+  "Allow Short": true
+
+  # ── Trend filter details (the on/off switch and EMA period ARE searched) ──
+  "Trend TimeFrame": Minute15
+  "Trend Slope Lookback Bars": 3
+  "Trend Min Slope Pips": 0.0
+  "Neutral Min Slope Pips": 0.0
+  "Trend Neutral Policy": BlockAll
+  "Trend Filter Verbose Logs": false
+
+  # ── DAY FILTERS: NEVER OPTIMISED ─────────────────────────────────────────
+  # Seven free bits that can only remove losing days in hindsight
+  # (01-Research 4.1). Reported as a per-day diagnostic with confidence
+  # intervals instead, and only acted on with an economic rationale you sign off.
+  "Trade Monday": true
+  "Trade Tuesday": true
+  "Trade Wednesday": true
+  "Trade Thursday": true
+  "Trade Friday": true
+  "Trade Saturday": false
+  "Trade Sunday": false
+
+  "Re-Entry Mode": AfterStopLossOnly
+
+  # ── Multi-TP: off. Partial closes are a second study with entry frozen ────
+  "Enable Multi TP": false
+  "TP1 R": 1.0
+  "TP1 Close Percent": 50
+  "TP2 R": 2.0
+  "TP2 Close Percent": 50
+  "TP3 R": 0.0
+  "TP3 Close Percent": 0
+  "TP4 R": 0.0
+  "TP4 Close Percent": 0
+
+  # ── Dynamic stop / early risk reduction: off for this study ──────────────
+  "Enable Dynamic Stop": false
+  "Break Even Trigger R": 1.0
+  "Dynamic Step R": 0.25
+  "Break Even Extra Pips": 0.0
+  "Enable Early Risk Reduction": false
+  "Early Risk Reduction Trigger R": 0.5
+  "Early Risk Reduction Remaining Risk %": 50.0
+
+  # ── Risk: policy, fixed so R-multiples compare across trials ─────────────
+  "Risk Amount": 100
+  "Risk Currency": AccountCurrency
+  "Enable Execution Risk Cap": true
+  "Assumed Stop Slippage Pips": 80.0
+  "Max Loss Per Trade (Account CCY)": 200.0
+
+  # ── Safety rails: never searched ─────────────────────────────────────────
+  "Min Risk Pips": 2.0
+  "Max Volume In Units": 0
+  "Max Spread Pips": 0
+  "Max Distance Beyond Threshold Pips": 0
+  "Require Entry Beyond Threshold": true
+  "Enable Margin Safety": true
+  "Max Margin Usage %": 50.0
+  "Clamp Volume To Margin": true
+  "Enable Protection Fallback": true
+  "Fallback SL Pips": 20.0
+
+  # ── Diagnostics: off for speed across ~1,600 runs ────────────────────────
+  "Bot Label Prefix": "ORB"
+  "Enable Debug Logging": false
+  "Verbose Logging": false
+  "Explain Blocked Entries": false
+  "Explain Near-Miss Breakouts": false
+  "Draw ORB Lines": false
+  "Draw Threshold Lines": false
+
+search:
+  "Range End Time":
+    {type: cat, choices: ["08:15:00", "08:30:00", "09:00:00"]}
+  "Entry Offset Pips":
+    {type: float, low: 0.0, high: 15.0, step: 2.5}
+  "Stop Loss ORB Percent":
+    {type: float, low: 25.0, high: 100.0, step: 12.5}
+  "Take Profit R":
+    {type: float, low: 1.0, high: 4.0, step: 0.5}
+  "Confirmation TimeFrame":
+    {type: cat, choices: [Minute, Minute5, Minute15]}
+  "Breakout Cross Type":
+    {type: cat, choices: [CloseBeyond, BodyCross, WickBeyond]}
+  "Enable Trend Filter":
+    {type: bool}
+  "Trend EMA Period":
+    {type: int, low: 5, high: 50, step: 5, condition: "Enable Trend Filter"}
+  "Max Trades Per Day":
+    {type: int, low: 1, high: 2}
+
+constraints: []
+
+notes: |
+  Range End Time — how long the opening range is allowed to form. Your build
+    plan specifies the 15-minute range (08:00-08:15 London), so that is the
+    hypothesis under test; 08:30 and 09:00 are included to check whether the
+    15-minute choice is actually load-bearing or merely conventional. If 08:15
+    wins on a plateau, that is real evidence for your existing approach.
+  Entry Offset Pips — how far beyond the range boundary price must travel
+    before entry. This is the core false-breakout filter. 0 means "trade the
+    touch"; above ~15 pips on the FTSE you are chasing a move that has already
+    happened.
+  Stop Loss ORB Percent — stop placement as a fraction of the range. Below 25%
+    the stop sits inside normal post-open noise; above 100% the stop is wider
+    than the range that defined the trade, which makes the R-multiple
+    meaningless.
+  Take Profit R — the reward target. Below 1.0 no breakout strategy survives
+    its own win rate; above 4.0 an intraday index move rarely reaches target
+    before the 16:25 close.
+  Confirmation TimeFrame — how much confirmation a breakout needs. This trades
+    off false breakouts against entry lag and is, with Entry Offset, the most
+    likely place for a genuine edge to live.
+  Breakout Cross Type — what counts as "beyond": a close, a body, or a wick.
+    Three genuinely different definitions of the same event. Expect WickBeyond
+    to look best in-sample and degrade out-of-sample; if it survives walk-forward
+    that is interesting.
+  Enable Trend Filter — the central structural question: is this a
+    trade-every-breakout system or a trade-with-the-trend system? Worth a
+    dimension on its own.
+  Trend EMA Period — only meaningful when the filter is on. 5-50 on M15 spans
+    "very fast" to "half-session". Step 5 keeps the grid honest; finer
+    resolution here would be fitting noise.
+  Max Trades Per Day — 1 (the disciplined single shot) versus 2 (allowing one
+    re-entry after a stop). This is as much a risk policy as an edge parameter;
+    watch whether 2 wins only by adding variance.
+
+  NOT searched, deliberately, though you may disagree:
+    Multi-TP and the dynamic stop are switched off. Both are exit-management
+    layers, and optimising them simultaneously with entry logic is how a
+    9-dimension study becomes a 15-dimension one. The intended sequence is:
+    find the entry plateau here, freeze it, then run a second study over exit
+    management. Say the word if you want them in this study instead.
