@@ -331,7 +331,8 @@ def finalize(args):
 
     written = []
     for year, rows in sorted(rows_by_year.items()):
-        path = os.path.join(out_dir, "data", f"XAUUSD_{args.period}_{year}.csv")
+        symbol_name = getattr(args, "symbol_name", None) or "XAUUSD"
+        path = os.path.join(out_dir, "data", f"{symbol_name}_{args.period}_{year}.csv")
         with open(path, "w") as fh:
             fh.write("datetime,open,high,low,close,volume\n")
             for r in rows:
@@ -352,6 +353,10 @@ def main():
     ap.add_argument("--years", type=float, default=5.0, help="how many years back (default 5)")
     ap.add_argument("--period", default="M_1", choices=sorted(_PERIOD_MS), help="timeframe (default M_1)")
     ap.add_argument("--symbol-id", type=int, default=_XAUUSD_SB, help="cTrader symbolId (default 241 XAUUSD_SB)")
+    ap.add_argument("--symbol-name", default="XAUUSD",
+                    help="name used in the output CSV filenames (default XAUUSD). "
+                         "Set this whenever --symbol-id is not the gold symbol, or the "
+                         "files will be misnamed. e.g. --symbol-id 113 --symbol-name UK100")
     ap.add_argument("--window-hours", type=float, default=336.0,
                     help="request window width in hours, must be <=720 (default 336 = 14d, "
                          "always straddles weekend/holiday gaps)")

@@ -134,6 +134,131 @@ def cmd_status(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_compile(args: argparse.Namespace) -> int:
+    from engine.compile import CompileError, compile_bot
+    from engine.ctcli import Credentials
+
+    study = load_study(args.config)
+    repo_root = _repo_root(Path(args.config))
+    source = repo_root / study.bot.source
+
+    try:
+        creds = Credentials.from_env()
+    except Exception:
+        creds = None   # the CLI's build subcommand may not need them
+
+    try:
+        result = compile_bot(
+            source=source, out_dir=study.runs_dir / "algo",
+            console_tag=study.ctrader_console_tag, target=study.bot.dotnet_target,
+            credentials=creds, sudo=args.sudo_docker, force=args.force,
+        )
+    except CompileError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+
+    print(f"compiled via {result.route}: {result.algo}")
+    print(f"algo hash: {result.algo_hash}")
+    return 0
+
+
+def cmd_throughput(args: argparse.Namespace) -> int:
+    """Measure real backtest wall time — the M3 gate before budgets are trusted.
+
+    Every budget in study.yaml is provisional until this has been run on the
+    machine that will actually do the work.
+    """
+    import random
+
+    from engine.compile import compile_bot
+    from engine.config import load_search_space
+    from engine.ctcli import Credentials, CtraderCli, make_backend
+    from engine.optimise import suggest
+    from engine.runner import ResultCache, RunSpec, Runner, throughput_report
+
+    study = load_study(args.config)
+    repo_root = _repo_root(Path(args.config))
+    space = load_search_space(study.study_dir / "search_space.yaml")
+
+    prepared = _latest_prepared(repo_root, study.market.symbol)
+    if not prepared:
+        print("error: run 'engine data-prepare' first", file=sys.stderr)
+        return 1
+    manifest = json.loads((prepared / "manifest.json").read_text())
+
+    result = compile_bot(
+        source=repo_root / study.bot.source, out_dir=study.runs_dir / "algo",
+        console_tag=study.ctrader_console_tag, target=study.bot.dotnet_target,
+        credentials=Credentials.from_env(), sudo=args.sudo_docker,
+    )
+
+    runner = Runner(
+        cli=CtraderCli(
+            backend=make_backend(study.ctrader_console_tag, sudo=args.sudo_docker),
+            credentials=Credentials.from_env(),
+        ),
+        cache=ResultCache(study.runs_dir / "cache"),
+        algo=result.algo, algo_hash=result.algo_hash, data_hash=manifest["data_hash"],
+        symbol=study.market.symbol, period=study.market.period,
+        balance=study.account.nominal_balance,
+        commission_per_million=study.execution.commission_per_million,
+        workdir_root=study.runs_dir / "work", workers=args.workers,
+    )
+
+    # Random parameter sets, so the measurement reflects the real spread of
+    # work rather than one lucky configuration.
+    import optuna
+    optuna.logging.set_verbosity(optuna.logging.WARNING)
+    sampler_study = optuna.create_study(sampler=optuna.samplers.RandomSampler(seed=1))
+    specs = []
+    for i in range(args.runs):
+        trial = sampler_study.ask()
+        specs.append(RunSpec(
+            parameters={**space.fixed, **suggest(trial, space)},
+            csv=prepared / "insample.csv",
+            start=study.windows.data_start,
+            end=min(study.windows.holdout_start,
+                    study.windows.data_start.replace(
+                        year=study.windows.data_start.year + args.window_years)),
+            spread_pips=study.execution.spread("realistic"),
+            trial_id=f"throughput-{i}",
+        ))
+
+    print(f"running {args.runs} backtests on {args.workers} worker(s) over "
+          f"{args.window_years}y of data...")
+    outcomes = runner.run_many(specs)
+    report = throughput_report(outcomes)
+
+    print(json.dumps(report, indent=2))
+
+    median = report.get("median_seconds")
+    if median:
+        per_worker = 3600 / median
+        total = args.workers * per_worker
+        print(f"\nMeasured: {median:.0f}s per backtest over {args.window_years}y "
+              f"({total:.0f} backtests/hour at {args.workers} workers)")
+        for label, budget in (("stage 1 (800)", 800), ("full study (~1,600)", 1600)):
+            hours = budget / total
+            scale = (study.windows.holdout_start - study.windows.data_start).days / 365.25 \
+                / args.window_years
+            print(f"  {label}: ~{hours * scale:.1f}h at full window length")
+        print("\nUpdate budgets in study.yaml if these hours are unacceptable, "
+              "then re-run.")
+
+    out = study.runs_dir / "throughput.json"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(report, indent=2) + "\n")
+    return 0
+
+
+def _latest_prepared(repo_root: Path, symbol: str) -> Path | None:
+    root = repo_root / REPO_ROOT_MARKER / "data" / "prepared" / symbol
+    if not root.is_dir():
+        return None
+    dirs = [p.parent for p in root.glob("*/manifest.json")]
+    return max(dirs, key=lambda p: p.stat().st_mtime) if dirs else None
+
+
 def cmd_not_implemented(args: argparse.Namespace) -> int:
     print(_NEEDS_HOST.format(cmd=args.command), file=sys.stderr)
     return 2
@@ -163,8 +288,19 @@ def build_parser() -> argparse.ArgumentParser:
 
     add("status", "Machine-readable stage completion (JSON)", cmd_status)
 
+    cp = add("compile", "Compile the bot .cs to a .algo artefact", cmd_compile)
+    cp.add_argument("--force", action="store_true", help="rebuild even if cached")
+    cp.add_argument("--sudo-docker", action="store_true",
+                    help="prefix docker calls with sudo (needed on some Linux hosts)")
+
+    tp = add("throughput", "Measure real backtest wall time (the M3 gate)", cmd_throughput)
+    tp.add_argument("--runs", type=int, default=5, help="how many backtests to time")
+    tp.add_argument("--workers", type=int, default=2, help="parallel workers")
+    tp.add_argument("--window-years", type=int, default=1,
+                    help="years of data per timing run (default 1, scaled up in the estimate)")
+    tp.add_argument("--sudo-docker", action="store_true")
+
     for name, help_ in [
-        ("compile", "Compile the bot .cs to a .algo artefact"),
         ("smoke", "Stage 0 parity and smoke test"),
         ("optimise", "Stage 1 coarse search"),
         ("wfa", "Stage 2 walk-forward analysis"),
