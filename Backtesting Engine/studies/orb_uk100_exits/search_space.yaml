@@ -1,0 +1,180 @@
+# STUDY B — ORB Bot x UK100 exit management, entry geometry FROZEN.
+#
+# This is the second half of the staged design, not a deferral: everything the
+# first study could not afford to search is searched properly here, with the
+# entry parameters pinned to the plateau centroid that Study A recommends.
+#
+# WHY STAGED RATHER THAN ONE BIG STUDY
+#   Searching entry and exit together needs 15 simultaneously-active dimensions.
+#   At ~1,600 trials that samples the space so thinly that the winner is
+#   mostly noise, and DSR deflates by every one of those trials regardless.
+#   Two 10-dimension studies cover the same ground with far better statistical
+#   power, and the cache means Study B reuses any backtest Study A already ran.
+#
+# BEFORE RUNNING: replace every PLATEAU-PENDING value below with the
+# corresponding figure from studies/orb_uk100/runs/stage1_top.json (the plateau
+# centroid, NOT the single best trial). `engine validate-config` will fail
+# loudly while the placeholders remain.
+
+fixed:
+  # ── Timezone: same reasoning as Study A. London wall-clock, never UTC ─────
+  "Use Fixed UTC Times": false
+  "Session Time Zone": EuropeLondon
+  "Range Start Time": "08:00:00"
+  "Trading Start Time": "00:00:00"
+
+  # ── FROZEN ENTRY GEOMETRY — fill from Study A's plateau centroid ─────────
+  "Range End Time": PLATEAU-PENDING
+  "Entry Offset Pips": PLATEAU-PENDING
+  "Stop Loss ORB Percent": PLATEAU-PENDING
+  "Confirmation TimeFrame": PLATEAU-PENDING
+  "Enable Trend Filter": PLATEAU-PENDING
+  "Trend EMA Period": PLATEAU-PENDING
+
+  # ── Session housekeeping ─────────────────────────────────────────────────
+  "Enable Kill Switch": false
+  "Kill Switch Time": "23:59:00"
+  "Enable Close Positions Time": true
+  "Close Positions Time": "16:25:00"
+
+  # ── ORB mechanics ────────────────────────────────────────────────────────
+  "ORB Bars TimeFrame": Minute
+  "Max ORB Range Pips": 200
+  "Min ORB Range Pips": 0.0
+  "Point Unit Mode": UsePipSizeAsPoint
+  "Enable ORB Backfill": true
+  "Enable ORB Self-Heal": true
+  "ORB Self-Heal Interval Seconds": 30
+  "Enable Post-Lock Confirm Replay": true
+  "Post-Lock Replay Confirm Bars": 1
+  "Post-Lock Replay Max Delay Minutes": 20
+  "Enable Catch-Up Entry": false
+  "Catch-Up Requires Confirmation Bars": true
+  "Catch-Up Max Distance Beyond Threshold Pips": 0.0
+
+  # ── Breakout ─────────────────────────────────────────────────────────────
+  "Confirmation Bars Count": 1
+  "Breakout Evaluation Moment": ClosedBarsOnly
+  "Candle Direction Requirement": NoPreference
+  "Allow Long": true
+  "Allow Short": true
+
+  # ── Trend filter detail ──────────────────────────────────────────────────
+  "Trend TimeFrame": Minute15
+  "Trend Slope Lookback Bars": 3
+  "Trend Min Slope Pips": 0.0
+  "Neutral Min Slope Pips": 0.0
+  "Trend Neutral Policy": BlockAll
+  "Trend Filter Verbose Logs": false
+
+  # ── Day filters: never optimised, in either study ────────────────────────
+  "Trade Monday": true
+  "Trade Tuesday": true
+  "Trade Wednesday": true
+  "Trade Thursday": true
+  "Trade Friday": true
+  "Trade Saturday": false
+  "Trade Sunday": false
+
+  # ── Risk & safety ────────────────────────────────────────────────────────
+  "Risk Amount": 100
+  "Risk Currency": AccountCurrency
+  "Enable Execution Risk Cap": true
+  "Assumed Stop Slippage Pips": 80.0
+  "Max Loss Per Trade (Account CCY)": 200.0
+  "Min Risk Pips": 2.0
+  "Max Volume In Units": 0
+  "Max Spread Pips": 0
+  "Max Distance Beyond Threshold Pips": 0
+  "Require Entry Beyond Threshold": true
+  "Enable Margin Safety": true
+  "Max Margin Usage %": 50.0
+  "Clamp Volume To Margin": true
+  "Enable Protection Fallback": true
+  "Fallback SL Pips": 20.0
+
+  # ── Ladder rungs 3 and 4 stay off ────────────────────────────────────────
+  "TP3 R": 0.0
+  "TP3 Close Percent": 0
+  "TP4 R": 0.0
+  "TP4 Close Percent": 0
+
+  # ── Break-even offset: fixed so the trigger itself stays attributable ────
+  "Break Even Extra Pips": 0.0
+
+  # ── Early Risk Reduction: OFF, and this is the one real deferral ─────────
+  # It does the same job as break-even by a different route. Searched alongside
+  # it, a win cannot be attributed to either — and the pair costs 3 of the 10
+  # available dimensions. If break-even wins here, Study C tests whether early
+  # risk reduction does it better; if break-even loses, the question is moot.
+  "Enable Early Risk Reduction": false
+  "Early Risk Reduction Trigger R": 0.5
+  "Early Risk Reduction Remaining Risk %": 50.0
+
+  # ── Diagnostics ──────────────────────────────────────────────────────────
+  "Bot Label Prefix": "ORB"
+  "Enable Debug Logging": false
+  "Verbose Logging": false
+  "Explain Blocked Entries": false
+  "Explain Near-Miss Breakouts": false
+  "Draw ORB Lines": false
+  "Draw Threshold Lines": false
+
+search:
+  # ── Trade frequency and breakout definition, deferred from Study A ───────
+  "Max Trades Per Day":
+    {type: int, low: 1, high: 3}
+  "Breakout Cross Type":
+    {type: cat, choices: [CloseBeyond, BodyCross, WickBeyond]}
+  "Re-Entry Mode":
+    {type: cat, choices: [AfterStopLossOnly, AfterAnyExit]}
+
+  # ── Target structure ─────────────────────────────────────────────────────
+  "Enable Multi TP":
+    {type: bool}
+  "Take Profit R":
+    {type: float, low: 1.0, high: 5.0, step: 0.25, condition: "Enable Multi TP == false"}
+  "TP1 R":
+    {type: float, low: 0.5, high: 2.5, step: 0.25, condition: "Enable Multi TP == true"}
+  "TP1 Close Percent":
+    {type: int, low: 20, high: 80, step: 10, condition: "Enable Multi TP == true"}
+  "TP2 R":
+    {type: float, low: 1.5, high: 6.0, step: 0.5, condition: "Enable Multi TP == true"}
+
+  # ── Stop management: now tuned properly, not just probed ─────────────────
+  "Enable Dynamic Stop":
+    {type: bool}
+  "Break Even Trigger R":
+    {type: float, low: 0.25, high: 2.5, step: 0.25, condition: "Enable Dynamic Stop"}
+  "Dynamic Step R":
+    {type: float, low: 0.1, high: 1.0, step: 0.1, condition: "Enable Dynamic Stop"}
+
+constraints:
+  - "TP2 R > TP1 R"
+
+notes: |
+  Max Trades Per Day — extended to 3 here because with entry frozen there is
+    budget to ask whether re-entries add edge or only variance. Watch the
+    per-trade expectancy, not the total: more trades that each earn less is a
+    worse system, not a better one.
+  Breakout Cross Type — deferred from Study A so entry geometry could be found
+    first. WickBeyond will very likely look best in-sample; the walk-forward
+    gate is what decides whether that is real.
+  Re-Entry Mode — whether a re-entry follows only a stop-out or any exit. Only
+    meaningful once Max Trades Per Day exceeds 1.
+  Enable Multi TP / Take Profit R / TP1 R / TP1 Close Percent / TP2 R — the
+    full target structure, now with the close percentage searched rather than
+    pinned at an even split. TP2 Close Percent remains the remainder so the
+    position always closes fully.
+  Enable Dynamic Stop / Break Even Trigger R / Dynamic Step R /
+    Break Even Extra Pips — Study A asks only whether moving the stop helps at
+    all; this study finds the trigger and step that make it work. Break Even
+    Extra Pips exists to cover spread on the break-even exit, which on an index
+    CFD at the open is not negligible.
+  Enable Early Risk Reduction / trigger / remaining risk — kept as a separate
+    branch rather than mixed with break-even, so if both help it is clear which
+    one earned it.
+
+  DIMENSION BUDGET: 15 declared, at most 10 simultaneously active, because the
+  target regimes are mutually exclusive and the two stop-management layers are
+  independent branches.

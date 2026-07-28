@@ -198,6 +198,55 @@ class TestResumability:
         assert "timeout=60" in storage_url(tmp_path / "x.db")
 
 
+class TestBranchSampling:
+    """The sampler must never suggest a parameter that is not in play."""
+
+    @pytest.fixture
+    def branched(self, tmp_path):
+        cfg = {**VALID_SPACE, "search": {
+            "Enable Multi TP": {"type": "bool"},
+            "Take Profit R": {"type": "float", "low": 1, "high": 4,
+                              "condition": "Enable Multi TP == false"},
+            "TP1 R": {"type": "float", "low": 0.5, "high": 2,
+                      "condition": "Enable Multi TP == true"},
+            "TP2 R": {"type": "float", "low": 1.5, "high": 5,
+                      "condition": "Enable Multi TP == true"},
+        }}
+        return load_search_space(write(tmp_path, cfg, "search_space.yaml"))
+
+    def test_only_the_live_branch_is_sampled(self, branched):
+        import optuna
+        from engine.optimise import suggest
+        optuna.logging.set_verbosity(optuna.logging.WARNING)
+        study = optuna.create_study(sampler=optuna.samplers.RandomSampler(seed=3))
+
+        saw_ladder = saw_single = False
+        for _ in range(30):
+            params = suggest(study.ask(), branched)
+            if params["Enable Multi TP"]:
+                saw_ladder = True
+                assert "TP1 R" in params and "TP2 R" in params
+                assert "Take Profit R" not in params
+            else:
+                saw_single = True
+                assert "Take Profit R" in params
+                assert "TP1 R" not in params and "TP2 R" not in params
+        assert saw_ladder and saw_single, "both branches should be explored"
+
+    def test_parent_is_sampled_before_its_dependants(self, tmp_path):
+        # Declaration order puts the dependant first; the sampler must reorder,
+        # or the condition would be evaluated against an unsampled parent.
+        from engine.optimise import _condition_order
+        cfg = {**VALID_SPACE, "search": {
+            "Trend EMA Period": {"type": "int", "low": 5, "high": 50,
+                                 "condition": "Enable Trend Filter"},
+            "Enable Trend Filter": {"type": "bool"},
+        }}
+        space = load_search_space(write(tmp_path, cfg, "search_space.yaml"))
+        order = _condition_order(space)
+        assert order.index("Enable Trend Filter") < order.index("Trend EMA Period")
+
+
 class TestPlateauPrescreen:
     def test_isolated_spike_is_demoted(self, tmp_path, setup):
         from engine.optimise import TrialRecord

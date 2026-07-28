@@ -315,6 +315,26 @@ class SearchParam:
     condition: str | None = None
 
 
+def parse_condition(expr: str) -> tuple[str, Any]:
+    """Parse a condition into (parent parameter, required value).
+
+    Two forms:
+      ``"Enable Trend Filter"``       — active when the parent is truthy
+      ``"Exit Mode == MultiTP"``      — active when the parent equals a value
+
+    The equality form is what makes mutually-exclusive branches possible: a
+    Multi-TP ladder and a dynamic trailing stop are never both in play, so they
+    should not each cost a permanent dimension.
+    """
+    if "==" in expr:
+        parent, value = expr.split("==", 1)
+        raw = value.strip().strip('"').strip("'")
+        if raw.lower() in ("true", "false"):
+            return parent.strip(), raw.lower() == "true"
+        return parent.strip(), raw
+    return expr.strip(), True
+
+
 @dataclass(frozen=True)
 class SearchSpace:
     fixed: dict[str, Any]
@@ -323,10 +343,58 @@ class SearchSpace:
     notes: str
     path: Path
 
+    def is_active(self, name: str, values: dict[str, Any]) -> bool:
+        """Whether a parameter is in play given the parent values chosen so far."""
+        p = self.search[name]
+        if not p.condition:
+            return True
+        parent, required = parse_condition(p.condition)
+        actual = values.get(parent, self.fixed.get(parent))
+        return bool(actual) if required is True else actual == required
+
+    @property
+    def declared_dimensions(self) -> int:
+        return len(self.search)
+
     @property
     def effective_dimensions(self) -> int:
-        """Every searchable parameter counts, conditionals included when active."""
-        return len(self.search)
+        """The most dimensions that can be *simultaneously* active.
+
+        This is the number that matters statistically: a trial only explores the
+        parameters actually in play, so mutually-exclusive branches do not
+        compound. Counting every declared parameter instead would forbid
+        perfectly sound designs (01-Research §4.1 caps the search at ten
+        dimensions per study — per trial, not per file).
+        """
+        controllers: dict[str, list[Any]] = {}
+        for p in self.search.values():
+            if not p.condition:
+                continue
+            parent, _ = parse_condition(p.condition)
+            if parent in controllers or parent not in self.search:
+                continue
+            parent_param = self.search[parent]
+            if parent_param.type == "bool":
+                controllers[parent] = [True, False]
+            elif parent_param.type == "cat":
+                controllers[parent] = list(parent_param.choices)
+            else:
+                controllers[parent] = [None]   # numeric parents: treat as always on
+
+        if not controllers:
+            return len(self.search)
+
+        import itertools
+        names = list(controllers)
+        best = 0
+        for combo in itertools.product(*(controllers[n] for n in names)):
+            values = dict(zip(names, combo))
+            active = sum(
+                1 for n in self.search
+                if not self.search[n].condition or self.is_active(n, values)
+            )
+            best = max(best, active)
+        return best
 
 
 _CONSTRAINT_RE = re.compile(r"^[\w\s\"'.<>=!+\-*/()%]+$")
@@ -372,11 +440,21 @@ def load_search_space(path: str | Path) -> SearchSpace:
         )
 
     for pname, p in params.items():
-        if p.condition and p.condition not in params and p.condition not in fixed:
+        if not p.condition:
+            continue
+        parent, required = parse_condition(p.condition)
+        if parent not in params and parent not in fixed:
             raise ConfigError(
-                f"search.{pname}.condition references {p.condition!r}, "
+                f"search.{pname}.condition references {parent!r}, "
                 "which is neither a searched nor a fixed parameter"
             )
+        if required is not True and parent in params:
+            parent_param = params[parent]
+            if parent_param.type == "cat" and required not in parent_param.choices:
+                raise ConfigError(
+                    f"search.{pname}.condition requires {parent}=={required!r}, "
+                    f"but that is not one of its choices {parent_param.choices}"
+                )
 
     space = SearchSpace(
         fixed=fixed,
@@ -388,8 +466,11 @@ def load_search_space(path: str | Path) -> SearchSpace:
 
     if space.effective_dimensions > MAX_SEARCH_DIMENSIONS:
         raise ConfigError(
-            f"search space has {space.effective_dimensions} dimensions; the limit is "
-            f"{MAX_SEARCH_DIMENSIONS} (01-Research §4.1). Split into staged studies."
+            f"search space has {space.effective_dimensions} simultaneously-active "
+            f"dimensions ({space.declared_dimensions} declared); the limit is "
+            f"{MAX_SEARCH_DIMENSIONS} (01-Research §4.1). Either split into staged "
+            "studies, or make competing options mutually exclusive with an "
+            "'X == value' condition so they do not compound."
         )
     if not space.notes.strip():
         raise ConfigError(

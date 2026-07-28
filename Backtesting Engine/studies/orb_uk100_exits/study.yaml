@@ -1,0 +1,77 @@
+# ORB Bot x UK100, STUDY B — exit management, with entry geometry frozen.
+#
+# Statistically this is the right target: an intraday breakout on an index
+# generates the trade counts that make Sharpe, DSR and PBO meaningful, which is
+# exactly what ThreeDownDaysBot cannot do (~15 trades/year).
+#
+# READ BEFORE RUNNING — the timezone decision below is not cosmetic.
+
+study: orb_uk100_exits_v1
+
+ctrader_console_tag: "5.9.0.0"
+
+bot:
+  source: "ORB Projects/ORB Bot/ORB_Bot_V_Code_ORB_lock_fixed.cs"
+  class_name: OrbBreakoutBot
+  dotnet_target: net6.0
+
+market:
+  symbol: UK100
+  # THROUGHPUT LEVER. m1 gives the finest event resolution and is the safest
+  # choice for a breakout bot whose entry offset is measured in pips — but it is
+  # also the slowest possible setting, and this study is ~1,600 runs over ~1.5M
+  # bars. If `engine throughput` says m1 is unaffordable, test m5 against an m1
+  # baseline on a handful of parameter sets FIRST and only switch if the trade
+  # lists agree closely. Never switch for speed alone.
+  period: m1
+  data_glob: "UK100 historical Pricing data/data/UK100_M_1_*.csv"
+
+account:
+  nominal_balance: 10000
+  currency: GBP
+  risk_per_trade: 100
+
+execution:
+  # PLACEHOLDER — replace with your observed Pepperstone UK100 figures. Index
+  # CFD spreads widen sharply around the 08:00 cash open, which is precisely
+  # when this strategy trades, so a median spread understates the real cost.
+  # Treat the stressed profile as the honest one until you have measured it.
+  spread_pips:
+    realistic: 1.0
+    stressed: 2.5
+  commission_per_million: 0.0
+  slippage_model:
+    dist: lognormal
+    median_pips: 0.5
+    p95_pips: 4.0
+
+windows:
+  # Set from the actual fetched series once `engine data-prepare` reports it;
+  # the fetch targets 5 years back from 2026-07-24.
+  data_start: 2021-08-02
+  holdout_start: 2025-07-01
+  wfa:
+    mode: rolling
+    is_months: 18
+    oos_months: 6
+    step_months: 6
+
+budgets:
+  # PROVISIONAL until `engine throughput` has been run on the machine that will
+  # do the work. At ~1.5M bars per backtest these numbers are the difference
+  # between an overnight run and a fortnight.
+  stage1_random: 200
+  stage1_tpe: 600
+  wfa_trials_per_fold: 150
+  mc_resamples: 5000
+
+gates:
+  # An intraday breakout that fires on most sessions should clear this
+  # comfortably. If it cannot, the low trade count is itself the finding.
+  min_trades_per_year: 100
+  max_dd_pct: 20
+  min_pf: 1.15
+  wfe_min: 0.5
+  dsr_min: 0.95
+  pbo_max: 0.25
+  plateau_retention: 0.7

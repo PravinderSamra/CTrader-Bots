@@ -77,6 +77,30 @@ def _enable_wal(path: Path) -> None:
         con.close()
 
 
+def _condition_order(space: SearchSpace) -> list[str]:
+    """Order parameters so every parent is sampled before its dependants."""
+    from engine.config import parse_condition
+
+    ordered: list[str] = []
+    seen: set[str] = set()
+
+    def visit(name: str, stack: tuple[str, ...] = ()) -> None:
+        if name in seen or name not in space.search:
+            return
+        if name in stack:
+            raise ValueError(f"circular condition involving {name!r}")
+        p = space.search[name]
+        if p.condition:
+            parent, _ = parse_condition(p.condition)
+            visit(parent, stack + (name,))
+        seen.add(name)
+        ordered.append(name)
+
+    for name in space.search:
+        visit(name)
+    return ordered
+
+
 def suggest(trial: optuna.Trial, space: SearchSpace) -> dict[str, Any]:
     """Build one parameter set, honouring conditional parameters.
 
@@ -86,11 +110,12 @@ def suggest(trial: optuna.Trial, space: SearchSpace) -> dict[str, Any]:
     were actually in play.
     """
     values: dict[str, Any] = {}
-    for name, p in space.search.items():
-        if p.condition:
-            parent = values.get(p.condition, space.fixed.get(p.condition))
-            if not parent:
-                continue
+    # Parents must be decided before their dependants, or a condition would be
+    # evaluated against a value that has not been sampled yet.
+    for name in _condition_order(space):
+        p = space.search[name]
+        if p.condition and not space.is_active(name, values):
+            continue
         if p.type == "float":
             values[name] = trial.suggest_float(name, p.low, p.high, step=p.step)
         elif p.type == "int":
