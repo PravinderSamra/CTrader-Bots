@@ -18,10 +18,6 @@ fixed:
   "Use Fixed UTC Times": false
   "Session Time Zone": EuropeLondon
 
-  # ── The opening range anchor ──────────────────────────────────────────────
-  # 08:00 London is the FTSE cash open. This is the strategy's definition, not
-  # a parameter — moving it would be a different hypothesis entirely.
-  "Range Start Time": "08:00:00"
   "Trading Start Time": "00:00:00"
 
   # ── Session housekeeping ─────────────────────────────────────────────────
@@ -77,6 +73,10 @@ fixed:
 
   "Re-Entry Mode": AfterStopLossOnly
   "Max Trades Per Day": 1
+  # Stop management moves wholly to orb_uk100_exits, where its trigger and step
+  # are tuned properly. Probing it here at default settings would have cost a
+  # dimension to answer a question the exits study answers better.
+  "Enable Dynamic Stop": false
   # CloseBeyond is the conservative definition. BodyCross/WickBeyond are tested
   # in orb_uk100_exits once entry geometry is settled — WickBeyond in particular
   # tends to flatter in-sample and needs the walk-forward to judge it.
@@ -135,9 +135,16 @@ fixed:
   "Draw Threshold Lines": false
 
 search:
+  # ── The session anchor: WHEN the opening range forms ─────────────────────
+  # Searched as an anchor plus a duration rather than two absolute times, so
+  # every sampled point is coherent by construction. Range End Time is derived
+  # (see the `derived:` block) — it is never sampled directly.
+  "Range Start Time":
+    {type: cat, choices: ["08:00:00", "09:00:00", "14:30:00"]}
+  "_Range Minutes":
+    {type: cat, choices: [15, 30, 60]}
+
   # ── Entry (always active) ────────────────────────────────────────────────
-  "Range End Time":
-    {type: cat, choices: ["08:15:00", "08:30:00", "09:00:00"]}
   "Entry Offset Pips":
     {type: float, low: 0.0, high: 15.0, step: 2.5}
   "Stop Loss ORB Percent":
@@ -167,23 +174,31 @@ search:
   "TP2 R":
     {type: float, low: 1.5, high: 5.0, step: 0.5, condition: "Enable Multi TP == true"}
 
-  # Trailing/break-even: searched as a binary probe at default settings.
-  # "Does moving the stop help at all?" is a different question from "what is
-  # the best trigger", and the second is only worth asking if the first says
-  # yes. Its numeric parameters are tuned in orb_uk100_exits with entry frozen.
-  "Enable Dynamic Stop":
-    {type: bool}
+derived:
+  # Range End Time is computed, never sampled. This is what makes searching the
+  # anchor safe: a 14:30 start can only ever pair with a 14:45/15:00/15:30 end.
+  "Range End Time":
+    from: "Range Start Time"
+    add_minutes: "_Range Minutes"
 
 constraints:
   # TP2 must sit beyond TP1 or the ladder is incoherent.
   - "TP2 R > TP1 R"
 
 notes: |
-  Range End Time — how long the opening range is allowed to form. Your build
-    plan specifies the 15-minute range (08:00-08:15 London), so that is the
-    hypothesis under test; 08:30 and 09:00 are included to check whether the
-    15-minute choice is actually load-bearing or merely conventional. If 08:15
-    wins on a plateau, that is real evidence for your existing approach.
+  Range Start Time — the session anchor: what event the opening range is
+    measured from. 08:00 is the FTSE cash open and is what you trade today.
+    09:00 tests whether letting the first hour's noise clear produces a cleaner
+    range. 14:30 is the US cash open, which drives a large share of FTSE
+    afternoon movement and is a genuinely different strategy wearing the same
+    mechanics. If 08:00 wins on a plateau, that is real evidence for your
+    current approach rather than an assumption behind it.
+  _Range Minutes — how long the range forms for: 15, 30 or 60 minutes. The
+    leading underscore marks it engine-local; it is never sent to the bot.
+    Range End Time is derived from anchor + duration, which is what keeps the
+    pairing coherent — searching two absolute times independently would allow a
+    14:30 start with an 08:15 end, and most of the sampled space would be
+    invalid.
   Entry Offset Pips — how far beyond the range boundary price must travel
     before entry. This is the core false-breakout filter. 0 means "trade the
     touch"; above ~15 pips on the FTSE you are chasing a move that has already
@@ -223,19 +238,18 @@ notes: |
     something on an average session, TP2 far enough to pay for the runners.
     TP2 Close Percent is pinned to the remainder rather than searched, so the
     position always closes fully and one dimension is saved.
-  Enable Dynamic Stop / Break Even Trigger R / Dynamic Step R — whether the
-    stop moves as the trade works, and how aggressively. Orthogonal to the
-    target choice, so it is a separate branch: the search can pair a ladder
-    with a trailing stop, or either alone, or neither.
-
-  DIMENSION BUDGET: 14 parameters are declared, but a single trial explores at
-  most 10 of them, because the exit regimes are mutually exclusive. The engine
+  DIMENSION BUDGET: 11 parameters are declared, but a single trial explores at
+  most 10, because the two target regimes are mutually exclusive. The engine
   enforces the limit on simultaneously-active dimensions, which is the number
   that matters statistically — a trial cannot overfit a parameter that was not
   in play.
 
-  NOT searched, deliberately:
+  DEFERRED TO orb_uk100_exits (searched there, not left at defaults):
+    Enable Dynamic Stop, Break Even Trigger R, Dynamic Step R — stop management
+      is tuned properly with entry frozen, rather than probed at default
+      settings here for the price of a dimension.
+    Breakout Cross Type, Max Trades Per Day, Re-Entry Mode, TP1 Close Percent.
     TP3/TP4 — a four-rung ladder on a trade that closes at 16:25 is more rungs
       than the move supports, at two dimensions each.
     Early Risk Reduction — overlaps break-even so directly that testing both at
-      once makes neither attributable. Worth its own study if break-even wins.
+      once makes neither attributable. Its own study if break-even wins.

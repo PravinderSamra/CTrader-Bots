@@ -180,7 +180,9 @@ class Stage1Search:
 
     def _evaluate(self, trial: optuna.Trial) -> float:
         params = suggest(trial, self.space)
-        merged = {**self.space.fixed, **params}
+        # Engine-local parameters (leading underscore) drive derived values and
+        # must not reach the bot, which would reject them as unknown.
+        merged = {**self.space.fixed, **self.space.bot_parameters(params)}
 
         spec = RunSpec(
             parameters=merged, csv=self.csv, start=self.start, end=self.end,

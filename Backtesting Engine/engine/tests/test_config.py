@@ -220,6 +220,71 @@ class TestSearchSpace:
         assert space.declared_dimensions == 13
         assert space.effective_dimensions == 7      # Mode + one 6-param branch
 
+    def test_derived_end_time_is_computed_from_anchor_plus_duration(self, tmp_path):
+        cfg = {**VALID_SPACE,
+               "search": {
+                   "Range Start Time": {"type": "cat",
+                                        "choices": ["08:00:00", "14:30:00"]},
+                   "_Range Minutes": {"type": "cat", "choices": [15, 60]},
+               },
+               "derived": {"Range End Time": {"from": "Range Start Time",
+                                              "add_minutes": "_Range Minutes"}}}
+        space = load_search_space(write(tmp_path, cfg, "search_space.yaml"))
+
+        out = space.bot_parameters({"Range Start Time": "08:00:00", "_Range Minutes": 15})
+        assert out["Range End Time"] == "08:15:00"
+        out = space.bot_parameters({"Range Start Time": "14:30:00", "_Range Minutes": 60})
+        assert out["Range End Time"] == "15:30:00"
+
+    def test_engine_local_params_never_reach_the_bot(self, tmp_path):
+        # The bot would reject an unknown "_Range Minutes" parameter outright.
+        cfg = {**VALID_SPACE,
+               "search": {
+                   "Range Start Time": {"type": "cat", "choices": ["08:00:00"]},
+                   "_Range Minutes": {"type": "cat", "choices": [15]},
+               },
+               "derived": {"Range End Time": {"from": "Range Start Time",
+                                              "add_minutes": "_Range Minutes"}}}
+        space = load_search_space(write(tmp_path, cfg, "search_space.yaml"))
+        out = space.bot_parameters({"Range Start Time": "08:00:00", "_Range Minutes": 15})
+        assert "_Range Minutes" not in out
+        assert set(out) == {"Range Start Time", "Range End Time"}
+
+    def test_anchor_search_can_never_produce_an_incoherent_range(self, tmp_path):
+        # The whole reason for deriving: an absolute end time searched
+        # independently could pair a 14:30 start with an 08:15 end.
+        cfg = {**VALID_SPACE,
+               "search": {
+                   "Range Start Time": {"type": "cat",
+                                        "choices": ["08:00:00", "09:00:00", "14:30:00"]},
+                   "_Range Minutes": {"type": "cat", "choices": [15, 30, 60]},
+               },
+               "derived": {"Range End Time": {"from": "Range Start Time",
+                                              "add_minutes": "_Range Minutes"}}}
+        space = load_search_space(write(tmp_path, cfg, "search_space.yaml"))
+        for start in ("08:00:00", "09:00:00", "14:30:00"):
+            for mins in (15, 30, 60):
+                out = space.bot_parameters(
+                    {"Range Start Time": start, "_Range Minutes": mins})
+                assert out["Range End Time"] > start, (start, mins)
+
+    def test_derived_colliding_with_a_real_param_is_rejected(self, tmp_path):
+        cfg = {**VALID_SPACE,
+               "search": {"Range Start Time": {"type": "cat", "choices": ["08:00:00"]},
+                          "_Range Minutes": {"type": "cat", "choices": [15]},
+                          "Range End Time": {"type": "cat", "choices": ["08:15:00"]}},
+               "derived": {"Range End Time": {"from": "Range Start Time",
+                                              "add_minutes": "_Range Minutes"}}}
+        with pytest.raises(ConfigError, match="collides"):
+            load_search_space(write(tmp_path, cfg, "search_space.yaml"))
+
+    def test_derived_referencing_a_missing_param_is_rejected(self, tmp_path):
+        cfg = {**VALID_SPACE,
+               "derived": {"Range End Time": {"from": "Nonexistent",
+                                              "add_minutes": "Max Hold Bars"}}}
+        with pytest.raises(ConfigError, match="neither searched nor fixed"):
+            load_search_space(write(tmp_path, cfg, "search_space.yaml"))
+
     def test_dangling_condition_is_rejected(self, tmp_path):
         cfg = {**VALID_SPACE, "search": {
             "X": {"type": "int", "low": 1, "high": 5, "condition": "Nonexistent Toggle"},

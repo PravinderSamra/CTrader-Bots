@@ -304,6 +304,11 @@ def load_study(path: str | Path) -> StudyConfig:
 # search_space.yaml (build-spec §5.2)
 # --------------------------------------------------------------------------
 
+# Parameters whose name starts with this are engine-local: they drive derived
+# values and are never passed to the bot, which would reject them as unknown.
+LOCAL_PREFIX = "_"
+
+
 @dataclass(frozen=True)
 class SearchParam:
     name: str
@@ -313,6 +318,33 @@ class SearchParam:
     step: float | None = None
     choices: list[Any] = field(default_factory=list)
     condition: str | None = None
+
+    @property
+    def is_local(self) -> bool:
+        return self.name.startswith(LOCAL_PREFIX)
+
+
+@dataclass(frozen=True)
+class DerivedParam:
+    """A bot parameter computed from searched ones.
+
+    Exists because some bot parameters are only meaningful as a *pair*. The ORB
+    range is the motivating case: Range Start and Range End are both absolute
+    times, so searching them independently yields incoherent combinations like
+    start 14:30 / end 08:15. Searching an anchor plus a duration, and deriving
+    the end time, keeps every sampled point valid by construction — far better
+    than generating nonsense and rejecting it afterwards.
+    """
+    name: str
+    source: str          # parameter holding a "HH:MM:SS" time
+    add_minutes: str     # parameter holding a whole number of minutes
+
+    def resolve(self, values: dict[str, Any]) -> str:
+        from datetime import datetime, timedelta
+        base = str(values[self.source])
+        minutes = int(values[self.add_minutes])
+        t = datetime.strptime(base, "%H:%M:%S") + timedelta(minutes=minutes)
+        return t.strftime("%H:%M:%S")
 
 
 def parse_condition(expr: str) -> tuple[str, Any]:
@@ -342,6 +374,15 @@ class SearchSpace:
     constraints: list[str]
     notes: str
     path: Path
+    derived: dict[str, DerivedParam] = field(default_factory=dict)
+
+    def bot_parameters(self, values: dict[str, Any]) -> dict[str, Any]:
+        """The parameters actually sent to the bot: searched + derived, minus locals."""
+        out = {k: v for k, v in values.items() if not k.startswith(LOCAL_PREFIX)}
+        for name, d in self.derived.items():
+            if d.source in values and d.add_minutes in values:
+                out[name] = d.resolve(values)
+        return out
 
     def is_active(self, name: str, values: dict[str, Any]) -> bool:
         """Whether a parameter is in play given the parent values chosen so far."""
@@ -456,12 +497,33 @@ def load_search_space(path: str | Path) -> SearchSpace:
                     f"but that is not one of its choices {parent_param.choices}"
                 )
 
+    derived: dict[str, DerivedParam] = {}
+    for dname, spec in (raw.get("derived") or {}).items():
+        if not isinstance(spec, dict) or "from" not in spec or "add_minutes" not in spec:
+            raise ConfigError(
+                f"derived.{dname}: expected a mapping with 'from' and 'add_minutes'"
+            )
+        src, mins = spec["from"], spec["add_minutes"]
+        for ref, label in ((src, "from"), (mins, "add_minutes")):
+            if ref not in params and ref not in fixed:
+                raise ConfigError(
+                    f"derived.{dname}.{label} references {ref!r}, which is neither "
+                    "searched nor fixed"
+                )
+        if dname in params or dname in fixed:
+            raise ConfigError(
+                f"derived.{dname} collides with a searched or fixed parameter — a "
+                "derived value must not also be set directly"
+            )
+        derived[dname] = DerivedParam(name=dname, source=src, add_minutes=mins)
+
     space = SearchSpace(
         fixed=fixed,
         search=params,
         constraints=list(raw.get("constraints") or []),
         notes=str(raw.get("notes") or ""),
         path=path.resolve(),
+        derived=derived,
     )
 
     if space.effective_dimensions > MAX_SEARCH_DIMENSIONS:
