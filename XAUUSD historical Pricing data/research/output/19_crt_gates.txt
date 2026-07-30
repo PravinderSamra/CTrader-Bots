@@ -1,0 +1,84 @@
+==============================================================================
+CRT GOLD SCALP — ACCEPTANCE GATES & SENSITIVITY
+==============================================================================
+
+### GATE 5 — COST STRESS
+  ZERO cost (theoretical edge)     n=2722 win%= 30.5 expectancy=+0.0246R  totR=   +66.9
+  1x modelled cost                 n=2722 win%= 28.8 expectancy=-0.3092R  totR=  -841.8
+  2x cost stress (spec requirement) n=2722 win%= 26.8 expectancy=-0.6431R  totR= -1750.4
+  VERDICT: fails unless the zero-cost row is comfortably positive.
+
+### GATE 2 — DIRECTION TEST (continuation must be WORSE than fade)
+  sweep-FADE (strategy):        n=2722 expectancy=-0.3092R
+  sweep-CONTINUATION (control): n=2723 expectancy=-0.3467R
+  VERDICT: PASS — reversion is the signal
+
+### GATE 3 — SESSION ABLATION (killzone filter must add value)
+  killzones ON  (LDN+NY): n=2722 expectancy=-0.3092R
+  killzones OFF (all day): n=5530 expectancy=-0.4170R
+  VERDICT: PASS — filter helps
+
+### GATE 4 — OUT-OF-SAMPLE (strict 60/40 chronological split)
+  IS  (2021-07-22 → 2024-06-13): n=1633 expectancy=-0.3288R
+  OOS (2024-06-14 → 2026-07-16): n=1089 expectancy=-0.2800R
+  VERDICT: FAIL — OOS expectancy negative after costs
+
+### GATE 1 — RANDOM-ENTRY NULL (identical geometry & sessions, bootstrap)
+  null distribution of expectancy (1,000 runs, n=2722 each):
+    p5=-0.3657R  median=-0.3181R  p95=-0.2697R
+  strategy expectancy: -0.3092R
+  VERDICT: FAIL — strategy does not beat the 95th percentile of random entry
+
+### PARAMETER SENSITIVITY (one-at-a-time around spec defaults)
+variant                                n    win%   expectancy      totR
+DEFAULT (H4)                        2722    28.8      -0.3092    -841.8
+TF_R = H1                           6491    31.2      -0.3705   -2405.0
+delta = 0.05 ATR                    2738    28.7      -0.3135    -858.2
+delta = 0.25 ATR                    2636    30.2      -0.2743    -723.1
+W = 5                               2720    28.0      -0.3238    -880.6
+W = 30                              2702    29.1      -0.3137    -847.5
+confirm B (MSS)                     3290    31.5      -0.2341    -770.0
+entry limit_RL                      2371    23.1      -0.3743    -887.4
+entry limit_Q25                     2199    22.3      -0.6172   -1357.3
+entry FVG                           1844    26.1      -0.3365    -620.6
+target Q75 single                   2721    27.0      -0.2919    -794.2
+target RH single                    2722    24.7      -0.2987    -813.1
+rng_min = 0.8                       1572    26.7      -0.2758    -433.6
+break-even after T1                 2722    31.8      -0.3087    -840.2
+time_stop 240min                    2722    28.1      -0.3085    -839.7
+LDN only                            1413    25.3      -0.3909    -552.4
+NY only                             1309    32.5      -0.2211    -289.4
+H1 + limit_RL + Q75                 5330    22.0      -0.4979   -2653.7
+
+### GATE 6 — MULTIPLE-TESTING HAIRCUT
+  parameter combinations evaluated: 23
+  with 23 trials, a Bonferroni-corrected 5% bar needs p < 0.0022
+  No variant is positive, so no haircut is required — nothing survives to deflate.
+
+==============================================================================
+ACCOUNT SIMULATION — $100,000, risking 1% per trade
+==============================================================================
+
+BASELINE (spec defaults) (compounding):
+  final equity $13   net P&L $-99,987   (-100.0%)
+  WEEKLY : mean $-383  median $-7  best $+9,053  worst $-11,508  positive 24% of 261 weeks  avg 10.4 trades/wk
+  MONTHLY: mean $-1,639  median $-54  best $+7,275  worst $-17,264  positive 15% of 61 months  avg 44.6 trades/mo
+  monthly P&L by year ($):
+    m          1        2       3       4        5       6       7       8        9       10      11       12
+    y                                                                                                        
+    2021      NaN      NaN     NaN     NaN      NaN     NaN -2314.0  4624.0 -15346.0 -5744.0 -3059.0 -14147.0
+    2022 -17264.0 -10971.0 -1572.0  7275.0 -13012.0 -3410.0 -5848.0 -5164.0     97.0 -3210.0  -641.0   -322.0
+    2023  -2910.0  -1601.0  -552.0 -1040.0   -577.0  -551.0    47.0  -677.0   -109.0  -220.0  -309.0   -125.0
+    2024   -359.0   -339.0   -25.0  -200.0   -122.0   -26.0   -54.0   -12.0    -37.0   -41.0   -31.0    -14.0
+    2025    -34.0     -9.0   -11.0    -1.0     -7.0     1.0    -8.0    -1.0     -1.0     1.0    -3.0     -1.0
+    2026      1.0      2.0    -3.0    -1.0     -1.0     1.0    -2.0     NaN      NaN     NaN     NaN      NaN
+
+BASELINE (spec defaults) (fixed $1,000 risk):
+  final equity $-1,156   net P&L $-101,156   (-101.2%)
+  WEEKLY : mean $-3,065  median $-3,204  best $+11,169  worst $-16,942  positive 27% of 33 weeks  avg 10.5 trades/wk
+  MONTHLY: mean $-11,240  median $-6,012  best $+5,836  worst $-30,519  positive 11% of 9 months  avg 38.4 trades/mo
+  monthly P&L by year ($):
+    m          1        2       3       7       8        9       10      11       12
+    y                                                                               
+    2021      NaN      NaN     NaN -2202.0  5836.0 -15367.0 -6012.0 -2489.0 -19257.0
+    2022 -30519.0 -26254.0 -4892.0     NaN     NaN      NaN     NaN     NaN      NaN

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRT Gold Scalp — Backtest Specification</title>
+<style>
+  :root{
+    --paper:#F4F3EE;
+    --panel:#FBFAF6;
+    --ink:#161613;
+    --muted:#6E6C63;
+    --line:#D9D6CC;
+    --blue:#153A56;      /* structural accent — institutional */
+    --brass:#9A7B44;     /* gold nod, used only for phase markers */
+    --brass-soft:#EDE4D0;
+    --up:#1F6B4A;
+    --down:#8A2B2B;
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--serif); font-size:17px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:840px; margin:0 auto; padding:56px 28px 96px;}
+
+  /* Masthead */
+  .mast{border-bottom:2px solid var(--ink); padding-bottom:20px; margin-bottom:8px;}
+  .eyebrow{
+    font-family:var(--mono); font-size:11.5px; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--blue); margin:0 0 14px;
+  }
+  h1{
+    font-family:var(--sans); font-weight:700; font-size:37px; line-height:1.08;
+    letter-spacing:-.02em; margin:0 0 14px;
+  }
+  .sub{font-size:18px; color:var(--muted); margin:0; max-width:60ch;}
+  .meta{
+    display:flex; flex-wrap:wrap; gap:6px 26px; margin-top:22px;
+    font-family:var(--mono); font-size:12px; color:var(--muted);
+  }
+  .meta b{color:var(--ink); font-weight:600;}
+
+  /* Section scaffolding */
+  section{margin-top:52px;}
+  h2{
+    font-family:var(--sans); font-weight:700; font-size:15px;
+    letter-spacing:.02em; margin:0 0 18px; padding-bottom:9px;
+    border-bottom:1px solid var(--line); display:flex; align-items:baseline; gap:12px;
+  }
+  h2 .num{
+    font-family:var(--mono); font-size:12px; color:var(--brass);
+    font-weight:700; letter-spacing:.05em;
+  }
+  h3{font-family:var(--sans); font-weight:650; font-size:15px; margin:26px 0 8px;}
+  p{margin:0 0 15px;}
+  .lead{font-size:18px;}
+  strong{font-weight:650;}
+  em{color:var(--blue); font-style:normal; font-weight:600;}
+
+  /* Phase strip (the signature element) */
+  .diagram{
+    background:var(--panel); border:1px solid var(--line); border-radius:4px;
+    padding:26px 24px 16px; margin:22px 0 8px;
+  }
+  .diagram svg{width:100%; height:auto; display:block;}
+  .legend{
+    display:flex; flex-wrap:wrap; gap:18px; margin-top:14px;
+    font-family:var(--mono); font-size:11.5px; color:var(--muted);
+  }
+  .legend span{display:flex; align-items:center; gap:7px;}
+  .swatch{width:11px; height:11px; border-radius:2px; flex:none;}
+
+  /* Phase cards */
+  .phases{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:20px 0;}
+  .phase{
+    background:var(--panel); border:1px solid var(--line);
+    border-top:3px solid var(--brass); border-radius:3px; padding:16px 15px;
+  }
+  .phase .tag{font-family:var(--mono); font-size:10.5px; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--brass); font-weight:700;}
+  .phase h4{font-family:var(--sans); font-size:15px; margin:6px 0 7px; font-weight:650;}
+  .phase p{font-size:14px; color:var(--muted); margin:0; line-height:1.5;}
+
+  /* Rule blocks — monospace, the machine-readable spine */
+  .rule{
+    background:#1C1C18; color:#E9E7DE; border-radius:4px;
+    font-family:var(--mono); font-size:13.5px; line-height:1.7;
+    padding:18px 20px; margin:16px 0; overflow-x:auto;
+    border-left:3px solid var(--brass);
+  }
+  .rule .k{color:#E7C583;}      /* keyword */
+  .rule .c{color:#8B948C;}      /* comment */
+  .rule .v{color:#9CC7E4;}      /* value */
+  .rule .op{color:#D98A7A;}
+
+  /* Numbered step list */
+  ol.steps{list-style:none; counter-reset:s; padding:0; margin:18px 0;}
+  ol.steps>li{
+    counter-increment:s; position:relative; padding:0 0 16px 44px; margin:0;
+    border-left:1px solid var(--line); margin-left:13px;
+  }
+  ol.steps>li:last-child{border-left-color:transparent;}
+  ol.steps>li::before{
+    content:counter(s,decimal-leading-zero); position:absolute; left:-13px; top:-2px;
+    font-family:var(--mono); font-size:12px; font-weight:700; color:#fff;
+    background:var(--blue); width:26px; height:26px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  ol.steps>li b{font-family:var(--sans); font-size:15px;}
+  ol.steps>li .d{font-size:14.5px; color:var(--muted); display:block; margin-top:2px;}
+
+  /* Tables */
+  table{width:100%; border-collapse:collapse; margin:16px 0; font-size:13.5px;}
+  th,td{text-align:left; padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top;}
+  th{font-family:var(--sans); font-size:11.5px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--muted); font-weight:650; border-bottom:1.5px solid var(--ink);}
+  td:first-child{font-family:var(--mono); font-size:12.5px; color:var(--blue); white-space:nowrap;}
+  td code{font-family:var(--mono); font-size:12.5px; background:var(--brass-soft);
+    padding:1px 5px; border-radius:3px;}
+
+  /* Gate list */
+  .gate{
+    background:var(--panel); border:1px solid var(--line); border-radius:3px;
+    padding:14px 16px 14px 46px; margin:11px 0; position:relative; font-size:14.5px;
+  }
+  .gate::before{
+    content:"✓"; position:absolute; left:16px; top:13px; color:var(--up);
+    font-family:var(--sans); font-weight:800; font-size:16px;
+  }
+  .gate b{font-family:var(--sans);}
+
+  /* Callout */
+  .note{
+    border-left:3px solid var(--down); background:#FBF3F1;
+    padding:14px 18px; margin:18px 0; font-size:14.5px;
+  }
+  .note b{color:var(--down);}
+
+  footer{
+    margin-top:64px; padding-top:20px; border-top:1px solid var(--line);
+    font-family:var(--mono); font-size:11.5px; color:var(--muted); line-height:1.7;
+  }
+
+  @media (max-width:620px){
+    .wrap{padding:40px 18px 72px;}
+    h1{font-size:29px;}
+    .phases{grid-template-columns:1fr;}
+    body{font-size:16px;}
+  }
+  @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto;} }
+  :focus-visible{outline:2px solid var(--blue); outline-offset:2px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="mast">
+    <p class="eyebrow">Backtest Specification · v1.0</p>
+    <h1>Candle Range Theory Scalp — XAUUSD</h1>
+    <p class="sub">A failed-breakout liquidity-sweep reversion model. H4/H1 candles define the dealing range; the sweep of a range extreme is the trigger; the M1 chart refines entry. Written to be implemented and tested without discretion.</p>
+    <div class="meta">
+      <span><b>Instrument</b> XAUUSD</span>
+      <span><b>Range TF</b> H4 · H1</span>
+      <span><b>Execution TF</b> M1</span>
+      <span><b>Class</b> Mean-reversion / sweep-fade</span>
+    </div>
+  </header>
+
+  <section>
+    <h2><span class="num">01</span> Thesis — where the edge comes from</h2>
+    <p class="lead">CRT is Wyckoff's spring/upthrust condensed onto a single higher-timeframe candle. The tradable event is not the breakout — it is the <em>failed</em> breakout.</p>
+    <p>Resting stop and breakout orders cluster just beyond the high and low of significant candles. A higher-timeframe extreme (an H4 or H1 high/low) sits on a deeper pool of that resting liquidity than any M1 level does. Price is drawn to run that pool; if the run <strong>immediately fails</strong> — price sweeps beyond the extreme and closes back inside the range — it signals the breakout had no continuation and the traders who triggered are now trapped. Their forced exit fuels the reverse move toward the opposite side of the range.</p>
+    <p>Three things convert that observation into an actual edge, and each is <strong>independently testable</strong> rather than assumed:</p>
+    <div class="phases">
+      <div class="phase"><span class="tag">Lever 1</span><h4>Deep liquidity anchor</h4><p>Fading H4/H1 extremes fades the levels most likely to hold real resting orders — not arbitrary M1 noise.</p></div>
+      <div class="phase"><span class="tag">Lever 2</span><h4>Tight structural stop</h4><p>M1 entry places the stop just beyond the sweep extreme. Small stop against a range-width target = high reward:risk. This is the real profit engine, not hit rate.</p></div>
+      <div class="phase"><span class="tag">Lever 3</span><h4>Time conditioning</h4><p>The sweep (the "Judas swing") disproportionately fires at the London and New York opens, when liquidity is injected. Conditioning on killzones lifts the base rate.</p></div>
+    </div>
+    <p>The backtest exists to measure whether these levers survive realistic costs on gold — not to confirm a belief.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> The setup, visualised</h2>
+    <div class="diagram">
+      <svg viewBox="0 0 760 260" role="img" aria-label="CRT long setup: range, sweep below the low, return inside, expansion to the range high.">
+        <!-- level lines -->
+        <g font-family="ui-monospace, monospace" font-size="11" fill="#6E6C63">
+          <line x1="60" y1="40"  x2="700" y2="40"  stroke="#153A56" stroke-width="1.4"/>
+          <text x="704" y="44" fill="#153A56">RH · target</text>
+          <line x1="60" y1="95"  x2="700" y2="95"  stroke="#D9D6CC" stroke-width="1" stroke-dasharray="4 4"/>
+          <text x="704" y="99">Q75</text>
+          <line x1="60" y1="130" x2="700" y2="130" stroke="#9A7B44" stroke-width="1" stroke-dasharray="2 4"/>
+          <text x="704" y="134" fill="#9A7B44">EQ (0.50)</text>
+          <line x1="60" y1="165" x2="700" y2="165" stroke="#D9D6CC" stroke-width="1" stroke-dasharray="4 4"/>
+          <text x="704" y="169">Q25</text>
+          <line x1="60" y1="205" x2="700" y2="205" stroke="#153A56" stroke-width="1.4"/>
+          <text x="704" y="209" fill="#153A56">RL · swept</text>
+        </g>
+        <!-- price path -->
+        <path d="M70,150 L150,150 L200,158 L250,150 L300,205 L330,238 L355,205 L390,150 L440,120 L520,90 L610,45"
+              fill="none" stroke="#161613" stroke-width="2.2" stroke-linejoin="round"/>
+        <!-- sweep marker -->
+        <circle cx="330" cy="238" r="4.5" fill="#8A2B2B"/>
+        <text x="300" y="256" font-family="ui-monospace, monospace" font-size="11" fill="#8A2B2B">sweep low − δ</text>
+        <!-- entry marker -->
+        <circle cx="390" cy="150" r="4.5" fill="#1F6B4A"/>
+        <text x="398" y="146" font-family="ui-monospace, monospace" font-size="11" fill="#1F6B4A">entry (close back inside)</text>
+        <!-- phase bands -->
+        <g font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#9A7B44" text-anchor="middle">
+          <text x="150" y="28">A · RANGE</text>
+          <text x="330" y="28">M · SWEEP</text>
+          <text x="520" y="28">D · EXPANSION</text>
+        </g>
+      </svg>
+      <div class="legend">
+        <span><span class="swatch" style="background:#153A56"></span>Range bounds (RH / RL)</span>
+        <span><span class="swatch" style="background:#8A2B2B"></span>Manipulation / sweep</span>
+        <span><span class="swatch" style="background:#1F6B4A"></span>Entry on failure</span>
+        <span><span class="swatch" style="background:#9A7B44"></span>Quarter / equilibrium</span>
+      </div>
+    </div>
+    <p style="font-size:14.5px;color:var(--muted)">Long shown. The short is the mirror: sweep of <code>RH</code>, close back below, expansion to <code>RL</code>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> Definitions &amp; notation</h2>
+    <p>All levels derive from the most recent <strong>closed</strong> candle on the range timeframe (<code>R</code>). Resample H1/H4 from the same M1 series so levels are exact.</p>
+    <div class="rule">
+<span class="c"># Range candle R = last CLOSED bar on TF_R (H4 or H1)</span>
+RH  <span class="op">=</span> high(R)          <span class="c"># range high</span>
+RL  <span class="op">=</span> low(R)           <span class="c"># range low</span>
+RNG <span class="op">=</span> RH <span class="op">-</span> RL         <span class="c"># range width</span>
+EQ  <span class="op">=</span> (RH <span class="op">+</span> RL) <span class="op">/</span> 2   <span class="c"># equilibrium (0.50)</span>
+Q25 <span class="op">=</span> RL <span class="op">+</span> 0.25<span class="op">*</span>RNG
+Q75 <span class="op">=</span> RL <span class="op">+</span> 0.75<span class="op">*</span>RNG
+
+<span class="c"># δ = minimum sweep penetration (noise filter)</span>
+<span class="k">delta</span> <span class="op">=</span> max( min_ticks , k <span class="op">*</span> ATR_M1(14) )
+
+<span class="c"># Killzones (UK local; shift for BST/GMT)</span>
+KZ_LONDON <span class="op">=</span> 07:00–10:00
+KZ_NEWYORK <span class="op">=</span> 13:30–16:30
+    </div>
+    <p style="font-size:14.5px;color:var(--muted)"><strong>Sweep (long side):</strong> an M1 low prints <code>≤ RL − delta</code>. <strong>Return-inside:</strong> a later M1 bar <em>closes</em> <code>&gt; RL</code> within <code>W</code> M1 bars of the sweep extreme.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> Entry logic — long (mirror for short)</h2>
+    <ol class="steps">
+      <li><b>Define the range.</b><span class="d">On each new closed <code>R</code>, compute RH, RL, RNG, EQ, Q25, Q75. Skip if <code>RNG &lt; 0.5 × ATR_H4(14)</code> — a dead range has no fuel.</span></li>
+      <li><b>Arm on a killzone sweep.</b><span class="d">Wait for an M1 low <code>≤ RL − delta</code> occurring inside a killzone. Record the sweep extreme <code>SL_ext</code>.</span></li>
+      <li><b>Confirm the failure.</b><span class="d">Model A — first M1 close back above <code>RL</code> within <code>W</code> bars. Model B — M1 market-structure shift after the sweep (close above the last M1 swing high formed during the sweep). Test both.</span></li>
+      <li><b>Enter.</b><span class="d">One of: market-on-confirm · limit at <code>RL</code> · limit at <code>Q25</code> · fill of the M1 displacement FVG. Parameter <code>entry_model</code>.</span></li>
+      <li><b>Place the stop.</b><span class="d"><code>SL = SL_ext − buffer</code>, buffer = <code>0.25 × ATR_M1(14)</code>.</span></li>
+      <li><b>Set targets.</b><span class="d">T1 = <code>EQ</code> (scale out p%), T2 = <code>RH</code>. Alt single target = <code>Q75</code>. Parameter <code>target_model</code>.</span></li>
+      <li><b>Manage &amp; cap.</b><span class="d">Optional break-even after T1. Time-stop: exit if neither T1 nor SL hit within <code>M</code> minutes. Max one trade per <code>R</code> per direction — no re-entry after invalidation on the same range candle.</span></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> Parameter grid</h2>
+    <p>Defaults isolate the raw edge; ranges are for controlled sweeps. Every combination tried counts toward the multiple-testing haircut in §07 — keep the grid deliberate, not exhaustive.</p>
+    <table>
+      <thead><tr><th>Param</th><th>Default</th><th>Test range</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td>TF_R</td><td>H4</td><td>H4, H1</td><td>Which candle sets the range</td></tr>
+        <tr><td>delta (k·ATR)</td><td>0.10</td><td>0.05 – 0.25</td><td>Min sweep depth / noise filter</td></tr>
+        <tr><td>W (bars)</td><td>15</td><td>5 – 30</td><td>Max sweep→return window</td></tr>
+        <tr><td>confirm_model</td><td>A (close-in)</td><td>A, B (MSS)</td><td>Failure confirmation</td></tr>
+        <tr><td>entry_model</td><td>market</td><td>market, limit_RL, limit_Q25, fvg</td><td>Fill method</td></tr>
+        <tr><td>target_model</td><td>EQ→RH</td><td>EQ→RH, Q75, RH</td><td>Exit geometry</td></tr>
+        <tr><td>session</td><td>LDN+NY</td><td>LDN+NY, all</td><td>Time conditioning</td></tr>
+        <tr><td>rng_min</td><td>0.5·ATR_H4</td><td>0.3 – 0.8</td><td>Skip dead ranges</td></tr>
+        <tr><td>confluence</td><td>off</td><td>off, on</td><td>HTF level gate (isolate raw edge first)</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> Backtest validity — non-negotiable</h2>
+    <p>These are where a CRT backtest silently lies to you. Enforce all of them.</p>
+    <h3>Causality</h3>
+    <p>Detect the sweep and the return-inside bar-by-bar using only past and current M1 data. Never inspect the completed forming-candle's full range — that is look-ahead. Iterate M1 forward and act on closes.</p>
+    <h3>Data &amp; time</h3>
+    <p>Single continuous M1 XAUUSD feed; derive H1/H4 by resampling it. Pin one exchange timezone and handle DST explicitly, or the killzone filter drifts an hour twice a year. Handle rollover and thin-liquidity hours.</p>
+    <h3>Costs — this is what kills M1 gold</h3>
+    <div class="note"><b>Cost realism decides the result.</b> Gold on M1 carries a meaningful spread-bet spread and the entry fires right after a fast sweep, so slippage is adverse exactly when you transact. Model <code>spread</code> + <code>commission</code> + <code>entry_slippage</code> as parameters, and require the edge to survive a <strong>2× cost stress</strong>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> Acceptance gates — how to know it's real</h2>
+    <p>A positive equity curve is not evidence. The strategy earns the label "edge" only if it clears <strong>every</strong> gate below. If it fails a gate, the honest outcome is to drop the complexity that gate tests — not to re-optimise around it.</p>
+    <div class="gate"><b>Random-entry null.</b> Beat the 95th percentile of a Monte-Carlo null (≥1,000 runs) using identical sessions and stop/target geometry with random entry times.</div>
+    <div class="gate"><b>Direction test.</b> Sweep-<em>continuation</em> (enter with the breakout) must perform worse — proving reversion is the signal, not just volatility harvesting.</div>
+    <div class="gate"><b>Session ablation.</b> Turning the killzone filter off must degrade performance. If it doesn't, drop the filter.</div>
+    <div class="gate"><b>Out-of-sample.</b> Walk-forward or a strict 60/40 split; OOS expectancy stays positive <em>after costs</em>.</div>
+    <div class="gate"><b>Cost stress.</b> Edge survives 2× modelled costs.</div>
+    <div class="gate"><b>Multiple-testing haircut.</b> Report combinations tried; apply a deflated-Sharpe / SPA adjustment or reserve one untouched final hold-out.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">08</span> Required output metrics</h2>
+    <p>The backtest must report, per parameter set and aggregate:</p>
+    <table>
+      <thead><tr><th>Group</th><th>Metrics</th></tr></thead>
+      <tbody>
+        <tr><td>Return</td><td>Expectancy (R/trade), profit factor, net after cost</td></tr>
+        <tr><td>Reliability</td><td>Win rate, avg win / avg loss in R, trade count</td></tr>
+        <tr><td>Risk</td><td>Max drawdown, Sharpe, Sortino, longest losing run</td></tr>
+        <tr><td>Structure</td><td>Split by session, by TF_R, by hour; avg duration</td></tr>
+        <tr><td>Robustness</td><td>OOS vs IS delta, cost-sensitivity curve, parameter heatmaps</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2><span class="num">09</span> Known failure modes</h2>
+    <p>Expect the edge to be modest, conditional, and concentrated. It will most likely break via: cost drag from M1 gold spreads; false sweeps in chop; whipsaw when <code>RNG</code> is small; and news-driven sweeps that <strong>do not revert</strong> (genuine continuation). If results look spectacular, suspect look-ahead in sweep detection or an unmodelled cost before you believe them.</p>
+  </section>
+
+  <footer>
+    CRT Gold Scalp · Backtest Specification v1.0 · single source of truth for implementation<br>
+    Instrument XAUUSD · Range TF H4/H1 · Execution M1 · Educational research spec, not trading advice.
+  </footer>
+
+</div>
+</body>
+</html>
