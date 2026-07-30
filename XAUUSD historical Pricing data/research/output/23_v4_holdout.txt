@@ -1,0 +1,38 @@
+====================================================================================================
+V4 HOLDOUT — 2025-07-17 → 2026-07-16 (never used in development)
+====================================================================================================
+holdout span: 2025-07-17 14:07:00+00:00 → 2026-07-16 15:24:00+00:00
+
+--- MODULE RESULTS ---
+NYX   DEV                                      n=694   win= 53.6% exp=+0.086R PF= 1.21 totR=  +60.0 DD= -11.6R Sh~ 1.01 cost/risk= 7.0%
+NYX   HOLDOUT                                  n=193   win= 50.8% exp=+0.036R PF= 1.09 totR=   +7.0 DD= -12.3R Sh~ 0.24 cost/risk= 2.4%
+CARRY DEV                                      n=802   win= 47.5% exp=+0.098R PF= 1.22 totR=  +78.5 DD= -31.0R Sh~ 1.16 cost/risk= 3.5%
+CARRY HOLDOUT                                  n=204   win= 48.0% exp=+0.073R PF= 1.16 totR=  +14.9 DD= -13.9R Sh~ 0.44 cost/risk= 1.2%
+PORT  DEV                                      n=1496  win= 50.3% exp=+0.093R PF= 1.22 totR= +138.5 DD= -28.4R Sh~ 1.54 cost/risk= 5.1%
+PORT  HOLDOUT                                  n=397   win= 49.4% exp=+0.055R PF= 1.13 totR=  +21.9 DD= -17.4R Sh~ 0.50 cost/risk= 1.8%
+
+--- PRE-DECLARED PASS/FAIL CRITERIA ---
+  1. portfolio expectancy > 0 after costs        : +0.0552R  -> PASS
+  2. portfolio expectancy >= 50% of dev (+0.0463R): +0.0552R  -> PASS
+  3. NYX individually > 0                        : +0.0363R  -> PASS
+
+--- $100,000 @ 1% RISK, HOLDOUT YEAR ---
+
+  4. max equity DD <= 1.5x dev (38.5%)          : -16.2%  -> PASS
+
+  OVERALL: *** VALIDATED ***
+
+--- monthly P&L, holdout (Variant A) ---
+    2025-07: $-1,046
+    2025-08: $+4,501
+    2025-09: $+17,098
+    2025-10: $+5,820
+    2025-11: $-925
+    2025-12: $+1,335
+    2026-01: $+9,923
+    2026-02: $-555
+    2026-03: $+6,952
+    2026-04: $-9,477
+    2026-05: $-9,686
+    2026-06: $-2,503
+    2026-07: $+106
