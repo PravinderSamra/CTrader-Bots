@@ -1,0 +1,62 @@
+====================================================================================================
+V4 — FROZEN CONFIG, DEV-SET RESULT (2021-07 → 2025-07)
+====================================================================================================
+MODULE 1 · NYX (NY opening-range expansion)    n=694   win= 53.6% exp=+0.086R PF= 1.21 totR=  +60.0 DD= -11.6R Sh~ 1.01 cost/risk= 7.0%
+            n     win    exp    totR
+    year                            
+    2021   59  49.153  0.025   1.503
+    2022  180  52.222  0.110  19.749
+    2023  175  52.571  0.084  14.683
+    2024  182  56.593  0.084  15.379
+    2025   98  55.102  0.089   8.685
+MODULE 2 · CARRY (overnight drift)             n=802   win= 47.5% exp=+0.098R PF= 1.22 totR=  +78.5 DD= -31.0R Sh~ 1.16 cost/risk= 3.5%
+            n     win    exp    totR
+    year                            
+    2021   78  44.872  0.002   0.128
+    2022  204  44.118 -0.011  -2.289
+    2023  204  44.118  0.091  18.554
+    2024  206  53.883  0.194  39.906
+    2025  110  50.000  0.202  22.190
+PORTFOLIO (NYX + CARRY)                        n=1496  win= 50.3% exp=+0.093R PF= 1.22 totR= +138.5 DD= -28.4R Sh~ 1.54 cost/risk= 5.1%
+            n     win    exp    totR
+    year                            
+    2021  137  46.715  0.012   1.631
+    2022  384  47.917  0.045  17.460
+    2023  379  48.021  0.088  33.237
+    2024  388  55.155  0.142  55.285
+    2025  208  52.404  0.148  30.874
+
+return/DD  NYX 5.17   CARRY 2.53   PORTFOLIO 4.87
+daily R correlation between modules: +0.003 (near zero = genuine diversification)
+
+====================================================================================================
+GATE — RANDOM-ENTRY NULL (the test that killed CRT v1), applied to NYX
+====================================================================================================
+  null (identical geometry/session/costs, random entry & side, n=11,914 pool):
+    p5=-0.0993R  median=-0.0558R  p95=-0.0079R
+  NYX expectancy: +0.0865R
+  VERDICT: PASS — beats the 95th percentile of random entry
+
+### COST STRESS (spec requirement: survive 2x)
+  1.0x cost:  NYX +0.0865R   CARRY +0.0979R
+  1.5x cost:  NYX +0.0516R   CARRY +0.0802R
+  2.0x cost:  NYX +0.0168R   CARRY +0.0626R
+
+====================================================================================================
+$100,000 ACCOUNT @ 1% RISK — DEV SET
+====================================================================================================
+
+MODULE 1 · NYX only
+  final equity $174,352   net $+74,352   total +74.4%   CAGR +15.3%   max equity DD -11.1%
+  WEEKLY  mean $+363  median $+434  best $+11,759  worst $-7,317  59% positive of 205  3.4 trades/wk
+  MONTHLY mean $+1,549  median $+993  best $+12,356  worst $-9,743  58% positive of 48  14.5 trades/mo
+
+MODULE 2 · CARRY only
+  final equity $207,050   net $+107,050   total +107.0%   CAGR +20.4%   max equity DD -27.1%
+  WEEKLY  mean $+522  median $+494  best $+17,784  worst $-7,759  54% positive of 205  3.9 trades/wk
+  MONTHLY mean $+2,230  median $+1,412  best $+21,813  worst $-8,797  60% positive of 48  16.7 trades/mo
+
+PORTFOLIO (both modules)
+  final equity $360,995   net $+260,995   total +261.0%   CAGR +38.8%   max equity DD -25.7%
+  WEEKLY  mean $+1,273  median $+534  best $+34,169  worst $-20,340  57% positive of 205  7.3 trades/wk
+  MONTHLY mean $+5,437  median $+2,652  best $+37,341  worst $-18,282  65% positive of 48  31.2 trades/mo

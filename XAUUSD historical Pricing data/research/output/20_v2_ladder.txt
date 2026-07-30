@@ -1,0 +1,55 @@
+============================================================================================================
+V2 SWEEP-REVERSION — DEV-SET ITERATION LADDER (2021-07 → 2025-07)
+============================================================================================================
+
+### STEP 0 — reproduce the CRT failure mode inside this engine (control)
+CTRL: tight wick stop, H4-ish levels           n=930   win= 31.1% exp=-0.227R PF= 0.74 totR= -210.9 DD=-243.8R Sh~-2.19 cost/risk=26.7%
+
+### STEP 1 — FIX 1 in isolation: widen the stop, change nothing else
+S1 pd-levels, stop=wick (tight)                n=511   win= 31.1% exp=-0.246R PF= 0.68 totR= -125.6 DD=-128.0R Sh~-1.99 cost/risk=16.0%
+S1 pd-levels, stop=wick w/ ATR floor           n=511   win= 41.9% exp=-0.080R PF= 0.84 totR=  -40.6 DD= -53.5R Sh~-0.83 cost/risk= 5.6%
+S1 pd-levels, stop=pure ATR                    n=511   win= 41.1% exp=-0.096R PF= 0.81 totR=  -49.1 DD= -61.2R Sh~-0.99 cost/risk= 5.9%
+
+### STEP 2 — FIX 2: which liquidity pool actually pays? (stop fixed at ATR)
+S2 level_set=pd                                n=511   win= 41.1% exp=-0.096R PF= 0.81 totR=  -49.1 DD= -61.2R Sh~-0.99 cost/risk= 5.9%
+S2 level_set=asia                              n=765   win= 39.6% exp=-0.093R PF= 0.83 totR=  -71.3 DD= -84.8R Sh~-1.14 cost/risk= 5.8%
+S2 level_set=va                                n=591   win= 37.7% exp=-0.101R PF= 0.81 totR=  -59.5 DD= -65.8R Sh~-1.06 cost/risk= 5.9%
+
+### STEP 3 — session window
+S3 London 07-12                                n=344   win= 45.6% exp=-0.011R PF= 0.98 totR=   -3.9 DD= -17.8R Sh~-0.10 cost/risk= 5.9%
+S3 NY 12-16                                    n=511   win= 41.1% exp=-0.096R PF= 0.81 totR=  -49.1 DD= -61.2R Sh~-0.99 cost/risk= 5.9%
+S3 NY 13-17                                    n=488   win= 42.2% exp=-0.119R PF= 0.76 totR=  -58.1 DD= -70.3R Sh~-1.29 cost/risk= 5.9%
+S3 all day                                     n=681   win= 43.3% exp=-0.049R PF= 0.90 totR=  -33.3 DD= -47.0R Sh~-0.60 cost/risk= 5.9%
+
+### STEP 4 — FIX 3: exit structure (partial + BE + runner)
+S4 single target 2.5R                          n=511   win= 41.1% exp=-0.096R PF= 0.81 totR=  -49.1 DD= -61.2R Sh~-0.99 cost/risk= 5.9%
+S4 no target, time exit                        n=511   win= 40.9% exp=-0.075R PF= 0.85 totR=  -38.6 DD= -50.6R Sh~-0.71 cost/risk= 5.9%
+S4 T1 1R 50% + BE + runner                     n=511   win= 47.4% exp=-0.076R PF= 0.84 totR=  -38.6 DD= -53.5R Sh~-0.88 cost/risk= 5.9%
+S4 T1 1R 50%, no BE + runner                   n=511   win= 43.4% exp=-0.081R PF= 0.83 totR=  -41.6 DD= -55.3R Sh~-0.93 cost/risk= 5.9%
+S4 T1 1.5R 50% + BE + runner                   n=511   win= 42.5% exp=-0.084R PF= 0.83 totR=  -42.8 DD= -57.3R Sh~-0.89 cost/risk= 5.9%
+S4 T1 1R 70% + BE + runner                     n=511   win= 47.4% exp=-0.080R PF= 0.83 totR=  -41.0 DD= -56.6R Sh~-0.98 cost/risk= 5.9%
+S4 T1 1R 50% + BE + T2 3R                      n=511   win= 47.4% exp=-0.081R PF= 0.83 totR=  -41.5 DD= -56.1R Sh~-0.96 cost/risk= 5.9%
+
+### STEP 5 — entry model & sweep depth
+S5 entry=reclaim delta=0.05                    n=520   win= 47.9% exp=-0.076R PF= 0.84 totR=  -39.4 DD= -54.3R Sh~-0.89 cost/risk= 5.9%
+S5 entry=reclaim delta=0.1                     n=511   win= 47.4% exp=-0.076R PF= 0.84 totR=  -38.6 DD= -53.5R Sh~-0.88 cost/risk= 5.9%
+S5 entry=reclaim delta=0.25                    n=494   win= 47.6% exp=-0.081R PF= 0.83 totR=  -40.0 DD= -54.5R Sh~-0.93 cost/risk= 5.9%
+S5 entry=limit_level delta=0.05                n=465   win= 46.7% exp=-0.069R PF= 0.85 totR=  -31.9 DD= -47.4R Sh~-0.77 cost/risk= 4.6%
+S5 entry=limit_level delta=0.1                 n=459   win= 46.8% exp=-0.066R PF= 0.86 totR=  -30.4 DD= -46.0R Sh~-0.73 cost/risk= 4.6%
+S5 entry=limit_level delta=0.25                n=442   win= 46.4% exp=-0.071R PF= 0.85 totR=  -31.4 DD= -46.5R Sh~-0.77 cost/risk= 4.6%
+
+### STEP 6 — context filters
+S6 filter=none                                 n=511   win= 47.4% exp=-0.076R PF= 0.84 totR=  -38.6 DD= -53.5R Sh~-0.88 cost/risk= 5.9%
+S6 filter=energy (Asia held London)            n=90    win= 40.0% exp=-0.212R PF= 0.59 totR=  -19.1 DD= -22.9R Sh~-1.10 cost/risk= 5.6%
+S6 filter=trend-with                           n=211   win= 45.0% exp=-0.107R PF= 0.78 totR=  -22.5 DD= -23.2R Sh~-0.79 cost/risk= 5.9%
+S6 filter=trend-against                        n=334   win= 47.6% exp=-0.078R PF= 0.83 totR=  -26.2 DD= -45.6R Sh~-0.75 cost/risk= 5.9%
+S6 filter=energy + trend-with                  n=36    win= 36.1% exp=-0.234R PF= 0.54 totR=   -8.4 DD= -10.4R Sh~-0.82 cost/risk= 5.4%
+
+### STEP 7 — stop width sweep (cost/risk trade-off)
+S7 stop=0.15xATR20                             n=511   win= 48.7% exp=-0.102R PF= 0.80 totR=  -52.1 DD= -66.7R Sh~-1.08 cost/risk= 7.7%
+S7 stop=0.2xATR20                              n=511   win= 48.7% exp=-0.081R PF= 0.84 totR=  -41.3 DD= -58.7R Sh~-0.86 cost/risk= 7.3%
+S7 stop=0.3xATR20                              n=511   win= 47.4% exp=-0.076R PF= 0.84 totR=  -38.6 DD= -53.5R Sh~-0.88 cost/risk= 5.9%
+S7 stop=0.45xATR20                             n=511   win= 47.7% exp=-0.048R PF= 0.87 totR=  -24.8 DD= -33.7R Sh~-0.68 cost/risk= 4.0%
+S7 stop=0.6xATR20                              n=511   win= 47.2% exp=-0.044R PF= 0.85 totR=  -22.6 DD= -29.1R Sh~-0.76 cost/risk= 3.0%
+
+DEV configurations evaluated so far: 34

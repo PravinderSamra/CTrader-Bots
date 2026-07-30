@@ -1,0 +1,38 @@
+============================================================================================================
+V3 — ENGINEERING APPLIED TO SIGNALS WITH REAL GROSS EDGE (DEV 2021-07 → 2025-07)
+============================================================================================================
+
+### A — NY ORB: does V2's exit engineering improve it?
+A1 baseline (struct stop, no TP)               n=924   win= 42.9% exp=+0.085R PF= 1.17 totR=  +79.0 DD= -33.0R Sh~ 0.83 cost/risk= 8.0%
+A2 + gap-trap filter                           n=694   win= 43.5% exp=+0.107R PF= 1.21 totR=  +74.1 DD= -24.8R Sh~ 0.87 cost/risk= 8.0%
+A3 + ATR-floored stop                          n=694   win= 47.0% exp=+0.081R PF= 1.19 totR=  +56.5 DD= -15.0R Sh~ 0.89 cost/risk= 6.2%
+A4 + T1 1R 50% + BE + runner                   n=694   win= 53.5% exp=+0.053R PF= 1.14 totR=  +36.5 DD=  -9.4R Sh~ 0.73 cost/risk= 6.2%
+A5 + T1 1.5R 50% + BE                          n=694   win= 49.0% exp=+0.067R PF= 1.17 totR=  +46.4 DD= -11.3R Sh~ 0.84 cost/risk= 6.2%
+A6 + T1 1R 33% + BE                            n=694   win= 53.5% exp=+0.061R PF= 1.16 totR=  +42.7 DD=  -9.7R Sh~ 0.80 cost/risk= 6.2%
+A7 + T1 1R 50%, no BE                          n=694   win= 50.4% exp=+0.054R PF= 1.14 totR=  +37.4 DD= -10.2R Sh~ 0.74 cost/risk= 6.2%
+A8 pure ATR stop                               n=694   win= 54.2% exp=+0.066R PF= 1.16 totR=  +45.5 DD= -10.3R Sh~ 0.84 cost/risk= 7.0%
+
+### B — stop floor sweep (the cost/risk lever)
+B stop_floor=0.0xATR20                         n=694   win= 54.3% exp=+0.069R PF= 1.17 totR=  +48.0 DD= -15.3R Sh~ 0.82 cost/risk= 8.0%
+B stop_floor=0.1xATR20                         n=694   win= 54.6% exp=+0.071R PF= 1.18 totR=  +49.6 DD= -15.3R Sh~ 0.87 cost/risk= 7.8%
+B stop_floor=0.15xATR20                        n=694   win= 54.3% exp=+0.065R PF= 1.16 totR=  +45.3 DD= -14.6R Sh~ 0.82 cost/risk= 7.5%
+B stop_floor=0.25xATR20                        n=694   win= 53.5% exp=+0.053R PF= 1.14 totR=  +36.5 DD=  -9.4R Sh~ 0.73 cost/risk= 6.2%
+B stop_floor=0.35xATR20                        n=694   win= 51.2% exp=+0.031R PF= 1.09 totR=  +21.4 DD= -11.4R Sh~ 0.48 cost/risk= 4.8%
+
+### C — OR window & width gates
+C1 OR 30m @13:30 (default)                     n=694   win= 53.5% exp=+0.053R PF= 1.14 totR=  +36.5 DD=  -9.4R Sh~ 0.73 cost/risk= 6.2%
+C2 OR 15m @13:30                               n=747   win= 50.3% exp=-0.015R PF= 0.97 totR=  -11.1 DD= -32.2R Sh~-0.20 cost/risk= 6.7%
+C3 OR 60m @13:30                               n=589   win= 52.5% exp=+0.044R PF= 1.14 totR=  +25.7 DD= -12.9R Sh~ 0.66 cost/risk= 5.6%
+C4 OR 30m @12:00                               n=789   win= 51.8% exp=-0.023R PF= 0.95 totR=  -18.2 DD= -78.6R Sh~-0.30 cost/risk= 6.9%
+C5 width gate 0.06-0.40                        n=631   win= 52.8% exp=+0.045R PF= 1.12 totR=  +28.3 DD= -10.9R Sh~ 0.59 cost/risk= 6.4%
+C6 width gate 0.08-0.35                        n=573   win= 53.1% exp=+0.049R PF= 1.13 totR=  +28.0 DD= -13.7R Sh~ 0.61 cost/risk= 6.4%
+C7 exit 21:00 not 20:00                        n=694   win= 52.7% exp=+0.064R PF= 1.17 totR=  +44.5 DD=  -9.3R Sh~ 0.87 cost/risk= 6.2%
+C8 + sweep context flag                        n=234   win= 50.4% exp=+0.001R PF= 1.00 totR=   +0.3 DD= -16.2R Sh~ 0.01 cost/risk= 6.0%
+
+### D — other validated modules with the same engineering
+D1 CARRY overnight 20:00→02:00                 n=802   win= 47.5% exp=+0.098R PF= 1.22 totR=  +78.5 DD= -31.0R Sh~ 1.16 cost/risk= 3.5%
+D2 CARRY + T1/BE                               n=802   win= 47.5% exp=+0.098R PF= 1.22 totR=  +78.5 DD= -31.0R Sh~ 1.16 cost/risk= 3.5%
+D3 SHOCK post-jump + T1/BE                     n=732   win= 49.9% exp=-0.029R PF= 0.93 totR=  -21.3 DD= -35.7R Sh~-0.41 cost/risk= 6.0%
+D4 SHOCK no TP                                 n=732   win= 42.9% exp=+0.012R PF= 1.02 totR=   +8.5 DD= -35.5R Sh~ 0.13 cost/risk= 6.0%
+
+DEV configurations evaluated (cumulative): 59
