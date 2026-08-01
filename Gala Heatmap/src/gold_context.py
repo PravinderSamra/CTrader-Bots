@@ -164,7 +164,18 @@ def futures_to_spot(fut: list[dict], basis: dict) -> list[dict]:
 
 
 def calibrate_ratio(etf: list[dict], spot: list[dict]) -> dict:
-    """spot / ETF, measured from overlapping hours rather than assumed."""
+    """spot / ETF, measured from overlapping hours rather than assumed.
+
+    Also returns how PRECISE that mapping is, which matters more than it looks.
+    GLD and XAUUSD are sampled from different venues with different closing
+    instants and GLD trades at an intraday premium/discount to NAV, so the ratio
+    wobbles. Measured 2026-08-01: stdev 0.0206, which at GLD ~371 is **±7.7 spot
+    points** — against a strike spacing of only 10.9 points.
+
+    That means an individual GLD strike CANNOT be pinned to a single spot price.
+    Treat mapped strikes as bands, not levels. By contrast the futures basis has
+    stdev ~1.2 points, so volume-profile levels are ~6x more precisely placed.
+    """
     emap = {b["ts"] // 3_600_000: b["c"] for b in etf}
     smap = {b["ts"] // 3_600_000: b["c"] for b in spot}
     common = sorted(set(emap) & set(smap))
@@ -172,8 +183,15 @@ def calibrate_ratio(etf: list[dict], spot: list[dict]) -> dict:
         return {"ratio": None, "n": len(common)}
     ratios = [smap[h] / emap[h] for h in common if emap[h]]
     recent = ratios[-24:] or ratios
-    return {"ratio": stats.median(recent), "median_all": stats.median(ratios),
-            "n": len(common), "spread": max(recent) - min(recent)}
+    ratio = stats.median(recent)
+    sd = stats.pstdev(ratios) if len(ratios) > 1 else 0.0
+    etf_px = etf[-1]["c"] if etf else 0.0
+    return {"ratio": ratio, "median_all": stats.median(ratios),
+            "n": len(common), "spread": max(recent) - min(recent),
+            "ratio_stdev": sd,
+            # 1-sigma uncertainty on any strike→spot mapping, in spot points.
+            "spot_uncertainty": sd * etf_px,
+            "strike_spacing_spot": ratio}
 
 
 # ----------------------------------------------------------- volume profile

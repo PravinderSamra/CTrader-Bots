@@ -158,15 +158,22 @@ def score_level(level: float, direction: str, hist: dict, ctx: dict,
 
     # ---- 4. Options open interest -----------------------------------------
     oi = ctx.get("nearest_oi")
+    # Tolerance is set by how precisely a GLD strike can be mapped to spot, not
+    # by a round number. Measured 1-sigma is ~8 points; 2-sigma is the honest
+    # "this strike could be here" band. Claiming tighter would be false precision.
+    unc = ctx.get("spot_uncertainty") or 7.7
+    oi_tol = max(10.0, 2 * unc)
     if oi is None:
         items.append(("Options OI confluence", 0.0, "UNAVAILABLE at this timestamp"))
-    elif abs(oi["spot"] - level) <= 15:
+    elif abs(oi["spot"] - level) <= oi_tol:
         items.append(("Options OI confluence", 7.0,
-                      f"{oi['total_oi']:,.0f} contracts at {oi['spot']:,.2f} "
-                      f"({oi['spot']-level:+.1f}) — committed size near the level"))
+                      f"{oi['total_oi']:,.0f} contracts at {oi['spot']:,.2f} ±{unc:.1f} "
+                      f"({oi['spot']-level:+.1f}) — committed size within the "
+                      f"±{oi_tol:.0f}pt mapping tolerance"))
     else:
         items.append(("Options OI confluence", 0.0,
-                      f"nearest significant OI {oi['spot']:,.2f} ({oi['spot']-level:+.1f}) — too far"))
+                      f"nearest significant OI {oi['spot']:,.2f} ({oi['spot']-level:+.1f}) — "
+                      f"outside the ±{oi_tol:.0f}pt tolerance"))
 
     # ---- 5. Gamma flip side ------------------------------------------------
     flip = ctx.get("gamma_flip")
@@ -335,6 +342,7 @@ def gather(symbol: str, levels: list[float], direction: str | None,
         basis = gc.compute_basis(fut, h1)
         vp = gc.volume_profile(gc.futures_to_spot(fut, basis), 80)
         ctx["basis"] = basis["current"]
+        ctx["basis_stdev"] = basis["stdev_recent"]
         ctx["roll"] = basis["roll"]
         ctx["vp"] = vp
         log(f"      basis {basis['current']:+.2f} · POC {vp['poc']:,.2f} spot")
@@ -355,6 +363,8 @@ def gather(symbol: str, levels: list[float], direction: str | None,
             ctx["net_gex"] = opts["net_gex"]
             ctx["gamma_flip"] = opts["gamma_flip"]
             ctx["ratio"] = cal["ratio"]
+            ctx["spot_uncertainty"] = cal.get("spot_uncertainty")
+            ctx["ratio_stdev"] = cal.get("ratio_stdev")
             ctx["opt_rows"] = opts["rows"]
             ctx["expiries"] = opts["expiries"]
             flip_s = f"{opts['gamma_flip']:,.2f}" if opts.get("gamma_flip") else "n/a"
@@ -441,6 +451,30 @@ def render(res: dict) -> str:
         a(f"- COT {ct['date']}: managed money {ct['mm_long']-ct['mm_short']:+,} net "
           f"({ct['mm_long']/max(1,ct['mm_short']):.1f}× long/short)")
     a("")
+
+    a("## How your levels translate")
+    a("")
+    a("You give levels in **XAUUSD spot**. Futures and options are priced differently,")
+    a("so every comparison below is converted into spot first — never the other way round.")
+    a("")
+    a("| Your level (spot) | = GC futures | = GLD strike | Options mapping precision |")
+    a("|---|---|---|---|")
+    for pl in res["levels"]:
+        lv = pl["level"]
+        fut_s = f"{lv + c['basis']:,.2f}" if c.get("basis") is not None else "—"
+        r = c.get("ratio")
+        gld_s = f"{lv / r:,.2f}" if r else "—"
+        unc = c.get("spot_uncertainty")
+        unc_s = f"±{unc:.1f} pts" if unc else "—"
+        a(f"| {lv:,.2f} | {fut_s} | {gld_s} | {unc_s} |")
+    a("")
+    if c.get("spot_uncertainty"):
+        a(f"The futures basis is stable (stdev {c.get('basis_stdev', 0):.2f} pts), so volume-profile")
+        a(f"levels land accurately. The GLD ratio is not: ±{c['spot_uncertainty']:.1f} spot points against a")
+        a(f"strike spacing of only {r:.1f}. **A single option strike cannot be pinned to a single spot**")
+        a("**price** — treat mapped strikes as bands. CME's own OG options would remove this")
+        a("entirely, since their strikes sit on the futures price and the basis maps cleanly.")
+        a("")
 
     for pl in res["levels"]:
         s = pl["score"]
@@ -550,6 +584,8 @@ def journal_entries(res: dict) -> list[dict]:
                            ("pinning" if c["net_gex"] > 0 else "trending")),
                 "expiries": c.get("expiries"),
                 "gld_ratio": c.get("ratio"),
+                "gld_ratio_stdev": c.get("ratio_stdev"),
+                "strike_mapping_uncertainty_pts": c.get("spot_uncertainty"),
                 "nearest_oi": (None if not pl["ctx"].get("nearest_oi") else {
                     "spot": round(pl["ctx"]["nearest_oi"]["spot"], 2),
                     "total_oi": pl["ctx"]["nearest_oi"]["total_oi"],

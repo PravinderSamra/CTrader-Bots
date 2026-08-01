@@ -60,7 +60,18 @@ Nearest strike carrying top-quartile open interest, within 15 points. Committed
 size near the level means dealer hedging flow anchored there.
 
 Remember this is GLD, translated by a measured ratio (~10.90, not 10). It is a
-proxy, one step removed from gold itself.
+proxy, one step removed from gold itself — and the translation is **imprecise**.
+
+The ratio has a measured stdev of ~0.02, which at GLD ~371 is **±7.6 spot points**,
+against a strike spacing of only 10.9 points. So a single strike cannot be pinned
+to a single spot price; adjacent strikes overlap within the error. The confluence
+tolerance is set at 2σ from this measurement rather than a round number, and the
+report prints the ± band. Say "there is committed size in this area", never "there
+is a wall at exactly 4,055".
+
+Contrast the futures side: the basis has stdev ~1.2 points, so volume-profile
+levels are roughly 6× more precisely placed. When the two layers disagree about
+where a level sits, trust the volume node.
 
 ### Gamma flip position (+5 / −3)
 
