@@ -1,0 +1,8 @@
+# Layer 1 (level_stats.py, pivots.py, ctrader_http.py) needs NOTHING beyond the
+# Python 3.11 standard library. That is deliberate — it runs anywhere the repo runs.
+
+# Layer 2 (dom_recorder.py) talks protobuf over TLS to the cTrader Open API:
+ctrader-open-api>=0.9.2
+twisted>=23.0
+
+# heatmap_render.py is stdlib-only and emits self-contained HTML (no CDN, no build).

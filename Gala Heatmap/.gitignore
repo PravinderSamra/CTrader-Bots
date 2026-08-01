@@ -1,0 +1,4 @@
+# Recorded depth can reach hundreds of MB per session — keep it local.
+data/
+*.jsonl
+__pycache__/
