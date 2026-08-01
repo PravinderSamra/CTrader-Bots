@@ -56,7 +56,8 @@ will run once it goes — useful for the target, less so for the hold.
 
 ### Options OI confluence (+7 / 0)
 
-Nearest strike carrying top-quartile open interest, within 15 points. Committed
+Nearest strike carrying top-quartile open interest, within a tolerance derived from
+the measured mapping precision (2σ, ~15 points). Committed
 size near the level means dealer hedging flow anchored there.
 
 Remember this is GLD, translated by a measured ratio (~10.90, not 10). It is a
