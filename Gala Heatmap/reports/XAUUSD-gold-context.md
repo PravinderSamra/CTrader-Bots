@@ -1,11 +1,11 @@
 # Gold Context — futures volume, options positioning, spot-mapped
 
-Generated 2026-08-01 16:53Z · XAUUSD spot 4,046.49 · lookback 30d
+Generated 2026-08-01 17:03Z · XAUUSD spot 4,046.49 · lookback 30d
 
 ## 1. Basis — how futures prices map to your chart
 
 - **Current basis: +57.12 points** (GC front month − XAUUSD spot), median of the last 24 overlapping hours
-- 30-day median +6.46 · recent stdev 1.23 · 470 aligned hours
+- 30-day median +6.43 · recent stdev 1.23 · 469 aligned hours
 
 To convert a futures price yourself right now: `spot = futures − 57.12`.
 
@@ -52,9 +52,9 @@ All prices are **XAUUSD spot**, converted per bar at that day's measured basis.
 | **4,025.26** | ███████████ |
 | **4,034.73** | ███████████ |
 | **4,107.38** | ████████ |
-| **4,113.70** | ████████ |
+| **4,120.02** | ███████ |
+| **4,113.70** | ███████ |
 | **4,006.31** | ███████ |
-| **4,126.33** | ███████ |
 
 ## 3. Options positioning — where size is committed
 
@@ -145,9 +145,7 @@ hold beyond the fact you drew a line there.
 
 | Your level | Nearest volume node | Nearest significant OI | Read |
 |---|---|---|---|
-| **4,020.00** | 4,025.26 (HVN, +5.3) | 4,022.38 (1,693 OI, +2.4) | **strong confluence** |
-| **4,046.00** | 4,047.37 (POC, +1.4) | 4,055.09 (1,354 OI, +9.1) | **strong confluence** |
-| **4,103.00** | 4,107.38 (HVN, +4.4) | 4,098.69 (2,446 OI, -4.3) | **strong confluence** |
+| **4,049.44** | 4,047.37 (POC, -2.1) | 4,055.09 (1,354 OI, +5.6) | **strong confluence** |
 
 ---
 

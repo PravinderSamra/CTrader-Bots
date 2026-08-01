@@ -59,7 +59,7 @@ from datetime import datetime, timezone
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from ctrader_http import CTraderClient, CTraderError, iso, now_ms  # noqa: E402
-from pivots import significant_levels, Level  # noqa: E402
+from pivots import significant_levels, find_pivots, Level  # noqa: E402
 
 DAY_MS = 86_400_000
 
@@ -417,7 +417,7 @@ def build_report(symbol: str, sym_id: int, days: int, spot: float,
     a("")
     shown = 0
     for lv, evs, s, sd in ranked:
-        if s["n"] < 4 or shown >= 5:
+        if s["n"] < (1 if cfg.get("explicit") else 4) or shown >= 5:
             continue
         shown += 1
         a(f"### {_fmt(lv.price,2)} ({lv.kind})")
@@ -487,6 +487,9 @@ def main() -> int:
     p.add_argument("--horizon", type=int, default=60, help="minutes to replay each trade over")
     p.add_argument("--target-r", type=float, default=3.0, help="cap the replay at this R")
     p.add_argument("--min-touches", type=int, default=2, help="min H1 pivots to keep a level")
+    p.add_argument("--level", action="append", type=float,
+                   help="analyse THIS price level instead of auto-detecting "
+                        "(repeatable, e.g. --level 4049.44)")
     p.add_argument("--near", type=float, default=None,
                    help="only report levels within --near-pct of this price")
     p.add_argument("--near-pct", type=float, default=0.01)
@@ -506,7 +509,21 @@ def main() -> int:
     if len(h1) < 20:
         raise CTraderError(f"only {len(h1)} H1 bars returned — widen --days")
 
-    levels = significant_levels(h1, args.strength, args.tol_pct, args.min_touches)
+    if args.level:
+        # Analyse the levels YOU drew, not the ones the detector found. Any H1
+        # pivots sitting within clustering tolerance are attached, so the report
+        # also tells you whether your hand-drawn line matches a real swing.
+        all_pivots = find_pivots(h1, args.strength)
+        levels = []
+        for px in args.level:
+            near = [pv for pv in all_pivots if abs(pv.price - px) <= px * args.tol_pct]
+            kinds = {pv.kind for pv in near}
+            kind = ("both" if len(kinds) > 1 else
+                    "resistance" if "high" in kinds else
+                    "support" if "low" in kinds else "user-drawn (no H1 pivot)")
+            levels.append(Level(price=px, kind=kind, pivots=near))
+    else:
+        levels = significant_levels(h1, args.strength, args.tol_pct, args.min_touches)
     spot_raw = cli.spot([sym_id])
     quotes = spot_raw.get("spotPrices") or spot_raw.get("prices") or []
     if quotes:
@@ -517,7 +534,7 @@ def main() -> int:
     else:
         spot = h1[-1]["c"]
 
-    if args.near is not None:
+    if args.near is not None and not args.level:
         lo, hi = args.near * (1 - args.near_pct), args.near * (1 + args.near_pct)
         levels = [lv for lv in levels if lo <= lv.price <= hi]
     print(f"[3/5] levels: {len(levels)} (spot {spot:,.2f})", file=sys.stderr)
@@ -556,7 +573,8 @@ def main() -> int:
     print(f"[5/5] touch events: {len(all_events)}", file=sys.stderr)
 
     cfg = {"strength": args.strength, "tol_pct": args.tol_pct, "band": band,
-           "break_buffer": brk, "horizon": args.horizon, "target_r": args.target_r}
+           "break_buffer": brk, "horizon": args.horizon, "target_r": args.target_r,
+           "explicit": bool(args.level)}
     report = build_report(sym_name, sym_id, args.days, spot, per_level, all_events, cfg)
 
     here = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
