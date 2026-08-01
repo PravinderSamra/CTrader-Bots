@@ -94,10 +94,30 @@ Gala Heatmap/
 │   ├── pivots.py                       H1 pivot detection + level clustering
 │   ├── level_stats.py                  ← level behaviour engine (any instrument)
 │   ├── gold_context.py                 ← gold futures volume + options + COT
+│   ├── level_confidence.py             ← scores a level from every layer at once
+│   ├── journal_review.py               grades logged calls, calibrates the score
 │   ├── dom_recorder.py                 Open API depth recorder (needs app reg)
 │   └── heatmap_render.py               depth → HTML heatmap + level report
 └── reports/                            generated output
+
+.claude/skills/gala-level-confidence/    the agent skill wrapping all of it
+trade-journal/YYYY-MM.jsonl              append-only log of every call
 ```
+
+### The agent skill
+
+`/gala-level-confidence` — tell it the level(s) you're watching and it scores them
+from every layer at once, journals the call, and grades it later.
+
+```bash
+python3 "Gala Heatmap/src/level_confidence.py" --level 4049.44 --journal
+python3 "Gala Heatmap/src/journal_review.py"  --month 2026-08 --write
+```
+
+`--as-of 2026-07-31T15:30:00Z` replays what could have been said at a past moment,
+truncating every series to that instant. One layer genuinely cannot be replayed —
+there is no free historical options chain — which is exactly why every live call
+must be journalled: the `gamma` block is the only record that regime ever existed.
 
 **For gold, the daily workflow is:** `gold_context.py` pre-session to see which
 levels have a reason to hold and whether today is a pinning or trending regime,

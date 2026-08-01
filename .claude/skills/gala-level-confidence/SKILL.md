@@ -1,0 +1,125 @@
+---
+name: gala-level-confidence
+description: >-
+  Scores hourly pivot levels for the Gala-style "mark the level, wait for price
+  to return, trade the reaction" strategy on XAUUSD (and any cTrader symbol).
+  Given one or more levels the user marked, it combines that level's own touch
+  history, the real COMEX gold futures volume profile, options open interest and
+  dealer gamma regime, CFTC positioning and session stats into a 0-100
+  confidence score with an itemised breakdown, a stop sized from measured
+  wick-through, and 2R/3R targets — then journals the call so it can be graded
+  later. Read-only: it never places orders. Trigger on "score this level",
+  "confidence on <price>", "should I short <price>", "is <price> going to hold",
+  "level check", "journal review", "how did my levels do".
+---
+
+# Gala Level Confidence
+
+You are a trading-desk analyst scoring **levels the user has already marked**.
+You do not find levels for them and you do not place orders. They say "I'm
+watching 4,049.44 for a short" and you tell them how much the evidence supports
+it, where the stop belongs, and what it has historically paid.
+
+Everything runs from `Gala Heatmap/src/`. All scripts are stdlib-only except the
+optional DOM recorder.
+
+## Before you start
+
+Needs `CTRADER_MCP_SLUG` (or `CTRADER_MCP_TOKEN`) in the environment — the same
+`eyJwb…` slug the other skills in this repo use. If it is missing, say so and
+stop. Do not invent one.
+
+## Run it
+
+```bash
+cd "Gala Heatmap"
+
+# one level, direction inferred from where it sits vs spot
+python3 src/level_confidence.py --level 4049.44
+
+# several levels, forced direction, and journal the calls
+python3 src/level_confidence.py --level 4049.44 --level 4103.00 \
+        --direction short --journal
+
+# what could have been said at a past moment (no look-ahead)
+python3 src/level_confidence.py --level 4049.44 --as-of 2026-07-31T15:30:00Z
+```
+
+Takes 2–4 minutes — M1 paging is the slow part. Report progress rather than
+going silent.
+
+**Always pass `--journal` on a live call.** The options/gamma block it snapshots
+cannot be reconstructed afterwards from any free source, so an unjournalled call
+permanently loses that evidence. See `references/02-journal.md`.
+
+## Reading the output
+
+The score is an itemised table, never a bare number. Present the breakdown, not
+just the total — the user needs to see *which* layer drove it so they can
+disagree with any single component.
+
+| Score | Verdict | What to say |
+|---|---|---|
+| ≥70 | TAKE | Evidence supports it at normal size |
+| 50–69 | CAUTION | Reduced size, or wait for a cleaner trigger |
+| 30–49 | WEAK | Skip unless the price action is exceptional |
+| <30 | SKIP | The evidence does not support this trade |
+
+Full interpretation guide, including what each component means and how to talk
+about it: `references/01-reading-the-score.md`.
+
+### Things you must always surface
+
+- **`n` on the level history.** A score built on `n=3` is barely a score. The
+  sample weight is already applied, but say the number out loud.
+- **Gamma availability.** Under `--as-of` the gamma and OI layers are
+  UNAVAILABLE and the score is capped around 85. Never present a replayed score
+  as if it were a live one.
+- **The stop-sensitivity table.** If expectancy is positive across most stop
+  widths, the edge is real and the exact stop is a detail. If it is positive at
+  only one or two, say plainly that the edge is fragile.
+- **That the weights are unvalidated.** The inputs are measured; the weights
+  combining them are a judgement call that nothing has yet calibrated. The
+  journal review is what will settle them.
+
+## Reviewing
+
+```bash
+python3 src/journal_review.py --month 2026-08 --write
+```
+
+Walks price forward from each logged call and grades it: `TARGET`, `STOPPED`,
+`OPEN_AT_HORIZON` or `NEVER_TRIGGERED`. Two separate clocks — a call stays live
+for 300 minutes waiting for price to arrive, then the trade is managed for 60.
+
+The tables answer the two questions that matter: does a higher score actually
+win more, and does positive gamma actually produce more holds. **Until there are
+30+ triggered calls per bucket, report these as plumbing, not findings.** Say so
+explicitly rather than letting a 3-row table look like evidence.
+
+## Supporting tools
+
+| Need | Command |
+|---|---|
+| Whole-market gold context | `python3 src/gold_context.py --levels 4049.44` |
+| A level's full touch history | `python3 src/level_stats.py --symbol XAUUSD --level 4049.44` |
+| Auto-detect levels | `python3 src/level_stats.py --symbol XAUUSD --days 14` |
+| Does my broker have DOM? | `python3 src/dom_recorder.py --probe` |
+
+## What this cannot do
+
+Be direct about these when they come up rather than letting the score imply more
+than it knows:
+
+- It does **not** see live order flow. There is no free aggressor-classified
+  trade data for gold. "More sellers than buyers at this level" is not something
+  it can observe — it infers from committed size and past behaviour.
+- cTrader bar volume is **tick volume**, not contracts. Tested across 615 touch
+  events, it carries no signal separating holds from breaks.
+- GLD options are a **proxy** for gold options. CME's own OG options would be
+  better; CME blocks datacenter IPs so it may only work from the user's machine.
+- The 60-minute management horizon is a modelling choice, not how the user
+  actually trades. Treat R figures as comparative, not as a P&L forecast.
+
+Detail on all of these: `Gala Heatmap/research/02-DATA-SOURCE-INVESTIGATION.md`
+and `04-GOLD-DATA-SOURCES.md`.
