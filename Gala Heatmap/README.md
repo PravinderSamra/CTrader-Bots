@@ -37,6 +37,48 @@ separating levels that hold from levels that break. Full write-up in
 
 ---
 
+## Gold gets a better answer than everything else
+
+**If you primarily trade XAUUSD, start here.** Gold has free data that index CFDs
+simply don't: COMEX futures publish **real traded contract volume**, and gold has
+a deep options market showing where size is actually committed.
+
+```bash
+python3 "Gala Heatmap/src/gold_context.py" --levels 4020,4046,4103
+```
+
+Verified live on 2026-08-01 — 2.76M real contracts of GC volume over 30 days,
+7,672 GLD option contracts with greeks, and current CFTC positioning:
+
+- **Real volume profile** — POC 4,047.37 spot, value area 4,018.94–4,120.02, built
+  from volume that actually transacted rather than quote counts
+- **Options walls** — a 4,233-contract put wall at 4,033 spot, call walls at 4,088
+  and 4,142
+- **Net dealer gamma +30.4M/1%** — positive, so dealers hedge *against* moves:
+  pinning regime, levels hold more often, breakouts fail more often. Directly tells
+  you whether fading your pivots is favoured today
+- **COT** — managed money net +119,795 and trimming; crowded long
+
+### The trap it exists to avoid
+
+GC futures trade at a premium to spot that **decays to zero into expiry then jumps
+at the roll**. Measured here: +12.74 on 3 July, decaying to +0.07 on 28 July, then
+**+58.27 on 29 July** when the contract rolled.
+
+Overlay a futures volume profile on your spot chart with a fixed offset and you are
+58 points wrong overnight — on gold, that's a stop that never had a chance. The tool
+measures the basis live from overlapping bars, flags the roll, and converts **each
+bar at that day's basis**. Done naively the POC came out at 4,014.77; done properly
+it's 4,047.37.
+
+Same class of bug, second instance: `GEX&OI/.../yfinance_options.py` hardcodes
+`XAUUSD: 10` as the GLD multiplier. The measured ratio is **10.9008** — at GLD
+371.54 that's 3,715 vs 4,050, i.e. 335 points out. Worth fixing there too.
+
+Full detail: [`research/04-GOLD-DATA-SOURCES.md`](research/04-GOLD-DATA-SOURCES.md).
+
+---
+
 ## What's here
 
 ```
@@ -44,16 +86,22 @@ Gala Heatmap/
 ├── research/
 │   ├── 01-THE-STRATEGY.md              the setup, and what confluence must prove
 │   ├── 02-DATA-SOURCE-INVESTIGATION.md every option tested, with verdicts
-│   └── 03-CTRADER-OPENAPI-REFERENCE.md depth + tick API, and MCP gotchas
-├── design/ARCHITECTURE.md              how the three layers fit together
+│   ├── 03-CTRADER-OPENAPI-REFERENCE.md depth + tick API, and MCP gotchas
+│   └── 04-GOLD-DATA-SOURCES.md         ← gold: futures volume, options, COT
+├── design/ARCHITECTURE.md              how the layers fit together
 ├── src/
 │   ├── ctrader_http.py                 MCP client with correct trendbar paging
 │   ├── pivots.py                       H1 pivot detection + level clustering
-│   ├── level_stats.py                  ← the engine that works today
+│   ├── level_stats.py                  ← level behaviour engine (any instrument)
+│   ├── gold_context.py                 ← gold futures volume + options + COT
 │   ├── dom_recorder.py                 Open API depth recorder (needs app reg)
 │   └── heatmap_render.py               depth → HTML heatmap + level report
 └── reports/                            generated output
 ```
+
+**For gold, the daily workflow is:** `gold_context.py` pre-session to see which
+levels have a reason to hold and whether today is a pinning or trending regime,
+plus `level_stats.py --symbol XAUUSD` weekly to see whether they historically have.
 
 ---
 

@@ -1,7 +1,8 @@
 # Architecture
 
-Three layers, deliberately independent. Each is useful alone, and the ones that
-work today do not depend on the one that needs a probe result.
+Four layers, deliberately independent. Each is useful alone, and the ones that
+work today do not depend on the one that needs a probe result. Layers 1–3 apply to
+any instrument; Layer 4 exists because gold has data an index CFD does not.
 
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
@@ -23,7 +24,20 @@ work today do not depend on the one that needs a probe result.
 │  dom_recorder.py ─▶ JSONL snapshots ─▶ heatmap_render.py             │
 │  Answers: is there size resting there RIGHT NOW, and on which side   │
 └──────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────┐
+│  LAYER 4 — GOLD ONLY: REAL VOLUME & COMMITTED SIZE   (works today)   │
+│  gold_context.py                                                     │
+│  GC=F volume ──┐                                                     │
+│  GLD options ──┼─▶ basis / ratio calibration ─▶ all mapped to XAUUSD │
+│  CFTC COT    ──┘                                                     │
+│  Answers: where did volume really trade · where is size committed ·  │
+│           is today a pinning or a trending regime                    │
+└──────────────────────────────────────────────────────────────────────┘
 ```
+
+Layer 4 is instrument-specific and only exists because gold has data an index CFD
+doesn't. It runs independently of Layers 1–3 and needs no new credentials.
 
 ---
 
@@ -102,6 +116,32 @@ answer would be building on an assumption.
 
 ---
 
+## Layer 4 — Gold context (`gold_context.py`)
+
+Three independent sources, each priced in something other than XAUUSD spot. The
+architecture is mostly about getting the translations right, because they are
+larger and less stable than they look.
+
+**Basis, measured not assumed.** GC-minus-spot is computed from overlapping hourly
+bars every run. It decays to zero into contract expiry and steps ~58 points at the
+roll, so a fixed constant is wrong twice over: wrong now, and wrong differently for
+historical bars. A roll is flagged when the day-over-day step exceeds 15 points.
+
+**Per-bar conversion.** The volume profile is built from futures bars each
+converted at *that day's* basis, so a lookback spanning a roll still lands volume
+at the right spot price. This is the single most important correctness decision in
+the module — with a single current offset the POC was 33 points off.
+
+**Ratio, measured not assumed.** spot/GLD is calibrated from overlapping hours
+(10.9008 on 2026-08-01) rather than the conventional 10, which is now 335 points wrong.
+
+**Greeks come from CBOE**, so there is no Black-Scholes and no scipy dependency —
+the whole module is stdlib-only. GEX convention matches `GEX&OI/agent_skill`
+(net = call GEX − put GEX) so the two projects agree.
+
+**Expired series are filtered.** CBOE keeps just-expired contracts in the file;
+including them would put dead open interest on the board as live positioning.
+
 ## Data honesty model
 
 Carried over from `Order Flow System/Stage3_Architecture.md`, which established
@@ -110,9 +150,15 @@ the same tiering for the earlier project.
 | Tier | Meaning | Here |
 |---|---|---|
 | 1 | True order flow — real aggressor-classified trade volume | **Not available** for these instruments at any free price |
+| 1− | Real traded volume — where business happened, but *not* aggressor-classified | Layer 4 futures volume profile (gold only) |
+| 1− | Real committed size — open interest by strike | Layer 4 options (gold, via GLD proxy) |
 | 2 | Structural / statistical — price behaviour | Layer 1 + 2 |
 | 2.5 | Real resting liquidity, broker-scoped | Layer 3 (if the probe passes) |
-| 3 | Confluence — supporting context | Session, day bias, correlated ETF tape |
+| 3 | Confluence — supporting context | Session, day bias, COT positioning |
+
+Gold reaches Tier 1− on two independent axes, which no index CFD does. That is the
+substantive reason the answer for XAUUSD is better than the answer for UK100 — it
+is not that the method is different, it is that the data exists.
 
 Every report states its tier. The tick-efficiency "absorption proxy" is
 explicitly reported as a proxy, and — as measured — as one that **does not
@@ -138,3 +184,21 @@ precisely so that stays visible rather than being quietly assumed to work.
 5. **Walk-forward.** Split the sample; check that a level's hold rate in the first
    half predicts the second. Without this, per-level stats are description, not
    edge.
+
+### Gold-specific
+
+6. **Pull OG options instead of GLD.** Options on COMEX gold futures put strikes
+   directly on the futures price, removing the ETF ratio entirely. CME publishes
+   them free; every CME endpoint 403s from this environment but should work from
+   your machine. This is the single biggest quality upgrade available to Layer 4.
+7. **Condition `level_stats` on the gamma regime.** The obvious test: do XAUUSD
+   pivots hold more often on positive-net-gamma days than negative ones? If the
+   pinning story is real it will show up as a hold-rate difference, and that turns
+   a plausible narrative into a filter worth trading. This is the highest-value
+   next piece of work in the whole project — it joins two layers that currently
+   only sit next to each other.
+8. **Volume profile per session.** Rebuild the profile for the London and US
+   windows separately; gold's character differs sharply between them, and a
+   single 30-day profile blurs that.
+9. **Track basis decay as a signal in its own right.** The basis falling toward
+   zero dates the contract; a sharp move in it can front-run rate repricing.
