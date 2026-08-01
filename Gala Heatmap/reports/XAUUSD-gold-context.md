@@ -1,11 +1,11 @@
 # Gold Context — futures volume, options positioning, spot-mapped
 
-Generated 2026-08-01 17:03Z · XAUUSD spot 4,046.49 · lookback 30d
+Generated 2026-08-01 23:09Z · XAUUSD spot 4,046.49 · lookback 30d
 
 ## 1. Basis — how futures prices map to your chart
 
 - **Current basis: +57.12 points** (GC front month − XAUUSD spot), median of the last 24 overlapping hours
-- 30-day median +6.43 · recent stdev 1.23 · 469 aligned hours
+- 30-day median +7.01 · recent stdev 1.23 · 510 aligned hours
 
 To convert a futures price yourself right now: `spot = futures − 57.12`.
 
@@ -35,26 +35,28 @@ Recent daily basis:
 This is **actual traded contract volume**, not the tick-count that CFD feeds
 report. It is the single biggest data upgrade gold has over an index CFD.
 
+Built from **6,662 volume-bearing bars** (3,032,550 contracts).
+
 All prices are **XAUUSD spot**, converted per bar at that day's measured basis.
 
 | Node | XAUUSD spot | Meaning |
 |---|---|---|
-| POC | **4,047.37** | most volume traded here — magnet, and a level that grinds |
-| VAH | **4,120.02** | top of the 70% value area |
-| VAL | **4,018.94** | bottom of the 70% value area |
+| POC | **4,049.95** | most volume traded here — magnet, and a level that grinds |
+| VAH | **4,106.66** | top of the 70% value area |
+| VAL | **4,006.33** | bottom of the 70% value area |
 
 **High volume nodes** — price slows and chops here; good targets, poor breakout levels.
 
 | XAUUSD spot | Relative volume |
 |---|---|
-| **4,047.37** | ██████████████ |
-| **4,066.32** | ██████████████ |
-| **4,025.26** | ███████████ |
-| **4,034.73** | ███████████ |
-| **4,107.38** | ████████ |
-| **4,120.02** | ███████ |
-| **4,113.70** | ███████ |
-| **4,006.31** | ███████ |
+| **4,049.95** | ██████████████ |
+| **4,028.14** | █████████████ |
+| **4,073.95** | █████████████ |
+| **4,060.86** | █████████████ |
+| **4,036.87** | ██████████ |
+| **4,082.67** | █████████ |
+| **4,015.06** | ████████ |
+| **4,102.30** | ███████ |
 
 ## 3. Options positioning — where size is committed
 
@@ -145,7 +147,7 @@ hold beyond the fact you drew a line there.
 
 | Your level | Nearest volume node | Nearest significant OI | Read |
 |---|---|---|---|
-| **4,049.44** | 4,047.37 (POC, -2.1) | 4,055.09 (1,354 OI, +5.6) | **strong confluence** |
+| **4,049.44** | 4,049.95 (POC, +0.5) | 4,055.09 (1,354 OI, +5.6) | **strong confluence** |
 
 ---
 

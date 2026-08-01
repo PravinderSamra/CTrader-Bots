@@ -3,6 +3,10 @@
 Written 2026-08-01 after building the whole stack. Every claim below is measured
 against XAUUSD 4,049.44 over the 14 days to 2026-08-01 unless stated otherwise.
 
+> **Status: §2.1, §2.2, §2.3 and §2.4 have since been fixed** — see §6. The
+> findings are left in place because they are the evidence for the fixes, and
+> because the measurements are the useful part.
+
 ---
 
 ## 1. What works
@@ -232,3 +236,66 @@ The most valuable thing the project produced is not the score. It is two
 measured facts: that the futures basis will silently misplace every level by ~58
 points across a roll, and that a stop "just beyond the wick" on gold is roughly
 three times too tight.
+
+
+---
+
+## 6. Implemented (2026-08-01)
+
+### Independent-sample counting — fixes §2.1
+
+`independent_counts()` reports events, visits (merged under 60 min) and distinct
+days. Sample weight now keys on **days**:
+
+```
+12+ days → 1.00 | 8–11 → 0.80 | 5–7 → 0.60 | 3–4 → 0.40 | <3 → 0.20
+```
+
+At 4,049.44 that moved the base from +30.8 (weight 1.00 on 23 events) to +9.6
+(weight 0.40 on 4 days), and the overall score from 79/TAKE to 48/WEAK. The
+report prints all three counts so the dilution is visible rather than implied.
+
+### Rejection entry model — fixes §2.2 and §2.3
+
+`replay_rejection()` waits for a bar to wick through the level and close back
+inside, enters at that close, charges the spread, and stops beyond the printed
+wick subject to a floor (default 0.125% of spot, ~5 pts on gold). It is now the
+**default**; `--entry level` keeps the old limit-at-the-level model for
+comparison.
+
+Visits that never produced a rejection are marked `triggered=False` and excluded
+from win rate and expectancy — averaging a no-signal visit in as a zero would
+dilute the edge toward nothing. Hold rate still counts every visit, because that
+is a property of the level rather than of the trade.
+
+Same level, same 14 days, identical data:
+
+| Model | Win | Expectancy | Spread as % of risk | Score |
+|---|---|---|---|---|
+| Rejection, 5.06pt floor *(default)* | 67% | +0.60R | 7% | 48 |
+| Rejection, 7pt floor | 73% | +0.45R | 5% | 47 |
+| Limit at level, 2.77pt stop | 57% | +1.06R | 13% | 60 |
+
+### 5-minute volume profile — fixes §2.4
+
+The profile now builds from 5-minute GC bars: **6,887 volume-bearing bars against
+486 hourly**, a 14× resolution gain.
+
+Two things had to be fixed to make it safe rather than merely finer:
+
+- **The basis window must cover the profile window.** It is now derived from
+  `--vp-range` rather than `--days`. Without this, bars outside the measured
+  basis silently borrowed a stale offset.
+- **`futures_to_spot` now refuses to borrow a basis across a roll**, and drops
+  bars more than 4 days from any measured basis rather than placing their volume
+  at a price they never traded at. It reports how many it dropped.
+
+The lookback stayed at 30 days deliberately. 60 days spans a 235-point range on
+gold and moved the POC by 25 points between runs — the gain here is *resolution*,
+not history.
+
+### Still open
+
+§2.5 (spread is now charged on entry, but slippage is not modelled), §2.6 (no
+event/news filter), §2.7 (gamma still used as a market-wide total), §2.8, and
+everything in §3 except the volume granularity.

@@ -82,11 +82,14 @@ class TouchEvent:
     day_bias: str        # "bearish" | "bullish" | "flat"
     session: str         # "asia" | "london" | "us" | "late"
 
-    # Filled by replay() once the empirical stop distance is known.
+    # Filled by replay() / replay_rejection() once the stop distance is known.
     r_outcome: float = 0.0    # realised R, stop checked before target
     mfe_r: float = 0.0        # best R reached before the stop was hit
     stopped: bool = False
     resolved: bool = False    # False = ran out of horizon still open
+    triggered: bool = True    # rejection model: did a rejection bar ever print?
+    entry_px: float = 0.0
+    stop_px: float = 0.0
 
 
 def _session(ts: int) -> str:
@@ -180,6 +183,33 @@ def find_touch_events(bars: list[dict], level: float, band: float, *,
     return events
 
 
+# ------------------------------------------------------- independent sampling
+
+def independent_counts(events: list[TouchEvent], merge_min: int = 60) -> dict:
+    """How many genuinely independent observations are in here?
+
+    Touch events are NOT independent. During chop a single visit to a level
+    produces many events, and their outcomes are dominated by that day's regime —
+    at XAUUSD 4,049.44 the raw count was 60 events, which was really 16 visits
+    across 7 days, one visit alone holding 17 events.
+
+    Treating 60 as the sample size hands full statistical confidence to what is
+    effectively a handful of observations. The point estimate survives that
+    (measured: +1.06R at n=60 events vs +1.00R at n=4 days) but the confidence
+    in it does not, so sample weighting must key off these numbers instead.
+    """
+    if not events:
+        return {"events": 0, "visits": 0, "days": 0}
+    ordered = sorted(events, key=lambda e: e.start_ts)
+    visits = 1
+    for prev, cur in zip(ordered, ordered[1:]):
+        if (cur.start_ts - prev.end_ts) / 60_000 >= merge_min:
+            visits += 1
+    days = len({datetime.fromtimestamp(e.start_ts / 1000, tz=timezone.utc)
+                .strftime("%Y-%m-%d") for e in events})
+    return {"events": len(events), "visits": visits, "days": days}
+
+
 # ---------------------------------------------------------------------- replay
 
 def derive_stop_distance(events: list[TouchEvent], floor: float, cap: float) -> float:
@@ -241,6 +271,82 @@ def replay(events: list[TouchEvent], bars: list[dict], stop_dist: float,
             e.resolved = e.resolved or best_r >= target_r
 
 
+def replay_rejection(events: list[TouchEvent], bars: list[dict], level: float, *,
+                     stop_floor: float, spread: float, horizon: int,
+                     target_r: float = 3.0, eps: float = 0.0) -> None:
+    """Replay the trade as actually described: wait for the rejection, then enter.
+
+    For each visit, find the first bar that wicks THROUGH the level and closes
+    back inside it. Enter at that bar's close (crossing the spread), stop beyond
+    that bar's printed wick — the "just beyond the deepest wick" rule — but never
+    tighter than `stop_floor`.
+
+    That floor is the whole point. Measured on XAUUSD 4,049.44, the unfloored
+    rule gives a ~1.6 point stop and −0.33R; a 5-point floor gives +0.52R and a
+    7-point floor +0.62R. The entry timing was never the problem, the stop was.
+
+    Visits where no rejection ever printed are marked triggered=False — there was
+    no signal, so they are neither wins nor losses.
+    """
+    idx = {b["ts"]: i for i, b in enumerate(bars)}
+    for e in events:
+        e.triggered = False
+        e.r_outcome = 0.0
+        e.mfe_r = 0.0
+        e.stopped = False
+        e.resolved = False
+
+        s = idx.get(e.start_ts)
+        if s is None:
+            continue
+        end = e.end_idx
+        short = e.side == "resistance"
+
+        rej = None
+        for i in range(s, min(end + 1, len(bars))):
+            b = bars[i]
+            if short and b["h"] >= level and b["c"] < level - eps:
+                rej = i
+                break
+            if (not short) and b["l"] <= level and b["c"] > level + eps:
+                rej = i
+                break
+        if rej is None:
+            continue
+
+        rb = bars[rej]
+        if short:
+            entry = rb["c"] - spread / 2          # sell the bid
+            stop = max(rb["h"] + spread, entry + stop_floor)
+        else:
+            entry = rb["c"] + spread / 2          # buy the ask
+            stop = min(rb["l"] - spread, entry - stop_floor)
+        risk = abs(stop - entry)
+        if risk <= 0:
+            continue
+
+        e.triggered = True
+        e.entry_px = entry
+        e.stop_px = stop
+        best = 0.0
+        for b in bars[rej + 1: rej + 1 + horizon]:
+            if short:
+                if b["h"] >= stop:
+                    e.stopped = True
+                    break
+                best = max(best, (entry - b["l"]) / risk)
+            else:
+                if b["l"] <= stop:
+                    e.stopped = True
+                    break
+                best = max(best, (b["h"] - entry) / risk)
+            if best >= target_r:
+                e.resolved = True
+                break
+        e.mfe_r = best
+        e.r_outcome = -1.0 if e.stopped else min(best, target_r)
+
+
 # ------------------------------------------------------------------ aggregation
 
 def _pct(vals: list[float], q: float) -> float:
@@ -258,21 +364,31 @@ def summarise(events: list[TouchEvent]) -> dict:
     held = [e for e in events if not e.broke]
     broke = [e for e in events if e.broke]
     pierces = [e.pierce for e in events]
-    wins = [e for e in events if e.r_outcome > 0]
+
+    # Hold/break rate is a property of the LEVEL — every visit counts.
+    # Win rate and expectancy are properties of the TRADE, so under the rejection
+    # model only visits that actually produced a signal are eligible; averaging a
+    # no-signal visit in as a zero would silently dilute the edge toward nothing.
+    trig = [e for e in events if e.triggered]
+    wins = [e for e in trig if e.r_outcome > 0]
+    ind = independent_counts(events)
 
     return {
         "n": len(events),
+        "n_visits": ind["visits"],
+        "n_days": ind["days"],
+        "n_triggered": len(trig),
         "hold_rate": len(held) / len(events),
         "break_rate": len(broke) / len(events),
         "pierce_median": stats.median(pierces),
         "pierce_p75": _pct(pierces, 0.75),
         "pierce_p90": _pct(pierces, 0.90),
         "pierce_max": max(pierces),
-        "win_rate": len(wins) / len(events),
-        "expectancy_r": stats.mean([e.r_outcome for e in events]),
-        "median_r": stats.median([e.r_outcome for e in events]),
-        "mfe_r_median": stats.median([e.mfe_r for e in events]),
-        "stopped_rate": sum(1 for e in events if e.stopped) / len(events),
+        "win_rate": (len(wins) / len(trig)) if trig else 0.0,
+        "expectancy_r": stats.mean([e.r_outcome for e in trig]) if trig else 0.0,
+        "median_r": stats.median([e.r_outcome for e in trig]) if trig else 0.0,
+        "mfe_r_median": stats.median([e.mfe_r for e in trig]) if trig else 0.0,
+        "stopped_rate": (sum(1 for e in trig if e.stopped) / len(trig)) if trig else 0.0,
         "efficiency_median": stats.median([e.efficiency for e in events]),
         "efficiency_median_on_hold": stats.median([e.efficiency for e in held]) if held else 0.0,
         "efficiency_median_on_break": stats.median([e.efficiency for e in broke]) if broke else 0.0,

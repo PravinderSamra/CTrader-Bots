@@ -41,6 +41,10 @@ python3 src/level_confidence.py --level 4049.44
 python3 src/level_confidence.py --level 4049.44 --level 4103.00 \
         --direction short --journal
 
+# compare entry models, or override the stop floor
+python3 src/level_confidence.py --level 4049.44 --entry level
+python3 src/level_confidence.py --level 4049.44 --stop-floor 7
+
 # what could have been said at a past moment (no look-ahead)
 python3 src/level_confidence.py --level 4049.44 --as-of 2026-07-31T15:30:00Z
 ```
@@ -70,8 +74,16 @@ about it: `references/01-reading-the-score.md`.
 
 ### Things you must always surface
 
-- **`n` on the level history.** A score built on `n=3` is barely a score. The
-  sample weight is already applied, but say the number out loud.
+- **The DAY count, not the event count.** The history line reads
+  "4 distinct days / 9 visits / 23 events". Quote the days first — events within
+  a day share that day's regime, so 23 events across 4 days is four observations.
+  Sample weight already keys off days; say the number anyway.
+- **Which entry model produced the number.** Rejection (default) and level give
+  materially different expectancies on identical data. Never present one as if it
+  were the other.
+- **The stop floor.** If the user says they stop "just beyond the wick", tell
+  them the measurement: that rule returns −0.33R on this instrument and needs a
+  5–7 point floor to turn positive.
 - **Gamma availability.** Under `--as-of` the gamma and OI layers are
   UNAVAILABLE and the score is capped around 85. Never present a replayed score
   as if it were a live one.

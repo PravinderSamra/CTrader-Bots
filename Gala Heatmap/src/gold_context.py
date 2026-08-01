@@ -70,6 +70,21 @@ XAUUSD_SYMBOL_ID = 241
 DAY_MS = 86_400_000
 
 
+def range_days(rng: str) -> int:
+    """'60d' / '1mo' / '3mo' → days, so the basis window can be made to cover it."""
+    rng = (rng or "").strip().lower()
+    try:
+        if rng.endswith("d"):
+            return int(rng[:-1])
+        if rng.endswith("mo"):
+            return int(rng[:-2]) * 31
+        if rng.endswith("y"):
+            return int(rng[:-1]) * 366
+    except ValueError:
+        pass
+    return 30
+
+
 def _get_json(url: str, timeout: int = 30) -> dict:
     req = urllib.request.Request(url, headers=UA)
     with urllib.request.urlopen(req, timeout=timeout) as r:
@@ -148,18 +163,37 @@ def futures_to_spot(fut: list[dict], basis: dict) -> list[dict]:
     dmap = basis["daily_map"]
     days = sorted(dmap)
     out = []
+    uncovered = 0
     for b in fut:
         day = datetime.fromtimestamp(b["ts"] / 1000, tz=timezone.utc).strftime("%Y-%m-%d")
         if day in dmap:
             off = dmap[day]
         elif days:
             # Nearest measured day — futures trade hours spot doesn't, and vice versa.
-            off = dmap[min(days, key=lambda d: abs(
-                (datetime.strptime(d, "%Y-%m-%d") - datetime.strptime(day, "%Y-%m-%d")).days))]
+            nearest = min(days, key=lambda d: abs(
+                (datetime.strptime(d, "%Y-%m-%d") - datetime.strptime(day, "%Y-%m-%d")).days))
+            gap = abs((datetime.strptime(nearest, "%Y-%m-%d")
+                       - datetime.strptime(day, "%Y-%m-%d")).days)
+            # A weekend or holiday leaves a 2-4 day hole where futures traded and
+            # XAUUSD didn't. Borrowing the adjacent day's basis costs ~1 pt/day of
+            # drift, which beats discarding the volume. Beyond that it is a guess.
+            roll_date = (basis.get("roll") or {}).get("date")
+            crosses_roll = bool(roll_date) and (
+                (day < roll_date) != (nearest < roll_date))
+            if gap > 4 or crosses_roll:
+                # Across a roll the basis steps ~58 points; borrowing would place
+                # this bar's volume at a price it never traded at.
+                uncovered += 1
+                continue
+            off = dmap[nearest]
         else:
             off = basis["current"]
         out.append({**{k: b[k] - off for k in ("o", "h", "l", "c")},
                     "ts": b["ts"], "v": b["v"], "basis": off})
+    if uncovered:
+        print(f"      note: dropped {uncovered:,} futures bars outside the measured "
+              f"basis window ({days[0]} → {days[-1]}) — extend the basis lookback "
+              f"to use them", file=sys.stderr)
     return out
 
 
@@ -257,6 +291,7 @@ def volume_profile(bars: list[dict], bins: int = 80) -> dict:
     return {
         "poc": price_of(poc_i), "vah": price_of(hi_i), "val": price_of(lo_i),
         "pmin": pmin, "pmax": pmax, "step": step, "total": total,
+        "n_bars": len(bars),
         "hist": [(price_of(i), hist[i]) for i in range(bins)],
         "hvn": sorted(hvn, key=lambda x: -x[1])[:8],
         "lvn": sorted(lvn, key=lambda x: x[1])[:8],
@@ -468,6 +503,9 @@ def build_report(spot_px: float, basis: dict, vp: dict, opts: dict | None,
     a("This is **actual traded contract volume**, not the tick-count that CFD feeds")
     a("report. It is the single biggest data upgrade gold has over an index CFD.")
     a("")
+    a(f"Built from **{vp.get('n_bars', 0):,} volume-bearing bars** "
+      f"({vp.get('total', 0):,.0f} contracts).")
+    a("")
     a("All prices are **XAUUSD spot**, converted per bar at that day's measured basis.")
     a("")
     a("| Node | XAUUSD spot | Meaning |")
@@ -644,7 +682,17 @@ def build_report(spot_px: float, basis: dict, vp: dict, opts: dict | None,
 def main() -> int:
     p = argparse.ArgumentParser(description="Gold futures/options context mapped to XAUUSD")
     p.add_argument("--days", type=int, default=30, help="lookback for basis and volume profile")
-    p.add_argument("--bins", type=int, default=80, help="volume profile resolution")
+    p.add_argument("--bins", type=int, default=120, help="volume profile resolution")
+    p.add_argument("--vp-interval", default="5m",
+                   help="futures bar interval for the volume profile. Hourly bars "
+                        "smear an hour of gold (20+ pts) evenly across their range, "
+                        "which is useless for a 1-2 minute strategy. 5m over 60d "
+                        "gives ~13,700 volume-bearing bars against ~490 hourly.")
+    p.add_argument("--vp-range", default="30d",
+                   help="lookback for the volume profile. 30d keeps the window "
+                        "comparable to the rest of the analysis; the gain here is "
+                        "RESOLUTION (5m vs 1h), not a longer history. 60d spans a "
+                        "235-pt range on gold and blurs what is relevant intraday.")
     p.add_argument("--futures", default="GC=F", help="Yahoo futures symbol")
     p.add_argument("--etf", default="GLD", help="options proxy ticker")
     p.add_argument("--levels", default="", help="comma-separated XAUUSD levels to cross-reference")
@@ -652,20 +700,36 @@ def main() -> int:
     p.add_argument("--out", default=None)
     args = p.parse_args()
 
-    rng = "1mo" if args.days <= 30 else "3mo"
+    # The basis is measured from XAUUSD H1 vs hourly GC, and every profile bar
+    # must fall inside that window or its volume lands at the wrong spot price.
+    # So the basis lookback is driven by the PROFILE range, not by --days.
+    basis_days = max(args.days, range_days(args.vp_range) + 2)
+    rng = "1mo" if basis_days <= 30 else "3mo" if basis_days <= 90 else "6mo"
 
-    print("[1/6] XAUUSD spot + H1 from cTrader…", file=sys.stderr)
+    print(f"[1/6] XAUUSD spot + H1 from cTrader ({basis_days}d for basis coverage)…",
+          file=sys.stderr)
     cli = CTraderClient()
     end = now_ms()
-    spot_bars = cli.trendbars(XAUUSD_SYMBOL_ID, "H_1", end - args.days * DAY_MS, end)
+    spot_bars = cli.trendbars(XAUUSD_SYMBOL_ID, "H_1", end - basis_days * DAY_MS, end)
     sp = cli.spot([XAUUSD_SYMBOL_ID])
     q = (sp.get("prices") or sp.get("spotPrices") or [{}])[0]
     spot_px = ((q.get("bid", 0) + q.get("ask", 0)) / 2) / 1e5 or spot_bars[-1]["c"]
     print(f"      spot {spot_px:,.2f}, {len(spot_bars)} H1 bars", file=sys.stderr)
 
-    print(f"[2/6] {args.futures} hourly from Yahoo…", file=sys.stderr)
+    # Two separate pulls, deliberately. The basis needs HOURLY bars because it is
+    # measured against XAUUSD H1; the profile wants the finest bars available.
+    print(f"[2/6] {args.futures} hourly (for basis) + {args.vp_interval} (for profile)…",
+          file=sys.stderr)
     fut = yahoo_ohlcv(args.futures, rng, "1h")
-    print(f"      {len(fut)} bars, total volume {sum(b['v'] for b in fut):,}", file=sys.stderr)
+    print(f"      hourly: {len(fut)} bars, volume {sum(b['v'] for b in fut):,}", file=sys.stderr)
+    try:
+        fut_fine = yahoo_ohlcv(args.futures, args.vp_range, args.vp_interval)
+        print(f"      {args.vp_interval}: {len(fut_fine)} bars, "
+              f"volume {sum(b['v'] for b in fut_fine):,}", file=sys.stderr)
+    except Exception as e:
+        print(f"      {args.vp_interval} unavailable ({str(e)[:60]}) — falling back to hourly",
+              file=sys.stderr)
+        fut_fine = fut
 
     print("[3/6] measuring basis…", file=sys.stderr)
     basis = compute_basis(fut, spot_bars)
@@ -673,7 +737,7 @@ def main() -> int:
           file=sys.stderr)
 
     print("[4/6] volume profile (per-bar basis conversion)…", file=sys.stderr)
-    fut_spot = futures_to_spot(fut, basis)
+    fut_spot = futures_to_spot(fut_fine, basis)
     vp = volume_profile(fut_spot, args.bins)
     print(f"      POC {vp['poc']:,.2f} spot · VA {vp['val']:,.2f}–{vp['vah']:,.2f}",
           file=sys.stderr)

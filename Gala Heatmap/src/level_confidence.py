@@ -57,6 +57,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from ctrader_http import CTraderClient, CTraderError, iso, now_ms  # noqa: E402
 from level_stats import (find_touch_events, derive_stop_distance, replay,  # noqa: E402
+                         replay_rejection, independent_counts,
                          summarise, _pct, resolve_symbol)
 from pivots import find_pivots  # noqa: E402
 import gold_context as gc  # noqa: E402
@@ -89,19 +90,29 @@ def score_level(level: float, direction: str, hist: dict, ctx: dict,
     if n:
         exp = bucket["expectancy_r"]
         base = max(0.0, min(60.0, (exp + 1.0) / 4.0 * 60.0))
-        # Thin samples cannot carry a full-weight opinion.
-        if n >= 15:
-            adeq, adeq_lbl = 1.00, "n≥15"
-        elif n >= 8:
-            adeq, adeq_lbl = 0.85, "n 8–14"
-        elif n >= 4:
-            adeq, adeq_lbl = 0.65, "n 4–7"
+        # Sample weight keys off DISTINCT DAYS, not raw events. Touch events
+        # within a day are dominated by that day's regime, so 23 events across
+        # 4 days is 4 observations wearing a big number. Weighting on the raw
+        # count handed full confidence to a 4-day sample.
+        nd = bucket.get("n_days", 0)
+        nv = bucket.get("n_visits", 0)
+        if nd >= 12:
+            adeq, adeq_lbl = 1.00, "12+ days"
+        elif nd >= 8:
+            adeq, adeq_lbl = 0.80, "8–11 days"
+        elif nd >= 5:
+            adeq, adeq_lbl = 0.60, "5–7 days"
+        elif nd >= 3:
+            adeq, adeq_lbl = 0.40, "3–4 days"
         else:
-            adeq, adeq_lbl = 0.40, "n<4"
+            adeq, adeq_lbl = 0.20, "<3 days"
         base *= adeq
+        trg = bucket.get("n_triggered", n)
         items.append((f"Level history ({side}, {hist['bias']} day)", base,
-                      f"n={n}, held {bucket['hold_rate']*100:.0f}%, "
-                      f"expectancy {exp:+.2f}R, sample weight {adeq:.2f} ({adeq_lbl})"))
+                      f"**{nd} distinct days** / {nv} visits / {n} events"
+                      f"{f', {trg} triggered' if trg != n else ''} · "
+                      f"held {bucket['hold_rate']*100:.0f}%, expectancy {exp:+.2f}R · "
+                      f"sample weight {adeq:.2f} ({adeq_lbl})"))
         if bucket["hold_rate"] < 0.5:
             items.append(("Breaks more than it holds", -15.0,
                           f"held only {bucket['hold_rate']*100:.0f}% — favour break-and-retest"))
@@ -241,7 +252,10 @@ def score_level(level: float, direction: str, hist: dict, ctx: dict,
 # --------------------------------------------------------------------- gather
 
 def gather(symbol: str, levels: list[float], direction: str | None,
-           as_of_ms: int | None, days: int, quiet: bool = False) -> dict:
+           as_of_ms: int | None, days: int, quiet: bool = False,
+           entry_model: str = "rejection", stop_floor: float | None = None,
+           spread: float = 0.35, vp_interval: str = "5m",
+           vp_range: str = "30d") -> dict:
     log = (lambda *a: None) if quiet else (lambda *a: print(*a, file=sys.stderr))
     cli = CTraderClient()
     sym_id, sym_name = resolve_symbol(cli, symbol)
@@ -300,6 +314,11 @@ def gather(symbol: str, levels: list[float], direction: str | None,
                    or [e.pierce for e in evs if not e.broke])
         stop_dist = (max(band, min(band * 6, _pct(pierces, 0.90))) if pierces
                      else derive_stop_distance(evs, band, band * 6) if evs else band)
+        # The rejection model needs a floor, and the wick rule does not supply a
+        # usable one — measured, an unfloored wick stop returns -0.33R against
+        # +0.52R at a 5-point floor. Default to a fraction of spot rather than a
+        # magic number so it travels across instruments.
+        floor = stop_floor if stop_floor is not None else spot * 0.00125
         # Stop-sensitivity sweep. A single stop distance can land on an unlucky
         # spot purely by sample noise, so check whether the edge survives across
         # a range of plausible stops. An edge that only exists at one stop width
@@ -307,18 +326,31 @@ def gather(symbol: str, levels: list[float], direction: str | None,
         robustness = []
         if bucket:
             for mult in (0.6, 0.8, 1.0, 1.3, 1.7, 2.2, 3.0):
-                sd = max(band * 0.5, stop_dist * mult)
-                replay(evs, m1, sd, 60, 3.0)
-                b2 = [e for e in evs if e.side == side and e.day_bias == bias]
+                if entry_model == "rejection":
+                    sd = max(band * 0.5, floor * mult)
+                    replay_rejection(evs, m1, lv, stop_floor=sd, spread=spread,
+                                     horizon=60, target_r=3.0)
+                else:
+                    sd = max(band * 0.5, stop_dist * mult)
+                    replay(evs, m1, sd, 60, 3.0)
+                b2 = [e for e in evs if e.side == side and e.day_bias == bias
+                      and e.triggered]
+                if not b2:
+                    continue
                 robustness.append({
                     "stop": round(sd, 2),
                     "win_rate": sum(1 for e in b2 if e.r_outcome > 0) / len(b2),
                     "expectancy_r": stats.mean(e.r_outcome for e in b2),
                 })
         if evs:
-            replay(evs, m1, stop_dist, 60, 3.0)   # restore the reported stop
+            if entry_model == "rejection":
+                replay_rejection(evs, m1, lv, stop_floor=floor, spread=spread,
+                                 horizon=60, target_r=3.0)
+            else:
+                replay(evs, m1, stop_dist, 60, 3.0)   # restore the reported stop
         per_level.append({
             "robustness": robustness,
+            "entry_model": entry_model, "stop_floor": floor, "spread": spread,
             "level": lv, "direction": dirn, "side": side,
             "events": evs, "stop_dist": stop_dist,
             "hist": {
@@ -339,13 +371,24 @@ def gather(symbol: str, levels: list[float], direction: str | None,
         fut = gc.yahoo_ohlcv("GC=F", "3mo" if days > 30 else "1mo", "1h")
         if as_of_ms:
             fut = [b for b in fut if b["ts"] < as_of_ms]
-        basis = gc.compute_basis(fut, h1)
-        vp = gc.volume_profile(gc.futures_to_spot(fut, basis), 80)
+        basis = gc.compute_basis(fut, h1)      # basis needs hourly vs XAUUSD H1
+        try:                                    # profile wants the finest bars
+            fine = gc.yahoo_ohlcv("GC=F", vp_range, vp_interval)
+            if as_of_ms:
+                fine = [b for b in fine if b["ts"] < as_of_ms]
+            if len(fine) < 200:
+                fine = fut
+        except Exception:
+            fine = fut
+        vp = gc.volume_profile(gc.futures_to_spot(fine, basis), 120)
         ctx["basis"] = basis["current"]
         ctx["basis_stdev"] = basis["stdev_recent"]
         ctx["roll"] = basis["roll"]
         ctx["vp"] = vp
-        log(f"      basis {basis['current']:+.2f} · POC {vp['poc']:,.2f} spot")
+        ctx["vp_bars"] = vp.get("n_bars", 0)
+        ctx["vp_interval"] = vp_interval if len(vp.get("hist", [])) else "1h"
+        log(f"      basis {basis['current']:+.2f} · POC {vp['poc']:,.2f} spot "
+            f"· {vp.get('n_bars', 0):,} volume bars")
     except Exception as e:
         log(f"      volume profile unavailable: {str(e)[:100]}")
 
@@ -439,7 +482,8 @@ def render(res: dict) -> str:
     if c.get("vp"):
         vp = c["vp"]
         a(f"- Volume profile (spot terms): POC **{vp['poc']:,.2f}** · "
-          f"VA {vp['val']:,.2f}–{vp['vah']:,.2f}")
+          f"VA {vp['val']:,.2f}–{vp['vah']:,.2f} "
+          f"({c.get('vp_bars', 0):,} × {c.get('vp_interval', '?')} volume bars)")
     if c.get("net_gex") is not None:
         regime = "PINNING (fades favoured)" if c["net_gex"] > 0 else "TRENDING (breaks favoured)"
         a(f"- Net dealer gamma **{c['net_gex']/1e6:+.1f}M** per 1% → **{regime}**"
@@ -476,6 +520,25 @@ def render(res: dict) -> str:
         a("entirely, since their strikes sit on the futures price and the basis maps cleanly.")
         a("")
 
+    em = res["levels"][0]["entry_model"] if res["levels"] else "rejection"
+    sf = res["levels"][0]["stop_floor"] if res["levels"] else 0
+    sp = res["levels"][0]["spread"] if res["levels"] else 0
+    a("## Trade model")
+    a("")
+    if em == "rejection":
+        a(f"**Rejection entry** — wait for a bar to wick through the level and close back")
+        a(f"inside it, then enter at that close. Stop beyond that bar's printed wick, but")
+        a(f"never tighter than **{sf:.2f} pts**. Spread of {sp:.2f} charged on entry.")
+        a("")
+        a("The floor is not cosmetic. Measured on this instrument, the unfloored wick rule")
+        a("gives a ~1.6 pt stop and **−0.33R**; a 5-pt floor gives **+0.52R** and 7 pts")
+        a("**+0.62R**. The entry timing was never the problem — the stop was.")
+    else:
+        a("**Limit at the level** — assumes a resting order fills at the level itself.")
+        a("Better average price than the rejection model, but you are also filled on every")
+        a("break, and it is not the trade described in the strategy.")
+    a("")
+
     for pl in res["levels"]:
         s = pl["score"]
         lv, d = pl["level"], pl["direction"]
@@ -493,19 +556,39 @@ def render(res: dict) -> str:
         a("")
         b = pl["hist"]["bucket"]
         if b.get("n"):
-            stop = pl["stop_dist"]
+            # The stop quoted must be the stop the replay actually used, or the
+            # expectancy underneath it is describing a different trade.
+            rejection = pl["entry_model"] == "rejection"
+            stop = pl["stop_floor"] if rejection else pl["stop_dist"]
             entry = lv
             stop_px = entry + stop if d == "short" else entry - stop
             t1 = entry - stop * 2 if d == "short" else entry + stop * 2
             t2 = entry - stop * 3 if d == "short" else entry + stop * 3
             a("**The trade, if you take it**")
             a("")
-            a(f"- Entry: {entry:,.2f} (at the level)")
-            a(f"- Stop: **{stop_px:,.2f}** — {stop:.2f} pts beyond, the p90 wick-through on "
-              f"non-break visits in this exact setup (deepest ever {b['pierce_max']:.2f})")
+            if rejection:
+                a(f"- Entry: on the rejection close, around {entry:,.2f} "
+                  f"(the exact fill depends on where that bar closes)")
+                a(f"- Stop: **{stop:.2f} pts minimum** beyond the printed wick — so no closer "
+                  f"than ~{stop_px:,.2f}. Widen it if the wick is deeper; never tighten it.")
+                a(f"- Deepest wick ever seen at this level: {b['pierce_max']:.2f} pts")
+            else:
+                a(f"- Entry: {entry:,.2f} (resting limit at the level)")
+                a(f"- Stop: **{stop_px:,.2f}** — {stop:.2f} pts beyond, the p90 wick-through "
+                  f"on non-break visits (deepest ever {b['pierce_max']:.2f})")
             a(f"- Target 2R {t1:,.2f} · 3R {t2:,.2f}")
-            a(f"- History: {b['n']} comparable touches, held {b['hold_rate']*100:.0f}%, "
-              f"win {b['win_rate']*100:.0f}%, expectancy {b['expectancy_r']:+.2f}R")
+            sig = (f", {b.get('n_triggered', 0)} produced a signal"
+                   if pl["entry_model"] == "rejection" else "")
+            a(f"- History: **{b.get('n_days',0)} distinct days** "
+              f"({b.get('n_visits',0)} visits, {b['n']} events{sig}) "
+              f"— held {b['hold_rate']*100:.0f}%, win {b['win_rate']*100:.0f}%, "
+              f"expectancy {b['expectancy_r']:+.2f}R")
+            a(f"- Cost: {pl['spread']:.2f} spread = "
+              f"{pl['spread']/max(0.01, stop)*100:.0f}% of risk")
+            if b.get("n_days", 0) < 5:
+                a(f"- ⚠️ Only {b.get('n_days',0)} distinct days behind this. Events within a")
+                a("  day share that day's regime, so the effective sample is small regardless")
+                a("  of the event count.")
             a("")
             if pl.get("robustness"):
                 a("**Stop sensitivity** — does the edge depend on getting the stop exactly right?")
@@ -521,8 +604,9 @@ def render(res: dict) -> str:
             a("| Last touches | Side | Day | Pierce | Broke | Result |")
             a("|---|---|---|---|---|---|")
             for e in recent:
+                res = (f"{e.r_outcome:+.1f}R" if e.triggered else "_no signal_")
                 a(f"| {iso(e.start_ts)} | {e.side} | {e.day_bias} | {e.pierce:.2f} | "
-                  f"{'yes' if e.broke else 'no'} | {e.r_outcome:+.1f}R |")
+                  f"{'yes' if e.broke else 'no'} | {res} |")
             a("")
         else:
             a(f"⚠️ No prior {pl['side']} tests of this level on a {pl['hist']['bias']} day in "
@@ -543,7 +627,7 @@ def journal_entries(res: dict) -> list[dict]:
         .strftime("%Y-%m-%dT%H:%M:%SZ")
     for pl in res["levels"]:
         s, b = pl["score"], pl["hist"]["bucket"]
-        stop = pl["stop_dist"]
+        stop = pl["stop_floor"] if pl["entry_model"] == "rejection" else pl["stop_dist"]
         entry = pl["level"]
         out.append({
             "id": f"{as_of}-{res['symbol']}-{pl['level']:.2f}-{pl['direction']}",
@@ -568,8 +652,14 @@ def journal_entries(res: dict) -> list[dict]:
                                else entry + stop * 2, 3),
             "target_3r": round(entry - stop * 3 if pl["direction"] == "short"
                                else entry + stop * 3, 3),
+            "entry_model": pl["entry_model"],
+            "stop_floor": round(pl["stop_floor"], 3),
+            "spread": pl["spread"],
             "history": {
                 "n": b.get("n", 0),
+                "n_visits": b.get("n_visits", 0),
+                "n_days": b.get("n_days", 0),
+                "n_triggered": b.get("n_triggered", 0),
                 "hold_rate": round(b.get("hold_rate", 0), 3),
                 "win_rate": round(b.get("win_rate", 0), 3),
                 "expectancy_r": round(b.get("expectancy_r", 0), 3),
@@ -632,13 +722,26 @@ def main() -> int:
     p.add_argument("--as-of", default=None,
                    help="ISO timestamp — replay what could have been said then")
     p.add_argument("--days", type=int, default=14)
+    p.add_argument("--entry", choices=["rejection", "level"], default="rejection",
+                   help="rejection (default): wait for a bar to wick through and close "
+                        "back inside, then enter — the strategy as actually described. "
+                        "level: enter at the level on a resting limit.")
+    p.add_argument("--stop-floor", type=float, default=None,
+                   help="minimum stop in points. Default 0.125%% of spot (~5 pts on "
+                        "gold). The raw wick rule gives ~1.6 pts and loses money.")
+    p.add_argument("--spread", type=float, default=0.35,
+                   help="round-trip spread in points, charged on entry")
+    p.add_argument("--vp-interval", default="5m", help="futures bars for the volume profile")
+    p.add_argument("--vp-range", default="30d", help="volume profile lookback")
     p.add_argument("--journal", action="store_true", help="append to trade-journal/")
     p.add_argument("--json", action="store_true", help="emit JSON instead of markdown")
     p.add_argument("--out", default=None)
     args = p.parse_args()
 
     res = gather(args.symbol, args.level, args.direction, parse_ts(args.as_of),
-                 args.days, quiet=args.json)
+                 args.days, quiet=args.json, entry_model=args.entry,
+                 stop_floor=args.stop_floor, spread=args.spread,
+                 vp_interval=args.vp_interval, vp_range=args.vp_range)
 
     if args.json:
         print(json.dumps(journal_entries(res), indent=1))

@@ -16,11 +16,19 @@ short, support for a long) and same day bias.
 ```
 base = clamp((expectancy_r + 1) / 4 × 60, 0, 60) × sample_weight
 
-sample_weight:  n≥15 → 1.00 | n 8–14 → 0.85 | n 4–7 → 0.65 | n<4 → 0.40
+sample_weight (keyed on DISTINCT DAYS, not events):
+  12+ days → 1.00 | 8–11 → 0.80 | 5–7 → 0.60 | 3–4 → 0.40 | <3 → 0.20
 ```
 
-**Always say `n` out loud.** A 0.40 weight on `n=3` still produces a number, and
-a number looks authoritative. It isn't.
+**Weighting keys off days, not the event count, and this matters enormously.**
+Touch events are not independent: at XAUUSD 4,049.44 the raw count was 60 events,
+which was 16 visits across 7 days — one visit alone held 17 events. Outcomes
+within a day share that day's regime, so an event count is a small sample wearing
+a big number.
+
+Measured, the point estimate survives de-duplication (+1.06R at 23 events, +1.00R
+at 4 days) but the *confidence* does not. The header line prints all three counts
+— **days / visits / events** — and you should quote the day count first.
 
 If the level breaks more often than it holds in this setup, a −15 penalty fires
 and the honest advice is break-and-retest rather than first-touch rejection.
@@ -112,10 +120,26 @@ What to avoid:
 
 ## The trade block
 
-Entry is at the level. Stop is the p90 wick-through on non-break visits **in the
-matching setup bucket**, floored at the touch band and capped at 6× it. Targets
-are mechanical 2R and 3R.
+Two entry models. `--entry rejection` is the default because it is the strategy
+as actually described.
 
-That stop is the answer to "just beyond the deepest wick", expressed as a
-measurement. Quote the deepest-ever pierce alongside it so the user knows the
-tail risk they are accepting.
+**Rejection (default).** Wait for a bar to wick through the level and close back
+inside, then enter at that close. Stop beyond that bar's printed wick — but never
+tighter than the floor (default 0.125% of spot, ~5 pts on gold).
+
+**That floor is the single most important parameter in the tool.** Measured on
+XAUUSD 4,049.44, the unfloored "just beyond the wick" rule gives a ~1.6 point stop
+and **−0.33R**; a 5-point floor gives **+0.52R**, 7 points **+0.62R**. The entry
+timing was never the problem — a 1-minute wick simply does not leave enough room
+on gold, and spread is 22% of risk at that width versus 5% at 7 points.
+
+If the user describes stopping "just beyond the wick", tell them this. It
+contradicts the stated rule of the strategy and it is the most directly actionable
+finding in the project.
+
+**Level.** A resting limit at the level itself. Better average fill (+1.06R vs
++0.60R on the same data) but you are also filled on every break, and it is not
+the trade the strategy describes. Offer it as a comparison, not the default.
+
+Spread is charged on entry and reported as a percentage of risk. Quote the
+deepest-ever pierce so the user knows the tail they are accepting.
