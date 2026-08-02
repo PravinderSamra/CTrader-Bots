@@ -57,6 +57,16 @@ def c_layout():
     return f"repo root {repo}"
 
 
+def c_transport():
+    """The scripts must reach cTrader over direct HTTPS, never the mcp__ctrader__*
+    tool transport — the latter drops mid-run in remote sessions."""
+    import ctrader_http, inspect
+    src = inspect.getsource(ctrader_http)
+    if "HTTPSConnection" not in src:
+        raise RuntimeError("ctrader_http is not using a direct HTTPS connection")
+    return "direct HTTPS keep-alive (not the MCP tool transport)"
+
+
 def c_token():
     tok = (os.environ.get("CTRADER_MCP_SLUG") or os.environ.get("CTRADER_MCP_TOKEN") or "").strip()
     if not tok:
@@ -70,21 +80,26 @@ def c_ctrader():
     cli = CTraderClient()
     data = cli.symbols()
     syms = data.get("symbols") or []
-    variants = [(s.get("symbolId"), s.get("symbolName")) for s in syms
-                if "XAUUSD" in (s.get("symbolName") or "").upper()]
+    variants = [s for s in syms if "XAUUSD" in (s.get("symbolName") or "").upper()]
     if not variants:
         raise RuntimeError("connected, but no XAUUSD instrument on this account")
+    enabled = [s for s in variants if s.get("enabled")]
     sid, sname = resolve_symbol(cli, "XAUUSD")
     if "-F" in sname.upper():
-        raise RuntimeError(f"resolved to {sname}, which tracks futures not spot")
-    return (f"{len(syms):,} symbols · {len(variants)} XAUUSD variants · "
-            f"resolves to {sname} (id {sid})")
+        raise RuntimeError(f"resolved to {sname}, which tracks the FORWARD price, not spot")
+    chosen = next((s for s in variants if s.get("symbolId") == sid), {})
+    if not chosen.get("enabled"):
+        raise RuntimeError(f"resolved to {sname} (id {sid}) which is DISABLED")
+    return (f"{len(syms):,} symbols · {len(variants)} XAUUSD variants "
+            f"({len(enabled)} enabled) · using {sname} (id {sid}, enabled)")
 
 
 def c_freshness():
     from ctrader_http import CTraderClient, now_ms
     cli = CTraderClient()
-    bars = cli.trendbars(241, "H_1", now_ms() - 5 * 86_400_000, now_ms())
+    from level_stats import resolve_symbol
+    sid, _ = resolve_symbol(cli, "XAUUSD")
+    bars = cli.trendbars(sid, "H_1", now_ms() - 5 * 86_400_000, now_ms())
     if not bars:
         raise RuntimeError("no XAUUSD H1 bars in the last 5 days")
     age_h = (now_ms() - bars[-1]["ts"]) / 3_600_000
@@ -133,6 +148,7 @@ def main() -> int:
     check("Python version", c_python)
     check("Module imports", c_stdlib_only)
     check("Repo layout", c_layout)
+    check("cTrader transport", c_transport)
     check("cTrader token", c_token)
     check("cTrader connection", c_ctrader)
     # Not required: a closed market is normal at weekends, and the tool warns.

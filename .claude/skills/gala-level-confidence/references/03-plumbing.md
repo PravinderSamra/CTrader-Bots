@@ -36,6 +36,30 @@ mid-run**.
 Always pass an explicit timeout of at least 900000 ms. If you are running
 several levels, or `journal_review.py` over a month, allow more.
 
+## cTrader transport — direct HTTPS, always
+
+**Every cTrader call goes over a direct keep-alive HTTPS connection
+(`http.client.HTTPSConnection` in `ctrader_http.py`). Never use the
+`mcp__ctrader__*` tools for this work.**
+
+That connector drops mid-run and often fails to register in remote sessions;
+the same server reached directly over HTTPS is stable. The repo already learned
+this once — `ICT-SMC-Local-Agent/ctrader_http_fetch.py` exists for exactly this
+reason, and `ctrader-mcp-integration-guide.md` Lesson 1 documents that
+`Connection: close` produces ~60% "session not found" 404s, which is why the
+connection is kept alive so every request lands on the same load-balanced
+backend.
+
+The env var is named `CTRADER_MCP_SLUG` for consistency with the rest of the
+repo, but it is carried as an ordinary `Authorization: Bearer` header. The name
+does not imply the MCP transport.
+
+`preflight.py` asserts this and prints
+`cTrader transport  direct HTTPS keep-alive (not the MCP tool transport)`.
+
+If you need an ad-hoc cTrader query, import `CTraderClient` from
+`Gala Heatmap/src/ctrader_http.py` rather than reaching for the MCP tools.
+
 ## Credentials
 
 Only one is needed: `CTRADER_MCP_SLUG` (or `CTRADER_MCP_TOKEN`) — the `eyJwb…`
@@ -45,12 +69,36 @@ slug. If missing you get:
 FAILED: Neither CTRADER_MCP_SLUG nor CTRADER_MCP_TOKEN is set.
 ```
 
-Say so and stop. Do not invent one, and do not fall back to the `mcp__ctrader__*`
-tools — those are a different transport and the scripts do not use them.
+Say so and stop. Do not invent one.
 
 Nothing else needs a key. Yahoo, CBOE and CFTC are all unauthenticated. The DOM
 recorder is the exception and needs its own cTrader Open API app, but it is not
 part of the scoring path.
+
+## Which XAUUSD — this is a CFD account
+
+The account trades **CFDs, not spread bets**, and carries six instruments whose
+names contain XAUUSD:
+
+| id | name | enabled | price | what it is |
+|---|---|---|---|---|
+| **41** | **XAUUSD** | **True** | 4046.31 | **spot CFD — the one used** |
+| 241 | XAUUSD_SB | False | 4046.31 | spread bet, disabled here |
+| 1711 | XAUUSD_SBE | False | 4046.32 | spread bet, EUR |
+| 2552 | XAUUSD-F | True | **4102.80** | FORWARD, 25 Jul–20 Nov |
+| 2586 | XAUUSD-F_SB | False | 4102.80 | forward, spread bet |
+| 5961 | XAUUSD-F_SBE | False | 0.00 | not quoted |
+
+Selection is by the broker's **`enabled` flag**, not by a naming convention.
+An earlier version preferred the `_SB` suffix on the strength of a claim in
+`ctrader-mcp-integration-guide.md` that enabled symbols carry it — on this CFD
+account `_SB` is *disabled*, so that guess selected a dead instrument. The flag
+is authoritative and account-type agnostic; use it.
+
+**Never let an "-F" variant be selected.** Those track the FORWARD price — 4102.80
+against spot 4046.31, which is precisely the ~57pt basis this code measures and
+subtracts. Feeding one in would double-count it. Exact-base matching already
+excludes them, resolution warns if one is somehow chosen, and preflight fails.
 
 ## Instrument scope — this one silently produced garbage
 
@@ -114,7 +162,7 @@ Progress goes to stderr, the report to stdout. Useful lines:
 | `HTTP 401 — token unauthorised or expired` | stale slug | stop; it is a credential issue, not retryable |
 | `only N M1 bars — cannot build reliable statistics` | window too short, or a long market closure | raise `--days` |
 | `only N H1 bars returned — widen --days` | same | raise `--days` |
-| `symbol 'X' not found` | wrong name | the error lists available symbols; all end `_SB` |
+| `symbol 'X' not found` | wrong name | the error lists available symbols |
 | `only N overlapping hours — cannot measure basis` | gold layer, thin overlap | usually a weekend; retry when markets open |
 | `no levels survived filtering` | only when auto-detecting | pass `--level` explicitly |
 

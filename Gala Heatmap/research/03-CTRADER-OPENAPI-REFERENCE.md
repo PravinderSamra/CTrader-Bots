@@ -153,8 +153,23 @@ Recorded here because they cost real debugging time and aren't documented.
 
 ## 6. Symbol IDs on this account
 
-From existing repo config plus this session's `get_symbols`. All are `_SB`
-(spread betting) and `pipDigits = 5`, so divide raw prices by 100,000.
+**Correction (2026-08-02).** An earlier version of this note said all symbols on
+this account are `_SB` (spread betting), repeating the claim in
+`ctrader-mcp-integration-guide.md`. That is wrong for this account, which trades
+**CFDs**. `get_symbols` returns 6,454 instruments including several variants per
+underlying, most of them `enabled: False`:
+
+| id | name | enabled | price |
+|---|---|---|---|
+| **41** | **XAUUSD** | **True** | 4046.31 (spot CFD) |
+| 241 | XAUUSD_SB | False | 4046.31 (spread bet) |
+| 2552 | XAUUSD-F | True | 4102.80 (**forward**) |
+
+**Select on the `enabled` flag, never on a name suffix.** And never auto-select
+an `-F` variant: those track the forward price, ~57 points above spot on gold,
+which is exactly the basis the analysis measures and subtracts.
+
+All are `pipDigits = 5`, so divide raw prices by 100,000.
 
 | Symbol | ID |
 |---|---|
@@ -164,7 +179,9 @@ From existing repo config plus this session's `get_symbols`. All are `_SB`
 | US500 | 115 |
 | NAS100 | 116 |
 | VIX | 152 |
-| XAUUSD | 241 |
+| XAUUSD (spot CFD, enabled) | **41** |
+| XAUUSD_SB (spread bet, disabled here) | 241 |
 
-Resolve others at runtime — `level_stats.py::resolve_symbol` matches on name with
-the `_SB` suffix stripped.
+Resolve at runtime rather than hardcoding — `level_stats.py::resolve_symbol`
+matches on the base name and then ranks by the `enabled` flag, so it follows the
+account rather than a convention.

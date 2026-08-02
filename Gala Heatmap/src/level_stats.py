@@ -574,22 +574,30 @@ def resolve_symbol(cli: CTraderClient, name: str) -> tuple[int, str]:
     """Resolve a symbol name to (id, name), deterministically.
 
     This account carries SIX instruments matching "XAUUSD", quoting two different
-    underlyings:
+    underlyings, and only two of them are enabled:
 
-        41    XAUUSD          4046.31   spot
-        241   XAUUSD_SB       4046.31   spot, spread betting  ← the tradeable one
-        1711  XAUUSD_SBE      4046.32   spot
-        2552  XAUUSD-F        4102.80   FUTURES-tracking
-        2586  XAUUSD-F_SB     4102.80   FUTURES-tracking
-        5961  XAUUSD-F_SBE       0.00   not quoted
+        id    name            enabled   price     what it is
+        41    XAUUSD          True      4046.31   spot CFD  ← the tradeable one
+        241   XAUUSD_SB       False     4046.31   spread bet (disabled here)
+        1711  XAUUSD_SBE      False     4046.32   spread bet, EUR
+        2552  XAUUSD-F        True      4102.80   FORWARD, 25 Jul–20 Nov
+        2586  XAUUSD-F_SB     False     4102.80   forward, spread bet
+        5961  XAUUSD-F_SBE    False        0.00   not quoted
 
-    Two things must not happen. Picking whichever matched first is undefined —
-    it returned 41 while gold_context hardcoded 241. And silently selecting an
-    "-F" variant would feed a futures-priced series into analysis that measures
-    and subtracts the futures basis, double-counting ~57 points on gold.
+    Three things must not happen:
 
-    So: exact base match only (which already excludes "-F"), preferring the
-    `_SB` spread-betting instrument this account actually trades.
+    1. Picking whichever matched first — that is undefined ordering, and it
+       returned 41 while gold_context hardcoded 241.
+    2. Preferring a name suffix. An earlier version preferred `_SB` on the
+       assumption from ctrader-mcp-integration-guide.md that enabled symbols
+       carry that suffix. On this CFD account `_SB` is *disabled* and the plain
+       name is the live one, so the guess picked a dead instrument.
+    3. Selecting an "-F" variant. Those track the FORWARD price (4102.80 vs spot
+       4046.31 — which is the ~57pt basis this code measures and subtracts), so
+       feeding one in would double-count the basis.
+
+    So the broker's own `enabled` flag decides, not a naming convention. Exact
+    base match only, which already excludes "-F".
     """
     data = cli.symbols()
     syms = data.get("symbols") or data.get("symbol") or []
@@ -608,9 +616,9 @@ def resolve_symbol(cli: CTraderClient, name: str) -> tuple[int, str]:
 
     def rank(s) -> tuple:
         nm = (s.get("symbolName") or "").upper()
-        # _SB first (the enabled, tradeable instrument on this account), then the
-        # bare name, then anything else. "-F" never reaches here via exact match.
-        return (0 if nm.endswith("_SB") else 1 if nm == want else 2, nm)
+        # enabled first — the authoritative signal, and account-type agnostic.
+        # Then the plain name, then anything else.
+        return (0 if s.get("enabled") else 1, 0 if nm == want else 1, nm)
 
     pick = sorted(exact, key=rank) if exact else sorted(partial, key=rank)
     if not pick:
@@ -619,6 +627,9 @@ def resolve_symbol(cli: CTraderClient, name: str) -> tuple[int, str]:
 
     s = pick[0]
     chosen = s.get("symbolName") or name
+    if not s.get("enabled", True):
+        print(f"WARNING: {chosen} is DISABLED on this account — no enabled instrument "
+              f"matched {name!r}. Prices may be stale or unavailable.", file=sys.stderr)
     if "-F" in chosen.upper():
         # Only reachable if the user explicitly asked for an -F symbol.
         print(f"WARNING: {chosen} tracks the FUTURES price, not spot. The basis "

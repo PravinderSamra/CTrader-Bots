@@ -25,11 +25,20 @@ optional DOM recorder.
 
 ## Before you start
 
+**cTrader is reached over direct HTTPS, always.** Never use the `mcp__ctrader__*`
+tools for this work — that connector drops mid-run and fails to register in
+remote sessions, while the same server over plain keep-alive HTTPS is stable.
+For ad-hoc queries import `CTraderClient` from `Gala Heatmap/src/ctrader_http.py`.
+
 **Only one credential is needed:** `CTRADER_MCP_SLUG` (or `CTRADER_MCP_TOKEN`),
-the `eyJwb…` slug the other skills in this repo use. If missing, say so and stop
-— do not invent one, and do not fall back to the `mcp__ctrader__*` tools (a
-different transport; these scripts do not use them). Yahoo, CBOE and CFTC need
-no keys.
+the `eyJwb…` slug the other skills in this repo use. Despite the name it is sent
+as an ordinary bearer header over HTTPS. If missing, say so and stop — do not
+invent one. Yahoo, CBOE and CFTC need no keys.
+
+**This is a CFD account.** XAUUSD resolves to **id 41 (`XAUUSD`, enabled)** — not
+the `_SB` spread-bet variant, which is disabled here. Selection uses the broker's
+`enabled` flag rather than a name suffix. The `-F` variants track the FORWARD
+price (~57 pts above spot) and must never be selected.
 
 Everything in the scoring path is **Python 3.10+ standard library only** — no
 numpy, scipy, pandas or yfinance to install.

@@ -67,10 +67,11 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from ctrader_http import CTraderClient, CTraderError, now_ms  # noqa: E402
 
 UA = {"User-Agent": "Mozilla/5.0 (compatible; gala-heatmap/1.0)"}
-# Fallback only. This account carries six XAUUSD variants and two of them track
-# the FUTURES price, so the symbol is resolved by name at runtime (see
-# level_stats.resolve_symbol) and this constant is used only if that fails.
-XAUUSD_SYMBOL_ID = 241
+# Fallback only. This account carries six XAUUSD variants; two track the FORWARD
+# price and four are disabled, so the symbol is resolved at runtime by the
+# broker's `enabled` flag (level_stats.resolve_symbol). 41 is the enabled spot
+# CFD — this constant is used only if resolution fails entirely.
+XAUUSD_SYMBOL_ID = 41
 DAY_MS = 86_400_000
 
 

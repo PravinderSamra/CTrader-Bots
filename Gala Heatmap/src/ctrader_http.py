@@ -1,6 +1,16 @@
 #!/usr/bin/env python3
 """
-cTrader MCP client over direct HTTPS, with trendbar paging.
+cTrader client over DIRECT HTTPS — the primary and only transport.
+
+This talks to mcp.ctrader.com over a plain keep-alive HTTPS connection. It does
+NOT use the `mcp__ctrader__*` tool transport, and nothing in this project should:
+that connector drops mid-run and frequently fails to register in remote sessions,
+whereas the same server reached directly over HTTPS is stable. The env var is
+named CTRADER_MCP_SLUG for consistency with the rest of the repo, but it is
+carried as an ordinary Authorization bearer header here.
+
+The same conclusion is recorded in ICT-SMC-Local-Agent/ctrader_http_fetch.py,
+which exists for exactly this reason.
 
 Reuses the connection pattern proven in ICT-SMC-Local-Agent/ctrader_http_fetch.py
 (see ctrader-mcp-integration-guide.md, Lesson 1): a single keep-alive
