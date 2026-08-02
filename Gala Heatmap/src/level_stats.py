@@ -571,23 +571,60 @@ def build_report(symbol: str, sym_id: int, days: int, spot: float,
 # ------------------------------------------------------------------------ main
 
 def resolve_symbol(cli: CTraderClient, name: str) -> tuple[int, str]:
+    """Resolve a symbol name to (id, name), deterministically.
+
+    This account carries SIX instruments matching "XAUUSD", quoting two different
+    underlyings:
+
+        41    XAUUSD          4046.31   spot
+        241   XAUUSD_SB       4046.31   spot, spread betting  ← the tradeable one
+        1711  XAUUSD_SBE      4046.32   spot
+        2552  XAUUSD-F        4102.80   FUTURES-tracking
+        2586  XAUUSD-F_SB     4102.80   FUTURES-tracking
+        5961  XAUUSD-F_SBE       0.00   not quoted
+
+    Two things must not happen. Picking whichever matched first is undefined —
+    it returned 41 while gold_context hardcoded 241. And silently selecting an
+    "-F" variant would feed a futures-priced series into analysis that measures
+    and subtracts the futures basis, double-counting ~57 points on gold.
+
+    So: exact base match only (which already excludes "-F"), preferring the
+    `_SB` spread-betting instrument this account actually trades.
+    """
     data = cli.symbols()
     syms = data.get("symbols") or data.get("symbol") or []
-    want = name.upper().replace("_SB", "")
+    want = name.upper().replace("_SB", "").strip()
+
+    def base_of(nm: str) -> str:
+        return nm.upper().removesuffix("_SBE").removesuffix("_SB")
+
     exact, partial = [], []
     for s in syms:
         nm = (s.get("symbolName") or s.get("name") or "").upper()
-        base = nm.replace("_SB", "")
-        if base == want:
+        if base_of(nm) == want:
             exact.append(s)
-        elif want in base:
+        elif want in nm:
             partial.append(s)
-    pick = (exact or partial)
+
+    def rank(s) -> tuple:
+        nm = (s.get("symbolName") or "").upper()
+        # _SB first (the enabled, tradeable instrument on this account), then the
+        # bare name, then anything else. "-F" never reaches here via exact match.
+        return (0 if nm.endswith("_SB") else 1 if nm == want else 2, nm)
+
+    pick = sorted(exact, key=rank) if exact else sorted(partial, key=rank)
     if not pick:
         avail = sorted({(s.get("symbolName") or "") for s in syms})[:40]
         raise CTraderError(f"symbol {name!r} not found. Sample of available: {avail}")
+
     s = pick[0]
-    return int(s.get("symbolId") or s.get("id")), (s.get("symbolName") or name)
+    chosen = s.get("symbolName") or name
+    if "-F" in chosen.upper():
+        # Only reachable if the user explicitly asked for an -F symbol.
+        print(f"WARNING: {chosen} tracks the FUTURES price, not spot. The basis "
+              f"logic assumes spot and will double-count. Use the spot symbol.",
+              file=sys.stderr)
+    return int(s.get("symbolId") or s.get("id")), chosen
 
 
 def main() -> int:

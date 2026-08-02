@@ -25,32 +25,52 @@ optional DOM recorder.
 
 ## Before you start
 
-Needs `CTRADER_MCP_SLUG` (or `CTRADER_MCP_TOKEN`) in the environment — the same
-`eyJwb…` slug the other skills in this repo use. If it is missing, say so and
-stop. Do not invent one.
+**Only one credential is needed:** `CTRADER_MCP_SLUG` (or `CTRADER_MCP_TOKEN`),
+the `eyJwb…` slug the other skills in this repo use. If missing, say so and stop
+— do not invent one, and do not fall back to the `mcp__ctrader__*` tools (a
+different transport; these scripts do not use them). Yahoo, CBOE and CFTC need
+no keys.
+
+Everything in the scoring path is **Python 3.10+ standard library only** — no
+numpy, scipy, pandas or yfinance to install.
+
+If anything looks off, or it is the first run in this session:
+
+```bash
+python3 "Gala Heatmap/src/preflight.py"     # ~20s, checks every dependency
+```
+
+It verifies the token, cTrader reachability, symbol resolution, and all three
+external feeds, and tells you which layers are degraded before you spend four
+minutes finding out.
 
 ## Run it
 
-```bash
-cd "Gala Heatmap"
+Sessions start at the repo root; the folder name contains a space, so quote it.
+Scripts resolve their own paths, so there is no need to `cd`.
 
+```bash
 # one level, direction inferred from where it sits vs spot
-python3 src/level_confidence.py --level 4049.44
+python3 "Gala Heatmap/src/level_confidence.py" --level 4049.44
 
 # several levels, forced direction, and journal the calls
-python3 src/level_confidence.py --level 4049.44 --level 4103.00 \
+python3 "Gala Heatmap/src/level_confidence.py" --level 4049.44 --level 4103.00 \
         --direction short --journal
 
 # compare entry models, or override the stop floor
-python3 src/level_confidence.py --level 4049.44 --entry level
-python3 src/level_confidence.py --level 4049.44 --stop-floor 7
+python3 "Gala Heatmap/src/level_confidence.py" --level 4049.44 --entry level
+python3 "Gala Heatmap/src/level_confidence.py" --level 4049.44 --stop-floor 7
 
 # what could have been said at a past moment (no look-ahead)
-python3 src/level_confidence.py --level 4049.44 --as-of 2026-07-31T15:30:00Z
+python3 "Gala Heatmap/src/level_confidence.py" --level 4049.44 --as-of 2026-07-31T15:30:00Z
 ```
 
-Takes 2–4 minutes — M1 paging is the slow part. Report progress rather than
-going silent.
+⚠️ **A run takes 2–4 minutes and the default Bash timeout is 2 minutes — it WILL
+be killed mid-run.** Always pass an explicit timeout of at least **900000 ms**.
+This is the single most likely fresh-session failure. Report progress rather
+than going silent.
+
+Full plumbing, failure modes and error meanings: `references/03-plumbing.md`.
 
 **Always pass `--journal` on a live call.** The options/gamma block it snapshots
 cannot be reconstructed afterwards from any free source, so an unjournalled call
@@ -71,6 +91,19 @@ disagree with any single component.
 
 Full interpretation guide, including what each component means and how to talk
 about it: `references/01-reading-the-score.md`.
+
+### Two conditions that change what the output means
+
+- **Market closed / stale data.** If the newest bar is >30 min old the report
+  opens with a **MARKET LOOKS CLOSED** banner and the age in hours. Spot, day
+  bias and session then describe the last session that traded. Surface this;
+  never present a weekend run as a live read.
+- **Non-gold instrument.** The futures, options, gamma and COT layers are
+  **gold-only** and are skipped for anything else, with those components marked
+  NOT APPLICABLE. The score then rests on price history alone and will be much
+  lower. That is correct, not a broken run. (Before this gate existed, UK100
+  produced a "GC basis" of −6768 and attached gold's gamma to a FTSE level —
+  plausible numbers, entirely fictitious.)
 
 ### Things you must always surface
 
@@ -117,6 +150,7 @@ explicitly rather than letting a 3-row table look like evidence.
 | A level's full touch history | `python3 src/level_stats.py --symbol XAUUSD --level 4049.44` |
 | Auto-detect levels | `python3 src/level_stats.py --symbol XAUUSD --days 14` |
 | Does my broker have DOM? | `python3 src/dom_recorder.py --probe` |
+| Check the environment | `python3 src/preflight.py` |
 
 ## What this cannot do
 

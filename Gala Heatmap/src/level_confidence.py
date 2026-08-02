@@ -65,6 +65,18 @@ import gold_context as gc  # noqa: E402
 DAY_MS = 86_400_000
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+# The futures/options/COT layers are GOLD-specific: GC=F, GLD and the CFTC gold
+# series. Running them for any other instrument does not fail — it silently
+# produces garbage. Measured on UK100 it computed a "basis" of -6768 (GC 4,107
+# minus UK100 10,875), shifted gold's volume profile by that to manufacture nodes
+# at UK100 prices, and attached gold's net GEX to a UK100 level. Plausible
+# numbers, entirely fictitious. So the layers are gated on the instrument.
+GOLD_SYMBOLS = {"XAUUSD", "GOLD", "XAUEUR", "XAUGBP"}
+
+
+def is_gold(symbol_name: str) -> bool:
+    return symbol_name.upper().replace("_SB", "").strip() in GOLD_SYMBOLS
+
 
 def parse_ts(s: str | None) -> int | None:
     if not s:
@@ -139,7 +151,11 @@ def score_level(level: float, direction: str, hist: dict, ctx: dict,
 
     # ---- 2. Gamma regime ---------------------------------------------------
     gex = ctx.get("net_gex")
-    if gex is None:
+    if gex is None and not ctx.get("is_gold", True):
+        items.append(("Dealer gamma regime", 0.0,
+                      f"NOT APPLICABLE — {ctx.get('symbol','this instrument')} is not gold; "
+                      f"the options layer is gold-only"))
+    elif gex is None:
         items.append(("Dealer gamma regime", 0.0,
                       "UNAVAILABLE — options chain cannot be reconstructed historically"))
     elif gex > 0:
@@ -164,6 +180,10 @@ def score_level(level: float, direction: str, hist: dict, ctx: dict,
             items.append(("Volume node confluence", 0.0,
                           f"nearest node {node['kind']} at {node['price']:,.2f} "
                           f"({node['price']-level:+.1f}) — too far to count"))
+    elif not ctx.get("is_gold", True):
+        items.append(("Volume node confluence", 0.0,
+                      f"NOT APPLICABLE — the COMEX volume profile is gold-only, and "
+                      f"{ctx.get('symbol','this instrument')} is not gold"))
     else:
         items.append(("Volume node confluence", 0.0, "no volume profile available"))
 
@@ -174,7 +194,9 @@ def score_level(level: float, direction: str, hist: dict, ctx: dict,
     # "this strike could be here" band. Claiming tighter would be false precision.
     unc = ctx.get("spot_uncertainty") or 7.7
     oi_tol = max(10.0, 2 * unc)
-    if oi is None:
+    if oi is None and not ctx.get("is_gold", True):
+        items.append(("Options OI confluence", 0.0, "NOT APPLICABLE — gold-only layer"))
+    elif oi is None:
         items.append(("Options OI confluence", 0.0, "UNAVAILABLE at this timestamp"))
     elif abs(oi["spot"] - level) <= oi_tol:
         items.append(("Options OI confluence", 7.0,
@@ -292,8 +314,12 @@ def gather(symbol: str, levels: list[float], direction: str | None,
     bias = "bullish" if move > 0.0008 else "bearish" if move < -0.0008 else "flat"
     hour = datetime.fromtimestamp(m1[-1]["ts"] / 1000, tz=timezone.utc).hour
     session = "asia" if hour < 7 else "london" if hour < 12 else "us" if hour < 17 else "late"
+    # A fresh session on a Saturday would otherwise present Friday's close as the
+    # live state, complete with a "bearish day" that ended hours ago.
+    age_min = (now_ms() - m1[-1]["ts"]) / 60_000 if not as_of_ms else 0
     log(f"[3/5] spot {spot:,.2f} · day open {d_open:,.2f} ({move*100:+.2f}%) "
-        f"→ {bias} day · {session} session")
+        f"→ {bias} day · {session} session"
+        + (f"  ⚠ last bar {age_min/60:.1f}h old" if age_min > 30 else ""))
 
     band = spot * 0.00035
     brk = spot * 0.00025
@@ -365,9 +391,20 @@ def gather(symbol: str, levels: list[float], direction: str | None,
         })
 
     # ---- context layers ----------------------------------------------------
-    ctx: dict = {"as_of_replay": bool(as_of_ms)}
-    log("[4/5] futures volume profile…")
+    gold = is_gold(sym_name)
+    ctx: dict = {"as_of_replay": bool(as_of_ms), "is_gold": gold,
+                 "symbol": sym_name}
+    if not gold:
+        log(f"[4/5] futures/options/COT layers SKIPPED — they are gold-specific "
+            f"and {sym_name} is not gold")
+        ctx["non_gold_note"] = (
+            f"{sym_name} is not gold, so the COMEX volume profile, GLD options, "
+            f"dealer gamma and CFTC layers do not apply and were not run. The "
+            f"score rests on this level's own price history alone.")
+    log("[4/5] futures volume profile…") if gold else None
     try:
+        if not gold:
+            raise CTraderError("non-gold instrument")
         fut = gc.yahoo_ohlcv("GC=F", "3mo" if days > 30 else "1mo", "1h")
         if as_of_ms:
             fut = [b for b in fut if b["ts"] < as_of_ms]
@@ -392,7 +429,9 @@ def gather(symbol: str, levels: list[float], direction: str | None,
     except Exception as e:
         log(f"      volume profile unavailable: {str(e)[:100]}")
 
-    if as_of_ms:
+    if not gold:
+        pass
+    elif as_of_ms:
         log("[5/5] options chain: SKIPPED — no free historical chain exists")
         ctx["options_note"] = ("Options/gamma cannot be reconstructed for a past "
                                "timestamp. CBOE serves the current book only.")
@@ -416,6 +455,8 @@ def gather(symbol: str, levels: list[float], direction: str | None,
             log(f"      options unavailable: {str(e)[:100]}")
 
     try:
+        if not gold:
+            raise CTraderError("non-gold instrument")
         cot = gc.cftc_gold(4)
         if as_of_ms:
             cutoff = datetime.fromtimestamp(as_of_ms / 1000, tz=timezone.utc).strftime("%Y-%m-%d")
@@ -447,7 +488,9 @@ def gather(symbol: str, levels: list[float], direction: str | None,
         pl["ctx"] = lctx
         pl["score"] = score_level(lv, pl["direction"], pl["hist"], lctx, spot)
 
+    ctx["data_age_min"] = age_min
     return {"symbol": sym_name, "symbol_id": sym_id, "spot": spot, "bias": bias,
+            "data_age_min": age_min,
             "session": session, "day_open": d_open, "as_of": end,
             "as_of_replay": bool(as_of_ms), "ctx": ctx, "levels": per_level,
             "days": days}
@@ -465,6 +508,15 @@ def render(res: dict) -> str:
       f"spot {res['spot']:,.2f} · day open {res['day_open']:,.2f} · "
       f"**{res['bias']} day** · {res['session']} session")
     a("")
+    age = res.get("data_age_min", 0)
+    if age > 30 and not res["as_of_replay"]:
+        a(f"> ⚠️ **MARKET LOOKS CLOSED.** The most recent bar is **{age/60:.1f} hours old**.")
+        a("> Spot, day bias and session below all describe the last session that traded,")
+        a("> not right now. Use this for preparation, not for a live decision.")
+        a("")
+    if res["ctx"].get("non_gold_note"):
+        a(f"> ⚠️ **{res['ctx']['non_gold_note']}**")
+        a("")
     if res["as_of_replay"]:
         a("> Every price series is truncated to this instant. Nothing below uses data")
         a("> that did not exist at the time.")
@@ -474,51 +526,62 @@ def render(res: dict) -> str:
         a("")
 
     c = res["ctx"]
-    a("## Market context")
-    a("")
-    if c.get("basis") is not None:
-        a(f"- GC basis {c['basis']:+.2f} pts" +
-          (f" · **roll detected {c['roll']['date']}** ({c['roll']['jump']:+.1f})" if c.get("roll") else ""))
-    if c.get("vp"):
-        vp = c["vp"]
-        a(f"- Volume profile (spot terms): POC **{vp['poc']:,.2f}** · "
-          f"VA {vp['val']:,.2f}–{vp['vah']:,.2f} "
-          f"({c.get('vp_bars', 0):,} × {c.get('vp_interval', '?')} volume bars)")
-    if c.get("net_gex") is not None:
-        regime = "PINNING (fades favoured)" if c["net_gex"] > 0 else "TRENDING (breaks favoured)"
-        a(f"- Net dealer gamma **{c['net_gex']/1e6:+.1f}M** per 1% → **{regime}**"
-          + (f" · flip {c['gamma_flip']:,.2f}" if c.get("gamma_flip") else ""))
-    else:
-        a("- Net dealer gamma: **unavailable**")
-    if c.get("cot"):
-        ct = c["cot"]
-        a(f"- COT {ct['date']}: managed money {ct['mm_long']-ct['mm_short']:+,} net "
-          f"({ct['mm_long']/max(1,ct['mm_short']):.1f}× long/short)")
-    a("")
-
-    a("## How your levels translate")
-    a("")
-    a("You give levels in **XAUUSD spot**. Futures and options are priced differently,")
-    a("so every comparison below is converted into spot first — never the other way round.")
-    a("")
-    a("| Your level (spot) | = GC futures | = GLD strike | Options mapping precision |")
-    a("|---|---|---|---|")
-    for pl in res["levels"]:
-        lv = pl["level"]
-        fut_s = f"{lv + c['basis']:,.2f}" if c.get("basis") is not None else "—"
-        r = c.get("ratio")
-        gld_s = f"{lv / r:,.2f}" if r else "—"
-        unc = c.get("spot_uncertainty")
-        unc_s = f"±{unc:.1f} pts" if unc else "—"
-        a(f"| {lv:,.2f} | {fut_s} | {gld_s} | {unc_s} |")
-    a("")
-    if c.get("spot_uncertainty"):
-        a(f"The futures basis is stable (stdev {c.get('basis_stdev', 0):.2f} pts), so volume-profile")
-        a(f"levels land accurately. The GLD ratio is not: ±{c['spot_uncertainty']:.1f} spot points against a")
-        a(f"strike spacing of only {r:.1f}. **A single option strike cannot be pinned to a single spot**")
-        a("**price** — treat mapped strikes as bands. CME's own OG options would remove this")
-        a("entirely, since their strikes sit on the futures price and the basis maps cleanly.")
+    if c.get("is_gold", True):
+        a("## Market context")
         a("")
+        if c.get("basis") is not None:
+            a(f"- GC basis {c['basis']:+.2f} pts" +
+              (f" · **roll detected {c['roll']['date']}** ({c['roll']['jump']:+.1f})" if c.get("roll") else ""))
+        if c.get("vp"):
+            vp = c["vp"]
+            a(f"- Volume profile (spot terms): POC **{vp['poc']:,.2f}** · "
+              f"VA {vp['val']:,.2f}–{vp['vah']:,.2f} "
+              f"({c.get('vp_bars', 0):,} × {c.get('vp_interval', '?')} volume bars)")
+        if c.get("net_gex") is not None:
+            regime = "PINNING (fades favoured)" if c["net_gex"] > 0 else "TRENDING (breaks favoured)"
+            a(f"- Net dealer gamma **{c['net_gex']/1e6:+.1f}M** per 1% → **{regime}**"
+              + (f" · flip {c['gamma_flip']:,.2f}" if c.get("gamma_flip") else ""))
+        else:
+            a("- Net dealer gamma: **unavailable**")
+        if c.get("cot"):
+            ct = c["cot"]
+            a(f"- COT {ct['date']}: managed money {ct['mm_long']-ct['mm_short']:+,} net "
+              f"({ct['mm_long']/max(1,ct['mm_short']):.1f}× long/short)")
+        a("")
+
+    if not res["ctx"].get("is_gold", True):
+        a("## Market context")
+        a("")
+        a(f"Futures, options and COT layers are gold-specific and were not run for "
+          f"{res['symbol']}. Only this level's own price history is scored below.")
+        a("")
+    # The whole translation section is gold-only — there is nothing to translate
+    # for an instrument whose futures and options layers were never run.
+    if res["ctx"].get("is_gold", True):
+        a("## How your levels translate")
+        a("")
+        a("You give levels in **XAUUSD spot**. Futures and options are priced differently,")
+        a("so every comparison below is converted into spot first — never the other way round.")
+        a("")
+        a("| Your level (spot) | = GC futures | = GLD strike | Options mapping precision |")
+        a("|---|---|---|---|")
+        for pl in res["levels"]:
+            lv = pl["level"]
+            fut_s = f"{lv + c['basis']:,.2f}" if c.get("basis") is not None else "—"
+            r = c.get("ratio")
+            gld_s = f"{lv / r:,.2f}" if r else "—"
+            unc = c.get("spot_uncertainty")
+            unc_s = f"±{unc:.1f} pts" if unc else "—"
+            a(f"| {lv:,.2f} | {fut_s} | {gld_s} | {unc_s} |")
+        a("")
+        if c.get("spot_uncertainty"):
+            r = c.get("ratio")
+            a(f"The futures basis is stable (stdev {c.get('basis_stdev', 0):.2f} pts), so volume-profile")
+            a(f"levels land accurately. The GLD ratio is not: ±{c['spot_uncertainty']:.1f} spot points against a")
+            a(f"strike spacing of only {r:.1f}. **A single option strike cannot be pinned to a single spot**")
+            a("**price** — treat mapped strikes as bands. CME's own OG options would remove this")
+            a("entirely, since their strikes sit on the futures price and the basis maps cleanly.")
+            a("")
 
     em = res["levels"][0]["entry_model"] if res["levels"] else "rejection"
     sf = res["levels"][0]["stop_floor"] if res["levels"] else 0
@@ -528,11 +591,18 @@ def render(res: dict) -> str:
     if em == "rejection":
         a(f"**Rejection entry** — wait for a bar to wick through the level and close back")
         a(f"inside it, then enter at that close. Stop beyond that bar's printed wick, but")
-        a(f"never tighter than **{sf:.2f} pts**. Spread of {sp:.2f} charged on entry.")
+        a(f"never tighter than **{sf:.2f} pts**. Spread of {sp:.2f} charged on entry"
+          f"{' — check this matches your broker for this instrument' if not res['ctx'].get('is_gold', True) else ''}.")
         a("")
-        a("The floor is not cosmetic. Measured on this instrument, the unfloored wick rule")
-        a("gives a ~1.6 pt stop and **−0.33R**; a 5-pt floor gives **+0.52R** and 7 pts")
-        a("**+0.62R**. The entry timing was never the problem — the stop was.")
+        a("The floor exists because the raw wick rule is too tight. Measured **on XAUUSD**")
+        a("(4,049.44, 14 days): the unfloored rule gives a ~1.6 pt stop and **−0.33R**; a")
+        a("5-pt floor gives **+0.52R**, 7 pts **+0.62R**. The entry timing was never the")
+        a("problem — the stop was.")
+        if not res["ctx"].get("is_gold", True):
+            a("")
+            a(f"That measurement has **not** been repeated on {res['symbol']}. The floor here "
+              f"({sf:.2f} pts) is scaled from price, not verified. Check the stop-sensitivity")
+            a("table below before trusting it.")
     else:
         a("**Limit at the level** — assumes a resting order fills at the level itself.")
         a("Better average price than the rejection model, but you are also filled on every")

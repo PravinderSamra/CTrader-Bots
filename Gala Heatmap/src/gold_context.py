@@ -56,6 +56,7 @@ import math
 import os
 import statistics as stats
 import sys
+import time
 import urllib.parse
 import urllib.request
 from collections import defaultdict
@@ -66,6 +67,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from ctrader_http import CTraderClient, CTraderError, now_ms  # noqa: E402
 
 UA = {"User-Agent": "Mozilla/5.0 (compatible; gala-heatmap/1.0)"}
+# Fallback only. This account carries six XAUUSD variants and two of them track
+# the FUTURES price, so the symbol is resolved by name at runtime (see
+# level_stats.resolve_symbol) and this constant is used only if that fails.
 XAUUSD_SYMBOL_ID = 241
 DAY_MS = 86_400_000
 
@@ -85,10 +89,22 @@ def range_days(rng: str) -> int:
     return 30
 
 
-def _get_json(url: str, timeout: int = 30) -> dict:
-    req = urllib.request.Request(url, headers=UA)
-    with urllib.request.urlopen(req, timeout=timeout) as r:
-        return json.loads(r.read().decode())
+def _get_json(url: str, timeout: int = 30, retries: int = 3) -> dict:
+    """Yahoo and CBOE both drop connections intermittently — a bare
+    'Connection reset by peer' silently removed the whole options layer from one
+    run during testing. Retry with backoff rather than losing a scoring input to
+    a transient blip."""
+    last = None
+    for attempt in range(retries):
+        try:
+            req = urllib.request.Request(url, headers=UA)
+            with urllib.request.urlopen(req, timeout=timeout) as r:
+                return json.loads(r.read().decode())
+        except Exception as e:                      # noqa: BLE001 - retry anything transient
+            last = e
+            if attempt < retries - 1:
+                time.sleep(1.5 * (attempt + 1))
+    raise last
 
 
 # ------------------------------------------------------------------- yahoo
@@ -710,8 +726,14 @@ def main() -> int:
           file=sys.stderr)
     cli = CTraderClient()
     end = now_ms()
-    spot_bars = cli.trendbars(XAUUSD_SYMBOL_ID, "H_1", end - basis_days * DAY_MS, end)
-    sp = cli.spot([XAUUSD_SYMBOL_ID])
+    try:
+        from level_stats import resolve_symbol
+        sym_id, sym_name = resolve_symbol(cli, "XAUUSD")
+    except Exception:
+        sym_id, sym_name = XAUUSD_SYMBOL_ID, "XAUUSD_SB"
+    print(f"      using {sym_name} (id {sym_id})", file=sys.stderr)
+    spot_bars = cli.trendbars(sym_id, "H_1", end - basis_days * DAY_MS, end)
+    sp = cli.spot([sym_id])
     q = (sp.get("prices") or sp.get("spotPrices") or [{}])[0]
     spot_px = ((q.get("bid", 0) + q.get("ask", 0)) / 2) / 1e5 or spot_bars[-1]["c"]
     print(f"      spot {spot_px:,.2f}, {len(spot_bars)} H1 bars", file=sys.stderr)
