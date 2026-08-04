@@ -70,8 +70,20 @@ Field notes:
 - **`state`** — `ARMED` | `WATCHING` | `NO_TRADE`. Only `ARMED` implies you
   would actually be in; the others are still logged, because "what did the
   setups I passed on go on to do" is exactly as informative.
-- **`entry_zone` / `stop` / `rr`** — null when not armed. Do not invent them to
-  fill the schema.
+- **`entry_zone` / `stop` / `rr`** — for an `ARMED` idea these are the real
+  levels. For a `WATCHING` idea, record the levels that **would** apply if the
+  trigger fires, and set `entry_basis: "conditional"`.
+
+  Leaving them null makes the entry unscoreable: the reviewer routes anything
+  without entry/stop/target/direction to `watch_only` before it ever looks for
+  a fill. Six of the first ten entries were logged that way and contributed
+  nothing at all to the R record — the journal grew while the evidence did
+  not. A conditional plan can be judged; a shrug cannot.
+
+  `entry_basis: "conditional"` matters: those levels were derived from where
+  the LB *would* sit, not observed, so a review must not present them as
+  equivalent to a real fill. Never invent levels for a `NO_TRADE` idea you
+  would not have taken under any trigger — that is fabrication, not a plan.
 - **`context`** — copied verbatim from the analyzer output. It is what lets a
   later review ask "did drying volume predict the stall" without re-deriving.
 - **`review`** — always `null` at write time. Filled later by the reviewer.
@@ -119,9 +131,18 @@ A run of `outcome: stop` carrying `direction_right_destination_missed` does
 not mean the ideas were wrong — it means the management was. That is the whole
 argument for actively managing rather than letting trades run to a fixed pool.
 
-`excursion_pts` does the same job for ideas that never filled: an idea price
-then ran 20 points in favour of was a right call with a wrong entry, which is a
-different fix from a wrong call.
+For ideas that never filled, **always read `edge_pts`, never `excursion_pts`
+alone.** Favourable excursion on its own is not evidence of anything. Two ideas
+logged at the same moment on the same instrument — one long, one short — scored
++71.4 and +49.2 favourable. Both cannot have been right. The number was
+measuring the day's *range*: over a 30h window a wide session hands a
+flattering figure to whichever direction you happened to write down. That
+figure was once read as "direction right, entry too far away" and it did not
+support that conclusion.
+
+`edge_pts` = favourable − adverse. It only goes positive when price spent more
+of its extent in the idea's favour than against it, so a range-bound day
+correctly scores near zero for both directions.
 
 **Read `bars_available` before trusting a verdict.** An idea logged minutes
 before the review has almost no forward data; the reviewer prints a warning

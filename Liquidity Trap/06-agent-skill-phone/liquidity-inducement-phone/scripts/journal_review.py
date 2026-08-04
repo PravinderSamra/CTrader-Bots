@@ -78,11 +78,21 @@ def in_zone(bar, zone):
 
 
 def excursion(bars, ref, direction):
-    """Best move in the idea's direction, in points, from a reference price.
+    """Favourable and adverse excursion, in points, from a reference price.
 
-    Unfilled ideas still carry information: an idea that never triggered but
-    that price then ran 20 points in favour of was a right call with a wrong
-    entry, which is a different fix from a wrong call.
+    Returns (favourable, adverse, edge) where edge = favourable - adverse.
+
+    Favourable excursion ALONE is worthless and actively misleading, which is
+    why adverse is returned beside it. Reviewing two ideas logged at the same
+    moment on the same instrument — one long, one short — gave +71.4 and +49.2
+    respectively. Both cannot have been the right read. All that number was
+    measuring was the day's range: over a 30h window, a wide-ranging session
+    hands a flattering figure to whichever direction you happened to write
+    down. Reading it as "the direction was right, the entry was wrong" was a
+    real mistaken conclusion drawn from exactly that.
+
+    `edge` is the honest single number: it only goes positive when price spent
+    more of its extent in the idea's favour than against it.
 
     Always pass the FULL forward window, never the post-trigger slice. Slicing
     made the figure non-monotonic: one entry reclassified from never_triggered
@@ -92,10 +102,18 @@ def excursion(bars, ref, direction):
     same entry are not comparable.
     """
     if not bars or ref is None or direction not in ("long", "short"):
-        return None
-    ext = (max(b["high"] for b in bars) if direction == "long"
-           else min(b["low"] for b in bars))
-    return round(ext - ref if direction == "long" else ref - ext, 3)
+        return None, None, None
+    hi = max(b["high"] for b in bars)
+    lo = min(b["low"] for b in bars)
+    fav, adv = (hi - ref, ref - lo) if direction == "long" else (ref - lo, hi - ref)
+    return round(fav, 3), round(adv, 3), round(fav - adv, 3)
+
+
+def _set_excursion(out, bars, entry, direction):
+    fav, adv, edge = excursion(bars, entry.get("price_at_idea"), direction)
+    out["excursion_pts"] = fav
+    out["adverse_pts"] = adv
+    out["edge_pts"] = edge
 
 
 def score(entry, bars):
@@ -139,8 +157,7 @@ def _score_raw(entry, bars):
                 out["triggered"] = True
                 break
         if not out["triggered"]:
-            out["excursion_pts"] = excursion(
-                fwd, entry.get("price_at_idea"), direction)
+            _set_excursion(out, fwd, entry, direction)
             return out
     rest = fwd[i:]
 
@@ -148,8 +165,7 @@ def _score_raw(entry, bars):
     # whether it triggered and what the excursion was, but not an R figure.
     if not (entry_zone and stop and target and direction):
         out["outcome"] = "watch_only"
-        out["excursion_pts"] = excursion(
-            fwd, entry.get("price_at_idea"), direction)
+        _set_excursion(out, fwd, entry, direction)
         return out
 
     fill_i = None
@@ -159,8 +175,7 @@ def _score_raw(entry, bars):
             break
     if fill_i is None:
         out["outcome"] = "no_fill"
-        out["excursion_pts"] = excursion(
-            fwd, entry.get("price_at_idea"), direction)
+        _set_excursion(out, fwd, entry, direction)
         return out
     out["filled"] = True
 
@@ -285,9 +300,11 @@ def main():
     print(f"\nreviewed {reviewed} entries")
     print("=" * 92)
     for e, r in scored:
-        exc = r.get("excursion_pts")
+        exc, adv, edge = (r.get("excursion_pts"), r.get("adverse_pts"),
+                          r.get("edge_pts"))
         tail = (f"{r.get('verdict', '-')}" if r["filled"]
-                else (f"unfilled, moved {exc:+.1f}pts in favour"
+                else (f"unfilled  fav={exc:+.1f} adv={adv:+.1f} "
+                      f"edge={edge:+.1f}pts"
                       if exc is not None else "unfilled"))
         print(f"  {e['as_of'][:16]} {e['instrument']:<7} {e['kind']:<11} "
               f"{str(e.get('direction')):<5} {e['state']:<8} -> "
