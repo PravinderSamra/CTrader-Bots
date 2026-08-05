@@ -373,9 +373,15 @@ def main():
             # could not answer "did the confirming close actually happen, and
             # when" or "how much forward data is this verdict resting on"
             # without reading the source.
-            conf = r.get("confirmed_at") or "n/a (close confirmation not required)"
-            print(f"    confirmed_at={conf}  "
-                  f"bars_available={r.get('bars_available')}")
+            # "not required" read as "checked and fine" the first time someone
+            # saw it, on an entry that had in fact filled on a touch and lost
+            # immediately. Say which it is: a confirmed close, or no gate at
+            # all. entry_basis "conditional" does NOT imply confirmation —
+            # they are separate flags.
+            conf = (f"confirmed at {r['confirmed_at']}" if r.get("confirmed_at")
+                    else "NO GATE — filled on touch (entry omits "
+                         "requires_close_confirmation)")
+            print(f"    entry: {conf}  bars_available={r.get('bars_available')}")
 
     filled = [r for _, r in scored if r["filled"]]
     if filled:
@@ -408,6 +414,14 @@ def main():
             marg = [r for r in losers if r["verdict"] == "direction_marginal"]
             wrong = [r for r in losers if r["verdict"] == "direction_wrong"]
             print("\nWHY THE LOSERS LOST")
+            # Gating only the exit-problem sentence left every other bucket
+            # free to be read as a finding — direction_marginal sat at n=2 with
+            # no caveat attached. The whole block needs the health warning, not
+            # just the one line that happened to embarrass itself.
+            if len(losers) < MIN_N_FOR_CLAIM:
+                print(f"  [n={len(losers)} losers, below {MIN_N_FOR_CLAIM}: "
+                      f"these counts describe what happened, they do not "
+                      f"support a claim about why]")
             rr_list = ", ".join(f"{r['mfe_r']:.1f}R" for r in right) or "-"
             print(f"  direction right, destination missed : {len(right):<3}"
                   f"  (max RR reached: {rr_list})")
