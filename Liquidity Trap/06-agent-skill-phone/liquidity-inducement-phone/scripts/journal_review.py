@@ -186,10 +186,22 @@ def _score_raw(entry, bars):
         return out
     tgt = target[0] if direction == "long" else target[1]
 
-    mfe = 0.0
+    # Recorded on every filled entry so an odd-looking MFE can be audited
+    # without re-deriving it. Two entries on different days once returned
+    # byte-identical MFEs (0.64R and 0.35R), which is either a coincidence or
+    # a window bug — and there was no way to tell which from the output alone.
+    out["fill_price"] = round(fill, 5)
+    out["risk_pts"] = round(risk, 5)
+    out["window_start"] = str(rest[fill_i]["time"])
+    out["window_end"] = str(rest[-1]["time"])
+    out["bars_after_fill"] = len(rest) - fill_i - 1
+
+    mfe, mfe_price, mfe_time = 0.0, fill, None
     for n, b in enumerate(rest[fill_i + 1:], start=1):
-        fav = (b["high"] - fill) if direction == "long" else (fill - b["low"])
-        mfe = max(mfe, fav / risk)
+        ext = b["high"] if direction == "long" else b["low"]
+        fav = (ext - fill) if direction == "long" else (fill - ext)
+        if fav / risk > mfe:
+            mfe, mfe_price, mfe_time = fav / risk, ext, b["time"]
         hit_stop = b["low"] <= stop if direction == "long" else b["high"] >= stop
         hit_tgt = b["high"] >= tgt if direction == "long" else b["low"] <= tgt
         if hit_stop:                      # pessimistic when both in one bar
@@ -206,6 +218,8 @@ def _score_raw(entry, bars):
         out["r"] = round(pnl / risk, 2)
         out["bars_to_outcome"] = len(rest) - fill_i
     out["mfe_r"] = round(mfe, 2)
+    out["mfe_price"] = round(mfe_price, 5)
+    out["mfe_time"] = str(mfe_time) if mfe_time else None
     return out
 
 
@@ -240,6 +254,8 @@ def main():
     ap.add_argument("--month", help="YYYY-MM (default: all)")
     ap.add_argument("--write", action="store_true",
                     help="write the review back into the journal")
+    ap.add_argument("--debug", action="store_true",
+                    help="print fill/risk/window internals for filled entries")
     ap.add_argument("--days", type=int, default=45,
                     help="history to pull per instrument")
     args = ap.parse_args()
@@ -310,6 +326,19 @@ def main():
               f"{str(e.get('direction')):<5} {e['state']:<8} -> "
               f"{r['outcome']:<15} r={r['r']:+5.2f} "
               f"maxRR={r.get('max_rr_reached', 0):.2f}R  {tail}")
+
+    if args.debug:
+        print("\nDEBUG: filled-entry internals (audit the MFE arithmetic here)")
+        for e, r in scored:
+            if not r["filled"]:
+                continue
+            print(f"  {e['id']}")
+            print(f"    fill={r['fill_price']}  risk={r['risk_pts']}pts  "
+                  f"mfe_r={r['mfe_r']}  mfe_price={r['mfe_price']}  "
+                  f"mfe_time={r['mfe_time']}")
+            print(f"    window {r['window_start']} .. {r['window_end']}  "
+                  f"bars_after_fill={r['bars_after_fill']}  "
+                  f"implied_fav_pts={round(r['mfe_r'] * r['risk_pts'], 3)}")
 
     filled = [r for _, r in scored if r["filled"]]
     if filled:
