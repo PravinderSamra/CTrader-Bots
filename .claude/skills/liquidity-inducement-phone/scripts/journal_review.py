@@ -255,6 +255,11 @@ def _score_raw(entry, bars):
 DIRECTION_RIGHT = 1.0
 DIRECTION_MARGINAL = 0.3
 
+# Minimum observations before the report is allowed to state a cause. Set by
+# judgement, not derived: it exists to stop a single trade being reported as a
+# finding, which is what happened the first time this bucket fired.
+MIN_N_FOR_CLAIM = 5
+
 
 def verdict_for(r):
     """Was the IDEA right, separately from whether the destination was hit?"""
@@ -364,6 +369,13 @@ def main():
             print(f"    window {r['window_start']} .. {r['window_end']}  "
                   f"bars_after_fill={r['bars_after_fill']}  "
                   f"implied_fav_pts={round(r['mfe_r'] * r['risk_pts'], 3)}")
+            # Both of these were computed and then never surfaced, so a review
+            # could not answer "did the confirming close actually happen, and
+            # when" or "how much forward data is this verdict resting on"
+            # without reading the source.
+            conf = r.get("confirmed_at") or "n/a (close confirmation not required)"
+            print(f"    confirmed_at={conf}  "
+                  f"bars_available={r.get('bars_available')}")
 
     filled = [r for _, r in scored if r["filled"]]
     if filled:
@@ -407,8 +419,19 @@ def main():
                       f"given back.")
                 print(f"  Those trades showed {give_back:.1f}R of unrealised profit in "
                       f"total before stopping for {len(right)}R of loss.")
-                print("  That is an exit problem, not a selection problem "
-                      "(reference 05).")
+                # This block used to assert "that is an exit problem" on any
+                # count at all, and duly asserted it off a single trade. One
+                # observation cannot distinguish a management failure from one
+                # volatile afternoon, and a confident sentence printed under a
+                # heading is exactly what gets quoted later as a finding.
+                if len(right) >= MIN_N_FOR_CLAIM:
+                    print("  That is an exit problem, not a selection problem "
+                          "(reference 05).")
+                else:
+                    print(f"  NOT a conclusion: {len(right)} observation(s) is "
+                          f"below the {MIN_N_FOR_CLAIM} needed to call this an "
+                          f"exit problem rather than variance. Worth watching, "
+                          f"not worth acting on yet.")
     by_kind = {}
     for e, r in scored:
         by_kind.setdefault(e["kind"], []).append(r)
