@@ -84,6 +84,17 @@ Field notes:
   the LB *would* sit, not observed, so a review must not present them as
   equivalent to a real fill. Never invent levels for a `NO_TRADE` idea you
   would not have taken under any trigger — that is fabrication, not a plan.
+
+- **`requires_close_confirmation`** — set `true` whenever the plan says "sweep
+  **and close back** through the level", which is every model-pure entry. The
+  model never enters on a band touch; the close is the trap confirming.
+
+  Without this flag, and with `trigger_zone` equal to `entry_zone`, the
+  reviewer fills on the touch — scoring the *no-confirmation* version of the
+  plan, which is the version most likely to be stopped. The first such entry
+  scored −1.00R that way, and that number was not evidence the plan lost.
+  Entries that never get their confirming close now score `no_confirmation`
+  rather than a spurious stop.
 - **`context`** — copied verbatim from the analyzer output. It is what lets a
   later review ask "did drying volume predict the stall" without re-deriving.
 - **`review`** — always `null` at write time. Filled later by the reviewer.

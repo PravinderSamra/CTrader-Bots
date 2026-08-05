@@ -168,8 +168,30 @@ def _score_raw(entry, bars):
         _set_excursion(out, fwd, entry, direction)
         return out
 
+    # The model does not enter on a band TOUCH — it enters after the sweep bar
+    # CLOSES back through the level (that close is the trap confirming). With
+    # trigger_zone and entry_zone set to the same band, scoring a fill on the
+    # touch measures the no-confirmation version of the plan, which is the
+    # version most likely to be stopped. Entries that say they need the close
+    # get it enforced here.
+    search = rest
+    if entry.get("requires_close_confirmation"):
+        conf_i = None
+        for j, b in enumerate(rest):
+            reclaimed = (b["close"] > trigger[1] if direction == "long"
+                         else b["close"] < trigger[0])
+            if reclaimed:
+                conf_i = j
+                break
+        if conf_i is None:
+            out["outcome"] = "no_confirmation"
+            _set_excursion(out, fwd, entry, direction)
+            return out
+        out["confirmed_at"] = str(rest[conf_i]["time"])
+        search = rest[conf_i:]
+
     fill_i = None
-    for j, b in enumerate(rest):
+    for j, b in enumerate(search):
         if in_zone(b, entry_zone):
             fill_i = j
             break
@@ -195,12 +217,12 @@ def _score_raw(entry, bars):
     # low, so that collision will happen again.
     out["fill_price"] = round(fill, 5)
     out["risk_pts"] = round(risk, 5)
-    out["window_start"] = str(rest[fill_i]["time"])
-    out["window_end"] = str(rest[-1]["time"])
-    out["bars_after_fill"] = len(rest) - fill_i - 1
+    out["window_start"] = str(search[fill_i]["time"])
+    out["window_end"] = str(search[-1]["time"])
+    out["bars_after_fill"] = len(search) - fill_i - 1
 
     mfe, mfe_price, mfe_time = 0.0, fill, None
-    for n, b in enumerate(rest[fill_i + 1:], start=1):
+    for n, b in enumerate(search[fill_i + 1:], start=1):
         ext = b["high"] if direction == "long" else b["low"]
         fav = (ext - fill) if direction == "long" else (fill - ext)
         if fav / risk > mfe:
@@ -216,10 +238,10 @@ def _score_raw(entry, bars):
             break
     else:
         out["outcome"] = "expired"
-        last = rest[-1]["close"]
+        last = search[-1]["close"]
         pnl = (last - fill) if direction == "long" else (fill - last)
         out["r"] = round(pnl / risk, 2)
-        out["bars_to_outcome"] = len(rest) - fill_i
+        out["bars_to_outcome"] = len(search) - fill_i
     out["mfe_r"] = round(mfe, 2)
     out["mfe_price"] = round(mfe_price, 5)
     out["mfe_time"] = str(mfe_time) if mfe_time else None
