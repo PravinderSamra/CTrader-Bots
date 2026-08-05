@@ -188,8 +188,11 @@ def _score_raw(entry, bars):
 
     # Recorded on every filled entry so an odd-looking MFE can be audited
     # without re-deriving it. Two entries on different days once returned
-    # byte-identical MFEs (0.64R and 0.35R), which is either a coincidence or
-    # a window bug — and there was no way to tell which from the output alone.
+    # byte-identical MFEs (0.64R and 0.35R) and the output gave no way to tell
+    # a coincidence from a window bug. These fields settled it: raw values were
+    # 0.6357 vs 0.6382 and 0.3492 vs 0.3454, on different bars at different
+    # times — the collision was 2dp rounding. Keep them; MFE values cluster
+    # low, so that collision will happen again.
     out["fill_price"] = round(fill, 5)
     out["risk_pts"] = round(risk, 5)
     out["window_start"] = str(rest[fill_i]["time"])
@@ -348,6 +351,19 @@ def main():
         print("\n" + "=" * 92)
         print(f"filled={len(filled)}  win={len(wins)}  totalR={tot:+.2f}  "
               f"median MFE={statistics.median(mfes):.2f}R")
+        # totalR above includes ideas logged NO_TRADE — scoring those is the
+        # point ("what did the setup I passed on go on to do"), but it means
+        # totalR is NOT what following the plan would have returned. Split it
+        # so the actionable number is never read off the wrong line.
+        actionable = [r for e, r in scored
+                      if r["filled"] and e.get("state") != "NO_TRADE"]
+        declined = [r for e, r in scored
+                    if r["filled"] and e.get("state") == "NO_TRADE"]
+        print(f"  actionable (ARMED/WATCHING): n={len(actionable)}  "
+              f"R={sum(r['r'] for r in actionable):+.2f}")
+        print(f"  declined   (NO_TRADE)      : n={len(declined)}  "
+              f"R={sum(r['r'] for r in declined):+.2f}  "
+              f"<- correctly avoided; not part of plan performance")
         # The management question: losers that were well onside first.
         # The question this journal exists to answer: when a trade lost, was
         # the IDEA wrong, or only the exit?
