@@ -258,7 +258,12 @@ DIRECTION_MARGINAL = 0.3
 # Minimum observations before the report is allowed to state a cause. Set by
 # judgement, not derived: it exists to stop a single trade being reported as a
 # finding, which is what happened the first time this bucket fired.
-MIN_N_FOR_CLAIM = 5
+#
+# First set to 5, which was plainly too low the moment real data arrived: the
+# month produced exactly 5 losers, so the health warning switched itself off by
+# a margin of zero and printed bucket counts of 2/2/1 bare. Clearing a bar by
+# nothing is not evidence. 20 is still judgement, not derivation.
+MIN_N_FOR_CLAIM = 20
 
 
 def verdict_for(r):
@@ -377,7 +382,7 @@ def main():
                   f"mfe_time={r['mfe_time']}")
             print(f"    window {r['window_start']} .. {r['window_end']}  "
                   f"bars_after_fill={r['bars_after_fill']}  "
-                  f"implied_fav_pts={round(r['mfe_r'] * r['risk_pts'], 3)}")
+                  f"fav_pts={round(abs(r['mfe_price'] - r['fill_price']), 3)}")
             # Both of these were computed and then never surfaced, so a review
             # could not answer "did the confirming close actually happen, and
             # when" or "how much forward data is this verdict resting on"
@@ -431,6 +436,8 @@ def main():
                 print(f"  [n={len(losers)} losers, below {MIN_N_FOR_CLAIM}: "
                       f"these counts describe what happened, they do not "
                       f"support a claim about why]")
+            else:
+                print(f"  [n={len(losers)} losers]")
             rr_list = ", ".join(f"{r['mfe_r']:.1f}R" for r in right) or "-"
             print(f"  direction right, destination missed : {len(right):<3}"
                   f"  (max RR reached: {rr_list})")
