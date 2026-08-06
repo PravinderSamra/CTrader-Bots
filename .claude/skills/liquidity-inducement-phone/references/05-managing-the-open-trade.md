@@ -93,3 +93,35 @@ levels:
 If you are asked about a position already open, work this file top-down: where
 is structure now, what has fuel done since entry, and does the original target
 still fit inside what is left.
+
+## Managing against the target ladder (T1 / T2 / T3)
+
+The analyzer now returns `targets_up` and `targets_down` — up to three graded
+objectives per side rather than one destination. This exists because of a
+measured failure, not a preference: across the journal, **83% of planned
+entries filled but only 27% of fills ever reached their single target.** The
+entries were landing; the exits were all-or-nothing.
+
+| Tier | Role | What to do |
+|---|---|---|
+| **T1** | bank | Take the first partial. Move the stop to breakeven here. |
+| **T2** | trail | Trail the stop behind structure to here; take a second partial if fuel or volume is fading. |
+| **T3** | runner | Leave the remainder. This is the tier you let go on a trend day, and the one you abandon on a `LOW_FUEL` or `drying_up` read. |
+
+Rules that follow from the data:
+
+- **Never run a position flat to T3.** If only one tier is usable, say so and
+  manage to that one tier — do not invent a ladder that the pool map does not
+  support.
+- **Prefer a `prime` (2–4 touch) T1.** Those were reached 50% of the time.
+  A `heavy` (5+ touch) T1 was reached only 20% — a wall as often as a magnet,
+  and a bad place to be relying on a first partial.
+- **Never place T1 on a `thin` tier.** Unconfirmed, single-touch levels have
+  never once been reached in the journal.
+- **`pct_of_remaining_budget` scopes the ladder; it does not veto it.**
+  Targets beyond the remaining ADR budget were hit slightly *more* often than
+  comfortable ones. Use it to decide how much comes off at T1, not whether to
+  take the trade.
+- **`path_up` / `path_down` remain the trailing checkpoints** between tiers.
+  When they are empty there is no intermediate structure, so trail on price
+  action instead and say that explicitly.

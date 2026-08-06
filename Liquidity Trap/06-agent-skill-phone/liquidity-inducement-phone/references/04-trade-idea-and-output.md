@@ -121,3 +121,37 @@ Then one plain-English sentence of desk read, and the standard footer:
 > *Nothing is 100%; analysis, not advice; no orders placed.*
 
 Do not template-match the numbers — recompute every run from the analyzer.
+
+## Targets: always a ladder, never a single number
+
+Quote `targets_up` / `targets_down` as three tiers, each as a band:
+
+```
+TARGET LADDER (long)
+  T1  4245.58-4248.16   prior_close   6 touches   prime   bank / stop to BE
+  T2  4270.52-4275.31   equal_highs   9 touches   heavy   trail to
+  T3  4280.92-4284.75   equal_highs   5 touches   heavy   runner
+```
+
+Why: 83% of planned entries filled, but only 27% of fills reached their one
+target. The entries work; the all-or-nothing exit did not. Management detail
+lives in reference 05.
+
+- `quality` is the tier grade, not the touch count: **prime** = 2-4 touches
+  (hit 50%), **heavy** = 5+ (hit 20% - a wall as often as a magnet), **thin**
+  = unconfirmed (never once reached). Put T1 on a `prime` tier where possible,
+  never on a `thin` one.
+- If a side returns no usable tier, say so. Do **not** substitute
+  `draw_up`/`draw_down` - those fall back to swept and unconfirmed pools when
+  nothing clean is in reach.
+- Give `pct_of_remaining_budget` per tier as scope, **not** as a veto. Targets
+  beyond the remaining ADR budget were hit slightly more often than
+  comfortable ones, so it decides how much comes off at T1, not whether the
+  trade is taken.
+
+## Counter-trend ideas are judged on their gates
+
+State counter-bias as a fact, then judge the setup on its own gates and RR.
+It is never on its own a reason to decline: counter-trend secondaries have
+returned +1.59R against with-trend primaries at -0.60R, and two of the three
+declined ideas that later hit target were turned down for nothing else.

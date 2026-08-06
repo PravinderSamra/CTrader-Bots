@@ -95,6 +95,11 @@ Field notes:
   scored −1.00R that way, and that number was not evidence the plan lost.
   Entries that never get their confirming close now score `no_confirmation`
   rather than a spurious stop.
+- **`targets`** — the full ladder as returned by the analyzer
+  (`targets_up` or `targets_down`), each tier with its band, touch count and
+  `quality`. `target_zone` stays as **T1**, because that is what the reviewer
+  scores and T1 is the honest "did this work" test. Recording the whole ladder
+  lets a later review ask how far up it the trade actually got.
 - **`context`** — copied verbatim from the analyzer output. It is what lets a
   later review ask "did drying volume predict the stall" without re-deriving.
 - **`review`** — always `null` at write time. Filled later by the reviewer.

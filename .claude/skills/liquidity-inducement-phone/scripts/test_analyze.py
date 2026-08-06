@@ -222,6 +222,33 @@ check("path: never includes a swept pool",
       all(p["zone"] not in _swept_zones for p in _allpaths))
 
 
+# ── target ladder ────────────────────────────────────────────────────────────
+# The ladder replaces the single draw as the target source, so it must be
+# strictly cleaner than draw_up/draw_down, which deliberately fall back to
+# swept/unconfirmed pools when nothing good is in reach.
+_lad = _o5["targets_up"] + _o5["targets_down"]
+check("ladder: at most 3 tiers per side",
+      len(_o5["targets_up"]) <= 3 and len(_o5["targets_down"]) <= 3)
+check("ladder: tiers labelled T1..T3 in order",
+      all([t["tier"] for t in side] == [f"T{i}" for i in range(1, len(side) + 1)]
+          for side in (_o5["targets_up"], _o5["targets_down"])))
+check("ladder: ordered outward from price",
+      all(all(side[i]["dist"] <= side[i + 1]["dist"] for i in range(len(side) - 1))
+          for side in (_o5["targets_up"], _o5["targets_down"])))
+_bad_zones = [p["zone"] for p in _o5["pools_above"] + _o5["pools_below"]
+              if p["swept"] or not p["confirmed"] or p["too_close"]]
+check("ladder: never offers a swept, unconfirmed or too-close pool",
+      all(t["zone"] not in _bad_zones for t in _lad))
+check("ladder: quality grades match touch count",
+      all((t["quality"] == "prime") == (2 <= t["touches"] <= 4) and
+          (t["quality"] == "heavy") == (t["touches"] >= 5) for t in _lad))
+check("ladder: every tier carries a band, not a point",
+      all(isinstance(t["zone"], list) and len(t["zone"]) == 2 and
+          t["zone"][0] <= t["zone"][1] for t in _lad))
+check("end-to-end: output contains 'targets_up'", "targets_up" in _o6)
+check("end-to-end: output contains 'targets_down'", "targets_down" in _o6)
+
+
 print(f"\n{_passed} passed, {len(_failed)} failed")
 if _failed:
     for _n in _failed:

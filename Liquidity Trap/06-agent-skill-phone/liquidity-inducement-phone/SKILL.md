@@ -134,14 +134,21 @@ away." (Official playbook + research files 01/03/09.)
 Fail any gate → the honest output is **watching** or **no-trade, with the
 reason.** A disciplined "no trade" is a correct answer.
 
-## Trend-first doctrine (your explicit preference)
+## Trend-first ordering, counter-trend on equal footing
 
 - **Primary = with-trend.** Trade in the direction of the day's bias
-  (`daily_bias.label`), targeting the nearest in-reach pool in that direction.
-- **Secondary = counter-trend**, offered only when a clean counter-setup exists
-  (an opposing pool got swept + reclaimed into an LB) — labelled explicitly as
-  counter-bias/short-term, smaller expectation, target = the near pool only, be
-  out fast. Never present a counter-trend idea as co-equal with the primary.
+  (`daily_bias.label`), working the target ladder in that direction.
+- **Secondary = counter-trend**, offered whenever a clean counter-setup exists
+  (an opposing pool got swept + reclaimed into an LB). **Judge it on its own
+  gates and its own RR, not on its direction.** The model explicitly permits
+  counter-trend trades, and the journal says they have been the better half:
+  counter-trend secondaries returned +1.59R against with-trend primaries at
+  −0.60R, and two of the three declined ideas that went on to hit target were
+  turned down for nothing but being counter-bias.
+- "Primary" therefore means **presented first**, not "the better trade".
+  Counter-bias is a fact to state, never on its own a reason to decline. If a
+  counter-trend setup passes the gates and the with-trend one does not, say so
+  plainly rather than promoting the weaker idea to keep the ordering tidy.
 
 ## Output & guardrails
 
@@ -156,9 +163,21 @@ reason.** A disciplined "no trade" is a correct answer.
   `exec_relative`, `expansion_state` — then say what fraction of the remaining
   budget the target consumes. Include this on no-trade outputs too; the fuel
   state is often the reason there is no trade.
-- Targets must be **in today's reach** (reference 03) — or, if the setup is
-  clean and the pool is far, taken as *direction* with an explicit management
-  plan (reference 05). Never dangle a far target flat, with no plan attached.
+- **Always give the target ladder, never a single target.** Quote `targets_up`
+  / `targets_down` as **T1 (bank) / T2 (trail to) / T3 (runner)** with each
+  band, touch count and `quality`. A lone target forced an all-or-nothing
+  exit, and that is where the model bled: 83% of planned entries filled but
+  only 27% of fills reached their one destination. If a side has no usable
+  tier, say so — do not fall back to `draw_up`/`draw_down`, which surface
+  swept and unconfirmed pools when nothing clean is in reach.
+- **`quality` ranks the tier, touch count does not.** `prime` = 2–4 touches,
+  which were hit 50% of the time; `heavy` = 5+, hit only 20% — heavily
+  defended levels act as walls as often as magnets; `thin` = unconfirmed and
+  never once reached. Prefer `prime` for T1.
+- **Remaining ADR budget is context, not a veto.** State it, but do not refuse
+  a setup because the target sits beyond it: on the journal to date, targets
+  beyond the remaining budget were hit slightly *more* often than comfortable
+  ones. Scope the ladder with it, don't gate on it.
 - **Every armed idea states its management**: trail points, partials, and the
   fuel/volume conditions that would end it early.
 - **Every idea is journalled**, no-trades included (reference 07). Writing the

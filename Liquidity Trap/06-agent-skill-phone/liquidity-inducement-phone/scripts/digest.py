@@ -88,6 +88,21 @@ def main():
         print(f"    pool_taken={'none' if not pt else band(pt.get('zone'))}")
         print(f"    note: {sw.get('note')}")
 
+    # The ladder comes before the single draw, because the draw is now just
+    # T1 by another name and reading it first invites all-or-nothing exits.
+    for name, key in (("TARGETS UP (T1 bank / T2 trail / T3 runner)", "targets_up"),
+                      ("TARGETS DOWN (T1 bank / T2 trail / T3 runner)", "targets_down")):
+        print(f"\n{name}")
+        tiers = d.get(key) or []
+        if not tiers:
+            print("    none usable (no confirmed, unswept, in-reach pool)")
+        for t in tiers:
+            pct = ("n/a" if t["pct_of_remaining_budget"] is None
+                   else f"{t['pct_of_remaining_budget']:.0f}% of budget")
+            print(f"    {t['tier']}  {band(t['zone']):<21} {t['name']:<13} "
+                  f"touches={t['touches']:<3} dist={t['dist']:>8.2f}  "
+                  f"{t['quality']:<5}  {pct}")
+
     for name, key in (("DRAW UP", "draw_up"), ("DRAW DOWN", "draw_down")):
         p = d.get(key)
         print(f"\n{name}")

@@ -373,6 +373,42 @@ def analyze(instrument, exec_period="M_5",
     path_up = path_to(draw_up, pools_above)
     path_down = path_to(draw_down, pools_below)
 
+    def target_ladder(pools, side_label):
+        """Up to three graded objectives, nearest first: T1, T2, T3.
+
+        A single `draw` forced an all-or-nothing exit, and the journal says
+        that is where the model bled: entries were landing (83% of planned
+        entries filled) but only 27% of fills ever reached their one target.
+        A ladder lets the position be managed — bank T1, trail to T2, leave a
+        runner for T3 — instead of round-tripping a winner.
+
+        Ordering is by distance, not by touch count, because touch count did
+        NOT rank outcomes the way it looks like it should: 2-4 touch targets
+        were hit 50% of the time, 5+ touch only 20%. Heavily defended levels
+        act as walls as often as magnets, so `quality` reports the count and
+        lets the reader judge rather than sorting on it.
+        """
+        usable = [p for p in pools
+                  if p["confirmed"] and not p["swept"] and not p["too_close"]]
+        out = []
+        for tier, p in enumerate(usable[:3], start=1):
+            pct = (round(100 * p["dist"] / remaining_budget, 1)
+                   if remaining_budget else None)
+            out.append({
+                "tier": f"T{tier}", "zone": p["zone"], "name": p["name"],
+                "touches": p["touches"], "dist": p["dist"],
+                "pct_of_remaining_budget": pct,
+                # Advisory only. Distance vs remaining ADR did not predict
+                # whether a target was reached (targets beyond budget were hit
+                # slightly MORE often), so this is context, not a veto.
+                "quality": ("prime" if 2 <= p["touches"] <= 4
+                            else "heavy" if p["touches"] >= 5 else "thin"),
+                "side": side_label,
+            })
+        return out
+    targets_up = target_ladder(pools_above, "up")
+    targets_down = target_ladder(pools_below, "down")
+
     # ---- recent sweep / reclaim (last ~40 exec bars) ----
     sweep = None
     if len(ex) >= 12:
@@ -529,6 +565,8 @@ def analyze(instrument, exec_period="M_5",
         "draw_down": draw_down,
         "path_up": path_up,
         "path_down": path_down,
+        "targets_up": targets_up,
+        "targets_down": targets_down,
         "recent_sweep": sweep,
         "no_mans_land": nml,
         "warnings": warnings,
