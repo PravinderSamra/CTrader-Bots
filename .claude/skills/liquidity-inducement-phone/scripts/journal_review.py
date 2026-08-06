@@ -279,7 +279,8 @@ def verdict_for(r):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("instrument", nargs="?",
-                    help="only review entries for this instrument")
+                    help='only review entries for this instrument; "ALL" '
+                         'reviews every instrument in the file')
     ap.add_argument("--journal", default=DEFAULT_JOURNAL)
     ap.add_argument("--month", help="YYYY-MM (default: all)")
     ap.add_argument("--write", action="store_true",
@@ -296,7 +297,10 @@ def main():
         print(f"no journal files in {args.journal}")
         return
 
+    scope = ("ALL instruments" if not args.instrument
+             or args.instrument.upper() == "ALL" else args.instrument)
     print(f"journal: {args.journal}")
+    print(f"scope:   {scope}")
     print(f"files:   {', '.join(os.path.basename(f) for f in files)}")
 
     reviewed, scored, too_recent = 0, [], []
@@ -307,7 +311,12 @@ def main():
         for e in entries:
             if e.get("review"):
                 continue
-            if args.instrument and e["instrument"] != args.instrument:
+            # The research workflow always passes an instrument positionally,
+            # so every run was silently single-instrument -- a month summary
+            # quietly excluded 6 of 12 entries and read as if it covered them.
+            # "ALL" is the escape hatch.
+            if (args.instrument and args.instrument.upper() != "ALL"
+                    and e["instrument"] != args.instrument):
                 continue
             bars = bars_for(e["instrument"], args.days)
             if not bars:
