@@ -24,7 +24,15 @@ from typing import Optional
 _MCP_HOST = "mcp.ctrader.com"
 _MCP_PATH = "/trading/mcp"
 
-_TOKEN = os.environ.get("CTRADER_MCP_TOKEN", "").strip()
+# The same value travels under several names depending on where it was set:
+# CTRADER_MCP_TOKEN in the workflow, CTRADER_MCP_SLUG in the shell environment,
+# VITE_CTRADER_MCP_TOKEN in the repo's web app. They are all the base64url
+# slug. Reading only the first name meant a perfectly good slug sitting in
+# CTRADER_MCP_SLUG went unnoticed through a GitHub Actions outage, and the
+# on-device fallback path was reported as impossible when it was available.
+_TOKEN_VARS = ("CTRADER_MCP_TOKEN", "CTRADER_MCP_SLUG", "VITE_CTRADER_MCP_TOKEN")
+_TOKEN = next((os.environ[v].strip() for v in _TOKEN_VARS
+               if os.environ.get(v, "").strip()), "")
 
 _conn: Optional[http.client.HTTPSConnection] = None
 _session_id: Optional[str] = None
