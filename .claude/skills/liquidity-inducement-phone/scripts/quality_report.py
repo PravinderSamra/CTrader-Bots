@@ -35,16 +35,25 @@ entries = []
 for f in sorted(glob.glob(os.path.join(JD, "*.jsonl"))):
     entries += [json.loads(l) for l in open(f) if l.strip()]
 
-bars = {i: jr.bars_for(i, 14) for i in {e["instrument"] for e in entries}}
-rows = []
+# Was hardcoded at 14 days, which silently shrinks the sample as the journal
+# ages: the oldest entries sat exactly on the edge, so this and journal_review
+# agreed by luck and would have diverged the next day with no warning.
+DAYS = int(os.environ.get("QUALITY_DAYS", "21"))
+bars = {i: jr.bars_for(i, DAYS) for i in {e["instrument"] for e in entries}}
+rows, skipped = [], []
 for e in entries:
     r = jr.score(e, bars[e["instrument"]])
-    if r:
-        rows.append((e, r))
+    (rows.append((e, r)) if r else skipped.append(e))
 
 directional = [(e, r) for e, r in rows if e.get("direction")]
-print(f"{len(rows)} entries scored; {len(directional)} directional "
-      f"({len(rows)-len(directional)} london_alt with no direction)\n")
+print(f"{len(entries)} entries on disk over {DAYS} days of bars; "
+      f"{len(rows)} scored; {len(directional)} directional "
+      f"({len(rows)-len(directional)} london_alt with no direction)")
+if skipped:
+    # Dropping these silently let a truncated sample read as a complete one.
+    print(f"SKIPPED {len(skipped)} too recent to judge: "
+          + ", ".join(e["id"] for e in skipped))
+print()
 
 # ── 1. NO_TRADE calls that would have paid ──────────────────────────────────
 print("=" * 78)
@@ -80,10 +89,15 @@ plans = [(e, r) for e, r in directional
          if e.get("entry_zone") and e.get("stop") and e.get("target_zone")]
 filled = [x for x in plans if x[1]["filled"]]
 tgt_hit = [x for x in filled if x[1]["outcome"] == "target"]
+triggered_plans = [x for x in plans if x[1]["triggered"]]
 print(f"  trigger zone reached : {len(trig_hit)}/{len(with_trig)} "
       f"({100*len(trig_hit)/len(with_trig):.0f}%)")
-print(f"  entry zone filled    : {len(filled)}/{len(plans)} "
-      f"({100*len(filled)/len(plans):.0f}%)")
+print(f"  entry filled | plan   : {len(filled)}/{len(plans)} "
+      f"({100*len(filled)/len(plans):.0f}%)   <- of ideas carrying a full plan")
+if triggered_plans:
+    print(f"  entry filled | triggered: {len(filled)}/{len(triggered_plans)} "
+          f"({100*len(filled)/len(triggered_plans):.0f}%)   <- the real "
+          f"conditional; the line above is not a funnel step")
 print(f"  target reached       : {len(tgt_hit)}/{len(filled)} of fills "
       f"({100*len(tgt_hit)/len(filled):.0f}%)")
 
@@ -97,9 +111,10 @@ for e, r in filled:
     t = (e.get("context") or {}).get("target_touches")
     if t is None:
         continue
-    key = "1 (unconfirmed)" if t <= 1 else "2-4" if t <= 4 else "5+"
+    key = ("0 (none)" if t == 0 else "1 (unconfirmed)" if t == 1
+           else "2-4" if t <= 4 else "5+")
     buckets.setdefault(key, []).append(r)
-for k in ("1 (unconfirmed)", "2-4", "5+"):
+for k in ("0 (none)", "1 (unconfirmed)", "2-4", "5+"):
     rs = buckets.get(k, [])
     if not rs:
         continue
@@ -139,3 +154,14 @@ for lab, flag in (("with gate (requires_close_confirmation)", True),
     tot = sum(r["r"] for r in rs)
     print(f"  {lab:<42} n={len(rs):<3} hit={h}  totalR={tot:+.2f}  "
           f"avg={tot/len(rs):+.2f}R")
+print("\n  CONFOUND: state and gate are near-collinear with DATE. Cross-tab "
+      "before reading either\n  section 1 or section 4 as an effect:")
+cells = {}
+for e, r in filled:
+    cells.setdefault((("declined" if e["state"] == "NO_TRADE" else "actionable"),
+                      ("GATED" if e.get("requires_close_confirmation")
+                       else "no-gate")), []).append(r)
+for (st, g), rs in sorted(cells.items()):
+    print(f"    {st:<11}{g:<9} n={len(rs):<3} "
+          f"R={sum(x['r'] for x in rs):+.2f}  "
+          f"avg={sum(x['r'] for x in rs)/len(rs):+.2f}R")

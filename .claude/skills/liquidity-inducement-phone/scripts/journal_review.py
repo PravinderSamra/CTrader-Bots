@@ -59,6 +59,10 @@ def _find_journal():
 
 DEFAULT_JOURNAL = _find_journal()
 HORIZON_HOURS = 30          # how long an idea is given to play out
+# An intraday idea that only confirms the NEXT session is not that idea any
+# more. Two entries were scored off confirmations 19 and 23 hours after they
+# were written, including the largest winner in the journal.
+CONFIRM_WITHIN_HOURS = 8
 _bars_cache: dict = {}
 
 
@@ -175,9 +179,13 @@ def _score_raw(entry, bars):
     # version most likely to be stopped. Entries that say they need the close
     # get it enforced here.
     search = rest
+    conf_close = None
     if entry.get("requires_close_confirmation"):
+        deadline = t0 + timedelta(hours=CONFIRM_WITHIN_HOURS)
         conf_i = None
         for j, b in enumerate(rest):
+            if b["time"] > deadline:
+                break
             reclaimed = (b["close"] > trigger[1] if direction == "long"
                          else b["close"] < trigger[0])
             if reclaimed:
@@ -188,6 +196,7 @@ def _score_raw(entry, bars):
             _set_excursion(out, fwd, entry, direction)
             return out
         out["confirmed_at"] = str(rest[conf_i]["time"])
+        conf_close = rest[conf_i]["close"]
         search = rest[conf_i:]
 
     fill_i = None
@@ -202,6 +211,17 @@ def _score_raw(entry, bars):
     out["filled"] = True
 
     fill = entry_zone[1] if direction == "long" else entry_zone[0]
+    # If the fill lands on the confirming bar itself, the band edge was already
+    # traded through - that close is the earliest price actually obtainable,
+    # and it is always the worse of the two. Later bars can be filled at the
+    # edge with a resting limit, so they keep it. Booking the edge on the
+    # confirming bar inflated the gated arm by ~40% and turned one +1.89R
+    # trade into +4.86R.
+    if conf_close is not None and fill_i == 0:
+        fill = max(fill, conf_close) if direction == "long" else min(fill, conf_close)
+        out["fill_basis"] = "confirming_close"
+    else:
+        out["fill_basis"] = "band_edge"
     risk = abs(fill - stop)
     if risk <= 0:
         out["outcome"] = "bad_entry_data"
@@ -223,11 +243,15 @@ def _score_raw(entry, bars):
 
     mfe, mfe_price, mfe_time = 0.0, fill, None
     for n, b in enumerate(search[fill_i + 1:], start=1):
-        ext = b["high"] if direction == "long" else b["low"]
-        fav = (ext - fill) if direction == "long" else (fill - ext)
-        if fav / risk > mfe:
-            mfe, mfe_price, mfe_time = fav / risk, ext, b["time"]
         hit_stop = b["low"] <= stop if direction == "long" else b["high"] >= stop
+        # Credit the favourable extreme only on bars that did not stop it out.
+        # Intrabar order is unknowable, and the pessimistic reading is the
+        # honest one - the same rule already used when a bar spans both.
+        if not hit_stop:
+            ext = b["high"] if direction == "long" else b["low"]
+            fav = (ext - fill) if direction == "long" else (fill - ext)
+            if fav / risk > mfe:
+                mfe, mfe_price, mfe_time = fav / risk, ext, b["time"]
         hit_tgt = b["high"] >= tgt if direction == "long" else b["low"] <= tgt
         if hit_stop:                      # pessimistic when both in one bar
             out.update(outcome="stop", r=-1.0, bars_to_outcome=n)
