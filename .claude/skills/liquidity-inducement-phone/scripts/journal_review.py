@@ -405,7 +405,8 @@ def main():
                   f"mfe_r={r['mfe_r']}  mfe_price={r['mfe_price']}  "
                   f"mfe_time={r['mfe_time']}")
             print(f"    window {r['window_start']} .. {r['window_end']}  "
-                  f"bars_after_fill={r['bars_after_fill']}  "
+                  f"bars_after_fill={r['bars_after_fill']} (window remainder, "
+                  f"NOT hold time)  bars_to_outcome={r.get('bars_to_outcome')}  "
                   f"fav_pts={round(abs(r['mfe_price'] - r['fill_price']), 3)}")
             # Both of these were computed and then never surfaced, so a review
             # could not answer "did the confirming close actually happen, and
@@ -416,9 +417,14 @@ def main():
             # immediately. Say which it is: a confirmed close, or no gate at
             # all. entry_basis "conditional" does NOT imply confirmation —
             # they are separate flags.
-            conf = (f"confirmed at {r['confirmed_at']}" if r.get("confirmed_at")
-                    else "NO GATE — filled on touch (entry omits "
-                         "requires_close_confirmation)")
+            if r.get("confirmed_at"):
+                conf = f"confirmed at {r['confirmed_at']}"
+            elif "requires_close_confirmation" in e:
+                # Explicitly false: the reclaim already happened before as_of,
+                # so there was nothing left for the gate to wait for.
+                conf = "NO GATE — waived (flag explicitly false)"
+            else:
+                conf = "NO GATE — filled on touch (flag absent)"
             print(f"    entry: {conf}  bars_available={r.get('bars_available')}")
 
     filled = [r for _, r in scored if r["filled"]]

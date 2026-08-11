@@ -40,10 +40,18 @@ for f in sorted(glob.glob(os.path.join(JD, "*.jsonl"))):
 # agreed by luck and would have diverged the next day with no warning.
 DAYS = int(os.environ.get("QUALITY_DAYS", "21"))
 bars = {i: jr.bars_for(i, DAYS) for i in {e["instrument"] for e in entries}}
-rows, skipped = [], []
+MIN_BARS = 24        # 2h of M5 forward data, same bar journal_review warns at
+rows, skipped, too_young = [], [], []
 for e in entries:
     r = jr.score(e, bars[e["instrument"]])
-    (rows.append((e, r)) if r else skipped.append(e))
+    if not r:
+        skipped.append(e)
+    elif r.get("bars_available", 0) < MIN_BARS:
+        # journal_review only WARNS about these; counting them here as settled
+        # let a ten-minute-old idea be recorded as "did not trigger".
+        too_young.append(e)
+    else:
+        rows.append((e, r))
 
 directional = [(e, r) for e, r in rows if e.get("direction")]
 print(f"{len(entries)} entries on disk over {DAYS} days of bars; "
@@ -51,8 +59,11 @@ print(f"{len(entries)} entries on disk over {DAYS} days of bars; "
       f"({len(rows)-len(directional)} london_alt with no direction)")
 if skipped:
     # Dropping these silently let a truncated sample read as a complete one.
-    print(f"SKIPPED {len(skipped)} too recent to judge: "
+    print(f"SKIPPED {len(skipped)} with no forward bars: "
           + ", ".join(e["id"] for e in skipped))
+if too_young:
+    print(f"EXCLUDED {len(too_young)} with <{MIN_BARS} bars (<2h) of forward "
+          f"data - not yet settled: " + ", ".join(e["id"] for e in too_young))
 print()
 
 # ── 1. NO_TRADE calls that would have paid ──────────────────────────────────
@@ -90,16 +101,14 @@ plans = [(e, r) for e, r in directional
 filled = [x for x in plans if x[1]["filled"]]
 tgt_hit = [x for x in filled if x[1]["outcome"] == "target"]
 triggered_plans = [x for x in plans if x[1]["triggered"]]
-print(f"  trigger zone reached : {len(trig_hit)}/{len(with_trig)} "
-      f"({100*len(trig_hit)/len(with_trig):.0f}%)")
-print(f"  entry filled | plan   : {len(filled)}/{len(plans)} "
-      f"({100*len(filled)/len(plans):.0f}%)   <- of ideas carrying a full plan")
-if triggered_plans:
-    print(f"  entry filled | triggered: {len(filled)}/{len(triggered_plans)} "
-          f"({100*len(filled)/len(triggered_plans):.0f}%)   <- the real "
-          f"conditional; the line above is not a funnel step")
-print(f"  target reached       : {len(tgt_hit)}/{len(filled)} of fills "
-      f"({100*len(tgt_hit)/len(filled):.0f}%)")
+def pct(a, b):
+    return f"{a}/{b} ({100*a/b:.0f}%)" if b else f"{a}/0 (n/a)"
+print(f"  trigger zone reached : {pct(len(trig_hit), len(with_trig))}")
+print(f"  entry filled | plan   : {pct(len(filled), len(plans))}"
+      f"   <- of ideas carrying a full plan")
+print(f"  entry filled | triggered: {pct(len(filled), len(triggered_plans))}"
+      f"   <- the real conditional; the line above is not a funnel step")
+print(f"  target reached       : {pct(len(tgt_hit), len(filled))} of fills")
 
 # ── 3. Does pool quality / distance predict a hit? ──────────────────────────
 print("\n" + "=" * 78)
