@@ -95,12 +95,19 @@ print("\n" + "=" * 78)
 print("2. DID THE ZONES ACTUALLY GET REACHED?")
 print("=" * 78)
 with_trig = [(e, r) for e, r in directional if e.get("trigger_zone")]
+# "Was the zone reached" is a question about the LEVEL, so a late trigger still
+# counts here. Only the fill-given-trigger conditional below excludes it, since
+# that one asks what could actually have been acted on.
 trig_hit = [x for x in with_trig if x[1]["triggered"]]
 plans = [(e, r) for e, r in directional
          if e.get("entry_zone") and e.get("stop") and e.get("target_zone")]
 filled = [x for x in plans if x[1]["filled"]]
 tgt_hit = [x for x in filled if x[1]["outcome"] == "target"]
-triggered_plans = [x for x in plans if x[1]["triggered"]]
+# Only triggers the engine could actually have acted on belong in the funnel.
+triggered_plans = [x for x in plans
+                   if x[1]["triggered"] and x[1].get("triggered_in_time", True)]
+out_of_time = [x for x in plans
+               if x[1]["triggered"] and not x[1].get("triggered_in_time", True)]
 def pct(a, b):
     return f"{a}/{b} ({100*a/b:.0f}%)" if b else f"{a}/0 (n/a)"
 print(f"  trigger zone reached : {pct(len(trig_hit), len(with_trig))}")
@@ -109,6 +116,9 @@ print(f"  entry filled | plan   : {pct(len(filled), len(plans))}"
 print(f"  entry filled | triggered: {pct(len(filled), len(triggered_plans))}"
       f"   <- the real conditional; the line above is not a funnel step")
 print(f"  target reached       : {pct(len(tgt_hit), len(filled))} of fills")
+if out_of_time:
+    print(f"  ({len(out_of_time)} trigger(s) excluded: arrived after the "
+          f"confirmation deadline and could never have been acted on)")
 
 # ── 3. Does pool quality / distance predict a hit? ──────────────────────────
 print("\n" + "=" * 78)

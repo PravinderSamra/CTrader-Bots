@@ -159,6 +159,13 @@ def _score_raw(entry, bars):
         for i, b in enumerate(fwd):
             if in_zone(b, trigger):
                 out["triggered"] = True
+                out["triggered_at"] = str(b["time"])
+                # A trigger arriving after the confirmation deadline could
+                # never have been acted on, whatever price then did. Record it
+                # as a trigger, but not as one the funnel may count.
+                out["triggered_in_time"] = not (
+                    entry.get("requires_close_confirmation")
+                    and b["time"] > t0 + timedelta(hours=CONFIRM_WITHIN_HOURS))
                 break
         if not out["triggered"]:
             _set_excursion(out, fwd, entry, direction)
@@ -192,7 +199,9 @@ def _score_raw(entry, bars):
                 conf_i = j
                 break
         if conf_i is None:
-            out["outcome"] = "no_confirmation"
+            out["outcome"] = ("confirm_window_expired"
+                              if not out.get("triggered_in_time", True)
+                              else "no_confirmation")
             _set_excursion(out, fwd, entry, direction)
             return out
         out["confirmed_at"] = str(rest[conf_i]["time"])
@@ -468,7 +477,7 @@ def main():
                       f"support a claim about why]")
             else:
                 print(f"  [n={len(losers)} losers]")
-            rr_list = ", ".join(f"{r['mfe_r']:.1f}R" for r in right) or "-"
+            rr_list = ", ".join(f"{r['mfe_r']:.2f}R" for r in right) or "-"
             print(f"  direction right, destination missed : {len(right):<3}"
                   f"  (max RR reached: {rr_list})")
             print(f"  direction marginal (0.3-1.0R)       : {len(marg)}")
@@ -477,8 +486,9 @@ def main():
                 give_back = sum(r["mfe_r"] for r in right)
                 print(f"\n  {len(right)}/{len(losers)} losses were correct calls that were "
                       f"given back.")
+                lost = -sum(r["r"] for r in right)
                 print(f"  Those trades showed {give_back:.1f}R of unrealised profit in "
-                      f"total before stopping for {len(right)}R of loss.")
+                      f"total before losing {lost:.2f}R.")
                 # This block used to assert "that is an exit problem" on any
                 # count at all, and duly asserted it off a single trade. One
                 # observation cannot distinguish a management failure from one
