@@ -118,3 +118,54 @@ max(20% of range, 30pt) - which the bot does not currently support.
 
 Next: 15% and 25%, shorts on, 2023 and 2024 - the two years holding -5,748 of
 quiet-day losses, where the mechanism is falsifiable.
+
+## v3 stop test — 2023 + 2024 (the real test)
+
+Identical trade selection to v2 (113 and 109 trades), so this is a paired
+comparison: same entries, different exits.
+
+| Stop | 2023 | 2024 | Both | Median trade | PF |
+|---|---|---|---|---|---|
+| fixed 50pt | −4,130 | −1,288 | **−5,417** | −105.3 | 0.67 |
+| 15% of ORB | −3,689 | −371 | **−4,061** | −104.4 | 0.75 |
+| 25% of ORB | −4,030 | −39 | **−4,069** | −102.2 | 0.71 |
+
+**The mechanism works, and it is not enough.** Split by the day's range, quiet-day
+losses fall from −5,748 to −4,333 (15%) to −3,749 (25%), i.e. the scaling stop does
+rescue quiet days as predicted — per-trade loss improves from −33.8 to −22.1. But
+active days give it back, going from +331 to −320 at 25%, because a wider stop earns
+fewer R per point travelled. Net across both years stays around −4,060.
+
+The earlier "too tight" worry was wrong in the main: anchoring to the ORB edge means
+risk = overshoot + pct×range, so median quiet-day stops were 38.9pt (15%) and 55.0pt
+(25%), not the ~17pt feared. Mean stop across all trades is *larger* than fixed-50 —
+65.3pt and 84.3pt — the change makes stops tighter on quiet days and much wider on
+active ones, which is exactly what it should do.
+
+What survives: the median trade barely moves (−105 → −102) and removing the best five
+trades still leaves −6,342. 2024 nearly reaches break-even (−39) but 2023 stays at
+−4,030 under every configuration tried. 2023 is the quietest year in the sample
+(mean ORB range 219pt, 14.2% of days above 300pt), and no exit rule tested has made
+it tradeable.
+
+## Where four rounds of changes leave 2023 + 2024
+
+| Config | 2023 | 2024 | Both |
+|---|---|---|---|
+| v1 fixed50, BE 0.6R, long only | −1,532 | −859 | −2,391 |
+| v2 fixed50, BE 2R, shorts | −4,130 | −1,288 | −5,417 |
+| v3 orb15, BE 2R, shorts | −3,689 | −371 | −4,061 |
+| v3 orb25, BE 2R, shorts | −4,030 | −39 | −4,069 |
+
+Every configuration loses in both years. The strategy has not been made to work in a
+quiet market by any exit change tested.
+
+## The untested structural difference
+
+The M5 study in `../../US30 London Range Breakout/docs/` found a US30 edge at PF ~1.31
+using a **fixed take-profit at 2.5–3.0R**. This bot has never been run that way:
+`TakeProfitR = 50` disables the target entirely, so every trade is a pure runner
+managed by the trailing stop. Winners do reach those levels — at 15% of ORB, 25 of 63
+winners reached 2R and 15 reached 3R — so a target is not obviously unreachable.
+That is the one element of the researched edge never tried here, and it is a
+structural change rather than another parameter tweak.
