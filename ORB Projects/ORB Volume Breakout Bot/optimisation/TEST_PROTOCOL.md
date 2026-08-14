@@ -73,3 +73,20 @@ If it fails, that is a real finding and worth more than a fitted curve.
 | — | vol 1.4, BE 0.6R, stop 50pt, fixed-UTC clock | 2024 | 37 | −£858.90 | 0.57 | out-of-sample |
 | — | vol 1.4, BE 0.6R, stop 50pt, fixed-UTC clock | 2025 | 37 | +£2,179.44 | 4.95 | in-sample |
 | — | vol 1.4, BE 0.6R, stop 50pt, fixed-UTC clock | 2026 (to Aug) | 20 | +£989.60 | 2.95 | in-sample |
+| — | v2: vol 1.2, BE 2R, no RR, shorts on | 2022 (Jun–Dec) | 42 | +£3,315 | 2.24 | partial year |
+| — | v2: vol 1.2, BE 2R, no RR, shorts on | 2023 | 113 | −£4,130 | 0.53 | |
+| — | v2: vol 1.2, BE 2R, no RR, shorts on | 2024 | 109 | −£1,288 | 0.83 | |
+| — | v2: vol 1.2, BE 2R, no RR, shorts on | 2025 | 113 | +£1,413 | 1.19 | |
+| — | v2: vol 1.2, BE 2R, no RR, shorts on | 2026 (to Aug) | 55 | +£1,476 | 1.40 | |
+| — | **v2 total** | 2022–2026 | **432** | **+£786** | **1.03** | expectancy +£1.82, 95% CI −£16.90…+£21.87 |
+
+## Provenance note added after the v2 run
+
+The 1.2× multiplier and 2R breakeven were chosen after reviewing all five years of
+the v1 run, so every year is now weakly in-sample. The v2 total is not an
+out-of-sample number. What survives that caveat is the *mechanical* findings —
+the clock split, the range-versus-stop relationship, the outlier concentration —
+because they describe the shape of the trade book rather than the level of profit.
+
+The next genuinely clean test would need data outside 2022–2026, or forward
+testing on demo.
