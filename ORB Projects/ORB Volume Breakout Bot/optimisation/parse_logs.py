@@ -144,6 +144,12 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("logs", nargs="+")
     ap.add_argument("--outdir", default="results")
+    ap.add_argument("--config", default="vol1.4_be0.6_sl50_utc",
+                    help="label for the parameter set these logs came from; keeps "
+                         "runs of different configs distinguishable when pooled")
+    ap.add_argument("--append", action="store_true",
+                    help="merge into existing trades.csv/days.csv instead of replacing, "
+                         "so several configs accumulate into one comparable table")
     a = ap.parse_args()
     os.makedirs(a.outdir, exist_ok=True)
 
@@ -153,18 +159,26 @@ def main():
             sys.exit("missing: " + p)
         t, d = parse(p)
         tag = os.path.basename(p).split()[0]
-        t["log"] = tag
-        d["log"] = tag
-        print(f"{tag}: {len(t):3d} trades, {len(d):3d} days with an ORB lock")
+        for frame in (t, d):
+            frame["log"] = tag
+            frame["config"] = a.config
+        print(f"{tag} [{a.config}]: {len(t):3d} trades, {len(d):3d} days with an ORB lock")
         all_t.append(t)
         all_d.append(d)
 
     T = pd.concat(all_t, ignore_index=True)
     D = pd.concat(all_d, ignore_index=True)
-    T.to_csv(os.path.join(a.outdir, "trades.csv"), index=False)
-    D.to_csv(os.path.join(a.outdir, "days.csv"), index=False)
-    print(f"\n-> {a.outdir}/trades.csv  ({len(T)} rows)")
-    print(f"-> {a.outdir}/days.csv    ({len(D)} rows)")
+
+    for frame, name in ((T, "trades.csv"), (D, "days.csv")):
+        path = os.path.join(a.outdir, name)
+        if a.append and os.path.isfile(path):
+            prior = pd.read_csv(path)
+            frame = pd.concat([prior, frame], ignore_index=True)
+            # a re-run of the same config over the same date replaces the old row
+            keys = [c for c in ("config", "date", "entry_time") if c in frame.columns]
+            frame = frame.drop_duplicates(subset=keys, keep="last")
+        frame.to_csv(path, index=False)
+        print(f"-> {path}  ({len(frame)} rows)")
 
 
 if __name__ == "__main__":
