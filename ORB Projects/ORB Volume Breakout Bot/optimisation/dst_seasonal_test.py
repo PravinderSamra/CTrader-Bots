@@ -3,7 +3,7 @@
 Does the bot's fixed-UTC clock split it into two different strategies?
 
 The live config sets UseFixedUtcTimes=true with range 08:00-14:30 UTC and first
-entry 14:31 UTC. The source (ORB_Volume_Breakout_Bot.cs:955) then skips all DST
+entry 14:31 UTC. The source (ORB_Volume_Breakout_Bot_v2.cs:955) then skips all DST
 handling: ConvertConfiguredTimeToUtc returns `sessionDate + configuredTime`.
 
 But the NYSE cash open moves in UTC:

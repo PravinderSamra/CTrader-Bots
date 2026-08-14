@@ -1,11 +1,19 @@
 // =============================================================================
-// ORB Volume Breakout cBot — v1.0 (Premarket Range + Volume Breakout)
+// ORB Volume Breakout cBot — v2.0 (Premarket Range + Volume Breakout, two-zone session)
 // Single compilable .cs file for cTrader Automate
 // -----------------------------------------------------------------------------
+// v2.0 change (this file): the session now resolves TWO timezones instead of one.
+// The range START is anchored in RangeTimeZoneParam (London), while the range END,
+// trading start, kill switch and close are anchored in ExecutionTimeZoneParam
+// (New York). A London range feeding a New York open cannot share one clock: the
+// UK and US shift on different weekends, so for ~4 weeks a year the NYSE bell is
+// at 13:30 London rather than 14:30. Setting UseFixedUtcTimes=false enables it;
+// leaving it true preserves the previous fixed-UTC behaviour exactly.
+//
 // This is a variant of the reviewed ORB Breakout cBot v2.0 base. It reuses the
 // v2.0 core UNCHANGED and adds only the Phase 2 changes specified in
 // docs/Phase2_Spec.md (the "US30 London Range Breakout" research study):
-//   P2.1 Identity: class OrbVolumeBreakoutBot, Bot Label Prefix default "ORBV"
+//   P2.1 Identity: class OrbVolumeBreakoutBotV2, Bot Label Prefix default "ORBV"
 //        so it can run side-by-side with the base bot without label/history collisions.
 //   P2.2 Volume Filter (new parameter group): the breakout (evaluation) bar must show
 //        tick volume >= VolumeMultiplier x the trailing-VolumeLookbackBars average of
@@ -143,7 +151,7 @@ namespace cAlgo.Robots
  // =========================================================================
 
  [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.None)]
- public class OrbVolumeBreakoutBot : Robot
+ public class OrbVolumeBreakoutBotV2 : Robot
  {
  // =====================================================================
  // PARAMETERS

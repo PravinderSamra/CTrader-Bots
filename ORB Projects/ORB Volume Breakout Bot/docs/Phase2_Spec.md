@@ -2,7 +2,7 @@
 
 **Author:** Fable 5 (spec/design) · **Implementer:** Opus · **Date:** 2026-07-18
 **Base:** `ORB Projects/ORB Bot/ORB_Bot.cs` (v2.0 + Phase 1.5 fixes — the reviewed file)
-**Deliverable:** `ORB Projects/ORB Volume Breakout Bot/ORB_Volume_Breakout_Bot.cs`
+**Deliverable:** `ORB Projects/ORB Volume Breakout Bot/ORB_Volume_Breakout_Bot_v2.cs`
 
 ## Purpose
 
@@ -21,7 +21,7 @@ so they can be swept in backtesting/optimization.
 ## Changes vs the v2.0 base (ONLY these; everything else identical)
 
 ### 1. Identity
-- New file `ORB_Volume_Breakout_Bot.cs`; class renamed `OrbVolumeBreakoutBot` (so both
+- New file `ORB_Volume_Breakout_Bot_v2.cs`; class renamed `OrbVolumeBreakoutBot` (so both
   bots can be installed side-by-side); header comment retitled
   "ORB Volume Breakout cBot — v1.0 (Premarket Range + Volume Breakout)" with its own short
   changelog referencing this spec.
