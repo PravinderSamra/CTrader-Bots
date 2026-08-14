@@ -169,3 +169,68 @@ managed by the trailing stop. Winners do reach those levels — at 15% of ORB, 2
 winners reached 2R and 15 reached 3R — so a target is not obviously unreachable.
 That is the one element of the researched edge never tried here, and it is a
 structural change rather than another parameter tweak.
+
+---
+
+# Moving to NAS100
+
+US30 is finished. Five configurations were tested against 2024, the year reserved
+as the honest test, and all five lost: −859, −1,288, −371, −39, and the original
+trader's own rules. 2023 lost under every one of them too. That is not a setting
+still to be found; it is the absence of an edge.
+
+## Reserve the years again, before touching anything
+
+The same discipline applies and matters more now, because the temptation after a
+disappointing result is to search harder.
+
+| Period | Role |
+|---|---|
+| 2022 + 2023 | **Train.** Choose settings here. Look freely. |
+| 2024 | **Test.** One run of the chosen setting. Nothing else. |
+| 2025 + 2026 | Report only — the US30 work has already touched these. |
+
+Nothing about NAS100 has been fitted yet, so its 2024 is genuinely clean. Spend
+it once.
+
+## Two starting configs, taken from the existing M5 study
+
+`../../US30 London Range Breakout/docs/Final_Study_London_Range_Breakout.md`
+tested this family on both instruments and found NAS100 profitable in all four
+years, with shallower drawdowns and a volume filter that behaves monotonically
+(US30's was non-monotonic — its highest-volume quintile was slightly negative).
+
+Its NAS100 structure is **not** the US30 one:
+
+- range **02:00 → 09:30 ET** — a wide overnight range, not a London session
+- execute **10:00 → 11:00 ET** — short and late; most of the edge is in that hour
+- volume **≥ 1.3×** trailing-20
+- plain stop and target, no breakeven and no trailing
+
+| Config | Stop | Target | Study result |
+|---|---|---|---|
+| `NAS100_balanced_60pt_2.0R` | 60pt | 2.0R | 30% win, PF 1.33, −12.9R drawdown |
+| `NAS100_aggressive_40pt_3.5R` | 40pt | 3.5R | 21% win, PF 1.36, −12R drawdown |
+
+Both zone selectors are set to New York, because on this instrument the range is
+a New York overnight concept rather than a London session. Same code, different
+answer to "which clock" — which is the point of having two.
+
+Three US30 lessons are already baked in:
+
+- **No breakeven, no trailing.** Every trailing variant tried on US30 amputated
+  the right tail; the studied NAS100 edge is a plain stop-and-target.
+- **Max ORB range raised to 2000.** US30's 500pt cap silently stood the bot down
+  on 41 summer days. NAS100 trades at a different price scale, so that number
+  must not be inherited blind.
+- **Margin usage raised to 80%.** The 50% cap quietly shrank every trade in the
+  last run to 70% of intended size, and nothing in the results said so.
+
+## Check before reading anything into the first run
+
+1. No `SAFETY: Clamping volume` lines — otherwise every result is scaled down.
+2. `SESSION_TIMEZONE` shows the range ending at the bell and entry 30 min later.
+3. Losses near −1R, wins near the target. If they overshoot, the backtest is on
+   bar data rather than tick data and is measuring the simulator.
+4. Sensible trade count. Far fewer than ~100/year means a filter is starving it,
+   most likely the volume multiplier or the range cap.
