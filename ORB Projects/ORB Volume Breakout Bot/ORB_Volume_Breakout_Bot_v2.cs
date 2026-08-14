@@ -180,51 +180,63 @@ namespace cAlgo.Robots
  // invisible. On FX with Point Unit Mode = UseTickSizeAsPoint it matters:
  // the ORB/offset numbers are then in ticks while risk numbers stay in pips.
  //
- // ----- Session (UTC) -----
- [Parameter("Range Start Time", Group = "Session", DefaultValue = "08:00:00")]
- public string RangeStartTimeUtcStr { get; set; }
-
- [Parameter("Range End Time", Group = "Session", DefaultValue = "08:15:00")]
- public string RangeEndTimeUtcStr { get; set; }
-
- [Parameter("Trading Start Time", Group = "Session", DefaultValue = "00:00:00")]
- public string TradingStartTimeUtcStr { get; set; }
-
- [Parameter("Enable Kill Switch", Group = "Session", DefaultValue = false)]
- public bool EnableKillSwitch { get; set; }
-
- [Parameter("Kill Switch Time", Group = "Session", DefaultValue = "23:59:00")]
- public string KillSwitchTimeUtcStr { get; set; }
-
- // NOTE: This setting USED to close positions at the same Kill Switch Time.
- // It now enables a *separate* Close Positions Time (see parameter below).
- [Parameter("Enable Close Positions Time", Group = "Session", DefaultValue = false)]
- public bool ClosePositionsAtKillSwitch { get; set; }
-
- [Parameter("Close Positions Time", Group = "Session", DefaultValue = "23:59:00")]
- public string ClosePositionsTimeUtcStr { get; set; }
-
- // ----- Session Time Zone -----
+ // ----- Session -----
  //
- // A session that spans two exchanges needs two clocks. The London range is a
- // London-session concept and starts at 08:00 London whatever the date; the
- // trading window is a New York concept and opens at 09:30 New York. Those two
- // are NOT a fixed number of hours apart: the UK and US change their clocks on
- // different weekends, so for about four weeks a year the NYSE bell lands at
- // 13:30 London instead of the usual 14:30.
+ // A session that spans two exchanges needs two clocks. The range is a London
+ // concept and opens at 08:00 London whatever the date; the trading window is a
+ // New York concept and starts from the 09:30 New York bell. Those two are NOT a
+ // fixed number of hours apart: the UK and US change their clocks on different
+ // weekends, so for about four weeks a year the NYSE bell lands at 13:30 London
+ // rather than the usual 14:30.
  //
- // Pinning everything to one zone (or to fixed UTC) therefore mis-specifies one
- // end of the session for part of the year. Anchoring the range start in London
- // and everything from the bell onward in New York keeps both ends correct on
- // every date, with no seasonal special-casing.
- [Parameter("Use Fixed UTC Times", Group = "Session Time Zone", DefaultValue = true)]
- public bool UseFixedUtcTimes { get; set; }
+ // The parameters below are therefore split into two groups, one per clock, and
+ // each group carries its own time-zone selector. A field is read in the zone of
+ // the group it sits in - there is no field whose clock has to be inferred.
+ //
+ // The range END sits in the trading group on purpose: it IS the opening bell,
+ // the instant the trading window is measured from, so it belongs to the New
+ // York clock. That is what removes the "14:30 London, except 13:30 for four
+ // weeks a year" special case - 09:30 New York is simply always the bell.
 
- [Parameter("Range Time Zone", Group = "Session Time Zone", DefaultValue = SessionTimeZoneEnum.EuropeLondon)]
+ // ----- Session 1: the range window -----
+ [Parameter("Range Time Zone", Group = "Session 1 - Range Window", DefaultValue = SessionTimeZoneEnum.EuropeLondon)]
  public SessionTimeZoneEnum RangeTimeZoneParam { get; set; }
 
- [Parameter("Execution Time Zone", Group = "Session Time Zone", DefaultValue = SessionTimeZoneEnum.AmericaNewYork)]
+ [Parameter("Range Start (this zone)", Group = "Session 1 - Range Window", DefaultValue = "08:00:00")]
+ public string RangeStartTimeUtcStr { get; set; }
+
+ // ----- Session 2: the trading window -----
+ [Parameter("Trading Time Zone", Group = "Session 2 - Trading Window", DefaultValue = SessionTimeZoneEnum.AmericaNewYork)]
  public SessionTimeZoneEnum ExecutionTimeZoneParam { get; set; }
+
+ [Parameter("Range End / Market Open", Group = "Session 2 - Trading Window", DefaultValue = "09:30:00")]
+ public string RangeEndTimeUtcStr { get; set; }
+
+ [Parameter("First Entry Time", Group = "Session 2 - Trading Window", DefaultValue = "09:31:00")]
+ public string TradingStartTimeUtcStr { get; set; }
+
+ [Parameter("Enable Last Entry Cutoff", Group = "Session 2 - Trading Window", DefaultValue = false)]
+ public bool EnableKillSwitch { get; set; }
+
+ // No NEW entries after this. An open trade is left alone - it runs to its stop
+ // or target unless the force-close below is enabled and reached.
+ [Parameter("Last Entry Time", Group = "Session 2 - Trading Window", DefaultValue = "23:59:00")]
+ public string KillSwitchTimeUtcStr { get; set; }
+
+ // NOTE: This setting USED to close positions at the same Last Entry Time.
+ // It now enables a *separate* force-close time (see parameter below).
+ [Parameter("Enable Force Close", Group = "Session 2 - Trading Window", DefaultValue = false)]
+ public bool ClosePositionsAtKillSwitch { get; set; }
+
+ [Parameter("Force Close Time", Group = "Session 2 - Trading Window", DefaultValue = "23:59:00")]
+ public string ClosePositionsTimeUtcStr { get; set; }
+
+ // ----- Session 3: legacy escape hatch -----
+ // Leave OFF to use the two zones above. Turning it ON ignores both selectors and
+ // reads every time as a fixed UTC clock, which is the pre-v2 behaviour: correct
+ // only while the US is on standard time, an hour out for the rest of the year.
+ [Parameter("Ignore Zones - Use Fixed UTC", Group = "Session 3 - Legacy", DefaultValue = false)]
+ public bool UseFixedUtcTimes { get; set; }
 
  // ----- ORB -----
  [Parameter("ORB Bars TimeFrame", Group = "ORB", DefaultValue = "Minute")]

@@ -9,7 +9,7 @@
     "TradingStartTimeUtcStr": "09:31:00",
     "EnableKillSwitch": true,
     "KillSwitchTimeUtcStr": "10:31:00",
-    "ClosePositionsAtKillSwitch": false,
+    "ClosePositionsAtKillSwitch": true,
     "ClosePositionsTimeUtcStr": "16:00:00",
     "UseFixedUtcTimes": false,
     "RangeTimeZoneParam": 1,
