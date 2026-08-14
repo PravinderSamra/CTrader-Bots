@@ -400,24 +400,29 @@ namespace cAlgo.Robots
  public bool TradeSunday { get; set; }
 
  // ----- Stops & Targets -----
- [Parameter("Stop Loss ORB Percent", Group = "Stops & Targets", DefaultValue = 50.0)]
+ //
+ // There are two ways to place the stop and ONE switch chooses between them.
+ // Typing a number into the other one does nothing - that is not obvious from the
+ // old labels, and setting the percent to 0 to "turn it off" produced a stop
+ // sitting exactly on the ORB line, i.e. a risk of only however far past the line
+ // the fill happened to land. A 3.2pt stop then sized a position 31x too large
+ // and one ordinary 30pt move cost 10R. The labels below name the switch first
+ // and say which field each mode reads; OnStart rejects the 0% combination.
+ [Parameter("Stop Type: Fixed Points? (No = % of ORB)", Group = "Stops & Targets", DefaultValue = true)]
+ public bool EnableFixedPointStop { get; set; }
+
+ // Used when Stop Type = Yes. Research stops were FIXED POINTS from entry
+ // (NAS100 40pt / US30 75pt): slPrice = expectedEntry -/+ FixedStopPoints.
+ [Parameter("...if Yes: Fixed Stop Points", Group = "Stops & Targets", DefaultValue = 40, MinValue = 0.1)]
+ public double FixedStopPoints { get; set; }
+
+ // Used when Stop Type = No. The stop sits this far INSIDE the range from its
+ // edge, so 0 means "exactly on the edge" - never what you want.
+ [Parameter("...if No: Stop % of ORB Range", Group = "Stops & Targets", DefaultValue = 50.0, MinValue = 0.0)]
  public double StopLossOrbPercent { get; set; }
 
  [Parameter("Take Profit R", Group = "Stops & Targets", DefaultValue = 2.0)]
  public double TakeProfitR { get; set; }
-
- // ----- Fixed-Point Stop (Phase 2) -----
- // Research stops were FIXED POINTS from entry (NAS100 40pt / US30 75pt), not %-of-ORB.
- // When enabled the initial SL is anchored to the estimated entry price rather than the ORB
- // range: slPrice = expectedEntry -/+ FixedStopPoints * _pointSize (Point-Unit units), rounded
- // to TickSize. Default OFF preserves the existing StopLossOrbPercent behaviour byte-for-byte.
- // Everything downstream (risk pips, sizing, R-based TP, multi-TP, dynamic stop, early risk
- // reduction, attach-at-entry protection) keys off the actual entry->SL distance and is unchanged.
- [Parameter("Enable Fixed Point Stop", Group = "Stops & Targets", DefaultValue = false)]
- public bool EnableFixedPointStop { get; set; }
-
- [Parameter("Fixed Stop Points", Group = "Stops & Targets", DefaultValue = 40, MinValue = 0.1)]
- public double FixedStopPoints { get; set; }
 
  // ----- Multi Take Profit -----
  [Parameter("Enable Multi TP", Group = "Multi Take Profit", DefaultValue = false)]
@@ -783,9 +788,27 @@ namespace cAlgo.Robots
  Log("VOLUME_DIAG symbol={0} min={1} step={2} max={3}", Symbol.Name, Symbol.VolumeInUnitsMin, Symbol.VolumeInUnitsStep, Symbol.VolumeInUnitsMax);
 
 
+ // Percent-mode with 0% puts the stop exactly on the ORB edge, so the risk is
+ // only however far past the edge the fill lands. That is not a small stop, it is
+ // an undefined one: a 3.2pt result sized a position 31x larger than intended and
+ // one ordinary 30pt move cost 10R. Refuse to start rather than warn - by the time
+ // a warning is noticed the backtest has already been read as if it were valid.
+ if (!EnableFixedPointStop && StopLossOrbPercent <= 0)
+ {
+ Print("ERROR: Stop Type is '% of ORB Range' but the percent is {0}. A 0% stop sits exactly on the "
+ + "ORB edge, leaving risk undefined and position size unbounded. Set a percent above 0 "
+ + "(20-25 is typical), or set Stop Type: Fixed Points? = Yes to use Fixed Stop Points.",
+ StopLossOrbPercent);
+ Stop();
+ return;
+ }
+
  // Startup sanity warnings
  if (MinOrbRangePips > 0 && MaxOrbRangePips > 0 && MinOrbRangePips > MaxOrbRangePips)
  Print("WARNING: MinOrbRangePips ({0}) > MaxOrbRangePips ({1}). No trades will ever be taken.", MinOrbRangePips, MaxOrbRangePips);
+ if (MinRiskPips < 10)
+ Print("WARNING: Min Risk Pips is {0}. On an index this is low enough to let a near-zero stop "
+ + "through, which sizes the position enormously. Around 20 is a safer floor.", MinRiskPips);
  if (EnableKillSwitch && _tradingStartUtcToday >= _killSwitchUtcToday)
  Print("WARNING: TradingStartTime ({0}) is at or after KillSwitchTime ({1}). No entries possible.", _tradingStartTimeCfg, _killSwitchTimeCfg);
 
