@@ -1,0 +1,344 @@
+<title>Five-Year Verdict</title>
+<style>
+  :root{
+    --paper:#F6F7F8; --panel:#FFFFFF; --ink:#101720; --ink-2:#3D4855; --ink-3:#6E7A88;
+    --rule:#D8DDE2; --rule-2:#EAEDF0;
+    --loss:#A32B26; --loss-fill:rgba(163,43,38,.13);
+    --gain:#1B6B57; --gain-fill:rgba(27,107,87,.10);
+    --band:rgba(110,122,136,.10); --hatch:rgba(110,122,136,.34);
+    --shadow:0 1px 2px rgba(16,23,32,.05),0 8px 24px -12px rgba(16,23,32,.14);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --paper:#0C1116; --panel:#131A21; --ink:#E8ECEF; --ink-2:#AFBAC4; --ink-3:#7F8C98;
+      --rule:#26313B; --rule-2:#1B242C;
+      --loss:#D9635A; --loss-fill:rgba(217,99,90,.17);
+      --gain:#4FA98E; --gain-fill:rgba(79,169,142,.13);
+      --band:rgba(127,140,152,.13); --hatch:rgba(127,140,152,.40);
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0C1116; --panel:#131A21; --ink:#E8ECEF; --ink-2:#AFBAC4; --ink-3:#7F8C98;
+    --rule:#26313B; --rule-2:#1B242C;
+    --loss:#D9635A; --loss-fill:rgba(217,99,90,.17);
+    --gain:#4FA98E; --gain-fill:rgba(79,169,142,.13);
+    --band:rgba(127,140,152,.13); --hatch:rgba(127,140,152,.40);
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font:400 16px/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;font-variant-numeric:tabular-nums}
+  .wrap{max-width:1000px;margin:0 auto;padding:56px 28px 96px}
+
+  header{border-bottom:2px solid var(--ink);padding-bottom:22px}
+  .eyebrow{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);
+           font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  h1{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-weight:400;
+     font-size:clamp(30px,4.4vw,46px);line-height:1.1;letter-spacing:-.012em;
+     margin:14px 0 10px;text-wrap:balance}
+  .dek{color:var(--ink-2);max-width:62ch;margin:0;font-size:17px}
+
+  h2{font-family:Georgia,"Iowan Old Style",serif;font-weight:400;font-size:24px;
+     letter-spacing:-.008em;margin:0 0 6px;text-wrap:balance}
+  section{margin-top:56px}
+  .sec-rule{border-top:1px solid var(--rule);padding-top:26px}
+  .lede{color:var(--ink-2);max-width:66ch;margin:0 0 22px}
+
+  /* ---- verdict strip ---- */
+  .verdict{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);
+           border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin-top:30px}
+  .v{background:var(--panel);padding:22px 24px}
+  .v .lab{font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+          font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .v .num{font-size:clamp(30px,5vw,44px);line-height:1.05;margin:10px 0 4px;letter-spacing:-.02em}
+  .v .sub{font-size:13.5px;color:var(--ink-3)}
+  .neg .num{color:var(--loss)} .pos .num{color:var(--gain)}
+  @media(max-width:620px){.verdict{grid-template-columns:1fr}}
+
+  /* ---- chart ---- */
+  figure{margin:0}
+  .chartcard{background:var(--panel);border:1px solid var(--rule);border-radius:3px;
+             padding:20px 18px 12px;box-shadow:var(--shadow);margin-top:24px}
+  .chartwrap{overflow-x:auto}
+  svg{display:block;width:100%;height:auto;min-width:560px}
+  .ax{font-size:11px;fill:var(--ink-3);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .gl{stroke:var(--rule-2);stroke-width:1}
+  .zero{stroke:var(--ink-3);stroke-width:1;stroke-dasharray:3 3}
+  .eqline{fill:none;stroke:var(--ink);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+  .bandlab{font-size:11.5px;fill:var(--ink-3);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+           letter-spacing:.08em;text-transform:uppercase}
+  figcaption{font-size:13.5px;color:var(--ink-3);margin-top:14px;max-width:70ch}
+  .hit{fill:transparent;cursor:crosshair}
+  #cross{stroke:var(--ink-3);stroke-width:1;opacity:0}
+  #dot{fill:var(--panel);stroke:var(--ink);stroke-width:2;opacity:0}
+  .tip{position:absolute;pointer-events:none;opacity:0;transition:opacity .1s;
+       background:var(--panel);border:1px solid var(--rule);border-radius:3px;
+       box-shadow:var(--shadow);padding:9px 11px;font-size:12.5px;white-space:nowrap;z-index:5}
+  .tip .d{color:var(--ink-3);font-size:11.5px}
+  .tip .e{font-size:16px;margin-top:3px}
+  .relwrap{position:relative}
+
+  /* ---- ledger table ---- */
+  .tblwrap{overflow-x:auto;margin-top:8px}
+  table{border-collapse:collapse;width:100%;min-width:540px;font-size:14.5px}
+  th,td{text-align:right;padding:11px 12px;border-bottom:1px solid var(--rule-2)}
+  th:first-child,td:first-child{text-align:left}
+  thead th{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);
+           font-weight:400;border-bottom:1px solid var(--rule);
+           font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  tbody tr.fitted td{color:var(--ink-3)}
+  tbody tr.fitted td:first-child::after{content:" fitted";font-size:10.5px;letter-spacing:.1em;
+           text-transform:uppercase;color:var(--ink-3);margin-left:8px;
+           font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  tfoot td{border-top:2px solid var(--ink);border-bottom:none;padding-top:13px}
+  .n{color:var(--loss)} .p{color:var(--gain)}
+
+  /* ---- findings: ledger rows, not cards ---- */
+  .find{border-top:1px solid var(--rule);padding:22px 0 4px;display:grid;
+        grid-template-columns:minmax(0,1fr) 190px;gap:28px;align-items:start}
+  .find:last-of-type{border-bottom:1px solid var(--rule);padding-bottom:24px}
+  .find h3{font-size:17px;font-weight:600;margin:0 0 7px;letter-spacing:-.005em}
+  .find p{margin:0;color:var(--ink-2);font-size:15px;max-width:60ch}
+  .stat{text-align:right}
+  .stat .big{font-size:27px;letter-spacing:-.018em;line-height:1.1}
+  .stat .cap{font-size:11.5px;color:var(--ink-3);letter-spacing:.08em;text-transform:uppercase;
+             margin-top:5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  @media(max-width:620px){.find{grid-template-columns:1fr;gap:14px}.stat{text-align:left}}
+
+  /* ---- steps: a real sequence, so numbered ---- */
+  ol.steps{list-style:none;counter-reset:s;padding:0;margin:22px 0 0}
+  ol.steps li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:16px;
+              padding:16px 0;border-bottom:1px solid var(--rule-2)}
+  ol.steps li::before{content:counter(s);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+              font-size:13px;color:var(--ink-3);padding-top:2px;font-variant-numeric:tabular-nums}
+  ol.steps h3{margin:0 0 5px;font-size:16px;font-weight:600}
+  ol.steps p{margin:0;color:var(--ink-2);font-size:14.5px;max-width:62ch}
+
+  .note{margin-top:44px;padding:20px 22px;border-left:3px solid var(--loss);
+        background:var(--loss-fill);border-radius:0 3px 3px 0}
+  .note p{margin:0;font-size:14.5px;color:var(--ink-2);max-width:66ch}
+  .note strong{color:var(--ink)}
+  footer{margin-top:64px;border-top:1px solid var(--rule);padding-top:18px;
+         font-size:12.5px;color:var(--ink-3)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">US30 ORB Volume Breakout &middot; cTrader &middot; 141 trades &middot; Jan 2022 &ndash; Aug 2026</div>
+  <h1>The good years were the ones it was fitted to</h1>
+  <p class="dek">Five calendar years of backtests on one unchanged configuration. Three of them were never used to
+  choose a parameter &mdash; and all three lost money.</p>
+</header>
+
+<div class="verdict">
+  <div class="v neg">
+    <div class="lab">Out&#8209;of&#8209;sample &middot; 2022&ndash;2024</div>
+    <div class="num mono">&minus;&pound;2,481</div>
+    <div class="sub mono">84 trades &middot; PF 0.41 &middot; &minus;&pound;29.53 per trade</div>
+  </div>
+  <div class="v pos">
+    <div class="lab">In&#8209;sample &middot; 2025&ndash;Aug 2026</div>
+    <div class="num mono">+&pound;3,169</div>
+    <div class="sub mono">57 trades &middot; PF 3.99 &middot; +&pound;55.60 per trade</div>
+  </div>
+</div>
+
+<section>
+  <h2>Equity, trade by trade</h2>
+  <p class="lede">The curve only turns once &mdash; at the exact point the data starts being the data the volume
+  multiplier, breakeven trigger and stop size were chosen on.</p>
+  <figure>
+    <div class="chartcard relwrap">
+      <div class="chartwrap"><svg id="chart" viewBox="0 0 920 400" role="img"
+        aria-label="Cumulative profit over 141 trades. The account falls to minus 2,481 pounds across 2022 to 2024, then rises during the fitted 2025 to 2026 window to finish at plus 688 pounds."></svg></div>
+      <div class="tip mono" id="tip"></div>
+    </div>
+    <figcaption>Cumulative net P&amp;L, &pound;100 risk per trade. The horizontal axis is trade sequence, not time &mdash;
+    year ticks sit unevenly because 2022 produced 11 trades and 2023 produced 36. Hatched band marks the window the
+    parameters were optimised on. Peak&#8209;to&#8209;trough drawdown &minus;&pound;2,490 &mdash; about 25R.</figcaption>
+  </figure>
+</section>
+
+<section class="sec-rule">
+  <h2>Year by year</h2>
+  <div class="tblwrap">
+  <table>
+    <thead><tr><th>Year</th><th>Trades</th><th>Win&nbsp;%</th><th>Net P&amp;L</th><th>Per trade</th><th>PF</th></tr></thead>
+    <tbody>
+      <tr><td>2022</td><td class="mono">11</td><td class="mono">72.7</td><td class="mono n">&minus;&pound;90</td><td class="mono n">&minus;&pound;8.21</td><td class="mono">0.72</td></tr>
+      <tr><td>2023</td><td class="mono">36</td><td class="mono">44.4</td><td class="mono n">&minus;&pound;1,532</td><td class="mono n">&minus;&pound;42.55</td><td class="mono">0.19</td></tr>
+      <tr><td>2024</td><td class="mono">37</td><td class="mono">45.9</td><td class="mono n">&minus;&pound;859</td><td class="mono n">&minus;&pound;23.21</td><td class="mono">0.57</td></tr>
+      <tr class="fitted"><td>2025</td><td class="mono">37</td><td class="mono">78.4</td><td class="mono">+&pound;2,179</td><td class="mono">+&pound;58.90</td><td class="mono">4.95</td></tr>
+      <tr class="fitted"><td>2026</td><td class="mono">20</td><td class="mono">65.0</td><td class="mono">+&pound;990</td><td class="mono">+&pound;49.48</td><td class="mono">2.95</td></tr>
+    </tbody>
+    <tfoot><tr><td>Five years</td><td class="mono">141</td><td class="mono">58.9</td><td class="mono">+&pound;688</td><td class="mono">+&pound;4.88</td><td class="mono">1.10</td></tr></tfoot>
+  </table>
+  </div>
+</section>
+
+<section class="sec-rule">
+  <h2>What the ledger shows</h2>
+  <p class="lede">Three properties of the trade book explain how a system with a 59% win rate ends up with no edge.</p>
+
+  <div class="find">
+    <div>
+      <h3>Five trades carry everything</h3>
+      <p>The five largest winners total &pound;1,707 against a five&#8209;year net of &pound;688. Remove them and the
+      account is down &pound;1,019. All five fall inside the fitted window.</p>
+    </div>
+    <div class="stat"><div class="big mono">+&pound;1,707</div><div class="cap">top 5 of 141</div></div>
+  </div>
+
+  <div class="find">
+    <div>
+      <h3>The breakeven stop cuts the right tail</h3>
+      <p>44 trades closed between &pound;0 and &pound;20 &mdash; breakeven exits worth &pound;113 in total. Every one had
+      already moved 0.6R in the right direction. A system that needs big winners is scratching a third of its
+      candidates for nothing while losses stay full size.</p>
+    </div>
+    <div class="stat"><div class="big mono">31%</div><div class="cap">of trades scratched</div></div>
+  </div>
+
+  <div class="find">
+    <div>
+      <h3>The split is not chance</h3>
+      <p>A permutation test over all 141 trades returns p&nbsp;&lt;&nbsp;0.00001. Drawing 84 trades from the in&#8209;sample
+      edge reproduced a result as poor as the real out&#8209;of&#8209;sample one in zero of 100,000 simulations.
+      Bootstrapping the out&#8209;of&#8209;sample edge instead, 2.9% of 30&#8209;trade years finish positive.</p>
+    </div>
+    <div class="stat"><div class="big mono">2.9%</div><div class="cap">chance of a winning year</div></div>
+  </div>
+</section>
+
+<section class="sec-rule">
+  <h2>What to change, in order</h2>
+  <p class="lede">The structure may still be sound &mdash; earlier M5 research in this repository found a real edge in
+  this family. What follows targets the implementation, cheapest and highest&#8209;leverage first.</p>
+  <ol class="steps">
+    <li><div><h3>Raise or remove the breakeven trigger</h3><p>0.6R is far too early for a system with no take&#8209;profit
+      that lives entirely off its runners. Test breakeven off, at 1.5R, and at 2R. The 44 scratched trades are where
+      the missing money is.</p></div></li>
+    <li><div><h3>Drop the volume filter to 1.2&ndash;1.3&times;</h3><p>Not for edge &mdash; for sample size. At 1.4&times; the
+      filter rejected a breakout on 315 days against 94 that traded. Eleven to thirty&#8209;seven trades a year cannot
+      support any conclusion, let alone an optimisation.</p></div></li>
+    <li><div><h3>Enable shorts</h3><p>Doubles the sample immediately and removes a directional bet that is currently
+      being made by omission rather than by choice.</p></div></li>
+    <li><div><h3>Fix the session clock</h3><p>Fixed UTC times put entry 61 minutes after the opening bell on 65% of
+      trading days. This does not by itself explain the losses &mdash; both clock states were profitable &mdash; but until
+      it is fixed the bot has two definitions and neither can be measured.</p></div></li>
+    <li><div><h3>Then optimise, walk&#8209;forward</h3><p>Choose parameters on 2022&ndash;2023, test once on 2024, and keep
+      2025&ndash;2026 out of the decision entirely. Roughly 96 parameters against 141 trades is why the first attempt
+      produced a curve rather than an edge.</p></div></li>
+  </ol>
+</section>
+
+<div class="note">
+  <p><strong>On deploying this live.</strong> Nothing here says the idea cannot work. It says this configuration has not
+  been shown to work: every year that was not used to build it lost money, and the profitable stretch is a description
+  of the search that produced it. The honest expectation from the out&#8209;of&#8209;sample record is
+  &minus;&pound;29.53 per trade.</p>
+</div>
+
+<footer class="mono">Backtests: cTrader, US30.cash M1, one unchanged configuration &mdash; volume 1.4&times;, fixed 50pt stop,
+breakeven 0.6R, long only, fixed&#8209;UTC session. Parsed from 1.13 GB of raw logs.</footer>
+</div>
+
+<script>
+const DATA = [{"i":0,"d":"2022-01-04","e":3.82},{"i":1,"d":"2022-01-12","e":-101.96},{"i":2,"d":"2022-01-13","e":-98.14},{"i":3,"d":"2022-01-19","e":-206.32},{"i":4,"d":"2022-02-11","e":-312.4},{"i":5,"d":"2022-03-24","e":-208.98},{"i":6,"d":"2022-06-20","e":-105.16},{"i":7,"d":"2022-09-07","e":-100.74},{"i":8,"d":"2022-11-21","e":-97.52},{"i":9,"d":"2022-11-22","e":-92.9},{"i":10,"d":"2022-12-29","e":-90.28},{"i":11,"d":"2023-01-04","e":-86.6},{"i":12,"d":"2023-01-09","e":-191.92},{"i":13,"d":"2023-01-16","e":-297.24},{"i":14,"d":"2023-01-23","e":-292.96},{"i":15,"d":"2023-01-26","e":-292.28},{"i":16,"d":"2023-02-23","e":-397.6},{"i":17,"d":"2023-03-06","e":-502.52},{"i":18,"d":"2023-03-09","e":-498.84},{"i":19,"d":"2023-04-11","e":-494.56},{"i":20,"d":"2023-04-20","e":-501.68},{"i":21,"d":"2023-04-24","e":-606.4},{"i":22,"d":"2023-04-28","e":-742.72},{"i":23,"d":"2023-05-17","e":-847.64},{"i":24,"d":"2023-05-26","e":-917.76},{"i":25,"d":"2023-05-29","e":-1026.28},{"i":26,"d":"2023-06-01","e":-1131.8},{"i":27,"d":"2023-06-02","e":-1130.32},{"i":28,"d":"2023-06-08","e":-1243.84},{"i":29,"d":"2023-06-09","e":-1349.76},{"i":30,"d":"2023-07-11","e":-1347.08},{"i":31,"d":"2023-07-18","e":-1346.4},{"i":32,"d":"2023-08-04","e":-1342.72},{"i":33,"d":"2023-08-29","e":-1338.64},{"i":34,"d":"2023-09-08","e":-1445.56},{"i":35,"d":"2023-09-14","e":-1443.48},{"i":36,"d":"2023-10-16","e":-1339.4},{"i":37,"d":"2023-11-02","e":-1335.32},{"i":38,"d":"2023-11-08","e":-1332.04},{"i":39,"d":"2023-11-10","e":-1438.36},{"i":40,"d":"2023-11-22","e":-1443.28},{"i":41,"d":"2023-11-23","e":-1505.6},{"i":42,"d":"2023-11-27","e":-1610.92},{"i":43,"d":"2023-12-06","e":-1609.24},{"i":44,"d":"2023-12-07","e":-1717.56},{"i":45,"d":"2023-12-21","e":-1825.88},{"i":46,"d":"2023-12-22","e":-1622.0},{"i":47,"d":"2024-01-10","e":-1518.9},{"i":48,"d":"2024-01-22","e":-1415.6},{"i":49,"d":"2024-01-29","e":-1412.5},{"i":50,"d":"2024-02-06","e":-1209.2},{"i":51,"d":"2024-02-07","e":-1265.9},{"i":52,"d":"2024-02-08","e":-1373.8},{"i":53,"d":"2024-02-22","e":-1481.5},{"i":54,"d":"2024-02-23","e":-1591.4},{"i":55,"d":"2024-02-26","e":-1589.9},{"i":56,"d":"2024-02-29","e":-1695.8},{"i":57,"d":"2024-03-06","e":-1802.7},{"i":58,"d":"2024-03-07","e":-1909.6},{"i":59,"d":"2024-03-12","e":-1905.9},{"i":60,"d":"2024-03-19","e":-1802.2},{"i":61,"d":"2024-03-26","e":-1907.7},{"i":62,"d":"2024-05-08","e":-1804.0},{"i":63,"d":"2024-05-15","e":-1800.5},{"i":64,"d":"2024-05-16","e":-1797.2},{"i":65,"d":"2024-05-21","e":-1904.3},{"i":66,"d":"2024-05-27","e":-1782.4},{"i":67,"d":"2024-06-17","e":-1779.1},{"i":68,"d":"2024-07-10","e":-1675.4},{"i":69,"d":"2024-07-12","e":-1781.1},{"i":70,"d":"2024-08-26","e":-1887.8},{"i":71,"d":"2024-09-02","e":-1891.1},{"i":72,"d":"2024-10-22","e":-1791.0},{"i":73,"d":"2024-11-08","e":-1896.46},{"i":74,"d":"2024-11-12","e":-2003.12},{"i":75,"d":"2024-11-22","e":-2108.78},{"i":76,"d":"2024-11-28","e":-2054.28},{"i":77,"d":"2024-12-02","e":-2160.94},{"i":78,"d":"2024-12-03","e":-2266.6},{"i":79,"d":"2024-12-04","e":-2165.86},{"i":80,"d":"2024-12-06","e":-2271.12},{"i":81,"d":"2024-12-09","e":-2376.38},{"i":82,"d":"2024-12-12","e":-2483.64},{"i":83,"d":"2024-12-19","e":-2480.9},{"i":84,"d":"2025-01-03","e":-2482.86},{"i":85,"d":"2025-01-07","e":-2482.82},{"i":86,"d":"2025-01-13","e":-2381.78},{"i":87,"d":"2025-01-20","e":-2379.78},{"i":88,"d":"2025-01-23","e":-2377.54},{"i":89,"d":"2025-02-05","e":-2483.9},{"i":90,"d":"2025-02-10","e":-2481.26},{"i":91,"d":"2025-02-17","e":-2486.22},{"i":92,"d":"2025-02-25","e":-2387.58},{"i":93,"d":"2025-04-22","e":-2196.34},{"i":94,"d":"2025-05-02","e":-2093.5},{"i":95,"d":"2025-05-06","e":-2201.26},{"i":96,"d":"2025-05-08","e":-2099.42},{"i":97,"d":"2025-06-10","e":-1999.58},{"i":98,"d":"2025-06-12","e":-2110.34},{"i":99,"d":"2025-06-26","e":-2008.3},{"i":100,"d":"2025-07-01","e":-2064.86},{"i":101,"d":"2025-07-23","e":-2063.42},{"i":102,"d":"2025-08-04","e":-2062.58},{"i":103,"d":"2025-09-04","e":-1862.54},{"i":104,"d":"2025-09-22","e":-1759.5},{"i":105,"d":"2025-10-03","e":-1758.46},{"i":106,"d":"2025-10-13","e":-1756.82},{"i":107,"d":"2025-10-20","e":-1554.98},{"i":108,"d":"2025-11-10","e":-1458.34},{"i":109,"d":"2025-11-11","e":-1564.7},{"i":110,"d":"2025-11-12","e":-1163.06},{"i":111,"d":"2025-11-20","e":-1064.42},{"i":112,"d":"2025-11-25","e":-761.78},{"i":113,"d":"2025-11-26","e":-659.14},{"i":114,"d":"2025-11-28","e":-656.5},{"i":115,"d":"2025-12-03","e":-712.86},{"i":116,"d":"2025-12-05","e":-710.02},{"i":117,"d":"2025-12-11","e":-308.38},{"i":118,"d":"2025-12-18","e":-305.74},{"i":119,"d":"2025-12-19","e":-304.1},{"i":120,"d":"2025-12-24","e":-301.46},{"i":121,"d":"2026-01-05","e":0.08},{"i":122,"d":"2026-01-07","e":1.62},{"i":123,"d":"2026-01-15","e":3.16},{"i":124,"d":"2026-01-22","e":199.7},{"i":125,"d":"2026-01-26","e":302.24},{"i":126,"d":"2026-01-30","e":397.78},{"i":127,"d":"2026-02-02","e":495.32},{"i":128,"d":"2026-02-06","e":794.86},{"i":129,"d":"2026-02-10","e":896.4},{"i":130,"d":"2026-02-11","e":783.94},{"i":131,"d":"2026-02-12","e":667.48},{"i":132,"d":"2026-02-17","e":667.02},{"i":133,"d":"2026-02-23","e":763.56},{"i":134,"d":"2026-02-26","e":765.1},{"i":135,"d":"2026-04-09","e":707.64},{"i":136,"d":"2026-04-13","e":908.18},{"i":137,"d":"2026-05-20","e":908.72},{"i":138,"d":"2026-05-27","e":800.26},{"i":139,"d":"2026-05-29","e":799.8},{"i":140,"d":"2026-07-24","e":688.14}];
+(function(){
+  const svg=document.getElementById('chart'), tip=document.getElementById('tip');
+  const W=920,H=400,ML=64,MR=22,MT=22,MB=42;
+  const pw=W-ML-MR, ph=H-MT-MB;
+  const es=DATA.map(d=>d.e);
+  const lo=Math.min(...es), hi=Math.max(...es);
+  const yMin=Math.floor((lo-160)/500)*500, yMax=Math.ceil((hi+160)/500)*500;
+  const X=i=>ML+(i/(DATA.length-1))*pw;
+  const Y=v=>MT+(yMax-v)/(yMax-yMin)*ph;
+  const NS='http://www.w3.org/2000/svg';
+  const el=(n,a)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);return e;};
+
+  // fitted-window band: first index dated 2025 or later
+  let fit=DATA.findIndex(d=>d.d>='2025-01-01');
+
+  const defs=el('defs');
+  const pat=el('pattern',{id:'hatch',width:7,height:7,patternTransform:'rotate(45)',patternUnits:'userSpaceOnUse'});
+  pat.appendChild(el('line',{x1:0,y1:0,x2:0,y2:7,stroke:'var(--hatch)','stroke-width':1}));
+  defs.appendChild(pat);
+  ['below','above'].forEach((id,k)=>{
+    const c=el('clipPath',{id:id});
+    c.appendChild(el('rect',{x:ML,y:k?MT:Y(0),width:pw,height:k?Math.max(0,Y(0)-MT):Math.max(0,MT+ph-Y(0))}));
+    defs.appendChild(c);
+  });
+  svg.appendChild(defs);
+
+  // fitted band
+  svg.appendChild(el('rect',{x:X(fit),y:MT,width:pw-(X(fit)-ML),height:ph,fill:'var(--band)'}));
+  svg.appendChild(el('rect',{x:X(fit),y:MT,width:pw-(X(fit)-ML),height:ph,fill:'url(#hatch)'}));
+  const bl=el('text',{x:X(fit)+10,y:MT+17,class:'bandlab'});
+  bl.textContent='Fitted window — not evidence';
+  svg.appendChild(bl);
+
+  // gridlines + y labels
+  for(let v=yMin;v<=yMax;v+=500){
+    svg.appendChild(el('line',{x1:ML,y1:Y(v),x2:ML+pw,y2:Y(v),class:'gl'}));
+    const t=el('text',{x:ML-11,y:Y(v)+4,class:'ax','text-anchor':'end'});
+    t.textContent=(v<0?'−':'')+'£'+Math.abs(v).toLocaleString();
+    svg.appendChild(t);
+  }
+
+  // areas
+  const line=DATA.map((d,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Y(d.e).toFixed(1)).join(' ');
+  const area=line+' L'+X(DATA.length-1).toFixed(1)+' '+Y(0).toFixed(1)+' L'+X(0).toFixed(1)+' '+Y(0).toFixed(1)+' Z';
+  svg.appendChild(el('path',{d:area,fill:'var(--loss-fill)','clip-path':'url(#below)'}));
+  svg.appendChild(el('path',{d:area,fill:'var(--gain-fill)','clip-path':'url(#above)'}));
+  svg.appendChild(el('line',{x1:ML,y1:Y(0),x2:ML+pw,y2:Y(0),class:'zero'}));
+  svg.appendChild(el('path',{d:line,class:'eqline'}));
+
+  // year ticks
+  let seen={};
+  DATA.forEach((d,i)=>{const y=d.d.slice(0,4); if(!seen[y]){seen[y]=1;
+    svg.appendChild(el('line',{x1:X(i),y1:MT+ph,x2:X(i),y2:MT+ph+5,stroke:'var(--ink-3)','stroke-width':1}));
+    const t=el('text',{x:X(i),y:MT+ph+21,class:'ax','text-anchor':'middle'}); t.textContent=y; svg.appendChild(t);}});
+
+  // endpoint emphasis
+  svg.appendChild(el('circle',{cx:X(DATA.length-1),cy:Y(DATA[DATA.length-1].e),r:4.5,
+    fill:'var(--panel)',stroke:'var(--ink)','stroke-width':2}));
+
+  // hover layer
+  const cross=el('line',{id:'cross',y1:MT,y2:MT+ph}); svg.appendChild(cross);
+  const dot=el('circle',{id:'dot',r:4.5}); svg.appendChild(dot);
+  const hit=el('rect',{x:ML,y:MT,width:pw,height:ph,class:'hit'}); svg.appendChild(hit);
+
+  function show(ev){
+    const r=svg.getBoundingClientRect();
+    const px=(ev.clientX-r.left)/r.width*W;
+    let i=Math.round((px-ML)/pw*(DATA.length-1));
+    i=Math.max(0,Math.min(DATA.length-1,i));
+    const d=DATA[i];
+    cross.setAttribute('x1',X(i)); cross.setAttribute('x2',X(i)); cross.style.opacity=.65;
+    dot.setAttribute('cx',X(i)); dot.setAttribute('cy',Y(d.e)); dot.style.opacity=1;
+    const sign=d.e<0?'−':'+';
+    tip.innerHTML='<div class="d">'+d.d+' · trade '+(i+1)+' of '+DATA.length+'</div>'+
+      '<div class="e" style="color:'+(d.e<0?'var(--loss)':'var(--gain)')+'">'+sign+'£'+
+      Math.abs(d.e).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})+'</div>';
+    tip.style.opacity=1;
+    const cx=r.left+X(i)/W*r.width - r.left;
+    const card=tip.parentElement.getBoundingClientRect();
+    let left=(X(i)/W)*r.width + (r.left-card.left) + 14;
+    if(left+tip.offsetWidth>card.width-8) left-=tip.offsetWidth+28;
+    tip.style.left=left+'px';
+    tip.style.top=((Y(d.e)/H)*r.height + (r.top-card.top) - 14)+'px';
+  }
+  function hide(){cross.style.opacity=0;dot.style.opacity=0;tip.style.opacity=0;}
+  hit.addEventListener('mousemove',show);
+  hit.addEventListener('mouseleave',hide);
+  hit.addEventListener('touchmove',e=>{show(e.touches[0]);e.preventDefault();},{passive:false});
+})();
+</script>
