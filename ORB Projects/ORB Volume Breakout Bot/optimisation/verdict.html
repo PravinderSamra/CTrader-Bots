@@ -1,0 +1,374 @@
+<title>Five-Year Verdict</title>
+<style>
+  :root{
+    --paper:#F6F7F8; --panel:#FFFFFF; --ink:#101720; --ink-2:#3D4855; --ink-3:#6E7A88;
+    --rule:#D8DDE2; --rule-2:#EAEDF0;
+    --loss:#A32B26; --loss-fill:rgba(163,43,38,.13);
+    --gain:#1B6B57; --gain-fill:rgba(27,107,87,.10);
+    --band:rgba(110,122,136,.10); --hatch:rgba(110,122,136,.34);
+    --shadow:0 1px 2px rgba(16,23,32,.05),0 8px 24px -12px rgba(16,23,32,.14);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --paper:#0C1116; --panel:#131A21; --ink:#E8ECEF; --ink-2:#AFBAC4; --ink-3:#7F8C98;
+      --rule:#26313B; --rule-2:#1B242C;
+      --loss:#D9635A; --loss-fill:rgba(217,99,90,.17);
+      --gain:#4FA98E; --gain-fill:rgba(79,169,142,.13);
+      --band:rgba(127,140,152,.13); --hatch:rgba(127,140,152,.40);
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0C1116; --panel:#131A21; --ink:#E8ECEF; --ink-2:#AFBAC4; --ink-3:#7F8C98;
+    --rule:#26313B; --rule-2:#1B242C;
+    --loss:#D9635A; --loss-fill:rgba(217,99,90,.17);
+    --gain:#4FA98E; --gain-fill:rgba(79,169,142,.13);
+    --band:rgba(127,140,152,.13); --hatch:rgba(127,140,152,.40);
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font:400 16px/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;font-variant-numeric:tabular-nums}
+  .wrap{max-width:1000px;margin:0 auto;padding:56px 28px 96px}
+
+  header{border-bottom:2px solid var(--ink);padding-bottom:22px}
+  .eyebrow{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);
+           font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  h1{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-weight:400;
+     font-size:clamp(30px,4.4vw,46px);line-height:1.1;letter-spacing:-.012em;
+     margin:14px 0 10px;text-wrap:balance}
+  .dek{color:var(--ink-2);max-width:62ch;margin:0;font-size:17px}
+
+  h2{font-family:Georgia,"Iowan Old Style",serif;font-weight:400;font-size:24px;
+     letter-spacing:-.008em;margin:0 0 6px;text-wrap:balance}
+  section{margin-top:56px}
+  .sec-rule{border-top:1px solid var(--rule);padding-top:26px}
+  .lede{color:var(--ink-2);max-width:66ch;margin:0 0 22px}
+
+  /* ---- verdict strip ---- */
+  .verdict{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);
+           border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin-top:30px}
+  .v{background:var(--panel);padding:22px 24px}
+  .v .lab{font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+          font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .v .num{font-size:clamp(30px,5vw,44px);line-height:1.05;margin:10px 0 4px;letter-spacing:-.02em}
+  .v .sub{font-size:13.5px;color:var(--ink-3)}
+  .neg .num{color:var(--loss)} .pos .num{color:var(--gain)}
+  @media(max-width:620px){.verdict{grid-template-columns:1fr}}
+
+  /* ---- chart ---- */
+  figure{margin:0}
+  .chartcard{background:var(--panel);border:1px solid var(--rule);border-radius:3px;
+             padding:20px 18px 12px;box-shadow:var(--shadow);margin-top:24px}
+  .chartwrap{overflow-x:auto}
+  svg{display:block;width:100%;height:auto;min-width:560px}
+  .ax{font-size:11px;fill:var(--ink-3);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .gl{stroke:var(--rule-2);stroke-width:1}
+  .zero{stroke:var(--ink-3);stroke-width:1;stroke-dasharray:3 3}
+  .eqline{fill:none;stroke:var(--ink);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+  .bandlab{font-size:11.5px;fill:var(--ink-3);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+           letter-spacing:.08em;text-transform:uppercase}
+  figcaption{font-size:13.5px;color:var(--ink-3);margin-top:14px;max-width:70ch}
+  .hit{fill:transparent;cursor:crosshair}
+  #cross{stroke:var(--ink-3);stroke-width:1;opacity:0}
+  #dot{fill:var(--panel);stroke:var(--ink);stroke-width:2;opacity:0}
+  .tip{position:absolute;pointer-events:none;opacity:0;transition:opacity .1s;
+       background:var(--panel);border:1px solid var(--rule);border-radius:3px;
+       box-shadow:var(--shadow);padding:9px 11px;font-size:12.5px;white-space:nowrap;z-index:5}
+  .tip .d{color:var(--ink-3);font-size:11.5px}
+  .tip .e{font-size:16px;margin-top:3px}
+  .relwrap{position:relative}
+
+  /* ---- ledger table ---- */
+  .tblwrap{overflow-x:auto;margin-top:8px}
+  table{border-collapse:collapse;width:100%;min-width:540px;font-size:14.5px}
+  th,td{text-align:right;padding:11px 12px;border-bottom:1px solid var(--rule-2)}
+  th:first-child,td:first-child{text-align:left}
+  thead th{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);
+           font-weight:400;border-bottom:1px solid var(--rule);
+           font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  tbody tr.fitted td{color:var(--ink-3)}
+  tbody tr.fitted td:first-child::after{content:" fitted";font-size:10.5px;letter-spacing:.1em;
+           text-transform:uppercase;color:var(--ink-3);margin-left:8px;
+           font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  tfoot td{border-top:2px solid var(--ink);border-bottom:none;padding-top:13px}
+  .n{color:var(--loss)} .p{color:var(--gain)}
+
+  /* ---- findings: ledger rows, not cards ---- */
+  .find{border-top:1px solid var(--rule);padding:22px 0 4px;display:grid;
+        grid-template-columns:minmax(0,1fr) 190px;gap:28px;align-items:start}
+  .find:last-of-type{border-bottom:1px solid var(--rule);padding-bottom:24px}
+  .find h3{font-size:17px;font-weight:600;margin:0 0 7px;letter-spacing:-.005em}
+  .find p{margin:0;color:var(--ink-2);font-size:15px;max-width:60ch}
+  .stat{text-align:right}
+  .stat .big{font-size:27px;letter-spacing:-.018em;line-height:1.1}
+  .stat .cap{font-size:11.5px;color:var(--ink-3);letter-spacing:.08em;text-transform:uppercase;
+             margin-top:5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  @media(max-width:620px){.find{grid-template-columns:1fr;gap:14px}.stat{text-align:left}}
+
+  /* ---- steps: a real sequence, so numbered ---- */
+  ol.steps{list-style:none;counter-reset:s;padding:0;margin:22px 0 0}
+  ol.steps li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:16px;
+              padding:16px 0;border-bottom:1px solid var(--rule-2)}
+  ol.steps li::before{content:counter(s);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+              font-size:13px;color:var(--ink-3);padding-top:2px;font-variant-numeric:tabular-nums}
+  ol.steps h3{margin:0 0 5px;font-size:16px;font-weight:600}
+  ol.steps p{margin:0;color:var(--ink-2);font-size:14.5px;max-width:62ch}
+
+  .note{margin-top:44px;padding:20px 22px;border-left:3px solid var(--loss);
+        background:var(--loss-fill);border-radius:0 3px 3px 0}
+  .note p{margin:0;font-size:14.5px;color:var(--ink-2);max-width:66ch}
+  .note strong{color:var(--ink)}
+  footer{margin-top:64px;border-top:1px solid var(--rule);padding-top:18px;
+         font-size:12.5px;color:var(--ink-3)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+<div class="wrap">
+<header>
+  <div class="eyebrow">US30 ORB Volume Breakout &middot; cTrader &middot; 432 trades &middot; Jun 2022 &ndash; Aug 2026</div>
+  <h1>The repairs worked. The edge is still indistinguishable from zero.</h1>
+  <p class="dek">Volume filter loosened to 1.2&times;, breakeven moved to 2R, risk reduction off, shorts enabled.
+  Every change did what it was meant to do &mdash; and the system still cannot be called profitable.</p>
+</header>
+
+<div class="verdict">
+  <div class="v">
+    <div class="lab">Expectancy per trade</div>
+    <div class="num mono">+&pound;1.82</div>
+    <div class="sub mono">95% CI &minus;&pound;16.90 to +&pound;21.87</div>
+  </div>
+  <div class="v">
+    <div class="lab">Probability the true edge is &le; 0</div>
+    <div class="num mono">43.4%</div>
+    <div class="sub mono">432 trades &middot; net +&pound;786 &middot; PF 1.03</div>
+  </div>
+</div>
+
+<section>
+  <h2>Equity, trade by trade</h2>
+  <p class="lede">Three times the sample of the previous configuration, and the curve still spends most of its life
+  underwater before a late recovery. The five-year total is smaller than a single good month.</p>
+  <figure>
+    <div class="chartcard relwrap">
+      <div class="chartwrap"><svg id="chart" viewBox="0 0 920 400" role="img"
+        aria-label="Cumulative profit across 432 trades from June 2022 to August 2026, ending at plus 786 pounds after a drawdown below minus 3,100 pounds."></svg></div>
+      <div class="tip mono" id="tip"></div>
+    </div>
+    <figcaption>Cumulative net P&amp;L, &pound;100 risk per trade. Horizontal axis is trade sequence, not time. The 2022
+    backtest starts 6 June, so that year is partial &mdash; and it is the strongest one. Peak-to-trough drawdown
+    &minus;&pound;6,627; reshuffling the same trades produces worst cases near &minus;&pound;9,800.</figcaption>
+  </figure>
+</section>
+
+<section class="sec-rule">
+  <h2>Year by year</h2>
+  <div class="tblwrap">
+  <table>
+    <thead><tr><th>Year</th><th>Trades</th><th>Win&nbsp;%</th><th>Net P&amp;L</th><th>Median trade</th><th>PF</th></tr></thead>
+    <tbody>
+      <tr><td>2022 <span class="mono" style="font-size:10.5px;letter-spacing:.1em;color:var(--ink-3)">JUN&ndash;DEC</span></td><td class="mono">42</td><td class="mono">38.1</td><td class="mono p">+&pound;3,315</td><td class="mono n">&minus;&pound;104</td><td class="mono">2.24</td></tr>
+      <tr><td>2023</td><td class="mono">113</td><td class="mono">23.9</td><td class="mono n">&minus;&pound;4,130</td><td class="mono n">&minus;&pound;105</td><td class="mono">0.53</td></tr>
+      <tr><td>2024</td><td class="mono">109</td><td class="mono">31.2</td><td class="mono n">&minus;&pound;1,288</td><td class="mono n">&minus;&pound;105</td><td class="mono">0.83</td></tr>
+      <tr><td>2025</td><td class="mono">113</td><td class="mono">36.3</td><td class="mono p">+&pound;1,413</td><td class="mono n">&minus;&pound;106</td><td class="mono">1.19</td></tr>
+      <tr><td>2026 <span class="mono" style="font-size:10.5px;letter-spacing:.1em;color:var(--ink-3)">TO AUG</span></td><td class="mono">55</td><td class="mono">34.5</td><td class="mono p">+&pound;1,476</td><td class="mono n">&minus;&pound;106</td><td class="mono">1.40</td></tr>
+    </tbody>
+    <tfoot><tr><td>Total</td><td class="mono">432</td><td class="mono">31.7</td><td class="mono">+&pound;786</td><td class="mono n">&minus;&pound;105</td><td class="mono">1.03</td></tr></tfoot>
+  </table>
+  </div>
+  <p class="lede" style="margin-top:18px">The median trade is a full stop-out in every single year. That is not a flaw
+  by itself &mdash; breakout systems are supposed to lose small and often &mdash; but it means the entire result lives in
+  the tail, and the tail is thin.</p>
+</section>
+
+<section class="sec-rule">
+  <h2>The outlier concern, tested</h2>
+  <p class="lede">You were right to worry, and the answer is sharper than &ldquo;it relies on outliers&rdquo;. Strip the
+  single best trade out of 432 and five years of trading turns negative.</p>
+  <div class="tblwrap">
+  <table>
+    <thead><tr><th>Trade book</th><th>Net P&amp;L</th><th>PF</th></tr></thead>
+    <tbody>
+      <tr><td>All 432 trades</td><td class="mono p">+&pound;786</td><td class="mono">1.03</td></tr>
+      <tr><td>Minus the best 1</td><td class="mono n">&minus;&pound;549</td><td class="mono">0.98</td></tr>
+      <tr><td>Minus the best 3</td><td class="mono n">&minus;&pound;2,550</td><td class="mono">0.92</td></tr>
+      <tr><td>Minus the best 5</td><td class="mono n">&minus;&pound;4,295</td><td class="mono">0.86</td></tr>
+      <tr><td>Minus the best 10</td><td class="mono n">&minus;&pound;7,876</td><td class="mono">0.74</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="find" style="margin-top:34px">
+    <div><h3>Every profitable year is three trades</h3>
+      <p>2025 nets &pound;1,413 &mdash; its best three trades are &pound;2,105, so the other 110 lose &pound;692.
+      2026 nets &pound;1,476 with a top three of &pound;2,638. 2022 nets &pound;3,315 with a top three of &pound;3,037.
+      No year is profitable on its body.</p></div>
+    <div class="stat"><div class="big mono">5.8%</div><div class="cap">of trades = half the gross profit</div></div>
+  </div>
+  <div class="find">
+    <div><h3>Month to month it is a coin flip</h3>
+      <p>Of 51 months traded, 47.1% finished positive and the median month lost &pound;20. The three largest months by
+      magnitude are &pound;2,041, &pound;1,759 and &pound;1,231 against a five-year net of &pound;786.</p></div>
+    <div class="stat"><div class="big mono">47.1%</div><div class="cap">of months positive</div></div>
+  </div>
+  <div class="find">
+    <div><h3>The payoff ratio sits on the break-even line</h3>
+      <p>Wins average &pound;227 against losses of &pound;103 &mdash; a ratio of 2.21. At a 31.7% win rate the ratio needed
+      simply to break even is 2.12. The whole edge is a 4% margin over the line, which is well inside the noise of a
+      432-trade sample.</p></div>
+    <div class="stat"><div class="big mono">2.21<span style="color:var(--ink-3)"> / 2.12</span></div><div class="cap">actual / break-even</div></div>
+  </div>
+</section>
+
+<section class="sec-rule">
+  <h2>What the changes did achieve</h2>
+  <p class="lede">This is not a failed experiment. Each intervention moved the metric it targeted &mdash; the problem is
+  that the sum still lands on zero.</p>
+  <div class="tblwrap">
+  <table>
+    <thead><tr><th>Measure</th><th>Before</th><th>After</th></tr></thead>
+    <tbody>
+      <tr><td>Trades in sample</td><td class="mono">141</td><td class="mono p">432</td></tr>
+      <tr><td>Breakeven scratches</td><td class="mono">31%</td><td class="mono p">7.4%</td></tr>
+      <tr><td>Average win</td><td class="mono">&pound;94</td><td class="mono p">&pound;227</td></tr>
+      <tr><td>Out-of-sample expectancy</td><td class="mono n">&minus;&pound;29.53</td><td class="mono">+&pound;1.82</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section class="sec-rule">
+  <h2>Two findings that change the plan</h2>
+
+  <div class="find">
+    <div><h3>Entering at the bell is the losing half &mdash; do not &ldquo;fix&rdquo; the clock to 09:31</h3>
+      <p>With three times the earlier sample the two clock states now separate clearly. The accidental
+      10:31&nbsp;ET entries made &pound;2,486 at PF 1.12 across 303 trades; the 09:31&nbsp;ET entries lost &pound;1,700 at
+      PF 0.83 across 129. This matches the earlier M5 study in this repository, which found waiting until
+      10:00&nbsp;ET to be the single most important rule. Make the clock deterministic &mdash; then set entry
+      deliberately at 10:00&ndash;10:30&nbsp;ET, not at the open.</p></div>
+    <div class="stat"><div class="big mono">1.12<span style="color:var(--ink-3)"> / 0.83</span></div><div class="cap">PF late / on&#8209;time</div></div>
+  </div>
+
+  <div class="find">
+    <div><h3>All the profit is on wide-range days &mdash; because the stop cannot see volatility</h3>
+      <p>Split by the day&rsquo;s ORB range, the three narrower quartiles lose &pound;1,613, &pound;3,231 and &pound;1,844.
+      The widest quartile makes &pound;7,475. A fixed 50pt stop is 45% of a tight day&rsquo;s range but only 13% of a wide
+      one &mdash; on quiet days the 2R target is simply out of reach before the stop is hit.</p></div>
+    <div class="stat"><div class="big mono">+&pound;7,475</div><div class="cap">widest quartile, vs losses in all others</div></div>
+  </div>
+
+  <div class="find">
+    <div><h3>Shorts are not paying their way</h3>
+      <p>186 short trades for &minus;&pound;425 at PF 0.97, negative in both clock states. They tripled the sample, which
+      was worth having, but they are not contributing edge.</p></div>
+    <div class="stat"><div class="big mono">&minus;&pound;425</div><div class="cap">186 short trades</div></div>
+  </div>
+</section>
+
+<section class="sec-rule">
+  <h2>Next test: let the stop scale with the day</h2>
+  <p class="lede">The range finding argues for changing the risk unit, not adding a filter. Filtering out quiet days
+  throws away two thirds of the sample and makes trade frequency depend on the volatility regime. Scaling the stop
+  keeps every trade and fixes the actual defect &mdash; and the bot already supports it.</p>
+  <ol class="steps">
+    <li><div><h3>Turn off the fixed-point stop</h3><p><span class="mono">EnableFixedPointStop = false</span> switches the
+      bot to <span class="mono">StopLossOrbPercent</span>, which anchors the stop to a percentage of that day&rsquo;s ORB
+      range. No code change needed &mdash; it is existing, already-tested behaviour.</p></div></li>
+    <li><div><h3>Run 15%, 20% and 25% across all five years</h3><p>At 15% a 373pt day gets a 56pt stop, close to today&rsquo;s
+      50pt, while a 110pt day gets 17pt instead of 50pt. That is the whole point: quiet days become tradeable rather
+      than being donations. Watch for stops so tight that spread and M1 noise take them out.</p></div></li>
+    <li><div><h3>Judge it on the body, not the total</h3><p>The question is not whether net P&amp;L rises. It is whether
+      the median trade improves and whether the result survives removing the top five. A configuration that only wins
+      on its tail has not been fixed.</p></div></li>
+    <li><div><h3>Then fix the clock &mdash; and move entry later, not earlier</h3><p>Two timezones, London for the range
+      start and New York for the bell, then test entry at 10:00 and 10:30&nbsp;ET against the current accidental 10:31.</p></div></li>
+  </ol>
+</section>
+
+<div class="note">
+  <p><strong>A caution about this round.</strong> The 1.2&times; volume filter and the 2R breakeven were chosen after
+  looking at all five years of the previous run, so no year is fully clean any more. The five-year total is now a
+  weakly in-sample number, not an out-of-sample one. The findings that survive that caveat are the mechanical ones
+  &mdash; the clock split, the range-versus-stop relationship, the outlier concentration &mdash; because those describe
+  the shape of the trade book rather than the level of its profit.</p>
+</div>
+
+<footer class="mono">Backtests: cTrader, US30.cash M1. Config &mdash; volume 1.2&times;, fixed 50pt stop, breakeven 2R,
+step 1R, no early risk reduction, longs and shorts, fixed-UTC session. 432 trades parsed from 2.0 GB of raw logs.</footer>
+</div>
+
+<script>
+const DATA = [{"i":0,"d":"2022-06-07","e":-104.18},{"i":1,"d":"2022-06-13","e":-214.36},{"i":2,"d":"2022-06-14","e":-318.34},{"i":3,"d":"2022-06-20","e":-265.62},{"i":4,"d":"2022-06-21","e":-370.0},{"i":5,"d":"2022-06-28","e":211.52},{"i":6,"d":"2022-06-30","e":107.34},{"i":7,"d":"2022-07-08","e":-8.84},{"i":8,"d":"2022-07-18","e":-113.12},{"i":9,"d":"2022-07-19","e":-217.3},{"i":10,"d":"2022-07-20","e":-321.48},{"i":11,"d":"2022-07-26","e":-425.66},{"i":12,"d":"2022-07-28","e":-134.14},{"i":13,"d":"2022-08-03","e":25.38},{"i":14,"d":"2022-08-12","e":317.8},{"i":15,"d":"2022-08-15","e":501.82},{"i":16,"d":"2022-08-16","e":605.64},{"i":17,"d":"2022-08-23","e":500.86},{"i":18,"d":"2022-08-24","e":395.08},{"i":19,"d":"2022-08-26","e":1729.7},{"i":20,"d":"2022-08-30","e":1624.92},{"i":21,"d":"2022-09-07","e":1628.54},{"i":22,"d":"2022-09-09","e":1520.96},{"i":23,"d":"2022-09-27","e":2023.38},{"i":24,"d":"2022-10-25","e":1918.4},{"i":25,"d":"2022-11-09","e":1813.62},{"i":26,"d":"2022-11-11","e":1709.04},{"i":27,"d":"2022-11-21","e":1603.26},{"i":28,"d":"2022-11-22","e":1491.68},{"i":29,"d":"2022-11-23","e":1386.5},{"i":30,"d":"2022-11-25","e":1378.52},{"i":31,"d":"2022-11-29","e":1273.94},{"i":32,"d":"2022-12-05","e":1165.16},{"i":33,"d":"2022-12-12","e":1623.18},{"i":34,"d":"2022-12-15","e":2427.4},{"i":35,"d":"2022-12-19","e":2322.82},{"i":36,"d":"2022-12-21","e":2326.84},{"i":37,"d":"2022-12-22","e":3224.66},{"i":38,"d":"2022-12-23","e":3119.88},{"i":39,"d":"2022-12-27","e":3120.3},{"i":40,"d":"2022-12-29","e":3432.32},{"i":41,"d":"2022-12-30","e":3314.74},{"i":42,"d":"2023-01-03","e":3513.82},{"i":43,"d":"2023-01-04","e":3406.7},{"i":44,"d":"2023-01-05","e":3483.38},{"i":45,"d":"2023-01-06","e":3375.06},{"i":46,"d":"2023-01-09","e":3266.74},{"i":47,"d":"2023-01-10","e":3161.62},{"i":48,"d":"2023-01-11","e":3055.9},{"i":49,"d":"2023-01-16","e":2949.78},{"i":50,"d":"2023-01-18","e":2842.06},{"i":51,"d":"2023-01-23","e":2736.34},{"i":52,"d":"2023-01-24","e":2626.02},{"i":53,"d":"2023-01-25","e":2517.7},{"i":54,"d":"2023-01-26","e":2410.58},{"i":55,"d":"2023-01-27","e":2414.06},{"i":56,"d":"2023-01-30","e":2295.14},{"i":57,"d":"2023-02-01","e":2189.02},{"i":58,"d":"2023-02-08","e":2081.7},{"i":59,"d":"2023-02-13","e":2240.18},{"i":60,"d":"2023-02-14","e":2124.86},{"i":61,"d":"2023-02-16","e":2019.54},{"i":62,"d":"2023-02-20","e":1983.22},{"i":63,"d":"2023-02-22","e":1865.3},{"i":64,"d":"2023-02-23","e":1759.98},{"i":65,"d":"2023-02-24","e":1653.19},{"i":66,"d":"2023-03-06","e":1548.27},{"i":67,"d":"2023-03-07","e":1441.35},{"i":68,"d":"2023-03-09","e":1330.03},{"i":69,"d":"2023-03-23","e":1224.11},{"i":70,"d":"2023-03-30","e":1119.39},{"i":71,"d":"2023-03-31","e":1014.27},{"i":72,"d":"2023-04-04","e":908.55},{"i":73,"d":"2023-04-11","e":896.83},{"i":74,"d":"2023-04-18","e":792.11},{"i":75,"d":"2023-04-20","e":687.59},{"i":76,"d":"2023-04-24","e":582.87},{"i":77,"d":"2023-04-27","e":932.95},{"i":78,"d":"2023-04-28","e":828.23},{"i":79,"d":"2023-05-01","e":720.91},{"i":80,"d":"2023-05-02","e":615.59},{"i":81,"d":"2023-05-08","e":510.87},{"i":82,"d":"2023-05-10","e":405.95},{"i":83,"d":"2023-05-12","e":410.03},{"i":84,"d":"2023-05-17","e":302.11},{"i":85,"d":"2023-05-19","e":197.19},{"i":86,"d":"2023-05-24","e":92.47},{"i":87,"d":"2023-05-25","e":-12.45},{"i":88,"d":"2023-05-29","e":-117.97},{"i":89,"d":"2023-05-30","e":-222.89},{"i":90,"d":"2023-06-01","e":-329.41},{"i":91,"d":"2023-06-02","e":-48.13},{"i":92,"d":"2023-06-06","e":-157.85},{"i":93,"d":"2023-06-08","e":-263.17},{"i":94,"d":"2023-06-15","e":-134.69},{"i":95,"d":"2023-06-19","e":-241.21},{"i":96,"d":"2023-07-03","e":-346.33},{"i":97,"d":"2023-07-06","e":-453.05},{"i":98,"d":"2023-07-11","e":-561.37},{"i":99,"d":"2023-07-13","e":-667.69},{"i":100,"d":"2023-07-17","e":-703.21},{"i":101,"d":"2023-07-18","e":-556.93},{"i":102,"d":"2023-07-20","e":-663.25},{"i":103,"d":"2023-07-24","e":-665.97},{"i":104,"d":"2023-07-25","e":-771.29},{"i":105,"d":"2023-07-26","e":-876.41},{"i":106,"d":"2023-08-04","e":-983.13},{"i":107,"d":"2023-08-09","e":-981.45},{"i":108,"d":"2023-08-17","e":-1086.37},{"i":109,"d":"2023-08-21","e":-1191.49},{"i":110,"d":"2023-08-22","e":-1297.61},{"i":111,"d":"2023-08-24","e":-930.13},{"i":112,"d":"2023-08-29","e":-666.85},{"i":113,"d":"2023-08-31","e":-392.57},{"i":114,"d":"2023-09-01","e":-498.29},{"i":115,"d":"2023-09-04","e":-578.61},{"i":116,"d":"2023-09-06","e":-683.33},{"i":117,"d":"2023-09-08","e":-790.85},{"i":118,"d":"2023-09-12","e":-686.77},{"i":119,"d":"2023-09-14","e":-491.09},{"i":120,"d":"2023-09-15","e":-275.41},{"i":121,"d":"2023-09-18","e":-381.13},{"i":122,"d":"2023-09-19","e":-488.25},{"i":123,"d":"2023-09-20","e":-664.37},{"i":124,"d":"2023-09-26","e":-769.09},{"i":125,"d":"2023-09-27","e":-565.61},{"i":126,"d":"2023-10-09","e":-670.13},{"i":127,"d":"2023-10-10","e":-775.45},{"i":128,"d":"2023-10-11","e":-879.97},{"i":129,"d":"2023-10-18","e":-878.29},{"i":130,"d":"2023-11-02","e":-482.81},{"i":131,"d":"2023-11-07","e":-484.33},{"i":132,"d":"2023-11-08","e":-590.25},{"i":133,"d":"2023-11-10","e":-696.57},{"i":134,"d":"2023-11-17","e":-802.09},{"i":135,"d":"2023-11-20","e":-425.61},{"i":136,"d":"2023-11-22","e":-533.73},{"i":137,"d":"2023-11-23","e":-594.05},{"i":138,"d":"2023-11-24","e":-565.77},{"i":139,"d":"2023-11-27","e":-671.09},{"i":140,"d":"2023-11-28","e":-783.01},{"i":141,"d":"2023-11-30","e":-898.53},{"i":142,"d":"2023-12-01","e":-511.85},{"i":143,"d":"2023-12-06","e":-622.17},{"i":144,"d":"2023-12-07","e":-730.49},{"i":145,"d":"2023-12-13","e":-836.61},{"i":146,"d":"2023-12-15","e":-943.93},{"i":147,"d":"2023-12-19","e":-907.25},{"i":148,"d":"2023-12-20","e":-1012.57},{"i":149,"d":"2023-12-21","e":-1126.89},{"i":150,"d":"2023-12-22","e":-1023.21},{"i":151,"d":"2023-12-26","e":-898.53},{"i":152,"d":"2023-12-27","e":-1004.32},{"i":153,"d":"2023-12-28","e":-917.44},{"i":154,"d":"2023-12-29","e":-814.96},{"i":155,"d":"2024-01-03","e":-818.26},{"i":156,"d":"2024-01-04","e":-925.76},{"i":157,"d":"2024-01-05","e":-1030.86},{"i":158,"d":"2024-01-08","e":-584.36},{"i":159,"d":"2024-01-09","e":-691.06},{"i":160,"d":"2024-01-10","e":-689.76},{"i":161,"d":"2024-01-18","e":-795.66},{"i":162,"d":"2024-01-22","e":-794.56},{"i":163,"d":"2024-01-23","e":-792.46},{"i":164,"d":"2024-01-29","e":-898.56},{"i":165,"d":"2024-02-02","e":-1005.26},{"i":166,"d":"2024-02-05","e":-1111.36},{"i":167,"d":"2024-02-06","e":-1109.06},{"i":168,"d":"2024-02-07","e":-1215.76},{"i":169,"d":"2024-02-08","e":-1321.66},{"i":170,"d":"2024-02-09","e":-1429.03},{"i":171,"d":"2024-02-12","e":-1228.93},{"i":172,"d":"2024-02-13","e":-1225.03},{"i":173,"d":"2024-02-15","e":-926.13},{"i":174,"d":"2024-02-21","e":-1031.11},{"i":175,"d":"2024-02-22","e":-1137.81},{"i":176,"d":"2024-02-23","e":-1243.71},{"i":177,"d":"2024-02-26","e":-1350.01},{"i":178,"d":"2024-02-27","e":-1232.31},{"i":179,"d":"2024-02-28","e":-1337.49},{"i":180,"d":"2024-02-29","e":-1443.39},{"i":181,"d":"2024-03-01","e":-1550.29},{"i":182,"d":"2024-03-05","e":-1655.99},{"i":183,"d":"2024-03-06","e":-1767.89},{"i":184,"d":"2024-03-07","e":-1876.79},{"i":185,"d":"2024-03-12","e":-1982.09},{"i":186,"d":"2024-03-13","e":-2087.19},{"i":187,"d":"2024-03-19","e":-2083.69},{"i":188,"d":"2024-03-20","e":-2189.99},{"i":189,"d":"2024-03-21","e":-2298.69},{"i":190,"d":"2024-03-22","e":-1928.99},{"i":191,"d":"2024-03-25","e":-1881.49},{"i":192,"d":"2024-03-26","e":-1986.99},{"i":193,"d":"2024-04-01","e":-1759.29},{"i":194,"d":"2024-04-09","e":-1656.19},{"i":195,"d":"2024-04-12","e":-1454.09},{"i":196,"d":"2024-04-15","e":-1054.99},{"i":197,"d":"2024-04-30","e":-1053.3},{"i":198,"d":"2024-05-06","e":-1158.4},{"i":199,"d":"2024-05-08","e":-977.7},{"i":200,"d":"2024-05-09","e":-1084.2},{"i":201,"d":"2024-05-10","e":-1189.5},{"i":202,"d":"2024-05-13","e":-1041.35},{"i":203,"d":"2024-05-15","e":-1146.65},{"i":204,"d":"2024-05-16","e":-1252.95},{"i":205,"d":"2024-05-20","e":-1358.65},{"i":206,"d":"2024-05-21","e":-1463.75},{"i":207,"d":"2024-05-22","e":-1570.05},{"i":208,"d":"2024-05-23","e":-1676.42},{"i":209,"d":"2024-05-27","e":-1591.52},{"i":210,"d":"2024-06-03","e":-1588.22},{"i":211,"d":"2024-06-13","e":-1693.88},{"i":212,"d":"2024-06-17","e":-1338.58},{"i":213,"d":"2024-06-19","e":-1364.88},{"i":214,"d":"2024-06-25","e":-1161.78},{"i":215,"d":"2024-07-03","e":-1266.56},{"i":216,"d":"2024-07-10","e":-691.66},{"i":217,"d":"2024-07-12","e":-797.36},{"i":218,"d":"2024-07-19","e":-902.46},{"i":219,"d":"2024-07-25","e":-698.56},{"i":220,"d":"2024-07-31","e":-808.26},{"i":221,"d":"2024-08-13","e":-914.16},{"i":222,"d":"2024-08-14","e":-923.06},{"i":223,"d":"2024-08-19","e":-1028.56},{"i":224,"d":"2024-08-21","e":-1134.46},{"i":225,"d":"2024-08-22","e":-1239.84},{"i":226,"d":"2024-08-26","e":-1346.54},{"i":227,"d":"2024-08-28","e":-1452.24},{"i":228,"d":"2024-08-30","e":-1558.81},{"i":229,"d":"2024-09-02","e":-1562.11},{"i":230,"d":"2024-09-06","e":-1359.01},{"i":231,"d":"2024-09-27","e":-1464.31},{"i":232,"d":"2024-10-02","e":-1571.61},{"i":233,"d":"2024-10-07","e":-1676.59},{"i":234,"d":"2024-10-09","e":-1781.89},{"i":235,"d":"2024-10-14","e":-1351.39},{"i":236,"d":"2024-10-21","e":-1150.09},{"i":237,"d":"2024-10-22","e":-1046.19},{"i":238,"d":"2024-10-23","e":-1154.89},{"i":239,"d":"2024-10-24","e":-1260.75},{"i":240,"d":"2024-10-28","e":-1368.61},{"i":241,"d":"2024-11-07","e":-1475.07},{"i":242,"d":"2024-11-08","e":-1580.53},{"i":243,"d":"2024-11-11","e":-1685.99},{"i":244,"d":"2024-11-12","e":-1791.65},{"i":245,"d":"2024-11-18","e":-1898.25},{"i":246,"d":"2024-11-20","e":-1795.73},{"i":247,"d":"2024-11-22","e":-1901.39},{"i":248,"d":"2024-11-26","e":-2007.07},{"i":249,"d":"2024-11-28","e":-1946.57},{"i":250,"d":"2024-12-02","e":-2052.23},{"i":251,"d":"2024-12-03","e":-2158.89},{"i":252,"d":"2024-12-04","e":-2265.95},{"i":253,"d":"2024-12-05","e":-2372.01},{"i":254,"d":"2024-12-06","e":-2477.27},{"i":255,"d":"2024-12-09","e":-2584.53},{"i":256,"d":"2024-12-12","e":-2689.79},{"i":257,"d":"2024-12-13","e":-2795.85},{"i":258,"d":"2024-12-17","e":-2902.11},{"i":259,"d":"2024-12-18","e":-3007.97},{"i":260,"d":"2024-12-19","e":-3113.23},{"i":261,"d":"2024-12-20","e":-2309.49},{"i":262,"d":"2024-12-26","e":-2306.35},{"i":263,"d":"2024-12-30","e":-2102.61},{"i":264,"d":"2025-01-03","e":-2208.57},{"i":265,"d":"2025-01-07","e":-2318.53},{"i":266,"d":"2025-01-13","e":-2118.29},{"i":267,"d":"2025-01-17","e":-2224.65},{"i":268,"d":"2025-01-20","e":-2333.25},{"i":269,"d":"2025-01-23","e":-1982.21},{"i":270,"d":"2025-01-28","e":-2088.97},{"i":271,"d":"2025-01-31","e":-2195.33},{"i":272,"d":"2025-02-03","e":-2094.29},{"i":273,"d":"2025-02-05","e":-2207.65},{"i":274,"d":"2025-02-06","e":-1905.61},{"i":275,"d":"2025-02-07","e":-2013.97},{"i":276,"d":"2025-02-10","e":-2121.33},{"i":277,"d":"2025-02-11","e":-1903.49},{"i":278,"d":"2025-02-12","e":-2012.85},{"i":279,"d":"2025-02-17","e":-2017.81},{"i":280,"d":"2025-02-18","e":-2123.97},{"i":281,"d":"2025-02-19","e":-2230.33},{"i":282,"d":"2025-02-20","e":-2338.69},{"i":283,"d":"2025-02-21","e":-1438.85},{"i":284,"d":"2025-02-25","e":-1550.21},{"i":285,"d":"2025-02-26","e":-1657.69},{"i":286,"d":"2025-03-04","e":-955.45},{"i":287,"d":"2025-03-06","e":-1072.21},{"i":288,"d":"2025-03-13","e":-1070.97},{"i":289,"d":"2025-03-18","e":-1069.73},{"i":290,"d":"2025-03-19","e":-1175.89},{"i":291,"d":"2025-03-24","e":-1294.25},{"i":292,"d":"2025-03-28","e":-824.83},{"i":293,"d":"2025-03-31","e":-931.59},{"i":294,"d":"2025-04-22","e":-629.35},{"i":295,"d":"2025-05-01","e":-736.11},{"i":296,"d":"2025-05-02","e":-843.47},{"i":297,"d":"2025-05-05","e":-950.23},{"i":298,"d":"2025-05-06","e":-1057.99},{"i":299,"d":"2025-05-08","e":-858.95},{"i":300,"d":"2025-05-15","e":-965.51},{"i":301,"d":"2025-05-20","e":-1071.47},{"i":302,"d":"2025-05-27","e":-744.69},{"i":303,"d":"2025-05-28","e":-851.65},{"i":304,"d":"2025-06-03","e":-849.21},{"i":305,"d":"2025-06-10","e":-960.77},{"i":306,"d":"2025-06-12","e":-1068.53},{"i":307,"d":"2025-06-24","e":-999.15},{"i":308,"d":"2025-06-25","e":-1105.31},{"i":309,"d":"2025-06-26","e":-801.33},{"i":310,"d":"2025-06-27","e":-598.29},{"i":311,"d":"2025-06-30","e":-704.45},{"i":312,"d":"2025-07-01","e":-503.41},{"i":313,"d":"2025-07-03","e":-536.37},{"i":314,"d":"2025-07-07","e":-138.33},{"i":315,"d":"2025-07-08","e":-244.49},{"i":316,"d":"2025-07-10","e":-241.65},{"i":317,"d":"2025-07-15","e":228.95},{"i":318,"d":"2025-07-18","e":122.79},{"i":319,"d":"2025-07-21","e":16.03},{"i":320,"d":"2025-07-23","e":117.81},{"i":321,"d":"2025-07-29","e":11.65},{"i":322,"d":"2025-08-04","e":13.49},{"i":323,"d":"2025-08-07","e":-93.07},{"i":324,"d":"2025-08-11","e":-199.23},{"i":325,"d":"2025-08-14","e":-307.39},{"i":326,"d":"2025-08-25","e":-413.35},{"i":327,"d":"2025-09-04","e":-519.51},{"i":328,"d":"2025-09-05","e":-626.07},{"i":329,"d":"2025-09-09","e":-733.43},{"i":330,"d":"2025-09-10","e":-839.99},{"i":331,"d":"2025-09-12","e":-946.35},{"i":332,"d":"2025-09-17","e":-1053.51},{"i":333,"d":"2025-09-19","e":-1159.67},{"i":334,"d":"2025-09-22","e":-1156.89},{"i":335,"d":"2025-09-24","e":-1154.45},{"i":336,"d":"2025-09-29","e":-1261.21},{"i":337,"d":"2025-09-30","e":-1370.57},{"i":338,"d":"2025-10-01","e":-1490.13},{"i":339,"d":"2025-10-02","e":-1596.29},{"i":340,"d":"2025-10-08","e":-1702.85},{"i":341,"d":"2025-10-09","e":-1623.65},{"i":342,"d":"2025-10-10","e":-1428.01},{"i":343,"d":"2025-10-13","e":-1534.57},{"i":344,"d":"2025-10-14","e":-1031.93},{"i":345,"d":"2025-10-16","e":-1029.29},{"i":346,"d":"2025-10-20","e":-651.31},{"i":347,"d":"2025-10-21","e":-758.47},{"i":348,"d":"2025-10-22","e":-864.63},{"i":349,"d":"2025-10-24","e":-971.39},{"i":350,"d":"2025-11-03","e":-570.75},{"i":351,"d":"2025-11-04","e":-677.91},{"i":352,"d":"2025-11-10","e":-785.27},{"i":353,"d":"2025-11-11","e":-893.63},{"i":354,"d":"2025-11-12","e":-491.79},{"i":355,"d":"2025-11-14","e":-599.15},{"i":356,"d":"2025-11-17","e":-706.51},{"i":357,"d":"2025-11-18","e":-814.87},{"i":358,"d":"2025-11-20","e":-814.23},{"i":359,"d":"2025-11-24","e":-920.39},{"i":360,"d":"2025-11-25","e":-818.75},{"i":361,"d":"2025-11-26","e":-817.11},{"i":362,"d":"2025-11-28","e":-807.27},{"i":363,"d":"2025-12-02","e":-916.43},{"i":364,"d":"2025-12-03","e":-1026.59},{"i":365,"d":"2025-12-04","e":-1133.75},{"i":366,"d":"2025-12-05","e":-1239.91},{"i":367,"d":"2025-12-08","e":-1346.07},{"i":368,"d":"2025-12-10","e":-1453.43},{"i":369,"d":"2025-12-11","e":-1152.79},{"i":370,"d":"2025-12-12","e":-952.15},{"i":371,"d":"2025-12-18","e":-1061.51},{"i":372,"d":"2025-12-19","e":-1059.33},{"i":373,"d":"2025-12-22","e":-956.45},{"i":374,"d":"2025-12-24","e":-474.01},{"i":375,"d":"2025-12-29","e":-583.37},{"i":376,"d":"2025-12-31","e":-690.07},{"i":377,"d":"2026-01-02","e":-800.33},{"i":378,"d":"2026-01-05","e":301.41},{"i":379,"d":"2026-01-07","e":184.95},{"i":380,"d":"2026-01-15","e":78.49},{"i":381,"d":"2026-01-22","e":180.03},{"i":382,"d":"2026-01-23","e":70.11},{"i":383,"d":"2026-01-26","e":170.65},{"i":384,"d":"2026-01-27","e":64.19},{"i":385,"d":"2026-01-30","e":-42.27},{"i":386,"d":"2026-02-02","e":255.27},{"i":387,"d":"2026-02-05","e":148.81},{"i":388,"d":"2026-02-06","e":838.35},{"i":389,"d":"2026-02-09","e":730.89},{"i":390,"d":"2026-02-10","e":728.43},{"i":391,"d":"2026-02-11","e":615.97},{"i":392,"d":"2026-02-12","e":509.51},{"i":393,"d":"2026-02-16","e":532.95},{"i":394,"d":"2026-02-17","e":423.49},{"i":395,"d":"2026-02-20","e":317.03},{"i":396,"d":"2026-02-23","e":319.57},{"i":397,"d":"2026-02-26","e":321.11},{"i":398,"d":"2026-02-27","e":214.65},{"i":399,"d":"2026-03-02","e":516.29},{"i":400,"d":"2026-03-25","e":407.83},{"i":401,"d":"2026-04-09","e":910.37},{"i":402,"d":"2026-04-13","e":1757.27},{"i":403,"d":"2026-04-14","e":1650.81},{"i":404,"d":"2026-04-15","e":1544.35},{"i":405,"d":"2026-04-21","e":1744.39},{"i":406,"d":"2026-04-27","e":1637.03},{"i":407,"d":"2026-04-29","e":1638.57},{"i":408,"d":"2026-05-01","e":1635.11},{"i":409,"d":"2026-05-04","e":1737.65},{"i":410,"d":"2026-05-08","e":1629.19},{"i":411,"d":"2026-05-20","e":1518.73},{"i":412,"d":"2026-05-26","e":1411.89},{"i":413,"d":"2026-05-29","e":1514.43},{"i":414,"d":"2026-06-03","e":1407.97},{"i":415,"d":"2026-06-05","e":1910.11},{"i":416,"d":"2026-06-09","e":1802.65},{"i":417,"d":"2026-06-12","e":1688.31},{"i":418,"d":"2026-06-15","e":1579.05},{"i":419,"d":"2026-06-16","e":1471.79},{"i":420,"d":"2026-06-24","e":1364.23},{"i":421,"d":"2026-06-26","e":1236.67},{"i":422,"d":"2026-07-01","e":1128.21},{"i":423,"d":"2026-07-07","e":1021.08},{"i":424,"d":"2026-07-09","e":913.82},{"i":425,"d":"2026-07-13","e":916.16},{"i":426,"d":"2026-07-20","e":809.6},{"i":427,"d":"2026-07-21","e":701.94},{"i":428,"d":"2026-07-24","e":592.28},{"i":429,"d":"2026-07-27","e":483.26},{"i":430,"d":"2026-07-28","e":583.8},{"i":431,"d":"2026-08-06","e":786.04}];
+(function(){
+  const svg=document.getElementById('chart'), tip=document.getElementById('tip');
+  const W=920,H=400,ML=68,MR=22,MT=22,MB=42;
+  const pw=W-ML-MR, ph=H-MT-MB;
+  const es=DATA.map(d=>d.e);
+  const yMin=Math.floor((Math.min(...es)-250)/1000)*1000, yMax=Math.ceil((Math.max(...es)+250)/1000)*1000;
+  const X=i=>ML+(i/(DATA.length-1))*pw;
+  const Y=v=>MT+(yMax-v)/(yMax-yMin)*ph;
+  const NS='http://www.w3.org/2000/svg';
+  const el=(n,a)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);return e;};
+
+  const defs=el('defs');
+  ['below','above'].forEach((id,k)=>{
+    const c=el('clipPath',{id:id});
+    c.appendChild(el('rect',{x:ML,y:k?MT:Y(0),width:pw,height:k?Math.max(0,Y(0)-MT):Math.max(0,MT+ph-Y(0))}));
+    defs.appendChild(c);
+  });
+  svg.appendChild(defs);
+
+  for(let v=yMin;v<=yMax;v+=1000){
+    svg.appendChild(el('line',{x1:ML,y1:Y(v),x2:ML+pw,y2:Y(v),class:'gl'}));
+    const t=el('text',{x:ML-11,y:Y(v)+4,class:'ax','text-anchor':'end'});
+    t.textContent=(v<0?'−':'')+'£'+Math.abs(v).toLocaleString();
+    svg.appendChild(t);
+  }
+
+  const line=DATA.map((d,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Y(d.e).toFixed(1)).join(' ');
+  const area=line+' L'+X(DATA.length-1).toFixed(1)+' '+Y(0).toFixed(1)+' L'+X(0).toFixed(1)+' '+Y(0).toFixed(1)+' Z';
+  svg.appendChild(el('path',{d:area,fill:'var(--loss-fill)','clip-path':'url(#below)'}));
+  svg.appendChild(el('path',{d:area,fill:'var(--gain-fill)','clip-path':'url(#above)'}));
+  svg.appendChild(el('line',{x1:ML,y1:Y(0),x2:ML+pw,y2:Y(0),class:'zero'}));
+  svg.appendChild(el('path',{d:line,class:'eqline'}));
+
+  let seen={};
+  DATA.forEach((d,i)=>{const y=d.d.slice(0,4); if(!seen[y]){seen[y]=1;
+    svg.appendChild(el('line',{x1:X(i),y1:MT+ph,x2:X(i),y2:MT+ph+5,stroke:'var(--ink-3)','stroke-width':1}));
+    const t=el('text',{x:X(i),y:MT+ph+21,class:'ax','text-anchor':'middle'}); t.textContent=y; svg.appendChild(t);}});
+
+  svg.appendChild(el('circle',{cx:X(DATA.length-1),cy:Y(DATA[DATA.length-1].e),r:4.5,
+    fill:'var(--panel)',stroke:'var(--ink)','stroke-width':2}));
+
+  const cross=el('line',{id:'cross',y1:MT,y2:MT+ph}); svg.appendChild(cross);
+  const dot=el('circle',{id:'dot',r:4.5}); svg.appendChild(dot);
+  const hit=el('rect',{x:ML,y:MT,width:pw,height:ph,class:'hit'}); svg.appendChild(hit);
+
+  function show(ev){
+    const r=svg.getBoundingClientRect();
+    let i=Math.round(((ev.clientX-r.left)/r.width*W-ML)/pw*(DATA.length-1));
+    i=Math.max(0,Math.min(DATA.length-1,i));
+    const d=DATA[i];
+    cross.setAttribute('x1',X(i)); cross.setAttribute('x2',X(i)); cross.style.opacity=.65;
+    dot.setAttribute('cx',X(i)); dot.setAttribute('cy',Y(d.e)); dot.style.opacity=1;
+    tip.innerHTML='<div class="d">'+d.d+' · trade '+(i+1)+' of '+DATA.length+'</div>'+
+      '<div class="e" style="color:'+(d.e<0?'var(--loss)':'var(--gain)')+'">'+(d.e<0?'−':'+')+'£'+
+      Math.abs(d.e).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})+'</div>';
+    tip.style.opacity=1;
+    const card=tip.parentElement.getBoundingClientRect();
+    let left=(X(i)/W)*r.width + (r.left-card.left) + 14;
+    if(left+tip.offsetWidth>card.width-8) left-=tip.offsetWidth+28;
+    tip.style.left=left+'px';
+    tip.style.top=((Y(d.e)/H)*r.height + (r.top-card.top) - 14)+'px';
+  }
+  function hide(){cross.style.opacity=0;dot.style.opacity=0;tip.style.opacity=0;}
+  hit.addEventListener('mousemove',show);
+  hit.addEventListener('mouseleave',hide);
+  hit.addEventListener('touchmove',e=>{show(e.touches[0]);e.preventDefault();},{passive:false});
+})();
+</script>

@@ -4,7 +4,7 @@ Spec: `docs/Phase2_Spec.md`
 Base: `../ORB Bot/ORB_Bot.cs` (v2.0 + Phase 1.5 fixes) — **copied verbatim, then only the Phase 2
 changes below were applied.** The base file was NOT modified.
 
-Derived file: `ORB_Volume_Breakout_Bot.cs`.
+Derived file: `ORB_Volume_Breakout_Bot_v2.cs`.
 
 ## Spec item → change map
 

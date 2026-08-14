@@ -1,11 +1,19 @@
 // =============================================================================
-// ORB Volume Breakout cBot — v1.0 (Premarket Range + Volume Breakout)
+// ORB Volume Breakout cBot — v2.0 (Premarket Range + Volume Breakout, two-zone session)
 // Single compilable .cs file for cTrader Automate
 // -----------------------------------------------------------------------------
+// v2.0 change (this file): the session now resolves TWO timezones instead of one.
+// The range START is anchored in RangeTimeZoneParam (London), while the range END,
+// trading start, kill switch and close are anchored in ExecutionTimeZoneParam
+// (New York). A London range feeding a New York open cannot share one clock: the
+// UK and US shift on different weekends, so for ~4 weeks a year the NYSE bell is
+// at 13:30 London rather than 14:30. Setting UseFixedUtcTimes=false enables it;
+// leaving it true preserves the previous fixed-UTC behaviour exactly.
+//
 // This is a variant of the reviewed ORB Breakout cBot v2.0 base. It reuses the
 // v2.0 core UNCHANGED and adds only the Phase 2 changes specified in
 // docs/Phase2_Spec.md (the "US30 London Range Breakout" research study):
-//   P2.1 Identity: class OrbVolumeBreakoutBot, Bot Label Prefix default "ORBV"
+//   P2.1 Identity: class OrbVolumeBreakoutBotV2, Bot Label Prefix default "ORBV"
 //        so it can run side-by-side with the base bot without label/history collisions.
 //   P2.2 Volume Filter (new parameter group): the breakout (evaluation) bar must show
 //        tick volume >= VolumeMultiplier x the trailing-VolumeLookbackBars average of
@@ -143,7 +151,7 @@ namespace cAlgo.Robots
  // =========================================================================
 
  [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.None)]
- public class OrbVolumeBreakoutBot : Robot
+ public class OrbVolumeBreakoutBotV2 : Robot
  {
  // =====================================================================
  // PARAMETERS
@@ -173,35 +181,50 @@ namespace cAlgo.Robots
  // the ORB/offset numbers are then in ticks while risk numbers stay in pips.
  //
  // ----- Session (UTC) -----
- [Parameter("Range Start Time", Group = "Session (UTC)", DefaultValue = "08:00:00")]
+ [Parameter("Range Start Time", Group = "Session", DefaultValue = "08:00:00")]
  public string RangeStartTimeUtcStr { get; set; }
 
- [Parameter("Range End Time", Group = "Session (UTC)", DefaultValue = "08:15:00")]
+ [Parameter("Range End Time", Group = "Session", DefaultValue = "08:15:00")]
  public string RangeEndTimeUtcStr { get; set; }
 
- [Parameter("Trading Start Time", Group = "Session (UTC)", DefaultValue = "00:00:00")]
+ [Parameter("Trading Start Time", Group = "Session", DefaultValue = "00:00:00")]
  public string TradingStartTimeUtcStr { get; set; }
 
- [Parameter("Enable Kill Switch", Group = "Session (UTC)", DefaultValue = false)]
+ [Parameter("Enable Kill Switch", Group = "Session", DefaultValue = false)]
  public bool EnableKillSwitch { get; set; }
 
- [Parameter("Kill Switch Time", Group = "Session (UTC)", DefaultValue = "23:59:00")]
+ [Parameter("Kill Switch Time", Group = "Session", DefaultValue = "23:59:00")]
  public string KillSwitchTimeUtcStr { get; set; }
 
  // NOTE: This setting USED to close positions at the same Kill Switch Time.
  // It now enables a *separate* Close Positions Time (see parameter below).
- [Parameter("Enable Close Positions Time", Group = "Session (UTC)", DefaultValue = false)]
+ [Parameter("Enable Close Positions Time", Group = "Session", DefaultValue = false)]
  public bool ClosePositionsAtKillSwitch { get; set; }
 
- [Parameter("Close Positions Time", Group = "Session (UTC)", DefaultValue = "23:59:00")]
+ [Parameter("Close Positions Time", Group = "Session", DefaultValue = "23:59:00")]
  public string ClosePositionsTimeUtcStr { get; set; }
 
  // ----- Session Time Zone -----
+ //
+ // A session that spans two exchanges needs two clocks. The London range is a
+ // London-session concept and starts at 08:00 London whatever the date; the
+ // trading window is a New York concept and opens at 09:30 New York. Those two
+ // are NOT a fixed number of hours apart: the UK and US change their clocks on
+ // different weekends, so for about four weeks a year the NYSE bell lands at
+ // 13:30 London instead of the usual 14:30.
+ //
+ // Pinning everything to one zone (or to fixed UTC) therefore mis-specifies one
+ // end of the session for part of the year. Anchoring the range start in London
+ // and everything from the bell onward in New York keeps both ends correct on
+ // every date, with no seasonal special-casing.
  [Parameter("Use Fixed UTC Times", Group = "Session Time Zone", DefaultValue = true)]
  public bool UseFixedUtcTimes { get; set; }
 
- [Parameter("Session Time Zone", Group = "Session Time Zone", DefaultValue = SessionTimeZoneEnum.UTC)]
- public SessionTimeZoneEnum SessionTimeZoneParam { get; set; }
+ [Parameter("Range Time Zone", Group = "Session Time Zone", DefaultValue = SessionTimeZoneEnum.EuropeLondon)]
+ public SessionTimeZoneEnum RangeTimeZoneParam { get; set; }
+
+ [Parameter("Execution Time Zone", Group = "Session Time Zone", DefaultValue = SessionTimeZoneEnum.AmericaNewYork)]
+ public SessionTimeZoneEnum ExecutionTimeZoneParam { get; set; }
 
  // ----- ORB -----
  [Parameter("ORB Bars TimeFrame", Group = "ORB", DefaultValue = "Minute")]
@@ -524,8 +547,10 @@ namespace cAlgo.Robots
  private TimeSpan _killSwitchTimeCfg;
  private TimeSpan _closePositionsTimeCfg;
 
- // Session timezone
- private TimeZoneInfo _sessionTz;
+ // Session timezones: the range window is anchored in one zone, everything from
+ // the bell onward (range end, trading start, kill switch, close) in the other.
+ private TimeZoneInfo _rangeTz;
+ private TimeZoneInfo _execTz;
 
  // Daily UTC-converted session boundaries
  private DateTime _orbStartUtcToday;
@@ -648,9 +673,10 @@ namespace cAlgo.Robots
  return;
  }
 
- // Resolve session timezone
- _sessionTz = ResolveTimeZone();
- if (_sessionTz == null)
+ // Resolve session timezones
+ _rangeTz = ResolveTimeZone(RangeTimeZoneParam);
+ _execTz = ResolveTimeZone(ExecutionTimeZoneParam);
+ if (_rangeTz == null || _execTz == null)
  {
  Print("ERROR: Failed to resolve session timezone.");
  Stop();
@@ -738,7 +764,9 @@ namespace cAlgo.Robots
 
  Log("ORB Bot started. Symbol={0} PointSize={1} OrbTF={2} ConfirmTF={3} TZ={4}",
  Symbol.Name, _pointSize, OrbBarsTimeFrame, ConfirmationTimeFrame,
- UseFixedUtcTimes ? "UTC(fixed)" : SessionTimeZoneParam.ToString());
+ UseFixedUtcTimes
+ ? "UTC(fixed)"
+ : string.Format("range={0} exec={1}", RangeTimeZoneParam, ExecutionTimeZoneParam));
 
  Log("VOLUME_DIAG symbol={0} min={1} step={2} max={3}", Symbol.Name, Symbol.VolumeInUnitsMin, Symbol.VolumeInUnitsStep, Symbol.VolumeInUnitsMax);
 
@@ -952,7 +980,7 @@ namespace cAlgo.Robots
  // SESSION TIMEZONE
  // =====================================================================
 
- private TimeZoneInfo ResolveTimeZone()
+ private TimeZoneInfo ResolveTimeZone(SessionTimeZoneEnum zone)
  {
  if (UseFixedUtcTimes)
  return TimeZoneInfo.Utc;
@@ -961,7 +989,7 @@ namespace cAlgo.Robots
  // while macOS/Linux typically use IANA IDs (e.g., "America/New_York").
  // We try both to avoid silently falling back to UTC.
  string[] candidates;
- switch (SessionTimeZoneParam)
+ switch (zone)
  {
  case SessionTimeZoneEnum.EuropeLondon:
  candidates = new[] { "GMT Standard Time", "Europe/London" };
@@ -991,7 +1019,7 @@ namespace cAlgo.Robots
  }
  }
 
- Print("WARNING: Could not resolve session timezone for {0}. Falling back to UTC.", SessionTimeZoneParam);
+ Print("WARNING: Could not resolve session timezone for {0}. Falling back to UTC.", zone);
  return TimeZoneInfo.Utc;
  }
 
@@ -1001,11 +1029,14 @@ namespace cAlgo.Robots
  if (UseFixedUtcTimes)
  return utcNow.Date;
 
- DateTime localNow = TimeZoneInfo.ConvertTimeFromUtc(utcNow, _sessionTz);
+ // The trading day is a New York day: anchoring the session date to the
+ // execution zone puts the daily reset at 00:00 New York, comfortably before
+ // the range window opens in London later that same calendar date.
+ DateTime localNow = TimeZoneInfo.ConvertTimeFromUtc(utcNow, _execTz);
  return localNow.Date;
  }
 
- private DateTime ConvertConfiguredTimeToUtc(DateTime sessionDate, TimeSpan configuredTime)
+ private DateTime ConvertConfiguredTimeToUtc(DateTime sessionDate, TimeSpan configuredTime, TimeZoneInfo tz)
  {
  if (UseFixedUtcTimes)
  return sessionDate + configuredTime;
@@ -1013,16 +1044,16 @@ namespace cAlgo.Robots
  DateTime localDt = sessionDate + configuredTime;
  try
  {
- if (_sessionTz.IsInvalidTime(localDt))
+ if (tz.IsInvalidTime(localDt))
  {
  // DST spring-forward gap: shift forward by 1 hour
  localDt = localDt.AddHours(1);
  }
- if (_sessionTz.IsAmbiguousTime(localDt))
+ if (tz.IsAmbiguousTime(localDt))
  {
- Print("WARNING: Ambiguous time {0} in {1} (DST fall-back). Using standard-time interpretation.", localDt, SessionTimeZoneParam);
+ Print("WARNING: Ambiguous time {0} in {1} (DST fall-back). Using standard-time interpretation.", localDt, tz.Id);
  }
- return TimeZoneInfo.ConvertTimeToUtc(localDt, _sessionTz);
+ return TimeZoneInfo.ConvertTimeToUtc(localDt, tz);
  }
  catch (Exception)
  {
@@ -1032,11 +1063,16 @@ namespace cAlgo.Robots
 
  private void ComputeSessionTimesForDay(DateTime sessionDate)
  {
- _orbStartUtcToday = ConvertConfiguredTimeToUtc(sessionDate, _rangeStartTimeCfg);
- _orbEndUtcToday = ConvertConfiguredTimeToUtc(sessionDate, _rangeEndTimeCfg);
- _tradingStartUtcToday = ConvertConfiguredTimeToUtc(sessionDate, _tradingStartTimeCfg);
- _killSwitchUtcToday = ConvertConfiguredTimeToUtc(sessionDate, _killSwitchTimeCfg);
- _closePositionsUtcToday = ConvertConfiguredTimeToUtc(sessionDate, _closePositionsTimeCfg);
+ // Only the range START belongs to the range zone. The range END is the
+ // opening bell - the same instant the trading window is measured from - so it
+ // is anchored in the execution zone along with everything after it. That is
+ // what removes the "14:30 London, except 13:30 for four weeks a year" special
+ // case: 09:30 New York is simply always the bell.
+ _orbStartUtcToday = ConvertConfiguredTimeToUtc(sessionDate, _rangeStartTimeCfg, _rangeTz);
+ _orbEndUtcToday = ConvertConfiguredTimeToUtc(sessionDate, _rangeEndTimeCfg, _execTz);
+ _tradingStartUtcToday = ConvertConfiguredTimeToUtc(sessionDate, _tradingStartTimeCfg, _execTz);
+ _killSwitchUtcToday = ConvertConfiguredTimeToUtc(sessionDate, _killSwitchTimeCfg, _execTz);
+ _closePositionsUtcToday = ConvertConfiguredTimeToUtc(sessionDate, _closePositionsTimeCfg, _execTz);
 
  // Cross-midnight normalization
  //
@@ -1161,8 +1197,11 @@ namespace cAlgo.Robots
  }
  else
  {
- Log("SESSION_TIMEZONE mode=Local tz={0} rangeUtc={1:HH:mm}-{2:HH:mm} tradingStartUtc={3:HH:mm} killUtc={4:HH:mm} closeUtc={5:HH:mm}",
- SessionTimeZoneParam,
+ // Log the resolved UTC boundaries every session day, not just once: on the
+ // four DST-transition weekends these shift, and that shift is exactly what we
+ // want visible in the log when reconciling a backtest against live behaviour.
+ Log("SESSION_TIMEZONE mode=Local rangeTz={0} execTz={1} rangeUtc={2:HH:mm}-{3:HH:mm} tradingStartUtc={4:HH:mm} killUtc={5:HH:mm} closeUtc={6:HH:mm}",
+ RangeTimeZoneParam, ExecutionTimeZoneParam,
  _orbStartUtcToday, _orbEndUtcToday,
  _tradingStartUtcToday, _killSwitchUtcToday, _closePositionsUtcToday);
  }

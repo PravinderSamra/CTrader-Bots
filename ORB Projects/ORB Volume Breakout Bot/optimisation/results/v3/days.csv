@@ -1,0 +1,1445 @@
+date,orb_hi,orb_lo,orb_range,trend_blocked_why,blocked_why,vol_rejects,trend_blocked,blocked,vol_best_ratio,max_locked_R,be,trail,no_trade_why,no_trade,log,config
+2023-01-03,33491.0,33214.8,276.2,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:47, kill=16:31).",33845.0,181.0,15.0,1.0,,,,,,2023,orb15
+2023-01-04,33289.3,33170.2,119.1,,MaxTradesPerDay reached (1/1).,20660.0,,9.0,0.9984871406959152,,,,,,2023,orb15
+2023-01-05,33310.9,33026.8,284.1,,existing open bot position found: ORBV_US30.cash_20230105 vo,30885.0,,30.0,0.9997006884166416,2.0,1.0,2.0,,,2023,orb15
+2023-01-06,33311.9,32890.55,421.3,,"KillSwitch already active (now=18:07, kill=16:31).",25925.0,,13.0,0.9985052316890882,,,,,,2023,orb15
+2023-01-07,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-01-08,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-01-09,33773.1,33613.5,159.6,,"KillSwitch already active (now=17:30, kill=16:31).",19201.0,,15.0,0.99967958987504,,,,,,2023,orb15
+2023-01-10,33506.1,33342.7,163.4,"Neutral trend, policy=BlockAll","KillSwitch already active (now=18:07, kill=16:31).",28150.0,565.0,20.0,0.9997151808601538,,,,,,2023,orb15
+2023-01-11,33844.2,33692.0,152.2,,existing open bot position found: ORBV_US30.cash_20230111 vo,11464.0,,19.0,1.0,,,,,,2023,orb15
+2023-01-12,34190.7,33700.1,490.6,,"KillSwitch already active (now=18:03, kill=16:31).",12971.0,,10.0,0.9963513892786976,,,,,,2023,orb15
+2023-01-13,34234.1,33880.2,353.9,,"KillSwitch already active (now=20:37, kill=16:31).",8350.0,,7.0,0.999259807549963,,,,,,2023,orb15
+2023-01-14,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-01-15,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-01-16,34315.0,34189.6,125.4,"Neutral trend, policy=BlockAll",MaxTradesPerDay reached (1/1).,675.0,55.0,4.0,0.9927007299270072,,,,,,2023,orb15
+2023-01-17,34260.6,34152.5,108.1,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:11, kill=16:31).",26217.0,158.0,26.0,1.0,,,,,,2023,orb15
+2023-01-18,34015.4,33872.7,142.7,,existing open bot position found: ORBV_US30.cash_20230118 vo,25796.0,,25.0,1.0,,1.0,,,,2023,orb15
+2023-01-19,33244.0,32959.7,284.3,,,,,,,,,,,,2023,orb15
+2023-01-20,33142.1,32983.0,159.1,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:33, kill=16:31).",17393.0,326.0,13.0,0.999709386806161,,,,,,2023,orb15
+2023-01-21,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-01-22,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-01-23,33491.6,33346.2,145.4,Bullish trend blocks SHORT,existing open bot position found: ORBV_US30.cash_20230123 vo,25264.0,199.0,19.0,1.0,,,,,,2023,orb15
+2023-01-24,33644.6,33454.0,190.6,,existing open bot position found: ORBV_US30.cash_20230124 vo,17521.0,,17.0,0.9996429846483398,,1.0,,,,2023,orb15
+2023-01-25,33697.1,33423.1,274.0,,MaxTradesPerDay reached (1/1).,13866.0,,25.0,0.9984202211690364,,,,,,2023,orb15
+2023-01-26,33871.3,33704.4,166.9,,MaxTradesPerDay reached (1/1).,12734.0,,20.0,1.0,,,,,,2023,orb15
+2023-01-27,33980.7,33871.7,109.0,,MaxTradesPerDay reached (1/1).,22354.0,,7.0,1.0,0.0,1.0,1.0,,,2023,orb15
+2023-01-28,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-01-29,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-01-30,33861.9,33704.4,157.5,"Neutral trend, policy=BlockAll","KillSwitch already active (now=18:17, kill=16:31).",19605.0,418.0,4.0,0.9993979530403372,,,,,,2023,orb15
+2023-01-31,33817.8,33510.7,307.1,,"KillSwitch already active (now=18:25, kill=16:31).",14965.0,,21.0,0.9995969367190648,,,,,,2023,orb15
+2023-02-01,34029.3,33882.3,147.0,,existing open bot position found: ORBV_US30.cash_20230201 vo,30318.0,,28.0,0.999704229517894,,,,,,2023,orb15
+2023-02-02,34151.6,33925.3,226.3,Bullish trend blocks SHORT,"KillSwitch already active (now=20:04, kill=16:31).",11176.0,151.0,2.0,0.9990059642147118,,,,,,2023,orb15
+2023-02-03,34019.5,33792.2,227.3,,"KillSwitch already active (now=16:41, kill=16:31).",12747.0,,2.0,0.998479472883933,,,,,,2023,orb15
+2023-02-04,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-02-05,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-02-06,33820.7,33638.2,182.5,"Neutral trend, policy=BlockAll","KillSwitch already active (now=18:06, kill=16:31).",20772.0,200.0,20.0,1.0,,,,,,2023,orb15
+2023-02-07,33919.4,33688.1,231.3,,"KillSwitch already active (now=17:46, kill=16:31).",18168.0,,19.0,1.0,,,,,,2023,orb15
+2023-02-08,34153.2,34015.2,138.0,,"KillSwitch already active (now=17:40, kill=16:31).",14568.0,,15.0,1.0,,,,,,2023,orb15
+2023-02-09,34224.1,34072.6,151.5,,"KillSwitch already active (now=17:33, kill=16:31).",25788.0,,16.0,1.0,,,,,,2023,orb15
+2023-02-10,33754.2,33515.1,239.1,,"KillSwitch already active (now=17:32, kill=16:31).",21921.0,,3.0,0.9996806132226124,,,,,,2023,orb15
+2023-02-11,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-02-12,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-02-13,33929.8,33807.8,122.0,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:44, kill=16:31).",25391.0,467.0,18.0,1.0,,,,,,2023,orb15
+2023-02-14,34511.6,34113.2,398.4,,existing open bot position found: ORBV_US30.cash_20230214 vo,19343.0,,20.0,0.999790838736666,,,,,,2023,orb15
+2023-02-15,34056.3,33874.7,181.6,,"KillSwitch already active (now=19:01, kill=16:31).",7503.0,,11.0,0.9983579638752051,,,,,,2023,orb15
+2023-02-16,34173.6,33768.4,405.2,,"ClosePositionsTime already reached (now=20:51, close=20:50).",6138.0,,10.0,0.997624703087886,,,,,,2023,orb15
+2023-02-17,33601.2,33470.2,131.0,"Neutral trend, policy=BlockAll","KillSwitch already active (now=20:36, kill=16:31).",27507.0,89.0,4.0,0.9993634627625716,,,,,,2023,orb15
+2023-02-18,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-02-19,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-02-20,33825.1,33728.1,97.0,,existing open bot position found: ORBV_US30.cash_20230220 vo,1809.0,,18.0,0.985691573926868,,,,,,2023,orb15
+2023-02-21,33717.1,33457.5,259.6,,"KillSwitch already active (now=16:33, kill=16:31).",27966.0,,22.0,1.0,,,,,,2023,orb15
+2023-02-22,33230.8,33067.7,163.1,,"ClosePositionsTime already reached (now=21:32, close=20:50).",9577.0,,6.0,0.9990485252140818,,,,,,2023,orb15
+2023-02-23,33188.2,33072.2,116.0,,MaxTradesPerDay reached (1/1).,18441.0,,11.0,0.999537251272559,,,,,,2023,orb15
+2023-02-24,33122.1,32747.3,374.8,,MaxTradesPerDay reached (1/1).,12590.0,,4.0,0.998180991359709,,,,,,2023,orb15
+2023-02-25,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-02-26,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-02-27,33068.8,32838.0,230.8,,"KillSwitch already active (now=20:38, kill=16:31).",3431.0,,1.0,0.9934735315445976,,,,,,2023,orb15
+2023-02-28,32991.6,32766.4,225.2,"Neutral trend, policy=BlockAll","KillSwitch already active (now=19:06, kill=16:31).",17321.0,208.0,27.0,0.999657651489216,,,,,,2023,orb15
+2023-03-01,32744.0,32548.0,196.0,"Neutral trend, policy=BlockAll","ClosePositionsTime already reached (now=21:32, close=20:50).",2825.0,16.0,4.0,0.999702469503124,,,,,,2023,orb15
+2023-03-02,32777.1,32604.5,172.6,,"KillSwitch already active (now=17:32, kill=16:31).",17316.0,,19.0,1.0,,,,,,2023,orb15
+2023-03-03,33153.7,32931.9,221.8,,"KillSwitch already active (now=18:00, kill=16:31).",14316.0,,14.0,0.9989373007438894,,,,,,2023,orb15
+2023-03-04,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-03-05,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-03-06,33463.1,33339.4,123.7,,existing open bot position found: ORBV_US30.cash_20230306 vo,11231.0,,6.0,0.9988776655443324,,,,,,2023,orb15
+2023-03-07,33496.2,33409.7,86.5,,existing open bot position found: ORBV_US30.cash_20230307 vo,30940.0,,43.0,1.0,,,,,,2023,orb15
+2023-03-08,32920.6,32787.8,132.8,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:36, kill=16:31).",19487.0,34.0,10.0,0.9987277353689568,,,,,,2023,orb15
+2023-03-09,32903.9,32713.5,190.4,,existing open bot position found: ORBV_US30.cash_20230309 vo,22329.0,,13.0,1.0,,,,,,2023,orb15
+2023-03-10,32333.2,31991.6,341.6,,"KillSwitch already active (now=18:16, kill=16:31).",14955.0,,8.0,0.9984559958826555,,,,,,2023,orb15
+2023-03-11,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-03-12,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-03-13,32251.2,31520.8,730.4,,,,,,,,,,ORB range 730.4 pips >= max 500. Standing down.,1.0,2023,orb15
+2023-03-14,32183.1,31829.6,353.5,,"KillSwitch already active (now=19:12, kill=16:31).",7724.0,,1.0,0.9658899020601148,,,,,,2023,orb15
+2023-03-15,32148.0,31447.0,701.0,,,290.0,,,0.8684396328547894,,,,ORB range 701.0 pips >= max 500. Standing down.,1.0,2023,orb15
+2023-03-16,31988.9,31565.8,423.1,,"KillSwitch already active (now=16:51, kill=16:31).",24779.0,,18.0,0.9990662931839402,,,,,,2023,orb15
+2023-03-17,32339.4,31830.2,509.2,,_noTradeToday=true (range/day filter).,13737.0,,2.0,0.996752435673245,,,,ORB range 509.2 pips >= max 500. Standing down.,1.0,2023,orb15
+2023-03-18,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-03-19,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-03-20,32254.1,31429.2,824.9,,_noTradeToday=true (range/day filter).,2375.0,,7.0,0.9975734699379888,,,,ORB range 824.9 pips >= max 500. Standing down.,1.0,2023,orb15
+2023-03-21,32596.0,32261.8,334.2,,,111.0,,,0.978698906160046,,,,,,2023,orb15
+2023-03-22,32619.1,32450.6,168.5,,"KillSwitch already active (now=17:05, kill=16:31).",13928.0,,19.0,0.998185117967332,,,,,,2023,orb15
+2023-03-23,32332.4,32004.4,328.0,,existing open bot position found: ORBV_US30.cash_20230323 vo,13917.0,,2.0,0.999086201644837,,,,,,2023,orb15
+2023-03-24,32216.0,31736.8,479.2,,"KillSwitch already active (now=20:00, kill=16:31).",2818.0,,1.0,0.9963861641713992,,,,,,2023,orb15
+2023-03-25,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-03-26,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-03-27,32540.2,32256.2,284.0,,"KillSwitch already active (now=19:01, kill=16:31).",783.0,,3.0,0.997586484312148,,,,,,2023,orb15
+2023-03-28,32544.5,32369.4,175.1,,"KillSwitch already active (now=17:34, kill=16:31).",6944.0,,9.0,0.9995240361732508,,,,,,2023,orb15
+2023-03-29,32678.9,32540.1,138.8,,"KillSwitch already active (now=19:19, kill=16:31).",3443.0,,21.0,0.9982713915298184,,,,,,2023,orb15
+2023-03-30,32929.4,32758.8,170.6,"Neutral trend, policy=BlockAll",existing open bot position found: ORBV_US30.cash_20230330 vo,7384.0,4.0,7.0,0.9972516686297606,,,,,,2023,orb15
+2023-03-31,33054.4,32818.0,236.4,,existing open bot position found: ORBV_US30.cash_20230331 vo,12823.0,,32.0,1.0,,,,,,2023,orb15
+2023-04-01,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-04-02,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-04-03,33636.2,33334.7,301.5,,,,,,,,,,,,2023,orb15
+2023-04-04,33689.2,33487.7,201.5,,"KillSwitch already active (now=17:08, kill=16:31).",21541.0,,26.0,0.9979454065159964,,,,,,2023,orb15
+2023-04-05,33528.1,33314.1,214.0,,,,,,,,,,,,2023,orb15
+2023-04-06,33542.1,33331.1,211.0,,,173.0,,,0.932859909619109,,,,,,2023,orb15
+2023-04-08,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-04-09,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-04-10,33523.6,33331.8,191.8,,"KillSwitch already active (now=16:40, kill=16:31).",9111.0,,39.0,1.0,,,,,,2023,orb15
+2023-04-11,33678.1,33555.3,122.8,,existing open bot position found: ORBV_US30.cash_20230411 vo,10175.0,,39.0,0.9994568169473113,,,,,,2023,orb15
+2023-04-12,33946.2,33723.0,223.2,"Neutral trend, policy=BlockAll","KillSwitch already active (now=19:04, kill=16:31).",10739.0,51.0,28.0,0.9997102289191538,,,,,,2023,orb15
+2023-04-13,33784.1,33583.6,200.5,,"KillSwitch already active (now=17:03, kill=16:31).",14625.0,,33.0,0.9982588508415554,,,,,,2023,orb15
+2023-04-14,34104.9,33823.4,281.5,,"KillSwitch already active (now=16:46, kill=16:31).",12861.0,,7.0,0.9996095275283092,,,,,,2023,orb15
+2023-04-15,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-04-16,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-04-17,33962.9,33868.1,94.8,,"KillSwitch already active (now=16:57, kill=16:31).",7340.0,,24.0,1.0,,,,,,2023,orb15
+2023-04-18,34131.5,33826.3,305.2,,,623.0,,,0.9946151409566044,,,,,,2023,orb15
+2023-04-19,33948.3,33799.7,148.6,,,1.0,,,0.2724458204334365,,,,,,2023,orb15
+2023-04-20,33768.9,33661.0,107.9,"Neutral trend, policy=BlockAll",existing open bot position found: ORBV_US30.cash_20230420 vo,11676.0,40.0,18.0,1.0,1.0,1.0,1.0,,,2023,orb15
+2023-04-21,33856.5,33706.9,149.6,Bullish trend blocks SHORT,,1370.0,28.0,,0.9974782852339592,,,,,,2023,orb15
+2023-04-22,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-04-23,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-04-24,33883.7,33683.7,200.0,,,302.0,,,0.8829712683952349,,,,,,2023,orb15
+2023-04-25,33865.6,33690.0,175.6,,"KillSwitch already active (now=16:55, kill=16:31).",12721.0,,28.0,0.9988649262202044,,,,,,2023,orb15
+2023-04-26,33643.2,33356.8,286.4,,"KillSwitch already active (now=17:58, kill=16:31).",9323.0,,22.0,0.998452012383901,,,,,,2023,orb15
+2023-04-27,33568.1,33364.6,203.5,,"KillSwitch already active (now=16:31, kill=16:31).",12578.0,,35.0,1.0,1.0,1.0,1.0,,,2023,orb15
+2023-04-28,33994.9,33644.1,350.8,,"KillSwitch already active (now=17:39, kill=16:31).",14266.0,,11.0,0.9995835068721366,,,,,,2023,orb15
+2023-04-29,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-04-30,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-05-01,34205.6,34063.3,142.3,,existing open bot position found: ORBV_US30.cash_20230501 vo,6319.0,,31.0,1.0,,,,,,2023,orb15
+2023-05-02,34013.4,33621.1,392.3,,existing open bot position found: ORBV_US30.cash_20230502 vo,14095.0,,5.0,0.998107852412488,,,,,,2023,orb15
+2023-05-03,33756.7,33633.6,123.1,,"KillSwitch already active (now=18:01, kill=16:31).",13066.0,,21.0,0.9987113402061856,,,,,,2023,orb15
+2023-05-04,33452.6,33015.5,437.1,,,2723.0,,,0.9572107765451664,,,,,,2023,orb15
+2023-05-05,33612.0,33162.5,449.5,,"KillSwitch already active (now=18:28, kill=16:31).",5149.0,,15.0,0.9989875126560918,,,,,,2023,orb15
+2023-05-06,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-05-07,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-05-08,33775.1,33571.5,203.6,,"KillSwitch already active (now=18:08, kill=16:31).",1875.0,,2.0,0.9991876523151908,,,,,,2023,orb15
+2023-05-09,33650.3,33463.0,187.3,,,,,,,,,,,,2023,orb15
+2023-05-10,33781.6,33442.1,339.5,"Neutral trend, policy=BlockAll",MaxTradesPerDay reached (1/1).,13826.0,18.0,9.0,0.9992616293379276,,,,,,2023,orb15
+2023-05-11,33596.3,33105.1,491.2,,,,,,,,,,,,2023,orb15
+2023-05-12,33483.8,33293.1,190.7,,existing open bot position found: ORBV_US30.cash_20230512 vo,17122.0,,14.0,0.9996213555471412,,,,,,2023,orb15
+2023-05-13,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-05-14,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-05-15,33447.8,33156.9,290.9,,,,,,,,,,,,2023,orb15
+2023-05-16,33337.9,33077.5,260.4,,"KillSwitch already active (now=18:11, kill=16:31).",3233.0,,26.0,0.9985935302390998,,,,,,2023,orb15
+2023-05-17,33185.6,33038.1,147.5,,MaxTradesPerDay reached (1/1).,13846.0,,41.0,1.0,,,,,,2023,orb15
+2023-05-18,33476.8,33255.9,220.9,,"KillSwitch already active (now=17:30, kill=16:31).",6052.0,,24.0,1.0,,,,,,2023,orb15
+2023-05-19,33657.9,33530.3,127.6,Bullish trend blocks SHORT,"KillSwitch already active (now=16:32, kill=16:31).",20085.0,128.0,10.0,0.99932478055368,,,,,,2023,orb15
+2023-05-20,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-05-21,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-05-22,33511.6,33198.6,313.0,,,,,,,,,,,,2023,orb15
+2023-05-23,33288.3,33109.2,179.1,,"KillSwitch already active (now=18:22, kill=16:31).",9372.0,,22.0,0.9980430528375732,,,,,,2023,orb15
+2023-05-24,33058.1,32810.1,248.0,,existing open bot position found: ORBV_US30.cash_20230524 vo,11974.0,,17.0,0.9989297181591152,,,,,,2023,orb15
+2023-05-25,32833.3,32659.4,173.9,,"KillSwitch already active (now=16:35, kill=16:31).",2330.0,,5.0,0.9973753280839897,,,,,,2023,orb15
+2023-05-26,33137.2,32696.4,440.8,,,483.0,,,0.9542410714285716,,,,,,2023,orb15
+2023-05-27,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-05-28,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-05-29,33200.7,33122.1,78.6,,existing open bot position found: ORBV_US30.cash_20230529 vo,406.0,,7.0,1.0,,,,,,2023,orb15
+2023-05-30,33187.5,32935.5,252.0,,"KillSwitch already active (now=17:29, kill=16:31).",2590.0,,2.0,0.9996048992493086,,,,,,2023,orb15
+2023-05-31,33000.8,32741.6,259.2,,,280.0,,,0.725181295323831,,,,,,2023,orb15
+2023-06-01,32982.7,32681.0,301.7,,"KillSwitch already active (now=17:01, kill=16:31).",14058.0,,32.0,1.0,,,,,,2023,orb15
+2023-06-02,33527.4,33144.4,383.0,,existing open bot position found: ORBV_US30.cash_20230602 vo,15905.0,,19.0,1.0,,,,,,2023,orb15
+2023-06-03,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-06-04,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-06-05,33826.8,33654.9,171.9,,"KillSwitch already active (now=17:29, kill=16:31).",12979.0,,31.0,0.9982638888888888,,,,,,2023,orb15
+2023-06-06,33585.6,33484.3,101.3,,"KillSwitch already active (now=17:26, kill=16:31).",3754.0,,11.0,0.9970958373668926,,,,,,2023,orb15
+2023-06-07,33668.8,33499.5,169.3,,"KillSwitch already active (now=19:13, kill=16:31).",4148.0,,7.0,0.9971711456859972,,,,,,2023,orb15
+2023-06-08,33752.1,33592.6,159.5,,MaxTradesPerDay reached (1/1).,11297.0,,26.0,1.0,,,,,,2023,orb15
+2023-06-09,33945.3,33740.7,204.6,,,1083.0,,,0.9318028359216746,,,,,,2023,orb15
+2023-06-10,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-06-11,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-06-12,33999.2,33870.0,129.2,,"KillSwitch already active (now=19:02, kill=16:31).",4115.0,,22.0,0.9977628635346756,,,,,,2023,orb15
+2023-06-13,34308.6,34038.5,270.1,,,,,,,,,,,,2023,orb15
+2023-06-14,34196.5,34010.7,185.8,,"KillSwitch already active (now=18:01, kill=16:31).",11241.0,,36.0,0.9985422740524782,,,,,,2023,orb15
+2023-06-15,34232.1,33853.6,378.5,,"KillSwitch already active (now=17:46, kill=16:31).",16787.0,,24.0,1.0,,,,,,2023,orb15
+2023-06-16,34573.8,34380.6,193.2,,"KillSwitch already active (now=18:33, kill=16:31).",5886.0,,12.0,0.9996001599360256,,,,,,2023,orb15
+2023-06-17,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-06-18,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-06-19,34307.7,34178.7,129.0,,existing open bot position found: ORBV_US30.cash_20230619 vo,130.0,,1.0,0.98159509202454,,,,,,2023,orb15
+2023-06-20,34236.3,33907.5,328.8,,,,,,,,,,,,2023,orb15
+2023-06-21,34080.6,33870.4,210.2,,"KillSwitch already active (now=18:33, kill=16:31).",776.0,,1.0,0.9945217024863042,,,,,,2023,orb15
+2023-06-22,34008.3,33821.6,186.7,,,,,,,,,,,,2023,orb15
+2023-06-23,33868.6,33622.9,245.7,,,,,,,,,,,,2023,orb15
+2023-06-24,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-06-25,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-06-26,33800.7,33644.5,156.2,"Neutral trend, policy=BlockAll",,843.0,14.0,,0.9960681520314548,,,,,,2023,orb15
+2023-06-27,33859.5,33653.3,206.2,,"KillSwitch already active (now=17:21, kill=16:31).",11181.0,,26.0,1.0,,,,,,2023,orb15
+2023-06-28,33968.3,33759.1,209.2,,,78.0,,,0.9203252032520324,,,,,,2023,orb15
+2023-06-29,34078.7,33810.2,268.5,,"KillSwitch already active (now=17:00, kill=16:31).",8381.0,,20.0,0.9986382206082616,,,,,,2023,orb15
+2023-06-30,34401.8,34113.5,288.3,,"KillSwitch already active (now=17:27, kill=16:31).",6107.0,,16.0,0.999375390381012,,,,,,2023,orb15
+2023-07-01,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-07-02,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-07-03,34403.4,34287.6,115.8,,"KillSwitch already active (now=16:38, kill=16:31).",4241.0,,16.0,1.0,,,,,,2023,orb15
+2023-07-04,34422.0,34365.1,56.9,,,,,,,,,,,,2023,orb15
+2023-07-05,34347.1,34218.0,129.1,,,1343.0,,,0.9269311064718164,,,,,,2023,orb15
+2023-07-06,34159.5,33825.2,334.3,,,4326.0,,,0.9948269001193792,,,,,,2023,orb15
+2023-07-07,33946.5,33764.5,182.0,,"KillSwitch already active (now=16:34, kill=16:31).",5635.0,,19.0,1.0,,,,,,2023,orb15
+2023-07-08,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-07-09,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-07-10,33966.2,33656.8,309.4,,,,,,,,,,,,2023,orb15
+2023-07-11,34111.7,33856.7,255.0,,existing open bot position found: ORBV_US30.cash_20230711 vo,9625.0,,41.0,1.0,,,,,,2023,orb15
+2023-07-12,34586.7,34282.8,303.9,,,,,,,,,,,,2023,orb15
+2023-07-13,34471.9,34373.3,98.6,,existing open bot position found: ORBV_US30.cash_20230713 vo,1002.0,,20.0,0.995475113122172,,,,,,2023,orb15
+2023-07-14,34599.3,34340.9,258.4,,,,,,,,,,,,2023,orb15
+2023-07-15,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-07-16,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-07-17,34566.3,34406.4,159.9,,existing open bot position found: ORBV_US30.cash_20230717 vo,8161.0,,42.0,1.0,,,,,,2023,orb15
+2023-07-18,34826.7,34516.0,310.7,,existing open bot position found: ORBV_US30.cash_20230718 vo,13227.0,,44.0,0.9996064541519089,,,,,,2023,orb15
+2023-07-19,35234.1,34922.9,311.2,,,,,,,,,,,,2023,orb15
+2023-07-20,35291.6,35041.6,250.0,,,8733.0,,,0.9995435874030124,,,,,,2023,orb15
+2023-07-21,35341.6,35176.1,165.5,,,3.0,,,0.6755969714618522,,,,,,2023,orb15
+2023-07-22,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-07-23,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-07-24,35408.1,35231.5,176.6,,existing open bot position found: ORBV_US30.cash_20230724 vo,10434.0,,20.0,0.9983498349834984,,,,,,2023,orb15
+2023-07-25,35447.0,35362.7,84.3,,existing open bot position found: ORBV_US30.cash_20230725 vo,7778.0,,23.0,1.0,,,,,,2023,orb15
+2023-07-26,35459.5,35309.7,149.8,,existing open bot position found: ORBV_US30.cash_20230726 vo,10351.0,,34.0,1.0,,,,,,2023,orb15
+2023-07-27,35688.0,35543.2,144.8,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:21, kill=16:31).",14137.0,1.0,34.0,0.999420625724218,,,,,,2023,orb15
+2023-07-28,35510.0,35310.9,199.1,,,2563.0,,,0.9438886472379296,,,,,,2023,orb15
+2023-07-29,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-07-30,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-07-31,35541.2,35430.7,110.5,,"KillSwitch already active (now=20:00, kill=16:31).",864.0,,16.0,0.998829496683574,,,,,,2023,orb15
+2023-08-01,35678.1,35442.3,235.8,,,,,,,,,,,,2023,orb15
+2023-08-02,35564.8,35347.3,217.5,,"KillSwitch already active (now=18:12, kill=16:31).",8069.0,,31.0,0.9986743261157754,,,,,,2023,orb15
+2023-08-03,35264.2,35112.7,151.5,,"KillSwitch already active (now=16:44, kill=16:31).",7477.0,,4.0,0.9986504723346828,,,,,,2023,orb15
+2023-08-04,35416.3,35146.8,269.5,,existing open bot position found: ORBV_US30.cash_20230804 vo,11836.0,,10.0,1.0,,,,,,2023,orb15
+2023-08-05,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-08-06,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-08-07,35410.5,35093.4,317.1,,"KillSwitch already active (now=17:13, kill=16:31).",9926.0,,31.0,1.0,,,,,,2023,orb15
+2023-08-08,35417.8,35003.9,413.9,,,,,,,,,,,,2023,orb15
+2023-08-09,35410.7,35260.5,150.2,,existing open bot position found: ORBV_US30.cash_20230809 vo,12146.0,,35.0,1.0,,,,,,2023,orb15
+2023-08-10,35573.7,35175.7,398.0,,"KillSwitch already active (now=17:56, kill=16:31).",4400.0,,4.0,0.9988317757009346,,,,,,2023,orb15
+2023-08-11,35342.5,35045.0,297.5,,,221.0,,,0.8116545265348596,,,,,,2023,orb15
+2023-08-12,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-08-13,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-08-14,35394.6,35164.7,229.9,,,,,,,,,,,,2023,orb15
+2023-08-15,35188.2,34967.3,220.9,,"KillSwitch already active (now=19:27, kill=16:31).",3498.0,,26.0,0.9995240361732508,,,,,,2023,orb15
+2023-08-16,35134.5,34882.0,252.5,,"KillSwitch already active (now=17:09, kill=16:31).",8655.0,,27.0,0.9996429846483398,,,,,,2023,orb15
+2023-08-17,34889.9,34729.5,160.4,,"KillSwitch already active (now=17:21, kill=16:31).",13927.0,,36.0,0.9996429846483398,,,,,,2023,orb15
+2023-08-18,34475.2,34260.7,214.5,,"KillSwitch already active (now=17:13, kill=16:31).",15892.0,,7.0,0.999691453255168,,,,,,2023,orb15
+2023-08-19,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-08-20,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-08-21,34648.7,34341.9,306.8,,existing open bot position found: ORBV_US30.cash_20230821 vo,6960.0,,1.0,0.9953970080552358,,,,,,2023,orb15
+2023-08-22,34591.1,34357.4,233.7,,existing open bot position found: ORBV_US30.cash_20230822 vo,15490.0,,38.0,0.9995903318312168,,,,,,2023,orb15
+2023-08-23,34445.1,34288.6,156.5,,"KillSwitch already active (now=17:05, kill=16:31).",8928.0,,27.0,1.0,,,,,,2023,orb15
+2023-08-24,34693.5,34392.0,301.5,,existing open bot position found: ORBV_US30.cash_20230824 vo,21982.0,,30.0,1.0,,,,,,2023,orb15
+2023-08-25,34359.1,34088.7,270.4,,"KillSwitch already active (now=18:21, kill=16:31).",7945.0,,1.0,0.9946151409566044,,,,,,2023,orb15
+2023-08-26,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-08-27,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-08-28,34662.7,34398.3,264.4,,,,,,,,,,,,2023,orb15
+2023-08-29,34707.4,34493.0,214.4,,existing open bot position found: ORBV_US30.cash_20230829 vo,11909.0,,40.0,0.9991119005328596,0.0,1.0,1.0,,,2023,orb15
+2023-08-30,35025.6,34793.2,232.4,,,,,,,,,,,,2023,orb15
+2023-08-31,35097.4,34940.9,156.5,,existing open bot position found: ORBV_US30.cash_20230831 vo,16009.0,,35.0,0.9990917347865578,,1.0,,,,2023,orb15
+2023-09-01,34972.6,34814.3,158.3,,"KillSwitch already active (now=16:54, kill=16:31).",11808.0,,10.0,0.9994821336095288,,,,,,2023,orb15
+2023-09-02,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-09-03,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-09-04,34935.1,34771.8,163.3,,,917.0,,,0.998914223669924,,,,,,2023,orb15
+2023-09-05,34887.7,34724.2,163.5,,"KillSwitch already active (now=17:08, kill=16:31).",5992.0,,29.0,1.0,,,,,,2023,orb15
+2023-09-06,34617.0,34481.8,135.2,,"KillSwitch already active (now=16:31, kill=16:31).",15683.0,,31.0,0.9995936611133686,,,,,,2023,orb15
+2023-09-07,34517.1,34330.7,186.4,,"KillSwitch already active (now=17:18, kill=16:31).",4792.0,,6.0,0.9935760171306208,,,,,,2023,orb15
+2023-09-08,34611.7,34410.6,201.1,,,1509.0,,,0.9991079393398752,,,,,,2023,orb15
+2023-09-09,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-09-10,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-09-11,34789.8,34601.7,188.1,"Neutral trend, policy=BlockAll",,1649.0,13.0,,0.9939070830159938,,,,,,2023,orb15
+2023-09-12,34645.5,34531.9,113.6,,"KillSwitch already active (now=16:36, kill=16:31).",11332.0,,25.0,1.0,1.0,1.0,2.0,,,2023,orb15
+2023-09-13,34773.4,34551.0,222.4,,"KillSwitch already active (now=18:55, kill=16:31).",1931.0,,4.0,0.9995497523638002,,,,,,2023,orb15
+2023-09-14,34825.4,34575.8,249.6,,existing open bot position found: ORBV_US30.cash_20230914 vo,9837.0,,35.0,0.9994256174612292,,,,,,2023,orb15
+2023-09-15,35012.3,34753.1,259.2,,existing open bot position found: ORBV_US30.cash_20230915 vo,16032.0,,22.0,1.0,2.0,1.0,2.0,,,2023,orb15
+2023-09-16,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-09-17,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-09-18,34680.4,34538.3,142.1,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:31, kill=16:31).",5263.0,37.0,5.0,1.0,,,,,,2023,orb15
+2023-09-19,34683.6,34416.8,266.8,,existing open bot position found: ORBV_US30.cash_20230919 vo,7645.0,,11.0,1.0,,,,,,2023,orb15
+2023-09-20,34693.7,34520.3,173.4,,"KillSwitch already active (now=16:53, kill=16:31).",10212.0,,43.0,0.9995027349577325,,,,,,2023,orb15
+2023-09-21,34406.5,34163.9,242.6,,"KillSwitch already active (now=19:29, kill=16:31).",4230.0,,26.0,1.0,,,,,,2023,orb15
+2023-09-22,34146.5,34000.5,146.0,,"KillSwitch already active (now=17:39, kill=16:31).",3109.0,,5.0,0.9985096870342772,,,,,,2023,orb15
+2023-09-23,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-09-24,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-09-25,34087.6,33803.8,283.8,,,651.0,,,0.9198913781398506,,,,,,2023,orb15
+2023-09-26,33921.7,33696.6,225.1,,existing open bot position found: ORBV_US30.cash_20230926 vo,11936.0,,25.0,1.0,,,,,,2023,orb15
+2023-09-27,33761.6,33570.8,190.8,,existing open bot position found: ORBV_US30.cash_20230927 vo,18117.0,,17.0,0.9996001599360256,1.0,1.0,1.0,,,2023,orb15
+2023-09-28,33654.3,33453.7,200.6,,"KillSwitch already active (now=16:51, kill=16:31).",13177.0,,29.0,0.999650471862985,,,,,,2023,orb15
+2023-09-29,33898.9,33679.3,219.6,,"KillSwitch already active (now=16:53, kill=16:31).",19950.0,,9.0,0.9994256174612292,,,,,,2023,orb15
+2023-09-30,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-10-01,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-10-02,33706.7,33349.8,356.9,,"KillSwitch already active (now=16:50, kill=16:31).",12626.0,,5.0,1.0,,,,,,2023,orb15
+2023-10-03,33489.4,33110.8,378.6,,"KillSwitch already active (now=18:53, kill=16:31).",23138.0,,20.0,1.0,,,,,,2023,orb15
+2023-10-04,33091.5,32877.8,213.7,,"KillSwitch already active (now=19:18, kill=16:31).",5865.0,,4.0,1.0,,,,,,2023,orb15
+2023-10-05,33145.9,32969.1,176.8,,"KillSwitch already active (now=17:03, kill=16:31).",3991.0,,4.0,0.9971408148677626,,,,,,2023,orb15
+2023-10-06,33219.4,32843.3,376.1,,"KillSwitch already active (now=17:14, kill=16:31).",16864.0,,11.0,0.9992254066615028,,,,,,2023,orb15
+2023-10-07,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-10-08,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-10-09,33419.8,33158.8,261.0,,existing open bot position found: ORBV_US30.cash_20231009 vo,10611.0,,28.0,0.9996213555471412,,,,,,2023,orb15
+2023-10-10,33792.6,33592.4,200.2,,existing open bot position found: ORBV_US30.cash_20231010 vo,8144.0,,3.0,0.9988982739625412,,,,,,2023,orb15
+2023-10-11,33886.6,33736.1,150.5,"Neutral trend, policy=BlockAll",existing open bot position found: ORBV_US30.cash_20231011 vo,11878.0,16.0,13.0,0.9994900560938296,,,,,,2023,orb15
+2023-10-12,33973.6,33660.2,313.4,,"KillSwitch already active (now=17:09, kill=16:31).",11435.0,,28.0,1.0,,,,,,2023,orb15
+2023-10-13,33963.2,33574.2,389.0,,,570.0,,,0.8600337268128162,,,,,,2023,orb15
+2023-10-14,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-10-15,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-10-16,33958.8,33700.3,258.5,,"KillSwitch already active (now=16:59, kill=16:31).",14255.0,,34.0,0.9994385176866928,,,,,,2023,orb15
+2023-10-17,33985.5,33810.0,175.5,,"KillSwitch already active (now=17:26, kill=16:31).",8456.0,,2.0,0.9973353635325468,,,,,,2023,orb15
+2023-10-18,33993.9,33830.3,163.6,,"KillSwitch already active (now=18:42, kill=16:31).",20931.0,,17.0,0.9971051785139916,2.0,1.0,2.0,,,2023,orb15
+2023-10-19,33707.5,33544.3,163.2,"Neutral trend, policy=BlockAll","KillSwitch already active (now=20:47, kill=16:31).",16888.0,24.0,20.0,1.0,,,,,,2023,orb15
+2023-10-20,33422.0,33206.0,216.0,,"KillSwitch already active (now=19:10, kill=16:31).",4019.0,,4.0,0.9992810927390368,,,,,,2023,orb15
+2023-10-21,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-10-22,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-10-23,33132.3,32885.3,247.0,,"KillSwitch already active (now=16:56, kill=16:31).",6776.0,,4.0,0.9969088098918084,,,,,,2023,orb15
+2023-10-24,33260.3,32947.8,312.5,,,538.0,,,0.8628571428571429,,,,,,2023,orb15
+2023-10-25,33252.3,32990.9,261.4,,"ClosePositionsTime already reached (now=23:23, close=20:50).",484.0,,1.0,0.9734513274336284,,,,,,2023,orb15
+2023-10-26,33105.1,32854.5,250.6,,"KillSwitch already active (now=20:02, kill=16:31).",10776.0,,6.0,0.9983361064891846,,,,,,2023,orb15
+2023-10-27,32911.5,32662.0,249.5,,"KillSwitch already active (now=17:06, kill=16:31).",21607.0,,4.0,0.9993489583333334,,,,,,2023,orb15
+2023-10-28,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-10-29,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-10-30,32755.1,32528.6,226.5,,"KillSwitch already active (now=17:30, kill=16:31).",15987.0,,26.0,0.9971393543114018,,,,,,2023,orb15
+2023-10-31,33138.7,32787.6,351.1,,,,,,,,,,,,2023,orb15
+2023-11-01,33226.4,32911.0,315.4,,"KillSwitch already active (now=19:52, kill=16:31).",7773.0,,22.0,0.99932478055368,,,,,,2023,orb15
+2023-11-02,33616.7,33294.0,322.7,,"KillSwitch already active (now=17:02, kill=16:31).",18150.0,,27.0,1.0,0.0,1.0,1.0,,,2023,orb15
+2023-11-03,34071.9,33827.1,244.8,,"KillSwitch already active (now=17:05, kill=16:31).",12907.0,,3.0,0.9978308026030368,,,,,,2023,orb15
+2023-11-04,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-11-05,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-11-06,34132.3,34067.2,65.1,Bearish trend blocks LONG,"KillSwitch already active (now=18:20, kill=16:31).",8362.0,137.0,21.0,1.0,,,,,,2023,orb15
+2023-11-07,34077.9,33973.9,104.0,,"KillSwitch already active (now=16:49, kill=16:31).",18045.0,,29.0,0.998613037447989,,1.0,,,,2023,orb15
+2023-11-08,34219.2,34113.5,105.7,,MaxTradesPerDay reached (1/1).,13462.0,,20.0,0.9976470588235294,,,,,,2023,orb15
+2023-11-09,34218.7,34079.7,139.0,,"KillSwitch already active (now=18:02, kill=16:31).",17760.0,,24.0,1.0,,,,,,2023,orb15
+2023-11-10,34062.1,33891.3,170.8,,"KillSwitch already active (now=17:33, kill=16:31).",11408.0,,23.0,0.9995635093845484,,,,,,2023,orb15
+2023-11-11,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-11-12,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-11-13,34302.5,34187.0,115.5,,"KillSwitch already active (now=16:48, kill=16:31).",12210.0,,19.0,0.9987618654560462,,,,,,2023,orb15
+2023-11-14,34741.5,34285.7,455.8,,"KillSwitch already active (now=16:53, kill=16:31).",18325.0,,25.0,0.999505195447798,,,,,,2023,orb15
+2023-11-15,34984.6,34862.8,121.8,,"KillSwitch already active (now=19:02, kill=16:31).",6263.0,,4.0,0.9976617303195634,,,,,,2023,orb15
+2023-11-16,35001.7,34870.9,130.8,,"KillSwitch already active (now=19:55, kill=16:31).",9151.0,,1.0,0.9957446808510638,,,,,,2023,orb15
+2023-11-17,35098.9,34948.9,150.0,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:57, kill=16:31).",14236.0,221.0,11.0,0.9996480112636394,,,,,,2023,orb15
+2023-11-18,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-11-19,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-11-20,34988.1,34893.0,95.1,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:36, kill=16:31).",14760.0,25.0,36.0,1.0,7.0,1.0,7.0,,,2023,orb15
+2023-11-21,35150.7,35078.0,72.7,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:18, kill=16:31).",11438.0,173.0,23.0,0.9994051160023796,,,,,,2023,orb15
+2023-11-22,35197.0,35087.7,109.3,,existing open bot position found: ORBV_US30.cash_20231122 vo,15731.0,,30.0,0.9992429977289932,,,,,,2023,orb15
+2023-11-23,35322.4,35261.4,61.0,,existing open bot position found: ORBV_US30.cash_20231123 vo,995.0,,6.0,0.9972299168975068,,,,,,2023,orb15
+2023-11-24,35376.8,35302.2,74.6,,"KillSwitch already active (now=17:57, kill=16:31).",2711.0,,2.0,0.996216897856242,,,,,,2023,orb15
+2023-11-25,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-11-26,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-11-27,35377.7,35300.3,77.4,,,1022.0,,,0.9968051118210862,,,,,,2023,orb15
+2023-11-28,35366.5,35288.2,78.3,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:31, kill=16:31).",13991.0,152.0,30.0,0.999569151227919,,,,,,2023,orb15
+2023-11-29,35532.2,35432.9,99.3,"Neutral trend, policy=BlockAll","KillSwitch already active (now=18:04, kill=16:31).",6573.0,7.0,13.0,0.9994051160023796,,,,,,2023,orb15
+2023-11-30,35676.4,35510.1,166.3,,"KillSwitch already active (now=18:06, kill=16:31).",19028.0,,23.0,1.0,,,,,,2023,orb15
+2023-12-01,36035.0,35896.0,139.0,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:33, kill=16:31).",13908.0,8.0,14.0,0.998914223669924,,,,,,2023,orb15
+2023-12-02,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-12-03,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-12-04,36206.7,36026.3,180.4,,"ClosePositionsTime already reached (now=20:51, close=20:50).",978.0,,2.0,0.9955201592832256,,,,,,2023,orb15
+2023-12-05,36187.1,36060.0,127.1,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:54, kill=16:31).",3690.0,131.0,3.0,0.9996351696461144,,,,,,2023,orb15
+2023-12-06,36242.8,36136.3,106.5,,existing open bot position found: ORBV_US30.cash_20231206 vo,6432.0,,33.0,1.0,,,,,,2023,orb15
+2023-12-07,36123.6,35977.4,146.2,,existing open bot position found: ORBV_US30.cash_20231207 vo,5087.0,,12.0,1.0,,,,,,2023,orb15
+2023-12-08,36156.7,35963.5,193.2,"Neutral trend, policy=BlockAll","KillSwitch already active (now=18:25, kill=16:31).",12073.0,10.0,16.0,0.999684642068748,,,,,,2023,orb15
+2023-12-09,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-12-10,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-12-11,36262.6,36203.1,59.5,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:33, kill=16:31).",15771.0,316.0,36.0,0.998894213048286,,,,,,2023,orb15
+2023-12-12,36574.2,36420.4,153.8,"Neutral trend, policy=BlockAll","KillSwitch already active (now=20:06, kill=16:31).",4045.0,290.0,14.0,1.0,,,,,,2023,orb15
+2023-12-13,36660.5,36577.9,82.6,"Neutral trend, policy=BlockAll","KillSwitch already active (now=18:18, kill=16:31).",14627.0,317.0,25.0,0.999586947542338,,,,,,2023,orb15
+2023-12-14,37313.8,37142.0,171.8,"Neutral trend, policy=BlockAll","KillSwitch already active (now=18:49, kill=16:31).",3823.0,52.0,7.0,1.0,,,,,,2023,orb15
+2023-12-15,37402.2,37173.5,228.7,,MaxTradesPerDay reached (1/1).,2365.0,,3.0,0.9962049335863375,,,,,,2023,orb15
+2023-12-16,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-12-17,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-12-18,37375.5,37295.2,80.3,"Neutral trend, policy=BlockAll","KillSwitch already active (now=19:31, kill=16:31).",2082.0,10.0,14.0,1.0,,,,,,2023,orb15
+2023-12-19,37399.5,37300.0,99.5,,existing open bot position found: ORBV_US30.cash_20231219 vo,12846.0,,35.0,1.0,,,,,,2023,orb15
+2023-12-20,37572.0,37458.0,114.0,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:34, kill=16:31).",12890.0,10.0,25.0,0.9988249118683902,,,,,,2023,orb15
+2023-12-21,37381.8,37212.5,169.3,,MaxTradesPerDay reached (1/1).,7897.0,,5.0,0.9992887624466572,,,,,,2023,orb15
+2023-12-22,37379.0,37247.2,131.8,,existing open bot position found: ORBV_US30.cash_20231222 vo,16125.0,,23.0,0.999383096853794,5.0,1.0,6.0,,,2023,orb15
+2023-12-23,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb15
+2023-12-24,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb15
+2023-12-26,37466.7,37375.1,91.6,,existing open bot position found: ORBV_US30.cash_20231226 vo,9521.0,,40.0,1.0,2.0,1.0,2.0,,,2023,orb15
+2023-12-27,37563.5,37506.9,56.6,,MaxTradesPerDay reached (1/1).,14913.0,,36.0,1.0,,,,,,2023,orb15
+2023-12-28,37691.2,37603.6,87.6,"Neutral trend, policy=BlockAll",existing open bot position found: ORBV_US30.cash_20231228 vo,13756.0,175.0,34.0,1.0,,1.0,,,,2023,orb15
+2023-12-29,37787.2,37698.2,89.0,,existing open bot position found: ORBV_US30.cash_20231229 vo,15024.0,,24.0,0.9993906154783668,1.0,1.0,1.0,,,2023,orb15
+2024-01-02,37811.4,37461.4,350.0,,,,,,,,,,,,2024,orb15
+2024-01-03,37726.8,37553.2,173.6,,existing open bot position found: ORBV_US30.cash_20240103 vo,17361.0,,28.0,0.9996125532739248,,,,,,2024,orb15
+2024-01-04,37541.1,37451.9,89.2,,"KillSwitch already active (now=16:54, kill=16:31).",13699.0,,6.0,1.0,,,,,,2024,orb15
+2024-01-05,37454.3,37249.3,205.0,"Neutral trend, policy=BlockAll",existing open bot position found: ORBV_US30.cash_20240105 vo,13742.0,89.0,6.0,0.999259807549963,,,,,,2024,orb15
+2024-01-06,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-01-07,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-01-08,37371.9,37215.4,156.5,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:41, kill=16:31).",14940.0,16.0,36.0,0.9988776655443324,,,,,,2024,orb15
+2024-01-09,37614.1,37439.8,174.3,,existing open bot position found: ORBV_US30.cash_20240109 vo,5874.0,,7.0,0.9982300884955752,,,,,,2024,orb15
+2024-01-10,37552.1,37466.5,85.6,,existing open bot position found: ORBV_US30.cash_20240110 vo,16873.0,,55.0,0.9995497523638002,3.0,1.0,4.0,,,2024,orb15
+2024-01-11,37811.1,37590.0,221.1,,"KillSwitch already active (now=18:07, kill=16:31).",12248.0,,3.0,0.9980879541108988,,,,,,2024,orb15
+2024-01-12,37795.7,37441.7,354.0,"Neutral trend, policy=BlockAll",,885.0,138.0,,0.9984871406959154,,,,,,2024,orb15
+2024-01-13,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-01-14,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-01-15,37598.6,37491.4,107.2,,,,,,,,,,,,2024,orb15
+2024-01-16,37550.2,37381.9,168.3,"Neutral trend, policy=BlockAll","KillSwitch already active (now=18:54, kill=16:31).",15462.0,11.0,19.0,0.9995782370307889,,,,,,2024,orb15
+2024-01-17,37267.0,37149.9,117.1,,"KillSwitch already active (now=16:54, kill=16:31).",10523.0,,5.0,0.9964570416297608,,,,,,2024,orb15
+2024-01-18,37334.7,37180.6,154.1,,MaxTradesPerDay reached (1/1).,10805.0,,30.0,0.9996270048489369,,,,,,2024,orb15
+2024-01-19,37705.8,37461.0,244.8,,"KillSwitch already active (now=18:16, kill=16:31).",10020.0,,10.0,0.9991386735572784,,,,,,2024,orb15
+2024-01-20,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-01-21,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-01-22,37986.0,37875.2,110.8,,MaxTradesPerDay reached (1/1).,12120.0,,29.0,0.9995100440960314,,,,,,2024,orb15
+2024-01-23,38023.2,37922.3,100.9,,MaxTradesPerDay reached (1/1).,14579.0,,24.0,0.9994256174612292,,,,,,2024,orb15
+2024-01-24,38078.1,37936.6,141.5,,"KillSwitch already active (now=18:40, kill=16:31).",10169.0,,21.0,1.0,,,,,,2024,orb15
+2024-01-25,37937.0,37753.6,183.4,"Neutral trend, policy=BlockAll","ClosePositionsTime already reached (now=20:51, close=20:50).",6090.0,14.0,9.0,0.9984813971146546,,,,,,2024,orb15
+2024-01-26,38070.4,37906.1,164.3,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:12, kill=16:31).",18102.0,254.0,10.0,1.0,,,,,,2024,orb15
+2024-01-27,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-01-28,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-01-29,38112.2,38038.2,74.0,,existing open bot position found: ORBV_US30.cash_20240129 vo,10874.0,,28.0,0.9994051160023796,,,,,,2024,orb15
+2024-01-30,38304.5,38238.4,66.1,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:19, kill=16:31).",14570.0,121.0,27.0,1.0,,,,,,2024,orb15
+2024-01-31,38565.4,38468.4,97.0,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:42, kill=16:31).",14721.0,2.0,22.0,0.9990749306197966,,,,,,2024,orb15
+2024-02-01,38244.9,38126.2,118.7,,"KillSwitch already active (now=17:05, kill=16:31).",19877.0,,18.0,0.9992912827781716,,,,,,2024,orb15
+2024-02-02,38588.1,38343.9,244.2,,"KillSwitch already active (now=18:33, kill=16:31).",12528.0,,5.0,1.0,,,,,,2024,orb15
+2024-02-03,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-02-04,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-02-05,38692.6,38520.2,172.4,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:23, kill=16:31).",21479.0,528.0,28.0,0.999685633448601,,,,,,2024,orb15
+2024-02-06,38403.5,38276.1,127.4,,existing open bot position found: ORBV_US30.cash_20240206 vo,23297.0,,25.0,0.999580008399832,4.0,1.0,5.0,,,2024,orb15
+2024-02-07,38652.6,38455.6,197.0,,MaxTradesPerDay reached (1/1).,16698.0,,28.0,1.0,,,,,,2024,orb15
+2024-02-08,38731.4,38612.6,118.8,,"KillSwitch already active (now=16:32, kill=16:31).",6039.0,,6.0,0.9994977398292316,,,,,,2024,orb15
+2024-02-09,38893.9,38695.0,198.9,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:36, kill=16:31).",15123.0,1.0,25.0,1.0,,,,,,2024,orb15
+2024-02-10,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-02-11,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-02-12,38661.2,38602.2,59.0,"Neutral trend, policy=BlockAll",existing open bot position found: ORBV_US30.cash_20240212 vo,19149.0,273.0,30.0,1.0,,1.0,,,,2024,orb15
+2024-02-13,38820.7,38385.4,435.3,,existing open bot position found: ORBV_US30.cash_20240213 vo,23480.0,,27.0,0.9991158267020336,1.0,1.0,1.0,,,2024,orb15
+2024-02-14,38424.1,38290.0,134.1,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:44, kill=16:31).",6325.0,3.0,13.0,1.0,,,,,,2024,orb15
+2024-02-15,38528.2,38431.8,96.4,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:54, kill=16:31).",20060.0,37.0,24.0,1.0,,1.0,,,,2024,orb15
+2024-02-16,38754.0,38603.2,150.8,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:09, kill=16:31).",7346.0,93.0,9.0,0.9992372234935164,,,,,,2024,orb15
+2024-02-17,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-02-18,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-02-19,38666.7,38597.7,69.0,,"ClosePositionsTime already reached (now=23:34, close=20:50).",467.0,,7.0,1.0,,,,,,2024,orb15
+2024-02-20,38578.1,38450.3,127.8,"Neutral trend, policy=BlockAll","ClosePositionsTime already reached (now=21:00, close=20:50).",10519.0,307.0,3.0,0.9985528219971056,,,,,,2024,orb15
+2024-02-21,38536.9,38463.9,73.0,,existing open bot position found: ORBV_US30.cash_20240221 vo,11159.0,,21.0,0.9983766233766234,4.0,1.0,4.0,,,2024,orb15
+2024-02-22,38867.8,38676.4,191.4,,MaxTradesPerDay reached (1/1).,19463.0,,38.0,0.9980506822612084,,,,,,2024,orb15
+2024-02-23,39188.7,39036.8,151.9,,MaxTradesPerDay reached (1/1).,9590.0,,1.0,0.9996064541519089,,,,,,2024,orb15
+2024-02-24,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-02-25,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-02-26,39166.3,39056.8,109.5,,MaxTradesPerDay reached (1/1).,4664.0,,10.0,0.9992006394884092,,,,,,2024,orb15
+2024-02-27,39112.0,39026.0,86.0,,existing open bot position found: ORBV_US30.cash_20240227 vo,17136.0,,47.0,0.999691453255168,,,,,,2024,orb15
+2024-02-28,38913.7,38771.2,142.5,,MaxTradesPerDay reached (1/1).,3519.0,,10.0,0.9995393827729158,,,,,,2024,orb15
+2024-02-29,39061.6,38788.7,272.9,,,126.0,,,0.9376723662437948,,,,,,2024,orb15
+2024-03-01,39011.3,38882.3,129.0,,MaxTradesPerDay reached (1/1).,16450.0,,10.0,0.9996970614965162,,,,,,2024,orb15
+2024-03-02,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-03-03,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-03-04,39046.3,38863.1,183.2,,"KillSwitch already active (now=17:29, kill=16:31).",2574.0,,7.0,0.9989023051591658,,,,,,2024,orb15
+2024-03-05,38962.1,38834.1,128.0,,existing open bot position found: ORBV_US30.cash_20240305 vo,24051.0,,30.0,0.9989220265900108,2.0,1.0,2.0,,,2024,orb15
+2024-03-06,38803.8,38572.5,231.3,,existing open bot position found: ORBV_US30.cash_20240306 vo,4303.0,,2.0,0.9993979530403372,,,,,,2024,orb15
+2024-03-07,38859.7,38521.2,338.5,,existing open bot position found: ORBV_US30.cash_20240307 vo,3394.0,,6.0,0.9996001599360256,,,,,,2024,orb15
+2024-03-08,38825.6,38596.1,229.5,,,16075.0,,,0.9873417721518988,,,,,,2024,orb15
+2024-03-09,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-03-10,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-03-11,38697.3,38474.4,222.9,,"KillSwitch already active (now=17:36, kill=16:31).",12068.0,,25.0,1.0,,,,,,2024,orb15
+2024-03-12,38974.6,38638.9,335.7,,"KillSwitch already active (now=18:04, kill=16:31).",12665.0,,27.0,0.9995635093845484,,,,,,2024,orb15
+2024-03-13,39160.6,38993.5,167.1,,"KillSwitch already active (now=16:31, kill=16:31).",4751.0,,6.0,0.9995147986414362,,,,,,2024,orb15
+2024-03-14,39229.1,38838.6,390.5,,"KillSwitch already active (now=19:01, kill=16:31).",4499.0,,3.0,0.998430141287284,,,,,,2024,orb15
+2024-03-15,38991.5,38722.8,268.7,,"KillSwitch already active (now=16:36, kill=16:31).",10177.0,,9.0,0.996978851963746,,,,,,2024,orb15
+2024-03-16,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-03-17,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-03-18,38891.9,38657.7,234.2,,,659.0,,,0.9391808026479108,,,,,,2024,orb15
+2024-03-19,38896.2,38687.2,209.0,,existing open bot position found: ORBV_US30.cash_20240319 vo,16184.0,,30.0,0.9995654063450674,,,,,,2024,orb15
+2024-03-20,39143.8,38997.3,146.5,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:57, kill=16:31).",13375.0,2.0,31.0,0.9982788296041308,,,,,,2024,orb15
+2024-03-21,39861.1,39588.3,272.8,,,867.0,,,0.9201213346814964,,,,,,2024,orb15
+2024-03-22,39850.9,39639.3,211.6,,existing open bot position found: ORBV_US30.cash_20240322 vo,13295.0,,19.0,1.0,1.0,1.0,1.0,,,2024,orb15
+2024-03-23,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-03-24,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-03-25,39459.7,39345.4,114.3,,"KillSwitch already active (now=16:46, kill=16:31).",7149.0,,37.0,0.998613037447989,,,,,,2024,orb15
+2024-03-26,39429.0,39302.85,126.2,,"KillSwitch already active (now=19:56, kill=16:31).",565.0,,3.0,0.9974141115626156,,,,,,2024,orb15
+2024-03-27,39623.65,39425.75,197.9,,"KillSwitch already active (now=19:29, kill=16:31).",3865.0,,21.0,1.0,,,,,,2024,orb15
+2024-03-28,39855.65,39713.35,142.3,,"KillSwitch already active (now=19:27, kill=16:31).",141.0,,1.0,0.9968847352024922,,,,,,2024,orb15
+2024-03-30,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-03-31,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-04-01,39945.85,39563.35,382.5,,existing open bot position found: ORBV_US30.cash_20240401 vo,12790.0,,50.0,0.9987819732034106,,1.0,,,,2024,orb15
+2024-04-02,39473.45,39048.55,424.9,,,13.0,,,0.6551297898640296,,,,,,2024,orb15
+2024-04-03,39311.55,39112.85,198.7,,"KillSwitch already active (now=19:13, kill=16:31).",1486.0,,7.0,0.9974701843151428,,,,,,2024,orb15
+2024-04-04,39425.35,39227.55,197.8,,"KillSwitch already active (now=17:48, kill=16:31).",14633.0,,29.0,0.9995709995709996,,,,,,2024,orb15
+2024-04-05,38761.25,38585.65,175.6,,"KillSwitch already active (now=17:11, kill=16:31).",22291.0,,5.0,1.0,,,,,,2024,orb15
+2024-04-06,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-04-07,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-04-08,39013.15,38800.35,212.8,,,,,,,,,,,,2024,orb15
+2024-04-09,38992.75,38796.55,196.2,,existing open bot position found: ORBV_US30.cash_20240409 vo,17666.0,,10.0,0.9993714644877436,,1.0,,,,2024,orb15
+2024-04-10,39028.45,38334.25,694.2,,_noTradeToday=true (range/day filter).,1757.0,,1.0,0.99672131147541,,,,ORB range 694.2 pips >= max 500. Standing down.,1.0,2024,orb15
+2024-04-11,38566.15,38195.15,371.0,,"KillSwitch already active (now=18:09, kill=16:31).",1513.0,,1.0,0.9989102796948782,,,,,,2024,orb15
+2024-04-12,38567.95,38117.25,450.7,,"KillSwitch already active (now=16:39, kill=16:31).",17567.0,,8.0,0.9996711608023676,,1.0,,,,2024,orb15
+2024-04-13,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-04-14,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-04-15,38376.95,38047.95,329.0,,"KillSwitch already active (now=17:22, kill=16:31).",18268.0,,18.0,0.999033193683532,2.0,1.0,2.0,,,2024,orb15
+2024-04-16,38033.95,37654.95,379.0,,,,,,,,,,,,2024,orb15
+2024-04-17,38011.95,37810.45,201.5,,"KillSwitch already active (now=20:43, kill=16:31).",20429.0,,16.0,0.9947643979057592,,,,,,2024,orb15
+2024-04-18,38014.65,37750.15,264.5,,"ClosePositionsTime already reached (now=23:20, close=20:50).",11176.0,,8.0,0.9972299168975068,,,,,,2024,orb15
+2024-04-19,37998.15,37589.25,408.9,,,3360.0,,,0.9237744403513743,,,,,,2024,orb15
+2024-04-20,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-04-21,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-04-22,38222.25,37999.15,223.1,,"KillSwitch already active (now=17:34, kill=16:31).",12681.0,,22.0,0.9989447766443896,,,,,,2024,orb15
+2024-04-23,38439.05,38245.15,193.9,,"KillSwitch already active (now=17:03, kill=16:31).",17980.0,,43.0,0.9984756097560976,,,,,,2024,orb15
+2024-04-24,38532.25,38412.15,120.1,,"KillSwitch already active (now=17:03, kill=16:31).",11751.0,,14.0,0.997920997920998,,,,,,2024,orb15
+2024-04-25,38393.95,37748.85,645.1,,,,,,,,,,ORB range 645.1 pips >= max 500. Standing down.,1.0,2024,orb15
+2024-04-26,38306.65,38052.95,253.7,,"KillSwitch already active (now=17:14, kill=16:31).",2198.0,,3.0,0.998185117967332,,,,,,2024,orb15
+2024-04-27,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-04-28,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-04-29,38400.75,38266.65,134.1,,"KillSwitch already active (now=19:04, kill=16:31).",684.0,,2.0,0.9976617303195634,,,,,,2024,orb15
+2024-04-30,38389.45,38131.15,258.3,"Neutral trend, policy=BlockAll",existing open bot position found: ORBV_US30.cash_20240430 vo,19137.0,12.0,38.0,1.0,,1.0,,,,2024,orb15
+2024-05-01,37935.85,37701.35,234.5,,"KillSwitch already active (now=17:23, kill=16:31).",13385.0,,25.0,0.999000999000999,,,,,,2024,orb15
+2024-05-02,38160.75,37891.85,268.9,,"KillSwitch already active (now=17:31, kill=16:31).",10328.0,,20.0,0.99927060539752,,,,,,2024,orb15
+2024-05-03,38807.05,38460.85,346.2,,,,,,,,,,,,2024,orb15
+2024-05-04,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-05-05,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-05-06,38879.15,38704.35,174.8,,,633.0,,,0.9987277353689568,,,,,,2024,orb15
+2024-05-07,38981.35,38844.95,136.4,,"KillSwitch already active (now=18:33, kill=16:31).",83.0,,1.0,0.994098955969133,,,,,,2024,orb15
+2024-05-08,38918.85,38798.05,120.8,,existing open bot position found: ORBV_US30.cash_20240508 vo,12885.0,,42.0,1.0,1.0,1.0,1.0,,,2024,orb15
+2024-05-09,39222.55,38950.25,272.3,,existing open bot position found: ORBV_US30.cash_20240509 vo,12555.0,,39.0,1.0,0.0,1.0,1.0,,,2024,orb15
+2024-05-10,39580.55,39453.25,127.3,Bullish trend blocks SHORT,existing open bot position found: ORBV_US30.cash_20240510 vo,3259.0,22.0,2.0,0.9971509971509972,,,,,,2024,orb15
+2024-05-11,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-05-12,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-05-13,39655.75,39519.55,136.2,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:42, kill=16:31).",10737.0,51.0,37.0,1.0,,1.0,,,,2024,orb15
+2024-05-14,39547.95,39292.05,255.9,,"KillSwitch already active (now=18:41, kill=16:31).",3849.0,,29.0,0.9990749306197966,,,,,,2024,orb15
+2024-05-15,39796.75,39531.25,265.5,,existing open bot position found: ORBV_US30.cash_20240515 vo,10276.0,,48.0,0.9994848016486348,0.0,1.0,1.0,,,2024,orb15
+2024-05-16,39995.95,39871.85,124.1,,existing open bot position found: ORBV_US30.cash_20240516 vo,4613.0,,8.0,0.9980430528375732,,,,,,2024,orb15
+2024-05-17,39934.15,39821.25,112.9,,"KillSwitch already active (now=17:13, kill=16:31).",4437.0,,22.0,1.0,,,,,,2024,orb15
+2024-05-18,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-05-19,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-05-20,40052.15,39901.55,150.6,,existing open bot position found: ORBV_US30.cash_20240520 vo,7791.0,,25.0,0.999537251272559,,,,,,2024,orb15
+2024-05-21,39872.65,39777.25,95.4,,MaxTradesPerDay reached (1/1).,1397.0,,21.0,1.0,,,,,,2024,orb15
+2024-05-22,39886.25,39781.75,104.5,,"KillSwitch already active (now=17:37, kill=16:31).",10929.0,,29.0,0.9995615957913196,,,,,,2024,orb15
+2024-05-23,39783.55,39382.95,400.6,,"KillSwitch already active (now=16:45, kill=16:31).",17095.0,,33.0,1.0,,,,,,2024,orb15
+2024-05-24,39195.35,39081.95,113.4,,"KillSwitch already active (now=18:56, kill=16:31).",4497.0,,13.0,0.998719590268886,,,,,,2024,orb15
+2024-05-25,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-05-26,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-05-27,39057.25,39008.15,49.1,"Neutral trend, policy=BlockAll",existing open bot position found: ORBV_US30.cash_20240527 vo,1522.0,53.0,20.0,1.0,,,,,,2024,orb15
+2024-05-28,39105.85,38899.55,206.3,,"KillSwitch already active (now=16:57, kill=16:31).",11784.0,,36.0,1.0,,,,,,2024,orb15
+2024-05-29,38708.75,38414.85,293.9,,"KillSwitch already active (now=20:02, kill=16:31).",2227.0,,21.0,0.9968847352024922,,,,,,2024,orb15
+2024-05-30,38190.45,38009.95,180.5,,"KillSwitch already active (now=17:12, kill=16:31).",251.0,,1.0,0.9964253798033958,,,,,,2024,orb15
+2024-05-31,38261.35,38026.65,234.7,,"KillSwitch already active (now=17:35, kill=16:31).",11947.0,,11.0,0.9989806320081548,,,,,,2024,orb15
+2024-06-01,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-06-02,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-06-03,38739.05,38569.35,169.7,,"KillSwitch already active (now=18:01, kill=16:31).",19197.0,,23.0,1.0,,,,,,2024,orb15
+2024-06-04,38670.95,38336.45,334.5,,"KillSwitch already active (now=18:16, kill=16:31).",4941.0,,32.0,0.999580008399832,,,,,,2024,orb15
+2024-06-05,38834.55,38548.65,285.9,,"KillSwitch already active (now=18:34, kill=16:31).",859.0,,4.0,0.999519461797213,,,,,,2024,orb15
+2024-06-06,39006.75,38727.65,279.1,,,,,,,,,,,,2024,orb15
+2024-06-07,38992.95,38650.15,342.8,,"KillSwitch already active (now=17:24, kill=16:31).",1623.0,,2.0,0.998820290994888,,,,,,2024,orb15
+2024-06-08,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-06-09,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-06-10,38854.25,38660.25,194.0,,"KillSwitch already active (now=17:50, kill=16:31).",1334.0,,2.0,0.9956395348837208,,,,,,2024,orb15
+2024-06-11,38824.05,38426.95,397.1,,,,,,,,,,,,2024,orb15
+2024-06-12,39147.71,38765.71,382.0,,"KillSwitch already active (now=17:33, kill=16:31).",9266.0,,28.0,0.998745294855709,,,,,,2024,orb15
+2024-06-13,38725.91,38436.91,289.0,,existing open bot position found: ORBV_US30.cash_20240613 vo,1964.0,,1.0,0.9946568023016852,,,,,,2024,orb15
+2024-06-14,38536.61,38281.11,255.5,,"KillSwitch already active (now=17:21, kill=16:31).",9269.0,,5.0,0.9973353635325468,,,,,,2024,orb15
+2024-06-15,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-06-16,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-06-17,38590.31,38422.95,167.4,,existing open bot position found: ORBV_US30.cash_20240617 vo,16000.0,,38.0,1.0,2.0,1.0,2.0,,,2024,orb15
+2024-06-18,38940.65,38726.65,214.0,,,2.0,,,0.8108108108108109,,,,,,2024,orb15
+2024-06-19,38833.35,38771.75,61.6,,existing open bot position found: ORBV_US30.cash_20240619 vo,643.0,,11.0,1.0,,,,,,2024,orb15
+2024-06-20,39016.05,38760.25,255.8,,"KillSwitch already active (now=17:05, kill=16:31).",11012.0,,27.0,0.9989297181591152,,,,,,2024,orb15
+2024-06-21,39262.35,39053.85,208.5,,,,,,,,,,,,2024,orb15
+2024-06-22,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-06-23,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-06-24,39514.15,39189.75,324.4,,,4094.0,,,0.981450252951096,,,,,,2024,orb15
+2024-06-25,39459.15,39222.65,236.5,,existing open bot position found: ORBV_US30.cash_20240625 vo,15793.0,,39.0,0.9995456610631532,4.0,1.0,4.0,,,2024,orb15
+2024-06-26,39160.15,38911.65,248.5,,"KillSwitch already active (now=17:59, kill=16:31).",3556.0,,5.0,0.998463901689708,,,,,,2024,orb15
+2024-06-27,39197.65,39025.55,172.1,,"KillSwitch already active (now=17:01, kill=16:31).",6532.0,,3.0,0.9978768577494692,,,,,,2024,orb15
+2024-06-28,39437.65,39097.15,340.5,,"KillSwitch already active (now=18:21, kill=16:31).",5999.0,,6.0,0.9991235758106924,,,,,,2024,orb15
+2024-06-29,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-06-30,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-07-01,39452.75,39141.65,311.1,,"KillSwitch already active (now=18:47, kill=16:31).",8203.0,,23.0,1.0,,,,,,2024,orb15
+2024-07-02,39219.25,38995.65,223.6,,"KillSwitch already active (now=17:52, kill=16:31).",5397.0,,30.0,0.9986595174262736,,,,,,2024,orb15
+2024-07-03,39418.75,39288.95,129.8,,,6366.0,,,0.9930242100943784,,,,,,2024,orb15
+2024-07-04,39439.95,39282.85,157.1,,,1.0,,,0.1423487544483985,,,,,,2024,orb15
+2024-07-05,39374.65,39158.75,215.9,,"KillSwitch already active (now=19:45, kill=16:31).",637.0,,6.0,0.9989594172736732,,,,,,2024,orb15
+2024-07-06,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-07-07,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-07-08,39679.85,39352.05,327.8,,"KillSwitch already active (now=17:03, kill=16:31).",10545.0,,19.0,0.999462654486835,,,,,,2024,orb15
+2024-07-09,39399.85,39139.65,260.2,,"KillSwitch already active (now=16:41, kill=16:31).",3988.0,,6.0,0.998095238095238,,,,,,2024,orb15
+2024-07-10,39361.35,39262.85,98.5,,existing open bot position found: ORBV_US30.cash_20240710 vo,13190.0,,39.0,1.0,4.0,1.0,4.0,,,2024,orb15
+2024-07-11,39871.95,39622.85,249.1,,,,,,,,,,,,2024,orb15
+2024-07-12,39964.45,39721.25,243.2,,MaxTradesPerDay reached (1/1).,16219.0,,16.0,1.0,,,,,,2024,orb15
+2024-07-13,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-07-14,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-07-15,40303.85,40118.95,184.9,,"KillSwitch already active (now=19:31, kill=16:31).",4074.0,,1.0,0.999353169469599,,,,,,2024,orb15
+2024-07-16,40768.15,40160.75,607.4,,_noTradeToday=true (range/day filter).,18183.0,,16.0,0.9996351696461144,,,,ORB range 607.4 pips >= max 500. Standing down.,1.0,2024,orb15
+2024-07-17,41134.15,40791.95,342.2,,"KillSwitch already active (now=19:01, kill=16:31).",17575.0,,18.0,0.9990141307919816,,,,,,2024,orb15
+2024-07-18,41380.15,41029.35,350.8,,"KillSwitch already active (now=17:52, kill=16:31).",20726.0,,22.0,1.0,,,,,,2024,orb15
+2024-07-19,40638.85,40361.15,277.7,,"KillSwitch already active (now=18:20, kill=16:31).",18935.0,,2.0,0.9966976883818672,,,,,,2024,orb15
+2024-07-20,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-07-21,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-07-22,40479.75,40221.15,258.6,,,,,,,,,,,,2024,orb15
+2024-07-23,40506.65,40312.25,194.4,,"ClosePositionsTime already reached (now=22:06, close=20:50).",2196.0,,12.0,0.997067448680352,,,,,,2024,orb15
+2024-07-24,40258.95,39938.15,320.8,,"KillSwitch already active (now=18:51, kill=16:31).",4927.0,,4.0,0.9996001599360256,,,,,,2024,orb15
+2024-07-25,40084.35,39813.85,270.5,,existing open bot position found: ORBV_US30.cash_20240725 vo,15737.0,,2.0,0.9960552268244576,,,,,,2024,orb15
+2024-07-26,40609.35,40132.65,476.7,,"KillSwitch already active (now=17:29, kill=16:31).",10969.0,,2.0,0.9924812030075189,,,,,,2024,orb15
+2024-07-27,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-07-28,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-07-29,40821.75,40434.75,387.0,,,691.0,,,0.881153113951591,,,,,,2024,orb15
+2024-07-30,40778.45,40496.95,281.5,,,735.0,,,0.9488636363636364,,,,,,2024,orb15
+2024-07-31,40935.05,40647.35,287.7,,"KillSwitch already active (now=17:01, kill=16:31).",15811.0,,13.0,0.999383096853794,,1.0,,,,2024,orb15
+2024-08-01,41089.45,40578.95,510.5,,_noTradeToday=true (range/day filter).,29634.0,,15.0,0.9991673605328892,,,,ORB range 510.5 pips >= max 500. Standing down.,1.0,2024,orb15
+2024-08-02,40142.65,39595.55,547.1,,_noTradeToday=true (range/day filter).,21801.0,,1.0,0.998157248157248,,,,ORB range 547.1 pips >= max 500. Standing down.,1.0,2024,orb15
+2024-08-03,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-08-04,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-08-05,39237.65,38389.85,847.8,,,,,,,,,,ORB range 847.8 pips >= max 500. Standing down.,1.0,2024,orb15
+2024-08-06,39154.15,38628.65,525.5,,_noTradeToday=true (range/day filter).,17816.0,,8.0,0.9990574929311968,,,,ORB range 525.5 pips >= max 500. Standing down.,1.0,2024,orb15
+2024-08-07,39478.55,39157.05,321.5,,"KillSwitch already active (now=20:23, kill=16:31).",20086.0,,25.0,1.0,,,,,,2024,orb15
+2024-08-08,39344.65,38594.45,750.2,,_noTradeToday=true (range/day filter).,12396.0,,19.0,0.9996297667530544,,,,ORB range 750.2 pips >= max 500. Standing down.,1.0,2024,orb15
+2024-08-09,39575.75,39225.25,350.5,,"KillSwitch already active (now=17:31, kill=16:31).",924.0,,1.0,0.9966777408637876,,,,,,2024,orb15
+2024-08-10,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-08-11,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-08-12,39606.25,39240.35,365.9,,,,,,,,,,,,2024,orb15
+2024-08-13,39645.45,39222.05,423.4,,existing open bot position found: ORBV_US30.cash_20240813 vo,12707.0,,29.0,1.0,,,,,,2024,orb15
+2024-08-14,39874.85,39671.53,203.3,,"KillSwitch already active (now=18:03, kill=16:31).",18540.0,,23.0,1.0,,,,,,2024,orb15
+2024-08-15,40547.65,40003.55,544.1,,_noTradeToday=true (range/day filter).,4069.0,,19.0,0.9996033320111068,,,,ORB range 544.1 pips >= max 500. Standing down.,1.0,2024,orb15
+2024-08-16,40634.05,40416.15,217.9,,"KillSwitch already active (now=16:58, kill=16:31).",10644.0,,13.0,0.99906191369606,,,,,,2024,orb15
+2024-08-17,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-08-18,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-08-19,40824.15,40619.65,204.5,,"KillSwitch already active (now=16:51, kill=16:31).",11395.0,,35.0,1.0,,,,,,2024,orb15
+2024-08-20,40944.35,40786.15,158.2,,,1578.0,,,0.99073701167942,,,,,,2024,orb15
+2024-08-21,40953.75,40767.15,186.6,,,1298.0,,,0.9937888198757764,,,,,,2024,orb15
+2024-08-22,41025.75,40776.45,249.3,,"KillSwitch already active (now=16:57, kill=16:31).",17170.0,,19.0,1.0,,,,,,2024,orb15
+2024-08-23,41161.15,40812.25,348.9,,"KillSwitch already active (now=20:38, kill=16:31).",3769.0,,1.0,0.9814687714481812,,,,,,2024,orb15
+2024-08-24,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-08-25,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-08-26,41411.45,41180.85,230.6,,"KillSwitch already active (now=17:46, kill=16:31).",2401.0,,9.0,0.999650471862985,,,,,,2024,orb15
+2024-08-27,41292.65,41084.85,207.8,,,,,,,,,,,,2024,orb15
+2024-08-28,41361.75,41169.15,192.6,,"KillSwitch already active (now=17:15, kill=16:31).",19775.0,,17.0,0.9993293091884642,,,,,,2024,orb15
+2024-08-29,41409.25,41077.35,331.9,,"KillSwitch already active (now=16:51, kill=16:31).",9930.0,,5.0,1.0,,,,,,2024,orb15
+2024-08-30,41503.45,41318.95,184.5,,existing open bot position found: ORBV_US30.cash_20240830 vo,12029.0,,14.0,1.0,,,,,,2024,orb15
+2024-08-31,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-09-01,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-09-02,41525.05,41450.25,74.8,Bearish trend blocks LONG,"KillSwitch already active (now=16:34, kill=16:31).",949.0,9.0,4.0,0.9953917050691244,,,,,,2024,orb15
+2024-09-03,41517.35,41043.35,474.0,,"KillSwitch already active (now=18:01, kill=16:31).",9170.0,,28.0,0.9996324880558616,,,,,,2024,orb15
+2024-09-04,41081.25,40818.75,262.5,,,2046.0,,,0.8734177215189873,,,,,,2024,orb15
+2024-09-05,41088.95,40825.95,263.0,,"KillSwitch already active (now=18:01, kill=16:31).",18934.0,,26.0,0.99967958987504,,,,,,2024,orb15
+2024-09-06,41012.05,40579.75,432.3,,"KillSwitch already active (now=19:31, kill=16:31).",24290.0,,6.0,0.9996836444163238,2.0,1.0,2.0,,,2024,orb15
+2024-09-07,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-09-08,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-09-09,40803.65,40502.15,301.5,,"KillSwitch already active (now=16:35, kill=16:31).",12325.0,,23.0,0.9984871406959154,,,,,,2024,orb15
+2024-09-10,40929.75,40547.75,382.0,,,3804.0,,,0.9848005066497784,,,,,,2024,orb15
+2024-09-11,40652.65,40011.15,641.5,,_noTradeToday=true (range/day filter).,9621.0,,16.0,0.9944751381215468,,,,ORB range 641.5 pips >= max 500. Standing down.,1.0,2024,orb15
+2024-09-12,41016.45,40656.85,359.6,,"KillSwitch already active (now=17:31, kill=16:31).",8386.0,,38.0,0.9996297667530544,,,,,,2024,orb15
+2024-09-13,41420.05,41105.35,314.7,,"KillSwitch already active (now=19:55, kill=16:31).",7790.0,,2.0,0.9992810927390368,,,,,,2024,orb15
+2024-09-14,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-09-15,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-09-16,41742.35,41392.65,349.7,,,,,,,,,,,,2024,orb15
+2024-09-17,41838.05,41639.85,198.2,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:46, kill=16:31).",13794.0,9.0,24.0,1.0,,,,,,2024,orb15
+2024-09-18,41677.95,41477.85,200.1,,"KillSwitch already active (now=18:01, kill=16:31).",6183.0,,5.0,0.9973443493655948,,,,,,2024,orb15
+2024-09-19,42111.65,41831.65,280.0,,"KillSwitch already active (now=17:47, kill=16:31).",1527.0,,3.0,0.9986565158978952,,,,,,2024,orb15
+2024-09-20,42087.25,41860.85,226.4,,"KillSwitch already active (now=17:18, kill=16:31).",4443.0,,5.0,0.997624703087886,,,,,,2024,orb15
+2024-09-21,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-09-22,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-09-23,42173.45,42000.75,172.7,,,,,,,,,,,,2024,orb15
+2024-09-24,42244.25,42078.05,166.2,,"KillSwitch already active (now=18:31, kill=16:31).",928.0,,2.0,0.9990205680705192,,,,,,2024,orb15
+2024-09-25,42305.55,42008.55,297.0,,"KillSwitch already active (now=16:47, kill=16:31).",17411.0,,26.0,0.999595305544314,,,,,,2024,orb15
+2024-09-26,42198.35,42028.35,170.0,,"KillSwitch already active (now=18:16, kill=16:31).",1260.0,,20.0,0.9965122072745392,,,,,,2024,orb15
+2024-09-27,42553.75,42135.45,418.3,,existing open bot position found: ORBV_US30.cash_20240927 vo,2714.0,,2.0,0.9996170049789352,,,,,,2024,orb15
+2024-09-28,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-09-29,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-09-30,42309.05,42056.15,252.9,,"KillSwitch already active (now=18:20, kill=16:31).",2088.0,,7.0,0.9994086339444116,,,,,,2024,orb15
+2024-10-01,42284.85,41934.85,350.0,,"KillSwitch already active (now=18:33, kill=16:31).",2904.0,,1.0,0.99644128113879,,,,,,2024,orb15
+2024-10-02,42211.15,41978.15,233.0,,"KillSwitch already active (now=18:01, kill=16:31).",6903.0,,24.0,1.0,,,,,,2024,orb15
+2024-10-03,42141.55,41837.95,303.6,,,,,,,,,,,,2024,orb15
+2024-10-04,42332.25,41963.35,368.9,,"KillSwitch already active (now=19:49, kill=16:31).",1041.0,,4.0,0.9978118161925602,,,,,,2024,orb15
+2024-10-05,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-10-06,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-10-07,42287.75,42115.75,172.0,,existing open bot position found: ORBV_US30.cash_20241007 vo,12754.0,,44.0,1.0,,,,,,2024,orb15
+2024-10-08,42084.15,41867.25,216.9,,"KillSwitch already active (now=18:40, kill=16:31).",1643.0,,13.0,0.99935107073329,,,,,,2024,orb15
+2024-10-09,42301.05,41962.45,338.6,,"KillSwitch already active (now=16:55, kill=16:31).",14071.0,,31.0,1.0,,,,,,2024,orb15
+2024-10-10,42513.45,42355.25,158.2,,"KillSwitch already active (now=17:10, kill=16:31).",2917.0,,7.0,1.0,,,,,,2024,orb15
+2024-10-11,42791.95,42393.75,398.2,,"KillSwitch already active (now=17:46, kill=16:31).",7816.0,,20.0,0.9994416527079844,,,,,,2024,orb15
+2024-10-12,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-10-13,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-10-14,42908.65,42717.55,191.1,,existing open bot position found: ORBV_US30.cash_20241014 vo,10497.0,,53.0,1.0,4.0,1.0,4.0,,,2024,orb15
+2024-10-15,43173.35,42753.05,420.3,,"KillSwitch already active (now=19:05, kill=16:31).",3106.0,,26.0,1.0,,,,,,2024,orb15
+2024-10-16,42957.65,42687.15,270.5,,"KillSwitch already active (now=16:39, kill=16:31).",8977.0,,33.0,0.999383096853794,,,,,,2024,orb15
+2024-10-17,43282.65,43048.75,233.9,,"KillSwitch already active (now=17:43, kill=16:31).",644.0,,2.0,0.9944064636420136,,,,,,2024,orb15
+2024-10-18,43307.05,43035.65,271.4,,"KillSwitch already active (now=16:56, kill=16:31).",748.0,,3.0,0.9968051118210862,,,,,,2024,orb15
+2024-10-19,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-10-20,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-10-21,43311.95,43107.65,204.3,,existing open bot position found: ORBV_US30.cash_20241021 vo,16212.0,,37.0,0.9990205680705192,2.0,1.0,2.0,,,2024,orb15
+2024-10-22,42855.35,42714.25,141.1,"Neutral trend, policy=BlockAll",existing open bot position found: ORBV_US30.cash_20241022 vo,9704.0,5.0,23.0,1.0,2.0,1.0,2.0,,,2024,orb15
+2024-10-23,42818.55,42621.05,197.5,,existing open bot position found: ORBV_US30.cash_20241023 vo,15679.0,,34.0,0.99932478055368,1.0,1.0,1.0,,,2024,orb15
+2024-10-24,42517.35,42347.56,169.8,,existing open bot position found: ORBV_US30.cash_20241024 vo,7355.0,,6.0,0.9996125532739248,,,,,,2024,orb15
+2024-10-25,42604.06,42404.76,199.3,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:01, kill=16:31).",15297.0,26.0,18.0,0.9995746490854956,,,,,,2024,orb15
+2024-10-26,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-10-27,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-10-28,42473.26,42202.76,270.5,,,496.0,,,0.9929078014184396,,,,,,2024,orb15
+2024-10-29,42498.66,42168.66,330.0,,,,,,,,,,,,2024,orb15
+2024-10-30,42438.76,42117.36,321.4,,"ClosePositionsTime already reached (now=22:07, close=20:50).",825.0,,1.0,0.9904761904761904,,,,,,2024,orb15
+2024-10-31,42008.56,41825.76,182.8,,"KillSwitch already active (now=20:00, kill=16:31).",7254.0,,21.0,0.9993792675356922,,,,,,2024,orb15
+2024-11-01,42294.96,41811.06,483.9,,,1529.0,,,0.9683794466403162,,,,,,2024,orb15
+2024-11-02,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-11-03,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-11-04,42130.36,41951.56,178.8,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:44, kill=16:31).",19474.0,75.0,21.0,0.9993593850096092,,,,,,2024,orb15
+2024-11-05,41894.08,41804.88,89.2,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:31, kill=16:31).",20705.0,104.0,24.0,1.0,,,,,,2024,orb15
+2024-11-06,43643.68,43076.88,566.8,,_noTradeToday=true (range/day filter).,9872.0,,21.0,1.0,,,,ORB range 566.8 pips >= max 500. Standing down.,1.0,2024,orb15
+2024-11-07,43857.92,43702.92,155.0,,existing open bot position found: ORBV_US30.cash_20241107 vo,1676.0,,4.0,0.9989665862900448,,,,,,2024,orb15
+2024-11-08,43828.26,43703.46,124.8,,"KillSwitch already active (now=17:58, kill=16:31).",18305.0,,20.0,1.0,,,,,,2024,orb15
+2024-11-09,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-11-10,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-11-11,44222.16,44080.16,142.0,"Neutral trend, policy=BlockAll",existing open bot position found: ORBV_US30.cash_20241111 vo,16166.0,503.0,28.0,1.0,,,,,,2024,orb15
+2024-11-12,44386.06,44201.06,185.0,,MaxTradesPerDay reached (1/1).,17466.0,,34.0,0.9991158267020336,,,,,,2024,orb15
+2024-11-13,44037.56,43761.56,276.0,,"KillSwitch already active (now=16:42, kill=16:31).",10973.0,,10.0,0.9981343283582088,,,,,,2024,orb15
+2024-11-14,44114.36,43976.96,137.4,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:45, kill=16:31).",25655.0,77.0,35.0,0.9997127262280951,,,,,,2024,orb15
+2024-11-15,43656.76,43476.96,179.8,,"KillSwitch already active (now=17:51, kill=16:31).",22967.0,,15.0,0.999666777740753,,,,,,2024,orb15
+2024-11-16,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-11-17,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-11-18,43400.86,43248.86,152.0,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:39, kill=16:31).",8461.0,104.0,8.0,0.999666777740753,,,,,,2024,orb15
+2024-11-19,43469.16,42849.66,619.5,,,,,,,,,,ORB range 619.5 pips >= max 500. Standing down.,1.0,2024,orb15
+2024-11-20,43428.36,43249.26,179.1,,existing open bot position found: ORBV_US30.cash_20241120 vo,23649.0,,20.0,0.9997835966241072,,1.0,,,,2024,orb15
+2024-11-21,43619.96,43252.96,367.0,,"KillSwitch already active (now=17:29, kill=16:31).",19365.0,,27.0,0.9986772486772488,,,,,,2024,orb15
+2024-11-22,43941.66,43706.56,235.1,,existing open bot position found: ORBV_US30.cash_20241122 vo,26764.0,,25.0,0.9996599795987758,,,,,,2024,orb15
+2024-11-23,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-11-24,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-11-25,44702.66,44521.06,181.6,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:45, kill=16:31).",11147.0,472.0,12.0,0.9997222993612884,,,,,,2024,orb15
+2024-11-26,44812.56,44531.46,281.1,,MaxTradesPerDay reached (1/1).,10218.0,,17.0,0.998471726948548,,,,,,2024,orb15
+2024-11-27,44936.46,44786.06,150.4,"Neutral trend, policy=BlockAll","KillSwitch already active (now=18:28, kill=16:31).",12093.0,440.0,27.0,1.0,,,,,,2024,orb15
+2024-11-28,44802.96,44728.06,74.9,,existing open bot position found: ORBV_US30.cash_20241128 vo,2199.0,,31.0,0.9990205680705192,,,,,,2024,orb15
+2024-11-29,44913.46,44762.26,151.2,,"KillSwitch already active (now=16:43, kill=16:31).",6338.0,,6.0,0.9976905311778292,,,,,,2024,orb15
+2024-11-30,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-12-01,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-12-02,44974.06,44830.06,144.0,,MaxTradesPerDay reached (1/1).,17927.0,,33.0,1.0,,,,,,2024,orb15
+2024-12-03,44834.76,44735.55,99.2,,MaxTradesPerDay reached (1/1).,14874.0,,24.0,1.0,,,,,,2024,orb15
+2024-12-04,44934.66,44771.36,163.3,,existing open bot position found: ORBV_US30.cash_20241204 vo,8906.0,,29.0,0.9989258861439312,1.0,1.0,1.0,,,2024,orb15
+2024-12-05,45056.56,44928.86,127.7,,existing open bot position found: ORBV_US30.cash_20241205 vo,18034.0,,30.0,1.0,,,,,,2024,orb15
+2024-12-06,44878.16,44704.36,173.8,,MaxTradesPerDay reached (1/1).,9144.0,,27.0,1.0,,,,,,2024,orb15
+2024-12-07,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-12-08,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-12-09,44702.96,44582.16,120.8,,MaxTradesPerDay reached (1/1).,15545.0,,33.0,0.999057492931197,,,,,,2024,orb15
+2024-12-10,44427.56,44276.36,151.2,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:33, kill=16:31).",5979.0,591.0,11.0,0.9989594172736732,,,,,,2024,orb15
+2024-12-11,44366.26,44175.16,191.1,,"ClosePositionsTime already reached (now=20:55, close=20:50).",1847.0,,12.0,0.9973614775725592,,,,,,2024,orb15
+2024-12-12,44156.09,44026.26,129.8,,MaxTradesPerDay reached (1/1).,11174.0,,31.0,1.0,,,,,,2024,orb15
+2024-12-13,44042.16,43912.36,129.8,,existing open bot position found: ORBV_US30.cash_20241213 vo,22413.0,,19.0,0.999650471862985,,,,,,2024,orb15
+2024-12-14,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-12-15,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-12-16,43919.76,43814.36,105.4,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:14, kill=16:31).",15425.0,195.0,31.0,1.0,,,,,,2024,orb15
+2024-12-17,43608.56,43481.36,127.2,,MaxTradesPerDay reached (1/1).,23369.0,,24.0,0.9994848016486348,,,,,,2024,orb15
+2024-12-18,43626.46,43449.26,177.2,,"KillSwitch already active (now=17:20, kill=16:31).",27036.0,,23.0,1.0,,,,,,2024,orb15
+2024-12-19,42669.06,42377.06,292.0,,existing open bot position found: ORBV_US30.cash_20241219 vo,4843.0,,16.0,1.0,,,,,,2024,orb15
+2024-12-20,42284.16,42024.66,259.5,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:31, kill=16:31).",38457.0,81.0,13.0,0.999414405621706,,,,,,2024,orb15
+2024-12-21,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-12-22,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-12-23,42971.96,42608.46,363.5,,,9527.0,,,0.999687597625742,,,,,,2024,orb15
+2024-12-24,42918.16,42843.76,74.4,Bullish trend blocks SHORT,"KillSwitch already active (now=16:32, kill=16:31).",11813.0,225.0,7.0,1.0,,,,,,2024,orb15
+2024-12-26,43230.26,43017.16,213.1,,existing open bot position found: ORBV_US30.cash_20241226 vo,15228.0,,31.0,0.9986082115518442,,1.0,,,,2024,orb15
+2024-12-27,43211.26,43007.96,203.3,,"KillSwitch already active (now=16:42, kill=16:31).",27083.0,,21.0,0.9994711792702274,,,,,,2024,orb15
+2024-12-28,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb15
+2024-12-29,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb15
+2024-12-30,42934.96,42489.66,445.3,,existing open bot position found: ORBV_US30.cash_20241230 vo,11806.0,,7.0,0.999625608386372,1.0,1.0,1.0,,,2024,orb15
+2024-12-31,42714.16,42541.86,172.3,"Neutral trend, policy=BlockAll","KillSwitch already active (now=18:01, kill=16:31).",25871.0,35.0,16.0,0.9997674959311788,,,,,,2024,orb15
+2023-01-03,33491.0,33214.8,276.2,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:47, kill=16:31).",33845.0,181.0,15.0,1.0,,,,,,2023,orb25
+2023-01-04,33289.3,33170.2,119.1,,existing open bot position found: ORBV_US30.cash_20230104 vo,20660.0,,9.0,0.9984871406959152,,,,,,2023,orb25
+2023-01-05,33310.9,33026.8,284.1,,existing open bot position found: ORBV_US30.cash_20230105 vo,30885.0,,30.0,0.9997006884166416,,1.0,,,,2023,orb25
+2023-01-06,33311.9,32890.55,421.3,,"KillSwitch already active (now=18:07, kill=16:31).",25925.0,,13.0,0.9985052316890882,,,,,,2023,orb25
+2023-01-07,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-01-08,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-01-09,33773.1,33613.5,159.6,,"KillSwitch already active (now=17:30, kill=16:31).",19201.0,,15.0,0.99967958987504,,,,,,2023,orb25
+2023-01-10,33506.1,33342.7,163.4,"Neutral trend, policy=BlockAll","KillSwitch already active (now=18:07, kill=16:31).",28150.0,565.0,20.0,0.9997151808601538,,1.0,,,,2023,orb25
+2023-01-11,33844.2,33692.0,152.2,,existing open bot position found: ORBV_US30.cash_20230111 vo,11464.0,,19.0,1.0,,,,,,2023,orb25
+2023-01-12,34190.7,33700.1,490.6,,"KillSwitch already active (now=18:03, kill=16:31).",12971.0,,10.0,0.9963513892786976,,,,,,2023,orb25
+2023-01-13,34234.1,33880.2,353.9,,"KillSwitch already active (now=20:37, kill=16:31).",8350.0,,7.0,0.999259807549963,,,,,,2023,orb25
+2023-01-14,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-01-15,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-01-16,34315.0,34189.6,125.4,"Neutral trend, policy=BlockAll",existing open bot position found: ORBV_US30.cash_20230116 vo,675.0,55.0,4.0,0.9927007299270072,,,,,,2023,orb25
+2023-01-17,34260.6,34152.5,108.1,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:11, kill=16:31).",26217.0,158.0,26.0,1.0,,,,,,2023,orb25
+2023-01-18,34015.4,33872.7,142.7,,existing open bot position found: ORBV_US30.cash_20230118 vo,25796.0,,25.0,1.0,,,,,,2023,orb25
+2023-01-19,33244.0,32959.7,284.3,,,,,,,,,,,,2023,orb25
+2023-01-20,33142.1,32983.0,159.1,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:33, kill=16:31).",17393.0,326.0,13.0,0.999709386806161,,,,,,2023,orb25
+2023-01-21,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-01-22,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-01-23,33491.6,33346.2,145.4,Bullish trend blocks SHORT,existing open bot position found: ORBV_US30.cash_20230123 vo,25264.0,199.0,19.0,1.0,,,,,,2023,orb25
+2023-01-24,33644.6,33454.0,190.6,,existing open bot position found: ORBV_US30.cash_20230124 vo,17521.0,,17.0,0.9996429846483398,,,,,,2023,orb25
+2023-01-25,33697.1,33423.1,274.0,,MaxTradesPerDay reached (1/1).,13866.0,,25.0,0.9984202211690364,,,,,,2023,orb25
+2023-01-26,33871.3,33704.4,166.9,,existing open bot position found: ORBV_US30.cash_20230126 vo,12734.0,,20.0,1.0,,,,,,2023,orb25
+2023-01-27,33980.7,33871.7,109.0,,MaxTradesPerDay reached (1/1).,22354.0,,7.0,1.0,0.0,1.0,1.0,,,2023,orb25
+2023-01-28,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-01-29,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-01-30,33861.9,33704.4,157.5,"Neutral trend, policy=BlockAll","KillSwitch already active (now=18:17, kill=16:31).",19605.0,418.0,4.0,0.9993979530403372,,,,,,2023,orb25
+2023-01-31,33817.8,33510.7,307.1,,"KillSwitch already active (now=18:25, kill=16:31).",14965.0,,21.0,0.9995969367190648,,,,,,2023,orb25
+2023-02-01,34029.3,33882.3,147.0,,existing open bot position found: ORBV_US30.cash_20230201 vo,30318.0,,28.0,0.999704229517894,,,,,,2023,orb25
+2023-02-02,34151.6,33925.3,226.3,Bullish trend blocks SHORT,"KillSwitch already active (now=20:04, kill=16:31).",11176.0,151.0,2.0,0.9990059642147118,,,,,,2023,orb25
+2023-02-03,34019.5,33792.2,227.3,,"KillSwitch already active (now=16:41, kill=16:31).",12747.0,,2.0,0.998479472883933,,,,,,2023,orb25
+2023-02-04,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-02-05,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-02-06,33820.7,33638.2,182.5,"Neutral trend, policy=BlockAll","KillSwitch already active (now=18:06, kill=16:31).",20772.0,200.0,20.0,1.0,,,,,,2023,orb25
+2023-02-07,33919.4,33688.1,231.3,,"KillSwitch already active (now=17:46, kill=16:31).",18168.0,,19.0,1.0,,,,,,2023,orb25
+2023-02-08,34153.2,34015.2,138.0,,"KillSwitch already active (now=17:40, kill=16:31).",14568.0,,15.0,1.0,,,,,,2023,orb25
+2023-02-09,34224.1,34072.6,151.5,,"KillSwitch already active (now=17:33, kill=16:31).",25788.0,,16.0,1.0,,,,,,2023,orb25
+2023-02-10,33754.2,33515.1,239.1,,"KillSwitch already active (now=17:32, kill=16:31).",21921.0,,3.0,0.9996806132226124,,,,,,2023,orb25
+2023-02-11,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-02-12,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-02-13,33929.8,33807.8,122.0,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:44, kill=16:31).",25391.0,467.0,18.0,1.0,,,,,,2023,orb25
+2023-02-14,34511.6,34113.2,398.4,,existing open bot position found: ORBV_US30.cash_20230214 vo,19343.0,,20.0,0.999790838736666,,,,,,2023,orb25
+2023-02-15,34056.3,33874.7,181.6,,"KillSwitch already active (now=19:01, kill=16:31).",7503.0,,11.0,0.9983579638752051,,,,,,2023,orb25
+2023-02-16,34173.6,33768.4,405.2,,"ClosePositionsTime already reached (now=20:51, close=20:50).",6138.0,,10.0,0.997624703087886,,,,,,2023,orb25
+2023-02-17,33601.2,33470.2,131.0,"Neutral trend, policy=BlockAll","KillSwitch already active (now=20:36, kill=16:31).",27507.0,89.0,4.0,0.9993634627625716,,,,,,2023,orb25
+2023-02-18,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-02-19,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-02-20,33825.1,33728.1,97.0,,existing open bot position found: ORBV_US30.cash_20230220 vo,1809.0,,18.0,0.985691573926868,,,,,,2023,orb25
+2023-02-21,33717.1,33457.5,259.6,,"KillSwitch already active (now=16:33, kill=16:31).",27966.0,,22.0,1.0,,,,,,2023,orb25
+2023-02-22,33230.8,33067.7,163.1,,"ClosePositionsTime already reached (now=21:32, close=20:50).",9577.0,,6.0,0.9990485252140818,,,,,,2023,orb25
+2023-02-23,33188.2,33072.2,116.0,,MaxTradesPerDay reached (1/1).,18441.0,,11.0,0.999537251272559,,,,,,2023,orb25
+2023-02-24,33122.1,32747.3,374.8,,existing open bot position found: ORBV_US30.cash_20230224 vo,12590.0,,4.0,0.998180991359709,,,,,,2023,orb25
+2023-02-25,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-02-26,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-02-27,33068.8,32838.0,230.8,,"KillSwitch already active (now=20:38, kill=16:31).",3431.0,,1.0,0.9934735315445976,,,,,,2023,orb25
+2023-02-28,32991.6,32766.4,225.2,"Neutral trend, policy=BlockAll","KillSwitch already active (now=19:06, kill=16:31).",17321.0,208.0,27.0,0.999657651489216,,,,,,2023,orb25
+2023-03-01,32744.0,32548.0,196.0,"Neutral trend, policy=BlockAll","ClosePositionsTime already reached (now=21:32, close=20:50).",2825.0,16.0,4.0,0.999702469503124,,,,,,2023,orb25
+2023-03-02,32777.1,32604.5,172.6,,"KillSwitch already active (now=17:32, kill=16:31).",17316.0,,19.0,1.0,,,,,,2023,orb25
+2023-03-03,33153.7,32931.9,221.8,,"KillSwitch already active (now=18:00, kill=16:31).",14316.0,,14.0,0.9989373007438894,,,,,,2023,orb25
+2023-03-04,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-03-05,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-03-06,33463.1,33339.4,123.7,,existing open bot position found: ORBV_US30.cash_20230306 vo,11231.0,,6.0,0.9988776655443324,,,,,,2023,orb25
+2023-03-07,33496.2,33409.7,86.5,,existing open bot position found: ORBV_US30.cash_20230307 vo,30940.0,,43.0,1.0,,,,,,2023,orb25
+2023-03-08,32920.6,32787.8,132.8,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:36, kill=16:31).",19487.0,34.0,10.0,0.9987277353689568,,,,,,2023,orb25
+2023-03-09,32903.9,32713.5,190.4,,existing open bot position found: ORBV_US30.cash_20230309 vo,22329.0,,13.0,1.0,,,,,,2023,orb25
+2023-03-10,32333.2,31991.6,341.6,,"KillSwitch already active (now=18:16, kill=16:31).",14955.0,,8.0,0.9984559958826555,,,,,,2023,orb25
+2023-03-11,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-03-12,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-03-13,32251.2,31520.8,730.4,,,,,,,,,,ORB range 730.4 pips >= max 500. Standing down.,1.0,2023,orb25
+2023-03-14,32183.1,31829.6,353.5,,"KillSwitch already active (now=19:12, kill=16:31).",7724.0,,1.0,0.9658899020601148,,,,,,2023,orb25
+2023-03-15,32148.0,31447.0,701.0,,,290.0,,,0.8684396328547894,,,,ORB range 701.0 pips >= max 500. Standing down.,1.0,2023,orb25
+2023-03-16,31988.9,31565.8,423.1,,"KillSwitch already active (now=16:51, kill=16:31).",24779.0,,18.0,0.9990662931839402,,,,,,2023,orb25
+2023-03-17,32339.4,31830.2,509.2,,_noTradeToday=true (range/day filter).,13737.0,,2.0,0.996752435673245,,,,ORB range 509.2 pips >= max 500. Standing down.,1.0,2023,orb25
+2023-03-18,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-03-19,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-03-20,32254.1,31429.2,824.9,,_noTradeToday=true (range/day filter).,2375.0,,7.0,0.9975734699379888,,,,ORB range 824.9 pips >= max 500. Standing down.,1.0,2023,orb25
+2023-03-21,32596.0,32261.8,334.2,,,111.0,,,0.978698906160046,,,,,,2023,orb25
+2023-03-22,32619.1,32450.6,168.5,,"KillSwitch already active (now=17:05, kill=16:31).",13928.0,,19.0,0.998185117967332,,,,,,2023,orb25
+2023-03-23,32332.4,32004.4,328.0,,existing open bot position found: ORBV_US30.cash_20230323 vo,13917.0,,2.0,0.999086201644837,,,,,,2023,orb25
+2023-03-24,32216.0,31736.8,479.2,,"KillSwitch already active (now=20:00, kill=16:31).",2818.0,,1.0,0.9963861641713992,,,,,,2023,orb25
+2023-03-25,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-03-26,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-03-27,32540.2,32256.2,284.0,,"KillSwitch already active (now=19:01, kill=16:31).",783.0,,3.0,0.997586484312148,,,,,,2023,orb25
+2023-03-28,32544.5,32369.4,175.1,,"KillSwitch already active (now=17:34, kill=16:31).",6944.0,,9.0,0.9995240361732508,,,,,,2023,orb25
+2023-03-29,32678.9,32540.1,138.8,,"KillSwitch already active (now=19:19, kill=16:31).",3443.0,,21.0,0.9982713915298184,,,,,,2023,orb25
+2023-03-30,32929.4,32758.8,170.6,"Neutral trend, policy=BlockAll",existing open bot position found: ORBV_US30.cash_20230330 vo,7384.0,4.0,7.0,0.9972516686297606,,,,,,2023,orb25
+2023-03-31,33054.4,32818.0,236.4,,existing open bot position found: ORBV_US30.cash_20230331 vo,12823.0,,32.0,1.0,,,,,,2023,orb25
+2023-04-01,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-04-02,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-04-03,33636.2,33334.7,301.5,,,,,,,,,,,,2023,orb25
+2023-04-04,33689.2,33487.7,201.5,,"KillSwitch already active (now=17:08, kill=16:31).",21541.0,,26.0,0.9979454065159964,,,,,,2023,orb25
+2023-04-05,33528.1,33314.1,214.0,,,,,,,,,,,,2023,orb25
+2023-04-06,33542.1,33331.1,211.0,,,173.0,,,0.932859909619109,,,,,,2023,orb25
+2023-04-08,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-04-09,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-04-10,33523.6,33331.8,191.8,,"KillSwitch already active (now=16:40, kill=16:31).",9111.0,,39.0,1.0,,,,,,2023,orb25
+2023-04-11,33678.1,33555.3,122.8,,existing open bot position found: ORBV_US30.cash_20230411 vo,10175.0,,39.0,0.9994568169473113,,,,,,2023,orb25
+2023-04-12,33946.2,33723.0,223.2,"Neutral trend, policy=BlockAll","KillSwitch already active (now=19:04, kill=16:31).",10739.0,51.0,28.0,0.9997102289191538,,,,,,2023,orb25
+2023-04-13,33784.1,33583.6,200.5,,"KillSwitch already active (now=17:03, kill=16:31).",14625.0,,33.0,0.9982588508415554,,,,,,2023,orb25
+2023-04-14,34104.9,33823.4,281.5,,"KillSwitch already active (now=16:46, kill=16:31).",12861.0,,7.0,0.9996095275283092,,,,,,2023,orb25
+2023-04-15,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-04-16,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-04-17,33962.9,33868.1,94.8,,"KillSwitch already active (now=16:57, kill=16:31).",7340.0,,24.0,1.0,,,,,,2023,orb25
+2023-04-18,34131.5,33826.3,305.2,,,623.0,,,0.9946151409566044,,,,,,2023,orb25
+2023-04-19,33948.3,33799.7,148.6,,,1.0,,,0.2724458204334365,,,,,,2023,orb25
+2023-04-20,33768.9,33661.0,107.9,"Neutral trend, policy=BlockAll",existing open bot position found: ORBV_US30.cash_20230420 vo,11676.0,40.0,18.0,1.0,,1.0,,,,2023,orb25
+2023-04-21,33856.5,33706.9,149.6,Bullish trend blocks SHORT,,1370.0,28.0,,0.9974782852339592,,,,,,2023,orb25
+2023-04-22,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-04-23,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-04-24,33883.7,33683.7,200.0,,,302.0,,,0.8829712683952349,,,,,,2023,orb25
+2023-04-25,33865.6,33690.0,175.6,,"KillSwitch already active (now=16:55, kill=16:31).",12721.0,,28.0,0.9988649262202044,,,,,,2023,orb25
+2023-04-26,33643.2,33356.8,286.4,,"KillSwitch already active (now=17:58, kill=16:31).",9323.0,,22.0,0.998452012383901,,,,,,2023,orb25
+2023-04-27,33568.1,33364.6,203.5,,"KillSwitch already active (now=16:31, kill=16:31).",12578.0,,35.0,1.0,,1.0,,,,2023,orb25
+2023-04-28,33994.9,33644.1,350.8,,"KillSwitch already active (now=17:39, kill=16:31).",14266.0,,11.0,0.9995835068721366,,,,,,2023,orb25
+2023-04-29,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-04-30,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-05-01,34205.6,34063.3,142.3,,existing open bot position found: ORBV_US30.cash_20230501 vo,6319.0,,31.0,1.0,,,,,,2023,orb25
+2023-05-02,34013.4,33621.1,392.3,,existing open bot position found: ORBV_US30.cash_20230502 vo,14095.0,,5.0,0.998107852412488,,,,,,2023,orb25
+2023-05-03,33756.7,33633.6,123.1,,"KillSwitch already active (now=18:01, kill=16:31).",13066.0,,21.0,0.9987113402061856,,,,,,2023,orb25
+2023-05-04,33452.6,33015.5,437.1,,,2723.0,,,0.9572107765451664,,,,,,2023,orb25
+2023-05-05,33612.0,33162.5,449.5,,"KillSwitch already active (now=18:28, kill=16:31).",5149.0,,15.0,0.9989875126560918,,,,,,2023,orb25
+2023-05-06,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-05-07,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-05-08,33775.1,33571.5,203.6,,"KillSwitch already active (now=18:08, kill=16:31).",1875.0,,2.0,0.9991876523151908,,,,,,2023,orb25
+2023-05-09,33650.3,33463.0,187.3,,,,,,,,,,,,2023,orb25
+2023-05-10,33781.6,33442.1,339.5,"Neutral trend, policy=BlockAll",existing open bot position found: ORBV_US30.cash_20230510 vo,13826.0,18.0,9.0,0.9992616293379276,,,,,,2023,orb25
+2023-05-11,33596.3,33105.1,491.2,,,,,,,,,,,,2023,orb25
+2023-05-12,33483.8,33293.1,190.7,,existing open bot position found: ORBV_US30.cash_20230512 vo,17122.0,,14.0,0.9996213555471412,,,,,,2023,orb25
+2023-05-13,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-05-14,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-05-15,33447.8,33156.9,290.9,,,,,,,,,,,,2023,orb25
+2023-05-16,33337.9,33077.5,260.4,,"KillSwitch already active (now=18:11, kill=16:31).",3233.0,,26.0,0.9985935302390998,,,,,,2023,orb25
+2023-05-17,33185.6,33038.1,147.5,,MaxTradesPerDay reached (1/1).,13846.0,,41.0,1.0,,,,,,2023,orb25
+2023-05-18,33476.8,33255.9,220.9,,"KillSwitch already active (now=17:30, kill=16:31).",6052.0,,24.0,1.0,,,,,,2023,orb25
+2023-05-19,33657.9,33530.3,127.6,Bullish trend blocks SHORT,"KillSwitch already active (now=16:32, kill=16:31).",20085.0,128.0,10.0,0.99932478055368,,,,,,2023,orb25
+2023-05-20,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-05-21,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-05-22,33511.6,33198.6,313.0,,,,,,,,,,,,2023,orb25
+2023-05-23,33288.3,33109.2,179.1,,"KillSwitch already active (now=18:22, kill=16:31).",9372.0,,22.0,0.9980430528375732,,,,,,2023,orb25
+2023-05-24,33058.1,32810.1,248.0,,existing open bot position found: ORBV_US30.cash_20230524 vo,11974.0,,17.0,0.9989297181591152,,,,,,2023,orb25
+2023-05-25,32833.3,32659.4,173.9,,"KillSwitch already active (now=16:35, kill=16:31).",2330.0,,5.0,0.9973753280839897,,,,,,2023,orb25
+2023-05-26,33137.2,32696.4,440.8,,,483.0,,,0.9542410714285716,,,,,,2023,orb25
+2023-05-27,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-05-28,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-05-29,33200.7,33122.1,78.6,,existing open bot position found: ORBV_US30.cash_20230529 vo,406.0,,7.0,1.0,,,,,,2023,orb25
+2023-05-30,33187.5,32935.5,252.0,,"KillSwitch already active (now=17:29, kill=16:31).",2590.0,,2.0,0.9996048992493086,,,,,,2023,orb25
+2023-05-31,33000.8,32741.6,259.2,,,280.0,,,0.725181295323831,,,,,,2023,orb25
+2023-06-01,32982.7,32681.0,301.7,,"KillSwitch already active (now=17:01, kill=16:31).",14058.0,,32.0,1.0,,,,,,2023,orb25
+2023-06-02,33527.4,33144.4,383.0,,existing open bot position found: ORBV_US30.cash_20230602 vo,15905.0,,19.0,1.0,,,,,,2023,orb25
+2023-06-03,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-06-04,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-06-05,33826.8,33654.9,171.9,,"KillSwitch already active (now=17:29, kill=16:31).",12979.0,,31.0,0.9982638888888888,,,,,,2023,orb25
+2023-06-06,33585.6,33484.3,101.3,,"KillSwitch already active (now=17:26, kill=16:31).",3754.0,,11.0,0.9970958373668926,,,,,,2023,orb25
+2023-06-07,33668.8,33499.5,169.3,,"KillSwitch already active (now=19:13, kill=16:31).",4148.0,,7.0,0.9971711456859972,,,,,,2023,orb25
+2023-06-08,33752.1,33592.6,159.5,,MaxTradesPerDay reached (1/1).,11297.0,,26.0,1.0,,,,,,2023,orb25
+2023-06-09,33945.3,33740.7,204.6,,,1083.0,,,0.9318028359216746,,,,,,2023,orb25
+2023-06-10,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-06-11,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-06-12,33999.2,33870.0,129.2,,"KillSwitch already active (now=19:02, kill=16:31).",4115.0,,22.0,0.9977628635346756,,,,,,2023,orb25
+2023-06-13,34308.6,34038.5,270.1,,,,,,,,,,,,2023,orb25
+2023-06-14,34196.5,34010.7,185.8,,"KillSwitch already active (now=18:01, kill=16:31).",11241.0,,36.0,0.9985422740524782,,,,,,2023,orb25
+2023-06-15,34232.1,33853.6,378.5,,"KillSwitch already active (now=17:46, kill=16:31).",16787.0,,24.0,1.0,,,,,,2023,orb25
+2023-06-16,34573.8,34380.6,193.2,,"KillSwitch already active (now=18:33, kill=16:31).",5886.0,,12.0,0.9996001599360256,,,,,,2023,orb25
+2023-06-17,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-06-18,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-06-19,34307.7,34178.7,129.0,,existing open bot position found: ORBV_US30.cash_20230619 vo,130.0,,1.0,0.98159509202454,,,,,,2023,orb25
+2023-06-20,34236.3,33907.5,328.8,,,,,,,,,,,,2023,orb25
+2023-06-21,34080.6,33870.4,210.2,,"KillSwitch already active (now=18:33, kill=16:31).",776.0,,1.0,0.9945217024863042,,,,,,2023,orb25
+2023-06-22,34008.3,33821.6,186.7,,,,,,,,,,,,2023,orb25
+2023-06-23,33868.6,33622.9,245.7,,,,,,,,,,,,2023,orb25
+2023-06-24,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-06-25,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-06-26,33800.7,33644.5,156.2,"Neutral trend, policy=BlockAll",,843.0,14.0,,0.9960681520314548,,,,,,2023,orb25
+2023-06-27,33859.5,33653.3,206.2,,"KillSwitch already active (now=17:21, kill=16:31).",11181.0,,26.0,1.0,,,,,,2023,orb25
+2023-06-28,33968.3,33759.1,209.2,,,78.0,,,0.9203252032520324,,,,,,2023,orb25
+2023-06-29,34078.7,33810.2,268.5,,"KillSwitch already active (now=17:00, kill=16:31).",8381.0,,20.0,0.9986382206082616,,,,,,2023,orb25
+2023-06-30,34401.8,34113.5,288.3,,"KillSwitch already active (now=17:27, kill=16:31).",6107.0,,16.0,0.999375390381012,,,,,,2023,orb25
+2023-07-01,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-07-02,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-07-03,34403.4,34287.6,115.8,,"KillSwitch already active (now=16:38, kill=16:31).",4241.0,,16.0,1.0,,,,,,2023,orb25
+2023-07-04,34422.0,34365.1,56.9,,,,,,,,,,,,2023,orb25
+2023-07-05,34347.1,34218.0,129.1,,,1343.0,,,0.9269311064718164,,,,,,2023,orb25
+2023-07-06,34159.5,33825.2,334.3,,,4326.0,,,0.9948269001193792,,,,,,2023,orb25
+2023-07-07,33946.5,33764.5,182.0,,"KillSwitch already active (now=16:34, kill=16:31).",5635.0,,19.0,1.0,,,,,,2023,orb25
+2023-07-08,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-07-09,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-07-10,33966.2,33656.8,309.4,,,,,,,,,,,,2023,orb25
+2023-07-11,34111.7,33856.7,255.0,,existing open bot position found: ORBV_US30.cash_20230711 vo,9625.0,,41.0,1.0,,,,,,2023,orb25
+2023-07-12,34586.7,34282.8,303.9,,,,,,,,,,,,2023,orb25
+2023-07-13,34471.9,34373.3,98.6,,existing open bot position found: ORBV_US30.cash_20230713 vo,1002.0,,20.0,0.995475113122172,,,,,,2023,orb25
+2023-07-14,34599.3,34340.9,258.4,,,,,,,,,,,,2023,orb25
+2023-07-15,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-07-16,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-07-17,34566.3,34406.4,159.9,,existing open bot position found: ORBV_US30.cash_20230717 vo,8161.0,,42.0,1.0,,,,,,2023,orb25
+2023-07-18,34826.7,34516.0,310.7,,existing open bot position found: ORBV_US30.cash_20230718 vo,13227.0,,44.0,0.9996064541519089,,,,,,2023,orb25
+2023-07-19,35234.1,34922.9,311.2,,,,,,,,,,,,2023,orb25
+2023-07-20,35291.6,35041.6,250.0,,,8733.0,,,0.9995435874030124,,,,,,2023,orb25
+2023-07-21,35341.6,35176.1,165.5,,,3.0,,,0.6755969714618522,,,,,,2023,orb25
+2023-07-22,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-07-23,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-07-24,35408.1,35231.5,176.6,,existing open bot position found: ORBV_US30.cash_20230724 vo,10434.0,,20.0,0.9983498349834984,,,,,,2023,orb25
+2023-07-25,35447.0,35362.7,84.3,,existing open bot position found: ORBV_US30.cash_20230725 vo,7778.0,,23.0,1.0,,,,,,2023,orb25
+2023-07-26,35459.5,35309.7,149.8,,existing open bot position found: ORBV_US30.cash_20230726 vo,10351.0,,34.0,1.0,,,,,,2023,orb25
+2023-07-27,35688.0,35543.2,144.8,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:21, kill=16:31).",14137.0,1.0,34.0,0.999420625724218,,,,,,2023,orb25
+2023-07-28,35510.0,35310.9,199.1,,,2563.0,,,0.9438886472379296,,,,,,2023,orb25
+2023-07-29,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-07-30,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-07-31,35541.2,35430.7,110.5,,"KillSwitch already active (now=20:00, kill=16:31).",864.0,,16.0,0.998829496683574,,,,,,2023,orb25
+2023-08-01,35678.1,35442.3,235.8,,,,,,,,,,,,2023,orb25
+2023-08-02,35564.8,35347.3,217.5,,"KillSwitch already active (now=18:12, kill=16:31).",8069.0,,31.0,0.9986743261157754,,,,,,2023,orb25
+2023-08-03,35264.2,35112.7,151.5,,"KillSwitch already active (now=16:44, kill=16:31).",7477.0,,4.0,0.9986504723346828,,,,,,2023,orb25
+2023-08-04,35416.3,35146.8,269.5,,existing open bot position found: ORBV_US30.cash_20230804 vo,11836.0,,10.0,1.0,,,,,,2023,orb25
+2023-08-05,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-08-06,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-08-07,35410.5,35093.4,317.1,,"KillSwitch already active (now=17:13, kill=16:31).",9926.0,,31.0,1.0,,,,,,2023,orb25
+2023-08-08,35417.8,35003.9,413.9,,,,,,,,,,,,2023,orb25
+2023-08-09,35410.7,35260.5,150.2,,existing open bot position found: ORBV_US30.cash_20230809 vo,12146.0,,35.0,1.0,,,,,,2023,orb25
+2023-08-10,35573.7,35175.7,398.0,,"KillSwitch already active (now=17:56, kill=16:31).",4400.0,,4.0,0.9988317757009346,,,,,,2023,orb25
+2023-08-11,35342.5,35045.0,297.5,,,221.0,,,0.8116545265348596,,,,,,2023,orb25
+2023-08-12,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-08-13,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-08-14,35394.6,35164.7,229.9,,,,,,,,,,,,2023,orb25
+2023-08-15,35188.2,34967.3,220.9,,"KillSwitch already active (now=19:27, kill=16:31).",3498.0,,26.0,0.9995240361732508,,,,,,2023,orb25
+2023-08-16,35134.5,34882.0,252.5,,"KillSwitch already active (now=17:09, kill=16:31).",8655.0,,27.0,0.9996429846483398,,,,,,2023,orb25
+2023-08-17,34889.9,34729.5,160.4,,"KillSwitch already active (now=17:21, kill=16:31).",13927.0,,36.0,0.9996429846483398,,,,,,2023,orb25
+2023-08-18,34475.2,34260.7,214.5,,"KillSwitch already active (now=17:13, kill=16:31).",15892.0,,7.0,0.999691453255168,,,,,,2023,orb25
+2023-08-19,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-08-20,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-08-21,34648.7,34341.9,306.8,,existing open bot position found: ORBV_US30.cash_20230821 vo,6960.0,,1.0,0.9953970080552358,,,,,,2023,orb25
+2023-08-22,34591.1,34357.4,233.7,,existing open bot position found: ORBV_US30.cash_20230822 vo,15490.0,,38.0,0.9995903318312168,,,,,,2023,orb25
+2023-08-23,34445.1,34288.6,156.5,,"KillSwitch already active (now=17:05, kill=16:31).",8928.0,,27.0,1.0,,,,,,2023,orb25
+2023-08-24,34693.5,34392.0,301.5,,existing open bot position found: ORBV_US30.cash_20230824 vo,21982.0,,30.0,1.0,,,,,,2023,orb25
+2023-08-25,34359.1,34088.7,270.4,,"KillSwitch already active (now=18:21, kill=16:31).",7945.0,,1.0,0.9946151409566044,,,,,,2023,orb25
+2023-08-26,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-08-27,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-08-28,34662.7,34398.3,264.4,,,,,,,,,,,,2023,orb25
+2023-08-29,34707.4,34493.0,214.4,,existing open bot position found: ORBV_US30.cash_20230829 vo,11909.0,,40.0,0.9991119005328596,,,,,,2023,orb25
+2023-08-30,35025.6,34793.2,232.4,,,,,,,,,,,,2023,orb25
+2023-08-31,35097.4,34940.9,156.5,,existing open bot position found: ORBV_US30.cash_20230831 vo,16009.0,,35.0,0.9990917347865578,,1.0,,,,2023,orb25
+2023-09-01,34972.6,34814.3,158.3,,"KillSwitch already active (now=16:54, kill=16:31).",11808.0,,10.0,0.9994821336095288,,,,,,2023,orb25
+2023-09-02,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-09-03,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-09-04,34935.1,34771.8,163.3,,,917.0,,,0.998914223669924,,,,,,2023,orb25
+2023-09-05,34887.7,34724.2,163.5,,"KillSwitch already active (now=17:08, kill=16:31).",5992.0,,29.0,1.0,,,,,,2023,orb25
+2023-09-06,34617.0,34481.8,135.2,,"KillSwitch already active (now=16:31, kill=16:31).",15683.0,,31.0,0.9995936611133686,,,,,,2023,orb25
+2023-09-07,34517.1,34330.7,186.4,,"KillSwitch already active (now=17:18, kill=16:31).",4792.0,,6.0,0.9935760171306208,,,,,,2023,orb25
+2023-09-08,34611.7,34410.6,201.1,,,1509.0,,,0.9991079393398752,,,,,,2023,orb25
+2023-09-09,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-09-10,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-09-11,34789.8,34601.7,188.1,"Neutral trend, policy=BlockAll",,1649.0,13.0,,0.9939070830159938,,,,,,2023,orb25
+2023-09-12,34645.5,34531.9,113.6,,"KillSwitch already active (now=16:36, kill=16:31).",11332.0,,25.0,1.0,0.0,1.0,1.0,,,2023,orb25
+2023-09-13,34773.4,34551.0,222.4,,"KillSwitch already active (now=18:55, kill=16:31).",1931.0,,4.0,0.9995497523638002,,,,,,2023,orb25
+2023-09-14,34825.4,34575.8,249.6,,existing open bot position found: ORBV_US30.cash_20230914 vo,9837.0,,35.0,0.9994256174612292,,,,,,2023,orb25
+2023-09-15,35012.3,34753.1,259.2,,existing open bot position found: ORBV_US30.cash_20230915 vo,16032.0,,22.0,1.0,,1.0,,,,2023,orb25
+2023-09-16,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-09-17,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-09-18,34680.4,34538.3,142.1,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:31, kill=16:31).",5263.0,37.0,5.0,1.0,,,,,,2023,orb25
+2023-09-19,34683.6,34416.8,266.8,,existing open bot position found: ORBV_US30.cash_20230919 vo,7645.0,,11.0,1.0,,,,,,2023,orb25
+2023-09-20,34693.7,34520.3,173.4,,"KillSwitch already active (now=16:53, kill=16:31).",10212.0,,43.0,0.9995027349577325,,,,,,2023,orb25
+2023-09-21,34406.5,34163.9,242.6,,"KillSwitch already active (now=19:29, kill=16:31).",4230.0,,26.0,1.0,,,,,,2023,orb25
+2023-09-22,34146.5,34000.5,146.0,,"KillSwitch already active (now=17:39, kill=16:31).",3109.0,,5.0,0.9985096870342772,,,,,,2023,orb25
+2023-09-23,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-09-24,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-09-25,34087.6,33803.8,283.8,,,651.0,,,0.9198913781398506,,,,,,2023,orb25
+2023-09-26,33921.7,33696.6,225.1,,existing open bot position found: ORBV_US30.cash_20230926 vo,11936.0,,25.0,1.0,,,,,,2023,orb25
+2023-09-27,33761.6,33570.8,190.8,,existing open bot position found: ORBV_US30.cash_20230927 vo,18117.0,,17.0,0.9996001599360256,,1.0,,,,2023,orb25
+2023-09-28,33654.3,33453.7,200.6,,"KillSwitch already active (now=16:51, kill=16:31).",13177.0,,29.0,0.999650471862985,,,,,,2023,orb25
+2023-09-29,33898.9,33679.3,219.6,,"KillSwitch already active (now=16:53, kill=16:31).",19950.0,,9.0,0.9994256174612292,,,,,,2023,orb25
+2023-09-30,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-10-01,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-10-02,33706.7,33349.8,356.9,,"KillSwitch already active (now=16:50, kill=16:31).",12626.0,,5.0,1.0,,,,,,2023,orb25
+2023-10-03,33489.4,33110.8,378.6,,"KillSwitch already active (now=18:53, kill=16:31).",23138.0,,20.0,1.0,,,,,,2023,orb25
+2023-10-04,33091.5,32877.8,213.7,,"KillSwitch already active (now=19:18, kill=16:31).",5865.0,,4.0,1.0,,,,,,2023,orb25
+2023-10-05,33145.9,32969.1,176.8,,"KillSwitch already active (now=17:03, kill=16:31).",3991.0,,4.0,0.9971408148677626,,,,,,2023,orb25
+2023-10-06,33219.4,32843.3,376.1,,"KillSwitch already active (now=17:14, kill=16:31).",16864.0,,11.0,0.9992254066615028,,,,,,2023,orb25
+2023-10-07,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-10-08,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-10-09,33419.8,33158.8,261.0,,existing open bot position found: ORBV_US30.cash_20231009 vo,10611.0,,28.0,0.9996213555471412,,,,,,2023,orb25
+2023-10-10,33792.6,33592.4,200.2,,existing open bot position found: ORBV_US30.cash_20231010 vo,8144.0,,3.0,0.9988982739625412,,,,,,2023,orb25
+2023-10-11,33886.6,33736.1,150.5,"Neutral trend, policy=BlockAll",existing open bot position found: ORBV_US30.cash_20231011 vo,11878.0,16.0,13.0,0.9994900560938296,,,,,,2023,orb25
+2023-10-12,33973.6,33660.2,313.4,,"KillSwitch already active (now=17:09, kill=16:31).",11435.0,,28.0,1.0,,,,,,2023,orb25
+2023-10-13,33963.2,33574.2,389.0,,,570.0,,,0.8600337268128162,,,,,,2023,orb25
+2023-10-14,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-10-15,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-10-16,33958.8,33700.3,258.5,,"KillSwitch already active (now=16:59, kill=16:31).",14255.0,,34.0,0.9994385176866928,,,,,,2023,orb25
+2023-10-17,33985.5,33810.0,175.5,,"KillSwitch already active (now=17:26, kill=16:31).",8456.0,,2.0,0.9973353635325468,,,,,,2023,orb25
+2023-10-18,33993.9,33830.3,163.6,,"KillSwitch already active (now=18:42, kill=16:31).",20931.0,,17.0,0.9971051785139916,,1.0,,,,2023,orb25
+2023-10-19,33707.5,33544.3,163.2,"Neutral trend, policy=BlockAll","KillSwitch already active (now=20:47, kill=16:31).",16888.0,24.0,20.0,1.0,,,,,,2023,orb25
+2023-10-20,33422.0,33206.0,216.0,,"KillSwitch already active (now=19:10, kill=16:31).",4019.0,,4.0,0.9992810927390368,,,,,,2023,orb25
+2023-10-21,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-10-22,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-10-23,33132.3,32885.3,247.0,,"KillSwitch already active (now=16:56, kill=16:31).",6776.0,,4.0,0.9969088098918084,,,,,,2023,orb25
+2023-10-24,33260.3,32947.8,312.5,,,538.0,,,0.8628571428571429,,,,,,2023,orb25
+2023-10-25,33252.3,32990.9,261.4,,"ClosePositionsTime already reached (now=23:23, close=20:50).",484.0,,1.0,0.9734513274336284,,,,,,2023,orb25
+2023-10-26,33105.1,32854.5,250.6,,"KillSwitch already active (now=20:02, kill=16:31).",10776.0,,6.0,0.9983361064891846,,,,,,2023,orb25
+2023-10-27,32911.5,32662.0,249.5,,"KillSwitch already active (now=17:06, kill=16:31).",21607.0,,4.0,0.9993489583333334,,,,,,2023,orb25
+2023-10-28,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-10-29,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-10-30,32755.1,32528.6,226.5,,"KillSwitch already active (now=17:30, kill=16:31).",15987.0,,26.0,0.9971393543114018,,,,,,2023,orb25
+2023-10-31,33138.7,32787.6,351.1,,,,,,,,,,,,2023,orb25
+2023-11-01,33226.4,32911.0,315.4,,"KillSwitch already active (now=19:52, kill=16:31).",7773.0,,22.0,0.99932478055368,,,,,,2023,orb25
+2023-11-02,33616.7,33294.0,322.7,,"KillSwitch already active (now=17:02, kill=16:31).",18150.0,,27.0,1.0,0.0,1.0,1.0,,,2023,orb25
+2023-11-03,34071.9,33827.1,244.8,,"KillSwitch already active (now=17:05, kill=16:31).",12907.0,,3.0,0.9978308026030368,,,,,,2023,orb25
+2023-11-04,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-11-05,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-11-06,34132.3,34067.2,65.1,Bearish trend blocks LONG,"KillSwitch already active (now=18:20, kill=16:31).",8362.0,137.0,21.0,1.0,,,,,,2023,orb25
+2023-11-07,34077.9,33973.9,104.0,,"KillSwitch already active (now=16:49, kill=16:31).",18045.0,,29.0,0.998613037447989,,1.0,,,,2023,orb25
+2023-11-08,34219.2,34113.5,105.7,,existing open bot position found: ORBV_US30.cash_20231108 vo,13462.0,,20.0,0.9976470588235294,,,,,,2023,orb25
+2023-11-09,34218.7,34079.7,139.0,,"KillSwitch already active (now=18:02, kill=16:31).",17760.0,,24.0,1.0,,,,,,2023,orb25
+2023-11-10,34062.1,33891.3,170.8,,"KillSwitch already active (now=17:33, kill=16:31).",11408.0,,23.0,0.9995635093845484,,,,,,2023,orb25
+2023-11-11,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-11-12,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-11-13,34302.5,34187.0,115.5,,"KillSwitch already active (now=16:48, kill=16:31).",12210.0,,19.0,0.9987618654560462,,,,,,2023,orb25
+2023-11-14,34741.5,34285.7,455.8,,"KillSwitch already active (now=16:53, kill=16:31).",18325.0,,25.0,0.999505195447798,,,,,,2023,orb25
+2023-11-15,34984.6,34862.8,121.8,,"KillSwitch already active (now=19:02, kill=16:31).",6263.0,,4.0,0.9976617303195634,,,,,,2023,orb25
+2023-11-16,35001.7,34870.9,130.8,,"KillSwitch already active (now=19:55, kill=16:31).",9151.0,,1.0,0.9957446808510638,,,,,,2023,orb25
+2023-11-17,35098.9,34948.9,150.0,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:57, kill=16:31).",14236.0,221.0,11.0,0.9996480112636394,,,,,,2023,orb25
+2023-11-18,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-11-19,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-11-20,34988.1,34893.0,95.1,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:36, kill=16:31).",14760.0,25.0,36.0,1.0,5.0,1.0,5.0,,,2023,orb25
+2023-11-21,35150.7,35078.0,72.7,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:18, kill=16:31).",11438.0,173.0,23.0,0.9994051160023796,,,,,,2023,orb25
+2023-11-22,35197.0,35087.7,109.3,,existing open bot position found: ORBV_US30.cash_20231122 vo,15731.0,,30.0,0.9992429977289932,,,,,,2023,orb25
+2023-11-23,35322.4,35261.4,61.0,,existing open bot position found: ORBV_US30.cash_20231123 vo,995.0,,6.0,0.9972299168975068,,,,,,2023,orb25
+2023-11-24,35376.8,35302.2,74.6,,"KillSwitch already active (now=17:57, kill=16:31).",2711.0,,2.0,0.996216897856242,,,,,,2023,orb25
+2023-11-25,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-11-26,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-11-27,35377.7,35300.3,77.4,,,1022.0,,,0.9968051118210862,,,,,,2023,orb25
+2023-11-28,35366.5,35288.2,78.3,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:31, kill=16:31).",13991.0,152.0,30.0,0.999569151227919,,,,,,2023,orb25
+2023-11-29,35532.2,35432.9,99.3,"Neutral trend, policy=BlockAll","KillSwitch already active (now=18:04, kill=16:31).",6573.0,7.0,13.0,0.9994051160023796,,,,,,2023,orb25
+2023-11-30,35676.4,35510.1,166.3,,"KillSwitch already active (now=18:06, kill=16:31).",19028.0,,23.0,1.0,0.0,1.0,1.0,,,2023,orb25
+2023-12-01,36035.0,35896.0,139.0,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:33, kill=16:31).",13908.0,8.0,14.0,0.998914223669924,2.0,1.0,3.0,,,2023,orb25
+2023-12-02,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-12-03,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-12-04,36206.7,36026.3,180.4,,"ClosePositionsTime already reached (now=20:51, close=20:50).",978.0,,2.0,0.9955201592832256,,,,,,2023,orb25
+2023-12-05,36187.1,36060.0,127.1,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:54, kill=16:31).",3690.0,131.0,3.0,0.9996351696461144,,,,,,2023,orb25
+2023-12-06,36242.8,36136.3,106.5,,existing open bot position found: ORBV_US30.cash_20231206 vo,6432.0,,33.0,1.0,,,,,,2023,orb25
+2023-12-07,36123.6,35977.4,146.2,,existing open bot position found: ORBV_US30.cash_20231207 vo,5087.0,,12.0,1.0,,,,,,2023,orb25
+2023-12-08,36156.7,35963.5,193.2,"Neutral trend, policy=BlockAll","KillSwitch already active (now=18:25, kill=16:31).",12073.0,10.0,16.0,0.999684642068748,,,,,,2023,orb25
+2023-12-09,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-12-10,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-12-11,36262.6,36203.1,59.5,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:33, kill=16:31).",15771.0,316.0,36.0,0.998894213048286,,,,,,2023,orb25
+2023-12-12,36574.2,36420.4,153.8,"Neutral trend, policy=BlockAll","KillSwitch already active (now=20:06, kill=16:31).",4045.0,290.0,14.0,1.0,,,,,,2023,orb25
+2023-12-13,36660.5,36577.9,82.6,"Neutral trend, policy=BlockAll","KillSwitch already active (now=18:18, kill=16:31).",14627.0,317.0,25.0,0.999586947542338,,,,,,2023,orb25
+2023-12-14,37313.8,37142.0,171.8,"Neutral trend, policy=BlockAll","KillSwitch already active (now=18:49, kill=16:31).",3823.0,52.0,7.0,1.0,,,,,,2023,orb25
+2023-12-15,37402.2,37173.5,228.7,,MaxTradesPerDay reached (1/1).,2365.0,,3.0,0.9962049335863375,,,,,,2023,orb25
+2023-12-16,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-12-17,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-12-18,37375.5,37295.2,80.3,"Neutral trend, policy=BlockAll","KillSwitch already active (now=19:31, kill=16:31).",2082.0,10.0,14.0,1.0,,,,,,2023,orb25
+2023-12-19,37399.5,37300.0,99.5,,existing open bot position found: ORBV_US30.cash_20231219 vo,12846.0,,35.0,1.0,,,,,,2023,orb25
+2023-12-20,37572.0,37458.0,114.0,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:34, kill=16:31).",12890.0,10.0,25.0,0.9988249118683902,,,,,,2023,orb25
+2023-12-21,37381.8,37212.5,169.3,,MaxTradesPerDay reached (1/1).,7897.0,,5.0,0.9992887624466572,,,,,,2023,orb25
+2023-12-22,37379.0,37247.2,131.8,,existing open bot position found: ORBV_US30.cash_20231222 vo,16125.0,,23.0,0.999383096853794,2.0,1.0,3.0,,,2023,orb25
+2023-12-23,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2023,orb25
+2023-12-24,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2023,orb25
+2023-12-26,37466.7,37375.1,91.6,,existing open bot position found: ORBV_US30.cash_20231226 vo,9521.0,,40.0,1.0,1.0,1.0,1.0,,,2023,orb25
+2023-12-27,37563.5,37506.9,56.6,,MaxTradesPerDay reached (1/1).,14913.0,,36.0,1.0,,,,,,2023,orb25
+2023-12-28,37691.2,37603.6,87.6,"Neutral trend, policy=BlockAll",existing open bot position found: ORBV_US30.cash_20231228 vo,13756.0,175.0,34.0,1.0,,1.0,,,,2023,orb25
+2023-12-29,37787.2,37698.2,89.0,,existing open bot position found: ORBV_US30.cash_20231229 vo,15024.0,,24.0,0.9993906154783668,,1.0,,,,2023,orb25
+2024-01-02,37811.4,37461.4,350.0,,,,,,,,,,,,2024,orb25
+2024-01-03,37726.8,37553.2,173.6,,existing open bot position found: ORBV_US30.cash_20240103 vo,17361.0,,28.0,0.9996125532739247,1.0,1.0,1.0,,,2024,orb25
+2024-01-04,37541.1,37451.9,89.2,,"KillSwitch already active (now=16:54, kill=16:31).",13699.0,,6.0,1.0,,,,,,2024,orb25
+2024-01-05,37454.3,37249.3,205.0,"Neutral trend, policy=BlockAll",existing open bot position found: ORBV_US30.cash_20240105 vo,13742.0,89.0,6.0,0.999259807549963,,,,,,2024,orb25
+2024-01-06,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-01-07,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-01-08,37371.9,37215.4,156.5,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:41, kill=16:31).",14940.0,16.0,36.0,0.9988776655443323,3.0,1.0,3.0,,,2024,orb25
+2024-01-09,37614.1,37439.8,174.3,,existing open bot position found: ORBV_US30.cash_20240109 vo,5874.0,,7.0,0.9982300884955753,,,,,,2024,orb25
+2024-01-10,37552.1,37466.5,85.6,,existing open bot position found: ORBV_US30.cash_20240110 vo,16873.0,,55.0,0.9995497523638002,1.0,1.0,2.0,,,2024,orb25
+2024-01-11,37811.1,37590.0,221.1,,"KillSwitch already active (now=18:07, kill=16:31).",12248.0,,3.0,0.9980879541108987,,,,,,2024,orb25
+2024-01-12,37795.7,37441.7,354.0,"Neutral trend, policy=BlockAll",,885.0,138.0,,0.9984871406959154,,,,,,2024,orb25
+2024-01-13,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-01-14,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-01-15,37598.6,37491.4,107.2,,,,,,,,,,,,2024,orb25
+2024-01-16,37550.2,37381.9,168.3,"Neutral trend, policy=BlockAll","KillSwitch already active (now=18:54, kill=16:31).",15462.0,11.0,19.0,0.9995782370307887,,,,,,2024,orb25
+2024-01-17,37267.0,37149.9,117.1,,"KillSwitch already active (now=16:54, kill=16:31).",10523.0,,5.0,0.9964570416297608,,,,,,2024,orb25
+2024-01-18,37334.7,37180.6,154.1,,existing open bot position found: ORBV_US30.cash_20240118 vo,10805.0,,30.0,0.9996270048489369,,,,,,2024,orb25
+2024-01-19,37705.8,37461.0,244.8,,"KillSwitch already active (now=18:16, kill=16:31).",10020.0,,10.0,0.9991386735572783,,,,,,2024,orb25
+2024-01-20,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-01-21,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-01-22,37986.0,37875.2,110.8,,existing open bot position found: ORBV_US30.cash_20240122 vo,12120.0,,29.0,0.9995100440960314,1.0,1.0,1.0,,,2024,orb25
+2024-01-23,38023.2,37922.3,100.9,,MaxTradesPerDay reached (1/1).,14579.0,,24.0,0.9994256174612293,,,,,,2024,orb25
+2024-01-24,38078.1,37936.6,141.5,,"KillSwitch already active (now=18:40, kill=16:31).",10169.0,,21.0,1.0,,,,,,2024,orb25
+2024-01-25,37937.0,37753.6,183.4,"Neutral trend, policy=BlockAll","ClosePositionsTime already reached (now=20:51, close=20:50).",6090.0,14.0,9.0,0.9984813971146546,,,,,,2024,orb25
+2024-01-26,38070.4,37906.1,164.3,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:12, kill=16:31).",18102.0,254.0,10.0,1.0,,,,,,2024,orb25
+2024-01-27,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-01-28,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-01-29,38112.2,38038.2,74.0,,existing open bot position found: ORBV_US30.cash_20240129 vo,10874.0,,28.0,0.9994051160023796,,,,,,2024,orb25
+2024-01-30,38304.5,38238.4,66.1,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:19, kill=16:31).",14570.0,121.0,27.0,1.0,,,,,,2024,orb25
+2024-01-31,38565.4,38468.4,97.0,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:42, kill=16:31).",14721.0,2.0,22.0,0.9990749306197966,,,,,,2024,orb25
+2024-02-01,38244.9,38126.2,118.7,,"KillSwitch already active (now=17:05, kill=16:31).",19877.0,,18.0,0.9992912827781716,,,,,,2024,orb25
+2024-02-02,38588.1,38343.9,244.2,,"KillSwitch already active (now=18:33, kill=16:31).",12528.0,,5.0,1.0,,,,,,2024,orb25
+2024-02-03,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-02-04,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-02-05,38692.6,38520.2,172.4,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:23, kill=16:31).",21479.0,528.0,28.0,0.999685633448601,,,,,,2024,orb25
+2024-02-06,38403.5,38276.1,127.4,,existing open bot position found: ORBV_US30.cash_20240206 vo,23297.0,,25.0,0.9995800083998321,1.0,1.0,2.0,,,2024,orb25
+2024-02-07,38652.6,38455.6,197.0,,existing open bot position found: ORBV_US30.cash_20240207 vo,16698.0,,28.0,1.0,,,,,,2024,orb25
+2024-02-08,38731.4,38612.6,118.8,,"KillSwitch already active (now=16:32, kill=16:31).",6039.0,,6.0,0.9994977398292316,,,,,,2024,orb25
+2024-02-09,38893.9,38695.0,198.9,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:36, kill=16:31).",15123.0,1.0,25.0,1.0,,,,,,2024,orb25
+2024-02-10,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-02-11,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-02-12,38661.2,38602.2,59.0,"Neutral trend, policy=BlockAll",existing open bot position found: ORBV_US30.cash_20240212 vo,19149.0,273.0,30.0,1.0,,1.0,,,,2024,orb25
+2024-02-13,38820.7,38385.4,435.3,,existing open bot position found: ORBV_US30.cash_20240213 vo,23480.0,,27.0,0.9991158267020337,,1.0,,,,2024,orb25
+2024-02-14,38424.1,38290.0,134.1,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:44, kill=16:31).",6325.0,3.0,13.0,1.0,,,,,,2024,orb25
+2024-02-15,38528.2,38431.8,96.4,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:54, kill=16:31).",20060.0,37.0,24.0,1.0,,1.0,,,,2024,orb25
+2024-02-16,38754.0,38603.2,150.8,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:09, kill=16:31).",7346.0,93.0,9.0,0.9992372234935164,,,,,,2024,orb25
+2024-02-17,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-02-18,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-02-19,38666.7,38597.7,69.0,,"ClosePositionsTime already reached (now=23:34, close=20:50).",467.0,,7.0,1.0,,,,,,2024,orb25
+2024-02-20,38578.1,38450.3,127.8,"Neutral trend, policy=BlockAll","ClosePositionsTime already reached (now=21:00, close=20:50).",10519.0,307.0,3.0,0.9985528219971057,,,,,,2024,orb25
+2024-02-21,38536.9,38463.9,73.0,,existing open bot position found: ORBV_US30.cash_20240221 vo,11159.0,,21.0,0.9983766233766234,2.0,1.0,2.0,,,2024,orb25
+2024-02-22,38867.8,38676.4,191.4,,existing open bot position found: ORBV_US30.cash_20240222 vo,19463.0,,38.0,0.9980506822612085,,,,,,2024,orb25
+2024-02-23,39188.7,39036.8,151.9,,MaxTradesPerDay reached (1/1).,9590.0,,1.0,0.9996064541519087,,,,,,2024,orb25
+2024-02-24,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-02-25,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-02-26,39166.3,39056.8,109.5,,MaxTradesPerDay reached (1/1).,4664.0,,10.0,0.9992006394884093,,,,,,2024,orb25
+2024-02-27,39112.0,39026.0,86.0,,existing open bot position found: ORBV_US30.cash_20240227 vo,17136.0,,47.0,0.9996914532551681,2.0,1.0,2.0,,,2024,orb25
+2024-02-28,38913.7,38771.2,142.5,,existing open bot position found: ORBV_US30.cash_20240228 vo,3519.0,,10.0,0.9995393827729158,,,,,,2024,orb25
+2024-02-29,39061.6,38788.7,272.9,,,126.0,,,0.9376723662437948,,,,,,2024,orb25
+2024-03-01,39011.3,38882.3,129.0,,existing open bot position found: ORBV_US30.cash_20240301 vo,16450.0,,10.0,0.9996970614965162,,,,,,2024,orb25
+2024-03-02,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-03-03,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-03-04,39046.3,38863.1,183.2,,"KillSwitch already active (now=17:29, kill=16:31).",2574.0,,7.0,0.9989023051591658,,,,,,2024,orb25
+2024-03-05,38962.1,38834.1,128.0,,existing open bot position found: ORBV_US30.cash_20240305 vo,24051.0,,30.0,0.9989220265900107,,1.0,,,,2024,orb25
+2024-03-06,38803.8,38572.5,231.3,,existing open bot position found: ORBV_US30.cash_20240306 vo,4303.0,,2.0,0.9993979530403372,,,,,,2024,orb25
+2024-03-07,38859.7,38521.2,338.5,,existing open bot position found: ORBV_US30.cash_20240307 vo,3394.0,,6.0,0.9996001599360256,,,,,,2024,orb25
+2024-03-08,38825.6,38596.1,229.5,,,16075.0,,,0.9873417721518988,,,,,,2024,orb25
+2024-03-09,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-03-10,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-03-11,38697.3,38474.4,222.9,,"KillSwitch already active (now=17:36, kill=16:31).",12068.0,,25.0,1.0,,,,,,2024,orb25
+2024-03-12,38974.6,38638.9,335.7,,"KillSwitch already active (now=18:04, kill=16:31).",12665.0,,27.0,0.9995635093845483,,,,,,2024,orb25
+2024-03-13,39160.6,38993.5,167.1,,"KillSwitch already active (now=16:31, kill=16:31).",4751.0,,6.0,0.9995147986414362,,,,,,2024,orb25
+2024-03-14,39229.1,38838.6,390.5,,"KillSwitch already active (now=19:01, kill=16:31).",4499.0,,3.0,0.9984301412872841,,,,,,2024,orb25
+2024-03-15,38991.5,38722.8,268.7,,"KillSwitch already active (now=16:36, kill=16:31).",10177.0,,9.0,0.9969788519637461,,,,,,2024,orb25
+2024-03-16,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-03-17,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-03-18,38891.9,38657.7,234.2,,,659.0,,,0.9391808026479107,,,,,,2024,orb25
+2024-03-19,38896.2,38687.2,209.0,,existing open bot position found: ORBV_US30.cash_20240319 vo,16184.0,,30.0,0.9995654063450674,,,,,,2024,orb25
+2024-03-20,39143.8,38997.3,146.5,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:57, kill=16:31).",13375.0,2.0,31.0,0.9982788296041307,,,,,,2024,orb25
+2024-03-21,39861.1,39588.3,272.8,,,867.0,,,0.9201213346814964,,,,,,2024,orb25
+2024-03-22,39850.9,39639.3,211.6,,existing open bot position found: ORBV_US30.cash_20240322 vo,13295.0,,19.0,1.0,,1.0,,,,2024,orb25
+2024-03-23,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-03-24,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-03-25,39459.7,39345.4,114.3,,"KillSwitch already active (now=16:46, kill=16:31).",7149.0,,37.0,0.998613037447989,,,,,,2024,orb25
+2024-03-26,39429.0,39302.85,126.2,,"KillSwitch already active (now=19:56, kill=16:31).",565.0,,3.0,0.9974141115626155,,,,,,2024,orb25
+2024-03-27,39623.65,39425.75,197.9,,"KillSwitch already active (now=19:29, kill=16:31).",3865.0,,21.0,1.0,,,,,,2024,orb25
+2024-03-28,39855.65,39713.35,142.3,,"KillSwitch already active (now=19:27, kill=16:31).",141.0,,1.0,0.9968847352024922,,,,,,2024,orb25
+2024-03-30,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-03-31,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-04-01,39945.85,39563.35,382.5,,existing open bot position found: ORBV_US30.cash_20240401 vo,12790.0,,50.0,0.9987819732034106,,,,,,2024,orb25
+2024-04-02,39473.45,39048.55,424.9,,,13.0,,,0.6551297898640296,,,,,,2024,orb25
+2024-04-03,39311.55,39112.85,198.7,,"KillSwitch already active (now=19:13, kill=16:31).",1486.0,,7.0,0.9974701843151428,,,,,,2024,orb25
+2024-04-04,39425.35,39227.55,197.8,,"KillSwitch already active (now=17:48, kill=16:31).",14633.0,,29.0,0.9995709995709996,,,,,,2024,orb25
+2024-04-05,38761.25,38585.65,175.6,,"KillSwitch already active (now=17:11, kill=16:31).",22291.0,,5.0,1.0,,,,,,2024,orb25
+2024-04-06,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-04-07,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-04-08,39013.15,38800.35,212.8,,,,,,,,,,,,2024,orb25
+2024-04-09,38992.75,38796.55,196.2,,existing open bot position found: ORBV_US30.cash_20240409 vo,17666.0,,10.0,0.9993714644877436,,,,,,2024,orb25
+2024-04-10,39028.45,38334.25,694.2,,_noTradeToday=true (range/day filter).,1757.0,,1.0,0.9967213114754099,,,,ORB range 694.2 pips >= max 500. Standing down.,1.0,2024,orb25
+2024-04-11,38566.15,38195.15,371.0,,"KillSwitch already active (now=18:09, kill=16:31).",1513.0,,1.0,0.9989102796948782,,,,,,2024,orb25
+2024-04-12,38567.95,38117.25,450.7,,"KillSwitch already active (now=16:39, kill=16:31).",17567.0,,8.0,0.9996711608023676,,,,,,2024,orb25
+2024-04-13,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-04-14,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-04-15,38376.95,38047.95,329.0,,"KillSwitch already active (now=17:22, kill=16:31).",18268.0,,18.0,0.999033193683532,1.0,1.0,1.0,,,2024,orb25
+2024-04-16,38033.95,37654.95,379.0,,,,,,,,,,,,2024,orb25
+2024-04-17,38011.95,37810.45,201.5,,"KillSwitch already active (now=20:43, kill=16:31).",20429.0,,16.0,0.9947643979057591,,,,,,2024,orb25
+2024-04-18,38014.65,37750.15,264.5,,"ClosePositionsTime already reached (now=23:20, close=20:50).",11176.0,,8.0,0.9972299168975068,,,,,,2024,orb25
+2024-04-19,37998.15,37589.25,408.9,,,3360.0,,,0.9237744403513743,,,,,,2024,orb25
+2024-04-20,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-04-21,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-04-22,38222.25,37999.15,223.1,,"KillSwitch already active (now=17:34, kill=16:31).",12681.0,,22.0,0.9989447766443897,,,,,,2024,orb25
+2024-04-23,38439.05,38245.15,193.9,,"KillSwitch already active (now=17:03, kill=16:31).",17980.0,,43.0,0.9984756097560976,,,,,,2024,orb25
+2024-04-24,38532.25,38412.15,120.1,,"KillSwitch already active (now=17:03, kill=16:31).",11751.0,,14.0,0.9979209979209979,,,,,,2024,orb25
+2024-04-25,38393.95,37748.85,645.1,,,,,,,,,,ORB range 645.1 pips >= max 500. Standing down.,1.0,2024,orb25
+2024-04-26,38306.65,38052.95,253.7,,"KillSwitch already active (now=17:14, kill=16:31).",2198.0,,3.0,0.9981851179673321,,,,,,2024,orb25
+2024-04-27,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-04-28,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-04-29,38400.75,38266.65,134.1,,"KillSwitch already active (now=19:04, kill=16:31).",684.0,,2.0,0.9976617303195634,,,,,,2024,orb25
+2024-04-30,38389.45,38131.15,258.3,"Neutral trend, policy=BlockAll",existing open bot position found: ORBV_US30.cash_20240430 vo,19137.0,12.0,38.0,1.0,,1.0,,,,2024,orb25
+2024-05-01,37935.85,37701.35,234.5,,"KillSwitch already active (now=17:23, kill=16:31).",13385.0,,25.0,0.999000999000999,,,,,,2024,orb25
+2024-05-02,38160.75,37891.85,268.9,,"KillSwitch already active (now=17:31, kill=16:31).",10328.0,,20.0,0.9992706053975201,,,,,,2024,orb25
+2024-05-03,38807.05,38460.85,346.2,,,,,,,,,,,,2024,orb25
+2024-05-04,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-05-05,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-05-06,38879.15,38704.35,174.8,,,633.0,,,0.9987277353689569,,,,,,2024,orb25
+2024-05-07,38981.35,38844.95,136.4,,"KillSwitch already active (now=18:33, kill=16:31).",83.0,,1.0,0.994098955969133,,,,,,2024,orb25
+2024-05-08,38918.85,38798.05,120.8,,existing open bot position found: ORBV_US30.cash_20240508 vo,12885.0,,42.0,1.0,,1.0,,,,2024,orb25
+2024-05-09,39222.55,38950.25,272.3,,existing open bot position found: ORBV_US30.cash_20240509 vo,12555.0,,39.0,1.0,,,,,,2024,orb25
+2024-05-10,39580.55,39453.25,127.3,Bullish trend blocks SHORT,existing open bot position found: ORBV_US30.cash_20240510 vo,3259.0,22.0,2.0,0.9971509971509972,,,,,,2024,orb25
+2024-05-11,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-05-12,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-05-13,39655.75,39519.55,136.2,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:42, kill=16:31).",10737.0,51.0,37.0,1.0,,,,,,2024,orb25
+2024-05-14,39547.95,39292.05,255.9,,"KillSwitch already active (now=18:41, kill=16:31).",3849.0,,29.0,0.9990749306197966,,,,,,2024,orb25
+2024-05-15,39796.75,39531.25,265.5,,existing open bot position found: ORBV_US30.cash_20240515 vo,10276.0,,48.0,0.9994848016486347,,,,,,2024,orb25
+2024-05-16,39995.95,39871.85,124.1,,existing open bot position found: ORBV_US30.cash_20240516 vo,4613.0,,8.0,0.9980430528375733,,,,,,2024,orb25
+2024-05-17,39934.15,39821.25,112.9,,"KillSwitch already active (now=17:13, kill=16:31).",4437.0,,22.0,1.0,,,,,,2024,orb25
+2024-05-18,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-05-19,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-05-20,40052.15,39901.55,150.6,,existing open bot position found: ORBV_US30.cash_20240520 vo,7791.0,,25.0,0.999537251272559,,,,,,2024,orb25
+2024-05-21,39872.65,39777.25,95.4,,MaxTradesPerDay reached (1/1).,1397.0,,21.0,1.0,,,,,,2024,orb25
+2024-05-22,39886.25,39781.75,104.5,,"KillSwitch already active (now=17:37, kill=16:31).",10929.0,,29.0,0.9995615957913196,,,,,,2024,orb25
+2024-05-23,39783.55,39382.95,400.6,,"KillSwitch already active (now=16:45, kill=16:31).",17095.0,,33.0,1.0,1.0,1.0,1.0,,,2024,orb25
+2024-05-24,39195.35,39081.95,113.4,,"KillSwitch already active (now=18:56, kill=16:31).",4497.0,,13.0,0.9987195902688861,,,,,,2024,orb25
+2024-05-25,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-05-26,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-05-27,39057.25,39008.15,49.1,"Neutral trend, policy=BlockAll",existing open bot position found: ORBV_US30.cash_20240527 vo,1522.0,53.0,20.0,1.0,,,,,,2024,orb25
+2024-05-28,39105.85,38899.55,206.3,,"KillSwitch already active (now=16:57, kill=16:31).",11784.0,,36.0,1.0,,,,,,2024,orb25
+2024-05-29,38708.75,38414.85,293.9,,"KillSwitch already active (now=20:02, kill=16:31).",2227.0,,21.0,0.9968847352024922,,,,,,2024,orb25
+2024-05-30,38190.45,38009.95,180.5,,"KillSwitch already active (now=17:12, kill=16:31).",251.0,,1.0,0.9964253798033958,,,,,,2024,orb25
+2024-05-31,38261.35,38026.65,234.7,,"KillSwitch already active (now=17:35, kill=16:31).",11947.0,,11.0,0.9989806320081549,,,,,,2024,orb25
+2024-06-01,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-06-02,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-06-03,38739.05,38569.35,169.7,,"KillSwitch already active (now=18:01, kill=16:31).",19197.0,,23.0,1.0,,,,,,2024,orb25
+2024-06-04,38670.95,38336.45,334.5,,"KillSwitch already active (now=18:16, kill=16:31).",4941.0,,32.0,0.9995800083998321,,,,,,2024,orb25
+2024-06-05,38834.55,38548.65,285.9,,"KillSwitch already active (now=18:34, kill=16:31).",859.0,,4.0,0.999519461797213,,,,,,2024,orb25
+2024-06-06,39006.75,38727.65,279.1,,,,,,,,,,,,2024,orb25
+2024-06-07,38992.95,38650.15,342.8,,"KillSwitch already active (now=17:24, kill=16:31).",1623.0,,2.0,0.9988202909948879,,,,,,2024,orb25
+2024-06-08,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-06-09,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-06-10,38854.25,38660.25,194.0,,"KillSwitch already active (now=17:50, kill=16:31).",1334.0,,2.0,0.9956395348837209,,,,,,2024,orb25
+2024-06-11,38824.05,38426.95,397.1,,,,,,,,,,,,2024,orb25
+2024-06-12,39147.71,38765.71,382.0,,"KillSwitch already active (now=17:33, kill=16:31).",9266.0,,28.0,0.998745294855709,,,,,,2024,orb25
+2024-06-13,38725.91,38436.91,289.0,,existing open bot position found: ORBV_US30.cash_20240613 vo,1964.0,,1.0,0.9946568023016851,,,,,,2024,orb25
+2024-06-14,38536.61,38281.11,255.5,,"KillSwitch already active (now=17:21, kill=16:31).",9269.0,,5.0,0.9973353635325467,,,,,,2024,orb25
+2024-06-15,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-06-16,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-06-17,38590.31,38422.95,167.4,,existing open bot position found: ORBV_US30.cash_20240617 vo,16000.0,,38.0,1.0,1.0,1.0,1.0,,,2024,orb25
+2024-06-18,38940.65,38726.65,214.0,,,2.0,,,0.8108108108108109,,,,,,2024,orb25
+2024-06-19,38833.35,38771.75,61.6,,existing open bot position found: ORBV_US30.cash_20240619 vo,643.0,,11.0,1.0,,,,,,2024,orb25
+2024-06-20,39016.05,38760.25,255.8,,"KillSwitch already active (now=17:05, kill=16:31).",11012.0,,27.0,0.9989297181591152,,,,,,2024,orb25
+2024-06-21,39262.35,39053.85,208.5,,,,,,,,,,,,2024,orb25
+2024-06-22,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-06-23,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-06-24,39514.15,39189.75,324.4,,,4094.0,,,0.9814502529510961,,,,,,2024,orb25
+2024-06-25,39459.15,39222.65,236.5,,existing open bot position found: ORBV_US30.cash_20240625 vo,15793.0,,39.0,0.9995456610631531,1.0,1.0,1.0,,,2024,orb25
+2024-06-26,39160.15,38911.65,248.5,,"KillSwitch already active (now=17:59, kill=16:31).",3556.0,,5.0,0.9984639016897081,,,,,,2024,orb25
+2024-06-27,39197.65,39025.55,172.1,,"KillSwitch already active (now=17:01, kill=16:31).",6532.0,,3.0,0.9978768577494692,,,,,,2024,orb25
+2024-06-28,39437.65,39097.15,340.5,,"KillSwitch already active (now=18:21, kill=16:31).",5999.0,,6.0,0.9991235758106924,,,,,,2024,orb25
+2024-06-29,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-06-30,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-07-01,39452.75,39141.65,311.1,,"KillSwitch already active (now=18:47, kill=16:31).",8203.0,,23.0,1.0,,,,,,2024,orb25
+2024-07-02,39219.25,38995.65,223.6,,"KillSwitch already active (now=17:52, kill=16:31).",5397.0,,30.0,0.9986595174262736,,,,,,2024,orb25
+2024-07-03,39418.75,39288.95,129.8,,,6366.0,,,0.9930242100943784,,,,,,2024,orb25
+2024-07-04,39439.95,39282.85,157.1,,,1.0,,,0.14234875444839856,,,,,,2024,orb25
+2024-07-05,39374.65,39158.75,215.9,,"KillSwitch already active (now=19:45, kill=16:31).",637.0,,6.0,0.9989594172736733,,,,,,2024,orb25
+2024-07-06,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-07-07,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-07-08,39679.85,39352.05,327.8,,"KillSwitch already active (now=17:03, kill=16:31).",10545.0,,19.0,0.999462654486835,,,,,,2024,orb25
+2024-07-09,39399.85,39139.65,260.2,,"KillSwitch already active (now=16:41, kill=16:31).",3988.0,,6.0,0.9980952380952381,,,,,,2024,orb25
+2024-07-10,39361.35,39262.85,98.5,,existing open bot position found: ORBV_US30.cash_20240710 vo,13190.0,,39.0,1.0,3.0,1.0,3.0,,,2024,orb25
+2024-07-11,39871.95,39622.85,249.1,,,,,,,,,,,,2024,orb25
+2024-07-12,39964.45,39721.25,243.2,,existing open bot position found: ORBV_US30.cash_20240712 vo,16219.0,,16.0,1.0,2.0,1.0,2.0,,,2024,orb25
+2024-07-13,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-07-14,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-07-15,40303.85,40118.95,184.9,,"KillSwitch already active (now=19:31, kill=16:31).",4074.0,,1.0,0.999353169469599,,,,,,2024,orb25
+2024-07-16,40768.15,40160.75,607.4,,_noTradeToday=true (range/day filter).,18183.0,,16.0,0.9996351696461144,,,,ORB range 607.4 pips >= max 500. Standing down.,1.0,2024,orb25
+2024-07-17,41134.15,40791.95,342.2,,"KillSwitch already active (now=19:01, kill=16:31).",17575.0,,18.0,0.9990141307919815,,,,,,2024,orb25
+2024-07-18,41380.15,41029.35,350.8,,"KillSwitch already active (now=17:52, kill=16:31).",20726.0,,22.0,1.0,,,,,,2024,orb25
+2024-07-19,40638.85,40361.15,277.7,,"KillSwitch already active (now=18:20, kill=16:31).",18935.0,,2.0,0.9966976883818672,,,,,,2024,orb25
+2024-07-20,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-07-21,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-07-22,40479.75,40221.15,258.6,,,,,,,,,,,,2024,orb25
+2024-07-23,40506.65,40312.25,194.4,,"ClosePositionsTime already reached (now=22:06, close=20:50).",2196.0,,12.0,0.9970674486803519,,,,,,2024,orb25
+2024-07-24,40258.95,39938.15,320.8,,"KillSwitch already active (now=18:51, kill=16:31).",4927.0,,4.0,0.9996001599360256,,,,,,2024,orb25
+2024-07-25,40084.35,39813.85,270.5,,existing open bot position found: ORBV_US30.cash_20240725 vo,15737.0,,2.0,0.9960552268244577,,,,,,2024,orb25
+2024-07-26,40609.35,40132.65,476.7,,"KillSwitch already active (now=17:29, kill=16:31).",10969.0,,2.0,0.9924812030075187,,,,,,2024,orb25
+2024-07-27,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-07-28,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-07-29,40821.75,40434.75,387.0,,,691.0,,,0.881153113951591,,,,,,2024,orb25
+2024-07-30,40778.45,40496.95,281.5,,,735.0,,,0.9488636363636364,,,,,,2024,orb25
+2024-07-31,40935.05,40647.35,287.7,,"KillSwitch already active (now=17:01, kill=16:31).",15811.0,,13.0,0.999383096853794,,,,,,2024,orb25
+2024-08-01,41089.45,40578.95,510.5,,_noTradeToday=true (range/day filter).,29634.0,,15.0,0.9991673605328893,,,,ORB range 510.5 pips >= max 500. Standing down.,1.0,2024,orb25
+2024-08-02,40142.65,39595.55,547.1,,_noTradeToday=true (range/day filter).,21801.0,,1.0,0.998157248157248,,,,ORB range 547.1 pips >= max 500. Standing down.,1.0,2024,orb25
+2024-08-03,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-08-04,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-08-05,39237.65,38389.85,847.8,,,,,,,,,,ORB range 847.8 pips >= max 500. Standing down.,1.0,2024,orb25
+2024-08-06,39154.15,38628.65,525.5,,_noTradeToday=true (range/day filter).,17816.0,,8.0,0.9990574929311969,,,,ORB range 525.5 pips >= max 500. Standing down.,1.0,2024,orb25
+2024-08-07,39478.55,39157.05,321.5,,"KillSwitch already active (now=20:23, kill=16:31).",20086.0,,25.0,1.0,,,,,,2024,orb25
+2024-08-08,39344.65,38594.45,750.2,,_noTradeToday=true (range/day filter).,12396.0,,19.0,0.9996297667530544,,,,ORB range 750.2 pips >= max 500. Standing down.,1.0,2024,orb25
+2024-08-09,39575.75,39225.25,350.5,,"KillSwitch already active (now=17:31, kill=16:31).",924.0,,1.0,0.9966777408637875,,,,,,2024,orb25
+2024-08-10,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-08-11,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-08-12,39606.25,39240.35,365.9,,,,,,,,,,,,2024,orb25
+2024-08-13,39645.45,39222.05,423.4,,existing open bot position found: ORBV_US30.cash_20240813 vo,12707.0,,29.0,1.0,,,,,,2024,orb25
+2024-08-14,39874.85,39671.53,203.3,,"KillSwitch already active (now=18:03, kill=16:31).",18540.0,,23.0,1.0,,,,,,2024,orb25
+2024-08-15,40547.65,40003.55,544.1,,_noTradeToday=true (range/day filter).,4069.0,,19.0,0.9996033320111067,,,,ORB range 544.1 pips >= max 500. Standing down.,1.0,2024,orb25
+2024-08-16,40634.05,40416.15,217.9,,"KillSwitch already active (now=16:58, kill=16:31).",10644.0,,13.0,0.9990619136960601,,,,,,2024,orb25
+2024-08-17,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-08-18,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-08-19,40824.15,40619.65,204.5,,"KillSwitch already active (now=16:51, kill=16:31).",11395.0,,35.0,1.0,,,,,,2024,orb25
+2024-08-20,40944.35,40786.15,158.2,,,1578.0,,,0.99073701167942,,,,,,2024,orb25
+2024-08-21,40953.75,40767.15,186.6,,,1298.0,,,0.9937888198757765,,,,,,2024,orb25
+2024-08-22,41025.75,40776.45,249.3,,"KillSwitch already active (now=16:57, kill=16:31).",17170.0,,19.0,1.0,,,,,,2024,orb25
+2024-08-23,41161.15,40812.25,348.9,,"KillSwitch already active (now=20:38, kill=16:31).",3769.0,,1.0,0.9814687714481812,,,,,,2024,orb25
+2024-08-24,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-08-25,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-08-26,41411.45,41180.85,230.6,,"KillSwitch already active (now=17:46, kill=16:31).",2401.0,,9.0,0.999650471862985,,,,,,2024,orb25
+2024-08-27,41292.65,41084.85,207.8,,,,,,,,,,,,2024,orb25
+2024-08-28,41361.75,41169.15,192.6,,"KillSwitch already active (now=17:15, kill=16:31).",19775.0,,17.0,0.9993293091884642,,,,,,2024,orb25
+2024-08-29,41409.25,41077.35,331.9,,"KillSwitch already active (now=16:51, kill=16:31).",9930.0,,5.0,1.0,,,,,,2024,orb25
+2024-08-30,41503.45,41318.95,184.5,,existing open bot position found: ORBV_US30.cash_20240830 vo,12029.0,,14.0,1.0,,,,,,2024,orb25
+2024-08-31,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-09-01,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-09-02,41525.05,41450.25,74.8,Bearish trend blocks LONG,"KillSwitch already active (now=16:34, kill=16:31).",949.0,9.0,4.0,0.9953917050691244,,,,,,2024,orb25
+2024-09-03,41517.35,41043.35,474.0,,"KillSwitch already active (now=18:01, kill=16:31).",9170.0,,28.0,0.9996324880558617,,,,,,2024,orb25
+2024-09-04,41081.25,40818.75,262.5,,,2046.0,,,0.8734177215189873,,,,,,2024,orb25
+2024-09-05,41088.95,40825.95,263.0,,"KillSwitch already active (now=18:01, kill=16:31).",18934.0,,26.0,0.99967958987504,,,,,,2024,orb25
+2024-09-06,41012.05,40579.75,432.3,,"KillSwitch already active (now=19:31, kill=16:31).",24290.0,,6.0,0.9996836444163238,,1.0,,,,2024,orb25
+2024-09-07,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-09-08,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-09-09,40803.65,40502.15,301.5,,"KillSwitch already active (now=16:35, kill=16:31).",12325.0,,23.0,0.9984871406959154,,,,,,2024,orb25
+2024-09-10,40929.75,40547.75,382.0,,,3804.0,,,0.9848005066497783,,,,,,2024,orb25
+2024-09-11,40652.65,40011.15,641.5,,_noTradeToday=true (range/day filter).,9621.0,,16.0,0.9944751381215469,,,,ORB range 641.5 pips >= max 500. Standing down.,1.0,2024,orb25
+2024-09-12,41016.45,40656.85,359.6,,"KillSwitch already active (now=17:31, kill=16:31).",8386.0,,38.0,0.9996297667530544,,,,,,2024,orb25
+2024-09-13,41420.05,41105.35,314.7,,"KillSwitch already active (now=19:55, kill=16:31).",7790.0,,2.0,0.9992810927390368,,,,,,2024,orb25
+2024-09-14,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-09-15,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-09-16,41742.35,41392.65,349.7,,,,,,,,,,,,2024,orb25
+2024-09-17,41838.05,41639.85,198.2,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:46, kill=16:31).",13794.0,9.0,24.0,1.0,,,,,,2024,orb25
+2024-09-18,41677.95,41477.85,200.1,,"KillSwitch already active (now=18:01, kill=16:31).",6183.0,,5.0,0.9973443493655947,,,,,,2024,orb25
+2024-09-19,42111.65,41831.65,280.0,,"KillSwitch already active (now=17:47, kill=16:31).",1527.0,,3.0,0.9986565158978952,,,,,,2024,orb25
+2024-09-20,42087.25,41860.85,226.4,,"KillSwitch already active (now=17:18, kill=16:31).",4443.0,,5.0,0.997624703087886,,,,,,2024,orb25
+2024-09-21,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-09-22,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-09-23,42173.45,42000.75,172.7,,,,,,,,,,,,2024,orb25
+2024-09-24,42244.25,42078.05,166.2,,"KillSwitch already active (now=18:31, kill=16:31).",928.0,,2.0,0.9990205680705192,,,,,,2024,orb25
+2024-09-25,42305.55,42008.55,297.0,,"KillSwitch already active (now=16:47, kill=16:31).",17411.0,,26.0,0.9995953055443141,,,,,,2024,orb25
+2024-09-26,42198.35,42028.35,170.0,,"KillSwitch already active (now=18:16, kill=16:31).",1260.0,,20.0,0.9965122072745392,,,,,,2024,orb25
+2024-09-27,42553.75,42135.45,418.3,,existing open bot position found: ORBV_US30.cash_20240927 vo,2714.0,,2.0,0.9996170049789352,,,,,,2024,orb25
+2024-09-28,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-09-29,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-09-30,42309.05,42056.15,252.9,,"KillSwitch already active (now=18:20, kill=16:31).",2088.0,,7.0,0.9994086339444116,,,,,,2024,orb25
+2024-10-01,42284.85,41934.85,350.0,,"KillSwitch already active (now=18:33, kill=16:31).",2904.0,,1.0,0.99644128113879,,,,,,2024,orb25
+2024-10-02,42211.15,41978.15,233.0,,"KillSwitch already active (now=18:01, kill=16:31).",6903.0,,24.0,1.0,,,,,,2024,orb25
+2024-10-03,42141.55,41837.95,303.6,,,,,,,,,,,,2024,orb25
+2024-10-04,42332.25,41963.35,368.9,,"KillSwitch already active (now=19:49, kill=16:31).",1041.0,,4.0,0.9978118161925602,,,,,,2024,orb25
+2024-10-05,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-10-06,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-10-07,42287.75,42115.75,172.0,,existing open bot position found: ORBV_US30.cash_20241007 vo,12754.0,,44.0,1.0,1.0,1.0,1.0,,,2024,orb25
+2024-10-08,42084.15,41867.25,216.9,,"KillSwitch already active (now=18:40, kill=16:31).",1643.0,,13.0,0.9993510707332901,,,,,,2024,orb25
+2024-10-09,42301.05,41962.45,338.6,,"KillSwitch already active (now=16:55, kill=16:31).",14071.0,,31.0,1.0,,,,,,2024,orb25
+2024-10-10,42513.45,42355.25,158.2,,"KillSwitch already active (now=17:10, kill=16:31).",2917.0,,7.0,1.0,,,,,,2024,orb25
+2024-10-11,42791.95,42393.75,398.2,,"KillSwitch already active (now=17:46, kill=16:31).",7816.0,,20.0,0.9994416527079844,,,,,,2024,orb25
+2024-10-12,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-10-13,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-10-14,42908.65,42717.55,191.1,,existing open bot position found: ORBV_US30.cash_20241014 vo,10497.0,,53.0,1.0,2.0,1.0,2.0,,,2024,orb25
+2024-10-15,43173.35,42753.05,420.3,,"KillSwitch already active (now=19:05, kill=16:31).",3106.0,,26.0,1.0,,,,,,2024,orb25
+2024-10-16,42957.65,42687.15,270.5,,"KillSwitch already active (now=16:39, kill=16:31).",8977.0,,33.0,0.999383096853794,,,,,,2024,orb25
+2024-10-17,43282.65,43048.75,233.9,,"KillSwitch already active (now=17:43, kill=16:31).",644.0,,2.0,0.9944064636420137,,,,,,2024,orb25
+2024-10-18,43307.05,43035.65,271.4,,"KillSwitch already active (now=16:56, kill=16:31).",748.0,,3.0,0.9968051118210862,,,,,,2024,orb25
+2024-10-19,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-10-20,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-10-21,43311.95,43107.65,204.3,,existing open bot position found: ORBV_US30.cash_20241021 vo,16212.0,,37.0,0.9990205680705192,1.0,1.0,1.0,,,2024,orb25
+2024-10-22,42855.35,42714.25,141.1,"Neutral trend, policy=BlockAll",existing open bot position found: ORBV_US30.cash_20241022 vo,9704.0,5.0,23.0,1.0,3.0,1.0,3.0,,,2024,orb25
+2024-10-23,42818.55,42621.05,197.5,,existing open bot position found: ORBV_US30.cash_20241023 vo,15679.0,,34.0,0.99932478055368,,1.0,,,,2024,orb25
+2024-10-24,42517.35,42347.56,169.8,,existing open bot position found: ORBV_US30.cash_20241024 vo,7355.0,,6.0,0.9996125532739247,,,,,,2024,orb25
+2024-10-25,42604.06,42404.76,199.3,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:01, kill=16:31).",15297.0,26.0,18.0,0.9995746490854955,,,,,,2024,orb25
+2024-10-26,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-10-27,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-10-28,42473.26,42202.76,270.5,,,496.0,,,0.9929078014184397,,,,,,2024,orb25
+2024-10-29,42498.66,42168.66,330.0,,,,,,,,,,,,2024,orb25
+2024-10-30,42438.76,42117.36,321.4,,"ClosePositionsTime already reached (now=22:07, close=20:50).",825.0,,1.0,0.9904761904761905,,,,,,2024,orb25
+2024-10-31,42008.56,41825.76,182.8,,"KillSwitch already active (now=20:00, kill=16:31).",7254.0,,21.0,0.9993792675356922,,,,,,2024,orb25
+2024-11-01,42294.96,41811.06,483.9,,,1529.0,,,0.9683794466403162,,,,,,2024,orb25
+2024-11-02,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-11-03,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-11-04,42130.36,41951.56,178.8,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:44, kill=16:31).",19474.0,75.0,21.0,0.9993593850096093,,,,,,2024,orb25
+2024-11-05,41894.08,41804.88,89.2,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:31, kill=16:31).",20705.0,104.0,24.0,1.0,,,,,,2024,orb25
+2024-11-06,43643.68,43076.88,566.8,,_noTradeToday=true (range/day filter).,9872.0,,21.0,1.0,,,,ORB range 566.8 pips >= max 500. Standing down.,1.0,2024,orb25
+2024-11-07,43857.92,43702.92,155.0,,existing open bot position found: ORBV_US30.cash_20241107 vo,1676.0,,4.0,0.9989665862900448,,,,,,2024,orb25
+2024-11-08,43828.26,43703.46,124.8,,"KillSwitch already active (now=17:58, kill=16:31).",18305.0,,20.0,1.0,,,,,,2024,orb25
+2024-11-09,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-11-10,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-11-11,44222.16,44080.16,142.0,"Neutral trend, policy=BlockAll",existing open bot position found: ORBV_US30.cash_20241111 vo,16166.0,503.0,28.0,1.0,,,,,,2024,orb25
+2024-11-12,44386.06,44201.06,185.0,,MaxTradesPerDay reached (1/1).,17466.0,,34.0,0.9991158267020337,,,,,,2024,orb25
+2024-11-13,44037.56,43761.56,276.0,,"KillSwitch already active (now=16:42, kill=16:31).",10973.0,,10.0,0.9981343283582089,,,,,,2024,orb25
+2024-11-14,44114.36,43976.96,137.4,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:45, kill=16:31).",25655.0,77.0,35.0,0.9997127262280953,,,,,,2024,orb25
+2024-11-15,43656.76,43476.96,179.8,,"KillSwitch already active (now=17:51, kill=16:31).",22967.0,,15.0,0.999666777740753,,,,,,2024,orb25
+2024-11-16,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-11-17,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-11-18,43400.86,43248.86,152.0,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:39, kill=16:31).",8461.0,104.0,8.0,0.999666777740753,,,,,,2024,orb25
+2024-11-19,43469.16,42849.66,619.5,,,,,,,,,,ORB range 619.5 pips >= max 500. Standing down.,1.0,2024,orb25
+2024-11-20,43428.36,43249.26,179.1,,existing open bot position found: ORBV_US30.cash_20241120 vo,23649.0,,20.0,0.9997835966241073,2.0,1.0,2.0,,,2024,orb25
+2024-11-21,43619.96,43252.96,367.0,,"KillSwitch already active (now=17:29, kill=16:31).",19365.0,,27.0,0.9986772486772487,,,,,,2024,orb25
+2024-11-22,43941.66,43706.56,235.1,,existing open bot position found: ORBV_US30.cash_20241122 vo,26764.0,,25.0,0.9996599795987758,1.0,1.0,1.0,,,2024,orb25
+2024-11-23,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-11-24,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-11-25,44702.66,44521.06,181.6,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:45, kill=16:31).",11147.0,472.0,12.0,0.9997222993612884,,,,,,2024,orb25
+2024-11-26,44812.56,44531.46,281.1,,existing open bot position found: ORBV_US30.cash_20241126 vo,10218.0,,17.0,0.9984717269485481,,,,,,2024,orb25
+2024-11-27,44936.46,44786.06,150.4,"Neutral trend, policy=BlockAll","KillSwitch already active (now=18:28, kill=16:31).",12093.0,440.0,27.0,1.0,,,,,,2024,orb25
+2024-11-28,44802.96,44728.06,74.9,,existing open bot position found: ORBV_US30.cash_20241128 vo,2199.0,,31.0,0.9990205680705192,,,,,,2024,orb25
+2024-11-29,44913.46,44762.26,151.2,,"KillSwitch already active (now=16:43, kill=16:31).",6338.0,,6.0,0.9976905311778291,,,,,,2024,orb25
+2024-11-30,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-12-01,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-12-02,44974.06,44830.06,144.0,,MaxTradesPerDay reached (1/1).,17927.0,,33.0,1.0,,,,,,2024,orb25
+2024-12-03,44834.76,44735.55,99.2,,MaxTradesPerDay reached (1/1).,14874.0,,24.0,1.0,,,,,,2024,orb25
+2024-12-04,44934.66,44771.36,163.3,,existing open bot position found: ORBV_US30.cash_20241204 vo,8906.0,,29.0,0.9989258861439313,,,,,,2024,orb25
+2024-12-05,45056.56,44928.86,127.7,,existing open bot position found: ORBV_US30.cash_20241205 vo,18034.0,,30.0,1.0,,,,,,2024,orb25
+2024-12-06,44878.16,44704.36,173.8,,MaxTradesPerDay reached (1/1).,9144.0,,27.0,1.0,,,,,,2024,orb25
+2024-12-07,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-12-08,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-12-09,44702.96,44582.16,120.8,,existing open bot position found: ORBV_US30.cash_20241209 vo,15545.0,,33.0,0.999057492931197,,,,,,2024,orb25
+2024-12-10,44427.56,44276.36,151.2,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:33, kill=16:31).",5979.0,591.0,11.0,0.9989594172736733,,,,,,2024,orb25
+2024-12-11,44366.26,44175.16,191.1,,"ClosePositionsTime already reached (now=20:55, close=20:50).",1847.0,,12.0,0.9973614775725593,,,,,,2024,orb25
+2024-12-12,44156.09,44026.26,129.8,,MaxTradesPerDay reached (1/1).,11174.0,,31.0,1.0,,,,,,2024,orb25
+2024-12-13,44042.16,43912.36,129.8,,existing open bot position found: ORBV_US30.cash_20241213 vo,22413.0,,19.0,0.999650471862985,,,,,,2024,orb25
+2024-12-14,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-12-15,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-12-16,43919.76,43814.36,105.4,"Neutral trend, policy=BlockAll","KillSwitch already active (now=17:14, kill=16:31).",15425.0,195.0,31.0,1.0,,,,,,2024,orb25
+2024-12-17,43608.56,43481.36,127.2,,MaxTradesPerDay reached (1/1).,23369.0,,24.0,0.9994848016486347,,,,,,2024,orb25
+2024-12-18,43626.46,43449.26,177.2,,"KillSwitch already active (now=17:20, kill=16:31).",27036.0,,23.0,1.0,,,,,,2024,orb25
+2024-12-19,42669.06,42377.06,292.0,,existing open bot position found: ORBV_US30.cash_20241219 vo,4843.0,,16.0,1.0,,,,,,2024,orb25
+2024-12-20,42284.16,42024.66,259.5,"Neutral trend, policy=BlockAll","KillSwitch already active (now=16:31, kill=16:31).",38457.0,81.0,13.0,0.9994144056217061,,,,,,2024,orb25
+2024-12-21,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-12-22,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-12-23,42971.96,42608.46,363.5,,,9527.0,,,0.9996875976257419,,,,,,2024,orb25
+2024-12-24,42918.16,42843.76,74.4,Bullish trend blocks SHORT,"KillSwitch already active (now=16:32, kill=16:31).",11813.0,225.0,7.0,1.0,,,,,,2024,orb25
+2024-12-26,43230.26,43017.16,213.1,,existing open bot position found: ORBV_US30.cash_20241226 vo,15228.0,,31.0,0.9986082115518442,,,,,,2024,orb25
+2024-12-27,43211.26,43007.96,203.3,,"KillSwitch already active (now=16:42, kill=16:31).",27083.0,,21.0,0.9994711792702274,,,,,,2024,orb25
+2024-12-28,,,,,,,,,,,,,Trading disabled for Saturday.,1.0,2024,orb25
+2024-12-29,,,,,,,,,,,,,Trading disabled for Sunday.,1.0,2024,orb25
+2024-12-30,42934.96,42489.66,445.3,,existing open bot position found: ORBV_US30.cash_20241230 vo,11806.0,,7.0,0.999625608386372,,1.0,,,,2024,orb25
+2024-12-31,42714.16,42541.86,172.3,"Neutral trend, policy=BlockAll","KillSwitch already active (now=18:01, kill=16:31).",25871.0,35.0,16.0,0.9997674959311788,,,,,,2024,orb25
