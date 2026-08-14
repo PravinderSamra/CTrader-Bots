@@ -1085,27 +1085,27 @@ date,no_trade_why,no_trade,orb_hi,orb_lo,orb_range,blocked_why,vol_rejects,block
 2025-12-29,,,48735.1,48539.01,196.1,,,,,,,,,,,2025,vol1.4_be0.6_sl50_utc
 2025-12-30,,,48491.7,48419.65,72.0,,,,,,,,,,,2025,vol1.4_be0.6_sl50_utc
 2025-12-31,,,48398.41,48284.8,113.6,,,,,,,,,,,2025,vol1.4_be0.6_sl50_utc
-2026-01-02,,,48293.71,48142.71,151.0,"ClosePositionsTime already reached (now=20:51, close=20:50).",8137.0,2.0,0.9972941631233089,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-01-02,,,48293.71,48142.71,151.0,"ClosePositionsTime already reached (now=20:51, close=20:50).",8137.0,2.0,0.9972941631233088,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-01-03,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-01-04,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-01-05,,,48486.21,48319.21,167.0,existing open bot position found: ORBV_US30.cash_20260105 vo,37007.0,14.0,0.9986648865153538,1.0,1.0,,,3.0,3.0,2026,vol1.4_be0.6_sl50_utc
-2026-01-06,,,48979.2,48843.01,136.2,"KillSwitch already active (now=20:01, kill=16:31).",31196.0,12.0,0.9997382884061763,,,"Neutral trend, policy=BlockAll",406.0,,,2026,vol1.4_be0.6_sl50_utc
+2026-01-06,,,48979.2,48843.01,136.2,"KillSwitch already active (now=20:01, kill=16:31).",31196.0,12.0,0.9997382884061764,,,"Neutral trend, policy=BlockAll",406.0,,,2026,vol1.4_be0.6_sl50_utc
 2026-01-07,,,49570.01,49468.2,101.8,existing open bot position found: ORBV_US30.cash_20260107 vo,146.0,2.0,0.9965635738831614,,1.0,,,0.0,1.0,2026,vol1.4_be0.6_sl50_utc
-2026-01-08,,,48909.61,48763.51,146.1,"KillSwitch already active (now=18:18, kill=16:31).",35668.0,17.0,0.9990393852065321,,,Bearish trend blocks LONG,474.0,,,2026,vol1.4_be0.6_sl50_utc
-2026-01-09,,,49450.11,49226.71,223.4,"KillSwitch already active (now=18:41, kill=16:31).",18119.0,8.0,0.9962994591517221,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-01-08,,,48909.61,48763.51,146.1,"KillSwitch already active (now=18:18, kill=16:31).",35668.0,17.0,0.999039385206532,,,Bearish trend blocks LONG,474.0,,,2026,vol1.4_be0.6_sl50_utc
+2026-01-09,,,49450.11,49226.71,223.4,"KillSwitch already active (now=18:41, kill=16:31).",18119.0,8.0,0.996299459151722,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-01-10,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-01-11,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-01-12,,,49292.71,49071.21,221.5,"KillSwitch already active (now=17:46, kill=16:31).",21333.0,12.0,0.9988649262202043,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-01-12,,,49292.71,49071.21,221.5,"KillSwitch already active (now=17:46, kill=16:31).",21333.0,12.0,0.9988649262202044,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-01-13,,,49686.91,49460.41,226.5,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-01-14,,,49132.0,48998.81,133.2,"ClosePositionsTime already reached (now=21:00, close=20:50).",2780.0,1.0,0.997864492331586,,,"Neutral trend, policy=BlockAll",181.0,,,2026,vol1.4_be0.6_sl50_utc
-2026-01-15,,,49301.71,49080.71,221.0,existing open bot position found: ORBV_US30.cash_20260115 vo,28336.0,18.0,0.9991843393148451,1.0,1.0,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-01-15,,,49301.71,49080.71,221.0,existing open bot position found: ORBV_US30.cash_20260115 vo,28336.0,18.0,0.9991843393148452,1.0,1.0,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-01-16,,,49543.11,49412.01,131.1,,107.0,,0.8380024360535931,,,Bearish trend blocks LONG,199.0,,,2026,vol1.4_be0.6_sl50_utc
 2026-01-17,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-01-18,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-01-19,,,49059.01,48858.01,201.0,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-01-20,,,48775.21,48496.21,279.0,,12742.0,,0.8121374386434628,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-01-21,,,48647.91,48312.91,335.0,"KillSwitch already active (now=19:28, kill=16:31).",53213.0,10.0,0.9998447446048749,,,"Neutral trend, policy=BlockAll",17.0,,,2026,vol1.4_be0.6_sl50_utc
-2026-01-22,,,49361.41,49144.41,217.0,existing open bot position found: ORBV_US30.cash_20260122 vo,32706.0,8.0,0.9996064541519087,1.0,1.0,,,2.0,2.0,2026,vol1.4_be0.6_sl50_utc
+2026-01-21,,,48647.91,48312.91,335.0,"KillSwitch already active (now=19:28, kill=16:31).",53213.0,10.0,0.9998447446048748,,,"Neutral trend, policy=BlockAll",17.0,,,2026,vol1.4_be0.6_sl50_utc
+2026-01-22,,,49361.41,49144.41,217.0,existing open bot position found: ORBV_US30.cash_20260122 vo,32706.0,8.0,0.9996064541519089,1.0,1.0,,,2.0,2.0,2026,vol1.4_be0.6_sl50_utc
 2026-01-23,,,49405.91,49110.51,295.4,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-01-24,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-01-25,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
@@ -1120,27 +1120,27 @@ date,no_trade_why,no_trade,orb_hi,orb_lo,orb_range,blocked_why,vol_rejects,block
 2026-02-03,,,49479.75,49284.81,194.9,,6763.0,,0.9985422740524782,,,Bearish trend blocks LONG,893.0,,,2026,vol1.4_be0.6_sl50_utc
 2026-02-04,,,49457.21,49287.21,170.0,"KillSwitch already active (now=19:49, kill=16:31).",44440.0,11.0,1.0,,,"Neutral trend, policy=BlockAll",1002.0,,,2026,vol1.4_be0.6_sl50_utc
 2026-02-05,,,49592.31,49230.31,362.0,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-02-06,,,49236.41,48829.41,407.0,existing open bot position found: ORBV_US30.cash_20260206 vo,48524.0,17.0,0.9997696383321815,1.0,1.0,,,3.0,3.0,2026,vol1.4_be0.6_sl50_utc
+2026-02-06,,,49236.41,48829.41,407.0,existing open bot position found: ORBV_US30.cash_20260206 vo,48524.0,17.0,0.9997696383321816,1.0,1.0,,,3.0,3.0,2026,vol1.4_be0.6_sl50_utc
 2026-02-07,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-02-08,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-02-09,,,50240.31,49980.81,259.5,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-02-10,,,50217.31,50013.31,204.0,existing open bot position found: ORBV_US30.cash_20260210 vo,27757.0,14.0,0.999598016883291,1.0,1.0,,,1.0,1.0,2026,vol1.4_be0.6_sl50_utc
 2026-02-11,,,50464.21,50182.21,282.0,MaxTradesPerDay reached (1/1).,232.0,1.0,0.997270245677889,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-02-12,,,50324.01,50199.61,124.4,MaxTradesPerDay reached (1/1).,7686.0,4.0,0.9990281827016521,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-02-13,,,49513.29,49223.81,289.5,"KillSwitch already active (now=19:31, kill=16:31).",31157.0,1.0,0.9996914532551681,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-02-12,,,50324.01,50199.61,124.4,MaxTradesPerDay reached (1/1).,7686.0,4.0,0.999028182701652,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-02-13,,,49513.29,49223.81,289.5,"KillSwitch already active (now=19:31, kill=16:31).",31157.0,1.0,0.999691453255168,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-02-14,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-02-15,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-02-16,,,49749.55,49606.91,142.6,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-02-17,,,49528.31,49268.81,259.5,existing open bot position found: ORBV_US30.cash_20260217 vo,29222.0,7.0,0.999657651489216,1.0,1.0,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-02-18,,,49805.2,49555.51,249.7,,15960.0,,0.8562064727570668,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-02-19,,,49715.61,49446.01,269.6,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-02-20,,,49548.35,49232.11,316.2,"KillSwitch already active (now=20:31, kill=16:31).",12916.0,2.0,0.9978809477942593,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-02-20,,,49548.35,49232.11,316.2,"KillSwitch already active (now=20:31, kill=16:31).",12916.0,2.0,0.9978809477942592,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-02-21,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-02-22,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-02-23,,,49538.9,49337.21,201.7,existing open bot position found: ORBV_US30.cash_20260223 vo,1133.0,4.0,0.9995217599234816,1.0,1.0,,,1.0,1.0,2026,vol1.4_be0.6_sl50_utc
-2026-02-24,,,48969.61,48772.11,197.5,"KillSwitch already active (now=18:04, kill=16:31).",34285.0,9.0,0.9993355481727575,,,"Neutral trend, policy=BlockAll",231.0,,,2026,vol1.4_be0.6_sl50_utc
-2026-02-25,,,49444.41,49171.65,272.8,"KillSwitch already active (now=19:03, kill=16:31).",9712.0,10.0,0.9989943010392223,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-02-26,,,49709.61,49360.11,349.5,MaxTradesPerDay reached (1/1).,1535.0,4.0,0.9980430528375733,1.0,1.0,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-02-24,,,48969.61,48772.11,197.5,"KillSwitch already active (now=18:04, kill=16:31).",34285.0,9.0,0.9993355481727576,,,"Neutral trend, policy=BlockAll",231.0,,,2026,vol1.4_be0.6_sl50_utc
+2026-02-25,,,49444.41,49171.65,272.8,"KillSwitch already active (now=19:03, kill=16:31).",9712.0,10.0,0.9989943010392224,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-02-26,,,49709.61,49360.11,349.5,MaxTradesPerDay reached (1/1).,1535.0,4.0,0.9980430528375732,1.0,1.0,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-02-27,,,49359.4,48889.71,469.7,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-02-28,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-03-01,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
@@ -1151,8 +1151,8 @@ date,no_trade_why,no_trade,orb_hi,orb_lo,orb_range,blocked_why,vol_rejects,block
 2026-03-06,ORB range 817.5 pips >= max 500. Standing down.,1.0,48063.01,47245.51,817.5,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-03-07,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-03-08,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-03-09,ORB range 522.3 pips >= max 500. Standing down.,1.0,47132.41,46610.1,522.3,_noTradeToday=true (range/day filter).,29416.0,16.0,0.9998305371970853,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-03-10,ORB range 516.3 pips >= max 500. Standing down.,1.0,47947.21,47430.9,516.3,,22865.0,,0.9950617283950617,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-03-09,ORB range 522.3 pips >= max 500. Standing down.,1.0,47132.41,46610.1,522.3,_noTradeToday=true (range/day filter).,29416.0,16.0,0.9998305371970851,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-03-10,ORB range 516.3 pips >= max 500. Standing down.,1.0,47947.21,47430.9,516.3,,22865.0,,0.9950617283950616,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-03-11,ORB range 559.3 pips >= max 500. Standing down.,1.0,47837.81,47278.5,559.3,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-03-12,,,47214.41,46729.6,484.8,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-03-13,ORB range 702.2 pips >= max 500. Standing down.,1.0,47122.2,46420.01,702.2,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
@@ -1166,16 +1166,16 @@ date,no_trade_why,no_trade,orb_hi,orb_lo,orb_range,blocked_why,vol_rejects,block
 2026-03-21,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-03-22,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-03-23,ORB range 1735.0 pips >= max 500. Standing down.,1.0,46911.81,45176.81,1735.0,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-03-24,ORB range 597.3 pips >= max 500. Standing down.,1.0,46354.91,45757.6,597.3,_noTradeToday=true (range/day filter).,11486.0,11.0,0.9989275317910219,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-03-24,ORB range 597.3 pips >= max 500. Standing down.,1.0,46354.91,45757.6,597.3,_noTradeToday=true (range/day filter).,11486.0,11.0,0.998927531791022,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-03-25,,,46750.6,46323.1,427.5,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-03-26,ORB range 545.7 pips >= max 500. Standing down.,1.0,46532.0,45986.31,545.7,,131.0,,0.7505938242280285,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-03-27,ORB range 691.3 pips >= max 500. Standing down.,1.0,46120.81,45429.5,691.3,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-03-28,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-03-29,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-03-30,,,45669.41,45285.6,383.8,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-03-31,,,45886.7,45478.51,408.2,"KillSwitch already active (now=16:40, kill=16:31).",38525.0,20.0,0.9997585124366095,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-03-31,,,45886.7,45478.51,408.2,"KillSwitch already active (now=16:40, kill=16:31).",38525.0,20.0,0.9997585124366096,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-04-01,,,46843.11,46459.11,384.0,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-04-02,,,46207.4,45842.71,364.7,"KillSwitch already active (now=19:51, kill=16:31).",45205.0,17.0,0.9997895179962113,,,"Neutral trend, policy=BlockAll",207.0,,,2026,vol1.4_be0.6_sl50_utc
+2026-04-02,,,46207.4,45842.71,364.7,"KillSwitch already active (now=19:51, kill=16:31).",45205.0,17.0,0.9997895179962112,,,"Neutral trend, policy=BlockAll",207.0,,,2026,vol1.4_be0.6_sl50_utc
 2026-04-04,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-04-05,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-04-06,,,46691.6,46335.6,356.0,"KillSwitch already active (now=20:24, kill=16:31).",2739.0,10.0,0.995850622406639,,,,,,,2026,vol1.4_be0.6_sl50_utc
@@ -1185,10 +1185,10 @@ date,no_trade_why,no_trade,orb_hi,orb_lo,orb_range,blocked_why,vol_rejects,block
 2026-04-10,,,48285.8,47934.2,351.6,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-04-11,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-04-12,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-04-13,,,47777.51,47407.01,370.5,"KillSwitch already active (now=16:34, kill=16:31).",17200.0,29.0,0.9997382884061763,1.0,1.0,"Neutral trend, policy=BlockAll",4.0,2.0,3.0,2026,vol1.4_be0.6_sl50_utc
-2026-04-14,,,48495.85,48134.21,361.6,"KillSwitch already active (now=17:55, kill=16:31).",15667.0,11.0,0.9992505620784411,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-04-13,,,47777.51,47407.01,370.5,"KillSwitch already active (now=16:34, kill=16:31).",17200.0,29.0,0.9997382884061764,1.0,1.0,"Neutral trend, policy=BlockAll",4.0,2.0,3.0,2026,vol1.4_be0.6_sl50_utc
+2026-04-14,,,48495.85,48134.21,361.6,"KillSwitch already active (now=17:55, kill=16:31).",15667.0,11.0,0.9992505620784412,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-04-15,,,48701.5,48353.0,348.5,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-04-16,,,48672.0,48331.05,340.9,"ClosePositionsTime already reached (now=23:22, close=20:50).",57.0,3.0,0.9677419354838709,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-04-16,,,48672.0,48331.05,340.9,"ClosePositionsTime already reached (now=23:22, close=20:50).",57.0,3.0,0.9677419354838708,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-04-17,ORB range 848.0 pips >= max 500. Standing down.,1.0,49557.35,48709.31,848.0,_noTradeToday=true (range/day filter).,13278.0,4.0,0.9998471181776486,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-04-18,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-04-19,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
@@ -1213,8 +1213,8 @@ date,no_trade_why,no_trade,orb_hi,orb_lo,orb_range,blocked_why,vol_rejects,block
 2026-05-08,,,49857.41,49628.05,229.4,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-05-09,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-05-10,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-05-11,,,49716.8,49466.3,250.5,"ClosePositionsTime already reached (now=22:06, close=20:50).",2117.0,7.0,0.9696969696969697,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-05-12,,,49736.5,49301.0,435.5,"KillSwitch already active (now=19:56, kill=16:31).",9745.0,11.0,0.9981343283582089,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-05-11,,,49716.8,49466.3,250.5,"ClosePositionsTime already reached (now=22:06, close=20:50).",2117.0,7.0,0.9696969696969696,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-05-12,,,49736.5,49301.0,435.5,"KillSwitch already active (now=19:56, kill=16:31).",9745.0,11.0,0.9981343283582088,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-05-13,,,49787.45,49445.9,341.5,"KillSwitch already active (now=20:38, kill=16:31).",1001.0,10.0,0.9972299168975068,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-05-14,,,50175.71,49808.31,367.4,,884.0,,0.7753846153846153,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-05-15,,,49886.51,49516.2,370.3,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
@@ -1223,7 +1223,7 @@ date,no_trade_why,no_trade,orb_hi,orb_lo,orb_range,blocked_why,vol_rejects,block
 2026-05-18,ORB range 649.7 pips >= max 500. Standing down.,1.0,49767.9,49118.21,649.7,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-05-19,ORB range 514.9 pips >= max 500. Standing down.,1.0,49752.41,49237.5,514.9,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-05-20,,,49628.51,49228.7,399.8,existing open bot position found: ORBV_US30.cash_20260520 vo,41334.0,14.0,0.9997268505872712,1.0,1.0,"Neutral trend, policy=BlockAll",1.0,,,2026,vol1.4_be0.6_sl50_utc
-2026-05-21,ORB range 506.4 pips >= max 500. Standing down.,1.0,50195.31,49688.9,506.4,_noTradeToday=true (range/day filter).,19462.0,18.0,0.9985504912224191,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-05-21,ORB range 506.4 pips >= max 500. Standing down.,1.0,50195.31,49688.9,506.4,_noTradeToday=true (range/day filter).,19462.0,18.0,0.9985504912224192,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-05-22,,,50786.41,50366.1,420.3,"KillSwitch already active (now=17:30, kill=16:31).",829.0,1.0,0.877527661198016,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-05-23,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-05-24,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
@@ -1235,7 +1235,7 @@ date,no_trade_why,no_trade,orb_hi,orb_lo,orb_range,blocked_why,vol_rejects,block
 2026-05-30,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-05-31,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-06-01,ORB range 525.0 pips >= max 500. Standing down.,1.0,51321.5,50796.5,525.0,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-06-02,,,51250.8,50783.11,467.7,"KillSwitch already active (now=18:13, kill=16:31).",8975.0,13.0,0.9995800083998321,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-06-02,,,51250.8,50783.11,467.7,"KillSwitch already active (now=18:13, kill=16:31).",8975.0,13.0,0.999580008399832,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-06-03,,,51223.4,50864.4,359.0,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-06-04,ORB range 684.9 pips >= max 500. Standing down.,1.0,51503.1,50818.15,684.9,_noTradeToday=true (range/day filter).,20332.0,13.0,1.0,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-06-05,,,51736.11,51340.7,395.4,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
@@ -1244,12 +1244,12 @@ date,no_trade_why,no_trade,orb_hi,orb_lo,orb_range,blocked_why,vol_rejects,block
 2026-06-08,ORB range 593.6 pips >= max 500. Standing down.,1.0,51276.2,50682.61,593.6,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-06-09,,,51264.9,50793.21,471.7,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-06-10,ORB range 510.7 pips >= max 500. Standing down.,1.0,50772.1,50261.41,510.7,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-06-11,,,50397.2,50072.46,324.7,"KillSwitch already active (now=17:30, kill=16:31).",30645.0,14.0,0.9996463515265827,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-06-11,,,50397.2,50072.46,324.7,"KillSwitch already active (now=17:30, kill=16:31).",30645.0,14.0,0.9996463515265828,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-06-12,,,51312.76,50822.5,490.3,,4614.0,,0.975254730713246,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-06-13,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-06-14,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-06-15,,,51884.6,51585.56,299.0,,8091.0,,0.9435421500386698,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-06-16,,,52105.7,51702.7,403.0,,10024.0,,0.9532828282828283,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-06-16,,,52105.7,51702.7,403.0,,10024.0,,0.9532828282828284,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-06-17,,,52277.35,51940.16,337.2,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-06-18,,,51940.3,51567.8,372.5,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-06-19,,,51588.6,51379.36,209.2,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
@@ -1257,7 +1257,7 @@ date,no_trade_why,no_trade,orb_hi,orb_lo,orb_range,blocked_why,vol_rejects,block
 2026-06-21,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-06-22,,,51897.95,51509.86,388.1,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-06-23,ORB range 514.8 pips >= max 500. Standing down.,1.0,51804.35,51289.56,514.8,_noTradeToday=true (range/day filter).,7949.0,1.0,0.9971126082771896,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-06-24,,,51918.4,51538.26,380.1,"KillSwitch already active (now=17:18, kill=16:31).",24603.0,5.0,0.9989806320081549,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-06-24,,,51918.4,51538.26,380.1,"KillSwitch already active (now=17:18, kill=16:31).",24603.0,5.0,0.9989806320081548,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-06-25,ORB range 749.4 pips >= max 500. Standing down.,1.0,52628.7,51879.3,749.4,,1947.0,,0.7264681478749885,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-06-26,,,52036.86,51589.9,447.0,,6459.0,,0.9022722258989632,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-06-27,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
@@ -1265,11 +1265,11 @@ date,no_trade_why,no_trade,orb_hi,orb_lo,orb_range,blocked_why,vol_rejects,block
 2026-06-29,,,52290.4,51929.9,360.5,,74.0,,0.3135498320268757,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-06-30,,,52330.5,52001.5,329.0,"KillSwitch already active (now=17:29, kill=16:31).",8307.0,2.0,0.9967020886771712,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-07-01,,,52436.05,52014.1,422.0,"KillSwitch already active (now=16:54, kill=16:31).",12796.0,2.0,0.9970089730807578,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-07-02,ORB range 543.4 pips >= max 500. Standing down.,1.0,52798.5,52255.06,543.4,_noTradeToday=true (range/day filter).,3180.0,15.0,0.9983498349834983,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-07-02,ORB range 543.4 pips >= max 500. Standing down.,1.0,52798.5,52255.06,543.4,_noTradeToday=true (range/day filter).,3180.0,15.0,0.9983498349834984,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-07-03,,,52891.8,52741.85,150.0,,288.0,,0.8996539792387543,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-07-04,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-07-05,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-07-06,,,53054.15,52634.15,420.0,"KillSwitch already active (now=20:00, kill=16:31).",1431.0,11.0,0.9905660377358491,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-07-06,,,53054.15,52634.15,420.0,"KillSwitch already active (now=20:00, kill=16:31).",1431.0,11.0,0.9905660377358492,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-07-07,,,53333.26,52928.95,404.3,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-07-08,ORB range 540.1 pips >= max 500. Standing down.,1.0,52716.45,52176.36,540.1,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-07-09,,,52465.76,52219.26,246.5,"KillSwitch already active (now=17:07, kill=16:31).",14101.0,5.0,0.9996599795987758,,,,,,,2026,vol1.4_be0.6_sl50_utc
@@ -1277,7 +1277,7 @@ date,no_trade_why,no_trade,orb_hi,orb_lo,orb_range,blocked_why,vol_rejects,block
 2026-07-11,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-07-12,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-07-13,,,52847.9,52531.96,315.9,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-07-14,ORB range 648.7 pips >= max 500. Standing down.,1.0,52653.35,52004.66,648.7,,88.0,,0.41966082207530897,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-07-14,ORB range 648.7 pips >= max 500. Standing down.,1.0,52653.35,52004.66,648.7,,88.0,,0.4196608220753089,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-07-15,,,52840.45,52495.46,345.0,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-07-16,,,52835.95,52590.8,245.1,,299.0,,0.7206005004170142,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-07-17,ORB range 667.2 pips >= max 500. Standing down.,1.0,52599.65,51932.45,667.2,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
@@ -1291,14 +1291,14 @@ date,no_trade_why,no_trade,orb_hi,orb_lo,orb_range,blocked_why,vol_rejects,block
 2026-07-25,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-07-26,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-07-27,,,52607.15,52235.15,372.0,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-07-28,,,52723.66,52229.76,493.9,"KillSwitch already active (now=20:01, kill=16:31).",26505.0,8.0,0.9995764506565015,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-07-28,,,52723.66,52229.76,493.9,"KillSwitch already active (now=20:01, kill=16:31).",26505.0,8.0,0.9995764506565016,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-07-29,ORB range 918.9 pips >= max 500. Standing down.,1.0,52836.16,51917.3,918.9,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-07-30,,,51976.95,51623.76,353.2,"KillSwitch already active (now=17:01, kill=16:31).",21693.0,22.0,1.0,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-07-31,ORB range 617.4 pips >= max 500. Standing down.,1.0,52596.5,51979.05,617.4,,1152.0,,0.8984277514349888,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-08-01,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-08-02,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-08-03,,,53243.55,52784.96,458.6,"KillSwitch already active (now=20:42, kill=16:31).",998.0,16.0,0.9941520467836257,,,,,,,2026,vol1.4_be0.6_sl50_utc
-2026-08-04,ORB range 805.1 pips >= max 500. Standing down.,1.0,53973.85,53168.76,805.1,_noTradeToday=true (range/day filter).,25129.0,23.0,0.9997976118194697,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-08-03,,,53243.55,52784.96,458.6,"KillSwitch already active (now=20:42, kill=16:31).",998.0,16.0,0.9941520467836256,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2026-08-04,ORB range 805.1 pips >= max 500. Standing down.,1.0,53973.85,53168.76,805.1,_noTradeToday=true (range/day filter).,25129.0,23.0,0.9997976118194696,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-08-05,ORB range 521.1 pips >= max 500. Standing down.,1.0,54743.7,54222.56,521.1,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-08-06,,,54544.0,54222.05,321.9,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-08-07,,,54086.86,53795.05,291.8,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
@@ -1308,3 +1308,362 @@ date,no_trade_why,no_trade,orb_hi,orb_lo,orb_range,blocked_why,vol_rejects,block
 2026-08-11,,,54230.3,53865.3,365.0,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-08-12,,,53984.86,53743.5,241.4,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
 2026-08-13,,,54051.4,53809.4,242.0,,,,,,,,,,,2026,vol1.4_be0.6_sl50_utc
+2023-01-03,,,33491.0,33214.8,276.2,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-04,,,33289.3,33170.2,119.1,existing open bot position found: ORBV_US30.cash_20230104 vo,10887.0,5.0,0.999162712810494,1.0,1.0,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-05,,,33310.9,33026.8,284.1,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-06,,,33311.9,32890.55,421.3,"KillSwitch already active (now=19:13, kill=16:31).",26094.0,5.0,0.9956076134699853,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-07,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-08,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-09,,,33773.1,33613.5,159.6,,12107.0,,0.9933774834437086,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-10,,,33506.1,33342.7,163.4,"ClosePositionsTime already reached (now=20:51, close=20:50).",28447.0,6.0,1.0,,,"Neutral trend, policy=BlockAll",407.0,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-11,,,33844.2,33692.0,152.2,"KillSwitch already active (now=18:18, kill=16:31).",11648.0,11.0,0.9994321408290744,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-12,,,34190.7,33700.1,490.6,"ClosePositionsTime already reached (now=23:46, close=20:50).",13021.0,3.0,0.9895833333333334,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-13,,,34234.1,33880.2,353.9,,8422.0,,0.9852717115286947,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-14,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-15,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-16,,,34315.0,34189.6,125.4,existing open bot position found: ORBV_US30.cash_20230116 vo,709.0,1.0,0.997506234413965,,,"Neutral trend, policy=BlockAll",46.0,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-17,,,34260.6,34152.5,108.1,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-18,,,34015.4,33872.7,142.7,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-19,,,33244.0,32959.7,284.3,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-20,,,33142.1,32983.0,159.1,"KillSwitch already active (now=18:01, kill=16:31).",16071.0,5.0,0.99967958987504,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-21,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-22,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-23,,,33491.6,33346.2,145.4,"ClosePositionsTime already reached (now=21:45, close=20:50).",24651.0,5.0,0.999742334449884,1.0,1.0,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-24,,,33644.6,33454.0,190.6,"ClosePositionsTime already reached (now=20:51, close=20:50).",16147.0,5.0,0.9961315280464216,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-25,,,33697.1,33423.1,274.0,"ClosePositionsTime already reached (now=23:08, close=20:50).",7491.0,9.0,0.9911242603550297,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-26,,,33871.3,33704.4,166.9,existing open bot position found: ORBV_US30.cash_20230126 vo,7963.0,11.0,0.9984329527647191,1.0,1.0,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-27,,,33980.7,33871.7,109.0,,21385.0,,0.9337748344370861,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-28,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-29,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-30,,,33861.9,33704.4,157.5,,19418.0,,0.99932478055368,,,"Neutral trend, policy=BlockAll",313.0,,,2023,vol1.4_be0.6_sl50_utc
+2023-01-31,,,33817.8,33510.7,307.1,"ClosePositionsTime already reached (now=20:51, close=20:50).",15178.0,9.0,0.99906919019547,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-01,,,34029.3,33882.3,147.0,"ClosePositionsTime already reached (now=23:11, close=20:50).",10114.0,4.0,0.9987357774968395,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-02,,,34151.6,33925.3,226.3,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-03,,,34019.5,33792.2,227.3,,12758.0,,0.8907234412339778,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-04,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-05,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-06,,,33820.7,33638.2,182.5,"ClosePositionsTime already reached (now=21:31, close=20:50).",20913.0,9.0,1.0,,,"Neutral trend, policy=BlockAll",144.0,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-07,,,33919.4,33688.1,231.3,"KillSwitch already active (now=17:46, kill=16:31).",16874.0,10.0,0.999752536500866,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-08,,,34153.2,34015.2,138.0,,11.0,,0.5396711937097927,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-09,,,34224.1,34072.6,151.5,,235.0,,0.8448347971560017,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-10,,,33754.2,33515.1,239.1,"ClosePositionsTime already reached (now=21:47, close=20:50).",21942.0,1.0,0.9115795236791677,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-11,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-12,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-13,,,33929.8,33807.8,122.0,"ClosePositionsTime already reached (now=23:23, close=20:50).",25710.0,5.0,0.9986382206082615,,,"Neutral trend, policy=BlockAll",298.0,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-14,,,34511.6,34113.2,398.4,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-15,,,34056.3,33874.7,181.6,"ClosePositionsTime already reached (now=23:31, close=20:50).",6693.0,4.0,0.9885931558935361,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-16,,,34173.6,33768.4,405.2,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-17,,,33601.2,33470.2,131.0,"ClosePositionsTime already reached (now=21:46, close=20:50).",27587.0,1.0,0.9958960328317373,,,"Neutral trend, policy=BlockAll",40.0,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-18,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-19,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-20,,,33825.1,33728.1,97.0,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-21,,,33717.1,33457.5,259.6,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-22,,,33230.8,33067.7,163.1,,1548.0,,0.8046767537826685,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-23,,,33188.2,33072.2,116.0,,4300.0,,0.9937430990062569,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-24,,,33122.1,32747.3,374.8,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-25,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-26,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-27,,,33068.8,32838.0,230.8,,3003.0,,0.8298755186721991,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-02-28,,,32991.6,32766.4,225.2,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-01,,,32744.0,32548.0,196.0,"ClosePositionsTime already reached (now=21:32, close=20:50).",1704.0,4.0,0.9992652461425423,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-02,,,32777.1,32604.5,172.6,"KillSwitch already active (now=18:36, kill=16:31).",17463.0,8.0,0.9972468644845519,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-03,,,33153.7,32931.9,221.8,"KillSwitch already active (now=18:00, kill=16:31).",14497.0,4.0,0.9996270048489369,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-04,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-05,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-06,,,33463.1,33339.4,123.7,existing open bot position found: ORBV_US30.cash_20230306 vo,11318.0,3.0,0.99967958987504,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-07,,,33496.2,33409.7,86.5,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-08,,,32920.6,32787.8,132.8,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-09,,,32903.9,32713.5,190.4,existing open bot position found: ORBV_US30.cash_20230309 vo,4903.0,5.0,0.9983543609434996,1.0,1.0,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-10,,,32333.2,31991.6,341.6,,1665.0,,0.8288928359976317,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-11,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-12,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-13,ORB range 730.4 pips >= max 500. Standing down.,1.0,32251.2,31520.8,730.4,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-14,,,32183.1,31829.6,353.5,,7020.0,,0.8280254777070064,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-15,ORB range 701.0 pips >= max 500. Standing down.,1.0,32148.0,31447.0,701.0,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-16,,,31988.9,31565.8,423.1,"ClosePositionsTime already reached (now=22:25, close=20:50).",24874.0,9.0,0.998531571218796,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-17,ORB range 509.2 pips >= max 500. Standing down.,1.0,32339.4,31830.2,509.2,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-18,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-19,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-20,ORB range 824.9 pips >= max 500. Standing down.,1.0,32254.1,31429.2,824.9,_noTradeToday=true (range/day filter).,2422.0,3.0,0.9855072463768116,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-21,,,32596.0,32261.8,334.2,,111.0,,0.8390918065153011,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-22,,,32619.1,32450.6,168.5,"KillSwitch already active (now=18:06, kill=16:31).",2263.0,2.0,0.9983853606027987,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-23,,,32332.4,32004.4,328.0,,8592.0,,0.9190600522193212,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-24,,,32216.0,31736.8,479.2,,2829.0,,0.8984288559415801,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-25,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-26,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-27,,,32540.2,32256.2,284.0,,817.0,,0.9772329246935202,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-28,,,32544.5,32369.4,175.1,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-29,,,32678.9,32540.1,138.8,"KillSwitch already active (now=19:19, kill=16:31).",3471.0,12.0,0.9968847352024922,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-30,,,32929.4,32758.8,170.6,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-03-31,,,33054.4,32818.0,236.4,"KillSwitch already active (now=17:37, kill=16:31).",13072.0,12.0,0.9984871406959153,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-01,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-02,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-03,,,33636.2,33334.7,301.5,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-04,,,33689.2,33487.7,201.5,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-05,,,33528.1,33314.1,214.0,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-06,,,33542.1,33331.1,211.0,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-08,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-09,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-10,,,33523.6,33331.8,191.8,"KillSwitch already active (now=16:40, kill=16:31).",9279.0,19.0,0.9977528089887641,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-11,,,33678.1,33555.3,122.8,"KillSwitch already active (now=17:09, kill=16:31).",10397.0,18.0,0.9964641594342655,1.0,1.0,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-12,,,33946.2,33723.0,223.2,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-13,,,33784.1,33583.6,200.5,"KillSwitch already active (now=17:03, kill=16:31).",14834.0,19.0,0.9969167523124358,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-14,,,34104.9,33823.4,281.5,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-15,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-16,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-17,,,33962.9,33868.1,94.8,"KillSwitch already active (now=20:38, kill=16:31).",1477.0,9.0,0.9486166007905138,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-18,,,34131.5,33826.3,305.2,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-19,,,33948.3,33799.7,148.6,,10.0,,0.9982983550765739,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-20,,,33768.9,33661.0,107.9,"KillSwitch already active (now=16:58, kill=16:31).",11926.0,7.0,1.0,1.0,1.0,"Neutral trend, policy=BlockAll",19.0,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-21,,,33856.5,33706.9,149.6,,24.0,,0.3324225865209472,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-22,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-23,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-24,,,33883.7,33683.7,200.0,,302.0,,0.7569840793030941,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-25,,,33865.6,33690.0,175.6,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-26,,,33643.2,33356.8,286.4,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-27,,,33568.1,33364.6,203.5,"KillSwitch already active (now=17:03, kill=16:31).",12867.0,17.0,0.997289972899729,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-28,,,33994.9,33644.1,350.8,"KillSwitch already active (now=20:00, kill=16:31).",14407.0,2.0,0.9962304792676361,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-29,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-04-30,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-01,,,34205.6,34063.3,142.3,"KillSwitch already active (now=16:32, kill=16:31).",2921.0,1.0,0.9929372663066057,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-02,,,34013.4,33621.1,392.3,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-03,,,33756.7,33633.6,123.1,"KillSwitch already active (now=18:01, kill=16:31).",723.0,2.0,0.9981960312687914,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-04,,,33452.6,33015.5,437.1,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-05,,,33612.0,33162.5,449.5,"KillSwitch already active (now=18:28, kill=16:31).",5307.0,2.0,0.9979751229389644,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-06,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-07,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-08,,,33775.1,33571.5,203.6,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-09,,,33650.3,33463.0,187.3,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-10,,,33781.6,33442.1,339.5,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-11,,,33596.3,33105.1,491.2,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-12,,,33483.8,33293.1,190.7,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-13,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-14,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-15,,,33447.8,33156.9,290.9,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-16,,,33337.9,33077.5,260.4,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-17,,,33185.6,33038.1,147.5,"KillSwitch already active (now=16:41, kill=16:31).",14169.0,17.0,1.0,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-18,,,33476.8,33255.9,220.9,"KillSwitch already active (now=19:46, kill=16:31).",3629.0,14.0,0.9984962406015038,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-19,,,33657.9,33530.3,127.6,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-20,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-21,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-22,,,33511.6,33198.6,313.0,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-23,,,33288.3,33109.2,179.1,,2998.0,,0.8368495077355838,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-24,,,33058.1,32810.1,248.0,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-25,,,32833.3,32659.4,173.9,"KillSwitch already active (now=18:01, kill=16:31).",93.0,2.0,1.0,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-26,,,33137.2,32696.4,440.8,,483.0,,0.817790530846485,1.0,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-27,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-28,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-29,,,33200.7,33122.1,78.6,existing open bot position found: ORBV_US30.cash_20230529 vo,433.0,5.0,0.9955752212389379,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-30,,,33187.5,32935.5,252.0,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-05-31,,,33000.8,32741.6,259.2,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-01,,,32982.7,32681.0,301.7,"KillSwitch already active (now=20:41, kill=16:31).",14237.0,11.0,0.9968186638388123,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-02,,,33527.4,33144.4,383.0,"KillSwitch already active (now=17:22, kill=16:31).",16043.0,5.0,0.9963250306247448,1.0,1.0,,,0.0,1.0,2023,vol1.4_be0.6_sl50_utc
+2023-06-03,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-04,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-05,,,33826.8,33654.9,171.9,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-06,,,33585.6,33484.3,101.3,"ClosePositionsTime already reached (now=23:13, close=20:50).",1589.0,5.0,0.9913664781184877,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-07,,,33668.8,33499.5,169.3,"ClosePositionsTime already reached (now=22:05, close=20:50).",4177.0,3.0,0.9926470588235294,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-08,,,33752.1,33592.6,159.5,MaxTradesPerDay reached (1/1).,11414.0,14.0,0.9969207082371054,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-09,,,33945.3,33740.7,204.6,,1083.0,,0.7988422575976846,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-10,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-11,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-12,,,33999.2,33870.0,129.2,"KillSwitch already active (now=20:00, kill=16:31).",4215.0,9.0,0.9981167608286252,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-13,,,34308.6,34038.5,270.1,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-14,,,34196.5,34010.7,185.8,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-15,,,34232.1,33853.6,378.5,"KillSwitch already active (now=20:00, kill=16:31).",16960.0,15.0,1.0,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-16,,,34573.8,34380.6,193.2,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-17,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-18,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-19,,,34307.7,34178.7,129.0,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-20,,,34236.3,33907.5,328.8,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-21,,,34080.6,33870.4,210.2,,780.0,,0.8742774566473988,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-22,,,34008.3,33821.6,186.7,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-23,,,33868.6,33622.9,245.7,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-24,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-25,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-26,,,33800.7,33644.5,156.2,,547.0,,0.777051561365287,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-27,,,33859.5,33653.3,206.2,"KillSwitch already active (now=20:48, kill=16:31).",11283.0,17.0,1.0,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-28,,,33968.3,33759.1,209.2,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-29,,,34078.7,33810.2,268.5,"KillSwitch already active (now=19:51, kill=16:31).",8481.0,16.0,1.0,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-06-30,,,34401.8,34113.5,288.3,"KillSwitch already active (now=17:35, kill=16:31).",6243.0,5.0,0.9955328653477984,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-01,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-02,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-03,,,34403.4,34287.6,115.8,"KillSwitch already active (now=16:38, kill=16:31).",4305.0,8.0,0.9941520467836257,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-04,,,34422.0,34365.1,56.9,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-05,,,34347.1,34218.0,129.1,,1343.0,,0.7945597709377238,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-06,,,34159.5,33825.2,334.3,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-07,,,33946.5,33764.5,182.0,"KillSwitch already active (now=16:36, kill=16:31).",4118.0,2.0,0.9941829719725014,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-08,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-09,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-10,,,33966.2,33656.8,309.4,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-11,,,34111.7,33856.7,255.0,"KillSwitch already active (now=16:32, kill=16:31).",9908.0,19.0,0.9986257443884562,1.0,1.0,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-12,,,34586.7,34282.8,303.9,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-13,,,34471.9,34373.3,98.6,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-14,,,34599.3,34340.9,258.4,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-15,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-16,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-17,,,34566.3,34406.4,159.9,"KillSwitch already active (now=17:11, kill=16:31).",8384.0,23.0,1.0,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-18,,,34826.7,34516.0,310.7,"KillSwitch already active (now=19:52, kill=16:31).",13498.0,17.0,0.999333777481679,1.0,1.0,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-19,,,35234.1,34922.9,311.2,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-20,,,35291.6,35041.6,250.0,,8742.0,,0.9194053208137716,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-21,,,35341.6,35176.1,165.5,,3.0,,0.5791313030454318,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-22,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-23,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-24,,,35408.1,35231.5,176.6,"KillSwitch already active (now=20:36, kill=16:31).",10518.0,12.0,1.0,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-25,,,35447.0,35362.7,84.3,"KillSwitch already active (now=17:42, kill=16:31).",7972.0,7.0,0.9979209979209979,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-26,,,35459.5,35309.7,149.8,"KillSwitch already active (now=16:34, kill=16:31).",10780.0,21.0,1.0,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-27,,,35688.0,35543.2,144.8,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-28,,,35510.0,35310.9,199.1,,2563.0,,0.8090976882923192,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-29,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-30,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-07-31,,,35541.2,35430.7,110.5,"KillSwitch already active (now=20:00, kill=16:31).",876.0,12.0,0.9966555183946488,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-01,,,35678.1,35442.3,235.8,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-02,,,35564.8,35347.3,217.5,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-03,,,35264.2,35112.7,151.5,,7507.0,,0.9967845659163986,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-04,,,35416.3,35146.8,269.5,existing open bot position found: ORBV_US30.cash_20230804 vo,4986.0,1.0,0.9979550102249489,1.0,1.0,,,0.0,1.0,2023,vol1.4_be0.6_sl50_utc
+2023-08-05,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-06,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-07,,,35410.5,35093.4,317.1,"KillSwitch already active (now=18:02, kill=16:31).",10085.0,14.0,0.99581589958159,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-08,,,35417.8,35003.9,413.9,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-09,,,35410.7,35260.5,150.2,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-10,,,35573.7,35175.7,398.0,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-11,,,35342.5,35045.0,297.5,,221.0,,0.6956521739130435,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-12,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-13,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-14,,,35394.6,35164.7,229.9,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-15,,,35188.2,34967.3,220.9,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-16,,,35134.5,34882.0,252.5,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-17,,,34889.9,34729.5,160.4,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-18,,,34475.2,34260.7,214.5,"KillSwitch already active (now=19:47, kill=16:31).",15977.0,2.0,0.9971830985915493,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-19,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-20,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-21,,,34648.7,34341.9,306.8,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-22,,,34591.1,34357.4,233.7,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-23,,,34445.1,34288.6,156.5,"KillSwitch already active (now=17:18, kill=16:31).",9155.0,9.0,0.9995800083998321,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-24,,,34693.5,34392.0,301.5,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-25,,,34359.1,34088.7,270.4,,5654.0,,0.991039913114309,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-26,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-27,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-28,,,34662.7,34398.3,264.4,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-29,,,34707.4,34493.0,214.4,"KillSwitch already active (now=17:02, kill=16:31).",12160.0,16.0,0.9987437185929648,1.0,1.0,,,0.0,1.0,2023,vol1.4_be0.6_sl50_utc
+2023-08-30,,,35025.6,34793.2,232.4,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-08-31,,,35097.4,34940.9,156.5,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-01,,,34972.6,34814.3,158.3,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-02,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-03,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-04,,,34935.1,34771.8,163.3,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-05,,,34887.7,34724.2,163.5,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-06,,,34617.0,34481.8,135.2,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-07,,,34517.1,34330.7,186.4,"ClosePositionsTime already reached (now=23:52, close=20:50).",4836.0,3.0,0.9907120743034057,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-08,,,34611.7,34410.6,201.1,,1512.0,,0.8699122106943337,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-09,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-10,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-11,,,34789.8,34601.7,188.1,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-12,,,34645.5,34531.9,113.6,"KillSwitch already active (now=17:22, kill=16:31).",11553.0,13.0,0.9986225895316805,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-13,,,34773.4,34551.0,222.4,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-14,,,34825.4,34575.8,249.6,"KillSwitch already active (now=19:53, kill=16:31).",10043.0,15.0,1.0,1.0,1.0,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-15,,,35012.3,34753.1,259.2,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-16,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-17,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-18,,,34680.4,34538.3,142.1,,5335.0,,0.9717382888114595,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-19,,,34683.6,34416.8,266.8,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-20,,,34693.7,34520.3,173.4,"KillSwitch already active (now=17:42, kill=16:31).",6292.0,1.0,0.9958506224066389,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-21,,,34406.5,34163.9,242.6,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-22,,,34146.5,34000.5,146.0,,227.0,,0.7034822370735139,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-23,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-24,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-25,,,34087.6,33803.8,283.8,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-26,,,33921.7,33696.6,225.1,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-27,,,33761.6,33570.8,190.8,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-28,,,33654.3,33453.7,200.6,"KillSwitch already active (now=16:56, kill=16:31).",13334.0,15.0,0.9980928162746344,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-29,,,33898.9,33679.3,219.6,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-09-30,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-01,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-02,,,33706.7,33349.8,356.9,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-03,,,33489.4,33110.8,378.6,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-04,,,33091.5,32877.8,213.7,,5778.0,,0.9327774882751433,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-05,,,33145.9,32969.1,176.8,,1277.0,,0.8587088915956151,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-06,,,33219.4,32843.3,376.1,"KillSwitch already active (now=19:56, kill=16:31).",16948.0,4.0,0.9994222992489891,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-07,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-08,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-09,,,33419.8,33158.8,261.0,"KillSwitch already active (now=17:31, kill=16:31).",10782.0,16.0,0.9973948641607742,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-10,,,33792.6,33592.4,200.2,"KillSwitch already active (now=17:07, kill=16:31).",8208.0,1.0,0.99644128113879,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-11,,,33886.6,33736.1,150.5,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-12,,,33973.6,33660.2,313.4,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-13,,,33963.2,33574.2,389.0,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-14,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-15,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-16,,,33958.8,33700.3,258.5,"KillSwitch already active (now=17:22, kill=16:31).",14379.0,15.0,1.0,1.0,1.0,,,1.0,1.0,2023,vol1.4_be0.6_sl50_utc
+2023-10-17,,,33985.5,33810.0,175.5,,8471.0,,0.9265905383360522,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-18,,,33993.9,33830.3,163.6,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-19,,,33707.5,33544.3,163.2,,5806.0,,0.9502639622117255,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-20,,,33422.0,33206.0,216.0,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-21,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-22,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-23,,,33132.3,32885.3,247.0,,6827.0,,0.992,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-24,,,33260.3,32947.8,312.5,,538.0,,0.7394711067580804,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-25,,,33252.3,32990.9,261.4,,305.0,,0.7478524507326932,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-26,,,33105.1,32854.5,250.6,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-27,,,32911.5,32662.0,249.5,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-28,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-29,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-30,,,32755.1,32528.6,226.5,"KillSwitch already active (now=19:01, kill=16:31).",16098.0,21.0,1.0,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-10-31,,,33138.7,32787.6,351.1,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-01,,,33226.4,32911.0,315.4,"KillSwitch already active (now=20:44, kill=16:31).",7853.0,15.0,0.9907834101382489,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-02,,,33616.7,33294.0,322.7,"KillSwitch already active (now=19:41, kill=16:31).",18360.0,13.0,0.998980632008155,1.0,1.0,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-03,,,34071.9,33827.1,244.8,,12922.0,,0.9222759390107848,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-04,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-05,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-06,,,34132.3,34067.2,65.1,,87.0,,0.996168582375479,,,Bearish trend blocks LONG,115.0,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-07,,,34077.9,33973.9,104.0,"KillSwitch already active (now=18:59, kill=16:31).",18276.0,11.0,0.9995329285380663,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-08,,,34219.2,34113.5,105.7,existing open bot position found: ORBV_US30.cash_20231108 vo,1105.0,1.0,0.995850622406639,1.0,1.0,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-09,,,34218.7,34079.7,139.0,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-10,,,34062.1,33891.3,170.8,"ClosePositionsTime already reached (now=21:40, close=20:50).",11622.0,1.0,0.9976617303195634,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-11,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-12,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-13,,,34302.5,34187.0,115.5,"KillSwitch already active (now=19:26, kill=16:31).",12331.0,11.0,0.9979381443298969,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-14,,,34741.5,34285.7,455.8,"KillSwitch already active (now=17:33, kill=16:31).",18485.0,11.0,0.9979550102249489,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-15,,,34984.6,34862.8,121.8,,6298.0,,0.9556025369978859,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-16,,,35001.7,34870.9,130.8,,399.0,,0.7885040530582166,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-17,,,35098.9,34948.9,150.0,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-18,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-19,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-20,,,34988.1,34893.0,95.1,"KillSwitch already active (now=18:03, kill=16:31).",15035.0,19.0,0.9988649262202044,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-21,,,35150.7,35078.0,72.7,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-22,,,35197.0,35087.7,109.3,existing open bot position found: ORBV_US30.cash_20231122 vo,15979.0,16.0,0.9979716024340771,1.0,1.0,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-23,,,35322.4,35261.4,61.0,existing open bot position found: ORBV_US30.cash_20231123 vo,1018.0,4.0,1.0,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-24,,,35376.8,35302.2,74.6,,2730.0,,0.9945945945945946,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-25,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-26,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-27,,,35377.7,35300.3,77.4,existing open bot position found: ORBV_US30.cash_20231127 vo,61.0,1.0,0.9838846480067853,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-28,,,35366.5,35288.2,78.3,"KillSwitch already active (now=17:32, kill=16:31).",14292.0,12.0,0.999087591240876,,,"Neutral trend, policy=BlockAll",40.0,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-29,,,35532.2,35432.9,99.3,"KillSwitch already active (now=18:35, kill=16:31).",3763.0,1.0,0.9905660377358491,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-11-30,,,35676.4,35510.1,166.3,"KillSwitch already active (now=18:06, kill=16:31).",19246.0,7.0,0.9984717269485481,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-01,,,36035.0,35896.0,139.0,"ClosePositionsTime already reached (now=20:56, close=20:50).",14036.0,4.0,0.9945750452079567,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-02,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-03,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-04,,,36206.7,36026.3,180.4,"ClosePositionsTime already reached (now=20:51, close=20:50).",1013.0,2.0,0.9987618654560462,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-05,,,36187.1,36060.0,127.1,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-06,,,36242.8,36136.3,106.5,existing open bot position found: ORBV_US30.cash_20231206 vo,737.0,1.0,0.9907997169143665,1.0,1.0,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-07,,,36123.6,35977.4,146.2,existing open bot position found: ORBV_US30.cash_20231207 vo,5195.0,4.0,0.9989023051591658,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-08,,,36156.7,35963.5,193.2,"KillSwitch already active (now=20:37, kill=16:31).",12207.0,3.0,0.9961685823754789,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-09,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-10,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-11,,,36262.6,36203.1,59.5,"KillSwitch already active (now=18:03, kill=16:31).",16128.0,20.0,1.0,,,"Neutral trend, policy=BlockAll",244.0,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-12,,,36574.2,36420.4,153.8,"KillSwitch already active (now=20:06, kill=16:31).",2336.0,8.0,1.0,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-13,,,36660.5,36577.9,82.6,"KillSwitch already active (now=19:01, kill=16:31).",10567.0,13.0,1.0,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-14,,,37313.8,37142.0,171.8,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-15,,,37402.2,37173.5,228.7,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-16,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-17,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-18,,,37375.5,37295.2,80.3,,876.0,,0.903954802259887,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-19,,,37399.5,37300.0,99.5,"KillSwitch already active (now=17:02, kill=16:31).",13059.0,6.0,0.9995240361732508,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-20,,,37572.0,37458.0,114.0,"KillSwitch already active (now=17:35, kill=16:31).",4933.0,6.0,0.999333777481679,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-21,,,37381.8,37212.5,169.3,MaxTradesPerDay reached (1/1).,1733.0,1.0,0.9856083733100741,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-22,,,37379.0,37247.2,131.8,existing open bot position found: ORBV_US30.cash_20231222 vo,16368.0,14.0,0.9992862241256246,1.0,1.0,,,2.0,3.0,2023,vol1.4_be0.6_sl50_utc
+2023-12-23,Trading disabled for Saturday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-24,Trading disabled for Sunday.,1.0,,,,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-26,,,37466.7,37375.1,91.6,"KillSwitch already active (now=17:50, kill=16:31).",9754.0,16.0,0.9986504723346828,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-27,,,37563.5,37506.9,56.6,"KillSwitch already active (now=17:45, kill=16:31).",15225.0,14.0,0.9988474836726853,,,,,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-28,,,37691.2,37603.6,87.6,"KillSwitch already active (now=17:48, kill=16:31).",14018.0,16.0,1.0,,,"Neutral trend, policy=BlockAll",150.0,,,2023,vol1.4_be0.6_sl50_utc
+2023-12-29,,,37787.2,37698.2,89.0,,,,,,,,,,,2023,vol1.4_be0.6_sl50_utc
