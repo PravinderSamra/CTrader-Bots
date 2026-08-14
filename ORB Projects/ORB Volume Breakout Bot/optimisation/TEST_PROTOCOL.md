@@ -9,7 +9,7 @@ remaining clean data is reserved for.
 
 | Period | Status | Why |
 |---|---|---|
-| 2022 | **CLEAN** | never seen |
+| 2022 | **SPENT as test** — ran at 1.4x, lost £90.28 over 11 trades | out-of-sample result, keep it that way |
 | 2023 | **CLEAN** | never seen |
 | 2024 | **CLEAN — the one real out-of-sample result so far** | ran, but nothing was fitted to it |
 | 2025-01-01 → 2026-08-13 | **SPENT** | `VolumeMultiplier`, `BreakEvenTriggerR`, `FixedStopPoints` were optimised here |
@@ -69,6 +69,7 @@ If it fails, that is a real finding and worth more than a fitted curve.
 
 | Date | Config | Period | Trades | Net P/L | PF | Notes |
 |---|---|---|---|---|---|---|
+| — | vol 1.4, BE 0.6R, stop 50pt, fixed-UTC clock | 2022 | 11 | −£90.28 | 0.72 | out-of-sample |
 | — | vol 1.4, BE 0.6R, stop 50pt, fixed-UTC clock | 2024 | 37 | −£858.90 | 0.57 | out-of-sample |
 | — | vol 1.4, BE 0.6R, stop 50pt, fixed-UTC clock | 2025 | 37 | +£2,179.44 | 4.95 | in-sample |
 | — | vol 1.4, BE 0.6R, stop 50pt, fixed-UTC clock | 2026 (to Aug) | 20 | +£989.60 | 2.95 | in-sample |
