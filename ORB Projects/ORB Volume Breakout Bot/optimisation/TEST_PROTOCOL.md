@@ -90,3 +90,31 @@ because they describe the shape of the trade book rather than the level of profi
 
 The next genuinely clean test would need data outside 2022–2026, or forward
 testing on demo.
+
+## v3 stop test — 2026 only (uninformative, kept for the record)
+
+Percentage-of-ORB-range stop replacing the fixed 50pt, run on 2026 alone.
+
+| Stop | Longs only | With shorts |
+|---|---|---|
+| 15% | +604.30 | +59.50 |
+| 20% | +331.58 | −510.44 |
+| 25% | +333.86 | −409.29 |
+| *v2 fixed 50pt (baseline)* | *≈ +2,273* | *+1,476* |
+
+Every variant underperformed the fixed stop, but 2026 could not test the
+hypothesis. The idea is that a fixed stop is too large on quiet days; 2026 was
+the most active year in the sample (48.9% of days ranged 300pt or more) and its
+14 quiet-day trades were already profitable at +1,277. What the runs actually
+measured was stop *size* in an active year, where the ranking 15% > 20% > 25%
+and fixed-50pt-best follows mechanically: on a 400pt day those are 60/80/100pt
+stops against 50pt, and a smaller stop earns more R per point travelled.
+
+A likely flaw in the formulation: 15% of a 110pt range is a ~17pt stop, which on
+US30 M1 with 1-2pt spread sits inside the noise. Quiet days may be stopping out
+faster rather than becoming tradeable. If the mechanism shows promise on
+2023-2024, the next formulation should be a percentage with a floor, e.g.
+max(20% of range, 30pt) - which the bot does not currently support.
+
+Next: 15% and 25%, shorts on, 2023 and 2024 - the two years holding -5,748 of
+quiet-day losses, where the mechanism is falsifiable.
