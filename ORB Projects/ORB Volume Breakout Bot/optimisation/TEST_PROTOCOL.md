@@ -322,3 +322,38 @@ tighter stop earns more R per point travelled, which is an argument for testing
 
 The falling per-trade profit across the five years remains unexplained. It is
 not the stop drifting.
+
+## Risk reduction at 1R (50%) across all years — REJECTED
+
+Paired against the 60pt baseline on identical trades. Criteria were set before
+the run: positive in at least four years of five, average win unchanged, and a
+steady few-hundred-dollar gain rather than one year carrying it.
+
+| Year | Baseline | With RR | Change | Helped | Hurt |
+|---|---|---|---|---|---|
+| 2022 *(Jan–Aug only)* | +$2,268 | +$3,035 | **+$766** | 16 | 0 |
+| 2023 | +$1,671 | +$1,372 | **−$299** | 8 | 5 |
+| 2024 | +$2,352 | +$1,956 | **−$396** | 6 | 7 |
+| 2025 | +$1,368 | +$1,552 | +$184 | 13 | 1 |
+| 2026 *(to Aug)* | +$553 | +$845 | +$291 | 6 | 1 |
+| **Total** | **+$8,214** | **+$8,760** | **+$546** | | |
+
+Positive in three years of five, not four. The +$546 total rests entirely on
+2022, which is a partial run — across the four other periods it is **−$220**.
+The +$291 on 2026 that motivated the test was not representative.
+
+The failure mode is the one flagged beforehand and then underweighted. A stop
+tightened to half distance can still be hit, and when it is, a trade that would
+have recovered books a small loss instead. It happened eight times: four in
+2023, three in 2024, one in 2025, costing about $1,689 in foregone profit. The
+worst single case turned +$397.85 into −$53.17.
+
+The "average win unchanged" criterion was mis-specified on my part. It did move
+slightly, but only because converted winners leave the winning pool and change
+its mean — not because the rule shrinks winners. The rule genuinely cannot
+shrink a winner that survives; it can only kill one outright. That is the real
+cost, and it is larger.
+
+**Conclusion: do not adopt it.** Keep 60pt fixed, no risk reduction, no
+breakeven, no trailing — the configuration that produced +$8,859 at PF 1.34
+across five full years.
