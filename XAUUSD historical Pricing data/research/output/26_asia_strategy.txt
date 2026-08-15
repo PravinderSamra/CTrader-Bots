@@ -1,0 +1,42 @@
+========================================================================================================
+ASIA RANGE BREAKOUT — STRATEGY BUILD (DEV, Razor costs $0.25/oz)
+========================================================================================================
+
+### 1 — ENTRY MODEL (stop = pre-break swing, partial+runner)
+  entry=break                                  n=982   win= 51.4% exp=+0.004R PF= 1.01 totR=   +3.5 DD= -40.4R Sh~ 0.05 cost/risk= 4.2%
+  entry=retrace                                n=936   win= 49.4% exp=-0.037R PF= 0.93 totR=  -34.4 DD= -54.2R Sh~-0.48 cost/risk= 4.2%
+  entry=retrace_confirm                        n=793   win= 49.7% exp=-0.021R PF= 0.96 totR=  -16.4 DD= -38.6R Sh~-0.25 cost/risk= 4.0%
+
+### 2 — STOP MODEL (entry = retrace)
+  stop=swing30                                 n=936   win= 48.9% exp=-0.071R PF= 0.87 totR=  -66.5 DD= -77.7R Sh~-0.91 cost/risk= 5.1%
+  stop=swing60                                 n=936   win= 49.4% exp=-0.037R PF= 0.93 totR=  -34.4 DD= -54.2R Sh~-0.48 cost/risk= 4.2%
+  stop=range_mid                               n=935   win= 49.4% exp=-0.061R PF= 0.88 totR=  -57.2 DD= -82.8R Sh~-0.79 cost/risk= 5.2%
+  stop=range_far                               n=933   win= 49.1% exp=-0.012R PF= 0.97 totR=  -11.6 DD= -39.2R Sh~-0.19 cost/risk= 2.6%
+  stop=atr                                     n=936   win= 49.7% exp=-0.011R PF= 0.98 totR=  -10.2 DD= -35.6R Sh~-0.14 cost/risk= 3.8%
+  stop=frac                                    n=936   win= 49.6% exp=-0.074R PF= 0.86 totR=  -69.4 DD= -84.9R Sh~-0.85 cost/risk= 7.3%
+
+### 3 — TARGET MODEL (entry=retrace, stop=swing60)
+  target=partial                               n=936   win= 49.4% exp=-0.037R PF= 0.93 totR=  -34.4 DD= -54.2R Sh~-0.48 cost/risk= 4.2%
+  target=none                                  n=936   win= 32.4% exp=-0.040R PF= 0.94 totR=  -37.0 DD= -62.5R Sh~-0.34 cost/risk= 4.2%
+  target=0.5R                                  n=936   win= 53.2% exp=-0.043R PF= 0.91 totR=  -40.5 DD= -63.4R Sh~-0.70 cost/risk= 4.2%
+  target=1R                                    n=936   win= 39.5% exp=-0.067R PF= 0.89 totR=  -62.8 DD= -84.4R Sh~-0.83 cost/risk= 4.2%
+  target=pdlevel                               n=936   win= 40.8% exp=-0.065R PF= 0.89 totR=  -60.6 DD= -75.2R Sh~-0.72 cost/risk= 4.2%
+
+### 4 — CONFLUENCE STACK (added one at a time)
+  S0 no filters                                n=936   win= 49.4% exp=-0.037R PF= 0.93 totR=  -34.4 DD= -54.2R Sh~-0.48 cost/risk= 4.2%
+  S1 + range < 0.60 ATR                        n=780   win= 48.7% exp=-0.062R PF= 0.88 totR=  -48.4 DD= -63.0R Sh~-0.74 cost/risk= 4.5%
+  S2 + range < 0.45 ATR                        n=607   win= 49.6% exp=-0.056R PF= 0.89 totR=  -33.8 DD= -57.6R Sh~-0.60 cost/risk= 4.6%
+  S3 + range 0.15-0.45                         n=602   win= 49.7% exp=-0.053R PF= 0.90 totR=  -31.7 DD= -58.4R Sh~-0.56 cost/risk= 4.6%
+  S4 S3 + PD level 0-1R ahead                  n=242   win= 51.7% exp=-0.004R PF= 0.99 totR=   -1.0 DD= -18.5R Sh~-0.03 cost/risk= 4.6%
+  S5 S3 + PD level 0-0.5R ahead                n=139   win= 54.0% exp=+0.053R PF= 1.11 totR=   +7.3 DD= -13.9R Sh~ 0.26 cost/risk= 4.7%
+  S6 S4 + skip Sunday                          n=212   win= 50.5% exp=-0.006R PF= 0.99 totR=   -1.2 DD= -15.4R Sh~-0.03 cost/risk= 4.7%
+  S7 S6 + break before 12:00                   n=194   win= 47.9% exp=-0.059R PF= 0.89 totR=  -11.4 DD= -19.1R Sh~-0.34 cost/risk= 4.8%
+  S8 S7 + Asia inside prior day                n=182   win= 48.4% exp=-0.047R PF= 0.91 totR=   -8.6 DD= -16.2R Sh~-0.26 cost/risk= 4.8%
+
+### 5 — refine the survivor (target & partial variants)
+  T1 1R 50% + BE + runner                      n=194   win= 47.9% exp=-0.059R PF= 0.89 totR=  -11.4 DD= -19.1R Sh~-0.34 cost/risk= 4.8%
+  T1 1R 33% + BE + runner                      n=194   win= 47.9% exp=-0.047R PF= 0.91 totR=   -9.1 DD= -19.3R Sh~-0.24 cost/risk= 4.8%
+  T1 1.5R 50% + BE                             n=194   win= 37.6% exp=-0.120R PF= 0.81 totR=  -23.3 DD= -26.8R Sh~-0.63 cost/risk= 4.8%
+  no target, time exit                         n=194   win= 26.8% exp=-0.179R PF= 0.76 totR=  -34.8 DD= -37.8R Sh~-0.73 cost/risk= 4.8%
+  single target 0.5 range                      n=194   win= 52.1% exp=-0.128R PF= 0.74 totR=  -24.9 DD= -26.2R Sh~-1.00 cost/risk= 4.8%
+  single target PD level                       n=194   win= 52.1% exp=-0.141R PF= 0.71 totR=  -27.4 DD= -26.3R Sh~-1.01 cost/risk= 4.8%
