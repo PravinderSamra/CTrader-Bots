@@ -1,0 +1,348 @@
+<title>The NAS100 Result</title>
+<style>
+  :root{
+    --paper:#F6F7F8; --panel:#FFFFFF; --ink:#101720; --ink-2:#3D4855; --ink-3:#6E7A88;
+    --rule:#D8DDE2; --rule-2:#EAEDF0;
+    --loss:#A32B26; --loss-fill:rgba(163,43,38,.13);
+    --gain:#1B6B57; --gain-fill:rgba(27,107,87,.10);
+    --band:rgba(110,122,136,.10); --hatch:rgba(110,122,136,.34);
+    --shadow:0 1px 2px rgba(16,23,32,.05),0 8px 24px -12px rgba(16,23,32,.14);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --paper:#0C1116; --panel:#131A21; --ink:#E8ECEF; --ink-2:#AFBAC4; --ink-3:#7F8C98;
+      --rule:#26313B; --rule-2:#1B242C;
+      --loss:#D9635A; --loss-fill:rgba(217,99,90,.17);
+      --gain:#4FA98E; --gain-fill:rgba(79,169,142,.13);
+      --band:rgba(127,140,152,.13); --hatch:rgba(127,140,152,.40);
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0C1116; --panel:#131A21; --ink:#E8ECEF; --ink-2:#AFBAC4; --ink-3:#7F8C98;
+    --rule:#26313B; --rule-2:#1B242C;
+    --loss:#D9635A; --loss-fill:rgba(217,99,90,.17);
+    --gain:#4FA98E; --gain-fill:rgba(79,169,142,.13);
+    --band:rgba(127,140,152,.13); --hatch:rgba(127,140,152,.40);
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font:400 16px/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;font-variant-numeric:tabular-nums}
+  .wrap{max-width:1000px;margin:0 auto;padding:56px 28px 96px}
+
+  header{border-bottom:2px solid var(--ink);padding-bottom:22px}
+  .eyebrow{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);
+           font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  h1{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-weight:400;
+     font-size:clamp(30px,4.4vw,46px);line-height:1.1;letter-spacing:-.012em;
+     margin:14px 0 10px;text-wrap:balance}
+  .dek{color:var(--ink-2);max-width:62ch;margin:0;font-size:17px}
+
+  h2{font-family:Georgia,"Iowan Old Style",serif;font-weight:400;font-size:24px;
+     letter-spacing:-.008em;margin:0 0 6px;text-wrap:balance}
+  section{margin-top:56px}
+  .sec-rule{border-top:1px solid var(--rule);padding-top:26px}
+  .lede{color:var(--ink-2);max-width:66ch;margin:0 0 22px}
+
+  /* ---- verdict strip ---- */
+  .verdict{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);
+           border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin-top:30px}
+  .v{background:var(--panel);padding:22px 24px}
+  .v .lab{font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+          font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .v .num{font-size:clamp(30px,5vw,44px);line-height:1.05;margin:10px 0 4px;letter-spacing:-.02em}
+  .v .sub{font-size:13.5px;color:var(--ink-3)}
+  .neg .num{color:var(--loss)} .pos .num{color:var(--gain)}
+  @media(max-width:620px){.verdict{grid-template-columns:1fr}}
+
+  /* ---- chart ---- */
+  figure{margin:0}
+  .chartcard{background:var(--panel);border:1px solid var(--rule);border-radius:3px;
+             padding:20px 18px 12px;box-shadow:var(--shadow);margin-top:24px}
+  .chartwrap{overflow-x:auto}
+  svg{display:block;width:100%;height:auto;min-width:560px}
+  .ax{font-size:11px;fill:var(--ink-3);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .gl{stroke:var(--rule-2);stroke-width:1}
+  .zero{stroke:var(--ink-3);stroke-width:1;stroke-dasharray:3 3}
+  .eqline{fill:none;stroke:var(--ink);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+  .bandlab{font-size:11.5px;fill:var(--ink-3);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+           letter-spacing:.08em;text-transform:uppercase}
+  figcaption{font-size:13.5px;color:var(--ink-3);margin-top:14px;max-width:70ch}
+  .hit{fill:transparent;cursor:crosshair}
+  #cross{stroke:var(--ink-3);stroke-width:1;opacity:0}
+  #dot{fill:var(--panel);stroke:var(--ink);stroke-width:2;opacity:0}
+  .tip{position:absolute;pointer-events:none;opacity:0;transition:opacity .1s;
+       background:var(--panel);border:1px solid var(--rule);border-radius:3px;
+       box-shadow:var(--shadow);padding:9px 11px;font-size:12.5px;white-space:nowrap;z-index:5}
+  .tip .d{color:var(--ink-3);font-size:11.5px}
+  .tip .e{font-size:16px;margin-top:3px}
+  .relwrap{position:relative}
+
+  /* ---- ledger table ---- */
+  .tblwrap{overflow-x:auto;margin-top:8px}
+  table{border-collapse:collapse;width:100%;min-width:540px;font-size:14.5px}
+  th,td{text-align:right;padding:11px 12px;border-bottom:1px solid var(--rule-2)}
+  th:first-child,td:first-child{text-align:left}
+  thead th{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);
+           font-weight:400;border-bottom:1px solid var(--rule);
+           font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  tbody tr.fitted td{color:var(--ink-3)}
+  tbody tr.fitted td:first-child::after{content:" fitted";font-size:10.5px;letter-spacing:.1em;
+           text-transform:uppercase;color:var(--ink-3);margin-left:8px;
+           font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  tfoot td{border-top:2px solid var(--ink);border-bottom:none;padding-top:13px}
+  .n{color:var(--loss)} .p{color:var(--gain)}
+
+  /* ---- findings: ledger rows, not cards ---- */
+  .find{border-top:1px solid var(--rule);padding:22px 0 4px;display:grid;
+        grid-template-columns:minmax(0,1fr) 190px;gap:28px;align-items:start}
+  .find:last-of-type{border-bottom:1px solid var(--rule);padding-bottom:24px}
+  .find h3{font-size:17px;font-weight:600;margin:0 0 7px;letter-spacing:-.005em}
+  .find p{margin:0;color:var(--ink-2);font-size:15px;max-width:60ch}
+  .stat{text-align:right}
+  .stat .big{font-size:27px;letter-spacing:-.018em;line-height:1.1}
+  .stat .cap{font-size:11.5px;color:var(--ink-3);letter-spacing:.08em;text-transform:uppercase;
+             margin-top:5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  @media(max-width:620px){.find{grid-template-columns:1fr;gap:14px}.stat{text-align:left}}
+
+  /* ---- steps: a real sequence, so numbered ---- */
+  ol.steps{list-style:none;counter-reset:s;padding:0;margin:22px 0 0}
+  ol.steps li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:16px;
+              padding:16px 0;border-bottom:1px solid var(--rule-2)}
+  ol.steps li::before{content:counter(s);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+              font-size:13px;color:var(--ink-3);padding-top:2px;font-variant-numeric:tabular-nums}
+  ol.steps h3{margin:0 0 5px;font-size:16px;font-weight:600}
+  ol.steps p{margin:0;color:var(--ink-2);font-size:14.5px;max-width:62ch}
+
+  .note{margin-top:44px;padding:20px 22px;border-left:3px solid var(--loss);
+        background:var(--loss-fill);border-radius:0 3px 3px 0}
+  .note p{margin:0;font-size:14.5px;color:var(--ink-2);max-width:66ch}
+  .note strong{color:var(--ink)}
+  footer{margin-top:64px;border-top:1px solid var(--rule);padding-top:18px;
+         font-size:12.5px;color:var(--ink-3)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+<div class="wrap">
+<header>
+  <div class="eyebrow">NAS100 &middot; ORB Volume Breakout &middot; 434 trades &middot; Jan 2022 &ndash; Aug 2026</div>
+  <h1>Same bot, different market, and this time the edge survives</h1>
+  <p class="dek">Five full years on one unchanged configuration. Profitable in every one of them, and it stays
+  profitable after the biggest winners are stripped out &mdash; which is where US30 always fell apart.</p>
+</header>
+
+<div class="verdict">
+  <div class="v pos">
+    <div class="lab">Expectancy per trade</div>
+    <div class="num mono">+$20.41</div>
+    <div class="sub mono">95% CI +$4.65 to +$36.38</div>
+  </div>
+  <div class="v">
+    <div class="lab">Probability the true edge is &le; 0</div>
+    <div class="num mono">0.5%</div>
+    <div class="sub mono">434 trades &middot; net +$8,859 &middot; PF 1.34</div>
+  </div>
+</div>
+
+<section>
+  <h2>Equity, trade by trade</h2>
+  <p class="lede">No long underwater stretch, no single cliff. The worst peak-to-trough dip is about eleven times the
+  risk taken on one trade &mdash; against twenty-five on US30.</p>
+  <figure>
+    <div class="chartcard relwrap">
+      <div class="chartwrap"><svg id="chart" viewBox="0 0 920 400" role="img"
+        aria-label="Cumulative profit across 434 NAS100 trades from January 2022 to August 2026, rising steadily to plus 8,859 dollars."></svg></div>
+      <div class="tip mono" id="tip"></div>
+    </div>
+    <figcaption>Cumulative net P&amp;L, $100 risk per trade. Horizontal axis is trade sequence, not time. Config held
+    constant throughout: 60pt stop, 4R cap, volume 1.2&times;, longs and shorts, 02:00&ndash;09:30 ET range, entries
+    10:00&ndash;11:00 ET. Worst drawdown &minus;$1,109.</figcaption>
+  </figure>
+</section>
+
+<section class="sec-rule">
+  <h2>Year by year</h2>
+  <div class="tblwrap">
+  <table>
+    <thead><tr><th>Year</th><th>Trades</th><th>Net</th><th>Per trade</th><th>PF</th><th>Minus top 5</th></tr></thead>
+    <tbody>
+      <tr><td>2022</td><td class="mono">105</td><td class="mono p">+$2,914</td><td class="mono">+$27.75</td><td class="mono">1.44</td><td class="mono p">+$922</td></tr>
+      <tr><td>2023</td><td class="mono">106</td><td class="mono p">+$1,671</td><td class="mono">+$15.77</td><td class="mono">1.29</td><td class="mono n">&minus;$234</td></tr>
+      <tr><td>2024 <span class="mono" style="font-size:10.5px;letter-spacing:.1em;color:var(--ink-3)">TUNED</span></td><td class="mono">85</td><td class="mono p">+$2,352</td><td class="mono">+$27.67</td><td class="mono">1.52</td><td class="mono p">+$359</td></tr>
+      <tr><td>2025</td><td class="mono">88</td><td class="mono p">+$1,368</td><td class="mono">+$15.55</td><td class="mono">1.25</td><td class="mono n">&minus;$622</td></tr>
+      <tr><td>2026 <span class="mono" style="font-size:10.5px;letter-spacing:.1em;color:var(--ink-3)">TO AUG</span></td><td class="mono">50</td><td class="mono p">+$553</td><td class="mono">+$11.07</td><td class="mono">1.16</td><td class="mono n">&minus;$1,434</td></tr>
+    </tbody>
+    <tfoot><tr><td>Total</td><td class="mono">434</td><td class="mono">+$8,859</td><td class="mono">+$20.41</td><td class="mono">1.34</td><td class="mono">+$6,859</td></tr></tfoot>
+  </table>
+  </div>
+  <p class="lede" style="margin-top:18px">The 60pt stop was chosen by looking at 2024, so that row is fitted. Drop it
+  and the other four years still give <strong>349 trades, +$6,507, PF 1.30</strong>, with a 2.0% chance the edge is
+  zero. Four clean years, all positive &mdash; that is the number that counts.</p>
+</section>
+
+<section class="sec-rule">
+  <h2>Why this is not the US30 story again</h2>
+  <div class="tblwrap">
+  <table>
+    <thead><tr><th>Test</th><th>US30</th><th>NAS100</th></tr></thead>
+    <tbody>
+      <tr><td>Profit factor</td><td class="mono n">1.03</td><td class="mono p">1.34</td></tr>
+      <tr><td>Chance the edge is zero</td><td class="mono n">43.4%</td><td class="mono p">0.5%</td></tr>
+      <tr><td>Remove the single best trade</td><td class="mono n">turns negative</td><td class="mono p">+$8,458</td></tr>
+      <tr><td>Remove the best ten</td><td class="mono n">&minus;$7,876</td><td class="mono p">+$4,867</td></tr>
+      <tr><td>Years profitable</td><td class="mono n">2 of 5</td><td class="mono p">5 of 5</td></tr>
+      <tr><td>Worst drawdown</td><td class="mono n">&minus;$6,627</td><td class="mono p">&minus;$1,109</td></tr>
+      <tr><td>Months profitable</td><td class="mono n">47%</td><td class="mono p">70%</td></tr>
+      <tr><td>Shorts</td><td class="mono n">&minus;$425, PF 0.97</td><td class="mono p">+$3,818, PF 1.31</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="lede" style="margin-top:18px">On US30 the whole result rested on five trades and one removal flipped the
+  sign. Here the body of the book carries it: strip the ten biggest winners from 434 trades and it is still up
+  $4,867. That is the difference between an edge and a lucky tail.</p>
+</section>
+
+<section class="sec-rule">
+  <h2>The one thing that is drifting</h2>
+  <p class="lede">Per-trade profit falls year on year &mdash; +$27.75, +$15.77, +$27.67, +$15.55, +$11.07 &mdash; and
+  2026 is the weakest and most outlier-dependent. The likely reason is not the market. It is that a fixed 60-point
+  stop has quietly stopped meaning the same thing.</p>
+  <div class="tblwrap">
+  <table>
+    <thead><tr><th>Year</th><th>Median price</th><th>Median day range</th><th>Range as % of price</th><th>60pt stop as % of range</th></tr></thead>
+    <tbody>
+      <tr><td>2022</td><td class="mono">11,610</td><td class="mono">106 pt</td><td class="mono">0.98%</td><td class="mono">56%</td></tr>
+      <tr><td>2023</td><td class="mono">14,700</td><td class="mono">97 pt</td><td class="mono">0.69%</td><td class="mono">62%</td></tr>
+      <tr><td>2024</td><td class="mono">19,007</td><td class="mono">118 pt</td><td class="mono">0.61%</td><td class="mono">51%</td></tr>
+      <tr><td>2025</td><td class="mono">22,672</td><td class="mono">141 pt</td><td class="mono">0.64%</td><td class="mono">43%</td></tr>
+      <tr><td>2026</td><td class="mono">27,071</td><td class="mono">211 pt</td><td class="mono">0.75%</td><td class="mono n">28%</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="find" style="margin-top:34px">
+    <div><h3>The range doubled, but only because the index did</h3>
+      <p>Daily range in points roughly doubled, 106 to 211. As a share of price it barely moved &mdash; 0.61% to 0.98%,
+      no trend. So NAS100 is not becoming a wilder market; it is becoming a bigger number.</p></div>
+    <div class="stat"><div class="big mono">2.0&times;</div><div class="cap">range in points, 2022 to 2026</div></div>
+  </div>
+  <div class="find">
+    <div><h3>Which makes the fixed stop a moving target</h3>
+      <p>60 points was 62% of a typical day's range in 2023 and is 28% today. That is not one strategy tested over
+      five years &mdash; it is a stop that has been shrinking in real terms the whole time, and it lines up with the
+      falling per-trade profit.</p></div>
+    <div class="stat"><div class="big mono">62% &rarr; 28%</div><div class="cap">what 60pt is worth</div></div>
+  </div>
+  <div class="find">
+    <div><h3>And 60 was fitted to 2024's volatility</h3>
+      <p>60 points is 51% of 2024's median range &mdash; the year it was chosen on. It was never a universal number,
+      it was that year's number. Holding it fixed exports one year's volatility to every other year.</p></div>
+    <div class="stat"><div class="big mono">51%</div><div class="cap">of 2024's range</div></div>
+  </div>
+</section>
+
+<section class="sec-rule">
+  <h2>What to do about it</h2>
+  <p class="lede">The answer is <em>not</em> a schedule of stop sizes by year. Fitting a number to each past year is
+  the same mistake in a new costume, and it says nothing about 2027. Use a rule that adapts on its own.</p>
+  <ol class="steps">
+    <li><div><h3>Switch the stop to a share of the day's range</h3><p>Set Stop Type to <span class="mono">No</span> and
+      Stop % of ORB Range to about <span class="mono">50</span>. That reproduces roughly what 60 points meant in 2024
+      and then keeps that meaning &mdash; near 48pt in a quiet 2023, near 105pt in an active 2026 &mdash; without
+      anyone touching it again.</p></div></li>
+    <li><div><h3>Run it across all five years, not just the recent ones</h3><p>The point of the change is that the
+      stop stops drifting, so the test is whether the per-trade decline flattens out. If 2026 improves while 2022 and
+      2023 hold, the drift was the problem. If everything sags, it was not.</p></div></li>
+    <li><div><h3>Keep the risk reduction, on this evidence</h3><p>On 2026, halving remaining risk at 1R turned +$553
+      into +$844. Six trades improved, one was hurt, and the average win was untouched &mdash; it only ever tightens
+      a stop, so it cannot shrink a winner. Confirm across the other four years before adopting it.</p></div></li>
+    <li><div><h3>Then leave it alone and forward-test</h3><p>Everything here is a backtest. The next real evidence is
+      a demo account running unattended for a few weeks against live spreads and fills.</p></div></li>
+  </ol>
+</section>
+
+<div class="note">
+  <p><strong>What would still change the picture.</strong> 2026 is the weakest year, the most dependent on a handful
+  of winners, and it is only eight months long &mdash; strip its top five trades and it is $1,434 down. If that is the
+  start of decay rather than the stop drifting out of range, the next full year will show it. Treat the equity curve
+  as a reason to keep going carefully, not as a settled result.</p>
+</div>
+
+<footer class="mono">Backtests: cTrader, US100.cash, M1 bars. One config across all five years &mdash; 60pt fixed stop,
+4R cap, volume 1.2&times;, no breakeven, no trailing, longs and shorts, one trade a day. 434 trades parsed from 7.6 GB
+of raw logs.</footer>
+</div>
+
+<script>
+const DATA = [{"i":0,"d":"2022-01-04","e":398.23},{"i":1,"d":"2022-01-10","e":296.39},{"i":2,"d":"2022-01-19","e":195.54},{"i":3,"d":"2022-01-20","e":92.45},{"i":4,"d":"2022-01-21","e":-8.78},{"i":5,"d":"2022-01-24","e":-110.46},{"i":6,"d":"2022-01-25","e":-215.37},{"i":7,"d":"2022-01-27","e":-316.8},{"i":8,"d":"2022-01-31","e":66.58},{"i":9,"d":"2022-02-01","e":-36.34},{"i":10,"d":"2022-02-02","e":-137.77},{"i":11,"d":"2022-02-07","e":-239.03},{"i":12,"d":"2022-02-16","e":-339.96},{"i":13,"d":"2022-02-17","e":-4.06},{"i":14,"d":"2022-02-22","e":-105.9},{"i":15,"d":"2022-02-23","e":291.5},{"i":16,"d":"2022-02-28","e":187.25},{"i":17,"d":"2022-03-16","e":79.6},{"i":18,"d":"2022-03-18","e":477.17},{"i":19,"d":"2022-03-22","e":820.79},{"i":20,"d":"2022-03-23","e":718.86},{"i":21,"d":"2022-03-24","e":617.76},{"i":22,"d":"2022-03-28","e":514.84},{"i":23,"d":"2022-03-31","e":413.83},{"i":24,"d":"2022-04-01","e":509.53},{"i":25,"d":"2022-04-04","e":650.05},{"i":26,"d":"2022-04-05","e":1048.28},{"i":27,"d":"2022-04-06","e":945.77},{"i":28,"d":"2022-04-08","e":845.09},{"i":29,"d":"2022-04-14","e":1163.64},{"i":30,"d":"2022-04-21","e":1062.63},{"i":31,"d":"2022-04-26","e":1405.0},{"i":32,"d":"2022-04-28","e":1302.08},{"i":33,"d":"2022-05-04","e":1201.4},{"i":34,"d":"2022-05-05","e":1600.21},{"i":35,"d":"2022-05-06","e":1498.53},{"i":36,"d":"2022-05-13","e":1702.29},{"i":37,"d":"2022-05-18","e":1598.29},{"i":38,"d":"2022-05-23","e":1491.3},{"i":39,"d":"2022-05-24","e":1386.39},{"i":40,"d":"2022-05-26","e":1727.1},{"i":41,"d":"2022-05-27","e":1906.46},{"i":42,"d":"2022-05-30","e":1805.28},{"i":43,"d":"2022-05-31","e":1702.69},{"i":44,"d":"2022-06-01","e":1600.18},{"i":45,"d":"2022-06-08","e":1499.42},{"i":46,"d":"2022-06-10","e":1664.17},{"i":47,"d":"2022-06-16","e":1941.39},{"i":48,"d":"2022-06-21","e":1888.02},{"i":49,"d":"2022-06-22","e":1825.6},{"i":50,"d":"2022-06-24","e":1977.49},{"i":51,"d":"2022-06-27","e":1874.32},{"i":52,"d":"2022-06-30","e":1772.81},{"i":53,"d":"2022-07-01","e":1671.96},{"i":54,"d":"2022-07-07","e":1840.03},{"i":55,"d":"2022-07-11","e":1737.11},{"i":56,"d":"2022-07-14","e":1633.96},{"i":57,"d":"2022-07-19","e":1962.76},{"i":58,"d":"2022-07-25","e":2082.36},{"i":59,"d":"2022-07-26","e":2296.71},{"i":60,"d":"2022-07-27","e":2694.33},{"i":61,"d":"2022-08-01","e":2593.45},{"i":62,"d":"2022-08-03","e":2492.5},{"i":63,"d":"2022-08-09","e":2390.33},{"i":64,"d":"2022-08-12","e":2289.48},{"i":65,"d":"2022-08-15","e":2187.31},{"i":66,"d":"2022-08-16","e":2086.63},{"i":67,"d":"2022-08-19","e":2140.66},{"i":68,"d":"2022-08-22","e":2368.99},{"i":69,"d":"2022-08-29","e":2268.31},{"i":70,"d":"2022-08-30","e":2533.16},{"i":71,"d":"2022-09-05","e":2514.32},{"i":72,"d":"2022-09-06","e":2410.65},{"i":73,"d":"2022-09-07","e":2754.85},{"i":74,"d":"2022-09-09","e":2914.29},{"i":75,"d":"2022-09-12","e":2812.12},{"i":76,"d":"2022-09-16","e":2710.78},{"i":77,"d":"2022-09-19","e":2609.44},{"i":78,"d":"2022-09-22","e":2508.1},{"i":79,"d":"2022-09-26","e":2406.92},{"i":80,"d":"2022-09-29","e":2465.43},{"i":81,"d":"2022-10-04","e":2364.09},{"i":82,"d":"2022-10-07","e":2592.42},{"i":83,"d":"2022-10-17","e":2659.57},{"i":84,"d":"2022-10-21","e":2555.74},{"i":85,"d":"2022-10-25","e":2664.72},{"i":86,"d":"2022-10-28","e":2563.54},{"i":87,"d":"2022-10-31","e":2462.86},{"i":88,"d":"2022-11-02","e":2349.07},{"i":89,"d":"2022-11-03","e":2247.89},{"i":90,"d":"2022-11-09","e":2146.55},{"i":91,"d":"2022-11-14","e":2041.55},{"i":92,"d":"2022-11-16","e":2098.74},{"i":93,"d":"2022-11-23","e":1995.9},{"i":94,"d":"2022-11-28","e":1888.75},{"i":95,"d":"2022-11-29","e":1989.93},{"i":96,"d":"2022-12-05","e":2200.0},{"i":97,"d":"2022-12-06","e":2341.68},{"i":98,"d":"2022-12-14","e":2176.59},{"i":99,"d":"2022-12-15","e":2371.56},{"i":100,"d":"2022-12-19","e":2557.4},{"i":101,"d":"2022-12-22","e":2956.38},{"i":102,"d":"2022-12-23","e":2848.06},{"i":103,"d":"2022-12-27","e":2746.55},{"i":104,"d":"2022-12-29","e":2913.96},{"i":105,"d":"2023-01-05","e":2970.38},{"i":106,"d":"2023-01-09","e":2868.93},{"i":107,"d":"2023-01-11","e":3051.18},{"i":108,"d":"2023-01-16","e":2996.55},{"i":109,"d":"2023-01-17","e":2894.94},{"i":110,"d":"2023-01-18","e":2793.66},{"i":111,"d":"2023-01-20","e":3145.23},{"i":112,"d":"2023-01-23","e":3333.29},{"i":113,"d":"2023-01-25","e":3232.01},{"i":114,"d":"2023-01-27","e":3461.07},{"i":115,"d":"2023-02-13","e":3592.19},{"i":116,"d":"2023-03-03","e":3764.98},{"i":117,"d":"2023-03-06","e":3663.7},{"i":118,"d":"2023-03-07","e":3843.46},{"i":119,"d":"2023-03-09","e":3740.85},{"i":120,"d":"2023-03-10","e":3638.91},{"i":121,"d":"2023-03-14","e":3536.63},{"i":122,"d":"2023-03-21","e":3431.53},{"i":123,"d":"2023-03-22","e":3330.08},{"i":124,"d":"2023-03-23","e":3226.97},{"i":125,"d":"2023-03-28","e":3196.07},{"i":126,"d":"2023-03-29","e":3094.13},{"i":127,"d":"2023-03-30","e":2992.85},{"i":128,"d":"2023-03-31","e":3190.87},{"i":129,"d":"2023-04-05","e":3280.32},{"i":130,"d":"2023-04-10","e":3178.38},{"i":131,"d":"2023-04-11","e":3227.99},{"i":132,"d":"2023-04-13","e":3467.84},{"i":133,"d":"2023-04-21","e":3366.39},{"i":134,"d":"2023-04-24","e":3265.11},{"i":135,"d":"2023-05-04","e":3156.36},{"i":136,"d":"2023-05-05","e":3392.06},{"i":137,"d":"2023-05-08","e":3290.78},{"i":138,"d":"2023-05-11","e":3189.33},{"i":139,"d":"2023-05-15","e":3087.72},{"i":140,"d":"2023-05-18","e":3372.56},{"i":141,"d":"2023-05-22","e":3271.28},{"i":142,"d":"2023-05-26","e":3668.17},{"i":143,"d":"2023-06-05","e":3662.17},{"i":144,"d":"2023-06-06","e":3560.89},{"i":145,"d":"2023-06-07","e":3459.44},{"i":146,"d":"2023-06-08","e":3678.37},{"i":147,"d":"2023-06-09","e":3576.76},{"i":148,"d":"2023-06-15","e":3973.65},{"i":149,"d":"2023-06-19","e":3957.36},{"i":150,"d":"2023-06-21","e":4041.67},{"i":151,"d":"2023-06-22","e":4217.28},{"i":152,"d":"2023-06-26","e":4115.34},{"i":153,"d":"2023-06-27","e":4011.9},{"i":154,"d":"2023-06-29","e":4029.64},{"i":155,"d":"2023-06-30","e":4079.42},{"i":156,"d":"2023-07-04","e":4040.06},{"i":157,"d":"2023-07-05","e":4051.33},{"i":158,"d":"2023-07-11","e":3949.72},{"i":159,"d":"2023-07-12","e":3848.27},{"i":160,"d":"2023-07-13","e":4040.81},{"i":161,"d":"2023-07-14","e":3939.2},{"i":162,"d":"2023-07-17","e":4122.94},{"i":163,"d":"2023-07-18","e":4020.83},{"i":164,"d":"2023-07-27","e":3919.22},{"i":165,"d":"2023-07-28","e":3990.41},{"i":166,"d":"2023-08-07","e":3888.63},{"i":167,"d":"2023-08-08","e":3783.53},{"i":168,"d":"2023-08-09","e":3915.65},{"i":169,"d":"2023-08-10","e":3813.04},{"i":170,"d":"2023-08-11","e":3711.76},{"i":171,"d":"2023-08-24","e":4108.48},{"i":172,"d":"2023-08-25","e":4004.54},{"i":173,"d":"2023-08-29","e":4353.78},{"i":174,"d":"2023-09-04","e":4252.5},{"i":175,"d":"2023-09-13","e":4150.56},{"i":176,"d":"2023-09-15","e":4343.76},{"i":177,"d":"2023-09-19","e":4241.48},{"i":178,"d":"2023-09-21","e":4137.38},{"i":179,"d":"2023-09-26","e":4270.49},{"i":180,"d":"2023-09-29","e":4169.21},{"i":181,"d":"2023-10-04","e":4066.27},{"i":182,"d":"2023-10-05","e":3962.0},{"i":183,"d":"2023-10-09","e":3858.4},{"i":184,"d":"2023-10-13","e":3755.79},{"i":185,"d":"2023-10-16","e":3881.76},{"i":186,"d":"2023-10-17","e":3779.98},{"i":187,"d":"2023-10-24","e":3677.37},{"i":188,"d":"2023-10-25","e":3943.45},{"i":189,"d":"2023-10-30","e":3835.2},{"i":190,"d":"2023-11-01","e":4167.35},{"i":191,"d":"2023-11-03","e":4065.9},{"i":192,"d":"2023-11-07","e":4223.08},{"i":193,"d":"2023-11-08","e":4118.98},{"i":194,"d":"2023-11-10","e":4482.33},{"i":195,"d":"2023-11-13","e":4379.89},{"i":196,"d":"2023-11-14","e":4429.17},{"i":197,"d":"2023-11-20","e":4594.82},{"i":198,"d":"2023-11-21","e":4596.13},{"i":199,"d":"2023-11-23","e":4587.48},{"i":200,"d":"2023-11-29","e":4485.37},{"i":201,"d":"2023-11-30","e":4585.45},{"i":202,"d":"2023-12-01","e":4484.0},{"i":203,"d":"2023-12-04","e":4438.83},{"i":204,"d":"2023-12-05","e":4508.2},{"i":205,"d":"2023-12-11","e":4615.25},{"i":206,"d":"2023-12-15","e":4625.36},{"i":207,"d":"2023-12-18","e":4762.29},{"i":208,"d":"2023-12-22","e":4660.01},{"i":209,"d":"2023-12-27","e":4557.9},{"i":210,"d":"2023-12-28","e":4585.44},{"i":211,"d":"2024-01-02","e":4720.62},{"i":212,"d":"2024-01-05","e":4617.59},{"i":213,"d":"2024-01-08","e":4858.68},{"i":214,"d":"2024-01-17","e":4756.98},{"i":215,"d":"2024-02-15","e":4655.28},{"i":216,"d":"2024-02-16","e":4552.25},{"i":217,"d":"2024-02-19","e":4562.77},{"i":218,"d":"2024-02-20","e":4521.49},{"i":219,"d":"2024-02-21","e":4471.42},{"i":220,"d":"2024-02-29","e":4368.72},{"i":221,"d":"2024-03-04","e":4416.92},{"i":222,"d":"2024-03-05","e":4643.73},{"i":223,"d":"2024-03-07","e":4839.83},{"i":224,"d":"2024-03-08","e":4737.8},{"i":225,"d":"2024-03-11","e":4635.6},{"i":226,"d":"2024-03-13","e":4533.4},{"i":227,"d":"2024-03-14","e":4431.53},{"i":228,"d":"2024-03-15","e":4329.0},{"i":229,"d":"2024-04-02","e":4228.3},{"i":230,"d":"2024-04-05","e":4357.17},{"i":231,"d":"2024-04-18","e":4255.14},{"i":232,"d":"2024-04-23","e":4450.58},{"i":233,"d":"2024-05-03","e":4347.88},{"i":234,"d":"2024-05-06","e":4432.6},{"i":235,"d":"2024-05-10","e":4328.24},{"i":236,"d":"2024-05-22","e":4224.88},{"i":237,"d":"2024-05-27","e":4311.76},{"i":238,"d":"2024-05-28","e":4208.73},{"i":239,"d":"2024-06-05","e":4499.62},{"i":240,"d":"2024-06-06","e":4397.42},{"i":241,"d":"2024-06-12","e":4395.27},{"i":242,"d":"2024-06-18","e":4402.47},{"i":243,"d":"2024-06-20","e":4799.43},{"i":244,"d":"2024-06-27","e":4695.41},{"i":245,"d":"2024-07-01","e":4593.54},{"i":246,"d":"2024-07-02","e":4834.46},{"i":247,"d":"2024-07-04","e":4842.15},{"i":248,"d":"2024-07-05","e":5016.67},{"i":249,"d":"2024-07-09","e":4912.98},{"i":250,"d":"2024-07-12","e":4924.49},{"i":251,"d":"2024-07-17","e":5170.39},{"i":252,"d":"2024-07-22","e":5068.19},{"i":253,"d":"2024-07-24","e":5465.15},{"i":254,"d":"2024-07-25","e":5363.28},{"i":255,"d":"2024-07-31","e":5560.05},{"i":256,"d":"2024-08-07","e":5457.85},{"i":257,"d":"2024-08-12","e":5354.82},{"i":258,"d":"2024-08-13","e":5687.21},{"i":259,"d":"2024-08-15","e":5869.7},{"i":260,"d":"2024-08-21","e":5760.03},{"i":261,"d":"2024-08-26","e":6024.36},{"i":262,"d":"2024-08-28","e":6425.81},{"i":263,"d":"2024-08-29","e":6322.12},{"i":264,"d":"2024-08-30","e":6214.78},{"i":265,"d":"2024-09-03","e":6615.73},{"i":266,"d":"2024-09-04","e":6510.88},{"i":267,"d":"2024-09-09","e":6406.03},{"i":268,"d":"2024-09-25","e":6304.16},{"i":269,"d":"2024-10-01","e":6405.99},{"i":270,"d":"2024-10-08","e":6652.89},{"i":271,"d":"2024-10-14","e":6550.36},{"i":272,"d":"2024-10-16","e":6447.5},{"i":273,"d":"2024-10-21","e":6334.68},{"i":274,"d":"2024-10-25","e":6232.98},{"i":275,"d":"2024-10-28","e":6131.11},{"i":276,"d":"2024-10-30","e":6028.75},{"i":277,"d":"2024-10-31","e":6094.88},{"i":278,"d":"2024-11-01","e":6069.61},{"i":279,"d":"2024-11-05","e":5967.76},{"i":280,"d":"2024-11-07","e":6178.14},{"i":281,"d":"2024-11-11","e":6076.44},{"i":282,"d":"2024-11-15","e":6473.4},{"i":283,"d":"2024-11-20","e":6367.22},{"i":284,"d":"2024-11-22","e":6265.19},{"i":285,"d":"2024-11-27","e":6349.58},{"i":286,"d":"2024-11-28","e":6343.83},{"i":287,"d":"2024-12-02","e":6463.81},{"i":288,"d":"2024-12-06","e":6516.16},{"i":289,"d":"2024-12-10","e":6413.3},{"i":290,"d":"2024-12-11","e":6591.14},{"i":291,"d":"2024-12-13","e":6487.28},{"i":292,"d":"2024-12-16","e":6718.24},{"i":293,"d":"2024-12-24","e":6958.0},{"i":294,"d":"2024-12-27","e":7040.23},{"i":295,"d":"2024-12-30","e":6937.7},{"i":296,"d":"2025-01-03","e":6829.42},{"i":297,"d":"2025-01-06","e":6726.95},{"i":298,"d":"2025-01-15","e":6624.81},{"i":299,"d":"2025-01-16","e":6522.17},{"i":300,"d":"2025-01-20","e":6417.04},{"i":301,"d":"2025-01-22","e":6407.2},{"i":302,"d":"2025-01-24","e":6304.56},{"i":303,"d":"2025-01-29","e":6198.77},{"i":304,"d":"2025-01-31","e":6092.81},{"i":305,"d":"2025-02-04","e":6237.51},{"i":306,"d":"2025-02-05","e":6134.89},{"i":307,"d":"2025-02-07","e":6006.52},{"i":308,"d":"2025-02-10","e":6091.63},{"i":309,"d":"2025-02-13","e":6361.5},{"i":310,"d":"2025-02-17","e":6326.76},{"i":311,"d":"2025-02-18","e":6382.49},{"i":312,"d":"2025-02-19","e":6280.35},{"i":313,"d":"2025-02-24","e":6177.21},{"i":314,"d":"2025-03-05","e":6039.76},{"i":315,"d":"2025-03-06","e":5930.81},{"i":316,"d":"2025-03-10","e":6326.84},{"i":317,"d":"2025-03-14","e":6215.39},{"i":318,"d":"2025-03-17","e":6113.25},{"i":319,"d":"2025-03-18","e":6010.78},{"i":320,"d":"2025-03-24","e":6122.61},{"i":321,"d":"2025-03-26","e":6522.95},{"i":322,"d":"2025-03-31","e":6420.31},{"i":323,"d":"2025-04-08","e":6317.51},{"i":324,"d":"2025-04-10","e":6215.04},{"i":325,"d":"2025-04-15","e":6112.4},{"i":326,"d":"2025-04-21","e":6510.42},{"i":327,"d":"2025-04-22","e":6906.94},{"i":328,"d":"2025-04-23","e":6804.8},{"i":329,"d":"2025-04-24","e":7200.66},{"i":330,"d":"2025-04-30","e":7096.1},{"i":331,"d":"2025-05-08","e":6993.79},{"i":332,"d":"2025-05-13","e":7287.56},{"i":333,"d":"2025-05-19","e":7506.63},{"i":334,"d":"2025-05-29","e":7675.73},{"i":335,"d":"2025-06-02","e":7572.13},{"i":336,"d":"2025-06-03","e":7706.13},{"i":337,"d":"2025-06-06","e":7587.72},{"i":338,"d":"2025-06-13","e":7463.0},{"i":339,"d":"2025-06-16","e":7490.01},{"i":340,"d":"2025-06-19","e":7463.4},{"i":341,"d":"2025-06-25","e":7360.76},{"i":342,"d":"2025-06-30","e":7258.29},{"i":343,"d":"2025-07-02","e":7319.0},{"i":344,"d":"2025-07-03","e":7411.66},{"i":345,"d":"2025-07-08","e":7309.52},{"i":346,"d":"2025-07-09","e":7203.06},{"i":347,"d":"2025-07-23","e":7100.26},{"i":348,"d":"2025-07-31","e":7497.28},{"i":349,"d":"2025-08-01","e":7395.07},{"i":350,"d":"2025-08-04","e":7292.93},{"i":351,"d":"2025-08-07","e":7188.8},{"i":352,"d":"2025-08-08","e":7246.02},{"i":353,"d":"2025-08-15","e":7143.2},{"i":354,"d":"2025-08-19","e":7539.72},{"i":355,"d":"2025-08-21","e":7437.25},{"i":356,"d":"2025-08-29","e":7503.27},{"i":357,"d":"2025-09-08","e":7400.8},{"i":358,"d":"2025-09-15","e":7447.89},{"i":359,"d":"2025-09-16","e":7422.77},{"i":360,"d":"2025-09-19","e":7320.3},{"i":361,"d":"2025-09-22","e":7536.38},{"i":362,"d":"2025-09-23","e":7719.26},{"i":363,"d":"2025-09-24","e":7879.73},{"i":364,"d":"2025-09-25","e":7775.6},{"i":365,"d":"2025-09-29","e":7673.13},{"i":366,"d":"2025-10-08","e":7891.04},{"i":367,"d":"2025-10-09","e":7888.0},{"i":368,"d":"2025-10-10","e":7782.04},{"i":369,"d":"2025-10-20","e":7945.0},{"i":370,"d":"2025-10-28","e":8140.5},{"i":371,"d":"2025-10-29","e":8038.03},{"i":372,"d":"2025-11-07","e":8435.88},{"i":373,"d":"2025-11-10","e":8333.41},{"i":374,"d":"2025-11-12","e":8230.94},{"i":375,"d":"2025-11-13","e":8128.63},{"i":376,"d":"2025-11-18","e":8026.32},{"i":377,"d":"2025-11-20","e":7922.69},{"i":378,"d":"2025-11-24","e":8318.55},{"i":379,"d":"2025-11-25","e":8216.24},{"i":380,"d":"2025-12-02","e":8113.77},{"i":381,"d":"2025-12-04","e":8011.46},{"i":382,"d":"2025-12-17","e":8408.32},{"i":383,"d":"2025-12-19","e":8305.85},{"i":384,"d":"2026-01-06","e":8202.83},{"i":385,"d":"2026-01-07","e":8162.85},{"i":386,"d":"2026-01-08","e":8059.42},{"i":387,"d":"2026-01-12","e":8195.61},{"i":388,"d":"2026-01-14","e":8087.62},{"i":389,"d":"2026-01-20","e":7984.94},{"i":390,"d":"2026-01-26","e":8055.48},{"i":391,"d":"2026-01-29","e":8451.79},{"i":392,"d":"2026-02-02","e":8601.59},{"i":393,"d":"2026-02-03","e":9000.06},{"i":394,"d":"2026-02-04","e":8889.06},{"i":395,"d":"2026-02-16","e":8889.38},{"i":396,"d":"2026-02-25","e":8786.2},{"i":397,"d":"2026-03-02","e":9033.94},{"i":398,"d":"2026-03-12","e":8929.26},{"i":399,"d":"2026-03-16","e":8826.58},{"i":400,"d":"2026-03-17","e":8723.4},{"i":401,"d":"2026-03-27","e":8621.25},{"i":402,"d":"2026-03-31","e":8518.4},{"i":403,"d":"2026-04-07","e":8415.55},{"i":404,"d":"2026-04-13","e":8311.21},{"i":405,"d":"2026-04-14","e":8706.61},{"i":406,"d":"2026-04-16","e":8602.76},{"i":407,"d":"2026-05-01","e":8499.91},{"i":408,"d":"2026-05-05","e":8598.5},{"i":409,"d":"2026-05-08","e":8923.85},{"i":410,"d":"2026-05-13","e":8817.18},{"i":411,"d":"2026-05-26","e":8714.5},{"i":412,"d":"2026-05-29","e":8610.74},{"i":413,"d":"2026-06-03","e":8507.87},{"i":414,"d":"2026-06-05","e":8402.86},{"i":415,"d":"2026-06-10","e":8294.37},{"i":416,"d":"2026-06-15","e":8560.04},{"i":417,"d":"2026-06-19","e":8486.49},{"i":418,"d":"2026-06-22","e":8382.64},{"i":419,"d":"2026-06-24","e":8279.96},{"i":420,"d":"2026-06-25","e":8170.47},{"i":421,"d":"2026-07-03","e":8102.81},{"i":422,"d":"2026-07-07","e":8501.61},{"i":423,"d":"2026-07-09","e":8397.43},{"i":424,"d":"2026-07-10","e":8294.25},{"i":425,"d":"2026-07-15","e":8189.08},{"i":426,"d":"2026-07-16","e":8084.57},{"i":427,"d":"2026-07-24","e":7981.06},{"i":428,"d":"2026-07-27","e":8379.37},{"i":429,"d":"2026-07-28","e":8276.02},{"i":430,"d":"2026-07-31","e":8671.5},{"i":431,"d":"2026-08-04","e":9067.15},{"i":432,"d":"2026-08-05","e":8961.98},{"i":433,"d":"2026-08-13","e":8859.3}];
+(function(){
+  const svg=document.getElementById('chart'), tip=document.getElementById('tip');
+  const W=920,H=400,ML=70,MR=22,MT=22,MB=42;
+  const pw=W-ML-MR, ph=H-MT-MB;
+  const es=DATA.map(d=>d.e);
+  const yMin=Math.min(0,Math.floor((Math.min(...es)-300)/1000)*1000);
+  const yMax=Math.ceil((Math.max(...es)+300)/1000)*1000;
+  const X=i=>ML+(i/(DATA.length-1))*pw;
+  const Y=v=>MT+(yMax-v)/(yMax-yMin)*ph;
+  const NS='http://www.w3.org/2000/svg';
+  const el=(n,a)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);return e;};
+
+  const defs=el('defs');
+  ['below','above'].forEach((id,k)=>{
+    const c=el('clipPath',{id:id});
+    c.appendChild(el('rect',{x:ML,y:k?MT:Y(0),width:pw,height:k?Math.max(0,Y(0)-MT):Math.max(0,MT+ph-Y(0))}));
+    defs.appendChild(c);
+  });
+  svg.appendChild(defs);
+
+  for(let v=yMin;v<=yMax;v+=1000){
+    svg.appendChild(el('line',{x1:ML,y1:Y(v),x2:ML+pw,y2:Y(v),class:'gl'}));
+    const t=el('text',{x:ML-11,y:Y(v)+4,class:'ax','text-anchor':'end'});
+    t.textContent=(v<0?'−':'')+'$'+Math.abs(v).toLocaleString();
+    svg.appendChild(t);
+  }
+  const line=DATA.map((d,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Y(d.e).toFixed(1)).join(' ');
+  const area=line+' L'+X(DATA.length-1).toFixed(1)+' '+Y(0).toFixed(1)+' L'+X(0).toFixed(1)+' '+Y(0).toFixed(1)+' Z';
+  svg.appendChild(el('path',{d:area,fill:'var(--loss-fill)','clip-path':'url(#below)'}));
+  svg.appendChild(el('path',{d:area,fill:'var(--gain-fill)','clip-path':'url(#above)'}));
+  svg.appendChild(el('line',{x1:ML,y1:Y(0),x2:ML+pw,y2:Y(0),class:'zero'}));
+  svg.appendChild(el('path',{d:line,class:'eqline'}));
+
+  let seen={};
+  DATA.forEach((d,i)=>{const y=d.d.slice(0,4); if(!seen[y]){seen[y]=1;
+    svg.appendChild(el('line',{x1:X(i),y1:MT+ph,x2:X(i),y2:MT+ph+5,stroke:'var(--ink-3)','stroke-width':1}));
+    const t=el('text',{x:X(i),y:MT+ph+21,class:'ax','text-anchor':'middle'}); t.textContent=y; svg.appendChild(t);}});
+  svg.appendChild(el('circle',{cx:X(DATA.length-1),cy:Y(DATA[DATA.length-1].e),r:4.5,
+    fill:'var(--panel)',stroke:'var(--ink)','stroke-width':2}));
+
+  const cross=el('line',{id:'cross',y1:MT,y2:MT+ph}); svg.appendChild(cross);
+  const dot=el('circle',{id:'dot',r:4.5}); svg.appendChild(dot);
+  const hit=el('rect',{x:ML,y:MT,width:pw,height:ph,class:'hit'}); svg.appendChild(hit);
+  function show(ev){
+    const r=svg.getBoundingClientRect();
+    let i=Math.round(((ev.clientX-r.left)/r.width*W-ML)/pw*(DATA.length-1));
+    i=Math.max(0,Math.min(DATA.length-1,i));
+    const d=DATA[i];
+    cross.setAttribute('x1',X(i)); cross.setAttribute('x2',X(i)); cross.style.opacity=.65;
+    dot.setAttribute('cx',X(i)); dot.setAttribute('cy',Y(d.e)); dot.style.opacity=1;
+    tip.innerHTML='<div class="d">'+d.d+' · trade '+(i+1)+' of '+DATA.length+'</div>'+
+      '<div class="e" style="color:'+(d.e<0?'var(--loss)':'var(--gain)')+'">'+(d.e<0?'−':'+')+'$'+
+      Math.abs(d.e).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})+'</div>';
+    tip.style.opacity=1;
+    const card=tip.parentElement.getBoundingClientRect();
+    let left=(X(i)/W)*r.width + (r.left-card.left) + 14;
+    if(left+tip.offsetWidth>card.width-8) left-=tip.offsetWidth+28;
+    tip.style.left=left+'px';
+    tip.style.top=((Y(d.e)/H)*r.height + (r.top-card.top) - 14)+'px';
+  }
+  function hide(){cross.style.opacity=0;dot.style.opacity=0;tip.style.opacity=0;}
+  hit.addEventListener('mousemove',show);
+  hit.addEventListener('mouseleave',hide);
+  hit.addEventListener('touchmove',e=>{show(e.touches[0]);e.preventDefault();},{passive:false});
+})();
+</script>
