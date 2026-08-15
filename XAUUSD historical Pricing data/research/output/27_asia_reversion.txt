@@ -1,0 +1,85 @@
+====================================================================================================
+ASIA BREAKOUT FAILURE / MEAN-REVERSION STUDY (DEV 2021-07 → 2025-07)
+====================================================================================================
+breaks analysed: 982
+
+BASELINE reversion after the first break:
+  P(returns to the broken level)      = 100.0%
+  P(a bar CLOSES back inside range)   = 96.8%
+  P(reaches range MIDPOINT)           = 66.7%
+  P(reaches the OPPOSITE side)        = 39.7%
+  median max extension beyond level   = 1.11 x range
+  75th pct extension                  = 1.94 x range
+
+--- by RANGE SIZE (continuation was worst for large ranges) ---
+           days  back_lvl  back_mid  back_far   ext
+rq                                                 
+<0.30       243     100.0      79.0      56.8  1.98
+0.30-0.45   390     100.0      73.3      45.1  1.16
+0.45-0.60   181     100.0      55.8      28.7  0.91
+0.60-0.80   109     100.0      46.8      13.8  0.73
+>0.80        59     100.0      42.4      15.3  0.62
+
+--- by MAGNET (prior-day level position) ---
+                 days  back_mid  back_far   ext
+mq                                             
+already cleared   273      57.1      30.4  0.88
+0-0.5R ahead      201      69.2      40.3  1.25
+0.5-1R ahead      176      67.0      38.6  1.10
+>1R ahead         332      72.9      47.6  1.31
+
+--- by BREAK TIME ---
+       days  back_mid  back_far
+tq                             
+07-08   507      72.2      44.0
+08-10   241      70.1      44.0
+10-12   108      55.6      27.8
+12-16   126      47.6      24.6
+
+--- COMBINED: range size x magnet, P(reach range MIDPOINT) ---
+mq2         0-1R ahead  >1R ahead  cleared
+rq2                                       
+small<0.45        76.2       76.5     71.8
+mid               48.5       58.7     60.9
+large>0.60        52.9       64.5     33.7
+counts:
+mq2         0-1R ahead  >1R ahead  cleared
+rq2                                       
+small<0.45         261        255      117
+mid                 66         46       69
+large>0.60          51         31       86
+
+====================================================================================================
+PART 2 — FADE STRATEGY TESTS (Razor costs $0.25/oz)
+====================================================================================================
+
+### entry model (no filters, target = range mid)
+  model=ext                                    n=702   win= 29.3% exp=-0.085R PF= 0.89 totR=  -59.7 DD= -65.7R Sh~-0.70 cost/risk= 9.5%
+  model=reclaim                                n=915   win= 37.0% exp=-0.101R PF= 0.85 totR=  -92.4 DD=-133.1R Sh~-1.08 cost/risk= 9.4%
+  model=level                                  n=152   win= 30.9% exp=-0.141R PF= 0.81 totR=  -21.5 DD= -33.7R Sh~-0.55 cost/risk= 9.9%
+
+### extension-fade: how far to let it run before fading
+  fade at +0.1 range                           n=842   win= 30.5% exp=-0.127R PF= 0.83 totR= -107.2 DD=-114.8R Sh~-1.25 cost/risk= 9.4%
+  fade at +0.2 range                           n=702   win= 29.3% exp=-0.085R PF= 0.89 totR=  -59.7 DD= -65.7R Sh~-0.70 cost/risk= 9.5%
+  fade at +0.3 range                           n=566   win= 28.3% exp=-0.041R PF= 0.95 totR=  -23.1 DD= -53.0R Sh~-0.28 cost/risk= 9.7%
+  fade at +0.5 range                           n=355   win= 25.9% exp=-0.028R PF= 0.96 totR=  -10.0 DD= -36.6R Sh~-0.14 cost/risk= 9.8%
+
+### target model (ext fade, k=0.20)
+  target=lvl                                   n=702   win= 59.8% exp=-0.052R PF= 0.88 totR=  -36.8 DD= -45.1R Sh~-0.81 cost/risk= 9.5%
+  target=mid                                   n=702   win= 29.3% exp=-0.085R PF= 0.89 totR=  -59.7 DD= -65.7R Sh~-0.70 cost/risk= 9.5%
+  target=far                                   n=702   win= 21.4% exp=-0.129R PF= 0.85 totR=  -90.7 DD=-108.8R Sh~-0.87 cost/risk= 9.5%
+  target=partial                               n=702   win= 51.0% exp=-0.067R PF= 0.88 totR=  -46.9 DD= -69.1R Sh~-0.61 cost/risk= 9.5%
+
+### CONFLUENCE STACK — fade the conditions that killed continuation
+  F0 no filters                                n=702   win= 29.3% exp=-0.085R PF= 0.89 totR=  -59.7 DD= -65.7R Sh~-0.70 cost/risk= 9.5%
+  F1 large range >0.60 ATR                     n=101   win= 24.8% exp=-0.247R PF= 0.69 totR=  -25.0 DD= -27.4R Sh~-0.85 cost/risk= 4.6%
+  F2 large range >0.45 ATR                     n=223   win= 27.8% exp=-0.095R PF= 0.88 totR=  -21.1 DD= -25.9R Sh~-0.44 cost/risk= 6.1%
+  F3 F2 + PD level already cleared             n=110   win= 30.9% exp=+0.003R PF= 1.00 totR=   +0.4 DD= -16.0R Sh~ 0.01 cost/risk= 5.7%
+  F4 F2 + late break (after 12:00)             n=56    win= 32.1% exp=-0.050R PF= 0.93 totR=   -2.8 DD= -13.2R Sh~-0.12 cost/risk= 5.3%
+  F5 large + cleared + late                    n=30    win= 40.0% exp=+0.232R PF= 1.37 totR=   +7.0 DD=  -8.0R Sh~ 0.38 cost/risk= 5.0%
+  F6 F3 + skip Sunday                          n=88    win= 34.1% exp=+0.112R PF= 1.16 totR=   +9.8 DD= -14.6R Sh~ 0.31 cost/risk= 5.7%
+
+### best-looking cells with the RECLAIM entry (confirmed failure)
+  R1 large range >0.45                         n=318   win= 30.2% exp=-0.037R PF= 0.95 totR=  -11.9 DD= -33.1R Sh~-0.19 cost/risk= 8.4%
+  R2 large + cleared                           n=141   win= 27.7% exp=-0.150R PF= 0.80 totR=  -21.1 DD= -33.8R Sh~-0.56 cost/risk= 7.9%
+  R3 large >0.60                               n=151   win= 28.5% exp=+0.042R PF= 1.06 totR=   +6.3 DD= -31.0R Sh~ 0.13 cost/risk= 7.5%
