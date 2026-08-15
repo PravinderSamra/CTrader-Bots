@@ -285,3 +285,40 @@ years.
 2024 is spent — the 60pt stop was chosen there. 2022, 2023, 2025 and 2026 were
 run afterwards on that unchanged setting, so they are effectively out-of-sample,
 and all four are positive. Any further change needs re-running all five years.
+
+## 50%-of-ORB stop tested across all five years — REJECTED
+
+Identical entries, only the stop rule changed. The hypothesis was that a fixed
+60pt stop had drifted from 62% of a typical day's range in 2023 to 28% in 2026,
+and that holding it at a constant share would flatten the falling per-trade
+profit. It did the opposite.
+
+| Year | 60pt fixed | 50% of range |
+|---|---|---|
+| 2022 | +$2,914 (PF 1.44) | +$2,152 (PF 1.48) |
+| 2023 | +$1,671 (PF 1.29) | +$889 (PF 1.16) |
+| 2024 | +$2,352 (PF 1.52) | +$153 (PF 1.04) |
+| 2025 | +$1,368 (PF 1.25) | +$279 (PF 1.07) |
+| 2026 | +$553 (PF 1.16) | +$95 (PF 1.05) |
+| **All** | **+$8,859, PF 1.34** | **+$3,567, PF 1.19** |
+
+Worse in four years of five, and worse on every secondary test: P(edge ≤ 0)
+rises from 0.49% to 7.06%, and removing the ten best trades leaves +$45 against
++$4,867. The per-trade decline did not flatten, it steepened: +20.49, +8.38,
++1.80, +3.17, +1.90.
+
+The mechanism is visible and is the one flagged before the test. Win rate rose
+from 38.5% to 47.2% — the wider stop genuinely does get hit less often. But the
+average win collapsed from $208.98 to $111.37, because risk is fixed in dollars,
+so a wider stop buys a smaller position and the same price move earns less. The
+median stop went from a flat 60pt to 108pt, with extremes out to 850pt. Fewer
+losses did not pay for smaller wins.
+
+**Conclusion: keep the 60pt fixed stop.** The drift in what 60pt means relative
+to the daily range is real and measurable, but correcting it costs more than it
+returns. If anything the data leans the other way — with dollar-fixed risk a
+tighter stop earns more R per point travelled, which is an argument for testing
+40pt (the value the M5 study recommended for NAS100) rather than a wider one.
+
+The falling per-trade profit across the five years remains unexplained. It is
+not the stop drifting.
