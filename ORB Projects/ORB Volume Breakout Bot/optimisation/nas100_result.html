@@ -210,8 +210,8 @@
 <section class="sec-rule">
   <h2>The one thing that is drifting</h2>
   <p class="lede">Per-trade profit falls year on year &mdash; +$27.75, +$15.77, +$27.67, +$15.55, +$11.07 &mdash; and
-  2026 is the weakest and most outlier-dependent. The likely reason is not the market. It is that a fixed 60-point
-  stop has quietly stopped meaning the same thing.</p>
+  2026 is the weakest and most outlier-dependent. The obvious suspect was the stop: a fixed 60 points has quietly
+  stopped meaning the same thing. That turned out to be measurable, and wrong &mdash; see the section after this one.</p>
   <div class="tblwrap">
   <table>
     <thead><tr><th>Year</th><th>Median price</th><th>Median day range</th><th>Range as % of price</th><th>60pt stop as % of range</th></tr></thead>
@@ -247,22 +247,58 @@
 </section>
 
 <section class="sec-rule">
-  <h2>What to do about it</h2>
-  <p class="lede">The answer is <em>not</em> a schedule of stop sizes by year. Fitting a number to each past year is
-  the same mistake in a new costume, and it says nothing about 2027. Use a rule that adapts on its own.</p>
+  <h2>The obvious fix was tested, and it failed</h2>
+  <p class="lede">If the drifting stop were the problem, pinning it to a constant share of the day's range should
+  have flattened the decline. All five years were re-run with the stop set to 50% of the ORB range instead of a flat
+  60 points, entries untouched. It was worse in four years of five.</p>
+  <div class="tblwrap">
+  <table>
+    <thead><tr><th>Year</th><th>60pt fixed</th><th>50% of range</th></tr></thead>
+    <tbody>
+      <tr><td>2022</td><td class="mono">+$2,914 &middot; PF 1.44</td><td class="mono">+$2,152 &middot; PF 1.48</td></tr>
+      <tr><td>2023</td><td class="mono">+$1,671 &middot; PF 1.29</td><td class="mono n">+$889 &middot; PF 1.16</td></tr>
+      <tr><td>2024</td><td class="mono">+$2,352 &middot; PF 1.52</td><td class="mono n">+$153 &middot; PF 1.04</td></tr>
+      <tr><td>2025</td><td class="mono">+$1,368 &middot; PF 1.25</td><td class="mono n">+$279 &middot; PF 1.07</td></tr>
+      <tr><td>2026</td><td class="mono">+$553 &middot; PF 1.16</td><td class="mono n">+$95 &middot; PF 1.05</td></tr>
+    </tbody>
+    <tfoot><tr><td>All</td><td class="mono">+$8,859 &middot; PF 1.34</td><td class="mono n">+$3,567 &middot; PF 1.19</td></tr></tfoot>
+  </table>
+  </div>
+
+  <div class="find" style="margin-top:34px">
+    <div><h3>The wider stop worked exactly as intended, and still lost</h3>
+      <p>Win rate rose from 38.5% to 47.2% &mdash; a bigger stop really is hit less often. But the average win fell
+      from $208.98 to $111.37. Risk is fixed in dollars, so a wider stop buys a smaller position, and the same price
+      move simply earns less. Fewer losses did not pay for smaller wins.</p></div>
+    <div class="stat"><div class="big mono">$209 &rarr; $111</div><div class="cap">average win</div></div>
+  </div>
+  <div class="find">
+    <div><h3>And it became far more dependent on its tail</h3>
+      <p>Strip the ten best trades and the 60pt version still holds +$4,867. The 50% version keeps $45. The chance
+      the edge is zero rises from 0.49% to 7.06%.</p></div>
+    <div class="stat"><div class="big mono">+$45</div><div class="cap">minus top 10, vs +$4,867</div></div>
+  </div>
+  <div class="find">
+    <div><h3>So the drift is real but not the problem</h3>
+      <p>60 points does mean something different now than in 2023. Correcting it costs more than it returns. The
+      falling per-trade profit has some other cause, and remains unexplained.</p></div>
+    <div class="stat"><div class="big mono">keep 60pt</div><div class="cap">verdict</div></div>
+  </div>
+</section>
+
+<section class="sec-rule">
+  <h2>What to do next</h2>
+  <p class="lede">The configuration that has now survived five years and one serious challenge is the one to stop
+  adjusting. Further tuning has a poor record here.</p>
   <ol class="steps">
-    <li><div><h3>Switch the stop to a share of the day's range</h3><p>Set Stop Type to <span class="mono">No</span> and
-      Stop % of ORB Range to about <span class="mono">50</span>. That reproduces roughly what 60 points meant in 2024
-      and then keeps that meaning &mdash; near 48pt in a quiet 2023, near 105pt in an active 2026 &mdash; without
-      anyone touching it again.</p></div></li>
-    <li><div><h3>Run it across all five years, not just the recent ones</h3><p>The point of the change is that the
-      stop stops drifting, so the test is whether the per-trade decline flattens out. If 2026 improves while 2022 and
-      2023 hold, the drift was the problem. If everything sags, it was not.</p></div></li>
-    <li><div><h3>Keep the risk reduction, on this evidence</h3><p>On 2026, halving remaining risk at 1R turned +$553
-      into +$844. Six trades improved, one was hurt, and the average win was untouched &mdash; it only ever tightens
-      a stop, so it cannot shrink a winner. Confirm across the other four years before adopting it.</p></div></li>
-    <li><div><h3>Then leave it alone and forward-test</h3><p>Everything here is a backtest. The next real evidence is
-      a demo account running unattended for a few weeks against live spreads and fills.</p></div></li>
+    <li><div><h3>Leave the stop at 60 points</h3><p>It has been tested against the best alternative anyone could
+      motivate from the data, and it won in four years out of five.</p></div></li>
+    <li><div><h3>Confirm the risk reduction on the other four years</h3><p>On 2026 alone, halving remaining risk at
+      1R turned +$553 into +$844 without touching the average win. That is the one open improvement worth
+      settling, and it is a single run per year.</p></div></li>
+    <li><div><h3>Then forward-test on demo</h3><p>Everything here is simulated fills on historical bars. Several
+      weeks unattended against live spreads is the only evidence that has not been collected yet, and it is the
+      only kind that cannot be curve-fitted.</p></div></li>
   </ol>
 </section>
 
