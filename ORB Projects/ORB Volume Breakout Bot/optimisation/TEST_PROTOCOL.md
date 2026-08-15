@@ -357,3 +357,41 @@ cost, and it is larger.
 **Conclusion: do not adopt it.** Keep 60pt fixed, no risk reduction, no
 breakeven, no trailing — the configuration that produced +$8,859 at PF 1.34
 across five full years.
+
+## Risk reduction, second pass — a dose-response appears
+
+Five variants, all measurable on 2024–2026, expressed as change against the
+60pt baseline. Ordered by how much risk is LEFT ON after the reduction fires:
+
+| Variant | Risk left on | 2024 | 2025 | 2026 | Sum |
+|---|---|---|---|---|---|
+| 1R / 25% | 25% | −167 | −250 | +154 | **−263** |
+| 1.5R / 50% | 50% | −292 | −61 | +184 | **−169** |
+| 1R / 50% | 50% | −396 | +184 | +331 | **+119** |
+| 1R / 75% | 75% | −201 | +308 | +218 | **+325** |
+| 0.75R / 75% | 75% | −54 | +396 | +207 | **+549** |
+| *baseline* | *100%* | 0 | 0 | 0 | *0* |
+
+Averaged by dose: 25% → −263, 50% → −25, 75% → +437, 100% → 0. It climbs and
+then falls back to zero at no-intervention, i.e. a peak at 75%, not a straight
+line. **That is a dose-response with an interior optimum, which is what a real
+effect looks like and what a best-of-five fluke usually does not.**
+
+This corrects an earlier reading in this file. On partial information — knowing
+only that one variant "hit the target" — the pattern was called incoherent and
+the result dismissed as selection noise. With every variant measured on common
+years the ordering is orderly, and the two 75% variants are the top two. The
+earlier conclusion was wrong.
+
+Two secondary orderings also hold: earlier triggers beat later ones at equal
+dose (0.75R beats 1R at 75%; 1R beats 1.5R at 50%), consistent with taking risk
+off before the pullback rather than after it.
+
+Full five-year totals for the variants that were run to completion: 1R/50%
++732, 1R/75% +649, 0.75R/75% +1,097. Adding 2021, which nothing has been fitted
+to, 0.75R/75% reaches +1,281 over six years.
+
+**Status: promising, not proven.** The gradient is built on three shared years
+and single runs per cell, 2024 is negative for every variant tested, and the
+effect is +$2.53/trade against a base of +$20.41. It goes to demo alongside the
+baseline rather than being adopted outright.
