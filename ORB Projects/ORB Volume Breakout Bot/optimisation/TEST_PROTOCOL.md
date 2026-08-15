@@ -234,3 +234,54 @@ Three US30 lessons are already baked in:
    bar data rather than tick data and is measuring the simulator.
 4. Sensible trade count. Far fewer than ~100/year means a filter is starving it,
    most likely the volume multiplier or the range cap.
+
+## NAS100 result — five full years, one config
+
+60pt fixed stop, 4R cap, volume 1.2x, no breakeven, no trailing, longs and
+shorts, 02:00-09:30 ET range, entries 10:00-11:00 ET.
+
+| Year | Trades | Net | Per trade | PF | Minus top 5 |
+|---|---|---|---|---|---|
+| 2022 | 105 | +$2,914 | +$27.75 | 1.44 | +$922 |
+| 2023 | 106 | +$1,671 | +$15.77 | 1.29 | −$234 |
+| 2024 *(tuned)* | 85 | +$2,352 | +$27.67 | 1.52 | +$359 |
+| 2025 | 88 | +$1,368 | +$15.55 | 1.25 | −$622 |
+| 2026 (to Aug) | 50 | +$553 | +$11.07 | 1.16 | −$1,434 |
+| **All** | **434** | **+$8,859** | **+$20.41** | **1.34** | **+$6,859** |
+
+Expectancy +$20.41/trade, 95% CI +$4.65 to +$36.38, P(edge ≤ 0) = 0.5%. Max
+drawdown −$1,109, about 11R. Excluding 2024, where the 60pt stop was chosen:
+349 trades, +$6,507, PF 1.30, four of four years positive, P(edge ≤ 0) = 2.0%.
+
+Against US30 on the same tests: PF 1.03 vs 1.34, P(no edge) 43.4% vs 0.5%,
+removing one trade flipped US30 negative while NAS100 keeps +$8,458, and
+removing ten leaves +$4,867 against US30's −$7,876. Shorts lost on US30 and
+make +$3,818 at PF 1.31 here.
+
+### The drift worth acting on
+
+Per-trade profit falls each year (+27.75, +15.77, +27.67, +15.55, +11.07) and
+the fixed stop is the likely reason. Median daily range roughly doubled, 106pt
+to 211pt, but as a share of price it barely moved (0.61%–0.98%, no trend) — the
+index simply got bigger. So 60 points was 62% of a typical day's range in 2023
+and is 28% now. It was never a universal number: it is 51% of 2024's range, the
+year it was fitted to.
+
+The fix is a rule that adapts rather than a schedule of numbers by year, which
+would be the same fitting mistake in a new costume. Stop Type = No with Stop %
+of ORB Range ≈ 50 reproduces what 60pt meant in 2024 and holds that meaning
+without further intervention. Test across all five years and look for the
+per-trade decline to flatten, not just for a bigger total.
+
+### Risk reduction at 1R, paired test on 2026
+
+Same 50 trades, only the exit rule differs: +$553 → +$844. Six trades improved,
+one was hurt by $14, and the average win was identical — it only tightens a
+stop, so it cannot shrink a winner. Promising, unconfirmed on the other four
+years.
+
+### Provenance
+
+2024 is spent — the 60pt stop was chosen there. 2022, 2023, 2025 and 2026 were
+run afterwards on that unchanged setting, so they are effectively out-of-sample,
+and all four are positive. Any further change needs re-running all five years.
