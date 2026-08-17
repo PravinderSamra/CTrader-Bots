@@ -51,15 +51,17 @@ If the trade hits your stop you lose $1,000, exactly as planned. Nothing else ma
 
 ---
 
-# STRATEGY 1 — THE 1:30PM TRADE
+# STRATEGY 1 — THE COMEX OPEN TRADE (13:30 UTC)
 
-**Why it works:** at 1:30pm UK time, the US gold futures market opens and US economic data is released. It is the single most active moment in gold's day — about a third of all daily movement happens in the following three hours. This trade simply positions you for whichever way that burst goes. It doesn't predict direction; it catches whichever direction shows up.
+**Why it works:** at **13:30 UTC** the US gold futures market opens and US economic data is released. It is the single most active moment in gold's day — about a third of all daily movement happens in the following three hours. This trade simply positions you for whichever way that burst goes. It doesn't predict direction; it catches whichever direction shows up.
 
-*(All times UK. In winter, subtract one hour from every time below.)*
+> ⚠️ **TIMES — read carefully.** The tested anchor is **13:30–14:00 UTC**. On a UK clock that is
+> **2:30–3:00pm in summer (BST)** and **1:30–2:00pm in winter (GMT)**. All UK times below are
+> **summer (BST)** times — subtract one hour in winter. Safest practice: set your chart to UTC.
 
-### Step 1 — 2:00pm: draw the box
+### Step 1 — 3:00pm (14:00 UTC): draw the box
 
-Look at your 5-minute gold chart. Find the **highest price and the lowest price between 1:30pm and 2:00pm**. Draw a horizontal line at each. That's your box.
+Look at your 5-minute gold chart. Find the **highest price and the lowest price between 2:30pm and 3:00pm UK (13:30–14:00 UTC)**. Draw a horizontal line at each. That's your box.
 
 ### Step 2 — check the box is a sensible size
 
@@ -159,7 +161,7 @@ Brokers charge a small fee for holding a position overnight (called **swap**). O
 3. **Recheck ATR20 every week** and resize. Gold's daily range went from $22 to $135 over the tested five years. Traders using fixed lot sizes through that were wiped out.
 4. **Maximum three positions a day** — two from Strategy 1, one from Strategy 2.
 5. **If you lose 3 trades in one day, stop trading for the day.** You've hit roughly 3% down; there's nothing left worth chasing.
-6. **Never add extra trades to fill the day.** I tested this exact setup at 7am, 8am, midday, 2:30pm and 3pm — **every single one lost money**. Only the 1:30pm slot works. More activity makes you poorer, not richer.
+6. **Never add extra trades to fill the day.** I tested this exact setup at 07:00, 08:00, 12:00, 14:30 and 15:00 UTC — **every single one lost money**. Only the 13:30 UTC slot works. More activity makes you poorer, not richer.
 7. **Never trade the Asia range breakout**, in either direction. I studied it extensively — continuation and reversal both lose after costs.
 8. **Start at 0.25% risk for your first 100 trades.** Compare your real results against the expectations below before increasing size.
 9. **Review every 50 trades, not every day.** A single day tells you nothing.
@@ -191,9 +193,9 @@ Tested on the hidden year, $100,000 account, Razor costs:
 
 **Once a week:** update ATR20 from the daily chart.
 
-**Every trading day:**
+**Every trading day:** *(UK summer times; −1h in winter, or just use UTC)*
 
-- [ ] **2:00pm** — mark the 1:30–2:00pm box high and low
+- [ ] **3:00pm UK / 14:00 UTC** — mark the 2:30–3:00pm (13:30–14:00 UTC) box high and low
 - [ ] Box between 4% and 50% of ATR20? If no → done for the day
 - [ ] Check where today opened vs yesterday's value zone → decide buy only / sell only / both
 - [ ] Work out size: (Account × 1%) ÷ (0.25 × ATR20)

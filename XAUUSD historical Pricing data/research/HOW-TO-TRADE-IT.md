@@ -45,7 +45,7 @@ FTMO has two limits. Only one of them matters here:
 
 ## Part 2 — The strategy, step by step
 
-All times are **UK time**. In winter (GMT) shift every time one hour earlier.
+The tested anchor for the afternoon trade is **13:30–14:00 UTC**. On a UK clock that is **2:30–3:00pm in summer (BST)** and **1:30–2:00pm in winter (GMT)**. UK times below are **summer** times; subtract one hour in winter. Setting your chart to UTC avoids the whole problem.
 
 ### Before you start each day, you need one number
 
@@ -55,8 +55,8 @@ All times are **UK time**. In winter (GMT) shift every time one hour earlier.
 
 ### TRADE 1 — The afternoon trade (the main one)
 
-**Step 1 — 2:00pm. Draw the box.**
-Look at the 30 minutes between **1:30pm and 2:00pm**. Find the highest price and the lowest price in that half hour. Draw a horizontal line at each. That's your box.
+**Step 1 — 3:00pm UK (14:00 UTC). Draw the box.**
+Look at the 30 minutes between **2:30pm and 3:00pm UK (13:30–14:00 UTC)**. Find the highest price and the lowest price in that half hour. Draw a horizontal line at each. That's your box.
 
 **Step 2 — Check the box is a sensible size.**
 Measure the box height in dollars.
@@ -115,7 +115,7 @@ If that trade closes (either stopped out or at a profit) and price then breaks t
 ## Part 3 — Rules that keep you out of trouble
 
 1. **Never move the stop further away.** Ever. Moving to break-even at 1R is the only adjustment allowed.
-2. **Never add trades to fill the day.** I tested opening-range trades at 7am, 8am, midday, 2:30pm and 3pm — **every single one lost money**. Only the 1:30pm slot works.
+2. **Never add trades to fill the day.** I tested opening-range trades at 07:00, 08:00, 12:00, 14:30 and 15:00 UTC — **every single one lost money**. Only the 13:30 UTC slot works.
 3. **Recheck ATR20 weekly** and resize. Gold's daily range went from $22 to $135 over five years; fixed lot sizes would have destroyed you.
 4. **Expect roughly half of weeks and half of months to lose.** The profit comes from a few strong months. In the test year, September alone made most of the annual gain.
 5. **Start at a quarter size** for your first 100 trades. Compare your real results with what's predicted here before going full size.
@@ -127,7 +127,7 @@ If that trade closes (either stopped out or at a profit) and price then breaks t
 
 Gold at $4,000. ATR20 = $100. Razor account, $100,000, 1% risk.
 
-- **2:00pm** — the 1:30–2:00pm range was 3,996 to 4,004. Box height $8. That's 8% of ATR — inside the 4%–50% window ✓
+- **3:00pm UK (14:00 UTC)** — the 13:30–14:00 UTC range was 3,996 to 4,004. Box height $8. That's 8% of ATR — inside the 4%–50% window ✓
 - Gold opened last night inside yesterday's value area → **both orders allowed** ✓
 - Place buy stop at **4,004.50**, sell stop at **3,995.50** (just outside the box), OCO.
 - **2:40pm** — the buy fills at 4,004.50.
