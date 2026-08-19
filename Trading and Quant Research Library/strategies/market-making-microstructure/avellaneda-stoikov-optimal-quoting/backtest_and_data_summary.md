@@ -209,6 +209,6 @@ subset of the problem.
 **How to use this entry.** Treat it as the correct skeleton for the inventory-management layer of a
 market-making system, and as the baseline any more sophisticated quoting model must beat. It is not
 a complete market-making strategy: the missing adverse-selection layer is where the money is won or
-lost. Guéant–Lehalle–Fernandez-Tapia (inventory bounds, exact closed forms) and Cartea–Jaimungal
-(order-flow and adverse selection) are queued as Wave 2 entries and are the necessary companions to
-this one.
+lost. Guéant–Lehalle–Fernandez-Tapia (inventory bounds, exact closed forms) and Guilbaud–Pham (limit
+*and* market orders, discrete tick) are ingested as Wave 2 companions to this entry; order-flow
+imbalance supplies the adverse-selection signal this model lacks.

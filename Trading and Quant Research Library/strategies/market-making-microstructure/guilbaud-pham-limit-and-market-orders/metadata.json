@@ -1,0 +1,60 @@
+{
+  "id": "guilbaud-pham-limit-and-market-orders",
+  "title": "Market Making with Limit and Market Orders (Guilbaud & Pham)",
+  "slug": "guilbaud-pham-limit-and-market-orders",
+  "strategy_type": "market-making-microstructure",
+  "asset_classes": ["equities", "futures", "crypto"],
+  "complexity_score": 9,
+  "execution_type": "Quant",
+  "requires_machine_learning": false,
+  "evidence_grade": "verified-primary",
+  "holding_period": "seconds; continuous quoting with occasional market-order flattening",
+  "signal_frequency": "per tick-time event; discrete placement decisions",
+  "directionality": "two-sided-quoting",
+  "data_requirements": [
+    "tick-by-tick level-1 data with spread in tick multiples",
+    "fill records tagged by spread state and quote placement, for Cox intensity calibration",
+    "event timestamps for the tick-time clock intensity, estimated hourly",
+    "exchange tick size and fee/rebate schedule"
+  ],
+  "capacity": "low",
+  "decay_status": "intact",
+  "sources": [
+    {
+      "type": "paper",
+      "citation": "Guilbaud, F., & Pham, H. Optimal high frequency trading with limit and market orders. arXiv:1106.5040 (24 June 2011 draft); published in Quantitative Finance 13(1), 79-94 (2013).",
+      "url": "https://arxiv.org/pdf/1106.5040",
+      "verified_in_session": true
+    },
+    {
+      "type": "paper",
+      "citation": "Avellaneda, M., & Stoikov, S. (2008). High-frequency trading in a limit order book. Quantitative Finance, 8(3), 217-224. (The parent model.)",
+      "url": "https://www.math.nyu.edu/~avellane/HighFrequencyTrading.pdf",
+      "verified_in_session": true
+    },
+    {
+      "type": "paper",
+      "citation": "Guéant, O., Lehalle, C.-A., & Fernandez-Tapia, J. Dealing with the Inventory Risk. arXiv:1105.3115.",
+      "url": "https://arxiv.org/pdf/1105.3115",
+      "verified_in_session": true
+    }
+  ],
+  "related_strategies": [
+    "avellaneda-stoikov-optimal-quoting",
+    "gueant-lehalle-fernandez-tapia-bounded-inventory",
+    "order-flow-imbalance-price-impact"
+  ],
+  "tags": [
+    "market-making",
+    "market-microstructure",
+    "impulse-control",
+    "discrete-tick",
+    "queue-priority",
+    "market-orders",
+    "cox-process",
+    "regime-switching",
+    "calibration",
+    "wave-2-depth"
+  ],
+  "ingested_at": "2026-08-19"
+}

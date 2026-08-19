@@ -45,6 +45,10 @@ Trading and Quant Research Library/
 |---|---|---|---|
 | Cross-Sectional Factors | [Momentum Crashes & Dynamic Weighting](strategies/cross-sectional-factors/momentum-crashes-daniel-moskowitz/) | Cross-Sectional Momentum | Verified |
 | Statistical Arbitrage | [Factor-Residual Stat Arb (PCA & ETF)](strategies/statistical-arbitrage/factor-residual-statistical-arbitrage/) | Pairs Trading | Verified + reproduced |
+| Statistical Arbitrage | [Optimal Mean-Reversion Bands (OU)](strategies/statistical-arbitrage/ornstein-uhlenbeck-optimal-bands/) | Pairs Trading, Factor-Residual | Verified + reproduced |
+| Market Making | [Bounded-Inventory Market Making](strategies/market-making-microstructure/gueant-lehalle-fernandez-tapia-bounded-inventory/) | Avellaneda–Stoikov | Verified + reproduced |
+| Market Making | [Limit *and* Market Orders](strategies/market-making-microstructure/guilbaud-pham-limit-and-market-orders/) | Avellaneda–Stoikov | Verified + reproduced |
+| Microstructure | [Order Flow Imbalance & Price Impact](strategies/market-making-microstructure/order-flow-imbalance-price-impact/) | all market-making entries | Verified |
 
 "Verified" means every quoted statistic was read out of the primary source document, not recalled or
 paraphrased from secondary commentary. "Reproduced" means the reference implementation was executed
@@ -61,6 +65,12 @@ reader to find out the hard way:
   +232% in two months, 1932).
 - **Pairs Trading → Factor-Residual Stat Arb.** The distance method's key weakness is that it cannot
   filter on mean-reversion speed. The companion entry is what that filter looks like implemented.
+- **Pairs Trading / Factor-Residual → Optimal Mean-Reversion Bands.** Both parents set their
+  thresholds by assertion (2σ; s-score 1.25) and say so. The companion entry *derives* them, and
+  shows the stop and the take-profit cannot be chosen independently.
+- **Any market-making model → Order Flow Imbalance.** Avellaneda–Stoikov, Guéant et al. and
+  Guilbaud–Pham all assume order arrivals are uninformative. OFI is the measurement that says
+  otherwise, and supplies the adverse-selection layer all three lack.
 
 ## Validating the library
 

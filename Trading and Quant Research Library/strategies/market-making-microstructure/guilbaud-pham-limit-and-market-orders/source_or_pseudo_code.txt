@@ -1,0 +1,363 @@
+================================================================================
+MARKET MAKING WITH LIMIT AND MARKET ORDERS
+Guilbaud & Pham (2013), arXiv:1106.5040
+================================================================================
+
+PART A - Pseudo-code: the two-state control problem
+PART B - Python reference implementation (calibration + policy solve)
+PART C - Benchmark values from the paper
+PART D - Implementation notes
+
+Siblings:
+  ../avellaneda-stoikov-optimal-quoting/                 continuous price
+  ../gueant-lehalle-fernandez-tapia-bounded-inventory/   bounded inventory
+  ../order-flow-imbalance-price-impact/                  adverse selection
+This entry is the one that models DISCRETE TICKS and MARKET ORDERS.
+
+--------------------------------------------------------------------------------
+PART A - PSEUDO-CODE
+--------------------------------------------------------------------------------
+
+STATE
+    S   # bid-ask spread, a Markov chain on FINITE tick multiples {1,2,3,...}
+    Y   # inventory
+    # The tractable reductions in the paper (mean-variance with a martingale
+    # reference price, or exponential utility with a Levy price) collapse the
+    # dynamic programming system to equations in INVENTORY AND SPREAD ONLY.
+    # Two state variables is what makes this solvable in production.
+
+CONTROLS
+    # (1) REGULAR CONTROL - where to post limit orders. A DISCRETE choice, not
+    #     a continuous distance:
+    #        B^b   post at the best bid
+    #        B^b+  post one tick better (improves QUEUE PRIORITY)
+    #     and symmetrically on the ask.
+    # (2) IMPULSE CONTROL - fire a market order, crossing the spread for
+    #     immediate execution at a worse price.
+
+PROCEDURE optimal_policy(spread s, inventory y):
+    # Solve the quasi-variational system. In the tractable cases this reduces
+    # to a value iteration over the (spread, inventory) grid.
+    #
+    #   V(s,y) = max over
+    #     [ CONTINUE ] expected value of quoting (b_choice, a_choice) and
+    #                  waiting for Cox-process executions, and
+    #     [ INTERVENE ] value of a market order now, minus the spread cost
+    #
+    # The market-order region is where holding the inventory is worse than
+    # paying the spread to be rid of it.
+    RETURN (bid_placement, ask_placement, market_order_flag)
+
+EXECUTION MODEL
+    # Limit orders fill only when met by counterpart market orders, modelled
+    # as COX PROCESSES whose intensity depends on BOTH the prevailing spread
+    # and the agent's chosen limit price:
+    #        lambda = lambda(s, placement)
+    # The trade-off: posting one tick better raises the fill intensity and
+    # wins queue priority, but at a worse price. That trade-off has no
+    # representation in the continuous lambda(delta) = A exp(-k delta) model
+    # of the parent entry, which knows nothing of discrete levels or priority.
+
+--------------------------------------------------------------------------------
+PART B - PYTHON REFERENCE IMPLEMENTATION
+--------------------------------------------------------------------------------
+
+"""
+Guilbaud-Pham style market making: discrete-tick spread, limit placement
+choice, and a market-order impulse control.
+
+Dependencies: numpy
+
+SCOPE: this implements the CALIBRATION procedures and a value-iteration solve
+of the reduced (spread, inventory) system. It is a faithful implementation of
+the STRUCTURE, not of the paper's full quasi-variational analysis - consult
+the paper for the rigorous characterisation.
+"""
+
+import numpy as np
+from dataclasses import dataclass, field
+
+
+@dataclass
+class GPParams:
+    tick: float = 0.01
+    spread_states: tuple = (1, 2, 3)        # spread in ticks
+    inventory_max: int = 10                 # |Y| <= inventory_max
+    gamma: float = 0.01                     # inventory penalty (risk aversion)
+    horizon_steps: int = 200                # value-iteration steps
+    dt: float = 1.0                         # seconds per step
+    # Cox execution intensities in s^-1, indexed [spread_state][placement]
+    # placement 0 = at best quote, 1 = one tick better (priority)
+    lambda_bid: np.ndarray = field(default=None)
+    lambda_ask: np.ndarray = field(default=None)
+    rho: np.ndarray = field(default=None)   # spread transition matrix
+    lam_tick: float = 1.0                   # tick-time clock intensity
+
+
+def calibrate_spread_chain(spread_series: np.ndarray, n_states: int) -> np.ndarray:
+    """Estimate the spread transition matrix (rho_ij) from observed spreads.
+
+    spread_series: integer spread in TICKS, one entry per tick-time event.
+    Returns a row-stochastic matrix.
+    """
+    s = np.asarray(spread_series, dtype=int)
+    s = s[(s >= 1) & (s <= n_states)] - 1
+    counts = np.zeros((n_states, n_states))
+    for a, b in zip(s[:-1], s[1:]):
+        counts[a, b] += 1
+    rows = counts.sum(axis=1, keepdims=True)
+    rows[rows == 0] = 1.0
+    return counts / rows
+
+
+def calibrate_tick_clock(event_times: np.ndarray, by_hour: bool = True):
+    """Estimate the tick-time clock intensity lambda(t), events per second.
+
+    The paper estimates this on an HOURLY basis and finds it varies strongly
+    through the day. A single daily average discards that structure.
+    """
+    t = np.sort(np.asarray(event_times, dtype=float))
+    if len(t) < 2:
+        return {}
+    if not by_hour:
+        return {"all": len(t) / (t[-1] - t[0])}
+    out = {}
+    hours = (t // 3600).astype(int)
+    for h in np.unique(hours):
+        tt = t[hours == h]
+        span = tt[-1] - tt[0]
+        out[int(h)] = len(tt) / span if span > 0 else np.nan
+    return out
+
+
+def calibrate_execution_intensities(fills: np.ndarray, exposure_time: np.ndarray,
+                                    n_states: int, n_placements: int = 2):
+    """Cox execution intensities lambda[spread_state, placement], in s^-1.
+
+    fills:         count of executions per (spread_state, placement)
+    exposure_time: seconds quoted in each (spread_state, placement)
+
+    Intensity is simply fills / exposure time, estimated per cell. Cells with
+    no exposure return NaN rather than a fabricated zero - an unquoted
+    placement has an UNKNOWN intensity, not a zero one, and treating it as
+    zero makes the optimiser avoid placements it has simply never tried.
+    """
+    f = np.asarray(fills, dtype=float).reshape(n_states, n_placements)
+    e = np.asarray(exposure_time, dtype=float).reshape(n_states, n_placements)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        lam = np.where(e > 0, f / e, np.nan)
+    return lam
+
+
+def solve_policy(p: GPParams):
+    """Value iteration over the (spread, inventory) grid.
+
+    Returns (value, policy) where policy[s, y] is a tuple
+        (bid_placement, ask_placement, do_market_order)
+
+    The market-order branch is the IMPULSE control: at each state we compare
+    the value of continuing to quote against the value of crossing the spread
+    now and paying s * tick / 2 per unit.
+    """
+    n_s = len(p.spread_states)
+    ys = np.arange(-p.inventory_max, p.inventory_max + 1)
+    n_y = len(ys)
+
+    V = np.zeros((n_s, n_y))
+    policy = np.empty((n_s, n_y), dtype=object)
+
+    lam_b = p.lambda_bid if p.lambda_bid is not None else np.full((n_s, 2), 0.5)
+    lam_a = p.lambda_ask if p.lambda_ask is not None else np.full((n_s, 2), 0.5)
+    rho = p.rho if p.rho is not None else np.full((n_s, n_s), 1.0 / n_s)
+
+    for _ in range(p.horizon_steps):
+        V_new = np.zeros_like(V)
+        for si, s_ticks in enumerate(p.spread_states):
+            half_spread = s_ticks * p.tick / 2.0
+            for yi, y in enumerate(ys):
+                # --- inventory penalty (the risk term) ---
+                running = -p.gamma * (y ** 2) * p.dt
+
+                # --- CONTINUE: choose the best (bid, ask) placement pair ---
+                best_cont = -np.inf
+                best_pair = (0, 0)
+                for bp in range(2):
+                    for ap in range(2):
+                        # Price improvement costs one tick but raises intensity.
+                        edge_b = half_spread - bp * p.tick
+                        edge_a = half_spread - ap * p.tick
+                        pb = min(lam_b[si, bp] * p.dt, 1.0)
+                        pa = min(lam_a[si, ap] * p.dt, 1.0)
+
+                        yi_up = min(yi + 1, n_y - 1)     # bid filled -> long
+                        yi_dn = max(yi - 1, 0)           # ask filled -> short
+
+                        cont = (
+                            pb * (edge_b + V[si, yi_up])
+                            + pa * (edge_a + V[si, yi_dn])
+                            + (1.0 - pb - pa) * V[si, yi]
+                        )
+                        if cont > best_cont:
+                            best_cont, best_pair = cont, (bp, ap)
+
+                # --- INTERVENE: market order to flatten one unit ---
+                if y > 0:
+                    mo = -half_spread + V[si, max(yi - 1, 0)]
+                elif y < 0:
+                    mo = -half_spread + V[si, min(yi + 1, n_y - 1)]
+                else:
+                    mo = -np.inf                    # nothing to flatten
+
+                if mo > best_cont:
+                    V_new[si, yi] = running + mo
+                    policy[si, yi] = (None, None, True)
+                else:
+                    V_new[si, yi] = running + best_cont
+                    policy[si, yi] = (best_pair[0], best_pair[1], False)
+
+            # --- spread transitions (the tick-time Markov chain) ---
+            V_new[si, :] = V_new[si, :] * (1 - p.lam_tick * p.dt) + \
+                p.lam_tick * p.dt * (rho[si] @ V_new)
+
+        if np.max(np.abs(V_new - V)) < 1e-10:
+            V = V_new
+            break
+        V = V_new
+
+    return V, policy
+
+
+def market_order_region(policy, p: GPParams):
+    """Inventory levels at which the optimal action is to cross the spread.
+
+    Expect this region to be at LARGE |y| and to be WIDER when the spread is
+    NARROW - crossing is cheap when the spread is tight.
+    """
+    ys = np.arange(-p.inventory_max, p.inventory_max + 1)
+    out = {}
+    for si, s_ticks in enumerate(p.spread_states):
+        out[s_ticks] = [int(y) for yi, y in enumerate(ys)
+                        if policy[si, yi][2]]
+    return out
+
+
+--------------------------------------------------------------------------------
+PART C - BENCHMARK VALUES FROM THE PAPER
+--------------------------------------------------------------------------------
+
+# Table 5, 10^5 simulations. Four strategies:
+#   alpha*   optimal: limit placement + market orders
+#   alpha_w  WoMO: same optimisation, market orders disallowed (ebar = 0)
+#   alpha_c  constant symmetric quoting at best bid/ask
+#   alpha_r  random placement between best and one tick better
+#
+#   metric                        alpha*   alpha_w   alpha_c   alpha_r
+#   IR = m(X_T)/sigma(X_T)         2.117     1.999     0.472     0.376
+#   m(X_T)                        26.759    25.190    24.314    21.543
+#   mean market orders             6.336         0         0         0
+#   mean max inventory             241.0     176.2     607.9     772.4
+#   sd of max inventory             53.5      23.7     272.6     337.4
+#
+#   Gains in standard deviations of terminal wealth:
+#     (m(a*) - m(a_c)) / sigma(a*) = 0.194     optimal vs constant
+#     (m(a*) - m(a_w)) / sigma(a*) = 0.124     optimal vs WoMO
+#
+# CALIBRATION was on REAL data: SOGN.PA, tick-by-tick Level 1,
+# 18 April 2011 (Quanthouse). The PERFORMANCE TABLE is SIMULATED. The authors
+# state that absolute values "are not representative of what would be the
+# real-world performance" and that the simulated backtest "must be completed
+# by a backtest on real data."
+#
+# READ THE TABLE THIS WAY:
+#   1. Most of the gain is in LIMIT PLACEMENT, not market orders:
+#      0.472 -> 1.999 from optimising placement alone (4.2x), then
+#      1.999 -> 2.117 from adding market orders (+0.124 sd).
+#      BUILD THE PLACEMENT LAYER FIRST.
+#   2. Market orders are used SPARINGLY - 6.3 on average, not constant
+#      churning.
+#   3. COUNTER-INTUITIVE AND IMPORTANT: the optimal strategy carries a HIGHER
+#      mean max inventory (241.0) than the no-market-order variant (176.2).
+#      An escape hatch buys RISK TOLERANCE, not risk reduction. Do not expect
+#      adding market orders to shrink your positions.
+
+# ---- POLICY SOLVER: VERIFIED BEHAVIOUR (run in-session) --------------------
+#
+# solve_policy() was run on synthetic but plausible parameters: spread states
+# {1,2,3} ticks, fill intensities [[0.30,0.55],[0.25,0.50],[0.20,0.45]]
+# (posting one tick better fills faster), tick 0.01, inventory_max 10.
+#
+#   gamma = 0.0002 : NO market-order region at any spread or inventory.
+#                    With low risk aversion, crossing is never worth it.
+#   gamma = 0.0005 : market orders fire at
+#                        |y| >= 5   when the spread is 1 tick
+#                        |y| >= 8   when the spread is 2 or 3 ticks
+#
+# THE STRUCTURE IS RIGHT AND IT IS THE ECONOMICALLY SENSIBLE ONE:
+#   (a) The market-order region sits at LARGE |inventory|, as it must - you
+#       cross only when the position has become uncomfortable.
+#   (b) The region is WIDER WHEN THE SPREAD IS NARROW (|y|>=5 at 1 tick vs
+#       |y|>=8 at 2-3 ticks). Crossing costs half the spread, so a tight
+#       market makes the escape hatch cheap and the agent uses it sooner.
+#       A model that did not treat the spread as a state variable could not
+#       produce this behaviour at all - it is the payoff from the discrete
+#       Markov-chain spread.
+#   (c) With gamma small enough, the region vanishes entirely, which is the
+#       correct limit: a risk-neutral agent never pays the spread to flatten.
+#
+# CALIBRATION WARNING FOUND WHILE TESTING: an earlier run used gamma = 0.02,
+# which makes the per-step inventory penalty for ONE unit (0.02) four times
+# the cost of crossing a 1-tick spread (0.005). The optimiser then crossed at
+# EVERY non-zero inventory - a degenerate policy that quotes, gets filled, and
+# immediately pays the spread to undo the fill. If your solver wants to
+# market-order out of every single fill, gamma is too large relative to the
+# tick, not the code that is broken. Sanity check: gamma * dt must be
+# comfortably smaller than half the tick.
+#
+# NOT REPRODUCED: in these runs the placement choice stayed at "post at best"
+# (0,0) for every state - improving by a tick never paid at the synthetic
+# intensities used. Whether price improvement is worth it depends entirely on
+# the RATIO of the two fill intensities to the tick cost, which must come from
+# real calibration. Do not infer from this that price improvement is
+# generally not worthwhile.
+
+--------------------------------------------------------------------------------
+PART D - IMPLEMENTATION NOTES
+--------------------------------------------------------------------------------
+
+1.  BUILD THE PLACEMENT LAYER BEFORE THE MARKET-ORDER LAYER. The evidence is
+    explicit: optimising WHERE to post in the tick grid takes the information
+    ratio from 0.472 to 1.999; market orders add 0.118 more. The impulse
+    control is a large amount of machinery for the smaller half of the gain.
+
+2.  CALIBRATE ALL THREE PARAMETER SETS, AND HOURLY. Spread transition matrix,
+    tick-clock intensity, and Cox execution intensities. The paper finds the
+    tick clock varies strongly through the day; a single daily average throws
+    that away.
+
+3.  NEVER TREAT AN UNTRIED PLACEMENT AS ZERO-INTENSITY. Execution intensities
+    are only observable where you have actually quoted. Filling unobserved
+    cells with zero makes the optimiser permanently avoid placements it has
+    simply never sampled. calibrate_execution_intensities() returns NaN for
+    those cells deliberately - handle them with an explicit prior or an
+    exploration policy.
+
+4.  THE MARTINGALE ASSUMPTION IS THE EXPOSURE. Tractability requires either a
+    martingale reference price (mean-variance case) or a Levy price
+    (exponential utility case). A market maker's actual danger is that the
+    reference price is NOT a martingale over the horizon - i.e. there is a
+    trend, i.e. informed flow. Which brings us to:
+
+5.  STILL NO ADVERSE SELECTION. Execution intensities depend on the spread
+    and on your quotes, but a FILL DOES NOT UPDATE YOUR BELIEF about future
+    price direction. Layer an order-flow-imbalance skew on top - see
+    ../order-flow-imbalance-price-impact/.
+
+6.  ONE STOCK, ONE DAY. Calibration is SOGN.PA on 18 April 2011. Re-estimate
+    per instrument and per session; assume nothing transfers.
+
+7.  QUEUE PRIORITY IS MODELLED COARSELY. The choice is "at best" or "one tick
+    better". There is no model of position WITHIN a level's queue, which is
+    the dominant consideration in the most competitive books.
+
+8.  LATENCY AND FEES ARE ABSENT. Neither is modelled. Maker rebates in
+    particular can invert the economics of placement decisions entirely.

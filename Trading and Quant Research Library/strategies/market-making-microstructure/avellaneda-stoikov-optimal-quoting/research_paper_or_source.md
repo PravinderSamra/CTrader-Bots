@@ -39,7 +39,8 @@ business and an eventual blow-up.
 | Open-source replication (Python) | repository | https://github.com/ragoragino/avellaneda-stoikov |
 | Open-source replication (alternative) | repository | https://github.com/z772/avellaneda-stoikov-1 |
 | Guéant, Lehalle & Fernandez-Tapia — closed-form extension with inventory limits | paper | https://arxiv.org/abs/1105.3115 |
-| Cartea & Jaimungal — market making with order-flow and adverse selection | paper | https://arxiv.org/pdf/1106.5040 |
+| Guilbaud & Pham — optimal market making with **both limit and market orders**, discrete tick | paper | https://arxiv.org/pdf/1106.5040 |
+| Cartea, Jaimungal & Penalva — *Algorithmic and High-Frequency Trading* (CUP, 2015) — the standard treatment of adverse selection | book | — |
 
 Note the replication repositories are third-party and are recorded at `verified-secondary` — they
 were identified as existing replications of this paper, but their code was not audited in-session.
@@ -127,7 +128,8 @@ The bid and ask then follow directly:
 The paper is not the last word — it assumes no drift, no adverse selection, symmetric arrival
 intensities, a finite terminal time, and unlimited inventory. Every one of those has been relaxed
 in the subsequent literature (Guéant–Lehalle–Fernandez-Tapia add inventory bounds and give exact
-closed-form solutions; Cartea–Jaimungal add order-flow signals and adverse selection).
+closed-form solutions; Guilbaud–Pham add market orders and a discrete tick grid; the
+Cartea–Jaimungal–Penalva line adds order-flow signals and adverse selection).
 
 But it is the paper that established the *shape* of the answer — reservation price plus
 symmetric-width spread — and every later model is a refinement of that decomposition. It is also
@@ -141,7 +143,8 @@ two-sided quoting, no locates, small tick relative to volatility) fit unusually 
    uninformative: a fill tells the model nothing about where the price is going. In real markets a
    fill on the bid is disproportionately likely just before the price falls — the trader lifting you
    often knows something. Real market makers lose to informed flow, and this model cannot see that
-   loss. Cartea–Jaimungal and the order-flow-imbalance literature address it.
+   loss. The order-flow-imbalance literature and the Cartea–Jaimungal–Penalva treatment address it; see
+`../../market-making-microstructure/order-flow-imbalance-price-impact/`.
 2. **Terminal time `T` is artificial.** The formulas depend on `T − t`, but a continuously operating
    market maker has no terminal time. Practitioners either roll `T` (treating it as a fixed lookahead
    window) or use the infinite-horizon variant the paper sketches. Simply letting `T − t → 0` at the

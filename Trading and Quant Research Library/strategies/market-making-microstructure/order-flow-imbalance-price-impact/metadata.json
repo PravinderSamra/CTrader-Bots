@@ -1,0 +1,60 @@
+{
+  "id": "order-flow-imbalance-price-impact",
+  "title": "Order Flow Imbalance & Price Impact (Cont, Kukanov & Stoikov)",
+  "slug": "order-flow-imbalance-price-impact",
+  "strategy_type": "market-making-microstructure",
+  "asset_classes": ["equities", "futures", "crypto"],
+  "complexity_score": 6,
+  "execution_type": "Quant",
+  "requires_machine_learning": false,
+  "evidence_grade": "verified-primary",
+  "holding_period": "seconds; a quote-adjustment and impact-measurement input rather than a standalone holding-period strategy",
+  "signal_frequency": "per quote update; aggregated to 10-second intervals in the source",
+  "directionality": "two-sided-quoting",
+  "data_requirements": [
+    "level-1 quote data with best bid/ask price and size (TAQ or equivalent)",
+    "timestamped quote updates at sub-second resolution",
+    "trade prints with buy/sell classification, only for the trade-imbalance comparison",
+    "per-instrument re-estimation - beta does not transfer across instruments or timescales"
+  ],
+  "capacity": "low",
+  "decay_status": "intact",
+  "sources": [
+    {
+      "type": "paper",
+      "citation": "Cont, R., Kukanov, A., & Stoikov, S. The price impact of order book events. arXiv:1011.6402 (March 2011 draft); published in Journal of Financial Econometrics 12(1), 47-88 (2014).",
+      "url": "https://arxiv.org/pdf/1011.6402",
+      "verified_in_session": true
+    },
+    {
+      "type": "paper",
+      "citation": "Kyle, A. S. (1985). Continuous Auctions and Insider Trading. Econometrica, 53(6), 1315-1335. (The theoretical ancestor of linear price impact.)",
+      "url": "https://www.jstor.org/stable/1913210",
+      "verified_in_session": false
+    },
+    {
+      "type": "paper",
+      "citation": "Almgren, R., & Chriss, N. (2000). Optimal execution of portfolio transactions. Journal of Risk, 3(2), 5-39.",
+      "url": "https://www.smallake.kr/wp-content/uploads/2016/03/optliq.pdf",
+      "verified_in_session": false
+    }
+  ],
+  "related_strategies": [
+    "avellaneda-stoikov-optimal-quoting",
+    "gueant-lehalle-fernandez-tapia-bounded-inventory",
+    "guilbaud-pham-limit-and-market-orders"
+  ],
+  "tags": [
+    "order-flow-imbalance",
+    "price-impact",
+    "market-microstructure",
+    "adverse-selection",
+    "limit-order-book",
+    "level-1-data",
+    "linear-impact",
+    "square-root-law",
+    "market-depth",
+    "wave-2-depth"
+  ],
+  "ingested_at": "2026-08-19"
+}

@@ -1,0 +1,60 @@
+{
+  "id": "ornstein-uhlenbeck-optimal-bands",
+  "title": "Optimal Mean-Reversion Bands — OU Double Stopping (Leung & Li)",
+  "slug": "ornstein-uhlenbeck-optimal-bands",
+  "strategy_type": "statistical-arbitrage",
+  "asset_classes": ["equities", "etfs", "commodities", "fx"],
+  "complexity_score": 7,
+  "execution_type": "Quant",
+  "requires_machine_learning": false,
+  "evidence_grade": "verified-primary",
+  "holding_period": "days to weeks; determined by the fitted mean-reversion speed",
+  "signal_frequency": "daily; entry and exit are threshold crossings",
+  "directionality": "market-neutral",
+  "data_requirements": [
+    "daily price history for both legs of the spread",
+    "sufficient sample to estimate the OU mean-reversion speed - the binding constraint",
+    "transaction cost estimate per round trip",
+    "an explicit subjective discount rate"
+  ],
+  "capacity": "medium",
+  "decay_status": "intact",
+  "sources": [
+    {
+      "type": "paper",
+      "citation": "Leung, T., & Li, X. Optimal Mean Reversion Trading with Transaction Costs and Stop-Loss Exit. arXiv:1411.5062v3 (14 May 2015); published in International Journal of Theoretical and Applied Finance 18(3), 2015.",
+      "url": "https://arxiv.org/pdf/1411.5062",
+      "verified_in_session": true
+    },
+    {
+      "type": "book",
+      "citation": "Leung, T., & Li, X. (2016). Optimal Mean Reversion Trading: Mathematical Analysis and Practical Applications. World Scientific.",
+      "url": "https://www.worldscientific.com/worldscibooks/10.1142/9839",
+      "verified_in_session": false
+    },
+    {
+      "type": "paper",
+      "citation": "Elliott, R. J., van der Hoek, J., & Malcolm, W. P. (2005). Pairs trading. Quantitative Finance, 5(3), 271-276.",
+      "url": "https://www.tandfonline.com/doi/abs/10.1080/14697680500149370",
+      "verified_in_session": false
+    }
+  ],
+  "related_strategies": [
+    "pairs-trading-distance-method",
+    "factor-residual-statistical-arbitrage",
+    "cointegration-pairs-engle-granger"
+  ],
+  "tags": [
+    "mean-reversion",
+    "ornstein-uhlenbeck",
+    "optimal-stopping",
+    "double-stopping",
+    "stop-loss",
+    "transaction-costs",
+    "entry-exit-thresholds",
+    "free-boundary",
+    "convergence",
+    "wave-2-depth"
+  ],
+  "ingested_at": "2026-08-19"
+}

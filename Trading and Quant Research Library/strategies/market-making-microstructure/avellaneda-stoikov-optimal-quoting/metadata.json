@@ -3,7 +3,12 @@
   "title": "Avellaneda–Stoikov Optimal Market Making",
   "slug": "avellaneda-stoikov-optimal-quoting",
   "strategy_type": "market-making-microstructure",
-  "asset_classes": ["equities", "futures", "crypto", "fx"],
+  "asset_classes": [
+    "equities",
+    "futures",
+    "crypto",
+    "fx"
+  ],
   "complexity_score": 8,
   "execution_type": "Quant",
   "requires_machine_learning": false,
@@ -41,15 +46,15 @@
     },
     {
       "type": "paper",
-      "citation": "Cartea, Á., & Jaimungal, S. Optimal High Frequency Trading with limit and market orders. (Adds order-flow signals and adverse selection.)",
+      "citation": "Guilbaud, F., & Pham, H. (2011). Optimal high frequency trading with limit and market orders. arXiv:1106.5040. (Adds market orders and a discrete tick grid.)",
       "url": "https://arxiv.org/pdf/1106.5040",
       "verified_in_session": false
     }
   ],
   "related_strategies": [
     "gueant-lehalle-fernandez-tapia-bounded-inventory",
-    "cartea-jaimungal-order-flow-market-making",
-    "order-flow-imbalance-signal",
+    "guilbaud-pham-limit-and-market-orders",
+    "order-flow-imbalance-price-impact",
     "kyle-lambda-price-impact"
   ],
   "tags": [

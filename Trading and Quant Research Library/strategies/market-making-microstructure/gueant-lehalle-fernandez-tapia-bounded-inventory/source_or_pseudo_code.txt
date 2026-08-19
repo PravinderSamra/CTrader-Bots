@@ -1,0 +1,288 @@
+================================================================================
+BOUNDED-INVENTORY MARKET MAKING
+Gueant, Lehalle & Fernandez-Tapia (2013), arXiv:1105.3115
+================================================================================
+
+PART A - Pseudo-code for the quoting rule
+PART B - Python reference implementation (closed form + exact ODE solution)
+PART C - Verified output and structural checks
+PART D - Production notes
+
+Prerequisite: ../avellaneda-stoikov-optimal-quoting/ - this model is its
+bounded-inventory, exactly-solved, stationary successor.
+
+--------------------------------------------------------------------------------
+PART A - PSEUDO-CODE
+--------------------------------------------------------------------------------
+
+PARAMETERS
+    sigma   # reference price volatility        dS = sigma dW
+    gamma   # CARA risk aversion
+    k       # order-arrival decay   lambda(delta) = A exp(-k delta)
+    A       # order-arrival base intensity
+    Q       # HARD inventory bound: q in {-Q, ..., Q}
+
+DERIVED (the whole problem reduces to these two)
+    alpha = (k/2) * gamma * sigma^2                    # inventory risk
+    eta   = A * (1 + gamma/k)^(-(1 + k/gamma))         # order-flow value
+
+PROCEDURE quote(inventory q):
+    # NOTE: no time argument. These are the T -> infinity stationary quotes.
+    # That is the point: a continuously operating market maker has no terminal
+    # time, and the parent model's (T - t) terms decay to zero at exactly the
+    # wrong moment.
+
+    base = (1/gamma) * ln(1 + gamma/k)          # identical to A-S, per side
+    skew = sqrt( (sigma^2 * gamma) / (2*k*A) * (1 + gamma/k)^(1 + k/gamma) )
+    # equivalently: skew = sqrt(alpha/eta) / k
+
+    delta_bid = base + ((2q + 1) / 2) * skew
+    delta_ask = base - ((2q - 1) / 2) * skew
+
+    # Enforce the inventory bound by refusing to add to a maxed-out position.
+    IF q >=  Q:  withdraw the BID   (cannot buy more)
+    IF q <= -Q:  withdraw the ASK   (cannot sell more)
+
+    bid = S - delta_bid
+    ask = S + delta_ask
+    RETURN bid, ask
+
+    # PROPERTIES (verified numerically in PART C):
+    #   spread = delta_bid + delta_ask = 2*base + skew, INDEPENDENT OF q
+    #   delta_bid(q) == delta_ask(-q)                  perfect antisymmetry
+    #   long inventory (q>0) -> wide bid, tight ask    -> market maker sells
+
+--------------------------------------------------------------------------------
+PART B - PYTHON REFERENCE IMPLEMENTATION
+--------------------------------------------------------------------------------
+
+"""
+Gueant-Lehalle-Fernandez-Tapia bounded-inventory market making.
+
+Dependencies: numpy (scipy optional, for the exact ODE solution)
+
+Two implementations:
+  * glft_quotes()      - the closed-form asymptotic approximation (Prop. 3).
+                         This is what you run in production.
+  * exact_quotes()     - the exact solution via the linear ODE system, using
+                         the eigenvector of the smallest eigenvalue of M
+                         (Theorem 2). Use it to check how good the closed form
+                         is AT YOUR OWN PARAMETERS before trusting it.
+"""
+
+import numpy as np
+from dataclasses import dataclass
+
+
+@dataclass
+class GLFTParams:
+    sigma: float = 0.3      # reference price volatility
+    gamma: float = 0.05     # CARA risk aversion
+    k: float = 1.5          # order-arrival decay
+    A: float = 0.9          # order-arrival base intensity
+    Q: int = 10             # hard inventory bound
+
+
+def alpha_eta(p: GLFTParams):
+    """The two effective parameters the whole problem reduces to."""
+    alpha = (p.k / 2.0) * p.gamma * p.sigma ** 2
+    eta = p.A * (1.0 + p.gamma / p.k) ** (-(1.0 + p.k / p.gamma))
+    return alpha, eta
+
+
+def glft_quotes(q: float, p: GLFTParams):
+    """Closed-form asymptotic optimal quote distances (Proposition 3).
+
+    Returns (delta_bid, delta_ask, spread).
+
+    delta_* are distances FROM THE MID, so:
+        bid = S - delta_bid,  ask = S + delta_ask
+    """
+    base = (1.0 / p.gamma) * np.log(1.0 + p.gamma / p.k)
+    skew = np.sqrt(
+        (p.sigma ** 2 * p.gamma) / (2.0 * p.k * p.A)
+        * (1.0 + p.gamma / p.k) ** (1.0 + p.k / p.gamma)
+    )
+    delta_bid = base + ((2.0 * q + 1.0) / 2.0) * skew
+    delta_ask = base - ((2.0 * q - 1.0) / 2.0) * skew
+    return float(delta_bid), float(delta_ask), float(delta_bid + delta_ask)
+
+
+def build_M(p: GLFTParams) -> np.ndarray:
+    """The tridiagonal matrix M of the linear ODE system.
+
+    The quadratic form the paper minimises is
+        sum_q alpha*q^2*f_q^2  +  eta * sum (f_{q+1} - f_q)^2
+                               +  eta*f_Q^2 + eta*f_{-Q}^2
+    whose matrix is tridiagonal with alpha*q^2 + 2*eta on the diagonal and
+    -eta off-diagonal. The boundary terms make the corners 2*eta as well.
+    """
+    alpha, eta = alpha_eta(p)
+    n = 2 * p.Q + 1
+    qs = np.arange(-p.Q, p.Q + 1, dtype=float)
+
+    M = np.zeros((n, n))
+    np.fill_diagonal(M, alpha * qs ** 2 + 2.0 * eta)
+    idx = np.arange(n - 1)
+    M[idx, idx + 1] = -eta
+    M[idx + 1, idx] = -eta
+    return M
+
+
+def exact_quotes(p: GLFTParams):
+    """Exact asymptotic quotes via the eigenvector f0 (Theorem 2).
+
+    f0 is the eigenvector of the SMALLEST eigenvalue of M. Then
+
+        delta_bid(q) = (1/gamma) ln(1 + gamma/k) + (1/k) ln( f0_q / f0_{q+1} )
+        delta_ask(q) = (1/gamma) ln(1 + gamma/k) + (1/k) ln( f0_q / f0_{q-1} )
+
+    Returns a dict {q: (delta_bid, delta_ask, spread)} for interior q.
+    Quotes at the boundaries are undefined (there is no f0_{Q+1}) - which is
+    correct: at |q| = Q the corresponding side is withdrawn anyway.
+    """
+    M = build_M(p)
+    vals, vecs = np.linalg.eigh(M)
+    f0 = np.abs(vecs[:, 0])          # smallest eigenvalue; sign is arbitrary
+
+    base = (1.0 / p.gamma) * np.log(1.0 + p.gamma / p.k)
+    out = {}
+    for i, q in enumerate(range(-p.Q, p.Q + 1)):
+        if i == 0 or i == len(f0) - 1:
+            continue                 # boundary: that side is withdrawn
+        db = base + (1.0 / p.k) * np.log(f0[i] / f0[i + 1])
+        da = base + (1.0 / p.k) * np.log(f0[i] / f0[i - 1])
+        out[q] = (float(db), float(da), float(db + da))
+    return out
+
+
+def quote_prices(mid: float, q: float, p: GLFTParams):
+    """Actual bid/ask prices, with the inventory bound enforced.
+
+    Returns (bid, ask); None on a side means WITHDRAW that quote because
+    filling it would breach the inventory bound.
+    """
+    db, da, _ = glft_quotes(q, p)
+    bid = None if q >= p.Q else mid - db
+    ask = None if q <= -p.Q else mid + da
+    return bid, ask
+
+
+def compare_to_avellaneda_stoikov(p: GLFTParams, T_minus_t: float):
+    """Side-by-side with the parent model at the same parameters.
+
+    A-S:   spread = gamma*sigma^2*(T-t) + (2/gamma)*ln(1 + gamma/k)
+           r      = S - q*gamma*sigma^2*(T-t)
+    GLFT:  spread = 2*base + skew                     [no time dependence]
+
+    The (2/gamma)*ln(1+gamma/k) term is IDENTICAL in both - the models agree
+    exactly on the liquidity component and differ only in the inventory term.
+    Verified in-session: both evaluate to 1.3116 at the default parameters.
+    """
+    as_base = (2.0 / p.gamma) * np.log(1.0 + p.gamma / p.k)
+    as_inventory = p.gamma * p.sigma ** 2 * T_minus_t
+    _, _, glft_spread = glft_quotes(0.0, p)
+    return {
+        "as_base_spread": float(as_base),
+        "as_inventory_term": float(as_inventory),
+        "as_total_spread": float(as_base + as_inventory),
+        "glft_total_spread": float(glft_spread),
+        "glft_2x_base": float(as_base),   # identical by construction
+        "note": "A-S inventory term -> 0 as t -> T; GLFT's is stationary.",
+    }
+
+
+--------------------------------------------------------------------------------
+PART C - VERIFIED OUTPUT AND STRUCTURAL CHECKS
+--------------------------------------------------------------------------------
+
+# Computed in-session with sigma=0.3, gamma=0.05, k=1.5, A=0.9:
+#
+#   base half-spread term            = 0.6558
+#   skew unit                        = 0.0679
+#   cross-check sqrt(alpha/eta)/k    = 0.0679     (alpha=0.003375, eta=0.325678)
+#
+#      q   delta_b   delta_a    spread
+#     -3    0.4861    0.8933    1.3795
+#     -2    0.5540    0.8255    1.3795
+#     -1    0.6219    0.7576    1.3795
+#      0    0.6897    0.6897    1.3795
+#      1    0.7576    0.6219    1.3795
+#      2    0.8255    0.5540    1.3795
+#      3    0.8933    0.4861    1.3795
+#
+#   A-S base spread (2/gamma)ln(1+gamma/k) = 1.3116
+#   GLFT 2*base                            = 1.3116     <- identical
+#
+# CHECK 1 - CONSTANT SPREAD. Across q in [-5,5] there must be exactly ONE
+#   distinct spread value. Inventory moves the CENTRE of the quotes, never the
+#   width. If your spread varies with q, the skew term is being applied to
+#   both sides with the same sign.
+#
+# CHECK 2 - ANTISYMMETRY. delta_bid(q) == delta_ask(-q) for all q. Assert it.
+#
+# CHECK 3 - SKEW DIRECTION. At q > 0 the BID must be FARTHER from the mid and
+#   the ASK CLOSER. Getting this backwards makes the quoter accumulate
+#   inventory instead of shedding it - a fast route to the position limit.
+#
+# CHECK 4 - CROSS-MODEL AGREEMENT. 2*base must equal the A-S base spread
+#   (2/gamma)ln(1+gamma/k) exactly. If not, the base term is wrong.
+#
+# CHECK 5 - EXACT vs CLOSED FORM. Run exact_quotes() and glft_quotes() at YOUR
+#   parameters and compare. The closed form is an approximation of an
+#   asymptotic limit (two layers of approximation). Verified in-session at the
+#   parameters above with Q=10:
+#
+#        q   exact db  approx db      diff   exact sp  approx sp
+#       -3     0.4833     0.4861   -0.0029     1.3799     1.3795
+#        0     0.6904     0.6897   +0.0007     1.3808     1.3795
+#       +3     0.8967     0.8933   +0.0033     1.3799     1.3795
+#
+#   Max quote error ~0.0033 (about 0.5%), growing with |q| as expected from a
+#   Gaussian approximation to a discrete eigenproblem.
+#
+#   IMPORTANT NUANCE: the EXACT spread is NOT constant in q - it peaks at
+#   1.3808 when flat and falls to 1.3799 at q = +/-3. The perfectly flat
+#   spread is an artefact of the CLOSED FORM, not a property of the exact
+#   solution. The true policy tightens slightly as inventory grows, which is
+#   economically sensible. The effect is tiny (<0.1% here) and the
+#   approximation remains usable - but do not treat "spread is independent of
+#   inventory" as an exact result.
+
+--------------------------------------------------------------------------------
+PART D - PRODUCTION NOTES
+--------------------------------------------------------------------------------
+
+1.  THIS REPLACES THE (T-t) TERMS. The reason to use this model over vanilla
+    Avellaneda-Stoikov in production is that the quotes are STATIONARY. A
+    continuously operating quoter has no terminal time; letting (T-t) -> 0
+    collapses the spread and kills the inventory skew at exactly the moment
+    the book should be flattening.
+
+2.  TUNE sqrt(alpha/eta), NOT FOUR PARAMETERS. The entire inventory response
+    is governed by that one ratio. alpha rises with k, gamma and sigma^2;
+    eta rises with A. Increasing it makes the quoter skew harder and flatten
+    faster.
+
+3.  ENFORCE Q BY WITHDRAWING, NOT BY WIDENING. At |q| = Q, pull the quote on
+    the side that would breach the bound. Merely widening it still permits a
+    fill and leaves the position outside the model's state space.
+
+4.  STILL NO ADVERSE SELECTION. Order arrivals are exogenous and
+    uninformative: a fill carries no signal. This is the dominant real-world
+    loss channel and neither this paper nor its parent addresses it. Add an
+    order-flow-imbalance skew on top - see
+    ../order-flow-imbalance-price-impact/ - before running this live.
+
+5.  CALIBRATE A AND k, AND RE-CALIBRATE OFTEN. The paper takes them as given.
+    Estimate them by regressing ln(fill rate) on quote distance
+    (slope = -k, intercept = ln A), separately per side, per instrument, per
+    volatility regime. Stale values mis-size the base spread directly.
+
+6.  ROUND TO THE TICK, AND THINK ABOUT THE QUEUE. Quotes here are continuous
+    reals. In a tight-tick book, fill probability is dominated by queue
+    position rather than by a smooth intensity function. See
+    ../guilbaud-pham-limit-and-market-orders/.
+
+7.  Q IS A RISK DECISION, NOT A MODEL OUTPUT. The model optimises GIVEN the
+    bound. Choosing Q from capital, margin and stress-loss limits is your job.

@@ -1,0 +1,61 @@
+{
+  "id": "gueant-lehalle-fernandez-tapia-bounded-inventory",
+  "title": "Bounded-Inventory Market Making (Guéant, Lehalle & Fernandez-Tapia)",
+  "slug": "gueant-lehalle-fernandez-tapia-bounded-inventory",
+  "strategy_type": "market-making-microstructure",
+  "asset_classes": ["equities", "futures", "crypto", "fx"],
+  "complexity_score": 8,
+  "execution_type": "Quant",
+  "requires_machine_learning": false,
+  "evidence_grade": "verified-primary",
+  "holding_period": "seconds to minutes; continuous two-sided quoting with a hard inventory bound",
+  "signal_frequency": "continuous / per-tick requoting",
+  "directionality": "two-sided-quoting",
+  "data_requirements": [
+    "level-1 or level-2 limit order book data",
+    "individual fill records with quote distance, for calibrating A and k",
+    "high-frequency realised volatility estimate for sigma",
+    "capital and margin limits to set the inventory bound Q",
+    "exchange fee and rebate schedule"
+  ],
+  "capacity": "low",
+  "decay_status": "intact",
+  "sources": [
+    {
+      "type": "paper",
+      "citation": "Guéant, O., Lehalle, C.-A., & Fernandez-Tapia, J. Dealing with the Inventory Risk: A solution to the market making problem. arXiv:1105.3115v5 (July 2012 draft); published in Mathematics and Financial Economics 7(4), 477-507 (2013).",
+      "url": "https://arxiv.org/pdf/1105.3115",
+      "verified_in_session": true
+    },
+    {
+      "type": "paper",
+      "citation": "Avellaneda, M., & Stoikov, S. (2008). High-frequency trading in a limit order book. Quantitative Finance, 8(3), 217-224. (The parent model.)",
+      "url": "https://www.math.nyu.edu/~avellane/HighFrequencyTrading.pdf",
+      "verified_in_session": true
+    },
+    {
+      "type": "paper",
+      "citation": "Ho, T., & Stoll, H. R. (1981). Optimal dealer pricing under transactions and return uncertainty. Journal of Financial Economics, 9(1), 47-73.",
+      "url": "https://www.sciencedirect.com/science/article/abs/pii/0304405X81900201",
+      "verified_in_session": false
+    }
+  ],
+  "related_strategies": [
+    "avellaneda-stoikov-optimal-quoting",
+    "guilbaud-pham-limit-and-market-orders",
+    "order-flow-imbalance-price-impact"
+  ],
+  "tags": [
+    "market-making",
+    "market-microstructure",
+    "stochastic-control",
+    "inventory-risk",
+    "inventory-constraint",
+    "closed-form",
+    "stationary-quotes",
+    "hjb",
+    "limit-order-book",
+    "wave-2-depth"
+  ],
+  "ingested_at": "2026-08-19"
+}

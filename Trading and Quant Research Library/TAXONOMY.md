@@ -46,10 +46,18 @@ Ingested so far:
 - ✅ **Factor-Residual Statistical Arbitrage** (Avellaneda & Lee, 2009) — pairs with the pairs-trading
   anchor; the modern PCA/ETF generalisation with an explicit mean-reversion-speed filter.
 
-Still queued for Wave 2: cointegration pairs (Engle–Granger / Johansen selection), Ornstein–Uhlenbeck
-optimal stopping bands, dispersion trading, volatility carry and term structure, Kyle's lambda and
-PIN, order-flow imbalance, queue-position models, Guéant–Lehalle–Fernandez-Tapia bounded-inventory
-market making, Cartea–Jaimungal adverse-selection quoting.
+- ✅ **Optimal Mean-Reversion Bands** (Leung & Li, 2015) — derives the entry/exit thresholds both
+  stat-arb parents assume; stop-loss and take-profit are shown to be jointly determined.
+- ✅ **Bounded-Inventory Market Making** (Guéant, Lehalle & Fernandez-Tapia, 2013) — exact solution
+  under inventory limits, with stationary quotes that fix A–S's terminal-time pathology.
+- ✅ **Limit *and* Market Orders** (Guilbaud & Pham, 2013) — discrete tick, queue priority, and a
+  market-order impulse control; ships its own calibration procedures.
+- ✅ **Order Flow Imbalance & Price Impact** (Cont, Kukanov & Stoikov, 2014) — the adverse-selection
+  measurement every market-making model in the library lacks.
+
+Still queued for Wave 2: cointegration pairs (Engle–Granger / Johansen selection), dispersion
+trading, volatility carry and term structure, Kyle's lambda and PIN, queue-position models, and the
+Cartea–Jaimungal–Penalva adverse-selection treatment.
 
 **Wave 3 — carry, term structure, and event/flow.**
 Commodity roll yield and backwardation, FX carry and the forward premium puzzle, bond term
