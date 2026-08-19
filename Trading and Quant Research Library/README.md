@@ -29,14 +29,38 @@ Trading and Quant Research Library/
 
 ## Ingested strategies
 
-| Category | Strategy | Status |
-|---|---|---|
-| Statistical Arbitrage | [Pairs Trading — Distance Method](strategies/statistical-arbitrage/pairs-trading-distance-method/) | Verified |
-| Trend Following | [Time Series Momentum (TSMOM)](strategies/trend-following/time-series-momentum-futures/) | Verified |
-| Market Making / Microstructure | [Avellaneda–Stoikov Optimal Quoting](strategies/market-making-microstructure/avellaneda-stoikov-optimal-quoting/) | Verified |
+**Wave 1 — one anchor per mechanism family**
 
-"Verified" means every quoted statistic in the entry was read out of the primary source document,
-not recalled or paraphrased from secondary commentary. See `INGESTION_STANDARD.md`.
+| Category | Strategy | Decay | Status |
+|---|---|---|---|
+| Statistical Arbitrage | [Pairs Trading — Distance Method](strategies/statistical-arbitrage/pairs-trading-distance-method/) | substantially-decayed | Verified |
+| Trend Following | [Time Series Momentum (TSMOM)](strategies/trend-following/time-series-momentum-futures/) | partially-decayed | Verified |
+| Market Making / Microstructure | [Avellaneda–Stoikov Optimal Quoting](strategies/market-making-microstructure/avellaneda-stoikov-optimal-quoting/) | intact | Verified + reproduced |
+| Volatility & Variance | [Variance Risk Premium Harvesting](strategies/volatility-and-variance/variance-risk-premium-harvesting/) | partially-decayed | Verified + reproduced |
+| Cross-Sectional Factors | [Cross-Sectional Momentum](strategies/cross-sectional-factors/cross-sectional-momentum-jegadeesh-titman/) | partially-decayed | Verified |
+
+**Wave 2 — depth entries that pair with a Wave 1 anchor**
+
+| Category | Strategy | Pairs with | Status |
+|---|---|---|---|
+| Cross-Sectional Factors | [Momentum Crashes & Dynamic Weighting](strategies/cross-sectional-factors/momentum-crashes-daniel-moskowitz/) | Cross-Sectional Momentum | Verified |
+| Statistical Arbitrage | [Factor-Residual Stat Arb (PCA & ETF)](strategies/statistical-arbitrage/factor-residual-statistical-arbitrage/) | Pairs Trading | Verified + reproduced |
+
+"Verified" means every quoted statistic was read out of the primary source document, not recalled or
+paraphrased from secondary commentary. "Reproduced" means the reference implementation was executed
+and its output checked against the paper or against a known ground truth. See
+`INGESTION_STANDARD.md`.
+
+### Entries that must be read together
+
+Two anchors are incomplete on their own, and the library says so explicitly rather than leaving a
+reader to find out the hard way:
+
+- **Cross-Sectional Momentum → Momentum Crashes.** The 1965–1989 sample contains no crash on the
+  scale the strategy can produce. The companion entry supplies the missing risk picture (loser decile
+  +232% in two months, 1932).
+- **Pairs Trading → Factor-Residual Stat Arb.** The distance method's key weakness is that it cannot
+  filter on mean-reversion speed. The companion entry is what that filter looks like implemented.
 
 ## Validating the library
 

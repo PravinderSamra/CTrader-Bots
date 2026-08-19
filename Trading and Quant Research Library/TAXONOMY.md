@@ -29,22 +29,27 @@ refinement in the family cites.
 | 1 | Statistical Arbitrage & Relative Value | Temporary mispricing between close substitutes; convergence | Gatev, Goetzmann & Rouwenhorst (2006) — pairs trading distance method |
 | 2 | Trend Following & Time-Series Momentum | Under-reaction then delayed over-reaction to information | Moskowitz, Ooi & Pedersen (2012) — TSMOM |
 | 3 | Market Making & Order-Flow Microstructure | Compensation for providing liquidity, priced against inventory and adverse-selection risk | Avellaneda & Stoikov (2008) — optimal quoting |
-| 4 | Volatility & Variance Risk Premium | Implied variance systematically exceeds realised variance | Carr & Wu (2009) — variance risk premia *(queued)* |
-| 5 | Cross-Sectional Equity Factors | Dispersion in expected returns across a cross-section | Jegadeesh & Titman (1993) — cross-sectional momentum *(queued)* |
+| 4 | Volatility & Variance Risk Premium | Implied variance systematically exceeds realised variance | Carr & Wu (2009) — variance risk premia ✅ |
+| 5 | Cross-Sectional Equity Factors | Dispersion in expected returns across a cross-section | Jegadeesh & Titman (1993) — cross-sectional momentum ✅ |
 
-Categories 1–3 are ingested in this session as the format-compliance demonstration. Categories 4
-and 5 are scoped and queued, pending confirmation to proceed.
+**Wave 1 complete.** All five mechanism families have a verified anchor entry.
 
 ## Wave roadmap (proposed, pending confirmation)
 
 Each wave deepens the categories rather than only widening them, so the library builds families of
 related work rather than a scatter of disconnected papers.
 
-**Wave 2 — complete the Wave 1 families (depth).**
-Cointegration pairs (Engle–Granger / Johansen selection), Ornstein–Uhlenbeck optimal stopping
-bands, cross-sectional momentum with the 12-2 convention, momentum crashes (Daniel & Moskowitz),
-variance risk premium, dispersion trading, volatility carry, Kyle's lambda and PIN, order-flow
-imbalance, queue-position models.
+**Wave 2 — complete the Wave 1 families (depth).** *In progress.*
+Ingested so far:
+- ✅ **Momentum Crashes & Dynamic Weighting** (Daniel & Moskowitz, 2016) — pairs with the
+  cross-sectional momentum anchor; supplies the crash-risk picture that anchor's sample cannot show.
+- ✅ **Factor-Residual Statistical Arbitrage** (Avellaneda & Lee, 2009) — pairs with the pairs-trading
+  anchor; the modern PCA/ETF generalisation with an explicit mean-reversion-speed filter.
+
+Still queued for Wave 2: cointegration pairs (Engle–Granger / Johansen selection), Ornstein–Uhlenbeck
+optimal stopping bands, dispersion trading, volatility carry and term structure, Kyle's lambda and
+PIN, order-flow imbalance, queue-position models, Guéant–Lehalle–Fernandez-Tapia bounded-inventory
+market making, Cartea–Jaimungal adverse-selection quoting.
 
 **Wave 3 — carry, term structure, and event/flow.**
 Commodity roll yield and backwardation, FX carry and the forward premium puzzle, bond term

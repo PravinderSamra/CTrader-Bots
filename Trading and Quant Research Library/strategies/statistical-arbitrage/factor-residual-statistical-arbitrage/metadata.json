@@ -1,0 +1,64 @@
+{
+  "id": "factor-residual-statistical-arbitrage",
+  "title": "Factor-Residual Statistical Arbitrage (Avellaneda & Lee)",
+  "slug": "factor-residual-statistical-arbitrage",
+  "strategy_type": "statistical-arbitrage",
+  "asset_classes": ["equities", "etfs"],
+  "complexity_score": 7,
+  "execution_type": "Quant",
+  "requires_machine_learning": false,
+  "holding_period": "days (mean-reversion time filtered to under 30 days)",
+  "signal_frequency": "daily rebalance",
+  "directionality": "market-neutral",
+  "evidence_grade": "verified-primary",
+  "data_requirements": [
+    "daily point-in-time equity prices and returns for a broad universe",
+    "daily trading volume (for the volume-time signal enhancement)",
+    "sector ETF price history and a stock-to-sector mapping",
+    "point-in-time market capitalisation for the $1bn universe screen",
+    "short-borrow availability and financing rates"
+  ],
+  "capacity": "medium",
+  "decay_status": "substantially-decayed",
+  "sources": [
+    {
+      "type": "paper",
+      "citation": "Avellaneda, M., & Lee, J.-H. Statistical Arbitrage in the U.S. Equities Market. Working paper, June 15 2009; published as Quantitative Finance 10(7), 761-782 (2010).",
+      "url": "https://www.math.nyu.edu/~avellane/AvellanedaLeeStatArb20090616.pdf",
+      "verified_in_session": true
+    },
+    {
+      "type": "paper",
+      "citation": "Avellaneda, M., & Lee, J.-H. (2010). Statistical arbitrage in the US equities market. Quantitative Finance, 10(7), 761-782. (Published version, not consulted.)",
+      "url": "https://www.tandfonline.com/doi/abs/10.1080/14697680903124632",
+      "verified_in_session": false
+    },
+    {
+      "type": "paper",
+      "citation": "Khandani, A. E., & Lo, A. W. (2007). What Happened to the Quants in August 2007? (The unwinding theory this paper validates.)",
+      "url": "https://www.tandfonline.com/doi/abs/10.21314/JOIS.2007.010",
+      "verified_in_session": false
+    }
+  ],
+  "related_strategies": [
+    "pairs-trading-distance-method",
+    "cointegration-pairs-engle-granger",
+    "ornstein-uhlenbeck-optimal-bands",
+    "avellaneda-stoikov-optimal-quoting"
+  ],
+  "tags": [
+    "statistical-arbitrage",
+    "mean-reversion",
+    "pca",
+    "eigenportfolio",
+    "ornstein-uhlenbeck",
+    "market-neutral",
+    "s-score",
+    "sector-etf",
+    "volume-time",
+    "crowding-risk",
+    "august-2007",
+    "wave-2-depth"
+  ],
+  "ingested_at": "2026-08-19"
+}

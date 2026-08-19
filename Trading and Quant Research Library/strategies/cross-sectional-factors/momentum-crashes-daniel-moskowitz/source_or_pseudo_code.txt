@@ -1,0 +1,301 @@
+================================================================================
+MOMENTUM CRASHES & DYNAMIC MOMENTUM WEIGHTING
+Daniel & Moskowitz (2016), Journal of Financial Economics 122(2), 221-247
+================================================================================
+
+PART A - Pseudo-code: crash diagnostics and the dynamic weight
+PART B - Python reference implementation
+PART C - Diagnostic checks a replication must pass
+PART D - Implementation warnings
+
+This entry is an OVERLAY on the base cross-sectional momentum strategy.
+Build ../cross-sectional-momentum-jegadeesh-titman/ first; this file consumes
+its WML return series.
+
+--------------------------------------------------------------------------------
+PART A - PSEUDO-CODE
+--------------------------------------------------------------------------------
+
+# ---- (1) THE EX ANTE BEAR MARKET INDICATOR ---------------------------------
+# The only state variable needed, and deliberately crude so it cannot be
+# tuned. Uses ONLY past information, so it is tradable.
+
+PROCEDURE bear_indicator(market_returns, month t):
+    cum_24m = cumulative CRSP VW index return over [t-24, t-1]
+    RETURN 1 if cum_24m < 0 else 0
+
+# ---- (2) THE OPTION-LIKE PAYOFF (measurement, not trading) -----------------
+# Henriksson-Merton up/down beta decomposition. The up-market indicator is
+# CONTEMPORANEOUS - it cannot be used to trade, only to demonstrate the
+# written-call payoff.
+
+PROCEDURE conditional_beta_regression(wml, mkt, bear):
+    up = 1 if mkt_t > 0 else 0            # contemporaneous
+    REGRESS  wml_t ~ a0 + a_B*bear + (b0 + b_B*bear + b_U*up + b_BU*bear*up) * mkt_t
+
+    # Expected result (Daniel & Moskowitz, bear markets):
+    #   up-market beta   = -1.51
+    #   down-market beta = -0.70
+    #   t-stat of difference = 4.5
+    # Outside bear markets: no reliable difference.
+
+# ---- (3) THE DYNAMIC WEIGHT ------------------------------------------------
+# Forecast BOTH conditional moments. Forecasting only the variance gives you
+# Barroso & Santa-Clara's constant-volatility strategy, which Daniel &
+# Moskowitz's dynamic strategy spans and beats.
+
+PROCEDURE dynamic_weight(month t):
+    mu_t    = forecast of the conditional MEAN of WML     # from bear/vol state
+    sigma_t = forecast of the conditional VOLATILITY      # from realised vol
+    w_t     = mu_t / (gamma * sigma_t^2)
+    RETURN w_t                    # may be negative in deep panic states
+
+--------------------------------------------------------------------------------
+PART B - PYTHON REFERENCE IMPLEMENTATION
+--------------------------------------------------------------------------------
+
+"""
+Momentum crash diagnostics and dynamic weighting.
+
+Dependencies: numpy, pandas, statsmodels
+Inputs:
+    wml : pd.Series, monthly winners-minus-losers returns (from the base
+          momentum entry, or the UMD factor from Ken French's library)
+    mkt : pd.Series, monthly market excess returns (CRSP VW index)
+Both indexed by month-end dates, aligned.
+"""
+
+import numpy as np
+import pandas as pd
+
+
+def bear_indicator(mkt: pd.Series, lookback_months: int = 24) -> pd.Series:
+    """Ex ante bear-market state: cumulative market return over the past 24
+    months is negative.
+
+    Returns a 0/1 series ALREADY LAGGED so that row t is usable at t. The
+    shift(1) is what keeps the indicator ex ante - without it the state
+    variable peeks at the current month and every downstream result is
+    invalid.
+    """
+    cum = (1.0 + mkt).rolling(lookback_months).apply(np.prod, raw=True) - 1.0
+    return (cum.shift(1) < 0).astype(float)
+
+
+def realised_volatility(wml: pd.Series, window: int = 6,
+                        annualise: bool = True) -> pd.Series:
+    """Trailing realised volatility of the momentum strategy itself.
+
+    Barroso & Santa-Clara use daily returns within a 6-month window; this
+    monthly version is the simplified form. Lagged for tradability.
+    """
+    vol = wml.rolling(window).std(ddof=1)
+    if annualise:
+        vol = vol * np.sqrt(12.0)
+    return vol.shift(1)
+
+
+def conditional_beta_regression(wml: pd.Series, mkt: pd.Series,
+                                bear: pd.Series) -> dict:
+    """Henriksson-Merton up/down beta decomposition, conditioned on the bear state.
+
+    Model:
+        wml = a0 + aB*bear
+              + (b0 + bB*bear + bU*up + bBU*bear*up) * mkt + e
+
+    Bear-market up-beta   = b0 + bB + bU + bBU
+    Bear-market down-beta = b0 + bB
+    The difference (bU + bBU) is the option-like asymmetry.
+
+    Daniel & Moskowitz report -1.51 vs -0.70 with t(difference) = 4.5.
+    """
+    import statsmodels.api as sm
+
+    df = pd.concat([wml, mkt, bear], axis=1).dropna()
+    df.columns = ["wml", "mkt", "bear"]
+    df["up"] = (df["mkt"] > 0).astype(float)     # CONTEMPORANEOUS by design
+
+    X = pd.DataFrame({
+        "const": 1.0,
+        "bear": df["bear"],
+        "mkt": df["mkt"],
+        "bear_mkt": df["bear"] * df["mkt"],
+        "up_mkt": df["up"] * df["mkt"],
+        "bear_up_mkt": df["bear"] * df["up"] * df["mkt"],
+    })
+    fit = sm.OLS(df["wml"].values, X.values).fit()
+    b = dict(zip(X.columns, fit.params))
+
+    bear_down = b["mkt"] + b["bear_mkt"]
+    bear_up = bear_down + b["up_mkt"] + b["bear_up_mkt"]
+    normal_down = b["mkt"]
+    normal_up = b["mkt"] + b["up_mkt"]
+
+    # t-stat on the bear-market asymmetry: the linear combination up_mkt + bear_up_mkt
+    c = np.zeros(len(X.columns))
+    c[list(X.columns).index("up_mkt")] = 1.0
+    c[list(X.columns).index("bear_up_mkt")] = 1.0
+    diff = float(c @ fit.params)
+    se = float(np.sqrt(c @ fit.cov_params() @ c))
+
+    return {
+        "bear_up_beta": float(bear_up),
+        "bear_down_beta": float(bear_down),
+        "normal_up_beta": float(normal_up),
+        "normal_down_beta": float(normal_down),
+        "bear_asymmetry": diff,
+        "t_bear_asymmetry": diff / se if se > 0 else np.nan,
+        "_benchmark": "Daniel & Moskowitz: bear up -1.51, bear down -0.70, t(diff) 4.5",
+    }
+
+
+def forecast_conditional_moments(wml: pd.Series, mkt: pd.Series,
+                                 vol_window: int = 6) -> pd.DataFrame:
+    """Forecast the conditional MEAN and VARIANCE of momentum returns.
+
+    Mean: regress wml on the ex ante bear indicator interacted with lagged
+          volatility - the paper's "panic state" specification in reduced form.
+    Var:  trailing realised variance (highly persistent, easy to forecast).
+
+    Both forecasts use only lagged information.
+    """
+    import statsmodels.api as sm
+
+    bear = bear_indicator(mkt)
+    vol = realised_volatility(wml, vol_window)
+
+    df = pd.concat([wml, bear, vol], axis=1).dropna()
+    df.columns = ["wml", "bear", "vol"]
+
+    X = pd.DataFrame({
+        "const": 1.0,
+        "bear": df["bear"],
+        "bear_vol": df["bear"] * df["vol"],
+    })
+    fit = sm.OLS(df["wml"].values, X.values).fit()
+
+    df["mu_hat"] = fit.predict(X.values)
+    df["sigma2_hat"] = df["vol"] ** 2
+    return df[["wml", "bear", "vol", "mu_hat", "sigma2_hat"]]
+
+
+def dynamic_momentum(wml: pd.Series, mkt: pd.Series, gamma: float = 1.0,
+                     vol_window: int = 6, max_weight: float = 4.0) -> pd.DataFrame:
+    """Daniel & Moskowitz dynamic momentum: w_t = mu_t / (gamma * sigma_t^2).
+
+    Returns a frame with the weight and the resulting strategy return.
+
+    max_weight caps leverage. The unconstrained rule can demand very large
+    positions in calm periods; the paper does not model whether that leverage
+    is fundable, and a live implementation must.
+    """
+    m = forecast_conditional_moments(wml, mkt, vol_window)
+    w = m["mu_hat"] / (gamma * m["sigma2_hat"].replace(0.0, np.nan))
+    m["weight"] = w.clip(-max_weight, max_weight)
+    m["dynamic_return"] = m["weight"] * m["wml"]
+    return m
+
+
+def constant_volatility_momentum(wml: pd.Series, target_vol: float = 0.12,
+                                 vol_window: int = 6,
+                                 max_weight: float = 4.0) -> pd.DataFrame:
+    """Barroso & Santa-Clara constant-volatility momentum: w_t ∝ 1/sigma_t.
+
+    The BENCHMARK the dynamic strategy must beat. Daniel & Moskowitz show
+    their strategy earns positive alpha against this AND spans its returns -
+    i.e. volatility scaling alone is not enough. Exploiting the forecastable
+    MEAN is where the additional return comes from.
+    """
+    vol = realised_volatility(wml, vol_window)
+    w = (target_vol / vol).clip(-max_weight, max_weight)
+    out = pd.concat([wml, vol, w], axis=1).dropna()
+    out.columns = ["wml", "vol", "weight"]
+    out["cvol_return"] = out["weight"] * out["wml"]
+    return out
+
+
+def performance(returns: pd.Series) -> dict:
+    """Standard metrics. Report SKEWNESS - it is the whole point of this entry."""
+    r = returns.dropna()
+    if r.empty:
+        return {}
+    ann_ret = r.mean() * 12.0
+    ann_vol = r.std(ddof=1) * np.sqrt(12.0)
+    equity = (1.0 + r).cumprod()
+    dd = equity / equity.cummax() - 1.0
+    return {
+        "annualised_return": float(ann_ret),
+        "annualised_volatility": float(ann_vol),
+        "sharpe_ratio": float(ann_ret / ann_vol) if ann_vol > 0 else np.nan,
+        "skewness": float(r.skew()),
+        "excess_kurtosis": float(r.kurtosis()),
+        "max_drawdown": float(dd.min()),
+        "worst_month": float(r.min()),
+        "worst_12m": float(r.rolling(12).sum().min()),
+    }
+
+
+--------------------------------------------------------------------------------
+PART C - DIAGNOSTIC CHECKS
+--------------------------------------------------------------------------------
+
+CHECK 1 - THE CRASHES MUST APPEAR
+    On a 1927-2013 US sample, the two worst WML months must be JULY and
+    AUGUST 1932, consecutive. The March-May 2009 window must also be
+    severely negative. If your worst months are elsewhere, the sample or the
+    decile construction is wrong.
+
+CHECK 2 - UNCONDITIONAL MOMENTS
+    WML Sharpe ~0.71 vs market ~0.40; WML beta ~-0.58; CAPM alpha ~22.3%/yr
+    with t ~8.5. Monthly market-model alpha ~1.852% with t ~7.3.
+
+CHECK 3 - NEGATIVE SKEWNESS
+    The WML return distribution must be NEGATIVELY skewed. Positive skew
+    means the loser leg is wrong (probably long/short inverted).
+
+CHECK 4 - THE OPTION-LIKE ASYMMETRY
+    conditional_beta_regression must show bear-market up-beta roughly double
+    the down-beta in magnitude (-1.51 vs -0.70), with t(difference) ~4.5, and
+    NO reliable difference outside bear markets. This is the paper's central
+    mechanism; if it is absent, nothing downstream is meaningful.
+
+CHECK 5 - DYNAMIC BEATS STATIC AND BEATS CONSTANT-VOL
+    dynamic_momentum should more than double the static Sharpe ratio, and
+    should produce positive alpha when regressed on constant_volatility_
+    momentum. If it only matches the constant-vol strategy, the conditional
+    MEAN forecast is not doing any work - check the bear indicator.
+
+--------------------------------------------------------------------------------
+PART D - IMPLEMENTATION WARNINGS
+--------------------------------------------------------------------------------
+
+1.  THE BEAR INDICATOR MUST BE LAGGED. bear_indicator() shifts by one month
+    deliberately. Using the contemporaneous 24-month window peeks at the
+    current month's return and produces a spectacular, fake result.
+
+2.  THE UP-MARKET INDICATOR IS NOT TRADABLE. It is contemporaneous by
+    construction and exists only to MEASURE the written-call payoff. Never
+    put it in a trading rule; doing so is pure look-ahead.
+
+3.  TWO CRASHES IS A THIN IDENTIFICATION BASE. The authors say so themselves
+    ("the paucity of momentum crashes"). The conditional-mean parameters are
+    effectively identified off 1932 and 2009. The cross-market and
+    cross-asset robustness is what carries the argument - not the US series.
+
+4.  LEVERAGE IS NOT FREE. The unconstrained weight can demand large positions
+    in calm periods. max_weight in the reference code is a placeholder for a
+    real funding constraint, not a solution to it.
+
+5.  HEDGING VOLATILITY DOES NOT FIX MOMENTUM. The paper tests buying S&P
+    variance swaps in bear markets and finds it does NOT restore
+    profitability. Do not reinvent this; the answer is position sizing, not
+    an options overlay.
+
+6.  IN-SAMPLE MOMENTS. The 1.19 Sharpe uses estimated conditional moments
+    over the full history. A live implementation estimates them on a rolling
+    basis, in real time, with the transition periods - the moments that
+    matter most - being the hardest to estimate. Expect materially less.
+
+7.  TURNOVER STACKS. Dynamic weighting adds trading on top of a base strategy
+    that already turns over 1/K of the book monthly, and whose short leg is
+    expensive to borrow. Neither paper models this.

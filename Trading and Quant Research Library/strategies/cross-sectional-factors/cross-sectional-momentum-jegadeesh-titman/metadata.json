@@ -1,0 +1,67 @@
+{
+  "id": "cross-sectional-momentum-jegadeesh-titman",
+  "title": "Cross-Sectional Momentum (Jegadeesh & Titman)",
+  "slug": "cross-sectional-momentum-jegadeesh-titman",
+  "strategy_type": "cross-sectional-factors",
+  "asset_classes": ["equities"],
+  "complexity_score": 3,
+  "execution_type": "Mechanical",
+  "requires_machine_learning": false,
+  "evidence_grade": "verified-primary",
+  "holding_period": "3-12 months (K); 6 months in the paper's headline configuration",
+  "signal_frequency": "monthly rebalance of 1/K of the book",
+  "directionality": "long-short",
+  "data_requirements": [
+    "point-in-time monthly equity returns (survivorship-bias free)",
+    "CRSP delisting returns - critical for the short leg",
+    "market capitalisation for weighting variants",
+    "short-borrow availability and fees for the loser decile"
+  ],
+  "capacity": "high",
+  "decay_status": "partially-decayed",
+  "sources": [
+    {
+      "type": "paper",
+      "citation": "Jegadeesh, N., & Titman, S. (1993). Returns to Buying Winners and Selling Losers: Implications for Stock Market Efficiency. The Journal of Finance, 48(1), 65-91.",
+      "url": "https://www.bauer.uh.edu/rsusmel/phd/jegadeesh-titman93.pdf",
+      "verified_in_session": true
+    },
+    {
+      "type": "paper",
+      "citation": "Jegadeesh, N., & Titman, S. (2001). Profitability of Momentum Strategies: An Evaluation of Alternative Explanations. The Journal of Finance, 56(2), 699-720. (Out-of-sample confirmation.)",
+      "url": "https://onlinelibrary.wiley.com/doi/10.1111/0022-1082.00342",
+      "verified_in_session": false
+    },
+    {
+      "type": "dataset",
+      "citation": "Kenneth R. French Data Library — the UMD (momentum) factor returns.",
+      "url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html",
+      "verified_in_session": false
+    },
+    {
+      "type": "paper",
+      "citation": "Asness, C., Moskowitz, T. J., & Pedersen, L. H. (2013). Value and Momentum Everywhere. The Journal of Finance, 68(3), 929-985.",
+      "url": "https://www.aqr.com/Insights/Research/Journal-Article/Value-and-Momentum-Everywhere",
+      "verified_in_session": false
+    }
+  ],
+  "related_strategies": [
+    "momentum-crashes-daniel-moskowitz",
+    "time-series-momentum-futures",
+    "short-term-reversal",
+    "residual-momentum"
+  ],
+  "tags": [
+    "momentum",
+    "cross-sectional",
+    "relative-strength",
+    "long-short",
+    "equity-factor",
+    "decile-sort",
+    "january-effect",
+    "underreaction",
+    "foundational",
+    "negatively-skewed"
+  ],
+  "ingested_at": "2026-08-19"
+}

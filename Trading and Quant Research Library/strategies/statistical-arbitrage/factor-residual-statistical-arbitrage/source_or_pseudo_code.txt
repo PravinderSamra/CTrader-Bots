@@ -1,0 +1,359 @@
+================================================================================
+FACTOR-RESIDUAL STATISTICAL ARBITRAGE (PCA & Sector-ETF)
+Avellaneda & Lee, "Statistical Arbitrage in the U.S. Equities Market" (2009/2010)
+================================================================================
+
+PART A - Pseudo-code for the full pipeline
+PART B - Python reference implementation
+PART C - Parameters as tested in the paper
+PART D - Replication pitfalls and production warnings
+
+--------------------------------------------------------------------------------
+PART A - PSEUDO-CODE
+--------------------------------------------------------------------------------
+
+CONSTANTS (paper values)
+    CORR_WINDOW   = 252      # trading days for the correlation matrix
+    OU_WINDOW     = 60       # business days for the OU fit  (T1 = 60/252)
+    KAPPA_MIN     = 8.4      # = 252/30; reversion time < half the OU window
+    S_BO = S_SO   = 1.25     # open thresholds
+    S_BC          = 0.75     # close short
+    S_SC          = 0.50     # close long
+    COST_PER_TRADE = 0.0005  # 5 bp; 10 bp round trip
+
+PROCEDURE daily_cycle(trade_date t):
+
+    # ---- STEP 1: build the factor set --------------------------------------
+    # OPTION A - PCA:
+    #   correlation matrix of daily returns over the previous CORR_WINDOW days,
+    #   computed on VOLATILITY-STANDARDISED returns; take the top m
+    #   eigenvectors. These define "eigenportfolios" whose returns are
+    #   uncorrelated by construction. The dominant eigenvector corresponds to
+    #   the market portfolio.
+    #
+    # OPTION B - SECTOR ETFs:
+    #   associate each stock with the ETF for its sector (15 sectors).
+    #   Simpler and interpretable, but the factors are CORRELATED with each
+    #   other, unlike eigenportfolios.
+
+    factors = pca_eigenportfolios(returns[t-252 : t], m)   # or sector ETF returns
+
+    # ---- STEP 2: regress each stock on the factors -------------------------
+    FOR each stock i in universe:
+        REGRESS  r_i(s) = alpha_i + SUM_j beta_ij * F_j(s) + residual_i(s)
+                 over s in [t - OU_WINDOW, t]
+        X_i = cumulative sum of residual_i    # the residual PROCESS, not the
+                                              # per-period residual
+
+    # ---- STEP 3: fit the OU process to each residual -----------------------
+    #   dX = kappa * (m - X) dt + sigma dW
+    # Estimate by AR(1) on X:  X_{n+1} = a + b*X_n + e
+    #   dt       = 1/252            <- ONE OBSERVATION, not the window length
+    #   kappa    = -log(b) / dt = -log(b) * 252     [per YEAR]
+    #   m        = a / (1 - b)
+    #   sigma_eq = sd(e) / sqrt(1 - b^2)
+    # kappa > 8.4 per year  <=>  reversion time tau = 1/kappa < 30 days,
+    # i.e. half the 60-day estimation window. That is the paper's filter.
+    FOR each stock i:
+        kappa_i, m_i, sigma_eq_i = fit_ou(X_i)
+
+        # THE FILTER - this is the key improvement over the distance method.
+        # Slow-reverting residuals will not converge inside the holding
+        # window, and no threshold tuning fixes that.
+        IF kappa_i <= KAPPA_MIN: SKIP this stock
+
+    # ---- STEP 4: compute the dimensionless s-score -------------------------
+        s_i = ( X_i(t) - m_i ) / sigma_eq_i
+
+    # ---- STEP 5: trade --------------------------------------------------
+    #   Because s is dimensionless, the SAME cutoffs apply to every stock.
+    #   Opening a long means: buy $1 of stock i, sell beta_ij dollars of
+    #   each factor portfolio j. That hedge is what makes the book neutral.
+        IF  s_i < -S_BO:  BUY TO OPEN   (long stock, short factors)
+        IF  s_i > +S_SO:  SELL TO OPEN  (short stock, long factors)
+        IF  position is SHORT and s_i < +S_BC:  CLOSE
+        IF  position is LONG  and s_i > -S_SC:  CLOSE
+
+--------------------------------------------------------------------------------
+PART B - PYTHON REFERENCE IMPLEMENTATION
+--------------------------------------------------------------------------------
+
+"""
+Factor-residual statistical arbitrage, Avellaneda & Lee (2009).
+
+Dependencies: numpy, pandas
+Input: returns -> pd.DataFrame, daily simple returns, DatetimeIndex,
+       columns = tickers. Universe should be point-in-time.
+"""
+
+import numpy as np
+import pandas as pd
+from dataclasses import dataclass
+
+
+@dataclass
+class StatArbConfig:
+    corr_window: int = 252        # correlation matrix lookback
+    ou_window: int = 60           # OU estimation window (business days)
+    n_factors: int = 15           # PCA components retained
+    kappa_min: float = 8.4        # 252/30 - the mean-reversion speed filter
+    s_bo: float = 1.25            # open long threshold (s < -s_bo)
+    s_so: float = 1.25            # open short threshold (s > +s_so)
+    s_bc: float = 0.75            # close short (s < +s_bc)
+    s_sc: float = 0.50            # close long  (s > -s_sc)
+    cost_per_trade: float = 0.0005   # 5 bp; 10 bp round trip
+
+
+def pca_eigenportfolios(returns: pd.DataFrame, n_factors: int):
+    """Eigenportfolios from the correlation matrix of standardised returns.
+
+    Avellaneda & Lee build the factors from the CORRELATION matrix (not the
+    covariance matrix), which means returns are standardised by their own
+    volatility first. Eigenportfolio weights are then rescaled by 1/sigma_i,
+    so low-volatility names get larger weights.
+
+    Returns (factor_returns, eigenvectors, explained_variance_ratio).
+    """
+    r = returns.dropna(axis=1, how="any")
+    if r.shape[1] < n_factors + 1:
+        raise ValueError("not enough complete return series for the requested factors")
+
+    sigma = r.std(ddof=1)
+    sigma = sigma.replace(0.0, np.nan).dropna()
+    r = r[sigma.index]
+    z = (r - r.mean()) / sigma          # standardised returns
+
+    corr = np.corrcoef(z.values, rowvar=False)
+    vals, vecs = np.linalg.eigh(corr)
+    order = np.argsort(vals)[::-1]      # descending
+    vals, vecs = vals[order], vecs[:, order]
+
+    v = vecs[:, :n_factors]
+    # Eigenportfolio weights: Q_ij = v_ij / sigma_i  (paper's construction)
+    weights = v / sigma.values[:, None]
+    cols = [f"eig{j+1}" for j in range(n_factors)]
+    factor_returns = pd.DataFrame(r.values @ weights, index=r.index, columns=cols)
+    weight_frame = pd.DataFrame(weights, index=sigma.index, columns=cols)
+    return factor_returns, weight_frame, vals[:n_factors] / vals.sum()
+
+
+def fit_ou(x: np.ndarray, dt_years: float):
+    """Fit dX = kappa (m - X) dt + sigma dW via the AR(1) representation.
+
+    X_{n+1} = a + b X_n + e,  with
+        kappa    = -ln(b) / dt_years
+        m        = a / (1 - b)
+        sigma_eq = sd(e) / sqrt(1 - b^2)      [equilibrium sd of the residual]
+
+    dt_years is the spacing of ONE OBSERVATION (1/252 for daily data), NOT the
+    length of the estimation window. Passing the window length instead scales
+    kappa down by the number of observations, and every stock then fails the
+    kappa > 8.4 filter. Verified in-session: with a true kappa of 12.0, the
+    correct dt recovers 12.0; the window-length dt returns 0.2.
+
+    Returns (kappa, m, sigma_eq). NaNs when the fit is degenerate or the
+    process is not mean-reverting (b <= 0 or b >= 1).
+    """
+    x = np.asarray(x, dtype=float)
+    if len(x) < 10 or not np.all(np.isfinite(x)):
+        return np.nan, np.nan, np.nan
+
+    x0, x1 = x[:-1], x[1:]
+    denom = np.sum((x0 - x0.mean()) ** 2)
+    if denom <= 0:
+        return np.nan, np.nan, np.nan
+
+    b = np.sum((x0 - x0.mean()) * (x1 - x1.mean())) / denom
+    a = x1.mean() - b * x0.mean()
+
+    # b must be strictly inside (0,1) for a sensible mean-reverting fit.
+    if not (0.0 < b < 1.0):
+        return np.nan, np.nan, np.nan
+
+    resid = x1 - (a + b * x0)
+    kappa = -np.log(b) / dt_years
+    m = a / (1.0 - b)
+    sigma_eq = np.std(resid, ddof=1) / np.sqrt(1.0 - b ** 2)
+    return float(kappa), float(m), float(sigma_eq)
+
+
+def compute_s_scores(returns: pd.DataFrame, factor_returns: pd.DataFrame,
+                     cfg: StatArbConfig) -> pd.DataFrame:
+    """s-scores and betas for every stock, as of the last date in `returns`.
+
+    Steps 2-4 of the pipeline: regress on factors, cumulate the residual into
+    the residual PROCESS X, fit the OU model, filter on kappa, normalise.
+    """
+    window = returns.tail(cfg.ou_window)
+    fwin = factor_returns.tail(cfg.ou_window)
+    dt_years = 1.0 / 252.0        # ONE trading day - see fit_ou's docstring
+
+    F = np.column_stack([np.ones(len(fwin)), fwin.values])
+    rows = []
+
+    for ticker in window.columns:
+        y = window[ticker].values
+        if not np.all(np.isfinite(y)) or len(y) < cfg.ou_window:
+            continue
+
+        coef, *_ = np.linalg.lstsq(F, y, rcond=None)
+        resid = y - F @ coef
+
+        # THE RESIDUAL PROCESS is the CUMULATIVE SUM of period residuals.
+        # Fitting the OU model to per-period residuals instead is the single
+        # most common error in replications - see PITFALL 1.
+        X = np.cumsum(resid)
+
+        kappa, m, sigma_eq = fit_ou(X, dt_years)
+        if not np.isfinite(kappa) or kappa <= cfg.kappa_min:
+            continue                      # THE MEAN-REVERSION SPEED FILTER
+        if not np.isfinite(sigma_eq) or sigma_eq <= 0:
+            continue
+
+        rows.append({
+            "ticker": ticker,
+            "s_score": float((X[-1] - m) / sigma_eq),
+            "kappa": kappa,
+            "half_life_days": float(np.log(2.0) / kappa * 252.0),
+            "betas": coef[1:],
+            "alpha": float(coef[0]),
+        })
+
+    return pd.DataFrame(rows).set_index("ticker") if rows else pd.DataFrame()
+
+
+def generate_signals(s_scores: pd.DataFrame, positions: dict,
+                     cfg: StatArbConfig) -> dict:
+    """Apply the four-threshold rule. Returns {ticker: +1 / -1 / 0}.
+
+    positions: {ticker: current position} carried between days.
+    """
+    out = {}
+    for ticker, row in s_scores.iterrows():
+        s = row["s_score"]
+        cur = positions.get(ticker, 0)
+
+        if cur == 0:
+            if s < -cfg.s_bo:
+                out[ticker] = +1        # residual too LOW -> buy the stock
+            elif s > cfg.s_so:
+                out[ticker] = -1        # residual too HIGH -> short the stock
+            else:
+                out[ticker] = 0
+        elif cur == +1:
+            out[ticker] = 0 if s > -cfg.s_sc else +1     # close long
+        else:
+            out[ticker] = 0 if s < cfg.s_bc else -1      # close short
+    return out
+
+
+def volume_time_returns(prices: pd.DataFrame, volumes: pd.DataFrame,
+                        bar_volume: float) -> pd.DataFrame:
+    """Resample returns into VOLUME TIME rather than calendar time.
+
+    The paper's most valuable extension: price discovery happens per unit of
+    trading activity, not per unit of clock time. A day with no volume carries
+    no information. Applying this to ETF-based signals lifted the 2003-2007
+    Sharpe to 1.51 - the one enhancement that fought the post-2002 decay
+    rather than succumbing to it.
+
+    This is a simplified bar-sampling version: accumulate volume until
+    `bar_volume` is reached, then emit one bar.
+    """
+    out = {}
+    for ticker in prices.columns:
+        p, v = prices[ticker].dropna(), volumes[ticker].dropna()
+        idx = p.index.intersection(v.index)
+        p, v = p.loc[idx], v.loc[idx]
+
+        bars, acc, last = [], 0.0, None
+        for dt in idx:
+            acc += float(v.loc[dt])
+            if acc >= bar_volume:
+                if last is not None:
+                    bars.append((dt, p.loc[dt] / p.loc[last] - 1.0))
+                last, acc = dt, 0.0
+        if bars:
+            out[ticker] = pd.Series(dict(bars))
+    return pd.DataFrame(out)
+
+
+--------------------------------------------------------------------------------
+PART C - PARAMETERS AS TESTED
+--------------------------------------------------------------------------------
+
+#  Universe            US stocks, market cap > $1 billion
+#                      (1,417 names on 1 May 2007)
+#  Sectors             15, each mapped to a sector ETF
+#  Correlation window  252 trading days
+#  OU window           60 business days (T1 = 60/252)
+#  kappa filter        > 252/30 = 8.4
+#  Thresholds          s_bo = s_so = 1.25, s_bc = 0.75, s_sc = 0.50
+#                      (fitted on 2000-2004 ETF simulations; the 0.75/0.50
+#                       asymmetry chosen on the 2000-2002 training period)
+#  Transaction cost    5 bp per trade, 10 bp round trip
+#
+#  REPORTED RESULTS (net of cost):
+#    PCA,          1997-2007 : Sharpe 1.44
+#    PCA,          2003-2007 : Sharpe 0.90
+#    Sector ETF,   1997-2007 : Sharpe 1.10
+#    ETF + volume, 2003-2007 : Sharpe 1.51
+#
+#  BENCHMARK YOUR REPLICATION AGAINST THE DECAY, NOT JUST THE LEVEL. If your
+#  1997-2007 PCA Sharpe is ~1.4 but 2003-2007 does NOT drop to ~0.9, you have
+#  look-ahead somewhere.
+
+--------------------------------------------------------------------------------
+PART D - REPLICATION PITFALLS AND PRODUCTION WARNINGS
+--------------------------------------------------------------------------------
+
+1.  THE RESIDUAL PROCESS IS A CUMULATIVE SUM. The OU model is fitted to
+    X = cumsum(residuals), not to the per-period regression residuals. Fitting
+    the raw residuals gives a process with no persistence, kappa estimates
+    that fail the filter, and essentially no trades.
+
+2.  CORRELATION MATRIX, NOT COVARIANCE. The PCA is on the correlation matrix
+    of standardised returns, and eigenportfolio weights carry a 1/sigma_i
+    factor. Using raw covariance lets the highest-volatility names dominate
+    every eigenvector.
+
+3.  RESPECT THE KAPPA FILTER. kappa > 8.4 is not a tuning knob - it is the
+    condition that the residual reverts fast enough to converge inside the
+    estimation window. Dropping it admits slow-reverting names that get
+    closed at a loss and quietly destroys the strategy.
+
+4.  NO LOOK-AHEAD IN THE FACTORS. The correlation matrix uses the 252 days
+    BEFORE the trade date; the OU fit uses the 60 days before it. Computing
+    the PCA on the full sample is a subtle and devastating leak - the
+    eigenvectors then encode the future factor structure.
+
+5.  UNIVERSE MUST BE POINT-IN-TIME. Market cap > $1bn evaluated as of the
+    trade date, with delisted names present in their historical windows.
+
+6.  COSTS ARE UNDERSTATED. The 10 bp round trip covers slippage and
+    commission. It does NOT include stock borrow on the short leg, financing,
+    the cost of trading the ETF hedge, or market impact at size. For a
+    daily-rebalanced book across ~1,400 names these are material.
+
+7.  CROWDING IS THE REAL RISK AND IT IS INVISIBLE IN BACKTEST. August 2007:
+    correlated residual books across many funds deleveraged simultaneously,
+    moving everyone's positions against them, with the losses largely
+    reversing within days. Market-neutral is not crowding-neutral. No
+    single-fund backtest can show this - model it separately, or at minimum
+    size for it.
+
+8.  KAPPA IS BIASED UPWARD ON A 60-DAY WINDOW. Verified in-session on
+    synthetic data with a known true kappa of 12.0: the estimator returns a
+    median of about 34. Two causes compound - AR(1) slope estimates are
+    biased toward zero in short samples (Kendall bias), which biases
+    -ln(b) upward, and regressing out the factors strips some genuine
+    persistence from the residual before the OU fit ever sees it.
+    CONSEQUENCE: the kappa > 8.4 filter is MORE PERMISSIVE in practice than
+    it looks, admitting residuals whose true reversion is slower than 30
+    days. If you need the filter to bind as intended, either bias-correct
+    the AR(1) slope or validate the realised half-life of closed trades
+    against the fitted one and tighten the threshold until they agree.
+
+9.  THE THRESHOLDS ARE FITTED VALUES. 1.25 / 0.75 / 0.50 were selected on
+    2000-2004 data. Treat them as a starting point calibrated to one regime,
+    not as constants of nature.

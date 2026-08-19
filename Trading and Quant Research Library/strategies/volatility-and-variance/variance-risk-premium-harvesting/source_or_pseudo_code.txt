@@ -1,0 +1,308 @@
+================================================================================
+VARIANCE RISK PREMIUM - measurement and harvesting
+Carr & Wu, "Variance Risk Premia" (working paper 2004; RFS 2009)
+================================================================================
+
+PART A - Pseudo-code: synthesising the variance swap rate
+PART B - Python reference implementation (model-free replication + VRP series)
+PART C - Harvesting implementations and their differences
+PART D - Risk management: the part that decides whether this survives
+
+--------------------------------------------------------------------------------
+PART A - PSEUDO-CODE
+--------------------------------------------------------------------------------
+
+# The whole method is: price a variance swap from options, compare to what
+# variance actually turned out to be, and collect the difference.
+
+PROCEDURE variance_swap_rate(option_chain, F, r, T):
+    # option_chain: strikes with OTM option prices
+    #   - puts  for K < F
+    #   - calls for K > F
+    # F: forward price, r: risk-free rate, T: time to expiry in years
+    #
+    # The 1/K^2 weighting is what makes the portfolio have constant dollar
+    # gamma, so a delta-hedged position accrues P&L proportional to realised
+    # variance independently of the path. This is the entire trick.
+
+    integral = 0
+    FOR each strike K in chain (sorted):
+        dK = spacing around K (trapezoidal / midpoint)
+        O(K) = OTM option price at K      # put if K<F, call if K>F
+        integral += ( O(K) / K^2 ) * dK
+
+    SW = (2 / T) * exp(r*T) * integral     # annualised variance swap rate
+    RETURN SW
+
+PROCEDURE realised_variance(daily_log_returns over [t, T]):
+    # Carr & Wu compare against a standard realised variance estimate.
+    # Annualise with the trading-day count.
+    RETURN (252 / n) * SUM( r_i^2 )
+
+PROCEDURE variance_risk_premium(RV, SW):
+    RP  = RV - SW                  # P&L of LONG variance (raw)
+    LRP = ln(RV / SW)              # log excess return of LONG variance
+    RETURN RP, LRP
+
+    # SIGN CONVENTION - get this wrong and every conclusion inverts:
+    #   RP < 0 and LRP < 0  =>  long variance LOSES  =>  the premium accrues
+    #                           to the SHORT side.
+    # Carr & Wu find mean LRP over -50% PER MONTH on SPX, OEX and DJIA.
+
+--------------------------------------------------------------------------------
+PART B - PYTHON REFERENCE IMPLEMENTATION
+--------------------------------------------------------------------------------
+
+"""
+Model-free variance swap rate and variance risk premium.
+
+Dependencies: numpy, pandas
+This is the same replication logic that defines the VIX index.
+"""
+
+import numpy as np
+import pandas as pd
+
+
+def variance_swap_rate(strikes, otm_prices, forward, rate, tau):
+    """Model-free variance swap rate from a chain of OTM option prices.
+
+    Parameters
+    ----------
+    strikes     : 1-D array, ascending, strictly positive
+    otm_prices  : 1-D array, OTM option price at each strike
+                  (puts below the forward, calls above it)
+    forward     : forward price of the underlying for expiry tau
+    rate        : continuously compounded risk-free rate
+    tau         : time to expiry in YEARS
+
+    Returns
+    -------
+    Annualised variance swap rate (in variance units - square it back to
+    volatility with np.sqrt).
+
+    The integral is  (2/tau) * e^{r*tau} * INT O(K)/K^2 dK, discretised
+    with the standard trapezoidal dK convention used by CBOE.
+    """
+    k = np.asarray(strikes, dtype=float)
+    o = np.asarray(otm_prices, dtype=float)
+    if k.ndim != 1 or k.shape != o.shape or len(k) < 3:
+        raise ValueError("strikes and otm_prices must be matching 1-D arrays, len>=3")
+    if np.any(k <= 0):
+        raise ValueError("strikes must be positive")
+
+    # dK: central differences at interior strikes, one-sided at the ends.
+    dk = np.empty_like(k)
+    dk[1:-1] = (k[2:] - k[:-2]) / 2.0
+    dk[0] = k[1] - k[0]
+    dk[-1] = k[-1] - k[-2]
+
+    integral = np.sum(o / (k ** 2) * dk)
+    return (2.0 / tau) * np.exp(rate * tau) * integral
+
+
+def realised_variance(log_returns, trading_days=252):
+    """Annualised realised variance from daily log returns over the window."""
+    r = np.asarray(log_returns, dtype=float)
+    r = r[np.isfinite(r)]
+    if len(r) == 0:
+        return np.nan
+    return trading_days * np.mean(r ** 2)
+
+
+def variance_risk_premium(rv, sw):
+    """Return (RP, LRP) following Carr & Wu's definitions.
+
+    RP  = RV - SW      : raw P&L to a LONG variance position
+    LRP = ln(RV / SW)  : continuously compounded excess return, LONG variance
+
+    Both are NEGATIVE on average for equity indices - the premium accrues to
+    the seller of variance.
+    """
+    rp = rv - sw
+    lrp = np.log(rv / sw) if (rv > 0 and sw > 0) else np.nan
+    return rp, lrp
+
+
+def variance_beta(rv_asset: pd.Series, rv_market: pd.Series) -> float:
+    """beta^V = Cov(RV_j, RV_SPX) / Var(RV_SPX).   [Carr & Wu eq. 53]
+
+    The paper's key cross-sectional result:
+        LRP_j = 0.0201 + 0.2675 * beta^V_j,   R^2 = 15.9%
+
+    A name's variance risk premium scales with how much its variance co-moves
+    with MARKET variance - not with how volatile it is. Low variance beta
+    means little premium to harvest, whatever the implied vol level.
+    """
+    df = pd.concat([rv_asset, rv_market], axis=1).dropna()
+    if len(df) < 3:
+        return np.nan
+    cov = np.cov(df.iloc[:, 0], df.iloc[:, 1])
+    return float(cov[0, 1] / cov[1, 1])
+
+
+def build_vrp_series(chains_by_date, rv_by_date, rate=0.02, tau=30.0 / 365.0):
+    """Assemble a time series of variance risk premia.
+
+    chains_by_date : {date: (strikes, otm_prices, forward)}
+    rv_by_date     : {date: realised variance over the SUBSEQUENT tau window}
+
+    NOTE ON ALIGNMENT - the classic error in this calculation:
+    the swap rate observed at t must be compared with the realised variance
+    over [t, t+tau], NOT the trailing realised variance ending at t. Comparing
+    the swap rate to trailing realised variance measures nothing and will
+    produce a premium that looks larger and steadier than it is.
+    """
+    rows = []
+    for dt, (strikes, prices, fwd) in sorted(chains_by_date.items()):
+        if dt not in rv_by_date:
+            continue
+        sw = variance_swap_rate(strikes, prices, fwd, rate, tau)
+        rv = rv_by_date[dt]
+        rp, lrp = variance_risk_premium(rv, sw)
+        rows.append({
+            "date": dt,
+            "swap_rate": sw,
+            "realised_var": rv,
+            "swap_vol": np.sqrt(sw),
+            "realised_vol": np.sqrt(rv),
+            "RP": rp,
+            "LRP": lrp,
+        })
+    return pd.DataFrame(rows).set_index("date")
+
+
+def summarise_vrp(df: pd.DataFrame, nw_lags: int = 30) -> dict:
+    """Summary statistics with Newey-West t-stats, as Carr & Wu compute them.
+
+    Overlapping daily observations of a 30-day premium are heavily
+    autocorrelated by construction. An OLS t-statistic here is meaningless;
+    the paper uses Newey-West with a 30-day lag.
+    """
+    out = {}
+    for col in ("RP", "LRP"):
+        x = df[col].dropna().values
+        n = len(x)
+        if n < nw_lags + 2:
+            continue
+        e = x - x.mean()
+        var = (e @ e) / n
+        for L in range(1, nw_lags + 1):
+            w = 1.0 - L / (nw_lags + 1.0)          # Bartlett kernel
+            var += 2.0 * w * ((e[L:] @ e[:-L]) / n)
+        se = np.sqrt(var / n)
+        out[f"{col}_mean"] = float(x.mean())
+        out[f"{col}_t_newey_west"] = float(x.mean() / se) if se > 0 else np.nan
+    return out
+
+
+
+# --- SELF-TEST: does the replication actually recover a known variance? ------
+# Under Black-Scholes with constant vol sigma, the model-free variance swap
+# rate must equal sigma^2. If your integral is right, this round-trips.
+# Verified in-session: recovers 0.040013 against a true 0.040000 (sigma=20%,
+# tau=30/365, strikes 20-300 step 0.25) - a 0.03% relative error.
+
+def _self_test():
+    import math
+
+    def bs(F, K, r, T, sig, call):
+        d1 = (math.log(F / K) + 0.5 * sig * sig * T) / (sig * math.sqrt(T))
+        d2 = d1 - sig * math.sqrt(T)
+        N = lambda x: 0.5 * (1.0 + math.erf(x / math.sqrt(2.0)))
+        if call:
+            return math.exp(-r * T) * (F * N(d1) - K * N(d2))
+        return math.exp(-r * T) * (K * N(-d2) - F * N(-d1))
+
+    F, r, T, sig = 100.0, 0.02, 30.0 / 365.0, 0.20
+    K = np.arange(20.0, 300.01, 0.25)
+    O = np.array([bs(F, k, r, T, sig, call=(k > F)) for k in K])
+
+    sw = variance_swap_rate(K, O, F, r, T)
+    err = abs(sw - sig ** 2) / sig ** 2
+    print(f"true var {sig**2:.6f} | replicated {sw:.6f} | rel err {err*100:.4f}%")
+    assert err < 0.01, "replication error too large - check the dK convention"
+
+    # Truncation study: a narrow chain understates the swap rate, and the
+    # error lives in the tails - exactly where the risk is.
+    for lo, hi in [(60, 160), (80, 125), (90, 112)]:
+        m = (K >= lo) & (K <= hi)
+        swt = variance_swap_rate(K[m], O[m], F, r, T)
+        print(f"  strikes [{lo},{hi}]: understates by {(1 - swt/sig**2)*100:5.2f}%")
+    # Verified in-session: [90,112] understates by 1.43%. Truncating the wings
+    # FLATTERS the measured premium, because a too-low SW makes RV - SW look
+    # less negative than it is.
+
+
+if __name__ == "__main__":
+    _self_test()
+
+
+--------------------------------------------------------------------------------
+PART C - HARVESTING IMPLEMENTATIONS
+--------------------------------------------------------------------------------
+
+# The paper MEASURES the premium. Harvesting it requires picking an
+# instrument, and they are not equivalent.
+#
+# 1. VARIANCE SWAP (what the paper measures)
+#    Pure exposure, linear in realised variance. OTC: needs ISDA docs and
+#    counterparty credit. Not accessible to most participants.
+#
+# 2. SHORT STRADDLE / STRANGLE, DELTA-HEDGED
+#    The closest listed proxy. Requires continuous delta hedging; hedging
+#    error is a real cost and grows with gap risk. This is what Bakshi &
+#    Kapadia (2003) study as "delta-hedged gains".
+#
+# 3. SHORT VIX FUTURES
+#    NOT the same trade. VIX futures track the forward VIX level, not
+#    realised-vs-implied variance. Their return is dominated by the term
+#    structure roll, which is correlated with but distinct from the VRP.
+#
+# 4. INVERSE VOLATILITY ETPs
+#    A levered, path-dependent wrapper around #3 with daily rebalancing.
+#    On 5 February 2018 this class lost the large majority of its value in a
+#    single session and XIV was terminated. Included here as the documented
+#    failure mode, not as an implementation.
+#
+# 5. OPTION-SELLING OVERLAYS (covered calls, put-writing indices)
+#    Harvest a mixture of the variance premium and the equity premium.
+#    Attributing the return to VRP alone overstates the effect.
+
+--------------------------------------------------------------------------------
+PART D - RISK MANAGEMENT
+--------------------------------------------------------------------------------
+
+1.  SIZE FOR THE TAIL, NOT THE SHARPE. Realised variance is unbounded above
+    and floored at zero: the payoff is short convexity. The historical
+    information ratio above 3 that Carr & Wu report is a property of that
+    payoff shape, not evidence of safety - and the authors explicitly warn
+    against reading it that way. Before sizing, answer: what is the loss at a
+    4x variance spike, and does the account survive it?
+
+2.  NEVER LEVER A SMOOTH EQUITY CURVE. The return stream is high-win-rate and
+    low-volatility until it is not. Leverage applied to that profile is the
+    documented mechanism by which short-variance programmes terminate rather
+    than merely lose.
+
+3.  INDICES, NOT SINGLE NAMES. Per the variance-beta result, the premium is
+    reliably present only where variance co-moves with market variance.
+    Selling single-stock variance for "diversification" takes gamma risk
+    without the compensation.
+
+4.  MODEL THE MARGIN CYCLE. Requirements rise as the position loses. A
+    strategy that is solvent on a mark-to-market basis can still be
+    force-liquidated. Backtests that ignore margin overstate survivability.
+
+5.  MIND THE REPLICATION ERROR. The 1/K^2 integral needs a continuum of
+    strikes; real chains are discrete and truncated, and the error is
+    largest in the tails - exactly where the risk lives. Truncating the
+    strike range understates the swap rate and flatters the measured premium.
+
+6.  ALIGNMENT DISCIPLINE. Compare SW(t) against realised variance over
+    [t, t+tau]. Comparing against trailing realised variance is not a
+    measurement of the premium and will look far better than reality.
+
+7.  THE SAMPLE ENDS IN FEBRUARY 2003. The published evidence predates 2008
+    and 2018. Any risk model calibrated only on this sample has never seen
+    the strategy's worst days.

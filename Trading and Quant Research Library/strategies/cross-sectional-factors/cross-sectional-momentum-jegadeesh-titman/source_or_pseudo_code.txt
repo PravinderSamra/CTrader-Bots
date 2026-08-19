@@ -1,0 +1,295 @@
+================================================================================
+CROSS-SECTIONAL MOMENTUM (J/K RELATIVE STRENGTH)
+Jegadeesh & Titman (1993), Journal of Finance 48(1), 65-91
+================================================================================
+
+PART A - Pseudo-code for the exact J/K rule
+PART B - Python reference implementation
+PART C - The J/K grid harness (reproducing Table I)
+PART D - Replication pitfalls
+
+--------------------------------------------------------------------------------
+PART A - PSEUDO-CODE
+--------------------------------------------------------------------------------
+
+CONSTANTS
+    J            = 6        # formation period, months  (paper tests 3,6,9,12)
+    K            = 6        # holding period, months    (paper tests 3,6,9,12)
+    N_PORTFOLIOS = 10       # deciles
+    SKIP_WEEK    = True     # Panel B convention; improves returns nearly everywhere
+
+PROCEDURE form_cohort(month t):
+    # 1. RANK on cumulative return over the previous J months.
+    #    With the skip convention, the formation window ENDS one week (or, in
+    #    modern practice, one month) before t.
+    FOR each eligible stock i:
+        R_i = cumulative return over [t - J months, t - skip]
+
+    # 2. SORT ASCENDING into deciles.
+    #    Decile 1  = worst past returns  -> the SELL (loser) portfolio
+    #    Decile 10 = best past returns   -> the BUY  (winner) portfolio
+    deciles = sort stocks ascending by R_i, split into N_PORTFOLIOS
+
+    # 3. EQUAL WEIGHT within each decile. The paper uses equal weighting,
+    #    not value weighting - this matters, see PITFALL 4.
+    winners = equal_weight(deciles[10])
+    losers  = equal_weight(deciles[1])
+
+    RETURN zero_cost_portfolio = LONG winners, SHORT losers
+
+PROCEDURE monthly_return(month t):
+    # OVERLAPPING COHORTS: K cohorts are live at any time. The month-t return
+    # is the equal-weighted average of the K cohorts formed at t-1 ... t-K.
+    # Only 1/K of the book turns over each month - this is what makes the
+    # strategy's turnover (and cost) tolerable.
+    live = cohorts formed in months t-1, t-2, ..., t-K
+    RETURN mean( cohort_return(c, t) for c in live )
+
+--------------------------------------------------------------------------------
+PART B - PYTHON REFERENCE IMPLEMENTATION
+--------------------------------------------------------------------------------
+
+"""
+Cross-sectional momentum, Jegadeesh & Titman (1993).
+
+Dependencies: numpy, pandas
+Input: monthly_returns -> pd.DataFrame, monthly PeriodIndex or month-end
+       DatetimeIndex, columns = permno/ticker, values = simple monthly returns.
+       The universe must be POINT-IN-TIME (see PITFALL 1).
+"""
+
+import numpy as np
+import pandas as pd
+from dataclasses import dataclass
+
+
+@dataclass
+class MomentumConfig:
+    formation_months: int = 6      # J
+    holding_months: int = 6        # K
+    n_portfolios: int = 10         # deciles
+    skip_months: int = 0           # 0 = Panel A; 1 = modern "12-2" skip-month
+    min_stocks: int = 100          # require a usable cross-section
+    weighting: str = "equal"       # the paper uses equal weighting
+
+
+def formation_signal(monthly: pd.DataFrame, cfg: MomentumConfig) -> pd.DataFrame:
+    """Cumulative return over the J months ending `skip_months` before t.
+
+    Row t holds the signal usable to form a portfolio AT t - i.e. it is built
+    only from information available strictly before t.
+    """
+    gross = 1.0 + monthly
+    # Cumulative product over the J-month formation window.
+    cum = gross.rolling(cfg.formation_months).apply(np.prod, raw=True) - 1.0
+    # Shift so row t contains data through t-1 (plus any skip).
+    return cum.shift(1 + cfg.skip_months)
+
+
+def assign_deciles(signal_row: pd.Series, cfg: MomentumConfig):
+    """Rank ASCENDING into deciles. Returns (winners, losers) index objects.
+
+    Ascending sort => decile 1 is the worst (losers), decile n is the best
+    (winners), matching the paper's convention.
+    """
+    s = signal_row.dropna()
+    if len(s) < cfg.min_stocks:
+        return None, None
+    # qcut on ranks avoids ties collapsing bins.
+    ranks = s.rank(method="first")
+    try:
+        bins = pd.qcut(ranks, cfg.n_portfolios, labels=False)
+    except ValueError:
+        return None, None
+    return s.index[bins == cfg.n_portfolios - 1], s.index[bins == 0]
+
+
+def run_momentum(monthly: pd.DataFrame, cfg: MomentumConfig = MomentumConfig()):
+    """Return a DataFrame with winner, loser and zero-cost monthly returns.
+
+    Implements the overlapping-cohort construction: at each month the return
+    is averaged across the K live cohorts.
+    """
+    signal = formation_signal(monthly, cfg)
+    dates = list(monthly.index)
+
+    # cohorts[t] = (winners_index, losers_index) formed at date t
+    cohorts = {}
+    for t in dates:
+        w, l = assign_deciles(signal.loc[t], cfg)
+        if w is not None:
+            cohorts[t] = (w, l)
+
+    rows = []
+    for pos, t in enumerate(dates):
+        # Cohorts formed in the previous K months are still held.
+        live = [dates[pos - k] for k in range(1, cfg.holding_months + 1)
+                if pos - k >= 0 and dates[pos - k] in cohorts]
+        if not live:
+            continue
+
+        w_rets, l_rets = [], []
+        for c in live:
+            w_idx, l_idx = cohorts[c]
+            # Stocks may have delisted since formation; dropna handles it, but
+            # see PITFALL 2 - silently dropping them is a real bias.
+            w_rets.append(monthly.loc[t, w_idx].dropna().mean())
+            l_rets.append(monthly.loc[t, l_idx].dropna().mean())
+
+        w_ret = float(np.nanmean(w_rets))
+        l_ret = float(np.nanmean(l_rets))
+        rows.append({"date": t, "winners": w_ret, "losers": l_ret,
+                     "wml": w_ret - l_ret, "n_cohorts": len(live)})
+
+    return pd.DataFrame(rows).set_index("date")
+
+
+def newey_west_tstat(x: pd.Series, lags: int = 6) -> float:
+    """HAC t-statistic of the mean. Overlapping cohorts induce autocorrelation,
+    so an OLS t-stat overstates significance."""
+    v = x.dropna().values
+    n = len(v)
+    if n < lags + 2:
+        return float("nan")
+    e = v - v.mean()
+    var = (e @ e) / n
+    for L in range(1, lags + 1):
+        w = 1.0 - L / (lags + 1.0)
+        var += 2.0 * w * ((e[L:] @ e[:-L]) / n)
+    se = np.sqrt(var / n)
+    return float(v.mean() / se) if se > 0 else float("nan")
+
+
+def january_analysis(wml: pd.Series) -> dict:
+    """Quantify the January effect - the paper's most actionable warning.
+
+    J&T report: about -7% average in January, +1.66% average in non-January
+    months, and 71% of non-January months positive.
+    """
+    idx = wml.dropna()
+    months = idx.index.month if hasattr(idx.index, "month") else \
+        pd.DatetimeIndex(idx.index).month
+    jan = idx[months == 1]
+    non_jan = idx[months != 1]
+    return {
+        "january_mean": float(jan.mean()) if len(jan) else np.nan,
+        "non_january_mean": float(non_jan.mean()) if len(non_jan) else np.nan,
+        "non_january_pct_positive": float((non_jan > 0).mean()) if len(non_jan) else np.nan,
+        "n_januaries": int(len(jan)),
+    }
+
+
+def event_time_returns(monthly: pd.DataFrame, cfg: MomentumConfig,
+                       horizon: int = 36) -> pd.DataFrame:
+    """Average zero-cost return in each of the `horizon` months after formation.
+
+    Reproduces the paper's Table VII. The expected shape is the whole point:
+    positive months 2-12, cumulative peak ~9.5% at month 12, NEGATIVE through
+    year 2 and into year 3, ending near +4% at month 36.
+
+    If a replication does not show the reversal, the holding logic is wrong.
+    """
+    signal = formation_signal(monthly, cfg)
+    dates = list(monthly.index)
+    buckets = {h: [] for h in range(1, horizon + 1)}
+
+    for pos, t in enumerate(dates):
+        w, l = assign_deciles(signal.loc[t], cfg)
+        if w is None:
+            continue
+        for h in range(1, horizon + 1):
+            if pos + h >= len(dates):
+                break
+            nxt = dates[pos + h]
+            r = (monthly.loc[nxt, w].dropna().mean()
+                 - monthly.loc[nxt, l].dropna().mean())
+            if np.isfinite(r):
+                buckets[h].append(r)
+
+    out = pd.DataFrame({
+        "event_month": list(buckets.keys()),
+        "mean_return": [np.mean(v) if v else np.nan for v in buckets.values()],
+    }).set_index("event_month")
+    out["cumulative"] = out["mean_return"].cumsum()
+    return out
+
+
+--------------------------------------------------------------------------------
+PART C - THE J/K GRID (reproducing Table I)
+--------------------------------------------------------------------------------
+
+# Run the full 4x4 grid in both panels and compare against the paper.
+#
+# def run_grid(monthly):
+#     results = {}
+#     for J in (3, 6, 9, 12):
+#         for K in (3, 6, 9, 12):
+#             for skip, panel in ((0, "A"), (1, "B")):
+#                 cfg = MomentumConfig(formation_months=J, holding_months=K,
+#                                      skip_months=skip)
+#                 df = run_momentum(monthly, cfg)
+#                 results[(panel, J, K)] = {
+#                     "mean": df["wml"].mean(),
+#                     "t": newey_west_tstat(df["wml"]),
+#                 }
+#     return results
+#
+# BENCHMARK VALUES from Table I (1965-1989, CRSP NYSE/AMEX, monthly):
+#
+#   Panel A (no skip), Buy-Sell:
+#     J=3:  K=3 0.32% (1.10) | K=6 0.58% (2.29) | K=9 0.61% (2.69) | K=12 0.69% (3.53)
+#     J=6:  K=3 0.84% (2.44) | K=6 0.95% (3.07) | K=9 1.02% (3.76) | K=12 0.86% (3.36)
+#
+#   Panel B (1-week skip), Buy-Sell:
+#     J=3:  K=3 0.73% (2.61) | K=6 0.78% (3.16) | K=9 0.74% (3.36) | K=12 0.77% (4.00)
+#     J=6:  K=3 1.14% (3.37) | K=6 1.10% (3.61) | K=9 1.08% (4.01) | K=12 0.90% (3.54)
+#
+#   Best overall: J=12, K=3 -> 1.31% (Panel A), 1.49% (Panel B).
+#
+# SANITY CHECK: Panel B should beat Panel A almost everywhere. If your skip
+# version is WORSE, the skip is being applied in the wrong direction (you are
+# shifting the holding window rather than the formation window).
+
+--------------------------------------------------------------------------------
+PART D - REPLICATION PITFALLS
+--------------------------------------------------------------------------------
+
+1.  SURVIVORSHIP BIAS. The universe must be point-in-time. Using a
+    currently-listed universe removes the delisted names, which sit
+    overwhelmingly in the LOSER decile. Removing failed losers inflates the
+    short leg's return and therefore the whole strategy.
+
+2.  DELISTING RETURNS. When a stock in the loser decile is delisted, CRSP
+    provides a delisting return that is frequently large and negative.
+    Dropping it (rather than applying it) is a well-documented source of
+    overstated momentum profits. `dropna()` in the reference code above is a
+    convenience, NOT correct handling - wire in delisting returns for
+    research use.
+
+3.  SKIP DIRECTION. The skip goes between the END of formation and the START
+    of holding. Getting it backwards makes Panel B worse than Panel A, which
+    inverts the paper's cleanest result.
+
+4.  EQUAL VS VALUE WEIGHTING. The paper uses EQUAL weighting within deciles.
+    Value weighting produces materially lower returns because much of the
+    effect sits in smaller names. A value-weighted replication that comes in
+    low is not necessarily broken - it is measuring a different thing.
+
+5.  OVERLAPPING COHORTS AND HAC ERRORS. K cohorts are live simultaneously, so
+    the monthly series is autocorrelated by construction. Use Newey-West.
+    The paper does so for the event-time cumulative returns.
+
+6.  THE JANUARY EFFECT WILL DOMINATE SMALL SAMPLES. At about -7% per January,
+    a 5-year backtest contains only 5 Januaries and its result is largely a
+    function of those 5 months. Report January and non-January separately -
+    always.
+
+7.  NO COSTS IN THE PAPER. Turnover is 1/K of the book per month, concentrated
+    in volatile, less liquid names, with a short leg that is expensive or
+    impossible to borrow. Later literature argues costs consume a large share
+    of the paper profits. Any live claim must model them.
+
+8.  MISSING THE CRASH RISK. A backtest on 1965-1989 - or on any sample without
+    1932 or 2009 - will not show what this strategy does in a post-crash
+    rebound. It is not a fat-tail curiosity; it is the defining risk. See the
+    momentum-crashes entry before sizing anything.

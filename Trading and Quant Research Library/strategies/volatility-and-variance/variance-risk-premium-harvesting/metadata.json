@@ -1,0 +1,66 @@
+{
+  "id": "variance-risk-premium-harvesting",
+  "title": "Variance Risk Premium Harvesting (Carr & Wu)",
+  "slug": "variance-risk-premium-harvesting",
+  "strategy_type": "volatility-and-variance",
+  "asset_classes": ["options", "indices", "equities"],
+  "complexity_score": 7,
+  "execution_type": "Quant",
+  "requires_machine_learning": false,
+  "evidence_grade": "verified-primary",
+  "holding_period": "30 days (monthly variance swap horizon)",
+  "signal_frequency": "monthly roll; daily marking",
+  "directionality": "long-short",
+  "data_requirements": [
+    "full option chains across strikes (OptionMetrics or equivalent)",
+    "forward prices and risk-free curve",
+    "high-frequency or daily returns for realised variance",
+    "margin and financing schedules for the short-variance leg"
+  ],
+  "capacity": "medium",
+  "decay_status": "partially-decayed",
+  "sources": [
+    {
+      "type": "paper",
+      "citation": "Carr, P., & Wu, L. Variance Risk Premia. Working paper draft, May 27 2004; published as Review of Financial Studies 22(3), 1311-1341 (2009).",
+      "url": "https://engineering.nyu.edu/sites/default/files/2019-01/CarrReviewofFinStudiesMarch2009-a.pdf",
+      "verified_in_session": true
+    },
+    {
+      "type": "paper",
+      "citation": "Carr, P., & Wu, L. (2009). Variance Risk Premiums. Review of Financial Studies, 22(3), 1311-1341. (Published version, paywalled, not consulted.)",
+      "url": "https://academic.oup.com/rfs/article-abstract/22/3/1311/1581057",
+      "verified_in_session": false
+    },
+    {
+      "type": "article",
+      "citation": "CBOE. VIX Index Methodology White Paper — the same model-free replication, productised.",
+      "url": "https://cdn.cboe.com/api/global/us_indices/governance/VIX_Methodology.pdf",
+      "verified_in_session": false
+    },
+    {
+      "type": "paper",
+      "citation": "Bakshi, G., & Kapadia, N. (2003). Delta-Hedged Gains and the Negative Market Volatility Risk Premium. Review of Financial Studies, 16(2), 527-566.",
+      "url": "https://academic.oup.com/rfs/article/16/2/527/1581543",
+      "verified_in_session": false
+    }
+  ],
+  "related_strategies": [
+    "dispersion-trading-correlation",
+    "volatility-carry-term-structure",
+    "short-straddle-delta-hedged"
+  ],
+  "tags": [
+    "variance-risk-premium",
+    "volatility",
+    "options",
+    "model-free-replication",
+    "variance-swap",
+    "short-convexity",
+    "insurance-premium",
+    "tail-risk",
+    "foundational",
+    "vix"
+  ],
+  "ingested_at": "2026-08-19"
+}

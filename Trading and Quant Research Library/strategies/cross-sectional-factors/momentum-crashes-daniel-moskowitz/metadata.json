@@ -1,0 +1,67 @@
+{
+  "id": "momentum-crashes-daniel-moskowitz",
+  "title": "Momentum Crashes & Dynamic Momentum Weighting (Daniel & Moskowitz)",
+  "slug": "momentum-crashes-daniel-moskowitz",
+  "strategy_type": "cross-sectional-factors",
+  "asset_classes": ["equities", "futures", "commodities", "fx", "fixed-income"],
+  "complexity_score": 6,
+  "execution_type": "Quant",
+  "requires_machine_learning": false,
+  "evidence_grade": "verified-primary",
+  "holding_period": "monthly rebalance, overlaid on a 12-month-formation momentum book",
+  "signal_frequency": "monthly reweighting from conditional mean and variance forecasts",
+  "directionality": "long-short",
+  "data_requirements": [
+    "monthly WML / UMD momentum factor returns",
+    "CRSP value-weighted market index returns (for the 24-month bear indicator)",
+    "long history including 1932 and 2009 - shorter samples miss the crashes entirely",
+    "VIX or variance swap data (only for the volatility-exposure analysis)"
+  ],
+  "capacity": "high",
+  "decay_status": "intact",
+  "sources": [
+    {
+      "type": "paper",
+      "citation": "Daniel, K., & Moskowitz, T. J. (2016). Momentum crashes. Journal of Financial Economics, 122(2), 221-247. Open access, CC BY.",
+      "url": "https://www.kentdaniel.net/papers/published/jfe_16.pdf",
+      "verified_in_session": true
+    },
+    {
+      "type": "paper",
+      "citation": "Daniel, K., & Moskowitz, T. J. Momentum Crashes. NBER Working Paper 20439.",
+      "url": "https://www.nber.org/system/files/working_papers/w20439/w20439.pdf",
+      "verified_in_session": false
+    },
+    {
+      "type": "paper",
+      "citation": "Barroso, P., & Santa-Clara, P. (2015). Momentum has its moments. Journal of Financial Economics, 116(1), 111-120. (The constant-volatility benchmark.)",
+      "url": "https://www.sciencedirect.com/science/article/abs/pii/S0304405X14002323",
+      "verified_in_session": false
+    },
+    {
+      "type": "dataset",
+      "citation": "Kenneth R. French Data Library — UMD momentum factor and market returns.",
+      "url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html",
+      "verified_in_session": false
+    }
+  ],
+  "related_strategies": [
+    "cross-sectional-momentum-jegadeesh-titman",
+    "time-series-momentum-futures",
+    "volatility-targeting-overlay",
+    "variance-risk-premium-harvesting"
+  ],
+  "tags": [
+    "momentum",
+    "crash-risk",
+    "conditional-beta",
+    "option-like-payoff",
+    "negative-skew",
+    "dynamic-weighting",
+    "volatility-targeting",
+    "risk-management",
+    "tail-risk",
+    "wave-2-depth"
+  ],
+  "ingested_at": "2026-08-19"
+}
