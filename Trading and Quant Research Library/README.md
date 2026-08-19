@@ -1,0 +1,64 @@
+# Trading & Quant Research Library
+
+A local, data-backed research library of trading and quantitative strategies. Every entry is
+sourced from a public academic paper, an open-source codebase, or a rigorous empirical study —
+and every performance number carries a citation back to the primary document it came from.
+
+## What this library is not
+
+It is not a collection of trade ideas, signal services, or blog heuristics. Nothing enters the
+library on narrative alone. An entry must have a stated data sample, a reproducible rule, and
+published results — or it does not get a folder.
+
+## Layout
+
+```
+Trading and Quant Research Library/
+├── README.md                     <- you are here
+├── TAXONOMY.md                   <- category tree + wave roadmap
+├── INGESTION_STANDARD.md         <- the ingestion contract every entry must satisfy
+├── _schema/metadata.schema.json  <- JSON Schema for metadata.json (machine validation)
+├── _index/library_index.csv      <- flat index of every ingested strategy
+└── strategies/
+    └── <category>/<strategy-slug>/
+        ├── research_paper_or_source.md   <- edge, sources, mathematical foundation
+        ├── backtest_and_data_summary.md  <- performance, data, regime behaviour
+        ├── source_or_pseudo_code.txt     <- reference implementation / pseudo-code
+        └── metadata.json                 <- structured tags for automated filtering
+```
+
+## Ingested strategies
+
+| Category | Strategy | Status |
+|---|---|---|
+| Statistical Arbitrage | [Pairs Trading — Distance Method](strategies/statistical-arbitrage/pairs-trading-distance-method/) | Verified |
+| Trend Following | [Time Series Momentum (TSMOM)](strategies/trend-following/time-series-momentum-futures/) | Verified |
+| Market Making / Microstructure | [Avellaneda–Stoikov Optimal Quoting](strategies/market-making-microstructure/avellaneda-stoikov-optimal-quoting/) | Verified |
+
+"Verified" means every quoted statistic in the entry was read out of the primary source document,
+not recalled or paraphrased from secondary commentary. See `INGESTION_STANDARD.md`.
+
+## Validating the library
+
+```bash
+cd "Trading and Quant Research Library"
+python3 _index/build_index.py
+```
+
+Checks every `metadata.json` against the schema, confirms all four required files exist in each
+strategy folder, and regenerates `_index/library_index.csv`. Exits non-zero on any failure, so it
+can be wired into a pre-commit hook. Run it after every ingestion wave.
+
+## Reading an entry
+
+Start with `research_paper_or_source.md` for the economic mechanism, then
+`backtest_and_data_summary.md` for whether the evidence survives contact with costs and regimes.
+`source_or_pseudo_code.txt` is the implementation contract. `metadata.json` is what automation
+should filter on — never parse the prose.
+
+## Honest-use warning
+
+Published backtests are the upper bound of what a strategy ever did, not a forecast. Most entries
+here document effects measured before widespread electronic arbitrage; several have decayed
+materially since publication, and the entry says so explicitly in its "Decay and current status"
+section. Treat that section as the most important part of the file.

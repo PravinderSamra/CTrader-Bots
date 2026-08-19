@@ -1,0 +1,65 @@
+{
+  "id": "pairs-trading-distance-method",
+  "title": "Pairs Trading — Distance Method (Gatev, Goetzmann & Rouwenhorst)",
+  "slug": "pairs-trading-distance-method",
+  "strategy_type": "statistical-arbitrage",
+  "asset_classes": ["equities"],
+  "complexity_score": 5,
+  "execution_type": "Quant",
+  "requires_machine_learning": false,
+  "evidence_grade": "verified-primary",
+  "holding_period": "3-4 months average (3.75 months reported); 6-month maximum trading window",
+  "signal_frequency": "daily close",
+  "directionality": "market-neutral",
+  "data_requirements": [
+    "daily total-return-adjusted equity prices",
+    "point-in-time universe with delistings (survivorship-bias free)",
+    "short-borrow availability and fee data for realistic implementation",
+    "effective spread / transaction cost estimates"
+  ],
+  "capacity": "medium",
+  "decay_status": "substantially-decayed",
+  "sources": [
+    {
+      "type": "paper",
+      "citation": "Gatev, E., Goetzmann, W. N., & Rouwenhorst, K. G. (2006). Pairs Trading: Performance of a Relative-Value Arbitrage Rule. The Review of Financial Studies, 19(3), 797-827.",
+      "url": "http://stat.wharton.upenn.edu/~steele/Courses/434/434Context/PairsTrading/PairsTradingGGR.pdf",
+      "verified_in_session": true
+    },
+    {
+      "type": "paper",
+      "citation": "Gatev, Goetzmann & Rouwenhorst — SSRN working paper version.",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=141615",
+      "verified_in_session": false
+    },
+    {
+      "type": "paper",
+      "citation": "Do, B., & Faff, R. (2010). Does Simple Pairs Trading Still Work? Financial Analysts Journal, 66(4), 83-95.",
+      "url": "https://www.tandfonline.com/doi/abs/10.2469/faj.v66.n4.1",
+      "verified_in_session": false
+    },
+    {
+      "type": "paper",
+      "citation": "Engle, R. F., & Granger, C. W. J. (1987). Co-integration and Error Correction: Representation, Estimation, and Testing. Econometrica, 55(2), 251-276.",
+      "url": "https://www.jstor.org/stable/1913236",
+      "verified_in_session": false
+    }
+  ],
+  "related_strategies": [
+    "cointegration-pairs-engle-granger",
+    "ornstein-uhlenbeck-optimal-bands",
+    "factor-residual-statistical-arbitrage"
+  ],
+  "tags": [
+    "mean-reversion",
+    "convergence",
+    "relative-value",
+    "market-neutral",
+    "law-of-one-price",
+    "foundational",
+    "long-short",
+    "us-equities",
+    "crsp"
+  ],
+  "ingested_at": "2026-08-19"
+}

@@ -1,0 +1,68 @@
+{
+  "id": "avellaneda-stoikov-optimal-quoting",
+  "title": "Avellaneda–Stoikov Optimal Market Making",
+  "slug": "avellaneda-stoikov-optimal-quoting",
+  "strategy_type": "market-making-microstructure",
+  "asset_classes": ["equities", "futures", "crypto", "fx"],
+  "complexity_score": 8,
+  "execution_type": "Quant",
+  "requires_machine_learning": false,
+  "evidence_grade": "verified-primary",
+  "holding_period": "seconds to minutes (continuous two-sided quoting; inventory mean-reverts to flat)",
+  "signal_frequency": "continuous / per-tick requoting",
+  "directionality": "two-sided-quoting",
+  "data_requirements": [
+    "level-1 or level-2 limit order book data",
+    "individual fill records with quote distance, for calibrating A and k",
+    "high-frequency realised volatility estimate for sigma",
+    "exchange fee and rebate schedule",
+    "queue position data for tight-tick markets"
+  ],
+  "capacity": "low",
+  "decay_status": "intact",
+  "sources": [
+    {
+      "type": "paper",
+      "citation": "Avellaneda, M., & Stoikov, S. (2008). High-frequency trading in a limit order book. Quantitative Finance, 8(3), 217-224.",
+      "url": "https://www.math.nyu.edu/~avellane/HighFrequencyTrading.pdf",
+      "verified_in_session": true
+    },
+    {
+      "type": "repository",
+      "citation": "ragoragino/avellaneda-stoikov — third-party Python replication (not audited in-session).",
+      "url": "https://github.com/ragoragino/avellaneda-stoikov",
+      "verified_in_session": false
+    },
+    {
+      "type": "paper",
+      "citation": "Guéant, O., Lehalle, C.-A., & Fernandez-Tapia, J. (2011). Dealing with the inventory risk: a solution to the market making problem. (Adds inventory bounds and exact closed forms.)",
+      "url": "https://arxiv.org/abs/1105.3115",
+      "verified_in_session": false
+    },
+    {
+      "type": "paper",
+      "citation": "Cartea, Á., & Jaimungal, S. Optimal High Frequency Trading with limit and market orders. (Adds order-flow signals and adverse selection.)",
+      "url": "https://arxiv.org/pdf/1106.5040",
+      "verified_in_session": false
+    }
+  ],
+  "related_strategies": [
+    "gueant-lehalle-fernandez-tapia-bounded-inventory",
+    "cartea-jaimungal-order-flow-market-making",
+    "order-flow-imbalance-signal",
+    "kyle-lambda-price-impact"
+  ],
+  "tags": [
+    "market-making",
+    "market-microstructure",
+    "stochastic-control",
+    "inventory-risk",
+    "hjb",
+    "limit-order-book",
+    "high-frequency",
+    "liquidity-provision",
+    "foundational",
+    "simulation-validated"
+  ],
+  "ingested_at": "2026-08-19"
+}

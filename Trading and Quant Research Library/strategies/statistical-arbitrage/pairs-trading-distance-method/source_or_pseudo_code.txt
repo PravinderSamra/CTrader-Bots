@@ -1,0 +1,350 @@
+================================================================================
+PAIRS TRADING - DISTANCE METHOD (Gatev, Goetzmann & Rouwenhorst, 2006)
+Reference implementation + algorithmic specification
+================================================================================
+
+This file contains:
+  PART A - Formal pseudo-code for the exact GGR rule
+  PART B - Runnable Python reference implementation (pandas/numpy)
+  PART C - The cointegration variant (Engle-Granger + OU half-life)
+  PART D - Replication pitfalls that change the answer
+
+No external data is bundled. The implementation expects a wide DataFrame of
+daily total-return-adjusted prices indexed by date, one column per instrument.
+
+--------------------------------------------------------------------------------
+PART A - PSEUDO-CODE (faithful to the paper)
+--------------------------------------------------------------------------------
+
+CONSTANTS
+    FORMATION_DAYS   = 252          # 12 months
+    TRADING_DAYS     = 126          # 6 months
+    ENTRY_THRESHOLD  = 2.0          # standard deviations of the formation spread
+    TOP_N            = 20           # pairs selected per cohort
+    WAIT_DAYS        = 1            # GGR Panel B; set 0 to reproduce Panel A
+
+PROCEDURE run_cohort(prices, formation_window, trading_window):
+
+    # ---- STEP 1: screen the universe -------------------------------------
+    # GGR exclude any stock with one or more missing trading days in the
+    # formation period. This is a liquidity screen, and it is load-bearing:
+    # without it the distance criterion selects illiquid stocks whose stale
+    # prices look artificially smooth.
+    universe = [s for s in prices.columns
+                if prices[s].loc[formation_window].notna().all()]
+
+    # ---- STEP 2: normalise price paths -----------------------------------
+    # Cumulative total return index starting at 1.0 on the first formation day.
+    FOR each s in universe:
+        r[s]  = pct_change(prices[s].loc[formation_window])
+        P[s]  = cumulative_product(1 + r[s])       # P[s][0] == 1.0
+
+    # ---- STEP 3: rank all pairs by sum of squared deviations -------------
+    FOR each unordered pair (i, j) in universe:
+        SSD(i,j) = SUM over formation days of (P[i][t] - P[j][t])^2
+    selected = the TOP_N pairs with the SMALLEST SSD
+
+    # ---- STEP 4: freeze the trigger from the formation period ONLY -------
+    # Using trading-period volatility here is look-ahead bias and is the
+    # single most common replication error.
+    FOR each pair (i, j) in selected:
+        spread_formation = P[i] - P[j]
+        sigma(i,j)       = standard_deviation(spread_formation)
+
+    # ---- STEP 5: trade the 6-month window --------------------------------
+    FOR each pair (i, j) in selected:
+
+        # Re-normalise into the trading window: both legs restart at 1.0 on
+        # the last formation day, so the spread starts at 0 by construction.
+        P_i, P_j = renormalise(prices[i], prices[j], start = trading_window[0])
+
+        position = FLAT
+        FOR each day t in trading_window:
+            spread = P_i[t] - P_j[t]
+
+            IF position == FLAT:
+                IF spread > +ENTRY_THRESHOLD * sigma(i,j):
+                    schedule OPEN(short i, long j) at t + WAIT_DAYS
+                ELSE IF spread < -ENTRY_THRESHOLD * sigma(i,j):
+                    schedule OPEN(long i, short j)  at t + WAIT_DAYS
+
+            ELSE:  # a position is open
+                IF sign(spread) != sign(spread_at_open):     # zero crossing
+                    schedule CLOSE at t + WAIT_DAYS
+
+        force CLOSE any open position on the final day of the window
+
+    # ---- STEP 6: aggregate returns ---------------------------------------
+    # Daily payoff of an open pair, one dollar per leg, self-financing:
+    #     payoff(t) = w_i * r_i(t) + w_j * r_j(t)     w in {+1, -1}
+    #
+    # TWO CONVENTIONS - always report which one you used:
+    #   fully_invested   = mean over pairs that ACTUALLY OPENED
+    #   committed_capital = mean over ALL TOP_N pairs (idle pairs contribute 0)
+    RETURN both series
+
+PROCEDURE run_full_backtest(prices):
+    # GGR start a new cohort every month; cohorts overlap, so at any time
+    # six cohorts are live. Average across live cohorts to get the portfolio.
+    # CONSEQUENCE: the monthly return series is autocorrelated by construction.
+    # Use Newey-West standard errors with 6 lags, as GGR do.
+    FOR each month-end m in sample:
+        cohort = run_cohort(prices,
+                            formation_window = [m - 18mo, m - 6mo],
+                            trading_window   = [m - 6mo,  m])
+    portfolio_return(t) = mean over all live cohorts of cohort_return(t)
+
+--------------------------------------------------------------------------------
+PART B - PYTHON REFERENCE IMPLEMENTATION
+--------------------------------------------------------------------------------
+
+"""
+Distance-method pairs trading, GGR (2006).
+
+Dependencies: numpy, pandas
+Input:  prices -> pd.DataFrame, DatetimeIndex, columns = tickers,
+        values = total-return-adjusted prices.
+"""
+
+import numpy as np
+import pandas as pd
+from itertools import combinations
+from dataclasses import dataclass, field
+
+
+@dataclass
+class PairsConfig:
+    formation_days: int = 252
+    trading_days: int = 126
+    entry_threshold: float = 2.0
+    top_n: int = 20
+    wait_days: int = 1          # 0 reproduces GGR Table 1 Panel A
+    max_universe: int = 500     # cap pair enumeration cost: O(n^2)
+
+
+def _normalise(block: pd.DataFrame) -> pd.DataFrame:
+    """Cumulative return index starting at 1.0 on the first row."""
+    return (1.0 + block.pct_change().fillna(0.0)).cumprod()
+
+
+def select_pairs(formation: pd.DataFrame, cfg: PairsConfig):
+    """Rank pairs by sum of squared deviations of normalised prices.
+
+    Returns [((i, j), ssd, sigma_spread), ...] sorted ascending by ssd.
+    """
+    # Liquidity screen: no missing days in the formation window.
+    complete = formation.columns[formation.notna().all()]
+    if len(complete) > cfg.max_universe:
+        # Deterministic cap - most liquid by median dollar volume would be
+        # better; alphabetical is used here only to keep the reference simple.
+        complete = sorted(complete)[: cfg.max_universe]
+
+    norm = _normalise(formation[complete])
+
+    out = []
+    for i, j in combinations(complete, 2):
+        spread = norm[i] - norm[j]
+        out.append(((i, j), float((spread ** 2).sum()), float(spread.std(ddof=1))))
+
+    out.sort(key=lambda x: x[1])
+    return out[: cfg.top_n]
+
+
+def trade_pair(trading: pd.DataFrame, i: str, j: str,
+               sigma: float, cfg: PairsConfig) -> pd.Series:
+    """Daily self-financing payoff for one pair over the trading window.
+
+    Convention: +1 unit long, -1 unit short, one dollar per leg.
+    Returns a daily payoff series (0.0 on days with no open position).
+    """
+    norm = _normalise(trading[[i, j]])
+    spread = norm[i] - norm[j]
+    rets = trading[[i, j]].pct_change().fillna(0.0)
+
+    payoff = pd.Series(0.0, index=trading.index)
+    position = 0            # +1 => long i / short j ; -1 => short i / long j
+    pending = None          # (target_index_position, action)
+
+    dates = list(trading.index)
+    for k, t in enumerate(dates):
+
+        # Execute anything scheduled for today (the WAIT_DAYS mechanism).
+        if pending is not None and pending[0] == k:
+            position = pending[1]
+            pending = None
+
+        # Accrue today's payoff from the position held at yesterday's close.
+        if position != 0:
+            # position = +1  -> spread was too WIDE  -> short i, long j
+            #                     payoff = r_j - r_i
+            # position = -1  -> spread was too NARROW -> long i, short j
+            #                     payoff = r_i - r_j
+            payoff.iloc[k] = position * (rets[j].iloc[k] - rets[i].iloc[k])
+
+        s = spread.iloc[k]
+        exec_k = min(k + cfg.wait_days, len(dates) - 1)
+
+        if position == 0 and pending is None:
+            if s > cfg.entry_threshold * sigma:
+                pending = (exec_k, +1)      # spread too wide: short i, long j
+            elif s < -cfg.entry_threshold * sigma:
+                pending = (exec_k, -1)      # spread too narrow: long i, short j
+        elif position != 0 and pending is None:
+            # Close on zero crossing of the spread.
+            if (position == +1 and s <= 0.0) or (position == -1 and s >= 0.0):
+                pending = (exec_k, 0)
+
+    return payoff
+
+
+def run_cohort(prices: pd.DataFrame, form_start, form_end, trade_end,
+               cfg: PairsConfig):
+    """One formation+trading cohort. Returns (fully_invested, committed)."""
+    formation = prices.loc[form_start:form_end]
+    trading = prices.loc[form_end:trade_end]
+
+    selected = select_pairs(formation, cfg)
+
+    payoffs, traded_flags = [], []
+    for (i, j), _ssd, sigma in selected:
+        if sigma <= 0 or not np.isfinite(sigma):
+            continue
+        p = trade_pair(trading, i, j, sigma, cfg)
+        payoffs.append(p)
+        traded_flags.append(bool((p != 0).any()))
+
+    if not payoffs:
+        empty = pd.Series(dtype=float)
+        return empty, empty
+
+    mat = pd.concat(payoffs, axis=1)
+
+    # Committed capital: divide by ALL selected pairs, including the idle ones.
+    committed = mat.sum(axis=1) / float(len(selected))
+
+    # Fully invested: divide only by pairs that actually opened.
+    n_traded = max(sum(traded_flags), 1)
+    fully_invested = mat.sum(axis=1) / float(n_traded)
+
+    return fully_invested, committed
+
+
+def newey_west_tstat(returns: pd.Series, lags: int = 6) -> float:
+    """t-statistic of the mean under Newey-West (Bartlett) HAC variance.
+
+    GGR use 6 lags to handle the autocorrelation induced by overlapping
+    6-month cohorts. Reporting an OLS t-stat here materially overstates
+    significance.
+    """
+    x = returns.dropna().values
+    n = len(x)
+    if n < lags + 2:
+        return float("nan")
+    e = x - x.mean()
+    gamma0 = (e @ e) / n
+    var = gamma0
+    for L in range(1, lags + 1):
+        w = 1.0 - L / (lags + 1.0)                 # Bartlett kernel
+        gL = (e[L:] @ e[:-L]) / n
+        var += 2.0 * w * gL
+    se = np.sqrt(var / n)
+    return float(x.mean() / se) if se > 0 else float("nan")
+
+
+def summarise(monthly: pd.Series, label: str = "") -> dict:
+    """Report the metrics GGR report, in the units GGR report them."""
+    m = monthly.dropna()
+    return {
+        "label": label,
+        "mean_monthly": float(m.mean()),
+        "std_monthly": float(m.std(ddof=1)),
+        "sharpe_monthly": float(m.mean() / m.std(ddof=1)) if m.std(ddof=1) > 0 else np.nan,
+        "t_stat_newey_west_6": newey_west_tstat(m, lags=6),
+        "skewness": float(m.skew()),
+        "kurtosis": float(m.kurtosis()),
+        "pct_months_negative": float((m < 0).mean()),
+        "min_month": float(m.min()),
+        "max_month": float(m.max()),
+        # NOTE: annualising the monthly Sharpe by sqrt(12) is WRONG here.
+        # Overlapping cohorts leave serial correlation ~0.24 in the series.
+        # GGR publish the MONTHLY Sharpe. Do the same.
+    }
+
+
+--------------------------------------------------------------------------------
+PART C - COINTEGRATION VARIANT (the modern replacement for STEP 3)
+--------------------------------------------------------------------------------
+
+# Replaces distance ranking with a stationarity test on the spread, and adds
+# a half-life filter that the distance method has no equivalent of.
+
+from statsmodels.tsa.stattools import adfuller
+import statsmodels.api as sm
+
+
+def engle_granger_pair(log_pi: pd.Series, log_pj: pd.Series, alpha: float = 0.05):
+    """Test pair cointegration; return (is_cointegrated, beta, half_life_days).
+
+    Step 1: OLS  log_pi = a + b * log_pj + e
+    Step 2: ADF test on the residual e. Reject unit root => cointegrated.
+    Step 3: fit OU mean reversion speed on the residual to get half-life.
+    """
+    X = sm.add_constant(log_pj.values)
+    fit = sm.OLS(log_pi.values, X).fit()
+    beta = float(fit.params[1])
+    resid = pd.Series(fit.resid, index=log_pi.index)
+
+    adf_p = adfuller(resid.values, maxlag=1, regression="c", autolag=None)[1]
+    if adf_p >= alpha:
+        return False, beta, float("nan")
+
+    # OU speed via the AR(1) representation:  de = theta * (mu - e) dt + sigma dW
+    lag = resid.shift(1).dropna()
+    delta = (resid - resid.shift(1)).dropna()
+    Z = sm.add_constant(lag.values)
+    ar = sm.OLS(delta.values, Z).fit()
+    theta = -float(ar.params[1])
+    half_life = np.log(2.0) / theta if theta > 0 else float("nan")
+
+    return True, beta, half_life
+
+
+# FILTER RULE: reject any pair whose half-life exceeds roughly one third of the
+# trading window. A 200-day half-life inside a 126-day window will be
+# force-closed before it converges, and the backtest will book that as a loss
+# that no amount of parameter tuning can remove.
+
+
+--------------------------------------------------------------------------------
+PART D - REPLICATION PITFALLS THAT CHANGE THE ANSWER
+--------------------------------------------------------------------------------
+
+1.  LOOK-AHEAD IN SIGMA. The 2-sigma trigger must use formation-period spread
+    volatility. Computing sigma over the trading period inflates results and is
+    the most common error in public replications.
+
+2.  RETURN CONVENTION. Fully-invested vs committed-capital differ by roughly 2x
+    (GGR top-20: 1.436% vs 0.805% monthly, no waiting). A replication that does
+    not state its convention cannot be compared to the paper.
+
+3.  BID-ASK BOUNCE. Executing at the closing price on the divergence day buys
+    at the bid and sells at the ask by construction. GGR's one-day wait cuts the
+    top-20 return from 1.436% to 0.895% monthly. Always report the waited number.
+
+4.  SURVIVORSHIP BIAS. The universe must be point-in-time. Using today's listed
+    names removes precisely the delistings and bankruptcies that break pairs and
+    generate the strategy's worst losses.
+
+5.  OVERLAPPING COHORTS. Six cohorts are live simultaneously. The resulting
+    serial correlation (0.24 for top-20) means OLS t-stats and sqrt(12) Sharpe
+    annualisation both overstate the result. Use Newey-West with 6 lags.
+
+6.  COST FLOOR. GGR's implied round-trip cost is 162 bp per pair (81 bp
+    effective spread), against gross profits of 437-549 bp per six months.
+    Any modern replication must model borrow cost on the short leg separately;
+    hard-to-borrow names are exactly the ones that diverge furthest.
+
+7.  UTILITY CONCENTRATION. 71% of top-20 pair stocks are utilities. If the
+    replication universe excludes utilities, expect materially different
+    results - the paper's headline is substantially a low-volatility,
+    rate-sensitive subset.

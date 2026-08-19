@@ -1,0 +1,66 @@
+{
+  "id": "time-series-momentum-futures",
+  "title": "Time Series Momentum (TSMOM) — Moskowitz, Ooi & Pedersen",
+  "slug": "time-series-momentum-futures",
+  "strategy_type": "trend-following",
+  "asset_classes": ["futures", "commodities", "fx", "indices", "fixed-income"],
+  "complexity_score": 4,
+  "execution_type": "Mechanical",
+  "requires_machine_learning": false,
+  "evidence_grade": "verified-primary",
+  "holding_period": "1 month",
+  "signal_frequency": "monthly rebalance; daily data for volatility estimation",
+  "directionality": "long-short",
+  "data_requirements": [
+    "daily futures excess returns with a documented roll convention",
+    "risk-free rate series to compute excess returns",
+    "wide cross-asset universe (equity indices, bonds, FX, commodities)",
+    "CFTC Commitments of Traders data (only for the speculator/hedger analysis)"
+  ],
+  "capacity": "high",
+  "decay_status": "partially-decayed",
+  "sources": [
+    {
+      "type": "paper",
+      "citation": "Moskowitz, T. J., Ooi, Y. H., & Pedersen, L. H. (2012). Time series momentum. Journal of Financial Economics, 104(2), 228-250.",
+      "url": "https://w4.stern.nyu.edu/facdir/lpederse/papers/TimeSeriesMomentum.pdf",
+      "verified_in_session": true
+    },
+    {
+      "type": "dataset",
+      "citation": "AQR Capital Management — Time Series Momentum: Original Paper Data (the paper's own monthly return series).",
+      "url": "https://www.aqr.com/Insights/Datasets/Time-Series-Momentum-Original-Paper-Data",
+      "verified_in_session": false
+    },
+    {
+      "type": "paper",
+      "citation": "Huang, D., Li, J., Wang, L., & Zhou, G. Time-series momentum: Is it there? Journal of Financial Economics. (Primary challenge to the result.)",
+      "url": "https://ink.library.smu.edu.sg/context/lkcsb_research/article/7520/viewcontent/Time_series_momentum_JFE_sv.pdf",
+      "verified_in_session": false
+    },
+    {
+      "type": "paper",
+      "citation": "Lim, B., Zohren, S., & Roberts, S. (2019). Enhancing Time Series Momentum Strategies Using Deep Neural Networks.",
+      "url": "https://arxiv.org/pdf/1904.04912",
+      "verified_in_session": false
+    }
+  ],
+  "related_strategies": [
+    "cross-sectional-momentum-jegadeesh-titman",
+    "momentum-crashes-daniel-moskowitz",
+    "managed-futures-carry-overlay",
+    "deep-momentum-networks"
+  ],
+  "tags": [
+    "trend-following",
+    "time-series-momentum",
+    "managed-futures",
+    "crisis-alpha",
+    "convexity",
+    "volatility-targeting",
+    "risk-parity-sizing",
+    "foundational",
+    "cross-asset"
+  ],
+  "ingested_at": "2026-08-19"
+}

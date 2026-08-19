@@ -1,0 +1,290 @@
+================================================================================
+TIME SERIES MOMENTUM (TSMOM) - Moskowitz, Ooi & Pedersen (2012)
+Reference implementation + algorithmic specification
+================================================================================
+
+This file contains:
+  PART A - Formal pseudo-code for the exact MOP rule
+  PART B - Runnable Python reference implementation (pandas/numpy)
+  PART C - Validation harness against the AQR public dataset
+  PART D - Replication pitfalls that change the answer
+
+Ground truth is available: AQR publish the paper's own monthly TSMOM return
+series at
+  https://www.aqr.com/Insights/Datasets/Time-Series-Momentum-Original-Paper-Data
+A replication that does not check against it is an unvalidated replication.
+
+--------------------------------------------------------------------------------
+PART A - PSEUDO-CODE (faithful to the paper)
+--------------------------------------------------------------------------------
+
+CONSTANTS
+    LOOKBACK_MONTHS      = 12       # sign of trailing 12-month excess return
+    HOLDING_MONTHS       = 1        # rebalance monthly
+    TARGET_VOL           = 0.40     # 40% annualised vol PER POSITION
+    ANNUALISATION_DAYS   = 261      # MOP's scalar, not 252
+    VOL_COM_DAYS         = 60       # centre of mass of the EWMA weights
+
+DERIVED
+    # Centre of mass 60 days:  delta / (1 - delta) = 60  =>  delta = 60/61
+    DELTA = 60.0 / 61.0             # ~= 0.983607
+
+PROCEDURE ex_ante_volatility(daily_excess_returns r, up to and including t-1):
+    # Exponentially weighted variance of daily returns, annualised.
+    #
+    #   sigma_t^2 = 261 * SUM_i (1 - delta) * delta^i * (r_{t-1-i} - rbar_t)^2
+    #
+    # where rbar_t is the exponentially weighted mean computed the same way.
+    #
+    # CRITICAL: the estimate uses data through t-1 ONLY and is applied to the
+    # time-t return. MOP impose this explicitly to exclude look-ahead bias.
+    rbar    = EWMA_mean(r, delta)
+    var_ewm = EWMA_mean((r - rbar)^2, delta)
+    RETURN sqrt(ANNUALISATION_DAYS * var_ewm)
+
+PROCEDURE tsmom_position(instrument s, month t):
+    past_return = cumulative excess return of s over months [t-12, t]
+    signal      = sign(past_return)            # +1, -1, or 0
+    sigma       = ex_ante_volatility(s, as of end of month t)
+    RETURN signal * (TARGET_VOL / sigma)       # units of the instrument
+
+PROCEDURE tsmom_portfolio(month t):
+    # Equal-weight across every instrument with data available this month.
+    # S_t VARIES OVER TIME - instruments enter as their data begins.
+    available = instruments with >= 12 months of history at t
+    r_portfolio(t -> t+1) =
+        (1 / |available|) * SUM over s in available of
+            tsmom_position(s, t) * excess_return(s, t -> t+1)
+
+    # With TARGET_VOL = 40% per position and 58 imperfectly correlated
+    # instruments, the realised portfolio volatility is ~12% annualised
+    # over 1985-2009. The 40% is a scaling constant, NOT a risk limit.
+
+--------------------------------------------------------------------------------
+PART B - PYTHON REFERENCE IMPLEMENTATION
+--------------------------------------------------------------------------------
+
+"""
+Time series momentum, Moskowitz, Ooi & Pedersen (2012).
+
+Dependencies: numpy, pandas
+Inputs:
+    daily_excess   -> pd.DataFrame, DatetimeIndex (daily), columns = instruments,
+                      values = DAILY EXCESS returns (over the risk-free rate).
+Everything downstream is derived from that single input.
+"""
+
+import numpy as np
+import pandas as pd
+from dataclasses import dataclass
+
+
+@dataclass
+class TSMOMConfig:
+    lookback_months: int = 12
+    holding_months: int = 1
+    target_vol: float = 0.40
+    annualisation_days: int = 261      # MOP use 261, not 252
+    vol_com_days: float = 60.0         # centre of mass in days
+    min_history_days: int = 252        # require a year before trading
+
+
+def ex_ante_volatility(daily_excess: pd.DataFrame,
+                       cfg: TSMOMConfig) -> pd.DataFrame:
+    """Annualised ex-ante volatility, MOP equation (1).
+
+    Centre of mass 60 days => delta = 60/61 ~= 0.9836.
+    pandas' ewm(com=...) uses exactly this parameterisation, so com=60 is a
+    direct translation of the paper rather than an approximation.
+
+    Returns a frame ALREADY SHIFTED so that row t holds the estimate formed
+    from data through t-1 — apply it to time-t returns with no further lag.
+    """
+    ew_mean = daily_excess.ewm(com=cfg.vol_com_days, adjust=False).mean()
+    dev_sq = (daily_excess - ew_mean) ** 2
+    ew_var = dev_sq.ewm(com=cfg.vol_com_days, adjust=False).mean()
+    sigma = np.sqrt(cfg.annualisation_days * ew_var)
+    return sigma.shift(1)              # <-- the no-look-ahead guarantee
+
+
+def monthly_excess_returns(daily_excess: pd.DataFrame) -> pd.DataFrame:
+    """Compound daily excess returns to month-end."""
+    return (1.0 + daily_excess).resample("ME").prod() - 1.0
+
+
+def build_tsmom(daily_excess: pd.DataFrame, cfg: TSMOMConfig = TSMOMConfig()):
+    """Return (portfolio_monthly, per_instrument_monthly, positions).
+
+    portfolio_monthly     -> pd.Series of monthly TSMOM portfolio returns
+    per_instrument_monthly-> pd.DataFrame, the TSMOM return of each instrument
+    positions             -> pd.DataFrame, the sizing multiplier actually used
+    """
+    sigma_daily = ex_ante_volatility(daily_excess, cfg)
+
+    # Month-end snapshot of the volatility estimate (already lagged).
+    sigma_m = sigma_daily.resample("ME").last()
+    monthly = monthly_excess_returns(daily_excess)
+
+    # --- SIGNAL: sign of the trailing 12-month cumulative excess return ------
+    # rolling(12).apply of a product is the literal reading of the paper.
+    cum_12m = (1.0 + monthly).rolling(cfg.lookback_months).apply(
+        np.prod, raw=True) - 1.0
+    signal = np.sign(cum_12m)
+
+    # --- POSITION SIZE: inverse ex-ante volatility, 40% vol target ----------
+    with np.errstate(divide="ignore", invalid="ignore"):
+        size = cfg.target_vol / sigma_m
+    size = size.replace([np.inf, -np.inf], np.nan)
+
+    positions = (signal * size)
+
+    # --- REALISED RETURN: position held at t earns the t -> t+1 return ------
+    # shift(1) on positions aligns "decided at end of month t" with
+    # "return realised during month t+1". Getting this backwards is the
+    # classic one-period look-ahead that inflates every trend backtest.
+    per_instrument = positions.shift(1) * monthly
+
+    # --- PORTFOLIO: equal-weight across instruments AVAILABLE that month ----
+    # Dividing by a fixed 58 instead of the live count is wrong for the early
+    # sample, where many contracts have no data yet.
+    portfolio = per_instrument.mean(axis=1, skipna=True)
+
+    return portfolio, per_instrument, positions
+
+
+def performance_summary(monthly_returns: pd.Series) -> dict:
+    """Metrics the paper reports, plus the ones it does not.
+
+    MOP report gross annualised Sharpe and regression alphas. Drawdown,
+    Sortino and win rate are NOT in the paper — they are computed here
+    because a trading desk needs them, and they should be labelled as
+    replication output, never cited to MOP.
+    """
+    r = monthly_returns.dropna()
+    if r.empty:
+        return {}
+
+    ann_return = (1.0 + r).prod() ** (12.0 / len(r)) - 1.0
+    ann_vol = r.std(ddof=1) * np.sqrt(12.0)
+    sharpe = ann_return / ann_vol if ann_vol > 0 else np.nan
+
+    downside = r[r < 0]
+    downside_vol = downside.std(ddof=1) * np.sqrt(12.0) if len(downside) > 1 else np.nan
+    sortino = ann_return / downside_vol if downside_vol and downside_vol > 0 else np.nan
+
+    equity = (1.0 + r).cumprod()
+    drawdown = equity / equity.cummax() - 1.0
+
+    gains = r[r > 0].sum()
+    losses = -r[r < 0].sum()
+
+    return {
+        "annualised_return": float(ann_return),
+        "annualised_volatility": float(ann_vol),
+        "sharpe_ratio": float(sharpe),
+        "sortino_ratio": float(sortino) if sortino == sortino else None,
+        "max_drawdown": float(drawdown.min()),
+        "win_rate_monthly": float((r > 0).mean()),
+        "profit_factor": float(gains / losses) if losses > 0 else None,
+        "n_months": int(len(r)),
+        "_note": "Sharpe here is NET of nothing - no costs modelled, as in MOP.",
+    }
+
+
+def market_convexity_test(tsmom_quarterly: pd.Series,
+                          market_quarterly: pd.Series):
+    """Reproduce the 'time series momentum smile' (Table 3, Panel C).
+
+    Regress TSMOM on the market and the market SQUARED. MOP find an
+    insignificant linear beta and a squared coefficient of 1.99 (t = 3.88).
+    A replication that does not recover a positive, significant squared term
+    has broken the strategy's defining property.
+    """
+    import statsmodels.api as sm
+
+    df = pd.concat([tsmom_quarterly, market_quarterly], axis=1).dropna()
+    df.columns = ["tsmom", "mkt"]
+    X = sm.add_constant(np.column_stack([df["mkt"], df["mkt"] ** 2]))
+    fit = sm.OLS(df["tsmom"].values, X).fit()
+    return {
+        "alpha": float(fit.params[0]),
+        "beta_market": float(fit.params[1]),
+        "beta_market_squared": float(fit.params[2]),
+        "t_market": float(fit.tvalues[1]),
+        "t_market_squared": float(fit.tvalues[2]),
+    }
+
+
+--------------------------------------------------------------------------------
+PART C - VALIDATION HARNESS
+--------------------------------------------------------------------------------
+
+# Do not trust a TSMOM replication until it clears these four checks.
+
+CHECK 1 - CORRELATION WITH GROUND TRUTH
+    Download the AQR "Time Series Momentum: Original Paper Data" series.
+    Correlate your monthly portfolio return against theirs over 1985-2009.
+    Expect a high correlation. A correlation below ~0.9 means a construction
+    error, not a data difference.
+
+CHECK 2 - PORTFOLIO VOLATILITY LANDS NEAR 12%
+    With TARGET_VOL = 40% per position across the full 58-instrument universe,
+    the realised portfolio volatility should be ~12% annualised over
+    1985-2009. Materially higher means the diversification is not working -
+    usually too few instruments, or a correlated subset.
+
+CHECK 3 - EVERY INSTRUMENT IS POSITIVE
+    Compute the per-instrument TSMOM Sharpe. MOP find all 58 positive and 52
+    significant at 5%. If a meaningful fraction of your instruments are
+    negative, inspect the signal alignment first (see PITFALL 1).
+
+CHECK 4 - THE SMILE IS PRESENT
+    Run market_convexity_test on quarterly data. The squared-market
+    coefficient must be positive and significant (MOP: 1.99, t = 3.88).
+    This is the property that makes trend following a crisis diversifier;
+    if it is absent, the replication is not TSMOM regardless of its Sharpe.
+
+
+--------------------------------------------------------------------------------
+PART D - REPLICATION PITFALLS THAT CHANGE THE ANSWER
+--------------------------------------------------------------------------------
+
+1.  SIGNAL/RETURN MISALIGNMENT. The signal formed at the end of month t earns
+    the return of month t+1. Multiplying the signal by the SAME month's return
+    is a one-period look-ahead and produces a spectacular, fake Sharpe. This is
+    the single most common error in trend-following backtests.
+
+2.  VOLATILITY LOOK-AHEAD. sigma must be estimated through t-1 and applied to
+    time-t returns. MOP impose this explicitly. Using contemporaneous
+    volatility leaks information about the size of the move being predicted.
+
+3.  EXCESS RETURNS, NOT RAW RETURNS. The signal is the sign of the past
+    12-month EXCESS return over the risk-free rate. In a high-rate regime the
+    distinction flips signs on low-drift instruments. Futures returns are
+    naturally close to excess returns; cash instruments are not.
+
+4.  THE 261 SCALAR. MOP annualise with 261, not 252. Trivial in magnitude,
+    but it is what the paper does, and matching the paper exactly removes one
+    source of ambiguity when a replication disagrees.
+
+5.  FIXED DIVISOR IN THE PORTFOLIO AVERAGE. Divide by the number of
+    instruments AVAILABLE that month, not by 58. Instruments enter as their
+    data begins; a fixed divisor silently damps the early sample.
+
+6.  CONTRACT ROLL METHODOLOGY. The paper uses futures returns, which requires
+    a roll convention. Back-adjusted continuous series computed differently
+    (ratio vs difference adjustment, roll date choice) produce materially
+    different 12-month cumulative returns and therefore different SIGNS near
+    the zero boundary. Document the roll convention used.
+
+7.  QUOTING A PRECISE MAIN-SAMPLE SHARPE AS "THE PAPER'S". The paper states
+    the diversified Sharpe is "greater than one" and gives 1.1 for the
+    1966-1985 extension. A specific decimal for 1985-2009 is a computed
+    figure. Label it as your own replication output.
+
+8.  COSTS. The published Sharpe ratios are GROSS (Figure 2 caption is
+    explicit). Monthly rebalancing of liquid futures is cheap, but a live
+    system must model commission, bid-ask, roll cost, and the market impact
+    of the inverse-vol sizing, which takes its LARGEST positions in the
+    LOWEST-volatility instruments - typically the ones with the tightest
+    spreads, but also where a large notional is needed to reach target risk.

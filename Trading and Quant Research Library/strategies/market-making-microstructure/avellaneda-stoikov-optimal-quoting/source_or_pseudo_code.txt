@@ -1,0 +1,319 @@
+================================================================================
+AVELLANEDA-STOIKOV OPTIMAL MARKET MAKING (2008)
+Reference implementation + algorithmic specification
+================================================================================
+
+This file contains:
+  PART A - Formal pseudo-code for the quoting rule
+  PART B - Runnable Python simulator that reproduces the paper's Tables 1-3
+  PART C - Parameter calibration from live fill data
+  PART D - Production hardening: what the paper omits and you must add
+
+The paper's own numerical experiment is fully specified, so PART B is a
+complete reproduction rather than an illustration. Run it and compare against
+Table 1 (gamma=0.1): Inventory 65.0 profit / 6.6 std, Symmetric 68.4 / 12.7.
+
+--------------------------------------------------------------------------------
+PART A - PSEUDO-CODE
+--------------------------------------------------------------------------------
+
+PARAMETERS
+    sigma   # mid-price volatility
+    gamma   # risk aversion (CARA coefficient)
+    k       # order-arrival decay: lambda(delta) = A * exp(-k * delta)
+    A       # order-arrival base intensity
+    T       # terminal time
+    q       # current inventory (signed; positive = long)
+
+PROCEDURE quote(mid_price s, inventory q, time t):
+
+    tau = T - t                             # time remaining
+
+    # ---- (1) RESERVATION PRICE --------------------------------------------
+    # The indifference price given current inventory. Long inventory pushes
+    # this BELOW the mid, so both quotes drop and the book helps you sell.
+    r = s - q * gamma * sigma^2 * tau
+
+    # ---- (2) OPTIMAL TOTAL SPREAD -----------------------------------------
+    #   term 1: inventory risk       -> widen when volatile / risk-averse
+    #   term 2: order-arrival value  -> depends on fill-rate sensitivity k
+    # NOTE: the spread does NOT depend on q. Inventory moves the CENTRE of
+    # the quotes, not their WIDTH. This is a consequence of the exponential
+    # arrival assumption.
+    spread = gamma * sigma^2 * tau + (2 / gamma) * ln(1 + gamma / k)
+
+    # ---- (3) QUOTES --------------------------------------------------------
+    bid = r - spread / 2
+    ask = r + spread / 2
+
+    RETURN bid, ask
+
+PROCEDURE simulate_one_path():
+    s = s0 ; q = 0 ; cash = 0
+    FOR t in 0, dt, 2*dt, ..., T:
+        bid, ask = quote(s, q, t)
+
+        delta_b = s - bid                   # distance from mid
+        delta_a = ask - s
+
+        # Fill probabilities over this step
+        P(bid filled) = A * exp(-k * delta_b) * dt
+        P(ask filled) = A * exp(-k * delta_a) * dt
+
+        IF bid filled: q += 1 ; cash -= bid
+        IF ask filled: q -= 1 ; cash += ask
+
+        s += sigma * sqrt(dt) * N(0,1)      # mid-price diffuses
+
+    RETURN cash + q * s                     # mark inventory to final mid
+
+--------------------------------------------------------------------------------
+PART B - PYTHON REFERENCE SIMULATOR
+--------------------------------------------------------------------------------
+
+"""
+Avellaneda-Stoikov (2008) market-making simulator.
+
+Reproduces Tables 1-3 of the paper. Dependencies: numpy only.
+
+Paper parameters: s0=100, T=1, sigma=2, dt=0.005, q0=0, k=1.5, A=140,
+gamma in {0.01, 0.1, 1}, 1000 simulation paths.
+"""
+
+import numpy as np
+from dataclasses import dataclass
+
+
+@dataclass
+class ASParams:
+    s0: float = 100.0        # initial mid-price
+    T: float = 1.0           # terminal time
+    sigma: float = 2.0       # mid-price volatility
+    dt: float = 0.005        # time step
+    gamma: float = 0.1       # risk aversion
+    k: float = 1.5           # order-arrival decay
+    A: float = 140.0         # order-arrival base intensity
+    q0: int = 0              # initial inventory
+
+
+def reservation_price(s: float, q: float, tau: float, p: ASParams) -> float:
+    """r(s, q, t) = s - q * gamma * sigma^2 * (T - t).   [paper eq. 29]"""
+    return s - q * p.gamma * (p.sigma ** 2) * tau
+
+
+def optimal_spread(tau: float, p: ASParams) -> float:
+    """delta_a + delta_b = gamma*sigma^2*tau + (2/gamma)*ln(1 + gamma/k).
+
+    [paper eq. 30]  Independent of inventory q.
+    """
+    return (p.gamma * (p.sigma ** 2) * tau
+            + (2.0 / p.gamma) * np.log(1.0 + p.gamma / p.k))
+
+
+def simulate(p: ASParams, n_paths: int = 1000, symmetric: bool = False,
+             fixed_spread: float | None = None, seed: int | None = 0):
+    """Run n_paths simulations.
+
+    symmetric=False -> the 'inventory' strategy: quotes centred on the
+                       reservation price.
+    symmetric=True  -> the benchmark: same spread WIDTH, but centred on the
+                       mid-price regardless of inventory. Pass the inventory
+                       strategy's realised average spread as fixed_spread so
+                       the comparison isolates skewing from width, exactly as
+                       the paper does.
+
+    Returns dict with profit array, final inventory array, and mean spread.
+    """
+    rng = np.random.default_rng(seed)
+    n_steps = int(round(p.T / p.dt))
+
+    profits = np.zeros(n_paths)
+    final_q = np.zeros(n_paths)
+    spread_accumulator = 0.0
+    spread_count = 0
+
+    sqrt_dt = np.sqrt(p.dt)
+
+    for path in range(n_paths):
+        s = p.s0
+        q = float(p.q0)
+        cash = 0.0
+
+        for step in range(n_steps):
+            t = step * p.dt
+            tau = p.T - t
+
+            if symmetric:
+                centre = s
+                spread = fixed_spread if fixed_spread is not None else optimal_spread(tau, p)
+            else:
+                centre = reservation_price(s, q, tau, p)
+                spread = optimal_spread(tau, p)
+
+            spread_accumulator += spread
+            spread_count += 1
+
+            bid = centre - spread / 2.0
+            ask = centre + spread / 2.0
+
+            # Distances from the CURRENT MID drive the arrival intensities.
+            # Using distance from the reservation price here is a common bug:
+            # the market fills you relative to the market's mid, not relative
+            # to your private indifference price.
+            delta_b = s - bid
+            delta_a = ask - s
+
+            # Clamp: a quote through the mid would imply an intensity above A.
+            lam_b = p.A * np.exp(-p.k * max(delta_b, 0.0))
+            lam_a = p.A * np.exp(-p.k * max(delta_a, 0.0))
+
+            # One fill per side per step at most (dt is chosen small enough
+            # that multiple arrivals are unlikely - the paper's own caveat).
+            if rng.random() < lam_b * p.dt:
+                q += 1.0
+                cash -= bid
+            if rng.random() < lam_a * p.dt:
+                q -= 1.0
+                cash += ask
+
+            # Mid-price diffuses: dS = sigma dW
+            s += p.sigma * sqrt_dt * rng.standard_normal()
+
+        profits[path] = cash + q * s          # mark inventory to final mid
+        final_q[path] = q
+
+    return {
+        "profit_mean": float(profits.mean()),
+        "profit_std": float(profits.std(ddof=1)),
+        "final_q_mean": float(final_q.mean()),
+        "final_q_std": float(final_q.std(ddof=1)),
+        "avg_spread": spread_accumulator / spread_count,
+        "profits": profits,
+        "final_q": final_q,
+    }
+
+
+def reproduce_paper_tables(n_paths: int = 1000, seed: int = 0):
+    """Reproduce Tables 1-3: gamma in {0.1, 0.01, 1}.
+
+    Published values (Avellaneda & Stoikov 2008):
+        Table 1, gamma=0.1 : Inventory 1.49 / 65.0 / 6.6 / 0.08 / 2.9
+                             Symmetric 1.49 / 68.4 / 12.7 / 0.26 / 8.4
+        Table 2, gamma=0.01: Inventory 1.35 / 68.6 / 8.7 / 0.12 / 5.1
+                             Symmetric 1.35 / 68.8 / 12.8 / 0.09 / 8.7
+        Table 3, gamma=1   : Inventory 3.02 / 31.4 / 5.0 / 0.02 / 1.7
+                             Symmetric 3.02 / 44.0 / 11.0 / 0.00 / 5.1
+    """
+    rows = []
+    for gamma, table in [(0.1, "Table 1"), (0.01, "Table 2"), (1.0, "Table 3")]:
+        p = ASParams(gamma=gamma)
+
+        inv = simulate(p, n_paths=n_paths, symmetric=False, seed=seed)
+        # The benchmark quotes the inventory strategy's AVERAGE spread.
+        sym = simulate(p, n_paths=n_paths, symmetric=True,
+                       fixed_spread=inv["avg_spread"], seed=seed + 1)
+
+        rows.append((table, gamma, "Inventory", inv))
+        rows.append((table, gamma, "Symmetric", sym))
+
+    header = f"{'Table':<9}{'gamma':>7}{'strategy':>12}{'spread':>9}{'profit':>9}{'std(P)':>9}{'q':>8}{'std(q)':>9}"
+    print(header)
+    print("-" * len(header))
+    for table, gamma, name, res in rows:
+        print(f"{table:<9}{gamma:>7}{name:>12}"
+              f"{res['avg_spread']:>9.2f}{res['profit_mean']:>9.1f}"
+              f"{res['profit_std']:>9.1f}{res['final_q_mean']:>8.2f}"
+              f"{res['final_q_std']:>9.1f}")
+    return rows
+
+
+if __name__ == "__main__":
+    reproduce_paper_tables()
+
+
+--------------------------------------------------------------------------------
+PART C - CALIBRATING A AND k FROM LIVE DATA
+--------------------------------------------------------------------------------
+
+# sigma is easy. A and k are the parameters that decide whether this works,
+# and the paper does not tell you how to estimate them. Method:
+#
+# 1. Post (or record) quotes at a range of distances delta from the mid.
+# 2. Bucket by delta and measure the empirical fill rate lambda_hat(delta)
+#    in fills per unit time.
+# 3. lambda(delta) = A * exp(-k * delta)  =>  ln lambda = ln A - k * delta.
+#    Regress ln(lambda_hat) on delta: slope = -k, intercept = ln A.
+#
+# In code:
+#
+#     import numpy as np
+#     deltas = np.array([...])          # quote distances actually posted
+#     fill_rates = np.array([...])      # fills per unit time at each distance
+#     mask = fill_rates > 0
+#     slope, intercept = np.polyfit(deltas[mask], np.log(fill_rates[mask]), 1)
+#     k = -slope
+#     A = np.exp(intercept)
+#
+# CAUTIONS:
+#   - Estimate per instrument, per session, per volatility regime. k in a
+#     calm hour is not k in a news minute.
+#   - Fill data is censored: you only observe fills at distances you actually
+#     quoted. Quoting only tight means you cannot identify the far tail.
+#   - Trade size matters. The exponential intensity is a size-blind
+#     approximation of a power-law size distribution.
+#   - Re-estimate continuously. Stale A and k are as dangerous as stale sigma.
+
+
+--------------------------------------------------------------------------------
+PART D - PRODUCTION HARDENING (what the paper omits)
+--------------------------------------------------------------------------------
+
+1.  ADVERSE SELECTION - THE BIG ONE. The model treats every fill as
+    uninformative. Real fills cluster right before the price moves against
+    you. Minimum viable defence: compute order-flow imbalance from the book
+    and skew or widen against the direction of aggressive flow. Without this
+    layer, a live A-S quoter typically bleeds to informed traders even while
+    the simulation looks healthy. See Cartea-Jaimungal for the principled
+    treatment.
+
+2.  THE TERMINAL TIME PROBLEM. Both the spread's inventory term and the
+    reservation-price shift are proportional to (T - t). At a session
+    boundary they go to ZERO: the quoter tightens to its minimum and stops
+    skewing exactly when it should be flattening. Fixes:
+      (a) roll T continuously - treat it as a fixed lookahead window
+          (tau = const), which is the usual practitioner choice; or
+      (b) use the infinite-horizon stationary variant the paper sketches.
+    Never let tau decay to zero on a live quoter.
+
+3.  HARD INVENTORY LIMITS. Nothing bounds q. Add caps: at |q| >= q_max,
+    stop quoting the side that would increase the position. Guean-Lehalle-
+    Fernandez-Tapia solve the bounded-inventory problem in closed form and
+    should be preferred if you need the position bound to be optimal rather
+    than bolted on.
+
+4.  DISCRETE TICKS AND QUEUE POSITION. The model produces a continuous
+    price. Real books have ticks, and fill probability depends far more on
+    queue position than on a smooth intensity function. Round quotes to the
+    tick, and model the queue explicitly in tight-tick markets.
+
+5.  VOLATILITY REGIME SWITCHING. sigma enters both formulas quadratically
+    (sigma^2). A stale sigma during a volatility spike means quoting far too
+    tight into exactly the conditions that punish it. Use a fast-reacting
+    estimator and widen aggressively on realised-vol jumps.
+
+6.  JUMP PROTECTION. Brownian motion has no jumps; markets do. Add explicit
+    protection: cancel-on-jump, a maximum loss per interval, and a
+    circuit-breaker that stops quoting when realised volatility exceeds a
+    threshold.
+
+7.  ASYMMETRIC ARRIVAL RATES. The paper assumes the same A and k on both
+    sides. Real books are asymmetric, especially in trending markets.
+    Estimate A_bid, k_bid, A_ask, k_ask separately.
+
+8.  FEES AND REBATES. Maker rebates can exceed the modelled spread edge in
+    some venues and invert the economics entirely. Model the fee schedule as
+    part of the effective spread before optimising anything else.
+
+9.  LATENCY. Between computing a quote and it resting in the book, the mid
+    has moved. Model this delay explicitly, or your backtest will fill you
+    at prices that were never available.
