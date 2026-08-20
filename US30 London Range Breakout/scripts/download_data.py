@@ -21,7 +21,8 @@ START = datetime(2023, 7, 1, tzinfo=timezone.utc)   # ~3 years
 WINDOW_H = 8
 
 # plausible display-price ranges for divisor auto-detection
-RANGES = {"US30": (25000, 60000), "NAS100": (8000, 35000), "US500": (3000, 12000)}
+RANGES = {"US30": (25000, 60000), "NAS100": (8000, 35000), "US500": (3000, 12000),
+          "GER40": (12000, 40000), "UK100": (6000, 15000)}
 
 
 def detect_div(name, raw):

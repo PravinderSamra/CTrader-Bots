@@ -22,7 +22,7 @@ _conn: Optional[http.client.HTTPSConnection] = None
 _sid: Optional[str] = None
 
 # Confirmed enabled symbol ids on this Pepperstone UK GBP spread-bet demo account.
-SYMBOLS = {"US30": 219, "NAS100": 205, "US500": 220}
+SYMBOLS = {"US30": 219, "NAS100": 205, "US500": 220, "GER40": 200, "UK100": 217}
 
 
 def _post(payload: dict, session_id: Optional[str] = None):
