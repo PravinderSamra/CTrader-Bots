@@ -1,0 +1,310 @@
+================================================================================
+CARRY ACROSS ASSET CLASSES
+Koijen, Moskowitz, Pedersen & Vrugt (2018), JFE 127(2), 197-225
+================================================================================
+
+PART A - Pseudo-code: carry by asset class, then the portfolio
+PART B - Python reference implementation
+PART C - Benchmark values from the paper
+PART D - Pitfalls
+
+Sibling entry: ../../trend-following/time-series-momentum-futures/
+Carry and trend are the two great cross-asset systematic families, and their
+payoffs are close to mirror images - carry is concave and crisis-negative,
+trend is convex and crisis-positive.
+
+--------------------------------------------------------------------------------
+PART A - PSEUDO-CODE
+--------------------------------------------------------------------------------
+
+# ---- THE DEFINITION - ONE FORMULA FOR EVERY ASSET CLASS --------------------
+PROCEDURE carry(spot S, futures F):
+    # Fully collateralised position: capital committed = futures price.
+    RETURN (S - F) / F
+    # Excess return computed consistently: r_{t+1} = (F_{t+1} - F_t) / F_t
+    #
+    # Carry is EX ANTE AND MODEL-FREE: observable today from prices. No
+    # regression, no fitted parameters, no estimation error. That is rare in
+    # this library and is a genuine practical advantage.
+
+# ---- WHAT "SPOT" AND "FUTURES" MEAN PER ASSET CLASS ------------------------
+#   Currencies    interest rate differential (the classic carry trade)
+#   Global bonds  yield curve slope + ROLL DOWN (price change as the bond
+#                 ages along the curve) - the roll-down piece is the part
+#                 practitioners most often omit
+#   Commodities   basis / convenience yield net of storage
+#   Equities      forward-looking dividend yield from index futures
+#   Treasuries    carry across the maturity cross-section
+#   Credit        spread carry
+#   Options       carry across moneyness
+
+# ---- THE CROSS-SECTIONAL STRATEGY (the stronger form) ----------------------
+PROCEDURE cross_sectional_carry(assets, month t):
+    FOR each asset i:  c_i = carry(S_i, F_i)
+    rank assets by c_i
+    # Rank-weighted, dollar-neutral within the asset class.
+    w_i = (rank(c_i) - mean_rank) , then scale so SUM|w_i| = 2
+    # Where volatilities differ a lot in the cross section, scale positions
+    # "to put the various assets on a comparable scale" (i.e. inverse-vol).
+    RETURN w
+
+# ---- THE TIMING STRATEGY (the weaker form) ---------------------------------
+PROCEDURE carry_timing(asset i, month t):
+    # Directional, not cross-sectional: long when carry is positive or above
+    # its own historical mean.
+    RETURN +1 if c_i > mean(c_i history) else -1
+    # Sharpe 0.6 average vs 0.8 for cross-sectional - the cross-sectional
+    # form is the better trade.
+
+# ---- THE DIVERSIFIED PORTFOLIO ---------------------------------------------
+PROCEDURE global_carry(all_asset_classes, t):
+    # Equal risk across asset classes. This step is where the Sharpe goes
+    # from 0.8 (average single class) to 1.2 (diversified).
+    RETURN weighted combination of each class's carry strategy
+
+--------------------------------------------------------------------------------
+PART B - PYTHON REFERENCE IMPLEMENTATION
+--------------------------------------------------------------------------------
+
+"""
+Carry across asset classes.
+
+Dependencies: numpy, pandas
+Inputs: spot and futures price panels (DataFrames, month-end index,
+        columns = instruments) per asset class.
+"""
+
+import numpy as np
+import pandas as pd
+
+
+def carry(spot: pd.DataFrame, futures: pd.DataFrame) -> pd.DataFrame:
+    """C_t = (S_t - F_t) / F_t for a fully collateralised position."""
+    return (spot - futures) / futures
+
+
+def bond_carry(yield_long: pd.Series, yield_short: pd.Series,
+               duration: float) -> pd.Series:
+    """Bond carry = yield-curve slope + roll-down.
+
+    The roll-down term captures the price change as the bond ages along a
+    static curve. OMITTING IT understates bond carry systematically - it is
+    the piece that distinguishes this measure from a plain slope signal.
+    """
+    slope = yield_long - yield_short
+    roll_down = duration * slope        # approximate: price gain from rolling
+    return slope + roll_down
+
+
+def excess_returns(futures: pd.DataFrame) -> pd.DataFrame:
+    """r_{t+1} = (F_{t+1} - F_t)/F_t, consistent with the carry definition."""
+    return futures.pct_change()
+
+
+def cross_sectional_weights(carry_df: pd.DataFrame,
+                            vol: pd.DataFrame = None) -> pd.DataFrame:
+    """Rank-weighted, dollar-neutral long-short weights from carry.
+
+    Long high carry, short low carry. Weights sum to zero and gross exposure
+    is normalised to 2 (i.e. 100% long, 100% short).
+
+    vol: optional volatility panel for inverse-vol scaling, used where
+    "asset volatilities vary significantly in the cross section".
+    """
+    ranks = carry_df.rank(axis=1)
+    n = carry_df.notna().sum(axis=1)
+    centred = ranks.sub(ranks.mean(axis=1), axis=0)
+
+    if vol is not None:
+        centred = centred / vol.reindex_like(centred).replace(0.0, np.nan)
+
+    gross = centred.abs().sum(axis=1).replace(0.0, np.nan)
+    w = centred.div(gross, axis=0) * 2.0
+    return w.where(n.gt(1), 0.0)
+
+
+def timing_weights(carry_df: pd.DataFrame, lookback: int = 60) -> pd.DataFrame:
+    """Directional: long when carry exceeds its own trailing mean.
+
+    The paper's weaker variant (Sharpe 0.6 average vs 0.8 cross-sectional).
+    Unlike the cross-sectional form this is NOT dollar-neutral - the book can
+    be net long or net short every asset at once, like TSMOM.
+    """
+    trailing = carry_df.rolling(lookback, min_periods=12).mean()
+    return np.sign(carry_df - trailing).fillna(0.0)
+
+
+def strategy_returns(weights: pd.DataFrame, rets: pd.DataFrame) -> pd.Series:
+    """Weights decided at t earn the return of t+1.
+
+    shift(1) is the no-look-ahead guarantee. Multiplying weights by the SAME
+    month's return is the classic one-period look-ahead and inflates every
+    factor backtest.
+    """
+    aligned = weights.shift(1).reindex_like(rets)
+    return (aligned * rets).sum(axis=1, min_count=1)
+
+
+def diversified_carry(class_returns: dict, target_vol: float = 0.10,
+                      window: int = 36) -> pd.Series:
+    """Combine asset-class carry strategies at equal risk.
+
+    THIS STEP IS WHERE THE SHARPE IMPROVEMENT LIVES: 0.8 average within an
+    asset class, 1.2 for the diversified portfolio.
+    """
+    df = pd.DataFrame(class_returns)
+    vol = df.rolling(window, min_periods=12).std() * np.sqrt(12)
+    w = (target_vol / vol).replace([np.inf, -np.inf], np.nan)
+    w = w.div(w.sum(axis=1), axis=0)
+    return (w.shift(1) * df).sum(axis=1, min_count=1)
+
+
+def carry_beta(returns: pd.Series, carry_signal: pd.Series) -> dict:
+    """Regress future returns on carry: the predictive coefficient.
+
+    THE COEFFICIENT'S MAGNITUDE IS THE ECONOMICALLY INTERESTING PART:
+        > 1  carry predicts ADDITIONAL price appreciation on top of the carry
+             (paper: global equities, global bonds, credit)
+        < 1  the market takes back part of the carry, but not all
+             (paper: commodities, options)
+    Positive in EVERY asset class the paper studies.
+    """
+    df = pd.concat([returns, carry_signal], axis=1).dropna()
+    if len(df) < 24:
+        return {}
+    y = df.iloc[:, 0].values
+    x = df.iloc[:, 1].values
+    X = np.column_stack([np.ones(len(x)), x])
+    coef, *_ = np.linalg.lstsq(X, y, rcond=None)
+    resid = y - X @ coef
+    dof = max(len(y) - 2, 1)
+    se = np.sqrt(np.diag((resid @ resid) / dof * np.linalg.inv(X.T @ X)))
+    return {"alpha": float(coef[0]), "beta": float(coef[1]),
+            "t_beta": float(coef[1] / se[1]) if se[1] > 0 else np.nan,
+            "interpretation": ("carry predicts extra appreciation"
+                               if coef[1] > 1 else
+                               "market takes back part of the carry")}
+
+
+def drawdown_episodes(returns: pd.Series, n: int = 3, window: int = 12):
+    """Identify the worst multi-month episodes - the paper's "carry drawdowns".
+
+    The paper's three: Aug 1972-Sep 1975, Mar 1980-Jun 1982, Aug 2008-Feb 2009,
+    all coinciding with major global recessions.
+    """
+    roll = returns.rolling(window).sum().dropna()
+    worst = roll.nsmallest(n)
+    return [{"end": str(d), "cumulative_return": float(v)}
+            for d, v in worst.items()]
+
+
+def joint_drawdown_check(class_returns: dict, window: int = 12) -> dict:
+    """THE RISK CHECK THIS ENTRY EXISTS FOR.
+
+    The paper warns that monthly correlations between carry strategies are
+    modest but CONCEAL strong low-frequency co-movement: during carry
+    drawdowns every strategy fails together.
+
+    Compare the mean pairwise correlation of MONTHLY returns against that of
+    ROLLING-12-MONTH returns. If the low-frequency correlation is materially
+    higher, your monthly covariance matrix is understating joint tail risk.
+    """
+    df = pd.DataFrame(class_returns).dropna(how="all")
+    monthly = df.corr().values
+    low_freq = df.rolling(window).sum().dropna().corr().values
+
+    def _mean_offdiag(m):
+        n = m.shape[0]
+        if n < 2:
+            return np.nan
+        iu = np.triu_indices(n, 1)
+        return float(np.nanmean(m[iu]))
+
+    mc, lc = _mean_offdiag(monthly), _mean_offdiag(low_freq)
+    return {
+        "mean_monthly_correlation": mc,
+        "mean_low_frequency_correlation": lc,
+        "ratio": lc / mc if mc and mc != 0 else np.nan,
+        "warning": ("low-frequency correlation materially exceeds monthly - "
+                    "size tail risk on the former"
+                    if (mc and lc and lc > 1.3 * mc) else "no large gap detected"),
+    }
+
+
+--------------------------------------------------------------------------------
+PART C - BENCHMARK VALUES FROM THE PAPER
+--------------------------------------------------------------------------------
+
+#  DATA (all series end September 2012):
+#    Global equities     13 country index futures         from Mar 1988
+#    Currencies          20 FX forwards                   from Nov 1983
+#    Commodities         24 commodity futures             from Jan 1980
+#    Global fixed income 10 government bonds              from Nov 1983
+#    US Treasuries       CRSP portfolios, 6 maturity buckets   from Aug 1971
+#    Credit              Barclays intermediate + long-term corporate indices
+#    Options             US equity index calls and puts across moneyness
+#
+#  ANNUALISED SHARPE RATIOS:
+#    Cross-sectional carry, average across asset classes    0.8
+#    DIVERSIFIED portfolio across all asset classes         1.2
+#    Carry timing, average                                  0.6
+#    Global carry timing, all asset classes                 0.9
+#
+#  PREDICTIVE COEFFICIENT (future returns on carry): positive EVERYWHERE
+#    > 1 : global equities, global bonds, credit
+#    < 1 : commodities, options
+#
+#  THE THREE GLOBAL CARRY DRAWDOWNS:
+#    Aug 1972 - Sep 1975
+#    Mar 1980 - Jun 1982
+#    Aug 2008 - Feb 2009
+#  During these, ALL carry strategies performed poorly AND "significantly
+#  worse than passive exposures to these same markets".
+#
+#  RISK EXPLANATIONS: global recession, liquidity and volatility exposures are
+#  all present, but "none fully explains carry's premium".
+
+--------------------------------------------------------------------------------
+PART D - PITFALLS
+--------------------------------------------------------------------------------
+
+1.  MONTHLY CORRELATIONS LIE ABOUT THE TAIL. The paper is explicit that
+    low-frequency co-movement "is obscured when considering monthly returns"
+    and that "modest unconditional pairwise correlations mask some important
+    dynamics". Run joint_drawdown_check(). Sizing a multi-asset carry book off
+    the monthly covariance matrix will understate the joint drawdown, which is
+    the only risk that has ever mattered for this strategy.
+
+2.  DON'T OMIT BOND ROLL-DOWN. Bond carry is the curve slope PLUS the roll-down
+    as the bond ages along the curve. Using slope alone systematically
+    understates bond carry and is not what the paper measures.
+
+3.  PREFER THE CROSS-SECTIONAL FORM. 0.8/1.2 Sharpe versus 0.6/0.9 for timing.
+    The cross-sectional version is also dollar-neutral, whereas the timing
+    version can be net long or short everything simultaneously.
+
+4.  DIVERSIFY ACROSS ASSET CLASSES - THAT IS WHERE THE SHARPE IS. Going from
+    one asset class (0.8) to all of them (1.2) is the single largest
+    improvement available, and it is free in the sense that it requires no
+    better signal.
+
+5.  SIGNAL/RETURN ALIGNMENT. Weights formed at t earn the return of t+1.
+    strategy_returns() shifts deliberately. Skipping the shift is a
+    one-period look-ahead that produces a spectacular fake result.
+
+6.  COSTS AND ROLL ARE NOT IN THE HEADLINE NUMBERS. Seven asset classes of
+    futures rolled continuously is real turnover, and commodity roll cost in
+    particular is material. Price it with
+    ../../execution-and-cost/almgren-chriss-optimal-execution/ before treating
+    1.2 as achievable net.
+
+7.  CARRY IS SHORT VOLATILITY AND SHORT LIQUIDITY. Negatively skewed, crashes
+    in recessions, loses MORE than passive exposure when it loses. Do not
+    lever it on the strength of a smooth equity curve - that is the same
+    mistake catalogued in the variance-risk-premium entry.
+
+8.  CARRY AND TREND ARE COMPLEMENTS, NOT SUBSTITUTES. TSMOM is convex and
+    crisis-POSITIVE; carry is concave and crisis-NEGATIVE. Running both is the
+    standard construction precisely because their tails point in opposite
+    directions. Running carry alone concentrates the exact risk trend would
+    have offset.

@@ -55,14 +55,28 @@ Ingested so far:
 - ✅ **Order Flow Imbalance & Price Impact** (Cont, Kukanov & Stoikov, 2014) — the adverse-selection
   measurement every market-making model in the library lacks.
 
-Still queued for Wave 2: cointegration pairs (Engle–Granger / Johansen selection), dispersion
-trading, volatility carry and term structure, Kyle's lambda and PIN, queue-position models, and the
-Cartea–Jaimungal–Penalva adverse-selection treatment.
+Still queued for Wave 2: cointegration pairs (Engle–Granger / Johansen selection), volatility carry
+and term structure, Kyle's lambda and PIN, queue-position models, and the Cartea–Jaimungal–Penalva
+adverse-selection treatment.
 
-**Wave 3 — carry, term structure, and event/flow.**
-Commodity roll yield and backwardation, FX carry and the forward premium puzzle, bond term
-premium, post-earnings-announcement drift, index-rebalance front-running, merger arbitrage
-spreads, short-interest and lending-fee signals.
+**Blocked on source access — dispersion trading / correlation risk premium.** The volatility category
+remains the thinnest at one entry. The canonical empirical sources (Driessen–Maenhout–Vilkov, "The
+Price of Correlation Risk"; Bakshi–Kapadia, "Delta-Hedged Gains") are paywalled with no public
+preprint located, and the openly available alternative (Jacquier & Slaoui, arXiv:1004.0125) is pure
+derivation with no data, tables or test statistics — failing criterion 4 of the ingestion standard.
+It is cross-referenced from the variance-risk-premium entry as background rather than ingested.
+Deepening this category needs either paywalled access or a different open source.
+
+**Wave 3 — carry, term structure, event/flow, and the cost layer.** *In progress.*
+Ingested so far:
+- ✅ **Carry Across Asset Classes** (Koijen, Moskowitz, Pedersen & Vrugt, 2018) — opens the
+  carry-and-term-structure category; unifies commodity basis, bond roll-down, FX differentials and
+  equity dividend yield into a single model-free measurement.
+- ✅ **Optimal Execution** (Almgren & Chriss, 2000) — opens the execution-and-cost category; the
+  layer that determines which of the other entries are actually implementable.
+
+Still queued: post-earnings-announcement drift, index-rebalance front-running, merger arbitrage
+spreads, short-interest and lending-fee signals, commodity backwardation in isolation.
 
 **Wave 4 — machine-learning alpha with credible protocols.**
 Only entries with an explicit walk-forward protocol, an out-of-sample discipline, and a published

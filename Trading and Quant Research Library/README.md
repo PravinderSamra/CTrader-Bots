@@ -50,6 +50,13 @@ Trading and Quant Research Library/
 | Market Making | [Limit *and* Market Orders](strategies/market-making-microstructure/guilbaud-pham-limit-and-market-orders/) | Avellaneda–Stoikov | Verified + reproduced |
 | Microstructure | [Order Flow Imbalance & Price Impact](strategies/market-making-microstructure/order-flow-imbalance-price-impact/) | all market-making entries | Verified |
 
+**Wave 3 — opening the remaining categories**
+
+| Category | Strategy | Why it matters | Status |
+|---|---|---|---|
+| **Execution & Cost** | [Optimal Execution (Almgren–Chriss)](strategies/execution-and-cost/almgren-chriss-optimal-execution/) | The cost layer that decides which entries above are implementable | Verified + reproduced |
+| **Carry & Term Structure** | [Carry Across Asset Classes](strategies/carry-and-term-structure/carry-across-asset-classes/) | Unifies bond roll-down, commodity basis, FX differentials and dividend yield into one measurement | Verified + reproduced |
+
 "Verified" means every quoted statistic was read out of the primary source document, not recalled or
 paraphrased from secondary commentary. "Reproduced" means the reference implementation was executed
 and its output checked against the paper or against a known ground truth. See
@@ -71,6 +78,12 @@ reader to find out the hard way:
 - **Any market-making model → Order Flow Imbalance.** Avellaneda–Stoikov, Guéant et al. and
   Guilbaud–Pham all assume order arrivals are uninformative. OFI is the measurement that says
   otherwise, and supplies the adverse-selection layer all three lack.
+- **Every strategy entry → Optimal Execution.** Several entries report gross results (TSMOM's Sharpe
+  ratios are explicitly gross; Jegadeesh–Titman models no costs at all). The execution entry supplies
+  the cost model needed to judge whether an edge survives its own turnover.
+- **Carry ↔ Time Series Momentum.** Carry is concave and crisis-negative; trend is convex and
+  crisis-positive. They are the two great cross-asset systematic families and their tails point in
+  opposite directions, which is why they are usually run together.
 
 ## Validating the library
 

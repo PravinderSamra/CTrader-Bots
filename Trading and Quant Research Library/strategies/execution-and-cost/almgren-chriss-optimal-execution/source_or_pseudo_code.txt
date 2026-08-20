@@ -1,0 +1,339 @@
+================================================================================
+OPTIMAL EXECUTION OF PORTFOLIO TRANSACTIONS
+Almgren & Chriss (2000), Journal of Risk 3(2), 5-39
+================================================================================
+
+PART A - Pseudo-code: calibration then trajectory
+PART B - Python reference implementation
+PART C - Verified output at the paper's Table 1 parameters
+PART D - Practical guidance and pitfalls
+
+This is the COST LAYER for the rest of the library. Before believing any
+strategy entry's reported returns, price its turnover with this.
+
+--------------------------------------------------------------------------------
+PART A - PSEUDO-CODE
+--------------------------------------------------------------------------------
+
+# ---- STEP 1: CALIBRATE IMPACT FROM OBSERVABLES -----------------------------
+# The paper's two rules of thumb. Use them when you lack fill data; replace
+# them with fitted values when you have it.
+
+PROCEDURE calibrate(spread, daily_volume):
+    eps   = spread / 2                              # half the bid-ask spread
+    # "for each 1% of daily volume traded, incur one spread of impact"
+    eta   = spread / (0.01 * daily_volume)
+    # "price effects become significant at 10% of daily volume"
+    gamma = spread / (0.10 * daily_volume)
+    RETURN eps, eta, gamma
+    # NOTE gamma comes out 10x SMALLER than eta under these rules. Temporary
+    # impact dominates at any given trading rate - which is why the
+    # optimisation is a fight between temporary impact and volatility, and
+    # permanent impact just sits there as a fixed toll.
+
+# ---- STEP 2: THE URGENCY PARAMETER -----------------------------------------
+PROCEDURE urgency(lam, sigma, eta):
+    kappa = sqrt( lam * sigma^2 / eta )
+    theta = 1 / kappa                # the trade's HALF-LIFE
+    RETURN kappa, theta
+    # theta does NOT depend on the deadline T. It is the intrinsic time scale
+    # of the trade, set only by price dynamics and impact.
+    #
+    # THE DIAGNOSTIC - run this before choosing any algorithm:
+    #     T >> theta  ->  risk-dominated;    trade early, front-load
+    #     T << theta  ->  impact-dominated;  trade evenly, approaches VWAP
+    #     T ~= theta  ->  genuine trade-off
+
+# ---- STEP 3: THE OPTIMAL TRAJECTORY ----------------------------------------
+PROCEDURE trajectory(X, kappa, T, N):
+    tau = T / N
+    FOR j = 0 .. N:
+        t_j  = j * tau
+        x_j  = X * sinh( kappa * (T - t_j) ) / sinh( kappa * T )
+    RETURN x            # shares REMAINING at each time
+
+    # Trade list (shares sold in interval j):
+    #   n_j = X * 2*sinh(kappa*tau/2)/sinh(kappa*T)
+    #           * cosh( kappa * (T - t_{j-1/2}) )
+    # n_j > 0 for all j whenever X > 0: an optimal SELL program never buys.
+
+# ---- STEP 4: COST AND RISK -------------------------------------------------
+PROCEDURE expected_cost(X, kappa, ...):
+    permanent = 0.5 * gamma * X^2        # TRAJECTORY-INDEPENDENT. Cannot be
+                                         # optimised away, only avoided by
+                                         # not trading.
+    spread_cost = eps * X
+    temporary = eta_tilde * X^2 * tanh(kappa*tau/2)
+                * ( tau*sinh(2*kappa*T) + 2*T*sinh(kappa*tau) )
+                / ( 2 * tau^2 * sinh(kappa*T)^2 )
+    RETURN permanent + spread_cost + temporary
+
+PROCEDURE variance(X, sigma, kappa, T, N):
+    V = 0.5 * sigma^2 * X^2
+        * ( tau*sinh(kappa*T)*cosh(kappa*(T-tau)) - T*sinh(kappa*tau) )
+        / ( sinh(kappa*T)^2 * sinh(kappa*tau) )
+    RETURN V
+
+# ---- STEP 5: THE EFFICIENT FRONTIER ----------------------------------------
+# Sweep lambda; each value gives one (expected cost, variance) point. This is
+# Markowitz for execution: pick a point by risk appetite, not by minimising
+# cost.
+
+--------------------------------------------------------------------------------
+PART B - PYTHON REFERENCE IMPLEMENTATION
+--------------------------------------------------------------------------------
+
+"""
+Almgren-Chriss optimal execution.
+
+Dependencies: numpy
+All quantities in absolute units ($/share, shares, days) - see calibrate()
+for converting from annual volatility and percentage terms.
+"""
+
+import numpy as np
+from dataclasses import dataclass
+
+
+@dataclass
+class ACParams:
+    S0: float = 50.0            # initial price, $/share
+    X: float = 1e6              # shares to liquidate
+    T: float = 5.0              # horizon, days
+    N: int = 5                  # number of intervals
+    sigma: float = 0.95         # ($/share)/day^0.5   ABSOLUTE, not fractional
+    eps: float = 0.0625         # fixed temporary cost, $/share
+    eta: float = 2.5e-6         # temporary impact
+    gamma: float = 2.5e-7       # permanent impact
+    lam: float = 1e-6           # risk aversion, 1/$
+
+
+def calibrate(spread, daily_volume, annual_vol, price, trading_days=250):
+    """Derive absolute parameters from observable market quantities.
+
+    Implements the paper's Table 1 derivation:
+      sigma = (annual_vol / sqrt(trading_days)) * price     <- SCALED BY PRICE
+      eps   = spread / 2
+      eta   = spread / (0.01 * daily_volume)      1% of volume -> one spread
+      gamma = spread / (0.10 * daily_volume)      10% of volume -> one spread
+
+    The price scaling is the step replications most often miss: sigma must be
+    in $/share per sqrt(day), NOT a fractional return.
+    """
+    return {
+        "sigma": (annual_vol / np.sqrt(trading_days)) * price,
+        "eps": spread / 2.0,
+        "eta": spread / (0.01 * daily_volume),
+        "gamma": spread / (0.10 * daily_volume),
+    }
+
+
+def kappa(p: ACParams) -> float:
+    """Urgency parameter, kappa ~= sqrt(lambda * sigma^2 / eta)."""
+    return float(np.sqrt(p.lam * p.sigma ** 2 / p.eta))
+
+
+def half_life(p: ACParams) -> float:
+    """theta = 1/kappa - time to deplete the position by a factor of e.
+
+    INDEPENDENT of the deadline T. Compare theta to T to learn whether you
+    are impact-constrained or risk-constrained.
+    """
+    k = kappa(p)
+    return float("inf") if k <= 0 else 1.0 / k
+
+
+def trajectory(p: ACParams, kap: float = None) -> np.ndarray:
+    """Shares REMAINING at each time step: x_j = X sinh(k(T-t_j))/sinh(kT).
+
+    kap <= 0 falls back to the linear (VWAP-like) trajectory, which is the
+    kappa -> 0 limit.
+    """
+    kap = kappa(p) if kap is None else kap
+    tau = p.T / p.N
+    tj = np.arange(p.N + 1) * tau
+    if kap <= 0:
+        return p.X * (1.0 - tj / p.T)
+    return p.X * np.sinh(kap * (p.T - tj)) / np.sinh(kap * p.T)
+
+
+def trade_list(p: ACParams, kap: float = None) -> np.ndarray:
+    """Shares sold in each interval. Must be strictly positive for X > 0."""
+    return -np.diff(trajectory(p, kap))
+
+
+def expected_cost(p: ACParams, kap: float = None) -> dict:
+    """Expected implementation shortfall, decomposed.
+
+    The permanent term 0.5*gamma*X^2 is TRAJECTORY-INDEPENDENT - it appears
+    in every strategy identically and cannot be optimised away.
+    """
+    kap = kappa(p) if kap is None else kap
+    tau = p.T / p.N
+    permanent = 0.5 * p.gamma * p.X ** 2
+    spread = p.eps * p.X
+    eta_tilde = p.eta - 0.5 * p.gamma * tau
+
+    if kap <= 0:
+        temporary = eta_tilde * p.X ** 2 / p.T
+    else:
+        num = np.tanh(0.5 * kap * tau) * (
+            tau * np.sinh(2 * kap * p.T) + 2 * p.T * np.sinh(kap * tau))
+        den = 2.0 * tau ** 2 * np.sinh(kap * p.T) ** 2
+        temporary = eta_tilde * p.X ** 2 * num / den
+
+    return {"permanent": float(permanent), "spread": float(spread),
+            "temporary": float(temporary),
+            "total": float(permanent + spread + temporary)}
+
+
+def variance(p: ACParams, kap: float = None) -> float:
+    """Variance of the execution cost."""
+    kap = kappa(p) if kap is None else kap
+    tau = p.T / p.N
+    if kap <= 0:
+        x = trajectory(p, 0.0)
+        return float(p.sigma ** 2 * tau * np.sum(x[1:] ** 2))
+    num = (tau * np.sinh(kap * p.T) * np.cosh(kap * (p.T - tau))
+           - p.T * np.sinh(kap * tau))
+    den = np.sinh(kap * p.T) ** 2 * np.sinh(kap * tau)
+    return float(0.5 * p.sigma ** 2 * p.X ** 2 * num / den)
+
+
+def efficient_frontier(p: ACParams, lambdas=None):
+    """Sweep risk aversion to trace the (cost, risk) efficient frontier.
+
+    This is the paper's central reframing: execution is a RISK-RETURN choice,
+    not a cost minimisation. Each lambda gives one point; pick by appetite.
+    """
+    if lambdas is None:
+        lambdas = np.logspace(-8, -4, 40)
+    rows = []
+    for lam in lambdas:
+        q = ACParams(**{**p.__dict__, "lam": lam})
+        k = kappa(q)
+        c = expected_cost(q, k)
+        v = variance(q, k)
+        rows.append({"lambda": float(lam), "kappa": k,
+                     "half_life": 1.0 / k if k > 0 else np.inf,
+                     "expected_cost": c["total"], "std_dev": float(np.sqrt(v))})
+    return rows
+
+
+def l_var(p: ACParams, confidence: float = 1.645, kap: float = None) -> float:
+    """Liquidity-adjusted VaR: expected cost plus a confidence multiple of risk.
+
+    Standard VaR asks what a position could lose while held, implicitly
+    assuming costless instant exit. L-VaR asks what getting OUT actually
+    costs. A position is only as safe as its liquidation path.
+    """
+    kap = kappa(p) if kap is None else kap
+    return float(expected_cost(p, kap)["total"] + confidence * np.sqrt(variance(p, kap)))
+
+
+def cost_of_turnover(annual_turnover, spread, daily_volume, adv_participation=0.01):
+    """Quick screen: does a strategy's edge survive its own trading?
+
+    THE TEST THIS WHOLE ENTRY EXISTS FOR. Given a strategy's annual turnover,
+    estimate the annual cost drag using the paper's rules of thumb, and
+    compare it against the strategy's reported gross return.
+
+    Returns annual cost as a FRACTION of portfolio value.
+    """
+    one_way_cost = (spread / 2.0) / 1.0        # spread cost per unit traded
+    impact = spread * (adv_participation / 0.01)
+    return float(annual_turnover * (one_way_cost + impact))
+
+
+--------------------------------------------------------------------------------
+PART C - VERIFIED OUTPUT
+--------------------------------------------------------------------------------
+
+# Run in-session at the paper's Table 1 parameters
+# (S0=50, X=1e6, T=5, N=5, sigma=0.95, eps=0.0625, gamma=2.5e-7,
+#  eta=2.5e-6, lambda=1e-6):
+#
+#   kappa                     0.6008 /day       paper: ~0.6        OK
+#   kappa*T                   3.0042            paper: ~3          OK
+#   half-life theta           1.6644 days
+#   sigma*sqrt(T)             2.1243 $/share    paper: 2.12        OK
+#   untraded position risk    $2.1243M          paper: $2.12M      OK
+#   permanent impact          $125,000          constant in kappa  OK
+#
+#   TRAJECTORY (shares remaining):
+#      day    optimal      linear
+#        0  1,000,000   1,000,000
+#        1    545,212     800,000
+#        2    293,239     600,000
+#        3    150,348     400,000
+#        4     63,385     200,000
+#        5          0           0
+#      all trades positive: True
+#
+#   HALF-LIFE DIAGNOSTIC:
+#      kappa   theta   kappa*T   % sold day 1
+#        0.1   10.00       0.5          21.2%     <- ~ linear (VWAP is 20%)
+#        0.6    1.67       3.0          45.4%     <- the paper's case
+#        2.0    0.50      10.0          86.5%
+#        5.0    0.20      25.0          99.3%     <- ~ immediate liquidation
+#
+# THE "PRECISELY TWICE" CLAIM IS A DISCRETE-TIME RESULT.
+#   The paper notes the untraded risk is "precisely twice" the linear
+#   trajectory's sqrt(V). At ITS discretisation (N=5) we compute 2.0412 - the
+#   claim holds. But it is NOT the continuous limit:
+#        N=5   -> 2.0412
+#        N=50  -> 1.7584
+#        N=500 -> 1.7347
+#   converging to sqrt(3) = 1.7321, since for a continuous linear liquidation
+#   V = sigma^2 X^2 INT (1-t/T)^2 dt = sigma^2 X^2 T/3.
+#   A replication on finer time steps will not see the factor of 2 and should
+#   NOT conclude the paper is wrong.
+
+--------------------------------------------------------------------------------
+PART D - PRACTICAL GUIDANCE AND PITFALLS
+--------------------------------------------------------------------------------
+
+1.  COMPUTE THE HALF-LIFE FIRST. theta = 1/kappa is the single most portable
+    idea in the paper and it costs one line. Compare it to your deadline:
+    T >> theta means you are risk-constrained (front-load); T << theta means
+    impact-constrained (spread it out, VWAP is nearly optimal). Choosing an
+    algorithm before running this diagnostic is guesswork.
+
+2.  SCALE VOLATILITY BY PRICE. sigma must be in $/share per sqrt(day), not a
+    fractional return. The paper: 30% annual -> 0.3/sqrt(250) = 0.019
+    fractional -> times $50 -> sigma = 0.95. Skipping the price scaling makes
+    kappa wrong by a factor of the price.
+
+3.  PERMANENT IMPACT IS A FIXED TOLL. 0.5*gamma*X^2 is identical for every
+    trajectory (verified: $125,000 at every kappa tested). No scheduling
+    cleverness reduces it. The only lever is trading less.
+
+4.  LINEAR IMPACT IS THE KNOWN WEAK POINT. The authors flag it themselves -
+    linear temporary impact fails to predict faster trading for smaller
+    baskets, and "the problem goes away when one considers more realistic
+    super-linear functions." Use Almgren (2003) for power-law impact. Note
+    also that the square-root law is itself contested: Cont, Kukanov &
+    Stoikov argue it is an aggregation artefact of an underlying LINEAR
+    order-flow relation. The functional form is not settled.
+
+5.  THE TRAJECTORY IS STATIC. It is computed once and never revised. Real
+    algorithms adapt to fills, price moves, and liquidity. Treat the
+    Almgren-Chriss path as the BASELINE SCHEDULE an adaptive algorithm
+    deviates from, not as the algorithm.
+
+6.  THE CALIBRATION RULES ARE RULES OF THUMB, NOT ESTIMATES. "1% of volume
+    costs one spread" and "10% of volume moves the price significantly" are
+    plausible defaults, not measurements. Fit eta and gamma to your own fills
+    and expect them to vary by instrument, size and regime.
+
+7.  USE cost_of_turnover() ON THE REST OF THIS LIBRARY. That is the point of
+    this entry. Several strategies here report GROSS results - TSMOM's Sharpe
+    ratios are explicitly gross, Jegadeesh-Titman models no costs at all.
+    Price their turnover before believing them. Gatev-Goetzmann-Rouwenhorst
+    is the model of good practice: they cut their own gross 437-549 bp per six
+    months down to a net 113-225 bp and reported the net figure.
+
+8.  NO LIMIT ORDERS, NO VENUES, NO QUEUE. Execution is a rate of liquidity
+    consumption. The passive-versus-aggressive decision - most of what a
+    modern algorithm does - is outside this model. See
+    ../../market-making-microstructure/guilbaud-pham-limit-and-market-orders/.

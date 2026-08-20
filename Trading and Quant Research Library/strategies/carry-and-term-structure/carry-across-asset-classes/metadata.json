@@ -1,0 +1,60 @@
+{
+  "id": "carry-across-asset-classes",
+  "title": "Carry Across Asset Classes (Koijen, Moskowitz, Pedersen & Vrugt)",
+  "slug": "carry-across-asset-classes",
+  "strategy_type": "carry-and-term-structure",
+  "asset_classes": ["futures", "fx", "commodities", "fixed-income", "indices", "options", "equities"],
+  "complexity_score": 5,
+  "execution_type": "Mechanical",
+  "requires_machine_learning": false,
+  "evidence_grade": "verified-primary",
+  "holding_period": "1 month",
+  "signal_frequency": "monthly rebalance",
+  "directionality": "long-short",
+  "data_requirements": [
+    "spot and futures/forward prices across seven asset classes",
+    "government bond yields and durations, for slope plus roll-down carry",
+    "futures roll calendars and roll cost estimates",
+    "long history - the 1972-75 drawdown is only visible in series starting before 1972"
+  ],
+  "capacity": "high",
+  "decay_status": "partially-decayed",
+  "sources": [
+    {
+      "type": "paper",
+      "citation": "Koijen, R. S. J., Moskowitz, T. J., Pedersen, L. H., & Vrugt, E. B. (2018). Carry. Journal of Financial Economics, 127(2), 197-225.",
+      "url": "https://spinup-000d1a-wp-offload-media.s3.amazonaws.com/faculty/wp-content/uploads/sites/3/2019/04/Carry.pdf",
+      "verified_in_session": true
+    },
+    {
+      "type": "paper",
+      "citation": "Koijen, Moskowitz, Pedersen & Vrugt. Carry. NBER Working Paper 19325.",
+      "url": "https://www.nber.org/system/files/working_papers/w19325/w19325.pdf",
+      "verified_in_session": false
+    },
+    {
+      "type": "paper",
+      "citation": "Moskowitz, T. J., Ooi, Y. H., & Pedersen, L. H. (2012). Time series momentum. Journal of Financial Economics, 104(2), 228-250. (The complementary cross-asset family.)",
+      "url": "https://w4.stern.nyu.edu/facdir/lpederse/papers/TimeSeriesMomentum.pdf",
+      "verified_in_session": true
+    }
+  ],
+  "related_strategies": [
+    "time-series-momentum-futures",
+    "variance-risk-premium-harvesting",
+    "almgren-chriss-optimal-execution"
+  ],
+  "tags": [
+    "carry",
+    "cross-asset",
+    "term-structure",
+    "roll-down",
+    "convenience-yield",
+    "interest-rate-differential",
+    "long-short",
+    "negative-skew",
+    "recession-risk",
+    "foundational"
+  ],
+  "ingested_at": "2026-08-19"
+}

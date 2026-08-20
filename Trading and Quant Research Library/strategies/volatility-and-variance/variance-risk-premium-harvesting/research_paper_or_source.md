@@ -55,6 +55,16 @@ Two results give this entry its structure and its warnings:
 | SSRN record | paper | https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1359527 |
 | CBOE VIX White Paper — the same replication logic, productised | article | https://cdn.cboe.com/api/global/us_indices/governance/VIX_Methodology.pdf |
 | Bakshi & Kapadia (2003) — delta-hedged gains, the complementary approach | paper | https://academic.oup.com/rfs/article/16/2/527/1581543 |
+| Jacquier & Slaoui — *Variance dispersion and correlation swaps* (theory only; see note) | paper | https://arxiv.org/pdf/1004.0125 |
+
+> **Note on the dispersion reference.** Jacquier & Slaoui (arXiv:1004.0125) derive why the implied
+> correlation embedded in a variance-swap dispersion trade differs from a correlation swap strike —
+> the spread is explained by the trade's **volga** (second-order volatility sensitivity). It is
+> listed here as background because it is the rigorous treatment of the dispersion mechanism the
+> variance-beta result in §3.3 motivates. It is **not** a separate library entry: the paper contains
+> no data, tables, or test statistics, so it does not meet criterion 4 of `INGESTION_STANDARD.md`
+> ("Reported results"). A dispersion entry awaits a source with empirical evidence; the canonical
+> candidates (Driessen–Maenhout–Vilkov, Bakshi–Kapadia) are paywalled with no public preprint found.
 
 ## 3. Mathematical foundation
 

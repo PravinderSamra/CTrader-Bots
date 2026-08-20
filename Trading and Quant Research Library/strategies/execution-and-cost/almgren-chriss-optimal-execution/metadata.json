@@ -1,0 +1,59 @@
+{
+  "id": "almgren-chriss-optimal-execution",
+  "title": "Optimal Execution of Portfolio Transactions (Almgren & Chriss)",
+  "slug": "almgren-chriss-optimal-execution",
+  "strategy_type": "execution-and-cost",
+  "asset_classes": ["equities", "futures", "fx", "crypto"],
+  "complexity_score": 5,
+  "execution_type": "Quant",
+  "requires_machine_learning": false,
+  "evidence_grade": "verified-primary",
+  "holding_period": "not applicable - this is an execution schedule, typically minutes to days",
+  "signal_frequency": "one trajectory computed per parent order",
+  "directionality": "long-only",
+  "data_requirements": [
+    "bid-ask spread for the instrument",
+    "median daily trading volume",
+    "annualised volatility",
+    "own fill data, to replace the rules-of-thumb impact parameters with fitted ones"
+  ],
+  "capacity": "high",
+  "decay_status": "intact",
+  "sources": [
+    {
+      "type": "paper",
+      "citation": "Almgren, R., & Chriss, N. (2000). Optimal Execution of Portfolio Transactions. Journal of Risk, 3(2), 5-39. (December 2000 draft consulted.)",
+      "url": "https://www.smallake.kr/wp-content/uploads/2016/03/optliq.pdf",
+      "verified_in_session": true
+    },
+    {
+      "type": "paper",
+      "citation": "Almgren, R. (2003). Optimal execution with nonlinear impact functions and trading-enhanced risk. Applied Mathematical Finance, 10(1), 1-18.",
+      "url": "https://www.cims.nyu.edu/~almgren/papers/optliq_nonlin.pdf",
+      "verified_in_session": false
+    },
+    {
+      "type": "paper",
+      "citation": "Cont, R., Kukanov, A., & Stoikov, S. The price impact of order book events. arXiv:1011.6402. (Argues square-root impact is an aggregation artefact of a linear order-flow relation.)",
+      "url": "https://arxiv.org/pdf/1011.6402",
+      "verified_in_session": true
+    }
+  ],
+  "related_strategies": [
+    "order-flow-imbalance-price-impact",
+    "guilbaud-pham-limit-and-market-orders",
+    "pairs-trading-distance-method"
+  ],
+  "tags": [
+    "optimal-execution",
+    "market-impact",
+    "implementation-shortfall",
+    "efficient-frontier",
+    "transaction-costs",
+    "liquidity-adjusted-var",
+    "trade-half-life",
+    "cost-layer",
+    "foundational"
+  ],
+  "ingested_at": "2026-08-19"
+}
