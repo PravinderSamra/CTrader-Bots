@@ -1,23 +1,41 @@
 # Test plan: ORB variants on GER40 / UK100
 
-## Instrument viability (measured, not assumed)
+## Instrument viability
 
-Median high-low of the first 15 minutes after each instrument's own cash open,
-against a round-trip spread:
+**Correction:** the first version of this table applied an assumed flat 1.5pt
+spread to all four instruments. That was wrong — the US500 backtest logs show
+a real variable spread with a median of 0.50 (25 distinct values, 0.10 to
+1.03), because cTrader backtests use real historical spread rather than a
+fixed parameter. The absolute percentages below have been replaced with the
+metric that matters: spread as a share of the stop distance.
 
-| | Price | OR15 | OR15 as % of price | Spread as % of OR15 |
-|---|---|---|---|---|
-| US30 | 42,259 | 122.7 | 0.29% | 1.6% |
-| NAS100 | 20,406 | 73.4 | 0.36% | 2.0% |
-| GER40 | 20,849 | 56.8 | 0.27% | **2.6%** |
-| UK100 | 8,398 | 21.7 | 0.26% | **6.9%** |
+| | Median stop | Spread | % of risk |
+|---|---|---|---|
+| US500 (measured) | 22.5 pts | 0.50 | **2.2%** |
+| GER40 (estimated) | ~40 pts | ~1.2 | ~3% |
+| UK100 (estimated) | ~16 pts | ~1.0 | ~6% |
 
-All four move about the same in percentage terms. FTSE's problem is its price
-level: the same spread in points against a third of the range.
+The US500 edge (+0.072R) survives 2.2% friction. GER40 and UK100 spreads are
+still estimates and need confirming from a real backtest log before the FTSE
+verdict is final.
 
-**GER40 is worth testing. UK100 starts with a 3.5x cost handicap** and would
-need an edge roughly three times larger than NAS100's to net the same. Given
-the US500 edge is only +0.072R, FTSE is a poor candidate.
+Median high-low of the first 15 minutes after each instrument's own cash open:
+
+| | Price | OR15 | OR15 as % of price |
+|---|---|---|---|
+| US30 | 42,259 | 122.7 | 0.29% |
+| NAS100 | 20,406 | 73.4 | 0.36% |
+| GER40 | 20,849 | 56.8 | 0.27% |
+| UK100 | 8,398 | 21.7 | 0.26% |
+
+All four move about the same in percentage terms. The structural concern with
+FTSE is that European indices attract broadly similar spreads in *points*,
+while FTSE's opening range is a third of DAX's — the same toll on a shorter
+road. That reasoning is robust to the exact spread figures; the percentages
+above are not, until measured.
+
+**Next step:** run a short GER40 and UK100 backtest, read the `spreadPts=`
+values from the logs, and redo this table with real numbers.
 
 ## Year split
 
