@@ -56,6 +56,8 @@ Trading and Quant Research Library/
 |---|---|---|---|
 | **Execution & Cost** | [Optimal Execution (Almgren–Chriss)](strategies/execution-and-cost/almgren-chriss-optimal-execution/) | The cost layer that decides which entries above are implementable | Verified + reproduced |
 | **Carry & Term Structure** | [Carry Across Asset Classes](strategies/carry-and-term-structure/carry-across-asset-classes/) | Unifies bond roll-down, commodity basis, FX differentials and dividend yield into one measurement | Verified + reproduced |
+| **Machine-Learning Alpha** | [Empirical Asset Pricing via ML](strategies/machine-learning-alpha/empirical-asset-pricing-via-machine-learning/) | The methodological standard any ML entry must meet | Verified + reproduced |
+| Machine-Learning Alpha | [Deep Momentum Networks](strategies/machine-learning-alpha/deep-momentum-networks/) | Training on the trading objective beats training on forecast error | Verified + reproduced |
 
 "Verified" means every quoted statistic was read out of the primary source document, not recalled or
 paraphrased from secondary commentary. "Reproduced" means the reference implementation was executed
@@ -84,6 +86,17 @@ reader to find out the hard way:
 - **Carry ↔ Time Series Momentum.** Carry is concave and crisis-negative; trend is convex and
   crisis-positive. They are the two great cross-asset systematic families and their tails point in
   opposite directions, which is why they are usually run together.
+- **TSMOM → Deep Momentum Networks.** The parent fixes its trend estimator and position sizer by
+  assumption; the companion learns both, and benchmarks directly against it (`Sgn(Returns)` = TSMOM).
+- **Both ML entries agree, independently, that shallow beats deep.** Gu–Kelly–Xiu find neural network
+  performance peaks at three layers; Lim–Zohren–Roberts find WaveNet loses to a sign function.
+  Different data, different asset class, same conclusion.
+
+## Blocked sources
+
+`ACCESS_NEEDED.md` lists the paywalled papers the library needs and the sites that would unblock
+them, ranked by how many entries each would open. Two categories are currently constrained by access
+rather than by effort: **volatility & variance** (one entry) and **event & flow driven** (empty).
 
 ## Validating the library
 

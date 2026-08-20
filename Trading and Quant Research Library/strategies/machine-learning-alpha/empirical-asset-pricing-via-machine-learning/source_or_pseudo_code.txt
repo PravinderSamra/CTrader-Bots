@@ -1,0 +1,316 @@
+================================================================================
+EMPIRICAL ASSET PRICING VIA MACHINE LEARNING
+Gu, Kelly & Xiu (2020), Review of Financial Studies 33(5), 2223-2273
+================================================================================
+
+PART A - Pseudo-code: the protocol (the part that matters)
+PART B - Python reference implementation
+PART C - Benchmark values from the paper
+PART D - Pitfalls - most financial ML fails on these, not on architecture
+
+THE PROTOCOL IS THE CONTRIBUTION. Any competent library can fit a neural
+network. What makes a result credible is the walk-forward discipline, the
+comparative baselines, and honest reporting of a very small R^2.
+
+--------------------------------------------------------------------------------
+PART A - PSEUDO-CODE
+--------------------------------------------------------------------------------
+
+# ---- THE THREE-WAY SPLIT ---------------------------------------------------
+# This is the single most important structure in the paper.
+#
+#   TRAINING    fit model parameters
+#   VALIDATION  tune hyperparameters (lambda, depth, layers, learning rate)
+#   TESTING     NEVER TOUCHED until the model is final
+#
+# Two-way splits are the standard failure. If hyperparameters are chosen by
+# looking at test performance, the reported "out-of-sample" R^2 is in-sample
+# for every design decision that mattered, and is not comparable to this
+# paper's numbers.
+
+PROCEDURE walk_forward(data, methods):
+    FOR each refit date t:
+        train      = data[ : t - validation_length]
+        validation = data[t - validation_length : t]
+        test       = data[t : t + test_length]
+
+        FOR each method m:
+            best_hp = argmax over hyperparameters of
+                          score(m fitted on train, evaluated on VALIDATION)
+            model   = m fitted on train with best_hp
+            record  predictions of model on TEST
+
+        roll t forward; refit
+
+# ---- THE OUT-OF-SAMPLE R^2 -------------------------------------------------
+PROCEDURE r2_oos(actual, predicted):
+    # NOTE THE DENOMINATOR: sum of SQUARED RETURNS, not deviations from a
+    # fitted mean. GKX use a zero benchmark because the historical mean
+    # return is itself a poor predictor and using it flatters the model.
+    RETURN 1 - SUM((actual - predicted)^2) / SUM(actual^2)
+
+    # EXPECT TENTHS OF A PERCENT PER MONTH at the stock level.
+    # Paper: 0.11% elastic net, 0.26% PCR, 0.27% PLS, 0.33-0.40% trees/NN.
+    # A stock-level monthly R^2 of 5% means a bug, not an edge.
+
+# ---- BUILD PORTFOLIOS FROM FORECASTS ---------------------------------------
+PROCEDURE decile_spread(predictions, returns, market_cap):
+    sort stocks by predicted return
+    long  = top decile,  VALUE WEIGHTED
+    short = bottom decile, VALUE WEIGHTED
+    RETURN long - short
+    # Value weighting matters: equal weighting loads on the small illiquid
+    # names where the paper notes returns "behave erratically" and where the
+    # measured predictability is least tradable.
+
+--------------------------------------------------------------------------------
+PART B - PYTHON REFERENCE IMPLEMENTATION
+--------------------------------------------------------------------------------
+
+"""
+Walk-forward machine learning for return prediction, GKX protocol.
+
+Dependencies: numpy, pandas; scikit-learn optional (falls back to ridge).
+Input: panel DataFrame with a MultiIndex (date, stock) and columns of
+       characteristics, plus a 'ret_fwd' column of NEXT-period returns.
+"""
+
+import numpy as np
+import pandas as pd
+from dataclasses import dataclass, field
+
+
+@dataclass
+class GKXConfig:
+    train_years: int = 18
+    val_years: int = 12
+    test_years: int = 1
+    refit_every_years: int = 1
+    # Shallow by design. The paper finds NN performance PEAKS at 3 layers and
+    # trees average FEWER THAN SIX LEAVES. Do not scale these up.
+    nn_layers: tuple = (32, 16, 8)      # 3 hidden layers
+    tree_max_leaves: int = 6
+    ridge_alphas: tuple = (0.1, 1.0, 10.0, 100.0, 1000.0)
+
+
+def r2_oos(actual: np.ndarray, predicted: np.ndarray) -> float:
+    """Out-of-sample R^2 with a ZERO benchmark (GKX convention).
+
+    R2 = 1 - sum((r - rhat)^2) / sum(r^2)
+
+    The zero denominator is deliberate: the historical mean return is a poor
+    predictor, and using it as the benchmark inflates the statistic.
+    """
+    a = np.asarray(actual, dtype=float)
+    p = np.asarray(predicted, dtype=float)
+    m = np.isfinite(a) & np.isfinite(p)
+    if m.sum() == 0:
+        return np.nan
+    return float(1.0 - np.sum((a[m] - p[m]) ** 2) / np.sum(a[m] ** 2))
+
+
+def _fit_predict(name, Xtr, ytr, Xva, yva, Xte, cfg: GKXConfig):
+    """Fit one method, tuning hyperparameters on VALIDATION only."""
+    try:
+        from sklearn.linear_model import Ridge, ElasticNet
+        from sklearn.ensemble import RandomForestRegressor
+        from sklearn.neural_network import MLPRegressor
+        from sklearn.cross_decomposition import PLSRegression
+    except ImportError:
+        # Minimal fallback: closed-form ridge, tuned on validation.
+        best, best_score = None, -np.inf
+        for a in cfg.ridge_alphas:
+            w = np.linalg.solve(Xtr.T @ Xtr + a * np.eye(Xtr.shape[1]), Xtr.T @ ytr)
+            sc = r2_oos(yva, Xva @ w)
+            if sc > best_score:
+                best, best_score = w, sc
+        return Xte @ best
+
+    grids = {
+        "ridge": [(Ridge(alpha=a), {}) for a in cfg.ridge_alphas],
+        "enet": [(ElasticNet(alpha=a, l1_ratio=0.5, max_iter=5000), {})
+                 for a in (1e-4, 1e-3, 1e-2)],
+        # n_components must not exceed the number of features, or PLS raises
+        # and the whole method silently becomes a NaN column. Cap the grid.
+        "pls": [(PLSRegression(n_components=k), {})
+                for k in (1, 3, 5, 10) if k <= Xtr.shape[1]],
+        "rf": [(RandomForestRegressor(
+                    n_estimators=200, max_leaf_nodes=cfg.tree_max_leaves,
+                    random_state=0, n_jobs=-1), {})],
+        "nn": [(MLPRegressor(hidden_layer_sizes=cfg.nn_layers, alpha=a,
+                             max_iter=400, random_state=0), {})
+               for a in (1e-4, 1e-3, 1e-2)],
+    }
+
+    best_pred, best_score = None, -np.inf
+    for model, _ in grids[name]:
+        model.fit(Xtr, ytr)
+        pv = np.asarray(model.predict(Xva)).ravel()
+        sc = r2_oos(yva, pv)
+        # A NaN validation score must not silently win or block selection.
+        # Without this guard, a method whose scores are all NaN returns None
+        # and its whole column becomes NaN - which looks like the method
+        # "failed" when in fact it was never selected. Found in testing.
+        if not np.isfinite(sc):
+            sc = -np.inf
+        if best_pred is None or sc > best_score:
+            best_score = sc
+            best_pred = np.asarray(model.predict(Xte)).ravel()
+    return best_pred
+
+
+def walk_forward(panel: pd.DataFrame, feature_cols, cfg: GKXConfig = GKXConfig(),
+                 methods=("ridge", "enet", "pls", "rf", "nn")):
+    """Expanding walk-forward with a separate validation window.
+
+    Returns a DataFrame of test-period predictions, one column per method.
+
+    THE VALIDATION WINDOW IS THE POINT. Hyperparameters are selected on data
+    the model was not fit on AND that is not the test set. Collapsing this to
+    two windows is the standard way financial ML results become fiction.
+    """
+    dates = panel.index.get_level_values(0).unique().sort_values()
+    out = []
+
+    start = cfg.train_years + cfg.val_years
+    for k in range(start, len(dates) - cfg.test_years + 1, cfg.refit_every_years):
+        tr_d = dates[: k - cfg.val_years]
+        va_d = dates[k - cfg.val_years: k]
+        te_d = dates[k: k + cfg.test_years]
+
+        tr = panel.loc[panel.index.get_level_values(0).isin(tr_d)]
+        va = panel.loc[panel.index.get_level_values(0).isin(va_d)]
+        te = panel.loc[panel.index.get_level_values(0).isin(te_d)]
+        if len(tr) < 100 or len(va) < 50 or len(te) < 10:
+            continue
+
+        Xtr, ytr = tr[feature_cols].values, tr["ret_fwd"].values
+        Xva, yva = va[feature_cols].values, va["ret_fwd"].values
+        Xte = te[feature_cols].values
+
+        preds = {"actual": te["ret_fwd"].values}
+        for m in methods:
+            try:
+                preds[m] = _fit_predict(m, Xtr, ytr, Xva, yva, Xte, cfg)
+            except Exception:
+                preds[m] = np.full(len(te), np.nan)
+
+        out.append(pd.DataFrame(preds, index=te.index))
+
+    return pd.concat(out) if out else pd.DataFrame()
+
+
+def decile_spread_returns(preds: pd.DataFrame, method: str,
+                          weights: pd.Series = None) -> pd.Series:
+    """Value-weighted long-short decile spread from model forecasts.
+
+    weights: market caps aligned to preds.index. If omitted, equal weighting
+    is used - but note the paper's caution that the smallest, least liquid
+    stocks behave erratically, so equal weighting overstates tradable
+    performance.
+    """
+    rows = []
+    for dt, g in preds.groupby(level=0):
+        g = g.dropna(subset=[method, "actual"])
+        if len(g) < 20:
+            continue
+        d = pd.qcut(g[method].rank(method="first"), 10, labels=False)
+        w = weights.reindex(g.index) if weights is not None else pd.Series(1.0, index=g.index)
+
+        def _wavg(mask):
+            ww = w[mask]
+            return np.average(g.loc[mask, "actual"], weights=ww) if ww.sum() > 0 else np.nan
+
+        rows.append({"date": dt, "ret": _wavg(d == 9) - _wavg(d == 0)})
+    return pd.DataFrame(rows).set_index("date")["ret"]
+
+
+def compare_methods(preds: pd.DataFrame, methods) -> pd.DataFrame:
+    """Out-of-sample R^2 per method - the comparative table GKX build.
+
+    ALWAYS report the baselines alongside. A neural network result with no
+    ridge/PLS comparison is not evidence that machine learning helped.
+    """
+    return pd.DataFrame([
+        {"method": m,
+         "r2_oos_pct": 100.0 * r2_oos(preds["actual"].values, preds[m].values)}
+        for m in methods if m in preds.columns
+    ]).set_index("method")
+
+
+--------------------------------------------------------------------------------
+PART C - BENCHMARK VALUES FROM THE PAPER
+--------------------------------------------------------------------------------
+
+#  DATA: ~30,000 stocks, 1957-2016 (60 years), monthly.
+#        94 characteristics x 8 aggregate variables + 74 industry dummies
+#        = 900+ baseline signals.
+#
+#  STOCK-LEVEL MONTHLY OUT-OF-SAMPLE R^2:
+#      OLS (900+ predictors)            negative
+#      Elastic net                      0.11%
+#      PCR                              0.26%
+#      PLS                              0.27%
+#      GLM (splines, NO interactions)   fails to robustly beat linear
+#      Trees and neural networks        0.33% - 0.40%
+#
+#  BOTTOM-UP S&P 500 MONTHLY OUT-OF-SAMPLE R^2:
+#      Benchmark 3-characteristic OLS  -0.22%
+#      GLM                              0.71%
+#      Trees and neural networks        1.08% - 1.80%
+#
+#  ECONOMIC PERFORMANCE (annualised out-of-sample Sharpe):
+#      S&P 500 timing with NN forecasts       0.77
+#      Buy and hold                           0.51
+#      Value-weighted long-short decile, NN   1.35
+#
+#  ARCHITECTURE FINDINGS:
+#      Neural network performance PEAKS AT 3 HIDDEN LAYERS, declines beyond.
+#      Boosted trees / random forests select FEWER THAN 6 LEAVES on average.
+#      Dominant signals across ALL methods: momentum, liquidity, volatility.
+#
+#  IF YOUR REPLICATION SHOWS A STOCK-LEVEL MONTHLY R^2 ABOVE ~1%, YOU HAVE A
+#  LOOK-AHEAD BUG. That is the single most useful calibration number here.
+
+--------------------------------------------------------------------------------
+PART D - PITFALLS
+--------------------------------------------------------------------------------
+
+1.  TWO-WAY SPLITS INSTEAD OF THREE. Hyperparameters tuned against the test
+    set make every reported out-of-sample number fictional. Train / VALIDATE /
+    test, and never look at test until the model is frozen. This is the most
+    common fatal error in applied financial ML and it is invisible in the
+    results - it just makes them look good.
+
+2.  EXPECT A TINY R^2. Tenths of a percent per month at the stock level. The
+    economic value comes from breadth - a weak signal applied across thousands
+    of names - not from strong prediction. Anything much larger is a bug.
+
+3.  BUILD IN INTERACTIONS, NOT JUST NONLINEARITY. The GLM control in the paper
+    adds flexible splines per predictor with NO interactions and fails to beat
+    a linear model. Trees and neural networks succeed because they capture
+    interactions. If your architecture cannot represent interactions, added
+    flexibility buys nothing.
+
+4.  KEEP THE MODEL SMALL. Three hidden layers, six leaves. Performance PEAKS
+    at three layers and declines with more. The signal-to-noise ratio in
+    returns is nothing like computer vision and the architectures do not
+    transfer. Starting big is starting wrong.
+
+5.  AGGREGATE TO PORTFOLIOS. Portfolio-level R^2 (1.08%-1.80% for the S&P 500)
+    is 3-5x the stock-level figure, because aggregation averages out the noise
+    from small erratic stocks. Evaluate the way you would trade.
+
+6.  VALUE WEIGHT, DON'T EQUAL WEIGHT. Equal weighting loads on exactly the
+    small illiquid names the paper flags as erratic, which is where measured
+    predictability is highest and tradability is lowest.
+
+7.  COSTS ARE NOT IN THE HEADLINE SHARPE. A monthly-rebalanced long-short
+    decile strategy over the full cross-section is high turnover with a short
+    leg that must be borrowed. Price it with
+    ../../execution-and-cost/almgren-chriss-optimal-execution/.
+
+8.  ML DID NOT FIND NEW ANOMALIES. The dominant predictors are momentum,
+    liquidity and volatility - all of which already have entries in this
+    library. What machine learning contributes is a better COMBINATION
+    FUNCTION over known signals, and it inherits their decay.

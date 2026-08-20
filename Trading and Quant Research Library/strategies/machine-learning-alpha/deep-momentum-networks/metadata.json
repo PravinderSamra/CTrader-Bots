@@ -1,0 +1,60 @@
+{
+  "id": "deep-momentum-networks",
+  "title": "Deep Momentum Networks (Lim, Zohren & Roberts)",
+  "slug": "deep-momentum-networks",
+  "strategy_type": "machine-learning-alpha",
+  "asset_classes": ["futures", "commodities", "fx", "indices", "fixed-income"],
+  "complexity_score": 9,
+  "execution_type": "Quant",
+  "requires_machine_learning": true,
+  "evidence_grade": "verified-primary",
+  "holding_period": "daily rebalance",
+  "signal_frequency": "daily; expanding-window recalibration in multi-year blocks",
+  "directionality": "long-short",
+  "data_requirements": [
+    "daily continuous futures price series with a documented roll convention",
+    "sufficient history for expanding-window calibration blocks",
+    "per-contract transaction cost estimates in basis points - the result is highly cost-sensitive",
+    "ex-ante volatility estimates for the scaling framework"
+  ],
+  "capacity": "low",
+  "decay_status": "partially-decayed",
+  "sources": [
+    {
+      "type": "paper",
+      "citation": "Lim, B., Zohren, S., & Roberts, S. (2019). Enhancing Time Series Momentum Strategies Using Deep Neural Networks. arXiv:1904.04912; Journal of Financial Data Science.",
+      "url": "https://arxiv.org/pdf/1904.04912",
+      "verified_in_session": true
+    },
+    {
+      "type": "paper",
+      "citation": "Moskowitz, T. J., Ooi, Y. H., & Pedersen, L. H. (2012). Time series momentum. Journal of Financial Economics, 104(2), 228-250. (The strategy being enhanced; the Sgn(Returns) benchmark.)",
+      "url": "https://w4.stern.nyu.edu/facdir/lpederse/papers/TimeSeriesMomentum.pdf",
+      "verified_in_session": true
+    },
+    {
+      "type": "paper",
+      "citation": "Gu, S., Kelly, B., & Xiu, D. (2020). Empirical Asset Pricing via Machine Learning. RFS 33(5). (Independent confirmation that shallow beats deep.)",
+      "url": "https://dachxiu.chicagobooth.edu/download/ML.pdf",
+      "verified_in_session": true
+    }
+  ],
+  "related_strategies": [
+    "time-series-momentum-futures",
+    "empirical-asset-pricing-via-machine-learning",
+    "almgren-chriss-optimal-execution"
+  ],
+  "tags": [
+    "machine-learning",
+    "deep-learning",
+    "lstm",
+    "trend-following",
+    "sharpe-loss",
+    "direct-position-generation",
+    "turnover-regularisation",
+    "cost-sensitive",
+    "volatility-scaling",
+    "wave-3-depth"
+  ],
+  "ingested_at": "2026-08-19"
+}

@@ -1,0 +1,297 @@
+================================================================================
+DEEP MOMENTUM NETWORKS
+Lim, Zohren & Roberts (2019), arXiv:1904.04912
+================================================================================
+
+PART A - Pseudo-code: the hybrid model
+PART B - Python reference implementation (Sharpe loss + turnover regularisation)
+PART C - Benchmark values from the paper
+PART D - Pitfalls
+
+Parent: ../../trend-following/time-series-momentum-futures/
+This model KEEPS TSMOM's volatility scaling and LEARNS the two parts TSMOM
+fixes by assumption: the trend estimator and the position sizing rule.
+
+--------------------------------------------------------------------------------
+PART A - PSEUDO-CODE
+--------------------------------------------------------------------------------
+
+# ---- THE HYBRID STRUCTURE --------------------------------------------------
+#
+#   TSMOM:   position = sign(r_{t-12,t})       * (sigma_tgt / sigma_t)
+#                       ^^^^^^^^^^^^^^^^ FIXED BY ASSUMPTION
+#
+#   DMN:     position = z_t                    * (sigma_tgt / sigma_t)
+#                       ^^^ LEARNED, in [-1, 1], DIRECTLY (not a forecast)
+#
+# The volatility scaling is deliberately RETAINED - it is the part of TSMOM
+# that is well motivated. Only the arbitrary part is learned.
+
+PROCEDURE dmn_return(instrument s, time t):
+    z_t = network( features(s, t) )        # tanh output, in [-1, 1]
+    RETURN z_t * (sigma_target / sigma_t) * r_{t,t+1}
+
+# ---- THE LOSS FUNCTION - THE PAPER'S CENTRAL IDEA --------------------------
+PROCEDURE sharpe_loss(returns R):
+    # Train DIRECTLY on the trading objective. NOT on forecast error.
+    RETURN -( mean(R) / sqrt( mean(R^2) - mean(R)^2 ) )
+    #
+    # WHY THIS BEATS THE ALTERNATIVES:
+    #   MSE     spends model capacity fitting the LARGEST return moves,
+    #           which are the least predictable.
+    #   BINARY  a 0.5-threshold classifier lands near 50% accuracy and sizes
+    #           every position identically. Catastrophic in the paper:
+    #           MLP binary scored 0.108 Sharpe vs 2.017 for the same network
+    #           trained on Sharpe.
+    #   SHARPE  optimises what the trader actually cares about, and learns
+    #           POSITION SIZING implicitly along the way.
+
+# ---- TURNOVER REGULARISATION -----------------------------------------------
+PROCEDURE cost_aware_loss(returns R, positions z, c):
+    turnover = mean( |z_t - z_{t-1}| )
+    RETURN sharpe_loss(R) + c * turnover
+    # Puts the cost model INSIDE the objective instead of applying a haircut
+    # afterwards. The network learns to trade less where trading is expensive.
+
+--------------------------------------------------------------------------------
+PART B - PYTHON REFERENCE IMPLEMENTATION
+--------------------------------------------------------------------------------
+
+"""
+Deep Momentum Networks: Sharpe-optimised position generation.
+
+Dependencies: numpy, pandas. Torch optional - a numpy linear model with the
+same Sharpe objective is provided so the CORE IDEA (the loss function) can be
+tested without a deep-learning stack. The paper's own result is that the LOSS
+matters more than the architecture, so the linear-Sharpe model is a
+meaningful baseline, not a toy: it scored 1.496 in Exhibit 3, beating both
+reference benchmarks.
+"""
+
+import numpy as np
+import pandas as pd
+
+
+def sharpe_loss(returns: np.ndarray) -> float:
+    """Negative annualised-agnostic Sharpe. Lower is better (it is a LOSS)."""
+    r = np.asarray(returns, dtype=float)
+    r = r[np.isfinite(r)]
+    if len(r) < 2:
+        return 0.0
+    sd = np.sqrt(np.mean(r ** 2) - np.mean(r) ** 2)
+    return 0.0 if sd <= 0 else -float(np.mean(r) / sd)
+
+
+def turnover(positions: np.ndarray) -> float:
+    """Mean absolute change in position - the cost proxy."""
+    z = np.asarray(positions, dtype=float)
+    return float(np.mean(np.abs(np.diff(z, axis=0)))) if len(z) > 1 else 0.0
+
+
+def cost_aware_loss(returns, positions, c: float = 0.0) -> float:
+    """Sharpe loss plus a turnover penalty (the paper's regulariser)."""
+    return sharpe_loss(returns) + c * turnover(positions)
+
+
+def build_features(prices: pd.DataFrame, vol_com: float = 60.0) -> dict:
+    """Normalised returns over multiple horizons, plus MACD-style signals.
+
+    The paper feeds volatility-normalised returns at several lookbacks. Each
+    feature is scaled by ex-ante volatility so instruments are comparable -
+    the same discipline as the TSMOM entry.
+    """
+    rets = prices.pct_change()
+    ew = rets.ewm(com=vol_com, adjust=False)
+    sigma = np.sqrt(261.0 * (rets - ew.mean()).pow(2).ewm(com=vol_com, adjust=False).mean())
+    sigma = sigma.shift(1)                       # no look-ahead
+
+    feats = {}
+    for h, name in [(1, "r_1d"), (21, "r_1m"), (63, "r_3m"),
+                    (126, "r_6m"), (252, "r_12m")]:
+        cum = prices.pct_change(h)
+        feats[name] = (cum / (sigma * np.sqrt(h / 261.0))).shift(1)
+    feats["sigma"] = sigma
+    feats["rets"] = rets
+    return feats
+
+
+class LinearSharpeModel:
+    """Linear position model trained by DIRECT Sharpe maximisation.
+
+    position z_t = tanh( w . x_t )
+
+    Optimised by random-restart coordinate search - crude, but it isolates
+    the paper's actual claim (the LOSS FUNCTION is what matters) from any
+    deep-learning machinery. In the paper this model class scores 1.496,
+    ahead of both reference benchmarks.
+    """
+
+    def __init__(self, n_features: int, seed: int = 0):
+        self.w = np.zeros(n_features)
+        self.rng = np.random.default_rng(seed)
+
+    def positions(self, X: np.ndarray, w=None) -> np.ndarray:
+        w = self.w if w is None else w
+        return np.tanh(X @ w)
+
+    def strategy_returns(self, X, fwd_returns, vol, target_vol=0.15, w=None):
+        z = self.positions(X, w)
+        scale = np.divide(target_vol, vol, out=np.zeros_like(vol),
+                          where=(vol > 0))
+        return z * scale * fwd_returns, z
+
+    def fit(self, X, fwd_returns, vol, target_vol=0.15, cost=0.0,
+            n_restarts=8, n_iter=250, step=0.35):
+        """Maximise Sharpe (minus turnover penalty) over w."""
+        best_w, best_loss = None, np.inf
+        for _ in range(n_restarts):
+            w = self.rng.normal(0, 0.3, len(self.w))
+            r, z = self.strategy_returns(X, fwd_returns, vol, target_vol, w)
+            loss = cost_aware_loss(r, z, cost)
+            s = step
+            for _ in range(n_iter):
+                cand = w + self.rng.normal(0, s, len(w))
+                rc, zc = self.strategy_returns(X, fwd_returns, vol, target_vol, cand)
+                lc = cost_aware_loss(rc, zc, cost)
+                if lc < loss:
+                    w, loss = cand, lc
+                else:
+                    s *= 0.995                    # anneal
+            if loss < best_loss:
+                best_w, best_loss = w, loss
+        self.w = best_w
+        return self
+
+
+def tsmom_benchmark(prices: pd.DataFrame, vol: pd.DataFrame,
+                    target_vol: float = 0.15) -> pd.DataFrame:
+    """Sgn(Returns): the paper's best reference benchmark, = TSMOM.
+
+    Exhibit 3 Sharpe 1.392. This is the number any enhancement must beat, and
+    it is the strategy documented in
+    ../../trend-following/time-series-momentum-futures/.
+    """
+    signal = np.sign(prices.pct_change(252)).shift(1)
+    scale = target_vol / vol
+    return signal * scale * prices.pct_change()
+
+
+def evaluate(returns: pd.Series, periods_per_year: int = 252) -> dict:
+    """Metrics matching the paper's exhibits, including MDD and Sortino."""
+    r = returns.dropna()
+    if r.empty:
+        return {}
+    ann_ret = r.mean() * periods_per_year
+    ann_vol = r.std(ddof=1) * np.sqrt(periods_per_year)
+    downside = r[r < 0].std(ddof=1) * np.sqrt(periods_per_year)
+    eq = (1.0 + r).cumprod()
+    mdd = float((eq / eq.cummax() - 1.0).min())
+    return {
+        "E[Return]": float(ann_ret),
+        "Vol": float(ann_vol),
+        "MDD": abs(mdd),
+        "Sharpe": float(ann_ret / ann_vol) if ann_vol > 0 else np.nan,
+        "Sortino": float(ann_ret / downside) if downside > 0 else np.nan,
+        "Calmar": float(ann_ret / abs(mdd)) if mdd != 0 else np.nan,
+        "pct_positive": float((r > 0).mean()),
+    }
+
+
+def cost_sensitivity(returns: pd.Series, positions: pd.Series,
+                     bps_grid=(0, 1, 2, 3, 5, 10)) -> pd.DataFrame:
+    """Sharpe as a function of transaction cost - the paper's Exhibit 7.
+
+    THE DECISIVE CHART FOR THIS STRATEGY. The paper's LSTM outperforms
+    benchmarks only up to 2-3 bps, with profitability eroding by ~5 bps.
+    Always produce this before believing a gross Sharpe ratio.
+    """
+    rows = []
+    to = positions.diff().abs().fillna(0.0)
+    for bps in bps_grid:
+        net = returns - (bps / 10000.0) * to
+        m = evaluate(net)
+        rows.append({"cost_bps": bps, "sharpe": m.get("Sharpe", np.nan)})
+    return pd.DataFrame(rows).set_index("cost_bps")
+
+
+--------------------------------------------------------------------------------
+PART C - BENCHMARK VALUES FROM THE PAPER
+--------------------------------------------------------------------------------
+
+#  DATA: 88 continuous futures, 1990-2015; out-of-sample 1995-2015;
+#        expanding-window calibration in six 5-year blocks; daily rebalance.
+#
+#  EXHIBIT 3 - RESCALED TO TARGET VOLATILITY (the exhibit the paper's
+#  headline claims refer to):
+#
+#      model / objective          E[Ret]    MDD   Sharpe  Sortino  Calmar
+#      Long only                   0.117  0.431    0.759    1.141   0.271
+#      Sgn(Returns)  [= TSMOM]     0.215  0.264    1.392    2.108   0.815
+#      MACD                        0.172  0.317    1.111    1.622   0.543
+#      Linear   / Sharpe           0.232  0.303    1.496    2.254   0.765
+#      MLP      / Sharpe           0.312  0.335    2.017    3.042   0.930
+#      MLP      / Binary           0.017  0.661    0.108    0.162   0.025
+#      WaveNet  / Sharpe           0.148  0.349    0.956    1.429   0.424
+#      LSTM     / Sharpe           0.451  0.209    2.907    4.290   2.159
+#      LSTM     / Ave. Returns     0.208  0.365    1.349    2.045   0.568
+#      LSTM     / MSE              0.121  0.362    0.791    1.211   0.335
+#      LSTM     / Binary           0.075  0.682    0.486    0.762   0.110
+#
+#  THE HEADLINE CLAIMS, VERIFIED ARITHMETICALLY:
+#      2.907 / 2.017 = 1.441   -> "44%" improvement over the best NN (MLP)
+#      2.907 / 1.392 = 2.089   -> "more than two times" the best benchmark
+#
+#  EXHIBIT 2 - RAW SIGNAL OUTPUTS (before rescaling), for reference:
+#      Long only 0.738 | Sgn(Returns) 1.192 | MACD 0.976
+#      Linear/Sharpe 1.094 | MLP/Sharpe 1.383 | WaveNet/Sharpe 0.854
+#      LSTM/Sharpe 2.804
+#
+#  DO NOT MIX THE EXHIBITS. The narrative claims are Exhibit 3. Checking them
+#  against Exhibit 2 makes the paper look internally inconsistent when it is
+#  not.
+#
+#  TRANSACTION COSTS: the LSTM outperforms benchmarks up to 2-3 bps;
+#  profitability erodes by ~5 bps. Turnover regularisation tested at c = 10bps
+#  helps but does not restore the uncosted advantage.
+
+--------------------------------------------------------------------------------
+PART D - PITFALLS
+--------------------------------------------------------------------------------
+
+1.  TRAIN ON THE OBJECTIVE YOU ACTUALLY WANT. The single most transferable
+    result. Same architecture, different loss:
+        LSTM Sharpe-loss  2.907  vs  MSE 0.791  vs  Binary 0.486
+        MLP  Sharpe-loss  2.017  vs  Binary 0.108
+    Binary classification is the worst choice available - a 0.5-threshold
+    classifier sits near 50% accuracy and sizes every position identically.
+
+2.  GENERATE POSITIONS DIRECTLY. Forecast-then-size throws away the
+    interaction between the two decisions. Models with direct position
+    outputs "perform the best" in every class the paper tests.
+
+3.  MORE COMPLEXITY IS NOT BETTER. WaveNet (0.956) loses to a SIGN FUNCTION
+    (1.392) and to a linear model (1.496). The authors attribute it to tuning
+    burden - many design parameters versus one for the LSTM. This
+    independently corroborates Gu-Kelly-Xiu's shallow-beats-deep finding on
+    completely different data.
+
+4.  KEEP THE VOLATILITY SCALING. DMN is a HYBRID: it retains TSMOM's
+    sigma_target/sigma_t sizing and learns only the direction/sizing signal.
+    Discarding the volatility framework discards the part that was already
+    well motivated.
+
+5.  RUN THE COST CURVE BEFORE BELIEVING ANY GROSS SHARPE. The advantage holds
+    only to 2-3 bps and erodes by ~5. cost_sensitivity() produces the paper's
+    Exhibit 7. On anything less liquid, add the turnover regulariser at
+    training time rather than haircutting afterwards.
+
+6.  NO LOOK-AHEAD IN THE VOLATILITY ESTIMATE. build_features() shifts sigma by
+    one period deliberately, exactly as in the TSMOM entry. The same trap.
+
+7.  THE 5 x 4 GRID IS ITSELF MULTIPLE TESTING. Five architectures times four
+    objectives, evaluated on one data set, with no correction applied. The
+    best cell of twenty is biased upward even under honest walk-forward.
+    Treat 2.907 as an upper bound on a research construction.
+
+8.  IT ENHANCES A DECAYING EDGE. TSMOM is graded partially-decayed in this
+    library. A better estimator of a weakening signal is still weakening.

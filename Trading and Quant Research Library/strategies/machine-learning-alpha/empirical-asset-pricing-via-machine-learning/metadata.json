@@ -1,0 +1,55 @@
+{
+  "id": "empirical-asset-pricing-via-machine-learning",
+  "title": "Empirical Asset Pricing via Machine Learning (Gu, Kelly & Xiu)",
+  "slug": "empirical-asset-pricing-via-machine-learning",
+  "strategy_type": "machine-learning-alpha",
+  "asset_classes": ["equities"],
+  "complexity_score": 8,
+  "execution_type": "Quant",
+  "requires_machine_learning": true,
+  "evidence_grade": "verified-primary",
+  "holding_period": "1 month",
+  "signal_frequency": "monthly forecast and rebalance; annual model refit",
+  "directionality": "long-short",
+  "data_requirements": [
+    "point-in-time panel of stock characteristics (94 in the source)",
+    "aggregate time-series conditioning variables for interactions",
+    "industry classification for sector dummies",
+    "market capitalisation for value weighting",
+    "a long history - the protocol needs train, validation AND test windows"
+  ],
+  "capacity": "medium",
+  "decay_status": "partially-decayed",
+  "sources": [
+    {
+      "type": "paper",
+      "citation": "Gu, S., Kelly, B., & Xiu, D. (2020). Empirical Asset Pricing via Machine Learning. The Review of Financial Studies, 33(5), 2223-2273.",
+      "url": "https://dachxiu.chicagobooth.edu/download/ML.pdf",
+      "verified_in_session": true
+    },
+    {
+      "type": "paper",
+      "citation": "Harvey, C. R., Liu, Y., & Zhu, H. (2016). ... and the Cross-Section of Expected Returns. Review of Financial Studies, 29(1), 5-68. (The multiple-testing critique applying to the input characteristics.)",
+      "url": "https://faculty.fuqua.duke.edu/~charvey/Research/Published_Papers/P118_and_the_cross.pdf",
+      "verified_in_session": false
+    }
+  ],
+  "related_strategies": [
+    "deep-momentum-networks",
+    "cross-sectional-momentum-jegadeesh-titman",
+    "almgren-chriss-optimal-execution"
+  ],
+  "tags": [
+    "machine-learning",
+    "neural-networks",
+    "random-forest",
+    "walk-forward",
+    "out-of-sample-protocol",
+    "predictor-interactions",
+    "shallow-learning",
+    "empirical-asset-pricing",
+    "methodology-standard",
+    "foundational"
+  ],
+  "ingested_at": "2026-08-19"
+}

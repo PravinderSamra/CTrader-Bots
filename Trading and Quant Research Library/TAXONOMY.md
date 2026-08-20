@@ -75,13 +75,25 @@ Ingested so far:
 - ✅ **Optimal Execution** (Almgren & Chriss, 2000) — opens the execution-and-cost category; the
   layer that determines which of the other entries are actually implementable.
 
-Still queued: post-earnings-announcement drift, index-rebalance front-running, merger arbitrage
-spreads, short-interest and lending-fee signals, commodity backwardation in isolation.
+Still queued: index-rebalance front-running, short-interest and lending-fee signals, commodity
+backwardation in isolation.
 
-**Wave 4 — machine-learning alpha with credible protocols.**
+**Blocked on source access — the entire event-and-flow-driven category.** Post-earnings-announcement
+drift (Bernard & Thomas 1989/1990), the index effect (Shleifer 1986) and merger arbitrage (Mitchell &
+Pulvino 2001) are all paywalled, and the open material is review articles rather than primary
+studies. See `ACCESS_NEEDED.md`.
+
+**Wave 4 — machine-learning alpha with credible protocols.** *Opened.*
 Only entries with an explicit walk-forward protocol, an out-of-sample discipline, and a published
-comparison against a linear baseline. Deep-learning trend models, gradient-boosted return
-prediction, and the empirical-asset-pricing literature (Gu, Kelly & Xiu style methodology).
+comparison against a linear baseline.
+- ✅ **Empirical Asset Pricing via Machine Learning** (Gu, Kelly & Xiu, 2020) — the methodological
+  anchor. Comparative study across the whole toolkit with a genuine train/validation/test split.
+  Establishes that *interactions* (not nonlinearity) drive the gain, and that shallow beats deep.
+- ✅ **Deep Momentum Networks** (Lim, Zohren & Roberts, 2019) — training on the Sharpe ratio directly
+  rather than on forecast error; independently corroborates shallow-beats-deep.
+
+Still queued: gradient-boosted return prediction as a separate entry, and any credible reinforcement-
+learning execution work that meets the protocol bar.
 
 **Wave 5 — execution, capacity, and the cost layer.**
 Almgren–Chriss optimal execution, square-root market impact, capacity decay, and the
