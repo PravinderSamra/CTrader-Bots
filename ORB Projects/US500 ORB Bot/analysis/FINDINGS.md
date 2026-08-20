@@ -71,3 +71,30 @@ Time to pass Phase 1, risk sized for a ~90% pass rate:
 | Both, if truly uncorrelated | $864 | 47 | 2.2 |
 
 Running both is clearly worth it despite the correlation.
+
+## One trade per day vs two
+
+The bot can take a second entry on the same day (162 of 1,099 trades).
+Restricting it to the first entry only:
+
+| | Trades | Net $ | Win% | $/trade | Expectancy |
+|---|---|---|---|---|---|
+| 1st of day | 937 | $7,412 | 49.5% | $7.91 | +0.0792R |
+| 2nd of day | 162 | $450 | 50.6% | $2.78 | +0.0277R |
+
+The second trade's edge is **not distinguishable from zero** (t = 0.35).
+
+| | Total R | Max DD | Return/DD | Worst day |
+|---|---|---|---|---|
+| 2 per day | 78.7 | 14.4R | 5.46 | -2.28R |
+| 1 per day | 74.2 | **11.9R** | **6.22** | **-1.29R** |
+
+Because the drawdown is smaller, risk per trade can be sized up, and the
+challenge is passed *faster* despite the lower raw profit:
+
+| | Risk/trade | Median days to pass | |
+|---|---|---|---|
+| 2 per day | $793 | 105 | 5.0 months |
+| 1 per day | **$886** | **92** | **4.4 months** |
+
+**Recommendation: limit to one trade per day.**
