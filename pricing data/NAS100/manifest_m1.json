@@ -1,0 +1,20 @@
+{
+  "instrument": "NAS100",
+  "symbol_id": 205,
+  "period": "M_1",
+  "price_divisor": 100000,
+  "bars": 1762347,
+  "coverage_first_utc": "2021-08-23 09:02:00",
+  "coverage_last_utc": "2026-08-21 20:54:00",
+  "files": [
+    "NAS100_M_1_2021.csv", "NAS100_M_1_2022.csv", "NAS100_M_1_2023.csv",
+    "NAS100_M_1_2024.csv", "NAS100_M_1_2025.csv", "NAS100_M_1_2026.csv"
+  ],
+  "columns": "datetime,open,high,low,close,volume",
+  "timestamp_note": "ISO-8601 UTC; timestamp is the bar OPEN time",
+  "source": "cTrader (Pepperstone UK GBP spread-bet), via fetch_ohlcv.py",
+  "volume_note": "tick volume (price-update count), not real contract volume",
+  "integrity": "verified: 0 malformed OHLC bars, 0 duplicate timestamps",
+  "history_available_beyond": "M_1 verified back to at least June 2019; re-run fetch_ohlcv.py with a larger --years to extend",
+  "downloaded_at": "2026-08-22T09:01:32Z"
+}

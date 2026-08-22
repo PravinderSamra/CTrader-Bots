@@ -8,7 +8,7 @@ Central store for all raw OHLCV price history in this repo. One subfolder per in
 |---|---|---|---|---|
 | **XAUUSD** (gold) | M1 | 1,762,482 | 2021-07-18 → 2026-07-16 | `XAUUSD/XAUUSD_M_1_<year>.csv` (6 files) |
 | **NAS100** (Nasdaq 100) | M5 | 212,383 | 2023-07-02 → 2026-07-03 | `NAS100/nas100_m5.csv` |
-| **NAS100** | **M1** | *in progress* | target 5 years back from 2026-08 | `NAS100/NAS100_M_1_<year>.csv` |
+| **NAS100** | **M1** | **1,762,347** | 2021-08-23 → 2026-08-21 | `NAS100/NAS100_M_1_<year>.csv` (6 files) |
 | **US30** (Dow 30) | M5 | 212,296 | 2023-07-02 → 2026-07-03 | `US30/us30_m5.csv` |
 
 All data: cTrader, Pepperstone UK GBP spread-bet account. Symbol IDs — XAUUSD 241, NAS100 205, US30 219.
@@ -17,7 +17,7 @@ All data: cTrader, Pepperstone UK GBP spread-bet account. Symbol IDs — XAUUSD 
 
 Two formats exist because the sets were gathered by different scripts:
 
-- **`<INSTRUMENT>_<PERIOD>_<YEAR>.csv`** (gold, and new NAS100 M1):
+- **`<INSTRUMENT>_<PERIOD>_<YEAR>.csv`** (gold M1, NAS100 M1):
   `datetime,open,high,low,close,volume` — ISO-8601 UTC, e.g. `2026-07-16T20:04:00Z`
 - **`<instrument>_m5.csv`** (US30, NAS100 M5):
   `timestamp_ms,datetime_utc,open,high,low,close,volume` — plain UTC, e.g. `2026-07-03 16:55:00`
@@ -53,8 +53,12 @@ where it stopped. Output lands in `<INSTRUMENT>/<INSTRUMENT>_<PERIOD>_<YEAR>.csv
 Requires `CTRADER_MCP_SLUG` in the environment. Rate is roughly 3.6 requests/sec, 100 bars per
 request — about 80 minutes for 5 years of 1-minute index data.
 
-**Availability verified:** NAS100 M1 goes back to at least June 2019 (7+ years), so the history
-can be extended beyond the current 5-year target if wanted.
+**Availability verified:** NAS100 M1 goes back to at least June 2019 (7+ years). To extend beyond
+the current 5 years, re-run the same command with a larger `--years` — it resumes from where it
+stopped rather than re-downloading.
+
+**Integrity:** the NAS100 M1 set was checked bar-by-bar — 0 malformed OHLC rows, 0 duplicate
+timestamps across all 1,762,347 bars.
 
 ## Note on duplication
 
