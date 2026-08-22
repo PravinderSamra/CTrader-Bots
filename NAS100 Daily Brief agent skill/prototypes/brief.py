@@ -138,6 +138,19 @@ def markdown(d):
       f"all gamma levels below are already converted to CFD price")
     A(f"- **Data freshness:** NDX chain {gx['as_of']['ndx']}, QQQ chain {gx['as_of']['qqq']}\n")
 
+    fr = mc.get("fred") or {}
+    A("### Real rates, credit & liquidity (FRED)\n")
+    if fr.get("key_present"):
+        for x in fr.get("read", []):
+            mark = "🟢" if x["signal"] > 0 else ("🔴" if x["signal"] < 0 else "⚪")
+            A(f"- {mark} {x['text']}")
+        A(f"\n_{fr.get('series_ok')} series, published with a 1-2 day lag — "
+          f"this is regime context, not an intraday trigger._\n")
+    else:
+        A("- _FRED_API_KEY not set — running on nominal yields only. "
+          "The real-yield read (the most direct driver of tech multiples) "
+          "is missing._\n")
+
     A("## 3. Fuel & range budget\n")
     vxn = v["vxn_nasdaq_ivol"].get("last")
     implied = round(px * (vxn / 100) / (252 ** 0.5), 1) if vxn else None

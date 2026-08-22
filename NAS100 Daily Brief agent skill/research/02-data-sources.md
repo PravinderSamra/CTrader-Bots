@@ -4,7 +4,7 @@ All probes run **2026-08-22 09:44–09:52 UTC** from this session via
 `prototypes/source_health.py`. Re-run that script any time; it prints
 PASS/FAIL per source with latency and a content sanity-check.
 
-**Result: 27 of 28 candidate sources LIVE. 0 API keys required for the core brief.**
+**Result: 31 of 32 candidate sources LIVE. 0 API keys required for the core brief; one free optional key (FRED) adds the real-rate, credit and liquidity layer.**
 
 ---
 
@@ -66,6 +66,38 @@ ratio replaces it and needs no key.
 | `dxy` | Yahoo `DX-Y.NYB` | 98.839 (−0.98%) | Risk appetite / liquidity |
 | `ust_curve_xml` | `home.treasury.gov/.../xml?data=daily_treasury_yield_curve` | 249KB | Official par curve — authoritative daily settle, use to sanity-check Yahoo |
 
+### FRED — real rates, credit and liquidity (free key, added after initial testing)
+Probed **2026-08-22 10:20 UTC — 14/14 series returned live data.** The key lives
+in `FRED_API_KEY`; see `SETUP-SECRETS.md`. The brief degrades gracefully and says
+so if the key is absent.
+
+`https://api.stlouisfed.org/fred/series/observations?series_id=<ID>&api_key=…&file_type=json`
+
+| Series | Value on test | Why it matters for NAS100 |
+|---|---|---|
+| `DFII10` | 2.35% | **10y REAL yield — the single most direct driver of tech multiples.** Nominal yields tell you what happened; this tells you whether it was tightening or inflation |
+| `T10YIE` | 2.34% | 10y breakeven. Lets us decompose a nominal move into real-rate vs inflation-expectation |
+| `T5YIFR` | 2.34% | 5y5y forward inflation — long-run credibility anchor |
+| `DFII5` | 2.05% | 5y real, policy-driven end |
+| `DGS10` / `DGS2` | 4.69% / 4.19% | Authoritative nominal settles (cross-check on Yahoo `^TNX`) |
+| `T10Y2Y` | +0.50pp | Curve shape; bull- vs bear-steepening reads differently for risk |
+| `NFCI` | −0.559 | Chicago Fed financial conditions. Negative = looser than average. **Conditions lead price** |
+| `BAMLH0A0HYM2` | 2.75% | **US high-yield OAS — credit's opinion on risk.** Widening HY while NAS100 rallies is the most reliable bearish divergence available |
+| `WALCL` | $6.75tn (−$14.3bn w/w) | Fed balance sheet — QT draining liquidity, a slow headwind |
+| `RRPONTSYD` | $0.2bn | Reverse repo, effectively drained — the liquidity buffer is gone |
+| `SOFR` | 3.63% | Funding-stress tell |
+| `VIXCLS`, `DTWEXBGS` | 16.01, 118.90 | Authoritative VIX settle and the Fed's broad dollar index (cleaner than DXY, which is 58% EUR) |
+
+**Publication lag is 1–2 days and differs per series** — `DFII10` lands a day
+after `T10YIE`. `fred_probe.py:aligned_change()` finds the latest date common to
+all compared series before measuring any cross-series change; comparing each
+series' own latest step produced a nonsense decomposition (nominal +4bp with
+real +0bp and breakeven +0bp). Treat this layer as **regime context, not an
+intraday trigger**.
+
+Rate limit: 120 requests/minute on the free tier — the 14-series pull is one
+run's worth of budget several times over.
+
 ### Calendars
 | ID | Endpoint | Notes |
 |---|---|---|
@@ -104,7 +136,7 @@ it de-duplicates across outlets reasonably well.
 | CBOE history CSVs (`_VIX_History.csv`) | **403** | Not needed |
 | BLS RSS + release schedule | **403** | ForexFactory + Nasdaq cover the same releases |
 | Reuters business RSS | connection failure | CNBC/MarketWatch/FT cover it |
-| FRED `fredgraph.csv` | connection failure from this environment | FRED's proper API is reachable (returns a clean 400 on a bad key) — **needs a free key** |
+| FRED `fredgraph.csv` | connection failure from this environment | Use the proper JSON API instead — **now live with a key**, see the FRED section above |
 | **NewsMCP** (`@newsmcp/server` in `.mcp.json`) | **410 — service shut down** | See the note in `PHASE1-FINDINGS.md`; must be removed from `.mcp.json` |
 | **Tavily MCP** | **401** — `.mcp.json` holds the literal placeholder `YOUR_TAVILY_API_KEY` | Needs a free key (or just use built-in WebSearch) |
 | **Alpha Vantage MCP** | Not exposed — `.mcp.json` holds the literal placeholder `YOUR_API_KEY` | Needs a free key. **Not required** — CBOE beats its options data and Yahoo covers the rest |
@@ -132,7 +164,8 @@ strictly better. Alpha Vantage stays on the optional list only for
 | Index spot for GEX mapping | CBOE `_NDX` quote | Yahoo `^NDX` | last CBOE chain `close` field |
 | GEX / OI | CBOE `_NDX` + `QQQ` chains | QQQ alone (scaled ×41.03) | previous run's cached levels, clearly labelled stale |
 | Vol regime | VXN + VIX9D/VIX + VVIX | VIX alone | ATR-implied from cTrader |
-| Rates | Yahoo `^TNX`/`^FVX`/`^IRX` | Treasury par-curve XML | — |
+| Rates (nominal) | Yahoo `^TNX`/`^FVX`/`^IRX` | FRED `DGS10`/`DGS2` | Treasury par-curve XML |
+| Real rates / credit / liquidity | FRED (`DFII10`, `T10YIE`, `BAMLH0A0HYM2`, `NFCI`, `WALCL`) | none — layer is skipped and the brief says so | — |
 | Calendar | ForexFactory `thisweek` | Nasdaq econ-events per-date | Fed calendar HTML |
 | News | Google News RSS ×2 | CNBC + MarketWatch + FT | built-in WebSearch |
 

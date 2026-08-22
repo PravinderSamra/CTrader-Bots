@@ -20,6 +20,20 @@ points, and it is *directional and immediate* — not a lagged effect.
   premium and growth. A rise led by the 2y is a hawkish-repricing selloff (fast,
   sharp, mean-reverts less). A rise led by the 10y is a term-premium/supply
   selloff (grindier).
+- **Decompose every nominal move — this is the part most traders skip.** A 10y
+  move is either a *real-rate* move (`DFII10`) or a *breakeven/inflation-
+  expectation* move (`T10YIE`), and they hit NAS100 differently:
+  - **Real-rate-led rise → the most direct multiple compression there is.**
+    The discount rate literally went up. Sell tech, immediately.
+  - **Breakeven-led rise → an inflation scare.** It hits tech via the *Fed-path
+    repricing that follows*, so the impulse is smaller and slower, and it is
+    more likely to retrace if the next data print cools.
+  - *Example 19→20 Aug 2026: 10y nominal +4bp, entirely breakeven (real +0bp).
+    That is a much softer bearish signal than a +4bp real-rate move would be.*
+- **Credit is the honest cross-check.** High-yield OAS (`BAMLH0A0HYM2`) widening
+  while NAS100 rallies is the single most reliable bearish divergence available
+  — credit is a better risk analyst than equity. Tight and stable HY spreads
+  give a rally permission to continue.
 - **Current regime (Aug 2026):** Fed funds 3.50–3.75%, June-2026 dot plot flipped
   from a projected cut to a **hike** — 9 of 18 members see tightening by
   year-end. 10y at ~4.74%. This is a *hawkish-risk* tape: upside inflation
@@ -80,6 +94,10 @@ strategy 2's continuation model is the right tool).
 | **VVIX** | CBOE | > 100 = active tail-hedging; big put buying feeds negative gamma |
 | **DXY** | `DX-Y.NYB` | Sharp dollar strength = risk-off / liquidity tightening = bearish NAS100. Weak dollar is a mild tailwind |
 | **ES vs NQ** | `ES=F` vs `NQ=F` | NQ outperforming ES = genuine tech-led risk appetite (trend day more likely). NQ underperforming on an up day = rotation out of tech, rallies fade |
+| **10y real yield** | FRED `DFII10` | The actual discount rate on tech cash flows. Rising = multiple compression, and it is more predictive than the nominal |
+| **HY credit spread** | FRED `BAMLH0A0HYM2` | Credit's risk verdict. Widening into an equity rally = fade the rally |
+| **Financial conditions** | FRED `NFCI` | Negative = looser than average. Conditions *lead* price, so a tightening week is an early warning |
+| **Fed liquidity** | FRED `WALCL`, `RRPONTSYD` | Balance sheet shrinking with reverse repo drained = QT biting reserves; a slow, persistent headwind |
 | **Overnight Globex range** | `NQ=F` 5m | Asia and London windows on the futures set the levels the CFD opens into. A wide Globex range that has already used most of the ADR means the NY session has little fuel left |
 
 ---

@@ -13,6 +13,11 @@ import json, re, ssl, sys, urllib.request, urllib.error
 from datetime import datetime, timezone, timedelta
 from xml.etree import ElementTree as ET
 
+try:
+    import fred_probe
+except Exception:            # module missing -> degrade, never crash the brief
+    fred_probe = None
+
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
                     "(KHTML, like Gecko) Chrome/125.0 Safari/537.36"}
 CTX = ssl.create_default_context()
@@ -216,6 +221,9 @@ def run():
             "nvda": yahoo_series("NVDA"), "msft": yahoo_series("MSFT"),
             "aapl": yahoo_series("AAPL"), "avgo": yahoo_series("AVGO"),
         },
+        "fred": (fred_probe.run() if fred_probe else
+                 {"key_present": False, "read": [],
+                  "_error": "fred_probe unavailable"}),
         "calendar": calendar_today_and_week(),
         "news": news_layer(),
     }
@@ -239,6 +247,13 @@ if __name__ == "__main__":
               f"9D/30D {v['vix9d_over_vix']} -> {v['term_read']}")
         print(f"US10y {r['us10y'].get('last')} ({r['us10y'].get('chg_pct')}%)  "
               f"DXY {r['dxy'].get('last')} ({r['dxy'].get('chg_pct')}%)")
+        fr = data.get("fred") or {}
+        if fr.get("key_present"):
+            print(f"\nFRED ({fr.get('series_ok')} series):")
+            for x in fr.get("read", []):
+                print(f"  [{x['signal']:+d}] {x['text']}")
+        else:
+            print("\nFRED: no key set (FRED_API_KEY) — real-yield layer skipped")
         print("\nUS events next 24h:")
         for e in data["calendar"].get("upcoming_next_24h", []) or ["  (none)"]:
             print("  ", e)

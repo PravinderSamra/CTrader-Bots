@@ -10,7 +10,7 @@ feed degrades the brief loudly instead of silently.
     python3 source_health.py            # all probes
     python3 source_health.py --json     # machine-readable
 """
-import json, ssl, sys, time, urllib.request, urllib.error
+import json, os, ssl, sys, time, urllib.request, urllib.error
 from datetime import datetime, timezone
 
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -39,6 +39,12 @@ PROBES = [
     ("us13w",           "macro",  "https://query1.finance.yahoo.com/v8/finance/chart/%5EIRX?range=5d&interval=1d", "chart", "13-week bill — risk-free proxy for BS gamma"),
     ("dxy",             "macro",  "https://query1.finance.yahoo.com/v8/finance/chart/DX-Y.NYB?range=5d&interval=1d", "chart", "Dollar index — inverse risk appetite"),
     ("ust_curve_xml",   "macro",  "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/pages/xml?data=daily_treasury_yield_curve&field_tdr_date_value=2026", "BC_10YEAR", "Official Treasury par curve (daily, authoritative)"),
+    # ---- FRED (needs a free key in FRED_API_KEY) ---------------------------
+    ("fred_real_yield", "macro", "https://api.stlouisfed.org/fred/series/observations?series_id=DFII10&api_key={FRED}&file_type=json&sort_order=desc&limit=3", "observations", "10y REAL yield — the direct driver of tech multiples"),
+    ("fred_breakeven",  "macro", "https://api.stlouisfed.org/fred/series/observations?series_id=T10YIE&api_key={FRED}&file_type=json&sort_order=desc&limit=3", "observations", "10y breakeven — splits nominal moves into real vs inflation"),
+    ("fred_hy_spread",  "macro", "https://api.stlouisfed.org/fred/series/observations?series_id=BAMLH0A0HYM2&api_key={FRED}&file_type=json&sort_order=desc&limit=3", "observations", "HY OAS — credit's opinion on risk"),
+    ("fred_nfci",       "macro", "https://api.stlouisfed.org/fred/series/observations?series_id=NFCI&api_key={FRED}&file_type=json&sort_order=desc&limit=3", "observations", "Chicago Fed financial conditions"),
+
     # ---- calendar ----------------------------------------------------------
     ("ff_calendar",     "calendar","https://nfs.faireconomy.media/ff_calendar_thisweek.json", "impact", "ForexFactory week calendar w/ High/Med/Low impact"),
     ("nasdaq_econ_cal", "calendar","https://api.nasdaq.com/api/calendar/economicevents?date={TODAY}", "eventName", "Nasdaq econ events for a specific date"),
@@ -83,9 +89,17 @@ def probe(url, expect, timeout=60):
 
 def main():
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    fred_key = os.environ.get("FRED_API_KEY", "").strip()
     results = {}
     for key, cat, url, expect, note in PROBES:
-        r = probe(url.replace("{TODAY}", today), expect)
+        if "{FRED}" in url and not fred_key:
+            results[key] = {"status": None, "ms": 0, "bytes": 0, "content_ok": False,
+                            "verdict": "SKIPPED_NO_KEY", "category": "optional",
+                            "note": note + "  [set FRED_API_KEY to enable]", "url": url}
+            if "--json" not in sys.argv:
+                print(f"[SKIP] optional {key:18}  ---       0ms         0B  {note}")
+            continue
+        r = probe(url.replace("{TODAY}", today).replace("{FRED}", fred_key), expect)
         r.update(category=cat, note=note, url=url)
         results[key] = r
         if "--json" not in sys.argv:

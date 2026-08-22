@@ -1,5 +1,5 @@
 # NAS100 Daily Brief — 2026-08-22
-_generated 2026-08-22T10:06:45+00:00 · price **29290.5** (bid 29290.0 / ask 29291.1)_
+_generated 2026-08-22T10:34:12+00:00 · price **29290.5** (bid 29290.0 / ask 29291.1)_
 
 ## 1. The call: **BEARISH**  (score -6)
 
@@ -17,6 +17,12 @@ _generated 2026-08-22T10:06:45+00:00 · price **29290.5** (bid 29290.0 / ask 292
 | vol | +0 | VVIX 86.27 — no tail-hedge bid |
 | rates | -1 | US10y 4.738 (+0.89%) — yields up, multiple compression, BEARISH tech |
 | rates | +0 | DXY 98.839 (-0.06%) — dollar flat |
+| macro | +0 | 10y REAL yield 2.35% (+0bp d/d, -4bp 5d) — flat day-on-day; watch the 5-day trend |
+| macro | -1 | 10y nominal +4bp over 2026-08-19->2026-08-20, driven by breakeven / inflation expectations (real +0bp, breakeven +4bp) — an inflation-expectation move; hits tech via the Fed-path repricing that follows |
+| macro | +2 | HY OAS 2.75% (+4bp/5d) — tight, credit is comfortable with risk |
+| macro | +0 | NFCI -0.559 (-0.004 w/w) — conditions looser than average |
+| macro | -1 | Fed balance sheet $6.75tn (-14.3bn w/w), ON RRP $0.2bn — QT draining, slow headwind |
+| macro | +0 | 10y-2y +0.50pp (+0bp) — little change |
 | breadth | +0 | mega-cap avg +0.01% (2/4 up): NVDA -0.98%, MSFT +0.43%, AAPL -0.63%, AVGO +1.21% |
 | breadth | +0 | NDX +0.33% vs ES +0.38% — in line |
 | fuel | +0 | ADR14 474.7, 67.1% used vs ~38% normal by 10:00 UTC -> fuel_ratio 1.77 (burning hot) [MODERATE] |
@@ -34,7 +40,18 @@ _generated 2026-08-22T10:06:45+00:00 · price **29290.5** (bid 29290.0 / ask 292
 - **Vol:** VXN 21.98 (-5.503%) · VIX 15.13 · VIX9D/VIX 0.831 → CONTANGO — calm, mean-reversion favoured · VVIX 86.27
 - **Rates/FX:** US10y 4.738 (0.894%) · DXY 98.839 (-0.062%)
 - **CFD/index offset:** -18.4 (NDX 29308.9 vs CFD 29290.5) — all gamma levels below are already converted to CFD price
-- **Data freshness:** NDX chain 2026-08-22 09:58:59, QQQ chain 2026-08-22 03:44:33
+- **Data freshness:** NDX chain 2026-08-22 10:13:00, QQQ chain 2026-08-22 03:44:33
+
+### Real rates, credit & liquidity (FRED)
+
+- ⚪ 10y REAL yield 2.35% (+0bp d/d, -4bp 5d) — flat day-on-day; watch the 5-day trend
+- 🔴 10y nominal +4bp over 2026-08-19->2026-08-20, driven by breakeven / inflation expectations (real +0bp, breakeven +4bp) — an inflation-expectation move; hits tech via the Fed-path repricing that follows
+- 🟢 HY OAS 2.75% (+4bp/5d) — tight, credit is comfortable with risk
+- ⚪ NFCI -0.559 (-0.004 w/w) — conditions looser than average
+- 🔴 Fed balance sheet $6.75tn (-14.3bn w/w), ON RRP $0.2bn — QT draining, slow headwind
+- ⚪ 10y-2y +0.50pp (+0bp) — little change
+
+_14 series, published with a 1-2 day lag — this is regime context, not an intraday trigger._
 
 ## 3. Fuel & range budget
 

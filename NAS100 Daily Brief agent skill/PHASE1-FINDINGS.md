@@ -10,9 +10,9 @@ the way are documented rather than quietly patched.
 ## The headline
 
 **We can build the entire brief — macro, GEX/OI, news, levels, fuel and a bias
-call — from free, keyless, connection-verified sources.** 27 of 28 candidate
-sources are live. The one gap (a paid-grade economic-calendar API) is covered
-by two free alternatives.
+call — from free, connection-verified sources.** 31 of 32 candidate sources are
+live. The core brief needs **no API keys at all**; one free optional key (FRED,
+now supplied and wired in) adds the real-rate, credit and liquidity layer.
 
 The most important find: **CBOE publishes the full NDX and QQQ options chains,
 with per-contract open interest AND greeks, at no cost and with no API key.**
@@ -32,6 +32,7 @@ Five prototypes in `prototypes/`, all runnable right now:
 | `gex_levels.py` | Combines NDX + QQQ into one dealer-gamma board, converts to your CFD price | 7,551 contracts; full level board |
 | `levels_fuel.py` | cTrader NAS100 → PDH/PDL/PWH/PWL, Asia/London/NY H-L, unmitigated pools, ADR fuel gauge | Full level set + fuel state |
 | `macro_probe.py` | Vol regime, rates, FX, breadth, calendars, news | Complete macro layer |
+| `fred_probe.py` | Real yields, breakevens, credit spreads, financial conditions, Fed liquidity | 14/14 series live |
 | `bias_engine.py` | Deterministic, fully-auditable bull/bear score | `-6 BEARISH` with traceable components |
 | `brief.py` | End-to-end brief, no model in the loop | See `examples_brief.md` |
 
@@ -77,6 +78,10 @@ validates the pipeline:
   Google News RSS with arbitrary queries.
 - **US Treasury** par-yield XML.
 
+### Live with the free FRED key (now supplied)
+`DFII10 DFII5 T10YIE T5YIFR DGS10 DGS2 T10Y2Y NFCI BAMLH0A0HYM2 WALCL
+RRPONTSYD SOFR VIXCLS DTWEXBGS` — 14/14 verified.
+
 ### Tested and rejected (do not plumb these)
 CNN Fear & Greed (HTTP 418 bot-block), Stooq (JS challenge), Yahoo v7
 quote/options (401), TradingEconomics guest (410 — discontinued), CBOE VIX
@@ -105,14 +110,53 @@ We don't need it — the RSS layer covers news comprehensively.
 
 ---
 
-## API keys — what I'd like you to sign up for (all free, none blocking)
+## FRED key — supplied, tested, wired in ✅
+
+The key you provided works: **14 of 14 series returned live data.** It is now
+integrated into `fred_probe.py`, `macro_probe.py`, `bias_engine.py`,
+`brief.py` and `source_health.py`.
+
+**The key is not in the repo.** Everything reads `FRED_API_KEY` from the
+environment; `SETUP-SECRETS.md` documents where to put it (Claude Code
+environment settings for interactive sessions, a GitHub Actions repo secret for
+the Phase-2 scheduled job). Without it the brief still runs end to end and
+prints an explicit note that the real-rate layer is missing — it never degrades
+silently.
+
+On the exposure: you're right that it's low risk — free, read-only, public
+data, no personal information, no billing. If you'd rather not leave it in a
+chat transcript, regenerating takes ten seconds and needs **no code change**,
+since nothing hardcodes it. The cTrader slug is the one that genuinely matters
+(it authenticates a trading account) — keep that in the environment and GitHub
+secrets only.
+
+### What the FRED layer actually adds
+
+| Read | Today's value | Why it earns its place |
+|---|---|---|
+| **10y real yield** `DFII10` | 2.35% (−4bp/5d) | The actual discount rate on tech cash flows — more predictive than the nominal |
+| **Yield decomposition** | 10y +4bp 19→20 Aug, **entirely breakevens**, real +0bp | A breakeven-led rise is a *much softer* bearish signal than a real-rate-led one. Reading the nominal alone would have over-weighted it |
+| **HY credit spread** `BAMLH0A0HYM2` | 2.75%, +4bp/5d | Credit's verdict on risk. Widening HY into an equity rally is the most reliable bearish divergence there is. Currently tight → credit is comfortable |
+| **Financial conditions** `NFCI` | −0.559, easing w/w | Conditions *lead* price. Looser than average and still easing |
+| **Fed liquidity** `WALCL` / `RRPONTSYD` | $6.75tn (−$14.3bn w/w), RRP $0.2bn | QT draining with the reverse-repo buffer effectively gone — a slow, persistent headwind |
+
+**A third bug surfaced and was fixed here:** FRED series publish on different
+lags (`DFII10` lands a day after `T10YIE`), so comparing each series' own
+latest step compared *different days* — the decomposition reported "nominal
++4bp, real +0bp, breakeven +0bp", which is arithmetically impossible.
+`aligned_change()` now finds the latest date common to all compared series and
+measures every change over that same interval.
+
+---
+
+## Remaining API keys — optional, none blocking
 
 **Nothing here blocks Phase 2.** The brief works fully without any of them.
 These are upgrades, in priority order:
 
 | # | Service | Cost | What it adds | Worth it? |
 |---|---|---|---|---|
-| 1 | **FRED** — https://fredaccount.stlouisfed.org/apikey | Free, unlimited, instant | Authoritative macro time series: real yields (DFII10), breakeven inflation (T10YIE), financial-conditions indices, Fed balance sheet. Lets the brief say *"real yields +4bp"* — the actual driver of tech multiples — instead of inferring from nominal ^TNX | **Yes — highest value of the four** |
+| ~~1~~ | ~~**FRED**~~ | Free | ✅ **Done — supplied and integrated** | — |
 | 2 | **Alpha Vantage** — https://www.alphavantage.co/support/#api-key | Free, 25 calls/day | `NEWS_SENTIMENT` gives scored sentiment per ticker, which would replace hand-rolled headline scoring. The 25/day cap is tight but fine for 3–4 briefs | Yes — nice upgrade to the news layer |
 | 3 | **Tavily** — https://app.tavily.com | Free, 1,000/month | Better web research than the built-in search for chasing a live theme mid-session. The key already has a slot in `.mcp.json` | Optional — built-in WebSearch covers most of it |
 | 4 | **Finnhub** — https://finnhub.io/register | Free tier | Earnings surprise history and analyst revisions. Nasdaq's calendar already covers dates and consensus | Low priority |
@@ -142,7 +186,7 @@ underlying data for free, and `gex_levels.py` already builds the board.
 
 ---
 
-## Two bugs found and fixed during the build (worth knowing)
+## Three bugs found and fixed during the build (worth knowing)
 
 1. **Yahoo's `chartPreviousClose` is the close before the *entire range*, not
    the prior session.** On a 10-day range it reported AVGO at −13.87% when the
@@ -152,8 +196,14 @@ underlying data for free, and `gex_levels.py` already builds the board.
 2. **The narrow-rally divergence rule fired on a non-divergence** (mega-cap
    average of +0.01% counted as "down"). Fixed.
 
-Both were caught only because the bias engine prints its reasoning per
-component. That transparency is a design requirement, not a nicety.
+3. **FRED series publish on different lags**, so per-series change comparisons
+   compared different days and mis-attributed the yield move. Fixed with
+   `aligned_change()`.
+
+All three were caught only because every component prints its reasoning. That
+transparency is a design requirement, not a nicety. The common lesson: **never
+trust a feed's convenience field — derive the comparison yourself and
+sanity-check the arithmetic.**
 
 ---
 
@@ -184,8 +234,10 @@ Recommended: skill + scripts in the repo, a cron workflow writing
 
 1. **Confirm the four cron times** (06:00 / 12:00 / 17:00 / 20:15 UTC) suit
    your routine, or give me the times you actually want a brief.
-2. **Sign up for the FRED key** if you want real yields and breakevens
-   (2 minutes, free, no card).
+2. ~~Sign up for the FRED key~~ ✅ done — but **add `FRED_API_KEY` to your
+   Claude Code environment settings** so it persists into future sessions, and
+   as a GitHub Actions repo secret for the Phase-2 scheduled job
+   (`SETUP-SECRETS.md`). I can't persist an environment variable from here.
 3. **Say whether to clean up `.mcp.json`** — remove the dead `newsmcp` entry
    and the two placeholder-key servers.
 4. **Confirm the output format.** `examples_brief.md` is my proposed shape.
@@ -199,6 +251,7 @@ Recommended: skill + scripts in the repo, a cron workflow writing
 ```
 NAS100 Daily Brief agent skill/
 ├── PHASE1-FINDINGS.md              <- this file
+├── SETUP-SECRETS.md                <- where the two env vars go (no values in repo)
 ├── examples_brief.md               <- a REAL brief from live data
 ├── research/
 │   ├── 01-macro-drivers.md         what actually moves NAS100 intraday

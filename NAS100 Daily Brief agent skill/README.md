@@ -28,9 +28,10 @@ dealer-gamma regime, not by the chart.
 
 ## Quick start (Phase 1 prototypes)
 
-Everything runs today, no API keys. `CTRADER_MCP_SLUG` must be in the
-environment for the cTrader-based level engine (it already is in this repo's
-sessions).
+Everything runs today. `CTRADER_MCP_SLUG` must be in the environment for the
+cTrader level engine (it already is in this repo's sessions). `FRED_API_KEY`
+is optional — it adds the real-rate/credit/liquidity layer, and the brief says
+so out loud if it's missing. See `SETUP-SECRETS.md`.
 
 ```bash
 cd "NAS100 Daily Brief agent skill/prototypes"
@@ -43,6 +44,7 @@ python3 levels_fuel.py          # levels + ADR fuel gauge only
 python3 gex_levels.py 29290.5   # gamma board only (pass your CFD price)
 python3 macro_probe.py          # macro / vol / calendar / news only
 python3 bias_engine.py          # the bull/bear score with full reasoning
+python3 fred_probe.py           # real yields, credit, financial conditions, Fed liquidity
 ```
 
 `examples_brief.md` is a real brief generated from live data on 2026-08-22 —
@@ -57,8 +59,13 @@ not a mock-up.
   resell. No subscription needed.
 - **cTrader NAS100 = symbolId 116** (`US100`/`USTEC`/`NDX100` do not resolve).
   Timeframes use the underscore form; daily bars roll at 21:00 UTC.
-- **27 of 28 candidate sources are live and keyless.** The full registry, with
-  latencies and the rejected list, is in `research/02-data-sources.md`.
+- **31 of 32 candidate sources are live**, and the core brief needs **no keys
+  at all**. The one optional free key (FRED) adds real yields, credit spreads,
+  financial conditions and Fed liquidity. Full registry with latencies and the
+  rejected list in `research/02-data-sources.md`.
+- **Real yields beat nominal yields for predicting tech.** A 10y move is either
+  a real-rate move (direct multiple compression) or a breakeven move (softer,
+  slower, more likely to retrace). The brief decomposes every move.
 - **Raw data is ~13 MB (~3.4M tokens); the reduced payload is ~8 KB (~2.5k
   tokens)** — a ~1,400:1 reduction that has to happen in a script, never in
   context.
@@ -70,6 +77,7 @@ not a mock-up.
 1. `PHASE1-FINDINGS.md` — the summary, the action items, and the API keys worth
    signing up for
 2. `examples_brief.md` — what the output actually looks like
+2b. `SETUP-SECRETS.md` — where the two environment variables go
 3. `research/05-levels-and-strategy-map.md` — the level board mapped to your
    two setups
 4. `research/03-gex-oi-levels.md` — what each gamma level means and how to

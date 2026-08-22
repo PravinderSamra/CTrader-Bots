@@ -111,6 +111,23 @@ def score(macro, levels, gex):
             f"DXY {rf['dxy'].get('last')} ({dxy:+.2f}%) — "
             f"{'dollar bid, risk-off' if dxy>0.4 else 'dollar soft, risk-on' if dxy<-0.4 else 'dollar flat'}")
 
+    # ---------------- 3b. FRED: real rates, credit, liquidity ---------------
+    # Nominal yields say WHAT rates did; these say WHY, and the why is what
+    # actually reprices long-duration tech. Weighted below the intraday levers
+    # because FRED publishes with a 1-2 day lag — this is regime, not trigger.
+    fr = macro.get("fred") or {}
+    if fr.get("key_present"):
+        _W = {"real_yields": 3, "yield_decomp": 1, "credit": 2,
+              "fin_conditions": 1, "liquidity": 1, "curve": 1}
+        for item in fr.get("read", []):
+            w = _W.get(item["tag"], 1)
+            sig = item["signal"]
+            pts = max(-w, min(w, sig * w)) if sig else 0
+            add("macro", pts, item["text"])
+    else:
+        add("macro", 0, "FRED layer unavailable (no FRED_API_KEY) — running "
+                        "on nominal yields only, real-rate read is missing")
+
     # ---------------- 4. Breadth / mega-cap leadership ----------------------
     bp = macro["breadth_proxy"]
     megas = {k: bp[k].get("chg_pct") for k in ("nvda", "msft", "aapl", "avgo")

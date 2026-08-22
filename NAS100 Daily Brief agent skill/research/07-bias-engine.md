@@ -27,6 +27,7 @@ caused it. `prototypes/bias_engine.py` implements this and runs today.
 | **Gamma regime** | ±8 | Highest weight. Decides *how* price moves, which decides which of your two strategies works. Sub-rules: side of the flip (±3), sign/size of week net GEX (±2), position within the call/put wall band (±2), flip-straddle instability (+1 damping) |
 | **Volatility** | ±6 | VXN daily change (±2), VIX9D/VIX term structure (±2), VXN/VIX tech-stress ratio (−1), VVIX tail-hedge bid (−1) |
 | **Rates / FX** | ±6 | 10y daily change (±3 — the biggest single macro lever on NAS100), short-end-led selloff penalty (−1), DXY (±2) |
+| **Macro (FRED)** | ±9 | Real yields (±3 — the actual discount rate on tech), credit spreads (±2), yield decomposition (±1), financial conditions (±1), Fed liquidity (±1), curve (±1). Weighted below the intraday levers because FRED publishes with a 1–2 day lag: this is **regime, not trigger**. Skipped with an explicit note if `FRED_API_KEY` is absent |
 | **Breadth / leadership** | ±5 | Mega-cap average move (±2), narrow-rally divergence (−2), NDX vs ES relative strength (±1) |
 | **Structure** | ±5 | Prior-week displacement (±3), side of PD mid (±1), in-reach pool imbalance (±1) |
 | **Fuel** | 0 | **Reports, never votes.** Fuel changes position management and target scope, not direction |
@@ -93,6 +94,20 @@ Index up > 0.3% while the mega-cap average is down > 0.2% means the move is
 being carried by the tail. Those rallies fade into the NY close far more often
 than they extend.
 
+### Decomposing the nominal yield move
+The `yield_decomp` rule splits a 10y move into its real-rate and breakeven
+components and scores them differently, because they are different events. A
+real-rate-led rise is direct multiple compression; a breakeven-led rise hits
+tech only via the Fed-path repricing that follows, and often retraces. On
+2026-08-22 the 10y was +4bp **entirely on breakevens** — a much softer bearish
+signal than the nominal number alone suggests, and the engine says so.
+
+### Credit divergence
+High-yield OAS widening while the index rallies is the most reliable bearish
+divergence available. It gets −2 (capped) because credit is a better risk
+analyst than equity, and it is slow-moving enough that it rarely fires
+spuriously.
+
 ### Flip-straddle damping
 Within 0.15% of the gamma flip the regime is genuinely undecided. The engine
 adds back +1 as an explicit conviction reduction rather than pretending to
@@ -112,6 +127,14 @@ know. Better to say "unstable" than to be confidently wrong.
 2. **Narrow-rally rule fired on a non-divergence.** The condition
    `nd > 0.3 > avg` triggered when the mega-cap average was +0.01%. Now
    requires the mega-caps to actually be down.
+3. **FRED series publish on different lags, so per-series change comparisons
+   compared different days.** `DFII10` lands a day after `T10YIE`, which made
+   the yield decomposition report "nominal +4bp, real +0bp, breakeven +0bp" —
+   arithmetically impossible and it silently mis-attributed the driver.
+   `fred_probe.py:aligned_change()` now finds the latest date common to all
+   compared series and measures every change over that same interval.
+   *Same lesson as bug 1: never trust a feed's convenience field; derive the
+   comparison yourself and sanity-check the arithmetic.*
 
 Both were caught only because every component prints its reasoning. That is the
 argument for the transparent design.
