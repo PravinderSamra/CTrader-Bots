@@ -340,6 +340,8 @@ Base probability starts at **50%**.
 
 After printing the full analysis to the chat, save it to the **Gold-Session AI** tab on the dashboard so it appears in the 3-day history.
 
+**🔴 THIS STEP IS MANDATORY AND IS THE ONLY THING THAT MAKES A SCAN REVIEWABLE LATER. A scan is NOT complete when the brief is printed to chat — it is complete only when the record is confirmed committed on `origin/main`.** This environment is an ephemeral, often re-cloned container: a brief that lives only in chat text (and `/tmp`) is *lost* the moment the session ends, so a later "how did that scan play out?" review has nothing to compare against. Never end your turn, and never call the scan "done", until the save step has printed `Committed and pushed to main (<sha>)` and you have confirmed the record on `origin/main` (verify command below). The only legitimate reason to skip the save is a STEP 0 data failure that meant no brief should exist at all (HTTP 401 / stale-input / market closed). A *successful* scan with no saved record is always a bug in your execution, never an acceptable outcome.
+
 **Two-file approach** (keeps JSON simple, no escaping of the long analysis text):
 
 **Steps 8a + 8b — Write both files with `cat` heredocs, NOT the Write tool.** `/tmp/gold-session-meta.json` and `/tmp/gold-session-analysis.txt` usually already exist from a prior run, and the Write tool refuses to overwrite a file it has not Read this session (`Error: File has not been read yet`). Use Bash heredocs instead — they overwrite unconditionally and need no prior Read. Fire both in the same response (two parallel Bash calls):
@@ -439,5 +441,12 @@ cd /home/user/CTrader-Bots/xauusd-dashboard && npx tsx scripts/save-gold-session
 ```
 
 Confirm the output shows `Session saved`, `Index updated`, and `Committed and pushed to main (<sha>)`. The Gold-Session AI tab on the dashboard will show the entry after GitHub Actions deploys (~1–2 min).
+
+**Persistence gate (mandatory — do not skip).** The script's own `Committed and pushed to main` line is necessary but not sufficient proof — confirm the record is actually on the remote before treating the scan as complete:
+```bash
+cd /home/user/CTrader-Bots && DATE=$(date -u +%Y-%m-%d) && git fetch origin main --quiet && \
+git ls-tree -r --name-only origin/main -- "xauusd-dashboard/public/data/sessions/$DATE/" | tail -1
+```
+It must print today's saved record path. If it prints nothing, the record did NOT persist — re-run the save once; if it still doesn't appear on `origin/main`, report the failure explicitly (do not claim the scan saved).
 
 **Do NOT perform any manual git recovery.** The save script owns the entire commit-and-push: it rebuilds `index.json` from the current `origin/main` and builds the commit directly on top of that tip via plumbing (`commit-tree`), so it CANNOT hit a rebase/merge conflict, and it internally re-fetches and retries up to 5× if another push races it. Earlier runs failed because the model tried to hand-fix a rebase conflict on `index.json` (e.g. Haiku, 2026-07-09) — that path no longer exists. If the script exits non-zero, it prints why: `HTTP 401`/stale-input → a data problem (report it, no record); a genuine push failure after 5 retries → report the printed error verbatim and stop. Never hand-edit `index.json`, never `git rebase`, never `git push --force`, never re-run with `--no-verify` — just re-run the same command once, and if it still fails, report the failure. A missing dashboard entry is always better than a hand-patched one.

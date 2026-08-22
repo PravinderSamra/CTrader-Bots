@@ -269,6 +269,11 @@ export interface OutcomeRow {
   // F7: UK100-only — orbPlaybook.direction at analysis time (nullable), so
   // calibration can later slice win-rates by playbook direction.
   orbDirection?: string | null
+  // Bias-direction accuracy — whether the directional lean was right by the
+  // session close, graded even for NO_CALL / never-triggered records so a
+  // correct-but-untraded call isn't invisible. Separate from the trade result.
+  biasLean?: 'BULLISH' | 'BEARISH' | null
+  biasVerdict?: 'RIGHT' | 'WRONG' | 'FLAT' | null
 }
 
 export interface OutcomesIndex {

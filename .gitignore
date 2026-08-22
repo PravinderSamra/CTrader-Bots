@@ -1,2 +1,5 @@
 **/__pycache__
 **/*.pyc
+
+# large intermediate log
+US30 London Range Breakout/data/download.log

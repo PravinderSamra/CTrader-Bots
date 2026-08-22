@@ -18,6 +18,15 @@ function brokenBadge(dir: string | null): string {
   if (dir === 'DOWN') return 'badge-red'
   return 'badge-muted'
 }
+function expansionBadge(label: string, done: boolean): string {
+  if (done) return 'badge-amber'          // most of the move/volume done → range likely
+  if (label === 'EXPANSION') return 'badge-gold'
+  return 'badge-muted'                     // COMPRESSED / NORMAL
+}
+function expansionText(label: string, done: boolean): string {
+  if (done) return 'MOVE MOSTLY DONE'
+  return label
+}
 function stanceBadge(stance: OrbIntelStance): string {
   if (stance === 'LONG_FAVOURED') return 'badge-green'
   if (stance === 'SHORT_FAVOURED') return 'badge-red'
@@ -47,6 +56,17 @@ export function Uk100OrbTile({ orb, intel }: Props) {
         {orb?.mode && <span className={`badge ${modeBadge(orb.mode)}`}>{orb.mode.replace('_', ' ')}</span>}
         <span className="tile-label" style={{ marginLeft: 8 }}>Cash open {orb?.cashOpenLondon ?? '—'}</span>
       </div>
+
+      {/* ── Expansion vs range read (B) — is today an expansion day, and is
+             most of the move/volume already done → likely to range? ── */}
+      {orb?.expansionState && orb.expansionState.label !== 'UNKNOWN' && (
+        <div className={styles.stanceBanner} style={{ marginBottom: 6 }}>
+          <span className={`badge ${expansionBadge(orb.expansionState.label, orb.expansionState.moveMostlyDone)}`}>
+            {expansionText(orb.expansionState.label, orb.expansionState.moveMostlyDone)}
+          </span>
+          <span className={styles.stanceLine}>{orb.expansionState.note}</span>
+        </div>
+      )}
 
       {/* ── Intel layer (G1) ── */}
       {intel && (
@@ -129,6 +149,15 @@ export function Uk100OrbTile({ orb, intel }: Props) {
               {orb?.adrUsedPct != null && ` · ${orb.adrUsedPct}% used`}
             </span>
           </div>
+          {orb?.expansionState && orb.expansionState.expectedRangePctByNow != null && (
+            <div className="tile-row">
+              <span className="tile-label">Range vs typical</span>
+              <span className="tile-val mono">
+                {orb.expansionState.rangeVsTypical != null ? `${orb.expansionState.rangeVsTypical.toFixed(2)}×` : '—'}
+                {` · ${orb.expansionState.rangeSoFarPct ?? '—'}% vs ~${orb.expansionState.expectedRangePctByNow}% · vol ~${orb.expansionState.expectedVolPctByNow}% done`}
+              </span>
+            </div>
+          )}
         </div>
       </details>
 

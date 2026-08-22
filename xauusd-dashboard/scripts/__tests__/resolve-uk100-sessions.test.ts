@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { classify, classifyHits, cashCloseCutoffMs } from '../resolve-uk100-sessions'
+import { classify, classifyHits, cashCloseCutoffMs, firstFillIndex, recordLean, biasVerdictFor } from '../resolve-uk100-sessions'
 
 describe('cashCloseCutoffMs', () => {
   it('resolves 16:30 BST (summer, UTC+1) for a July analysis time', () => {
@@ -127,5 +127,78 @@ describe('classifyHits — F7 chronological level-hit sequence', () => {
     const bars = [{ high: 10480, low: 10470, timestamp: 1 }]
     const hits = classifyHits('SHORT', [10475, 10465], 10490, bars)
     expect(hits.map(h => h.level)).toEqual(['T1'])
+  })
+})
+
+describe('firstFillIndex — WAIT entry-zone fill detection', () => {
+  it('LONG fills when a bar dips into the zone from above (low <= entryHigh)', () => {
+    const bars = [
+      { high: 10620, low: 10610 },  // above the zone — no fill
+      { high: 10615, low: 10596 },  // low 10596 <= entryHigh 10600 → fills here (idx 1)
+      { high: 10630, low: 10605 },
+    ]
+    expect(firstFillIndex('LONG', 10590, 10600, bars)).toBe(1)
+  })
+
+  it('SHORT fills when a bar bounces into the zone from below (high >= entryLow)', () => {
+    const bars = [
+      { high: 10470, low: 10460 },  // below the zone — no fill
+      { high: 10489, low: 10475 },  // high 10489 >= entryLow 10488 → fills here (idx 1)
+    ]
+    expect(firstFillIndex('SHORT', 10488, 10496, bars)).toBe(1)
+  })
+
+  it('returns -1 when price never reaches the zone within the window', () => {
+    const bars = [{ high: 10470, low: 10460 }, { high: 10475, low: 10465 }]
+    expect(firstFillIndex('SHORT', 10488, 10496, bars)).toBe(-1) // never bounced to 10488
+  })
+})
+
+describe('classify — WAIT-fill scoring (the 2026-07-16 miss the resolver used to drop)', () => {
+  // SHORT WAIT: entry zone 10488–10496, stop/invalidation 10505.2, target 10429.6.
+  // The market rose INTO the zone, then kept rising through the stop — a real
+  // LOSS that the old ACTIVE-only gate scored as NO_CALL. Here we feed only the
+  // post-fill bars (as main() slices them) with entry = entryLow (10488, the
+  // short's least-favourable fill) and expect a LOSS.
+  const shortRec = {
+    timestamp: '2026-07-16T07:39:00.000Z',
+    date: '2026-07-16', time: '08:39 BST', session: 'LONDON',
+    bias: 'BEARISH', probability: 80, confidence: 5,
+    tradeIdea: { direction: 'SHORT' as const, status: 'WAIT', entryLow: 10488, entryHigh: 10496, stop: 10508, targets: [10429.6] },
+    priceAtAnalysis: 10460.65,
+    drawOnLiquidity: 10429.6,   // target (down)
+    invalidation: 10505.2,      // stop (up)
+  }
+  const ts = Date.parse(shortRec.timestamp)
+  const cutoffMs = ts + 8 * 3600 * 1000
+
+  it('scores LOSS when a filled SHORT WAIT then runs through its invalidation', () => {
+    // post-fill bars: price pushes up past 10505.2 → stop hit
+    const postFill = [{ open: 10490, high: 10515, low: 10488, close: 10512 }]
+    const out = classify(shortRec, postFill, ts + 4 * 3600_000, cutoffMs, 10488)
+    expect(out?.result).toBe('LOSS')
+  })
+
+  it('scores WIN when a filled SHORT WAIT reaches its target before the stop', () => {
+    const postFill = [{ open: 10490, high: 10497, low: 10425, close: 10430 }]
+    const out = classify(shortRec, postFill, ts + 4 * 3600_000, cutoffMs, 10488)
+    expect(out?.result).toBe('WIN')
+  })
+})
+
+describe('recordLean / biasVerdictFor — bias-direction accuracy', () => {
+  it('lean is the bias label, else the trade direction, else null', () => {
+    expect(recordLean('BULLISH')).toBe('BULLISH')
+    expect(recordLean('BEARISH', 'LONG')).toBe('BEARISH')    // explicit bias wins
+    expect(recordLean('NEUTRAL', 'SHORT')).toBe('BEARISH')   // NEUTRAL → fall back to trade dir
+    expect(recordLean('NEUTRAL', 'LONG')).toBe('BULLISH')
+    expect(recordLean('NEUTRAL')).toBeNull()
+  })
+  it('grades the lean against the session close with a ±0.15% dead-band', () => {
+    // 2026-07-23: BEARISH, price 10675.35 → close ~10580 → RIGHT
+    expect(biasVerdictFor('BEARISH', 10675.35, 10580)).toBe('RIGHT')
+    expect(biasVerdictFor('BEARISH', 10675.35, 10720)).toBe('WRONG')   // rose → bearish wrong
+    expect(biasVerdictFor('BULLISH', 10000, 10005)).toBe('FLAT')       // +0.05% < 0.15%
+    expect(biasVerdictFor('BULLISH', 10000, 10200)).toBe('RIGHT')
   })
 })

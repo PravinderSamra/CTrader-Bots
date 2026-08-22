@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-07-21T16:18:54.975Z",
+  "generatedAt": "2026-07-24T14:45:52.814Z",
   "yields": {
-    "US10Y": 4.55,
-    "US2Y": 4.18,
-    "realYield10Y": 2.31,
-    "realYield5Y": 2.01,
-    "curve2s10s": 37,
-    "breakeven10Y": 2.25,
-    "breakeven5Y": 2.28,
-    "forward5y5y": 2.22,
+    "US10Y": 4.67,
+    "US2Y": 4.31,
+    "realYield10Y": 2.39,
+    "realYield5Y": 2.11,
+    "curve2s10s": 36,
+    "breakeven10Y": 2.28,
+    "breakeven5Y": 2.29,
+    "forward5y5y": 2.27,
     "dayOverDay": {
-      "US10Y": -0.02,
-      "US2Y": 0.02,
-      "realYield10Y": -0.04
+      "US10Y": 0.04,
+      "US2Y": 0.05,
+      "realYield10Y": 0.02
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-07-29",
-    "probCut": 8,
-    "probHold": 92,
-    "probHike": 0
+    "probCut": 0,
+    "probHold": 96,
+    "probHike": 4
   },
   "marketVolatility": {
-    "GVZ": 25.37,
-    "VIX": 18.65
+    "GVZ": 25.14,
+    "VIX": 18.7
   },
   "positioning": {
     "cotNetLong": 175931,
@@ -34,30 +34,30 @@
     "openInterestChange": 15702
   },
   "etfFlows": {
-    "gldTonnes": 992.4,
-    "gldWoWChange": -1.9,
+    "gldTonnes": 996.8,
+    "gldWoWChange": -0.8,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4077.72,
-    "XAGUSD": 59.0555,
-    "EURUSD": 1.14078,
-    "USDJPY": 163.021,
-    "USDCHF": 0.81229,
-    "USDCNH": 6.76799,
-    "GBPUSD": 1.33705,
-    "USDCAD": 1.4101,
-    "USDSEK": 9.69361,
-    "US500": 7508.9,
-    "GER40": 25048.55,
-    "UK100": 10597.5,
-    "ADR_14day": 85,
-    "ADR_usedToday": 84.5,
-    "goldSilverRatio": 69
+    "XAUUSD": 4059.37,
+    "XAGUSD": 58.421,
+    "EURUSD": 1.13764,
+    "USDJPY": 163.7645,
+    "USDCHF": 0.81756,
+    "USDCNH": 6.77293,
+    "GBPUSD": 1.33254,
+    "USDCAD": 1.40891,
+    "USDSEK": 9.71433,
+    "US500": 7398.8,
+    "GER40": 24950.85,
+    "UK100": 10690.75,
+    "ADR_14day": 87.5,
+    "ADR_usedToday": 47.8,
+    "goldSilverRatio": 69.5
   },
   "dollarLiquidity": {
-    "stlfsi": -0.882,
-    "nfci": -0.538
+    "stlfsi": -0.7011,
+    "nfci": -0.552
   },
   "geopoliticalRisk": {
     "gpr": 173.6,
@@ -66,29 +66,23 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Emirates' Clark uses Farnborough to air industry frustrations over jets, engines - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-07-21T10:38:20.000Z",
-      "hoursAgo": 5.7
+      "headline": "Treasury yields retreat, 10-year hovers around January 2025 highs",
+      "source": "CNBC",
+      "publishedAt": "2026-07-24T09:00:31.000Z",
+      "hoursAgo": 5.8
     },
     {
-      "headline": "Gold gains on hopes of de-escalation in Middle East conflict - Reuters",
+      "headline": "Asian stocks sink, bonds struggle as oil spike stokes rate risks - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-07-21T04:08:00.000Z",
-      "hoursAgo": 12.2
-    },
-    {
-      "headline": "Dollar steady as investors weigh Middle East jitters against softer inflation data - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-07-21T01:35:00.000Z",
-      "hoursAgo": 14.7
+      "publishedAt": "2026-07-24T01:20:00.000Z",
+      "hoursAgo": 13.4
     }
   ],
   "briefing": {
-    "biasScore": 2,
-    "biasLabel": "BULLISH",
-    "confidence": 5,
-    "briefing": "Right now the two biggest forces driving gold are geopolitical tension in the Middle East and a US dollar that is sitting under modest pressure from softer inflation readings — both of which lean in gold's favour, but neither is dominating strongly enough to create a clear, high-conviction trend today. Looking at recent headlines, roughly 12 hours ago Reuters reported that gold was gaining on hopes of Middle East de-escalation, which is a slightly mixed signal — conflict tends to push gold higher as a safe haven [an asset people buy when they're scared], but de-escalation hopes can reduce that fear premium and cap gains. About 15 hours ago, Reuters also noted the dollar was steady as investors weighed those same Middle East nerves against softer inflation data; softer inflation typically reduces the appeal of the dollar, which in turn helps gold since the two often move in opposite directions. The airline story from Farnborough is not market-moving for gold. The directional bias leans mildly BULLISH — gold is trading near $4,077, geopolitical risk remains elevated (GPR index at 173.6 is historically high), real yields [the return investors get after stripping out inflation] dipped slightly today, and the dollar index at 101.13 is soft — all gentle tailwinds for gold. However, confidence is only 5/10. The Fed is almost certain to hold rates at its July 29th meeting (92% probability), ETF flows [money moving into gold-backed investment funds] have been in outflow for three weeks, and large speculative traders slightly reduced their gold bets last week — these are headwinds that limit upside enthusiasm. Critically, today's 14-day Average Daily Range [the typical size of a day's price move, used to judge how much movement is left] is 85 points, and today's move has already used 84.5 of those points — meaning the daily range is essentially exhausted, and chasing a new move in either direction this late in the session is very high risk. The calendar shows no scheduled economic events today. With the calendar empty for the rest of today and no fresh high-impact catalysts, price may drift sideways or consolidate into the close. Watch $4,090–$4,095 as near-term resistance [a price ceiling where sellers may step in] and $4,055–$4,060 as support [a floor where buyers may step in]. For trade integration: this is NOT a good window for new trend-following entries — the daily range is nearly fully used up, market volatility (GVZ at 25) is moderate but not surging, and there are no fresh catalysts to fuel a new leg. If you are already in a long [a buy trade] from earlier today, you can trail your stop [move your protective exit level up] to protect profits, but opening new trades now carries poor reward-versus-risk. Wait for tomorrow's London session open for a fresh setup. The one thing to remember today: when the daily range is nearly used up, the smartest trade is often no trade at all.",
-    "generatedAt": "2026-07-21T16:19:13.256Z"
+    "biasScore": -1,
+    "biasLabel": "NEUTRAL",
+    "confidence": 4,
+    "briefing": "RIGHT NOW, the biggest forces on gold are elevated US interest rates and a dollar that is holding relatively firm — both of which typically act as headwinds [obstacles] for gold, since gold pays no interest and becomes less attractive when dollars and bonds offer decent returns. Real yields [the return investors get after adjusting for inflation] are sitting at 2.39% on the 10-year bond, which is meaningfully high — that is real competition for gold. RECENT CATALYSTS: About 5.8 hours ago, CNBC reported that Treasury yields [the interest rate the US government pays to borrow money] are retreating slightly from multi-month highs. A small dip in yields is mildly supportive for gold, but the effect is modest. Around 13 hours ago, Reuters flagged an oil price spike stirring fears that interest rates could stay higher for longer globally — that is a mild negative for gold since it reinforces a 'rates stay elevated' story. Neither headline is a strong game-changer. DIRECTIONAL BIAS: The bias leans very slightly bearish [downward] to neutral. High real yields, a firm dollar (DXY [the US Dollar Index, measuring dollar strength against major currencies] at 101.42), and three weeks of ETF outflows [investors pulling money out of gold funds] all gently pressure gold lower. However, geopolitical risk [GPR index] remains elevated at 173.6, which gives gold some underlying support as a safe-haven. The net picture is choppy-to-softly-lower. CONFIDENCE: 4/10 — the conflicting signals make a high-conviction call difficult. A clear break below $4,030 or above $4,090 would sharpen the picture. EVENT RISK: The calendar data shows no scheduled news events today, which is actually a caution flag in itself — with no catalyst to drive a clean directional move, price may drift or chop. There are no high-impact events flagged later this week in the data either, though the Federal Reserve meeting on July 29th (in 5 days) is extremely close — markets are pricing a 96% chance of no rate change [hold], so gold is unlikely to get a boost from rate-cut hopes, and traders may trade cautiously into that meeting. KEY LEVELS: Gold is at $4,059. The 14-day average daily range [how far price typically moves in a full day] is $87.50, and today has already used $47.80 of that — meaning roughly $39–40 of typical movement may remain. Watch $4,030 as support [a floor where buyers may step in] and $4,090–$4,100 as resistance [a ceiling where sellers may push back]. TRADE INTEGRATION: This is a low-conviction environment for trend-following trades. The trend on the 1H chart needs to be confirmed clearly before committing — if price is ranging between those key levels, it is better to wait on the sidelines. If you do trade, use reduced size [smaller position than normal] given the mixed signals and the Fed meeting looming next week. Remember: no clean trend, no trade — protecting your capital during choppy conditions is itself a winning strategy.",
+    "generatedAt": "2026-07-24T14:46:13.585Z"
   }
 }

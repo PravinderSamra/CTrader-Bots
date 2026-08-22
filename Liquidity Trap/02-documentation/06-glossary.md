@@ -173,6 +173,52 @@ The transcripts are caption-derived; these corruptions appear and should be read
 - **"Rinse and repeat"** — the model re-arms continuously (V1 [10:49]; V3 [9:16]).
 - **"It is what it is"** — acceptance of missed/failed trades (V1 [85:11], [100:21]).
 
+## 10. New and refined terms from the 2026 sources (official playbook + Inter Equity channel)
+
+Added 2026-07-22 from `../04-official-playbook/marco-trades-liquidity-playbook.md` (PB) and the 20 Inter Equity Trading transcripts (`(IET YYYY-MM-DD "title" [MM:SS])` → `../01-transcripts/inter-equity-channel/`; timestamps are inline-tag video time, see file 09 §0). Full treatment in files 09–10.
+
+**No man's land** — The choppy region between the marked pool above and the marked pool below; where liquidity *builds*; explicitly not traded: "I call this like no man's land... I'm typically not trading in here. I want to see price either above or below. I will wait days... or weeks" (IET 2026-05-13 [02:05]–[02:25]); "everything in between here is now just going to be known as noise" (IET 2026-07-21 [12:07]). See file 10 P10.
+
+**Early traders** — Umbrella for early buyers *and* early sellers (file 06 §1), now carried by a written rule: "**we must only trade once the early traders are trapped. No ifs, ands, or buts**" (IET 2026-06-09 [07:05]–[09:05]).
+
+**"No liquidity block, no entry" / "no LB, no stop loss"** — The LB requirement stated as a hard gate: the LB's whole job is to supply the stop level, and without one there is no trade even when everything else aligns (IET 2026-03-10 [04:52]–[05:12]; IET 2026-07-14 [07:55]–[08:15]). Refines the LB entry (file 06 §1, file 03 §1.5).
+
+**Imbalance (as LB geometry)** — IET equates the sweep candle's imbalance with the liquidity block zone: "leaving this imbalance area, otherwise known as a liquidity block" (IET 2026-03-03 [04:02]); limits are parked "right in the imbalance" ([07:12]). Distinct from §6's retail-FVG usage — same word, two roles; role is determined by whether the gap sits beyond a sweep (LB) or inside a trap zone (retail POI).
+
+**Structure liquidity (formal definition)** — "Liquidity below higher lows... liquidity above lower highs. That's why we call it structure liquidity" (IET 2026-06-09 [05:05]–[05:45]). Formalizes §1's structural-liquidity entry.
+
+**H4-candle model / the 6–10 a.m. candle** — The New-York H4 candle spanning 6:00–10:00 a.m.; its low/high are the model's reference levels (IET 2026-02-10 [01:27]–[03:27]). See file 09 §3.5.
+
+**10:00 a.m. reversal** — The new-H4-candle-open trap-and-reverse: the pre-10:00 sell-off (bullish case) below the prior H4 low is "viewed... being false", and "once we trade below previous 4-hour low... longs are active" (IET 2026-02-10 [02:47]–[03:27], [07:47]–[08:07]). Related: stock-open moves are presumed trap moves (IET 2026-04-28 [08:43]).
+
+**Inside day** — Day trading inside the previous day's high/low; expected after a both-extremes ("outside") day and treated as a reduced/no-trade day (IET 2026-07-07 [02:43]–[03:23]).
+
+**PDH / PDL frame ("daily-to-daily")** — Previous-day-high/low used as target/arming levels; day-boundary sweep pairs ("Monday spikes above Friday['s high] → target Friday's low", IET 2026-07-14 [17:36]); the PDL-spike-holding-an-older-LB long script (IET 2026-07-07 [07:23]–[08:03]). Extends §5's PDL entry (V1 used PDL only as a stop reference).
+
+**Ping-pong / trading both sides** — Trading the trap leg and the reversal leg of the same day as two independent full setups chained at the target sweep (IET 2026-04-28, whole video; file 09 §4).
+
+**Stacking entries** — Sequential full entries in one direction, each a complete setup, justified while the shared target survives: "if our target is left intact, all that means is we have another opportunity to sell" (IET 2026-05-05 [08:13]). Distinct from V1's in-trade scale-ins (§4). See file 09 §5.
+
+**Target intact** — The standing validity condition for a bias/stack: "as long as the highs stay intact, whatever happens below this high, buys are valid. Cuz that's the target" (IET 2026-06-30 [04:04]); "once that target's taken, the sell is invalid" (IET 2026-04-07 [03:02]).
+
+**Lower probability (graded lockout)** — IET's softening of the V1/PB absolute lockout: against-sequence trades are "automatically deemed lower probability" and permitted only with time confluence (IET 2026-04-28 [01:02]–[01:22]; IET 2026-07-14 [12:36]).
+
+**Risk-free / risk off** — Position state after rolling the stop to entry (or better) once a liquidity level is consumed in the trade's favor: "once we took out this internal high, I went risk-free" (IET 2026-06-30 [01:23]). Partial at that level only if its RR justifies it (~1:5–1:6+); otherwise BE only (IET 2026-07-14 [20:18]–[20:58]). Note PB p.03's stricter "no break-even stops unless partials have been taken" — see file 05 §2.6 item 1.
+
+**Trail-to-LB** — Rolling the stop behind a freshly-formed liquidity block: "we've created some sort of an LB here... This LB should protect my SL. If it runs it, I don't want to be in the trade no more" (IET 2026-06-30 [10:08]–[10:28]).
+
+**Sniper entry / 4-candle model** — The candle-anatomy entry: candle 2's sweep-wick forms the LB, candle 3 leaves a low, candle 4's spike below it is the trigger, stop beyond the candle-2 wick (IET 2026-03-24; file 10 P7).
+
+**Liquidity run / false run** — Additional synonyms for the trap sweep: "you can call it a trap move, you can call it a liquidity run, a false run, whatever you want to call it" (IET 2026-03-17 [03:04]). Extends §2's synonym list. Also **"falling knife"** — how a valid per-system entry can feel when catching the stab (IET 2026-07-21 [14:09]–[14:29]).
+
+**Squeezed(-up) price action** — Chart state where highs/lows are too compressed to read; the fix is dropping one timeframe: "when price action is very squeezed like this, I can't really understand what's going on... just go down a time frame" (IET 2026-02-24 [01:42]; IET 2026-03-17 [02:24]).
+
+**Bank-holiday rule** — "If there ever is a bank holiday, do not trade, guys. Do not trade" (IET 2026-07-14 [09:56]–[10:16]).
+
+**Training the eyes (series)** — Now also the name of IET's recurring recognition-drill series (Ep. 12: 2026-01-31; Ep. 13: 2026-02-17), distilled into the pattern library of file 10; the prescribed practice is replay-tool backtesting "to train your eyes. Without this, you will struggle to see setups in the live market" (IET 2026-02-03 [02:07]–[02:47]).
+
+**Inter Equity Trading (IET)** — The channel behind V3 and the 20 new transcripts; sponsored by Alpha Capital / Alpha Futures (ad reads, e.g. IET 2026-07-14 [02:33]); presenter addressed as "Marco" by his community (IET 2026-02-03 [02:27]; IET 2026-04-07 [06:26]) — see file 05's updated relationship note.
+
 ---
 
 **Next file:** `07-open-questions-pending-visuals.md`.

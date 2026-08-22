@@ -53,6 +53,9 @@ interface TrackStats {
   wins: number
   winRate: number | null
   avgProbability: number | null
+  biasDecided: number
+  biasRight: number
+  biasRate: number | null
   byOrbDirection: { direction: string; decided: number; winRate: number }[]
 }
 
@@ -77,7 +80,17 @@ function computeTrackStats(outcomes: OutcomeRow[]): TrackStats {
     return { direction, decided: rows.length, winRate: rows.length > 0 ? Math.round((w / rows.length) * 100) : 0 }
   }).filter(b => b.decided > 0)
 
-  return { decided, wins, winRate, avgProbability, byOrbDirection }
+  // Bias-direction accuracy — over ALL recent rows (incl. NO_CALL), graded on
+  // RIGHT/WRONG only (FLAT excluded). Captures correct-but-untraded calls.
+  const biasScored = outcomes
+    .filter(o => o.biasVerdict === 'RIGHT' || o.biasVerdict === 'WRONG')
+    .sort((a, b) => b.resolvedAt.localeCompare(a.resolvedAt))
+    .slice(0, 30)
+  const biasRight = biasScored.filter(o => o.biasVerdict === 'RIGHT').length
+  const biasDecided = biasScored.length
+  const biasRate = biasDecided > 0 ? Math.round((biasRight / biasDecided) * 100) : null
+
+  return { decided, wins, winRate, avgProbability, biasDecided, biasRight, biasRate, byOrbDirection }
 }
 
 function orbDirectionLabel(d: string): string {
@@ -89,7 +102,7 @@ function orbDirectionLabel(d: string): string {
 
 function TrackRecord({ outcomes }: { outcomes: OutcomeRow[] }) {
   const stats = computeTrackStats(outcomes)
-  if (stats.decided === 0) return null
+  if (stats.decided === 0 && stats.biasDecided === 0) return null
 
   const edge = stats.winRate != null && stats.avgProbability != null
     ? stats.winRate - stats.avgProbability
@@ -98,16 +111,23 @@ function TrackRecord({ outcomes }: { outcomes: OutcomeRow[] }) {
   return (
     <div className={styles.trackCard}>
       <div className={styles.trackTitle}>Track Record · last {stats.decided}</div>
-      <div className={styles.trackHeadline}>
-        <span className={styles.trackCalled}>Called {stats.avgProbability}%</span>
-        <span className={styles.trackDot}>·</span>
-        <span className={stats.winRate! >= 50 ? styles.trackHitGood : styles.trackHitBad}>
-          Hit {stats.winRate}%
-        </span>
-      </div>
+      {stats.decided > 0 && (
+        <div className={styles.trackHeadline}>
+          <span className={styles.trackCalled}>Called {stats.avgProbability}%</span>
+          <span className={styles.trackDot}>·</span>
+          <span className={stats.winRate! >= 50 ? styles.trackHitGood : styles.trackHitBad}>
+            Hit {stats.winRate}%
+          </span>
+        </div>
+      )}
       {edge != null && (
         <div className={styles.trackEdge}>
           {edge >= 0 ? 'Calibrated / beating' : 'Below'} its own probability by {Math.abs(edge)}pts
+        </div>
+      )}
+      {stats.biasRate != null && (
+        <div className={styles.trackEdge}>
+          Bias direction right {stats.biasRate}% ({stats.biasRight}/{stats.biasDecided}) — incl. untraded calls
         </div>
       )}
       {stats.byOrbDirection.length > 0 && (
