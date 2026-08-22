@@ -1,0 +1,5 @@
+# Resumable work-files produced during a fetch — not deliverables
+_raw_bars_*.jsonl
+_checkpoint_*.json
+*_fetch.log
+nohup.out
