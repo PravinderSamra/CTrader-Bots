@@ -42,22 +42,15 @@ describe('signalVerdict', () => {
     expect(signalVerdict('FAVOURS_SHORT', 0.2, 0, 0)).toBe('WRONG')
     expect(signalVerdict('FAVOURS_LONG', 0.05, 0, 0)).toBe('FLAT')
   })
-  it('BREAKOUT_SUSPECT: realised span well below ADR → RIGHT (range day, break suspect)', () => {
-    // ADR 1.28%; span = 0.2 - (-0.2) = 0.4 ≤ 0.55*1.28 (0.70) → RIGHT
-    expect(signalVerdict('BREAKOUT_SUSPECT', 0, 0.2, -0.2, 1.28)).toBe('RIGHT')
+  it('BREAKOUT_SUSPECT: both excursions < 0.25 → RIGHT (went nowhere)', () => {
+    expect(signalVerdict('BREAKOUT_SUSPECT', 0, 0.2, -0.2)).toBe('RIGHT')
   })
-  it('BREAKOUT_SUSPECT: realised span ≥ ADR → WRONG (a real expansion)', () => {
-    // span 0.9 - (-0.5) = 1.4 ≥ 1.0*1.28 → WRONG
-    expect(signalVerdict('BREAKOUT_SUSPECT', 0, 0.9, -0.5, 1.28)).toBe('WRONG')
+  it('BREAKOUT_SUSPECT: an excursion ≥ 0.40 → WRONG (a real extension)', () => {
+    expect(signalVerdict('BREAKOUT_SUSPECT', 0, 0.45, -0.1)).toBe('WRONG')
+    expect(signalVerdict('BREAKOUT_SUSPECT', 0, 0.1, -0.5)).toBe('WRONG')
   })
-  it('BREAKOUT_SUSPECT: span between 0.55*ADR and ADR → FLAT (the 2026-07-17 flat-close case)', () => {
-    // span 0.15 - (-0.8) = 0.95; 0.70 < 0.95 < 1.28 → FLAT, where the old
-    // absolute 0.40% threshold force-marked this genuine range day WRONG
-    expect(signalVerdict('BREAKOUT_SUSPECT', -0.06, 0.15, -0.8, 1.28)).toBe('FLAT')
-  })
-  it('BREAKOUT_SUSPECT: falls back to a sane default ADR when adrPct is null', () => {
-    // default ADR 1.2%; span 0.3 - (-0.1) = 0.4 ≤ 0.55*1.2 (0.66) → RIGHT (not the old bug)
-    expect(signalVerdict('BREAKOUT_SUSPECT', 0, 0.3, -0.1, null)).toBe('RIGHT')
+  it('BREAKOUT_SUSPECT: in-between excursion → FLAT', () => {
+    expect(signalVerdict('BREAKOUT_SUSPECT', 0, 0.3, -0.1)).toBe('FLAT')
   })
   it('NEUTRAL signals are not scored → null', () => {
     expect(signalVerdict('NEUTRAL', 0.9, 0.9, -0.9)).toBeNull()
@@ -74,10 +67,7 @@ describe('computeOutcome', () => {
     { timestamp: entryMs + 2 * 3600_000, high: 10045, low: 10020, close: 10040 },
     { timestamp: entryMs + 3 * 3600_000, high: 10050, low: 10030, close: 10040 },
   ]
-  // orb.adr14 = 60 → adrPct = 0.6%; the day's realised span is 0.6% (high 10050
-  // to low 9990), i.e. a full-ADR expansion, so BREAKOUT_SUSPECT scores WRONG.
   const entry = { at: new Date(entryMs).toISOString(), price: 10000, stance: 'LONG_FAVOURED',
-    orb: { adr14: 60 },
     signals: [{ direction: 'FAVOURS_LONG', rule: 'R3' }, { direction: 'BREAKOUT_SUSPECT', rule: 'R4' }] }
 
   it('computes toClose / excursions / forward returns and a RIGHT long verdict', () => {

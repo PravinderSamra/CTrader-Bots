@@ -69,7 +69,7 @@
         "adrUsedPct": 64
       },
       "outcome": {
-        "resolvedAt": "2026-07-23T21:36:39.836Z",
+        "resolvedAt": "2026-07-21T16:19:49.505Z",
         "fwd1hPct": 0.21,
         "fwd3hPct": 0.18,
         "toClosePct": 0.72,
@@ -79,11 +79,11 @@
         "signalVerdicts": [
           {
             "rule": "R10",
-            "verdict": "FLAT"
+            "verdict": "WRONG"
           },
           {
             "rule": "R13",
-            "verdict": "FLAT"
+            "verdict": "WRONG"
           },
           {
             "rule": "R8",
@@ -91,7 +91,7 @@
           },
           {
             "rule": "R11b",
-            "verdict": "FLAT"
+            "verdict": "WRONG"
           }
         ]
       }
@@ -171,7 +171,7 @@
         "adrUsedPct": 86
       },
       "outcome": {
-        "resolvedAt": "2026-07-23T21:36:39.974Z",
+        "resolvedAt": "2026-07-21T16:19:49.618Z",
         "fwd1hPct": 0,
         "fwd3hPct": -0.13,
         "toClosePct": 0.55,
@@ -181,11 +181,11 @@
         "signalVerdicts": [
           {
             "rule": "R4",
-            "verdict": "FLAT"
+            "verdict": "WRONG"
           },
           {
             "rule": "R13",
-            "verdict": "FLAT"
+            "verdict": "WRONG"
           },
           {
             "rule": "R3",
@@ -197,7 +197,7 @@
           },
           {
             "rule": "R11b",
-            "verdict": "FLAT"
+            "verdict": "WRONG"
           }
         ]
       }
@@ -277,7 +277,7 @@
         "adrUsedPct": 92
       },
       "outcome": {
-        "resolvedAt": "2026-07-23T21:36:40.110Z",
+        "resolvedAt": "2026-07-21T16:19:49.731Z",
         "fwd1hPct": -0.03,
         "fwd3hPct": 0.16,
         "toClosePct": 0.48,
@@ -287,11 +287,11 @@
         "signalVerdicts": [
           {
             "rule": "R4",
-            "verdict": "FLAT"
+            "verdict": "WRONG"
           },
           {
             "rule": "R13",
-            "verdict": "FLAT"
+            "verdict": "WRONG"
           },
           {
             "rule": "R3",
@@ -303,7 +303,7 @@
           },
           {
             "rule": "R11b",
-            "verdict": "FLAT"
+            "verdict": "WRONG"
           }
         ]
       }
@@ -383,7 +383,7 @@
         "adrUsedPct": 92
       },
       "outcome": {
-        "resolvedAt": "2026-07-23T21:36:40.243Z",
+        "resolvedAt": "2026-07-21T16:19:49.844Z",
         "fwd1hPct": -0.09,
         "fwd3hPct": 0.58,
         "toClosePct": 0.58,
@@ -393,11 +393,11 @@
         "signalVerdicts": [
           {
             "rule": "R4",
-            "verdict": "FLAT"
+            "verdict": "WRONG"
           },
           {
             "rule": "R13",
-            "verdict": "FLAT"
+            "verdict": "WRONG"
           },
           {
             "rule": "R3",
@@ -409,7 +409,7 @@
           },
           {
             "rule": "R11b",
-            "verdict": "FLAT"
+            "verdict": "WRONG"
           }
         ]
       }
@@ -489,7 +489,7 @@
         "adrUsedPct": 97
       },
       "outcome": {
-        "resolvedAt": "2026-07-23T21:36:40.381Z",
+        "resolvedAt": "2026-07-21T16:19:49.959Z",
         "fwd1hPct": 0.29,
         "fwd3hPct": null,
         "toClosePct": 0.29,
@@ -499,11 +499,11 @@
         "signalVerdicts": [
           {
             "rule": "R4",
-            "verdict": "RIGHT"
+            "verdict": "FLAT"
           },
           {
             "rule": "R13",
-            "verdict": "RIGHT"
+            "verdict": "FLAT"
           },
           {
             "rule": "R3",
@@ -589,162 +589,6 @@
       },
       "outcome": {
         "resolvedAt": "2026-07-21T16:19:49.959Z",
-        "fwd1hPct": null,
-        "fwd3hPct": null,
-        "toClosePct": 0,
-        "maxUpPct": 0,
-        "maxDownPct": 0,
-        "verdict": "UNSCORABLE",
-        "signalVerdicts": []
-      }
-    },
-    {
-      "at": "2026-07-21T18:11:44.234Z",
-      "londonTime": "19:11 BST",
-      "mode": "CLOSED",
-      "price": 10594.8,
-      "stance": "BREAKOUTS_SUSPECT",
-      "stanceLine": "Breakouts suspect in both directions today — 123% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
-      "signals": [
-        {
-          "direction": "BREAKOUT_SUSPECT",
-          "severity": "STRONG",
-          "source": "RANGE",
-          "rule": "R4",
-          "text": "123% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
-        },
-        {
-          "direction": "BREAKOUT_SUSPECT",
-          "severity": "CAUTION",
-          "source": "EVENT",
-          "rule": "R13",
-          "text": "UK Labour Market Report @ 07:00 BST today — pre-release breaks are positioning, not conviction."
-        },
-        {
-          "direction": "FAVOURS_LONG",
-          "severity": "INFO",
-          "source": "TAPE",
-          "rule": "R8",
-          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +1.62%) — the cross-market lean is up."
-        },
-        {
-          "direction": "FAVOURS_LONG",
-          "severity": "INFO",
-          "source": "TAPE",
-          "rule": "R9",
-          "text": "Past 13:30 with US futures +0.87% — the 14:30 US handoff argues for holding longs into the US open."
-        },
-        {
-          "direction": "BREAKOUT_SUSPECT",
-          "severity": "INFO",
-          "source": "POSITIONING",
-          "rule": "R11b",
-          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
-        }
-      ],
-      "aiStanceLine": "Due to 123% of the 14-day ADR already spent, a pre-open Labour Market Report distorting the ORB mechanics, and current price (10,594.8) sitting above every intraday reference level, this is a stand-aside or fade-only day — not a breakout-chase day.",
-      "aiBullets": [
-        "Price at 10,594.8 is already 74 points above the ORB high of 10,520.2 — the 'breakout' the ORB system would normally trade has already fully played out before most traders are at their desks.",
-        "The UK Labour Market Report at 07:00 BST (pre-cash-open) means the ORB itself was set on post-data positioning noise, not a clean overnight range — reducing the statistical edge of any 08:00 break signal.",
-        "Copper +2.99% and Brent +1.45% justify the bullish tape, but commodity-driven rallies on exhausted range days historically produce intraday fades, not continuation — the 'why' is strong but the 'when' has passed.",
-        "The crowded GBP short (net -72,474 contracts, still building cover with +17,517 week-on-week) is a latent upside risk for sterling; a squeeze to 1.34+ GBPUSD would hit the FTSE's dollar-earners precisely when the index has no range buffer left to absorb it."
-      ],
-      "bias": {
-        "score": 10,
-        "label": "BULLISH"
-      },
-      "orb": {
-        "orbHigh": 10520.2,
-        "orbLow": 10472.9,
-        "orbBrokenDirection": "UP",
-        "overnightHigh": 10520.2,
-        "overnightLow": 10433.8,
-        "priorDayHigh": 10589.4,
-        "priorDayLow": 10443.1,
-        "gapPct": 1.36,
-        "adr14": 134.4,
-        "adrUsedPct": 123
-      },
-      "outcome": {
-        "resolvedAt": "2026-07-21T18:11:46.174Z",
-        "fwd1hPct": null,
-        "fwd3hPct": null,
-        "toClosePct": 0,
-        "maxUpPct": 0,
-        "maxDownPct": 0,
-        "verdict": "UNSCORABLE",
-        "signalVerdicts": []
-      }
-    },
-    {
-      "at": "2026-07-21T20:15:35.911Z",
-      "londonTime": "21:15 BST",
-      "mode": "CLOSED",
-      "price": 10595.6,
-      "stance": "BREAKOUTS_SUSPECT",
-      "stanceLine": "Breakouts suspect in both directions today — 126% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
-      "signals": [
-        {
-          "direction": "BREAKOUT_SUSPECT",
-          "severity": "STRONG",
-          "source": "RANGE",
-          "rule": "R4",
-          "text": "126% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
-        },
-        {
-          "direction": "BREAKOUT_SUSPECT",
-          "severity": "CAUTION",
-          "source": "EVENT",
-          "rule": "R13",
-          "text": "UK Labour Market Report @ 07:00 BST today — pre-release breaks are positioning, not conviction."
-        },
-        {
-          "direction": "FAVOURS_LONG",
-          "severity": "INFO",
-          "source": "TAPE",
-          "rule": "R8",
-          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +1.67%) — the cross-market lean is up."
-        },
-        {
-          "direction": "FAVOURS_LONG",
-          "severity": "INFO",
-          "source": "TAPE",
-          "rule": "R9",
-          "text": "Past 13:30 with US futures +0.83% — the 14:30 US handoff argues for holding longs into the US open."
-        },
-        {
-          "direction": "BREAKOUT_SUSPECT",
-          "severity": "INFO",
-          "source": "POSITIONING",
-          "rule": "R11b",
-          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
-        }
-      ],
-      "aiStanceLine": "Due to 126% of the 14-day average daily range (134 pts) already consumed, a 1.36% gap open sitting above both the overnight high and prior day high, and tomorrow's UK CPI at 07:00 BST hitting one hour before cash open, any 08:00 breakout faces an exhausted range budget and a live macro grenade — favour standing aside or fading rather than chasing.",
-      "aiBullets": [
-        "Today's total move has already exceeded the 134-point ADR14 by 26%, leaving statistically minimal 'fuel' for a fresh directional ORB — the mechanical range rule alone makes this a stand-aside day.",
-        "The 142.6-point gap (1.36%) opens the index above the prior day high of 10,589 and the overnight high of 10,520; gap-above-prior-high opens historically resolve through mean-reversion once early momentum fades, compounding the fakeout risk.",
-        "GBP COT positioning is a crowded short (net -72,474 contracts, though improving by +17,517 week-on-week) — a sterling short-squeeze, if triggered by tomorrow's CPI beat, converts directly into an index headwind via the sign-flip, making upside ORB longs doubly exposed.",
-        "With UK CPI (HIGH impact) at 07:00 BST tomorrow — 60 minutes before the ORB window — the opening range itself will be shaped by a macro print, not overnight drift; the ORB high/low will mean very little without knowing which way CPI surprises."
-      ],
-      "bias": {
-        "score": 10,
-        "label": "BULLISH"
-      },
-      "orb": {
-        "orbHigh": 10520.2,
-        "orbLow": 10472.9,
-        "orbBrokenDirection": "UP",
-        "overnightHigh": 10520.2,
-        "overnightLow": 10433.8,
-        "priorDayHigh": 10589.4,
-        "priorDayLow": 10443.1,
-        "gapPct": 1.36,
-        "adr14": 134.4,
-        "adrUsedPct": 126
-      },
-      "outcome": {
-        "resolvedAt": "2026-07-21T20:15:38.158Z",
         "fwd1hPct": null,
         "fwd3hPct": null,
         "toClosePct": 0,

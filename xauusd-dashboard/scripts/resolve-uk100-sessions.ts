@@ -14,20 +14,13 @@
  *   WIN    — price reached drawOnLiquidity (target) before invalidation (stop)
  *   LOSS   — price reached invalidation before the target (or both in one bar)
  *   EXPIRED_FAVOURABLE / _ADVERSE / _FLAT — neither hit within the window
- *   NO_CALL — not a scoreable trade: no directional idea, missing levels, or a
- *             WAIT idea whose entry zone never filled within the window
- *             (terminal, excluded from stats)
+ *   NO_CALL — no ACTIVE directional trade idea / missing levels (terminal, excluded from stats)
  *
  * UK100-specific: the record's own `bias` label can be NEUTRAL while the ORB
- * playbook still produces a genuine LONG/SHORT call (the ORB decision table
- * trades structure/session mechanics, not the macro bias score) — so the
- * directional gate here keys off `tradeIdea`, not `bias`, unlike gold's
- * resolver where bias IS the call. Both an ACTIVE idea (taken at analysis time)
- * AND a WAIT idea with an entry zone are scoreable: the WAIT is scored only
- * if/once price actually returns to [entryLow, entryHigh] within the window
- * (see firstFillIndex), from that fill onward. This stops the common case — a
- * WAIT the market DID trigger and that then won/lost — from silently vanishing
- * as NO_CALL, which had left wrong-way calls invisible to the archive.
+ * playbook still produces a genuine ACTIVE LONG/SHORT call (the ORB decision
+ * table trades structure/session mechanics, not the macro bias score) — so the
+ * directional gate here keys off `tradeIdea.status === 'ACTIVE'`, not `bias`,
+ * unlike gold's resolver where bias IS the call.
  *
  * UK100-SESSION-REVIEW-2026-07-13.md §5 F7 enrichment: alongside the single
  * WIN/LOSS/EXPIRED result (computed from drawOnLiquidity/invalidation, same
@@ -71,10 +64,6 @@ const UK100_ID   = KNOWN_SYMBOL_IDS.UK100
 const UK100_SCALE = 10 ** (PIP_DIGITS.UK100 ?? 5)
 
 const DRY = process.argv.includes('--dry')
-// --rescore: recompute already-resolved records (used after a scoring-logic
-// change — the WAIT-fill fix, the bias-direction grade — to backfill the
-// archive rather than only affecting future records).
-const RESCORE = process.argv.includes('--rescore')
 
 // Local type copies — same convention as resolve-gold-sessions.ts and
 // fetch-uk100-data.ts (scripts keep their own copies rather than importing
@@ -88,15 +77,7 @@ type Result =
 
 interface HitEvent { level: string; timestamp: string }
 
-// Bias-direction accuracy — graded for EVERY record with a directional lean,
-// including NO_CALL / never-filled ones, so a correct-but-untraded call (e.g.
-// 2026-07-23: BEARISH / SHORT NO_TRADE, and the day fell ~90pts) is no longer
-// invisible to calibration. Separate from the trade WIN/LOSS: it measures only
-// whether the directional lean was right by the session close.
-type BiasLean = 'BULLISH' | 'BEARISH'
-type BiasVerdict = 'RIGHT' | 'WRONG' | 'FLAT'
-
-interface TargetSpec { direction: 'LONG' | 'SHORT'; status: string; stop?: number; targets?: number[]; entryLow?: number; entryHigh?: number }
+interface TargetSpec { direction: 'LONG' | 'SHORT'; status: string; stop?: number; targets?: number[] }
 
 interface BaseOutcome {
   result: Result
@@ -108,25 +89,6 @@ interface BaseOutcome {
 
 interface Outcome extends BaseOutcome {
   hits: HitEvent[]
-  biasLean?: BiasLean | null
-  biasVerdict?: BiasVerdict | null
-}
-
-/** The record's directional lean: its bias label, else its trade-idea direction. */
-export function recordLean(bias: string, tradeDirection?: 'LONG' | 'SHORT'): BiasLean | null {
-  if (bias === 'BULLISH' || bias === 'BEARISH') return bias
-  if (tradeDirection === 'LONG') return 'BULLISH'
-  if (tradeDirection === 'SHORT') return 'BEARISH'
-  return null
-}
-
-/** Was the lean right by the session close? ±0.15% dead-band = FLAT. */
-export function biasVerdictFor(lean: BiasLean, priceAtAnalysis: number, closePrice: number): BiasVerdict {
-  const chgPct = (closePrice - priceAtAnalysis) / priceAtAnalysis * 100
-  const signed = lean === 'BULLISH' ? chgPct : -chgPct
-  if (signed >= 0.15) return 'RIGHT'
-  if (signed <= -0.15) return 'WRONG'
-  return 'FLAT'
 }
 
 interface SessionRecord {
@@ -160,8 +122,6 @@ interface OutcomeRow {
   resolvedAt: string
   maxFavourable: number | null
   maxAdverse: number | null
-  biasLean?: BiasLean | null
-  biasVerdict?: BiasVerdict | null
 }
 
 interface OutcomesFile {
@@ -226,9 +186,9 @@ export function classify(
   bars: { open: number; high: number; low: number; close: number }[],
   now: number,
   cutoffMs: number,
-  entry: number = rec.priceAtAnalysis!,
 ): BaseOutcome | null {
   const bullish = rec.tradeIdea!.direction === 'LONG'
+  const entry = rec.priceAtAnalysis!
   const draw  = rec.drawOnLiquidity ?? null
   const inval = rec.invalidation ?? null
 
@@ -309,32 +269,6 @@ export function classifyHits(
   return hits
 }
 
-/**
- * Index of the first bar at which a `WAIT` entry zone would fill, or -1 if the
- * market never reached the zone within `bars`.
- *
- * A WAIT idea is conditional — it only becomes a real trade once price returns
- * to the entry zone. A LONG waits for a pullback DOWN into [entryLow, entryHigh]
- * (fills when a bar's low reaches entryHigh); a SHORT waits for a bounce UP into
- * the zone (fills when a bar's high reaches entryLow). This is what lets the
- * resolver score WAIT briefs the market actually triggered — e.g. the
- * 2026-07-16 SHORT WAIT whose 10488–10496 zone was tagged at 15:00 BST and would
- * then have stopped out — instead of silently discarding every WAIT as NO_CALL
- * and leaving wrong-way calls invisible to the calibration archive.
- */
-export function firstFillIndex(
-  direction: 'LONG' | 'SHORT',
-  entryLow: number,
-  entryHigh: number,
-  bars: { high: number; low: number }[],
-): number {
-  for (let i = 0; i < bars.length; i++) {
-    const filled = direction === 'LONG' ? bars[i].low <= entryHigh : bars[i].high >= entryLow
-    if (filled) return i
-  }
-  return -1
-}
-
 function loadOutcomes(): OutcomesFile {
   try { return JSON.parse(fs.readFileSync(OUTCOMES_FILE, 'utf8')) as OutcomesFile }
   catch { return { updatedAt: '', outcomes: [] } }
@@ -360,7 +294,7 @@ async function main() {
     try { rec = JSON.parse(fs.readFileSync(full, 'utf8')) as SessionRecord }
     catch { continue }
 
-    if (rec.outcome && !RESCORE) { skipped++; continue }             // already terminal
+    if (rec.outcome) { skipped++; continue }             // already terminal
 
     const ts = Date.parse(rec.timestamp)
     if (!Number.isFinite(ts)) { skipped++; continue }
@@ -368,32 +302,16 @@ async function main() {
     if (age < MIN_AGE_MS) { skipped++; continue }        // too soon
     if (age > MAX_LOOKBACK_DAYS * 86_400_000) { skipped++; continue }
 
-    // A resolvable "call" is a directional trade idea with the levels needed
-    // to score it. Two shapes qualify (bias alone — which can be NEUTRAL on a
-    // genuine ORB-playbook call, see file header — is not enough):
-    //   • ACTIVE — a trade taken at analysis time (scored over all bars).
-    //   • WAIT with an entry zone — a conditional trade, scored ONLY if/once
-    //     price actually returns to [entryLow, entryHigh] within the window.
-    //     Without this, every WAIT (the vast majority of briefs) collapses to
-    //     NO_CALL and wrong-way calls the market DID trigger stay invisible to
-    //     the calibration archive (e.g. the 2026-07-16 SHORT WAIT whose zone
-    //     filled at 15:00 BST and would have stopped out).
-    const ti = rec.tradeIdea
-    const dirOk = !!ti && (ti.direction === 'LONG' || ti.direction === 'SHORT')
-    const isActive = dirOk && ti!.status === 'ACTIVE'
-    const isWaitWithZone = dirOk && ti!.status === 'WAIT' && ti!.entryLow != null && ti!.entryHigh != null
+    // Only an ACTIVE directional trade idea, with the levels needed to
+    // score it, is a resolvable "call" — bias alone (which can be NEUTRAL
+    // on a genuine ORB-playbook call, see file header) is not enough.
+    const directional = rec.tradeIdea?.status === 'ACTIVE' &&
+      (rec.tradeIdea.direction === 'LONG' || rec.tradeIdea.direction === 'SHORT')
     const hasLevels = rec.priceAtAnalysis != null && (rec.drawOnLiquidity != null || rec.invalidation != null)
-    const scoreableTrade = (isActive || isWaitWithZone) && hasLevels
-    // Bias-direction grade — for any record with a directional lean, incl. ones
-    // that never become a scoreable trade (NO_TRADE / never-filled WAIT). Graded
-    // at the session close, so these records are DEFERRED until the window
-    // completes rather than written as NO_CALL at MIN_AGE.
-    const lean = recordLean(rec.bias, dirOk ? ti!.direction : undefined)
-    const canGradeBias = lean != null && rec.priceAtAnalysis != null
-    let outcome: Outcome | null = null
+    let outcome: Outcome | null
 
-    if (!scoreableTrade && !canGradeBias) {
-      outcome = noCall()   // truly directionless — no market data needed
+    if (!directional || !hasLevels) {
+      outcome = noCall()
     } else {
       if (clientReady === null) {
         clientReady = await client.init()
@@ -407,54 +325,19 @@ async function main() {
       const rawBars = await client.getTrendbars(UK100_ID, 'H_1', ts, toMs)
       if (rawBars.length === 0) { console.log(`  ${filename}: no bars returned — retry next run`); skipped++; continue }
       const bars = rawBars.map((b: Trendbar) => ({ open: b.open / UK100_SCALE, high: b.high / UK100_SCALE, low: b.low / UK100_SCALE, close: b.close / UK100_SCALE }))
-      const windowComplete = now >= cutoffMs
-      // Bias is graded only once the session has closed (against the last bar's
-      // close); a record finalising early via WIN/LOSS carries a null bias grade.
-      const biasFields = (): { biasLean: BiasLean | null; biasVerdict: BiasVerdict | null } =>
-        canGradeBias && windowComplete
-          ? { biasLean: lean, biasVerdict: biasVerdictFor(lean!, rec.priceAtAnalysis!, bars[bars.length - 1].close) }
-          : { biasLean: lean, biasVerdict: null }
+      const base = classify(rec, bars, now, cutoffMs)
+      if (base === null) { skipped++; continue }         // window not complete yet
 
-      if (scoreableTrade) {
-        // Determine the first bar the trade is "in": ACTIVE fills at analysis
-        // time (index 0, entry = priceAtAnalysis); a WAIT fills when its zone
-        // is first tagged (entry = the zone boundary price reaches first — the
-        // least-favourable fill, conservative). A WAIT whose zone never fills
-        // is not a trade: NO_CALL once the window has closed.
-        let fillIdx = 0
-        let entry = rec.priceAtAnalysis!
-        if (isWaitWithZone) {
-          fillIdx = firstFillIndex(ti!.direction, ti!.entryLow!, ti!.entryHigh!, bars)
-          if (fillIdx === -1) {
-            if (now < cutoffMs) { skipped++; continue }    // window still open — may yet fill
-            outcome = { ...noCall(), ...biasFields() }     // window closed — never triggered
-          } else {
-            entry = ti!.direction === 'LONG' ? ti!.entryHigh! : ti!.entryLow!
-          }
-        }
-        if (outcome === null) {   // ACTIVE, or a WAIT that filled at fillIdx
-          const scoredBars = bars.slice(fillIdx)
-          const base = classify(rec, scoredBars, now, cutoffMs, entry)
-          if (base === null) { skipped++; continue }       // window not complete yet
-          const hits = ti!.targets && ti!.targets.length > 0 && ti!.stop != null
-            ? classifyHits(ti!.direction, ti!.targets, ti!.stop, rawBars.slice(fillIdx))
-            : []
-          outcome = { ...base, hits, ...biasFields() }
-        }
-      } else {
-        // No scoreable trade, but a directional lean to grade — wait for the
-        // session close, then record NO_CALL + the bias grade.
-        if (!windowComplete) { skipped++; continue }
-        outcome = { ...noCall(), ...biasFields() }
-      }
+      const tradeIdea = rec.tradeIdea!
+      const hits = tradeIdea.targets && tradeIdea.targets.length > 0 && tradeIdea.stop != null
+        ? classifyHits(tradeIdea.direction, tradeIdea.targets, tradeIdea.stop, rawBars)
+        : []
+      outcome = { ...base, hits }
     }
-
-    if (outcome === null) { skipped++; continue }   // defensive — nothing to write
 
     console.log(`  ${filename}: ${rec.tradeIdea?.direction ?? rec.bias} → ${outcome.result}` +
       (outcome.maxFavourable != null ? ` (MFE ${outcome.maxFavourable}pt / MAE ${outcome.maxAdverse}pt, ${outcome.barsSeen} bars)` : '') +
-      (outcome.hits.length > 0 ? ` [${outcome.hits.map(h => h.level).join('→')}]` : '') +
-      (outcome.biasVerdict ? ` · bias ${outcome.biasLean} ${outcome.biasVerdict}` : ''))
+      (outcome.hits.length > 0 ? ` [${outcome.hits.map(h => h.level).join('→')}]` : ''))
 
     if (!DRY) {
       rec.outcome = outcome
@@ -467,8 +350,6 @@ async function main() {
         orbDirection: rec.orbPlaybook?.direction ?? null,
         result: outcome.result, resolvedAt: outcome.resolvedAt,
         maxFavourable: outcome.maxFavourable, maxAdverse: outcome.maxAdverse,
-        ...(outcome.biasLean ? { biasLean: outcome.biasLean } : {}),
-        ...(outcome.biasVerdict ? { biasVerdict: outcome.biasVerdict } : {}),
       })
     }
     resolved++

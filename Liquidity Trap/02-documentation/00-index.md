@@ -4,20 +4,15 @@ Complete documentation of the "Liquidity Trap" / "Da Vinci model" trading strate
 
 ## Source material
 
-All claims in files 01–08 cite transcripts in `../01-transcripts/` as `(Video N, [MM:SS])`:
+All claims in these docs cite transcripts in `../01-transcripts/` as `(Video N, [MM:SS])`:
 
 - **Video 1 (V1)** — `video1_transcript.md` — Chart Fanatics ep. 1 with **Marco Trades** (the strategy's author): whiteboard theory, four chart examples, and a full live NQ trading session (Aug 2025).
 - **Video 2 (V2)** — `video2_transcript.md` — Chart Fanatics ep. 2 with Marco, 11 chapters: names and formalizes the setup as the **"Da Vinci model"**, adds the engineered-liquidity arming condition, gold/NQ/USDJPY examples (Jul 2026).
-- **Video 3 (V3)** — `video3_transcript.md` — Inter Equity Trading: a 16-minute NQ walkthrough using Marco's exact vocabulary and rules on 4H/1H only (Jan 2026).
-
-Added 2026-07-22, cited in files 05–06 and 09–10:
-
-- **Official playbook (PB)** — `../04-official-playbook/marco-trades-liquidity-playbook.md` — the first-party PDF "Marco Trade's Playbook" (via ChartFanatics/Tradezella), transcribed verbatim with page images in `../04-official-playbook/images/`. Authoritative where sources conflict; terser than the videos.
-- **Inter Equity Trading channel (IET)** — `../01-transcripts/inter-equity-channel/` — 20 further videos from V3's channel (2026-01-31 → 2026-07-21): the liquidity-inducement masterclass material, "Training The Eyes" drills, liquidity blocks, the H4/10:00 a.m. and PDH/PDL timing models, ping-pong both-sides trading, stacking entries, and several live/worked trades. Cited as `(IET YYYY-MM-DD "title" [MM:SS])` — timestamps are inline-caption video time (the raw files' `[MM:SS]` line prefixes are unreliable; see file 09 §0). Evidence in the transcripts indicates the IET presenter *is* Marco (file 05 relationship note) — so these are first-party teaching, not independent corroboration.
+- **Video 3 (V3)** — `video3_transcript.md` — Inter Equity Trading: an independent-in-name 16-minute NQ walkthrough using Marco's exact vocabulary and rules on 4H/1H only (Jan 2026).
 
 Chart screenshots for resolving visual ambiguities live in `../03-images/` (Video3 complete: 28 shots + manifest; Video2 complete: 36 files; Video1 pending).
 
-## The eleven files
+## The nine files
 
 | File | One-line summary |
 |---|---|
@@ -30,8 +25,6 @@ Chart screenshots for resolving visual ambiguities live in `../03-images/` (Vide
 | `06-glossary.md` | Every strategy-specific term defined with sources: core concepts, the many sweep synonyms, chart color conventions, execution terms, an ICT-vocabulary translation map, and auto-caption artifacts. |
 | `07-open-questions-pending-visuals.md` | Catalogue of "here / this level / like this" moments the audio alone can't resolve, per video with timestamps, plus the cross-cutting parameter unknowns (respect tolerance, zone heights, stop buffers) and non-visual open questions. |
 | `08-bot-blueprint-outline.md` | High-level algo design: data/timeframe requirements, the level-registry state machine, `IdentifyLiquidityPool()` and `DetectSweepAndReversalConfirmation()` specs, entry/stop/target math, build phases, and the 12 design decisions the user must make before coding. |
-| `09-liquidity-inducement-and-daily-bias.md` | **The new-source deep-dive** (IET channel + playbook): the induce→trap→enter grammar and inducement-vs-sweep distinction, the definitive liquidity-block doctrine ("no LB, no entry"), the daily-bias method (two-lines doctrine, PDH/PDL frame, the H4 6–10 a.m. / "10:00 a.m. reversal" model), ping-pong both-sides trading, the target-intact stacking rule, plus a full confirmations table and the extensions/divergences list (incl. the break-even conflict with the playbook). |
-| `10-training-the-eyes-pattern-library.md` | Named recognition-pattern library distilled from the "Training The Eyes" series: P1 respected level → P12 day-boundary patterns, each with looks-like / means / confirmed-by / invalidated-when / action + citations, and a 10-step top-down recognition checklist usable by a human or a detector. |
 
 ## How to use this documentation (cold start)
 
@@ -39,10 +32,9 @@ Chart screenshots for resolving visual ambiguities live in `../03-images/` (Vide
 
 1. **01 → 02 → 03** — this is the strategy itself, in dependency order (concepts → identification → trade rules). File 03 is the executable core; files 01–02 define every term it uses.
 2. **04** — management/risk layer and which claims are marketing.
-3. **09 → 10** — the 2026 new-source layer: read 09 after 03/04 (it extends and occasionally corrects them from the author's own channel + playbook), and 10 as the recognition drill-book.
-4. **05** — before trusting anything, read the (updated) relationship note — *all* sources now appear to be one trader, so nothing here is independent confirmation — and §3's load-bearing-vs-cosmetic assessment.
-5. **06** — keep open as a reference; the transcripts use many synonyms for "sweep" and inconsistent box colors, and the glossary normalizes all of it (§10 covers the new IET/playbook terms). §8 lists caption artifacts so you don't chase phantom terms ("Molly", "VOS", "frapple").
-6. **07 + 08** — only when moving toward implementation (file 09 §7's closing note lists the bot-blueprint impacts of the new sources).
+3. **05** — before trusting anything, read the relationship note (V3 is *not* an independent confirmation) and §3's load-bearing-vs-cosmetic assessment.
+4. **06** — keep open as a reference; the transcripts use ~8 synonyms for "sweep" and inconsistent box colors, and the glossary normalizes all of it. §8 lists caption artifacts so you don't chase phantom terms ("Molly", "VOS", "frapple").
+5. **07 + 08** — only when moving toward implementation.
 
 **Rules for working with this doc set:**
 

@@ -25,7 +25,6 @@ import { fileURLToPath } from 'url'
 import { CTraderClient, KNOWN_SYMBOL_IDS, PIP_DIGITS, type Trendbar } from './lib/ctrader'
 import { mergeCalendars, nextMpcDate, UK_STATIC_CALENDAR_2026, US_STATIC_CALENDAR_2026, type Uk100CalendarEvent } from './lib/calendar'
 import { pearson, dailyReturnsByDate, pairByDate } from './lib/stats'
-import { computeExpansionState, type ExpansionState, type IntradayProfile } from './build-uk100-intraday-profile'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -127,17 +126,7 @@ interface OrbContext {
   orbBrokenDirection: 'UP' | 'DOWN' | 'NONE' | null
   eventWindows: { event: string; timeLondon: string; impact: string }[]
   adr14: number | null; adrUsedPct: number | null
-  expansionState: ExpansionState | null   // is today an expansion vs range day / is most of the move done
 }
-
-// Cached intraday completion baseline (built by build-uk100-intraday-profile.ts,
-// refreshed weekly). Loaded once; null until the profile has been generated.
-const INTRADAY_PROFILE: IntradayProfile | null = (() => {
-  try {
-    const p = path.join(__dirname, '../public/data/uk100/intraday-profile.json')
-    return JSON.parse(fs.readFileSync(p, 'utf8')) as IntradayProfile
-  } catch { return null }
-})()
 
 // ── ORB intelligence (G1, UK100-ORB-INTEL-TLDR-DESIGN.md §2) — a synthesis
 //    layer over the fields the snapshot already carries. Layer 1 (mechanical
@@ -1197,7 +1186,6 @@ function computeOrbContext(input: {
     orbBrokenDirection,
     eventWindows,
     adr14: c?.adr14 ?? null, adrUsedPct: c?.adrUsedPct ?? null,
-    expansionState: computeExpansionState(INTRADAY_PROFILE, ld.getUTCHours(), c?.adrUsedPct ?? null),
   }
 }
 

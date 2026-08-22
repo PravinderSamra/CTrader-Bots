@@ -114,20 +114,6 @@ export interface OrbContext {
   orbBrokenDirection: 'UP' | 'DOWN' | 'NONE' | null
   eventWindows: OrbEventWindow[]
   adr14: number | null; adrUsedPct: number | null
-  expansionState?: ExpansionState | null   // expansion vs range day / is most of the move done
-}
-
-// Mirror of scripts/build-uk100-intraday-profile.ts ExpansionState. Optional on
-// OrbContext so snapshots written before this field existed still parse.
-export type ExpansionLabel = 'EXPANSION' | 'NORMAL' | 'COMPRESSED' | 'UNKNOWN'
-export interface ExpansionState {
-  label: ExpansionLabel
-  rangeSoFarPct: number | null
-  expectedRangePctByNow: number | null
-  rangeVsTypical: number | null
-  expectedVolPctByNow: number | null
-  moveMostlyDone: boolean
-  note: string
 }
 
 // ── ORB intelligence (G1, UK100-ORB-INTEL-TLDR-DESIGN.md §2) — mirror of the

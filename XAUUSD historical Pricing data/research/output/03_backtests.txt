@@ -1,0 +1,97 @@
+
+--- S1a Overnight long 20:00->02:00 (incl. Fri->Mon) ---
+trades=1007  win%=52.9  avg $/oz=+2.67  median $/oz=+2.00
+expectancy=+5.84% of ATR/trade  ann.Sharpe~1.12  maxDD=-22.1 ATR-units
+        n    win    total  avg_R
+year                            
+2021   79  46.84   -96.03  -0.06
+2022  206  51.94   -26.75  -0.01
+2023  205  50.24   163.16  -0.00
+2024  205  54.63   278.87   0.06
+2025  202  59.90  2197.36   0.25
+2026  110  48.18   174.40   0.03
+
+--- S1b Overnight long 20:00->02:00 (skip Friday) ---
+trades=1007  win%=52.9  avg $/oz=+2.67  median $/oz=+2.00
+expectancy=+5.84% of ATR/trade  ann.Sharpe~1.12  maxDD=-22.1 ATR-units
+        n    win    total  avg_R
+year                            
+2021   79  46.84   -96.03  -0.06
+2022  206  51.94   -26.75  -0.01
+2023  205  50.24   163.16  -0.00
+2024  205  54.63   278.87   0.06
+2025  202  59.90  2197.36   0.25
+2026  110  48.18   174.40   0.03
+
+--- S1c Overnight long 20:00->00:00 (skip Friday) ---
+trades=1007  win%=52.9  avg $/oz=+2.67  median $/oz=+2.00
+expectancy=+5.84% of ATR/trade  ann.Sharpe~1.12  maxDD=-22.1 ATR-units
+        n    win    total  avg_R
+year                            
+2021   79  46.84   -96.03  -0.06
+2022  206  51.94   -26.75  -0.01
+2023  205  50.24   163.16  -0.00
+2024  205  54.63   278.87   0.06
+2025  202  59.90  2197.36   0.25
+2026  110  48.18   174.40   0.03
+
+--- S1d Long at 22:00 reopen -> exit 02:00 ---
+trades=1270  win%=53.2  avg $/oz=+1.09  median $/oz=+0.48
+expectancy=+2.08% of ATR/trade  ann.Sharpe~1.50  maxDD=-6.4 ATR-units
+        n    win   total  avg_R
+year                           
+2021   99  64.65  116.05   0.05
+2022  258  45.35 -110.17  -0.01
+2023  257  56.03  171.28   0.03
+2024  259  55.21  102.20   0.01
+2025  258  53.88  537.92   0.04
+2026  139  49.64  569.94   0.03
+
+--- S2a Asian breakout, stop=far side of range, entries 07:00-14:30, exit 20:55 ---
+trades=1180  win%=44.0  avg $/oz=+1.43  median $/oz=-3.19
+expectancy=+1.31% of ATR/trade  ann.Sharpe~0.42  maxDD=-16.9 ATR-units
+        n    win    total  avg_R
+year                            
+2021   98  30.61  -209.36  -0.09
+2022  251  45.02   140.23   0.02
+2023  252  33.73  -186.74  -0.03
+2024  249  47.79   380.25   0.04
+2025  218  48.17   520.95   0.03
+2026  112  59.82  1036.72   0.08
+
+--- S2b Asian breakout +10% buffer, stop=0.33*ATR, entries 07:00-14:30 ---
+trades=1114  win%=40.9  avg $/oz=+0.39  median $/oz=-5.27
+expectancy=-0.55% of ATR/trade  ann.Sharpe~-0.20  maxDD=-22.7 ATR-units
+        n    win   total  avg_R
+year                           
+2021   95  34.74 -130.94  -0.06
+2022  241  41.08   29.25   0.01
+2023  242  32.23 -237.76  -0.04
+2024  238  45.38  149.05   0.01
+2025  203  43.84  228.64   0.02
+2026   95  51.58  390.70   0.02
+
+--- S3a NY ORB: 13:30 open, 30m range, breakout->20:00, stop far side ---
+trades=1252  win%=42.3  avg $/oz=+0.65  median $/oz=-2.48
+expectancy=+2.05% of ATR/trade  ann.Sharpe~0.97  maxDD=-4.9 ATR-units
+        n    win   total  avg_R
+year                           
+2021   95  35.79  -60.30  -0.02
+2022  255  41.96  254.80   0.04
+2023  252  43.65  197.69   0.03
+2024  257  45.14  122.19   0.01
+2025  254  43.70  296.67   0.02
+2026  139  37.41    1.82  -0.00
+
+--- S3b NYSE ORB: 14:30 open, 30m range, breakout->20:00 ---
+trades=1251  win%=43.0  avg $/oz=-0.05  median $/oz=-1.62
+expectancy=+0.11% of ATR/trade  ann.Sharpe~0.06  maxDD=-6.8 ATR-units
+        n    win  total  avg_R
+year                          
+2021   94  40.43 -34.04  -0.01
+2022  256  43.75  36.65   0.01
+2023  252  42.06  55.04   0.01
+2024  258  44.96 -40.90  -0.00
+2025  254  42.13  16.68  -0.01
+2026  137  43.07 -94.00  -0.00
+S4a At 12:00 beyond Asian range -> hold to 20:55, stop=range mid: no trades

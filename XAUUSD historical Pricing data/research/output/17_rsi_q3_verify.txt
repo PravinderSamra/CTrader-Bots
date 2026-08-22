@@ -1,0 +1,35 @@
+=== Q3 CELL: 15m bearish divergence, RSI gap 3.8-7.3 points ===
+N=353  P(1-ATR down before 1-ATR up) = 59.2%  (base 50.1%)
+
+by year:
+      size   mean
+year             
+2021    37  0.541
+2022    68  0.559
+2023    62  0.694
+2024    70  0.643
+2025    86  0.488
+2026    30  0.700
+
+split-half: 2021-23 = 60.5%  2024-26 = 58.1%
+
+robustness to re-binning (best bin per scheme):
+  bins= 3: best p=54.4% z=+1.85 monotonic=False
+  bins= 5: best p=59.4% z=+3.12 monotonic=False
+  bins= 6: best p=61.4% z=+3.48 monotonic=False
+  bins=10: best p=59.9% z=+2.33 monotonic=False
+
+NOTE: ~40 hypotheses were tested across scripts 15-16; Bonferroni alpha=0.05 needs |z|>3.02.
+
+=== DECISIVE TEST: costed backtest of the Q3 cell ===
+median stop distance (to pivot high + 0.1 ATR buffer) = 1.51 ATR  <-- the problem
+TP=1.0: n=319 win%=52.4 avgR=-0.082 totR=-26.2 maxDD=-37.1R
+   by year: 2021:-0.136  2022:-0.174  2023:+0.058  2024:+0.025  2025:-0.223  2026:+0.070
+TP=1.5: n=319 win%=43.9 avgR=-0.045 totR=-14.2 maxDD=-27.2R
+   by year: 2021:-0.092  2022:-0.082  2023:+0.086  2024:+0.113  2025:-0.223  2026:+0.001
+TP=2.0: n=319 win%=37.0 avgR=-0.032 totR=-10.2 maxDD=-35.8R
+   by year: 2021:+0.129  2022:-0.157  2023:+0.225  2024:+0.073  2025:-0.198  2026:-0.206
+TP=3.0: n=319 win%=29.2 avgR=+0.023 totR=+7.3 maxDD=-27.4R
+   by year: 2021:+0.100  2022:-0.007  2023:+0.029  2024:+0.154  2025:-0.048  2026:-0.098
+TP=timeout: n=319 win%=10.3 avgR=-0.163 totR=-52.0 maxDD=-105.9R
+   by year: 2021:-0.038  2022:-0.119  2023:-0.800  2024:-0.447  2025:+0.135  2026:+0.575

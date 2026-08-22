@@ -1,0 +1,82 @@
+=== T1: Donchian(24) breakout + chandelier trail ===
+
+--- T1a all-day, trail 2.5*ATR ---
+n=12224 win%=27.7 avgR=-0.127 avgWin=+1.20 avgLoss=-0.63 totR=-1555.9 maxDD=-1580.3R avgHold=75min
+         n    win    totR  avgR
+year                           
+2021  1140  25.35 -260.35 -0.23
+2022  2411  28.45 -380.41 -0.16
+2023  2417  25.65 -486.27 -0.20
+2024  2426  28.19 -259.35 -0.11
+2025  2470  29.31 -130.92 -0.05
+2026  1360  27.72  -38.58 -0.03
+
+--- T1b NY-only entries 12:00-19:00, trail 2.5*ATR ---
+n=3749 win%=33.0 avgR=-0.091 avgWin=+1.22 avgLoss=-0.74 totR=-342.2 maxDD=-348.7R avgHold=91min
+        n    win   totR  avgR
+year                         
+2021  353  27.48 -78.34 -0.22
+2022  738  34.01 -57.63 -0.08
+2023  755  32.72 -73.91 -0.10
+2024  755  32.05 -62.78 -0.08
+2025  736  35.87 -23.32 -0.03
+2026  412  33.25 -46.20 -0.11
+
+--- T1c NY-only, tight trail 1.5*ATR ---
+n=4742 win%=30.5 avgR=-0.137 avgWin=+1.45 avgLoss=-0.83 totR=-647.8 maxDD=-668.2R avgHold=41min
+        n    win    totR  avgR
+year                          
+2021  444  26.80 -130.87 -0.29
+2022  938  30.81 -120.79 -0.13
+2023  964  29.15 -153.51 -0.16
+2024  973  28.57 -175.93 -0.18
+2025  912  33.99  -28.63 -0.03
+2026  511  32.68  -38.09 -0.07
+
+--- T1d NY-only, wide trail 3.0*ATR ---
+n=3464 win%=34.0 avgR=-0.075 avgWin=+1.18 avgLoss=-0.72 totR=-258.4 maxDD=-268.0R avgHold=119min
+        n    win   totR  avgR
+year                         
+2021  323  31.58 -49.24 -0.15
+2022  690  33.77 -44.26 -0.06
+2023  697  32.28 -52.72 -0.08
+2024  702  34.19 -61.91 -0.09
+2025  679  37.41 -22.36 -0.03
+2026  373  33.51 -27.90 -0.07
+
+--- T2 NY-only + expansion-bar confirmation ---
+n=2319 win%=32.5 avgR=-0.073 avgWin=+1.38 avgLoss=-0.77 totR=-168.3 maxDD=-186.9R avgHold=85min
+        n    win   totR  avgR
+year                         
+2021  234  27.35 -44.81 -0.19
+2022  470  32.13 -43.43 -0.09
+2023  486  30.86 -52.74 -0.11
+2024  457  33.04 -20.14 -0.04
+2025  411  36.74   2.81  0.01
+2026  261  32.95  -9.95 -0.04
+
+=== R1: enter OPPOSITE after a >=1-ATR trend is trailed out (from T1d events) ===
+
+--- R1 reversal-after-trend ---
+n=949 win%=34.0 avgR=-0.152 avgWin=+0.79 avgLoss=-0.64 totR=-144.4 maxDD=-150.0R avgHold=nanmin
+        n    win   totR  avgR
+year                         
+2021   86  29.07 -12.62 -0.15
+2022  173  34.68  -5.22 -0.03
+2023  175  30.29 -44.60 -0.25
+2024  197  39.09 -27.06 -0.14
+2025  197  31.98 -39.50 -0.20
+2026  121  37.19 -15.36 -0.13
+
+=== R2: London RSI(2) extremes, exit EMA20/12:00, stop 1*ATR ===
+
+--- R2 London RSI2 fade ---
+n=9728 win%=41.1 avgR=-0.270 avgWin=+0.90 avgLoss=-1.09 totR=-2625.0 maxDD=-2654.3R avgHold=nanmin
+         n    win    totR  avgR
+year                           
+2021   875  36.57 -333.01 -0.38
+2022  1997  39.56 -659.57 -0.33
+2023  1904  39.60 -660.30 -0.35
+2024  1980  40.05 -622.58 -0.31
+2025  1981  43.31 -337.15 -0.17
+2026   991  48.84  -12.36 -0.01

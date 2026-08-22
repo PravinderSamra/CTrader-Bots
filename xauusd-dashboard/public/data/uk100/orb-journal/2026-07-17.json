@@ -69,7 +69,7 @@
         "adrUsedPct": 91
       },
       "outcome": {
-        "resolvedAt": "2026-07-23T21:36:38.593Z",
+        "resolvedAt": "2026-07-17T17:02:17.983Z",
         "fwd1hPct": -0.51,
         "fwd3hPct": -0.35,
         "toClosePct": -0.06,
@@ -79,19 +79,19 @@
         "signalVerdicts": [
           {
             "rule": "R4",
-            "verdict": "FLAT"
+            "verdict": "WRONG"
           },
           {
             "rule": "R2",
-            "verdict": "FLAT"
+            "verdict": "WRONG"
           },
           {
             "rule": "R8",
-            "verdict": "FLAT"
+            "verdict": "WRONG"
           },
           {
             "rule": "R11b",
-            "verdict": "FLAT"
+            "verdict": "WRONG"
           }
         ]
       }
@@ -164,7 +164,7 @@
         "adrUsedPct": 101
       },
       "outcome": {
-        "resolvedAt": "2026-07-23T21:36:38.730Z",
+        "resolvedAt": "2026-07-17T17:02:18.112Z",
         "fwd1hPct": -0.05,
         "fwd3hPct": 0.07,
         "toClosePct": 0.41,
@@ -174,11 +174,11 @@
         "signalVerdicts": [
           {
             "rule": "R4",
-            "verdict": "FLAT"
+            "verdict": "WRONG"
           },
           {
             "rule": "R2",
-            "verdict": "FLAT"
+            "verdict": "WRONG"
           },
           {
             "rule": "R8",
@@ -186,7 +186,7 @@
           },
           {
             "rule": "R11b",
-            "verdict": "FLAT"
+            "verdict": "WRONG"
           }
         ]
       }
@@ -259,7 +259,7 @@
         "adrUsedPct": 101
       },
       "outcome": {
-        "resolvedAt": "2026-07-23T21:36:38.872Z",
+        "resolvedAt": "2026-07-17T17:02:18.241Z",
         "fwd1hPct": 0.09,
         "fwd3hPct": 0.31,
         "toClosePct": 0.39,
@@ -354,7 +354,7 @@
         "adrUsedPct": 101
       },
       "outcome": {
-        "resolvedAt": "2026-07-23T21:36:39.011Z",
+        "resolvedAt": "2026-07-17T17:02:18.369Z",
         "fwd1hPct": 0.2,
         "fwd3hPct": 0.29,
         "toClosePct": 0.53,
@@ -364,11 +364,11 @@
         "signalVerdicts": [
           {
             "rule": "R4",
-            "verdict": "FLAT"
+            "verdict": "WRONG"
           },
           {
             "rule": "R2",
-            "verdict": "FLAT"
+            "verdict": "WRONG"
           },
           {
             "rule": "R8",
@@ -376,7 +376,7 @@
           },
           {
             "rule": "R11b",
-            "verdict": "FLAT"
+            "verdict": "WRONG"
           }
         ]
       }
@@ -456,7 +456,7 @@
         "adrUsedPct": 101
       },
       "outcome": {
-        "resolvedAt": "2026-07-23T21:36:39.149Z",
+        "resolvedAt": "2026-07-17T17:02:18.497Z",
         "fwd1hPct": 0.23,
         "fwd3hPct": null,
         "toClosePct": 0.48,
@@ -466,11 +466,11 @@
         "signalVerdicts": [
           {
             "rule": "R4",
-            "verdict": "RIGHT"
+            "verdict": "WRONG"
           },
           {
             "rule": "R2",
-            "verdict": "RIGHT"
+            "verdict": "WRONG"
           },
           {
             "rule": "R8",
@@ -482,7 +482,7 @@
           },
           {
             "rule": "R11b",
-            "verdict": "RIGHT"
+            "verdict": "WRONG"
           }
         ]
       }

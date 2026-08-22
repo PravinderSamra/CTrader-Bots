@@ -1,0 +1,73 @@
+days with a qualifying first break 07:00-16:00: 1200 / 1290
+
+=== CONFIG GRID (R = on actual stop distance, net $0.40 cost) ===
+k=0.25 tp=none filter=N: trades=1111 win%=17.8 avgR=-0.190 avgWin=+4.22 avgLoss=-1.15 Sharpe~-0.99 maxDD=-243.6R totR=-211
+k=0.25 tp=none filter=Y: trades=993 win%=17.8 avgR=-0.232 avgWin=+3.90 avgLoss=-1.13 Sharpe~-1.35 maxDD=-266.6R totR=-230
+k=0.25 tp=1.5 filter=N: trades=1111 win%=40.2 avgR=-0.140 avgWin=+1.34 avgLoss=-1.14 Sharpe~-1.61 maxDD=-159.4R totR=-155
+k=0.25 tp=1.5 filter=Y: trades=993 win%=39.2 avgR=-0.150 avgWin=+1.36 avgLoss=-1.12 Sharpe~-1.74 maxDD=-153.4R totR=-149
+k=0.25 tp=2.0 filter=N: trades=1111 win%=33.0 avgR=-0.168 avgWin=+1.80 avgLoss=-1.14 Sharpe~-1.70 maxDD=-190.3R totR=-186
+k=0.25 tp=2.0 filter=Y: trades=993 win%=31.9 avgR=-0.185 avgWin=+1.82 avgLoss=-1.13 Sharpe~-1.89 maxDD=-188.2R totR=-184
+k=0.5 tp=none filter=N: trades=1111 win%=32.6 avgR=-0.055 avgWin=+1.96 avgLoss=-1.03 Sharpe~-0.43 maxDD=-126.1R totR=-61
+k=0.5 tp=none filter=Y: trades=993 win%=33.4 avgR=-0.055 avgWin=+1.86 avgLoss=-1.02 Sharpe~-0.46 maxDD=-122.0R totR=-55
+k=0.5 tp=1.5 filter=N: trades=1111 win%=43.5 avgR=-0.032 avgWin=+1.26 avgLoss=-1.03 Sharpe~-0.39 maxDD=-92.9R totR=-36
+k=0.5 tp=1.5 filter=Y: trades=993 win%=43.0 avgR=-0.038 avgWin=+1.25 avgLoss=-1.01 Sharpe~-0.46 maxDD=-91.0R totR=-38
+k=0.5 tp=2.0 filter=N: trades=1111 win%=38.3 avgR=-0.061 avgWin=+1.50 avgLoss=-1.03 Sharpe~-0.67 maxDD=-121.1R totR=-68
+k=0.5 tp=2.0 filter=Y: trades=993 win%=38.0 avgR=-0.070 avgWin=+1.48 avgLoss=-1.02 Sharpe~-0.77 maxDD=-113.1R totR=-69
+
+=== DETAIL: k=0.5, tp=2.0, no filter ===
+base: trades=1111 win%=38.3 avgR=-0.061 avgWin=+1.50 avgLoss=-1.03 Sharpe~-0.67 maxDD=-121.1R totR=-68
+        n    win   totR  avgR
+year                         
+2021   96  28.12 -32.03 -0.33
+2022  232  36.21 -20.31 -0.09
+2023  235  31.49 -47.50 -0.20
+2024  232  41.38   8.04  0.03
+2025  208  41.35  -4.52 -0.02
+2026  108  53.70  28.18  0.26
+
+=== SESSION OF BREAK: London break (07:00-11:59) vs NY break (12:00-15:59) ===
+-- k=0.5 tp=2 --
+          n     win   avgR    totR
+sess                              
+London  923  36.403 -0.088 -81.393
+NY      188  47.340  0.071  13.259
+by side:
+               n   avgR
+sess   side            
+London -1    430 -0.045
+        1    493 -0.125
+NY     -1     86 -0.074
+        1    102  0.193
+-- k=0.5 no-tp --
+          n     win   avgR    totR
+sess                              
+London  923  29.794 -0.091 -84.117
+NY      188  46.277  0.125  23.461
+by side:
+               n   avgR
+sess   side            
+London -1    430 -0.077
+        1    493 -0.104
+NY     -1     86 -0.059
+        1    102  0.280
+
+=== WALK-FORWARD (config chosen each year on ALL PRIOR data by avgR*sqrt(n)) ===
+  2022: picked k=0.5 tp=none filter=Y -> OOS n=200 win%=30.0 totR=-27.4 avgR=-0.137
+  2023: picked k=0.25 tp=none filter=N -> OOS n=235 win%=11.1 totR=-96.9 avgR=-0.412
+  2024: picked k=0.5 tp=none filter=N -> OOS n=232 win%=33.6 totR=-2.4 avgR=-0.010
+  2025: picked k=0.5 tp=none filter=N -> OOS n=208 win%=39.9 totR=+10.8 avgR=+0.052
+  2026: picked k=0.5 tp=none filter=N -> OOS n=108 win%=51.9 totR=+17.1 avgR=+0.158
+
+WALK-FORWARD combined OOS: trades=983 win%=30.8 avgR=-0.100 avgWin=+2.06 avgLoss=-1.06 Sharpe~-0.71 maxDD=-176.3R totR=-99
+
+WF trades/week~5.0  R/day: mean=-0.100 | R/month: mean=-1.80 med=-1.80 best=+12.9 worst=-29.4 pos-months=44% of 55
+
+=== MONTE CARLO (5,000 bootstrap years of 190 trades, sampled from WF OOS R's) ===
+annual R:  p5=-62  p25=-39  median=-21  p75=-2  p95=+29   P(negative year)=77.1%
+max DD  :  p5(worst)=-69.7R  p25=-51.1R  median=-39.1R  p95(best)=-18.6R
+longest losing streak: median=12  p95=19 trades
+  at 0.5%/trade: median year -10.7% | median maxDD -19.5% | p5 maxDD -34.8%
+  at 1.0%/trade: median year -21.3% | median maxDD -39.1% | p5 maxDD -69.7%
+  at 2.0%/trade: median year -42.6% | median maxDD -78.1% | p5 maxDD -139.3%
+
+saved charts/asia_pullback.png

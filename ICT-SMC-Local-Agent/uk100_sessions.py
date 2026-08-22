@@ -168,42 +168,20 @@ def adr14(d1_candles: list[Candle]) -> float | None:
     return round(sum(c.high - c.low for c in sample) / len(sample), 1)
 
 
-def session_bias_note(orb: dict, prior: dict, current_price: float | None,
-                      daily_open: float | None = None) -> list[str]:
+def session_bias_note(orb: dict, prior: dict, current_price: float | None) -> list[str]:
     """Session-specific bias notes for the brief: gap direction, ORB break
-    status, and current session/time-of-day context.
-
-    The opening GAP is `daily_open - prior_close` (today's session open vs the
-    prior close) — NOT `current_price - prior_close`, which conflates the whole
-    intraday move with the open and mislabels an intraday rally/selloff as a
-    "gap" (observed 2026-07-22: a flat open that rallied +80pts intraday was
-    reported as "Gap UP +79.6pts"). The intraday move since the open is a
-    separate note. `daily_open` falls back to `current_price` only when the
-    session open is unavailable, preserving old behaviour rather than dropping
-    the note."""
+    status, and current session/time-of-day context."""
     notes: list[str] = []
     sess = current_session()
     notes.append(f"Current session: {sess} ({_now_london().strftime('%H:%M %Z')})")
 
     prior_close = prior.get("prior_close")
-    open_px = daily_open if daily_open is not None else current_price
-    if prior_close is not None and open_px is not None:
-        gap = open_px - prior_close
+    if prior_close is not None and current_price is not None:
+        gap = current_price - prior_close
         gap_pct = (gap / prior_close) * 100 if prior_close else 0
         if abs(gap_pct) >= 0.1:
             direction = "UP" if gap > 0 else "DOWN"
             notes.append(f"Gap {direction} {gap:+.1f}pts ({gap_pct:+.2f}%) vs prior close {prior_close:.1f}.")
-        else:
-            notes.append(f"Opened ~flat vs prior close {prior_close:.1f} (gap {gap:+.1f}pts).")
-        # Intraday move since the open — kept distinct from the opening gap.
-        if current_price is not None and open_px:
-            move = current_price - open_px
-            move_pct = (move / open_px) * 100 if open_px else 0
-            if abs(move_pct) >= 0.1:
-                mdir = "up" if move > 0 else "down"
-                notes.append(
-                    f"Since the session open ({open_px:.1f}), price has moved {mdir} "
-                    f"{move:+.1f}pts ({move_pct:+.2f}%) to {current_price:.1f}.")
 
     orb_high, orb_low = orb.get("orb_high"), orb.get("orb_low")
     broken = orb.get("orb_broken_direction")

@@ -267,8 +267,7 @@ def main():
         "data_age_minutes": data_age,
         "session": {
             "current_session": uk100_sessions.current_session(),
-            "bias_notes": uk100_sessions.session_bias_note(
-                orb, prior, current_price, reference_levels.get("daily_open")),
+            "bias_notes": uk100_sessions.session_bias_note(orb, prior, current_price),
         },
         "orb": orb,
         "reference_levels": reference_levels,

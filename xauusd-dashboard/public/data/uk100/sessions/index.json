@@ -1,52 +1,52 @@
 {
-  "updatedAt": "2026-07-24T07:21:41.367Z",
+  "updatedAt": "2026-07-16T07:39:03.947Z",
   "sessions": [
     {
-      "date": "2026-07-24",
-      "time": "08:21 BST",
-      "filename": "2026-07-24/07-21.json",
-      "timestamp": "2026-07-24T07:21:41.367Z",
+      "date": "2026-07-16",
+      "time": "08:39 BST",
+      "filename": "2026-07-16/07-39.json",
+      "timestamp": "2026-07-16T07:39:03.947Z",
       "session": "LONDON",
-      "bias": "NEUTRAL",
-      "biasScore": -1,
-      "probability": 70,
+      "bias": "BEARISH",
+      "biasScore": -3,
+      "probability": 80,
       "confidence": 5,
       "priceZone": "DISCOUNT",
       "tradeIdea": {
-        "direction": "LONG",
+        "direction": "SHORT",
         "status": "WAIT"
       }
     },
     {
-      "date": "2026-07-23",
-      "time": "09:56 BST",
-      "filename": "2026-07-23/08-56.json",
-      "timestamp": "2026-07-23T08:56:58.289Z",
-      "session": "LONDON",
-      "bias": "BEARISH",
-      "biasScore": -5,
-      "probability": 65,
-      "confidence": 3,
-      "priceZone": "OTE",
-      "tradeIdea": {
-        "direction": "SHORT",
-        "status": "NO_TRADE"
-      }
-    },
-    {
-      "date": "2026-07-22",
-      "time": "09:48 BST",
-      "filename": "2026-07-22/08-48.json",
-      "timestamp": "2026-07-22T08:48:51.785Z",
+      "date": "2026-07-15",
+      "time": "15:26 BST",
+      "filename": "2026-07-15/14-26.json",
+      "timestamp": "2026-07-15T14:26:31.542Z",
       "session": "LONDON",
       "bias": "NEUTRAL",
-      "biasScore": -1,
-      "probability": 67,
-      "confidence": 5,
+      "biasScore": 1,
+      "probability": 61,
+      "confidence": 3,
       "priceZone": "PREMIUM",
       "tradeIdea": {
-        "direction": "LONG",
+        "direction": "SHORT",
         "status": "WAIT"
+      }
+    },
+    {
+      "date": "2026-07-13",
+      "time": "14:46 BST",
+      "filename": "2026-07-13/13-46.json",
+      "timestamp": "2026-07-13T13:46:57.959Z",
+      "session": "LONDON",
+      "bias": "NEUTRAL",
+      "biasScore": 0,
+      "probability": 62,
+      "confidence": 5,
+      "priceZone": "OTE",
+      "tradeIdea": {
+        "direction": "LONG",
+        "status": "ACTIVE"
       }
     }
   ]

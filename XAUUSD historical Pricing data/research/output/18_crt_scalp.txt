@@ -1,0 +1,33 @@
+==============================================================================
+CRT GOLD SCALP — BACKTEST vs SPECIFICATION v1.0
+==============================================================================
+data: 2021-07-18 22:00:00+00:00 -> 2026-07-16 20:04:00+00:00  (1,762,482 M1 bars)
+costs: spread $0.3 + commission $0.07 + slippage $0.1 = $0.47/oz market entries, $0.37/oz limit entries
+
+--- BASELINE (spec defaults: H4, δ=0.10ATR, W=15, confirm A, market entry, EQ→RH, LDN+NY) ---
+trades=2722  win%=28.8  expectancy=-0.3092R  PF=0.66  avgWin=+2.11R  avgLoss=-1.29R
+totR=-841.8  maxDD=-861.0R  Sharpe~-3.49  Sortino~-17.42  longest losing run=21  avg duration=41min
+$100k @1% risk (compounding): final equity $13  net P&L $-99,987  return -100.0% over 5 yrs
+  max equity drawdown: -100.0%
+
+by year:
+        n     win     totR  expectancy
+year                                  
+2021  254  33.858  -39.492      -0.155
+2022  558  28.674 -168.572      -0.302
+2023  575  33.565 -188.101      -0.327
+2024  545  25.688 -263.750      -0.484
+2025  536  25.000 -160.184      -0.299
+2026  254  27.559  -21.665      -0.085
+
+by killzone:
+        n     win  expectancy
+kz                           
+LDN  1401  25.482      -0.383
+NY   1321  32.248      -0.232
+
+by side:
+         n     win  expectancy
+side                          
+-1    1371  26.769      -0.393
+ 1    1351  30.792      -0.224

@@ -1,0 +1,39 @@
+========================================================================================================
+V5 — INTRADAY-ONLY (no overnight holds). DEV 2021-07 → 2025-07
+========================================================================================================
+
+### A — what the day-trading constraint costs
+NYX alone (intraday, compliant)                n=694   win= 53.6% exp=+0.086R PF= 1.21 totR=  +60.0 DD= -11.6R Sh~ 1.01 cost/risk= 7.0%
+CARRY (OVERNIGHT — disqualified)               n=802   win= 47.5% exp=+0.098R PF= 1.22 totR=  +78.5 DD= -31.0R Sh~ 1.16 cost/risk= 3.5%
+old V4 portfolio (non-compliant)               n=1496  win= 50.3% exp=+0.093R PF= 1.22 totR= +138.5 DD= -28.4R Sh~ 1.54 cost/risk= 5.1%
+  -> dropping CARRY removes 78R of 138R dev profit. That gap must be filled with intraday modules.
+
+### B — SESSION ORB SWEEP: where else in the day does expansion pay?
+window                                 n    win%       exp     PF     totR      DD
+London 07:00 +30m                              n=949   win= 49.5% exp=-0.060R PF= 0.88 totR=  -57.2 DD= -65.0R Sh~-0.77 cost/risk= 7.1%
+London 08:00 +30m                              n=949   win= 51.4% exp=-0.020R PF= 0.96 totR=  -19.0 DD= -43.2R Sh~-0.25 cost/risk= 7.1%
+Pre-NY 12:00 +30m                              n=928   win= 51.6% exp=-0.004R PF= 0.99 totR=   -3.6 DD= -66.4R Sh~-0.05 cost/risk= 7.1%
+COMEX 13:30 +30m (NYX)                         n=780   win= 53.6% exp=+0.080R PF= 1.20 totR=  +62.4 DD= -12.7R Sh~ 1.01 cost/risk= 7.0%
+NYSE 14:30 +30m                                n=830   win= 49.0% exp=-0.019R PF= 0.95 totR=  -15.6 DD= -26.3R Sh~-0.29 cost/risk= 7.0%
+PMfix 15:00 +30m                               n=835   win= 48.1% exp=-0.059R PF= 0.83 totR=  -48.8 DD= -80.5R Sh~-1.07 cost/risk= 7.0%
+London 07:00 +60m                              n=924   win= 49.8% exp=-0.057R PF= 0.89 totR=  -52.7 DD= -76.3R Sh~-0.72 cost/risk= 7.1%
+COMEX 13:30 +45m                               n=685   win= 51.4% exp=+0.061R PF= 1.16 totR=  +41.5 DD= -17.0R Sh~ 0.75 cost/risk= 7.0%
+
+### C — NYX refinements (each vs the frozen baseline +0.086R)
+C0 frozen baseline                             n=780   win= 53.6% exp=+0.080R PF= 1.20 totR=  +62.4 DD= -12.7R Sh~ 1.01 cost/risk= 7.0%
+C1 allow 2nd trade (re-entry)                  n=932   win= 54.9% exp=+0.103R PF= 1.28 totR=  +96.0 DD= -10.8R Sh~ 1.47 cost/risk= 7.0%
+C2 structural T2 (PDH/PDL/POC)                 n=780   win= 54.1% exp=+0.056R PF= 1.14 totR=  +43.8 DD= -12.6R Sh~ 0.78 cost/risk= 7.0%
+C3 skip lowest-20% ATR days                    n=589   win= 53.1% exp=+0.057R PF= 1.14 totR=  +33.6 DD= -15.1R Sh~ 0.66 cost/risk= 6.1%
+C4 skip Fridays                                n=780   win= 53.6% exp=+0.080R PF= 1.20 totR=  +62.4 DD= -12.7R Sh~ 1.01 cost/risk= 7.0%
+C5 skip Mondays                                n=618   win= 52.4% exp=+0.055R PF= 1.14 totR=  +33.8 DD= -13.4R Sh~ 0.62 cost/risk= 7.0%
+C6 1.5x size on inside-value opens             n=780   win= 53.6% exp=+0.080R PF= 1.20 totR=  +62.4 DD= -12.7R Sh~ 1.01 cost/risk= 7.0%
+C7 exit 19:00 (earlier flat)                   n=777   win= 52.8% exp=+0.061R PF= 1.16 totR=  +47.4 DD= -11.2R Sh~ 0.82 cost/risk= 7.0%
+C8 exit 17:00                                  n=761   win= 51.9% exp=+0.042R PF= 1.12 totR=  +32.0 DD= -11.6R Sh~ 0.60 cost/risk= 7.0%
+C9 tighter width gate 0.06-0.35                n=659   win= 53.0% exp=+0.074R PF= 1.19 totR=  +48.7 DD= -14.5R Sh~ 0.88 cost/risk= 6.9%
+C10 stop 0.20xATR                              n=780   win= 54.1% exp=+0.086R PF= 1.19 totR=  +67.4 DD= -16.0R Sh~ 0.94 cost/risk= 8.8%
+C11 stop 0.30xATR                              n=780   win= 51.5% exp=+0.063R PF= 1.17 totR=  +48.8 DD= -11.8R Sh~ 0.87 cost/risk= 5.8%
+C12 T1 at 1.25R                                n=780   win= 50.0% exp=+0.092R PF= 1.22 totR=  +72.1 DD= -14.5R Sh~ 1.10 cost/risk= 7.0%
+
+### D — Asia-break NY continuation (intraday)
+D1 ASIA break+pullback                         n=134   win= 54.5% exp=+0.051R PF= 1.12 totR=   +6.9 DD=  -9.0R Sh~ 0.27 cost/risk= 6.6%
+D2 ASIA stop 0.35xATR                          n=134   win= 50.7% exp=+0.003R PF= 1.01 totR=   +0.4 DD= -10.9R Sh~ 0.02 cost/risk= 4.7%

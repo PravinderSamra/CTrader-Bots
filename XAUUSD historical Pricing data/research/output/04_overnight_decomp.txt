@@ -1,0 +1,65 @@
+=== 24h DRIFT DECOMPOSITION (mean segment move as % of ATR20, with t) ===
+  A 20:00->close           mean= +0.35% ATR  t=+1.19  N=1009
+  B close->22:00 reopen    mean= -0.04% ATR  t=-0.21  N=1009
+  C 22:00->02:00(nxt)      mean= +3.38% ATR  t=+5.45  N=1270
+  D 02:00->07:00           mean= +0.23% ATR  t=+0.40  N=1270
+  E 07:00->12:00           mean= +1.04% ATR  t=+1.57  N=1270
+  F 12:00->20:00           mean= -0.48% ATR  t=-0.38  N=1270
+
+segment B (maintenance-break gap) by year:
+  2021: mean= -2.87% ATR  t=-5.87  N=79  P(gap up)=19%
+  2022: mean= -1.75% ATR  t=-4.98  N=206  P(gap up)=30%
+  2023: mean= +0.43% ATR  t=+1.52  N=205  P(gap up)=48%
+  2024: mean= +0.09% ATR  t=+0.29  N=205  P(gap up)=51%
+  2025: mean= +0.79% ATR  t=+1.52  N=204  P(gap up)=61%
+  2026: mean= +2.56% ATR  t=+3.38  N=110  P(gap up)=74%
+
+segment C (22:00->02:00) by year:
+  2021: mean= +6.86% ATR  t=+3.99  N=79
+  2022: mean= +0.92% ATR  t=+0.77  N=207
+  2023: mean= +5.65% ATR  t=+4.96  N=207
+  2024: mean= +2.99% ATR  t=+2.26  N=207
+  2025: mean= +5.02% ATR  t=+2.86  N=206
+  2026: mean= +2.56% ATR  t=+0.86  N=111
+
+--- S1-fix long 20:00 -> next-day 02:00 (holds break gap), Mon-Thu entries ---
+trades=1017  win%=54.1  avg $/oz=+1.81  expectancy=+2.78% ATR  Sharpe~1.95  maxDD=-5.3R
+        n    win    total  avg_R
+year                            
+2021   79  56.96    32.42   0.02
+2022  207  43.96  -110.08  -0.02
+2023  207  58.94   163.72   0.03
+2024  207  58.94   125.55   0.02
+2025  206  54.37   521.75   0.05
+2026  111  52.25  1109.83   0.07
+
+--- S1-alt long 22:00 reopen -> next-day 02:00, Mon-Thu entries ---
+trades=1017  win%=55.0  avg $/oz=+1.22  expectancy=+2.48% ATR  Sharpe~1.87  maxDD=-4.7R
+        n    win   total  avg_R
+year                           
+2021   79  64.56   89.13   0.05
+2022  207  48.79  -62.84  -0.01
+2023  207  59.42  178.92   0.04
+2024  207  57.49  110.33   0.02
+2025  206  53.40  419.06   0.04
+2026  111  49.55  510.50   0.02
+
+--- S4-fix London->NY continuation (12:00 beyond Asian range -> 20:55, stop=mid) ---
+trades=550  win%=40.9  avg $/oz=-0.05  expectancy=+0.05% ATR  Sharpe~0.01  maxDD=-12.0R  longs=312 shorts=238
+        n    win   total  avg_R
+year                           
+2021   37  45.95  -19.00  -0.02
+2022  145  37.93 -163.91  -0.04
+2023  107  34.58  111.88   0.05
+2024  123  41.46   65.34   0.02
+2025  101  46.53  -60.00  -0.01
+2026   37  48.65   40.84   0.01
+by side:
+        n     win  avg_R
+side                    
+-1    238  47.059  0.052
+ 1    312  36.218 -0.039
+
+=== WEEKEND GAPS (Fri 20:59 close -> Sun 22:00 open), N=0 ===
+mean gap=+nan $/oz (+nan% ATR)  P(gap up)=nan%  mean |gap|=nan $/oz
+P(gap fills within 24h) all gaps: nan%   large gaps (>15% ATR, N=0): nan%
