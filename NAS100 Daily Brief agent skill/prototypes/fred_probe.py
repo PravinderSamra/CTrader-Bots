@@ -148,12 +148,15 @@ def interpret(d):
         bp = round(r10 * 100)
         out.append({
             "tag": "real_yields", "signal": -1 if r10 > 0.01 else (1 if r10 < -0.01 else 0),
-            "text": f"10y REAL yield {r10v}% ({bp:+d}bp d/d, "
-                    f"{(r10_5 or 0)*100:+.0f}bp 5d) — "
-                    + ("rising real rates compress tech multiples directly: BEARISH"
+            "text": f"**Real interest rates** (what lenders earn after inflation) "
+                    f"are {r10v}%, {'up' if r10 > 0 else 'down' if r10 < 0 else 'flat'} "
+                    f"{abs(bp)}bp today and {abs((r10_5 or 0)*100):.0f}bp over 5 days. "
+                    + ("Rising = tech gets hit hardest, because tech is valued on "
+                       "profits years away and those are worth less when rates rise."
                        if r10 > 0.01 else
-                       "falling real rates support duration: BULLISH" if r10 < -0.01
-                       else "flat day-on-day; watch the 5-day trend")})
+                       "Falling = a direct tailwind for tech, for the same reason "
+                       "in reverse." if r10 < -0.01
+                       else "No change today — watch the 5-day direction instead.")})
 
     # --- decompose a nominal move into real vs breakeven --------------------
     # Measured over a date interval common to all three series, never over each
@@ -164,14 +167,15 @@ def interpret(d):
         driver = ("breakeven / inflation expectations" if abs(be) > abs(rr)
                   else "real rate / tightening")
         out.append({"tag": "yield_decomp", "signal": -1 if nom > 0 else 1,
-                    "text": f"10y nominal {nom*100:+.0f}bp over {prev}->{as_of}, "
-                            f"driven by {driver} (real {rr*100:+.0f}bp, "
-                            f"breakeven {be*100:+.0f}bp) — "
-                            + ("rising yields on real rates is the most direct "
-                               "multiple compression for tech" if nom > 0 and abs(rr) > abs(be)
-                               else "an inflation-expectation move; hits tech via the "
-                                    "Fed-path repricing that follows" if nom > 0
-                               else "falling yields support duration")})
+                    "text": f"**Bond yields moved {abs(nom*100):.0f}bp "
+                            f"{'up' if nom > 0 else 'down'}** ({prev} to {as_of}). "
+                            + ("That was driven by real rates — the harsher kind for "
+                               "tech, and an immediate headwind."
+                               if nom > 0 and abs(rr) > abs(be)
+                               else "That was driven by inflation expectations, not real "
+                                    "rates — a softer signal that only hurts tech if the "
+                                    "Fed then reacts to it." if nom > 0
+                               else "Falling yields are a tailwind for tech.")})
     elif as_of:
         out.append({"tag": "yield_decomp", "signal": 0,
                     "text": f"10y nominal unchanged {prev}->{as_of} — no rate impulse"})
@@ -182,40 +186,56 @@ def interpret(d):
     if hyv is not None:
         wide = (hy5 or 0) > 0.15
         out.append({"tag": "credit", "signal": -2 if wide else (1 if hyv < 3.0 else 0),
-                    "text": f"HY OAS {hyv}% ({(hy5 or 0)*100:+.0f}bp/5d) — "
-                            + ("WIDENING: credit is refusing the equity rally, "
-                               "strong bearish divergence" if wide else
-                               "tight, credit is comfortable with risk" if hyv < 3.0
-                               else "neutral")})
+                    "text": f"**Bond investors' risk appetite** — the extra interest "
+                            f"demanded to lend to riskier companies is {hyv}% "
+                            f"({(hy5 or 0)*100:+.0f}bp over 5 days). "
+                            + ("It's WIDENING: the bond market is getting nervous while "
+                               "stocks aren't. Bonds are usually right first — this is a "
+                               "warning." if wide else
+                               "Low and steady: the bond market is relaxed about risk, "
+                               "which gives stocks permission to rise." if hyv < 3.0
+                               else "Middling — no strong signal either way.")})
 
     # --- financial conditions ------------------------------------------------
     nf, nfv = g("NFCI"), (d.get("NFCI") or {}).get("value")
     if nfv is not None:
         out.append({"tag": "fin_conditions",
                     "signal": -1 if (nf or 0) > 0.01 else (1 if (nf or 0) < -0.01 else 0),
-                    "text": f"NFCI {nfv} ({nf:+.3f} w/w) — conditions "
-                            + ("looser than average" if nfv < 0 else "tighter than average")
-                            + ("; TIGHTENING week-on-week, a leading headwind"
-                               if (nf or 0) > 0.01 else "")})
+                    "text": f"**How easy it is to borrow money** across the economy is "
+                            + ("EASIER than normal" if nfv < 0 else "TIGHTER than normal")
+                            + f" ({nfv}). "
+                            + ("It got tighter again this week, which tends to show up in "
+                               "stock prices a few weeks later — an early warning."
+                               if (nf or 0) > 0.01 else
+                               "Cheap, available money is a background tailwind for stocks.")})
 
     # --- liquidity -----------------------------------------------------------
     bs, bsv = g("WALCL"), (d.get("WALCL") or {}).get("value")
     rrp = (d.get("RRPONTSYD") or {}).get("value")
     if bsv is not None:
         out.append({"tag": "liquidity", "signal": -1 if (bs or 0) < -5000 else 0,
-                    "text": f"Fed balance sheet ${bsv/1e6:.2f}tn ({(bs or 0)/1e3:+.1f}bn w/w)"
-                            + (f", ON RRP ${rrp}bn" if rrp is not None else "")
-                            + (" — QT draining, slow headwind" if (bs or 0) < -5000 else "")})
+                    "text": f"**Cash in the financial system:** the Fed is holding "
+                            f"${bsv/1e6:.2f}tn of assets, "
+                            f"{'shrinking' if (bs or 0) < 0 else 'growing'} by "
+                            f"${abs((bs or 0)/1e3):.1f}bn this week"
+                            + (f", and the spare-cash buffer is down to ${rrp}bn"
+                               if rrp is not None else "")
+                            + (". The Fed is quietly pulling money out of the system — "
+                               "a slow, persistent drag on stocks, not a day-trade signal."
+                               if (bs or 0) < -5000 else ".")})
 
     # --- curve ----------------------------------------------------------------
     cv, cvv = g("T10Y2Y"), (d.get("T10Y2Y") or {}).get("value")
     if cvv is not None:
         out.append({"tag": "curve", "signal": 0,
-                    "text": f"10y-2y {cvv:+.2f}pp ({(cv or 0)*100:+.0f}bp) — "
-                            + ("bear-steepening on the long end: term premium, risk-off"
+                    "text": f"**Long vs short bond yields:** the 10-year pays "
+                            f"{cvv:+.2f}% more than the 2-year. "
+                            + ("The gap widened because LONG rates rose — investors "
+                               "demanding more to hold debt. Risk-off."
                                if (cv or 0) > 0.02 and (g('DGS10') or 0) > 0 else
-                               "bull-steepening: cuts being priced, risk-on"
-                               if (cv or 0) > 0.02 else "little change")})
+                               "The gap widened because SHORT rates fell — the market is "
+                               "pricing rate cuts. Risk-on."
+                               if (cv or 0) > 0.02 else "Barely moved.")})
     return out
 
 

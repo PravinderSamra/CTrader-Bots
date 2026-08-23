@@ -44,24 +44,24 @@ def level_board(d):
 
     L = lv["levels"]
     push("PDH", L.get("PDH"), "liquidity",
-         "Prior-day high — densest stop cluster above. Sweep + 1m LH + CISD = short (S1)")
+         "Yesterday's high — the biggest pile of stops above us. Sweep it, "
+         "wait for a lower high on the 1m, then CISD = short")
     push("PDL", L.get("PDL"), "liquidity",
-         "Prior-day low — densest stop cluster below. Sweep + 1m HL + CISD = long (S1)")
+         "Yesterday's low — the biggest pile of stops below us. Sweep it, "
+         "wait for a higher low on the 1m, then CISD = long")
     push("PD mid", L.get("PD_mid"), "magnet",
-         "Prior-day equilibrium — a TARGET, not a trigger. Magnet on rangebound days")
-    push("PD close", L.get("PD_close"), "magnet", "Settlement reference / gap-fill magnet")
+         "Middle of yesterday's range. A target to aim AT, not a trigger to trade — price drifts here on quiet days")
+    push("PD close", L.get("PD_close"), "magnet", "Where yesterday settled. Price often comes back to fill a gap from here")
     # PWH/PWL flip role when price displaces outside the prior week entirely —
     # calling PWL "support" while trading below it would be actively misleading.
     pwh, pwl = L.get("PWH"), L.get("PWL")
     if pwh and pwl and px < pwl:
         push("PWL", pwl, "liquidity",
-             "Prior-week LOW, but price is below the whole prior week — this is now "
-             "RESISTANCE. Trade it as an S1 short-sweep level, not a long-sweep level")
+             "Last week's low — but we're trading BELOW the whole of last week, so it has flipped to RESISTANCE. Sweep it and short, don't buy it")
         push("PWH", pwh, "context", "Prior-week high — far overhead, context only")
     elif pwh and pwl and px > pwh:
         push("PWH", pwh, "liquidity",
-             "Prior-week HIGH, but price is above the whole prior week — this is now "
-             "SUPPORT. Trade it as an S1 long-sweep level")
+             "Last week's high — but we're trading ABOVE the whole of last week, so it has flipped to SUPPORT. Sweep it and buy")
         push("PWL", pwl, "context", "Prior-week low — far below, context only")
     else:
         push("PWH", pwh, "liquidity", "Prior-week high — big pool, best Mon-Tue")
@@ -69,40 +69,117 @@ def level_board(d):
     for tag, label in (("sessions_prev_day", "prev-day"), ("sessions_today", "today")):
         for sess, v in (L.get(tag) or {}).items():
             push(f"{sess.upper() if sess in ('ny',) else sess.title()} High ({label})", v["high"], "liquidity",
-                 f"{sess.upper() if sess in ('ny',) else sess.title()} session high — the next session routinely sweeps it")
+                 f"High of the {sess.upper() if sess in ('ny',) else sess.title()} session — the next session usually runs the stops above it")
             push(f"{sess.upper() if sess in ('ny',) else sess.title()} Low ({label})", v["low"], "liquidity",
-                 f"{sess.upper() if sess in ('ny',) else sess.title()} session low — the next session routinely sweeps it")
+                 f"Low of the {sess.upper() if sess in ('ny',) else sess.title()} session — the next session usually runs the stops below it")
+    # Single-touch swing extremes are dropped entirely. They were nine of the
+    # thirty rows on the old board, every one of them labelled "context only" —
+    # i.e. the board itself said don't trade them, while they took a row each.
+    # A lone swing high is not a pool of stops; it's just where price turned.
+    # Multi-touch clusters ARE kept: equal highs/lows are a genuine stop
+    # cluster and a primary strategy-1 sweep trigger. They're relabelled so
+    # it's obvious why they earned a row.
     for p in lv["unmitigated_pools_above"] + lv["unmitigated_pools_below"]:
-        q = "CONFIRMED pool" if p["confirmed"] else "single-touch (context only)"
-        push(f"Unmitigated {'high' if p['price'] > px else 'low'}", p["price"],
-             "liquidity" if p["confirmed"] else "context",
-             f"{q}, {p['touches']} touch(es) — untouched liquidity still resting")
+        if not p["confirmed"]:
+            continue
+        side = "highs" if p["price"] > px else "lows"
+        push(f"Equal {side} \u00d7{p['touches']}", p["price"], "liquidity",
+             f"{p['touches']} touches at this price, never traded through — "
+             f"a real stop cluster. Prime S1 sweep trigger")
 
     gf = gx["gamma_flip"]
-    push("GAMMA FLIP", gf.get("nas100"), "gamma",
-         "THE volatility switch. Above = long gamma, dealers fade moves (S1 works). "
-         "Below = short gamma, dealers amplify (S2 works). Not S/R — a regime line")
+    flip_px = gf.get("nas100")
+    # We KNOW which regime we're in, so state what applies today rather than
+    # printing both branches and making the reader work out which is live.
+    long_gamma = flip_px is not None and px > flip_px
+    push("GAMMA FLIP", flip_px, "gamma",
+         ("The line where the big desks switch from damping moves to pushing "
+          "them. We're ABOVE it: they're damping, so fades work. Lose this and "
+          "hold below and that reverses — stop fading."
+          if long_gamma else
+          "The line where the big desks switch from pushing moves along to "
+          "damping them. We're BELOW it: they're pushing, so don't fade. "
+          "Reclaim and hold above and fading becomes valid again."))
     if wk.get("call_wall"):
         push("CALL WALL", wk["call_wall"]["nas100"], "gamma",
-             f"Largest call gamma above ({wk['call_wall']['oi']:,} OI). Magnetic ceiling — "
-             f"rallies stall. Prime S1 short-sweep level. A HELD break above flips it to a "
-             f"gamma squeeze -> S2 long")
+             f"The heaviest ceiling on the board — desks have to SELL as price "
+             f"rises into it, so rallies stall here. Take profit into it. If "
+             f"price closes above and holds, that selling flips to buying and "
+             f"it becomes a launchpad instead ({wk['call_wall']['oi']:,} contracts)")
     if wk.get("put_wall"):
         push("PUT WALL", wk["put_wall"]["nas100"], "gamma",
-             f"Largest put gamma below ({wk['put_wall']['oi']:,} OI). Defended floor IN "
-             f"POSITIVE GAMMA -> prime S1 long-sweep level. IN NEGATIVE GAMMA IT INVERTS: "
-             f"a break is acceleration, not a bounce")
+             (f"The heaviest floor on the board — expect a bounce and a good "
+              f"long-sweep here ({wk['put_wall']['oi']:,} contracts)"
+              if long_gamma else
+              f"Heaviest floor on the board, BUT today the desks are pushing "
+              f"moves along — so if this breaks, expect it to speed UP, not "
+              f"bounce. Don't buy the break ({wk['put_wall']['oi']:,} contracts)"))
     push("MAX PAIN", gx["max_pain_week"]["nas100"], "gamma",
-         "Weak magnet Mon, strong Thu/Fri. Coincident with the call wall = hard pin")
-    for p in (wk.get("largest_abs_gex") or [])[:6]:
-        sign = p["sign"]
-        push(f"GEX shelf {sign}{abs(p['net_gex_$bn']):.2f}bn", p["nas100"], "gamma-shelf",
-             ("POSITIVE shelf — expect a stall here; good place to fade / take partials"
-              if sign == "+" else
-              "NEGATIVE shelf — expect price to slice through; do NOT fade, good for continuation"))
+         "Where the most options expire worthless — price drifts toward it as "
+         "the week goes on. Weak on a Monday, strong by Thursday/Friday")
+    # Only shelves price REACTS at earn a row on the board.
+    #
+    # A negative shelf is, by definition, where price accelerates through. As a
+    # chart marking it tells you nothing — you can't trade "it goes straight
+    # past here". It stays in the data (bias_engine still reads it) but it is
+    # not a level to draw, so it's out of the board and summarised in a footer.
+    #
+    # Positive shelves do cause a stall, so they stay — but only if they're big
+    # enough to matter and close enough to reach today. The threshold scales
+    # with the day's own gamma so it adapts instead of being a magic number.
+    pos = [p for p in (wk.get("largest_abs_gex") or []) if p["sign"] == "+"]
+    if pos:
+        biggest = max(p["net_gex_$bn"] for p in pos)
+        floor_bn = max(0.05, biggest * 0.35)
+        for p in pos:
+            if p["net_gex_$bn"] < floor_bn:
+                continue
+            if abs(p["nas100"] - px) > budget:
+                continue
+            push(f"Options shelf {p['net_gex_$bn']:.2f}bn", p["nas100"], "gamma-shelf",
+                 "Heavy dealer hedging parked here — expect price to stall. "
+                 "Good place to take partials rather than push through")
 
+    # Merge rows that are the same price. Confluence should make ONE level
+    # stronger, not print three rows: 29381.6 was appearing separately as call
+    # wall, max pain and a GEX shelf, and 29133.6 as PDL, NY Low and an
+    # unmitigated low. Same price, same line, names joined.
     rows.sort(key=lambda r: -r["level"])
-    return rows
+    merge_tol = max(3.0, (lv["fuel"]["adr14"] or 0) * 0.008)
+    merged = []
+    for r in rows:
+        if merged and abs(merged[-1]["level"] - r["level"]) <= merge_tol:
+            m = merged[-1]
+            if r["name"] not in m["name"]:
+                m["name"] += " + " + r["name"]
+            # strongest kind wins the row's colour/priority
+            rank = {"gamma": 4, "liquidity": 3, "gamma-shelf": 2, "magnet": 1, "context": 0}
+            if rank.get(r["kind"], 0) > rank.get(m["kind"], 0):
+                m["kind"], m["note"] = r["kind"], r["note"]
+            m["confluence"] = m.get("confluence", 1) + 1
+            continue
+        r["confluence"] = 1
+        merged.append(r)
+
+    # Anything beyond today's range budget can't be reached, so it isn't a level
+    # to mark — it's a footnote. Keeps PWH at +885 out of the first row.
+    # PDH/PDL and the session extremes are primary strategy-1 triggers. The
+    # first cut of this filter pushed PDH into the footnote for being 162pts
+    # away against a 156pt budget — technically out of budget, but it is the
+    # level most likely to be swept all day. Core levels stay on the board and
+    # get flagged as a stretch instead; only genuinely distant things drop out.
+    CORE = ("PDH", "PDL", "PWH", "PWL", "High", "Low", "GAMMA FLIP",
+            "CALL WALL", "PUT WALL")
+    def keep(r):
+        if r["reach"] == "intraday":
+            return True
+        core = any(c in r["name"] for c in CORE)
+        return core and abs(r["dist"]) <= budget * 1.75
+    board = [r for r in merged if keep(r)]
+    far = [r for r in merged if not keep(r)]
+    for r in board:
+        r["stretch"] = r["reach"] != "intraday"
+    return board, far
 
 
 def markdown(d):
@@ -124,32 +201,93 @@ def markdown(d):
         A(f"| {r['component']} | {r['points']:+d} | {r['why']} |")
     A("")
 
-    A("## 2. Regime\n")
-    A(f"- **Gamma:** flip at **{gx['gamma_flip']['nas100']}**, price {px} → "
-      f"**{gx['gamma_flip']['spot_position']}**")
+    A("## 2. What kind of day is this?\n")
+
+    flip = gx["gamma_flip"]["nas100"]
+    wk = gx["buckets"].get("this_week", {})
+    net = wk.get("net_gex_$bn_per_1pct") or 0
+    long_gamma = flip is not None and px > flip
+
+    A("**Who's on the other side, and what they're doing**\n")
+    if long_gamma:
+        A(f"The big options desks are **leaning against** today's move. When "
+          f"price runs up they sell into it; when it dips they buy. That squashes "
+          f"the range and makes moves fade back.")
+        A(f"- ➜ **Sweeps of a high or low tend to genuinely fail** — which is "
+          f"exactly what Strategy 1 needs. This is your fade day.")
+        A(f"- ➜ It stops working below **{flip}**. If price loses that and holds "
+          f"below, they flip to pushing moves along instead — stop fading.")
+    else:
+        A(f"The big options desks are **pushing today's move along**, not "
+          f"leaning against it. As price falls they have to sell more; as it "
+          f"rises they buy more. Their hedging adds fuel to whatever is already "
+          f"happening.")
+        A(f"- ➜ **Sweeps tend to keep running rather than fail.** Fading is the "
+          f"wrong trade today — Strategy 2 (go with the move) is the right one.")
+        A(f"- ➜ It flips at **{flip}**. Reclaim and hold above that and they "
+          f"start damping moves again, and fading becomes valid.")
+    A("")
+
+    A("**How much movement is being priced in**\n")
+    vxn = v["vxn_nasdaq_ivol"].get("last"); vxn_c = v["vxn_nasdaq_ivol"].get("chg_pct")
+    term = v.get("vix9d_over_vix"); vixl = v["vix"].get("last")
+    implied = round(px * (vxn / 100) / (252 ** 0.5)) if vxn else None
+    A(f"- The Nasdaq's own fear gauge is at **{vxn}**"
+      + (f", {'down' if (vxn_c or 0) < 0 else 'up'} {abs(vxn_c or 0):.1f}% — "
+         f"{'fear is easing' if (vxn_c or 0) < 0 else 'fear is building'}" if vxn_c is not None else "")
+      + (f". That prices a **~{implied}pt day**." if implied else ""))
+    if term is not None:
+        A(f"- Worry about the **next few days** is "
+          f"{'HIGHER' if term > 1.0 else 'lower'} than worry about the next month "
+          f"({term}). "
+          + ("Something specific is spooking people short-term — expect a bigger "
+             "range than normal." if term > 1.0 else
+             "Nothing urgent is spooking anyone — a calmer, more rangebound day."))
+    if vxn and vixl:
+        rr = round(vxn / vixl, 2)
+        A(f"- Tech is priced as **{(rr - 1) * 100:.0f}% jumpier than the wider "
+          f"market** ({vxn} vs {vixl})."
+          + (" That's a big gap — the nervousness is specifically about tech, "
+             "not stocks in general." if rr > 1.35 else " That's a normal gap."))
+    A("")
+
+    A("**The macro backdrop**\n")
+    y10, y10c = rf["us10y"].get("last"), rf["us10y"].get("chg_pct")
+    dxy, dxyc = rf["dxy"].get("last"), rf["dxy"].get("chg_pct")
+    A(f"- **Interest rates:** the US 10-year is **{y10}%** "
+      f"({y10c:+.2f}%). "
+      + ("Rising rates hurt tech more than anything else, because tech is priced "
+         "on profits far in the future." if (y10c or 0) > 0.3 else
+         "Falling rates help tech more than anything else." if (y10c or 0) < -0.3 else
+         "Barely moved — not a factor today."))
+    A(f"- **Dollar:** **{dxy}** ({dxyc:+.2f}%). "
+      + ("A strong dollar usually means money leaving risky assets." if (dxyc or 0) > 0.4 else
+         "A soft dollar usually helps risk appetite." if (dxyc or 0) < -0.4 else
+         "Flat — not a factor today."))
+    A("")
+
+    A("<details><summary>The options numbers behind this (tap if you want them)</summary>\n")
+    A(f"- Gamma flip **{flip}** · price {px} → {gx['gamma_flip']['spot_position']}")
     for k, b in gx["buckets"].items():
-        A(f"  - `{k}`: net GEX **{b['net_gex_$bn_per_1pct']} $bn/1%** [{b['regime']}]")
-    A(f"- **Vol:** VXN {v['vxn_nasdaq_ivol'].get('last')} "
-      f"({v['vxn_nasdaq_ivol'].get('chg_pct')}%) · VIX {v['vix'].get('last')} · "
-      f"VIX9D/VIX {v['vix9d_over_vix']} → {v['term_read']} · VVIX {v['vvix'].get('last')}")
-    A(f"- **Rates/FX:** US10y {rf['us10y'].get('last')} ({rf['us10y'].get('chg_pct')}%) · "
-      f"DXY {rf['dxy'].get('last')} ({rf['dxy'].get('chg_pct')}%)")
-    A(f"- **CFD/index offset:** {gx['cfd_offset']} (NDX {gx['ndx_spot']} vs CFD {px}) — "
-      f"all gamma levels below are already converted to CFD price")
-    A(f"- **Data freshness:** NDX chain {gx['as_of']['ndx']}, QQQ chain {gx['as_of']['qqq']}\n")
+        A(f"- `{k}`: net GEX **{b['net_gex_$bn_per_1pct']} $bn per 1% move** "
+          f"[{b['regime']}]")
+    A(f"- VXN {vxn} · VIX {vixl} · VIX9D/VIX {term} · VVIX {v['vvix'].get('last')}")
+    A(f"- CFD/index offset **{gx['cfd_offset']}** (NDX {gx['ndx_spot']} vs CFD {px}) "
+      f"— every options level below is already converted to your chart's price")
+    A(f"- Data age: NDX chain {gx['as_of']['ndx']}, QQQ chain {gx['as_of']['qqq']}")
+    A("\n</details>\n")
 
     fr = mc.get("fred") or {}
-    A("### Real rates, credit & liquidity (FRED)\n")
+    A("**Rates, borrowing and money supply**\n")
     if fr.get("key_present"):
         for x in fr.get("read", []):
             mark = "🟢" if x["signal"] > 0 else ("🔴" if x["signal"] < 0 else "⚪")
             A(f"- {mark} {x['text']}")
-        A(f"\n_{fr.get('series_ok')} series, published with a 1-2 day lag — "
-          f"this is regime context, not an intraday trigger._\n")
+        A("\n_These update once a day or so — they set the mood for the week, "
+          "they are not a signal to trade off right now._\n")
     else:
-        A("- _FRED_API_KEY not set — running on nominal yields only. "
-          "The real-yield read (the most direct driver of tech multiples) "
-          "is missing._\n")
+        A("- _No FRED key set, so the real-interest-rate picture is missing "
+          "\u2014 running on headline bond yields only._\n")
 
     A("## 3. Fuel & range budget\n")
     vxn = v["vxn_nasdaq_ivol"].get("last")
@@ -170,12 +308,22 @@ def markdown(d):
     }[f["expansion_state"]] + "\n")
 
     A("## 4. Level board — mark these\n")
-    A("| NAS100 | distance | type | level | reach | what to expect |")
-    A("|---|---|---|---|---|---|")
-    for r in level_board(d):
-        A(f"| **{r['level']}** | {r['dist']:+.1f} | {r['kind']} | {r['name']} | "
-          f"{r['reach']} | {r['note']} |")
+    board, far = level_board(d)
+    A(f"_Same price = one line, so a level named twice is two reasons to "
+      f"respect it (⭐). Today's remaining range budget is "
+      f"**{f['remaining_budget']:.0f}pts** — anything marked _(stretch)_ is "
+      f"beyond that, so treat it as partials-only._\n")
+    A("| NAS100 | dist | level | what to expect |")
+    A("|---|---|---|---|")
+    for r in board:
+        star = " ⭐" if r.get("confluence", 1) > 1 else ""
+        tag = " _(stretch)_" if r.get("stretch") else ""
+        dist = f"{r['dist']:+.0f}" if abs(r["dist"]) >= 1.0 else "at price"
+        A(f"| **{r['level']}** | {dist} | {r['name']}{star}{tag} | {r['note']} |")
     A("")
+    if far:
+        A("_Beyond today's range (context only, don't mark): "
+          + " · ".join(f"{r['level']:.0f} {r['name']}" for r in far[:6]) + "_\n")
 
     A("## 5. Events\n")
     up = mc["calendar"].get("upcoming_next_24h") or []
@@ -238,7 +386,7 @@ if __name__ == "__main__":
     if "error" in d:
         print(json.dumps(d, indent=2, default=str)); sys.exit(1)
     if "--json" in sys.argv:
-        d["level_board"] = level_board(d)
+        d["level_board"], d["level_board_far"] = level_board(d)
         print(json.dumps(d, indent=2, default=str))
     else:
         print(markdown(d))

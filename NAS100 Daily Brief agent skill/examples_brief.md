@@ -1,5 +1,5 @@
 # NAS100 Daily Brief — 2026-08-23
-_generated 2026-08-23T12:37:11+00:00 · price **29290.5** (bid 29290.0 / ask 29291.1)_
+_generated 2026-08-23T12:49:21+00:00 · price **29290.5** (bid 29290.0 / ask 29291.1)_
 
 ## 1. The call: **BEARISH**  (score -6)
 
@@ -17,42 +17,62 @@ _generated 2026-08-23T12:37:11+00:00 · price **29290.5** (bid 29290.0 / ask 292
 | vol | +0 | VVIX 86.27 — no tail-hedge bid |
 | rates | -1 | US10y 4.738 (+0.89%) — yields up, multiple compression, BEARISH tech |
 | rates | +0 | DXY 98.839 (-0.06%) — dollar flat |
-| macro | +0 | 10y REAL yield 2.35% (+0bp d/d, -4bp 5d) — flat day-on-day; watch the 5-day trend |
-| macro | -1 | 10y nominal +4bp over 2026-08-19->2026-08-20, driven by breakeven / inflation expectations (real +0bp, breakeven +4bp) — an inflation-expectation move; hits tech via the Fed-path repricing that follows |
-| macro | +2 | HY OAS 2.75% (+4bp/5d) — tight, credit is comfortable with risk |
-| macro | +0 | NFCI -0.559 (-0.004 w/w) — conditions looser than average |
-| macro | -1 | Fed balance sheet $6.75tn (-14.3bn w/w), ON RRP $0.2bn — QT draining, slow headwind |
-| macro | +0 | 10y-2y +0.50pp (+0bp) — little change |
+| macro | +0 | **Real interest rates** (what lenders earn after inflation) are 2.35%, flat 0bp today and 4bp over 5 days. No change today — watch the 5-day direction instead. |
+| macro | -1 | **Bond yields moved 4bp up** (2026-08-19 to 2026-08-20). That was driven by inflation expectations, not real rates — a softer signal that only hurts tech if the Fed then reacts to it. |
+| macro | +2 | **Bond investors' risk appetite** — the extra interest demanded to lend to riskier companies is 2.75% (+4bp over 5 days). Low and steady: the bond market is relaxed about risk, which gives stocks permission to rise. |
+| macro | +0 | **How easy it is to borrow money** across the economy is EASIER than normal (-0.559). Cheap, available money is a background tailwind for stocks. |
+| macro | -1 | **Cash in the financial system:** the Fed is holding $6.75tn of assets, shrinking by $14.3bn this week, and the spare-cash buffer is down to $0.2bn. The Fed is quietly pulling money out of the system — a slow, persistent drag on stocks, not a day-trade signal. |
+| macro | +0 | **Long vs short bond yields:** the 10-year pays +0.50% more than the 2-year. Barely moved. |
 | breadth | +0 | mega-cap avg +0.01% (2/4 up): NVDA -0.98%, MSFT +0.43%, AAPL -0.63%, AVGO +1.21% |
 | breadth | +0 | NDX +0.33% vs ES +0.38% — in line |
-| fuel | +0 | ADR14 474.7, 67.1% used vs ~45% normal by 08:37 ET -> fuel_ratio 1.49 (burning hot) [MODERATE] |
+| fuel | +0 | ADR14 474.7, 67.1% used vs ~45% normal by 08:49 ET -> fuel_ratio 1.49 (burning hot) [MODERATE] |
 | structure | -1 | price below PD mid 29292.9 (PDH 29452.2 / PDL 29133.6) |
 | structure | -3 | price is BELOW the entire prior-week range (29422.4-30175.7) — weekly draw has flipped bearish; PWL 29422.4 is now resistance, not support |
 | structure | +1 | in-reach unmitigated pools: 3 above / 1 below — draw higher |
-| news | +0 | 0 auto-scored headline(s) (0 bull / 0 bear) -> NEUTRAL; 41 more need reading in context (not counted here) |
+| news | +0 | 0 auto-scored headline(s) (0 bull / 0 bear) -> NEUTRAL; 42 more need reading in context (not counted here) |
 | events | +0 | NVDA earnings 2026-08-26 time-after-hours (cons $2.01) — INDEX-DEFINING event; day before pins, day after expands |
 
-## 2. Regime
+## 2. What kind of day is this?
 
-- **Gamma:** flip at **29331.8**, price 29290.5 → **BELOW flip — short gamma**
-  - `near_expiry_0_2dte`: net GEX **0.002 $bn/1%** [POSITIVE]
-  - `this_week`: net GEX **-0.329 $bn/1%** [NEGATIVE]
-  - `full_45dte`: net GEX **-0.944 $bn/1%** [NEGATIVE]
-- **Vol:** VXN 21.98 (-5.503%) · VIX 15.13 · VIX9D/VIX 0.831 → CONTANGO — calm, mean-reversion favoured · VVIX 86.27
-- **Rates/FX:** US10y 4.738 (0.894%) · DXY 98.839 (-0.062%)
-- **CFD/index offset:** -18.4 (NDX 29308.9 vs CFD 29290.5) — all gamma levels below are already converted to CFD price
-- **Data freshness:** NDX chain 2026-08-23 11:28:28, QQQ chain 2026-08-22 23:53:38
+**Who's on the other side, and what they're doing**
 
-### Real rates, credit & liquidity (FRED)
+The big options desks are **pushing today's move along**, not leaning against it. As price falls they have to sell more; as it rises they buy more. Their hedging adds fuel to whatever is already happening.
+- ➜ **Sweeps tend to keep running rather than fail.** Fading is the wrong trade today — Strategy 2 (go with the move) is the right one.
+- ➜ It flips at **29331.8**. Reclaim and hold above that and they start damping moves again, and fading becomes valid.
 
-- ⚪ 10y REAL yield 2.35% (+0bp d/d, -4bp 5d) — flat day-on-day; watch the 5-day trend
-- 🔴 10y nominal +4bp over 2026-08-19->2026-08-20, driven by breakeven / inflation expectations (real +0bp, breakeven +4bp) — an inflation-expectation move; hits tech via the Fed-path repricing that follows
-- 🟢 HY OAS 2.75% (+4bp/5d) — tight, credit is comfortable with risk
-- ⚪ NFCI -0.559 (-0.004 w/w) — conditions looser than average
-- 🔴 Fed balance sheet $6.75tn (-14.3bn w/w), ON RRP $0.2bn — QT draining, slow headwind
-- ⚪ 10y-2y +0.50pp (+0bp) — little change
+**How much movement is being priced in**
 
-_14 series, published with a 1-2 day lag — this is regime context, not an intraday trigger._
+- The Nasdaq's own fear gauge is at **21.98**, down 5.5% — fear is easing. That prices a **~406pt day**.
+- Worry about the **next few days** is lower than worry about the next month (0.831). Nothing urgent is spooking anyone — a calmer, more rangebound day.
+- Tech is priced as **45% jumpier than the wider market** (21.98 vs 15.13). That's a big gap — the nervousness is specifically about tech, not stocks in general.
+
+**The macro backdrop**
+
+- **Interest rates:** the US 10-year is **4.738%** (+0.89%). Rising rates hurt tech more than anything else, because tech is priced on profits far in the future.
+- **Dollar:** **98.839** (-0.06%). Flat — not a factor today.
+
+<details><summary>The options numbers behind this (tap if you want them)</summary>
+
+- Gamma flip **29331.8** · price 29290.5 → BELOW flip — short gamma
+- `near_expiry_0_2dte`: net GEX **0.002 $bn per 1% move** [POSITIVE]
+- `this_week`: net GEX **-0.329 $bn per 1% move** [NEGATIVE]
+- `full_45dte`: net GEX **-0.944 $bn per 1% move** [NEGATIVE]
+- VXN 21.98 · VIX 15.13 · VIX9D/VIX 0.831 · VVIX 86.27
+- CFD/index offset **-18.4** (NDX 29308.9 vs CFD 29290.5) — every options level below is already converted to your chart's price
+- Data age: NDX chain 2026-08-23 11:28:28, QQQ chain 2026-08-22 23:53:38
+
+</details>
+
+**Rates, borrowing and money supply**
+
+- ⚪ **Real interest rates** (what lenders earn after inflation) are 2.35%, flat 0bp today and 4bp over 5 days. No change today — watch the 5-day direction instead.
+- 🔴 **Bond yields moved 4bp up** (2026-08-19 to 2026-08-20). That was driven by inflation expectations, not real rates — a softer signal that only hurts tech if the Fed then reacts to it.
+- 🟢 **Bond investors' risk appetite** — the extra interest demanded to lend to riskier companies is 2.75% (+4bp over 5 days). Low and steady: the bond market is relaxed about risk, which gives stocks permission to rise.
+- ⚪ **How easy it is to borrow money** across the economy is EASIER than normal (-0.559). Cheap, available money is a background tailwind for stocks.
+- 🔴 **Cash in the financial system:** the Fed is holding $6.75tn of assets, shrinking by $14.3bn this week, and the spare-cash buffer is down to $0.2bn. The Fed is quietly pulling money out of the system — a slow, persistent drag on stocks, not a day-trade signal.
+- ⚪ **Long vs short bond yields:** the 10-year pays +0.50% more than the 2-year. Barely moved.
+
+_These update once a day or so — they set the mood for the week, they are not a signal to trade off right now._
 
 ## 3. Fuel & range budget
 
@@ -65,39 +85,24 @@ _14 series, published with a 1-2 day lag — this is regime context, not an intr
 
 ## 4. Level board — mark these
 
-| NAS100 | distance | type | level | reach | what to expect |
-|---|---|---|---|---|---|
-| **30175.7** | +885.2 | context | PWH | swing | Prior-week high — far overhead, context only |
-| **30131.6** | +841.1 | gamma-shelf | GEX shelf +0.11bn | swing | POSITIVE shelf — expect a stall here; good place to fade / take partials |
-| **29549.9** | +259.4 | context | Unmitigated high | swing | single-touch (context only), 1 touch(es) — untouched liquidity still resting |
-| **29495.2** | +204.7 | context | Unmitigated high | swing | single-touch (context only), 1 touch(es) — untouched liquidity still resting |
-| **29452.2** | +161.7 | liquidity | PDH | swing | Prior-day high — densest stop cluster above. Sweep + 1m LH + CISD = short (S1) |
-| **29452.2** | +161.7 | liquidity | London High (prev-day) | swing | London session high — the next session routinely sweeps it |
-| **29448.8** | +158.3 | liquidity | Unmitigated high | swing | CONFIRMED pool, 2 touch(es) — untouched liquidity still resting |
-| **29422.4** | +131.9 | liquidity | PWL | intraday | Prior-week LOW, but price is below the whole prior week — this is now RESISTANCE. Trade it as an S1 short-sweep level, not a long-sweep level |
-| **29401.3** | +110.8 | liquidity | NY High (prev-day) | intraday | NY session high — the next session routinely sweeps it |
-| **29401.3** | +110.8 | context | Unmitigated high | intraday | single-touch (context only), 1 touch(es) — untouched liquidity still resting |
-| **29381.6** | +91.1 | gamma | CALL WALL | intraday | Largest call gamma above (8,657 OI). Magnetic ceiling — rallies stall. Prime S1 short-sweep level. A HELD break above flips it to a gamma squeeze -> S2 long |
-| **29381.6** | +91.1 | gamma | MAX PAIN | intraday | Weak magnet Mon, strong Thu/Fri. Coincident with the call wall = hard pin |
-| **29381.6** | +91.1 | gamma-shelf | GEX shelf +0.29bn | intraday | POSITIVE shelf — expect a stall here; good place to fade / take partials |
-| **29364.9** | +74.4 | context | Unmitigated high | intraday | single-touch (context only), 1 touch(es) — untouched liquidity still resting |
-| **29345.0** | +54.5 | context | Unmitigated high | intraday | single-touch (context only), 1 touch(es) — untouched liquidity still resting |
-| **29331.8** | +41.3 | gamma | GAMMA FLIP | intraday | THE volatility switch. Above = long gamma, dealers fade moves (S1 works). Below = short gamma, dealers amplify (S2 works). Not S/R — a regime line |
-| **29314.4** | +23.9 | liquidity | Asia High (prev-day) | intraday | Asia session high — the next session routinely sweeps it |
-| **29294.2** | +3.7 | liquidity | London Low (prev-day) | intraday | London session low — the next session routinely sweeps it |
-| **29292.9** | +2.4 | magnet | PD mid | intraday | Prior-day equilibrium — a TARGET, not a trigger. Magnet on rangebound days |
-| **29290.0** | -0.5 | magnet | PD close | intraday | Settlement reference / gap-fill magnet |
-| **29274.6** | -15.9 | liquidity | Unmitigated low | intraday | CONFIRMED pool, 2 touch(es) — untouched liquidity still resting |
-| **29200.6** | -89.9 | liquidity | Asia Low (prev-day) | intraday | Asia session low — the next session routinely sweeps it |
-| **29181.6** | -108.9 | gamma | PUT WALL | intraday | Largest put gamma below (7,091 OI). Defended floor IN POSITIVE GAMMA -> prime S1 long-sweep level. IN NEGATIVE GAMMA IT INVERTS: a break is acceleration, not a bounce |
-| **29133.6** | -156.9 | liquidity | PDL | swing | Prior-day low — densest stop cluster below. Sweep + 1m HL + CISD = long (S1) |
-| **29133.6** | -156.9 | liquidity | NY Low (prev-day) | swing | NY session low — the next session routinely sweeps it |
-| **29133.6** | -156.9 | context | Unmitigated low | swing | single-touch (context only), 1 touch(es) — untouched liquidity still resting |
-| **29115.9** | -174.6 | context | Unmitigated low | swing | single-touch (context only), 1 touch(es) — untouched liquidity still resting |
-| **29081.6** | -208.9 | gamma-shelf | GEX shelf -0.13bn | swing | NEGATIVE shelf — expect price to slice through; do NOT fade, good for continuation |
-| **28981.6** | -308.9 | gamma-shelf | GEX shelf -0.12bn | swing | NEGATIVE shelf — expect price to slice through; do NOT fade, good for continuation |
-| **28931.6** | -358.9 | gamma-shelf | GEX shelf -0.18bn | swing | NEGATIVE shelf — expect price to slice through; do NOT fade, good for continuation |
-| **28681.6** | -608.9 | gamma-shelf | GEX shelf -0.20bn | swing | NEGATIVE shelf — expect price to slice through; do NOT fade, good for continuation |
+_Same price = one line, so a level named twice is two reasons to respect it (⭐). Today's remaining range budget is **156pts** — anything marked _(stretch)_ is beyond that, so treat it as partials-only._
+
+| NAS100 | dist | level | what to expect |
+|---|---|---|---|
+| **29452.2** | +162 | PDH + London High (prev-day) + Equal highs ×2 ⭐ _(stretch)_ | Yesterday's high — the biggest pile of stops above us. Sweep it, wait for a lower high on the 1m, then CISD = short |
+| **29422.4** | +132 | PWL | Last week's low — but we're trading BELOW the whole of last week, so it has flipped to RESISTANCE. Sweep it and short, don't buy it |
+| **29401.3** | +111 | NY High (prev-day) | High of the NY session — the next session usually runs the stops above it |
+| **29381.6** | +91 | CALL WALL + MAX PAIN + Options shelf 0.29bn ⭐ | The heaviest ceiling on the board — desks have to SELL as price rises into it, so rallies stall here. Take profit into it. If price closes above and holds, that selling flips to buying and it becomes a launchpad instead (8,657 contracts) |
+| **29331.8** | +41 | GAMMA FLIP | The line where the big desks switch from pushing moves along to damping them. We're BELOW it: they're pushing, so don't fade. Reclaim and hold above and fading becomes valid again. |
+| **29314.4** | +24 | Asia High (prev-day) | High of the Asia session — the next session usually runs the stops above it |
+| **29294.2** | +4 | London Low (prev-day) + PD mid ⭐ | Low of the London session — the next session usually runs the stops below it |
+| **29290.0** | at price | PD close | Where yesterday settled. Price often comes back to fill a gap from here |
+| **29274.6** | -16 | Equal lows ×2 | 2 touches at this price, never traded through — a real stop cluster. Prime S1 sweep trigger |
+| **29200.6** | -90 | Asia Low (prev-day) | Low of the Asia session — the next session usually runs the stops below it |
+| **29181.6** | -109 | PUT WALL | Heaviest floor on the board, BUT today the desks are pushing moves along — so if this breaks, expect it to speed UP, not bounce. Don't buy the break (7,091 contracts) |
+| **29133.6** | -157 | PDL + NY Low (prev-day) ⭐ _(stretch)_ | Yesterday's low — the biggest pile of stops below us. Sweep it, wait for a higher low on the 1m, then CISD = long |
+
+_Beyond today's range (context only, don't mark): 30176 PWH_
 
 ## 5. Events
 
@@ -106,7 +111,7 @@ _14 series, published with a 1-2 day lag — this is regime context, not an intr
 
 ## 6. News that matters
 
-_135 headlines from 10/10 feeds -> 41 relevant -> **0 auto-scored**, 41 for judgement._
+_136 headlines from 10/10 feeds -> 42 relevant -> **0 auto-scored**, 42 for judgement._
 
 **Scored: NEUTRAL (+0.00)**
 
@@ -118,10 +123,10 @@ _No headline was unambiguous enough to auto-score — read the judgement list be
 - [jackson_hole] The Week Ahead: Warsh Makes Jackson Hole Debut as Nvidia and Marvell Earnings Test AI Investment
 - [unclassified] Could This Unstoppable S&P 500 ETF Make You a Millionaire? Here's What 20 Years of Data Says.
 - [unclassified] Citi expects Nvidia stock to trade higher post earnings
+- [risk_on] Microsoft Stock Dropped 30% From Its All-Time High: 2 Reasons It Could Double by 2030 - Yahoo Fi — _modal/conditional — describes what MIGHT happen, not an event_
 - [risk_on] Microsoft Stock Dropped 30% From Its All-Time High: 2 Reasons It Could Double by 2030 — _modal/conditional — describes what MIGHT happen, not an event_
 - [earnings_beat] Nvidia Stock May Plunge After Earnings, Even If It Beats (NASDAQ:NVDA) - Seeking Alpha — _modal/conditional — describes what MIGHT happen, not an event_
 - [unclassified] Prediction: Nvidia Will Be a $6 Trillion Company Before 2026 Is Over and Its Run Kickstarts This
-- [unclassified] Nvidia's Q2 earnings to test resurgent AI trade
 
 ---
 _All figures computed from CBOE delayed quotes, cTrader NAS100 (id 116), Yahoo chart API, ForexFactory and Nasdaq calendars. No API keys. GEX assumes the standard long-call/short-put dealer convention — levels and regime are robust, absolute dollar figures are approximate._
