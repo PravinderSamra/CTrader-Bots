@@ -19,10 +19,31 @@ dealer-gamma regime, not by the chart.
 
 | Phase | Scope | State |
 |---|---|---|
-| **1** | Research: find, test and prove data sources; design the models | ✅ **Complete** — see `PHASE1-FINDINGS.md` |
-| 2 | Build the agent skill (repo-hosted, scheduled pre-compute) | Not started — plan in `research/08-phase2-architecture.md` |
-| 3 | Refine information selection and output presentation | Not started |
-| 4 | Continuous improvement against the logged archive | Not started |
+| **1** | Research: find, test and prove data sources; design the models | ✅ **Complete** — `PHASE1-FINDINGS.md` |
+| **2** | Build the agent skill | ✅ **Complete** — skill, slash command and sub-agent all live |
+| **3** | Refine information selection and output presentation | ✅ **Complete** — level board 30→12 rows, plain-English regime, collapsed scoring |
+| 4 | Continuous improvement against the logged archive | ⏳ Machinery built (journal + reviewer); needs real sessions |
+
+## Where it lives
+
+| What | Path |
+|---|---|
+| The skill | `.claude/skills/nas100-daily-brief/` |
+| Slash command | `/nas100-brief` (`.claude/commands/nas100-brief.md`) |
+| Background reviewer | `.claude/agents/brief-reviewer.md` |
+| Scripts (canonical) | `.claude/skills/nas100-daily-brief/scripts/` |
+| Journal (committed) | `journal/<trading-day>/` |
+| **Full build documentation** | **`docs/00-BUILD-FROM-SCRATCH.md`** |
+
+## Using it
+
+```
+/nas100-brief              full brief + background review of the last session
+/nas100-brief quick        brief only, no reviewer
+/nas100-brief levels       just the level board and stop-management line
+/nas100-brief review       skip the brief, run the retrospective now
+```
+Or just ask: *"what's the bias on NAS100"*, *"nas100 scan"*, *"mark the levels"*.
 
 ---
 
@@ -34,7 +55,7 @@ is optional — it adds the real-rate/credit/liquidity layer, and the brief says
 so out loud if it's missing. See `SETUP-SECRETS.md`.
 
 ```bash
-cd "NAS100 Daily Brief agent skill/prototypes"
+cd .claude/skills/nas100-daily-brief/scripts
 
 python3 source_health.py        # probe all 28 sources, PASS/FAIL + latency
 python3 brief.py                # the full brief, markdown
@@ -47,6 +68,7 @@ python3 bias_engine.py          # the bull/bear score with full reasoning
 python3 fred_probe.py           # real yields, credit, financial conditions, Fed liquidity
 python3 news_scorer.py          # headline pre-filter -> NAS100 reaction mapping
 python3 test_news_scorer.py     # 22 regression cases for the pre-filter
+python3 review_day.py           # grade a past day against real bars
 ```
 
 `examples_brief.md` is a real brief generated from live data on 2026-08-22 —
@@ -89,6 +111,9 @@ not a mock-up.
 6. `research/08-phase2-architecture.md` — how Phase 2 should be built
 7. `research/09-news-sentiment-replacement.md` — why we replaced Alpha Vantage
    with a pre-filter rather than another sentiment API
+8. `research/10-journal-and-review-loop.md` — journal, grading, session awareness
+9. **`docs/00-BUILD-FROM-SCRATCH.md`** — the complete build record: every source,
+   decision, rejected option and bug. Enough to rebuild this from an empty repo
 
 ---
 

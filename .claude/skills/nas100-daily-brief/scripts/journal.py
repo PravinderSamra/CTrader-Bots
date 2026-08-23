@@ -18,7 +18,25 @@ import json, os, re
 from datetime import datetime, timezone
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
-JOURNAL_ROOT = os.path.abspath(os.path.join(_HERE, "..", "journal"))
+
+
+def _find_journal_root():
+    """The journal is DATA and lives with the project, not inside the skill.
+    Walk up for the repo root, then into the project folder. Falls back to a
+    sibling of the scripts dir so the module still works if moved."""
+    env = os.environ.get("NAS100_JOURNAL_DIR", "").strip()
+    if env:
+        return os.path.abspath(env)
+    d = _HERE
+    for _ in range(6):
+        d = os.path.dirname(d)
+        cand = os.path.join(d, "NAS100 Daily Brief agent skill", "journal")
+        if os.path.isdir(os.path.dirname(cand)):
+            return os.path.abspath(cand)
+    return os.path.abspath(os.path.join(_HERE, "..", "journal"))
+
+
+JOURNAL_ROOT = _find_journal_root()
 
 
 def _session_tag(ctx):

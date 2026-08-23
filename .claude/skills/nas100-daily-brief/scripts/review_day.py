@@ -15,8 +15,7 @@ import json, os, sys
 from datetime import datetime, timezone, timedelta
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
-for _c in [os.path.join(_HERE, "..", "..", ".claude", "skills",
-                        "liquidity-inducement-phone", "scripts"),
+for _c in [_HERE,
            os.path.expanduser("~/CTrader-Bots/.claude/skills/"
                               "liquidity-inducement-phone/scripts")]:
     if os.path.isfile(os.path.join(_c, "ctrader_http.py")):

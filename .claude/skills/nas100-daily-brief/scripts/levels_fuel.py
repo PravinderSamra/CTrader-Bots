@@ -20,8 +20,7 @@ from zoneinfo import ZoneInfo
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _CANDIDATES = [
-    os.path.join(_HERE, "..", "..", ".claude", "skills",
-                 "liquidity-inducement-phone", "scripts"),
+    _HERE,
     os.path.expanduser("~/CTrader-Bots/.claude/skills/"
                        "liquidity-inducement-phone/scripts"),
 ]
