@@ -25,13 +25,35 @@ entry model, which levels, and how hard to manage the stop.**
 cd .claude/skills/nas100-daily-brief/scripts && python3 brief.py
 ```
 
-Print the output essentially as-is. It is deterministic and already formatted —
-**do not recompute its numbers or rewrite its level notes.** Your value is added
-on top: judgement on the headlines the pre-filter could not classify, and
-answering follow-ups.
+**Print the output as-is.** It is deterministic and already formatted to an
+agreed spec — the section order, the collapsed scoring block, the plain-English
+regime explanations and the level-board wording were all settled deliberately.
 
-Use `python3 brief.py --json` when you need the structured payload (e.g. to
-compare against a previous scan).
+Specifically, do **not**:
+- recompute or restate its numbers,
+- reword the "what to expect" note on any level,
+- expand the collapsed `<details>` blocks into the body,
+- re-order, merge or drop sections,
+- add levels of your own to the board.
+
+Your value is added *on top*: judgement on the headlines the pre-filter could
+not classify (step 2), and answering follow-ups afterwards.
+
+### Modes
+
+The slash command `/nas100-brief` takes an optional argument. **Each mode maps
+to a flag — do not hand-assemble any of them.** The renderer is the agreed
+format; re-extracting or rewording it is how the output drifts.
+
+| Mode | Command | Output |
+|---|---|---|
+| *(none)* / `full` | `python3 brief.py` | Complete brief, then spawn the reviewer (step 3) |
+| `quick` | `python3 brief.py` | Same brief. **Do NOT spawn the reviewer** |
+| `levels` | `python3 brief.py --levels` | Header, fuel + stop-management line, level board only |
+| `review` | `python3 review_day.py` | Skip the brief. Run the retrospective in the FOREGROUND and report it |
+
+`python3 brief.py --json` gives the structured payload when you need to compare
+against a previous scan.
 
 If it errors, relay the error. A missing `CTRADER_MCP_SLUG` is the usual cause —
 see `SETUP-SECRETS.md` in the project folder. **Never fabricate a brief.**

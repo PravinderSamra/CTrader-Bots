@@ -483,12 +483,26 @@ Order matters — each step is verifiable before the next.
 9. **Build the orchestrator** (`brief.py`), then **journal** and **review**.
 10. **Write SKILL.md, references, the slash command, and the sub-agent.**
 
+### The output format is code, not instruction
+
+The agreed presentation lives in `brief.py`'s renderer, and SKILL.md tells the
+model to print it **as-is** with an explicit do-not list: don't recompute
+numbers, don't reword a level's "what to expect" note, don't expand the
+collapsed blocks, don't reorder sections, don't add levels.
+
+This matters because a format settled over several review rounds is worthless if
+the model paraphrases it each run. **Every slash-command mode is therefore a
+flag on an existing script, never something the model assembles.** `levels` mode
+exists as `brief.py --levels` for exactly this reason — verified emitting the
+same 12 board rows, byte-identical to the full brief.
+
 **Verification at each stage:**
 ```bash
 cd .claude/skills/nas100-daily-brief/scripts
 python3 source_health.py       # expect 31 live (32 with FRED_API_KEY set)
 python3 test_news_scorer.py    # expect 22/22
 python3 brief.py               # expect a full brief, exit 0
+python3 brief.py --levels      # expect the board only, rows identical to above
 python3 review_day.py          # expect a graded day, or "nothing to review"
 ```
 

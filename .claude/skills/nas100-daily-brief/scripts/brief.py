@@ -184,6 +184,40 @@ def level_board(d):
     return board, far
 
 
+def markdown_levels_only(d):
+    """The chart-marking answer only: where we are, what to mark, how to manage.
+    Same renderer and same wording as the full brief — a subset, never a
+    rewrite, so /nas100-brief levels can't drift from /nas100-brief."""
+    lv = d["levels"]; f = lv["fuel"]; px = lv["price"]
+    c = d.get("context") or {}
+    o = []; A = o.append
+    A(f"# NAS100 levels \u2014 {c.get('trading_day', lv['trading_day'])}")
+    A(f"_{c.get('now_uk', '')} \u00b7 price **{px}**_\n")
+    if c.get("headline"):
+        A(f"> {c['headline']}\n")
+    A(f"**Fuel:** ADR14 {f['adr14']} \u00b7 {f['adr_used_pct']}% used \u00b7 "
+      f"**{f['remaining_budget']:.0f}pts budget left** \u2192 "
+      f"`{f['expansion_state']}`\n")
+    A("**Stop management:** " + {
+        "ROOM_TO_EXPAND": "leave the structural stop alone; trail only on confirmed 1m structure breaks.",
+        "MODERATE": "structural stop; break-even at 1R or 50% of remaining budget, whichever first.",
+        "LOW_FUEL": "active management from entry \u2014 break-even at 0.7R, 50% off at the first pool, trail tight.",
+        "EXHAUSTED": "do not initiate; if already in, take partials and be flat before the close.",
+    }[f["expansion_state"]] + "\n")
+    board, far = level_board(d)
+    A("| NAS100 | dist | level | what to expect |")
+    A("|---|---|---|---|")
+    for r in board:
+        star = " \u2b50" if r.get("confluence", 1) > 1 else ""
+        tag = " _(stretch)_" if r.get("stretch") else ""
+        dist = f"{r['dist']:+.0f}" if abs(r["dist"]) >= 1.0 else "at price"
+        A(f"| **{r['level']}** | {dist} | {r['name']}{star}{tag} | {r['note']} |")
+    if far:
+        A("\n_Beyond today's range (context only, don't mark): "
+          + " \u00b7 ".join(f"{r['level']:.0f} {r['name']}" for r in far[:6]) + "_")
+    return "\n".join(o)
+
+
 def markdown(d):
     lv, mc, gx, bs = d["levels"], d["macro"], d["gex"], d["bias"]
     px, f = lv["price"], lv["fuel"]
@@ -423,6 +457,8 @@ if __name__ == "__main__":
     d = gather(last_scan_iso=journal.last_scan_utc())
     if "error" in d:
         print(json.dumps(d, indent=2, default=str)); sys.exit(1)
+    if "--levels" in sys.argv:
+        print(markdown_levels_only(d)); sys.exit(0)
     if "--json" in sys.argv:
         d["level_board"], d["level_board_far"] = level_board(d)
         print(json.dumps(d, indent=2, default=str))

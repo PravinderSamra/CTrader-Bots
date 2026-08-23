@@ -1,9 +1,11 @@
 {
-  "updated": "2026-08-23T14:24:17+00:00",
-  "count": 2,
+  "updated": "2026-08-23T14:42:30+00:00",
+  "count": 4,
   "scans": [
     "2026-08-23/1403-closed.json",
-    "2026-08-23/1424-closed.json"
+    "2026-08-23/1424-closed.json",
+    "2026-08-23/1440-closed.json",
+    "2026-08-23/1442-closed.json"
   ],
-  "latest": "2026-08-23/1424-closed.json"
+  "latest": "2026-08-23/1442-closed.json"
 }
