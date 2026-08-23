@@ -148,8 +148,8 @@ def interpret(d):
         bp = round(r10 * 100)
         out.append({
             "tag": "real_yields", "signal": -1 if r10 > 0.01 else (1 if r10 < -0.01 else 0),
-            "text": f"**Real interest rates** (what lenders earn after inflation) "
-                    f"are {r10v}%, {'up' if r10 > 0 else 'down' if r10 < 0 else 'flat'} "
+            "text": f"**Real yield, 10y (DFII10)** — what lenders earn after inflation — "
+                    f"is {r10v}%, {'up' if r10 > 0 else 'down' if r10 < 0 else 'flat'} "
                     f"{abs(bp)}bp today and {abs((r10_5 or 0)*100):.0f}bp over 5 days. "
                     + ("Rising = tech gets hit hardest, because tech is valued on "
                        "profits years away and those are worth less when rates rise."
@@ -167,8 +167,8 @@ def interpret(d):
         driver = ("breakeven / inflation expectations" if abs(be) > abs(rr)
                   else "real rate / tightening")
         out.append({"tag": "yield_decomp", "signal": -1 if nom > 0 else 1,
-                    "text": f"**Bond yields moved {abs(nom*100):.0f}bp "
-                            f"{'up' if nom > 0 else 'down'}** ({prev} to {as_of}). "
+                    "text": f"**10y nominal yield (DGS10)** moved {abs(nom*100):.0f}bp "
+                            f"{'up' if nom > 0 else 'down'} ({prev} to {as_of}). "
                             + ("That was driven by real rates — the harsher kind for "
                                "tech, and an immediate headwind."
                                if nom > 0 and abs(rr) > abs(be)
@@ -186,7 +186,7 @@ def interpret(d):
     if hyv is not None:
         wide = (hy5 or 0) > 0.15
         out.append({"tag": "credit", "signal": -2 if wide else (1 if hyv < 3.0 else 0),
-                    "text": f"**Bond investors' risk appetite** — the extra interest "
+                    "text": f"**High-yield credit spread (HY OAS)** — the extra interest "
                             f"demanded to lend to riskier companies is {hyv}% "
                             f"({(hy5 or 0)*100:+.0f}bp over 5 days). "
                             + ("It's WIDENING: the bond market is getting nervous while "
@@ -201,7 +201,8 @@ def interpret(d):
     if nfv is not None:
         out.append({"tag": "fin_conditions",
                     "signal": -1 if (nf or 0) > 0.01 else (1 if (nf or 0) < -0.01 else 0),
-                    "text": f"**How easy it is to borrow money** across the economy is "
+                    "text": f"**Financial conditions (NFCI)** — how easy it is to borrow "
+                            f"money across the economy — is "
                             + ("EASIER than normal" if nfv < 0 else "TIGHTER than normal")
                             + f" ({nfv}). "
                             + ("It got tighter again this week, which tends to show up in "
@@ -214,7 +215,8 @@ def interpret(d):
     rrp = (d.get("RRPONTSYD") or {}).get("value")
     if bsv is not None:
         out.append({"tag": "liquidity", "signal": -1 if (bs or 0) < -5000 else 0,
-                    "text": f"**Cash in the financial system:** the Fed is holding "
+                    "text": f"**Fed balance sheet (WALCL) / reverse repo (RRP)** — cash "
+                            f"in the financial system. The Fed is holding "
                             f"${bsv/1e6:.2f}tn of assets, "
                             f"{'shrinking' if (bs or 0) < 0 else 'growing'} by "
                             f"${abs((bs or 0)/1e3):.1f}bn this week"
@@ -228,7 +230,8 @@ def interpret(d):
     cv, cvv = g("T10Y2Y"), (d.get("T10Y2Y") or {}).get("value")
     if cvv is not None:
         out.append({"tag": "curve", "signal": 0,
-                    "text": f"**Long vs short bond yields:** the 10-year pays "
+                    "text": f"**Yield curve (10y–2y)** — long vs short bond yields. "
+                            f"The 10-year pays "
                             f"{cvv:+.2f}% more than the 2-year. "
                             + ("The gap widened because LONG rates rose — investors "
                                "demanding more to hold debt. Risk-off."

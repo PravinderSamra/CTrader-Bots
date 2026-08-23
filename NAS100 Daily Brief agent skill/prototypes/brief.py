@@ -201,79 +201,89 @@ def markdown(d):
         A(f"| {r['component']} | {r['points']:+d} | {r['why']} |")
     A("")
 
-    A("## 2. What kind of day is this?\n")
+    A("## 2. Regime — what kind of day is this?\n")
 
     flip = gx["gamma_flip"]["nas100"]
     wk = gx["buckets"].get("this_week", {})
     net = wk.get("net_gex_$bn_per_1pct") or 0
     long_gamma = flip is not None and px > flip
 
-    A("**Who's on the other side, and what they're doing**\n")
+    # Each block leads with the technical read, then explains it. Keeps the
+    # brief scannable once the vocabulary is familiar, and teaches the terms by
+    # always pairing them with what they mean.
+    A(f"**Gamma:** flip at **{flip}**, price {px} \u2192 "
+      f"**{gx['gamma_flip']['spot_position']}** \u00b7 "
+      f"this week's net GEX **{net} $bn per 1% move**\n")
     if long_gamma:
-        A(f"The big options desks are **leaning against** today's move. When "
+        A(f"> The big options desks are **leaning against** today's move. When "
           f"price runs up they sell into it; when it dips they buy. That squashes "
-          f"the range and makes moves fade back.")
-        A(f"- ➜ **Sweeps of a high or low tend to genuinely fail** — which is "
-          f"exactly what Strategy 1 needs. This is your fade day.")
-        A(f"- ➜ It stops working below **{flip}**. If price loses that and holds "
-          f"below, they flip to pushing moves along instead — stop fading.")
+          f"the range and makes moves fade back.\n"
+          f">\n"
+          f"> \u27a4 **Sweeps of a high or low tend to genuinely fail** \u2014 exactly "
+          f"what Strategy 1 needs. This is your fade day.\n"
+          f">\n"
+          f"> \u27a4 It stops working below **{flip}**. If price loses that and holds "
+          f"below, they flip to pushing moves along instead \u2014 stop fading.\n")
     else:
-        A(f"The big options desks are **pushing today's move along**, not "
+        A(f"> The big options desks are **pushing today's move along**, not "
           f"leaning against it. As price falls they have to sell more; as it "
           f"rises they buy more. Their hedging adds fuel to whatever is already "
-          f"happening.")
-        A(f"- ➜ **Sweeps tend to keep running rather than fail.** Fading is the "
-          f"wrong trade today — Strategy 2 (go with the move) is the right one.")
-        A(f"- ➜ It flips at **{flip}**. Reclaim and hold above that and they "
-          f"start damping moves again, and fading becomes valid.")
-    A("")
+          f"happening.\n"
+          f">\n"
+          f"> \u27a4 **Sweeps tend to keep running rather than fail.** Fading is the "
+          f"wrong trade today \u2014 Strategy 2 (go with the move) is the right one.\n"
+          f">\n"
+          f"> \u27a4 It flips at **{flip}**. Reclaim and hold above and they start "
+          f"damping moves again, and fading becomes valid.\n")
 
-    A("**How much movement is being priced in**\n")
     vxn = v["vxn_nasdaq_ivol"].get("last"); vxn_c = v["vxn_nasdaq_ivol"].get("chg_pct")
     term = v.get("vix9d_over_vix"); vixl = v["vix"].get("last")
     implied = round(px * (vxn / 100) / (252 ** 0.5)) if vxn else None
-    A(f"- The Nasdaq's own fear gauge is at **{vxn}**"
-      + (f", {'down' if (vxn_c or 0) < 0 else 'up'} {abs(vxn_c or 0):.1f}% — "
-         f"{'fear is easing' if (vxn_c or 0) < 0 else 'fear is building'}" if vxn_c is not None else "")
-      + (f". That prices a **~{implied}pt day**." if implied else ""))
+    A(f"**Volatility:** VXN **{vxn}** ({vxn_c:+.1f}%) \u00b7 VIX {vixl} \u00b7 "
+      f"VIX9D/VIX **{term}** \u2192 {v['term_read'].split(' — ')[0]} \u00b7 "
+      f"VVIX {v['vvix'].get('last')}\n")
+    A(f"> **VXN is the Nasdaq's own fear gauge.** At {vxn} it's "
+      f"{'down' if (vxn_c or 0) < 0 else 'up'} {abs(vxn_c or 0):.1f}% \u2014 "
+      f"{'fear is easing' if (vxn_c or 0) < 0 else 'fear is building'}, and it "
+      f"prices a **~{implied}pt day**.\n>")
     if term is not None:
-        A(f"- Worry about the **next few days** is "
-          f"{'HIGHER' if term > 1.0 else 'lower'} than worry about the next month "
-          f"({term}). "
-          + ("Something specific is spooking people short-term — expect a bigger "
-             "range than normal." if term > 1.0 else
-             "Nothing urgent is spooking anyone — a calmer, more rangebound day."))
+        A(f"> **VIX9D/VIX compares worry about the next 9 days against the next "
+          f"month.** At {term} the near-term worry is "
+          f"{'HIGHER' if term > 1.0 else 'lower'}. "
+          + ("Something specific is spooking people short-term \u2014 expect a "
+             "bigger range than normal." if term > 1.0 else
+             "Nothing urgent is spooking anyone \u2014 a calmer, more rangebound "
+             "day.") + "\n>")
     if vxn and vixl:
         rr = round(vxn / vixl, 2)
-        A(f"- Tech is priced as **{(rr - 1) * 100:.0f}% jumpier than the wider "
-          f"market** ({vxn} vs {vixl})."
-          + (" That's a big gap — the nervousness is specifically about tech, "
-             "not stocks in general." if rr > 1.35 else " That's a normal gap."))
-    A("")
+        A(f"> **VXN vs VIX** is tech's nerves against the whole market's. Tech is "
+          f"priced **{(rr - 1) * 100:.0f}% jumpier**."
+          + (" That's a big gap \u2014 the nervousness is specifically about tech, "
+             "not stocks in general.\n" if rr > 1.35 else " A normal gap.\n"))
 
-    A("**The macro backdrop**\n")
     y10, y10c = rf["us10y"].get("last"), rf["us10y"].get("chg_pct")
     dxy, dxyc = rf["dxy"].get("last"), rf["dxy"].get("chg_pct")
-    A(f"- **Interest rates:** the US 10-year is **{y10}%** "
-      f"({y10c:+.2f}%). "
-      + ("Rising rates hurt tech more than anything else, because tech is priced "
-         "on profits far in the future." if (y10c or 0) > 0.3 else
-         "Falling rates help tech more than anything else." if (y10c or 0) < -0.3 else
-         "Barely moved — not a factor today."))
-    A(f"- **Dollar:** **{dxy}** ({dxyc:+.2f}%). "
-      + ("A strong dollar usually means money leaving risky assets." if (dxyc or 0) > 0.4 else
-         "A soft dollar usually helps risk appetite." if (dxyc or 0) < -0.4 else
-         "Flat — not a factor today."))
-    A("")
+    A(f"**Rates / FX:** US10y **{y10}%** ({y10c:+.2f}%) \u00b7 "
+      f"DXY **{dxy}** ({dxyc:+.2f}%)\n")
+    A("> **The 10-year yield is the rate everything else is priced off.** "
+      + ("It's rising, which hurts tech more than anything else \u2014 tech is "
+         "valued on profits far in the future, and those are worth less when "
+         "rates go up." if (y10c or 0) > 0.3 else
+         "It's falling, which helps tech more than anything else, for the same "
+         "reason in reverse." if (y10c or 0) < -0.3 else
+         "Barely moved today \u2014 not a factor.") + "\n>")
+    A("> **DXY is the dollar against a basket of currencies.** "
+      + ("It's bid, which usually means money is leaving risky assets.\n"
+         if (dxyc or 0) > 0.4 else
+         "It's soft, which usually helps risk appetite.\n" if (dxyc or 0) < -0.4 else
+         "Flat \u2014 not a factor today.\n"))
 
-    A("<details><summary>The options numbers behind this (tap if you want them)</summary>\n")
-    A(f"- Gamma flip **{flip}** · price {px} → {gx['gamma_flip']['spot_position']}")
+    A("<details><summary>Full options numbers and data ages</summary>\n")
     for k, b in gx["buckets"].items():
         A(f"- `{k}`: net GEX **{b['net_gex_$bn_per_1pct']} $bn per 1% move** "
           f"[{b['regime']}]")
-    A(f"- VXN {vxn} · VIX {vixl} · VIX9D/VIX {term} · VVIX {v['vvix'].get('last')}")
     A(f"- CFD/index offset **{gx['cfd_offset']}** (NDX {gx['ndx_spot']} vs CFD {px}) "
-      f"— every options level below is already converted to your chart's price")
+      f"\u2014 every options level below is already converted to your chart's price")
     A(f"- Data age: NDX chain {gx['as_of']['ndx']}, QQQ chain {gx['as_of']['qqq']}")
     A("\n</details>\n")
 
