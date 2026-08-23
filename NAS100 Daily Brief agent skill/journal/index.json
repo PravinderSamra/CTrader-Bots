@@ -1,0 +1,17 @@
+{
+  "updated": "2026-08-23T17:23:45+00:00",
+  "count": 10,
+  "scans": [
+    "2026-08-23/1403-closed.json",
+    "2026-08-23/1424-closed.json",
+    "2026-08-23/1440-closed.json",
+    "2026-08-23/1442-closed.json",
+    "2026-08-23/1542-closed.json",
+    "2026-08-23/1659-closed.json",
+    "2026-08-23/1703-closed.json",
+    "2026-08-23/1705-closed.json",
+    "2026-08-23/1722-closed.json",
+    "2026-08-23/1723-closed.json"
+  ],
+  "latest": "2026-08-23/1723-closed.json"
+}

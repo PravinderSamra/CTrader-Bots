@@ -1,0 +1,300 @@
+{
+  "schema": 1,
+  "scan_utc": "2026-08-23T15:42:32+00:00",
+  "scan_et": "2026-08-23 11:42 ET (Sun)",
+  "trading_day": "2026-08-23",
+  "session_window": "CLOSED",
+  "is_trading_day": false,
+  "prediction": {
+    "price_at_scan": 29290.5,
+    "bias_score": -6,
+    "bias_label": "BEARISH",
+    "strategy": "STRATEGY 2 \u2014 CISD -> HH/HL -> fib OTE continuation. Below the flip in negative gamma: dealers amplify, sweeps run rather than fail. Strategy-1 fades have a materially lower hit rate here \u2014 only take them at the far walls.",
+    "event_gate": null,
+    "expected_direction": -1,
+    "gamma_flip": 29331.8,
+    "expiry_shape": "FRONT_FLAT_BACK_SHORT",
+    "fuel_state": "MODERATE",
+    "remaining_budget": 156.1,
+    "adr14": 474.7,
+    "adr_used_pct": 67.1,
+    "levels": [
+      {
+        "price": 29452.2,
+        "name": "PDH + London High (prev-day) + Equal highs \u00d72",
+        "kind": "liquidity",
+        "dist": 161.7,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 3
+      },
+      {
+        "price": 29422.4,
+        "name": "PWL",
+        "kind": "liquidity",
+        "dist": 131.9,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29401.3,
+        "name": "NY High (prev-day)",
+        "kind": "liquidity",
+        "dist": 110.8,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29381.6,
+        "name": "CALL WALL 9k [MODERATE] + MAX PAIN + Options shelf 0.29bn",
+        "kind": "gamma",
+        "dist": 91.1,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 3
+      },
+      {
+        "price": 29331.8,
+        "name": "GAMMA FLIP",
+        "kind": "gamma",
+        "dist": 41.3,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29314.4,
+        "name": "Asia High (prev-day)",
+        "kind": "liquidity",
+        "dist": 23.9,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29294.2,
+        "name": "London Low (prev-day) + PD mid",
+        "kind": "liquidity",
+        "dist": 3.7,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 2
+      },
+      {
+        "price": 29290.0,
+        "name": "PD close",
+        "kind": "magnet",
+        "dist": -0.5,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29274.6,
+        "name": "Equal lows \u00d72",
+        "kind": "liquidity",
+        "dist": -15.9,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29200.6,
+        "name": "Asia Low (prev-day)",
+        "kind": "liquidity",
+        "dist": -89.9,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29181.6,
+        "name": "PUT WALL 7k [MODERATE]",
+        "kind": "gamma",
+        "dist": -108.9,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29133.6,
+        "name": "PDL + NY Low (prev-day)",
+        "kind": "liquidity",
+        "dist": -156.9,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 2
+      },
+      {
+        "price": 28681.6,
+        "name": "STRUCTURAL PUT WALL 168k [MAJOR]",
+        "kind": "structural",
+        "dist": -608.9,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      }
+    ]
+  },
+  "inputs": {
+    "bias_components": [
+      {
+        "component": "gamma",
+        "points": -3,
+        "why": "below flip 29331.8 by 41.3pts \u2014 SHORT gamma, dealers amplify: downside accelerates, rallies unstable"
+      },
+      {
+        "component": "gamma",
+        "points": 1,
+        "why": "but price is straddling the flip (<0.15%) \u2014 regime unstable, reduce conviction"
+      },
+      {
+        "component": "gamma",
+        "points": -2,
+        "why": "week net GEX -0.329 $bn/1% -> expansion likely"
+      },
+      {
+        "component": "gamma",
+        "points": 0,
+        "why": "price mid-band (29181.6-29381.6), 54% up the range"
+      },
+      {
+        "component": "vol",
+        "points": 2,
+        "why": "VXN 21.98 (-5.5%) \u2014 fear falling, bullish"
+      },
+      {
+        "component": "vol",
+        "points": 1,
+        "why": "VIX9D/VIX 0.831 contango \u2014 calm, mean-reversion favoured, mild upward drift"
+      },
+      {
+        "component": "vol",
+        "points": -1,
+        "why": "VXN/VIX 1.45 \u2014 tech-specific stress priced above the broad market"
+      },
+      {
+        "component": "vol",
+        "points": 0,
+        "why": "VVIX 86.27 \u2014 no tail-hedge bid"
+      },
+      {
+        "component": "rates",
+        "points": -1,
+        "why": "US10y 4.738 (+0.89%) \u2014 yields up, multiple compression, BEARISH tech"
+      },
+      {
+        "component": "rates",
+        "points": 0,
+        "why": "DXY 98.839 (-0.06%) \u2014 dollar flat"
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Real yield, 10y (DFII10)** \u2014 what lenders earn after inflation \u2014 is 2.35%, flat 0bp today and 4bp over 5 days. No change today \u2014 watch the 5-day direction instead."
+      },
+      {
+        "component": "macro",
+        "points": -1,
+        "why": "**10y nominal yield (DGS10)** moved 4bp up (2026-08-19 to 2026-08-20). That was driven by inflation expectations, not real rates \u2014 a softer signal that only hurts tech if the Fed then reacts to it."
+      },
+      {
+        "component": "macro",
+        "points": 2,
+        "why": "**High-yield credit spread (HY OAS)** \u2014 the extra interest demanded to lend to riskier companies is 2.75% (+4bp over 5 days). Low and steady: the bond market is relaxed about risk, which gives stocks permission to rise."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Financial conditions (NFCI)** \u2014 how easy it is to borrow money across the economy \u2014 is EASIER than normal (-0.559). Cheap, available money is a background tailwind for stocks."
+      },
+      {
+        "component": "macro",
+        "points": -1,
+        "why": "**Fed balance sheet (WALCL) / reverse repo (RRP)** \u2014 cash in the financial system. The Fed is holding $6.75tn of assets, shrinking by $14.3bn this week, and the spare-cash buffer is down to $0.2bn. The Fed is quietly pulling money out of the system \u2014 a slow, persistent drag on stocks, not a day-trade signal."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Yield curve (10y\u20132y)** \u2014 long vs short bond yields. The 10-year pays +0.50% more than the 2-year. Barely moved."
+      },
+      {
+        "component": "breadth",
+        "points": 0,
+        "why": "mega-cap avg +0.01% (2/4 up): NVDA -0.98%, MSFT +0.43%, AAPL -0.63%, AVGO +1.21%"
+      },
+      {
+        "component": "breadth",
+        "points": 0,
+        "why": "NDX +0.33% vs ES +0.38% \u2014 in line"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "ADR14 474.7, 67.1% used vs ~78% normal by 11:42 ET -> fuel_ratio 0.86 (normal) [MODERATE]"
+      },
+      {
+        "component": "structure",
+        "points": -1,
+        "why": "price below PD mid 29292.9 (PDH 29452.2 / PDL 29133.6)"
+      },
+      {
+        "component": "structure",
+        "points": -3,
+        "why": "price is BELOW the entire prior-week range (29422.4-30175.7) \u2014 weekly draw has flipped bearish; PWL 29422.4 is now resistance, not support"
+      },
+      {
+        "component": "structure",
+        "points": 1,
+        "why": "in-reach unmitigated pools: 3 above / 1 below \u2014 draw higher"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "0 auto-scored headline(s) (0 bull / 0 bear) -> NEUTRAL; 47 more need reading in context (not counted here)"
+      },
+      {
+        "component": "events",
+        "points": 0,
+        "why": "NVDA earnings 2026-08-26 time-after-hours (cons $2.01) \u2014 INDEX-DEFINING event; day before pins, day after expands"
+      }
+    ],
+    "fuel": {
+      "adr14": 474.7,
+      "today_range": 318.6,
+      "adr_used_pct": 67.1,
+      "remaining_budget": 156.1,
+      "expansion_state": "MODERATE",
+      "volume_relative": 0.71,
+      "volume_state": "normal"
+    },
+    "gamma": {
+      "near_expiry_0_2dte": 0.002,
+      "this_week": -0.329,
+      "full_45dte": -0.944
+    },
+    "call_wall": 29381.6,
+    "put_wall": 29181.6,
+    "max_pain": 29381.6,
+    "vol": {
+      "vxn": 21.98,
+      "vix": 15.13,
+      "vix9d_over_vix": 0.831
+    },
+    "rates": {
+      "us10y": 4.738,
+      "dxy": 98.839
+    },
+    "news": {
+      "raw_score": 0,
+      "bias_points": 0,
+      "label": "NEUTRAL",
+      "scored_high_confidence": 0,
+      "needs_model_judgement": 47
+    },
+    "events_24h": []
+  },
+  "outcome": null
+}

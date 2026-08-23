@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+
+# The journal MUST be committed. Cloud containers are wiped between
+# sessions, so an ignored journal means Phase 4 has nothing to learn from.
+!journal/

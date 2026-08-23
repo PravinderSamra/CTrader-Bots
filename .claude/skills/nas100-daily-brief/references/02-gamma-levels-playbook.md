@@ -1,0 +1,162 @@
+# 02 — Gamma levels: what they are and how to trade them
+
+Large options dealers hedge continuously. Their hedging is mechanical and
+predictable, which makes these levels different from ordinary support and
+resistance: price reacts to *flow*, not to sentiment.
+
+## Gamma flip — the most important line on the chart
+The price where dealer hedging switches sign.
+
+**Above it** dealers hedge *against* the move — selling rallies, buying dips.
+Volatility compresses, moves mean-revert, ranges hold. Sweeps genuinely fail.
+**Below it** they hedge *with* the move — selling weakness, buying strength.
+Volatility expands, trends persist, dips are not bought.
+
+It is a **regime switch, not support/resistance**. Price crossing it is rarely
+rejected cleanly; what changes is the character of everything after. Expect
+visibly different 1m candles within 15–30 minutes of a cross.
+
+Crossing it mid-trade is a management trigger: if you're in a Strategy-1 fade
+and price breaks the flip against you, your edge just inverted. Tighten or exit.
+
+## Call wall
+The strike with the most call gamma above. Dealers must **sell** as price rises
+into it, so rallies stall. The strongest magnetic ceiling on the board and a
+prime Strategy-1 short-sweep level.
+
+**Held break above inverts it.** The hedge flips to buying — a gamma squeeze.
+A clean 1m close and hold above turns resistance into a launchpad. That's a
+Strategy-2 long, not a fade.
+
+## Put wall
+The strike with the heaviest put gamma below.
+
+**In positive gamma:** a defended floor. Price decelerates, wicks, reverses —
+a prime Strategy-1 long-sweep level.
+**In negative gamma it inverts, and this is what costs people money.** Dealers
+short gamma must sell into the decline, so a break of the put wall is where
+acceleration *happens*, not where it stops. Treat the break as a continuation
+short trigger, never a bounce.
+
+The brief states which case applies today. Follow it.
+
+## Reading wall strength
+
+Walls carry a strength scale and their gamma force:
+
+```
+CALL WALL ●●●●● 0.56bn        PUT WALL ●●●○○ 0.28bn
+```
+
+**The dots are gamma force ($GEX), not contract count**, and they are relative
+to the strongest wall *of the same type* in that run.
+
+Why not contract count — measured on real data:
+
+| Wall | Contracts | Force | Distance | Force per 1k contracts |
+|---|---|---|---|---|
+| Weekly call | 8,657 | 0.56bn | +91 | **0.0647** |
+| Weekly put | 7,091 | 0.28bn | −109 | 0.0392 |
+| 45-day put | **168,275** | 1.01bn | **−609** | **0.0060** |
+
+The structural wall holds **24× the contracts** of the weekly put wall but
+produces only **3.6× the force** — and per contract it is **11× weaker** than
+the at-the-money call wall. Gamma collapses with distance from spot, so a
+distant wall can be enormous on paper and still barely move price.
+
+**What the dots mean in practice:** ●●●●● is the wall dealers must trade
+hardest to defend among its peers — expect the strongest reaction. ●○○○○ is
+present but thin; treat it as a pause, not a floor.
+
+**Scaling is within-group on purpose.** Comparing a structural wall's absolute
+force against an intraday one made a level 609pts away render as the strongest
+thing on the board. The absolute $bn is printed so you can still compare across
+groups when you want to.
+
+**Tenor confluence is the strongest signal.** When the weekly wall and the
+45-day wall sit at the same strike, the level is defended across expiries — the
+note says so explicitly ("It is ALSO the 45-day call wall"). Those are the
+highest-quality walls on the board.
+
+## Structural walls — what they actually do for a DAY trader
+
+A 45-day wall several hundred points away is **not a level you will trade
+today**. Price will not reach it inside one session's range. Be clear about
+that: it is not support you can lean on intraday.
+
+It earns its place for three indirect reasons, and only the third is a daily
+decision input:
+
+1. **It anchors the gamma flip.** The flip is computed from the whole book, so
+   large distant open interest moves it. The structural wall is part of why
+   today's flip sits where it does — and the flip decides which strategy works.
+2. **It becomes relevant later.** As those contracts approach expiry their gamma
+   rises and they start to bite. Irrelevant today, material in a few weeks.
+3. **It marks where the corridor ends** — and the corridor is very much today's
+   business. See below.
+
+## The corridor read — the intraday translation
+
+This is the part that matters for a day trade. The brief reports what sits
+**between price and the next real barrier** in each direction:
+
+```
+- DOWNSIDE path: clear. Every options shelf from here to 28931.6
+  (359pts, 0.76x ADR) is negative gamma — nothing structural to slow a
+  breakdown. If it goes, it has room. Do not fade it.
+- UPSIDE path: has friction. Expect a stall at 29381.6 (91pts away) —
+  take partials into it rather than assuming a clean breakout.
+```
+
+**Only a positive gamma shelf actually brakes a move.** A run of negative
+shelves is a low-friction corridor — an air pocket. So the useful daily
+question is not "where is the big wall" but "is there anything between me and
+it".
+
+| Reading | What to do today |
+|---|---|
+| **Path clear** | A break has room. Don't fade it; give the trade space and trail rather than target |
+| **Path mostly clear** | First brake is beyond today's budget — inside today's range there is little to stop it |
+| **Path has friction** | Expect a stall at the named level. Take partials into it, don't assume a clean run |
+
+## Structural walls on the board
+
+
+
+`STRUCTURAL CALL/PUT WALL` rows come from the 45-day book and are usually far
+outside today's range. That is the point: they are the **week/month** boundary,
+not an intraday trigger. Mark them once and leave them — they are where a
+multi-day move runs out of room.
+
+They are deliberately exempt from the range-budget filter that removes other
+distant levels, and they carry no `(stretch)` tag, because "partials only" is
+the wrong framing for a boundary you are not trading toward today.
+
+## Max pain
+Where the most options expire worthless. A weak magnet on Monday, strong by
+Thursday/Friday. **Coincident with the call wall = a hard pin.**
+
+## Positive gamma shelves
+Bins with large positive net gamma — price gets sticky. Good places to take
+partials rather than push through.
+
+Negative shelves are deliberately *not* on the board: price accelerates through
+them, so there is nothing to trade at the level itself.
+
+## Shape of the day — how the expiry buckets combine
+Near-dated gamma decays *during* the session, so when the buckets disagree the
+day has two regimes.
+
+| Shape | What to do |
+|---|---|
+| `COHERENT_SHORT` | Whole book short gamma. Expansion, high conviction. ADR can be exceeded |
+| `COHERENT_LONG` | Pinned range. Fade at the walls, keep targets modest |
+| `PIN_THEN_EXPAND` | **Chop early, resolves late.** Be patient in the morning; save risk for after ~13:00 ET as 0DTE gamma decays |
+| `SPIKE_THEN_REVERT` | Sharp move that mean-reverts. Fade extremes back to the middle only |
+| `FRONT_FLAT_BACK_*` | Nothing pinning price today; the longer book sets the tone. Lower conviction |
+
+## Honest limits
+- CBOE data is ~15 minutes delayed. This is a map, not a live feed.
+- Dealer positioning is *assumed* (long calls / short puts), not observed.
+  Levels and regime are robust; absolute dollar figures are approximate.
+  Nobody — free or paid — actually knows dealer inventory.
