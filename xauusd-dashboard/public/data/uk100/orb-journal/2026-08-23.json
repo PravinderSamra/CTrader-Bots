@@ -1,0 +1,76 @@
+{
+  "date": "2026-08-23",
+  "entries": [
+    {
+      "at": "2026-08-23T16:21:48.202Z",
+      "londonTime": "17:21 BST",
+      "mode": "CLOSED",
+      "price": 10805.05,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 118% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "118% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 100th percentile of its 20-day range and still rising — a persistent FX headwind capping upside breaks (weak GBP is what lifts FTSE)."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.58%) — the cross-market lean is up."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to sterling sitting at its 100th percentile (strongest in 20 days), 118% of the 14-day average daily range already consumed, and a crowded GBP short that could squeeze further at any moment, tomorrow's 08:00 ORB breakouts — especially to the upside — will need strong overnight range context and volume confirmation before trusting them.",
+      "aiBullets": [
+        "At 118% of ADR-14 (84.6 pts) already used, the index has statistically overextended its typical daily fuel — any ORB break tomorrow starts from a compacted overnight range, likely tightening the opening range itself and raising false-break risk.",
+        "GBP at the 100th percentile of its 20-day range AND a crowded-short positioning read (net short 53,966 contracts) creates a double-edged FX threat: a further squeeze higher in sterling directly undermines any long ORB break on FTSE.",
+        "Copper +1.53% and Brent +0.82% both bullish today, but these commodity gains are a today story — if they fade overnight, the miner and energy tailwind that supported 10,805 won't carry forward to support an upside ORB break at 08:00.",
+        "The 76.5-point gap up from prior close (10,728.5 to current 10,805) with no ORB high/low yet set means tomorrow's cash open will define the first clean range — watch whether the index opens above or below the prior week low (10,710) for directional context."
+      ],
+      "bias": {
+        "score": 5,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": null,
+        "orbLow": null,
+        "orbBrokenDirection": null,
+        "overnightHigh": null,
+        "overnightLow": null,
+        "priorDayHigh": 10759.1,
+        "priorDayLow": 10673.9,
+        "gapPct": 0.71,
+        "adr14": 84.6,
+        "adrUsedPct": 118
+      },
+      "outcome": {
+        "resolvedAt": "2026-08-23T16:21:50.245Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
+    }
+  ]
+}
