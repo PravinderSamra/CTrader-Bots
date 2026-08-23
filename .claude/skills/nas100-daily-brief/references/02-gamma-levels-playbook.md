@@ -42,15 +42,36 @@ The brief states which case applies today. Follow it.
 
 ## Reading wall strength
 
-Walls are labelled with contract count and a band, because a 7k wall and a 168k
-wall are not the same level and must not look the same on a chart:
+Walls carry a strength scale and their gamma force:
 
-| Band | Contracts | What it means |
-|---|---|---|
-| `LIGHT` | < 5k | Thin. Expect little more than a pause |
-| `MODERATE` | 5–25k | A normal weekly wall. Real, but breakable |
-| `STRONG` | 25–100k | Heavily defended |
-| `MAJOR` | > 100k | Structural. Where a multi-day move is defended |
+```
+CALL WALL ●●●●● 0.56bn        PUT WALL ●●●○○ 0.28bn
+```
+
+**The dots are gamma force ($GEX), not contract count**, and they are relative
+to the strongest wall *of the same type* in that run.
+
+Why not contract count — measured on real data:
+
+| Wall | Contracts | Force | Distance | Force per 1k contracts |
+|---|---|---|---|---|
+| Weekly call | 8,657 | 0.56bn | +91 | **0.0647** |
+| Weekly put | 7,091 | 0.28bn | −109 | 0.0392 |
+| 45-day put | **168,275** | 1.01bn | **−609** | **0.0060** |
+
+The structural wall holds **24× the contracts** of the weekly put wall but
+produces only **3.6× the force** — and per contract it is **11× weaker** than
+the at-the-money call wall. Gamma collapses with distance from spot, so a
+distant wall can be enormous on paper and still barely move price.
+
+**What the dots mean in practice:** ●●●●● is the wall dealers must trade
+hardest to defend among its peers — expect the strongest reaction. ●○○○○ is
+present but thin; treat it as a pause, not a floor.
+
+**Scaling is within-group on purpose.** Comparing a structural wall's absolute
+force against an intraday one made a level 609pts away render as the strongest
+thing on the board. The absolute $bn is printed so you can still compare across
+groups when you want to.
 
 **Tenor confluence is the strongest signal.** When the weekly wall and the
 45-day wall sit at the same strike, the level is defended across expiries — the

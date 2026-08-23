@@ -110,14 +110,38 @@ def level_board(d):
     def oi_short(n):
         return f"{n/1000:.0f}k" if n >= 1000 else str(int(n))
 
-    def strength(n):
-        # Bands calibrated against observed NDX+QQQ walls: weekly walls run
-        # 5-10k, the full-book structural walls 15-170k.
-        return ("MAJOR" if n >= 100_000 else "STRONG" if n >= 25_000
-                else "MODERATE" if n >= 5_000 else "LIGHT")
-
     cw, pw = wk.get("call_wall"), wk.get("put_wall")
     fcw, fpw = full.get("call_wall"), full.get("put_wall")
+
+    # Strength is measured in GAMMA FORCE ($GEX), not contract count.
+    #
+    # An earlier version banded walls by open interest. Measured on real data
+    # that is misleading: the 45-day put wall held 168,275 contracts against the
+    # weekly put wall's 7,091 (24x the OI) but produced only 3.6x the hedging
+    # force, because gamma collapses with distance from spot. Per contract it
+    # was 11x WEAKER than the at-the-money weekly call wall. Contract count
+    # says how many bets sit there; $GEX says how hard dealers must trade to
+    # stay hedged, and only the second one moves price.
+    #
+    # The scale is RELATIVE to the strongest wall in this run, so it adapts to
+    # a quiet week vs an OPEX week instead of relying on fixed thresholds that
+    # would be wrong half the time.
+    # Normalised WITHIN GROUP — this-week walls against each other, structural
+    # walls against each other. Comparing across groups was misleading in the
+    # other direction: the structural put wall has the highest absolute force
+    # (1.01bn) purely because it holds 168k contracts, so it rendered as the
+    # strongest thing on the board while sitting 609pts away and being
+    # irrelevant to today. Dots now answer "how strong is this among walls of
+    # its own kind", which is the question that has a useful answer. The
+    # absolute $bn is printed alongside for cross-group comparison.
+    _wk_peak = max((w.get("gex_$bn", 0) for w in (cw, pw) if w), default=0) or 1.0
+    _st_peak = max((w.get("gex_$bn", 0) for w in (fcw, fpw) if w), default=0) or 1.0
+
+    def wall_tag(w, structural=False):
+        g = w.get("gex_$bn", 0) or 0
+        share = g / (_st_peak if structural else _wk_peak)
+        filled = max(1, min(5, int(share * 5 + 0.5)))
+        return "\u25cf" * filled + "\u25cb" * (5 - filled) + f" {g:.2f}bn"
 
     if cw:
         # Same strike in both tenors = the wall is defended across expiries,
@@ -126,39 +150,43 @@ def level_board(d):
         extra = (f" It is ALSO the 45-day call wall ({oi_short(fcw['oi'])} "
                  f"contracts) — defended across expiries, so it is the strongest "
                  f"ceiling on the board." if conf else "")
-        push(f"CALL WALL {oi_short(cw['oi'])} [{strength(cw['oi'])}]",
+        push(f"CALL WALL {wall_tag(cw)}",
              cw["nas100"], "gamma",
-             f"Heaviest ceiling this week — desks must SELL as price rises into "
-             f"it, so rallies stall. Take profit into it. A held close above "
-             f"flips that selling to buying and it becomes a launchpad.{extra}")
+             f"Heaviest ceiling this week ({oi_short(cw['oi'])} contracts) — "
+             f"desks must SELL as price rises into it, so rallies stall. Take "
+             f"profit into it. A held close above flips that selling to buying "
+             f"and it becomes a launchpad.{extra}")
     if pw:
         conf = fpw and abs(fpw["nas100"] - pw["nas100"]) <= 5
         extra = (f" It is ALSO the 45-day put wall ({oi_short(fpw['oi'])} "
                  f"contracts) — defended across expiries, so it is the strongest "
                  f"floor on the board." if conf else "")
-        push(f"PUT WALL {oi_short(pw['oi'])} [{strength(pw['oi'])}]",
+        push(f"PUT WALL {wall_tag(pw)}",
              pw["nas100"], "gamma",
-             (f"Heaviest floor this week — expect a bounce and a good long-sweep "
-              f"here.{extra}" if long_gamma else
-              f"Heaviest floor this week, BUT today the desks are pushing moves "
-              f"along — if it breaks, expect it to speed UP, not bounce. Don't "
-              f"buy the break.{extra}"))
+             (f"Heaviest floor this week ({oi_short(pw['oi'])} contracts) — "
+              f"expect a bounce and a good long-sweep here.{extra}" if long_gamma
+              else
+              f"Heaviest floor this week ({oi_short(pw['oi'])} contracts), BUT "
+              f"today the desks are pushing moves along — if it breaks, expect "
+              f"it to speed UP, not bounce. Don't buy the break.{extra}"))
 
     # STRUCTURAL walls from the 45-day book. These are frequently far outside
     # today's range and were being filtered off the board entirely — but a
     # 168k-contract concentration is the level a multi-day move stops at, and
     # it belongs on the chart even when it is not today's target.
     if fcw and (not cw or abs(fcw["nas100"] - cw["nas100"]) > 5):
-        push(f"STRUCTURAL CALL WALL {oi_short(fcw['oi'])} [{strength(fcw['oi'])}]",
+        push(f"STRUCTURAL CALL WALL {wall_tag(fcw, structural=True)}",
              fcw["nas100"], "structural",
-             f"The 45-day call wall — the ceiling for the WEEK/MONTH, not today. "
+             f"The 45-day call wall ({oi_short(fcw['oi'])} contracts) — the "
+             f"ceiling for the WEEK/MONTH, not today. "
              f"Mark it and leave it: it is where a multi-day rally runs out of "
              f"room, not an intraday trigger")
     if fpw and (not pw or abs(fpw["nas100"] - pw["nas100"]) > 5):
-        push(f"STRUCTURAL PUT WALL {oi_short(fpw['oi'])} [{strength(fpw['oi'])}]",
+        push(f"STRUCTURAL PUT WALL {wall_tag(fpw, structural=True)}",
              fpw["nas100"], "structural",
-             f"The 45-day put wall and the single biggest options concentration "
-             f"on the chain — the floor for the WEEK/MONTH. Mark it and leave "
+             f"The 45-day put wall ({oi_short(fpw['oi'])} contracts) and the "
+             f"biggest concentration on the chain — the floor for the "
+             f"WEEK/MONTH. Mark it and leave "
              f"it: where a multi-day sell-off is defended, not an intraday trigger")
     push("MAX PAIN", gx["max_pain_week"]["nas100"], "gamma",
          "Where the most options expire worthless — price drifts toward it as "
@@ -255,6 +283,8 @@ def markdown_levels_only(d):
         "EXHAUSTED": "do not initiate; if already in, take partials and be flat before the close.",
     }[f["expansion_state"]] + "\n")
     board, far = level_board(d)
+    A("_Wall strength ●●●○○ is **gamma force** relative to the strongest wall "
+      "of the same type, not contract count._\n")
     A("| NAS100 | dist | level | what to expect |")
     A("|---|---|---|---|")
     for r in board:
@@ -430,6 +460,10 @@ def markdown(d):
 
     A("## 4. Level board — mark these\n")
     board, far = level_board(d)
+    A("_Wall strength ●●●○○ is **gamma force** relative to the strongest wall "
+      "of the same type — how hard dealers must trade to stay hedged there. Not "
+      "contract count: a far-away wall can hold 24x the contracts and still "
+      "push price less, because gamma collapses with distance._\n")
     A(f"_Same price = one line, so a level named twice is two reasons to "
       f"respect it (⭐). Today's remaining range budget is "
       f"**{f['remaining_budget']:.0f}pts** — anything marked _(stretch)_ is "

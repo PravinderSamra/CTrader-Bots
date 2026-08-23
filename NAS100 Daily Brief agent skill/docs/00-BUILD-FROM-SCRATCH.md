@@ -226,10 +226,29 @@ Chosen: `tol = max(12, ADR14 × 0.03)` ≈ 14pts. Below ~10pts every swing becom
 its own "pool" and the equal-highs signal vanishes. NAS100 needs a far wider
 band than FX because ADR14 is ~475 points.
 
-**Wall strength is part of the level's name**, not buried in prose: `PUT WALL
-7k [MODERATE]`, `STRUCTURAL PUT WALL 168k [MAJOR]`. Bands are LIGHT <5k,
-MODERATE 5–25k, STRONG 25–100k, MAJOR >100k, calibrated against observed
-NDX+QQQ walls (weekly walls run 5–10k; full-book structural walls 15–170k).
+**Wall strength is measured in gamma force ($GEX), not open interest.** A first
+version banded walls by contract count. Measured on real data that is
+misleading in both directions:
+
+| Wall | Contracts | Force | Distance | Force per 1k |
+|---|---|---|---|---|
+| Weekly call | 8,657 | 0.56bn | +91 | 0.0647 |
+| Weekly put | 7,091 | 0.28bn | −109 | 0.0392 |
+| 45-day put | 168,275 | 1.01bn | −609 | **0.0060** |
+
+24× the contracts, 3.6× the force, and 11× weaker *per contract* than the
+at-the-money wall — because gamma collapses with distance from spot. Contract
+count says how many bets sit there; $GEX says how hard dealers must trade to
+stay hedged, and only the second one moves price.
+
+The scale is **relative to the strongest wall of the same type in that run**
+rather than fixed thresholds, so it adapts to a quiet week versus an OPEX week.
+Normalising across groups instead made a wall 609pts away render as the
+strongest level on the board, so intraday and structural walls are ranked
+separately and the absolute $bn is printed for cross-group comparison.
+
+*(Note: `round()` is banker's rounding, so a wall at exactly half strength
+rendered 2 dots instead of 3 until half-up rounding was used explicitly.)*
 
 **Tenor confluence** — the weekly and 45-day wall at the same strike — is called
 out explicitly, because a wall defended across expiries is materially stronger
