@@ -21,7 +21,7 @@ it is the same upstream data the paid vendors resell.
 
 **Both chains are required.** NDX index options are where institutional hedging
 sits; QQQ is where the volume is. Using NDX alone under-counts dealer gamma
-badly. `prototypes/gex_levels.py` loads both and scales QQQ strikes into NDX
+badly. `.claude/skills/nas100-daily-brief/scripts/gex_levels.py` loads both and scales QQQ strikes into NDX
 points with the live NDX/QQQ ratio (**41.034** measured 2026-08-22), giving one
 combined book: **3,608 NDX + 3,943 QQQ contracts** inside 45 DTE.
 

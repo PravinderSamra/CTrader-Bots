@@ -585,6 +585,21 @@ and exclude any it finds.
 
 ---
 
+# 8b. Reliability notes
+
+**cTrader sessions expire under load.** The client retried expiry once, which is
+enough for an idle session but not for `fetch_ohlcv_paged`, which issues dozens
+of sequential calls — a re-initialised session can expire again immediately.
+Observed as `get_trendbars: no result ({'_session_expired': True})` killing an
+entire brief on the third consecutive run. A scheduled job that dies here
+produces no brief at all, so the retry is now bounded with backoff (3 attempts,
+0.4s/0.8s/1.2s) and reports a clear message if it still fails.
+
+**Journal entries are never edited, even when superseded.** Entries written
+before the wall-strength change still contain the old `[MAJOR]`/`[MODERATE]`
+labels. That is correct: a journal records what was said at the time, and
+rewriting history would corrupt every statistic Phase 4 draws from it.
+
 # 9. Honest limitations
 
 1. CBOE options data is **~15 minutes delayed**. A map, not a live feed.

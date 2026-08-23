@@ -1,7 +1,7 @@
 # 02 — Data Source Registry (every entry connection-tested)
 
 All probes run **2026-08-22 09:44–09:52 UTC** from this session via
-`prototypes/source_health.py`. Re-run that script any time; it prints
+`.claude/skills/nas100-daily-brief/scripts/source_health.py`. Re-run that script any time; it prints
 PASS/FAIL per source with latency and a content sanity-check.
 
 **Result: 31 of 32 candidate sources LIVE. 0 API keys required for the core brief; one free optional key (FRED) adds the real-rate, credit and liquidity layer.**
@@ -42,7 +42,7 @@ Caveats, honestly stated:
   levels are a *map*, not a live tick feed. Refresh mid-session if you want the
   intraday drift in 0DTE gamma.
 - **Payload is 7 MB.** It must be parsed by a script, never read into context.
-  `prototypes/cboe_gex.py` reduces it to ~40 lines of JSON.
+  `.claude/skills/nas100-daily-brief/scripts/cboe_gex.py` reduces it to ~40 lines of JSON.
 - Greeks are CBOE's own model values. Fine for ranking strikes; the flip point
   is re-priced independently with Black-Scholes (see doc 03).
 

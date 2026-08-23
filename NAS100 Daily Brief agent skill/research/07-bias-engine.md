@@ -2,7 +2,7 @@
 
 You asked for **an opinion**, not a data dump. This is how it is produced —
 deterministically, so that a wrong call can always be traced to the input that
-caused it. `prototypes/bias_engine.py` implements this and runs today.
+caused it. `.claude/skills/nas100-daily-brief/scripts/bias_engine.py` implements this and runs today.
 
 ---
 

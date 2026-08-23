@@ -16,6 +16,7 @@ Endpoint / field shapes are documented in ctrader-mcp-integration-guide.md.
 
 import http.client
 import ssl
+import time
 import json
 import os
 from datetime import datetime, timezone, timedelta
@@ -134,14 +135,30 @@ def _call_tool(tool: str, arguments: dict) -> Optional[dict]:
                "params": {"name": tool, "arguments": arguments}, "id": 1}
     data, new_sid, status = _post(payload, _session_id)
 
-    expired = (data and data.get("_session_expired")) or (
-        data and "error" in data
-        and "session" in str(data.get("error", {}).get("message", "")).lower())
-    if expired:
+    def _expired(d):
+        return bool(d) and (d.get("_session_expired") or (
+            "error" in d
+            and "session" in str(d.get("error", {}).get("message", "")).lower()))
+
+    # Retry session expiry more than once. The original single retry was enough
+    # for an idle session, but fetch_ohlcv_paged issues dozens of sequential
+    # calls and a re-initialised session can expire again immediately under
+    # that load — observed as "get_trendbars: no result ({'_session_expired':
+    # True})" killing a whole brief. A scheduled run that dies here produces no
+    # brief at all, so it is worth a bounded backoff rather than one attempt.
+    attempts = 0
+    while _expired(data) and attempts < 3:
+        attempts += 1
         _session_id = None
+        time.sleep(0.4 * attempts)          # 0.4s, 0.8s, 1.2s
         if not _ensure_session():
             return None
         data, new_sid, status = _post(payload, _session_id)
+    if _expired(data):
+        _last_error = (f"{tool}: cTrader session kept expiring after "
+                       f"{attempts} retries — the service is likely rate "
+                       f"limiting or degraded. Try again shortly.")
+        return None
     if new_sid:
         _session_id = new_sid
 

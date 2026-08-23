@@ -52,7 +52,7 @@ been solving the wrong problem.
 
 ## 3. What we built instead — and what it taught us
 
-`prototypes/news_scorer.py`: ten keyless RSS feeds, a rules engine mapping
+`.claude/skills/nas100-daily-brief/scripts/news_scorer.py`: ten keyless RSS feeds, a rules engine mapping
 headlines to **NAS100 reaction** (not tone), with `research/04-news-layer.md`'s
 magnitudes and half-lives attached.
 
@@ -107,7 +107,7 @@ Jackson Hole debut as markets seek clarity on inflation"*, which is a
 materially important headline the brief would otherwise have missed entirely.
 
 ### Regression tests
-`prototypes/test_news_scorer.py` — **22 cases, 22 passing.** Every `FALSE` case
+`.claude/skills/nas100-daily-brief/scripts/test_news_scorer.py` — **22 cases, 22 passing.** Every `FALSE` case
 is a real misfire observed on live RSS; every `TRUE` case is hard news the
 `HIGH` tier must still catch, so that tightening the gates can never quietly
 reduce the scorer to "never fires". Two genuine bugs were caught by these tests

@@ -5,7 +5,7 @@ can be graded and improved.
 
 ---
 
-## 1. The journal (`prototypes/journal.py`)
+## 1. The journal (`.claude/skills/nas100-daily-brief/scripts/journal.py`)
 
 Every scan writes two files to `journal/<trading-day>/`:
 
@@ -47,7 +47,7 @@ fabricated record silently corrupts every statistic computed from the archive.
 
 ---
 
-## 2. The review engine (`prototypes/review_day.py`)
+## 2. The review engine (`.claude/skills/nas100-daily-brief/scripts/review_day.py`)
 
 Grades a past day's scans against real cTrader bars. Deliberately a **script,
 not a prompt** — the arithmetic is deterministic and must not be re-derived by a
@@ -99,7 +99,7 @@ predictions are immutable once written.
 
 ---
 
-## 4. Session awareness (`prototypes/session_context.py`)
+## 4. Session awareness (`.claude/skills/nas100-daily-brief/scripts/session_context.py`)
 
 Stops the brief being confusing about *when* it is:
 

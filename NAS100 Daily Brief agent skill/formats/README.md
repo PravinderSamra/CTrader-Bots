@@ -1,4 +1,16 @@
-# Phase 3 — Output format options
+# Phase 3 — Output format options  ⚠️ HISTORICAL
+
+> **These are the options considered, not the format shipped.** The brief was
+> refined in place instead: scoring table collapsed, regime written in plain
+> English with the technical read above it, level board cut from 30 rows to 13
+> and merged by price, wall strength by gamma force, plus the corridor read.
+>
+> **For the shipped format see `../examples_brief.md`** (a real generated brief)
+> and `docs/00-BUILD-FROM-SCRATCH.md` §6.7.
+>
+> Kept as a record of what was weighed and why — the price-ladder idea in
+> option A was not adopted, and the trigger/diff ideas in option C are still
+> open.
 
 The problem, measured: the current brief is **127 lines ≈ 8 phone screens**.
 You read it 15 minutes before the NY open, on a phone. That's the wrong shape.

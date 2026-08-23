@@ -60,6 +60,13 @@ argument.
 
 ## Recommended architecture
 
+> **Built as planned, with one change.** The scripts are NOT duplicated between
+> a project folder and the skill — they live only in
+> `.claude/skills/nas100-daily-brief/scripts/`, because two copies drift. The
+> project folder keeps research, docs, formats and the journal.
+> The layout below is the original proposal; see `docs/00-BUILD-FROM-SCRATCH.md`
+> §2 for what actually exists.
+
 ```
 .claude/skills/nas100-daily-brief/          <- Claude Code auto-loads this
 ├── SKILL.md                                <- ~1,200 tokens, always loaded
