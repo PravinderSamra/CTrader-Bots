@@ -1,5 +1,5 @@
 # NAS100 Daily Brief — 2026-08-23
-_generated 2026-08-23T11:33:03+00:00 · price **29290.5** (bid 29290.0 / ask 29291.1)_
+_generated 2026-08-23T12:08:20+00:00 · price **29290.5** (bid 29290.0 / ask 29291.1)_
 
 ## 1. The call: **BEARISH**  (score -6)
 
@@ -25,11 +25,11 @@ _generated 2026-08-23T11:33:03+00:00 · price **29290.5** (bid 29290.0 / ask 292
 | macro | +0 | 10y-2y +0.50pp (+0bp) — little change |
 | breadth | +0 | mega-cap avg +0.01% (2/4 up): NVDA -0.98%, MSFT +0.43%, AAPL -0.63%, AVGO +1.21% |
 | breadth | +0 | NDX +0.33% vs ES +0.38% — in line |
-| fuel | +0 | ADR14 474.7, 67.1% used vs ~42% normal by 11:00 UTC -> fuel_ratio 1.6 (burning hot) [MODERATE] |
+| fuel | +0 | ADR14 474.7, 67.1% used vs ~45% normal by 08:08 ET -> fuel_ratio 1.49 (burning hot) [MODERATE] |
 | structure | -1 | price below PD mid 29292.9 (PDH 29452.2 / PDL 29133.6) |
 | structure | -3 | price is BELOW the entire prior-week range (29422.4-30175.7) — weekly draw has flipped bearish; PWL 29422.4 is now resistance, not support |
 | structure | +1 | in-reach unmitigated pools: 3 above / 1 below — draw higher |
-| news | +0 | 0 auto-scored headline(s) (0 bull / 0 bear) -> NEUTRAL; 43 more need reading in context (not counted here) |
+| news | +0 | 0 auto-scored headline(s) (0 bull / 0 bear) -> NEUTRAL; 46 more need reading in context (not counted here) |
 | events | +0 | NVDA earnings 2026-08-26 time-after-hours (cons $2.01) — INDEX-DEFINING event; day before pins, day after expands |
 
 ## 2. Regime
@@ -57,7 +57,7 @@ _14 series, published with a 1-2 day lag — this is regime context, not an intr
 ## 3. Fuel & range budget
 
 - ADR14 **474.7** · today's range **318.6** (**67.1% used**) · raw budget left **156.1** → `MODERATE`
-- fuel_ratio vs time of day: **1.6**
+- fuel_ratio vs time of day: **1.49**
 - VXN-implied daily range: **405.6** pts (below ADR — options market prices a quieter day, use the smaller budget)
 - volume: **normal** (0.71)
 
@@ -106,7 +106,7 @@ _14 series, published with a 1-2 day lag — this is regime context, not an intr
 
 ## 6. News that matters
 
-_138 headlines from 10/10 feeds -> 43 relevant -> **0 auto-scored**, 43 for judgement._
+_137 headlines from 10/10 feeds -> 46 relevant -> **0 auto-scored**, 46 for judgement._
 
 **Scored: NEUTRAL (+0.00)**
 
@@ -114,14 +114,14 @@ _No headline was unambiguous enough to auto-score — read the judgement list be
 
 **Needs reading in context** (negation, hypotheticals and relevance are handled here, not by keywords):
 
+- [jackson_hole] The Week Ahead: Warsh Makes Jackson Hole Debut as Nvidia and Marvell Earnings Test AI Investment
+- [unclassified] Could This Unstoppable S&P 500 ETF Make You a Millionaire? Here's What 20 Years of Data Says.
+- [risk_on] Microsoft Stock Dropped 30% From Its All-Time High: 2 Reasons It Could Double by 2030 - Yahoo Fi — _modal/conditional — describes what MIGHT happen, not an event_
+- [risk_on] Microsoft Stock Dropped 30% From Its All-Time High: 2 Reasons It Could Double by 2030 — _modal/conditional — describes what MIGHT happen, not an event_
+- [unclassified] Citi expects Nvidia stock to trade higher post earnings
 - [earnings_beat] Nvidia Stock May Plunge After Earnings, Even If It Beats (NASDAQ:NVDA) - Seeking Alpha — _modal/conditional — describes what MIGHT happen, not an event_
 - [unclassified] Nvidia's Q2 earnings to test resurgent AI trade
 - [unclassified] Prediction: Nvidia Will Be a $6 Trillion Company Before 2026 Is Over and Its Run Kickstarts This
-- [unclassified] Citi expects Nvidia stock to trade higher post earnings - Investing.com
-- [cpi_cool] US Inflation Is Cooling on Paper, but Price Pressures Have Gone Far Beyond the Pump - finance.bi — _contrast clause (but/however/despite) qualifies the claim_
-- [unclassified] Nvidia Reportedly Warns Top Customers of 15% Price Hikes on AI Servers
-- [jackson_hole] Nvidia earnings and Jackson Hole: What to watch this week
-- [event_preview] What to Expect in Markets This Week: Nvidia Earnings; Software Firms, Discount Stores Also Repor
 
 ---
 _All figures computed from CBOE delayed quotes, cTrader NAS100 (id 116), Yahoo chart API, ForexFactory and Nasdaq calendars. No API keys. GEX assumes the standard long-call/short-put dealer convention — levels and regime are robust, absolute dollar figures are approximate._

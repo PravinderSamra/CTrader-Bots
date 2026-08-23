@@ -15,7 +15,7 @@ in the US 10y (`^TNX`) during the NY session is routinely worth 80–150 NAS100
 points, and it is *directional and immediate* — not a lagged effect.
 
 - **Yields up → NAS100 down.** Inverse correlation is tightest during
-  13:30–16:00 UTC and around data prints.
+  09:30–12:00 ET and around data prints.
 - The **2y/5y** (`^FVX`) carries Fed-path expectations; the **10y** carries term
   premium and growth. A rise led by the 2y is a hawkish-repricing selloff (fast,
   sharp, mean-reverts less). A rise led by the 10y is a term-premium/supply
@@ -59,18 +59,25 @@ The top ~8 names are roughly 50% of the index. NAS100 is, intraday, largely a
 ### 3. Scheduled US macro data
 Only a short list actually moves the index intraday. In descending order:
 
-| Event | Typical UTC | Why it matters | Reaction to a HOT print |
+**All times below are US Eastern, because that is what they are actually
+anchored to.** The UTC equivalent moves by an hour twice a year, and getting
+this wrong is not cosmetic — it puts the stand-aside window in the wrong place.
+`08:30 ET` = **12:30 UTC in EDT** (mid-Mar to early Nov) and **13:30 UTC in
+EST**. The scripts resolve this from the feed's own timestamps and from
+`zoneinfo`, so the brief always prints the correct UTC time for today.
+
+| Event | Time (ET) | Why it matters | Reaction to a HOT print |
 |---|---|---|---|
-| **CPI** | 13:30 | Direct input to the Fed path | Bearish NAS100, yields up. Often a 150–350pt initial impulse then a full or partial retrace within 60–90 min |
-| **FOMC decision + presser** | 19:00 / 19:30 | Rate path + dots + QT | Decision spike is noise; **the presser (19:30) sets the real direction**. Frequent full reversal between the two |
-| **NFP / jobs report** | 13:30 (1st Fri) | Growth vs. wage inflation | Ambiguous — strong jobs is bullish growth but hawkish rates. Reaction depends on regime; in a hawkish regime, strong jobs = bearish |
-| **PCE (core)** | 13:30 | The Fed's preferred gauge | Same sign as CPI, usually smaller |
-| **PPI** | 13:30 | Leads CPI | Smaller, but a big miss reprices the CPI expectation |
-| **ISM Services / Manufacturing** | 15:00 | Growth pulse | Weak = growth scare (bearish) unless it flips the Fed dovish |
-| **Jobless claims** | 13:30 Thu | Weekly labour tell | Small on its own; matters in clusters |
-| **Retail sales** | 13:30 | Consumer | Moderate |
-| **UoM sentiment + inflation expectations** | 15:00 | The 5–10y inflation-expectation subcomponent is the market mover, not the headline | Moderate–high on a surprise |
-| **Treasury auctions (10y/30y)** | 18:00 | A tailing auction lifts yields fast | Bearish on a poor auction |
+| **CPI** | 08:30 | Direct input to the Fed path | Bearish NAS100, yields up. Often a 150–350pt initial impulse then a full or partial retrace within 60–90 min |
+| **FOMC decision + presser** | 14:00 / 14:30 | Rate path + dots + QT | Decision spike is noise; **the presser (14:30 ET) sets the real direction**. Frequent full reversal between the two |
+| **NFP / jobs report** | 08:30 (1st Fri) | Growth vs. wage inflation | Ambiguous — strong jobs is bullish growth but hawkish rates. Reaction depends on regime; in a hawkish regime, strong jobs = bearish |
+| **PCE (core)** | 08:30 | The Fed's preferred gauge | Same sign as CPI, usually smaller |
+| **PPI** | 08:30 | Leads CPI | Smaller, but a big miss reprices the CPI expectation |
+| **ISM Services / Manufacturing** | 10:00 | Growth pulse | Weak = growth scare (bearish) unless it flips the Fed dovish |
+| **Jobless claims** | 08:30 Thu | Weekly labour tell | Small on its own; matters in clusters |
+| **Retail sales** | 08:30 | Consumer | Moderate |
+| **UoM sentiment + inflation expectations** | 10:00 | The 5–10y inflation-expectation subcomponent is the market mover, not the headline | Moderate–high on a surprise |
+| **Treasury auctions (10y/30y)** | 13:00 | A tailing auction lifts yields fast | Bearish on a poor auction |
 | **Fed speakers** | any | Reprices the path between meetings | Directional, size depends on the speaker's voting status |
 
 **Rule for the brief:** a Tier-0 print inside the next 90 minutes overrides
@@ -121,16 +128,19 @@ strategy 2's continuation model is the right tool).
 
 ## Session map for a UK-based NAS100 trader (all UTC)
 
-| Window | UTC | Character | What the brief should say |
-|---|---|---|---|
-| Globex re-open | 22:00 | Thin, gappy | Note the gap vs. the 21:00 close |
-| **Asia** | 23:00–07:00 | Low range, builds the Asia H/L that London sweeps | Mark Asia H/L — a primary strategy-1 sweep level |
-| **London** | 07:00–12:30 | First real liquidity; often sweeps Asia and sets a false direction | Mark London H/L; expect the London extreme to be revisited |
-| **Pre-NY / data** | 12:30–13:30 | Data lands at 13:30 | **Stand aside window** if a Tier-0 print is due |
-| **NY open drive** | 13:30–15:00 | Highest volume; the day's high or low forms here ~65% of the time | Primary window for both strategies |
-| **NY midday lull** | 15:30–17:30 | Volume dries, chop; positive gamma pins hardest here | Downgrade breakouts, favour fades |
-| **NY afternoon** | 17:30–20:00 | Reawakens; 0DTE gamma unwind and MOC imbalance | Second-best window; watch the call/put wall |
-| **Close** | 20:00–21:00 | MOC, position squaring | No new entries |
+Anchored to exchange local time. Only the Asia window is genuinely fixed in
+UTC (Tokyo has no DST); London and NY both shift.
+
+| Window | Local | UTC in summer (EDT/BST) | UTC in winter (EST/GMT) | Character |
+|---|---|---|---|---|
+| Globex re-open | 18:00 ET | 22:00 | 23:00 | Thin, gappy — note the gap vs. the roll |
+| **Asia** | — | 23:00–07:00 | 23:00–07:00 | Builds the Asia H/L that London sweeps |
+| **London** | 08:00–13:30 UK | 07:00–12:30 | 08:00–13:30 | First real liquidity; often sweeps Asia and sets a false direction |
+| **Pre-NY / data** | 08:30 ET print | 12:00–12:30 | 13:00–13:30 | **Stand aside** if a Tier-0 print is due |
+| **NY open drive** | 09:30–11:00 ET | 13:30–15:00 | 14:30–16:00 | Highest volume; the day's high or low forms here ~65% of the time |
+| **NY midday lull** | 11:30–13:30 ET | 15:30–17:30 | 16:30–18:30 | Volume dries, chop; positive gamma pins hardest |
+| **NY afternoon** | 13:30–16:00 ET | 17:30–20:00 | 18:30–21:00 | 0DTE gamma unwind and MOC imbalance |
+| **Close** | 16:00–17:00 ET | 20:00–21:00 | 21:00–22:00 | MOC, position squaring — no new entries |
 
 ---
 

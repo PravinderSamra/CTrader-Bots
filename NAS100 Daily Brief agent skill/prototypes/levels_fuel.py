@@ -16,6 +16,7 @@ Produces exactly the level set the two NAS100 strategies key off:
 """
 import json, os, sys
 from datetime import datetime, timezone, timedelta
+from zoneinfo import ZoneInfo
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _CANDIDATES = [
@@ -30,11 +31,46 @@ for _c in _CANDIDATES:
 import ctrader_http as ct                                    # noqa: E402
 
 SYMBOL = "NAS100"
-# UK-trader session windows in UTC. NAS100 CFD trades ~22:00–21:00 UTC.
-# Asia   = 23:00–07:00 UTC  (Tokyo open -> pre-London)
-# London = 07:00–12:30 UTC  (LSE open -> before NY cash)
-# NY     = 13:30–20:00 UTC  (NYSE cash session)
-SESSIONS = {"asia": (23, 7), "london": (7, 12.5), "ny": (13.5, 20)}
+
+# Session windows MUST be derived from exchange local time, not hardcoded UTC.
+# The original version hardcoded NY at 13:30-20:00 UTC and London at
+# 07:00-12:30 UTC. Both are wrong for half the year:
+#
+#   09:30 ET (NY cash open) = 13:30 UTC in EDT, 14:30 UTC in EST
+#   08:00 London (LSE open) = 07:00 UTC in BST, 08:00 UTC in GMT
+#
+# Tokyo does not observe DST, so the Asia window is genuinely fixed in UTC.
+# Getting this wrong shifts the session highs/lows — which are primary
+# strategy-1 sweep levels — by a full hour for ~8 months of the year.
+_ET = ZoneInfo("America/New_York")
+_LON = ZoneInfo("Europe/London")
+
+# (tz or None for fixed-UTC, start_local_hour, end_local_hour)
+_SESSION_SPEC = {
+    "asia":   (None, 23.0, 7.0),      # Tokyo open -> pre-London, no DST
+    "london": (_LON, 8.0, 13.5),      # LSE open -> before NY cash
+    "ny":     (_ET, 9.5, 16.0),       # NYSE cash session
+}
+
+
+def session_windows(on_date):
+    """Resolve the session windows to UTC hours for a given trading date,
+    honouring whatever DST rule is in force that day."""
+    out = {}
+    for name, (tz, h0, h1) in _SESSION_SPEC.items():
+        if tz is None:
+            out[name] = (h0, h1)
+            continue
+        out[name] = (_local_hour_to_utc(tz, on_date, h0),
+                     _local_hour_to_utc(tz, on_date, h1))
+    return out
+
+
+def _local_hour_to_utc(tz, on_date, hour):
+    h, m = int(hour), int(round((hour - int(hour)) * 60))
+    local = datetime(on_date.year, on_date.month, on_date.day, h, m, tzinfo=tz)
+    u = local.astimezone(timezone.utc)
+    return u.hour + u.minute / 60.0
 
 
 def _h(dt):
@@ -57,9 +93,9 @@ def trading_day(dt):
 
 
 def session_levels(bars, day):
-    """Asia/London/NY high-low for one trading day."""
+    """Asia/London/NY high-low for one trading day, DST-resolved."""
     out = {}
-    for name, (h0, h1) in SESSIONS.items():
+    for name, (h0, h1) in session_windows(day).items():
         if h0 > h1:   # wraps midnight (Asia)
             w = [b for b in bars if trading_day(b["time"]) == day
                  and (_h(b["time"]) >= h0 or _h(b["time"]) < h1)]

@@ -52,22 +52,26 @@ Three adjustments the generic model gets wrong on NAS100:
 ### a) Time-of-day fuel, not just total fuel
 NAS100 does not spend its range evenly. Roughly:
 
-| Window (UTC) | Typical share of the day's range consumed |
+| Window (US Eastern) | Typical share of the day's range consumed |
 |---|---|
-| Asia 23:00–07:00 | ~15% |
-| London 07:00–12:30 | ~25% |
-| **NY 13:30–16:00** | **~45%** |
-| NY 16:00–21:00 | ~15% |
+| Asia 19:00–03:00 ET | ~15% |
+| London 03:00–09:30 ET | ~25% |
+| **NY open 09:30–12:00 ET** | **~45%** |
+| NY afternoon 12:00–17:00 ET | ~15% |
 
-So "67% of ADR used" at **12:00 UTC** is a genuinely exhausted day — the
-biggest window has not even opened and the tank is nearly empty, which usually
-means a reversal day. The same 67% at **17:00 UTC** is completely normal.
+Keyed to **Eastern time, not UTC** — the curve tracks the session, and the
+session moves an hour against UTC twice a year. `bias_engine.expected_consumed()`
+resolves it with `zoneinfo`.
+
+So "67% of ADR used" at **08:00 ET** is a genuinely exhausted day — the biggest
+window has not even opened and the tank is nearly empty, which usually means a
+reversal day. The same 67% at **13:00 ET** is completely normal.
 
 **The brief must therefore report `adr_used_pct` *against the expected
 consumption for the current time of day*, not against 100%:**
 
 ```
-expected_used_by_now = cumulative share for the current UTC hour
+expected_used_by_now = cumulative share for the current EASTERN hour
 fuel_ratio           = adr_used_pct / expected_used_by_now
 ```
 - `fuel_ratio > 1.4` → **burning hot.** The day is trending or has already had
@@ -154,7 +158,7 @@ Additional triggers that force a management action regardless of state:
 One paragraph, every run:
 
 > **Fuel:** ADR14 474.7. Day range 318.6 = **67% used**, 156 pts of raw budget
-> left. It is 09:50 UTC — only ~40% of a normal day's range is usually spent by
+> left. It is 05:50 ET — only ~34% of a normal day's range is usually spent by
 > now, so the `fuel_ratio` is **1.7: burning hot**. VXN implies a 406-pt day
 > (below ADR), and we are **below the gamma flip** (negative gamma, ×1.3), so
 > the working budget is ~**165 pts**. Nearest in-reach pool above is 29,345

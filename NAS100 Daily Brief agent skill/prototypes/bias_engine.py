@@ -10,14 +10,30 @@ Score range roughly -20..+20.  >= +6 bullish, <= -6 bearish, else neutral.
 """
 import json, math, sys
 from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 
-# expected cumulative share of the day's range consumed, by UTC hour,
-# for the NAS100 CFD session (21:00 roll). Doc 06 section 2a.
-_CONSUMED_BY_HOUR = {
-    21: .02, 22: .04, 23: .06, 0: .08, 1: .10, 2: .12, 3: .14, 4: .16,
-    5: .18, 6: .20, 7: .25, 8: .30, 9: .34, 10: .38, 11: .42, 12: .45,
-    13: .50, 14: .66, 15: .78, 16: .85, 17: .89, 18: .92, 19: .96, 20: 1.0,
+# Expected cumulative share of the day's range consumed, keyed by **US Eastern
+# hour** — not UTC. The original table was keyed by UTC hour and happened to be
+# correct only during EDT: it put the big NY-open jump at 14:00 UTC, which is
+# 10:00 ET in summer but 09:00 ET in winter. Keying on ET makes the curve track
+# the actual session shape year-round, through both DST switches.
+#
+# 17:00 ET is the broker day roll / Globex reopen; 09:30 ET is the NY cash open,
+# which is where roughly 45% of the day's range gets spent.
+_CONSUMED_BY_ET_HOUR = {
+    17: .02, 18: .04, 19: .06, 20: .08, 21: .10, 22: .12, 23: .14,
+    0: .16, 1: .18, 2: .20,
+    3: .25, 4: .30, 5: .34, 6: .38, 7: .42, 8: .45, 9: .50,
+    10: .66, 11: .78, 12: .85, 13: .89, 14: .92, 15: .96, 16: 1.0,
 }
+
+
+def expected_consumed(now_utc=None):
+    """-> (fraction_of_ADR_normally_spent_by_now, 'HH:MM ET') for the current
+    moment, DST-resolved."""
+    now = now_utc or datetime.now(timezone.utc)
+    et = now.astimezone(ZoneInfo("America/New_York"))
+    return _CONSUMED_BY_ET_HOUR.get(et.hour, 0.5), et.strftime("%H:%M ET")
 
 
 def _pct(x):
@@ -154,11 +170,11 @@ def score(macro, levels, gex):
     # ---------------- 5. Structure / fuel ----------------------------------
     f = levels["fuel"]; lv = levels["levels"]
     used, adr = f["adr_used_pct"], f["adr14"]
-    hour = datetime.now(timezone.utc).hour
-    exp = _CONSUMED_BY_HOUR.get(hour, 0.5) * 100
+    frac, et_label = expected_consumed()
+    exp = frac * 100
     ratio = round(used / exp, 2) if exp else None
     add("fuel", 0, f"ADR14 {adr}, {used}% used vs ~{round(exp)}% normal by "
-                   f"{hour:02d}:00 UTC -> fuel_ratio {ratio} "
+                   f"{et_label} -> fuel_ratio {ratio} "
                    f"({'burning hot' if ratio and ratio>1.4 else 'coiled' if ratio and ratio<0.6 else 'normal'}) "
                    f"[{f['expansion_state']}]")
     if f["expansion_state"] in ("LOW_FUEL", "EXHAUSTED"):
