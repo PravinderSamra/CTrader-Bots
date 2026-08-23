@@ -1,9 +1,9 @@
 # NAS100 Daily Brief — 2026-08-23
-_2026-08-23 18:05 BST (Sun) · price **29290.5** (bid 29290.0 / ask 29291.1)_
+_2026-08-23 18:03 BST (Sun) · price **29290.5** (bid 29290.0 / ask 29291.1)_
 
 > Sunday — **weekend**. This is a PREP scan, not a live one: the numbers below are last session's close. Next session Monday 24 Aug.
 
-> Continuation — last scan 0.0h ago at 13:03 ET today. Read the CHANGES, not the whole brief.
+> Continuation — last scan 0.1h ago at 12:59 ET today. Read the CHANGES, not the whole brief.
 
 ## 1. The call: **BEARISH**  (score -6)
 
@@ -33,7 +33,7 @@ Driven by: **gamma -4** · **structure -3** · **vol +2** · **rates -1**
 | macro | +0 | **Yield curve (10y–2y)** — long vs short bond yields. The 10-year pays +0.50% more than the 2-year. Barely moved. |
 | breadth | +0 | mega-cap avg +0.01% (2/4 up): NVDA -0.98%, MSFT +0.43%, AAPL -0.63%, AVGO +1.21% |
 | breadth | +0 | NDX +0.33% vs ES +0.38% — in line |
-| fuel | +0 | ADR14 474.7, 67.1% used vs ~89% normal by 13:05 ET -> fuel_ratio 0.75 (normal) [MODERATE] |
+| fuel | +0 | ADR14 474.7, 67.1% used vs ~89% normal by 13:03 ET -> fuel_ratio 0.75 (normal) [MODERATE] |
 | structure | -1 | price below PD mid 29292.9 (PDH 29452.2 / PDL 29133.6) |
 | structure | -3 | price is BELOW the entire prior-week range (29422.4-30175.7) — weekly draw has flipped bearish; PWL 29422.4 is now resistance, not support |
 | structure | +1 | in-reach unmitigated pools: 3 above / 1 below — draw higher |
@@ -141,8 +141,8 @@ _No headline was unambiguous enough to auto-score — read the judgement list be
 
 **Needs reading in context** (negation, hypotheticals and relevance are handled here, not by keywords):
 
-- [unclassified] Dow Jones Futures Due; Nvidia Earnings, Canada Tariffs, Warsh In Focus
 - [unclassified] Your Last Chance to Buy Nvidia Stock for Cheap in 2026 May Be Near
+- [unclassified] Dow Jones Futures Due; Nvidia Earnings, Canada Tariffs, Warsh In Focus
 - [unclassified] Kashkari: Treasury Market Functioning, Yields Not a Policy Concern | Fed News - News and Statist
 - [unclassified] Hubbis Macro Corner: Sticky Inflation, AI Breadth and New Diversifiers Shape Portfolio Thinking 
 - [unclassified] The Three Minds Leading the Fed’s Inflation Rethink - WSJ

@@ -78,7 +78,50 @@ groups when you want to.
 note says so explicitly ("It is ALSO the 45-day call wall"). Those are the
 highest-quality walls on the board.
 
-## Structural walls — mark them, don't trade them
+## Structural walls — what they actually do for a DAY trader
+
+A 45-day wall several hundred points away is **not a level you will trade
+today**. Price will not reach it inside one session's range. Be clear about
+that: it is not support you can lean on intraday.
+
+It earns its place for three indirect reasons, and only the third is a daily
+decision input:
+
+1. **It anchors the gamma flip.** The flip is computed from the whole book, so
+   large distant open interest moves it. The structural wall is part of why
+   today's flip sits where it does — and the flip decides which strategy works.
+2. **It becomes relevant later.** As those contracts approach expiry their gamma
+   rises and they start to bite. Irrelevant today, material in a few weeks.
+3. **It marks where the corridor ends** — and the corridor is very much today's
+   business. See below.
+
+## The corridor read — the intraday translation
+
+This is the part that matters for a day trade. The brief reports what sits
+**between price and the next real barrier** in each direction:
+
+```
+- DOWNSIDE path: clear. Every options shelf from here to 28931.6
+  (359pts, 0.76x ADR) is negative gamma — nothing structural to slow a
+  breakdown. If it goes, it has room. Do not fade it.
+- UPSIDE path: has friction. Expect a stall at 29381.6 (91pts away) —
+  take partials into it rather than assuming a clean breakout.
+```
+
+**Only a positive gamma shelf actually brakes a move.** A run of negative
+shelves is a low-friction corridor — an air pocket. So the useful daily
+question is not "where is the big wall" but "is there anything between me and
+it".
+
+| Reading | What to do today |
+|---|---|
+| **Path clear** | A break has room. Don't fade it; give the trade space and trail rather than target |
+| **Path mostly clear** | First brake is beyond today's budget — inside today's range there is little to stop it |
+| **Path has friction** | Expect a stall at the named level. Take partials into it, don't assume a clean run |
+
+## Structural walls on the board
+
+
 
 `STRUCTURAL CALL/PUT WALL` rows come from the 45-day book and are usually far
 outside today's range. That is the point: they are the **week/month** boundary,

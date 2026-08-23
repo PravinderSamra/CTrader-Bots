@@ -263,6 +263,16 @@ of a structural level, not a reason to hide it. They also carry no `(stretch)`
 tag, since "partials only" is the wrong framing for a boundary you are not
 trading toward today.
 
+**The corridor read translates distant structure into a daily decision.** A
+structural wall hundreds of points away is not a level a day trader reaches, so
+publishing it alone was only half an answer. `path_read()` reports what sits
+*between* price and the next real barrier each way, because **only a positive
+gamma shelf actually brakes a move** — a run of negative shelves is a
+low-friction corridor. Measured on one run: every shelf from 29,181 down to
+28,681 was negative, i.e. no structural friction for a full ADR, which is
+directly actionable ("a breakdown has room, do not fade it") in a way the
+distant wall alone was not.
+
 **What is deliberately NOT published:**
 - **Single-touch swing extremes.** They were 9 of 30 rows, every one labelled
   "context only" — the board was telling the user not to trade them while

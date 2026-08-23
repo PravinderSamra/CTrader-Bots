@@ -262,6 +262,53 @@ def level_board(d):
     return board, far
 
 
+def budget_txt(d):
+    return f"{d['levels']['fuel']['remaining_budget']:.0f}pt"
+
+
+def path_read(d):
+    """What sits BETWEEN price and the next real barrier, in each direction.
+
+    This is the intraday translation of a distant structural wall. A wall 609pts
+    away is not a level a day trader will reach — but the corridor leading to it
+    is very much today's business. If every gamma shelf in between is negative
+    there is nothing to slow a move, so a break has room and must not be faded.
+    If a positive shelf sits in the way, expect a stall there instead.
+    """
+    gx, lv = d["gex"], d["levels"]
+    px = lv["price"]; budget = lv["fuel"]["remaining_budget"]
+    adr = lv["fuel"]["adr14"] or 1
+    wk = gx["buckets"].get("this_week", {})
+    shelves = wk.get("largest_abs_gex") or []
+    out = {}
+
+    for side, sign in (("below", -1), ("above", +1)):
+        span = [p_ for p_ in shelves
+                if 0 < (p_["nas100"] - px) * sign <= adr * 1.2]
+        if not span:
+            out[side] = None
+            continue
+        span.sort(key=lambda p_: (p_["nas100"] - px) * sign)
+        # a positive shelf is the only thing that actually brakes a move
+        brake = next((p_ for p_ in span if p_["sign"] == "+"), None)
+        far = span[-1]
+        net = sum(p_["net_gex_$bn"] for p_ in span)
+        dist_to_far = abs(far["nas100"] - px)
+        out[side] = {
+            "shelves": len(span),
+            "net_bn": round(net, 3),
+            "first_brake": brake["nas100"] if brake else None,
+            "brake_dist": round(abs(brake["nas100"] - px), 0) if brake else None,
+            "corridor_end": far["nas100"],
+            "corridor_pts": round(dist_to_far, 0),
+            "corridor_adr": round(dist_to_far / adr, 2),
+            "in_budget": dist_to_far <= budget,
+            "friction": "NONE" if brake is None else
+                        ("LOW" if brake and abs(brake["nas100"] - px) > budget else "SOME"),
+        }
+    return out
+
+
 def markdown_levels_only(d):
     """The chart-marking answer only: where we are, what to mark, how to manage.
     Same renderer and same wording as the full brief — a subset, never a
@@ -276,6 +323,23 @@ def markdown_levels_only(d):
     A(f"**Fuel:** ADR14 {f['adr14']} \u00b7 {f['adr_used_pct']}% used \u00b7 "
       f"**{f['remaining_budget']:.0f}pts budget left** \u2192 "
       f"`{f['expansion_state']}`\n")
+    pr = path_read(d)
+    for side, label, verb in (("below", "DOWNSIDE", "breakdown"),
+                              ("above", "UPSIDE", "breakout")):
+        r = pr.get(side)
+        if not r:
+            continue
+        if r["friction"] == "NONE":
+            A(f"- **{label} path clear** to {r['corridor_end']} "
+              f"({r['corridor_pts']:.0f}pts) \u2014 nothing to slow a {verb}. "
+              f"Don't fade it.")
+        elif r["friction"] == "LOW":
+            A(f"- **{label} path mostly clear** \u2014 first brake "
+              f"{r['first_brake']} is beyond today's budget.")
+        else:
+            A(f"- **{label} stalls at {r['first_brake']}** "
+              f"({r['brake_dist']:.0f}pts) \u2014 partials into it.")
+    A("")
     A("**Stop management:** " + {
         "ROOM_TO_EXPAND": "leave the structural stop alone; trail only on confirmed 1m structure breaks.",
         "MODERATE": "structural stop; break-even at 1R or 50% of remaining budget, whichever first.",
@@ -451,6 +515,28 @@ def markdown(d):
       f"({'below' if implied and implied < f['adr14'] else 'above'} ADR — "
       f"{'options market prices a quieter day, use the smaller budget' if implied and implied < f['adr14'] else 'options market prices expansion, ADR understates'})")
     A(f"- volume: **{f['volume_state']}** ({f['volume_relative']})\n")
+    pr = path_read(d)
+    for side, label, verb in (("below", "DOWNSIDE", "breakdown"),
+                              ("above", "UPSIDE", "breakout")):
+        r = pr.get(side)
+        if not r:
+            continue
+        if r["friction"] == "NONE":
+            A(f"- **{label} path: clear.** Every options shelf from here to "
+              f"{r['corridor_end']} ({r['corridor_pts']:.0f}pts, "
+              f"{r['corridor_adr']}× ADR) is negative gamma — **nothing "
+              f"structural to slow a {verb}.** If it goes, it has room. Do not "
+              f"fade it.")
+        elif r["friction"] == "LOW":
+            A(f"- **{label} path: mostly clear.** First real brake is "
+              f"{r['first_brake']} ({r['brake_dist']:.0f}pts away), which is "
+              f"beyond today's {budget_txt(d)} budget — so inside today's range "
+              f"there is little to stop a {verb}.")
+        else:
+            A(f"- **{label} path: has friction.** Expect a stall at "
+              f"{r['first_brake']} ({r['brake_dist']:.0f}pts away) — take "
+              f"partials into it rather than assuming a clean {verb}.")
+    A("")
     A(f"**Stop management:** " + {
         "ROOM_TO_EXPAND": "leave the structural stop alone; trail only on confirmed 1m structure breaks.",
         "MODERATE": "structural stop; break-even at 1R or 50% of remaining budget, whichever first.",
