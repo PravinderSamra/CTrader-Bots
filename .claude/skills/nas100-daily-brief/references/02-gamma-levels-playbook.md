@@ -40,6 +40,34 @@ short trigger, never a bounce.
 
 The brief states which case applies today. Follow it.
 
+## Reading wall strength
+
+Walls are labelled with contract count and a band, because a 7k wall and a 168k
+wall are not the same level and must not look the same on a chart:
+
+| Band | Contracts | What it means |
+|---|---|---|
+| `LIGHT` | < 5k | Thin. Expect little more than a pause |
+| `MODERATE` | 5–25k | A normal weekly wall. Real, but breakable |
+| `STRONG` | 25–100k | Heavily defended |
+| `MAJOR` | > 100k | Structural. Where a multi-day move is defended |
+
+**Tenor confluence is the strongest signal.** When the weekly wall and the
+45-day wall sit at the same strike, the level is defended across expiries — the
+note says so explicitly ("It is ALSO the 45-day call wall"). Those are the
+highest-quality walls on the board.
+
+## Structural walls — mark them, don't trade them
+
+`STRUCTURAL CALL/PUT WALL` rows come from the 45-day book and are usually far
+outside today's range. That is the point: they are the **week/month** boundary,
+not an intraday trigger. Mark them once and leave them — they are where a
+multi-day move runs out of room.
+
+They are deliberately exempt from the range-budget filter that removes other
+distant levels, and they carry no `(stretch)` tag, because "partials only" is
+the wrong framing for a boundary you are not trading toward today.
+
 ## Max pain
 Where the most options expire worthless. A weak magnet on Monday, strong by
 Thursday/Friday. **Coincident with the call wall = a hard pin.**

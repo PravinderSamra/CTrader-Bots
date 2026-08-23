@@ -102,20 +102,64 @@ def level_board(d):
           "The line where the big desks switch from pushing moves along to "
           "damping them. We're BELOW it: they're pushing, so don't fade. "
           "Reclaim and hold above and fading becomes valid again."))
-    if wk.get("call_wall"):
-        push("CALL WALL", wk["call_wall"]["nas100"], "gamma",
-             f"The heaviest ceiling on the board — desks have to SELL as price "
-             f"rises into it, so rallies stall here. Take profit into it. If "
-             f"price closes above and holds, that selling flips to buying and "
-             f"it becomes a launchpad instead ({wk['call_wall']['oi']:,} contracts)")
-    if wk.get("put_wall"):
-        push("PUT WALL", wk["put_wall"]["nas100"], "gamma",
-             (f"The heaviest floor on the board — expect a bounce and a good "
-              f"long-sweep here ({wk['put_wall']['oi']:,} contracts)"
-              if long_gamma else
-              f"Heaviest floor on the board, BUT today the desks are pushing "
-              f"moves along — so if this breaks, expect it to speed UP, not "
-              f"bounce. Don't buy the break ({wk['put_wall']['oi']:,} contracts)"))
+    # Wall strength belongs in the NAME, not buried at the end of a sentence —
+    # 7k contracts and 168k contracts are not the same level and should not
+    # look the same on a chart.
+    full = gx["buckets"].get("full_45dte", {})
+
+    def oi_short(n):
+        return f"{n/1000:.0f}k" if n >= 1000 else str(int(n))
+
+    def strength(n):
+        # Bands calibrated against observed NDX+QQQ walls: weekly walls run
+        # 5-10k, the full-book structural walls 15-170k.
+        return ("MAJOR" if n >= 100_000 else "STRONG" if n >= 25_000
+                else "MODERATE" if n >= 5_000 else "LIGHT")
+
+    cw, pw = wk.get("call_wall"), wk.get("put_wall")
+    fcw, fpw = full.get("call_wall"), full.get("put_wall")
+
+    if cw:
+        # Same strike in both tenors = the wall is defended across expiries,
+        # which is materially stronger than a one-week wall.
+        conf = fcw and abs(fcw["nas100"] - cw["nas100"]) <= 5
+        extra = (f" It is ALSO the 45-day call wall ({oi_short(fcw['oi'])} "
+                 f"contracts) — defended across expiries, so it is the strongest "
+                 f"ceiling on the board." if conf else "")
+        push(f"CALL WALL {oi_short(cw['oi'])} [{strength(cw['oi'])}]",
+             cw["nas100"], "gamma",
+             f"Heaviest ceiling this week — desks must SELL as price rises into "
+             f"it, so rallies stall. Take profit into it. A held close above "
+             f"flips that selling to buying and it becomes a launchpad.{extra}")
+    if pw:
+        conf = fpw and abs(fpw["nas100"] - pw["nas100"]) <= 5
+        extra = (f" It is ALSO the 45-day put wall ({oi_short(fpw['oi'])} "
+                 f"contracts) — defended across expiries, so it is the strongest "
+                 f"floor on the board." if conf else "")
+        push(f"PUT WALL {oi_short(pw['oi'])} [{strength(pw['oi'])}]",
+             pw["nas100"], "gamma",
+             (f"Heaviest floor this week — expect a bounce and a good long-sweep "
+              f"here.{extra}" if long_gamma else
+              f"Heaviest floor this week, BUT today the desks are pushing moves "
+              f"along — if it breaks, expect it to speed UP, not bounce. Don't "
+              f"buy the break.{extra}"))
+
+    # STRUCTURAL walls from the 45-day book. These are frequently far outside
+    # today's range and were being filtered off the board entirely — but a
+    # 168k-contract concentration is the level a multi-day move stops at, and
+    # it belongs on the chart even when it is not today's target.
+    if fcw and (not cw or abs(fcw["nas100"] - cw["nas100"]) > 5):
+        push(f"STRUCTURAL CALL WALL {oi_short(fcw['oi'])} [{strength(fcw['oi'])}]",
+             fcw["nas100"], "structural",
+             f"The 45-day call wall — the ceiling for the WEEK/MONTH, not today. "
+             f"Mark it and leave it: it is where a multi-day rally runs out of "
+             f"room, not an intraday trigger")
+    if fpw and (not pw or abs(fpw["nas100"] - pw["nas100"]) > 5):
+        push(f"STRUCTURAL PUT WALL {oi_short(fpw['oi'])} [{strength(fpw['oi'])}]",
+             fpw["nas100"], "structural",
+             f"The 45-day put wall and the single biggest options concentration "
+             f"on the chain — the floor for the WEEK/MONTH. Mark it and leave "
+             f"it: where a multi-day sell-off is defended, not an intraday trigger")
     push("MAX PAIN", gx["max_pain_week"]["nas100"], "gamma",
          "Where the most options expire worthless — price drifts toward it as "
          "the week goes on. Weak on a Monday, strong by Thursday/Friday")
@@ -155,7 +199,8 @@ def level_board(d):
             if r["name"] not in m["name"]:
                 m["name"] += " + " + r["name"]
             # strongest kind wins the row's colour/priority
-            rank = {"gamma": 4, "liquidity": 3, "gamma-shelf": 2, "magnet": 1, "context": 0}
+            rank = {"gamma": 5, "structural": 4, "liquidity": 3,
+                    "gamma-shelf": 2, "magnet": 1, "context": 0}
             if rank.get(r["kind"], 0) > rank.get(m["kind"], 0):
                 m["kind"], m["note"] = r["kind"], r["note"]
             m["confluence"] = m.get("confluence", 1) + 1
@@ -174,6 +219,11 @@ def level_board(d):
             "CALL WALL", "PUT WALL")
     def keep(r):
         if r["reach"] == "intraday":
+            return True
+        # Structural walls are deliberately exempt from the budget filter: they
+        # are week/month boundaries, so being out of today's range is the whole
+        # point of them.
+        if r["kind"] == "structural":
             return True
         core = any(c in r["name"] for c in CORE)
         return core and abs(r["dist"]) <= budget * 1.75
@@ -209,7 +259,8 @@ def markdown_levels_only(d):
     A("|---|---|---|---|")
     for r in board:
         star = " \u2b50" if r.get("confluence", 1) > 1 else ""
-        tag = " _(stretch)_" if r.get("stretch") else ""
+        tag = (" _(stretch)_" if r.get("stretch") and r["kind"] != "structural"
+               else "")
         dist = f"{r['dist']:+.0f}" if abs(r["dist"]) >= 1.0 else "at price"
         A(f"| **{r['level']}** | {dist} | {r['name']}{star}{tag} | {r['note']} |")
     if far:
@@ -387,7 +438,8 @@ def markdown(d):
     A("|---|---|---|---|")
     for r in board:
         star = " ⭐" if r.get("confluence", 1) > 1 else ""
-        tag = " _(stretch)_" if r.get("stretch") else ""
+        tag = (" _(stretch)_" if r.get("stretch") and r["kind"] != "structural"
+               else "")
         dist = f"{r['dist']:+.0f}" if abs(r["dist"]) >= 1.0 else "at price"
         A(f"| **{r['level']}** | {dist} | {r['name']}{star}{tag} | {r['note']} |")
     A("")

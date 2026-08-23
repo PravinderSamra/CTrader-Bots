@@ -226,6 +226,24 @@ Chosen: `tol = max(12, ADR14 × 0.03)` ≈ 14pts. Below ~10pts every swing becom
 its own "pool" and the equal-highs signal vanishes. NAS100 needs a far wider
 band than FX because ADR14 is ~475 points.
 
+**Wall strength is part of the level's name**, not buried in prose: `PUT WALL
+7k [MODERATE]`, `STRUCTURAL PUT WALL 168k [MAJOR]`. Bands are LIGHT <5k,
+MODERATE 5–25k, STRONG 25–100k, MAJOR >100k, calibrated against observed
+NDX+QQQ walls (weekly walls run 5–10k; full-book structural walls 15–170k).
+
+**Tenor confluence** — the weekly and 45-day wall at the same strike — is called
+out explicitly, because a wall defended across expiries is materially stronger
+than a one-week wall.
+
+**Structural walls are exempt from the range-budget filter.** An earlier version
+dropped the 45-day put wall at 28,681.6 — **168,275 contracts, the single
+biggest concentration on the entire chain** — purely because it sat 609pts away,
+beyond today's budget. That is the level a multi-day sell-off is defended at and
+it belongs on the chart permanently. Being out of today's range is the *point*
+of a structural level, not a reason to hide it. They also carry no `(stretch)`
+tag, since "partials only" is the wrong framing for a boundary you are not
+trading toward today.
+
 **What is deliberately NOT published:**
 - **Single-touch swing extremes.** They were 9 of 30 rows, every one labelled
   "context only" — the board was telling the user not to trade them while
