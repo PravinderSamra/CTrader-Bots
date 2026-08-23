@@ -73,3 +73,8 @@ Also consider, but only when evidence supports it:
   of what was said before the outcome was known.
 - Fabricated or backfilled journal entries corrupt every future analysis. If you
   find one, flag it and exclude it.
+- **Exclude scans with `is_trading_day: false`.** Weekend and holiday runs are
+  PREP scans against the previous session's frozen close, so a run of them holds
+  the same numbers repeated. Counting them as separate observations would make
+  one data point look like ten. They are real records and stay in the journal —
+  they just never enter a statistic.

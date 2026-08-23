@@ -71,6 +71,16 @@ def review(day, root=None):
     scans = journal.load_day(day, root)
     if not scans:
         return {"error": f"no journal entries for {day}"}
+    # A weekend/holiday scan is a PREP read against the previous session's
+    # frozen close, so there is no session to grade it against and its numbers
+    # repeat across every run that day. Grading one would manufacture a
+    # statistic out of a single stale observation.
+    live = [s for s in scans if s.get("is_trading_day")]
+    if not live:
+        return {"status": "skipped", "trading_day": day,
+                "reason": "not a trading day — PREP scans only, nothing to grade",
+                "scans_found": len(scans)}
+    scans = live
     bars = fetch_day_bars(day)
     if not bars:
         return {"error": f"no NAS100 bars for {day}",
@@ -160,7 +170,11 @@ def latest_unreviewed(root=None):
     days = sorted(d for d in os.listdir(root) if os.path.isdir(os.path.join(root, d)))
     today = LF.trading_day(datetime.now(timezone.utc)).isoformat()
     past = [d for d in days if d < today]
-    return past[-1] if past else None
+    # walk back to the most recent day that actually has a gradeable scan
+    for d in reversed(past):
+        if any(s.get("is_trading_day") for s in journal.load_day(d, root)):
+            return d
+    return None
 
 
 if __name__ == "__main__":
@@ -171,7 +185,9 @@ if __name__ == "__main__":
                           "reason": "no completed trading day in the journal yet"},
                          indent=2)); sys.exit(0)
     r = review(day)
-    if "--json" in sys.argv or "error" in r:
+    # "status" covers the skipped/non-gradeable cases, which carry no session
+    # data — without it the human path reached for r["actual_session"].
+    if "--json" in sys.argv or "error" in r or "status" in r:
         print(json.dumps(r, indent=2, default=str)); sys.exit(0)
     a, s = r["actual_session"], r["summary"]
     print(f"REVIEW {r['trading_day']}  O {a['open']} H {a['high']} L {a['low']} "
