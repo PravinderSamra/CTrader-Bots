@@ -105,10 +105,61 @@ NAS100 Daily Brief agent skill/             <- this folder: research + archive
 The SKILL.md should encode exactly this fallback ladder, and **say out loud in
 the brief which path it used and how old the data is**.
 
-### Suggested cron schedule (UTC)
+### The schedule (agreed) — anchored to exchange time, not UTC
 
-| Time | Purpose |
-|---|---|
+Each slot is anchored to the session it serves, so it tracks DST automatically.
+The UTC columns are what the cron entries actually use.
+
+| Slot | Local anchor | UTC (summer) | UTC (winter) | Job |
+|---|---|---|---|---|
+| **Pre-London** | 06:00 UK | 05:00 | 06:00 | Overnight Globex range, Asia H/L, the day's calendar and gamma map before London opens |
+| **Pre-NY open** | **09:15 ET** | **13:15** | **14:15** | **The one you trade from.** After the 08:30 ET data print, pre-market fully developed, 15 min before the cash open. Catches anything that cropped up overnight or in pre-market |
+| **Mid-NY** | 13:00 ET | 17:00 | 18:00 | 0DTE gamma drift, fuel consumed — the stop-management update |
+| **EOD archive** | 16:15 ET | 20:15 | 21:15 | Silent. Feeds the Phase-4 archive only |
+
+**This replaces the originally-proposed 12:00 UTC slot.** That one sat *before*
+the 08:30 ET print, so its levels were invalidated by the print minutes later.
+The 09:15 ET slot is strictly better: it includes the print reaction, and the
+06:00 UK brief already carries the day's calendar warning.
+
+### Implementing DST-aware cron on GitHub Actions
+
+GitHub cron is UTC-only and has no DST awareness, so each ET-anchored slot needs
+both UTC times registered, with the job deciding whether it is the live one:
+
+```yaml
+on:
+  schedule:
+    - cron: "0 5,6 * * 1-5"      # pre-London   06:00 UK
+    - cron: "15 13,14 * * 1-5"   # pre-NY open  09:15 ET
+    - cron: "0 17,18 * * 1-5"    # mid-NY       13:00 ET
+    - cron: "15 20,21 * * 1-5"   # EOD archive  16:15 ET
+  workflow_dispatch:
+```
+
+The job exits early when the current run is the wrong side of the DST switch:
+
+```python
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+et = datetime.now(timezone.utc).astimezone(ZoneInfo("America/New_York"))
+uk = datetime.now(timezone.utc).astimezone(ZoneInfo("Europe/London"))
+SLOTS = {(6, 0): "pre_london_uk", (9, 15): "pre_ny_et",
+         (13, 0): "mid_ny_et", (16, 15): "eod_et"}
+```
+Match on the *local* hour/minute, not the UTC one, and each slot then fires
+exactly once per day in both seasons.
+
+GitHub's cron is best-effort and can fire several minutes late; nothing in the
+design depends on exact firing times.
+
+### Alternative: Claude Code Routines
+Routines are Claude Code's own scheduler and can run a session on a cron without
+a workflow file at all. Same UTC-only caveat applies. Worth comparing against
+Actions when we build Phase 2 — Actions wins on committing the archive back to
+the repo, Routines wins on not needing a workflow or secrets plumbing.
+
+---|---|
 | 06:00 | Pre-London brief — overnight Globex range, Asia levels, calendar |
 | 12:00 | Pre-NY brief — London range complete, refreshed gamma before the 13:30 data window |
 | 17:00 | Mid-NY refresh — 0DTE gamma drift, fuel consumed, management update |
