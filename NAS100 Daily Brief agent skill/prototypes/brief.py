@@ -13,17 +13,19 @@ numbers a script can compute exactly.
 import json, sys
 from datetime import datetime, timezone
 
-import macro_probe, levels_fuel, gex_levels, bias_engine
+import macro_probe, levels_fuel, gex_levels, bias_engine, session_context, journal
 
 
-def gather():
+def gather(last_scan_iso=None):
     lv = levels_fuel.run()
     if "error" in lv:
         return {"error": "cTrader unavailable", "detail": lv}
     mc = macro_probe.run()
     gx = gex_levels.build(lv["price"])
     bs = bias_engine.score(mc, lv, gx)
-    return {"levels": lv, "macro": mc, "gex": gx, "bias": bs}
+    gx["expiry_structure"] = gex_levels.expiry_structure(gx)
+    ctx = session_context.context(last_scan_iso=last_scan_iso)
+    return {"levels": lv, "macro": mc, "gex": gx, "bias": bs, "context": ctx}
 
 
 def level_board(d):
@@ -188,18 +190,37 @@ def markdown(d):
     v, rf = mc["volatility"], mc["rates_fx"]
     o = []
     A = o.append
-    A(f"# NAS100 Daily Brief — {lv['trading_day']}")
-    A(f"_generated {lv['generated_utc']} · price **{px}** (bid {lv['bid']} / ask {lv['ask']})_\n")
+    c = d.get("context") or {}
+    A(f"# NAS100 Daily Brief — {c.get('trading_day', lv['trading_day'])}")
+    A(f"_{c.get('now_uk', '')} · price **{px}** (bid {lv['bid']} / ask {lv['ask']})_\n")
+    if c.get("headline"):
+        A(f"> {c['headline']}\n")
+    ps = c.get("previous_scan")
+    if ps and "relation" in ps:
+        A(f"> {ps['relation']}\n")
+    elif c.get("first_scan"):
+        A("> First scan on record — nothing to compare against yet.\n")
 
     A(f"## 1. The call: **{bs['label']}**  (score {bs['score']:+d})\n")
     A(f"**{bs['strategy_call']}**\n")
     if bs.get("event_gate"):
         A(f"> ⚠️ **{bs['event_gate']}**\n")
+    # The full component table is transparency, not a decision input. Collapsed
+    # here — but every row is still written to the journal, because the whole
+    # point of Phase 4 is asking which components actually predicted the day.
+    tallies = {}
+    for r in bs["components"]:
+        tallies[r["component"]] = tallies.get(r["component"], 0) + r["points"]
+    drivers = sorted(tallies.items(), key=lambda kv: -abs(kv[1]))
+    A("Driven by: " + " · ".join(
+        f"**{k} {v:+d}**" for k, v in drivers if v != 0) + "\n")
+    A("<details><summary>Full scoring breakdown "
+      f"({len(bs['components'])} checks)</summary>\n")
     A("| component | pts | reasoning |")
     A("|---|---|---|")
     for r in bs["components"]:
         A(f"| {r['component']} | {r['points']:+d} | {r['why']} |")
-    A("")
+    A("\n</details>\n")
 
     A("## 2. Regime — what kind of day is this?\n")
 
@@ -278,10 +299,15 @@ def markdown(d):
          "It's soft, which usually helps risk appetite.\n" if (dxyc or 0) < -0.4 else
          "Flat \u2014 not a factor today.\n"))
 
-    A("<details><summary>Full options numbers and data ages</summary>\n")
-    for k, b in gx["buckets"].items():
-        A(f"- `{k}`: net GEX **{b['net_gex_$bn_per_1pct']} $bn per 1% move** "
-          f"[{b['regime']}]")
+    es = gx.get("expiry_structure") or {}
+    if es:
+        A(f"**Shape of the day:** `{es['shape']}` "
+          f"(confidence {es['confidence']}) \u00b7 today {es['near_0_2dte']} \u00b7 "
+          f"this week {es['this_week']} \u00b7 45-day {es['full_45dte']} "
+          f"$bn per 1%\n")
+        A(f"> {es['what_it_is']}\n>\n> \u27a4 {es['what_to_do']}\n")
+
+    A("<details><summary>Data ages and conversion</summary>\n")
     A(f"- CFD/index offset **{gx['cfd_offset']}** (NDX {gx['ndx_spot']} vs CFD {px}) "
       f"\u2014 every options level below is already converted to your chart's price")
     A(f"- Data age: NDX chain {gx['as_of']['ndx']}, QQQ chain {gx['as_of']['qqq']}")
@@ -392,11 +418,19 @@ def markdown(d):
 
 
 if __name__ == "__main__":
-    d = gather()
+    # Chain scans together: the previous scan's timestamp is what lets the
+    # brief say "new trading day" vs "continuation".
+    d = gather(last_scan_iso=journal.last_scan_utc())
     if "error" in d:
         print(json.dumps(d, indent=2, default=str)); sys.exit(1)
     if "--json" in sys.argv:
         d["level_board"], d["level_board_far"] = level_board(d)
         print(json.dumps(d, indent=2, default=str))
     else:
-        print(markdown(d))
+        text = markdown(d)
+        print(text)
+        # Journal AFTER rendering, and never let a write failure break output.
+        d.setdefault("level_board", level_board(d)[0])
+        res = journal.write(d, text)
+        if isinstance(res, dict):
+            print(f"\n_[journal write failed: {res['_error']}]_", file=sys.stderr)

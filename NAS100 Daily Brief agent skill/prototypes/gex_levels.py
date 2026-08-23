@@ -134,3 +134,94 @@ if __name__ == "__main__":
         print("    largest |GEX| bins:")
         for p in d["largest_abs_gex"][:6]:
             print(f"      NAS100 {p['nas100']:>10}   {p['sign']}{abs(p['net_gex_$bn']):.3f} $bn")
+
+
+# ---------------------------------------------------------------------------
+# Expiry-structure read.
+#
+# The three buckets (0-2 DTE, this week, full 45 DTE) are not three versions of
+# the same number — they are near-dated vs longer-dated dealer positioning, and
+# near-dated gamma DECAYS DURING THE DAY. So when they disagree, the day has a
+# shape: one regime early, a different one late. That is the signal.
+#
+#   both negative      -> expansion, and the whole book agrees. High conviction.
+#   both positive      -> pinned range all day. High conviction.
+#   near +, far -      -> PINNED EARLY, EXPANDS LATE. 0DTE gamma holds price
+#                         through the morning; as it decays into the afternoon
+#                         the short-gamma structure underneath takes over.
+#                         Be patient early, aggressive after ~13:00 ET.
+#   near -, far +      -> SHARP MOVE THAT MEAN-REVERTS. Near-term instability
+#                         inside a stabilising structure: fade the extremes,
+#                         but only back to the middle.
+#
+# A deadband stops a rounding-level figure (0.002bn) being read as "positive".
+# ---------------------------------------------------------------------------
+DEADBAND_BN = 0.05
+
+
+def _sign(v):
+    if v is None:
+        return 0
+    return 1 if v > DEADBAND_BN else (-1 if v < -DEADBAND_BN else 0)
+
+
+def expiry_structure(board):
+    b = board.get("buckets", {})
+    near = (b.get("near_expiry_0_2dte") or {}).get("net_gex_$bn_per_1pct")
+    week = (b.get("this_week") or {}).get("net_gex_$bn_per_1pct")
+    full = (b.get("full_45dte") or {}).get("net_gex_$bn_per_1pct")
+    sn, sw, sf = _sign(near), _sign(week), _sign(full)
+    far = sf if sf != 0 else sw
+
+    if sn < 0 and far < 0:
+        shape, conf = "COHERENT_SHORT", "high"
+        what = ("Every expiry is short gamma and it deepens with tenor — the "
+                "whole options book is positioned for movement, not just "
+                "today's contracts.")
+        do = ("Expect range expansion and trends that persist. Strategy 2. "
+              "Today's ADR can be exceeded — don't cap the target too early.")
+    elif sn > 0 and far > 0:
+        shape, conf = "COHERENT_LONG", "high"
+        what = ("Every expiry is long gamma — dealers are damping moves across "
+                "the board.")
+        do = ("Expect a tight, pinned range. Strategy 1 at the walls. Keep "
+              "targets modest; breakouts mostly fail.")
+    elif sn > 0 and far < 0:
+        shape, conf = "PIN_THEN_EXPAND", "high"
+        what = ("Today's expiring contracts are pinning price, but the book "
+                "underneath is short gamma. That near-dated gamma decays "
+                "through the session.")
+        do = ("**Chop early, resolve late.** Be patient in the morning — "
+              "breakouts will fail while the pin holds. From roughly 13:00 ET "
+              "the pin weakens and the move that has been building gets "
+              "released. Save your risk for the afternoon.")
+    elif sn < 0 and far > 0:
+        shape, conf = "SPIKE_THEN_REVERT", "medium"
+        what = ("Near-dated is short gamma inside a longer-dated book that is "
+                "long gamma — instability today wrapped in stability.")
+        do = ("Expect a sharp move that then mean-reverts. Fade the extremes, "
+              "but only back toward the middle — don't hold for continuation.")
+    elif sn == 0 and far < 0:
+        shape, conf = "FRONT_FLAT_BACK_SHORT", "medium"
+        what = ("Today's expiries are gamma-neutral, so there is nothing "
+                "pinning price, and the longer book is short gamma.")
+        do = ("Nothing holds price in place. Moves that start tend to keep "
+              "going — favour continuation over fades, but conviction is "
+              "lower than a fully coherent short-gamma day.")
+    elif sn == 0 and far > 0:
+        shape, conf = "FRONT_FLAT_BACK_LONG", "medium"
+        what = ("Today's expiries are gamma-neutral inside a longer-dated "
+                "long-gamma book.")
+        do = ("Mild damping, no strong pin. Normal range day; take the walls "
+              "as soft boundaries rather than hard ones.")
+    else:
+        shape, conf = "NEUTRAL", "low"
+        what = "No meaningful gamma positioning in either the front or the back book."
+        do = ("Gamma is not a factor today — trade structure and levels, and "
+              "ignore the dealer-flow argument entirely.")
+
+    return {"shape": shape, "confidence": conf,
+            "near_0_2dte": near, "this_week": week, "full_45dte": full,
+            "signs": {"near": sn, "far": far},
+            "what_it_is": what, "what_to_do": do,
+            "agree": sn == far and sn != 0}
