@@ -119,11 +119,20 @@ integrated into `fred_probe.py`, `macro_probe.py`, `bias_engine.py`,
 `brief.py` and `source_health.py`.
 
 **The key is not in the repo.** Everything reads `FRED_API_KEY` from the
-environment; `SETUP-SECRETS.md` documents where to put it (Claude Code
-environment settings for interactive sessions, a GitHub Actions repo secret for
-the Phase-2 scheduled job). Without it the brief still runs end to end and
-prints an explicit note that the real-rate layer is missing — it never degrades
-silently.
+environment; `SETUP-SECRETS.md` documents where to put it. Without it the brief
+still runs end to end and prints an explicit note that the real-rate layer is
+missing — it never degrades silently.
+
+**Correction to my earlier advice:** I initially said to put the key in the
+Claude Code cloud-environment variables. The docs are explicit that cloud
+environments have *no dedicated secrets store* and that anyone using the
+environment can read the values, so they advise against putting credentials
+there at all. For a free, read-only, public-data key in a **personal**
+environment that is an acceptable trade-off — but it is your call to make
+knowingly, and the GitHub Actions secret store is the correct home for the
+scheduled job. `SETUP-SECRETS.md` now states both accurately, and flags that
+`CTRADER_MCP_SLUG` — which authenticates a **trading account** — sits in a
+different risk category entirely.
 
 On the exposure: you're right that it's low risk — free, read-only, public
 data, no personal information, no billing. If you'd rather not leave it in a
@@ -240,9 +249,12 @@ Recommended: skill + scripts in the repo, a cron workflow writing
    Claude Code environment settings** so it persists into future sessions, and
    as a GitHub Actions repo secret for the Phase-2 scheduled job
    (`SETUP-SECRETS.md`). I can't persist an environment variable from here.
-3. **Say whether to clean up `.mcp.json`** — remove the dead `newsmcp` entry,
-   the now-unnecessary `alpha-vantage` entry, and the placeholder-key `tavily`
-   entry. Nothing in the brief depends on any of them.
+3. ~~Clean up `.mcp.json`~~ ✅ **done** — removed `newsmcp` (HTTP 410, service
+   shut down), `alpha-vantage` (placeholder key, superseded) and `tavily`
+   (placeholder key, 401). Two more are non-functional but were left in place
+   rather than removed unasked: `massive` (placeholder key, paid service) and
+   `tradingview-ohlcv` (needs a manual clone to `/tmp` that never exists in a
+   fresh container). Say the word and they go too.
 4. **Confirm the output format.** `examples_brief.md` is my proposed shape.
    Tell me what to cut and what to add — Phase 3 is presentation refinement,
    but it's cheaper to get the skeleton right now.
