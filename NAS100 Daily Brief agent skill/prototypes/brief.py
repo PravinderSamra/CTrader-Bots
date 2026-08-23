@@ -192,13 +192,39 @@ def markdown(d):
     A("")
 
     A("## 6. News that matters\n")
-    for src in ("nasdaq_24h", "mag7_24h", "cnbc", "fed_press"):
-        items = [h for h in mc["news"].get(src, []) if "title" in h][:4]
-        if items:
-            A(f"**{src}**")
-            for h in items:
-                A(f"- {h['title']}")
+    ns = mc.get("news_scored") or {}
+    if "_error" not in ns:
+        A(f"_{ns['headlines_pulled']} headlines from {ns['feeds_ok']}/"
+          f"{ns['feeds_total']} feeds -> {ns['passed_relevance']} relevant -> "
+          f"**{ns['scored_high_confidence']} auto-scored**, "
+          f"{ns['needs_model_judgement']} for judgement._\n")
+        A(f"**Scored: {ns['label']} ({ns['raw_score']:+.2f})**\n")
+        if ns.get("high_confidence"):
+            A("| dir | headline | reaction | size / half-life |")
+            A("|---|---|---|---|")
+            for it in ns["high_confidence"][:6]:
+                d = "🟢 bull" if it["direction"] > 0 else ("🔴 bear" if it["direction"] < 0 else "⚪ amb")
+                A(f"| {d} | {it['title'][:74]} | {it['note']} | "
+                  f"~{it['magnitude_pts']}pts / {it['half_life_min']}min |")
             A("")
+        else:
+            A("_No headline was unambiguous enough to auto-score — "
+              "read the judgement list below._\n")
+        if ns.get("for_model_judgement"):
+            A("**Needs reading in context** (negation, hypotheticals and "
+              "relevance are handled here, not by keywords):\n")
+            for it in ns["for_model_judgement"][:8]:
+                fl = f" — _{'; '.join(it['flags'])}_" if it.get("flags") else ""
+                A(f"- [{it['rule']}] {it['title'][:96]}{fl}")
+            A("")
+    else:
+        for src in ("nasdaq_24h", "mag7_24h", "cnbc", "fed_press"):
+            items = [h for h in mc["news"].get(src, []) if "title" in h][:4]
+            if items:
+                A(f"**{src}**")
+                for h in items:
+                    A(f"- {h['title']}")
+                A("")
     A("---")
     A("_All figures computed from CBOE delayed quotes, cTrader NAS100 (id 116), "
       "Yahoo chart API, ForexFactory and Nasdaq calendars. No API keys. "

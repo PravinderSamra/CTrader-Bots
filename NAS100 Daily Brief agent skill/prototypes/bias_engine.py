@@ -192,6 +192,23 @@ def score(macro, levels, gex):
         f"in-reach unmitigated pools: {n_ab} above / {n_be} below — "
         f"draw {'higher' if n_ab>n_be else 'lower' if n_be>n_ab else 'balanced'}")
 
+    # ---------------- 5b. News (HIGH-confidence items only) -----------------
+    # Only headlines the pre-filter could classify unambiguously vote here.
+    # Everything else is surfaced for the model to read in context — see
+    # research/09-news-sentiment-replacement.md for why keyword scoring alone
+    # is not trustworthy enough to move a number.
+    ns = macro.get("news_scored") or {}
+    if "_error" not in ns:
+        pts = ns.get("bias_points", 0)
+        c = ns.get("counts", {})
+        add("news", pts,
+            f"{ns.get('scored_high_confidence', 0)} auto-scored headline(s) "
+            f"({c.get('bullish', 0)} bull / {c.get('bearish', 0)} bear) -> "
+            f"{ns.get('label')}; {ns.get('needs_model_judgement', 0)} more need "
+            f"reading in context (not counted here)")
+        for it in (ns.get("high_confidence") or [])[:3]:
+            add("news", 0, f"  \u2022 [{it['rule']}] {it['title'][:88]}")
+
     # ---------------- 6. Events (gate, not direction) -----------------------
     cal = macro["calendar"]
     soon = [e for e in (cal.get("upcoming_next_24h") or []) if 0 <= e["hours_away"] <= 1.5]

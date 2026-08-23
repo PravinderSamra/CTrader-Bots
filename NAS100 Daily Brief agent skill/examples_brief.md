@@ -1,5 +1,5 @@
-# NAS100 Daily Brief — 2026-08-22
-_generated 2026-08-22T10:34:12+00:00 · price **29290.5** (bid 29290.0 / ask 29291.1)_
+# NAS100 Daily Brief — 2026-08-23
+_generated 2026-08-23T11:33:03+00:00 · price **29290.5** (bid 29290.0 / ask 29291.1)_
 
 ## 1. The call: **BEARISH**  (score -6)
 
@@ -7,9 +7,9 @@ _generated 2026-08-22T10:34:12+00:00 · price **29290.5** (bid 29290.0 / ask 292
 
 | component | pts | reasoning |
 |---|---|---|
-| gamma | -3 | below flip 29327.2 by 36.7pts — SHORT gamma, dealers amplify: downside accelerates, rallies unstable |
+| gamma | -3 | below flip 29331.8 by 41.3pts — SHORT gamma, dealers amplify: downside accelerates, rallies unstable |
 | gamma | +1 | but price is straddling the flip (<0.15%) — regime unstable, reduce conviction |
-| gamma | -2 | week net GEX -0.331 $bn/1% -> expansion likely |
+| gamma | -2 | week net GEX -0.329 $bn/1% -> expansion likely |
 | gamma | +0 | price mid-band (29181.6-29381.6), 54% up the range |
 | vol | +2 | VXN 21.98 (-5.5%) — fear falling, bullish |
 | vol | +1 | VIX9D/VIX 0.831 contango — calm, mean-reversion favoured, mild upward drift |
@@ -25,22 +25,23 @@ _generated 2026-08-22T10:34:12+00:00 · price **29290.5** (bid 29290.0 / ask 292
 | macro | +0 | 10y-2y +0.50pp (+0bp) — little change |
 | breadth | +0 | mega-cap avg +0.01% (2/4 up): NVDA -0.98%, MSFT +0.43%, AAPL -0.63%, AVGO +1.21% |
 | breadth | +0 | NDX +0.33% vs ES +0.38% — in line |
-| fuel | +0 | ADR14 474.7, 67.1% used vs ~38% normal by 10:00 UTC -> fuel_ratio 1.77 (burning hot) [MODERATE] |
+| fuel | +0 | ADR14 474.7, 67.1% used vs ~42% normal by 11:00 UTC -> fuel_ratio 1.6 (burning hot) [MODERATE] |
 | structure | -1 | price below PD mid 29292.9 (PDH 29452.2 / PDL 29133.6) |
 | structure | -3 | price is BELOW the entire prior-week range (29422.4-30175.7) — weekly draw has flipped bearish; PWL 29422.4 is now resistance, not support |
 | structure | +1 | in-reach unmitigated pools: 3 above / 1 below — draw higher |
+| news | +0 | 0 auto-scored headline(s) (0 bull / 0 bear) -> NEUTRAL; 43 more need reading in context (not counted here) |
 | events | +0 | NVDA earnings 2026-08-26 time-after-hours (cons $2.01) — INDEX-DEFINING event; day before pins, day after expands |
 
 ## 2. Regime
 
-- **Gamma:** flip at **29327.2**, price 29290.5 → **BELOW flip — short gamma**
-  - `near_expiry_0_2dte`: net GEX **-0.291 $bn/1%** [NEGATIVE]
-  - `this_week`: net GEX **-0.331 $bn/1%** [NEGATIVE]
-  - `full_45dte`: net GEX **-0.943 $bn/1%** [NEGATIVE]
+- **Gamma:** flip at **29331.8**, price 29290.5 → **BELOW flip — short gamma**
+  - `near_expiry_0_2dte`: net GEX **0.002 $bn/1%** [POSITIVE]
+  - `this_week`: net GEX **-0.329 $bn/1%** [NEGATIVE]
+  - `full_45dte`: net GEX **-0.944 $bn/1%** [NEGATIVE]
 - **Vol:** VXN 21.98 (-5.503%) · VIX 15.13 · VIX9D/VIX 0.831 → CONTANGO — calm, mean-reversion favoured · VVIX 86.27
 - **Rates/FX:** US10y 4.738 (0.894%) · DXY 98.839 (-0.062%)
 - **CFD/index offset:** -18.4 (NDX 29308.9 vs CFD 29290.5) — all gamma levels below are already converted to CFD price
-- **Data freshness:** NDX chain 2026-08-22 10:13:00, QQQ chain 2026-08-22 03:44:33
+- **Data freshness:** NDX chain 2026-08-23 11:28:28, QQQ chain 2026-08-22 23:53:38
 
 ### Real rates, credit & liquidity (FRED)
 
@@ -56,7 +57,7 @@ _14 series, published with a 1-2 day lag — this is regime context, not an intr
 ## 3. Fuel & range budget
 
 - ADR14 **474.7** · today's range **318.6** (**67.1% used**) · raw budget left **156.1** → `MODERATE`
-- fuel_ratio vs time of day: **1.77**
+- fuel_ratio vs time of day: **1.6**
 - VXN-implied daily range: **405.6** pts (below ADR — options market prices a quieter day, use the smaller budget)
 - volume: **normal** (0.71)
 
@@ -81,7 +82,7 @@ _14 series, published with a 1-2 day lag — this is regime context, not an intr
 | **29381.6** | +91.1 | gamma-shelf | GEX shelf +0.29bn | intraday | POSITIVE shelf — expect a stall here; good place to fade / take partials |
 | **29364.9** | +74.4 | context | Unmitigated high | intraday | single-touch (context only), 1 touch(es) — untouched liquidity still resting |
 | **29345.0** | +54.5 | context | Unmitigated high | intraday | single-touch (context only), 1 touch(es) — untouched liquidity still resting |
-| **29327.2** | +36.7 | gamma | GAMMA FLIP | intraday | THE volatility switch. Above = long gamma, dealers fade moves (S1 works). Below = short gamma, dealers amplify (S2 works). Not S/R — a regime line |
+| **29331.8** | +41.3 | gamma | GAMMA FLIP | intraday | THE volatility switch. Above = long gamma, dealers fade moves (S1 works). Below = short gamma, dealers amplify (S2 works). Not S/R — a regime line |
 | **29314.4** | +23.9 | liquidity | Asia High (prev-day) | intraday | Asia session high — the next session routinely sweeps it |
 | **29294.2** | +3.7 | liquidity | London Low (prev-day) | intraday | London session low — the next session routinely sweeps it |
 | **29292.9** | +2.4 | magnet | PD mid | intraday | Prior-day equilibrium — a TARGET, not a trigger. Magnet on rangebound days |
@@ -105,29 +106,22 @@ _14 series, published with a 1-2 day lag — this is regime context, not an intr
 
 ## 6. News that matters
 
-**nasdaq_24h**
-- US Stock Futures Gain as Nasdaq 100 Looks to Snap Five-Day Slump - Bloomberg.com
-- Monthly Performance Review QQQ - invesco.com
-- Chartstopper: August 21, 2026 - Nasdaq
-- US Stocks Gain as Nasdaq 100 Looks to Snap Five-Day Slump - Advisor Perspectives
+_138 headlines from 10/10 feeds -> 43 relevant -> **0 auto-scored**, 43 for judgement._
 
-**mag7_24h**
-- Tesla’s stock jumps as the company gets cleared for a Las Vegas robotaxi launch - MarketWatch
-- NIO Stock Eyes June Delivery Test: Deutsche Bank Tracker Shows Nio Orders Beating Tesla In China - Stocktwits
-- Why is Tesla stock rallying today? - Investing.com
-- Amazon stock price ended at $258.63 on Friday, after losing 0.569% - StockInvest.us
+**Scored: NEUTRAL (+0.00)**
 
-**cnbc**
-- Dow surges 500 points Friday, but index posts back-to-back weekly losses
-- Six investors reveal the biggest market risks — and one strategy they agree on
-- U.S., Canada fail to reach a tariff deal, deepen trade war
-- Ray Dalio says Bessent move is sign that a debt crisis is getting closer; recommends gold and bitcoin
+_No headline was unambiguous enough to auto-score — read the judgement list below._
 
-**fed_press**
-- Federal Reserve Board announces approval of application by National Westminster Bank Plc
-- Federal Reserve Board issues enforcement action with SouthPoint Bancshares, Inc. and announces termination of enforcement action with Deutsche Bank AG, DB USA Corporation, and Deut
-- Federal Reserve Board issues enforcement actions with former employee of Regions Bank and former employee of United Community Bank
-- Minutes of the Federal Open Market Committee, July 28–29, 2026
+**Needs reading in context** (negation, hypotheticals and relevance are handled here, not by keywords):
+
+- [earnings_beat] Nvidia Stock May Plunge After Earnings, Even If It Beats (NASDAQ:NVDA) - Seeking Alpha — _modal/conditional — describes what MIGHT happen, not an event_
+- [unclassified] Nvidia's Q2 earnings to test resurgent AI trade
+- [unclassified] Prediction: Nvidia Will Be a $6 Trillion Company Before 2026 Is Over and Its Run Kickstarts This
+- [unclassified] Citi expects Nvidia stock to trade higher post earnings - Investing.com
+- [cpi_cool] US Inflation Is Cooling on Paper, but Price Pressures Have Gone Far Beyond the Pump - finance.bi — _contrast clause (but/however/despite) qualifies the claim_
+- [unclassified] Nvidia Reportedly Warns Top Customers of 15% Price Hikes on AI Servers
+- [jackson_hole] Nvidia earnings and Jackson Hole: What to watch this week
+- [event_preview] What to Expect in Markets This Week: Nvidia Earnings; Software Firms, Discount Stores Also Repor
 
 ---
 _All figures computed from CBOE delayed quotes, cTrader NAS100 (id 116), Yahoo chart API, ForexFactory and Nasdaq calendars. No API keys. GEX assumes the standard long-call/short-put dealer convention — levels and regime are robust, absolute dollar figures are approximate._

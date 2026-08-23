@@ -15,8 +15,12 @@ from xml.etree import ElementTree as ET
 
 try:
     import fred_probe
-except Exception:            # module missing -> degrade, never crash the brief
+except Exception:
     fred_probe = None
+try:
+    import news_scorer
+except Exception:            # module missing -> degrade, never crash the brief
+    news_scorer = None
 
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
                     "(KHTML, like Gecko) Chrome/125.0 Safari/537.36"}
@@ -226,6 +230,8 @@ def run():
                   "_error": "fred_probe unavailable"}),
         "calendar": calendar_today_and_week(),
         "news": news_layer(),
+        "news_scored": (news_scorer.run() if news_scorer else
+                        {"_error": "news_scorer unavailable"}),
     }
 
 

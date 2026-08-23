@@ -33,6 +33,8 @@ Five prototypes in `prototypes/`, all runnable right now:
 | `levels_fuel.py` | cTrader NAS100 → PDH/PDL/PWH/PWL, Asia/London/NY H-L, unmitigated pools, ADR fuel gauge | Full level set + fuel state |
 | `macro_probe.py` | Vol regime, rates, FX, breadth, calendars, news | Complete macro layer |
 | `fred_probe.py` | Real yields, breakevens, credit spreads, financial conditions, Fed liquidity | 14/14 series live |
+| `news_scorer.py` | Headline pre-filter: relevance, negation and modal gates, then NAS100 reaction mapping | 138 headlines -> 43 relevant, 2-tier |
+| `test_news_scorer.py` | Regression suite for the pre-filter | **22/22 passing** |
 | `bias_engine.py` | Deterministic, fully-auditable bull/bear score | `-6 BEARISH` with traceable components |
 | `brief.py` | End-to-end brief, no model in the loop | See `examples_brief.md` |
 
@@ -157,7 +159,7 @@ These are upgrades, in priority order:
 | # | Service | Cost | What it adds | Worth it? |
 |---|---|---|---|---|
 | ~~1~~ | ~~**FRED**~~ | Free | ✅ **Done — supplied and integrated** | — |
-| 2 | **Alpha Vantage** — https://www.alphavantage.co/support/#api-key | Free, 25 calls/day | `NEWS_SENTIMENT` gives scored sentiment per ticker, which would replace hand-rolled headline scoring. The 25/day cap is tight but fine for 3–4 briefs | Yes — nice upgrade to the news layer |
+| ~~2~~ | ~~**Alpha Vantage**~~ | Free, 25 calls/**day** | ❌ **Dropped — remove from `.mcp.json`.** Its only remaining role was `NEWS_SENTIMENT`, and testing showed a generic tone score is the wrong tool, not just a rationed one. Replaced by `news_scorer.py`. Full reasoning in `research/09` | No |
 | 3 | **Tavily** — https://app.tavily.com | Free, 1,000/month | Better web research than the built-in search for chasing a live theme mid-session. The key already has a slot in `.mcp.json` | Optional — built-in WebSearch covers most of it |
 | 4 | **Finnhub** — https://finnhub.io/register | Free tier | Earnings surprise history and analyst revisions. Nasdaq's calendar already covers dates and consensus | Low priority |
 
@@ -238,8 +240,9 @@ Recommended: skill + scripts in the repo, a cron workflow writing
    Claude Code environment settings** so it persists into future sessions, and
    as a GitHub Actions repo secret for the Phase-2 scheduled job
    (`SETUP-SECRETS.md`). I can't persist an environment variable from here.
-3. **Say whether to clean up `.mcp.json`** — remove the dead `newsmcp` entry
-   and the two placeholder-key servers.
+3. **Say whether to clean up `.mcp.json`** — remove the dead `newsmcp` entry,
+   the now-unnecessary `alpha-vantage` entry, and the placeholder-key `tavily`
+   entry. Nothing in the brief depends on any of them.
 4. **Confirm the output format.** `examples_brief.md` is my proposed shape.
    Tell me what to cut and what to add — Phase 3 is presentation refinement,
    but it's cheaper to get the skeleton right now.

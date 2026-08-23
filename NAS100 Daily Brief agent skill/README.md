@@ -45,6 +45,8 @@ python3 gex_levels.py 29290.5   # gamma board only (pass your CFD price)
 python3 macro_probe.py          # macro / vol / calendar / news only
 python3 bias_engine.py          # the bull/bear score with full reasoning
 python3 fred_probe.py           # real yields, credit, financial conditions, Fed liquidity
+python3 news_scorer.py          # headline pre-filter -> NAS100 reaction mapping
+python3 test_news_scorer.py     # 22 regression cases for the pre-filter
 ```
 
 `examples_brief.md` is a real brief generated from live data on 2026-08-22 —
@@ -85,6 +87,8 @@ not a mock-up.
 5. `research/06-range-and-fuel.md` — fuel, and the stop-management rules it
    drives
 6. `research/08-phase2-architecture.md` — how Phase 2 should be built
+7. `research/09-news-sentiment-replacement.md` — why we replaced Alpha Vantage
+   with a pre-filter rather than another sentiment API
 
 ---
 

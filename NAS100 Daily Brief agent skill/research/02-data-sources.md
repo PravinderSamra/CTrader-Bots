@@ -139,7 +139,9 @@ it de-duplicates across outlets reasonably well.
 | FRED `fredgraph.csv` | connection failure from this environment | Use the proper JSON API instead — **now live with a key**, see the FRED section above |
 | **NewsMCP** (`@newsmcp/server` in `.mcp.json`) | **410 — service shut down** | See the note in `PHASE1-FINDINGS.md`; must be removed from `.mcp.json` |
 | **Tavily MCP** | **401** — `.mcp.json` holds the literal placeholder `YOUR_TAVILY_API_KEY` | Needs a free key (or just use built-in WebSearch) |
-| **Alpha Vantage MCP** | Not exposed — `.mcp.json` holds the literal placeholder `YOUR_API_KEY` | Needs a free key. **Not required** — CBOE beats its options data and Yahoo covers the rest |
+| **Alpha Vantage MCP** | Not exposed — `.mcp.json` holds the literal placeholder `YOUR_API_KEY` | ❌ **Dropped entirely.** CBOE beats its options data, FRED beats its treasury data, and its `NEWS_SENTIMENT` was replaced by a pre-filter after testing showed a generic tone score is the wrong tool for this job — see `research/09` |
+| **GDELT 2.0 DOC API** | Worked twice, then **429 for 3+ min across 4 spaced retries** | ❌ Rate-limits hard from shared/cloud IPs — exactly where the Phase-2 job runs. Do not use |
+| Marketaux / Finnhub / Alpaca / FMP / Polygon / EODHD / NewsAPI | All 401 (keys required) | Marketaux's free tier (100 req/day, 3 articles/req) is the best like-for-like swap **if** you want an API at all; see `research/09` |
 | `massive` MCP | Placeholder key | Paid; not needed |
 
 ---
