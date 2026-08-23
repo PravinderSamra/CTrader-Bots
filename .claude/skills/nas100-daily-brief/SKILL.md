@@ -58,6 +58,33 @@ against a previous scan.
 If it errors, relay the error. A missing `CTRADER_MCP_SLUG` is the usual cause —
 see `SETUP-SECRETS.md` in the project folder. **Never fabricate a brief.**
 
+### cTrader connection — always direct HTTP, never the MCP tools
+
+All broker data goes through `scripts/ctrader_http.py`, a persistent HTTPS
+keep-alive client. **Do not use the `mcp__ctrader__*` tools for any part of this
+skill**, even for something as small as a spot price on a follow-up question.
+
+This is not a style preference — the MCP transport is measurably less stable:
+
+- It drops. During a single build session the `mcp__ctrader__*` tools went
+  unavailable and reconnected **four separate times**, while the HTTP client ran
+  throughout without interruption.
+- It expires on phone and browser sessions, which is where this skill is
+  actually used.
+- It gives no retry control. `ctrader_http.py` handles session expiry with a
+  bounded backoff (3 attempts) — necessary because `fetch_ohlcv_paged` fires
+  dozens of sequential calls and can expire a freshly re-initialised session.
+  A dropped MCP tool call just fails.
+
+If you need broker data for a follow-up, call the client directly:
+
+```bash
+cd .claude/skills/nas100-daily-brief/scripts
+python3 -c "import ctrader_http as ct; print(ct.get_live_price('NAS100'))"
+```
+
+The same rule holds for anything built on top of this skill.
+
 ### 2. Judge the news the script would not
 
 Section 6 lists headlines flagged `NEEDS_JUDGEMENT`. The script deliberately

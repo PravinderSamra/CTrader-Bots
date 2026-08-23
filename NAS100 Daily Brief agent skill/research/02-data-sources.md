@@ -13,7 +13,7 @@ PASS/FAIL per source with latency and a content sanity-check.
 ### Price / structure
 | ID | Endpoint | Latency | Payload | Use |
 |---|---|---|---|---|
-| `ctrader_nas100` | cTrader MCP `get_trendbars` / `get_spot_prices`, symbolId **116** | ~1–3s | JSON | **Primary.** Broker's own NAS100 CFD OHLCV — D_1/H_4/H_1/M_15/M_5/M_1. Every level printed is a price you can type straight onto your chart |
+| `ctrader_nas100` (**direct HTTP only** — never the `mcp__ctrader__*` tools; they dropped 4× in one build session and expire on phone/browser) | cTrader MCP `get_trendbars` / `get_spot_prices`, symbolId **116** | ~1–3s | JSON | **Primary.** Broker's own NAS100 CFD OHLCV — D_1/H_4/H_1/M_15/M_5/M_1. Every level printed is a price you can type straight onto your chart |
 | `ndx_cash_cboe` | `cdn.cboe.com/api/global/delayed_quotes/quotes/_NDX.json` | 379ms | 533B | NDX cash spot — needed to compute the **CFD↔index offset** so GEX strikes translate to your chart |
 | `ndx_cash_yahoo` | `query1.finance.yahoo.com/v8/finance/chart/^NDX` | 156ms | 1.6KB | NDX daily OHLC, cross-check |
 | `nq_futures_1m` | Yahoo chart `NQ=F`, 1d/1m and 2d/5m | 208ms | 65KB | Globex overnight range → Asia/London H/L on the futures, and the gap vs. cash |

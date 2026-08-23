@@ -1,15 +1,19 @@
 """
 ctrader_http.py — read-only cTrader MCP data client over a persistent HTTPS
-keep-alive connection. Phone-safe: uses direct HTTP (NOT the mcp__ctrader__*
-injected Claude tools, which expire on iPhone/browser — see the repo's
-ctrader-mcp-integration-guide.md, Lesson 6).
+keep-alive connection.
+
+DIRECT HTTP IS THE REQUIRED TRANSPORT — do not swap this for the mcp__ctrader__*
+injected Claude tools. They expire on iPhone/browser sessions, they drop and
+reconnect during long runs (observed four times in one build session while this
+client ran uninterrupted), and they offer no retry control over session expiry.
+See the repo's ctrader-mcp-integration-guide.md, Lesson 6.
 
 READ ONLY. This module deliberately exposes no order-placement functions — the
 skill produces trade *ideas*, it does not execute.
 
 Auth: set CTRADER_MCP_TOKEN to your account's bearer token. The stale demo
 token is NOT bundled — without a valid token every tool call returns a clear
-auth error that analyze.py surfaces to you (instead of a silent None).
+auth error that brief.py surfaces to you (instead of a silent None).
 
 Endpoint / field shapes are documented in ctrader-mcp-integration-guide.md.
 """

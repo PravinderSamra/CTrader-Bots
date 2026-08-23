@@ -121,7 +121,22 @@ QQQ carries the volume. NDX alone under-counts dealer gamma badly. QQQ strikes
 are scaled into NDX points by the live ratio (**41.034** measured 2026-08-22),
 giving **3,608 NDX + 3,943 QQQ contracts** inside 45 DTE.
 
-## 3.2 Broker price data — cTrader
+## 3.2 Broker price data — cTrader (direct HTTP only)
+
+**Transport is a hard requirement, not a preference.** All broker data goes
+through `ctrader_http.py`, a persistent HTTPS keep-alive client. The
+`mcp__ctrader__*` injected tools must not be used anywhere in this skill.
+
+Evidence, from building it: during one session the `mcp__ctrader__*` tools went
+unavailable and reconnected **four separate times** while the HTTP client ran
+throughout without interruption. The MCP transport also expires on phone and
+browser sessions — which is exactly where this skill is used — and gives no
+retry control, where the HTTP client handles session expiry with a bounded
+backoff (see §8b).
+
+Anything built on top of this skill inherits the same rule.
+
+
 
 - **NAS100 = symbolId 116.** `US100`, `USTEC`, `NDX100` all resolve to `None`.
 - Timeframes use the underscore form: `M_1 M_5 M_15 M_30 H_1 H_4 D_1 W_1`.
