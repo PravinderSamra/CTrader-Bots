@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-24T15:29:56.643Z",
+  "generatedAt": "2026-08-24T16:25:03.490Z",
   "yields": {
     "US10Y": 4.69,
     "US2Y": 4.19,
@@ -34,26 +34,26 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 866.9,
-    "gldWoWChange": -0.5,
-    "trend3W": "FLAT"
+    "gldTonnes": 870.3,
+    "gldWoWChange": 3.4,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4674.89,
-    "XAGUSD": 69.189,
-    "EURUSD": 1.1671,
-    "USDJPY": 159.089,
-    "USDCHF": 0.80178,
-    "USDCNH": 6.72209,
-    "GBPUSD": 1.36424,
-    "USDCAD": 1.38321,
-    "USDSEK": 9.48725,
-    "US500": 7656.3,
-    "GER40": 26130.85,
-    "UK100": 10854.55,
+    "XAUUSD": 4656.935,
+    "XAGUSD": 68.7955,
+    "EURUSD": 1.1667,
+    "USDJPY": 159.06,
+    "USDCHF": 0.80217,
+    "USDCNH": 6.72264,
+    "GBPUSD": 0.68178,
+    "USDCAD": 1.3841,
+    "USDSEK": null,
+    "US500": 7668.1,
+    "GER40": 26140.65,
+    "UK100": 10849.95,
     "ADR_14day": 101.3,
     "ADR_usedToday": 85.7,
-    "goldSilverRatio": 67.6
+    "goldSilverRatio": 67.7
   },
   "dollarLiquidity": {
     "stlfsi": -0.8285,
@@ -66,59 +66,59 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Gold rally gains momentum ahead of US inflation, Jackson Hole event - Reuters",
+      "headline": "US Treasury to broaden scope of secondary sanctions on Iran, source says - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-08-24T14:08:00.000Z",
-      "hoursAgo": 1.4
+      "publishedAt": "2026-08-24T15:08:55.000Z",
+      "hoursAgo": 1.3
     },
     {
       "headline": "Trump says U.S. will hike Canada auto tariffs to 50% as trade war escalates",
       "source": "CNBC",
       "publishedAt": "2026-08-24T13:59:26.000Z",
-      "hoursAgo": 1.5
-    },
-    {
-      "headline": "US Treasury to broaden scope of secondary sanctions on Iran, source says - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-24T13:34:44.000Z",
-      "hoursAgo": 1.9
+      "hoursAgo": 2.4
     },
     {
       "headline": "Dollar hovers near multi-month lows as debt nerves unnerve investors - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T11:33:26.000Z",
-      "hoursAgo": 3.9
+      "hoursAgo": 4.9
     },
     {
       "headline": "Looming US sanctions on Iran put China oil buying in spotlight - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T10:10:08.000Z",
-      "hoursAgo": 5.3
+      "hoursAgo": 6.2
     },
     {
       "headline": "China vows to protect its rights as US readies Iran sanction - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T08:05:38.000Z",
-      "hoursAgo": 7.4
+      "hoursAgo": 8.3
     },
     {
       "headline": "European shares slip as tech drags; Iran sanctions in focus - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T07:30:59.000Z",
-      "hoursAgo": 8
+      "hoursAgo": 8.9
+    },
+    {
+      "headline": "Gold rally gains momentum ahead of US inflation, Jackson Hole event - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-24T04:39:00.000Z",
+      "hoursAgo": 11.8
     },
     {
       "headline": "Interventions hold rupee on narrow leash, traders await US sanctions on Iran - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T02:37:00.000Z",
-      "hoursAgo": 12.9
+      "hoursAgo": 13.8
     }
   ],
   "briefing": {
     "biasScore": 3,
     "biasLabel": "BULLISH",
     "confidence": 6,
-    "briefing": "Right now, gold is being pushed higher by a combination of geopolitical stress, a weak US dollar, and growing uncertainty about trade policy — all of which tend to make investors flee toward gold as a 'safe haven' (a place to park money when the world feels risky). The most important catalyst from the last couple of hours was Trump's announcement (~1.5 hours ago) that the US will raise tariffs [taxes on imported goods] on Canadian autos to 50%, escalating the trade war further. This kind of news weakens the dollar and boosts gold. On top of that, the US is broadening sanctions [economic penalties] on Iran (~1.9 hours ago), adding another layer of geopolitical tension that historically supports gold. The dollar (DXY at 98.93) is near multi-month lows according to the 3.9-hour-old Reuters headline, which further supports gold since a weaker dollar makes gold cheaper for foreign buyers, lifting demand. The directional bias here is BULLISH [favouring higher prices] — the trend on higher timeframes appears to be up, the dollar is weak, geopolitical risk is elevated (GPR reading of 152.7 is high), and news flow is supporting the move. Confidence is 6/10. What would change this view: a sudden dollar recovery, a surprise hawkish Fed signal [the Fed signalling interest rate hikes, which strengthen the dollar and pressure gold], or a sharp risk-on reversal. Looking at the ADR [Average Daily Range — how far price typically moves in a day]: the 14-day ADR is 101.3 points, and price has already used 85.7 of those today — meaning roughly 15 points of 'typical' movement may remain. This is important: most of today's move may already be done, so chasing price aggressively right now carries more risk. There are no scheduled economic events on the calendar today, which keeps things cleaner — but the news mentions a Jackson Hole event and US inflation data coming up (likely later this week), which are HIGH-impact events [big market-moving releases]. Price may start trading more cautiously or choppily in the day or two before those hit, as traders wait to see what direction those events push things. For your 1H/5M/1M setup: the bullish trend-following bias is valid, but with 85% of the daily range already used, wait for a clean pullback [price dipping back toward a recent level of support] on the 5M chart before entering — avoid buying into a stretched, extended move. Keep position size modest given the proximity to major upcoming events. Remember: when most of the day's range is already used, patience beats chasing.",
-    "generatedAt": "2026-08-24T15:30:17.944Z"
+    "briefing": "Right now, gold is being driven by a powerful combination of geopolitical tension, a weakening dollar, and trade war escalation — all of which tend to push investors toward gold as a safe-haven [a safe-haven is an asset people buy when they're scared, because it tends to hold or gain value during uncertainty]. The most market-moving headlines in the last few hours are the Trump Canada auto tariff hike to 50% (about 2.4 hours ago), which signals a deepening trade war and hurts confidence in the US economy, and the US Treasury broadening Iran sanctions (about 1.3 hours ago), which adds fresh geopolitical risk to an already nervous market. Earlier today (about 4.9 hours ago), Reuters reported the dollar is hovering near multi-month lows on US debt concerns — a weaker dollar almost always supports gold because gold is priced in dollars, so it becomes cheaper for foreign buyers. Directionally, the bias is BULLISH [meaning we expect prices to go up] — gold at $4,656 is supported by a weak dollar, rising geopolitical risk, steady ETF inflows [money flowing into gold funds, showing real demand], and large speculative positioning [professional traders are net-long, meaning they've already bet on higher prices]. Confidence is 6/10 — the crowded long positioning is a real risk, meaning if sentiment shifts suddenly, a sharp pullback [a quick price drop] could happen fast. The 14-day Average Daily Range [a measure of how much gold typically moves in a day] is $101.3, and today has already used $85.7 of that, meaning roughly $15-16 of average daily movement is left — late-session momentum may be limited and price could consolidate [move sideways] into the close. The calendar is empty for today, which removes scheduled news risk, but keep a close eye on any fresh Iran or tariff headlines that could spike volatility. No high-impact events are flagged later this week in the data, though the Reuters headline about a Jackson Hole event [an important central bank conference where Fed policy signals are sometimes dropped] suggests traders may be cautious ahead of that. Key levels to watch: $4,600 as near-term support [a price floor where buyers tend to step in] and $4,700 as the next psychological resistance [a ceiling where sellers may emerge]. For trade management, the 1H trend appears bullish, so look for 5-minute pullbacks [short dips against the trend] into demand zones [price areas where buyers previously stepped in] for entries — but given that most of today's ADR is already consumed, keep position size [the amount you risk per trade] smaller than usual and be selective; this is a time for quality over quantity. Remember: late in a big move day, patience beats aggression — wait for a clean pullback rather than chasing price.",
+    "generatedAt": "2026-08-24T16:25:23.107Z"
   }
 }

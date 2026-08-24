@@ -834,6 +834,70 @@
         "verdict": "UNSCORABLE",
         "signalVerdicts": []
       }
+    },
+    {
+      "at": "2026-08-24T16:26:03.566Z",
+      "londonTime": "17:26 BST",
+      "mode": "CLOSED",
+      "price": 10849.85,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — 80% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "80% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10726) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to 80% of the 14-day ADR (85.7pts) already consumed, an ORB that already broke upward leaving price 30pts above the ORB high, and a crowded-short pound at its 100th percentile that could squeeze further and weigh on FTSE multinationals, any fresh breakout attempt today looks poorly supported on both the range-budget and currency fronts.",
+      "aiBullets": [
+        "Price at 10849.85 is ~30pts above the ORB high of 10819.9 — with only ~17pts of ADR budget remaining, pursuing longs from here offers almost no room before a typical day's range is fully spent.",
+        "The ORB already broke UP, but the risk-tone is BEARISH (-3) driven by the Canada auto tariff headline (2.4hrs ago) — a directional conflict that historically favours mean-reversion rather than trend continuation.",
+        "GBP is at its 100th 20-day percentile (strongest in over three weeks); any further pound strength would flip the FTSE GBP read from NEUTRAL to a headwind for the dollar-earning multinationals that dominate the index.",
+        "Brent -1.68% is pressuring Shell and BP (top-5 weights), while copper +0.64% only partially offsets via miners — net sector drag reinforces the case for fading intraday highs rather than buying the break."
+      ],
+      "bias": {
+        "score": -3,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10819.9,
+        "orbLow": 10799.5,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10832.2,
+        "overnightLow": 10799.5,
+        "priorDayHigh": 10825.9,
+        "priorDayLow": 10726,
+        "gapPct": 0.42,
+        "adr14": 85.7,
+        "adrUsedPct": 80
+      },
+      "outcome": {
+        "resolvedAt": "2026-08-24T16:26:05.696Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
