@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-24T16:25:03.490Z",
+  "generatedAt": "2026-08-24T17:23:14.244Z",
   "yields": {
     "US10Y": 4.69,
     "US2Y": 4.19,
@@ -34,23 +34,23 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 870.3,
-    "gldWoWChange": 3.4,
+    "gldTonnes": 875.1,
+    "gldWoWChange": 4.8,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4656.935,
-    "XAGUSD": 68.7955,
-    "EURUSD": 1.1667,
-    "USDJPY": 159.06,
-    "USDCHF": 0.80217,
-    "USDCNH": 6.72264,
-    "GBPUSD": 0.68178,
-    "USDCAD": 1.3841,
-    "USDSEK": null,
-    "US500": 7668.1,
-    "GER40": 26140.65,
-    "UK100": 10849.95,
+    "XAUUSD": 4631.325,
+    "XAGUSD": 68.452,
+    "EURUSD": 1.16578,
+    "USDJPY": 159.1645,
+    "USDCHF": 0.80273,
+    "USDCNH": 6.72365,
+    "GBPUSD": 1.36283,
+    "USDCAD": 1.38585,
+    "USDSEK": 9.50482,
+    "US500": 7656.1,
+    "GER40": 26131.65,
+    "UK100": 10848.95,
     "ADR_14day": 101.3,
     "ADR_usedToday": 85.7,
     "goldSilverRatio": 67.7
@@ -66,59 +66,53 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Shares dip on pressure from technology; yields and oil fall - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-24T15:49:43.000Z",
+      "hoursAgo": 1.6
+    },
+    {
       "headline": "US Treasury to broaden scope of secondary sanctions on Iran, source says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T15:08:55.000Z",
-      "hoursAgo": 1.3
+      "hoursAgo": 2.2
     },
     {
       "headline": "Trump says U.S. will hike Canada auto tariffs to 50% as trade war escalates",
       "source": "CNBC",
       "publishedAt": "2026-08-24T13:59:26.000Z",
-      "hoursAgo": 2.4
+      "hoursAgo": 3.4
     },
     {
       "headline": "Dollar hovers near multi-month lows as debt nerves unnerve investors - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T11:33:26.000Z",
-      "hoursAgo": 4.9
+      "hoursAgo": 5.8
     },
     {
       "headline": "Looming US sanctions on Iran put China oil buying in spotlight - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T10:10:08.000Z",
-      "hoursAgo": 6.2
+      "hoursAgo": 7.2
     },
     {
       "headline": "China vows to protect its rights as US readies Iran sanction - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T08:05:38.000Z",
-      "hoursAgo": 8.3
+      "hoursAgo": 9.3
     },
     {
       "headline": "European shares slip as tech drags; Iran sanctions in focus - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T07:30:59.000Z",
-      "hoursAgo": 8.9
+      "hoursAgo": 9.9
     },
     {
-      "headline": "Gold rally gains momentum ahead of US inflation, Jackson Hole event - Reuters",
+      "headline": "Gold rally gains momentum ahead of US inflation data, Jackson Hole event - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T04:39:00.000Z",
-      "hoursAgo": 11.8
-    },
-    {
-      "headline": "Interventions hold rupee on narrow leash, traders await US sanctions on Iran - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-24T02:37:00.000Z",
-      "hoursAgo": 13.8
+      "hoursAgo": 12.7
     }
   ],
-  "briefing": {
-    "biasScore": 3,
-    "biasLabel": "BULLISH",
-    "confidence": 6,
-    "briefing": "Right now, gold is being driven by a powerful combination of geopolitical tension, a weakening dollar, and trade war escalation — all of which tend to push investors toward gold as a safe-haven [a safe-haven is an asset people buy when they're scared, because it tends to hold or gain value during uncertainty]. The most market-moving headlines in the last few hours are the Trump Canada auto tariff hike to 50% (about 2.4 hours ago), which signals a deepening trade war and hurts confidence in the US economy, and the US Treasury broadening Iran sanctions (about 1.3 hours ago), which adds fresh geopolitical risk to an already nervous market. Earlier today (about 4.9 hours ago), Reuters reported the dollar is hovering near multi-month lows on US debt concerns — a weaker dollar almost always supports gold because gold is priced in dollars, so it becomes cheaper for foreign buyers. Directionally, the bias is BULLISH [meaning we expect prices to go up] — gold at $4,656 is supported by a weak dollar, rising geopolitical risk, steady ETF inflows [money flowing into gold funds, showing real demand], and large speculative positioning [professional traders are net-long, meaning they've already bet on higher prices]. Confidence is 6/10 — the crowded long positioning is a real risk, meaning if sentiment shifts suddenly, a sharp pullback [a quick price drop] could happen fast. The 14-day Average Daily Range [a measure of how much gold typically moves in a day] is $101.3, and today has already used $85.7 of that, meaning roughly $15-16 of average daily movement is left — late-session momentum may be limited and price could consolidate [move sideways] into the close. The calendar is empty for today, which removes scheduled news risk, but keep a close eye on any fresh Iran or tariff headlines that could spike volatility. No high-impact events are flagged later this week in the data, though the Reuters headline about a Jackson Hole event [an important central bank conference where Fed policy signals are sometimes dropped] suggests traders may be cautious ahead of that. Key levels to watch: $4,600 as near-term support [a price floor where buyers tend to step in] and $4,700 as the next psychological resistance [a ceiling where sellers may emerge]. For trade management, the 1H trend appears bullish, so look for 5-minute pullbacks [short dips against the trend] into demand zones [price areas where buyers previously stepped in] for entries — but given that most of today's ADR is already consumed, keep position size [the amount you risk per trade] smaller than usual and be selective; this is a time for quality over quantity. Remember: late in a big move day, patience beats aggression — wait for a clean pullback rather than chasing price.",
-    "generatedAt": "2026-08-24T16:25:23.107Z"
-  }
+  "briefing": null
 }

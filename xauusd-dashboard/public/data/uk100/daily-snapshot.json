@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-08-24T16:25:33.383Z",
+  "generatedAt": "2026-08-24T17:23:18.557Z",
   "prices": {
-    "UK100": 10849.85,
-    "GBPUSD": 1.36359,
-    "GBPEUR": 1.16872,
-    "US500": 7667.6,
-    "NAS100": 29129.45,
-    "BRENT": 92.759,
-    "COPPER": 6.7118,
-    "VIX": 16.09,
-    "USDX": 98.99,
-    "XAUUSD": 4657.56,
+    "UK100": 10848.95,
+    "GBPUSD": 1.36282,
+    "GBPEUR": 1.169,
+    "US500": 7655.9,
+    "NAS100": 29069,
+    "BRENT": 92.364,
+    "COPPER": 6.6953,
+    "VIX": 16.115,
+    "USDX": 99.07,
+    "XAUUSD": 4631.235,
     "UK100_dayPct": 0.42
   },
   "fx": {
-    "gbpUsdDayPct": -0.05,
+    "gbpUsdDayPct": -0.11,
     "gbpUsd20dPercentile": 100,
     "sterlingEri": 85.8957,
     "sterlingEriDayChange": -0.02,
@@ -36,23 +36,23 @@
     "daysToMpc": 24
   },
   "usLinkage": {
-    "us500DayPct": -0.03,
-    "nas100DayPct": -0.55,
-    "vix": 16.09,
+    "us500DayPct": -0.19,
+    "nas100DayPct": -0.75,
+    "vix": 16.115,
     "vixRegime": "NORMAL",
     "us10y": 4.69,
-    "usdx": 98.99
+    "usdx": 99.07
   },
   "commodities": {
-    "brentDayPct": -1.68,
-    "copperDayPct": 0.64,
-    "goldDayPct": 1.14,
+    "brentDayPct": -2.1,
+    "copperDayPct": 0.4,
+    "goldDayPct": 0.57,
     "brent20dTrend": "UP"
   },
   "europeanTape": {
     "eurostoxx50DayPct": -0.01,
-    "dax40DayPct": 0.06,
-    "eurUsdDayPct": -0.07,
+    "dax40DayPct": 0.02,
+    "eurUsdDayPct": -0.16,
     "ftseDaxCorr20d": 0.48,
     "ftseSx5eCorr20d": 0.5,
     "tapeAgreement": "ALIGNED",
@@ -69,14 +69,14 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent -1.68%",
+      "driver": "Brent -2.1%",
       "read": "BEARISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper +0.64%",
+      "driver": "Copper +0.4%",
       "read": "NEUTRAL",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
@@ -117,26 +117,22 @@
       "headline": "Trump says U.S. will hike Canada auto tariffs to 50% as trade war escalates",
       "source": "CNBC",
       "url": "https://www.cnbc.com/2026/08/24/trump-canada-auto-tariffs-trade-war.html",
-      "hoursAgo": 2.4
+      "hoursAgo": 3.4
     },
     {
-      "headline": "Gold rally gains momentum ahead of US inflation, Jackson Hole event - Reuters",
+      "headline": "Gold rally gains momentum ahead of US inflation data, Jackson Hole event - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNUkZtQVBPdjlyb21JaVBxeFRicDFEeHVNQ21pZzdGQnlSMUpFYV80MEl3RjJUbF9tYWxmdkZqY2NpaXh5S0NPd1lhbFZxUHZMVVFkTHNyNktCX2hrUU5KN3hjcWRUVTlaQ0hwcmVoMV9VZjBmUkFjMGtTUUY5MXBwRDRFWXBwQnhZTzU1dV81LThOaTNZR1BLVDRGU1JtbDczRjVweFByWkVQbWhhX3VwYTlJZ0VYblU?oc=5",
-      "hoursAgo": 11.8
+      "hoursAgo": 12.7
     },
     {
       "headline": "Health of Norway's king deteriorates while in hospital, palace says - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNb1lUMXhic3JyYmx3WmZRdjlFXzYyR29tN0lxb2dFR2lzNW5aSDdraG1fSzBQdHR1OVY3azRQQkN3MURpbmM0SFhYRC1WdVJRMk44bkRWMms0MEplT3ZVWi1UZXFyS1pLVGVWQ2Uwc2V0WWE4YWJyMUg2enlsbEdzczgwS1c5N0JGb3dzWmlXbjQtdFg5WW9SLVJlU0NfUTdZZnJn?oc=5",
-      "hoursAgo": 22.3
+      "hoursAgo": 23.3
     }
   ],
-  "riskTone": {
-    "score": -3,
-    "label": "BEARISH",
-    "rationale": "Escalating US-Canada trade war with 50% auto tariffs and gold rally signal clear risk-off sentiment; Norway king headline is non-market relevant."
-  },
+  "riskTone": null,
   "bias": {
     "score": -3,
     "label": "BEARISH",
@@ -146,31 +142,31 @@
         "name": "GBP",
         "weight": 3,
         "impact": "NEUTRAL",
-        "detail": "GBP/USD -0.05% → FTSE tailwind (sign-flipped)"
+        "detail": "GBP/USD -0.11% → FTSE tailwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
-        "impact": "NEUTRAL",
-        "detail": "US500 -0.03% today"
+        "impact": "BEARISH",
+        "detail": "US500 -0.19% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 16.09 — NORMAL regime"
+        "detail": "VIX 16.115 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
         "impact": "BEARISH",
-        "detail": "Brent -1.68% (energy majors)"
+        "detail": "Brent -2.1% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
-        "impact": "BULLISH",
-        "detail": "Copper +0.64% (miners/China)"
+        "impact": "NEUTRAL",
+        "detail": "Copper +0.4% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -187,20 +183,20 @@
       {
         "name": "Risk tone",
         "weight": 1,
-        "impact": "BEARISH",
-        "detail": "Risk-tone classifier: BEARISH"
+        "impact": "NEUTRAL",
+        "detail": "Risk-tone classifier unavailable (no API key or no news)"
       },
       {
         "name": "European tape (SX5E/DAX)",
         "weight": 1,
         "impact": "NEUTRAL",
-        "detail": "SX5E -0.01% / DAX +0.06%"
+        "detail": "SX5E -0.01% / DAX +0.02%"
       }
     ],
     "eventSuppressed": false
   },
   "orbContext": {
-    "computedAt": "2026-08-24T16:25:33.382Z",
+    "computedAt": "2026-08-24T17:23:18.557Z",
     "mode": "CLOSED",
     "cashOpenLondon": "08:00 BST",
     "overnightHigh": 10832.2,
@@ -210,7 +206,7 @@
     "priorClose": 10804.1,
     "prevWeekHigh": 10825.9,
     "prevWeekLow": 10673.9,
-    "gapPts": 45.8,
+    "gapPts": 44.9,
     "gapPct": 0.42,
     "orbHigh": 10819.9,
     "orbLow": 10799.5,
@@ -254,20 +250,9 @@
         "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
       }
     ],
-    "aiStanceLine": "Due to 80% of the 14-day ADR (85.7pts) already consumed, an ORB that already broke upward leaving price 30pts above the ORB high, and a crowded-short pound at its 100th percentile that could squeeze further and weigh on FTSE multinationals, any fresh breakout attempt today looks poorly supported on both the range-budget and currency fronts.",
-    "aiBullets": [
-      "Price at 10849.85 is ~30pts above the ORB high of 10819.9 — with only ~17pts of ADR budget remaining, pursuing longs from here offers almost no room before a typical day's range is fully spent.",
-      "The ORB already broke UP, but the risk-tone is BEARISH (-3) driven by the Canada auto tariff headline (2.4hrs ago) — a directional conflict that historically favours mean-reversion rather than trend continuation.",
-      "GBP is at its 100th 20-day percentile (strongest in over three weeks); any further pound strength would flip the FTSE GBP read from NEUTRAL to a headwind for the dollar-earning multinationals that dominate the index.",
-      "Brent -1.68% is pressuring Shell and BP (top-5 weights), while copper +0.64% only partially offsets via miners — net sector drag reinforces the case for fading intraday highs rather than buying the break."
-    ],
+    "aiStanceLine": null,
+    "aiBullets": [],
     "baseRateNote": null
   },
-  "briefing": {
-    "biasScore": -3,
-    "biasLabel": "BEARISH",
-    "confidence": 5,
-    "briefing": "Starting with sterling (the pound): GBPUSD is down just -0.05% today, sitting at a 20-day high percentile of 100 — meaning the pound is at its strongest point in over three weeks. Because UK100 and the pound move in opposite directions (a strong pound hurts the big multinationals that earn dollars and euros abroad), this is a mild but real headwind for the index, though the snapshot classifies the net FTSE impact as NEUTRAL given how small the move is. The dominant regime force today is not currency or rates — it is trade war risk: Trump's announcement just over two hours ago that US auto tariffs on Canada will be escalated to 50% is driving a classic risk-off (investors moving away from riskier assets) tone, which pushed gold up +1.14% and is the clearest explanation for why energy is struggling despite Brent's 20-day uptrend. Brent crude itself is down -1.68%, which directly pressures Shell and BP — two of the top-five index weights — making the energy sector the single biggest drag on UK100 right now. Miners are a partial offset with copper +0.64%, but not enough to flip the picture. Gilts (UK government bonds) are unchanged and there is no long-end stress, so no fiscal alarm. VIX (Wall Street's fear gauge) sits at 16, firmly in NORMAL territory, meaning this is not a panic day — just a soft, cautious one. The directional bias is modestly BEARISH: energy weakness plus trade-war anxiety outweigh the copper and GBP tailwinds, but conviction is only MEDIUM because the moves are small and much of today's range is already used. Confidence is 5/10 — the trade-war headline is real but markets have partly absorbed it; a fresh escalation or a strong US data print could shift things quickly. For the 08:00 ORB trade specifically, this is a stand-aside or fade-the-break day: 80% of the 14-day average daily range (85.7 points) has already been consumed, the ORB already broke upward, and with so little range budget left, chasing a fresh breakout in either direction looks poor risk-reward — fading moves back toward the ORB midpoint is more aligned with how late-session days like this tend to behave. On the calendar, the big event is US PCE inflation data (the Federal Reserve's preferred inflation measure) on Wednesday at 13:30 BST — two days away — so build up caution from Tuesday evening. Key levels: overnight high 10832.2 and low 10799.5 form the short-term reference band; the ORB high is 10819.9 and ORB low 10799.5; prior day high 10825.9 is the nearest upside cap; prior day low 10726 is the stretch target to the downside but sits beyond what is left of a typical day's range. Current price at 10849.85 is already above all of these, suggesting the intraday move is largely done. The trade-war tariff shock is the story today — but with range nearly exhausted, the real risk is Wednesday's PCE print, not today's tape.",
-    "generatedAt": "2026-08-24T16:26:03.565Z"
-  }
+  "briefing": null
 }
