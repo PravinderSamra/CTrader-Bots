@@ -96,6 +96,61 @@
         "adrUsedPct": 38
       },
       "outcome": null
+    },
+    {
+      "at": "2026-08-24T08:05:41.406Z",
+      "londonTime": "09:05 BST",
+      "mode": "POST_ORB",
+      "price": 10813.85,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — The obvious draw (PDL 10726) sits beyond what's left of a typical day's range — targets past it are stretch-only today.",
+      "signals": [
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10726) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.17%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to an unbroken, compressed ORB (only 38% of the 85.7-point ADR used, versus the ~63% typical by now), a negative three-way tape alignment across FTSE, Eurostoxx and DAX, and a crowded-short GBP that makes upside breaks doubly dangerous, the path of least resistance is modestly lower — but range exhaustion limits how far a short can realistically run today.",
+      "aiBullets": [
+        "The ORB range of just 20.4 points (10799.5–10819.9) is narrow relative to the 85.7-point ADR; with 62 points of range budget still available, a short break could extend meaningfully, BUT the PDL at 10726 requires a further ~74 points from the ORB low — beyond a full typical day's remaining range.",
+        "Three major cross-market signals (US500 -0.19%, Eurostoxx -0.17%, DAX -0.15%) are all aligned negative and the snapshot marks tape agreement as 'ALIGNED' — this multi-market confirmation strengthens the short lean beyond what any single index move would justify alone.",
+        "Brent crude -1.09% is directly bearish for Shell and BP (top-5 index weights each), creating a sector-level anchor that the mechanical signals do not cross-reference against today's compressed range — energy drag could do disproportionate index damage even on limited overall movement.",
+        "GBP at the 100th percentile of its 20-day range (GBPUSD 1.3634) combined with a CROWDED_SHORT COT position means a squeeze is statistically overdue; any sterling spike would flip the sign-flip relationship and actively punish upside ORB breaks — making long fades after an initial upside sweep the higher-probability contrarian play."
+      ],
+      "bias": {
+        "score": -3,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10819.9,
+        "orbLow": 10799.5,
+        "orbBrokenDirection": "NONE",
+        "overnightHigh": 10832.2,
+        "overnightLow": 10799.5,
+        "priorDayHigh": 10825.9,
+        "priorDayLow": 10726,
+        "gapPct": 0.09,
+        "adr14": 85.7,
+        "adrUsedPct": 38
+      },
+      "outcome": null
     }
   ]
 }
