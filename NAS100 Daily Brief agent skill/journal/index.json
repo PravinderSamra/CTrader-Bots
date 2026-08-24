@@ -1,6 +1,6 @@
 {
-  "updated": "2026-08-24T09:37:45+00:00",
-  "count": 16,
+  "updated": "2026-08-24T12:40:16+00:00",
+  "count": 17,
   "scans": [
     "2026-08-23/1403-closed.json",
     "2026-08-23/1424-closed.json",
@@ -17,7 +17,8 @@
     "2026-08-24/0830-london.json",
     "2026-08-24/0832-london.json",
     "2026-08-24/0833-london.json",
-    "2026-08-24/0937-london.json"
+    "2026-08-24/0937-london.json",
+    "2026-08-24/1240-preny.json"
   ],
-  "latest": "2026-08-24/0937-london.json"
+  "latest": "2026-08-24/1240-preny.json"
 }
