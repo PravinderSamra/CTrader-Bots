@@ -1,0 +1,216 @@
+{
+  "schema": 1,
+  "scan_utc": "2026-08-24T13:45:51+00:00",
+  "scan_et": "2026-08-24 09:45 ET (Mon)",
+  "trading_day": "2026-08-24",
+  "session_window": "NY_OPEN",
+  "is_trading_day": true,
+  "prediction": {
+    "price_at_scan": 28903.5,
+    "bias_score": -12,
+    "bias_label": "STRONGLY BEARISH",
+    "strategy": "STRATEGY 2 \u2014 CISD -> HH/HL -> fib OTE continuation. Below the flip in negative gamma: dealers amplify, sweeps run rather than fail. Strategy-1 fades have a materially lower hit rate here \u2014 only take them at the far walls.",
+    "event_gate": null,
+    "expected_direction": -1,
+    "gamma_flip": 29049.6,
+    "expiry_shape": "COHERENT_SHORT",
+    "fuel_state": "EXHAUSTED",
+    "remaining_budget": 0.0,
+    "adr14": 451.1,
+    "adr_used_pct": 113.0,
+    "levels": [
+      {
+        "price": 28530.1,
+        "name": "STRUCTURAL PUT WALL \u25cf\u25cf\u25cf\u25cf\u25cf 1.12bn",
+        "kind": "structural",
+        "dist": -373.4,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      }
+    ]
+  },
+  "inputs": {
+    "bias_components": [
+      {
+        "component": "gamma",
+        "points": -3,
+        "why": "below flip 29049.6 by 146.1pts \u2014 SHORT gamma, dealers amplify: downside accelerates, rallies unstable"
+      },
+      {
+        "component": "gamma",
+        "points": -2,
+        "why": "week net GEX -1.223 $bn/1% -> expansion likely"
+      },
+      {
+        "component": "gamma",
+        "points": 0,
+        "why": "price mid-band (28730.1-29130.1), 43% up the range"
+      },
+      {
+        "component": "vol",
+        "points": 2,
+        "why": "VXN 21.98 (-5.5%) \u2014 fear falling, bullish"
+      },
+      {
+        "component": "vol",
+        "points": 1,
+        "why": "VIX9D/VIX 0.794 contango \u2014 calm, mean-reversion favoured, mild upward drift"
+      },
+      {
+        "component": "vol",
+        "points": -1,
+        "why": "VXN/VIX 1.39 \u2014 tech-specific stress priced above the broad market"
+      },
+      {
+        "component": "vol",
+        "points": 0,
+        "why": "VVIX 86.27 \u2014 no tail-hedge bid"
+      },
+      {
+        "component": "rates",
+        "points": 1,
+        "why": "US10y 4.712 (-0.55%) \u2014 yields down, BULLISH tech"
+      },
+      {
+        "component": "rates",
+        "points": 0,
+        "why": "DXY 98.924 (+0.13%) \u2014 dollar flat"
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Real yield, 10y (DFII10)** \u2014 what lenders earn after inflation \u2014 is 2.35%, flat 0bp today and 4bp over 5 days. No change today \u2014 watch the 5-day direction instead."
+      },
+      {
+        "component": "macro",
+        "points": -1,
+        "why": "**10y nominal yield (DGS10)** moved 4bp up (2026-08-19 to 2026-08-20). That was driven by inflation expectations, not real rates \u2014 a softer signal that only hurts tech if the Fed then reacts to it."
+      },
+      {
+        "component": "macro",
+        "points": 2,
+        "why": "**High-yield credit spread (HY OAS)** \u2014 the extra interest demanded to lend to riskier companies is 2.75% (+4bp over 5 days). Low and steady: the bond market is relaxed about risk, which gives stocks permission to rise."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Financial conditions (NFCI)** \u2014 how easy it is to borrow money across the economy \u2014 is EASIER than normal (-0.559). Cheap, available money is a background tailwind for stocks."
+      },
+      {
+        "component": "macro",
+        "points": -1,
+        "why": "**Fed balance sheet (WALCL) / reverse repo (RRP)** \u2014 cash in the financial system. The Fed is holding $6.75tn of assets, shrinking by $14.3bn this week, and the spare-cash buffer is down to $0.2bn. The Fed is quietly pulling money out of the system \u2014 a slow, persistent drag on stocks, not a day-trade signal."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Yield curve (10y\u20132y)** \u2014 long vs short bond yields. The 10-year pays +0.50% more than the 2-year. Barely moved."
+      },
+      {
+        "component": "breadth",
+        "points": -2,
+        "why": "mega-cap avg -0.87% (1/4 up): NVDA -2.31%, MSFT -0.03%, AAPL +0.66%, AVGO -1.81%"
+      },
+      {
+        "component": "breadth",
+        "points": -1,
+        "why": "NDX -1.38% vs ES -0.32% \u2014 tech lagging, rotation out of tech"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "ADR14 451.1, 113.0% used vs ~50% normal by 09:45 ET -> fuel_ratio 2.26 (burning hot) [EXHAUSTED]"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "fuel is short \u2014 this dampens CONVICTION in any continuation call, it does not change direction"
+      },
+      {
+        "component": "structure",
+        "points": -1,
+        "why": "price below PD mid 29292.9 (PDH 29452.2 / PDL 29133.6)"
+      },
+      {
+        "component": "structure",
+        "points": -3,
+        "why": "price is BELOW the entire prior-week range (29115.9-30245.8) \u2014 weekly draw has flipped bearish; PWL 29115.9 is now resistance, not support"
+      },
+      {
+        "component": "structure",
+        "points": 0,
+        "why": "in-reach unmitigated pools: 0 above / 0 below \u2014 draw balanced"
+      },
+      {
+        "component": "news",
+        "points": -3,
+        "why": "4 auto-scored headline(s) (0 bull / 4 bear) -> BEARISH; 45 more need reading in context (not counted here)"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [tariff_semi] S&P, Nasdaq futures slip as markets await Iran sanctions, Nvidia results - StreetInsider"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [tariff_general] U.S. Trade Rep Greer blames Canada for failed tariff talks: 'They wanted more'"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [tariff_general] Tariff-Driven Inflation Risks Return With Trump Moves on Canada, Iran - Bloomberg"
+      },
+      {
+        "component": "events",
+        "points": 0,
+        "why": "NVDA earnings 2026-08-26 time-after-hours (cons $2.09) \u2014 INDEX-DEFINING event; day before pins, day after expands"
+      }
+    ],
+    "fuel": {
+      "adr14": 451.1,
+      "today_range": 509.6,
+      "adr_used_pct": 113.0,
+      "remaining_budget": 0.0,
+      "expansion_state": "EXHAUSTED",
+      "volume_relative": 0.99,
+      "volume_state": "normal"
+    },
+    "gamma": {
+      "near_expiry_0_2dte": -1.185,
+      "this_week": -1.223,
+      "full_45dte": -2.228
+    },
+    "call_wall": 29130.1,
+    "put_wall": 28730.1,
+    "max_pain": 29130.1,
+    "vol": {
+      "vxn": 21.98,
+      "vix": 15.85,
+      "vix9d_over_vix": 0.794
+    },
+    "rates": {
+      "us10y": 4.712,
+      "dxy": 98.924
+    },
+    "news": {
+      "raw_score": -5.84,
+      "bias_points": -3,
+      "label": "BEARISH",
+      "scored_high_confidence": 4,
+      "needs_model_judgement": 45
+    },
+    "events_24h": [
+      {
+        "utc": "2026-08-24T18:00:00+00:00",
+        "impact": "Medium",
+        "title": "Treasury Sec Bessent Speaks",
+        "forecast": "",
+        "previous": "",
+        "hours_away": 4.2
+      }
+    ]
+  },
+  "outcome": null
+}
