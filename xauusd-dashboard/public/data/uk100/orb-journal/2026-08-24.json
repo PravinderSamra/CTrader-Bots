@@ -247,6 +247,54 @@
         "adrUsedPct": 40
       },
       "outcome": null
+    },
+    {
+      "at": "2026-08-24T09:38:03.185Z",
+      "londonTime": "10:38 BST",
+      "mode": "POST_ORB",
+      "price": 10828.35,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — The obvious draw (PDL 10726) sits beyond what's left of a typical day's range — targets past it are stretch-only today.",
+      "signals": [
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10726) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to the ORB already breaking UP into a thin overhead range (overnight high 10,832.2 just 13 points away), a crowded-short pound that could squeeze higher and hurt FTSE multinationals, and 51% of the 85.7-point ADR already consumed by 09:37, continuation longs carry poor reward-to-risk and a fakeout-then-fade is the more probable outcome.",
+      "aiBullets": [
+        "Price is 10,828 vs overnight high 10,832.2 — only ~4 points of clear air above before the ORB breakout runs into a ceiling; the remaining ADR budget (~42 points) is almost entirely consumed by that gap, leaving very little room for a trend day higher.",
+        "GBP sits at the 100th percentile of its 20-day range even after today's -0.12% dip — any mean-reversion bounce in sterling (a crowded-short squeeze) would flip the FX tailwind to a headwind for dollar-earning index heavyweights, undermining the breakout.",
+        "Brent -1.28% drags directly on Shell and BP (top-5 index weights); with European peers flat (DAX +0.09%, SX5E +0.04%) offering no amplifying momentum, the energy drag is an unhedged headwind that the upside break must fight through.",
+        "Volume is only ~37% done by this hour per the expansion model — an afternoon range expansion is possible, but with Wednesday's US PCE (13:30 BST) two days away, macro uncertainty typically compresses intraday follow-through in the prior session."
+      ],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10819.9,
+        "orbLow": 10799.5,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10832.2,
+        "overnightLow": 10799.5,
+        "priorDayHigh": 10825.9,
+        "priorDayLow": 10726,
+        "gapPct": 0.22,
+        "adr14": 85.7,
+        "adrUsedPct": 51
+      },
+      "outcome": null
     }
   ]
 }

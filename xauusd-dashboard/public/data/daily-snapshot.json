@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-24T09:05:27.281Z",
+  "generatedAt": "2026-08-24T09:36:59.294Z",
   "yields": {
     "US10Y": 4.69,
     "US2Y": 4.19,
@@ -34,23 +34,23 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 872.8,
-    "gldWoWChange": -1.4,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 874.4,
+    "gldWoWChange": 1.6,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4643.245,
-    "XAGUSD": 68.836,
-    "EURUSD": 1.16654,
-    "USDJPY": 159.167,
-    "USDCHF": 0.80215,
-    "USDCNH": 6.72426,
-    "GBPUSD": 1.36278,
-    "USDCAD": 1.38396,
-    "USDSEK": 9.48253,
-    "US500": 7668.4,
-    "GER40": 26145.75,
-    "UK100": 10834.25,
+    "XAUUSD": 4634.695,
+    "XAGUSD": 68.702,
+    "EURUSD": 1.16606,
+    "USDJPY": 159.184,
+    "USDCHF": 0.80272,
+    "USDCNH": 6.72365,
+    "GBPUSD": 1.36268,
+    "USDCAD": 1.38382,
+    "USDSEK": 9.49205,
+    "US500": 7666.7,
+    "GER40": 26145.95,
+    "UK100": 10827.95,
     "ADR_14day": 101.3,
     "ADR_usedToday": 64.9,
     "goldSilverRatio": 67.5
@@ -69,50 +69,50 @@
       "headline": "China vows to protect its rights as US readies Iran sanction - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T08:05:38.000Z",
-      "hoursAgo": 1
+      "hoursAgo": 1.5
+    },
+    {
+      "headline": "Gold climbs to more than three-month high as markets await US inflation data - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-24T04:39:00.000Z",
+      "hoursAgo": 5
     },
     {
       "headline": "Indian shares extend cautious trade on concerns over Iran sanctions - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-08-24T04:49:13.000Z",
-      "hoursAgo": 4.3
-    },
-    {
-      "headline": "Gold hits over 3-month high ahead of US inflation data, Fed chair speech - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-24T04:39:00.000Z",
-      "hoursAgo": 4.4
+      "publishedAt": "2026-08-24T02:22:00.000Z",
+      "hoursAgo": 7.2
     },
     {
       "headline": "Dollar trading near multi-month lows, restrained by debt nerves - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T01:48:00.000Z",
-      "hoursAgo": 7.3
+      "hoursAgo": 7.8
     },
     {
       "headline": "Shares, oil slip awaiting US details of Iran sanctions - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T00:49:00.000Z",
-      "hoursAgo": 8.3
+      "hoursAgo": 8.8
     },
     {
       "headline": "Oil falls as US prepares to unveil new Iran sanctions - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-23T23:18:00.000Z",
-      "hoursAgo": 9.8
+      "hoursAgo": 10.3
     },
     {
       "headline": "Iran says new sanctions threatened by 'desperate' US will fail - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-23T18:16:16.000Z",
-      "hoursAgo": 14.8
+      "hoursAgo": 15.3
     }
   ],
   "briefing": {
     "biasScore": 3,
     "biasLabel": "BULLISH",
     "confidence": 6,
-    "briefing": "Right now, the dominant forces driving gold are a weakening US dollar, rising geopolitical tension around Iran, and anticipation of upcoming US inflation data and a Federal Reserve Chair speech — all of which are pulling traders toward gold as a safe store of value. The most market-moving recent headlines: about 1 hour ago, Reuters reported that China is vowing to protect its interests as the US readies new Iran sanctions, adding a layer of geopolitical uncertainty that typically supports gold (when the world feels less safe, investors buy gold). About 4 hours ago, Reuters confirmed gold hit a 3-month high ahead of US inflation data and a Fed Chair speech, and about 7 hours ago, the dollar was reported trading near multi-month lows, restrained by concerns over US government debt — a weaker dollar makes gold cheaper for foreign buyers, which tends to push prices up. Directional bias is BULLISH: gold is trending up on the 1H chart, the dollar is soft, geopolitical risk is elevated (GPR reading of 152.7, which is meaningfully high), and institutional positioning shows large traders [hedge funds and big banks tracked weekly by the CFTC report] are net long 219,495 contracts — that means the big players are broadly on the bullish side. However, positioning is flagged as CROWDED LONG, meaning a lot of people are already in buy trades, which raises the risk of a sharp pullback if sentiment shifts. Confidence is 6/10 — the trend is clearly up, but crowded positioning and a 20% market probability of a Fed rate hike [meaning the Fed could raise borrowing costs, which often hurts gold] are real risks. The 14-day Average Daily Range [how much gold typically moves each day] is 101.3 points, and today has already used 64.9 of those points — so roughly 36 points of typical daily movement may remain, meaning big explosive moves from here today are less likely unless a fresh catalyst arrives. There are no scheduled economic events on today's calendar, which is unusual — the calendar is empty — but the news references upcoming US inflation data and a Fed Chair speech that appear to be due very soon (likely later today or tomorrow based on context), so treat this as a high-alert window where price could move sharply on any release. For trade integration: conditions support trend-following BUY setups aligned with the uptrend, but because positioning is crowded and much of the daily range is already used, keep position size smaller than usual [perhaps 50% of your normal risk] and wait patiently on the 5M chart for a clean pullback into a key area before entering on the 1M chart — key levels to watch are the recent highs around 4,643 (current price), with support likely near 4,620–4,610 where a pullback could offer a buying opportunity. The one thing to remember today: gold's uptrend has strong reasons behind it, but with most of today's expected move already done and big players already heavily long, chase carefully — wait for price to come back to you, don't jump in at the top.",
-    "generatedAt": "2026-08-24T09:05:46.420Z"
+    "briefing": "Right now, gold is being driven by three overlapping forces: a weak US dollar, rising geopolitical tension around Iran, and markets positioning ahead of upcoming US inflation data. The dollar index (DXY — a measure of how strong the dollar is against a basket of currencies) is sitting at 99.01, near multi-month lows according to a headline from roughly 8 hours ago, and a weak dollar is historically good for gold because gold is priced in dollars — when the dollar falls, gold becomes cheaper for foreign buyers, which pushes demand and price up. The most recent catalyst, breaking just 1.5 hours ago, is China vowing to protect its rights as the US prepares new Iran sanctions — this kind of geopolitical friction [meaning tension between major powers] adds 'safe haven' demand to gold, as investors tend to buy gold when global uncertainty rises. Multiple headlines over the last 9 hours confirm this Iran sanctions story has been building overnight, and that broader market caution is in play. With all that said, the directional bias here favours gold continuing HIGHER — the trend is supported by a soft dollar, elevated geopolitical risk (the GPR index sits at a high 152.7), steady ETF inflows into gold over the past three weeks, and large speculative positioning that remains net long (meaning most professional traders are betting on higher prices). Confidence is 6/10 — the main risk is that gold is already CROWDED LONG [meaning most traders are already positioned for higher prices, which can lead to sharp reversals if sentiment flips], and there is a 20% chance the Fed [US central bank] hikes rates at its September meeting, which would strengthen the dollar and hurt gold. The calendar shows no scheduled economic events today, so there is no specific news risk to time around this session — however, markets are described as 'awaiting US inflation data,' which suggests that event may be later this week; trade cautiously and use smaller position sizes in the days leading up to it. On price levels: gold is at $4,634.69, the 14-day average daily range (ADR — how much gold typically moves in a day) is $101.30, and today has already used $64.90 of that, leaving roughly $36 of average movement available — so while the trend is bullish, the daily move is mostly spent, meaning chasing a big breakout right now carries more risk. Watch $4,600 as near-term support [a price floor where buyers tend to step in] and $4,670–4,680 as the logical upside target zone. For trade integration: the London session window is open and conditions are broadly favourable for trend-following long trades [buying to profit from rising prices], but given the limited ADR remaining today and the crowded positioning, keep trade size conservative — this is a 6/10 conviction setup, not a full-size trade. The one thing to remember today: gold's uptrend is intact and supported by real fundamentals, but with most of today's average move already used up, patience for a pullback entry is smarter than chasing price higher right now.",
+    "generatedAt": "2026-08-24T09:37:18.632Z"
   }
 }
