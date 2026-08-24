@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-07-23T21:36:41.649Z",
-  "entriesScored": 29,
+  "updatedAt": "2026-08-24T15:31:07.281Z",
+  "entriesScored": 40,
   "byStance": {
     "SHORT_FAVOURED": {
-      "n": 9,
+      "n": 15,
       "right": 3,
-      "wrong": 6,
-      "flat": 0,
-      "avgToClosePct": 0.34
+      "wrong": 11,
+      "flat": 1,
+      "avgToClosePct": 0.29
     },
     "LONG_FAVOURED": {
       "n": 5,
@@ -32,10 +32,10 @@
       "flat": 6
     },
     "R11b": {
-      "n": 24,
-      "right": 4,
+      "n": 35,
+      "right": 6,
       "wrong": 5,
-      "flat": 15
+      "flat": 24
     },
     "R6": {
       "n": 1,
@@ -44,9 +44,9 @@
       "flat": 0
     },
     "R8": {
-      "n": 26,
-      "right": 10,
-      "wrong": 11,
+      "n": 29,
+      "right": 12,
+      "wrong": 12,
       "flat": 5
     },
     "R12": {
@@ -56,14 +56,14 @@
       "flat": 3
     },
     "R2": {
-      "n": 11,
-      "right": 2,
+      "n": 14,
+      "right": 4,
       "wrong": 3,
-      "flat": 6
+      "flat": 7
     },
     "R4": {
-      "n": 15,
-      "right": 7,
+      "n": 16,
+      "right": 8,
       "wrong": 0,
       "flat": 8
     },
@@ -74,8 +74,8 @@
       "flat": 1
     },
     "R10": {
-      "n": 5,
-      "right": 0,
+      "n": 6,
+      "right": 1,
       "wrong": 0,
       "flat": 5
     },

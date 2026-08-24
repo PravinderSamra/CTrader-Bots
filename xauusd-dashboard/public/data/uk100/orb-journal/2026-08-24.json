@@ -47,7 +47,21 @@
         "adr14": 85.7,
         "adrUsedPct": 36
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-08-24T15:31:06.123Z",
+        "fwd1hPct": -0.03,
+        "fwd3hPct": 0,
+        "toClosePct": 0.24,
+        "maxUpPct": 0.28,
+        "maxDownPct": -0.35,
+        "verdict": "WRONG",
+        "signalVerdicts": [
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-08-24T07:51:44.723Z",
@@ -95,7 +109,21 @@
         "adr14": 85.7,
         "adrUsedPct": 38
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-08-24T15:31:06.231Z",
+        "fwd1hPct": 0.17,
+        "fwd3hPct": 0.05,
+        "toClosePct": 0.39,
+        "maxUpPct": 0.47,
+        "maxDownPct": -0.16,
+        "verdict": "WRONG",
+        "signalVerdicts": [
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-08-24T08:05:41.406Z",
@@ -150,7 +178,25 @@
         "adr14": 85.7,
         "adrUsedPct": 38
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-08-24T15:31:06.342Z",
+        "fwd1hPct": 0.14,
+        "fwd3hPct": 0.01,
+        "toClosePct": 0.35,
+        "maxUpPct": 0.44,
+        "maxDownPct": -0.2,
+        "verdict": "WRONG",
+        "signalVerdicts": [
+          {
+            "rule": "R8",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-08-24T08:38:06.049Z",
@@ -198,7 +244,21 @@
         "adr14": 85.7,
         "adrUsedPct": 38
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-08-24T15:31:06.452Z",
+        "fwd1hPct": 0.05,
+        "fwd3hPct": -0.19,
+        "toClosePct": 0.25,
+        "maxUpPct": 0.34,
+        "maxDownPct": -0.3,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-08-24T09:06:29.295Z",
@@ -246,7 +306,21 @@
         "adr14": 85.7,
         "adrUsedPct": 40
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-08-24T15:31:06.561Z",
+        "fwd1hPct": -0.04,
+        "fwd3hPct": -0.28,
+        "toClosePct": 0.16,
+        "maxUpPct": 0.25,
+        "maxDownPct": -0.39,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-08-24T09:38:03.185Z",
@@ -294,7 +368,21 @@
         "adr14": 85.7,
         "adrUsedPct": 51
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-08-24T15:31:06.669Z",
+        "fwd1hPct": -0.12,
+        "fwd3hPct": 0.13,
+        "toClosePct": 0.22,
+        "maxUpPct": 0.31,
+        "maxDownPct": -0.33,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-08-24T10:29:48.587Z",
@@ -342,7 +430,21 @@
         "adr14": 85.7,
         "adrUsedPct": 51
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-08-24T15:31:06.784Z",
+        "fwd1hPct": -0.18,
+        "fwd3hPct": 0.07,
+        "toClosePct": 0.16,
+        "maxUpPct": 0.25,
+        "maxDownPct": -0.39,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-08-24T11:19:47.092Z",
@@ -397,7 +499,25 @@
         "adr14": 85.7,
         "adrUsedPct": 52
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-08-24T15:31:06.896Z",
+        "fwd1hPct": -0.23,
+        "fwd3hPct": 0.26,
+        "toClosePct": 0.21,
+        "maxUpPct": 0.3,
+        "maxDownPct": -0.33,
+        "verdict": "WRONG",
+        "signalVerdicts": [
+          {
+            "rule": "R2",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-08-24T12:29:59.062Z",
@@ -445,7 +565,21 @@
         "adr14": 85.7,
         "adrUsedPct": 52
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-08-24T15:31:07.006Z",
+        "fwd1hPct": 0.25,
+        "fwd3hPct": 0.34,
+        "toClosePct": 0.34,
+        "maxUpPct": 0.43,
+        "maxDownPct": -0.21,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-08-24T13:43:44.381Z",
@@ -514,7 +648,33 @@
         "adr14": 85.7,
         "adrUsedPct": 60
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-08-24T15:31:07.125Z",
+        "fwd1hPct": 0.24,
+        "fwd3hPct": null,
+        "toClosePct": 0.24,
+        "maxUpPct": 0.33,
+        "maxDownPct": 0.09,
+        "verdict": "WRONG",
+        "signalVerdicts": [
+          {
+            "rule": "R2",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R10",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-08-24T14:34:12.011Z",
@@ -583,7 +743,97 @@
         "adr14": 85.7,
         "adrUsedPct": 72
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-08-24T15:31:07.279Z",
+        "fwd1hPct": -0.04,
+        "fwd3hPct": null,
+        "toClosePct": -0.04,
+        "maxUpPct": 0.02,
+        "maxDownPct": -0.1,
+        "verdict": "FLAT",
+        "signalVerdicts": [
+          {
+            "rule": "R2",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R4",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-08-24T15:31:03.507Z",
+      "londonTime": "16:31 BST",
+      "mode": "CLOSED",
+      "price": 10853.35,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — 80% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "80% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10726) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to 80% of the 14-day ADR (85.7 pts) already consumed, a 49-point gap-up that has already resolved upward past the ORB high of 10,819.9, and a bearish risk tone driven by Trump's 50% Canada auto tariff headline, any further upside break from current levels (10,853) is poorly fuelled and the higher-probability play is a fade back toward the ORB range.",
+      "aiBullets": [
+        "Current price 10,853 is 33 points above the ORB high (10,819.9) and 54 points above the ORB low (10,799.5) — with only ~17 points of typical daily range remaining, the breakout has already delivered most of its travel.",
+        "The 49-point gap-up (0.46% of prior close 10,804) absorbed nearly 57% of the 85.7-point ADR before London even opened a candle, compressing the range budget available for any mechanical ORB entry.",
+        "Gold +1.54% and Brent -2.18% are pulling in opposite directions on the index: miners (copper +0.82%) partially offset energy drag, but the net sector picture does not give a clean trend-day tailwind to support a sustained directional breakout.",
+        "GBP is at the 100th percentile of its 20-day range (gbpUsd20dPercentile: 100) and positioned as a crowded short — a snap reversal higher in sterling would act as a headwind for any long ORB break, adding an asymmetric downside risk to upside chases."
+      ],
+      "bias": {
+        "score": -4,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10819.9,
+        "orbLow": 10799.5,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10832.2,
+        "overnightLow": 10799.5,
+        "priorDayHigh": 10825.9,
+        "priorDayLow": 10726,
+        "gapPct": 0.46,
+        "adr14": 85.7,
+        "adrUsedPct": 80
+      },
+      "outcome": {
+        "resolvedAt": "2026-08-24T15:31:07.279Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
