@@ -295,6 +295,54 @@
         "adrUsedPct": 51
       },
       "outcome": null
+    },
+    {
+      "at": "2026-08-24T10:29:48.587Z",
+      "londonTime": "11:29 BST",
+      "mode": "POST_ORB",
+      "price": 10834.85,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — The obvious draw (PDL 10726) sits beyond what's left of a typical day's range — targets past it are stretch-only today.",
+      "signals": [
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10726) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to an already-spent 51% of the 14-day average daily range, a crowded short-sterling positioning that threatens upside FTSE breaks via any GBP squeeze, and a Brent -1.53% drag concentrated in top-5 energy weights, the ORB breakout above 10819.9 looks range-limited rather than trend-initiating today.",
+      "aiBullets": [
+        "With 51% of ADR14 (85.7 pts) used but only ~46% of typical daily volume done by 10:29 BST, an afternoon vol expansion is plausible — but the PDL at 10726 requires a further ~108 pts move, well beyond the remaining range budget.",
+        "GBP sits at the 100th percentile of its 20-day range (historically strong sterling); any COT short-squeeze (net short -53,966 contracts) would strengthen GBP and, via the sign-flip, push FTSE lower — threatening any long ORB trade built on the upside break.",
+        "The European tape is ALIGNED (DAX +0.16%, SX5E +0.08%) but with a 20-day FTSE-DAX correlation of only 0.49, European support adds limited directional confidence to the UK100 ORB break today.",
+        "Brent's -1.53% drop is the sole sector-level bearish signal and sits against a flat gilt curve (+0bp on 10Y) — no rate-driven bank rotation offset is available today, leaving energy as an unhedged index drag."
+      ],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10819.9,
+        "orbLow": 10799.5,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10832.2,
+        "overnightLow": 10799.5,
+        "priorDayHigh": 10825.9,
+        "priorDayLow": 10726,
+        "gapPct": 0.28,
+        "adr14": 85.7,
+        "adrUsedPct": 51
+      },
+      "outcome": null
     }
   ]
 }
