@@ -605,6 +605,21 @@ store for scheduled runs.
 4. **The reviewer has never run on real accumulated history** — it has only been
    verified against a deliberately backdated entry, which was deleted.
 
+**How improvement is actually governed.** Open questions live in
+`journal/HYPOTHESES.md` as a register: each carries its claim, the evidence so
+far, and the number of sessions needed before it can be acted on.
+`scripts/track.py` regenerates the evidence table across every completed trading
+day and prints `actionable: YES/NO`. The reviewer consults both, appends today's
+observation, and proposes nothing while the answer is NO.
+
+This exists because the first review got it wrong in both available directions:
+it proposed a recalibration built on the wrong metric, and cited a synthetic
+backdated entry as one of three "independent sessions". The register carries a
+withdrawn section so neither can be quietly resurrected. `track.py` also
+collapses scans taken within 15 minutes of each other and refuses to grade a
+session that is still in progress — both caught inflating the numbers on the
+first run.
+
 **Phase 4 questions the archive can answer:** which components actually predict
 direction; whether sweeps of the call wall fail more often than sweeps of PDH;
 whether strategy selection by gamma regime measurably beats picking one; whether

@@ -55,7 +55,10 @@ the prior-week low in the first hour and the rule has no reclaim condition" is.
 ### 4. Change proposals — only material ones
 For each: what to change, the evidence, and the expected effect. **Propose
 nothing without evidence from at least 3 sessions** — one day is noise, and
-tuning on noise is how a model gets worse. If there is not enough history yet,
+tuning on noise is how a model gets worse. `track.py` prints
+`actionable: YES/NO`; when it says NO you append today's data point to
+`HYPOTHESES.md` and propose nothing at all. "Still observing, here is the
+observation" is a complete and correct output. If there is not enough history yet,
 say exactly that and list what you are watching.
 
 Also consider, but only when evidence supports it:

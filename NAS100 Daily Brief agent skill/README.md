@@ -22,7 +22,7 @@ dealer-gamma regime, not by the chart.
 | **1** | Research: find, test and prove data sources; design the models | ✅ **Complete** — `PHASE1-FINDINGS.md` |
 | **2** | Build the agent skill | ✅ **Complete** — skill, slash command and sub-agent all live |
 | **3** | Refine information selection and output presentation | ✅ **Complete** — level board 30→12 rows, plain-English regime, collapsed scoring |
-| 4 | Continuous improvement against the logged archive | ⏳ Machinery built (journal + reviewer); needs real sessions |
+| 4 | Continuous improvement against the logged archive | 🔄 **Running.** 1 trading day logged. Open questions tracked in `journal/HYPOTHESES.md`; `scripts/track.py` prints the evidence table. Nothing changes below 3 sessions |
 
 ## Where it lives
 
