@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-23T16:20:42.987Z",
+  "generatedAt": "2026-08-24T08:04:40.675Z",
   "yields": {
     "US10Y": 4.69,
     "US2Y": 4.19,
@@ -34,26 +34,26 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 880,
-    "gldWoWChange": -116.8,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 874.8,
+    "gldWoWChange": null,
+    "trend3W": null
   },
   "snapshotPrices": {
-    "XAUUSD": 4605.23,
-    "XAGUSD": 69.0045,
-    "EURUSD": 1.16766,
-    "USDJPY": 158.9845,
-    "USDCHF": 0.80139,
-    "USDCNH": 6.72133,
-    "GBPUSD": 1.36441,
-    "USDCAD": 1.37675,
-    "USDSEK": 9.4748,
-    "US500": 7670.4,
-    "GER40": 26124.95,
-    "UK100": 10805.05,
-    "ADR_14day": 103.2,
-    "ADR_usedToday": 123,
-    "goldSilverRatio": 66.7
+    "XAUUSD": 4640.21,
+    "XAGUSD": 68.8805,
+    "EURUSD": 1.16661,
+    "USDJPY": 159.197,
+    "USDCHF": 0.802,
+    "USDCNH": 6.72447,
+    "GBPUSD": 1.3634,
+    "USDCAD": 1.38396,
+    "USDSEK": 9.48626,
+    "US500": 7656.2,
+    "GER40": 26085.45,
+    "UK100": 10811.85,
+    "ADR_14day": 101.3,
+    "ADR_usedToday": 64.9,
+    "goldSilverRatio": 67.4
   },
   "dollarLiquidity": {
     "stlfsi": -0.8285,
@@ -66,17 +66,47 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Gold hits over 3-month high ahead of US inflation data, Fed chair speech - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-24T04:39:00.000Z",
+      "hoursAgo": 3.4
+    },
+    {
+      "headline": "Indian shares extend cautious trade on concerns over Iran sanctions - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-24T02:22:00.000Z",
+      "hoursAgo": 5.7
+    },
+    {
+      "headline": "Dollar trading near multi-month lows, restrained by debt nerves - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-24T01:48:00.000Z",
+      "hoursAgo": 6.3
+    },
+    {
+      "headline": "Shares, oil slip awaiting US details of Iran sanctions - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-24T00:49:00.000Z",
+      "hoursAgo": 7.3
+    },
+    {
+      "headline": "Oil falls as US prepares to unveil new Iran sanctions - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-23T23:18:00.000Z",
+      "hoursAgo": 8.8
+    },
+    {
       "headline": "Iran says new sanctions threatened by 'desperate' US will fail - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-08-23T14:27:05.000Z",
-      "hoursAgo": 1.9
+      "publishedAt": "2026-08-23T18:16:16.000Z",
+      "hoursAgo": 13.8
     }
   ],
   "briefing": {
-    "biasScore": -1,
-    "biasLabel": "NEUTRAL",
-    "confidence": 4,
-    "briefing": "RIGHT NOW, the most important forces shaping gold are a dollar that is holding firm (DXY at 98.85, meaning the US dollar is relatively strong, which normally pushes gold down), rising bond yields (the 10-year US Treasury yield ticked up 0.04% today to 4.69%, and real yields — that is, yields after adjusting for inflation — are sitting at a high 2.35%, which makes holding gold less attractive since gold pays no interest), and a market that has already run hard today. On RECENT CATALYSTS, the only headline in the last few hours is Iran pushing back against threatened US sanctions (about 2 hours ago via Reuters) — geopolitical tension like this can give gold a small safe-haven boost, but this story doesn't look like a fresh escalation, more of a diplomatic exchange, so it probably isn't the main driver here. On DIRECTIONAL BIAS, gold is actually CHOPPY-to-slightly-bearish from here. Here's the simple reason: today's move has already exceeded the average daily range — price has travelled 123 points today against a 14-day average of just 103 points, meaning the typical daily 'fuel tank' is already empty and then some. Big institutional players (per the COT report, which tracks large trader positioning) are already heavily long gold, and ETF flows have been negative for three weeks running, meaning big funds are selling gold holdings. That combination — exhausted daily range, crowded positioning, firm dollar, high real yields — argues against chasing new longs. CONFIDENCE is 4/10. What would change this view: a fresh geopolitical shock, a sudden dollar sell-off, or price reclaiming a key resistance level with momentum. EVENT RISK: the calendar is empty today, which is unusual — no scheduled data releases to watch. That said, an empty calendar can sometimes produce slow, choppy, low-conviction price action. KEY LEVELS to watch: with ADR already blown out, respect any prior 1H highs and lows as potential reversal zones; a clean break and hold above 4,620 would be the first sign bulls are still in control, while a drop below 4,580 would signal sellers stepping in. TRADE INTEGRATION: this is NOT a good window for new trend-following buys — the daily range is exhausted, positioning is crowded, and there's no fresh bullish catalyst. If you're already in a long trade from earlier, consider tightening your stop-loss [the price level where you exit to limit losses]. Wait for a clean reset — ideally a pullback [a temporary dip in price] on the 1H chart — before considering new entries. Remember: when the day's fuel tank is already empty, the smartest trade is often no trade at all.",
-    "generatedAt": "2026-08-23T16:21:01.658Z"
+    "biasScore": 3,
+    "biasLabel": "BULLISH",
+    "confidence": 6,
+    "briefing": "Right now, gold is being pushed higher by two overlapping forces: a weakening US dollar and rising geopolitical tension — both of which typically make gold more attractive as a safe-haven asset [meaning investors park money in gold when they're nervous about the world or the dollar's value]. The most relevant recent headline came about 3.4 hours ago from Reuters, noting that gold just hit a 3-month high ahead of upcoming US inflation data and a Federal Reserve Chair speech — this tells us the market is positioning [placing trades in advance] for potentially market-moving events. Supporting this, a headline from 6.3 hours ago flagged the dollar trading near multi-month lows, held back by US debt concerns — a weaker dollar almost always gives gold a lift. Additionally, Iran sanctions headlines (from 7–14 hours ago) are adding a layer of geopolitical fear, which historically nudges gold upward. The directional bias is BULLISH [favouring higher prices], supported by a weak dollar, geopolitical anxiety, and the 14-day ADR [Average Daily Range — how far price typically moves in a day] of 101.3 points, with 64.9 points already used today, meaning roughly 36 points of potential daily move remains — so a meaningful extension higher is still possible, but the day's easy gains may be behind us. Confidence is 6/10; the 20% probability of a Fed rate hike [raising interest rates, which often pressures gold down] is a meaningful risk, and any surprise hawkish [aggressive on rate hikes] tone from the Fed Chair or hot inflation print could quickly reverse the mood. The calendar JSON shows no scheduled events today, but the mention of US inflation data and a Fed Chair speech in the Reuters headline suggests these are imminent — treat the next 12–24 hours as elevated-risk territory and size down [trade smaller than normal]. The COT report [a weekly measure of large trader positioning] shows the crowd is already heavily long [most big players have already bought], which means upside momentum could stall if there's any negative surprise. Key levels to watch: the current price of 4640 is near a 3-month high, so watch for resistance [a ceiling where sellers may step in] just above; on the downside, any pullback toward 4600–4610 could offer a buy opportunity if the 1H trend structure remains intact. For trade integration, the window is open for trend-following long trades [buying], but with reduced size given the crowded positioning and event risk nearby — wait for a clean 5M pullback into a structure level rather than chasing the current high. Remember: gold is in an uptrend, the dollar is weak, and the crowd is nervous — ride the wave, but keep your finger near the exit.",
+    "generatedAt": "2026-08-24T08:04:58.616Z"
   }
 }
