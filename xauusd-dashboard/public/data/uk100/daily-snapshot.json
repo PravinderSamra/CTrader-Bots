@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-08-24T19:22:06.009Z",
+  "generatedAt": "2026-08-24T20:19:40.111Z",
   "prices": {
-    "UK100": 10852.85,
-    "GBPUSD": 1.36279,
-    "GBPEUR": 1.16867,
-    "US500": 7661.4,
-    "NAS100": 29087.55,
-    "BRENT": 92.669,
-    "COPPER": 6.692,
-    "VIX": 16.115,
-    "USDX": 99.047,
-    "XAUUSD": 4643.97,
-    "UK100_dayPct": 0.45
+    "UK100": 10853.85,
+    "GBPUSD": 1.36304,
+    "GBPEUR": 1.16869,
+    "US500": 7655.4,
+    "NAS100": 29036.3,
+    "BRENT": 92.399,
+    "COPPER": 6.6938,
+    "VIX": 16.215,
+    "USDX": 99.022,
+    "XAUUSD": 4652.005,
+    "UK100_dayPct": 0.46
   },
   "fx": {
-    "gbpUsdDayPct": -0.11,
+    "gbpUsdDayPct": -0.1,
     "gbpUsd20dPercentile": 100,
     "sterlingEri": 85.8957,
     "sterlingEriDayChange": -0.02,
@@ -30,31 +30,31 @@
     "gilt10yDayBp": 0,
     "gilt20yDayBp": 0,
     "slope5s20s": 1.27,
-    "giltUst10ySpread": 0.44,
+    "giltUst10ySpread": 0.39,
     "longEndStress": false,
     "nextMpcDate": "2026-09-17",
     "daysToMpc": 24
   },
   "usLinkage": {
-    "us500DayPct": -0.11,
-    "nas100DayPct": -0.69,
-    "vix": 16.115,
+    "us500DayPct": -0.19,
+    "nas100DayPct": -0.87,
+    "vix": 16.215,
     "vixRegime": "NORMAL",
-    "us10y": 4.69,
-    "usdx": 99.047
+    "us10y": 4.74,
+    "usdx": 99.022
   },
   "commodities": {
-    "brentDayPct": -1.78,
-    "copperDayPct": 0.35,
-    "goldDayPct": 0.84,
+    "brentDayPct": -2.06,
+    "copperDayPct": 0.37,
+    "goldDayPct": 1.02,
     "brent20dTrend": "UP"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": 0.07,
+    "eurostoxx50DayPct": -0.01,
     "dax40DayPct": 0,
-    "eurUsdDayPct": -0.13,
+    "eurUsdDayPct": -0.11,
     "ftseDaxCorr20d": 0.48,
-    "ftseSx5eCorr20d": 0.51,
+    "ftseSx5eCorr20d": 0.5,
     "tapeAgreement": "ALIGNED",
     "preOpenLead": "NONE"
   },
@@ -69,14 +69,14 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent -1.78%",
+      "driver": "Brent -2.06%",
       "read": "BEARISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper +0.35%",
+      "driver": "Copper +0.37%",
       "read": "NEUTRAL",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
@@ -114,22 +114,34 @@
   ],
   "newsItems": [
     {
+      "headline": "US eyes China overcapacity tariffs of 7.5% before Xi-Trump talks, Bloomberg News reports - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxONVZLUTRjNDFCbG9qX21DUWdHYkNMb3hzYXREb3BhX0lXNGF6MEdxNExNZ1hqYkRxRWU3OUdGY3hKRHdnYm9YOEZkOVRhSnp4bG52bUtWSU10NjQyQTE3Z1ZFRlVRelBSMF9vTGswcTFJRDMzQnkwVGlpeThzeGRlZ3FSd1IwNlBmOVNWeERLaHQtWWZiazQ3OTJyaXJGQmpVb2FKN2RjTlNseDBoNXRrUFJrRnc2MWdoQUhwcnpiQQ?oc=5",
+      "hoursAgo": 4.3
+    },
+    {
       "headline": "Dollar edges up, loonie drops after U.S. announces tariffs - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNeWdQcUNEMGg5ZXdrRnBJRl9PLXZtbk9NYzdiZnEydGZBT21TOWRFaV9EQVBpYU9mcktFSV84c0JwcVBDdHVDSkkwUUpIWVM3ZVhYTWFrNFNWRlc3MUhMWVZ5V29JTXh5U01Ja0l3MzdGTTUweFo0Y0VVZjlfYXp5YjVfSU11NW5zdUtqM1l4cEtCV1JmU24xVmlBc1NtVkRHcnpxUFlxNkRZSUU?oc=5",
-      "hoursAgo": 4.2
+      "hoursAgo": 5.2
     },
     {
       "headline": "Trump says U.S. will hike Canada auto tariffs to 50% as trade war escalates",
       "source": "CNBC",
       "url": "https://www.cnbc.com/2026/08/24/trump-canada-auto-tariffs-trade-war.html",
-      "hoursAgo": 5.4
+      "hoursAgo": 6.3
+    },
+    {
+      "headline": "'Economic D-Day', Canada tariffs and Tesla recall - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOZlNSbmY2b1RYbnppS25lajE2dldaOXJHcGR5dGh4UXdoQXJ3OTZzVUVKYWh3NWZkSUIza1hmOXVHaGtUSUtaVWNFdV9vekdUNXR1X05zYXNBcVQ2ejJXVmJGVktWWGJ1VXc2UUloM1JWanN4MnpnM24zQ3NIUDlXQUpxMWd4UEhNTS12YnhpQ1Y?oc=5",
+      "hoursAgo": 8
     },
     {
       "headline": "Gold rally gains momentum ahead of US inflation data, Jackson Hole event - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNUkZtQVBPdjlyb21JaVBxeFRicDFEeHVNQ21pZzdGQnlSMUpFYV80MEl3RjJUbF9tYWxmdkZqY2NpaXh5S0NPd1lhbFZxUHZMVVFkTHNyNktCX2hrUU5KN3hjcWRUVTlaQ0hwcmVoMV9VZjBmUkFjMGtTUUY5MXBwRDRFWXBwQnhZTzU1dV81LThOaTNZR1BLVDRGU1JtbDczRjVweFByWkVQbWhhX3VwYTlJZ0VYblU?oc=5",
-      "hoursAgo": 14.7
+      "hoursAgo": 15.7
     }
   ],
   "riskTone": null,
@@ -142,31 +154,31 @@
         "name": "GBP",
         "weight": 3,
         "impact": "NEUTRAL",
-        "detail": "GBP/USD -0.11% → FTSE tailwind (sign-flipped)"
+        "detail": "GBP/USD -0.1% → FTSE tailwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
-        "impact": "NEUTRAL",
-        "detail": "US500 -0.11% today"
+        "impact": "BEARISH",
+        "detail": "US500 -0.19% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 16.115 — NORMAL regime"
+        "detail": "VIX 16.215 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
         "impact": "BEARISH",
-        "detail": "Brent -1.78% (energy majors)"
+        "detail": "Brent -2.06% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "Copper +0.35% (miners/China)"
+        "detail": "Copper +0.37% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -190,13 +202,13 @@
         "name": "European tape (SX5E/DAX)",
         "weight": 1,
         "impact": "NEUTRAL",
-        "detail": "SX5E +0.07% / DAX +0%"
+        "detail": "SX5E -0.01% / DAX +0%"
       }
     ],
     "eventSuppressed": false
   },
   "orbContext": {
-    "computedAt": "2026-08-24T19:22:06.008Z",
+    "computedAt": "2026-08-24T20:19:40.110Z",
     "mode": "CLOSED",
     "cashOpenLondon": "08:00 BST",
     "overnightHigh": 10832.2,
@@ -206,8 +218,8 @@
     "priorClose": 10804.1,
     "prevWeekHigh": 10825.9,
     "prevWeekLow": 10673.9,
-    "gapPts": 48.8,
-    "gapPct": 0.45,
+    "gapPts": 49.8,
+    "gapPct": 0.46,
     "orbHigh": 10819.9,
     "orbLow": 10799.5,
     "orbBrokenDirection": "UP",
