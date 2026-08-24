@@ -151,6 +151,54 @@
         "adrUsedPct": 38
       },
       "outcome": null
+    },
+    {
+      "at": "2026-08-24T08:38:06.049Z",
+      "londonTime": "09:38 BST",
+      "mode": "POST_ORB",
+      "price": 10824.95,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — The obvious draw (PDL 10726) sits beyond what's left of a typical day's range — targets past it are stretch-only today.",
+      "signals": [
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10726) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to a range already running 60% below its typical pace by 09:00 BST, an upside ORB break with no sector fuel behind it (energy bearish, miners/banks flat), and a crowded-short GBP that could snap back and cap any FTSE rally, the upside breakout through 10819.9 deserves scepticism until confirmed by volume or a second sector catalyst.",
+      "aiBullets": [
+        "Range is only 38% of the 85.7-point ADR vs ~63% expected by now — the day is compressed, meaning a late-session expansion is plausible in either direction, not just a continuation of the morning's upside break.",
+        "Brent -0.99% drags on Shell and BP (top-5 index weights), creating a sector-level headwind that the mechanical ORB signal does not pair against the upside break already printed above 10819.9.",
+        "Gold at a 3-month high (4 hours ago) while US500 slips 0.08% and NAS100 falls 0.58% suggests risk-off rotation is building in the US — a cross-market drag that is not captured in the ORB's purely price-based upside signal.",
+        "GBP at the 100th percentile of its 20-day range while still in a crowded-short position means any sterling squeeze would hit the index from two sides: a stronger pound compresses overseas earnings and wrong-foots the short base simultaneously."
+      ],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10819.9,
+        "orbLow": 10799.5,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10832.2,
+        "overnightLow": 10799.5,
+        "priorDayHigh": 10825.9,
+        "priorDayLow": 10726,
+        "gapPct": 0.19,
+        "adr14": 85.7,
+        "adrUsedPct": 38
+      },
+      "outcome": null
     }
   ]
 }
