@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-24T17:23:14.244Z",
+  "generatedAt": "2026-08-24T18:26:49.513Z",
   "yields": {
     "US10Y": 4.69,
     "US2Y": 4.19,
@@ -34,26 +34,26 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 875.1,
-    "gldWoWChange": 4.8,
-    "trend3W": "INFLOW"
+    "gldTonnes": 873.6,
+    "gldWoWChange": -1.5,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4631.325,
-    "XAGUSD": 68.452,
-    "EURUSD": 1.16578,
-    "USDJPY": 159.1645,
-    "USDCHF": 0.80273,
-    "USDCNH": 6.72365,
-    "GBPUSD": 1.36283,
-    "USDCAD": 1.38585,
-    "USDSEK": 9.50482,
-    "US500": 7656.1,
-    "GER40": 26131.65,
-    "UK100": 10848.95,
+    "XAUUSD": 4639.345,
+    "XAGUSD": 68.6755,
+    "EURUSD": 1.16639,
+    "USDJPY": 159.15,
+    "USDCHF": 0.80241,
+    "USDCNH": 6.72227,
+    "GBPUSD": 1.36334,
+    "USDCAD": 1.38522,
+    "USDSEK": 9.49654,
+    "US500": 7665.5,
+    "GER40": 26138.65,
+    "UK100": 10849.45,
     "ADR_14day": 101.3,
     "ADR_usedToday": 85.7,
-    "goldSilverRatio": 67.7
+    "goldSilverRatio": 67.6
   },
   "dollarLiquidity": {
     "stlfsi": -0.8285,
@@ -69,49 +69,49 @@
       "headline": "Shares dip on pressure from technology; yields and oil fall - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T15:49:43.000Z",
-      "hoursAgo": 1.6
+      "hoursAgo": 2.6
     },
     {
       "headline": "US Treasury to broaden scope of secondary sanctions on Iran, source says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T15:08:55.000Z",
-      "hoursAgo": 2.2
+      "hoursAgo": 3.3
+    },
+    {
+      "headline": "Dollar edges up, loonie drops after U.S. announces tariffs - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-24T15:07:23.000Z",
+      "hoursAgo": 3.3
     },
     {
       "headline": "Trump says U.S. will hike Canada auto tariffs to 50% as trade war escalates",
       "source": "CNBC",
       "publishedAt": "2026-08-24T13:59:26.000Z",
-      "hoursAgo": 3.4
-    },
-    {
-      "headline": "Dollar hovers near multi-month lows as debt nerves unnerve investors - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-24T11:33:26.000Z",
-      "hoursAgo": 5.8
+      "hoursAgo": 4.5
     },
     {
       "headline": "Looming US sanctions on Iran put China oil buying in spotlight - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T10:10:08.000Z",
-      "hoursAgo": 7.2
+      "hoursAgo": 8.3
     },
     {
       "headline": "China vows to protect its rights as US readies Iran sanction - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T08:05:38.000Z",
-      "hoursAgo": 9.3
-    },
-    {
-      "headline": "European shares slip as tech drags; Iran sanctions in focus - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-24T07:30:59.000Z",
-      "hoursAgo": 9.9
+      "hoursAgo": 10.4
     },
     {
       "headline": "Gold rally gains momentum ahead of US inflation data, Jackson Hole event - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T04:39:00.000Z",
-      "hoursAgo": 12.7
+      "hoursAgo": 13.8
+    },
+    {
+      "headline": "Indian central bank likely intervenes, anchoring rupee in face of global ructions, traders say - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-24T03:53:00.000Z",
+      "hoursAgo": 14.6
     }
   ],
   "briefing": null
