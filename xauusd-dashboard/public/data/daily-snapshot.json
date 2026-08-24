@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-24T09:05:27.281Z",
+  "generatedAt": "2026-08-24T12:28:56.845Z",
   "yields": {
     "US10Y": 4.69,
     "US2Y": 4.19,
@@ -34,26 +34,26 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 872.8,
-    "gldWoWChange": -1.4,
+    "gldTonnes": 869.5,
+    "gldWoWChange": -3.3,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4643.245,
-    "XAGUSD": 68.836,
-    "EURUSD": 1.16654,
-    "USDJPY": 159.167,
-    "USDCHF": 0.80215,
-    "USDCNH": 6.72426,
-    "GBPUSD": 1.36278,
-    "USDCAD": 1.38396,
-    "USDSEK": 9.48253,
-    "US500": 7668.4,
-    "GER40": 26145.75,
-    "UK100": 10834.25,
+    "XAUUSD": 4660.91,
+    "XAGUSD": 69.327,
+    "EURUSD": 1.16715,
+    "USDJPY": 158.959,
+    "USDCHF": 0.80166,
+    "USDCNH": 6.72234,
+    "GBPUSD": 1.36424,
+    "USDCAD": 1.38399,
+    "USDSEK": 9.48785,
+    "US500": 7666.1,
+    "GER40": 26143.65,
+    "UK100": 10814.85,
     "ADR_14day": 101.3,
-    "ADR_usedToday": 64.9,
-    "goldSilverRatio": 67.5
+    "ADR_usedToday": 74.9,
+    "goldSilverRatio": 67.2
   },
   "dollarLiquidity": {
     "stlfsi": -0.8285,
@@ -66,53 +66,59 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Looming US sanctions on Iran put China oil buying in spotlight - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-24T10:10:08.000Z",
+      "hoursAgo": 2.3
+    },
+    {
       "headline": "China vows to protect its rights as US readies Iran sanction - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T08:05:38.000Z",
-      "hoursAgo": 1
-    },
-    {
-      "headline": "Indian shares extend cautious trade on concerns over Iran sanctions - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-24T04:49:13.000Z",
-      "hoursAgo": 4.3
-    },
-    {
-      "headline": "Gold hits over 3-month high ahead of US inflation data, Fed chair speech - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-24T04:39:00.000Z",
       "hoursAgo": 4.4
     },
     {
-      "headline": "Dollar trading near multi-month lows, restrained by debt nerves - Reuters",
+      "headline": "European shares slip as tech drags; Iran sanctions in focus - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-24T07:30:59.000Z",
+      "hoursAgo": 5
+    },
+    {
+      "headline": "Gold climbs to more than three-month high as markets await US inflation data - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-24T04:39:00.000Z",
+      "hoursAgo": 7.8
+    },
+    {
+      "headline": "Interventions hold rupee on narrow leash, traders await US sanctions on Iran - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-24T02:37:00.000Z",
+      "hoursAgo": 9.9
+    },
+    {
+      "headline": "Indian shares fall as investors await details on Iran sanctions - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-24T02:22:00.000Z",
+      "hoursAgo": 10.1
+    },
+    {
+      "headline": "Dollar hovers near multi-month lows as debt nerves unnerve investors - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T01:48:00.000Z",
-      "hoursAgo": 7.3
+      "hoursAgo": 10.7
     },
     {
-      "headline": "Shares, oil slip awaiting US details of Iran sanctions - Reuters",
+      "headline": "Shares, oil dip as US sanctions on Iran loom - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T00:49:00.000Z",
-      "hoursAgo": 8.3
-    },
-    {
-      "headline": "Oil falls as US prepares to unveil new Iran sanctions - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-23T23:18:00.000Z",
-      "hoursAgo": 9.8
-    },
-    {
-      "headline": "Iran says new sanctions threatened by 'desperate' US will fail - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-23T18:16:16.000Z",
-      "hoursAgo": 14.8
+      "hoursAgo": 11.7
     }
   ],
   "briefing": {
     "biasScore": 3,
     "biasLabel": "BULLISH",
     "confidence": 6,
-    "briefing": "Right now, the dominant forces driving gold are a weakening US dollar, rising geopolitical tension around Iran, and anticipation of upcoming US inflation data and a Federal Reserve Chair speech — all of which are pulling traders toward gold as a safe store of value. The most market-moving recent headlines: about 1 hour ago, Reuters reported that China is vowing to protect its interests as the US readies new Iran sanctions, adding a layer of geopolitical uncertainty that typically supports gold (when the world feels less safe, investors buy gold). About 4 hours ago, Reuters confirmed gold hit a 3-month high ahead of US inflation data and a Fed Chair speech, and about 7 hours ago, the dollar was reported trading near multi-month lows, restrained by concerns over US government debt — a weaker dollar makes gold cheaper for foreign buyers, which tends to push prices up. Directional bias is BULLISH: gold is trending up on the 1H chart, the dollar is soft, geopolitical risk is elevated (GPR reading of 152.7, which is meaningfully high), and institutional positioning shows large traders [hedge funds and big banks tracked weekly by the CFTC report] are net long 219,495 contracts — that means the big players are broadly on the bullish side. However, positioning is flagged as CROWDED LONG, meaning a lot of people are already in buy trades, which raises the risk of a sharp pullback if sentiment shifts. Confidence is 6/10 — the trend is clearly up, but crowded positioning and a 20% market probability of a Fed rate hike [meaning the Fed could raise borrowing costs, which often hurts gold] are real risks. The 14-day Average Daily Range [how much gold typically moves each day] is 101.3 points, and today has already used 64.9 of those points — so roughly 36 points of typical daily movement may remain, meaning big explosive moves from here today are less likely unless a fresh catalyst arrives. There are no scheduled economic events on today's calendar, which is unusual — the calendar is empty — but the news references upcoming US inflation data and a Fed Chair speech that appear to be due very soon (likely later today or tomorrow based on context), so treat this as a high-alert window where price could move sharply on any release. For trade integration: conditions support trend-following BUY setups aligned with the uptrend, but because positioning is crowded and much of the daily range is already used, keep position size smaller than usual [perhaps 50% of your normal risk] and wait patiently on the 5M chart for a clean pullback into a key area before entering on the 1M chart — key levels to watch are the recent highs around 4,643 (current price), with support likely near 4,620–4,610 where a pullback could offer a buying opportunity. The one thing to remember today: gold's uptrend has strong reasons behind it, but with most of today's expected move already done and big players already heavily long, chase carefully — wait for price to come back to you, don't jump in at the top.",
-    "generatedAt": "2026-08-24T09:05:46.420Z"
+    "briefing": "Right now, gold is being driven by two powerful forces working together: a weakening US dollar and rising geopolitical tension around US sanctions on Iran. The dollar [the world's reserve currency — when it weakens, gold usually gets cheaper for foreign buyers and tends to rise] is sitting near multi-month lows according to a headline from about 11 hours ago, with the DXY [a measure of dollar strength against major currencies] at 98.92 — a relatively soft reading. That dollar weakness is combining with Iran sanction fears, which markets treat as a risk event that can disrupt oil flows and regional stability. Two Reuters headlines in the last 2–5 hours confirm this narrative is actively in play, with China pushing back against the sanctions, adding another layer of geopolitical uncertainty that historically benefits gold as a 'safe haven' [an asset people buy when they're nervous about the world]. Gold has already climbed to a three-month high today (per a headline 7.8 hours ago) and is currently trading at $4,660.91. On the structure side, the 10-year real yield [the return on US government bonds after stripping out inflation — a key competitor to gold] sits at 2.35%, which is elevated and normally a headwind for gold, but the dollar weakness and geopolitical premium appear to be overriding that pressure for now. The directional bias is BULLISH — price is trending up, catalysts support further upside, and the macro backdrop (weak dollar, geopolitical fear) gives bulls a reason to stay in control. Confidence is 6/10 because the positioning data shows the market is already CROWDED LONG [meaning a large number of traders are already betting on gold going up, which increases the risk of a sharp reversal if sentiment shifts], and ETF flows [money moving in or out of gold-backed investment funds] have shown three consecutive weeks of outflows, suggesting some larger players are quietly reducing exposure even as price rises. The 14-day Average Daily Range [a measure of how much gold typically moves in a day] is 101.3 points, and today has already used 74.9 of those points — meaning roughly 26 points of typical daily range remain. That limits how much more upside is likely TODAY without an additional catalyst, so chasing entries late in the session carries more risk. The calendar is empty for today, which means no scheduled data releases to worry about — but also no fresh catalyst to push price significantly further unless the Iran sanctions story escalates. There are no upcoming high-impact events flagged for later this week in the data provided. For trade integration: this IS a reasonable window for trend-following longs [buying gold, expecting it to go higher], but with the daily range nearly exhausted and positioning crowded, use reduced position size and be selective — only take setups on the 5M chart that align cleanly with the 1H uptrend structure, and use the 1M chart to time your entry precisely into a pullback rather than chasing price at highs. The view flips cautious or bearish if the dollar bounces sharply, real yields spike further, or Iran headlines de-escalate suddenly. When the daily range is nearly used up, the smartest move is to wait for a pullback rather than chase the high.",
+    "generatedAt": "2026-08-24T12:29:18.147Z"
   }
 }

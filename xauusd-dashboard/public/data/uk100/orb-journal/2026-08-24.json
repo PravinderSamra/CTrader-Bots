@@ -247,6 +247,205 @@
         "adrUsedPct": 40
       },
       "outcome": null
+    },
+    {
+      "at": "2026-08-24T09:38:03.185Z",
+      "londonTime": "10:38 BST",
+      "mode": "POST_ORB",
+      "price": 10828.35,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — The obvious draw (PDL 10726) sits beyond what's left of a typical day's range — targets past it are stretch-only today.",
+      "signals": [
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10726) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to the ORB already breaking UP into a thin overhead range (overnight high 10,832.2 just 13 points away), a crowded-short pound that could squeeze higher and hurt FTSE multinationals, and 51% of the 85.7-point ADR already consumed by 09:37, continuation longs carry poor reward-to-risk and a fakeout-then-fade is the more probable outcome.",
+      "aiBullets": [
+        "Price is 10,828 vs overnight high 10,832.2 — only ~4 points of clear air above before the ORB breakout runs into a ceiling; the remaining ADR budget (~42 points) is almost entirely consumed by that gap, leaving very little room for a trend day higher.",
+        "GBP sits at the 100th percentile of its 20-day range even after today's -0.12% dip — any mean-reversion bounce in sterling (a crowded-short squeeze) would flip the FX tailwind to a headwind for dollar-earning index heavyweights, undermining the breakout.",
+        "Brent -1.28% drags directly on Shell and BP (top-5 index weights); with European peers flat (DAX +0.09%, SX5E +0.04%) offering no amplifying momentum, the energy drag is an unhedged headwind that the upside break must fight through.",
+        "Volume is only ~37% done by this hour per the expansion model — an afternoon range expansion is possible, but with Wednesday's US PCE (13:30 BST) two days away, macro uncertainty typically compresses intraday follow-through in the prior session."
+      ],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10819.9,
+        "orbLow": 10799.5,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10832.2,
+        "overnightLow": 10799.5,
+        "priorDayHigh": 10825.9,
+        "priorDayLow": 10726,
+        "gapPct": 0.22,
+        "adr14": 85.7,
+        "adrUsedPct": 51
+      },
+      "outcome": null
+    },
+    {
+      "at": "2026-08-24T10:29:48.587Z",
+      "londonTime": "11:29 BST",
+      "mode": "POST_ORB",
+      "price": 10834.85,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — The obvious draw (PDL 10726) sits beyond what's left of a typical day's range — targets past it are stretch-only today.",
+      "signals": [
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10726) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to an already-spent 51% of the 14-day average daily range, a crowded short-sterling positioning that threatens upside FTSE breaks via any GBP squeeze, and a Brent -1.53% drag concentrated in top-5 energy weights, the ORB breakout above 10819.9 looks range-limited rather than trend-initiating today.",
+      "aiBullets": [
+        "With 51% of ADR14 (85.7 pts) used but only ~46% of typical daily volume done by 10:29 BST, an afternoon vol expansion is plausible — but the PDL at 10726 requires a further ~108 pts move, well beyond the remaining range budget.",
+        "GBP sits at the 100th percentile of its 20-day range (historically strong sterling); any COT short-squeeze (net short -53,966 contracts) would strengthen GBP and, via the sign-flip, push FTSE lower — threatening any long ORB trade built on the upside break.",
+        "The European tape is ALIGNED (DAX +0.16%, SX5E +0.08%) but with a 20-day FTSE-DAX correlation of only 0.49, European support adds limited directional confidence to the UK100 ORB break today.",
+        "Brent's -1.53% drop is the sole sector-level bearish signal and sits against a flat gilt curve (+0bp on 10Y) — no rate-driven bank rotation offset is available today, leaving energy as an unhedged index drag."
+      ],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10819.9,
+        "orbLow": 10799.5,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10832.2,
+        "overnightLow": 10799.5,
+        "priorDayHigh": 10825.9,
+        "priorDayLow": 10726,
+        "gapPct": 0.28,
+        "adr14": 85.7,
+        "adrUsedPct": 51
+      },
+      "outcome": null
+    },
+    {
+      "at": "2026-08-24T11:19:47.092Z",
+      "londonTime": "12:19 BST",
+      "mode": "POST_ORB",
+      "price": 10828.85,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — ORB broke UP against a BEARISH macro bias (-3) — counter-bias breaks fail more often; treat continuation as suspect.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "STRUCTURE",
+          "rule": "R2",
+          "text": "ORB broke UP against a BEARISH macro bias (-3) — counter-bias breaks fail more often; treat continuation as suspect."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10726) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to an upside ORB break running into a -3 bearish macro bias, only 52% of the 85.7-point ADR consumed with energy (-1.2% Brent) and US futures both negative, the up-break looks like a sweep candidate rather than a genuine trend day.",
+      "aiBullets": [
+        "ORB broke UP to 10819.9 but the overnight high (10832.2) is only 12.5 points above current price — barely one candle of room before structure turns to resistance, compressing the risk/reward for longs.",
+        "At 52% of ADR used vs 77% typical by midday, the afternoon session still has expansion potential; if that expansion is to the downside it would find the prior week low at 10673.9 — 155 points away, nearly two full ADRs, so realistic only on a catalyst.",
+        "GBP is at the 100th percentile of its 20-day range (extreme high) despite being down today — a crowded-short currency sitting at multi-week highs means any relief rally in sterling would hit the same FTSE multinationals the ORB up-break is relying on.",
+        "European tape (EuroStoxx -0.01%, DAX +0.02%) is flatlined and ALIGNED, offering no corroborating momentum to validate the UK100 upside breakout — the index is breaking higher in a vacuum."
+      ],
+      "bias": {
+        "score": -3,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10819.9,
+        "orbLow": 10799.5,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10832.2,
+        "overnightLow": 10799.5,
+        "priorDayHigh": 10825.9,
+        "priorDayLow": 10726,
+        "gapPct": 0.23,
+        "adr14": 85.7,
+        "adrUsedPct": 52
+      },
+      "outcome": null
+    },
+    {
+      "at": "2026-08-24T12:29:59.062Z",
+      "londonTime": "13:29 BST",
+      "mode": "POST_ORB",
+      "price": 10815.25,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — The obvious draw (PDL 10726) sits beyond what's left of a typical day's range — targets past it are stretch-only today.",
+      "signals": [
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10726) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to a GBP sitting at the 100th percentile of its 20-day range (a silent ceiling for any FTSE rally), Brent oil down 1.09% dragging top-five index weights, and only 52% of the 85.7-point average daily range consumed by midday, the upside ORB break looks vulnerable to a fade rather than a follow-through trend.",
+      "aiBullets": [
+        "The ORB broke UP through 10819.9, but current price (10815.25) is already back below that level — a classic 'break-and-fail' pattern; the ORB high now acts as resistance rather than a springboard.",
+        "Range so far is 32.7 points against a 14-day average of 85.7, leaving roughly 41 points of typical expansion available — enough for a meaningful move, but PDL at 10726 would require 89+ points from the overnight high, well beyond budget.",
+        "Gold +1.24% to a three-month high (Reuters, ~8 hours ago) and Brent -1.09% point in opposite directions for UK100: defensive flows lift pharma/staples but the Brent hit to Shell and BP (top-5 weights, ENERGY read BEARISH) is the more direct index drag.",
+        "GBP is at the 100th percentile of its 20-day range and still crowded-short (net -53,966 contracts, COT 18 Aug); any short-squeeze in sterling from here is an additional headwind for FTSE upside breaks that the mechanical ORB signals do not price in."
+      ],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10819.9,
+        "orbLow": 10799.5,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10832.2,
+        "overnightLow": 10799.5,
+        "priorDayHigh": 10825.9,
+        "priorDayLow": 10726,
+        "gapPct": 0.1,
+        "adr14": 85.7,
+        "adrUsedPct": 52
+      },
+      "outcome": null
     }
   ]
 }
