@@ -1,0 +1,256 @@
+{
+  "schema": 1,
+  "scan_utc": "2026-08-24T08:33:53+00:00",
+  "scan_et": "2026-08-24 04:33 ET (Mon)",
+  "trading_day": "2026-08-24",
+  "session_window": "LONDON",
+  "is_trading_day": true,
+  "prediction": {
+    "price_at_scan": 29117.3,
+    "bias_score": -1,
+    "bias_label": "NEUTRAL / TWO-WAY",
+    "strategy": "STRATEGY 2 \u2014 CISD -> HH/HL -> fib OTE continuation. Below the flip in negative gamma: dealers amplify, sweeps run rather than fail. Strategy-1 fades have a materially lower hit rate here \u2014 only take them at the far walls.",
+    "event_gate": null,
+    "expected_direction": 0,
+    "gamma_flip": 29257.5,
+    "expiry_shape": "FRONT_FLAT_BACK_LONG",
+    "fuel_state": "LOW_FUEL",
+    "remaining_budget": 88.7,
+    "adr14": 451.1,
+    "adr_used_pct": 80.3,
+    "levels": [
+      {
+        "price": 29257.5,
+        "name": "GAMMA FLIP",
+        "kind": "gamma",
+        "dist": 140.2,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 29200.6,
+        "name": "Asia Low (prev-day)",
+        "kind": "liquidity",
+        "dist": 83.3,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29136.4,
+        "name": "London High (today) + PDL + NY Low (prev-day)",
+        "kind": "liquidity",
+        "dist": 19.1,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 3
+      },
+      {
+        "price": 29115.9,
+        "name": "PWL",
+        "kind": "liquidity",
+        "dist": -1.4,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29049.8,
+        "name": "Asia Low (today)",
+        "kind": "liquidity",
+        "dist": -67.5,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29041.4,
+        "name": "London Low (today)",
+        "kind": "liquidity",
+        "dist": -75.9,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      }
+    ]
+  },
+  "inputs": {
+    "bias_components": [
+      {
+        "component": "gamma",
+        "points": -3,
+        "why": "below flip 29257.5 by 140.2pts \u2014 SHORT gamma, dealers amplify: downside accelerates, rallies unstable"
+      },
+      {
+        "component": "gamma",
+        "points": 0,
+        "why": "week net GEX 0.067 $bn/1% -> pinning likely"
+      },
+      {
+        "component": "gamma",
+        "points": 0,
+        "why": "price mid-band (28706.7-29306.7), 68% up the range"
+      },
+      {
+        "component": "vol",
+        "points": 2,
+        "why": "VXN 21.98 (-5.5%) \u2014 fear falling, bullish"
+      },
+      {
+        "component": "vol",
+        "points": 1,
+        "why": "VIX9D/VIX 0.79 contango \u2014 calm, mean-reversion favoured, mild upward drift"
+      },
+      {
+        "component": "vol",
+        "points": -1,
+        "why": "VXN/VIX 1.38 \u2014 tech-specific stress priced above the broad market"
+      },
+      {
+        "component": "vol",
+        "points": 0,
+        "why": "VVIX 86.27 \u2014 no tail-hedge bid"
+      },
+      {
+        "component": "rates",
+        "points": -1,
+        "why": "US10y 4.738 (+0.89%) \u2014 yields up, multiple compression, BEARISH tech"
+      },
+      {
+        "component": "rates",
+        "points": 0,
+        "why": "DXY 98.995 (+0.20%) \u2014 dollar flat"
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Real yield, 10y (DFII10)** \u2014 what lenders earn after inflation \u2014 is 2.35%, flat 0bp today and 4bp over 5 days. No change today \u2014 watch the 5-day direction instead."
+      },
+      {
+        "component": "macro",
+        "points": -1,
+        "why": "**10y nominal yield (DGS10)** moved 4bp up (2026-08-19 to 2026-08-20). That was driven by inflation expectations, not real rates \u2014 a softer signal that only hurts tech if the Fed then reacts to it."
+      },
+      {
+        "component": "macro",
+        "points": 2,
+        "why": "**High-yield credit spread (HY OAS)** \u2014 the extra interest demanded to lend to riskier companies is 2.75% (+4bp over 5 days). Low and steady: the bond market is relaxed about risk, which gives stocks permission to rise."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Financial conditions (NFCI)** \u2014 how easy it is to borrow money across the economy \u2014 is EASIER than normal (-0.559). Cheap, available money is a background tailwind for stocks."
+      },
+      {
+        "component": "macro",
+        "points": -1,
+        "why": "**Fed balance sheet (WALCL) / reverse repo (RRP)** \u2014 cash in the financial system. The Fed is holding $6.75tn of assets, shrinking by $14.3bn this week, and the spare-cash buffer is down to $0.2bn. The Fed is quietly pulling money out of the system \u2014 a slow, persistent drag on stocks, not a day-trade signal."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Yield curve (10y\u20132y)** \u2014 long vs short bond yields. The 10-year pays +0.50% more than the 2-year. Barely moved."
+      },
+      {
+        "component": "breadth",
+        "points": 0,
+        "why": "mega-cap avg +0.01% (2/4 up): NVDA -0.98%, MSFT +0.43%, AAPL -0.63%, AVGO +1.21%"
+      },
+      {
+        "component": "breadth",
+        "points": 1,
+        "why": "NDX +0.33% vs ES -0.18% \u2014 tech leading, genuine risk appetite"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "ADR14 451.1, 80.3% used vs ~30% normal by 04:33 ET -> fuel_ratio 2.68 (burning hot) [LOW_FUEL]"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "fuel is short \u2014 this dampens CONVICTION in any continuation call, it does not change direction"
+      },
+      {
+        "component": "structure",
+        "points": -1,
+        "why": "price below PD mid 29292.9 (PDH 29452.2 / PDL 29133.6)"
+      },
+      {
+        "component": "structure",
+        "points": 0,
+        "why": "price inside the prior-week range (29115.9-30245.8)"
+      },
+      {
+        "component": "structure",
+        "points": 0,
+        "why": "in-reach unmitigated pools: 1 above / 1 below \u2014 draw balanced"
+      },
+      {
+        "component": "news",
+        "points": 1,
+        "why": "2 auto-scored headline(s) (1 bull / 1 bear) -> MILDLY BULLISH; 43 more need reading in context (not counted here)"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [cpi_cool] Tariffs lose some heat as inflation pressure cools - Seeking Alpha"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [hawkish] Nasdaq, S&P 500 Futures Surge As Wall Street Cheers US-Iran Deal, Brushes Off Hawkish Fe"
+      },
+      {
+        "component": "events",
+        "points": 0,
+        "why": "NVDA earnings 2026-08-26 time-after-hours (cons $2.01) \u2014 INDEX-DEFINING event; day before pins, day after expands"
+      }
+    ],
+    "fuel": {
+      "adr14": 451.1,
+      "today_range": 362.4,
+      "adr_used_pct": 80.3,
+      "remaining_budget": 88.7,
+      "expansion_state": "LOW_FUEL",
+      "volume_relative": 1.02,
+      "volume_state": "normal"
+    },
+    "gamma": {
+      "near_expiry_0_2dte": -0.002,
+      "this_week": 0.067,
+      "full_45dte": 0.024
+    },
+    "call_wall": 29306.7,
+    "put_wall": 28706.7,
+    "max_pain": 29306.7,
+    "vol": {
+      "vxn": 21.98,
+      "vix": 15.93,
+      "vix9d_over_vix": 0.79
+    },
+    "rates": {
+      "us10y": 4.738,
+      "dxy": 98.995
+    },
+    "news": {
+      "raw_score": 1.12,
+      "bias_points": 1,
+      "label": "MILDLY BULLISH",
+      "scored_high_confidence": 2,
+      "needs_model_judgement": 43
+    },
+    "events_24h": [
+      {
+        "utc": "2026-08-24T18:00:00+00:00",
+        "impact": "Medium",
+        "title": "Treasury Sec Bessent Speaks",
+        "forecast": "",
+        "previous": "",
+        "hours_away": 9.4
+      }
+    ]
+  },
+  "outcome": null
+}
