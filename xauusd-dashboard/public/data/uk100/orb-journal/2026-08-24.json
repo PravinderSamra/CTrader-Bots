@@ -199,6 +199,54 @@
         "adrUsedPct": 38
       },
       "outcome": null
+    },
+    {
+      "at": "2026-08-24T09:06:29.295Z",
+      "londonTime": "10:06 BST",
+      "mode": "POST_ORB",
+      "price": 10834.85,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — The obvious draw (PDL 10726) sits beyond what's left of a typical day's range — targets past it are stretch-only today.",
+      "signals": [
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10726) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to a crowded-short GBP (COT net -53,966 contracts), compressed range at only 40% of ADR versus 70% typical by this hour, and mild risk-off signalled by gold at a 3-month high, the upside ORB break looks poorly supported and afternoon volatility risk is elevated into Wednesday's US PCE.",
+      "aiBullets": [
+        "Range compression is the key cross-field alert: at 40% of the 85.7-point ADR used versus ~70% expected by 10:00 BST, roughly 51 points remain — too little to reach the prior day's low at 10726, confirming the mechanical signal that PDL is stretch-only, not a usable intraday target.",
+        "The GBP crowded-short (net -53,966 contracts, still improving by +2,356 w/w) creates an asymmetric risk on upside ORB breaks: a sterling squeeze would be a direct mechanical headwind for UK100 via the sign-flip, making long trades above 10819.9 exposed to a double-hit.",
+        "Gold up 0.82% and Brent down 1.43% is a classic risk-off/demand-fear split — not sector rotation, but divergence that depresses the two largest index sector groups (energy bearish, safe-haven bid elsewhere) simultaneously, undermining broad index momentum.",
+        "European tape is ALIGNED but barely so (DAX +0.08%, SX5E +0.07%), providing no meaningful directional amplifier for a follow-through trend day — with 20-day FTSE-DAX correlation at only 0.49, a split tape remains a plausible afternoon scenario."
+      ],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10819.9,
+        "orbLow": 10799.5,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10832.2,
+        "overnightLow": 10799.5,
+        "priorDayHigh": 10825.9,
+        "priorDayLow": 10726,
+        "gapPct": 0.28,
+        "adr14": 85.7,
+        "adrUsedPct": 40
+      },
+      "outcome": null
     }
   ]
 }
