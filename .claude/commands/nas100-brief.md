@@ -18,6 +18,6 @@ Argument passed: `$ARGUMENTS`
 Every mode is a flag on an existing script. **Never hand-assemble the output** —
 the renderer is the agreed format and re-extracting it makes it drift.
 
-Invoke the skill and follow its SKILL.md. Deliver the brief before doing
+Invoke the skill and follow its SKILL.md. **Always deliver the brief as a file via SendUserFile** — bash output is not reliably visible to the user, so a scan that only prints to the tool result has delivered nothing. Deliver the brief before doing
 anything else — the reviewer runs after, in the background, and must never
 delay it.

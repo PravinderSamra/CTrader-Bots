@@ -25,6 +25,20 @@ entry model, which levels, and how hard to manage the stop.**
 cd .claude/skills/nas100-daily-brief/scripts && python3 brief.py
 ```
 
+**Deliver the brief as a FILE, every single time.** Write it to a file and send
+it with `SendUserFile`:
+
+```bash
+cd .claude/skills/nas100-daily-brief/scripts
+python3 brief.py > "/tmp/NAS100-brief-$(date -u +%Y%m%d-%H%M).md"
+```
+then `SendUserFile(files=["/tmp/NAS100-brief-<stamp>.md"], status="normal")`.
+
+This is not optional and not a nicety. **Bash output renders for you but not
+reliably for the user** — a scan that only printed to the tool result has, from
+their side, produced nothing. They asked for a brief; a summary of a brief is
+not a brief. Send the file first, then add commentary.
+
 **Print the output as-is.** It is deterministic and already formatted to an
 agreed spec — the section order, the collapsed scoring block, the plain-English
 regime explanations and the level-board wording were all settled deliberately.
@@ -36,8 +50,11 @@ Specifically, do **not**:
 - re-order, merge or drop sections,
 - add levels of your own to the board.
 
-Your value is added *on top*: judgement on the headlines the pre-filter could
-not classify (step 2), and answering follow-ups afterwards.
+Your value is added *on top*, in the chat message accompanying the file:
+judgement on the headlines the pre-filter could not classify (step 2), what
+changed since the last scan if this is a continuation, and anything the brief
+structurally cannot see. That commentary is expected on every scan — but it
+**supplements** the file, it never replaces it.
 
 ### Modes
 
