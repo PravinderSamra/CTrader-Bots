@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-08-24T13:42:43.390Z",
+  "generatedAt": "2026-08-24T20:19:34.077Z",
   "yields": {
-    "US10Y": 4.69,
-    "US2Y": 4.19,
-    "realYield10Y": 2.35,
-    "realYield5Y": 2.05,
+    "US10Y": 4.74,
+    "US2Y": 4.24,
+    "realYield10Y": 2.4,
+    "realYield5Y": 2.09,
     "curve2s10s": 50,
     "breakeven10Y": 2.34,
     "breakeven5Y": 2.34,
     "forward5y5y": 2.34,
     "dayOverDay": {
-      "US10Y": 0.04,
-      "US2Y": 0,
-      "realYield10Y": 0
+      "US10Y": 0.05,
+      "US2Y": 0.05,
+      "realYield10Y": 0.05
     }
   },
   "fedExpectations": {
@@ -34,26 +34,26 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 867.3,
-    "gldWoWChange": -2.2,
+    "gldTonnes": 871.2,
+    "gldWoWChange": -1.5,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4672.735,
-    "XAGUSD": 69.398,
-    "EURUSD": 1.16687,
-    "USDJPY": 159.1155,
-    "USDCHF": 0.80199,
-    "USDCNH": 6.72346,
-    "GBPUSD": 1.36462,
-    "USDCAD": 1.38285,
-    "USDSEK": 9.49223,
-    "US500": 7649.8,
-    "GER40": 26063.85,
-    "UK100": 10825.85,
+    "XAUUSD": 4652.015,
+    "XAGUSD": 68.868,
+    "EURUSD": 1.16632,
+    "USDJPY": 159.1445,
+    "USDCHF": 0.80253,
+    "USDCNH": 6.7218,
+    "GBPUSD": 1.36304,
+    "USDCAD": 1.38447,
+    "USDSEK": 9.49509,
+    "US500": 7655.4,
+    "GER40": 26124.65,
+    "UK100": 10853.85,
     "ADR_14day": 101.3,
     "ADR_usedToday": 85.7,
-    "goldSilverRatio": 67.3
+    "goldSilverRatio": 67.5
   },
   "dollarLiquidity": {
     "stlfsi": -0.8285,
@@ -66,59 +66,53 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Wall Street set to open lower as high-stakes Iran, inflation tests loom - Reuters",
+      "headline": "Tech drags S&P 500, Nasdaq lower as more Iran sanctions, Nvidia earnings loom - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-08-24T13:06:08.000Z",
-      "hoursAgo": 0.6
+      "publishedAt": "2026-08-24T18:27:38.000Z",
+      "hoursAgo": 1.9
     },
     {
-      "headline": "Indian shares fall as investors await details on Iran sanctions - Reuters",
+      "headline": "US eyes China overcapacity tariffs of 7.5% before Xi-Trump talks, Bloomberg News reports - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-08-24T10:14:35.000Z",
-      "hoursAgo": 3.5
+      "publishedAt": "2026-08-24T16:04:15.000Z",
+      "hoursAgo": 4.3
+    },
+    {
+      "headline": "Dollar edges up, loonie drops after U.S. announces tariffs - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-24T15:07:23.000Z",
+      "hoursAgo": 5.2
+    },
+    {
+      "headline": "Surge in bond yields is a result of \"Trump's war\", German minister says - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-24T14:53:45.000Z",
+      "hoursAgo": 5.4
+    },
+    {
+      "headline": "Trump says U.S. will hike Canada auto tariffs to 50% as trade war escalates",
+      "source": "CNBC",
+      "publishedAt": "2026-08-24T13:59:26.000Z",
+      "hoursAgo": 6.3
+    },
+    {
+      "headline": "India's Iran exports set to fall further due to Dubai halt, U.S. sanctions - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-24T12:55:44.000Z",
+      "hoursAgo": 7.4
+    },
+    {
+      "headline": "'Economic D-Day', Canada tariffs and Tesla recall - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-24T12:20:20.000Z",
+      "hoursAgo": 8
     },
     {
       "headline": "Looming US sanctions on Iran put China oil buying in spotlight - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T10:10:08.000Z",
-      "hoursAgo": 3.5
-    },
-    {
-      "headline": "China vows to protect its rights as US readies Iran sanction - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-24T08:05:38.000Z",
-      "hoursAgo": 5.6
-    },
-    {
-      "headline": "European shares slip as tech drags; Iran sanctions in focus - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-24T07:30:59.000Z",
-      "hoursAgo": 6.2
-    },
-    {
-      "headline": "Gold climbs to more than three-month high as markets await US inflation data - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-24T04:39:00.000Z",
-      "hoursAgo": 9.1
-    },
-    {
-      "headline": "Interventions hold rupee on narrow leash, traders await US sanctions on Iran - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-24T02:37:00.000Z",
-      "hoursAgo": 11.1
-    },
-    {
-      "headline": "Dollar hovers near multi-month lows as debt nerves unnerve investors - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-24T01:48:00.000Z",
-      "hoursAgo": 11.9
+      "hoursAgo": 10.2
     }
   ],
-  "briefing": {
-    "biasScore": 2,
-    "biasLabel": "BULLISH",
-    "confidence": 5,
-    "briefing": "Right now, gold is being pushed higher by two main forces working together: a weakening US dollar and rising geopolitical tension around Iran. The dollar [the world's reserve currency — when it weakens, gold typically becomes cheaper for foreign buyers and rises in price] is hovering near multi-month lows according to a headline from about 12 hours ago, and the DXY [an index measuring dollar strength against a basket of currencies] sits at 98.94, which is relatively soft. On the geopolitical side, headlines from roughly 3.5 to 6 hours ago show markets are nervous about looming US sanctions on Iran, with China pushing back and equities slipping in both Europe and Asia — this kind of uncertainty tends to drive money into gold as a 'safe haven' [an asset people buy when they're scared, to protect wealth]. A Reuters headline from 9 hours ago confirmed gold climbed to a more than three-month high as markets also await US inflation data, which suggests price is already elevated heading into this overlap session. The directional bias leans modestly BULLISH — the dollar is soft, geopolitical fear is real, and gold has momentum — however, the market is waiting on inflation data (no specific time listed in today's calendar, which shows no scheduled events) and Iran sanctions details, meaning price could chop or spike unpredictably. Confidence is 5/10: the trend is up but we're in a 'wait and see' environment with large unknowns. What would flip this view bearish: a strong dollar rebound, de-escalation on Iran, or hot inflation data that brings rate-hike expectations back [markets currently price a 20% chance of a rate hike at the September Fed meeting, which would be dollar-positive and gold-negative]. The 14-day average daily range [how far gold typically moves in a full day] is 101.3 points, and today has already used 85.7 of that — meaning roughly 15 points of typical range remain. This is a critical warning: most of today's expected move is already done. Key levels to watch are the current price around $4,672 as near-term support, with any pullback toward $4,640–$4,650 being a potential buy zone if the 1H trend structure [the overall direction shown on the hourly chart] remains intact. For trade integration, this overlap session (London/NY crossover) is technically active, but with 85% of the daily range consumed and major unknowns around Iran sanctions and inflation data, now is a LOW-conviction window — if you trade at all, use reduced position size and wait for a clean 5M signal [a clear entry pattern on the 5-minute chart] rather than chasing price at highs. Remember: when most of the day's range is already used up, the smart move is to wait for the next day's setup rather than forcing a trade.",
-    "generatedAt": "2026-08-24T13:43:03.914Z"
-  }
+  "briefing": null
 }
