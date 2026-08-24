@@ -624,6 +624,27 @@ brief prints which basis was used and never hides the substitution. If the
 futures fallback also fails the board is published with a loud warning rather
 than a silent guess.
 
+**CBOE's published greeks carry the same staleness, and it flips the sign.**
+Asked "does below-flip mean negative gamma", the brief was found printing
+"BELOW flip — short gamma" beside a net GEX of **+0.067bn** and a shape of
+`FRONT_FLAT_BACK_LONG` — three mutually contradictory readings. Two causes:
+
+1. The gamma flip was computed from **NDX options only** (3,980 contracts),
+   ignoring QQQ's 4,117 — despite this document already stating that NDX alone
+   under-counts dealer gamma badly. Including QQQ moved the flip 162 points.
+   The naive fix is wrong: QQQ strikes are rescaled into NDX space while their
+   gamma and OI belong to QQQ space, so valuing them at NDX spot² over-weights
+   QQQ by the ~41× ratio. Each row now carries `scale` and `strike_native` and
+   is priced where it actually lives, with only the dollar results combined.
+2. The bucket figures used CBOE's **published** greeks, stamped Friday 16:14 at
+   a spot of 29,309, while the market sat at 29,136. Published greeks gave
+   **+0.46bn** (pinning); repriced at the real spot they gave **−5.48bn**
+   (amplifying). Opposite sign, opposite instruction — printed next to a flip
+   that *was* repriced. Buckets now reprice with Black-Scholes at the current
+   spot whenever the chain is stale, so flip, buckets, walls and shape all
+   derive from one basis. All three buckets then read NEGATIVE and the shape
+   resolved to `COHERENT_SHORT`, matching the flip.
+
 The general lesson, and the third instance of it in this build: **a feed
 returning 200 with a plausible number is not the same as a feed returning
 current data.** Yahoo's `chartPreviousClose`, FRED's per-series publication

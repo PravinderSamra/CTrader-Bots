@@ -493,13 +493,16 @@ def markdown(d):
           f"({basis['cash_age_min']:.0f} min ago) \u2014 it does not print outside US "
           f"cash hours. The reference has been rolled forward by the NQ futures "
           f"move ({basis['nq_move_since_close']:+.1f}) to **{basis['ndx_reference']}**. "
-          f"Levels are good; they will firm up once cash opens.\n")
+          f"CBOE's published greeks are from that same stale timestamp, so gamma "
+          f"has been **recomputed at the current spot** rather than taken as "
+          f"published. Levels are good; they firm up once cash opens.\n")
     elif basis.get("method") == "stale_cash_UNCORRECTED":
         A(f"> \u26a0\ufe0f **WARNING \u2014 {basis.get('warning')}**\n")
 
     A("<details><summary>Data ages and conversion</summary>\n")
     A(f"- CFD/index offset **{gx['cfd_offset']}** (NDX reference {gx['ndx_spot']} "
-      f"vs CFD {px}, basis `{basis.get('method', 'live_cash')}`) "
+      f"vs CFD {px}, price basis `{basis.get('method', 'live_cash')}`, "
+      f"greeks `{basis.get('greeks', 'cboe_published')}`) "
       f"\u2014 every options level below is already converted to your chart's price")
     A(f"- Data age: NDX chain {gx['as_of']['ndx']}, QQQ chain {gx['as_of']['qqq']}")
     A("\n</details>\n")

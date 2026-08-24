@@ -120,8 +120,15 @@ def gamma_flip(rows, S, lo_pct=0.92, hi_pct=1.08, steps=81):
         for r_ in rows:
             T = max(r_["dte"], 0.5) / 365.0
             sig = r_["iv"] if r_["iv"] > 0.01 else 0.20
-            g = bs_gamma(s, r_["strike"], T, sig)
-            v = g * r_["oi"] * CONTRACT_MULT * s * s * 0.01
+            # Rows may come from chains quoted in different price spaces (NDX
+            # index points vs QQQ dollars). `scale` maps this row's native
+            # space onto the NDX grid: price the contract where it actually
+            # lives, then combine the dollar results.
+            scale = r_.get("scale", 1.0)
+            k = r_.get("strike_native", r_["strike"])
+            s_native = s / scale
+            g = bs_gamma(s_native, k, T, sig)
+            v = g * r_["oi"] * CONTRACT_MULT * s_native * s_native * 0.01
             tot += v if r_["cp"] == "C" else -v
         curve.append((s, tot))
     flip = None

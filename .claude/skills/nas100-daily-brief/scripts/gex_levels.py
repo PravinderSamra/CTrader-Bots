@@ -32,24 +32,44 @@ def load_combined(max_dte=45):
     # QQQ contract contributes gamma_qqq * OI * 100 * S_qqq^2 * 0.01 — i.e. we
     # keep each chain's own spot for the dollar maths and only move the STRIKE.
     for r in qqq_rows:
+        r["strike_native"] = r["strike"]          # keep the QQQ-space strike
+        r["scale"] = ratio                        # NDX points per QQQ dollar
         r["strike"] = round(r["strike"] * ratio, 0)
         r["src"] = "QQQ"; r["spot"] = S_qqq
     for r in ndx_rows:
+        r["strike_native"] = r["strike"]
+        r["scale"] = 1.0
         r["src"] = "NDX"; r["spot"] = S_ndx
     return ndx_rows + qqq_rows, S_ndx, S_qqq, ratio, {"ndx": ndx_asof, "qqq": qqq_asof}
 
 
-def bucket(rows, S_ndx, dte_max, bin_pts=50):
-    """Aggregate $GEX and OI onto a common NDX-point grid."""
+def bucket(rows, S_ndx, dte_max, bin_pts=50, reprice=False):
+    """Aggregate $GEX and OI onto a common NDX-point grid.
+
+    `reprice=True` recomputes gamma with Black-Scholes at the CURRENT spot
+    instead of trusting CBOE's published greeks. Those greeks carry the
+    timestamp of the last chain update, which outside US cash hours is the
+    previous close. Measured pre-market on 2026-08-24 the market had moved 173
+    points since CBOE last recomputed: the published greeks gave net GEX
+    +0.46bn (positive, "pinning"), repricing at the real spot gave -5.48bn
+    (negative, "amplifying"). Opposite signs, opposite trading instruction, and
+    the figure was being printed beside a flip that WAS repriced.
+    """
     agg = defaultdict(lambda: {"call_gex": 0.0, "put_gex": 0.0,
                                "call_oi": 0.0, "put_oi": 0.0})
     for r in rows:
         if r["dte"] > dte_max:
             continue
-        s = r["spot"]
-        g = r["gamma"] * r["oi"] * G.CONTRACT_MULT * s * s * 0.01
-        if r["src"] == "QQQ":
-            g *= 1.0            # QQQ $-gamma is already in dollars; no rescale
+        if reprice:
+            sc = r.get("scale", 1.0)
+            s = S_ndx / sc
+            T = max(r["dte"], 0.5) / 365.0
+            sig = r["iv"] if r["iv"] > 0.01 else 0.20
+            gamma = G.bs_gamma(s, r.get("strike_native", r["strike"]), T, sig)
+        else:
+            s = r["spot"]
+            gamma = r["gamma"]
+        g = gamma * r["oi"] * G.CONTRACT_MULT * s * s * 0.01
         k = round(r["strike"] / bin_pts) * bin_pts
         d = agg[k]
         if r["cp"] == "C":
@@ -134,7 +154,12 @@ def build(cfd_price, max_dte=45):
     def cfd(x):
         return None if x is None else round(x + offset, 1)
 
-    flip, _ = G.gamma_flip([r for r in rows if r["src"] == "NDX"], S_ndx)
+    # Use the FULL book. The flip decides which entry model the day suits, and
+    # computing it from NDX alone ignored 4,117 QQQ contracts — it put the flip
+    # 253 points away from the combined-book answer, which on the wrong day
+    # gives the opposite trading instruction. QQQ carries the volume; excluding
+    # it here while including it everywhere else was simply inconsistent.
+    flip, _ = G.gamma_flip(rows, S_ndx)
 
     board = {"as_of": asof, "ndx_spot": round(S_ndx, 1), "qqq_spot": S_qqq,
              "basis": basis,
@@ -145,7 +170,7 @@ def build(cfd_price, max_dte=45):
              "buckets": {}}
 
     for label, dte in (("near_expiry_0_2dte", 2), ("this_week", 7), ("full_45dte", max_dte)):
-        pack = bucket(rows, S_ndx, dte)
+        pack = bucket(rows, S_ndx, dte, reprice=stale)
         if not pack:
             continue
         net = sum(p["net_gex"] for p in pack)
@@ -179,6 +204,8 @@ def build(cfd_price, max_dte=45):
                            "nas100": cfd(flip),
                            "spot_position": ("ABOVE flip — long gamma" if flip and S_ndx > flip
                                              else "BELOW flip — short gamma" if flip else None)}
+    basis["greeks"] = ("repriced_bs_at_current_spot" if stale
+                       else "cboe_published")
     near = [r for r in rows if r["dte"] <= 7 and r["src"] == "NDX"]
     mp = G.max_pain(near)
     board["max_pain_week"] = {"ndx": mp, "nas100": cfd(mp)}
