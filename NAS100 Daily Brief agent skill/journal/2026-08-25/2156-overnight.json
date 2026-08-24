@@ -1,0 +1,211 @@
+{
+  "schema": 1,
+  "scan_utc": "2026-08-24T21:56:20+00:00",
+  "scan_et": "2026-08-24 17:56 ET (Mon)",
+  "trading_day": "2026-08-25",
+  "session_window": "OVERNIGHT",
+  "is_trading_day": true,
+  "prediction": {
+    "price_at_scan": 29051.2,
+    "bias_score": -15,
+    "bias_label": "STRONGLY BEARISH",
+    "strategy": "STRATEGY 2 \u2014 CISD -> HH/HL -> fib OTE continuation. Below the flip in negative gamma: dealers amplify, sweeps run rather than fail. Strategy-1 fades have a materially lower hit rate here \u2014 only take them at the far walls.",
+    "event_gate": null,
+    "expected_direction": -1,
+    "gamma_flip": 29271.0,
+    "expiry_shape": "COHERENT_SHORT",
+    "fuel_state": "EXHAUSTED",
+    "remaining_budget": 0.0,
+    "adr14": 451.1,
+    "adr_used_pct": 117.7,
+    "levels": [
+      {
+        "price": 28752.5,
+        "name": "STRUCTURAL PUT WALL \u25cf\u25cf\u25cf\u25cf\u25cb 1.25bn",
+        "kind": "structural",
+        "dist": -298.7,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      }
+    ]
+  },
+  "inputs": {
+    "bias_components": [
+      {
+        "component": "gamma",
+        "points": -3,
+        "why": "below flip 29271.0 by 219.8pts \u2014 SHORT gamma, dealers amplify: downside accelerates, rallies unstable"
+      },
+      {
+        "component": "gamma",
+        "points": -2,
+        "why": "week net GEX -2.35 $bn/1% -> expansion likely"
+      },
+      {
+        "component": "gamma",
+        "points": 0,
+        "why": "price mid-band (28952.5-29302.5), 28% up the range"
+      },
+      {
+        "component": "vol",
+        "points": 0,
+        "why": "VXN 22.69 (+3.2%) \u2014 stable"
+      },
+      {
+        "component": "vol",
+        "points": 1,
+        "why": "VIX9D/VIX 0.888 contango \u2014 calm, mean-reversion favoured, mild upward drift"
+      },
+      {
+        "component": "vol",
+        "points": -1,
+        "why": "VXN/VIX 1.43 \u2014 tech-specific stress priced above the broad market"
+      },
+      {
+        "component": "vol",
+        "points": 0,
+        "why": "VVIX 88.64 \u2014 no tail-hedge bid"
+      },
+      {
+        "component": "rates",
+        "points": 1,
+        "why": "US10y 4.704 (-0.72%) \u2014 yields down, BULLISH tech"
+      },
+      {
+        "component": "rates",
+        "points": 0,
+        "why": "DXY 98.984 (+0.19%) \u2014 dollar flat"
+      },
+      {
+        "component": "macro",
+        "points": -3,
+        "why": "**Real yield, 10y (DFII10)** \u2014 what lenders earn after inflation \u2014 is 2.4%, up 5bp today and 1bp over 5 days. Rising = tech gets hit hardest, because tech is valued on profits years away and those are worth less when rates rise."
+      },
+      {
+        "component": "macro",
+        "points": -1,
+        "why": "**10y nominal yield (DGS10)** moved 5bp up (2026-08-20 to 2026-08-21). That was driven by real rates \u2014 the harsher kind for tech, and an immediate headwind."
+      },
+      {
+        "component": "macro",
+        "points": 2,
+        "why": "**High-yield credit spread (HY OAS)** \u2014 the extra interest demanded to lend to riskier companies is 2.7% (+3bp over 5 days). Low and steady: the bond market is relaxed about risk, which gives stocks permission to rise."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Financial conditions (NFCI)** \u2014 how easy it is to borrow money across the economy \u2014 is EASIER than normal (-0.559). Cheap, available money is a background tailwind for stocks."
+      },
+      {
+        "component": "macro",
+        "points": -1,
+        "why": "**Fed balance sheet (WALCL) / reverse repo (RRP)** \u2014 cash in the financial system. The Fed is holding $6.75tn of assets, shrinking by $14.3bn this week, and the spare-cash buffer is down to $0.38bn. The Fed is quietly pulling money out of the system \u2014 a slow, persistent drag on stocks, not a day-trade signal."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Yield curve (10y\u20132y)** \u2014 long vs short bond yields. The 10-year pays +0.46% more than the 2-year. Barely moved."
+      },
+      {
+        "component": "breadth",
+        "points": -2,
+        "why": "mega-cap avg -1.09% (2/4 up): NVDA -2.91%, MSFT +0.84%, AAPL +0.32%, AVGO -2.63%"
+      },
+      {
+        "component": "breadth",
+        "points": -1,
+        "why": "NDX -0.97% vs ES -0.22% \u2014 tech lagging, rotation out of tech"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "ADR14 451.1, 117.7% used vs ~2% normal by 17:56 ET -> fuel_ratio 58.85 (burning hot) [EXHAUSTED]"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "fuel is short \u2014 this dampens CONVICTION in any continuation call, it does not change direction"
+      },
+      {
+        "component": "structure",
+        "points": -1,
+        "why": "price below PD mid 29138.3 (PDH 29403.8 / PDL 28872.9)"
+      },
+      {
+        "component": "structure",
+        "points": -3,
+        "why": "price is BELOW the entire prior-week range (29115.9-30245.8) \u2014 weekly draw has flipped bearish; PWL 29115.9 is now resistance, not support"
+      },
+      {
+        "component": "structure",
+        "points": 0,
+        "why": "in-reach unmitigated pools: 0 above / 0 below \u2014 draw balanced"
+      },
+      {
+        "component": "news",
+        "points": -1,
+        "why": "2 auto-scored headline(s) (0 bull / 2 bear) -> MILDLY BEARISH; 46 more need reading in context (not counted here)"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [tariff_semi] Nasdaq 100 Falls 0.69% in Early Trade as Tech Selloff Deepens; Dow Jones Gains 0.15% Ami"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [tariff_general] Tariff-Driven Inflation Risks Return With Trump Moves on Canada, Iran - Bloomberg.com"
+      },
+      {
+        "component": "events",
+        "points": 0,
+        "why": "NVDA earnings 2026-08-26 time-after-hours (cons $2.09) \u2014 INDEX-DEFINING event; day before pins, day after expands"
+      }
+    ],
+    "fuel": {
+      "adr14": 451.1,
+      "today_range": 530.9,
+      "adr_used_pct": 117.7,
+      "remaining_budget": 0.0,
+      "expansion_state": "EXHAUSTED",
+      "volume_relative": 0.67,
+      "volume_state": "drying_up"
+    },
+    "gamma": {
+      "near_expiry_0_2dte": -1.621,
+      "this_week": -2.35,
+      "full_45dte": -3.226
+    },
+    "call_wall": 29302.5,
+    "put_wall": 28952.5,
+    "max_pain": 29302.5,
+    "vol": {
+      "vxn": 22.69,
+      "vix": 15.85,
+      "vix9d_over_vix": 0.888
+    },
+    "rates": {
+      "us10y": 4.704,
+      "dxy": 98.984
+    },
+    "news": {
+      "raw_score": -2.16,
+      "bias_points": -1,
+      "label": "MILDLY BEARISH",
+      "scored_high_confidence": 2,
+      "needs_model_judgement": 46
+    },
+    "events_24h": [
+      {
+        "utc": "2026-08-25T14:00:00+00:00",
+        "impact": "Medium",
+        "title": "CB Consumer Confidence",
+        "forecast": "90.3",
+        "previous": "90.8",
+        "hours_away": 16.1
+      }
+    ]
+  },
+  "outcome": null
+}

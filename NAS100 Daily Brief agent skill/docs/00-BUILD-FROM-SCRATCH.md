@@ -334,6 +334,23 @@ level, not a long-sweep one.
 ADR14, adr_used_pct, remaining_budget → ROOM_TO_EXPAND / MODERATE / LOW_FUEL / EXHAUSTED
 ```
 
+**The budget forecasts RANGE EXTENSION, not price travel — and the output used
+to imply the latter.** `EXHAUSTED` printed "do not initiate", which reads as
+"nothing will happen". Measured 2026-08-24: a 0.0pt budget was followed by
+5.3pts of extension (the forecast was right) while price traversed 284.4pts
+inside the range. The metric was sound; the description was wrong.
+
+This also inverts the setup preference: if the range will not extend, price must
+turn at the extremes, so `LOW_FUEL`/`EXHAUSTED` favours **fading the extremes**
+even when the gamma regime favours continuation. On 24 Aug the brief called
+continuation at 28,903 with a 0pt budget — price bottomed 30pts later and
+rallied 178 into the close.
+
+**The review engine was grading fuel on the wrong quantity**, comparing the
+budget against traversal rather than extension, which reported a 3.8x
+under-estimate where the model had been accurate. Fixed to grade extension and
+report traversal separately.
+
 **NAS100-specific correction that matters most:** the index does not spend its
 range evenly — roughly 15% Asia, 25% London, **45% NY open**, 15% afternoon. So
 "67% of ADR used" at 08:00 ET is an exhausted day (the biggest window hasn't

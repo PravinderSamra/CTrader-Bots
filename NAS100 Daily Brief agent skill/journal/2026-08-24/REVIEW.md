@@ -45,7 +45,7 @@ The advice given alongside it — take partials, trail on 1m structure, don't
 fade, invalidation at the flip — was sound and would have protected the trade.
 **The risk management saved it, not the direction call.**
 
-### Fuel is systematically too tight — now actionable
+### ~~Fuel is systematically too tight — now actionable~~ **WITHDRAWN — see addendum**
 
 | Session | Budget published | Realised | Ratio |
 |---|---|---|---|
@@ -88,3 +88,40 @@ One trading day. Two correct calls and one wrong call is not a hit rate. The
 only finding here with enough evidence to act on is the fuel budget, and that is
 because it has now failed in the same direction across three separate sessions.
 Everything else is logged and waiting.
+
+
+---
+
+# ADDENDUM — this review's central finding was wrong
+
+Re-measured after the question "does fuel mean range extension rather than
+movement?". It does, and grading it against price traversal was the error.
+
+| 13:45 scan | |
+|---|---|
+| Budget published | **0.0pts** |
+| Range **extension** that followed | **5.3pts** — forecast essentially exact |
+| Price **traversal** inside the range | **284.4pts** |
+
+**The fuel model was right.** The review engine compared the budget against
+traversal (how far price roamed) instead of extension (how much the range grew),
+manufacturing a "3.8x under-estimate" out of an accurate forecast. Engine fixed.
+
+**The 2026-08-20 data point is withdrawn.** It came from a backdated entry
+created to test the review loop and deleted immediately after — not a real scan.
+Citing it as one of "three independent sessions" was exactly the archive
+corruption this reviewer is written to prevent. Real trading-day evidence is
+**one session**, and it does not support recalibration.
+
+**What genuinely follows.** `EXHAUSTED` means the extremes are probably in, not
+that movement stops. Since the range will not extend, price must turn at the
+extremes — so the higher-probability trade at `LOW_FUEL`/`EXHAUSTED` is **fading
+back into the range**, even when the gamma regime favours continuation. That is
+a definitional consequence of the forecast being right, not a calibration
+tuned on one day. The brief's wording now says this; no thresholds or scores
+were changed.
+
+Proposal P1 (recalibrate the budget) is **withdrawn**. P2 (cap conviction when
+exhausted at the extreme) is superseded by the reframing above — the fuel state
+now argues against the continuation call directly. P3 (deduplicate scans)
+stands.

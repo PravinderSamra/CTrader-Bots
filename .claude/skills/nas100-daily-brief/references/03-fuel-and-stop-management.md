@@ -3,6 +3,29 @@
 Answers: *is there enough room left for this move today, and do I need to manage
 the stop actively?*
 
+## What the budget actually forecasts — read this first
+
+**It forecasts how much further the day's HIGH-LOW RANGE can grow. It has never
+forecast how far price will travel.** Those two things diverge sharply once a
+range is established, and confusing them is the single easiest way to misread
+this section.
+
+Measured on 2026-08-24: the 13:45 scan published a **0.0pt budget**. The range
+then extended **5.3pts** — the forecast was essentially exact. In the same
+window price **traversed 284.4pts** inside that range.
+
+So `EXHAUSTED` does not mean "nothing will happen". It means:
+
+> The extremes are probably in. Expect real movement still — just **between**
+> them rather than beyond them.
+
+**This inverts which setup to prefer.** If the range will not extend, then by
+definition price has to turn at the extremes. At `LOW_FUEL`/`EXHAUSTED` the
+higher-probability trade is **fading the extremes back into the range**, even
+when the gamma regime favours continuation. On 24 Aug the brief called
+continuation at 28,903 with a 0pt budget; price bottomed 30pts later and rallied
+178 into the close. The fade was the trade, and the fuel state said so.
+
 ## The gauge
 ```
 ADR14        = mean(High − Low) over the last 14 completed days
@@ -45,7 +68,11 @@ Regardless of state:
 6. High-impact print inside 15 minutes → flatten or hard-stop to BE.
 
 ## Known open question
-The review engine found the published budget under-estimating realised range on
-2026-08-20 (156 vs 266). One session is not evidence. If the reviewer confirms
-it across 3+ sessions, the budget multiplier needs raising — do not change it
-before then.
+Whether the budget under-estimates range EXTENSION early in the session. On
+2026-08-24 the London scans published 88.7 against 168.5 of actual extension
+(~1.9x), while the exhausted-point scan was essentially exact (0.0 vs 5.3).
+One session. Do not recalibrate on it.
+
+A previously-recorded data point from 2026-08-20 has been **withdrawn**: it came
+from a backdated journal entry created to test the review loop, not from a real
+scan, and should never have been cited as evidence.

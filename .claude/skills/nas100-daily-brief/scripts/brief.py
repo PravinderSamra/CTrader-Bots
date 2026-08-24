@@ -262,6 +262,41 @@ def level_board(d):
     return board, far
 
 
+# The budget forecasts how much further the day's HIGH-LOW RANGE can grow. It
+# has never forecast how far price will travel, and the two diverge sharply once
+# a range is established. Measured 2026-08-24: a 0.0pt budget was followed by
+# 5.3pts of range extension (right) while price traversed 284.4pts inside the
+# range. The old wording ("do not initiate", "range is spent") described
+# movement and so read as "nothing will happen", which was actively misleading
+# on the day it mattered most.
+_FUEL_MEANING = {
+    "ROOM_TO_EXPAND": (
+        "The range can still grow. New highs/lows are live — breakouts and "
+        "continuation have somewhere to go.",
+        "leave the structural stop alone; trail only on confirmed 1m structure breaks."),
+    "MODERATE": (
+        "The range has room but not unlimited room. Continuation is fine to the "
+        "nearest pool; don't plan on a third leg.",
+        "structural stop; break-even at 1R or 50% of remaining budget, whichever first."),
+    "LOW_FUEL": (
+        "The range is close to done. Expect price to keep MOVING but mostly "
+        "**inside** the extremes rather than making new ones — favour fades "
+        "over chasing breaks.",
+        "active management from entry \u2014 break-even at 0.7R, 50% off at the "
+        "first pool, trail tight."),
+    "EXHAUSTED": (
+        "**The day's range is set — but that is not the same as 'nothing will "
+        "happen'.** Expect real movement still, just **within** the extremes "
+        "rather than beyond them. Continuation into new highs/lows is the "
+        "low-probability trade; the range width is where the remaining "
+        "opportunity is.",
+        "don't chase a break. If already in a continuation trade, take partials "
+        "\u2014 you are trading the last few points of extension. Fading the "
+        "extremes back into the range is the higher-probability side here, even "
+        "when the gamma regime favours continuation."),
+}
+
+
 def budget_txt(d):
     return f"{d['levels']['fuel']['remaining_budget']:.0f}pt"
 
@@ -340,12 +375,10 @@ def markdown_levels_only(d):
             A(f"- **{label} stalls at {r['first_brake']}** "
               f"({r['brake_dist']:.0f}pts) \u2014 partials into it.")
     A("")
-    A("**Stop management:** " + {
-        "ROOM_TO_EXPAND": "leave the structural stop alone; trail only on confirmed 1m structure breaks.",
-        "MODERATE": "structural stop; break-even at 1R or 50% of remaining budget, whichever first.",
-        "LOW_FUEL": "active management from entry \u2014 break-even at 0.7R, 50% off at the first pool, trail tight.",
-        "EXHAUSTED": "do not initiate; if already in, take partials and be flat before the close.",
-    }[f["expansion_state"]] + "\n")
+    meaning, mgmt = _FUEL_MEANING[f["expansion_state"]]
+    A(f"_Budget = how much further the RANGE can grow, not how far price "
+      f"travels._ {meaning}\n")
+    A(f"**Stop management:** {mgmt}\n")
     board, far = level_board(d)
     A("_Wall strength ●●●○○ is **gamma force** relative to the strongest wall "
       "of the same type, not contract count._\n")
@@ -552,12 +585,10 @@ def markdown(d):
               f"{r['first_brake']} ({r['brake_dist']:.0f}pts away) — take "
               f"partials into it rather than assuming a clean {verb}.")
     A("")
-    A(f"**Stop management:** " + {
-        "ROOM_TO_EXPAND": "leave the structural stop alone; trail only on confirmed 1m structure breaks.",
-        "MODERATE": "structural stop; break-even at 1R or 50% of remaining budget, whichever first.",
-        "LOW_FUEL": "active management from entry — break-even at 0.7R, 50% off at the first pool, trail tight.",
-        "EXHAUSTED": "do not initiate; if already in, take partials and be flat before the close.",
-    }[f["expansion_state"]] + "\n")
+    meaning, mgmt = _FUEL_MEANING[f["expansion_state"]]
+    A(f"**What the budget means:** it forecasts how much further the day's "
+      f"**range** can grow \u2014 not how far price will travel. {meaning}\n")
+    A(f"**Stop management:** {mgmt}\n")
 
     A("## 4. Level board — mark these\n")
     board, far = level_board(d)

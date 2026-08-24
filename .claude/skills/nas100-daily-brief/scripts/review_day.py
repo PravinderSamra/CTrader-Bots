@@ -121,13 +121,24 @@ def review(day, root=None):
             levels.append({**{k: lv[k] for k in ("price", "name", "kind")}, **g})
         touched = [x for x in levels if x["touched"]]
 
-        # was the fuel/range estimate right?
+        # Fuel must be graded on range EXTENSION, not on how far price roamed.
+        #
+        # The budget answers "how much further can the day's HIGH-LOW range
+        # grow", not "how far will price travel". Those are wildly different
+        # once a range is established: on 2026-08-24 the 13:45 scan published a
+        # 0.0pt budget, the range then extended 5.3pts (essentially exact) —
+        # while price traversed 284.4pts inside it. Grading against traversal
+        # called that a 3.8x under-estimate when the model had been right.
         budget = pr["remaining_budget"]
-        realised = round(max(b["high"] for b in fwd) - min(b["low"] for b in fwd), 1) if fwd else 0
-        fuel_call = ("UNDER-estimated — price used more range than we budgeted"
-                     if realised > budget * 1.25 else
-                     "OVER-estimated — price used far less than budgeted"
-                     if realised < budget * 0.5 else "about right")
+        upto = bars[:i0] or bars[:1]
+        range_at_scan = round(max(b["high"] for b in upto) - min(b["low"] for b in upto), 1)
+        extension = round(actual["range"] - range_at_scan, 1)
+        traversal = round(max(b["high"] for b in fwd) - min(b["low"] for b in fwd), 1) if fwd else 0
+        tol = max(60.0, budget * 0.5)
+        fuel_call = ("UNDER-estimated — the range grew more than budgeted"
+                     if extension > budget + tol else
+                     "OVER-estimated — the range grew far less than budgeted"
+                     if extension < budget - tol else "about right")
 
         results.append({
             "scan_utc": sc["scan_utc"], "session": sc["session_window"],
@@ -135,9 +146,17 @@ def review(day, root=None):
                           "direction": exp, "shape": pr["expiry_shape"],
                           "fuel_state": pr["fuel_state"], "budget": budget},
             "actual_after_scan": {"move": move, "direction": dir_after,
-                                  "realised_range": realised},
+                                  "range_at_scan": range_at_scan,
+                                  "range_extension": extension,
+                                  "price_traversal": traversal},
             "direction_call": call,
-            "fuel_call": fuel_call, "fuel_ratio": round(realised / budget, 2) if budget else None,
+            "fuel_call": fuel_call,
+            "fuel_extension_vs_budget": (round(extension / budget, 2)
+                                         if budget else None),
+            # How much movement was available INSIDE the range. This is the
+            # number that says whether there was a trade, independent of
+            # whether the range grew.
+            "traversal_vs_budget": (round(traversal / budget, 2) if budget else None),
             "levels_published": len(levels),
             "levels_touched": len(touched),
             "level_hit_rate": round(len(touched) / len(levels), 2) if levels else None,
@@ -198,8 +217,10 @@ if __name__ == "__main__":
         print(f"\n  {sc['scan_utc'][11:16]} {sc['session']:<10} "
               f"{sc['predicted']['bias']} ({sc['predicted']['score']:+d}) "
               f"-> moved {sc['actual_after_scan']['move']:+.1f}  [{sc['direction_call']}]")
-        print(f"     fuel: budget {sc['predicted']['budget']} vs realised "
-              f"{sc['actual_after_scan']['realised_range']} -> {sc['fuel_call']}")
+        a = sc["actual_after_scan"]
+        print(f"     fuel: budget {sc['predicted']['budget']} vs range EXTENSION "
+              f"{a['range_extension']} -> {sc['fuel_call']}")
+        print(f"           (price traversed {a['price_traversal']} INSIDE the range)")
         for lv in sc["levels_detail"]:
             if lv["touched"]:
                 print(f"       {lv['price']:>9} {lv['name'][:34]:<34} {lv['reaction']}")
