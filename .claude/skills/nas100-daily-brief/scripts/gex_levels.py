@@ -10,8 +10,10 @@ what it implies above vs. below.
     python3 gex_levels.py <NAS100_CFD_PRICE>
     python3 gex_levels.py 29290.5 --json
 """
-import json, sys
+import json, ssl, sys, urllib.request
 from collections import defaultdict
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 import cboe_gex as G
 
 
@@ -59,8 +61,74 @@ def bucket(rows, S_ndx, dte_max, bin_pts=50):
     return out
 
 
+def _nq_implied_cash(cash_close):
+    """Roll a stale cash close forward using the futures move.
+
+    The NDX cash index only prints during US cash hours. Ask CBOE for _NDX at
+    08:26 UTC on a Monday and you get FRIDAY'S CLOSE, with no error and no
+    obvious sign it is stale. Differencing a live CFD against it produced an
+    offset of -200.7 instead of the true ~+3, which would have shifted every
+    single options level on the board by 200 points during exactly the
+    pre-market window the brief is read in.
+
+    NQ futures trade nearly 24h, so the cash index can be rolled forward by the
+    futures' move since its own prior close.
+    """
+    try:
+        u = ("https://query1.finance.yahoo.com/v8/finance/chart/"
+             "NQ%3DF?range=1d&interval=5m")
+        req = urllib.request.Request(u, headers=G.UA)
+        with urllib.request.urlopen(req, timeout=20, context=ssl.create_default_context()) as r:
+            m = json.loads(r.read().decode())["chart"]["result"][0]["meta"]
+        now, prev = m.get("regularMarketPrice"), m.get("chartPreviousClose")
+        if not now or not prev:
+            return None, None
+        return cash_close + (now - prev), round(now - prev, 1)
+    except Exception:
+        return None, None
+
+
+def _cash_is_stale(quote, max_age_min=30):
+    """-> (stale, age_minutes, last_trade_iso)."""
+    ts = quote.get("last_trade_time")
+    if not ts:
+        return False, None, None
+    try:
+        lt = datetime.fromisoformat(ts)
+        if lt.tzinfo is None:
+            lt = lt.replace(tzinfo=ZoneInfo("America/New_York"))
+        age = (datetime.now(timezone.utc) - lt.astimezone(timezone.utc)).total_seconds() / 60
+        return age > max_age_min, round(age, 0), ts
+    except Exception:
+        return False, None, ts
+
+
 def build(cfd_price, max_dte=45):
     rows, S_ndx, S_qqq, ratio, asof = load_combined(max_dte)
+
+    # Guard against anchoring the whole level board to a stale cash print.
+    quote = G._get(G.CBOE_QTE.format("_NDX"))["data"]
+    stale, age_min, last_trade = _cash_is_stale(quote)
+    basis = {"method": "live_cash", "ndx_reference": round(S_ndx, 1),
+             "cash_last_trade": last_trade, "cash_age_min": age_min}
+    if stale:
+        implied, fut_move = _nq_implied_cash(S_ndx)
+        if implied:
+            basis = {"method": "nq_implied",
+                     "cash_close": round(S_ndx, 1),
+                     "cash_last_trade": last_trade, "cash_age_min": age_min,
+                     "nq_move_since_close": fut_move,
+                     "ndx_reference": round(implied, 1),
+                     "note": (f"NDX cash last traded {last_trade} "
+                              f"({age_min:.0f} min ago) — rolled forward by the "
+                              f"NQ futures move ({fut_move:+.1f}) rather than "
+                              f"differencing against a stale close")}
+            S_ndx = implied
+        else:
+            basis["method"] = "stale_cash_UNCORRECTED"
+            basis["warning"] = (f"NDX cash is {age_min:.0f} min old and the "
+                                f"futures fallback failed — every level below "
+                                f"may be materially wrong. Treat with caution.")
     offset = cfd_price - S_ndx
 
     def cfd(x):
@@ -69,6 +137,7 @@ def build(cfd_price, max_dte=45):
     flip, _ = G.gamma_flip([r for r in rows if r["src"] == "NDX"], S_ndx)
 
     board = {"as_of": asof, "ndx_spot": round(S_ndx, 1), "qqq_spot": S_qqq,
+             "basis": basis,
              "ndx_qqq_ratio": round(ratio, 3), "nas100_cfd": cfd_price,
              "cfd_offset": round(offset, 1),
              "contracts": {"ndx": sum(1 for r in rows if r["src"] == "NDX"),

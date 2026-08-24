@@ -486,8 +486,20 @@ def markdown(d):
           f"$bn per 1%\n")
         A(f"> {es['what_it_is']}\n>\n> \u27a4 {es['what_to_do']}\n")
 
+    basis = gx.get("basis") or {}
+    if basis.get("method") == "nq_implied":
+        A(f"> \u2139\ufe0f **Options levels are anchored to an inferred index price.** "
+          f"NDX cash last traded {basis['cash_last_trade']} "
+          f"({basis['cash_age_min']:.0f} min ago) \u2014 it does not print outside US "
+          f"cash hours. The reference has been rolled forward by the NQ futures "
+          f"move ({basis['nq_move_since_close']:+.1f}) to **{basis['ndx_reference']}**. "
+          f"Levels are good; they will firm up once cash opens.\n")
+    elif basis.get("method") == "stale_cash_UNCORRECTED":
+        A(f"> \u26a0\ufe0f **WARNING \u2014 {basis.get('warning')}**\n")
+
     A("<details><summary>Data ages and conversion</summary>\n")
-    A(f"- CFD/index offset **{gx['cfd_offset']}** (NDX {gx['ndx_spot']} vs CFD {px}) "
+    A(f"- CFD/index offset **{gx['cfd_offset']}** (NDX reference {gx['ndx_spot']} "
+      f"vs CFD {px}, basis `{basis.get('method', 'live_cash')}`) "
       f"\u2014 every options level below is already converted to your chart's price")
     A(f"- Data age: NDX chain {gx['as_of']['ndx']}, QQQ chain {gx['as_of']['qqq']}")
     A("\n</details>\n")

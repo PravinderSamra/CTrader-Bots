@@ -602,6 +602,35 @@ and exclude any it finds.
 
 # 8b. Reliability notes
 
+**The NDX cash index does not print outside US cash hours, and says so nowhere.**
+Ask CBOE for `_NDX` at 08:26 UTC on a Monday and you get Friday's close — HTTP
+200, a plausible number, no error. Only `last_trade_time` reveals it.
+
+Caught on the first live weekday run: the CFD had gapped ~200pts overnight while
+cash sat at Friday's print, so `offset = cfd − cash` computed **−200.7** instead
+of the true ~−4. Every options level on the board was shifted by 200 points,
+during exactly the pre-market window the brief is designed to be read in.
+
+Worse than wrong numbers, it **inverted the trade**. The stale reference put
+price *above* the gamma flip → "long gamma, dealers fade extensions, this is
+your fade day, use Strategy 1". Corrected, price was *below* the flip → "short
+gamma, dealers amplify, Strategy-1 fades have a materially lower hit rate".
+Opposite instructions from the same data.
+
+`gex_levels._cash_is_stale()` now checks `last_trade_time`, and when cash is
+more than 30 minutes old `_nq_implied_cash()` rolls it forward by the NQ futures
+move since NQ's own prior close — futures trade nearly 24h, cash does not. The
+brief prints which basis was used and never hides the substitution. If the
+futures fallback also fails the board is published with a loud warning rather
+than a silent guess.
+
+The general lesson, and the third instance of it in this build: **a feed
+returning 200 with a plausible number is not the same as a feed returning
+current data.** Yahoo's `chartPreviousClose`, FRED's per-series publication
+lags, and now CBOE's out-of-hours cash quote all failed this way.
+
+
+
 **cTrader sessions expire under load.** The client retried expiry once, which is
 enough for an idle session but not for `fetch_ohlcv_paged`, which issues dozens
 of sequential calls — a re-initialised session can expire again immediately.
