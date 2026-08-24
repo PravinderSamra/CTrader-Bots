@@ -48,6 +48,54 @@
         "adrUsedPct": 36
       },
       "outcome": null
+    },
+    {
+      "at": "2026-08-24T07:51:44.723Z",
+      "londonTime": "08:51 BST",
+      "mode": "POST_ORB",
+      "price": 10810.35,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — The obvious draw (PDL 10726) sits beyond what's left of a typical day's range — targets past it are stretch-only today.",
+      "signals": [
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10726) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": "Due to Brent falling -1.08% dragging the index's largest sector, an overnight range of only 32.7 points (38% of the 85.7-point ADR already used, below the ~50% typical pace), and the prior-day low at 10,726 sitting ~84 points from current price — beyond what a normal remaining daily range can reach — downside breaks lack a credible intraday target and should be treated as fade candidates unless volume accelerates sharply.",
+      "aiBullets": [
+        "The ORB band (10,799.5–10,819.9) spans just 20.4 points — less than 24% of the 85.7-point ADR — meaning any initial break is statistically likely to be a sweep rather than a trend launch, especially with orbBrokenDirection still NONE at open.",
+        "Energy (Shell, BP — top-5 weights) reads BEARISH on Brent -1.08%, while miners are only NEUTRAL on copper +0.17%; the sector drag is lopsided to the downside, adding weight to the SHORT_FAVOURED mechanical stance without requiring macro confirmation.",
+        "GBP sits at the 100th 20-day percentile (most expensive in the recent window) yet COT data shows a CROWDED_SHORT of -53,966 net contracts — a snap GBP rally is the single biggest asymmetric risk to any long FTSE ORB break, as stronger sterling directly compresses the overseas-earnings uplift.",
+        "Gold +0.6% to a 3-month high (Reuters, 3.2 hours ago) and VIX at 16.12 (NORMAL, not STRESS) together suggest mild hedging demand rather than panic — enough to suppress upside conviction but not enough to force a directional flush before Wednesday's US PCE at 13:30 BST."
+      ],
+      "bias": {
+        "score": -4,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10819.9,
+        "orbLow": 10799.5,
+        "orbBrokenDirection": "NONE",
+        "overnightHigh": 10832.2,
+        "overnightLow": 10799.5,
+        "priorDayHigh": 10825.9,
+        "priorDayLow": 10726,
+        "gapPct": 0.06,
+        "adr14": 85.7,
+        "adrUsedPct": 38
+      },
+      "outcome": null
     }
   ]
 }

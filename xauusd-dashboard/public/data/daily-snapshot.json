@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-24T06:37:44.787Z",
+  "generatedAt": "2026-08-24T07:50:40.338Z",
   "yields": {
     "US10Y": 4.69,
     "US2Y": 4.19,
@@ -34,23 +34,23 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 870.9,
-    "gldWoWChange": -9.1,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 874.8,
+    "gldWoWChange": 3.9,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4653.46,
-    "XAGUSD": 69.2385,
-    "EURUSD": 1.16781,
-    "USDJPY": 158.969,
-    "USDCHF": 0.80073,
-    "USDCNH": 6.72267,
-    "GBPUSD": 1.36421,
-    "USDCAD": 1.38163,
-    "USDSEK": 9.4724,
-    "US500": 7659.7,
-    "GER40": 26116.65,
-    "UK100": 10830.75,
+    "XAUUSD": 4632.645,
+    "XAGUSD": 68.912,
+    "EURUSD": 1.16658,
+    "USDJPY": 159.1595,
+    "USDCHF": 0.80207,
+    "USDCNH": 6.72358,
+    "GBPUSD": 1.36358,
+    "USDCAD": 1.38346,
+    "USDSEK": 9.48336,
+    "US500": 7657.9,
+    "GER40": 26095.05,
+    "UK100": 10810.85,
     "ADR_14day": 101.3,
     "ADR_usedToday": 64.9,
     "goldSilverRatio": 67.2
@@ -69,44 +69,44 @@
       "headline": "Gold hits over 3-month high ahead of US inflation data, Fed chair speech - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T04:39:00.000Z",
-      "hoursAgo": 2
+      "hoursAgo": 3.2
     },
     {
       "headline": "Indian shares extend cautious trade on concerns over Iran sanctions - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T02:22:00.000Z",
-      "hoursAgo": 4.3
+      "hoursAgo": 5.5
     },
     {
       "headline": "Dollar trading near multi-month lows, restrained by debt nerves - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T01:48:00.000Z",
-      "hoursAgo": 4.8
+      "hoursAgo": 6
     },
     {
-      "headline": "Shares dither, oil slips in wait for US details of Iran sanctions - Reuters",
+      "headline": "Shares, oil slip awaiting US details of Iran sanctions - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T00:49:00.000Z",
-      "hoursAgo": 5.8
+      "hoursAgo": 7
     },
     {
       "headline": "Oil falls as US prepares to unveil new Iran sanctions - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-23T23:18:00.000Z",
-      "hoursAgo": 7.3
+      "hoursAgo": 8.5
     },
     {
       "headline": "Iran says new sanctions threatened by 'desperate' US will fail - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-23T18:16:16.000Z",
-      "hoursAgo": 12.4
+      "hoursAgo": 13.6
     }
   ],
   "briefing": {
     "biasScore": 3,
     "biasLabel": "BULLISH",
     "confidence": 6,
-    "briefing": "Right now, the two biggest forces driving gold are a weakening US dollar and rising geopolitical tension — both of which typically push gold higher. The dollar [the US currency, which gold is priced in — when the dollar falls, gold usually rises] is sitting near multi-month lows, held back by what Reuters described about 4–5 hours ago as 'debt nerves,' meaning investors are worried about the size of US government borrowing. That headline, along with gold hitting a 3-month high reported just 2 hours ago ahead of upcoming US inflation data and a Federal Reserve [the US central bank] chair speech, tells you the market is already leaning bullish [expecting prices to rise] on gold. Separately, Iran sanctions headlines over the last 5–12 hours are adding a layer of geopolitical stress, which historically pushes investors toward gold as a 'safe haven' [an asset people buy when they're scared]. The directional bias here is UP, because a soft dollar, geopolitical risk, and pre-event positioning [traders building positions ahead of a key speech or data release] are all pointing the same way. However, confidence is a moderate 6/10 — here's why it's not higher: the COT data [Commitment of Traders report, showing how big professional traders are positioned] shows the market is already CROWDED LONG, meaning a lot of people have already bought. ETF [Exchange-Traded Fund, a product that holds physical gold] flows have also been negative for three straight weeks, a sign that some larger players are quietly selling. If the Fed chair's speech turns out more hawkish [suggesting interest rates stay high or go higher], that could quickly reverse the mood. There are no scheduled economic events on today's calendar, but the US inflation data and Fed chair speech flagged in headlines are the live risks to watch — if those hit today during London or New York hours, expect sharp, fast moves. Gold's 14-day average daily range [how much price typically moves in a day] is about $101, and today has already used roughly $65 of that — meaning there may only be around $35 of typical movement left for the day, so don't expect a huge fresh leg unless a major catalyst hits. For trade execution, the trend on the 1-hour chart is up, so you should only be looking to BUY dips [price pulling back to a lower level before continuing higher] — wait for the 5-minute chart to show a clean setup after a pullback toward a recent swing low or order block [a price area where big institutions previously placed large buy orders], then refine your entry on the 1-minute chart. Given the crowded positioning and remaining daily range is limited, use smaller size than normal and keep your stop-loss [the price at which you exit if the trade goes against you] tight. Remember: the trend is your friend — only take trades in the direction the 1-hour chart is pointing, and let the market come to you.",
-    "generatedAt": "2026-08-24T06:38:04.135Z"
+    "briefing": "Right now, the two biggest forces driving gold are a weakening US dollar and rising geopolitical tension — both of which typically push gold higher. The dollar (measured by the DXY index, which tracks the dollar against a basket of major currencies) is sitting near multi-month lows at 98.97, reportedly weighed down by nerves around US government debt levels (Reuters, ~6 hours ago). A weaker dollar makes gold cheaper for foreign buyers, which tends to increase demand and lift prices. On the geopolitical side, multiple headlines over the last 7–9 hours have flagged escalating tension around new US sanctions on Iran — unscheduled, fast-moving news like this often sparks 'safe haven' buying, meaning investors rush into gold when they feel anxious about global stability. Gold has already responded, hitting a 3-month high according to Reuters just 3 hours ago. All of this points to a BULLISH [upward-leaning] bias for gold — the trend is up, the dollar is under pressure, and fear is in the air. Confidence is 6/10 because there are two big wildcards: first, the calendar shows no scheduled events today (the data field is empty), but markets are clearly bracing for upcoming US inflation data AND a speech from the Fed Chair [the head of America's central bank] — these events are NOT listed with specific times in today's data, so treat this session as event-risk territory. Second, a rate-hike probability of 20% for the next Fed meeting on September 16th is a meaningful headwind for gold — if any speaker today sounds hawkish [in favour of keeping rates high or raising them], gold could pull back sharply. What would flip this bullish view bearish: a strong dollar bounce, hawkish Fed commentary, or a surprise de-escalation in Iran tensions. The 14-day Average Daily Range [the typical daily price movement] is 101.3 points, and today has already used 64.9 of those points, meaning roughly 36 points of average move remain — so chasing a breakout aggressively right now carries more risk than entering on a pullback [a dip back toward a recently tested price level]. Key levels to watch: any clean pullback toward the 4,600–4,610 zone would be the highest-quality area to look for a long [buy] entry on the 5M chart using ICT methodology — specifically, watch for a liquidity sweep [a brief dip below a recent low to grab stop-losses before reversing] followed by a bullish displacement [a sharp move upward]. During London and early New York, favour buy setups only — do not fight the trend by looking for shorts. Use reduced position size [trade smaller than usual] given the event risk around the Fed Chair speech; treat this as a 50–60% conviction session, not a full-size day. Screenshot this: Gold is at a 3-month high, the dollar is weak, and Iran tensions are simmering — buy the dips, not the peaks, and keep size small until the Fed Chair speaks.",
+    "generatedAt": "2026-08-24T07:50:59.557Z"
   }
 }
