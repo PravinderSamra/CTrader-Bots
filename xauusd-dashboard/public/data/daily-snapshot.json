@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-25T09:01:02.989Z",
+  "generatedAt": "2026-08-25T09:25:38.021Z",
   "yields": {
     "US10Y": 4.74,
     "US2Y": 4.24,
@@ -34,23 +34,23 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 876.1,
-    "gldWoWChange": 1.5,
-    "trend3W": "INFLOW"
+    "gldTonnes": 875.6,
+    "gldWoWChange": -0.5,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4626.17,
-    "XAGUSD": 67.8035,
-    "EURUSD": 1.16677,
-    "USDJPY": 159.342,
-    "USDCHF": 0.80279,
-    "USDCNH": 6.72225,
-    "GBPUSD": 1.3643,
-    "USDCAD": 1.38604,
-    "USDSEK": 9.50709,
-    "US500": 7682.5,
-    "GER40": 26263.35,
-    "UK100": 10868.45,
+    "XAUUSD": 4628.625,
+    "XAGUSD": 67.8335,
+    "EURUSD": 1.16691,
+    "USDJPY": 159.3305,
+    "USDCHF": 0.80266,
+    "USDCNH": 6.72065,
+    "GBPUSD": 1.36427,
+    "USDCAD": 1.38572,
+    "USDSEK": 9.49391,
+    "US500": 7683.9,
+    "GER40": 26271.25,
+    "UK100": 10864.95,
     "ADR_14day": 99.9,
     "ADR_usedToday": 78.6,
     "goldSilverRatio": 68.2
@@ -69,49 +69,49 @@
       "headline": "Treasury yields steady as traders await more economic data",
       "source": "CNBC",
       "publishedAt": "2026-08-25T07:48:57.000Z",
-      "hoursAgo": 1.2
+      "hoursAgo": 1.6
+    },
+    {
+      "headline": "Iran vows to retaliate after US widens sanctions - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-25T06:16:47.000Z",
+      "hoursAgo": 3.1
     },
     {
       "headline": "United States sanctions oil trader Wellbred over Iran links - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T03:40:00.000Z",
-      "hoursAgo": 5.3
+      "hoursAgo": 5.8
     },
     {
       "headline": "Dollar inches up as markets weigh Iran sanctions, Treasury buybacks - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T01:31:00.000Z",
-      "hoursAgo": 7.5
+      "hoursAgo": 7.9
     },
     {
-      "headline": "Oil extends fall as investors shrug off latest US sanctions on Iran - Reuters",
+      "headline": "Oil hits one-week low as investors shrug off latest US sanctions on Iran - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T01:16:00.000Z",
-      "hoursAgo": 7.7
-    },
-    {
-      "headline": "Iran vows to retaliate after US widens sanctions - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-25T00:57:00.000Z",
-      "hoursAgo": 8.1
+      "hoursAgo": 8.2
     },
     {
       "headline": "Bessent's D-Day sanctions are more Anzio, but Iran response is key - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T00:43:14.000Z",
-      "hoursAgo": 8.3
+      "hoursAgo": 8.7
     },
     {
       "headline": "TRADING DAY Tech, tariffs & Treasuries - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T21:13:38.000Z",
-      "hoursAgo": 11.8
+      "hoursAgo": 12.2
     },
     {
       "headline": "US Treasury to stick to debt auction schedule despite bigger buybacks, Bessent says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T19:43:43.000Z",
-      "hoursAgo": 13.3
+      "hoursAgo": 13.7
     }
   ],
   "briefing": null
