@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-25T17:23:34.674Z",
+  "generatedAt": "2026-08-25T18:25:23.711Z",
   "yields": {
     "US10Y": 4.74,
     "US2Y": 4.24,
@@ -34,23 +34,23 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 873.4,
-    "gldWoWChange": 0,
-    "trend3W": "FLAT"
+    "gldTonnes": 871.6,
+    "gldWoWChange": -1.8,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4640.43,
-    "XAGUSD": 68.743,
-    "EURUSD": 1.16703,
-    "USDJPY": 159.3065,
-    "USDCHF": 0.80251,
-    "USDCNH": 6.71814,
-    "GBPUSD": 1.3637,
-    "USDCAD": 1.38363,
-    "USDSEK": 9.47424,
-    "US500": 7670.4,
-    "GER40": 26252.25,
-    "UK100": 10890.95,
+    "XAUUSD": 4649.645,
+    "XAGUSD": 68.87,
+    "EURUSD": 1.1674,
+    "USDJPY": 159.2295,
+    "USDCHF": 0.80207,
+    "USDCNH": 6.71777,
+    "GBPUSD": 1.36447,
+    "USDCAD": 1.38318,
+    "USDSEK": 9.4685,
+    "US500": 7667.4,
+    "GER40": 26246.25,
+    "UK100": 10897.05,
     "ADR_14day": 99.9,
     "ADR_usedToday": 91.1,
     "goldSilverRatio": 67.5
@@ -69,49 +69,49 @@
       "headline": "Canada poised to retaliate against Trump tariffs: 'We're not waiting by the phone'",
       "source": "CNBC",
       "publishedAt": "2026-08-25T12:55:49.000Z",
-      "hoursAgo": 4.5
+      "hoursAgo": 5.5
     },
     {
       "headline": "What are the new US economic sanctions on Iran and its trade partners? - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T12:20:58.000Z",
-      "hoursAgo": 5
+      "hoursAgo": 6.1
     },
     {
       "headline": "European shares climb on softer-than-feared Iran sanctions, defence gains - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T09:24:01.000Z",
-      "hoursAgo": 8
+      "hoursAgo": 9
     },
     {
       "headline": "Iran war makes multibillion-dollar Tanzania LNG more attractive, Equinor says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T09:08:55.000Z",
-      "hoursAgo": 8.2
+      "hoursAgo": 9.3
     },
     {
       "headline": "United States sanctions oil trader Wellbred over Iran links - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T08:55:21.000Z",
-      "hoursAgo": 8.5
+      "hoursAgo": 9.5
     },
     {
       "headline": "Treasury yields steady as traders await more economic data",
       "source": "CNBC",
       "publishedAt": "2026-08-25T07:48:57.000Z",
-      "hoursAgo": 9.6
+      "hoursAgo": 10.6
     },
     {
       "headline": "Bessent's D-Day sanctions are more Anzio, but Iran response is key - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T03:19:48.000Z",
-      "hoursAgo": 14.1
+      "hoursAgo": 15.1
     },
     {
       "headline": "Gold retreats as upward momentum hits pause ahead of US inflation data - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T02:10:00.000Z",
-      "hoursAgo": 15.2
+      "hoursAgo": 16.3
     }
   ],
   "briefing": null
