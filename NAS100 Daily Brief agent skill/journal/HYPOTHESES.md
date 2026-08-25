@@ -233,6 +233,16 @@ Same strikes, same order. Gamma explodes as expiry approaches, so 0DTE already
 *dominates* the blended sum — separating it out would add chart lines without
 adding information. **Do not re-propose without new evidence.**
 
+**R3 — Session VWAP in the level board.** *Rejected 2026-08-25 by the trader.*
+Tested and it works — computable from bars already fetched, and 25 Aug's NY
+VWAP (29,185.4) landed within 2 points of the 0DTE call-gamma pivot (29,183.5),
+which is genuine cross-mechanism confluence. Not added: **it is already on the
+chart.** The brief's job is to supply what the chart cannot, and duplicating a
+line the platform draws natively is clutter, not enrichment.
+
+Keep this in mind when weighing future candidates: "is it material?" is only
+half the test — the other half is "is it already in front of him?"
+
 **R2 — Vanna and charm as chart levels.** *Rejected 2026-08-25 on design
 grounds.* Both are computable from the chain, and both are real forces (charm
 drives the end-of-day pin, vanna drives vol-crush rallies). But neither is a
