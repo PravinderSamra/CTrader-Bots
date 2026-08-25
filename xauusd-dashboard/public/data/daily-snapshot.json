@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-25T09:25:38.021Z",
+  "generatedAt": "2026-08-25T10:22:16.591Z",
   "yields": {
     "US10Y": 4.74,
     "US2Y": 4.24,
@@ -34,23 +34,23 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 875.6,
-    "gldWoWChange": -0.5,
-    "trend3W": "FLAT"
+    "gldTonnes": 873.7,
+    "gldWoWChange": -1.9,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4628.625,
-    "XAGUSD": 67.8335,
-    "EURUSD": 1.16691,
-    "USDJPY": 159.3305,
-    "USDCHF": 0.80266,
-    "USDCNH": 6.72065,
-    "GBPUSD": 1.36427,
-    "USDCAD": 1.38572,
-    "USDSEK": 9.49391,
-    "US500": 7683.9,
-    "GER40": 26271.25,
-    "UK100": 10864.95,
+    "XAUUSD": 4638.4,
+    "XAGUSD": 67.9655,
+    "EURUSD": 1.16625,
+    "USDJPY": 159.2965,
+    "USDCHF": 0.80286,
+    "USDCNH": 6.72032,
+    "GBPUSD": 1.3637,
+    "USDCAD": 1.38614,
+    "USDSEK": 9.49404,
+    "US500": 7691.6,
+    "GER40": 26344.25,
+    "UK100": 10871.15,
     "ADR_14day": 99.9,
     "ADR_usedToday": 78.6,
     "goldSilverRatio": 68.2
@@ -66,52 +66,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Iran war makes multibillion-dollar Tanzania LNG more attractive, Equinor says - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-25T09:08:55.000Z",
+      "hoursAgo": 1.2
+    },
+    {
+      "headline": "United States sanctions oil trader Wellbred over Iran links - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-25T08:55:21.000Z",
+      "hoursAgo": 1.4
+    },
+    {
       "headline": "Treasury yields steady as traders await more economic data",
       "source": "CNBC",
       "publishedAt": "2026-08-25T07:48:57.000Z",
-      "hoursAgo": 1.6
+      "hoursAgo": 2.6
     },
     {
       "headline": "Iran vows to retaliate after US widens sanctions - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T06:16:47.000Z",
-      "hoursAgo": 3.1
-    },
-    {
-      "headline": "United States sanctions oil trader Wellbred over Iran links - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-25T03:40:00.000Z",
-      "hoursAgo": 5.8
+      "hoursAgo": 4.1
     },
     {
       "headline": "Dollar inches up as markets weigh Iran sanctions, Treasury buybacks - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T01:31:00.000Z",
-      "hoursAgo": 7.9
+      "hoursAgo": 8.9
     },
     {
       "headline": "Oil hits one-week low as investors shrug off latest US sanctions on Iran - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T01:16:00.000Z",
-      "hoursAgo": 8.2
+      "hoursAgo": 9.1
     },
     {
       "headline": "Bessent's D-Day sanctions are more Anzio, but Iran response is key - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T00:43:14.000Z",
-      "hoursAgo": 8.7
+      "hoursAgo": 9.7
     },
     {
       "headline": "TRADING DAY Tech, tariffs & Treasuries - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T21:13:38.000Z",
-      "hoursAgo": 12.2
-    },
-    {
-      "headline": "US Treasury to stick to debt auction schedule despite bigger buybacks, Bessent says - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-24T19:43:43.000Z",
-      "hoursAgo": 13.7
+      "hoursAgo": 13.1
     }
   ],
   "briefing": null
