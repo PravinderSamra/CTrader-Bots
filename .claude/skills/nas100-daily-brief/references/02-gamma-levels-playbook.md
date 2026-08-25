@@ -155,6 +155,45 @@ day has two regimes.
 | `SPIKE_THEN_REVERT` | Sharp move that mean-reverts. Fade extremes back to the middle only |
 | `FRONT_FLAT_BACK_*` | Nothing pinning price today; the longer book sets the tone. Lower conviction |
 
+## Secondary walls — why one call wall and one put wall is not enough
+
+The headline walls come from `max(above, key=call_gex)` and
+`max(below, key=put_gex)`. That leaves a blind spot: **call gamma sitting BELOW
+spot**. It is not the call wall (that search only looks above spot) and it is
+not the put wall (that search only reads put gamma), so it cannot be published
+at all.
+
+It is not a rare case. Those are in-the-money calls, and dealers long gamma
+there **buy dips** — so the level behaves as *support*. On 2026-08-25 the
+heaviest concentration anywhere near price was exactly this: **1.29bn across
+43,299 contracts**, and price pivoted on it all afternoon while the board said
+nothing about it.
+
+The brief now prints an **Other gamma concentrations in range** block beneath
+the level board. Each strike is ranked by whichever side actually dominates it,
+labelled with what that implies, and de-duplicated against the main board.
+
+Read the `what it does` column carefully — the sign convention is not intuitive:
+
+| Where | Dominant | Behaviour |
+|---|---|---|
+| Below spot | CALL | **Support.** ITM calls, dealers buy dips into it |
+| Below spot | PUT | Floor, while we remain in long gamma |
+| Above spot | CALL | Resistance. Dealers sell into it, rallies stall |
+| Above spot | PUT | OTM puts — thin, expect little reaction |
+
+**Window:** ±0.75 × ADR14, deliberately *not* the range budget. The budget
+forecasts how much further the RANGE can grow; these are levels price can still
+REACH inside the range. On an exhausted day those are different questions, and
+the second one is the one that has trades in it.
+
+**A gamma wall is not a liquidity level.** It has no resting stops, so it is not
+a Strategy-1 sweep trigger — its force is continuous dealer hedging, i.e.
+absorption rather than a discrete break. Use liquidity (session highs/lows,
+equal highs/lows, PDH/PDL) as the **sweep**, and a wall as the **reclaim
+confirmation**. Sweeping into a wall and reclaiming it is a strong long; buying
+a first touch of one is not.
+
 ## Honest limits
 - CBOE data is ~15 minutes delayed. This is a map, not a live feed.
 - Dealer positioning is *assumed* (long calls / short puts), not observed.

@@ -67,11 +67,34 @@ Regardless of state:
 5. Approaching a **negative** shelf with the trade → it accelerates. Give it room.
 6. High-impact print inside 15 minutes → flatten or hard-stop to BE.
 
+## `SESSION_PENDING` — no fuel read yet
+
+Between roughly 21:00 and 22:00 UTC the feed goes quiet for the daily rollover,
+so a scan there finds **zero bars** for the trading day that has just begun.
+
+The fuel state is then `SESSION_PENDING`: budget = the full ADR14, and the brief
+says in words that there is no fuel read. **Unknown is not the same as
+exhausted.** Manage off structure alone and re-run after the open.
+
+This replaced a real defect (D1, fixed 2026-08-25): the code used to fall back
+to the last completed *daily* bar and serve the **previous** day's finished
+range as today's. On 2026-08-24 at 21:56Z it published *"range 530.9, 117.7%
+used, EXHAUSTED, 0.0 budget"* 56 minutes into a session that went on to build a
+397-point range — telling the reader to fade extremes that did not exist yet.
+Any archived scan carrying that signature is quarantined from the evidence
+statistics rather than graded.
+
 ## Known open question
 Whether the budget under-estimates range EXTENSION early in the session. On
 2026-08-24 the London scans published 88.7 against 168.5 of actual extension
 (~1.9x), while the exhausted-point scan was essentially exact (0.0 vs 5.3).
-One session. Do not recalibrate on it.
+On 2026-08-25 the pre-NY scan published 12.0 against **0.4** of actual
+extension — the first over-read on record, and it arrived late in the range's
+life, which is consistent with the claim that the error is an early-session one.
+The exhausted-point forecast is now accurate two sessions running (0.0 vs 5.3,
+then 12.0 vs 0.4).
+
+Two sessions. Still do not recalibrate on it — the threshold is three.
 
 A previously-recorded data point from 2026-08-20 has been **withdrawn**: it came
 from a backdated journal entry created to test the review loop, not from a real

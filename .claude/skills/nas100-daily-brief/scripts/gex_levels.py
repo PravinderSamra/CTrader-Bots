@@ -198,6 +198,26 @@ def build(cfd_price, max_dte=45):
                  "net_gex_$bn": round(p["net_gex"] / 1e9, 3),
                  "sign": "+" if p["net_gex"] > 0 else "-"}
                 for p in sorted(pack, key=lambda p: -abs(p["net_gex"]))[:10]],
+            # The board publishes ONE call wall and ONE put wall, and that
+            # hides real structure. On 2026-08-25 the heaviest gamma
+            # concentration within 280pts of spot — 0.94bn across 31.6k
+            # contracts at 29183.5 — was neither, so it never reached the
+            # reader even though price pivoted on it all afternoon.
+            #
+            # Note it was CALL gamma sitting BELOW spot (in-the-money calls,
+            # dealers buying dips). `put_wall` takes max(below, key=put_gex)
+            # and so cannot see it at all. Rank each strike by whichever side
+            # actually dominates it, and carry that label.
+            "walls_ranked": {
+                side: [{"nas100": cfd(p["strike"]),
+                        "dominant": "CALL" if p["call_gex"] >= p["put_gex"] else "PUT",
+                        "gex_$bn": round(max(p["call_gex"], p["put_gex"]) / 1e9, 3),
+                        "oi": int(p["call_oi"] if p["call_gex"] >= p["put_gex"]
+                                  else p["put_oi"])}
+                       for p in sorted(grp,
+                                       key=lambda p: -max(p["call_gex"], p["put_gex"]))[:6]]
+                for side, grp in (("above", above), ("below", below))
+            },
         }
 
     board["gamma_flip"] = {"ndx": round(flip, 1) if flip else None,

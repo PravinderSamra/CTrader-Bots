@@ -270,6 +270,14 @@ def level_board(d):
 # movement and so read as "nothing will happen", which was actively misleading
 # on the day it mattered most.
 _FUEL_MEANING = {
+    "SESSION_PENDING": (
+        "**The new trading day has not opened yet** — the feed is quiet across "
+        "the 21:00 UTC rollover, so there is no range to measure and no fuel "
+        "read. Treat the full ADR as available and re-scan once the session "
+        "has ticks. This is *unknown*, not *exhausted*: the previous day's "
+        "range tells you nothing about this one.",
+        "no fuel-based stop guidance until the session opens \u2014 size and manage "
+        "off structure alone, and re-run the brief after the open."),
     "ROOM_TO_EXPAND": (
         "The range can still grow. New highs/lows are live — breakouts and "
         "continuation have somewhere to go.",
@@ -393,7 +401,74 @@ def markdown_levels_only(d):
     if far:
         A("\n_Beyond today's range (context only, don't mark): "
           + " \u00b7 ".join(f"{r['level']:.0f} {r['name']}" for r in far[:6]) + "_")
+    sw = secondary_walls_md(d, board)
+    if sw:
+        A("")
+        for line in sw:
+            A(line)
     return "\n".join(o)
+
+
+def secondary_walls(d, board):
+    """Gamma concentrations that are NOT the single call/put wall.
+
+    The board names one call wall and one put wall. Those two fields are
+    `max(above, key=call_gex)` and `max(below, key=put_gex)`, which means a
+    heavy strike that is neither cannot appear at all — and on 2026-08-25 the
+    largest concentration within 280pts of spot was exactly that: 1.29bn of
+    CALL gamma sitting BELOW spot (in-the-money calls, dealers buying dips).
+    Price pivoted on it for the whole afternoon and it was never published.
+
+    Windowed on ADR, not on the range budget. The budget forecasts how much
+    further the RANGE can grow; these are levels price can still REACH inside
+    the range, which is a different question and the one that matters when
+    fuel is exhausted but price is still travelling 250pts.
+    """
+    gx, px = d["gex"], d["levels"]["price"]
+    adr = d["levels"]["fuel"].get("adr14") or 0
+    wk = gx["buckets"].get("this_week", {})
+    ranked = wk.get("walls_ranked") or {}
+    if not ranked:
+        return []
+    window = adr * 0.75 or 250.0
+    on_board = [r["level"] for r in board]
+    tol = max(6.0, adr * 0.015)
+    out = []
+    for side in ("above", "below"):
+        for w in ranked.get(side, []):
+            lvl = w["nas100"]
+            if abs(lvl - px) > window:
+                continue
+            if any(abs(lvl - b) <= tol for b in on_board):
+                continue          # already published, don't print it twice
+            out.append({**w, "dist": round(lvl - px, 1), "side": side})
+    out.sort(key=lambda w: -w["gex_$bn"])
+    return out[:6]
+
+
+def secondary_walls_md(d, board):
+    rows = secondary_walls(d, board)
+    if not rows:
+        return []
+    o = ["**Other gamma concentrations in range** — secondary walls behind the "
+         "headline call/put wall. Mark them: they are where price stalls and "
+         "pivots intraday even on a day whose range is already finished.\n",
+         "| NAS100 | dist | force | contracts | what it does |",
+         "|---|---|---|---|---|"]
+    for w in rows:
+        if w["dominant"] == "CALL" and w["side"] == "below":
+            what = ("in-the-money call gamma — dealers BUY dips into it, so it "
+                    "acts as **support**, not resistance")
+        elif w["dominant"] == "CALL":
+            what = "call gamma overhead — dealers SELL into it, so rallies stall here"
+        elif w["side"] == "below":
+            what = "put gamma below — a genuine floor while we stay in long gamma"
+        else:
+            what = ("out-of-the-money put gamma above spot — thin, expect little "
+                    "reaction")
+        o.append(f"| **{w['nas100']:.1f}** | {w['dist']:+.0f} | {w['gex_$bn']:.2f}bn | "
+                 f"{w['oi']:,} | {what} |")
+    return o
 
 
 def markdown(d):
@@ -612,6 +687,10 @@ def markdown(d):
     if far:
         A("_Beyond today's range (context only, don't mark): "
           + " · ".join(f"{r['level']:.0f} {r['name']}" for r in far[:6]) + "_\n")
+
+    for line in secondary_walls_md(d, board):
+        A(line)
+    A("")
 
     A("## 5. Events\n")
     up = mc["calendar"].get("upcoming_next_24h") or []

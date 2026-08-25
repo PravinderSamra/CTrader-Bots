@@ -12,7 +12,7 @@ enough of them to act on — not to react to the most recent session.
 """
 import glob, json, os, sys
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import journal, review_day as R
 
@@ -35,11 +35,31 @@ def _dedupe(scans, window_min=15):
     return out
 
 
+def _rollover_corrupt(scan_utc, used_pct, window_min=90):
+    """Was this scan's fuel measured across the 21:00 UTC day rollover?
+
+    levels_fuel now reports SESSION_PENDING for this case, but entries written
+    before that fix carry the previous day's finished range stamped as the new
+    day's. Signature: the scan lands within `window_min` of the roll AND
+    already claims >100% of ADR consumed. A real session cannot burn a full
+    average day's range in its first 90 minutes; a genuine >100% reading later
+    in the day is ordinary and must NOT be filtered (2026-08-24 13:45 was
+    exactly that, and it is the cleanest H1 observation on record).
+    """
+    if (used_pct or 0) <= 100:
+        return False
+    t = datetime.fromisoformat(scan_utc)
+    roll = t.replace(hour=21, minute=0, second=0, microsecond=0)
+    if t.hour < 21:
+        roll -= timedelta(days=1)
+    return (t - roll).total_seconds() / 60 < window_min
+
+
 def collect(root=None):
     root = root or journal.JOURNAL_ROOT
     days = sorted(d for d in os.listdir(root)
                   if os.path.isdir(os.path.join(root, d)))
-    rows, per_day = [], {}
+    rows, per_day, excluded = [], {}, []
     for day in days:
         scans = [s for s in journal.load_day(day, root) if s.get("is_trading_day")]
         if not scans:
@@ -60,6 +80,19 @@ def collect(root=None):
             if sc["scan_utc"] not in kept:
                 continue
             a, p = sc["actual_after_scan"], sc["predicted"]
+            # A scan taken across the 21:00 UTC rollover had no bars for the
+            # new day, so its fuel figures described YESTERDAY's finished
+            # range (levels_fuel now reports SESSION_PENDING instead). Such a
+            # scan's budget is not a forecast that failed, it is a corrupt
+            # input: 2026-08-24 21:56Z carried a 371pt "error" that on its own
+            # dragged H1's mean from 46.6 to 100.7. Grading it would
+            # manufacture a conclusion out of a bug — exactly what W1/W2 were
+            # withdrawn for. Record it, exclude it from the statistics.
+            if p.get("fuel_state") == "SESSION_PENDING" or \
+                    _rollover_corrupt(sc["scan_utc"], p.get("adr_used_pct")):
+                excluded.append({"day": day, "time": sc["scan_utc"][11:16],
+                                 "why": "fuel measured across the day rollover"})
+                continue
             rows.append({
                 "day": day, "time": sc["scan_utc"][11:16], "session": sc["session"],
                 "budget": p["budget"], "extension": a["range_extension"],
@@ -68,7 +101,7 @@ def collect(root=None):
                 "hit_rate": sc["level_hit_rate"],
             })
         per_day[day] = rev["actual_session"]
-    return rows, per_day
+    return rows, per_day, excluded
 
 
 def summarise(rows):
@@ -112,10 +145,11 @@ def summarise(rows):
 
 
 if __name__ == "__main__":
-    rows, per_day = collect()
+    rows, per_day, excluded = collect()
     s = summarise(rows)
     if "--json" in sys.argv:
-        print(json.dumps({"rows": rows, "days": per_day, "summary": s},
+        print(json.dumps({"rows": rows, "days": per_day, "summary": s,
+                          "excluded": excluded},
                          indent=2, default=str)); sys.exit(0)
     print(f"EVIDENCE TO DATE — {s['trading_days']} trading day(s), "
           f"{s['scans']} scans (deduped)")
@@ -136,6 +170,10 @@ if __name__ == "__main__":
     d = s["direction"]
     print(f"direction: {d['correct']} right / {d['wrong']} wrong / "
           f"{d['no_call']} no-call   levels touched {s['mean_level_hit_rate']}")
+    if excluded:
+        print("\nEXCLUDED from the statistics (corrupt input, not a failed forecast):")
+        for x in excluded:
+            print(f"  {x['day']} {x['time']}  {x['why']}")
     if s["H2_exhausted_scans"]:
         print("\nH2 — low-fuel / exhausted scans (does fading beat continuation?):")
         for x in s["H2_exhausted_scans"]:

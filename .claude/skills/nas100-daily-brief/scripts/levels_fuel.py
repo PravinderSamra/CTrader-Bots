@@ -174,15 +174,28 @@ def run(days_intraday=6, days_daily=40):
     rng = [b["high"] - b["low"] for b in d1[-15:-1]]
     adr14 = sum(rng) / len(rng) if rng else 0
     today_bars = [b for b in m5 if trading_day(b["time"]) == today]
-    if today_bars:
+    # The feed goes quiet across the 21:00 UTC daily rollover, so a scan in
+    # that window finds ZERO bars for the trading day that has just begun.
+    # The old code fell back to the last completed daily bar — i.e. it served
+    # YESTERDAY's finished range as if it were today's. On 2026-08-24 21:56Z
+    # that printed "range 530.9, 117.7% used, EXHAUSTED, 0.0 budget" 56
+    # minutes into a session that went on to build a 397pt range, telling the
+    # reader the day was over before it had started. A range that does not
+    # exist yet is unknowable, not exhausted: say so.
+    MIN_SESSION_BARS = 3
+    if len(today_bars) >= MIN_SESSION_BARS:
         t_hi = max(b["high"] for b in today_bars); t_lo = min(b["low"] for b in today_bars)
+        today_range = t_hi - t_lo
+        used = (today_range / adr14 * 100) if adr14 else 0
+        remaining = max(0.0, adr14 - today_range)
+        state = ("ROOM_TO_EXPAND" if used <= 40 else "MODERATE" if used <= 70
+                 else "LOW_FUEL" if used <= 90 else "EXHAUSTED")
     else:
-        t_hi, t_lo = cur["high"], cur["low"]
-    today_range = t_hi - t_lo
-    used = (today_range / adr14 * 100) if adr14 else 0
-    remaining = max(0.0, adr14 - today_range)
-    state = ("ROOM_TO_EXPAND" if used <= 40 else "MODERATE" if used <= 70
-             else "LOW_FUEL" if used <= 90 else "EXHAUSTED")
+        t_hi = t_lo = price
+        today_range = 0.0
+        used = 0.0
+        remaining = adr14
+        state = "SESSION_PENDING"
 
     # volume state on the execution TF
     vols = [b["volume"] for b in m5[-120:]]

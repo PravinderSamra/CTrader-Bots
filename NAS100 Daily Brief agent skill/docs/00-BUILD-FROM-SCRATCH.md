@@ -632,6 +632,23 @@ and exclude any it finds.
 
 ---
 
+# 8a. Secondary walls
+
+The level board publishes one call wall and one put wall, from
+`max(above, key=call_gex)` and `max(below, key=put_gex)`. Those two searches
+between them cannot see **call gamma below spot** — in-the-money calls, where
+dealers long gamma buy dips and the level behaves as *support*.
+
+On 2026-08-25 that blind spot hid the heaviest concentration anywhere near
+price: 1.29bn across 43,299 contracts, the level price pivoted on all afternoon.
+
+`gex_levels.bucket()` now emits `walls_ranked` — the top six strikes each side,
+each ranked by whichever side actually dominates it and labelled with that side.
+`brief.secondary_walls()` windows them at **±0.75 × ADR14** (not the range
+budget: the budget forecasts range *extension*, these are levels price can
+*reach* inside the range), drops any already on the main board, and renders the
+top six.
+
 # 8b. Reliability notes
 
 **The NDX cash index does not print outside US cash hours, and says so nowhere.**
@@ -696,6 +713,58 @@ produces no brief at all, so the retry is now bounded with backoff (3 attempts,
 before the wall-strength change still contain the old `[MAJOR]`/`[MODERATE]`
 labels. That is correct: a journal records what was said at the time, and
 rewriting history would corrupt every statistic Phase 4 draws from it.
+
+# 8c. The day-rollover defect (D1) — and why the review loop paid for itself
+
+Found 2026-08-25, during the end-of-day review. It is worth writing up in full
+because it is the clearest example of what this whole review apparatus is for.
+
+**Symptom.** A scan at 21:56 UTC published:
+
+    range 530.9 · 117.7% of ADR used · EXHAUSTED · 0.0pts budget
+
+…**56 minutes into a trading day that went on to build a 397-point range.**
+
+**Cause.** The broker feed goes quiet across the 21:00 UTC daily roll, so
+`today_bars` came back empty. The code had:
+
+```python
+if today_bars:
+    t_hi = max(...); t_lo = min(...)
+else:
+    t_hi, t_lo = cur["high"], cur["low"]      # <-- last completed DAILY bar
+```
+
+That `else` silently substituted **yesterday's finished range** for today's, and
+then every downstream figure — used%, budget, state — was computed from it and
+presented with full confidence. The brief told the reader the day was over
+before it had started, and advised fading extremes that did not yet exist.
+
+**Fix.** A range that does not exist yet is *unknowable*, not *exhausted*. New
+`SESSION_PENDING` state, full ADR as budget, and prose in the brief saying there
+is no fuel read. Verified live on the next rollover.
+
+**Three lessons, in order of importance:**
+
+1. **A silent fallback is worse than an error.** Every other failure in this
+   project announced itself. This one produced a plausible, well-formatted,
+   completely wrong number — the most dangerous kind of output a decision tool
+   can emit.
+2. **A bug is not a hypothesis.** The 3-session rule governs changes to *model
+   behaviour*. A day-boundary mismatch is a correctness defect and gets fixed
+   immediately. Confusing the two would either freeze real bugs behind an
+   evidence threshold, or let calibration changes sneak through labelled
+   "fixes".
+3. **Grading a corrupt input manufactures false conclusions.** The bad scan
+   carried a 371pt "forecast error" that on its own dragged H1's mean from
+   **46.6 to 100.7pts** — it was about to invent a systematic model bias out of
+   a bug. This is the same failure class as W1 and W2 in `HYPOTHESES.md`, caught
+   this time before it reached a conclusion. `track.py` now quarantines such
+   scans into a visible EXCLUDED block rather than dropping them silently.
+
+The generalisation, now the project's standing rule:
+
+> **Before concluding a forecast failed, confirm its inputs were real.**
 
 # 9. Honest limitations
 

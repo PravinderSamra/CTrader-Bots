@@ -144,7 +144,12 @@ def review(day, root=None):
             "scan_utc": sc["scan_utc"], "session": sc["session_window"],
             "predicted": {"bias": pr["bias_label"], "score": pr["bias_score"],
                           "direction": exp, "shape": pr["expiry_shape"],
-                          "fuel_state": pr["fuel_state"], "budget": budget},
+                          "fuel_state": pr["fuel_state"], "budget": budget,
+                          # Carried through so track.py can spot a scan whose
+                          # fuel was measured across the 21:00 UTC rollover:
+                          # >100% "used" before the session has bars means the
+                          # figure describes the PREVIOUS day's finished range.
+                          "adr_used_pct": pr.get("adr_used_pct")},
             "actual_after_scan": {"move": move, "direction": dir_after,
                                   "range_at_scan": range_at_scan,
                                   "range_extension": extension,
