@@ -450,6 +450,77 @@
         "adrUsedPct": 44
       },
       "outcome": null
+    },
+    {
+      "at": "2026-08-25T13:41:16.581Z",
+      "londonTime": "14:41 BST",
+      "mode": "POST_ORB",
+      "price": 10826.95,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — The obvious draw (PDH 10861.4) sits beyond what's left of a typical day's range — targets past it are stretch-only today.",
+      "signals": [
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDH 10861.4) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is diverging from a united European tape — it's trading its own story today; tape-based confirmation is unreliable."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 100th percentile of its 20-day range and still rising — a persistent FX headwind capping upside breaks (weak GBP is what lifts FTSE)."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures +0.33% — the 14:30 US handoff argues for holding longs into the US open."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "INFO",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "US PCE Price Index prints tomorrow 13:30 BST — late-session moves today are as likely pre-event de-risking as conviction."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 0,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10887,
+        "orbLow": 10857.3,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10887,
+        "overnightLow": 10849.2,
+        "priorDayHigh": 10861.4,
+        "priorDayLow": 10792.7,
+        "gapPct": -0.24,
+        "adr14": 85.7,
+        "adrUsedPct": 66
+      },
+      "outcome": null
     }
   ]
 }
