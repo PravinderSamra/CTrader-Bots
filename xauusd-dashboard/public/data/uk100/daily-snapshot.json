@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-08-25T13:41:16.420Z",
+  "generatedAt": "2026-08-25T14:35:49.672Z",
   "prices": {
-    "UK100": 10826.95,
-    "GBPUSD": 1.36429,
-    "GBPEUR": 1.16888,
-    "US500": 7684.8,
-    "NAS100": 29296.95,
-    "BRENT": 89.858,
-    "COPPER": 6.7139,
-    "VIX": 16.125,
-    "USDX": 98.977,
-    "XAUUSD": 4619.11,
-    "UK100_dayPct": -0.24
+    "UK100": 10880.95,
+    "GBPUSD": 1.36343,
+    "GBPEUR": 1.16835,
+    "US500": 7664,
+    "NAS100": 29146.95,
+    "BRENT": 90.268,
+    "COPPER": 6.7455,
+    "VIX": 16.175,
+    "USDX": 98.982,
+    "XAUUSD": 4632.02,
+    "UK100_dayPct": 0.26
   },
   "fx": {
-    "gbpUsdDayPct": 0.1,
+    "gbpUsdDayPct": 0.03,
     "gbpUsd20dPercentile": 100,
     "sterlingEri": 86.0075,
     "sterlingEriDayChange": 0.11,
@@ -36,26 +36,26 @@
     "daysToMpc": 23
   },
   "usLinkage": {
-    "us500DayPct": 0.33,
-    "nas100DayPct": 0.85,
-    "vix": 16.125,
+    "us500DayPct": 0.06,
+    "nas100DayPct": 0.33,
+    "vix": 16.175,
     "vixRegime": "NORMAL",
     "us10y": 4.74,
-    "usdx": 98.977
+    "usdx": 98.982
   },
   "commodities": {
-    "brentDayPct": -2.74,
-    "copperDayPct": 0.21,
-    "goldDayPct": -0.7,
+    "brentDayPct": -2.29,
+    "copperDayPct": 0.69,
+    "goldDayPct": -0.42,
     "brent20dTrend": "UP"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": 0.07,
-    "dax40DayPct": 0.6,
-    "eurUsdDayPct": 0.07,
-    "ftseDaxCorr20d": 0.5,
-    "ftseSx5eCorr20d": 0.61,
-    "tapeAgreement": "DIVERGING",
+    "eurostoxx50DayPct": 0.16,
+    "dax40DayPct": 0.75,
+    "eurUsdDayPct": 0.05,
+    "ftseDaxCorr20d": 0.54,
+    "ftseSx5eCorr20d": 0.6,
+    "tapeAgreement": "ALIGNED",
     "preOpenLead": "NONE"
   },
   "positioning": {
@@ -69,14 +69,14 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent -2.74%",
+      "driver": "Brent -2.29%",
       "read": "BEARISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper +0.21%",
+      "driver": "Copper +0.69%",
       "read": "NEUTRAL",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
@@ -117,37 +117,31 @@
       "headline": "Canada poised to retaliate against Trump tariffs: 'We're not waiting by the phone'",
       "source": "CNBC",
       "url": "https://www.cnbc.com/2026/08/25/canada-trump-tariffs-trade-carney-leblanc.html",
-      "hoursAgo": 0.8
+      "hoursAgo": 1.7
     },
     {
       "headline": "TRADING DAY Tech, tariffs & Treasuries - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxQUmpoclpIbHRCNUVXQ0IyQ1ZQbDJoR0VQQ0JuN2k4YVJuekdBQ05YcHI5WnVtc0JNSzN6MDhFSzRSS2dvbWRzUnFxSEJ5TURVVEFuc3Vha0sxdGhSbUZ6TllJSkU0c0JrMFFOb2dsN3VLRTItYnE4MVNVWVJQR3o3alhlSFAzVXNla1pBcXNnTnNwencyLWtpRmJteWVFYnJtS0IzbzZR?oc=5",
-      "hoursAgo": 16.5
+      "hoursAgo": 17.4
     },
     {
       "headline": "Miners support FTSE 100 as investors eye key events - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxOQmFRSzdpUDVPMG05aVJCZWFGYVQ3R3BUWExjYXlxV041eUpYd09hdDFhR2lBeFRnTzhtbnRRZEhWYU1PTG9fc210bG5fOXBTQzZ3Q2UtcXI4Yi16bjN4UzNEbmczVVFlNzRMcEJrWTFMLTdFTzc3d1Q1NkxBZzRsMjVkOHYyaER3X0dKQURpZU41M19vbFdwb2lR?oc=5",
-      "hoursAgo": 21.5
+      "hoursAgo": 22.4
     },
     {
       "headline": "US eyes China overcapacity tariffs of 7.5% before Xi-Trump talks, Bloomberg News reports - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxONVZLUTRjNDFCbG9qX21DUWdHYkNMb3hzYXREb3BhX0lXNGF6MEdxNExNZ1hqYkRxRWU3OUdGY3hKRHdnYm9YOEZkOVRhSnp4bG52bUtWSU10NjQyQTE3Z1ZFRlVRelBSMF9vTGswcTFJRDMzQnkwVGlpeThzeGRlZ3FSd1IwNlBmOVNWeERLaHQtWWZiazQ3OTJyaXJGQmpVb2FKN2RjTlNseDBoNXRrUFJrRnc2MWdoQUhwcnpiQQ?oc=5",
-      "hoursAgo": 21.6
+      "hoursAgo": 22.5
     },
     {
       "headline": "Oil stocks in US Strategic Petroleum Reserve fall by 3.7 million barrels to lowest level since 1982 - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNcmhLSVR1RUVwZXFYcHJIUFNac0RwMjNmLVJDaFpqWm9MdER5TnFWZnBIWHFUQkdZRlJCaXpNVHBxeUdwZUpCVjUxc3F4Y3VxVVF4eGpveG1jeDlyRjBuNDZENEk3cGFrRk84cVJHQlJ1U3J2enNVclM4eHoyMWdxcEpvVkpCQUNMV1BzVG92RFdRTC0waHV5YTU5TXU2UUoyVHdHZXhTalNFeE9fMG13a2M1Z3JFX1k4V05EZHMzUm5faHdYbEE?oc=5",
-      "hoursAgo": 22.2
-    },
-    {
-      "headline": "Trump says U.S. will hike Canada auto tariffs to 50% as trade war escalates",
-      "source": "CNBC",
-      "url": "https://www.cnbc.com/2026/08/24/trump-canada-auto-tariffs-trade-war.html",
-      "hoursAgo": 23.7
+      "hoursAgo": 23.1
     }
   ],
   "riskTone": null,
@@ -160,31 +154,31 @@
         "name": "GBP",
         "weight": 3,
         "impact": "NEUTRAL",
-        "detail": "GBP/USD +0.1% → FTSE headwind (sign-flipped)"
+        "detail": "GBP/USD +0.03% → FTSE headwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
-        "impact": "BULLISH",
-        "detail": "US500 +0.33% today"
+        "impact": "NEUTRAL",
+        "detail": "US500 +0.06% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 16.125 — NORMAL regime"
+        "detail": "VIX 16.175 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
         "impact": "BEARISH",
-        "detail": "Brent -2.74% (energy majors)"
+        "detail": "Brent -2.29% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
-        "impact": "NEUTRAL",
-        "detail": "Copper +0.21% (miners/China)"
+        "impact": "BULLISH",
+        "detail": "Copper +0.69% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -206,15 +200,15 @@
       },
       {
         "name": "European tape (SX5E/DAX)",
-        "weight": 2.22,
+        "weight": 1,
         "impact": "BULLISH",
-        "detail": "SX5E +0.07% / DAX +0.6%"
+        "detail": "SX5E +0.16% / DAX +0.75%"
       }
     ],
     "eventSuppressed": false
   },
   "orbContext": {
-    "computedAt": "2026-08-25T13:41:16.419Z",
+    "computedAt": "2026-08-25T14:35:49.671Z",
     "mode": "POST_ORB",
     "cashOpenLondon": "08:00 BST",
     "overnightHigh": 10887,
@@ -224,41 +218,34 @@
     "priorClose": 10852.9,
     "prevWeekHigh": 10825.9,
     "prevWeekLow": 10673.9,
-    "gapPts": -25.9,
-    "gapPct": -0.24,
+    "gapPts": 28.1,
+    "gapPct": 0.26,
     "orbHigh": 10887,
     "orbLow": 10857.3,
     "orbBrokenDirection": "DOWN",
     "eventWindows": [],
     "adr14": 85.7,
-    "adrUsedPct": 66,
+    "adrUsedPct": 76,
     "expansionState": {
       "label": "NORMAL",
-      "rangeSoFarPct": 66,
-      "expectedRangePctByNow": 91,
-      "rangeVsTypical": 0.73,
-      "expectedVolPctByNow": 79,
-      "moveMostlyDone": false,
-      "note": "Range 66% of ADR vs ~91% typical by 14:00 BST (about the typical pace). only ~79% of volume typically done by now — an afternoon expansion is still possible."
+      "rangeSoFarPct": 76,
+      "expectedRangePctByNow": 96,
+      "rangeVsTypical": 0.79,
+      "expectedVolPctByNow": 92,
+      "moveMostlyDone": true,
+      "note": "Range 76% of ADR vs ~96% typical by 15:00 BST (about the typical pace). ~92% of a typical day's volume already done — expect a rangebound remainder, tighten targets."
     }
   },
   "orbIntel": {
     "stance": "BREAKOUTS_SUSPECT",
-    "stanceLine": "Breakouts suspect in both directions today — The obvious draw (PDH 10861.4) sits beyond what's left of a typical day's range — targets past it are stretch-only today.",
+    "stanceLine": "Breakouts suspect in both directions today — 76% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
     "signals": [
-      {
-        "direction": "NEUTRAL",
-        "severity": "CAUTION",
-        "source": "RANGE",
-        "rule": "R7",
-        "text": "The obvious draw (PDH 10861.4) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
-      },
       {
         "direction": "BREAKOUT_SUSPECT",
         "severity": "CAUTION",
-        "source": "TAPE",
-        "rule": "R8",
-        "text": "FTSE is diverging from a united European tape — it's trading its own story today; tape-based confirmation is unreliable."
+        "source": "RANGE",
+        "rule": "R4",
+        "text": "76% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
       },
       {
         "direction": "BREAKOUT_SUSPECT",
@@ -271,8 +258,8 @@
         "direction": "FAVOURS_LONG",
         "severity": "INFO",
         "source": "TAPE",
-        "rule": "R9",
-        "text": "Past 13:30 with US futures +0.33% — the 14:30 US handoff argues for holding longs into the US open."
+        "rule": "R8",
+        "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.16%) — the cross-market lean is up."
       },
       {
         "direction": "NEUTRAL",
