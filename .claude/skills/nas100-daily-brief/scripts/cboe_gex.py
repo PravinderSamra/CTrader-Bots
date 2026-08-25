@@ -80,6 +80,10 @@ def load_chain(ticker="_NDX", max_dte=90, min_oi=1):
             "exp": exp, "dte": dte, "cp": cp, "strike": k, "oi": float(oi),
             "vol": float(o.get("volume") or 0), "gamma": float(o.get("gamma") or 0),
             "delta": float(o.get("delta") or 0), "iv": float(o.get("iv") or 0),
+            # Kept for the ATM-straddle expected move. The straddle is the
+            # market's own price for the next session's move, which is a
+            # sharper number than scaling a 30-day vol index down to one day.
+            "bid": float(o.get("bid") or 0), "ask": float(o.get("ask") or 0),
         })
     return rows, asof, raw["data"].get("close")
 

@@ -9,7 +9,7 @@ Run `python3 track.py` (in the skill's `scripts/`) to regenerate the evidence
 table. Append observations below; do not rewrite history.
 
 **Status:** 2 trading days on record (2026-08-24, 2026-08-25). Nothing is
-actionable — the threshold is 3.
+actionable — the threshold is 3. H8 is newly opened and needs 10.
 
 ---
 
@@ -182,6 +182,63 @@ measure the drift.
 fix is to *widen the confidence band* on overnight regime calls, or suppress the
 gamma component before the cash open — not to change the flip maths, which is
 sound.
+
+---
+
+## H8 — Is the ATM-straddle expected move a useful boundary?
+
+**Claim.** The ±EM band from the nearest-expiry ATM straddle marks where price
+is likely to *close*, and is a better forecast than the VXN-derived daily range
+the brief already prints.
+
+**Why it matters.** It is the only forward-looking, market-priced range measure
+in the brief. Everything else (ADR, fuel budget) is derived from realised
+history.
+
+**Cannot be backtested.** CBOE serves a live snapshot only — there is no
+historical straddle price to test against. So this goes in as observation-only
+and must be tracked forward.
+
+**First observation (25 Aug, for the 26 Aug session).** Straddle 191pts → EM
+**±162** → band **29,065 .. 29,390**. ATM IV 15.5%. Record tomorrow's close
+against it.
+
+**The trap to avoid.** EM prices a **close-to-close** move; ADR measures a
+**high-low** range, which is always larger. Reading "EM 162 vs ADR 399" as "the
+market expects a quiet day" is the same category error as reading the range
+budget as price travel. The brief says so in words at the point of use.
+
+**Threshold.** 10+ sessions (a 68% claim needs a distribution, not a handful).
+Record: did the close land inside the band? Did price trade outside it intraday?
+
+**Status: OBSERVING.**
+
+---
+
+## Rejected after testing (recorded so they are not re-proposed)
+
+**R1 — Separate 0DTE-only gamma walls.** *Tested and rejected 2026-08-25.*
+Hypothesis: since 0DTE carried 5,582,029 contracts of volume against 650,147 on
+the next expiry, its walls should be published separately from the blended
+this-week bucket. Measured on the live chain, the two rankings are nearly
+identical:
+
+| | 0DTE only | blended dte 0-3 |
+|---|---|---|
+| 1st | 29,233.5 CALL 2.52bn | 29,233.5 CALL 2.80bn |
+| 2nd | 29,183.5 CALL 0.87bn | 29,183.5 CALL 1.08bn |
+| 3rd | 29,283.5 CALL 0.86bn | 29,283.5 CALL 0.99bn |
+
+Same strikes, same order. Gamma explodes as expiry approaches, so 0DTE already
+*dominates* the blended sum — separating it out would add chart lines without
+adding information. **Do not re-propose without new evidence.**
+
+**R2 — Vanna and charm as chart levels.** *Rejected 2026-08-25 on design
+grounds.* Both are computable from the chain, and both are real forces (charm
+drives the end-of-day pin, vanna drives vol-crush rallies). But neither is a
+*price level* — they are flows that vary continuously with spot and vol. There
+is nothing to draw. If they earn a place later it is as a one-line regime flag
+in the bias engine, never as a marking.
 
 ---
 

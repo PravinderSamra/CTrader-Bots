@@ -43,6 +43,66 @@ def load_combined(max_dte=45):
     return ndx_rows + qqq_rows, S_ndx, S_qqq, ratio, {"ndx": ndx_asof, "qqq": qqq_asof}
 
 
+def expected_move(rows, S_ndx, cfd_offset, now_utc=None):
+    """The market's own forecast for the next session, from the ATM straddle.
+
+    An at-the-money call plus put is what it costs to own the move in either
+    direction, so its price IS the expected absolute move. That is a sharper
+    number than the VXN-derived range the brief already prints, which takes a
+    30-day vol index and scales it to one day.
+
+    IMPORTANT — this is NOT comparable to ADR. The straddle prices a
+    CLOSE-to-close move; ADR measures the HIGH-LOW range, which is always the
+    larger of the two. Reading "EM 162 vs ADR 409" as "the market expects a
+    quiet day" is the same class of error as reading the range budget as
+    though it forecast price travel. They measure different things.
+
+    Skips a 0DTE expiry after the US cash close, when its quotes are final
+    rather than live.
+    """
+    now = now_utc or datetime.now(timezone.utc)
+    by_exp = defaultdict(list)
+    for r in rows:
+        if r.get("src") != "NDX":        # price the index, not the ETF proxy
+            continue
+        by_exp[(r["dte"], r["exp"])].append(r)
+    for (dte, exp) in sorted(by_exp):
+        if dte < 0 or (dte == 0 and now.hour >= 20):
+            continue                     # expired or settling
+        sub = by_exp[(dte, exp)]
+        ks = sorted({r["strike"] for r in sub}, key=lambda k: abs(k - S_ndx))
+        # Walk out from the money rather than demanding the single nearest
+        # strike. `load_chain` drops strikes with no open interest, so the
+        # exact ATM can be missing a call or a put — and taking only ks[0]
+        # threw away the ENTIRE expiry when that happened, silently falling
+        # through to a 7-day straddle and reporting it as the next session's
+        # expected move (481pts instead of 162).
+        atm = c = p = None
+        for k in ks[:6]:
+            cc = next((r for r in sub if r["strike"] == k and r["cp"] == "C"), None)
+            pp = next((r for r in sub if r["strike"] == k and r["cp"] == "P"), None)
+            if cc and pp and cc["bid"] and pp["bid"]:
+                atm, c, p = k, cc, pp
+                break
+        if not c or not p:
+            continue
+        cm = (c["bid"] + c["ask"]) / 2
+        pm = (p["bid"] + p["ask"]) / 2
+        straddle = cm + pm
+        # E|move| is about 0.8 of the straddle for a lognormal; 0.85 is the
+        # convention most desks quote and the difference is inside the spread.
+        em = straddle * 0.85
+        return {"expiry": str(exp), "dte": dte,
+                "atm_strike_ndx": atm,
+                "straddle": round(straddle, 1),
+                "em_pts": round(em, 1),
+                "em_pct": round(em / S_ndx * 100, 2),
+                "upper": round(S_ndx + em + cfd_offset, 1),
+                "lower": round(S_ndx - em + cfd_offset, 1),
+                "iv_atm": round((c["iv"] + p["iv"]) / 2, 4)}
+    return None
+
+
 def bucket(rows, S_ndx, dte_max, bin_pts=50, reprice=False):
     """Aggregate $GEX and OI onto a common NDX-point grid.
 
@@ -229,6 +289,7 @@ def build(cfd_price, max_dte=45):
     near = [r for r in rows if r["dte"] <= 7 and r["src"] == "NDX"]
     mp = G.max_pain(near)
     board["max_pain_week"] = {"ndx": mp, "nas100": cfd(mp)}
+    board["expected_move"] = expected_move(rows, S_ndx, board["cfd_offset"])
     return board
 
 

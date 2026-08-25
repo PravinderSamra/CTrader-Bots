@@ -387,6 +387,8 @@ def markdown_levels_only(d):
     A(f"_Budget = how much further the RANGE can grow, not how far price "
       f"travels._ {meaning}\n")
     A(f"**Stop management:** {mgmt}\n")
+    for line in expected_move_md(d, compact=True):
+        A(line)
     board, far = level_board(d)
     A("_Wall strength ●●●○○ is **gamma force** relative to the strongest wall "
       "of the same type, not contract count._\n")
@@ -407,6 +409,32 @@ def markdown_levels_only(d):
         for line in sw:
             A(line)
     return "\n".join(o)
+
+
+def expected_move_md(d, compact=False):
+    """Market-implied boundaries for the next session, from the ATM straddle."""
+    em = (d["gex"] or {}).get("expected_move")
+    if not em:
+        return []
+    when = ("the rest of today" if em["dte"] == 0
+            else "tomorrow" if em["dte"] == 1
+            else f"the next {em['dte']} sessions")
+    if compact:
+        return [f"**Expected move ({when}):** ±**{em['em_pts']:.0f}pts** "
+                f"({em['em_pct']:.2f}%) → **{em['lower']:.0f} .. {em['upper']:.0f}** "
+                f"_(close-to-close, not a high-low range — do not compare to ADR)_\n"]
+    return [
+        f"- **Expected move, {when}:** ±**{em['em_pts']:.0f}pts** "
+        f"({em['em_pct']:.2f}%) → **{em['lower']:.0f} .. {em['upper']:.0f}**",
+        f"  - from the {em['expiry']} ATM straddle at {em['straddle']:.0f}pts "
+        f"(ATM IV {em['iv_atm']*100:.1f}%) — the market's own price for the move, "
+        f"not a vol index scaled down",
+        f"  - **this is a CLOSE-to-close band, not a high-low range.** ADR measures "
+        f"high-low and is always the larger number; comparing the two directly is "
+        f"the same error as reading the range budget as price travel. Price closes "
+        f"inside this band roughly two days in three, and routinely trades outside "
+        f"it intraday.\n",
+    ]
 
 
 def secondary_walls(d, board):
@@ -638,6 +666,8 @@ def markdown(d):
       f"({'below' if implied and implied < f['adr14'] else 'above'} ADR — "
       f"{'options market prices a quieter day, use the smaller budget' if implied and implied < f['adr14'] else 'options market prices expansion, ADR understates'})")
     A(f"- volume: **{f['volume_state']}** ({f['volume_relative']})\n")
+    for line in expected_move_md(d):
+        A(line)
     pr = path_read(d)
     for side, label, verb in (("below", "DOWNSIDE", "breakdown"),
                               ("above", "UPSIDE", "breakout")):
