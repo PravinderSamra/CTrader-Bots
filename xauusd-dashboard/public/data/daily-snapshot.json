@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-25T08:31:23.302Z",
+  "generatedAt": "2026-08-25T09:01:02.989Z",
   "yields": {
     "US10Y": 4.74,
     "US2Y": 4.24,
@@ -34,26 +34,26 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 874.6,
-    "gldWoWChange": -0.6,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 876.1,
+    "gldWoWChange": 1.5,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4634.045,
-    "XAGUSD": 68.04,
-    "EURUSD": 1.16623,
-    "USDJPY": 159.433,
-    "USDCHF": 0.80367,
-    "USDCNH": 6.72286,
-    "GBPUSD": 1.36336,
-    "USDCAD": 0.69311,
-    "USDSEK": null,
-    "US500": 7677.6,
-    "GER40": 26240.45,
-    "UK100": 10867.35,
+    "XAUUSD": 4626.17,
+    "XAGUSD": 67.8035,
+    "EURUSD": 1.16677,
+    "USDJPY": 159.342,
+    "USDCHF": 0.80279,
+    "USDCNH": 6.72225,
+    "GBPUSD": 1.3643,
+    "USDCAD": 1.38604,
+    "USDSEK": 9.50709,
+    "US500": 7682.5,
+    "GER40": 26263.35,
+    "UK100": 10868.45,
     "ADR_14day": 99.9,
     "ADR_usedToday": 78.6,
-    "goldSilverRatio": 68.1
+    "goldSilverRatio": 68.2
   },
   "dollarLiquidity": {
     "stlfsi": -0.8285,
@@ -69,49 +69,49 @@
       "headline": "Treasury yields steady as traders await more economic data",
       "source": "CNBC",
       "publishedAt": "2026-08-25T07:48:57.000Z",
-      "hoursAgo": 0.7
+      "hoursAgo": 1.2
+    },
+    {
+      "headline": "United States sanctions oil trader Wellbred over Iran links - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-25T03:40:00.000Z",
+      "hoursAgo": 5.3
     },
     {
       "headline": "Dollar inches up as markets weigh Iran sanctions, Treasury buybacks - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T01:31:00.000Z",
-      "hoursAgo": 7
+      "hoursAgo": 7.5
     },
     {
       "headline": "Oil extends fall as investors shrug off latest US sanctions on Iran - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T01:16:00.000Z",
-      "hoursAgo": 7.3
+      "hoursAgo": 7.7
     },
     {
       "headline": "Iran vows to retaliate after US widens sanctions - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T00:57:00.000Z",
-      "hoursAgo": 7.6
+      "hoursAgo": 8.1
+    },
+    {
+      "headline": "Bessent's D-Day sanctions are more Anzio, but Iran response is key - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-25T00:43:14.000Z",
+      "hoursAgo": 8.3
     },
     {
       "headline": "TRADING DAY Tech, tariffs & Treasuries - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T21:13:38.000Z",
-      "hoursAgo": 11.3
+      "hoursAgo": 11.8
     },
     {
       "headline": "US Treasury to stick to debt auction schedule despite bigger buybacks, Bessent says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-24T19:43:43.000Z",
-      "hoursAgo": 12.8
-    },
-    {
-      "headline": "US eyes China overcapacity tariffs of 7.5% before Xi-Trump talks, Bloomberg News reports - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-24T16:04:15.000Z",
-      "hoursAgo": 16.5
-    },
-    {
-      "headline": "Oil stocks in US Strategic Petroleum Reserve fall by 3.7 million barrels to lowest level since 1982 - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-24T15:29:43.000Z",
-      "hoursAgo": 17
+      "hoursAgo": 13.3
     }
   ],
   "briefing": null
