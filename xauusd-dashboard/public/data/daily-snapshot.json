@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-25T10:22:16.591Z",
+  "generatedAt": "2026-08-25T11:18:11.403Z",
   "yields": {
     "US10Y": 4.74,
     "US2Y": 4.24,
@@ -34,26 +34,26 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 873.7,
-    "gldWoWChange": -1.9,
+    "gldTonnes": 873,
+    "gldWoWChange": -0.7,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4638.4,
-    "XAGUSD": 67.9655,
-    "EURUSD": 1.16625,
-    "USDJPY": 159.2965,
-    "USDCHF": 0.80286,
-    "USDCNH": 6.72032,
-    "GBPUSD": 1.3637,
-    "USDCAD": 1.38614,
-    "USDSEK": 9.49404,
-    "US500": 7691.6,
-    "GER40": 26344.25,
-    "UK100": 10871.15,
+    "XAUUSD": 4642.525,
+    "XAGUSD": 67.998,
+    "EURUSD": 1.16594,
+    "USDJPY": 159.3055,
+    "USDCHF": 0.80288,
+    "USDCNH": 6.7202,
+    "GBPUSD": 1.36291,
+    "USDCAD": 1.38571,
+    "USDSEK": 9.49631,
+    "US500": 7682.6,
+    "GER40": 26319.85,
+    "UK100": 10877.85,
     "ADR_14day": 99.9,
     "ADR_usedToday": 78.6,
-    "goldSilverRatio": 68.2
+    "goldSilverRatio": 68.3
   },
   "dollarLiquidity": {
     "stlfsi": -0.8285,
@@ -66,52 +66,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Iran vows to retaliate after US widens sanctions - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-25T09:33:24.000Z",
+      "hoursAgo": 1.7
+    },
+    {
       "headline": "Iran war makes multibillion-dollar Tanzania LNG more attractive, Equinor says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T09:08:55.000Z",
-      "hoursAgo": 1.2
-    },
-    {
-      "headline": "United States sanctions oil trader Wellbred over Iran links - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-25T08:55:21.000Z",
-      "hoursAgo": 1.4
+      "hoursAgo": 2.2
     },
     {
       "headline": "Treasury yields steady as traders await more economic data",
       "source": "CNBC",
       "publishedAt": "2026-08-25T07:48:57.000Z",
-      "hoursAgo": 2.6
+      "hoursAgo": 3.5
     },
     {
-      "headline": "Iran vows to retaliate after US widens sanctions - Reuters",
+      "headline": "European shares climb on Iran sanctions relief, defence gains - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-08-25T06:16:47.000Z",
-      "hoursAgo": 4.1
+      "publishedAt": "2026-08-25T07:33:44.000Z",
+      "hoursAgo": 3.7
+    },
+    {
+      "headline": "Bessent's D-Day sanctions are more Anzio, but Iran response is key - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-25T03:51:25.000Z",
+      "hoursAgo": 7.4
+    },
+    {
+      "headline": "United States sanctions oil trader Wellbred over Iran links - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-25T03:40:00.000Z",
+      "hoursAgo": 7.6
+    },
+    {
+      "headline": "Gold slips on profit-taking after rally to over three-month peak - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-25T02:10:00.000Z",
+      "hoursAgo": 9.1
     },
     {
       "headline": "Dollar inches up as markets weigh Iran sanctions, Treasury buybacks - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T01:31:00.000Z",
-      "hoursAgo": 8.9
-    },
-    {
-      "headline": "Oil hits one-week low as investors shrug off latest US sanctions on Iran - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-25T01:16:00.000Z",
-      "hoursAgo": 9.1
-    },
-    {
-      "headline": "Bessent's D-Day sanctions are more Anzio, but Iran response is key - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-25T00:43:14.000Z",
-      "hoursAgo": 9.7
-    },
-    {
-      "headline": "TRADING DAY Tech, tariffs & Treasuries - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-24T21:13:38.000Z",
-      "hoursAgo": 13.1
+      "hoursAgo": 9.8
     }
   ],
   "briefing": null
