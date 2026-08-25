@@ -1,0 +1,253 @@
+{
+  "schema": 1,
+  "scan_utc": "2026-08-25T13:04:17+00:00",
+  "scan_et": "2026-08-25 09:04 ET (Tue)",
+  "trading_day": "2026-08-25",
+  "session_window": "PRE_NY",
+  "is_trading_day": true,
+  "prediction": {
+    "price_at_scan": 29252.8,
+    "bias_score": 0,
+    "bias_label": "NEUTRAL / TWO-WAY",
+    "strategy": "STRATEGY 1 \u2014 sweep -> failed re-break -> CISD reversal. Positive gamma above the flip: dealers fade extensions, so sweeps genuinely fail. Trade the walls and the day-frame levels.",
+    "event_gate": null,
+    "expected_direction": 0,
+    "gamma_flip": 28976.3,
+    "expiry_shape": "COHERENT_LONG",
+    "fuel_state": "EXHAUSTED",
+    "remaining_budget": 12.0,
+    "adr14": 408.7,
+    "adr_used_pct": 97.1,
+    "levels": [
+      {
+        "price": 29299.6,
+        "name": "STRUCTURAL CALL WALL \u25cf\u25cf\u25cf\u25cf\u25cf 1.70bn",
+        "kind": "structural",
+        "dist": 46.8,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 29249.6,
+        "name": "Options shelf 0.56bn",
+        "kind": "gamma-shelf",
+        "dist": -3.2,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 28549.6,
+        "name": "STRUCTURAL PUT WALL \u25cf\u25cf\u25cf\u25cb\u25cb 0.89bn",
+        "kind": "structural",
+        "dist": -703.2,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      }
+    ]
+  },
+  "inputs": {
+    "bias_components": [
+      {
+        "component": "gamma",
+        "points": 2,
+        "why": "above flip 28976.3 by 276.5pts \u2014 long-gamma, dips supported, upside grinds"
+      },
+      {
+        "component": "gamma",
+        "points": 2,
+        "why": "week net GEX 5.225 $bn/1% -> pinning likely"
+      },
+      {
+        "component": "gamma",
+        "points": 0,
+        "why": "price mid-band (29099.6-29349.6), 61% up the range"
+      },
+      {
+        "component": "vol",
+        "points": 0,
+        "why": "VXN 22.69 (+3.2%) \u2014 stable"
+      },
+      {
+        "component": "vol",
+        "points": 1,
+        "why": "VIX9D/VIX 0.888 contango \u2014 calm, mean-reversion favoured, mild upward drift"
+      },
+      {
+        "component": "vol",
+        "points": -1,
+        "why": "VXN/VIX 1.43 \u2014 tech-specific stress priced above the broad market"
+      },
+      {
+        "component": "vol",
+        "points": 0,
+        "why": "VVIX 88.64 \u2014 no tail-hedge bid"
+      },
+      {
+        "component": "rates",
+        "points": 1,
+        "why": "US10y 4.664 (-0.85%) \u2014 yields down, BULLISH tech"
+      },
+      {
+        "component": "rates",
+        "points": 0,
+        "why": "DXY 99.014 (+0.01%) \u2014 dollar flat"
+      },
+      {
+        "component": "macro",
+        "points": -3,
+        "why": "**Real yield, 10y (DFII10)** \u2014 what lenders earn after inflation \u2014 is 2.4%, up 5bp today and 1bp over 5 days. Rising = tech gets hit hardest, because tech is valued on profits years away and those are worth less when rates rise."
+      },
+      {
+        "component": "macro",
+        "points": -1,
+        "why": "**10y nominal yield (DGS10)** moved 5bp up (2026-08-20 to 2026-08-21). That was driven by real rates \u2014 the harsher kind for tech, and an immediate headwind."
+      },
+      {
+        "component": "macro",
+        "points": 2,
+        "why": "**High-yield credit spread (HY OAS)** \u2014 the extra interest demanded to lend to riskier companies is 2.7% (+3bp over 5 days). Low and steady: the bond market is relaxed about risk, which gives stocks permission to rise."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Financial conditions (NFCI)** \u2014 how easy it is to borrow money across the economy \u2014 is EASIER than normal (-0.559). Cheap, available money is a background tailwind for stocks."
+      },
+      {
+        "component": "macro",
+        "points": -1,
+        "why": "**Fed balance sheet (WALCL) / reverse repo (RRP)** \u2014 cash in the financial system. The Fed is holding $6.75tn of assets, shrinking by $14.3bn this week, and the spare-cash buffer is down to $0.38bn. The Fed is quietly pulling money out of the system \u2014 a slow, persistent drag on stocks, not a day-trade signal."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Yield curve (10y\u20132y)** \u2014 long vs short bond yields. The 10-year pays +0.46% more than the 2-year. Barely moved."
+      },
+      {
+        "component": "breadth",
+        "points": -2,
+        "why": "mega-cap avg -1.09% (2/4 up): NVDA -2.91%, MSFT +0.84%, AAPL +0.32%, AVGO -2.63%"
+      },
+      {
+        "component": "breadth",
+        "points": -1,
+        "why": "NDX -0.97% vs ES +0.38% \u2014 tech lagging, rotation out of tech"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "ADR14 408.7, 97.1% used vs ~50% normal by 09:04 ET -> fuel_ratio 1.94 (burning hot) [EXHAUSTED]"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "fuel is short \u2014 this dampens CONVICTION in any continuation call, it does not change direction"
+      },
+      {
+        "component": "structure",
+        "points": 1,
+        "why": "price above PD mid 29138.3 (PDH 29403.8 / PDL 28872.9)"
+      },
+      {
+        "component": "structure",
+        "points": 0,
+        "why": "price inside the prior-week range (29115.9-30245.8)"
+      },
+      {
+        "component": "structure",
+        "points": 0,
+        "why": "in-reach unmitigated pools: 0 above / 0 below \u2014 draw balanced"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "2 auto-scored headline(s) (1 bull / 1 bear) -> NEUTRAL; 52 more need reading in context (not counted here)"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [earnings_beat] Nvidia Q2 preview: a beat is a fail, a blowout is base case"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [tariff_general] Tariff-Driven Inflation Risks Return With Trump Moves on Canada, Iran - Bloomberg"
+      },
+      {
+        "component": "events",
+        "points": 0,
+        "why": "NVDA earnings 2026-08-26 time-after-hours (cons $2.09) \u2014 INDEX-DEFINING event; day before pins, day after expands"
+      }
+    ],
+    "fuel": {
+      "adr14": 408.7,
+      "today_range": 396.7,
+      "adr_used_pct": 97.1,
+      "remaining_budget": 12.0,
+      "expansion_state": "EXHAUSTED",
+      "volume_relative": 0.98,
+      "volume_state": "normal"
+    },
+    "gamma": {
+      "near_expiry_0_2dte": 4.175,
+      "this_week": 5.225,
+      "full_45dte": 6.022
+    },
+    "call_wall": 29349.6,
+    "put_wall": 29099.6,
+    "max_pain": 29189.6,
+    "vol": {
+      "vxn": 22.69,
+      "vix": 15.84,
+      "vix9d_over_vix": 0.888
+    },
+    "rates": {
+      "us10y": 4.664,
+      "dxy": 99.014
+    },
+    "news": {
+      "raw_score": 0.66,
+      "bias_points": 0,
+      "label": "NEUTRAL",
+      "scored_high_confidence": 2,
+      "needs_model_judgement": 52
+    },
+    "events_24h": [
+      {
+        "utc": "2026-08-25T14:00:00+00:00",
+        "impact": "Medium",
+        "title": "CB Consumer Confidence",
+        "forecast": "90.3",
+        "previous": "90.8",
+        "hours_away": 0.9
+      },
+      {
+        "utc": "2026-08-26T12:30:00+00:00",
+        "impact": "High",
+        "title": "Core PCE Price Index m/m",
+        "forecast": "0.2%",
+        "previous": "0.1%",
+        "hours_away": 23.4
+      },
+      {
+        "utc": "2026-08-26T12:30:00+00:00",
+        "impact": "High",
+        "title": "Prelim GDP q/q",
+        "forecast": "1.5%",
+        "previous": "1.5%",
+        "hours_away": 23.4
+      },
+      {
+        "utc": "2026-08-26T12:30:00+00:00",
+        "impact": "Medium",
+        "title": "Prelim GDP Price Index q/q",
+        "forecast": "6.2%",
+        "previous": "6.2%",
+        "hours_away": 23.4
+      }
+    ]
+  },
+  "outcome": null
+}
