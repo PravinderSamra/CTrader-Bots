@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-08-25T16:25:28.702Z",
+  "generatedAt": "2026-08-25T17:23:40.859Z",
   "prices": {
-    "UK100": 10890.05,
-    "GBPUSD": 1.3635,
+    "UK100": 10889.85,
+    "GBPUSD": 1.3637,
     "GBPEUR": 1.16854,
-    "US500": 7675.6,
-    "NAS100": 29218.35,
-    "BRENT": 89.344,
-    "COPPER": 6.8072,
+    "US500": 7670.5,
+    "NAS100": 29172.95,
+    "BRENT": 89.054,
+    "COPPER": 6.802,
     "VIX": 16.025,
-    "USDX": 98.997,
-    "XAUUSD": 4640.405,
+    "USDX": 98.982,
+    "XAUUSD": 4640.345,
     "UK100_dayPct": 0.34
   },
   "fx": {
-    "gbpUsdDayPct": 0.04,
+    "gbpUsdDayPct": 0.05,
     "gbpUsd20dPercentile": 100,
     "sterlingEri": 86.0075,
     "sterlingEriDayChange": 0.11,
@@ -36,23 +36,23 @@
     "daysToMpc": 23
   },
   "usLinkage": {
-    "us500DayPct": 0.21,
-    "nas100DayPct": 0.58,
+    "us500DayPct": 0.15,
+    "nas100DayPct": 0.42,
     "vix": 16.025,
     "vixRegime": "NORMAL",
     "us10y": 4.74,
-    "usdx": 98.997
+    "usdx": 98.982
   },
   "commodities": {
-    "brentDayPct": -3.29,
-    "copperDayPct": 1.61,
+    "brentDayPct": -3.61,
+    "copperDayPct": 1.53,
     "goldDayPct": -0.24,
     "brent20dTrend": "UP"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": 0.05,
-    "dax40DayPct": 0.56,
-    "eurUsdDayPct": 0.04,
+    "eurostoxx50DayPct": -0.03,
+    "dax40DayPct": 0.49,
+    "eurUsdDayPct": 0.06,
     "ftseDaxCorr20d": 0.54,
     "ftseSx5eCorr20d": 0.59,
     "tapeAgreement": "ALIGNED",
@@ -69,14 +69,14 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent -3.29%",
+      "driver": "Brent -3.61%",
       "read": "BEARISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper +1.61%",
+      "driver": "Copper +1.53%",
       "read": "BULLISH",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
@@ -117,19 +117,19 @@
       "headline": "Canada poised to retaliate against Trump tariffs: 'We're not waiting by the phone'",
       "source": "CNBC",
       "url": "https://www.cnbc.com/2026/08/25/canada-trump-tariffs-trade-carney-leblanc.html",
-      "hoursAgo": 3.5
+      "hoursAgo": 4.5
     },
     {
       "headline": "Gold retreats as upward momentum hits pause ahead of US inflation data - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxQa19NSUEzV2xqY0JpOW5BRUlWc1VQNHNxdFk1cjk2ZldBQnotS0VtRmo4MWRSdjdDMEhya0JXeURjRFVoRkpyeDVLSGxTcExWM0YxaDh4dFl5OGF6MmN3eU4zd0poVXRBMnlQRFFkUy1qQmNwck9nV01hd2RNSXlaR3lJMzFYRWt3TDFGVnJENVZEVXZDR1puXzV0dGtSdW8zZGFmYXFn?oc=5",
-      "hoursAgo": 14.3
+      "hoursAgo": 15.2
     },
     {
       "headline": "TRADING DAY Tech, tariffs & Treasuries - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxQUmpoclpIbHRCNUVXQ0IyQ1ZQbDJoR0VQQ0JuN2k4YVJuekdBQ05YcHI5WnVtc0JNSzN6MDhFSzRSS2dvbWRzUnFxSEJ5TURVVEFuc3Vha0sxdGhSbUZ6TllJSkU0c0JrMFFOb2dsN3VLRTItYnE4MVNVWVJQR3o3alhlSFAzVXNla1pBcXNnTnNwencyLWtpRmJteWVFYnJtS0IzbzZR?oc=5",
-      "hoursAgo": 19.2
+      "hoursAgo": 20.2
     }
   ],
   "riskTone": null,
@@ -142,13 +142,13 @@
         "name": "GBP",
         "weight": 3,
         "impact": "NEUTRAL",
-        "detail": "GBP/USD +0.04% → FTSE headwind (sign-flipped)"
+        "detail": "GBP/USD +0.05% → FTSE headwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
         "impact": "BULLISH",
-        "detail": "US500 +0.21% today"
+        "detail": "US500 +0.15% today"
       },
       {
         "name": "VIX regime",
@@ -160,13 +160,13 @@
         "name": "Brent",
         "weight": 1.5,
         "impact": "BEARISH",
-        "detail": "Brent -3.29% (energy majors)"
+        "detail": "Brent -3.61% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
         "impact": "BULLISH",
-        "detail": "Copper +1.61% (miners/China)"
+        "detail": "Copper +1.53% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -189,14 +189,14 @@
       {
         "name": "European tape (SX5E/DAX)",
         "weight": 1,
-        "impact": "BULLISH",
-        "detail": "SX5E +0.05% / DAX +0.56%"
+        "impact": "NEUTRAL",
+        "detail": "SX5E -0.03% / DAX +0.49%"
       }
     ],
     "eventSuppressed": false
   },
   "orbContext": {
-    "computedAt": "2026-08-25T16:25:28.702Z",
+    "computedAt": "2026-08-25T17:23:40.858Z",
     "mode": "CLOSED",
     "cashOpenLondon": "08:00 BST",
     "overnightHigh": 10887,
@@ -206,22 +206,22 @@
     "priorClose": 10852.9,
     "prevWeekHigh": 10825.9,
     "prevWeekLow": 10673.9,
-    "gapPts": 37.1,
+    "gapPts": 37,
     "gapPct": 0.34,
     "orbHigh": 10887,
     "orbLow": 10857.3,
     "orbBrokenDirection": "DOWN",
     "eventWindows": [],
     "adr14": 85.7,
-    "adrUsedPct": 86,
+    "adrUsedPct": 87,
     "expansionState": {
       "label": "NORMAL",
-      "rangeSoFarPct": 86,
+      "rangeSoFarPct": 87,
       "expectedRangePctByNow": 100,
-      "rangeVsTypical": 0.86,
+      "rangeVsTypical": 0.87,
       "expectedVolPctByNow": 100,
       "moveMostlyDone": true,
-      "note": "Range 86% of ADR vs ~100% typical by 16:00 BST (about the typical pace). ~100% of a typical day's volume already done — expect a rangebound remainder, tighten targets."
+      "note": "Range 87% of ADR vs ~100% typical by 16:00 BST (about the typical pace). ~100% of a typical day's volume already done — expect a rangebound remainder, tighten targets."
     }
   },
   "orbIntel": {
@@ -240,7 +240,7 @@
         "severity": "CAUTION",
         "source": "RANGE",
         "rule": "R4",
-        "text": "86% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        "text": "87% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
       },
       {
         "direction": "BREAKOUT_SUSPECT",
