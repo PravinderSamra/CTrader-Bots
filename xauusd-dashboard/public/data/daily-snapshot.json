@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-08-25T19:24:01.992Z",
+  "generatedAt": "2026-08-25T20:18:23.782Z",
   "yields": {
-    "US10Y": 4.74,
+    "US10Y": 4.7,
     "US2Y": 4.24,
-    "realYield10Y": 2.4,
+    "realYield10Y": 2.38,
     "realYield5Y": 2.09,
-    "curve2s10s": 50,
+    "curve2s10s": 46,
     "breakeven10Y": 2.32,
     "breakeven5Y": 2.32,
     "forward5y5y": 2.32,
     "dayOverDay": {
-      "US10Y": 0.05,
-      "US2Y": 0.05,
-      "realYield10Y": 0.05
+      "US10Y": -0.04,
+      "US2Y": 0,
+      "realYield10Y": -0.02
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-09-16",
     "probCut": 0,
-    "probHold": 80,
-    "probHike": 20
+    "probHold": 84,
+    "probHike": 16
   },
   "marketVolatility": {
     "GVZ": 28.28,
@@ -34,26 +34,26 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 869.1,
-    "gldWoWChange": -2.5,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 868.6,
+    "gldWoWChange": -0.5,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4663.055,
-    "XAGUSD": 69.12,
-    "EURUSD": 1.16763,
-    "USDJPY": 159.176,
-    "USDCHF": 0.80161,
-    "USDCNH": 6.71743,
-    "GBPUSD": 1.36492,
-    "USDCAD": 1.38274,
-    "USDSEK": 9.46555,
-    "US500": 7668.9,
-    "GER40": 26254.25,
-    "UK100": 10896.95,
+    "XAUUSD": 4665.745,
+    "XAGUSD": 68.882,
+    "EURUSD": 1.16775,
+    "USDJPY": 159.152,
+    "USDCHF": 0.80103,
+    "USDCNH": 6.71682,
+    "GBPUSD": 1.36528,
+    "USDCAD": 1.38319,
+    "USDSEK": 9.44708,
+    "US500": 7677.4,
+    "GER40": 26292.25,
+    "UK100": 10900.35,
     "ADR_14day": 99.9,
     "ADR_usedToday": 91.1,
-    "goldSilverRatio": 67.5
+    "goldSilverRatio": 67.7
   },
   "dollarLiquidity": {
     "stlfsi": -0.8285,
@@ -66,52 +66,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Oil falls 4% as investors shrug off US sanctions on Iran - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-25T18:18:22.000Z",
-      "hoursAgo": 1.1
-    },
-    {
       "headline": "Canada poised to retaliate against Trump tariffs: 'We're not waiting by the phone'",
       "source": "CNBC",
       "publishedAt": "2026-08-25T12:55:49.000Z",
-      "hoursAgo": 6.5
+      "hoursAgo": 7.4
     },
     {
       "headline": "What are the new US economic sanctions on Iran and its trade partners? - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T12:20:58.000Z",
-      "hoursAgo": 7.1
+      "hoursAgo": 8
+    },
+    {
+      "headline": "Bessent's D-Day sanctions are more Anzio, but Iran response is key - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-25T12:00:40.000Z",
+      "hoursAgo": 8.3
     },
     {
       "headline": "European shares climb on softer-than-feared Iran sanctions, defence gains - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T09:24:01.000Z",
-      "hoursAgo": 10
+      "hoursAgo": 10.9
     },
     {
       "headline": "Iran war makes multibillion-dollar Tanzania LNG more attractive, Equinor says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T09:08:55.000Z",
-      "hoursAgo": 10.3
-    },
-    {
-      "headline": "United States sanctions oil trader Wellbred over Iran links - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-25T08:55:21.000Z",
-      "hoursAgo": 10.5
+      "hoursAgo": 11.2
     },
     {
       "headline": "Treasury yields steady as traders await more economic data",
       "source": "CNBC",
       "publishedAt": "2026-08-25T07:48:57.000Z",
-      "hoursAgo": 11.6
+      "hoursAgo": 12.5
     },
     {
-      "headline": "Bessent's D-Day sanctions are more Anzio, but Iran response is key - Reuters",
+      "headline": "United States sanctions oil trader Wellbred over Iran links - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-08-25T03:19:48.000Z",
-      "hoursAgo": 16.1
+      "publishedAt": "2026-08-25T03:40:00.000Z",
+      "hoursAgo": 16.6
+    },
+    {
+      "headline": "Gold steadies after hitting over 3-month peak ahead of US inflation data - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-25T02:10:00.000Z",
+      "hoursAgo": 18.1
     }
   ],
   "briefing": null
