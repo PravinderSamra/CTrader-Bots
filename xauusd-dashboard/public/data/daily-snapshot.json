@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-26T09:02:59.653Z",
+  "generatedAt": "2026-08-26T09:31:42.054Z",
   "yields": {
     "US10Y": 4.7,
     "US2Y": 4.24,
@@ -34,25 +34,25 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 875.4,
-    "gldWoWChange": -0.4,
-    "trend3W": "FLAT"
+    "gldTonnes": 877.2,
+    "gldWoWChange": 1.8,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4629.845,
-    "XAGUSD": 68.673,
-    "EURUSD": 1.16699,
-    "USDJPY": 159.02,
-    "USDCHF": 0.80374,
-    "USDCNH": 6.72014,
-    "GBPUSD": 1.36279,
-    "USDCAD": 1.3866,
-    "USDSEK": 9.48991,
-    "US500": 7674.5,
-    "GER40": 26285.15,
-    "UK100": 10881.95,
+    "XAUUSD": 4619.92,
+    "XAGUSD": 68.5435,
+    "EURUSD": 1.16663,
+    "USDJPY": 159.0015,
+    "USDCHF": 0.80389,
+    "USDCNH": 6.72046,
+    "GBPUSD": 1.36266,
+    "USDCAD": 1.38683,
+    "USDSEK": 9.48816,
+    "US500": 7672.9,
+    "GER40": 26297.35,
+    "UK100": 10883.55,
     "ADR_14day": 99.1,
-    "ADR_usedToday": 51.7,
+    "ADR_usedToday": 57.6,
     "goldSilverRatio": 67.4
   },
   "dollarLiquidity": {
@@ -66,34 +66,28 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Bessent's D-Day sanctions are more Anzio, but Iran response is key - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-26T03:28:00.000Z",
-      "hoursAgo": 5.6
-    },
-    {
       "headline": "ECB set for September rate hike with no appetite to signal more, sources say - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T19:22:00.000Z",
-      "hoursAgo": 13.7
+      "hoursAgo": 14.2
     },
     {
       "headline": "European shares gain on softer US Iran sanctions, falling oil prices - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T16:41:59.000Z",
-      "hoursAgo": 16.3
+      "hoursAgo": 16.8
     },
     {
       "headline": "Canada poised to retaliate against Trump tariffs: 'We're not waiting by the phone'",
       "source": "CNBC",
       "publishedAt": "2026-08-25T12:55:49.000Z",
-      "hoursAgo": 20.1
+      "hoursAgo": 20.6
     },
     {
       "headline": "What are the new US economic sanctions on Iran and its trade partners? - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T12:20:58.000Z",
-      "hoursAgo": 20.7
+      "hoursAgo": 21.2
     }
   ],
   "briefing": null

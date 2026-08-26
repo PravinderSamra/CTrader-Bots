@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-08-26T09:03:05.157Z",
+  "generatedAt": "2026-08-26T09:31:48.008Z",
   "prices": {
-    "UK100": 10882.65,
-    "GBPUSD": 1.36281,
-    "GBPEUR": 1.16777,
-    "US500": 7674.5,
-    "NAS100": 29153.55,
-    "BRENT": 86.958,
-    "COPPER": 6.8226,
-    "VIX": 15.985,
-    "USDX": 98.999,
-    "XAUUSD": 4629.885,
+    "UK100": 10883.45,
+    "GBPUSD": 1.36255,
+    "GBPEUR": 1.16798,
+    "US500": 7672.7,
+    "NAS100": 29140.95,
+    "BRENT": 87.094,
+    "COPPER": 6.8134,
+    "VIX": 15.99,
+    "USDX": 99.019,
+    "XAUUSD": 4620.55,
     "UK100_dayPct": -0.15
   },
   "fx": {
-    "gbpUsdDayPct": -0.14,
+    "gbpUsdDayPct": -0.16,
     "gbpUsd20dPercentile": 100,
     "sterlingEri": 85.9591,
     "sterlingEriDayChange": -0.05,
@@ -36,23 +36,23 @@
     "daysToMpc": 22
   },
   "usLinkage": {
-    "us500DayPct": -0.03,
-    "nas100DayPct": -0.2,
-    "vix": 15.985,
+    "us500DayPct": -0.05,
+    "nas100DayPct": -0.25,
+    "vix": 15.99,
     "vixRegime": "NORMAL",
     "us10y": 4.7,
-    "usdx": 98.999
+    "usdx": 99.019
   },
   "commodities": {
-    "brentDayPct": -0.97,
-    "copperDayPct": 0.28,
-    "goldDayPct": -0.62,
+    "brentDayPct": -0.82,
+    "copperDayPct": 0.14,
+    "goldDayPct": -0.82,
     "brent20dTrend": "UP"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": 0.1,
-    "dax40DayPct": -0.03,
-    "eurUsdDayPct": -0.04,
+    "eurostoxx50DayPct": 0.09,
+    "dax40DayPct": 0.02,
+    "eurUsdDayPct": -0.07,
     "ftseDaxCorr20d": 0.5,
     "ftseSx5eCorr20d": 0.52,
     "tapeAgreement": "ALIGNED",
@@ -69,14 +69,14 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent -0.97%",
+      "driver": "Brent -0.82%",
       "read": "BEARISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper +0.28%",
+      "driver": "Copper +0.14%",
       "read": "NEUTRAL",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
@@ -117,13 +117,13 @@
       "headline": "ECB set for September rate hike with no appetite to signal more, sources say - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNaS1YSEQ1R25MRlpTOGV2WjhEVjJMc1N3MjhGMnhCcUF0WGpMSTh1UTVUTGxIam1MNjh0dURNUWQtdGd5MGZpRTBIcUVuS0dobGhhNlY2UDN5OTYxZzJPTnp4Y0FVWUlzMUN2bGxQQWtnTUVMNENlbXI0bkdFSnFjaDZOdG12VGZLcFdUZUJHWElaVElqMmF0dmpCNTdNejM1UTdISUdGaVYwWW9kSUN4TVUzbw?oc=5",
-      "hoursAgo": 13.7
+      "hoursAgo": 14.2
     },
     {
       "headline": "Canada poised to retaliate against Trump tariffs: 'We're not waiting by the phone'",
       "source": "CNBC",
       "url": "https://www.cnbc.com/2026/08/25/canada-trump-tariffs-trade-carney-leblanc.html",
-      "hoursAgo": 20.1
+      "hoursAgo": 20.6
     }
   ],
   "riskTone": null,
@@ -136,31 +136,31 @@
         "name": "GBP",
         "weight": 3,
         "impact": "NEUTRAL",
-        "detail": "GBP/USD -0.14% → FTSE tailwind (sign-flipped)"
+        "detail": "GBP/USD -0.16% → FTSE tailwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
         "impact": "NEUTRAL",
-        "detail": "US500 -0.03% today"
+        "detail": "US500 -0.05% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 15.985 — NORMAL regime"
+        "detail": "VIX 15.99 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
         "impact": "BEARISH",
-        "detail": "Brent -0.97% (energy majors)"
+        "detail": "Brent -0.82% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "Copper +0.28% (miners/China)"
+        "detail": "Copper +0.14% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -184,13 +184,13 @@
         "name": "European tape (SX5E/DAX)",
         "weight": 2.5,
         "impact": "NEUTRAL",
-        "detail": "SX5E +0.1% / DAX -0.03%"
+        "detail": "SX5E +0.09% / DAX +0.02%"
       }
     ],
     "eventSuppressed": true
   },
   "orbContext": {
-    "computedAt": "2026-08-26T09:03:05.156Z",
+    "computedAt": "2026-08-26T09:31:48.007Z",
     "mode": "POST_ORB",
     "cashOpenLondon": "08:00 BST",
     "overnightHigh": 10924.6,
@@ -200,7 +200,7 @@
     "priorClose": 10899.4,
     "prevWeekHigh": 10825.9,
     "prevWeekLow": 10673.9,
-    "gapPts": -16.7,
+    "gapPts": -15.9,
     "gapPct": -0.15,
     "orbHigh": 10905.9,
     "orbLow": 10872,
