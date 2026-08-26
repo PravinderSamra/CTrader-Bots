@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-08-25T12:28:59.040Z",
+  "generatedAt": "2026-08-26T21:29:15.334Z",
   "yields": {
-    "US10Y": 4.74,
-    "US2Y": 4.24,
-    "realYield10Y": 2.4,
-    "realYield5Y": 2.09,
-    "curve2s10s": 50,
+    "US10Y": 4.64,
+    "US2Y": 4.17,
+    "realYield10Y": 2.32,
+    "realYield5Y": 2.04,
+    "curve2s10s": 47,
     "breakeven10Y": 2.32,
-    "breakeven5Y": 2.32,
-    "forward5y5y": 2.32,
+    "breakeven5Y": 2.31,
+    "forward5y5y": 2.33,
     "dayOverDay": {
-      "US10Y": 0.05,
-      "US2Y": 0.05,
-      "realYield10Y": 0.05
+      "US10Y": -0.06,
+      "US2Y": -0.07,
+      "realYield10Y": -0.06
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-09-16",
     "probCut": 0,
-    "probHold": 80,
-    "probHike": 20
+    "probHold": 84,
+    "probHike": 16
   },
   "marketVolatility": {
-    "GVZ": 27.29,
-    "VIX": 15.13
+    "GVZ": 27.69,
+    "VIX": 15.45
   },
   "positioning": {
     "cotNetLong": 219495,
@@ -34,30 +34,30 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 874.1,
-    "gldWoWChange": 1.1,
-    "trend3W": "INFLOW"
+    "gldTonnes": 882,
+    "gldWoWChange": 0.4,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4636.775,
-    "XAGUSD": 67.9665,
-    "EURUSD": 1.16639,
-    "USDJPY": 159.248,
-    "USDCHF": 0.80263,
-    "USDCNH": 6.71944,
-    "GBPUSD": 1.36337,
-    "USDCAD": 1.38607,
-    "USDSEK": 9.48584,
-    "US500": 7691.1,
-    "GER40": 26300.15,
-    "UK100": 10862.45,
-    "ADR_14day": 99.9,
-    "ADR_usedToday": 78.6,
-    "goldSilverRatio": 68.2
+    "XAUUSD": 4594.835,
+    "XAGUSD": 68.127,
+    "EURUSD": 1.16535,
+    "USDJPY": 159.285,
+    "USDCHF": 0.80524,
+    "USDCNH": 6.72154,
+    "GBPUSD": 1.35944,
+    "USDCAD": 1.38776,
+    "USDSEK": 9.52764,
+    "US500": 7695.8,
+    "GER40": 26298.05,
+    "UK100": 10846.55,
+    "ADR_14day": 100.7,
+    "ADR_usedToday": 90.8,
+    "goldSilverRatio": 67.4
   },
   "dollarLiquidity": {
-    "stlfsi": -0.8285,
-    "nfci": -0.559
+    "stlfsi": -0.8107,
+    "nfci": -0.566
   },
   "geopoliticalRisk": {
     "gpr": 152.7,
@@ -66,52 +66,22 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Iran war makes multibillion-dollar Tanzania LNG more attractive, Equinor says - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-25T09:08:55.000Z",
-      "hoursAgo": 3.3
-    },
-    {
-      "headline": "Treasury yields steady as traders await more economic data",
+      "headline": "Why we need ‘Human Reserved’ jobs, says Bill Gates—and how we can combat the worst of the AI upheaval",
       "source": "CNBC",
-      "publishedAt": "2026-08-25T07:48:57.000Z",
-      "hoursAgo": 4.7
+      "publishedAt": "2026-08-26T16:44:08.000Z",
+      "hoursAgo": 4.8
     },
     {
-      "headline": "European shares climb on Iran sanctions relief, defence gains - Reuters",
+      "headline": "European shares muted as investors assess Iran-Oman talks, U.S. inflation - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-08-25T07:33:44.000Z",
-      "hoursAgo": 4.9
+      "publishedAt": "2026-08-26T16:41:46.000Z",
+      "hoursAgo": 4.8
     },
     {
-      "headline": "United States sanctions oil trader Wellbred over Iran links - Reuters",
+      "headline": "Oil settles down more than 3%; investors shrug off US sanctions on Iran - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-08-25T03:40:00.000Z",
-      "hoursAgo": 8.8
-    },
-    {
-      "headline": "Gold slips on profit-taking after rally to over three-month high - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-25T02:10:00.000Z",
-      "hoursAgo": 10.3
-    },
-    {
-      "headline": "Dollar edges higher as investors weigh Iran sanctions, Treasury buybacks - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-25T01:31:00.000Z",
-      "hoursAgo": 11
-    },
-    {
-      "headline": "Investors shrug off US sanctions plan for Iran, bitcoin powers on - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-25T01:26:00.000Z",
-      "hoursAgo": 11
-    },
-    {
-      "headline": "Oil hits one-week low as investors shrug off US sanctions on Iran - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-25T01:16:00.000Z",
-      "hoursAgo": 11.2
+      "publishedAt": "2026-08-25T22:49:43.000Z",
+      "hoursAgo": 22.7
     }
   ],
   "briefing": null
