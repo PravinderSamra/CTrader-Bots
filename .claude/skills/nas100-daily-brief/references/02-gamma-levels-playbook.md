@@ -195,6 +195,55 @@ confirmation**. Sweeping into a wall and reclaiming it is a strong long; buying
 a first touch of one is not.
 
 ## Honest limits
+
+**Open interest is T+1 — for everyone.** This is the single most important thing
+to understand about every gamma level in this brief. Three different feeds with
+three different freshnesses go into a wall:
+
+| Input | Freshness | What we do |
+|---|---|---|
+| Quotes, IV, greeks | ~15 min delayed, updates all day | Repriced with Black-Scholes at the CURRENT spot |
+| Volume | Live, intraday | Available but not used for walls (see below) |
+| **Open interest** | **Updated ONCE, overnight** | Used as-is — there is no alternative |
+
+Open interest is computed by the **OCC after the close**, from that day's
+clearing. Nobody has it in real time. Not us, not SpotGamma, not any paid
+vendor at any price — it is a property of how the options market clears, not a
+limitation of a free data source.
+
+**So yes, positions build during the day that the walls cannot see.** Measured
+on 2026-08-26: contract `NDXP260826C29300000` traded **3,039 contracts against
+an open interest of 35**. Across the whole book, 0DTE volume was **9.93×** its
+open interest, and the top-6 strikes ranked by OI overlapped the top-6 ranked by
+volume in only **2 of 6** cases.
+
+Two things stop that being fatal:
+
+1. **Most 0DTE volume never becomes open interest.** A contract bought at 10am
+   and expiring at 4pm is born and dies inside the session. It is churn, not a
+   standing wall. (It is still hedged while alive — the gamma is real for the
+   hours it exists, which is why intraday pins can form that we cannot see.)
+2. **The effect is concentrated in the near tenors.** Volume/OI by bucket:
+   0DTE **9.93**, this-week **4.65**, 2–10 dte **0.36**, full-45dte **0.95**.
+   The structural walls are large, slow positions at round strikes (30,000,
+   29,500, 27,000) that a single day's trading barely moves. Today's volume
+   clusters tightly around spot; OI clusters at round numbers.
+
+**Impact, by what you are reading:**
+
+| Level | Exposure to stale OI |
+|---|---|
+| Gamma flip / net-GEX regime | Negligible — dominated by large slow OI |
+| Structural 45-day walls | Negligible |
+| This-week call/put wall | Moderate |
+| Intraday 0DTE pins | **Significant, and unfixable at any price** |
+
+**Why we do not just weight by volume instead.** Volume has no sign. It does not
+say whether a trade opened or closed a position, or who was buying. Open
+interest at least has a standard convention to anchor it (dealers long calls,
+short puts). Weighting walls by volume would stack a second assumption on top of
+the first and call the result an improvement.
+
 - CBOE data is ~15 minutes delayed. This is a map, not a live feed.
 - Dealer positioning is *assumed* (long calls / short puts), not observed.
   Levels and regime are robust; absolute dollar figures are approximate.
