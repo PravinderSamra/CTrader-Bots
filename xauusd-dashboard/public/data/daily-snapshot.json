@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-08-26T06:32:08.421Z",
+  "generatedAt": "2026-08-26T07:38:16.011Z",
   "yields": {
     "US10Y": 4.7,
     "US2Y": 4.24,
-    "realYield10Y": null,
-    "realYield5Y": null,
+    "realYield10Y": 2.38,
+    "realYield5Y": 2.09,
     "curve2s10s": 46,
-    "breakeven10Y": null,
-    "breakeven5Y": null,
-    "forward5y5y": null,
+    "breakeven10Y": 2.32,
+    "breakeven5Y": 2.31,
+    "forward5y5y": 2.33,
     "dayOverDay": {
       "US10Y": -0.04,
       "US2Y": 0,
-      "realYield10Y": null
+      "realYield10Y": -0.02
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-09-16",
-    "probCut": null,
-    "probHold": null,
-    "probHike": null
+    "probCut": 0,
+    "probHold": 84,
+    "probHike": 16
   },
   "marketVolatility": {
     "GVZ": 28.28,
-    "VIX": null
+    "VIX": 15.85
   },
   "positioning": {
     "cotNetLong": 219495,
@@ -34,36 +34,79 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 875.3,
-    "gldWoWChange": 6.7,
-    "trend3W": "INFLOW"
+    "gldTonnes": 874.9,
+    "gldWoWChange": -0.4,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4630.405,
-    "XAGUSD": 68.7735,
-    "EURUSD": 1.16638,
-    "USDJPY": 159.057,
-    "USDCHF": 0.80358,
-    "USDCNH": 6.7204,
-    "GBPUSD": 1.36316,
-    "USDCAD": 1.38599,
-    "USDSEK": 9.46963,
-    "US500": 7669.5,
-    "GER40": 26280.05,
-    "UK100": 10911.55,
+    "XAUUSD": 4632.425,
+    "XAGUSD": 68.856,
+    "EURUSD": 1.16718,
+    "USDJPY": 158.9995,
+    "USDCHF": 0.80337,
+    "USDCNH": 6.71975,
+    "GBPUSD": 1.36363,
+    "USDCAD": 1.38592,
+    "USDSEK": 9.48433,
+    "US500": 7670,
+    "GER40": 26214.25,
+    "UK100": 10864.95,
     "ADR_14day": 99.1,
     "ADR_usedToday": 49.2,
     "goldSilverRatio": 67.3
   },
   "dollarLiquidity": {
-    "stlfsi": null,
-    "nfci": null
+    "stlfsi": -0.8285,
+    "nfci": -0.559
   },
   "geopoliticalRisk": {
     "gpr": 152.7,
     "gprDate": "2026-07"
   },
   "economicCalendar": [],
-  "newsItems": [],
+  "newsItems": [
+    {
+      "headline": "Bessent's D-Day sanctions are more Anzio, but Iran response is key - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-26T03:28:00.000Z",
+      "hoursAgo": 4.2
+    },
+    {
+      "headline": "ECB set for September rate hike with no appetite to signal more, sources say - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-25T19:22:00.000Z",
+      "hoursAgo": 12.3
+    },
+    {
+      "headline": "European shares gain on softer US Iran sanctions, falling oil prices - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-25T16:41:59.000Z",
+      "hoursAgo": 14.9
+    },
+    {
+      "headline": "Canada poised to retaliate against Trump tariffs: 'We're not waiting by the phone'",
+      "source": "CNBC",
+      "publishedAt": "2026-08-25T12:55:49.000Z",
+      "hoursAgo": 18.7
+    },
+    {
+      "headline": "What are the new US economic sanctions on Iran and its trade partners? - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-25T12:20:58.000Z",
+      "hoursAgo": 19.3
+    },
+    {
+      "headline": "Treasury yields steady as traders await more economic data",
+      "source": "CNBC",
+      "publishedAt": "2026-08-25T07:48:57.000Z",
+      "hoursAgo": 23.8
+    },
+    {
+      "headline": "Iran war makes multibillion-dollar Tanzania LNG more attractive, Equinor says - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-25T07:40:00.000Z",
+      "hoursAgo": 24
+    }
+  ],
   "briefing": null
 }
