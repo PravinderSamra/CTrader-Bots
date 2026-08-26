@@ -136,3 +136,64 @@ is not six independent failures, it is one pinning zone that happens to contain
 six named levels — which flatters the "chopped" count and is worth remembering
 before reading anything into it. It is also the clearest visual argument yet for
 H6's eventual breakdown by level *type*, and for splitting it by gamma regime.
+
+---
+
+# Correction: what the first retrospective actually tested
+
+**Raised by the trader, 2026-08-26.** The ask was to test *the chart* — the
+per-strike ladder with its C1–C3 / P1–P3 ranking — built from a prior day and
+compared against the next day's trading.
+
+**That is not what the first retrospective did.** It graded the **brief's level
+board**: 8 liquidity levels (PDH, PDL, session highs/lows, equal highs/lows) and
+9 gamma levels. The *timing* was right — levels published 25 Aug 22:11Z, graded
+against the 26 Aug session, a genuine forward test — but the **object was
+wrong**. The board and the ladder are different things:
+
+| | Level board | Chart ladder |
+|---|---|---|
+| Contents | curated mix of liquidity + gamma | every strike bin |
+| Filter | the day's range budget | none |
+| Ranking | none | **C1–C3 / P1–P3 by gamma force** |
+
+The C1–C3 and P1–P3 ranks — the thing the chart exists for — were **not in the
+test at all.**
+
+## Why it could not have been
+
+The ranking was never recoverable. CBOE serves a **live snapshot only**; there
+is no historical chain endpoint, so a chart for a past day cannot be rebuilt
+after the fact. The journal stores the summarised walls (`call_wall`,
+`put_wall`, `max_pain`) but not the ladder. That data was simply gone.
+
+**Fixed.** `gex_chart.persist()` now writes the full ladder — every strike bin,
+plus the ranked walls, call resistance, put support and flip — to
+`research/chart-ladders/` on every chart run. From 2026-08-26 onward every chart
+is exactly reproducible and gradeable.
+
+`gex_retro.py --ladder auto --to <day>` grades a persisted ladder against a
+later session. It refuses, with the reason, when no ladder older than the target
+exists — rather than silently falling back to the level board and producing a
+number that answers a different question. **The first genuine chart test is
+2026-08-26's ladder against 2026-08-27.**
+
+## What the partial gamma-only test showed
+
+Running the 25 Aug 22:11Z board filtered to gamma levels only — the closest
+available subset, still without the ranking:
+
+| | |
+|---|---|
+| Reached | 6 of 9 |
+| Held | 1 (call wall 29,343 — day's high was 29,353.8) |
+| Broke | 2 (structural call wall, max pain) |
+| Chopped | 3 (PD mid shelf, gamma flip, put wall) |
+
+Same headline as the full board: one excellent level, and a cluster of three
+that all chopped inside the same 50-point band. Suggestive, not evidence.
+
+**Lesson, and it is the same one as D1/D3.** "Test the chart" was answered by
+testing *the nearest thing that happened to be stored*. The honest move when
+the required data does not exist is to say so and start storing it — not to
+grade a proxy and report the number as though it answered the question.

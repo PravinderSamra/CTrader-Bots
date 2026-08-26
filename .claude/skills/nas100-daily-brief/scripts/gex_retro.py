@@ -97,6 +97,64 @@ def build(src_day, tgt_day, scan_time=None, gamma_only=False):
     }
 
 
+def build_from_ladder(ladder_path, tgt_day, top=None):
+    """Grade a PERSISTED CHART's ranked walls against a later session.
+
+    This is the test of the chart itself — the C1-C3 / P1-P3 ranking — rather
+    than of the brief's level board. They are different objects: the board is a
+    curated mix of liquidity and gamma levels filtered by the range budget; the
+    ladder is every strike bin ranked purely by gamma force.
+
+    Only possible for charts drawn after 2026-08-26, because CBOE serves a live
+    snapshot and nothing before that was saved.
+    """
+    import json as _json
+    d = _json.load(open(ladder_path))
+    bars = session_bars(tgt_day)
+    if not bars:
+        raise SystemExit(f"no bars for {tgt_day}")
+    picks = []
+    for x in d.get("ranked_positive", []) + d.get("ranked_negative", []):
+        picks.append({"price": x["price"],
+                      "name": f'{x["rank"]} {x["net_$bn"]:+.2f}bn ({x["oi"]:,} OI)',
+                      "kind": "gamma", "rank": x["rank"]})
+    for key, lab in (("call_resistance", "CALL RESISTANCE"),
+                     ("put_support", "PUT SUPPORT")):
+        if d.get(key) and not any(abs(p["price"] - d[key]) < 1 for p in picks):
+            picks.append({"price": d[key], "name": lab, "kind": "gamma",
+                          "rank": lab.split()[0][0]})
+    if d.get("flip"):
+        picks.append({"price": d["flip"], "name": "GAMMA FLIP", "kind": "gamma",
+                      "rank": "F"})
+    graded = []
+    for lv in picks:
+        g = R.grade_level(lv, bars)
+        graded.append({**lv, **g, "outcome": classify(g.get("reaction"))})
+    graded.sort(key=lambda l: -l["price"])
+    return {
+        "src_day": d["generated_utc"][:10], "tgt_day": tgt_day,
+        "scan_utc": d["generated_utc"], "scan_session": "CHART LADDER",
+        "scan_price": d["spot"], "bars": bars, "levels": graded,
+        "day_low": min(b["low"] for b in bars),
+        "day_high": max(b["high"] for b in bars),
+        "open": bars[0]["open"], "close": bars[-1]["close"],
+        "gamma_only": True, "from_ladder": os.path.basename(ladder_path),
+    }
+
+
+def latest_ladder(before_day=None):
+    import glob as _glob
+    root = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                        "..", "..", "..", "..")
+    hits = []
+    for base, _d, _f in os.walk(os.path.abspath(root)):
+        if base.endswith(os.path.join("research", "chart-ladders")):
+            hits = sorted(_glob.glob(os.path.join(base, "*.json")))
+    if before_day:
+        hits = [h for h in hits if os.path.basename(h)[:10] < before_day]
+    return hits[-1] if hits else None
+
+
 def score(d):
     lv = d["levels"]
     reached = [l for l in lv if l["outcome"] != "untouched"]
@@ -257,8 +315,20 @@ def main():
             raise SystemExit("no earlier journal day to draw from")
         src = days[-1]
     out = opt("--out", f"/tmp/NAS100-retro-{src}-vs-{tgt}.svg")
-    d = build(src, tgt, scan_time=opt("--scan"),
-              gamma_only=("--gamma-only" in a))
+    if "--ladder" in a:
+        lp = opt("--ladder")
+        if lp in (None, "auto"):
+            lp = latest_ladder(before_day=tgt)
+            if not lp:
+                raise SystemExit(
+                    "no persisted chart ladder earlier than %s. Ladders are "
+                    "saved from 2026-08-26 onward; CBOE has no historical "
+                    "chain, so charts before that cannot be rebuilt." % tgt)
+        d = build_from_ladder(lp, tgt)
+        out = opt("--out", f"/tmp/NAS100-retro-ladder-vs-{tgt}.svg")
+    else:
+        d = build(src, tgt, scan_time=opt("--scan"),
+                  gamma_only=("--gamma-only" in a))
     s = score(d)
     print(f"RETRO  {src} levels  vs  {tgt} price")
     print(f"  scan {d['scan_utc'][:16].replace('T',' ')}Z ({d['scan_session']}) "

@@ -68,7 +68,8 @@ format; re-extracting or rewording it is how the output drifts.
 | `quick` | `python3 brief.py` **+ `python3 gex_chart.py`** | Same two files. **Do NOT spawn the reviewer** |
 | `levels` | `python3 brief.py --levels` **+ `python3 gex_chart.py`** | Level board **and** the chart |
 | `chart` | `python3 gex_chart.py /tmp/nas100-gex.svg` | The chart on its own, when that is all that was asked for |
-| `retro` | `python3 gex_retro.py` | Draws a PAST scan's levels against what price actually did. Send the SVG with `display: "render"` |
+| `retro` | `python3 gex_retro.py` | Draws a PAST scan's LEVEL BOARD against what price actually did |
+| `retro chart` | `python3 gex_retro.py --ladder auto --to <day>` | Grades a past CHART's ranked walls (C1-C3 / P1-P3). Different object from the board — see `research/gamma-chart.md`. Refuses if no ladder predates the target day |
 | `review` | `python3 review_day.py` **+ `python3 gex_retro.py`** | Skip the brief. Run the retrospective in the FOREGROUND, report it, and attach the retro chart. **After 21:00 UTC also run the live-wall grading — see below** |
 
 `python3 brief.py --json` gives the structured payload when you need to compare

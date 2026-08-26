@@ -15,7 +15,7 @@ it stays sharp at any zoom on a phone.
     python3 gex_chart.py                    # writes /tmp/nas100-gex.svg
     python3 gex_chart.py out.svg --span 700
 """
-import sys
+import os, sys
 from datetime import datetime, timezone
 
 import gex_levels as gl
@@ -242,6 +242,57 @@ def render(c, path):
     return path
 
 
+def persist(c, root=None):
+    """Save the per-strike ladder this chart was drawn from.
+
+    Without this the chart cannot be retro-tested at all. CBOE serves a LIVE
+    snapshot only — there is no historical chain endpoint — so a chart for a
+    past day cannot be rebuilt after the fact. The journal keeps the summarised
+    walls (call_wall, put_wall, max_pain) but not the ladder, so the C1-C3 and
+    P1-P3 rankings that the chart is FOR were never recoverable.
+
+    Every chart run now writes its ladder. From here the retrospective can
+    rebuild any past chart exactly and grade its ranked walls against what
+    price did next.
+    """
+    import json
+    root = root or os.path.join(_repo_research(), "chart-ladders")
+    os.makedirs(root, exist_ok=True)
+    stamp = c["generated"].strftime("%Y-%m-%d-%H%M")
+    doc = {
+        "schema": 1,
+        "generated_utc": c["generated"].isoformat(timespec="seconds"),
+        "spot": c["spot"], "flip": c["flip"],
+        "bin_pts": c["bin_pts"], "dte_max": c["dte_max"],
+        "net_total_$bn": round(c["net_total"] / 1e9, 3),
+        "call_resistance": (c["call_res"] or {}).get("price"),
+        "put_support": (c["put_sup"] or {}).get("price"),
+        "ranked_positive": [{"rank": f"C{n}", "price": b["price"],
+                             "net_$bn": round(b["net"] / 1e9, 3),
+                             "oi": int(b["call_oi"])}
+                            for n, b in enumerate(c["ranked_up"], 1)],
+        "ranked_negative": [{"rank": f"P{n}", "price": b["price"],
+                             "net_$bn": round(b["net"] / 1e9, 3),
+                             "oi": int(b["put_oi"])}
+                            for n, b in enumerate(c["ranked_dn"], 1)],
+        "ladder": [{"price": b["price"], "net_$bn": round(b["net"] / 1e9, 4),
+                    "call_oi": int(b["call_oi"]), "put_oi": int(b["put_oi"])}
+                   for b in c["bars"]],
+    }
+    path = os.path.join(root, stamp + ".json")
+    json.dump(doc, open(path, "w"), indent=1)
+    return path
+
+
+def _repo_research():
+    d = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                     "..", "..", "..", ".."))
+    for base, _dirs, _f in os.walk(d):
+        if base.endswith("NAS100 Daily Brief agent skill"):
+            return os.path.join(base, "research")
+    return os.path.join(d, "research")
+
+
 if __name__ == "__main__":
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     out = args[0] if args else "/tmp/nas100-gex.svg"
@@ -252,3 +303,5 @@ if __name__ == "__main__":
     bid, ask = ct.get_live_price("NAS100")
     c = collect(cfd_price=round((bid + ask) / 2, 1), span=span)
     print(render(c, out))
+    if "--no-persist" not in sys.argv:
+        print(persist(c))
