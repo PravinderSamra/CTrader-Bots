@@ -987,6 +987,72 @@
         "verdict": "UNSCORABLE",
         "signalVerdicts": []
       }
+    },
+    {
+      "at": "2026-08-26T18:52:01.626Z",
+      "londonTime": "19:52 BST",
+      "mode": "CLOSED",
+      "price": 10846.65,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 99% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "99% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDH 10904) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "US PCE Price Index @ 13:30 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 3,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": 10905.9,
+        "orbLow": 10872,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10924.6,
+        "overnightLow": 10855,
+        "priorDayHigh": 10904,
+        "priorDayLow": 10821.8,
+        "gapPct": -0.48,
+        "adr14": 83.4,
+        "adrUsedPct": 99
+      },
+      "outcome": {
+        "resolvedAt": "2026-08-26T18:52:03.958Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }

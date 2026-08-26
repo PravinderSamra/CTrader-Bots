@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-26T16:10:52.821Z",
+  "generatedAt": "2026-08-26T18:51:47.199Z",
   "yields": {
     "US10Y": 4.7,
     "US2Y": 4.24,
@@ -34,29 +34,29 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 881.3,
-    "gldWoWChange": 3.7,
-    "trend3W": "INFLOW"
+    "gldTonnes": 881.6,
+    "gldWoWChange": 0.3,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4598.505,
-    "XAGUSD": 67.9485,
-    "EURUSD": 1.16512,
-    "USDJPY": 159.3575,
-    "USDCHF": 0.80554,
-    "USDCNH": 6.72361,
-    "GBPUSD": 1.3595,
-    "USDCAD": 1.3876,
-    "USDSEK": 9.53753,
-    "US500": 7669,
-    "GER40": 26267.25,
-    "UK100": 10865.45,
+    "XAUUSD": 4596.86,
+    "XAGUSD": 68.22,
+    "EURUSD": 1.16524,
+    "USDJPY": 159.3925,
+    "USDCHF": 0.80531,
+    "USDCNH": 6.723,
+    "GBPUSD": 1.35919,
+    "USDCAD": 1.38772,
+    "USDSEK": 9.53147,
+    "US500": 7680.8,
+    "GER40": 26282.25,
+    "UK100": 10846.55,
     "ADR_14day": 99.1,
     "ADR_usedToday": 90.8,
-    "goldSilverRatio": 67.7
+    "goldSilverRatio": 67.4
   },
   "dollarLiquidity": {
-    "stlfsi": -0.8285,
+    "stlfsi": -0.8107,
     "nfci": -0.566
   },
   "geopoliticalRisk": {
@@ -66,15 +66,27 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Why we need ‘Human Reserved’ jobs, says Bill Gates—and how we can combat the worst of the AI upheaval",
+      "source": "CNBC",
+      "publishedAt": "2026-08-26T16:44:08.000Z",
+      "hoursAgo": 2.1
+    },
+    {
+      "headline": "European shares muted as investors assess Iran-Oman talks, U.S. inflation - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-26T16:41:46.000Z",
+      "hoursAgo": 2.2
+    },
+    {
+      "headline": "Oil settles down more than 3%; investors shrug off US sanctions on Iran - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-25T19:40:57.000Z",
+      "hoursAgo": 23.2
+    },
+    {
       "headline": "ECB set for September rate hike with no appetite to signal more, sources say - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T19:22:00.000Z",
-      "hoursAgo": 20.8
-    },
-    {
-      "headline": "European shares gain on softer US Iran sanctions, falling oil prices - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-25T16:41:59.000Z",
       "hoursAgo": 23.5
     }
   ],
