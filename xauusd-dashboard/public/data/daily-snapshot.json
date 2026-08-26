@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-26T08:00:21.549Z",
+  "generatedAt": "2026-08-26T08:32:02.002Z",
   "yields": {
     "US10Y": 4.7,
     "US2Y": 4.24,
@@ -22,7 +22,7 @@
     "probHike": 16
   },
   "marketVolatility": {
-    "GVZ": null,
+    "GVZ": 28.28,
     "VIX": 15.85
   },
   "positioning": {
@@ -35,25 +35,25 @@
   },
   "etfFlows": {
     "gldTonnes": 875.8,
-    "gldWoWChange": 0.9,
-    "trend3W": "INFLOW"
+    "gldWoWChange": 0,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4627.5,
-    "XAGUSD": 68.681,
-    "EURUSD": 1.16702,
-    "USDJPY": 159.011,
-    "USDCHF": 0.80312,
-    "USDCNH": 6.71967,
-    "GBPUSD": 1.36309,
-    "USDCAD": 1.38633,
-    "USDSEK": 9.48622,
-    "US500": 7672.5,
-    "GER40": 26272.85,
-    "UK100": 10872.55,
+    "XAUUSD": 4627.64,
+    "XAGUSD": 68.5805,
+    "EURUSD": 1.16751,
+    "USDJPY": 158.9805,
+    "USDCHF": 0.80302,
+    "USDCNH": 6.71997,
+    "GBPUSD": 1.3632,
+    "USDCAD": 1.38621,
+    "USDSEK": 9.4862,
+    "US500": 7674,
+    "GER40": 26259.85,
+    "UK100": 10877.45,
     "ADR_14day": 99.1,
-    "ADR_usedToday": 49.2,
-    "goldSilverRatio": 67.4
+    "ADR_usedToday": 51.7,
+    "goldSilverRatio": 67.5
   },
   "dollarLiquidity": {
     "stlfsi": -0.8285,
@@ -69,31 +69,31 @@
       "headline": "Bessent's D-Day sanctions are more Anzio, but Iran response is key - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-26T03:28:00.000Z",
-      "hoursAgo": 4.5
+      "hoursAgo": 5.1
     },
     {
       "headline": "ECB set for September rate hike with no appetite to signal more, sources say - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T19:22:00.000Z",
-      "hoursAgo": 12.6
+      "hoursAgo": 13.2
     },
     {
       "headline": "European shares gain on softer US Iran sanctions, falling oil prices - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T16:41:59.000Z",
-      "hoursAgo": 15.3
+      "hoursAgo": 15.8
     },
     {
       "headline": "Canada poised to retaliate against Trump tariffs: 'We're not waiting by the phone'",
       "source": "CNBC",
       "publishedAt": "2026-08-25T12:55:49.000Z",
-      "hoursAgo": 19.1
+      "hoursAgo": 19.6
     },
     {
       "headline": "What are the new US economic sanctions on Iran and its trade partners? - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T12:20:58.000Z",
-      "hoursAgo": 19.7
+      "hoursAgo": 20.2
     }
   ],
   "briefing": null
