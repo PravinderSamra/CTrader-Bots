@@ -12,7 +12,7 @@ enough of them to act on — not to react to the most recent session.
 """
 import glob, json, os, sys
 from collections import defaultdict
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 import journal, review_day as R
 
@@ -55,6 +55,18 @@ def _rollover_corrupt(scan_utc, used_pct, window_min=90):
     return (t - roll).total_seconds() / 60 < window_min
 
 
+def _day_complete(day, bars, min_bars=240):
+    """Has this trading day ended? It runs to 21:00 UTC on its own date."""
+    try:
+        d = datetime.strptime(day, "%Y-%m-%d")
+    except ValueError:
+        return False
+    end = d.replace(hour=21, minute=0, tzinfo=timezone.utc)
+    if datetime.now(timezone.utc) < end:
+        return False
+    return bars >= min_bars
+
+
 def collect(root=None):
     root = root or journal.JOURNAL_ROOT
     days = sorted(d for d in os.listdir(root)
@@ -67,13 +79,22 @@ def collect(root=None):
         rev = R.review(day, root)
         if "scans" not in rev:
             continue
-        # A day still in progress has almost no forward data to grade against.
-        # The first run of this caught a scan taken 56 minutes into a new
-        # trading day being scored as "extension 0.0, traversal 26.1" — a
-        # meaningless observation that would still have entered the averages.
+        # Only grade a day that has actually FINISHED.
+        #
+        # This used to test `bars < 150`, which does not work: the trading day
+        # starts at 21:00 UTC the previous evening, so 150 M_5 bars accumulate
+        # by 09:30 UTC — four hours before NY even opens. On 2026-08-26 at
+        # 13:23 UTC it admitted a day with 185 bars (complete days have 276),
+        # whose "close" was just the last tick and whose range had not finished
+        # extending. That single unfinished day flipped H1's mean error from
+        # +46.6 to -19.9 — a SIGN CHANGE — and turned `actionable` to YES while
+        # HYPOTHESES.md still correctly said nothing was actionable.
+        #
+        # A day is done when the clock says so. Bars are kept only as a
+        # secondary sanity check against a broken or gappy feed.
         sess = rev.get("actual_session") or {}
-        if sess.get("bars", 0) < 150:            # ~12.5h of M_5 bars
-            per_day[day] = {**sess, "_excluded": "session incomplete"}
+        if not _day_complete(day, sess.get("bars", 0)):
+            per_day[day] = {**sess, "_excluded": "session not finished"}
             continue
         kept = {s["scan_utc"] for s in _dedupe(scans)}
         for sc in rev["scans"]:
@@ -88,13 +109,28 @@ def collect(root=None):
             # dragged H1's mean from 46.6 to 100.7. Grading it would
             # manufacture a conclusion out of a bug — exactly what W1/W2 were
             # withdrawn for. Record it, exclude it from the statistics.
-            if p.get("fuel_state") == "SESSION_PENDING" or \
-                    _rollover_corrupt(sc["scan_utc"], p.get("adr_used_pct")):
-                excluded.append({"day": day, "time": sc["scan_utc"][11:16],
-                                 "why": "fuel measured across the day rollover"})
-                continue
+            # The corruption is FIELD-level, so the quarantine is too.
+            #
+            # A scan taken across the 21:00 UTC rollover had no bars for the
+            # new day, so its FUEL described yesterday's finished range. Its
+            # direction call is untouched by that — fuel reports and never
+            # votes, which D1 establishes and the bias components confirm.
+            # Dropping the whole row therefore threw away good evidence: both
+            # quarantined scans carried WRONG direction calls, so the
+            # scoreboard read 1 right / 1 wrong when the honest tally was
+            # 1 right / 2 wrong. Worse, the SESSION_PENDING branch would have
+            # done that to EVERY future overnight scan — precisely the
+            # population H7 exists to study.
+            fuel_bad = (p.get("fuel_state") == "SESSION_PENDING" or
+                        _rollover_corrupt(sc["scan_utc"], p.get("adr_used_pct")))
+            if fuel_bad:
+                excluded.append({"scan": sc["scan_utc"][:16].replace("T", " "),
+                                 "day": day, "session": sc["session"],
+                                 "why": "fuel measured across the day rollover "
+                                        "— fuel fields dropped, direction kept"})
             rows.append({
                 "day": day, "time": sc["scan_utc"][11:16], "session": sc["session"],
+                "scan_utc": sc["scan_utc"], "fuel_bad": fuel_bad,
                 "budget": p["budget"], "extension": a["range_extension"],
                 "traversal": a["price_traversal"], "fuel_state": p["fuel_state"],
                 "bias": p["score"], "call": sc["direction_call"],
@@ -109,17 +145,21 @@ def summarise(rows):
     calls = [r["call"] for r in rows]
     hits = [r["hit_rate"] for r in rows if r["hit_rate"] is not None]
 
-    # H1: does the budget forecast range EXTENSION?
-    ext_err = [(r["extension"] - r["budget"]) for r in rows]
-    # H5: is it worse early in the session than late?
-    early = [r for r in rows if r["session"] in ("ASIA", "LONDON", "PRE_NY")]
-    late = [r for r in rows if r["session"] in ("NY_OPEN", "NY_MIDDAY", "NY_PM", "NY_CLOSE")]
+    # H1/H5 read the fuel fields, so they use only rows whose fuel is sound.
+    # Direction and level stats above use EVERY row — a rollover scan's call
+    # is perfectly good evidence.
+    fuel_rows = [r for r in rows if not r.get("fuel_bad")]
+    ext_err = [(r["extension"] - r["budget"]) for r in fuel_rows]
+    early = [r for r in fuel_rows if r["session"] in ("ASIA", "LONDON", "PRE_NY")]
+    late = [r for r in fuel_rows
+            if r["session"] in ("NY_OPEN", "NY_MIDDAY", "NY_PM", "NY_CLOSE")]
 
     def mean(xs):
         return round(sum(xs) / len(xs), 1) if xs else None
 
     return {
         "trading_days": n_days, "scans": len(rows),
+        "scans_with_sound_fuel": len(fuel_rows),
         "actionable": n_days >= MIN_SESSIONS,
         "min_sessions_required": MIN_SESSIONS,
         "direction": {"correct": calls.count("CORRECT"),
@@ -139,7 +179,7 @@ def summarise(rows):
             {"day": r["day"], "time": r["time"], "bias": r["bias"],
              "call": r["call"], "extension": r["extension"],
              "traversal": r["traversal"]}
-            for r in rows if r["fuel_state"] in ("LOW_FUEL", "EXHAUSTED")
+            for r in fuel_rows if r["fuel_state"] in ("LOW_FUEL", "EXHAUSTED")
         ],
     }
 
@@ -158,12 +198,14 @@ if __name__ == "__main__":
     print(f"{'day':<12}{'time':>6} {'session':<10}{'budget':>8}{'extension':>11}"
           f"{'traversal':>11}{'err':>7}  {'bias':>5} {'call':<10}")
     for r in rows:
+        flag = " *" if r.get("fuel_bad") else ""
         print(f"{r['day']:<12}{r['time']:>6} {r['session']:<10}{r['budget']:>8.1f}"
               f"{r['extension']:>11.1f}{r['traversal']:>11.1f}"
-              f"{r['extension']-r['budget']:>7.1f}  {r['bias']:>+5d} {r['call']:<10}")
+              f"{r['extension']-r['budget']:>7.1f}  {r['bias']:>+5d} "
+              f"{r['call']:<10}{flag}")
     print(f"\nH1 budget vs range EXTENSION: mean error "
           f"{s['H1_budget_vs_extension']['mean_error_pts']} pts "
-          f"(+ = range grew more than budgeted)")
+          f"(+ = range grew more than budgeted, n={s['scans_with_sound_fuel']})")
     h5 = s["H5_early_vs_late"]
     print(f"H5 early ({h5['early_n']}) mean err {h5['early_mean_error']}  vs  "
           f"late ({h5['late_n']}) mean err {h5['late_mean_error']}")
@@ -171,9 +213,11 @@ if __name__ == "__main__":
     print(f"direction: {d['correct']} right / {d['wrong']} wrong / "
           f"{d['no_call']} no-call   levels touched {s['mean_level_hit_rate']}")
     if excluded:
-        print("\nEXCLUDED from the statistics (corrupt input, not a failed forecast):")
+        print("\n* FUEL fields excluded (corrupt input, not a failed forecast).")
+        print("  Direction calls from these scans ARE counted.")
         for x in excluded:
-            print(f"  {x['day']} {x['time']}  {x['why']}")
+            print(f"  scanned {x['scan']}Z  (trading day {x['day']}, "
+                  f"{x['session']})")
     if s["H2_exhausted_scans"]:
         print("\nH2 — low-fuel / exhausted scans (does fading beat continuation?):")
         for x in s["H2_exhausted_scans"]:

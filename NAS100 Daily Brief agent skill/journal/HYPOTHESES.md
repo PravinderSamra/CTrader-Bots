@@ -41,11 +41,19 @@ range did not extend. Meanwhile price travelled **256.5pts inside** it. Early
 LONDON scans still run ~1.9× light. Traversal exceeded the budget every time —
 which is the point: they measure different things.
 
-*Excluded:* 25 Aug 21:56 OVERNIGHT (budget 0.0 vs extension 371.0). Its fuel was
+*Fuel excluded:* the scan of **24 Aug 21:56Z** (trading day 25 Aug), budget 0.0
+vs extension 371.0. Its fuel was
 measured across the 21:00 UTC rollover and described the *previous* day's
 finished range — a corrupt input, not a failed forecast. Counting it would have
 dragged the mean from 46.6 to 100.7 and invented a systematic bias out of a bug.
-See D1 below.
+See D1 below. Its *direction* call is still counted — see D3 on why only the
+fuel fields are quarantined.
+
+**Naming convention (adopted 26 Aug).** A scan is named by its **scan timestamp
+in UTC**, with the trading day in brackets where it differs. This register
+previously called one scan "25 Aug 21:56" in one place and "24 Aug 21:56" in
+another — one scan, two names, in the file whose entire job is to prevent
+double-counting.
 
 **Threshold.** 3+ days. If the exhausted-point accuracy holds and early-session
 error persists, the fix is a time-of-day correction, not a blanket multiplier.
@@ -166,7 +174,7 @@ because the chain reprices and rolls before the session that would use it.
 the two strategies the brief recommends. If it moves several hundred points
 overnight, an overnight regime call is close to worthless.
 
-**Evidence so far (1 day).** 24 Aug 21:56 published flip **29,271.0** with price
+**First observation.** The scan of 24 Aug 21:56Z published flip **29,271.0** with price
 29,051.2 → "BELOW flip, SHORT gamma, dealers amplify" and **−3** on the bias
 score, the single largest bearish component. By 25 Aug 13:04 the flip was
 **28,976.3** with price 29,252.8 → "ABOVE flip, LONG gamma". The regime label
@@ -175,8 +183,26 @@ not because price moved. The strategy recommendation inverted with it
 (Strategy 2 → Strategy 1). The overnight scan's direction call was WRONG (−15
 STRONGLY BEARISH, day closed +140).
 
+**Second observation.** 25 Aug 22:11Z flip **29,098.5** → 26 Aug 13:12Z flip
+**29,207.2**: drift **+108.7pts**, and the regime label inverted again (long →
+short gamma). Weaker evidence than the first, because price also moved 153pts
+over the same window, so the inversion is not purely flip drift. **2 of 3.**
+
+**Anomaly that widens the scope.** On 24 Aug the flip moved **192 points between
+the 08:28 and 08:30 scans** — 120 seconds apart, on a chain that cannot have
+repriced in that time — while price moved 8.9pts. The regime label inverted.
+The other four short-interval scan pairs in the journal drift only 0.4–23.5pts,
+so this is a single anomalous observation, possibly a cold-start artefact on the
+session's first scan (08:28's flip of 29,049.9 nearly matches 13:45's 29,049.6,
+while everything between sits 200–390pts higher).
+
+H7 was framed as "the chain reprices and rolls **overnight**". That mechanism
+does not explain a 192pt move in two minutes. **Widen H7 from overnight
+staleness to flip stability generally**, and record consecutive-scan drift, not
+just overnight drift. One data point — no proposal.
+
 **Threshold.** 3+ days. Record the overnight flip and the next-day pre-NY flip;
-measure the drift.
+measure the drift. Also log flip drift between any two consecutive scans.
 
 **Status: OBSERVING. Do not implement.** If the drift is consistently large the
 fix is to *widen the confidence band* on overnight regime calls, or suppress the
@@ -286,6 +312,59 @@ cannot enter the statistics.
 It did **not** affect the direction call: fuel reports and never votes, so the
 bias score was untouched. The two failures on 24–25 Aug overnight are
 independent — this one and H7.
+
+**D2 — Secondary-walls table described put strikes backwards.** *Found and fixed
+2026-08-26, on the first live scan that contained any.* Under this repo's stated
+dealer convention (long calls, short puts) a put-dominant strike means dealers
+are **short** gamma there: they amplify, so price accelerates through rather
+than stalling. The table called every put-dominant strike below spot *"a genuine
+floor while we stay in long gamma"* — the opposite behaviour, carrying a
+long-gamma caveat, on a session trading BELOW the flip in short gamma.
+
+The result was two "genuine floors" printed below spot on the same page as the
+brief's own *"DOWNSIDE path: clear … nothing structural to slow a breakdown. Do
+not fade it."* Contradictory guidance in one document, on the side the trader
+would have been managing a short from.
+
+Moneyness was wrong too: a put struck **above** spot is in-the-money, not out.
+The label read *"out-of-the-money put gamma above spot — thin, expect little
+reaction"* while attached to the single largest force in the table (1.02bn
+across 18,551 contracts).
+
+Behaviour is now derived from the **sign of dealer gamma** at the strike rather
+than from which side of spot it sits, and is regime-aware.
+
+*Lesson.* The bug survived a full build, a render check and a docs pass because
+every one of those confirmed the table *appeared*. Nothing checked it against
+the regime read on the same page. **A new panel needs one test that it does not
+contradict the rest of the brief**, not just that it renders.
+
+**D3 — `track.py` graded an unfinished trading day.** *Found by the reviewer and
+fixed 2026-08-26.* The completeness guard tested `bars < 150`. That does not
+work: the trading day starts at 21:00 UTC the **previous evening**, so 150 M_5
+bars accumulate by 09:30 UTC — four hours before NY opens. At 13:23 UTC on
+26 Aug it admitted a day with 185 bars (complete days have 276), whose "close"
+was the last tick and whose range had not finished extending.
+
+That single unfinished day flipped **H1's mean error from +46.6 to −19.9 — a
+sign change** — and turned `actionable` to **YES** while HYPOTHESES.md still
+correctly said nothing was actionable. Fixed to test the wall clock
+(`now_utc >= 21:00 UTC on the day's own date`), with the bar count kept only as
+a secondary guard against a gappy feed.
+
+The same pass fixed an **over-exclusion**: the rollover quarantine dropped whole
+rows, but the corruption is field-level. D1 establishes that fuel reports and
+never votes, so those scans' direction calls are sound. Dropping them made the
+scoreboard read 1 right / 1 wrong when the honest tally was **1 right / 2
+wrong**, and the `SESSION_PENDING` branch would have done that to every future
+overnight scan — exactly the population H7 exists to study. Fuel fields are now
+quarantined; direction and level statistics keep the row, marked `*`.
+
+*Lesson.* Both D1 and D3 are the same shape: **a guard written against the
+symptom rather than the definition.** "Not enough bars" and "over 100% ADR" are
+proxies; "the day has not ended" and "this field was measured across a
+rollover" are the actual conditions. Proxy guards fail silently and in the
+flattering direction.
 
 ---
 
