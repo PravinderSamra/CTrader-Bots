@@ -67,10 +67,35 @@ format; re-extracting or rewording it is how the output drifts.
 | *(none)* / `full` | `python3 brief.py` | Complete brief, then spawn the reviewer (step 3) |
 | `quick` | `python3 brief.py` | Same brief. **Do NOT spawn the reviewer** |
 | `levels` | `python3 brief.py --levels` | Header, fuel + stop-management line, level board only |
-| `review` | `python3 review_day.py` | Skip the brief. Run the retrospective in the FOREGROUND and report it |
+| `chart` | `python3 gex_chart.py /tmp/nas100-gex.svg` | The per-strike gamma profile as an SVG. Send it with `SendUserFile` using `display: "render"` — it is the deliverable, not the terminal output |
+| `review` | `python3 review_day.py` | Skip the brief. Run the retrospective in the FOREGROUND and report it. **After 21:00 UTC also run the live-wall grading — see below** |
 
 `python3 brief.py --json` gives the structured payload when you need to compare
 against a previous scan.
+
+**The chart is additive, never a replacement.** A `full` scan still delivers the
+markdown brief as a file. Attach the chart alongside it when the user asks for
+one, or when the question is about wall locations.
+
+## Live-wall research (NOT part of any scan output)
+
+`intraday_oi.py` estimates today's open interest from today's volume, and
+`oi_accuracy.py` grades yesterday's estimate against what the OCC published this
+morning. **Neither feeds the brief.** They write only to
+`NAS100 Daily Brief agent skill/research/live-walls/`.
+
+At an end-of-day review (after 21:00 UTC):
+
+```
+python3 intraday_oi.py            # snapshot today, before the day rolls
+python3 oi_accuracy.py --fit      # grade yesterday, refit the calibration
+```
+
+Then append the result to `research/live-walls/ACCURACY-LOG.md` and report it as
+an **appendix** to the review — clearly separated from the brief's own findings.
+Do not act on it, do not put its numbers in the level board, and do not promote
+it into the scan until the accuracy log earns it. A snapshot is gradeable on
+D+1 only; the tool enforces that and will refuse otherwise.
 
 If it errors, relay the error. A missing `CTRADER_MCP_SLUG` is the usual cause —
 see `SETUP-SECRETS.md` in the project folder. **Never fabricate a brief.**

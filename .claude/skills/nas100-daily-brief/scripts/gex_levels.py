@@ -17,7 +17,30 @@ from zoneinfo import ZoneInfo
 import cboe_gex as G
 
 
-def load_combined(max_dte=45):
+_CHAIN_CACHE = {}
+_CHAIN_TTL = 90          # seconds
+
+
+def load_combined(max_dte=45, _cache=True):
+    """Memoised: one scan legitimately asks for the chain more than once.
+
+    gex_chart calls build() (which loads the chain) and then wanted the raw
+    rows for the per-strike bars, which loaded it again — four HTTP round trips
+    to CBOE for one picture, and enough to earn a 429. The chain does not
+    change inside a single scan, so serve it from a short TTL cache instead.
+    """
+    import time
+    key = max_dte
+    if _cache and key in _CHAIN_CACHE:
+        ts, payload = _CHAIN_CACHE[key]
+        if time.time() - ts < _CHAIN_TTL:
+            return payload
+    payload = _load_combined_uncached(max_dte)
+    _CHAIN_CACHE[key] = (time.time(), payload)
+    return payload
+
+
+def _load_combined_uncached(max_dte=45):
     S_ndx, _ = G.spot_ndx()
     qq = G._get(G.CBOE_QTE.format("QQQ"))["data"]
     S_qqq = float(qq.get("current_price") or qq.get("close"))

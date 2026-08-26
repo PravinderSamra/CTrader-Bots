@@ -13,6 +13,7 @@ Argument passed: `$ARGUMENTS`
 | *(none)* / `full` | `brief.py` | Spawn `brief-reviewer` in the background if a completed unreviewed day exists |
 | `quick` | `brief.py` | Nothing — no reviewer |
 | `levels` | `brief.py --levels` | Nothing |
+| `chart` | The per-strike gamma profile as a chart — every strike's net gamma with sizes, walls, flip and spot marked. Built for wall-to-wall trading |
 | `review` | `review_day.py` | Report it in the foreground; no brief |
 
 Every mode is a flag on an existing script. **Never hand-assemble the output** —
