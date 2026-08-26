@@ -64,18 +64,42 @@ format; re-extracting or rewording it is how the output drifts.
 
 | Mode | Command | Output |
 |---|---|---|
-| *(none)* / `full` | `python3 brief.py` | Complete brief, then spawn the reviewer (step 3) |
-| `quick` | `python3 brief.py` | Same brief. **Do NOT spawn the reviewer** |
-| `levels` | `python3 brief.py --levels` | Header, fuel + stop-management line, level board only |
-| `chart` | `python3 gex_chart.py /tmp/nas100-gex.svg` | The per-strike gamma profile as an SVG. Send it with `SendUserFile` using `display: "render"` — it is the deliverable, not the terminal output |
-| `review` | `python3 review_day.py` | Skip the brief. Run the retrospective in the FOREGROUND and report it. **After 21:00 UTC also run the live-wall grading — see below** |
+| *(none)* / `full` | `python3 brief.py` **+ `python3 gex_chart.py`** | Complete brief **and** the gamma chart — BOTH files, every time. Then spawn the reviewer (step 3) |
+| `quick` | `python3 brief.py` **+ `python3 gex_chart.py`** | Same two files. **Do NOT spawn the reviewer** |
+| `levels` | `python3 brief.py --levels` **+ `python3 gex_chart.py`** | Level board **and** the chart |
+| `chart` | `python3 gex_chart.py /tmp/nas100-gex.svg` | The chart on its own, when that is all that was asked for |
+| `retro` | `python3 gex_retro.py` | Draws a PAST scan's levels against what price actually did. Send the SVG with `display: "render"` |
+| `review` | `python3 review_day.py` **+ `python3 gex_retro.py`** | Skip the brief. Run the retrospective in the FOREGROUND, report it, and attach the retro chart. **After 21:00 UTC also run the live-wall grading — see below** |
 
 `python3 brief.py --json` gives the structured payload when you need to compare
 against a previous scan.
 
-**The chart is additive, never a replacement.** A `full` scan still delivers the
-markdown brief as a file. Attach the chart alongside it when the user asks for
-one, or when the question is about wall locations.
+### Every scan delivers TWO files. Not one.
+
+```
+cd .claude/skills/nas100-daily-brief/scripts
+STAMP=$(date -u +%Y%m%d-%H%M)
+python3 brief.py     > "/tmp/NAS100-brief-$STAMP.md"
+python3 gex_chart.py   "/tmp/NAS100-gamma-$STAMP.svg"
+```
+
+Then send **both in a single `SendUserFile` call**, with
+`display: "render"` so the chart opens in the panel:
+
+- `/tmp/NAS100-brief-$STAMP.md` — the written brief
+- `/tmp/NAS100-gamma-$STAMP.svg` — the per-strike call/put wall chart
+
+This is not optional and not conditional on being asked. A scan that delivered
+only the markdown is an **incomplete scan** — the trader has said so explicitly.
+The same stamp on both files keeps a scan's pair together.
+
+`levels` mode sends both as well. Only `chart` mode sends the SVG alone.
+
+A `review` sends the written review **plus** the retro chart from
+`gex_retro.py` — the same two-file rule applies to reviews.
+
+**If the chart fails, still send the brief**, and say plainly that the chart
+failed and why. One missing file is a degraded scan; two is a failed one.
 
 ## Live-wall research (NOT part of any scan output)
 
