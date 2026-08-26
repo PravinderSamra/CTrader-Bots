@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-26T12:32:15.402Z",
+  "generatedAt": "2026-08-26T13:45:50.076Z",
   "yields": {
     "US10Y": 4.7,
     "US2Y": 4.24,
@@ -22,8 +22,8 @@
     "probHike": 16
   },
   "marketVolatility": {
-    "GVZ": 28.28,
-    "VIX": 15.85
+    "GVZ": 27.69,
+    "VIX": 15.45
   },
   "positioning": {
     "cotNetLong": 219495,
@@ -34,30 +34,30 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 877.9,
-    "gldWoWChange": 1.2,
-    "trend3W": "INFLOW"
+    "gldTonnes": 877,
+    "gldWoWChange": -0.9,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4616.26,
-    "XAGUSD": 68.632,
-    "EURUSD": 1.16647,
-    "USDJPY": 159.088,
-    "USDCHF": 0.80451,
-    "USDCNH": 6.72008,
-    "GBPUSD": 1.36188,
-    "USDCAD": 1.38676,
-    "USDSEK": 9.50216,
-    "US500": 7670.4,
-    "GER40": 26381.05,
-    "UK100": 10885.15,
+    "XAUUSD": 4621.06,
+    "XAGUSD": 68.3685,
+    "EURUSD": 1.16556,
+    "USDJPY": 159.3575,
+    "USDCHF": 0.80517,
+    "USDCNH": 6.72267,
+    "GBPUSD": 1.36038,
+    "USDCAD": 1.38724,
+    "USDSEK": 9.51316,
+    "US500": 7683.7,
+    "GER40": 26460.35,
+    "UK100": 10910.95,
     "ADR_14day": 99.1,
-    "ADR_usedToday": 61.5,
-    "goldSilverRatio": 67.3
+    "ADR_usedToday": 76,
+    "goldSilverRatio": 67.6
   },
   "dollarLiquidity": {
     "stlfsi": -0.8285,
-    "nfci": -0.559
+    "nfci": -0.566
   },
   "geopoliticalRisk": {
     "gpr": 152.7,
@@ -69,19 +69,13 @@
       "headline": "ECB set for September rate hike with no appetite to signal more, sources say - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T19:22:00.000Z",
-      "hoursAgo": 17.2
+      "hoursAgo": 18.4
     },
     {
       "headline": "European shares gain on softer US Iran sanctions, falling oil prices - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T16:41:59.000Z",
-      "hoursAgo": 19.8
-    },
-    {
-      "headline": "Canada poised to retaliate against Trump tariffs: 'We're not waiting by the phone'",
-      "source": "CNBC",
-      "publishedAt": "2026-08-25T12:55:49.000Z",
-      "hoursAgo": 23.6
+      "hoursAgo": 21.1
     }
   ],
   "briefing": null
