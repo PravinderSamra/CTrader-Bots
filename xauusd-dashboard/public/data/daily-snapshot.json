@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-08-25T20:18:23.782Z",
+  "generatedAt": "2026-08-26T06:32:08.421Z",
   "yields": {
     "US10Y": 4.7,
     "US2Y": 4.24,
-    "realYield10Y": 2.38,
-    "realYield5Y": 2.09,
+    "realYield10Y": null,
+    "realYield5Y": null,
     "curve2s10s": 46,
-    "breakeven10Y": 2.32,
-    "breakeven5Y": 2.32,
-    "forward5y5y": 2.32,
+    "breakeven10Y": null,
+    "breakeven5Y": null,
+    "forward5y5y": null,
     "dayOverDay": {
       "US10Y": -0.04,
       "US2Y": 0,
-      "realYield10Y": -0.02
+      "realYield10Y": null
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-09-16",
-    "probCut": 0,
-    "probHold": 84,
-    "probHike": 16
+    "probCut": null,
+    "probHold": null,
+    "probHike": null
   },
   "marketVolatility": {
     "GVZ": 28.28,
-    "VIX": 15.85
+    "VIX": null
   },
   "positioning": {
     "cotNetLong": 219495,
@@ -34,85 +34,36 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 868.6,
-    "gldWoWChange": -0.5,
-    "trend3W": "FLAT"
+    "gldTonnes": 875.3,
+    "gldWoWChange": 6.7,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4665.745,
-    "XAGUSD": 68.882,
-    "EURUSD": 1.16775,
-    "USDJPY": 159.152,
-    "USDCHF": 0.80103,
-    "USDCNH": 6.71682,
-    "GBPUSD": 1.36528,
-    "USDCAD": 1.38319,
-    "USDSEK": 9.44708,
-    "US500": 7677.4,
-    "GER40": 26292.25,
-    "UK100": 10900.35,
-    "ADR_14day": 99.9,
-    "ADR_usedToday": 91.1,
-    "goldSilverRatio": 67.7
+    "XAUUSD": 4630.405,
+    "XAGUSD": 68.7735,
+    "EURUSD": 1.16638,
+    "USDJPY": 159.057,
+    "USDCHF": 0.80358,
+    "USDCNH": 6.7204,
+    "GBPUSD": 1.36316,
+    "USDCAD": 1.38599,
+    "USDSEK": 9.46963,
+    "US500": 7669.5,
+    "GER40": 26280.05,
+    "UK100": 10911.55,
+    "ADR_14day": 99.1,
+    "ADR_usedToday": 49.2,
+    "goldSilverRatio": 67.3
   },
   "dollarLiquidity": {
-    "stlfsi": -0.8285,
-    "nfci": -0.559
+    "stlfsi": null,
+    "nfci": null
   },
   "geopoliticalRisk": {
     "gpr": 152.7,
     "gprDate": "2026-07"
   },
   "economicCalendar": [],
-  "newsItems": [
-    {
-      "headline": "Canada poised to retaliate against Trump tariffs: 'We're not waiting by the phone'",
-      "source": "CNBC",
-      "publishedAt": "2026-08-25T12:55:49.000Z",
-      "hoursAgo": 7.4
-    },
-    {
-      "headline": "What are the new US economic sanctions on Iran and its trade partners? - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-25T12:20:58.000Z",
-      "hoursAgo": 8
-    },
-    {
-      "headline": "Bessent's D-Day sanctions are more Anzio, but Iran response is key - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-25T12:00:40.000Z",
-      "hoursAgo": 8.3
-    },
-    {
-      "headline": "European shares climb on softer-than-feared Iran sanctions, defence gains - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-25T09:24:01.000Z",
-      "hoursAgo": 10.9
-    },
-    {
-      "headline": "Iran war makes multibillion-dollar Tanzania LNG more attractive, Equinor says - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-25T09:08:55.000Z",
-      "hoursAgo": 11.2
-    },
-    {
-      "headline": "Treasury yields steady as traders await more economic data",
-      "source": "CNBC",
-      "publishedAt": "2026-08-25T07:48:57.000Z",
-      "hoursAgo": 12.5
-    },
-    {
-      "headline": "United States sanctions oil trader Wellbred over Iran links - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-25T03:40:00.000Z",
-      "hoursAgo": 16.6
-    },
-    {
-      "headline": "Gold steadies after hitting over 3-month peak ahead of US inflation data - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-25T02:10:00.000Z",
-      "hoursAgo": 18.1
-    }
-  ],
+  "newsItems": [],
   "briefing": null
 }
