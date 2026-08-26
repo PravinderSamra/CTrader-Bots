@@ -478,22 +478,44 @@ def secondary_walls_md(d, board):
     rows = secondary_walls(d, board)
     if not rows:
         return []
-    o = ["**Other gamma concentrations in range** — secondary walls behind the "
-         "headline call/put wall. Mark them: they are where price stalls and "
-         "pivots intraday even on a day whose range is already finished.\n",
+    o = ["**Other gamma concentrations in range** — the heaviest strikes behind "
+         "the headline call/put wall, which name only one level each side. "
+         "Read the last column for what each one DOES: call-dominant strikes "
+         "brake a move, put-dominant strikes speed it up. They are not all "
+         "support.\n",
          "| NAS100 | dist | force | contracts | what it does |",
          "|---|---|---|---|---|"]
+    # Behaviour follows the SIGN of dealer gamma at the strike, under this
+    # repo's stated convention (dealers long calls, short puts):
+    #   call-dominant -> dealers long gamma  -> they damp   -> barrier / pin
+    #   put-dominant  -> dealers short gamma -> they amplify -> accelerant
+    #
+    # The first version of this table got both put cases wrong. It called every
+    # put-dominant strike below spot "a genuine floor", which is the opposite
+    # of what short gamma does, and labelled put strikes ABOVE spot
+    # "out-of-the-money" when a put struck above spot is IN the money — while
+    # calling the single largest force in the table "thin". On 2026-08-26 that
+    # put two "genuine floors" below spot on the same page as a brief saying
+    # the downside path was clear and not to fade it.
+    long_gamma = (d["gex"].get("gamma_flip") or {}).get("nas100")
+    long_gamma = long_gamma is not None and d["levels"]["price"] > long_gamma
     for w in rows:
-        if w["dominant"] == "CALL" and w["side"] == "below":
-            what = ("in-the-money call gamma — dealers BUY dips into it, so it "
-                    "acts as **support**, not resistance")
-        elif w["dominant"] == "CALL":
-            what = "call gamma overhead — dealers SELL into it, so rallies stall here"
-        elif w["side"] == "below":
-            what = "put gamma below — a genuine floor while we stay in long gamma"
+        itm = ((w["dominant"] == "CALL" and w["side"] == "below") or
+               (w["dominant"] == "PUT" and w["side"] == "above"))
+        money = "in-the-money" if itm else "out-of-the-money"
+        if w["dominant"] == "CALL":
+            what = (f"{money} call gamma — dealers are LONG gamma here, so they "
+                    f"damp moves: expect a "
+                    + ("stall and dip-buying, it acts as **support**"
+                       if w["side"] == "below" else
+                       "stall — rallies lose momentum into it"))
         else:
-            what = ("out-of-the-money put gamma above spot — thin, expect little "
-                    "reaction")
+            what = (f"{money} put gamma — dealers are SHORT gamma here, so they "
+                    f"**amplify**: price tends to accelerate THROUGH rather than "
+                    f"stall. Not a floor"
+                    + ("" if not long_gamma else
+                       ". Net book is long gamma today, so treat it as a "
+                       "speed-bump rather than an accelerant"))
         o.append(f"| **{w['nas100']:.1f}** | {w['dist']:+.0f} | {w['gex_$bn']:.2f}bn | "
                  f"{w['oi']:,} | {what} |")
     return o
