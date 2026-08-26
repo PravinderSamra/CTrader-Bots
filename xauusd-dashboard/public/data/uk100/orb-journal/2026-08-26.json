@@ -49,7 +49,25 @@
         "adr14": 83.4,
         "adrUsedPct": 45
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-08-26T14:36:04.784Z",
+        "fwd1hPct": -0.32,
+        "fwd3hPct": -0.46,
+        "toClosePct": 0.02,
+        "maxUpPct": 0.07,
+        "maxDownPct": -0.52,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R13",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-08-26T07:38:20.593Z",
@@ -587,6 +605,70 @@
         "priorDayHigh": 10904,
         "priorDayLow": 10821.8,
         "gapPct": 0.11,
+        "adr14": 83.4,
+        "adrUsedPct": 83
+      },
+      "outcome": null
+    },
+    {
+      "at": "2026-08-26T14:36:01.939Z",
+      "londonTime": "15:36 BST",
+      "mode": "POST_ORB",
+      "price": 10915.55,
+      "stance": "FADE_FAVOURED",
+      "stanceLine": "Fade day — the ORB break was a trap — ORB broke DOWN but price has fully reclaimed the range (back above 10905.9) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.",
+      "signals": [
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "STRONG",
+          "source": "STRUCTURE",
+          "rule": "R1",
+          "text": "ORB broke DOWN but price has fully reclaimed the range (back above 10905.9) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "83% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "US PCE Price Index @ 13:30 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.3%) — the cross-market lean is up."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10905.9,
+        "orbLow": 10872,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10924.6,
+        "overnightLow": 10855,
+        "priorDayHigh": 10904,
+        "priorDayLow": 10821.8,
+        "gapPct": 0.15,
         "adr14": 83.4,
         "adrUsedPct": 83
       },
