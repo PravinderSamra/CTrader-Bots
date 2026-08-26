@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-08-26T14:36:04.787Z",
-  "entriesScored": 52,
+  "updatedAt": "2026-08-26T16:11:30.727Z",
+  "entriesScored": 62,
   "byStance": {
     "SHORT_FAVOURED": {
-      "n": 15,
+      "n": 16,
       "right": 3,
       "wrong": 11,
-      "flat": 1,
-      "avgToClosePct": 0.29
+      "flat": 2,
+      "avgToClosePct": 0.28
     },
     "LONG_FAVOURED": {
       "n": 7,
@@ -17,25 +17,25 @@
       "avgToClosePct": 0.05
     },
     "FADE_FAVOURED": {
-      "n": 1,
+      "n": 3,
       "right": 0,
-      "wrong": 1,
+      "wrong": 3,
       "flat": 0,
-      "avgToClosePct": 0.17
+      "avgToClosePct": -0.16
     }
   },
   "byRule": {
     "R13": {
-      "n": 17,
-      "right": 5,
+      "n": 27,
+      "right": 9,
       "wrong": 5,
-      "flat": 7
+      "flat": 13
     },
     "R11b": {
-      "n": 47,
-      "right": 7,
+      "n": 57,
+      "right": 11,
       "wrong": 5,
-      "flat": 35
+      "flat": 41
     },
     "R6": {
       "n": 1,
@@ -44,10 +44,10 @@
       "flat": 0
     },
     "R8": {
-      "n": 40,
-      "right": 18,
-      "wrong": 12,
-      "flat": 10
+      "n": 44,
+      "right": 19,
+      "wrong": 14,
+      "flat": 11
     },
     "R12": {
       "n": 9,
@@ -62,10 +62,10 @@
       "flat": 9
     },
     "R4": {
-      "n": 17,
-      "right": 9,
+      "n": 27,
+      "right": 13,
       "wrong": 0,
-      "flat": 8
+      "flat": 14
     },
     "R9": {
       "n": 5,
@@ -80,10 +80,10 @@
       "flat": 13
     },
     "R3": {
-      "n": 7,
+      "n": 8,
       "right": 4,
       "wrong": 2,
-      "flat": 1
+      "flat": 2
     },
     "R11": {
       "n": 5,
@@ -92,16 +92,16 @@
       "flat": 3
     },
     "R1": {
-      "n": 1,
+      "n": 3,
       "right": 0,
-      "wrong": 1,
+      "wrong": 3,
       "flat": 0
     }
   },
   "breakoutsSuspect": {
-    "n": 16,
-    "noExtensionRate": 0.06,
-    "avgMaxUpPct": 0.45,
-    "avgMaxDownPct": -0.22
+    "n": 23,
+    "noExtensionRate": 0.04,
+    "avgMaxUpPct": 0.43,
+    "avgMaxDownPct": -0.19
   }
 }

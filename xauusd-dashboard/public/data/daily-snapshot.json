@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-26T14:35:55.878Z",
+  "generatedAt": "2026-08-26T16:10:52.821Z",
   "yields": {
     "US10Y": 4.7,
     "US2Y": 4.24,
@@ -34,26 +34,26 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 877.6,
-    "gldWoWChange": 0.6,
+    "gldTonnes": 881.3,
+    "gldWoWChange": 3.7,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4617.87,
-    "XAGUSD": 68.309,
-    "EURUSD": 1.16478,
-    "USDJPY": 159.3905,
-    "USDCHF": 0.80588,
-    "USDCNH": 6.72332,
-    "GBPUSD": 1.35915,
-    "USDCAD": 1.38831,
-    "USDSEK": 9.53239,
-    "US500": 7668.8,
-    "GER40": 26380.25,
-    "UK100": 10916.05,
+    "XAUUSD": 4598.505,
+    "XAGUSD": 67.9485,
+    "EURUSD": 1.16512,
+    "USDJPY": 159.3575,
+    "USDCHF": 0.80554,
+    "USDCNH": 6.72361,
+    "GBPUSD": 1.3595,
+    "USDCAD": 1.3876,
+    "USDSEK": 9.53753,
+    "US500": 7669,
+    "GER40": 26267.25,
+    "UK100": 10865.45,
     "ADR_14day": 99.1,
-    "ADR_usedToday": 76,
-    "goldSilverRatio": 67.6
+    "ADR_usedToday": 90.8,
+    "goldSilverRatio": 67.7
   },
   "dollarLiquidity": {
     "stlfsi": -0.8285,
@@ -69,13 +69,13 @@
       "headline": "ECB set for September rate hike with no appetite to signal more, sources say - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T19:22:00.000Z",
-      "hoursAgo": 19.2
+      "hoursAgo": 20.8
     },
     {
       "headline": "European shares gain on softer US Iran sanctions, falling oil prices - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T16:41:59.000Z",
-      "hoursAgo": 21.9
+      "hoursAgo": 23.5
     }
   ],
   "briefing": null

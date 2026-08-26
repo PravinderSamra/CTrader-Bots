@@ -131,7 +131,33 @@
         "adr14": 83.4,
         "adrUsedPct": 83
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-08-26T16:11:29.414Z",
+        "fwd1hPct": 0.07,
+        "fwd3hPct": 0.18,
+        "toClosePct": 0.14,
+        "maxUpPct": 0.52,
+        "maxDownPct": -0.03,
+        "verdict": "FLAT",
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R13",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R3",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-08-26T08:00:39.366Z",
@@ -188,7 +214,29 @@
         "adr14": 83.4,
         "adrUsedPct": 83
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-08-26T16:11:29.562Z",
+        "fwd1hPct": -0.02,
+        "fwd3hPct": 0.1,
+        "toClosePct": 0.05,
+        "maxUpPct": 0.43,
+        "maxDownPct": -0.12,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R13",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-08-26T08:32:06.659Z",
@@ -245,7 +293,29 @@
         "adr14": 83.4,
         "adrUsedPct": 83
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-08-26T16:11:29.706Z",
+        "fwd1hPct": -0.14,
+        "fwd3hPct": 0.1,
+        "toClosePct": 0.01,
+        "maxUpPct": 0.39,
+        "maxDownPct": -0.16,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R13",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-08-26T09:03:05.269Z",
@@ -302,7 +372,29 @@
         "adr14": 83.4,
         "adrUsedPct": 83
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-08-26T16:11:29.856Z",
+        "fwd1hPct": -0.19,
+        "fwd3hPct": 0.06,
+        "toClosePct": -0.04,
+        "maxUpPct": 0.34,
+        "maxDownPct": -0.2,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R13",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-08-26T09:31:48.161Z",
@@ -359,7 +451,29 @@
         "adr14": 83.4,
         "adrUsedPct": 83
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-08-26T16:11:30.006Z",
+        "fwd1hPct": 0,
+        "fwd3hPct": 0.19,
+        "toClosePct": -0.04,
+        "maxUpPct": 0.33,
+        "maxDownPct": -0.21,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R13",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-08-26T10:25:21.734Z",
@@ -416,7 +530,29 @@
         "adr14": 83.4,
         "adrUsedPct": 83
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-08-26T16:11:30.144Z",
+        "fwd1hPct": 0.08,
+        "fwd3hPct": 0.26,
+        "toClosePct": 0.03,
+        "maxUpPct": 0.41,
+        "maxDownPct": -0.14,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R13",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-08-26T11:20:32.175Z",
@@ -480,7 +616,33 @@
         "adr14": 83.4,
         "adrUsedPct": 83
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-08-26T16:11:30.293Z",
+        "fwd1hPct": 0.16,
+        "fwd3hPct": 0.19,
+        "toClosePct": 0.07,
+        "maxUpPct": 0.45,
+        "maxDownPct": 0.03,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R13",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-08-26T12:32:20.755Z",
@@ -544,7 +706,33 @@
         "adr14": 83.4,
         "adrUsedPct": 83
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-08-26T16:11:30.440Z",
+        "fwd1hPct": 0.06,
+        "fwd3hPct": -0.05,
+        "toClosePct": -0.05,
+        "maxUpPct": 0.32,
+        "maxDownPct": -0.1,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R13",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-08-26T13:45:54.398Z",
@@ -608,7 +796,37 @@
         "adr14": 83.4,
         "adrUsedPct": 83
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-08-26T16:11:30.582Z",
+        "fwd1hPct": -0.3,
+        "fwd3hPct": null,
+        "toClosePct": -0.3,
+        "maxUpPct": 0.08,
+        "maxDownPct": -0.34,
+        "verdict": "WRONG",
+        "signalVerdicts": [
+          {
+            "rule": "R1",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R4",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R13",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-08-26T14:36:01.939Z",
@@ -672,7 +890,103 @@
         "adr14": 83.4,
         "adrUsedPct": 83
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-08-26T16:11:30.725Z",
+        "fwd1hPct": -0.34,
+        "fwd3hPct": null,
+        "toClosePct": -0.34,
+        "maxUpPct": -0.15,
+        "maxDownPct": -0.38,
+        "verdict": "WRONG",
+        "signalVerdicts": [
+          {
+            "rule": "R1",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R4",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R13",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-08-26T16:11:26.789Z",
+      "londonTime": "17:11 BST",
+      "mode": "CLOSED",
+      "price": 10866.05,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 83% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "83% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDH 10904) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "US PCE Price Index @ 13:30 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 1,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10905.9,
+        "orbLow": 10872,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10924.6,
+        "overnightLow": 10855,
+        "priorDayHigh": 10904,
+        "priorDayLow": 10821.8,
+        "gapPct": -0.31,
+        "adr14": 83.4,
+        "adrUsedPct": 83
+      },
+      "outcome": {
+        "resolvedAt": "2026-08-26T16:11:30.725Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
