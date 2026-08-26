@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-26T09:31:42.054Z",
+  "generatedAt": "2026-08-26T10:25:15.539Z",
   "yields": {
     "US10Y": 4.7,
     "US2Y": 4.24,
@@ -34,25 +34,25 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 877.2,
-    "gldWoWChange": 1.8,
-    "trend3W": "INFLOW"
+    "gldTonnes": 877.5,
+    "gldWoWChange": 0.3,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4619.92,
-    "XAGUSD": 68.5435,
-    "EURUSD": 1.16663,
-    "USDJPY": 159.0015,
-    "USDCHF": 0.80389,
-    "USDCNH": 6.72046,
-    "GBPUSD": 1.36266,
-    "USDCAD": 1.38683,
-    "USDSEK": 9.48816,
-    "US500": 7672.9,
-    "GER40": 26297.35,
-    "UK100": 10883.55,
+    "XAUUSD": 4618.335,
+    "XAGUSD": 68.555,
+    "EURUSD": 1.16638,
+    "USDJPY": 159.0315,
+    "USDCHF": 0.80411,
+    "USDCNH": 6.72021,
+    "GBPUSD": 1.3619,
+    "USDCAD": 1.38699,
+    "USDSEK": 9.49133,
+    "US500": 7672.7,
+    "GER40": 26325.85,
+    "UK100": 10876.45,
     "ADR_14day": 99.1,
-    "ADR_usedToday": 57.6,
+    "ADR_usedToday": 57.7,
     "goldSilverRatio": 67.4
   },
   "dollarLiquidity": {
@@ -69,25 +69,25 @@
       "headline": "ECB set for September rate hike with no appetite to signal more, sources say - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T19:22:00.000Z",
-      "hoursAgo": 14.2
+      "hoursAgo": 15.1
     },
     {
       "headline": "European shares gain on softer US Iran sanctions, falling oil prices - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T16:41:59.000Z",
-      "hoursAgo": 16.8
+      "hoursAgo": 17.7
     },
     {
       "headline": "Canada poised to retaliate against Trump tariffs: 'We're not waiting by the phone'",
       "source": "CNBC",
       "publishedAt": "2026-08-25T12:55:49.000Z",
-      "hoursAgo": 20.6
+      "hoursAgo": 21.5
     },
     {
       "headline": "What are the new US economic sanctions on Iran and its trade partners? - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T12:20:58.000Z",
-      "hoursAgo": 21.2
+      "hoursAgo": 22.1
     }
   ],
   "briefing": null
