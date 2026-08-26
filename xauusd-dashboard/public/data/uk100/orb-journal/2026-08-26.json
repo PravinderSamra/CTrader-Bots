@@ -114,6 +114,63 @@
         "adrUsedPct": 83
       },
       "outcome": null
+    },
+    {
+      "at": "2026-08-26T08:00:39.366Z",
+      "londonTime": "09:00 BST",
+      "mode": "POST_ORB",
+      "price": 10873.15,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 83% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "83% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10821.8) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "US PCE Price Index @ 13:30 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10905.9,
+        "orbLow": 10872,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10924.6,
+        "overnightLow": 10855,
+        "priorDayHigh": 10904,
+        "priorDayLow": 10821.8,
+        "gapPct": -0.24,
+        "adr14": 83.4,
+        "adrUsedPct": 83
+      },
+      "outcome": null
     }
   ]
 }

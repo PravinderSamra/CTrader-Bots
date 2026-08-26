@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-26T07:38:16.011Z",
+  "generatedAt": "2026-08-26T08:00:21.549Z",
   "yields": {
     "US10Y": 4.7,
     "US2Y": 4.24,
@@ -22,7 +22,7 @@
     "probHike": 16
   },
   "marketVolatility": {
-    "GVZ": 28.28,
+    "GVZ": null,
     "VIX": 15.85
   },
   "positioning": {
@@ -34,26 +34,26 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 874.9,
-    "gldWoWChange": -0.4,
-    "trend3W": "FLAT"
+    "gldTonnes": 875.8,
+    "gldWoWChange": 0.9,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4632.425,
-    "XAGUSD": 68.856,
-    "EURUSD": 1.16718,
-    "USDJPY": 158.9995,
-    "USDCHF": 0.80337,
-    "USDCNH": 6.71975,
-    "GBPUSD": 1.36363,
-    "USDCAD": 1.38592,
-    "USDSEK": 9.48433,
-    "US500": 7670,
-    "GER40": 26214.25,
-    "UK100": 10864.95,
+    "XAUUSD": 4627.5,
+    "XAGUSD": 68.681,
+    "EURUSD": 1.16702,
+    "USDJPY": 159.011,
+    "USDCHF": 0.80312,
+    "USDCNH": 6.71967,
+    "GBPUSD": 1.36309,
+    "USDCAD": 1.38633,
+    "USDSEK": 9.48622,
+    "US500": 7672.5,
+    "GER40": 26272.85,
+    "UK100": 10872.55,
     "ADR_14day": 99.1,
     "ADR_usedToday": 49.2,
-    "goldSilverRatio": 67.3
+    "goldSilverRatio": 67.4
   },
   "dollarLiquidity": {
     "stlfsi": -0.8285,
@@ -69,43 +69,31 @@
       "headline": "Bessent's D-Day sanctions are more Anzio, but Iran response is key - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-26T03:28:00.000Z",
-      "hoursAgo": 4.2
+      "hoursAgo": 4.5
     },
     {
       "headline": "ECB set for September rate hike with no appetite to signal more, sources say - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T19:22:00.000Z",
-      "hoursAgo": 12.3
+      "hoursAgo": 12.6
     },
     {
       "headline": "European shares gain on softer US Iran sanctions, falling oil prices - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T16:41:59.000Z",
-      "hoursAgo": 14.9
+      "hoursAgo": 15.3
     },
     {
       "headline": "Canada poised to retaliate against Trump tariffs: 'We're not waiting by the phone'",
       "source": "CNBC",
       "publishedAt": "2026-08-25T12:55:49.000Z",
-      "hoursAgo": 18.7
+      "hoursAgo": 19.1
     },
     {
       "headline": "What are the new US economic sanctions on Iran and its trade partners? - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T12:20:58.000Z",
-      "hoursAgo": 19.3
-    },
-    {
-      "headline": "Treasury yields steady as traders await more economic data",
-      "source": "CNBC",
-      "publishedAt": "2026-08-25T07:48:57.000Z",
-      "hoursAgo": 23.8
-    },
-    {
-      "headline": "Iran war makes multibillion-dollar Tanzania LNG more attractive, Equinor says - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-25T07:40:00.000Z",
-      "hoursAgo": 24
+      "hoursAgo": 19.7
     }
   ],
   "briefing": null
