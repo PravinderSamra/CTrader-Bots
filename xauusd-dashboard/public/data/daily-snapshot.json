@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-08-26T18:51:47.199Z",
+  "generatedAt": "2026-08-26T21:29:15.334Z",
   "yields": {
-    "US10Y": 4.7,
-    "US2Y": 4.24,
-    "realYield10Y": 2.38,
-    "realYield5Y": 2.09,
-    "curve2s10s": 46,
+    "US10Y": 4.64,
+    "US2Y": 4.17,
+    "realYield10Y": 2.32,
+    "realYield5Y": 2.04,
+    "curve2s10s": 47,
     "breakeven10Y": 2.32,
     "breakeven5Y": 2.31,
     "forward5y5y": 2.33,
     "dayOverDay": {
-      "US10Y": -0.04,
-      "US2Y": 0,
-      "realYield10Y": -0.02
+      "US10Y": -0.06,
+      "US2Y": -0.07,
+      "realYield10Y": -0.06
     }
   },
   "fedExpectations": {
@@ -34,24 +34,24 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 881.6,
-    "gldWoWChange": 0.3,
+    "gldTonnes": 882,
+    "gldWoWChange": 0.4,
     "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4596.86,
-    "XAGUSD": 68.22,
-    "EURUSD": 1.16524,
-    "USDJPY": 159.3925,
-    "USDCHF": 0.80531,
-    "USDCNH": 6.723,
-    "GBPUSD": 1.35919,
-    "USDCAD": 1.38772,
-    "USDSEK": 9.53147,
-    "US500": 7680.8,
-    "GER40": 26282.25,
+    "XAUUSD": 4594.835,
+    "XAGUSD": 68.127,
+    "EURUSD": 1.16535,
+    "USDJPY": 159.285,
+    "USDCHF": 0.80524,
+    "USDCNH": 6.72154,
+    "GBPUSD": 1.35944,
+    "USDCAD": 1.38776,
+    "USDSEK": 9.52764,
+    "US500": 7695.8,
+    "GER40": 26298.05,
     "UK100": 10846.55,
-    "ADR_14day": 99.1,
+    "ADR_14day": 100.7,
     "ADR_usedToday": 90.8,
     "goldSilverRatio": 67.4
   },
@@ -69,25 +69,19 @@
       "headline": "Why we need ‘Human Reserved’ jobs, says Bill Gates—and how we can combat the worst of the AI upheaval",
       "source": "CNBC",
       "publishedAt": "2026-08-26T16:44:08.000Z",
-      "hoursAgo": 2.1
+      "hoursAgo": 4.8
     },
     {
       "headline": "European shares muted as investors assess Iran-Oman talks, U.S. inflation - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-26T16:41:46.000Z",
-      "hoursAgo": 2.2
+      "hoursAgo": 4.8
     },
     {
       "headline": "Oil settles down more than 3%; investors shrug off US sanctions on Iran - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-08-25T19:40:57.000Z",
-      "hoursAgo": 23.2
-    },
-    {
-      "headline": "ECB set for September rate hike with no appetite to signal more, sources say - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-25T19:22:00.000Z",
-      "hoursAgo": 23.5
+      "publishedAt": "2026-08-25T22:49:43.000Z",
+      "hoursAgo": 22.7
     }
   ],
   "briefing": null
