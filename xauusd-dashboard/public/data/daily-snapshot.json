@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-26T11:20:26.538Z",
+  "generatedAt": "2026-08-26T12:32:15.402Z",
   "yields": {
     "US10Y": 4.7,
     "US2Y": 4.24,
@@ -34,26 +34,26 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 876.7,
-    "gldWoWChange": -0.8,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 877.9,
+    "gldWoWChange": 1.2,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4623.005,
-    "XAGUSD": 68.494,
-    "EURUSD": 1.16638,
-    "USDJPY": 159.108,
-    "USDCHF": 0.80394,
-    "USDCNH": 6.72021,
-    "GBPUSD": 1.36234,
-    "USDCAD": 1.38695,
-    "USDSEK": 9.49368,
-    "US500": 7677.8,
-    "GER40": 26334.15,
-    "UK100": 10870.55,
+    "XAUUSD": 4616.26,
+    "XAGUSD": 68.632,
+    "EURUSD": 1.16647,
+    "USDJPY": 159.088,
+    "USDCHF": 0.80451,
+    "USDCNH": 6.72008,
+    "GBPUSD": 1.36188,
+    "USDCAD": 1.38676,
+    "USDSEK": 9.50216,
+    "US500": 7670.4,
+    "GER40": 26381.05,
+    "UK100": 10885.15,
     "ADR_14day": 99.1,
-    "ADR_usedToday": 60.4,
-    "goldSilverRatio": 67.5
+    "ADR_usedToday": 61.5,
+    "goldSilverRatio": 67.3
   },
   "dollarLiquidity": {
     "stlfsi": -0.8285,
@@ -69,25 +69,19 @@
       "headline": "ECB set for September rate hike with no appetite to signal more, sources say - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T19:22:00.000Z",
-      "hoursAgo": 16
+      "hoursAgo": 17.2
     },
     {
       "headline": "European shares gain on softer US Iran sanctions, falling oil prices - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-25T16:41:59.000Z",
-      "hoursAgo": 18.6
+      "hoursAgo": 19.8
     },
     {
       "headline": "Canada poised to retaliate against Trump tariffs: 'We're not waiting by the phone'",
       "source": "CNBC",
       "publishedAt": "2026-08-25T12:55:49.000Z",
-      "hoursAgo": 22.4
-    },
-    {
-      "headline": "What are the new US economic sanctions on Iran and its trade partners? - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-25T12:20:58.000Z",
-      "hoursAgo": 23
+      "hoursAgo": 23.6
     }
   ],
   "briefing": null
