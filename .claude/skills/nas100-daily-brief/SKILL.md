@@ -72,7 +72,18 @@ format; re-extracting or rewording it is how the output drifts.
 | `retro chart` | `python3 gex_retro.py --ladder auto --to <day>` | Grades a past CHART's ranked walls (C1-C3 / P1-P3). Different object from the board — see `research/gamma-chart.md`. Refuses if no ladder predates the target day |
 | `review` | `python3 review_day.py` **+ `python3 gex_retro.py`** | Skip the brief. Run the retrospective in the FOREGROUND, report it, and attach the retro chart. **After 21:00 UTC also run the live-wall grading — see below** |
 
-### Before a review, read these two files. Every time.
+### Before a review, PULL. Then read these two files. Every time.
+
+```
+git -C <repo root> pull --rebase origin main
+```
+
+**Scans may have been run in other chats.** Each one self-commits and pushes its
+journal entry, chart ladder and any snapshot — but this session's clone only
+sees them after a pull. Reviewing without pulling grades an incomplete day and
+reports it as complete, which is D3 wearing a different hat.
+
+### The two files
 
 A review that proposes a change without them is guesswork with numbers attached.
 
@@ -85,6 +96,10 @@ A review that proposes a change without them is guesswork with numbers attached.
    the evidence, not to act.
 2. **`research/live-walls/ACCURACY-LOG.md`** — the live-wall record, including
    any OPEN DEFECT. Check for one before running anything with `--fit`.
+
+After a scan, confirm the archive line said `pushed=True`. If it says
+`ARCHIVE NOT SAVED`, commit by hand — otherwise that scan is lost when the
+container is reclaimed, and it will not announce itself.
 
 **Propose nothing that is below its threshold.** "Still observing, here is what
 today added" is a complete and correct review.

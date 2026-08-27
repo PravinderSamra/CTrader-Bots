@@ -857,5 +857,22 @@ if __name__ == "__main__":
             print(f"\n_[journal write failed: {res['_error']}]_", file=sys.stderr)
         elif isinstance(res, dict):
             print("\n_[journal skipped: --no-journal]_", file=sys.stderr)
+        else:
+            # Persist the archive immediately. The container is ephemeral, and
+            # a journal entry that is written but never pushed dies with it —
+            # silently, which is the worst kind. Nothing else commits it: the
+            # stop hook only asks. Scoped to the archive paths, never code.
+            try:
+                import sync_archive
+                r = sync_archive.sync()
+                if not r.get("ok"):
+                    print(f"\n_[ARCHIVE NOT SAVED: {r.get('why')} — commit by "
+                          f"hand or this scan is lost]_", file=sys.stderr)
+                elif r.get("committed"):
+                    print(f"\n_[archive: {r['committed']} file(s) committed, "
+                          f"pushed={r.get('pushed')}]_", file=sys.stderr)
+            except Exception as e:
+                print(f"\n_[ARCHIVE SYNC ERROR: {type(e).__name__}: {e}]_",
+                      file=sys.stderr)
         if "--chart" in sys.argv:
             _chart()
