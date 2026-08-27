@@ -1,0 +1,71 @@
+{
+ "updated": "2026-08-27T21:21:46+00:00",
+ "graded_days": [
+  "2026-08-26"
+ ],
+ "min_sample": 200,
+ "max_step": 0.15,
+ "buckets": {
+  "1-5d|atm": {
+   "k": 0.5,
+   "n": 265,
+   "raw_fit": 0.597,
+   "prev": 0.35,
+   "status": "fitted"
+  },
+  "1-5d|far": {
+   "k": 0.6,
+   "n": 246,
+   "raw_fit": 0.649,
+   "prev": 0.45,
+   "status": "fitted"
+  },
+  "1-5d|near": {
+   "k": 0.383,
+   "n": 409,
+   "raw_fit": 0.383,
+   "prev": 0.4,
+   "status": "fitted"
+  },
+  "21d+|atm": {
+   "k": 0.45,
+   "n": 140,
+   "status": "held (thin sample)"
+  },
+  "21d+|far": {
+   "k": 0.517,
+   "n": 306,
+   "raw_fit": 0.517,
+   "prev": 0.55,
+   "status": "fitted"
+  },
+  "21d+|near": {
+   "k": 0.65,
+   "n": 249,
+   "raw_fit": 0.869,
+   "prev": 0.5,
+   "status": "fitted"
+  },
+  "6-20d|atm": {
+   "k": 0.25,
+   "n": 216,
+   "raw_fit": 0.234,
+   "prev": 0.4,
+   "status": "fitted"
+  },
+  "6-20d|far": {
+   "k": 0.65,
+   "n": 319,
+   "raw_fit": 0.798,
+   "prev": 0.5,
+   "status": "fitted"
+  },
+  "6-20d|near": {
+   "k": 0.6,
+   "n": 383,
+   "raw_fit": 0.707,
+   "prev": 0.45,
+   "status": "fitted"
+  }
+ }
+}

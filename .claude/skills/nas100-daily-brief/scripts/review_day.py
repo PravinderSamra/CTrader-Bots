@@ -68,7 +68,12 @@ def grade_level(lv, bars, i_from=0):
 
 
 def review(day, root=None):
-    scans = journal.load_day(day, root)
+    # Verification re-runs are excluded here for the same reason track.py
+    # excludes them: they are one market state sampled once, journalled several
+    # times. Left in, 2026-08-27 read "5 right / 0 wrong" off a single real
+    # scan repeated four times while code was being fixed.
+    scans = [s for s in journal.load_day(day, root) if not s.get("test_artefact")]
+    n_art = sum(1 for s in journal.load_day(day, root) if s.get("test_artefact"))
     if not scans:
         return {"error": f"no journal entries for {day}"}
     # A weekend/holiday scan is a PREP read against the previous session's
@@ -169,7 +174,7 @@ def review(day, root=None):
         })
 
     return {"trading_day": day, "reviewed_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-            "actual_session": actual, "scans": results,
+            "actual_session": actual, "scans": results, "test_artefacts": n_art,
             "summary": _summary(results, actual)}
 
 

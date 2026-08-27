@@ -32,6 +32,21 @@ probably in — expect movement *between* them.
 | 24 Aug 09:37 LONDON | 88.7 | 168.5 | 334.7 | +79.8 |
 | 24 Aug 08:28 LONDON | 88.7 | 168.5 | 334.7 | +79.8 |
 | **25 Aug 13:04 PRE_NY** | 12.0 | **0.4** | 256.5 | **−11.6** |
+| 26 Aug 13:12 PRE_NY | 186.2 | 113.2 | 268.2 | −73.0 |
+| **27 Aug 13:23 PRE_NY** | **132.6** | **46.2** | 281.3 | **−86.4** |
+
+**Per DAY** (the weighting to read for a claim about the model — see M1):
+**+61.2 → −11.6 → −73.0 → −86.4**, mean **−27.5**.
+
+**THRESHOLD MET at 4 days, and still no change proposed.** Three consecutive
+over-reads, each larger than the last, after one large under-read. Four points
+running monotonically in one direction describe a *trend*, not a level: a
+multiplier fitted to them would fit the slope and be wrong at both ends.
+
+What it does justify is a specific question rather than a tuning: **all three
+over-read days were long-gamma or pinning sessions; the single under-read day
+was not.** Record the gamma regime alongside the error from here, and get an
+unpinned day before touching the model.
 
 Mean error **+46.6pts** (range grew more than budgeted).
 
@@ -126,8 +141,12 @@ miss.
 **Threshold.** 5+ days (this is a distributional claim, so it needs more).
 Record the close-to-flip distance each day.
 
-**Status: OBSERVING.** 24 Aug's 1.1pt finish now looks like the coincidence it
-was warned to be. Do not use the flip as a target on this evidence.
+**26 Aug:** flip 29,098.5, close 29,353.7 — **255.2pts away**. Miss.
+**27 Aug:** flip 28,966.9, close 29,566.7 — **599.8pts away**. Clear miss.
+
+**Status: OBSERVING — 4 of 5, and looking weak.** One hit, three misses, the
+misses widening. 24 Aug's 1.1pt finish now looks firmly like the coincidence it
+was warned to be. **Do not use the flip as a target.**
 
 ---
 
@@ -238,8 +257,16 @@ historical straddle price to test against. So this goes in as observation-only
 and must be tracked forward.
 
 **First observation (25 Aug, for the 26 Aug session).** Straddle 191pts → EM
-**±162** → band **29,065 .. 29,390**. ATM IV 15.5%. Record tomorrow's close
-against it.
+**±162** → band **29,065 .. 29,390**. Close **29,353.7 — inside**, 36pts below
+the top. *(Logged initially as 4.9pts outside, off the pre-roll close; the final
+close was higher and landed inside.)*
+
+**Second observation (27 Aug).** Straddle 306pts → EM **±260** → band
+**29,221 .. 29,741**. Close **29,566.7 — inside**. Intraday high 29,642.1, also
+inside.
+
+**2 of 2 closes inside. 2 of 10 observations.** Far too early to mean anything,
+but nothing has gone wrong yet.
 
 **The trap to avoid.** EM prices a **close-to-close** move; ADR measures a
 **high-low** range, which is always larger. Reading "EM 162 vs ADR 399" as "the
@@ -307,6 +334,33 @@ call went the way the penalty implied.
 
 **Status: OBSERVING. Do not implement.** The fix, if the evidence supports one,
 is a reclaim term — not a smaller constant.
+
+---
+
+## H11 — Do the chart's ranked walls produce in-range levels?
+
+**Claim.** C1–C3 / P1–P3 rank by gamma force with no proximity filter, so they
+frequently sit outside the day's range and are useless as day-trade levels.
+
+**Why it matters.** It goes straight at the wall-to-wall strategy: if the two
+nearest ranked walls are routinely further apart than a session's range, the
+entry never triggers.
+
+**Evidence so far (1 day).** First genuine ladder test — the 26 Aug 22:12Z
+ladder graded against the 27 Aug session: **1 of 7 reached, 0 held, 6 never
+reached.**
+
+The ranked walls spanned **29,299–29,899 (600pts)** against a session range of
+**303.9**. C1 sat 39pts *below* the day's low; C2 and C3 above its high.
+
+Structural, not bad luck: the brief's level board applies a range-budget filter
+and the chart deliberately does not, because it draws the whole book.
+
+**Threshold.** 3+ ladder tests. If it repeats, the fix is a proximity filter on
+the *ranks* (or a second in-range ranking alongside) — not a change to the
+ranking itself. The force ordering is correct; the selection is unfiltered.
+
+**Status: OBSERVING. Do not implement.**
 
 ---
 
