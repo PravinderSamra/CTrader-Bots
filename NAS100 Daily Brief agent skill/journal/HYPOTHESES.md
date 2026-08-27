@@ -596,6 +596,39 @@ flattering direction.
 
 ---
 
+## Regression test — the invariants today's bugs violated
+
+`scripts/test_consistency.py` (24 checks; `--offline` skips the live half).
+
+Every check corresponds to a bug that actually shipped. The point is not to
+prove the code works — it is to make **these particular failures loud**, because
+every one of them was silent. A brief and a chart that disagreed still rendered.
+A put wall on a call-dominated strike still printed. An unfinished day still
+produced a number.
+
+Structural: wall dominance at source and in the chart · chart defaults to the
+brief's book · `brief.py --chart` builds both files from one `gather()` ·
+`--no-journal` exists · both graders honour `test_artefact` · day-completeness by
+clock not bar count · held-back days printed · H1 reported per day · ladder retro
+clips to post-publication · auto-pick refuses pre-fix ladders · `role_reversal`
+ignores untouched levels · one grader shared by `track` and `gex_retro` · every
+ladder records its book or is marked `pre_fix`.
+
+Live, from a single build: chart flip == brief flip · both walls agree within bin
+rounding · no strike carries contradictory labels · each wall is dominated by its
+own side · every C rank is net positive and every P rank net negative.
+
+**It found a real file on its first run** — the 27 Aug 13:23 ladder, written
+before the book fix, still sitting in the directory where the auto-pick looks.
+Marked `pre_fix` rather than deleted, and the retro now refuses it explicitly.
+
+**Latent, left in place deliberately:** `max_call_oi` / `max_put_oi` in
+`gex_levels` carry no dominance test. They are honestly named — they are the
+strike with the most open interest on that side, nothing more — and nothing
+consumes them but a debug printer. They are annotated with a warning, because
+they are exactly the field someone reaches for when building a "floor" and would
+reproduce D4 verbatim.
+
 ## Housekeeping carried forward
 
 - **Deduplicate near-identical scans.** Four landed within five minutes during

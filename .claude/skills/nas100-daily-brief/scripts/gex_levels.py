@@ -279,6 +279,12 @@ def build(cfd_price, max_dte=45):
         cands_p = [p for p in below if p["put_gex"] > p["call_gex"]]
         cw = max(cands_c, key=lambda p: p["call_gex"], default=None)
         pw = max(cands_p, key=lambda p: p["put_gex"], default=None)
+        # NOT walls, and must never be used as walls. These are literally
+        # "the strike with the most call/put open interest on that side" with
+        # no dominance test — the exact trap that produced D4 when `put_wall`
+        # was computed this way. The names are honest; keep them that way and
+        # do not build a "floor" or "ceiling" claim on top of them without
+        # checking which side actually dominates the strike.
         cwo = max(above, key=lambda p: p["call_oi"], default=None)
         pwo = max(below, key=lambda p: p["put_oi"], default=None)
         board["buckets"][label] = {

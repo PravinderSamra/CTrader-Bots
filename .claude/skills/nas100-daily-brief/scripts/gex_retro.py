@@ -179,7 +179,8 @@ def latest_ladder(before_day=None):
     ok = []
     for h in hits:
         try:
-            if _j.load(open(h)).get("book") == "week":
+            j = _j.load(open(h))
+            if j.get("book") == "week" and not j.get("pre_fix"):
                 ok.append(h)
         except Exception:
             continue

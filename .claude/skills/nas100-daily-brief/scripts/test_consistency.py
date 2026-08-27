@@ -1,0 +1,153 @@
+#!/usr/bin/env python3
+"""
+test_consistency.py — the invariants that today's bugs violated.
+
+Every check here corresponds to a bug that actually shipped. The point is not
+to prove the code works; it is to make these particular failures loud if they
+ever come back, because every one of them was silent.
+
+    python3 test_consistency.py            # live data, ~2 min
+    python3 test_consistency.py --offline  # structural checks only, no network
+"""
+import glob, json, os, subprocess, sys
+from datetime import datetime, timezone
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+PASS, FAIL = [], []
+
+
+def check(name, ok, detail=""):
+    (PASS if ok else FAIL).append((name, detail))
+    print(f"  {'PASS' if ok else 'FAIL'}  {name}" + (f"  — {detail}" if detail else ""))
+
+
+def _research(sub):
+    d = os.path.abspath(os.path.join(HERE, "..", "..", "..", ".."))
+    for base, _x, _y in os.walk(d):
+        if base.endswith("NAS100 Daily Brief agent skill"):
+            return os.path.join(base, "research", sub)
+    return None
+
+
+def offline_checks():
+    print("\nSTRUCTURAL (no network)")
+
+    # D4 — walls must be side-dominated, at source
+    src = open(os.path.join(HERE, "gex_levels.py")).read()
+    check("gex_levels requires call dominance for the call wall",
+          'cands_c = [p for p in above if p["call_gex"] > p["put_gex"]]' in src)
+    check("gex_levels requires put dominance for the put wall",
+          'cands_p = [p for p in below if p["put_gex"] > p["call_gex"]]' in src)
+
+    chart = open(os.path.join(HERE, "gex_chart.py")).read()
+    check("gex_chart applies the same dominance rule",
+          'b["call_gex"] > b["put_gex"]' in chart and 'b["put_gex"] > b["call_gex"]' in chart)
+
+    # book mismatch — chart must default to the brief's book
+    check("chart defaults to the week book (dte<=7), matching the brief",
+          'BOOKS = {"week": 7, "full": 45}' in chart and 'book="week"' in chart)
+
+    # one build per scan
+    brief = open(os.path.join(HERE, "brief.py")).read()
+    check("brief.py can draw the chart from its own gather()",
+          "--chart" in brief and "gex_chart.collect(d=d" in brief)
+
+    # verification runs must not journal
+    check("brief.py supports --no-journal",
+          '"--no-journal" in sys.argv' in brief)
+
+    # both graders honour test_artefact
+    rv = open(os.path.join(HERE, "review_day.py")).read()
+    tr = open(os.path.join(HERE, "track.py")).read()
+    check("review_day excludes test_artefact entries", 'test_artefact' in rv)
+    check("track excludes test_artefact entries", 'test_artefact' in tr)
+
+    # D3 — day completeness by clock, not bar count
+    check("track grades a day only after it has ended",
+          "_day_complete" in tr and "hour=21" in tr)
+    check("track reports held-back days out loud", "HELD BACK" in tr)
+    check("track reports H1 per day as well as per scan",
+          "mean_error_per_day" in tr)
+
+    # ladder retro guards
+    rt = open(os.path.join(HERE, "gex_retro.py")).read()
+    check("ladder retro clips bars to after the ladder was published",
+          'b["time"] >= born' in rt)
+    check("ladder auto-pick refuses pre-fix (non-week) ladders",
+          '.get("book") == "week"' in rt)
+    check("role_reversal ignores levels price never reached",
+          'b["low"] - 6 <= level <= b["high"] + 6 for b in bars' in rt)
+
+    # the single grading rule
+    check("track and gex_retro both import review_day (one grader)",
+          "import journal, review_day as R" in tr and "review_day as R" in rt)
+
+    # persisted ladders must record their book
+    lad = _research("chart-ladders")
+    if lad and os.path.isdir(lad):
+        files = sorted(glob.glob(os.path.join(lad, "*.json")))
+        recent = [f for f in files if os.path.basename(f)[:10] >= "2026-08-27"]
+        bad = []
+        for f in recent:
+            j = json.load(open(f))
+            if j.get("book") != "week" and not j.get("pre_fix"):
+                bad.append(os.path.basename(f))
+        check("every ladder records book=week or is marked pre_fix",
+              not bad, f"offenders: {bad}" if bad else f"{len(recent)} checked")
+
+
+def live_checks():
+    print("\nLIVE (one build, compared against itself)")
+    sys.path.insert(0, HERE)
+    import brief as B, gex_chart as GC
+
+    d = B.gather()
+    if "error" in d:
+        check("gather() succeeded", False, str(d.get("detail"))[:120]); return
+    c = GC.collect(d=d, book="week")
+
+    # the flip must be identical — they come from one build
+    bf = (d["gex"].get("gamma_flip") or {}).get("nas100")
+    check("chart flip == brief flip", bf == c["flip"],
+          f"brief {bf} vs chart {c['flip']}")
+
+    # walls must agree to bin rounding
+    board, _far = B.level_board(d)
+    def find(tag):
+        for r in board:
+            if tag in r["name"]:
+                return r["level"]
+        return None
+    for tag, key in (("CALL WALL", "call_res"), ("PUT WALL", "put_sup")):
+        bl, cl = find(tag), (c.get(key) or {}).get("price")
+        if bl is None or cl is None:
+            check(f"{tag} present in both", True, "absent from one — not comparable")
+            continue
+        check(f"{tag} agrees within bin rounding", abs(bl - cl) <= 26,
+              f"brief {bl} vs chart {cl}")
+
+    # D4 — no strike may carry contradictory labels
+    problems = GC.consistency_check(c)
+    check("no strike carries contradictory labels", not problems,
+          "; ".join(problems) if problems else "")
+
+    # walls are actually dominated by their own side
+    for key, lab in (("call_res", "call"), ("put_sup", "put")):
+        w = c.get(key)
+        if not w:
+            continue
+        ok = (w["call_gex"] > w["put_gex"]) if lab == "call" else (w["put_gex"] > w["call_gex"])
+        check(f"{lab} wall is {lab}-dominated", ok,
+              f"{w['price']:,.0f} call {w['call_gex']/1e9:.2f}bn put {w['put_gex']/1e9:.2f}bn")
+
+    # ranks must match their sign
+    check("every C rank has positive net", all(b["net"] > 0 for b in c["ranked_up"]))
+    check("every P rank has negative net", all(b["net"] < 0 for b in c["ranked_dn"]))
+
+
+if __name__ == "__main__":
+    offline_checks()
+    if "--offline" not in sys.argv:
+        live_checks()
+    print(f"\n{len(PASS)} passed, {len(FAIL)} failed")
+    sys.exit(1 if FAIL else 0)

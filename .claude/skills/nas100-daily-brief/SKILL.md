@@ -93,6 +93,12 @@ as one scan must come from one computation.
 `gex_chart.py` standalone is for `chart` mode only, or with `--book full` when
 someone explicitly wants the 45-day view.
 
+**After changing any scoring, wall or grading code, run
+`python3 test_consistency.py`** (add `--offline` to skip the live half). It
+asserts the invariants that a day of shipped bugs violated — brief and chart
+agreeing, walls dominated by their own side, no strike carrying contradictory
+labels, unfinished days not graded. All of those failures were silent.
+
 **Add `--no-journal` when re-running the brief to test code.** A scan run to
 verify a fix is not an observation of the market, and without the flag it lands
 in the journal and inflates the evidence — three fake observations of one market

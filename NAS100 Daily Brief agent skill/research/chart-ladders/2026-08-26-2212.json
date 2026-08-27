@@ -205,5 +205,7 @@
    "call_oi": 7949,
    "put_oi": 10663
   }
- ]
+ ],
+ "pre_fix": true,
+ "pre_fix_note": "Written before the 2026-08-27 book fix: built on the 45-day book (dte_max 45) and before the wall-dominance requirement. Grading it measures the buggy version. Kept as a record, excluded from every retro."
 }
