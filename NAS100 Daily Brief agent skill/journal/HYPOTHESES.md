@@ -487,6 +487,17 @@ flattering direction.
   being graded "extension 0.0, traversal 26.1". `track.py` now requires ~12.5h
   of bars before a day enters the evidence.
 - **Weekend PREP scans** never enter statistics (`is_trading_day: false`).
+- **Verification re-runs are marked, not deleted.** On 2026-08-27 five journal
+  entries were written for one real scan — four came from re-running the brief
+  while fixing the put-wall dominance bug. The 15-minute dedupe collapses only
+  the closest pair, so three would have entered the evidence as independent
+  observations of a market state that was sampled once. Exactly the inflation
+  the dedupe exists to prevent, caused this time from the inside.
+  `brief.py --no-journal` prevents it going forward; the four already written
+  carry `test_artefact: true` and `track.py` excludes them and says how many.
+  **Marked rather than deleted, deliberately** — the archive's job is to record
+  what happened, and a silent deletion is indistinguishable from the synthetic
+  entry that produced W2.
 - **Quarantine corrupt inputs, don't grade them.** A scan whose *input* was
   wrong is not a forecast that failed. `track.py` now prints an EXCLUDED block
   so the exclusions stay visible rather than silent.

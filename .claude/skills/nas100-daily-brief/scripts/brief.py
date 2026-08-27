@@ -843,8 +843,19 @@ if __name__ == "__main__":
         print(text)
         # Journal AFTER rendering, and never let a write failure break output.
         d.setdefault("level_board", level_board(d)[0])
-        res = journal.write(d, text)
-        if isinstance(res, dict):
+        # A scan run to VERIFY CODE is not an observation of the market.
+        #
+        # On 2026-08-27 five journal entries were written for one real scan:
+        # four came from re-running the brief while fixing the wall-label bugs.
+        # track.py's 15-minute dedupe collapses only the closest pair, so three
+        # would have entered the evidence as independent observations of a
+        # market state that was sampled once. Exactly the inflation the dedupe
+        # was built to stop, caused this time from the inside.
+        res = ({"_skipped": "no-journal"} if "--no-journal" in sys.argv
+               else journal.write(d, text))
+        if isinstance(res, dict) and "_error" in res:
             print(f"\n_[journal write failed: {res['_error']}]_", file=sys.stderr)
+        elif isinstance(res, dict):
+            print("\n_[journal skipped: --no-journal]_", file=sys.stderr)
         if "--chart" in sys.argv:
             _chart()

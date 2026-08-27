@@ -1,18 +1,18 @@
 {
  "schema": 1,
- "scan_utc": "2026-08-27T13:43:32+00:00",
- "scan_et": "2026-08-27 09:43 ET (Thu)",
+ "scan_utc": "2026-08-27T13:58:05+00:00",
+ "scan_et": "2026-08-27 09:58 ET (Thu)",
  "trading_day": "2026-08-27",
  "session_window": "NY_OPEN",
  "is_trading_day": true,
  "prediction": {
-  "price_at_scan": 29425.0,
-  "bias_score": 12,
+  "price_at_scan": 29395.5,
+  "bias_score": 11,
   "bias_label": "STRONGLY BULLISH",
   "strategy": "STRATEGY 1 \u2014 sweep -> failed re-break -> CISD reversal. Positive gamma above the flip: dealers fade extensions, so sweeps genuinely fail. Trade the walls and the day-frame levels.",
   "event_gate": null,
   "expected_direction": 1,
-  "gamma_flip": 28914.2,
+  "gamma_flip": 29083.4,
   "expiry_shape": "COHERENT_LONG",
   "fuel_state": "MODERATE",
   "remaining_budget": 132.6,
@@ -23,7 +23,7 @@
     "price": 29595.9,
     "name": "London High (today)",
     "kind": "liquidity",
-    "dist": 170.9,
+    "dist": 200.4,
     "reach": "swing",
     "stretch": true,
     "confluence": 1
@@ -32,43 +32,52 @@
     "price": 29588.6,
     "name": "Asia High (today)",
     "kind": "liquidity",
-    "dist": 163.6,
+    "dist": 193.1,
     "reach": "swing",
     "stretch": true,
     "confluence": 1
    },
    {
-    "price": 29523.1,
+    "price": 29536.1,
     "name": "NY High (today)",
     "kind": "liquidity",
-    "dist": 98.1,
+    "dist": 140.6,
+    "reach": "swing",
+    "stretch": true,
+    "confluence": 1
+   },
+   {
+    "price": 29514.2,
+    "name": "Options shelf 0.80bn",
+    "kind": "gamma-shelf",
+    "dist": 118.7,
     "reach": "intraday",
     "stretch": false,
     "confluence": 1
    },
    {
-    "price": 29491.2,
-    "name": "CALL WALL \u25cf\u25cf\u25cf\u25cf\u25cf 2.34bn + Options shelf 2.14bn",
+    "price": 29464.2,
+    "name": "CALL WALL \u25cf\u25cf\u25cf\u25cf\u25cf 1.60bn + Options shelf 1.48bn",
     "kind": "gamma",
-    "dist": 66.2,
+    "dist": 68.7,
     "reach": "intraday",
     "stretch": false,
     "confluence": 2
    },
    {
-    "price": 29413.0,
-    "name": "London Low (today)",
+    "price": 29414.2,
+    "name": "Options shelf 1.04bn + London Low (today)",
     "kind": "liquidity",
-    "dist": -12.0,
+    "dist": 18.7,
     "reach": "intraday",
     "stretch": false,
-    "confluence": 1
+    "confluence": 2
    },
    {
     "price": 29382.2,
     "name": "NY Low (today)",
     "kind": "liquidity",
-    "dist": -42.8,
+    "dist": -13.3,
     "reach": "intraday",
     "stretch": false,
     "confluence": 1
@@ -77,7 +86,7 @@
     "price": 29353.8,
     "name": "PDH + PD close",
     "kind": "liquidity",
-    "dist": -71.2,
+    "dist": -41.7,
     "reach": "intraday",
     "stretch": false,
     "confluence": 2
@@ -86,7 +95,16 @@
     "price": 29338.2,
     "name": "Asia Low (today)",
     "kind": "liquidity",
-    "dist": -86.8,
+    "dist": -57.3,
+    "reach": "intraday",
+    "stretch": false,
+    "confluence": 1
+   },
+   {
+    "price": 29314.2,
+    "name": "Options shelf 0.67bn",
+    "kind": "gamma-shelf",
+    "dist": -81.3,
     "reach": "intraday",
     "stretch": false,
     "confluence": 1
@@ -95,25 +113,25 @@
     "price": 29299.8,
     "name": "NY High (prev-day)",
     "kind": "liquidity",
-    "dist": -125.2,
+    "dist": -95.7,
     "reach": "intraday",
     "stretch": false,
     "confluence": 1
    },
    {
-    "price": 29291.2,
-    "name": "PUT WALL \u25cf\u25cb\u25cb\u25cb\u25cb 0.53bn",
+    "price": 29264.2,
+    "name": "PUT WALL \u25cf\u25cb\u25cb\u25cb\u25cb 0.44bn",
     "kind": "gamma",
-    "dist": -133.8,
-    "reach": "swing",
-    "stretch": true,
+    "dist": -131.3,
+    "reach": "intraday",
+    "stretch": false,
     "confluence": 1
    },
    {
     "price": 29219.3,
     "name": "Asia High (prev-day)",
     "kind": "liquidity",
-    "dist": -205.7,
+    "dist": -176.2,
     "reach": "swing",
     "stretch": true,
     "confluence": 1
@@ -122,16 +140,16 @@
     "price": 29209.5,
     "name": "London High (prev-day)",
     "kind": "liquidity",
-    "dist": -215.5,
+    "dist": -186.0,
     "reach": "swing",
     "stretch": true,
     "confluence": 1
    },
    {
-    "price": 28491.2,
-    "name": "STRUCTURAL PUT WALL \u25cf\u25cb\u25cb\u25cb\u25cb 0.80bn",
+    "price": 28714.2,
+    "name": "STRUCTURAL PUT WALL \u25cf\u25cf\u25cb\u25cb\u25cb 0.99bn",
     "kind": "structural",
-    "dist": -933.8,
+    "dist": -681.3,
     "reach": "swing",
     "stretch": true,
     "confluence": 1
@@ -143,37 +161,37 @@
    {
     "component": "gamma",
     "points": 2,
-    "why": "above flip 28914.2 by 510.8pts \u2014 long-gamma, dips supported, upside grinds"
+    "why": "above flip 29083.4 by 312.1pts \u2014 long-gamma, dips supported, upside grinds"
    },
    {
     "component": "gamma",
     "points": 2,
-    "why": "week net GEX 9.039 $bn/1% -> pinning likely"
+    "why": "week net GEX 6.817 $bn/1% -> pinning likely"
    },
    {
     "component": "gamma",
     "points": 0,
-    "why": "price mid-band (29291.2-29491.2), 67% up the range"
+    "why": "price mid-band (29264.2-29464.2), 66% up the range"
    },
    {
     "component": "vol",
     "points": 0,
-    "why": "VXN 21.42 (-1.7%) \u2014 stable"
+    "why": "VXN 20.7 (-3.4%) \u2014 stable"
    },
    {
     "component": "vol",
     "points": 1,
-    "why": "VIX9D/VIX 0.886 contango \u2014 calm, mean-reversion favoured, mild upward drift"
+    "why": "VIX9D/VIX 0.852 contango \u2014 calm, mean-reversion favoured, mild upward drift"
    },
    {
     "component": "vol",
     "points": -1,
-    "why": "VXN/VIX 1.42 \u2014 tech-specific stress priced above the broad market"
+    "why": "VXN/VIX 1.38 \u2014 tech-specific stress priced above the broad market"
    },
    {
     "component": "vol",
     "points": 0,
-    "why": "VVIX 85.24 \u2014 no tail-hedge bid"
+    "why": "VVIX 84.7 \u2014 no tail-hedge bid"
    },
    {
     "component": "rates",
@@ -183,7 +201,7 @@
    {
     "component": "rates",
     "points": 0,
-    "why": "DXY 99.09 (-0.08%) \u2014 dollar flat"
+    "why": "DXY 99.147 (-0.02%) \u2014 dollar flat"
    },
    {
     "component": "macro",
@@ -218,17 +236,17 @@
    {
     "component": "breadth",
     "points": 2,
-    "why": "mega-cap avg +2.08% (2/4 up): NVDA +7.42%, MSFT -0.59%, AAPL -1.09%, AVGO +2.59%"
+    "why": "mega-cap avg +2.21% (3/4 up): NVDA +6.62%, MSFT +0.40%, AAPL -0.48%, AVGO +2.29%"
    },
    {
     "component": "breadth",
     "points": 1,
-    "why": "NDX +0.71% vs ES +0.21% \u2014 tech leading, genuine risk appetite"
+    "why": "NDX +0.57% vs ES +0.30% \u2014 tech leading, genuine risk appetite"
    },
    {
     "component": "fuel",
     "points": 0,
-    "why": "ADR14 390.3, 66.0% used vs ~50% normal by 09:43 ET -> fuel_ratio 1.32 (normal) [MODERATE]"
+    "why": "ADR14 390.3, 66.0% used vs ~50% normal by 09:58 ET -> fuel_ratio 1.32 (normal) [MODERATE]"
    },
    {
     "component": "structure",
@@ -242,13 +260,13 @@
    },
    {
     "component": "structure",
-    "points": 0,
-    "why": "in-reach unmitigated pools: 1 above / 1 below \u2014 draw balanced"
+    "points": -1,
+    "why": "in-reach unmitigated pools: 0 above / 2 below \u2014 draw lower"
    },
    {
     "component": "news",
     "points": -1,
-    "why": "1 auto-scored headline(s) (0 bull / 1 bear) -> MILDLY BEARISH; 60 more need reading in context (not counted here)"
+    "why": "1 auto-scored headline(s) (0 bull / 1 bear) -> MILDLY BEARISH; 64 more need reading in context (not counted here)"
    },
    {
     "component": "news",
@@ -262,34 +280,67 @@
    "adr_used_pct": 66.0,
    "remaining_budget": 132.6,
    "expansion_state": "MODERATE",
-   "volume_relative": 1.03,
+   "volume_relative": 1.06,
    "volume_state": "normal"
   },
   "gamma": {
-   "near_expiry_0_2dte": 7.516,
-   "this_week": 9.039,
-   "full_45dte": 11.817
+   "near_expiry_0_2dte": 5.786,
+   "this_week": 6.817,
+   "full_45dte": 8.295
   },
-  "call_wall": 29491.2,
-  "put_wall": 29291.2,
-  "max_pain": 29181.2,
+  "call_wall": 29464.2,
+  "put_wall": 29264.2,
+  "max_pain": 29154.2,
   "vol": {
-   "vxn": 21.42,
-   "vix": 15.04,
-   "vix9d_over_vix": 0.886
+   "vxn": 20.7,
+   "vix": 14.99,
+   "vix9d_over_vix": 0.852
   },
   "rates": {
    "us10y": 4.66,
-   "dxy": 99.09
+   "dxy": 99.147
   },
   "news": {
    "raw_score": -1.4,
    "bias_points": -1,
    "label": "MILDLY BEARISH",
    "scored_high_confidence": 1,
-   "needs_model_judgement": 60
+   "needs_model_judgement": 64
   },
-  "events_24h": []
+  "events_24h": [
+   {
+    "utc": "2026-08-28T14:00:00+00:00",
+    "impact": "High",
+    "title": "Fed Chairman Warsh Speaks",
+    "forecast": "",
+    "previous": "",
+    "hours_away": 24.0
+   },
+   {
+    "utc": "2026-08-28T14:00:00+00:00",
+    "impact": "High",
+    "title": "Prelim Benchmark Payrolls Revision",
+    "forecast": "",
+    "previous": "-911K",
+    "hours_away": 24.0
+   },
+   {
+    "utc": "2026-08-28T14:00:00+00:00",
+    "impact": "Medium",
+    "title": "Revised UoM Consumer Sentiment",
+    "forecast": "51.0",
+    "previous": "51.0",
+    "hours_away": 24.0
+   },
+   {
+    "utc": "2026-08-28T14:00:00+00:00",
+    "impact": "Medium",
+    "title": "Revised UoM Inflation Expectations",
+    "forecast": "",
+    "previous": "4.3%",
+    "hours_away": 24.0
+   }
+  ]
  },
  "outcome": null,
  "test_artefact": true,

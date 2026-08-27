@@ -93,6 +93,11 @@ as one scan must come from one computation.
 `gex_chart.py` standalone is for `chart` mode only, or with `--book full` when
 someone explicitly wants the 45-day view.
 
+**Add `--no-journal` when re-running the brief to test code.** A scan run to
+verify a fix is not an observation of the market, and without the flag it lands
+in the journal and inflates the evidence — three fake observations of one market
+state, on the day this was found.
+
 Then send **both in a single `SendUserFile` call**, with
 `display: "render"` so the chart opens in the panel:
 

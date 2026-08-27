@@ -71,9 +71,15 @@ def collect(root=None):
     root = root or journal.JOURNAL_ROOT
     days = sorted(d for d in os.listdir(root)
                   if os.path.isdir(os.path.join(root, d)))
-    rows, per_day, excluded, unfinished = [], {}, [], []
+    rows, per_day, excluded, unfinished, artefacts = [], {}, [], [], 0
     for day in days:
-        scans = [s for s in journal.load_day(day, root) if s.get("is_trading_day")]
+        # Entries written by a verification re-run are marked, not deleted. The
+        # archive records what happened; the statistics take one observation
+        # per market state.
+        artefacts += sum(1 for s in journal.load_day(day, root)
+                         if s.get("test_artefact"))
+        scans = [s for s in journal.load_day(day, root)
+                 if s.get("is_trading_day") and not s.get("test_artefact")]
         if not scans:
             continue
         rev = R.review(day, root)
@@ -138,7 +144,7 @@ def collect(root=None):
                 "hit_rate": sc["level_hit_rate"],
             })
         per_day[day] = rev["actual_session"]
-    return rows, per_day, excluded, unfinished
+    return rows, per_day, excluded, unfinished, artefacts
 
 
 def summarise(rows):
@@ -205,7 +211,7 @@ def summarise(rows):
 
 
 if __name__ == "__main__":
-    rows, per_day, excluded, unfinished = collect()
+    rows, per_day, excluded, unfinished, artefacts = collect()
     s = summarise(rows)
     if "--json" in sys.argv:
         print(json.dumps({"rows": rows, "days": per_day, "summary": s,
@@ -243,6 +249,9 @@ if __name__ == "__main__":
     d = s["direction"]
     print(f"direction: {d['correct']} right / {d['wrong']} wrong / "
           f"{d['no_call']} no-call   levels touched {s['mean_level_hit_rate']}")
+    if artefacts:
+        print(f"\n{artefacts} entr{'y' if artefacts==1 else 'ies'} marked "
+              f"test_artefact (verification re-runs) \u2014 excluded.")
     if unfinished:
         # D3 again: an exclusion the reader is never told about is a silent one.
         print("\nHELD BACK - day not finished (grades after 21:00 UTC on its own date):")
