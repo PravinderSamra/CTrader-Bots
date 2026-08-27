@@ -105,6 +105,9 @@ def load_k():
     if os.path.exists(p):
         try:
             raw = json.load(open(p))
+            if raw.get("provisional"):
+                print("  [calibration is PROVISIONAL — fitted on a dataset with "
+                      "an unexplained hard-bounds violation]", file=sys.stderr)
             return {tuple(k.split("|")): v["k"] for k, v in raw.get("buckets", {}).items()}, raw
         except Exception:
             pass

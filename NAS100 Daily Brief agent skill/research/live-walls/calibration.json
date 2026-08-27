@@ -67,5 +67,7 @@
    "prev": 0.45,
    "status": "fitted"
   }
- }
+ },
+ "provisional": true,
+ "provisional_note": "Fitted 2026-08-27 from a grading run that returned within-hard-bounds 98.9%, not 100%. Those bounds are arithmetic and cannot be violated by a correct dataset, so an input was wrong and this fit is on partly unsound data. It is LEFT IN PLACE rather than reverted because reverting would hide that it happened - the same reasoning as marking test artefacts instead of deleting them. Treat every k below as provisional, and refit from scratch once the bounds figure is 100%."
 }

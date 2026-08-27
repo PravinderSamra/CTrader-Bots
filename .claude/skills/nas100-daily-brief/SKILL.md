@@ -72,6 +72,23 @@ format; re-extracting or rewording it is how the output drifts.
 | `retro chart` | `python3 gex_retro.py --ladder auto --to <day>` | Grades a past CHART's ranked walls (C1-C3 / P1-P3). Different object from the board — see `research/gamma-chart.md`. Refuses if no ladder predates the target day |
 | `review` | `python3 review_day.py` **+ `python3 gex_retro.py`** | Skip the brief. Run the retrospective in the FOREGROUND, report it, and attach the retro chart. **After 21:00 UTC also run the live-wall grading — see below** |
 
+### Before a review, read these two files. Every time.
+
+A review that proposes a change without them is guesswork with numbers attached.
+
+1. **`journal/HYPOTHESES.md`** — the evidence register. It holds every open
+   hypothesis with its threshold and day count, the defects already found and
+   fixed, the ideas already **rejected after testing** (do not re-propose them),
+   and the claims **withdrawn** for being wrong. It also carries the rule this
+   whole project runs on: **nothing changes the model until 3+ trading days of
+   evidence point the same way**, and reaching a threshold is permission to read
+   the evidence, not to act.
+2. **`research/live-walls/ACCURACY-LOG.md`** — the live-wall record, including
+   any OPEN DEFECT. Check for one before running anything with `--fit`.
+
+**Propose nothing that is below its threshold.** "Still observing, here is what
+today added" is a complete and correct review.
+
 `python3 brief.py --json` gives the structured payload when you need to compare
 against a previous scan.
 
@@ -133,8 +150,16 @@ At an end-of-day review (after 21:00 UTC):
 
 ```
 python3 intraday_oi.py            # snapshot today, before the day rolls
-python3 oi_accuracy.py --fit      # grade yesterday, refit the calibration
+python3 oi_accuracy.py            # grade yesterday — REPORT ONLY
 ```
+
+> ⚠️ **`--fit` is BLOCKED until an open defect is resolved.** The 2026-08-27
+> grading returned **within-hard-bounds 98.9%**, where the arithmetic says it
+> must be 100% — those bounds are not modelled and a correct dataset cannot
+> violate them, so an input is not what it claims to be. **Fitting calibration
+> on a dataset with an unexplained impossibility in it is fitting noise.**
+> Read `research/live-walls/ACCURACY-LOG.md` for the candidates before running
+> `--fit` again, and remove this block only once the figure is 100%.
 
 Then append the result to `research/live-walls/ACCURACY-LOG.md` and report it as
 an **appendix** to the review — clearly separated from the brief's own findings.

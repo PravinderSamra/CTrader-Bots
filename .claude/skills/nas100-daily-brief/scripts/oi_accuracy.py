@@ -133,7 +133,22 @@ def main():
     for s in skipped:
         print(f"  - {os.path.basename(s['path'])}: {s['skipped']}")
 
-    if "--fit" in sys.argv and graded:
+    # Refuse to fit on a dataset with an unexplained impossibility in it.
+    #
+    # The hard bounds are arithmetic, not modelled: dOI cannot fall outside
+    # [max(-V,-OI), +V]. When it does, an INPUT is wrong, and calibration
+    # fitted on top of that is fitted on noise. 2026-08-27 came back 98.9%.
+    unsound = [g for g in graded if (g.get("within_hard_bounds_pct") or 100) < 99.99]
+    if "--fit" in sys.argv and unsound:
+        print("\n  REFUSING TO FIT — within-hard-bounds is below 100%:")
+        for g in unsound:
+            print(f"     {g['snapshot_day']}: {g['within_hard_bounds_pct']}%")
+        print("  Those bounds are arithmetic. Below 100% means an input is not")
+        print("  what it claims to be, and fitting on it fits noise. Diagnose")
+        print("  first — see research/live-walls/ACCURACY-LOG.md.")
+        print("  Override with --fit-anyway once you understand why.")
+        return
+    if ("--fit" in sys.argv or "--fit-anyway" in sys.argv) and graded:
         prior, _ = I.load_k()
         buckets, notes = refit(graded, prior)
         doc = {"updated": datetime.now(timezone.utc).isoformat(timespec="seconds"),

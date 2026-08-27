@@ -118,3 +118,18 @@ dataset with an unexplained 1.1% impossibility is a model tuned on noise.
 published +7.34bn → estimated +10.53bn. **Both walls unchanged** at 29,650 and
 28,650 — the second consecutive day where the estimate moves the magnitude but
 not the levels. That pattern is now worth watching directly.
+
+### The 27 Aug fit is PROVISIONAL and `--fit` is now blocked in code
+
+Fitting was run on the 98.9% dataset before the significance of that figure was
+thought through. The resulting `calibration.json` is marked `provisional: true`
+and `intraday_oi.py` prints a warning whenever it loads it.
+
+**Left in place rather than reverted.** Reverting would hide that it happened —
+the same reasoning as marking test artefacts instead of deleting them. Every `k`
+in it is provisional; refit from scratch once the bounds figure is 100%.
+
+`oi_accuracy.py --fit` now **refuses** when any graded day is below 100% within
+hard bounds, and prints why. Enforced in code, not only in the docs, because a
+cold session reads the code's behaviour long before it reads a note. Override is
+`--fit-anyway`, and only once the cause is understood.
