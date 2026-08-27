@@ -71,7 +71,7 @@ def collect(root=None):
     root = root or journal.JOURNAL_ROOT
     days = sorted(d for d in os.listdir(root)
                   if os.path.isdir(os.path.join(root, d)))
-    rows, per_day, excluded = [], {}, []
+    rows, per_day, excluded, unfinished = [], {}, [], []
     for day in days:
         scans = [s for s in journal.load_day(day, root) if s.get("is_trading_day")]
         if not scans:
@@ -95,6 +95,7 @@ def collect(root=None):
         sess = rev.get("actual_session") or {}
         if not _day_complete(day, sess.get("bars", 0)):
             per_day[day] = {**sess, "_excluded": "session not finished"}
+            unfinished.append({"day": day, "bars": sess.get("bars", 0)})
             continue
         kept = {s["scan_utc"] for s in _dedupe(scans)}
         for sc in rev["scans"]:
@@ -137,7 +138,7 @@ def collect(root=None):
                 "hit_rate": sc["level_hit_rate"],
             })
         per_day[day] = rev["actual_session"]
-    return rows, per_day, excluded
+    return rows, per_day, excluded, unfinished
 
 
 def summarise(rows):
@@ -150,6 +151,21 @@ def summarise(rows):
     # is perfectly good evidence.
     fuel_rows = [r for r in rows if not r.get("fuel_bad")]
     ext_err = [(r["extension"] - r["budget"]) for r in fuel_rows]
+    # A scan-pooled mean is not one observation per day.
+    #
+    # 24 Aug contributes FOUR rows, three carrying an identical budget (88.7)
+    # against an identical extension (168.5) — one budget reading graded three
+    # times. Not a stale-fuel defect: the live range genuinely was 362.4 at all
+    # three timestamps. The 15-minute dedupe cannot see it either, because the
+    # scans are hours apart. A day with more scans simply votes more often.
+    #
+    # Both are reported now. Per-scan answers "how wrong is a typical scan";
+    # per-day answers "how wrong is the model on a typical day", and a
+    # hypothesis about the MODEL should be read against the second.
+    by_day = defaultdict(list)
+    for r in fuel_rows:
+        by_day[r["day"]].append(r["extension"] - r["budget"])
+    day_err = [sum(v) / len(v) for v in by_day.values()]
     early = [r for r in fuel_rows if r["session"] in ("ASIA", "LONDON", "PRE_NY")]
     late = [r for r in fuel_rows
             if r["session"] in ("NY_OPEN", "NY_MIDDAY", "NY_PM", "NY_CLOSE")]
@@ -168,7 +184,11 @@ def summarise(rows):
         "mean_level_hit_rate": (round(sum(hits) / len(hits), 2) if hits else None),
         "H1_budget_vs_extension": {
             "mean_error_pts": mean(ext_err),
-            "note": "positive = range grew MORE than budgeted",
+            "mean_error_per_day": mean(day_err),
+            "days": len(day_err),
+            "per_day": {d: round(sum(v) / len(v), 1) for d, v in sorted(by_day.items())},
+            "note": "positive = range grew MORE than budgeted; read per_day for "
+                    "claims about the model, per-scan for claims about a scan",
         },
         "H5_early_vs_late": {
             "early_mean_error": mean([r["extension"] - r["budget"] for r in early]),
@@ -185,7 +205,7 @@ def summarise(rows):
 
 
 if __name__ == "__main__":
-    rows, per_day, excluded = collect()
+    rows, per_day, excluded, unfinished = collect()
     s = summarise(rows)
     if "--json" in sys.argv:
         print(json.dumps({"rows": rows, "days": per_day, "summary": s,
@@ -193,8 +213,16 @@ if __name__ == "__main__":
                          indent=2, default=str)); sys.exit(0)
     print(f"EVIDENCE TO DATE — {s['trading_days']} trading day(s), "
           f"{s['scans']} scans (deduped)")
-    print(f"  actionable at {MIN_SESSIONS}+ days: "
-          f"{'YES' if s['actionable'] else 'NO — keep observing'}\n")
+    # "actionable: YES" was a global day-count gate and read far more
+    # permissively than the individual thresholds: it shouted YES on 3 days
+    # while H4/H6 need 5, H8 needs 10, and H5 had one late-session scan to fit
+    # a time-of-day term to. A banner that overstates readiness is how a model
+    # gets tuned early.
+    print(f"  {s['trading_days']} of {MIN_SESSIONS} days for the 3-day hypotheses "
+          f"(H1/H2/H3/H5/H7) \u2014 "
+          f"{'threshold met, read the evidence before proposing' if s['actionable'] else 'keep observing'}")
+    print(f"  H4/H6 need 5 days \u00b7 H8 needs 10. Day count alone is not "
+          f"evidence.\n")
     print(f"{'day':<12}{'time':>6} {'session':<10}{'budget':>8}{'extension':>11}"
           f"{'traversal':>11}{'err':>7}  {'bias':>5} {'call':<10}")
     for r in rows:
@@ -203,15 +231,23 @@ if __name__ == "__main__":
               f"{r['extension']:>11.1f}{r['traversal']:>11.1f}"
               f"{r['extension']-r['budget']:>7.1f}  {r['bias']:>+5d} "
               f"{r['call']:<10}{flag}")
-    print(f"\nH1 budget vs range EXTENSION: mean error "
-          f"{s['H1_budget_vs_extension']['mean_error_pts']} pts "
-          f"(+ = range grew more than budgeted, n={s['scans_with_sound_fuel']})")
+    h1 = s["H1_budget_vs_extension"]
+    print("\nH1 budget vs range EXTENSION  (+ = range grew more than budgeted)")
+    print(f"   per scan {h1['mean_error_pts']:>8} pts  (n={s['scans_with_sound_fuel']} scans)")
+    print(f"   per DAY  {h1['mean_error_per_day']:>8} pts  (n={h1['days']} days)"
+          f"   <- read this for claims about the model")
+    print("   " + "   ".join(f"{d[5:]} {e:+.1f}" for d, e in h1["per_day"].items()))
     h5 = s["H5_early_vs_late"]
     print(f"H5 early ({h5['early_n']}) mean err {h5['early_mean_error']}  vs  "
           f"late ({h5['late_n']}) mean err {h5['late_mean_error']}")
     d = s["direction"]
     print(f"direction: {d['correct']} right / {d['wrong']} wrong / "
           f"{d['no_call']} no-call   levels touched {s['mean_level_hit_rate']}")
+    if unfinished:
+        # D3 again: an exclusion the reader is never told about is a silent one.
+        print("\nHELD BACK - day not finished (grades after 21:00 UTC on its own date):")
+        for u in unfinished:
+            print(f"  {u['day']}  {u['bars']} bars so far")
     if excluded:
         print("\n* FUEL fields excluded (corrupt input, not a failed forecast).")
         print("  Direction calls from these scans ARE counted.")

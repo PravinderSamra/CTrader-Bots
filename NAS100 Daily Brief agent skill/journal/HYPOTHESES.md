@@ -8,8 +8,9 @@ between sessions.
 Run `python3 track.py` (in the skill's `scripts/`) to regenerate the evidence
 table. Append observations below; do not rewrite history.
 
-**Status:** 2 trading days on record (2026-08-24, 2026-08-25). Nothing is
-actionable — the threshold is 3. H8 is newly opened and needs 10.
+**Status:** 3 trading days on record (24, 25, 26 Aug). Only **H1** has actually
+reached its own threshold, and its evidence is a trend rather than a level, so
+nothing is proposed. H9 and H10 opened 27 Aug.
 
 ---
 
@@ -201,6 +202,17 @@ does not explain a 192pt move in two minutes. **Widen H7 from overnight
 staleness to flip stability generally**, and record consecutive-scan drift, not
 just overnight drift. One data point — no proposal.
 
+**Third observation, and the sharpest yet.** Between 25 Aug 21:43Z and 22:11Z —
+**28 minutes** — the flip moved **+167.4pts** while spot moved about **12.7**.
+Drift was **13× price movement**. That is the second large short-interval move
+after the 192pt/2min anomaly; the other five consecutive-scan pairs on record
+drift only 0.4–23.5pts.
+
+Related, and it quantifies the cost: the `gamma` component swung **+2 → −3**
+overnight on a 108.7pt flip move. A **5-point swing** — larger than the entire
+net score of −4 that produced the wrong 26 Aug call — driven by the least stable
+input in the model.
+
 **Threshold.** 3+ days. Record the overnight flip and the next-day pre-NY flip;
 measure the drift. Also log flip drift between any two consecutive scans.
 
@@ -238,6 +250,63 @@ budget as price travel. The brief says so in words at the point of use.
 Record: did the close land inside the band? Did price trade outside it intraday?
 
 **Status: OBSERVING.**
+
+---
+
+## H9 — Do same-day index-defining earnings suppress the expansion signal?
+
+**Claim.** When a same-day, index-defining earnings event is on the calendar,
+the range comes in contained regardless of what expiry structure says — so a
+`COHERENT_SHORT` "expect expansion" read should be discounted, not followed.
+
+**Why it matters.** The two signals are computed independently and neither
+defers to the other. On the day it mattered the brief printed the earnings line
+and the expansion call side by side and let them contradict each other.
+
+**Evidence so far (1 day).** 26 Aug, NVDA after the close. Expiry structure said
+`COHERENT_SHORT`, confidence high: *"expect range expansion and trends that
+persist. Today's ADR can be exceeded — don't cap the target too early."* Actual
+range **325.7 against ADR14 398.7 — 82%**. No expansion, no persistent trend.
+
+*Corrected 27 Aug:* the first write-up of this cited 286.0 / 72%, taken from a
+grading run at 20:42 before the session had finished. The day's high and close
+were both set in the final bars. 82% is contained but materially less dramatic
+than 72%, and it weakens this observation accordingly.
+
+**Threshold.** 3+ index-defining earnings days. NVDA is the most extreme
+possible case, so a single observation from it generalises poorly.
+
+**Status: OBSERVING. Do not implement.**
+
+---
+
+## H10 — The prior-week-range rule has no reclaim condition
+
+**Claim.** `structure −3` ("price is BELOW the entire prior-week range; PWL is
+now resistance") scores a *state* and has no term for price reclaiming that
+range. So the penalty neither decays nor inverts when the premise stops holding.
+
+**Why it matters.** It is one of the largest single components in the engine,
+and on 26 Aug it was one of two inputs behind a call that was wrong by 249.8
+points.
+
+**Evidence so far (1 day).** 26 Aug 13:12, the rule fired on PWL 29,115.9.
+Within the same hour:
+
+| Level | Travel up | Travel down | Graded |
+|---|---|---|---|
+| 29,118.1 (London Low + PWL) | 145.8 | 29.4 | chopped |
+| 29,086.1 (NY Low prev-day) | **177.8** | **0.5** | broke UP through it |
+
+Price touched 29,086.1 and never traded half a point below it. The "resistance"
+was reclaimed almost immediately and the −3 stayed on the books.
+
+**Threshold.** 3+ instances where price is outside the prior-week range at scan
+time. Record whether the range was reclaimed within the session, and whether the
+call went the way the penalty implied.
+
+**Status: OBSERVING. Do not implement.** The fix, if the evidence supports one,
+is a reclaim term — not a smaller constant.
 
 ---
 
@@ -380,3 +449,119 @@ flattering direction.
 - **Quarantine corrupt inputs, don't grade them.** A scan whose *input* was
   wrong is not a forecast that failed. `track.py` now prints an EXCLUDED block
   so the exclusions stay visible rather than silent.
+
+---
+
+# Observations appended 2026-08-27 (trading day 2026-08-26, graded post-roll)
+
+Full working: `journal/2026-08-26/REVIEW.md`. Nothing below is a proposal.
+
+**Status update:** **3 trading days on record** (24, 25, 26 Aug). `track.py`
+prints `actionable: YES` on the *day count*, but per-hypothesis only **H1** and
+(nominally) **H5** have reached threshold, and neither supports a change.
+
+**H1 — threshold reached; no change supported.** Per-day mean error is
+**+61.2 → −11.6 → −73.0**. The sign reverses and the magnitude is still moving,
+so there is no stable bias to correct. Note the 26 Aug figure was **−112.7** when
+measured last night at 20:42 UTC and is **−73.0** post-roll: the session high
+was set in the final bar (20:55), adding 39.7 pts of extension to every scan on
+the day. The reversal is real but 35% smaller than it looked. *Keep observing.*
+
+**H2 — no new instance.** 26 Aug produced no LOW_FUEL/EXHAUSTED-at-extreme scan
+(MODERATE / ROOM_TO_EXPAND / SESSION_PENDING). Still **2 of 3**.
+
+**H3 — no new instance.** Still 1.
+
+**H4 — third data point, a miss.** Close 29353.7 vs published flips 29207.2
+(13:12), 29230.7 (13:14), 29098.5 (22:11) → **123–255 pts away**. Running
+1 hit / 2 miss over 3 days. Needs 5. *Do not use the flip as a target.*
+
+**H5 — day count reached, evidence not.** The late-session bucket still holds
+exactly **one** scan (24 Aug 13:45, +5.3). A time-of-day term cannot be fitted to
+one late observation. Insufficient despite the day count.
+
+**H6 — third day.** Hit rate 0.71 (mean of 4 scans); running mean 0.56. "Traded
+both sides — chopped" remains the dominant outcome. Two cull candidates now
+have a track record worth watching: **MAX PAIN** was touched on 3 of 4 scans and
+never stalled price once (chopped, chopped, broke down through), and **PD mid
+29144.0** chopped on all 4. Needs 5 days. *Logged, not proposed.*
+
+**H7 — strongest data point yet, but the pair count did not advance.** No
+overnight scan was taken on the evening of 26 Aug, so there is still no third
+overnight→pre-NY pair (**2 of 3**). However, the *widened* H7 (drift between any
+two consecutive scans) gained a sharp observation: between **25 Aug 21:43Z and
+22:11Z — 28 minutes apart — the flip moved 28931.1 → 29098.5 (+167.4 pts) while
+spot moved ~12.7 pts** (29213.5 → 29226.2). Flip drift was **13× price
+movement**. That is the second large short-interval drift on record after the
+192 pt / 2 min anomaly of 24 Aug; the other five short-interval pairs drift
+0.4–23.5 pts. Related: on 26 Aug the `gamma` component swung **+2 → −3** between
+the 22:11Z and 13:12Z scans on a **+108.7 pt** flip move — a 5-point swing, larger
+than the whole net score of −4, on the least stable input in the model.
+
+**H8 — first outcome recorded (1 of 10).** Band **29,064 .. 29,388** (EM ±162
+from the 25 Aug ATM straddle at 191 pts, ATM IV 15.5%). 26 Aug close **29353.7 →
+INSIDE the band**. Intraday **low 29028.1 → 36 pts BELOW** the lower bound; high
+29353.8 stayed inside. Result: **close inside / low breached**.
+
+**H-new (opened, 1 day) — the prior-week displacement rule has no reclaim
+condition.** On 26 Aug `structure −3` fired for *"price is BELOW the entire
+prior-week range (29115.9–30245.8); PWL 29115.9 is now resistance, not
+support"*, and it was half the bearish weight behind two WRONG −4 PRE_NY calls
+(price then ran +249.8). Within the same hour `29118.1 London Low + PWL` graded
+*traded both sides* at **145.8 up / 29.4 down**, and `29086.1 NY Low (prev-day)`
+graded ***broke UP through it*** at **177.8 up / 0.5 down** — price touched it and
+never traded 0.5 pts lower. The prior-week low was reclaimed and held, and the
+rule scores a **state** with no term for reclaim, so the −3 neither decays nor
+inverts. **Threshold: 3 days.** Record each time price is below the prior-week
+range at scan time and whether it reclaims intraday. *One observation — no
+proposal.*
+
+**D2 did not regress.** `2211-overnight.md`'s secondary-walls table
+("28993.0 … a genuine floor while we stay in long gamma") was written 22:11 on
+25 Aug, *before* the D2 fix landed. It is a **pre-fix artefact and must not be
+graded as a forecast.** The 27 Aug brief carries the corrected regime-aware
+wording.
+
+## Two methodology items awaiting a decision (not calibration, so not 3-day gated)
+
+**M1 — `track.py`'s H1 mean pools scans, not days; 24 Aug is counted 4×.** Its
+08:28, 09:37 and 12:40 rows carry the **identical** budget 88.7 against the
+**identical** extension 168.5. Verified against bars: the live range really was
+362.4 at all three timestamps, so this is genuine market behaviour, **not** a
+stale-fuel defect — but it is still one budget reading graded three times. The
+15-minute dedupe window does not catch it. Pooled by scan the H1 mean is
+**+12.4**; weighted one-vote-per-day it is **−7.8**. Which weighting H1 should use
+is a decision for the trader, not a tuning.
+
+**M2 — the unfinished-day exclusion is silent.** `track.py` stores
+`_excluded: "session not finished"` in `per_day` but never prints it; only the
+fuel quarantine gets a visible EXCLUDED block. 2026-08-27 was correctly held out
+and the reader is told nothing. Same shape as **D3**: a guard that fails quietly
+and in the flattering direction. The housekeeping rule already says exclusions
+must stay visible.
+
+**Register gap: there is no H9.** This file runs H1–H8. A review task referred to
+"H9 needs 3 days". Flagged, not created — inventing one would corrupt the count.
+
+### Resolved 2026-08-27
+
+**M1 — RESOLVED.** `track.py` now reports H1 **both ways**: per-scan and
+per-day, and labels the per-day figure as the one to read for claims about the
+model. It does not pick a weighting silently. Per-day the series is
+**+61.2 → −11.6 → −73.0, mean −7.8** — monotonic, which is a clearer picture
+than either pooled number gave.
+
+**M2 — RESOLVED.** `track.py` now prints a `HELD BACK — day not finished` block
+naming each day and its bar count, alongside the existing fuel-quarantine block.
+
+**Also fixed: the `actionable: YES` banner.** It was a global day-count gate and
+read far more permissively than the individual thresholds — shouting YES at 3
+days while H4/H6 need 5 and H8 needs 10. It now names which hypotheses the day
+count applies to and states that day count alone is not evidence.
+
+**The H9 gap was mine.** The 26 Aug review told the trader "opening as H9" and
+then never wrote it down — the claim lived only in a chat message. That is
+precisely the failure this register exists to prevent, and it is worse than
+forgetting, because H9 was subsequently referenced in a review task as though it
+existed. **A hypothesis is opened by writing it here, not by saying so.** It is
+created properly below.
