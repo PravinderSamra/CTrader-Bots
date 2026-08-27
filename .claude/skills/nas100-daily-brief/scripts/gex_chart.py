@@ -90,8 +90,9 @@ def collect(d=None, cfd_price=None, span=650, bin_pts=50, book="week"):
     # its put wall is max PUT gamma below — not max/min NET, which is what this
     # used and which put "put support" 295pts away from the brief's put wall on
     # 2026-08-27 (and 700pts away in a same-minute test).
-    call_res = max(above, key=lambda b: b["call_gex"], default=None)
-    call_res = call_res if call_res and call_res["call_gex"] > 0 else None
+    # Dominance, not just magnitude — see the note in gex_levels.build().
+    call_res = max((b for b in above if b["call_gex"] > b["put_gex"]),
+                   key=lambda b: b["call_gex"], default=None)
     # Put support: heaviest NEGATIVE gamma below spot.
     #
     # On NDX this is frequently absent. The index carries far less protective
@@ -99,8 +100,8 @@ def collect(d=None, cfd_price=None, span=650, bin_pts=50, book="week"):
     # all the way down. When that happens the honest answer is "there is no put
     # support on this chain today", not to promote the least-positive strike
     # and dress it up as one.
-    put_sup = max(below, key=lambda b: b["put_gex"], default=None)
-    put_sup = put_sup if put_sup and put_sup["put_gex"] > 0 else None
+    put_sup = max((b for b in below if b["put_gex"] > b["call_gex"]),
+                  key=lambda b: b["put_gex"], default=None)
     # Kept separately: the most negative NET strike below spot. It is a real
     # and different object (where dealers are most short gamma) and it used to
     # masquerade as the put wall.
@@ -125,6 +126,46 @@ def collect(d=None, cfd_price=None, span=650, bin_pts=50, book="week"):
         "generated": datetime.now(timezone.utc),
         "bin_pts": bin_pts, "dte_max": dte_max,
     }
+
+
+def consistency_check(c):
+    """No strike may carry two labels that contradict each other.
+
+    This is the test that would have caught the 29,291 bug: it was marked
+    PUT WALL and ranked C3 (top-3 POSITIVE) on the same row, and nothing
+    looked. D2's lesson was written down after the secondary-walls put labels
+    were found backwards — "a new panel needs one test that it does not
+    contradict the rest of the brief" — and then not implemented. Here it is.
+
+    Returns a list of problems; empty means clean.
+    """
+    bad = []
+    pos = {b["price"] for b in c["ranked_up"]}
+    neg = {b["price"] for b in c["ranked_dn"]}
+    pw = (c.get("put_sup") or {}).get("price")
+    cw = (c.get("call_res") or {}).get("price")
+    if pw is not None and pw in pos:
+        bad.append(f"{pw:,.0f} is labelled PUT WALL and also ranked among the "
+                   f"heaviest POSITIVE strikes")
+    if cw is not None and cw in neg:
+        bad.append(f"{cw:,.0f} is labelled CALL WALL and also ranked among the "
+                   f"heaviest NEGATIVE strikes")
+    by_price = {b["price"]: b for b in c["bars"]}
+    if pw is not None and by_price.get(pw, {}).get("net", 0) > 0:
+        bad.append(f"{pw:,.0f} is labelled PUT WALL but its NET gamma is "
+                   f"{by_price[pw]['net']/1e9:+.2f}bn (positive)")
+    if cw is not None and by_price.get(cw, {}).get("net", 0) < 0:
+        bad.append(f"{cw:,.0f} is labelled CALL WALL but its NET gamma is "
+                   f"{by_price[cw]['net']/1e9:+.2f}bn (negative)")
+    for b in c["ranked_up"]:
+        if b["net"] <= 0:
+            bad.append(f"{b['price']:,.0f} carries a C rank with net "
+                       f"{b['net']/1e9:+.2f}bn")
+    for b in c["ranked_dn"]:
+        if b["net"] >= 0:
+            bad.append(f"{b['price']:,.0f} carries a P rank with net "
+                       f"{b['net']/1e9:+.2f}bn")
+    return bad
 
 
 def render(c, path):
@@ -249,6 +290,10 @@ def render(c, path):
         marker(c["call_res"]["price"], CALLW, f'CALL WALL {c["call_res"]["price"]:,.0f}')
     if c["put_sup"]:
         marker(c["put_sup"]["price"], PUTW, f'PUT WALL {c["put_sup"]["price"]:,.0f}')
+    else:
+        A(f'<text x="8" y="{TOP-26}" fill="{PUTW}" font-size="14" '
+          f'font-weight="600">No put wall: no strike below spot is '
+          f'put-dominated</text>')
     if c["flip"]:
         marker(c["flip"], FLIP, f'BOOK FLIP {c["flip"]:,.0f}')
     if c.get("most_neg"):

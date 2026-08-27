@@ -259,8 +259,26 @@ def build(cfd_price, max_dte=45):
         net = sum(p["net_gex"] for p in pack)
         above = [p for p in pack if p["strike"] > S_ndx]
         below = [p for p in pack if p["strike"] < S_ndx]
-        cw = max(above, key=lambda p: p["call_gex"], default=None)
-        pw = max(below, key=lambda p: p["put_gex"], default=None)
+        # A wall must be DOMINATED by the side it is named after.
+        #
+        # `max(below, key=put_gex)` finds the strike carrying the most put
+        # gamma below spot — but never checks whether puts actually dominate
+        # it. On 2026-08-27 that returned 29,291, which held 45,880 call OI
+        # against 10,432 put OI (4.4:1 calls) and net +0.742bn — the THIRD
+        # LARGEST POSITIVE strike on the board. The brief called it "heaviest
+        # floor this week, expect a bounce and a good long-sweep here" and the
+        # chart stamped C3 on the same row. One strike, two contradictory
+        # labels, and a long recommended off a call-gamma brake.
+        #
+        # NDX makes this the normal case rather than an edge case: it carries
+        # far less protective put open interest than SPX, so on many days NO
+        # strike below spot is put-dominated. The honest answer then is that
+        # there is no put wall on this chain — not to promote whichever
+        # call-heavy strike happens to hold the most puts.
+        cands_c = [p for p in above if p["call_gex"] > p["put_gex"]]
+        cands_p = [p for p in below if p["put_gex"] > p["call_gex"]]
+        cw = max(cands_c, key=lambda p: p["call_gex"], default=None)
+        pw = max(cands_p, key=lambda p: p["put_gex"], default=None)
         cwo = max(above, key=lambda p: p["call_oi"], default=None)
         pwo = max(below, key=lambda p: p["put_oi"], default=None)
         board["buckets"][label] = {

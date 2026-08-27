@@ -408,6 +408,47 @@ every one of those confirmed the table *appeared*. Nothing checked it against
 the regime read on the same page. **A new panel needs one test that it does not
 contradict the rest of the brief**, not just that it renders.
 
+**D4 — the put wall was not required to be put-dominated.** *Found by the trader
+2026-08-27, from the chart contradicting itself.*
+
+`max(below, key=put_gex)` returns the strike carrying the most put gamma below
+spot — but never checked whether puts actually **dominate** that strike. On
+2026-08-27 it returned **29,291**, which held:
+
+| | |
+|---|---|
+| Call open interest | **45,880** |
+| Put open interest | 10,432 |
+| Ratio | **4.4 : 1 calls** |
+| Net gamma | **+0.742bn** — the 3rd-largest POSITIVE strike on the board |
+
+The brief called it *"heaviest floor this week — expect a bounce and a good
+long-sweep here."* The chart stamped **C3** on the same row. One strike, two
+labels that cannot both be true, and a long recommended off what is actually a
+call-gamma brake.
+
+**NDX makes this the normal case, not an edge case.** The index carries far less
+protective put open interest than SPX, so on many days **no strike below spot is
+put-dominated at all** — on 27 Aug only 4 of the strikes below spot had negative
+net gamma and the largest was −0.029bn. The honest answer on such a day is *there
+is no put wall on this chain*, not to promote whichever call-heavy strike happens
+to hold the most puts.
+
+Both walls now require dominance (`call_gex > put_gex` / `put_gex > call_gex`),
+fixed in `gex_levels.build()` so the brief and the chart inherit it together. The
+chart says in words when no put wall exists.
+
+*This is the third time the same root cause has produced a bug* — D2 (secondary
+walls), the C/P rank inversion in `gex_chart`, and now this. **Naming a level
+after a side without checking which side actually dominates it.**
+
+**And the guard that catches it now existed only as a lesson.** D2's write-up
+said: *"a new panel needs one test that it does not contradict the rest of the
+brief."* That was written down and never implemented. `gex_chart.consistency_check()`
+now runs on every render and refuses to stay silent when a strike carries a PUT
+WALL label and a C rank, a CALL WALL label and a P rank, or a wall whose net
+gamma has the wrong sign. **A lesson recorded but not built is not a fix.**
+
 **D3 — `track.py` graded an unfinished trading day.** *Found by the reviewer and
 fixed 2026-08-26.* The completeness guard tested `bars < 150`. That does not
 work: the trading day starts at 21:00 UTC the **previous evening**, so 150 M_5
