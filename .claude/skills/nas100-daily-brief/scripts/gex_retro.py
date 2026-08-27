@@ -113,6 +113,21 @@ def build_from_ladder(ladder_path, tgt_day, top=None):
     bars = session_bars(tgt_day)
     if not bars:
         raise SystemExit(f"no bars for {tgt_day}")
+    # Grade only what happened AFTER the ladder existed.
+    #
+    # session_bars returns the whole trading day from 21:00 the previous
+    # evening. For a ladder published mid-session that means grading it against
+    # price action that predates it — pure look-ahead. It did not bite on the
+    # first test (a prior-evening ladder against a whole next day) which is
+    # exactly why it survived.
+    born = datetime.fromisoformat(d["generated_utc"])
+    after = [b for b in bars if b["time"] >= born]
+    clipped = len(bars) - len(after)
+    if len(after) < 12:
+        raise SystemExit(
+            f"only {len(after)} bars after the ladder was published "
+            f"({d['generated_utc']}) — too little forward data to grade")
+    bars = after
     picks = []
     for x in d.get("ranked_positive", []) + d.get("ranked_negative", []):
         picks.append({"price": x["price"],
@@ -129,7 +144,9 @@ def build_from_ladder(ladder_path, tgt_day, top=None):
     graded = []
     for lv in picks:
         g = R.grade_level(lv, bars)
-        graded.append({**lv, **g, "outcome": classify(g.get("reaction"))})
+        rr = role_reversal(lv["price"], bars)
+        graded.append({**lv, **g, "outcome": classify(g.get("reaction")),
+                       "role": rr})
     graded.sort(key=lambda l: -l["price"])
     return {
         "src_day": d["generated_utc"][:10], "tgt_day": tgt_day,
@@ -139,6 +156,7 @@ def build_from_ladder(ladder_path, tgt_day, top=None):
         "day_high": max(b["high"] for b in bars),
         "open": bars[0]["open"], "close": bars[-1]["close"],
         "gamma_only": True, "from_ladder": os.path.basename(ladder_path),
+        "bars_before_ladder_clipped": clipped,
     }
 
 
@@ -152,7 +170,72 @@ def latest_ladder(before_day=None):
             hits = sorted(_glob.glob(os.path.join(base, "*.json")))
     if before_day:
         hits = [h for h in hits if os.path.basename(h)[:10] < before_day]
-    return hits[-1] if hits else None
+    # Refuse pre-fix ladders outright.
+    #
+    # Files written before 2026-08-27 carry `book: None` (the 45-day book) and
+    # predate the wall-dominance fix. Grading one measures the version with the
+    # bugs in it, and doing exactly that produced a withdrawn H11 observation.
+    import json as _j
+    ok = []
+    for h in hits:
+        try:
+            if _j.load(open(h)).get("book") == "week":
+                ok.append(h)
+        except Exception:
+            continue
+    return ok[-1] if ok else None
+
+
+def role_reversal(level, bars, tol=25.0):
+    """Did the level hold AFTER price settled on one side of it?
+
+    `grade_level` scores the FIRST touch and a window of bars after it. On a
+    news-driven open the first touch is the worst possible sample: it grades
+    the noise and ignores everything that follows.
+
+    It also has no concept of ROLE REVERSAL. A call wall that caps price, gets
+    reclaimed, and then acts as support is a level doing its job well — the
+    first-touch rule calls that "chopped". And "broke UP through it" is scored
+    as a failure even when the level sits below price and is simply never
+    revisited, which for a call wall in a rally is normal.
+
+    On 2026-08-27 the trader read C1 29,464 as: swept once, reclaimed, then
+    support for the rest of the day, never broken again. The tool graded it
+    CHOP. The trader was right. This measures what he actually looked at.
+    """
+    if not bars:
+        return None
+    # A level price never went near cannot have "held" anything. Without this
+    # a strike 650pts below spot scored as SUPPORT with a +651.6 excursion,
+    # because the minimum low was trivially above it. Untested is not passed.
+    if not any(b["low"] - 6 <= level <= b["high"] + 6 for b in bars):
+        return None
+    last_far = None
+    side_above = bars[-1]["close"] >= level
+    for b in bars:
+        if (b["close"] < level) if side_above else (b["close"] > level):
+            last_far = b["time"]
+    after = [b for b in bars if last_far is None or b["time"] > last_far]
+    if len(after) < 6:
+        return None
+    touches = [b for b in after if b["low"] - 6 <= level <= b["high"] + 6]
+    if side_above:
+        worst = min(b["low"] for b in after)
+        held = worst >= level - tol
+        excursion = worst - level
+    else:
+        worst = max(b["high"] for b in after)
+        held = worst <= level + tol
+        excursion = worst - level
+    return {
+        "settled_side": "above" if side_above else "below",
+        "settled_from": last_far.strftime("%H:%M") if last_far else "open",
+        "minutes_held": len(after) * 5,
+        "touches_after": len(touches),
+        "worst_excursion": round(excursion, 1),
+        "held": held,
+        "acted_as": ("support" if side_above else "resistance") if held else "lost",
+    }
 
 
 def score(d):
@@ -343,7 +426,14 @@ def main():
               f"decisive {s['decisive_rate']}%")
     print()
     for l in d["levels"]:
-        print(f"  {l['price']:>10,.1f}  {OUT_LABEL[l['outcome']]:<12} {l['name'][:52]}")
+        rr = l.get("role")
+        extra = ""
+        if rr:
+            extra = (f"   [settled {rr['settled_side']} from {rr['settled_from']}, "
+                     f"{rr['minutes_held']}min, worst {rr['worst_excursion']:+.1f} "
+                     f"-> {rr['acted_as'].upper()}]")
+        print(f"  {l['price']:>10,.1f}  {OUT_LABEL[l['outcome']]:<12} "
+              f"{l['name'][:34]}{extra}")
     print(f"\n  {render(d, out)}")
 
 

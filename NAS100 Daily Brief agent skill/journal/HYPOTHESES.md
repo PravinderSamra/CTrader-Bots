@@ -340,27 +340,91 @@ is a reclaim term — not a smaller constant.
 ## H11 — Do the chart's ranked walls produce in-range levels?
 
 **Claim.** C1–C3 / P1–P3 rank by gamma force with no proximity filter, so they
-frequently sit outside the day's range and are useless as day-trade levels.
+may sit outside the day's range and be useless as day-trade levels.
 
-**Why it matters.** It goes straight at the wall-to-wall strategy: if the two
-nearest ranked walls are routinely further apart than a session's range, the
-entry never triggers.
+### ⚠️ The first observation was INVALID and is withdrawn
 
-**Evidence so far (1 day).** First genuine ladder test — the 26 Aug 22:12Z
-ladder graded against the 27 Aug session: **1 of 7 reached, 0 held, 6 never
-reached.**
+It reported *"1 of 7 reached, 6 never reached, ranked walls spanned 600pts"* and
+concluded the ranks do not produce tradeable levels. **Every part of that rested
+on grading the wrong ladder.** Caught by the trader, who noticed a level in it
+(29,599) that had never appeared in any ladder he was given.
 
-The ranked walls spanned **29,299–29,899 (600pts)** against a session range of
-**303.9**. C1 sat 39pts *below* the day's low; C2 and C3 above its high.
+Three independent faults, any one of which invalidates it:
 
-Structural, not bad luck: the brief's level board applies a range-budget filter
-and the chart deliberately does not, because it draws the whole book.
+1. **Wrong ladder.** `--ladder auto` picked the 26 Aug 22:12Z file. That ladder
+   was never delivered in a scan — it was generated while building the
+   persistence feature.
+2. **Pre-fix code.** It carries `book: None, dte_max: 45` — built on the 45-day
+   book, *before* the book mismatch and the wall-dominance fixes. Grading it
+   measures the version with the bugs in.
+3. **Post-spike anchor.** Built at spot 29,492.8 in the post-NVDA move after the
+   roll, so its ranks were spread across 600pts of a book anchored to a price
+   the next session never returned to.
 
-**Threshold.** 3+ ladder tests. If it repeats, the fix is a proximity filter on
-the *ranks* (or a second in-range ranking alongside) — not a change to the
-ranking itself. The force ordering is correct; the selection is unfiltered.
+### The correct first observation
 
-**Status: OBSERVING. Do not implement.**
+The ladder actually delivered with the 27 Aug scan (13:58Z, week book,
+post-fix), graded from publication forward:
+
+| Rank | Level | First-touch grade | **After it settled** |
+|---|---|---|---|
+| C3 | 29,514 | CHOP | held 120min, worst **−11.2** → support |
+| C1 | 29,464 | CHOP | held **310min**, worst **−4.7** → support |
+| C2 | 29,414 | BROKE | held 420min, worst **+1.6** → support |
+
+**All three C-ranks were in range and all three were touched.** They span 100
+points, not 600. The corrected result points the opposite way to the withdrawn
+one.
+
+**Status: OBSERVING, 1 valid observation of 3.** The concern is still live —
+one week-book ladder is not proof the ranks are always in range — but there is
+now no evidence for the original claim.
+
+**Lesson.** `--ladder auto` picking "the newest file older than the target" is
+not the same as "the ladder the trader was given". Ladders written by
+development runs sit in the same directory as real ones. The auto-pick needs to
+prefer a ladder that accompanied a delivered scan, and to refuse a pre-fix
+`book: None` file outright.
+
+---
+
+## D5 — the level grader scores the first touch and nothing else
+
+*Found by the trader 2026-08-27.* He read C1 29,464 as: swept once, reclaimed,
+then support for the rest of the session, never broken again. `grade_level`
+called it **CHOP**. He was right and the tool was wrong.
+
+Three faults in the rule:
+
+1. **Only the first touch counts.** `grade_level` looks at `REACT_BARS` after
+   the first touch and stops. On a news-driven open the first touch is the
+   worst possible sample — it grades the noise and discards everything after.
+2. **No concept of role reversal.** A call wall that caps price, is reclaimed,
+   and then acts as support is a level working well. First-touch scoring calls
+   that "chopped".
+3. **"broke UP through it" counts as a failure** even when the level sits below
+   price and is simply never revisited. For a call wall in a rally that is the
+   normal, successful outcome.
+
+Measured properly on 27 Aug, C1 had **exactly one bar close below it** in the
+whole post-publication session, then held for **310 minutes** with a worst
+excursion of **4.7 points**.
+
+`gex_retro.role_reversal()` now reports, for every touched level: which side
+price settled on, from when, how long it held, how many times it was retested,
+and the worst excursion through it. It is **additive** — `grade_level` is
+unchanged, so the written review and the chart still agree, and the first-touch
+grade sits beside the settled-behaviour read rather than being replaced by it.
+
+Two guards learned building it: a level price never came near returns nothing
+(a strike 650pts away was scoring as SUPPORT with a +651.6 "excursion"), and
+the ladder retro now clips bars to **after the ladder was published** — it was
+grading a mid-session ladder against the morning that preceded it, pure
+look-ahead that survived only because the first test used a prior-evening
+ladder against a whole next day.
+
+**The general point, and it is the important one: the trader read the level
+better than the tool did.** The measurement was wrong, not just the conclusion.
 
 ---
 

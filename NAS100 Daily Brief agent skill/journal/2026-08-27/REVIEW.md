@@ -79,31 +79,51 @@ or pinning sessions, and the single under-read day was not.
 statement is that the budget has been systematically generous on pinned days,
 and we do not yet have an unpinned day to test against.
 
-## 4. First genuine chart-ladder test — and it did poorly
+## 4. First chart-ladder test — CORRECTED
 
-Yesterday's saved ladder (26 Aug 22:12Z) graded against today's session. This is
-the test that was impossible until the ladder started being persisted.
+**The version of this section published earlier was wrong and is withdrawn.**
+It reported *"1 of 7 reached, 6 never reached"* and concluded the ranked walls
+do not produce in-range levels. It graded the wrong ladder — the 26 Aug 22:12Z
+file, which was never delivered in a scan, carries `book: None` (the 45-day book
+from before today's fixes), and was anchored to a post-NVDA spike price.
 
-| | |
-|---|---|
-| Reached | **1 of 7** |
-| Held | 0 |
-| Broke | 1 (P1 29,599) |
-| Never reached | 6 |
+Caught by the trader, who noticed a level in it (29,599) that had never appeared
+in any ladder he was given.
 
-**The reason is structural, not bad luck.** The ranked walls spanned
-29,299–29,899 — 600 points — while the session's entire range was 303.9. C1 sat
-39pts *below* the day's low; C2 and C3 sat *above* the day's high.
+**The ladder actually delivered with today's scan**, graded from publication
+forward:
 
-**Ranking by gamma force does not produce in-range levels.** The brief's level
-board applies a range-budget filter for exactly this reason. The chart does not,
-because it is drawn to show the whole book.
+| Rank | Level | First-touch grade | After it settled |
+|---|---|---|---|
+| C3 | 29,514 | CHOP | held 120min, worst **−11.2** → support |
+| C1 | 29,464 | CHOP | held **310min**, worst **−4.7** → support |
+| C2 | 29,414 | BROKE | held 420min, worst **+1.6** → support |
 
-That is a real limitation of the chart *as a source of day-trade levels*, and it
-bears directly on the wall-to-wall strategy you want to test: on a day like
-today, the two nearest ranked walls were 260pts apart with price never touching
-either. **One observation — not a verdict.** But if it repeats, the fix is a
-proximity filter on the ranks, not a change to the ranking.
+**All three C-ranks were in range, all three were touched, and all three held.**
+They span 100 points, not 600.
+
+### And the grader was wrong too
+
+The trader read C1 as: chopped through at the open on news, then acted as
+resistance, then — once price got above it — support; swept once, reclaimed,
+never broken again.
+
+Measured: C1 had **exactly one bar close below it** in the entire
+post-publication session, then held for **310 minutes** with a worst excursion
+of **4.7 points**.
+
+`grade_level` called it CHOP, because it scores the *first touch* and stops. On
+a news-driven open the first touch is the worst possible sample. It also has no
+concept of role reversal, and treats "broke UP through it" as a failure even
+when the level is below price and never revisited — which for a call wall in a
+rally is the successful outcome.
+
+Logged as **D5**. `role_reversal()` now reports settled side, duration, retests
+and worst excursion alongside the first-touch grade. It is additive, so the
+written review and the chart still use the same rule and cannot drift.
+
+**The honest summary: the trader read the level better than the tool did.** The
+measurement was wrong, not just the conclusion.
 
 ## 5. Live-wall research — first graded result, and it is promising
 
