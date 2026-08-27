@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-26T21:29:15.334Z",
+  "generatedAt": "2026-08-27T17:07:37.762Z",
   "yields": {
     "US10Y": 4.64,
     "US2Y": 4.17,
@@ -22,8 +22,8 @@
     "probHike": 16
   },
   "marketVolatility": {
-    "GVZ": 27.69,
-    "VIX": 15.45
+    "GVZ": 26.96,
+    "VIX": 15.21
   },
   "positioning": {
     "cotNetLong": 219495,
@@ -34,26 +34,26 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 882,
-    "gldWoWChange": 0.4,
-    "trend3W": "FLAT"
+    "gldTonnes": 878.9,
+    "gldWoWChange": -3.1,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4594.835,
-    "XAGUSD": 68.127,
-    "EURUSD": 1.16535,
-    "USDJPY": 159.285,
-    "USDCHF": 0.80524,
-    "USDCNH": 6.72154,
-    "GBPUSD": 1.35944,
-    "USDCAD": 1.38776,
-    "USDSEK": 9.52764,
-    "US500": 7695.8,
-    "GER40": 26298.05,
-    "UK100": 10846.55,
-    "ADR_14day": 100.7,
-    "ADR_usedToday": 90.8,
-    "goldSilverRatio": 67.4
+    "XAUUSD": 4611.075,
+    "XAGUSD": 69.487,
+    "EURUSD": 1.16522,
+    "USDJPY": 159.2975,
+    "USDCHF": 0.80395,
+    "USDCNH": 6.71917,
+    "GBPUSD": 1.35934,
+    "USDCAD": 1.38589,
+    "USDSEK": 9.51672,
+    "US500": 7737.7,
+    "GER40": 26378.45,
+    "UK100": 10785.25,
+    "ADR_14day": 99.9,
+    "ADR_usedToday": 77.4,
+    "goldSilverRatio": 66.4
   },
   "dollarLiquidity": {
     "stlfsi": -0.8107,
@@ -66,22 +66,16 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Why we need ‘Human Reserved’ jobs, says Bill Gates—and how we can combat the worst of the AI upheaval",
+      "headline": "Kansas City Fed's Schmid says inflation 'stubborn' and 'sticky,' policy rate not restrictive",
       "source": "CNBC",
-      "publishedAt": "2026-08-26T16:44:08.000Z",
+      "publishedAt": "2026-08-27T12:20:30.000Z",
       "hoursAgo": 4.8
     },
     {
-      "headline": "European shares muted as investors assess Iran-Oman talks, U.S. inflation - Reuters",
+      "headline": "Canada excludes US seafood from retaliatory tariffs - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-08-26T16:41:46.000Z",
-      "hoursAgo": 4.8
-    },
-    {
-      "headline": "Oil settles down more than 3%; investors shrug off US sanctions on Iran - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-25T22:49:43.000Z",
-      "hoursAgo": 22.7
+      "publishedAt": "2026-08-27T08:24:37.000Z",
+      "hoursAgo": 8.7
     }
   ],
   "briefing": null
