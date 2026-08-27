@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-27T17:07:37.762Z",
+  "generatedAt": "2026-08-27T18:17:54.734Z",
   "yields": {
     "US10Y": 4.64,
     "US2Y": 4.17,
@@ -34,26 +34,26 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 878.9,
-    "gldWoWChange": -3.1,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 880,
+    "gldWoWChange": 1.1,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4611.075,
-    "XAGUSD": 69.487,
-    "EURUSD": 1.16522,
-    "USDJPY": 159.2975,
-    "USDCHF": 0.80395,
-    "USDCNH": 6.71917,
-    "GBPUSD": 1.35934,
-    "USDCAD": 1.38589,
-    "USDSEK": 9.51672,
-    "US500": 7737.7,
-    "GER40": 26378.45,
-    "UK100": 10785.25,
+    "XAUUSD": 4605.55,
+    "XAGUSD": 69.195,
+    "EURUSD": 1.16475,
+    "USDJPY": 159.4255,
+    "USDCHF": 0.80442,
+    "USDCNH": 6.71981,
+    "GBPUSD": 1.35872,
+    "USDCAD": 1.38584,
+    "USDSEK": 9.52366,
+    "US500": 7721.2,
+    "GER40": 26359.65,
+    "UK100": 10796.25,
     "ADR_14day": 99.9,
     "ADR_usedToday": 77.4,
-    "goldSilverRatio": 66.4
+    "goldSilverRatio": 66.6
   },
   "dollarLiquidity": {
     "stlfsi": -0.8107,
@@ -69,13 +69,13 @@
       "headline": "Kansas City Fed's Schmid says inflation 'stubborn' and 'sticky,' policy rate not restrictive",
       "source": "CNBC",
       "publishedAt": "2026-08-27T12:20:30.000Z",
-      "hoursAgo": 4.8
+      "hoursAgo": 6
     },
     {
       "headline": "Canada excludes US seafood from retaliatory tariffs - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-27T08:24:37.000Z",
-      "hoursAgo": 8.7
+      "hoursAgo": 9.9
     }
   ],
   "briefing": null
