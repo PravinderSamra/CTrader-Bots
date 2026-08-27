@@ -64,9 +64,9 @@ format; re-extracting or rewording it is how the output drifts.
 
 | Mode | Command | Output |
 |---|---|---|
-| *(none)* / `full` | `python3 brief.py` **+ `python3 gex_chart.py`** | Complete brief **and** the gamma chart — BOTH files, every time. Then spawn the reviewer (step 3) |
-| `quick` | `python3 brief.py` **+ `python3 gex_chart.py`** | Same two files. **Do NOT spawn the reviewer** |
-| `levels` | `python3 brief.py --levels` **+ `python3 gex_chart.py`** | Level board **and** the chart |
+| *(none)* / `full` | `python3 brief.py --chart <svg>` | Complete brief **and** the gamma chart — BOTH files from ONE build. Then spawn the reviewer (step 3) |
+| `quick` | `python3 brief.py --chart <svg>` | Same two files. **Do NOT spawn the reviewer** |
+| `levels` | `python3 brief.py --levels --chart <svg>` | Level board **and** the chart |
 | `chart` | `python3 gex_chart.py /tmp/nas100-gex.svg` | The chart on its own, when that is all that was asked for |
 | `retro` | `python3 gex_retro.py` | Draws a PAST scan's LEVEL BOARD against what price actually did |
 | `retro chart` | `python3 gex_retro.py --ladder auto --to <day>` | Grades a past CHART's ranked walls (C1-C3 / P1-P3). Different object from the board — see `research/gamma-chart.md`. Refuses if no ladder predates the target day |
@@ -80,9 +80,18 @@ against a previous scan.
 ```
 cd .claude/skills/nas100-daily-brief/scripts
 STAMP=$(date -u +%Y%m%d-%H%M)
-python3 brief.py     > "/tmp/NAS100-brief-$STAMP.md"
-python3 gex_chart.py   "/tmp/NAS100-gamma-$STAMP.svg"
+python3 brief.py --chart "/tmp/NAS100-gamma-$STAMP.svg" > "/tmp/NAS100-brief-$STAMP.md"
 ```
+
+**One command, one build, two files.** Do NOT run `gex_chart.py` separately for
+a scan. It re-fetches and re-derives everything, and on 2026-08-27 the two
+processes ran 16 seconds apart: spot moved 4.6pts, the CFD offset moved with it,
+and the brief published a flip of 28,966.9 while the chart drew 28,972.0 — every
+level on the chart 5.1pts off its counterpart in the brief. Two files delivered
+as one scan must come from one computation.
+
+`gex_chart.py` standalone is for `chart` mode only, or with `--book full` when
+someone explicitly wants the 45-day view.
 
 Then send **both in a single `SendUserFile` call**, with
 `display: "render"` so the chart opens in the panel:

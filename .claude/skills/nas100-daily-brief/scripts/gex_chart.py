@@ -40,7 +40,19 @@ def _esc(s):
     return (str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
 
 
-def collect(d=None, cfd_price=None, span=650, bin_pts=50, dte_max=45):
+# The brief's level board reads the `this_week` bucket, which gex_levels
+# defines as dte <= 7. The chart was built on dte <= 45 and so summed five
+# more weeks of open interest into every bar. Same strikes, bigger numbers,
+# and the C1-C3 ordering could differ from the board's ranking because the
+# longer book weights far strikes more heavily. Two files delivered as one
+# scan disagreed with each other.
+#
+# Default is now `week`, matching the brief. `full` stays available, labelled.
+BOOKS = {"week": 7, "full": 45}
+
+
+def collect(d=None, cfd_price=None, span=650, bin_pts=50, book="week"):
+    dte_max = BOOKS.get(book, 7)
     """Per-strike net GEX in NAS100 price space, plus the marker levels."""
     if d is not None:
         gx = d["gex"]
@@ -73,8 +85,13 @@ def collect(d=None, cfd_price=None, span=650, bin_pts=50, dte_max=45):
     above = [b for b in bars if b["price"] > cfd_price]
     below = [b for b in bars if b["price"] < cfd_price]
     # Call resistance: heaviest POSITIVE gamma above spot — dealers sell into it.
-    call_res = max(above, key=lambda b: b["net"], default=None)
-    call_res = call_res if call_res and call_res["net"] > 0 else None
+    # Match the BRIEF's definitions exactly, or the same word means two things
+    # across two files. The brief's call wall is max CALL gamma above spot and
+    # its put wall is max PUT gamma below — not max/min NET, which is what this
+    # used and which put "put support" 295pts away from the brief's put wall on
+    # 2026-08-27 (and 700pts away in a same-minute test).
+    call_res = max(above, key=lambda b: b["call_gex"], default=None)
+    call_res = call_res if call_res and call_res["call_gex"] > 0 else None
     # Put support: heaviest NEGATIVE gamma below spot.
     #
     # On NDX this is frequently absent. The index carries far less protective
@@ -82,8 +99,13 @@ def collect(d=None, cfd_price=None, span=650, bin_pts=50, dte_max=45):
     # all the way down. When that happens the honest answer is "there is no put
     # support on this chain today", not to promote the least-positive strike
     # and dress it up as one.
-    put_sup = min(below, key=lambda b: b["net"], default=None)
-    put_sup = put_sup if put_sup and put_sup["net"] < 0 else None
+    put_sup = max(below, key=lambda b: b["put_gex"], default=None)
+    put_sup = put_sup if put_sup and put_sup["put_gex"] > 0 else None
+    # Kept separately: the most negative NET strike below spot. It is a real
+    # and different object (where dealers are most short gamma) and it used to
+    # masquerade as the put wall.
+    most_neg = min(below, key=lambda b: b["net"], default=None)
+    most_neg = most_neg if most_neg and most_neg["net"] < 0 else None
 
     # Rank WITHIN SIGN, not by absolute size.
     #
@@ -96,7 +118,8 @@ def collect(d=None, cfd_price=None, span=650, bin_pts=50, dte_max=45):
     neg = sorted([b for b in bars if b["net"] < 0], key=lambda b: b["net"])[:3]
     return {
         "bars": bars, "spot": cfd_price, "flip": flip,
-        "call_res": call_res, "put_sup": put_sup,
+        "call_res": call_res, "put_sup": put_sup, "most_neg": most_neg,
+        "book": book,
         "ranked_up": pos, "ranked_dn": neg,
         "net_total": sum(b["net"] for b in bars),
         "generated": datetime.now(timezone.utc),
@@ -165,9 +188,9 @@ def render(c, path):
 
     # legend: fixed 3-column grid, two rows. No measuring, no collisions.
     legend = [(POS_HI, "Positive GEX \u2014 dealers damp (brake)"),
-              (CALLW, "Call resistance"), (FLIP, "Gamma flip"),
+              (CALLW, "Call wall \u2014 max call gamma above"), (FLIP, "Book flip"),
               (NEG_HI, "Negative GEX \u2014 dealers amplify"),
-              (PUTW, "Put support"), (SPOT, "Spot")]
+              (PUTW, "Put wall \u2014 max put gamma below"), (SPOT, "Spot")]
     COLW = (W - 56) / 3
     for n, (col, lab) in enumerate(legend):
         cx = 28 + (n % 3) * COLW
@@ -223,17 +246,29 @@ def render(c, path):
           f'text-anchor="end" font-weight="700">{_esc(label)}</text>')
 
     if c["call_res"]:
-        marker(c["call_res"]["price"], CALLW, f'CALL RES {c["call_res"]["price"]:,.0f}')
+        marker(c["call_res"]["price"], CALLW, f'CALL WALL {c["call_res"]["price"]:,.0f}')
     if c["put_sup"]:
-        marker(c["put_sup"]["price"], PUTW, f'PUT SUP {c["put_sup"]["price"]:,.0f}')
+        marker(c["put_sup"]["price"], PUTW, f'PUT WALL {c["put_sup"]["price"]:,.0f}')
     if c["flip"]:
-        marker(c["flip"], FLIP, f'GAMMA FLIP {c["flip"]:,.0f}')
+        marker(c["flip"], FLIP, f'BOOK FLIP {c["flip"]:,.0f}')
+    if c.get("most_neg"):
+        marker(c["most_neg"]["price"], "#a371f7",
+               f'MOST SHORT {c["most_neg"]["price"]:,.0f}')
     marker(spot, SPOT, f'SPOT {spot:,.0f}', dash="none")
 
     fy = H - 62
+    book_note = ("this week (dte \u2264 7) \u2014 same book as the brief's level board"
+                 if c.get("book", "week") == "week"
+                 else "FULL 45-day book \u2014 larger numbers than the brief's board, "
+                      "which reads this week only")
     for n, line in enumerate([
-        "Bars are NET gamma per strike (calls minus puts); contract count in grey.",
+        f"Book: {book_note}. Bars are NET gamma per strike (calls minus puts); "
+        f"contract count in grey.",
         "C1-C3 rank the heaviest POSITIVE strikes (brakes), P1-P3 the heaviest NEGATIVE (accelerants).",
+        "BOOK FLIP is where the WHOLE book's net gamma changes sign as spot moves \u2014 every contract "
+        "repriced across a spot grid.",
+        "It is NOT where these bars change colour. Single strikes can be negative above it and positive "
+        "below it, so do not read the green/red boundary as the flip.",
         "Open interest is the previous close \u2014 the OCC publishes once daily. Greeks are repriced at "
         "the current spot. Dealer positioning is assumed, not observed."]):
         A(f'<text x="28" y="{fy+n*20}" fill="{DIM}" font-size="14">{_esc(line)}</text>')
@@ -263,7 +298,7 @@ def persist(c, root=None):
         "schema": 1,
         "generated_utc": c["generated"].isoformat(timespec="seconds"),
         "spot": c["spot"], "flip": c["flip"],
-        "bin_pts": c["bin_pts"], "dte_max": c["dte_max"],
+        "bin_pts": c["bin_pts"], "dte_max": c["dte_max"], "book": c.get("book"),
         "net_total_$bn": round(c["net_total"] / 1e9, 3),
         "call_resistance": (c["call_res"] or {}).get("price"),
         "put_support": (c["put_sup"] or {}).get("price"),
@@ -299,9 +334,10 @@ if __name__ == "__main__":
     span = 650
     if "--span" in sys.argv:
         span = float(sys.argv[sys.argv.index("--span") + 1])
+    book = (sys.argv[sys.argv.index("--book") + 1] if "--book" in sys.argv else "week")
     import ctrader_http as ct
     bid, ask = ct.get_live_price("NAS100")
-    c = collect(cfd_price=round((bid + ask) / 2, 1), span=span)
+    c = collect(cfd_price=round((bid + ask) / 2, 1), span=span, book=book)
     print(render(c, out))
     if "--no-persist" not in sys.argv:
         print(persist(c))

@@ -806,7 +806,34 @@ if __name__ == "__main__":
     d = gather(last_scan_iso=journal.last_scan_utc())
     if "error" in d:
         print(json.dumps(d, indent=2, default=str)); sys.exit(1)
+
+    def _chart():
+        """Draw the gamma chart from THIS scan's build, not a fresh one.
+
+        Running gex_chart.py as a separate process re-fetched and re-derived
+        everything. On 2026-08-27 the two ran 16 seconds apart, spot moved
+        4.6pts, and the CFD offset shifted with it — so the brief published a
+        flip of 28,966.9 and the chart drew 28,972.0, and every level on the
+        chart sat 5.1pts off its counterpart in the brief. Two files delivered
+        as one scan have to come from one computation.
+        """
+        try:
+            import gex_chart
+            i = sys.argv.index("--chart")
+            out = (sys.argv[i + 1] if len(sys.argv) > i + 1
+                   and not sys.argv[i + 1].startswith("--") else "/tmp/nas100-gex.svg")
+            c = gex_chart.collect(d=d, book="week")
+            gex_chart.render(c, out)
+            gex_chart.persist(c)
+            print(f"\n_[chart: {out}]_", file=sys.stderr)
+            return out
+        except Exception as e:
+            print(f"\n_[chart FAILED: {type(e).__name__}: {e}]_", file=sys.stderr)
+            return None
+
     if "--levels" in sys.argv:
+        if "--chart" in sys.argv:
+            _chart()
         print(markdown_levels_only(d)); sys.exit(0)
     if "--json" in sys.argv:
         d["level_board"], d["level_board_far"] = level_board(d)
@@ -819,3 +846,5 @@ if __name__ == "__main__":
         res = journal.write(d, text)
         if isinstance(res, dict):
             print(f"\n_[journal write failed: {res['_error']}]_", file=sys.stderr)
+        if "--chart" in sys.argv:
+            _chart()
