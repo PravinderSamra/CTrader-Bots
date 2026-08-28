@@ -1,0 +1,409 @@
+{
+  "schema": 1,
+  "scan_utc": "2026-08-28T13:14:50+00:00",
+  "scan_et": "2026-08-28 09:14 ET (Fri)",
+  "trading_day": "2026-08-28",
+  "session_window": "PRE_NY",
+  "is_trading_day": true,
+  "prediction": {
+    "price_at_scan": 29597.5,
+    "bias_score": 6,
+    "bias_label": "BULLISH",
+    "strategy": "STRATEGY 1 \u2014 sweep -> failed re-break -> CISD reversal. Positive gamma above the flip: dealers fade extensions, so sweeps genuinely fail. Trade the walls and the day-frame levels.",
+    "event_gate": "STAND ASIDE \u2014 Fed Chairman Warsh Speaks in 0.8h. No entries until 30min after the print; then use the post-print 30-min range H/L as the day's sweep levels.",
+    "expected_direction": 1,
+    "gamma_flip": 29265.1,
+    "expiry_shape": "COHERENT_LONG",
+    "fuel_state": "ROOM_TO_EXPAND",
+    "remaining_budget": 254.9,
+    "adr14": 382.6,
+    "adr_used_pct": 33.4,
+    "levels": [
+      {
+        "price": 29835.4,
+        "name": "Options shelf 0.68bn",
+        "kind": "gamma-shelf",
+        "dist": 237.9,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29785.4,
+        "name": "Options shelf 0.76bn",
+        "kind": "gamma-shelf",
+        "dist": 187.9,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29735.4,
+        "name": "CALL WALL \u25cf\u25cf\u25cf\u25cf\u25cf 1.71bn + Options shelf 1.64bn",
+        "kind": "gamma",
+        "dist": 137.9,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 2
+      },
+      {
+        "price": 29685.4,
+        "name": "Options shelf 0.61bn",
+        "kind": "gamma-shelf",
+        "dist": 87.9,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29643.8,
+        "name": "Asia High (today) + PDH",
+        "kind": "liquidity",
+        "dist": 46.3,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 2
+      },
+      {
+        "price": 29639.3,
+        "name": "NY High (prev-day)",
+        "kind": "liquidity",
+        "dist": 41.8,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29599.6,
+        "name": "London High (today)",
+        "kind": "liquidity",
+        "dist": 2.1,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29595.9,
+        "name": "London High (prev-day)",
+        "kind": "liquidity",
+        "dist": -1.6,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29588.6,
+        "name": "Asia High (prev-day)",
+        "kind": "liquidity",
+        "dist": -8.9,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29585.4,
+        "name": "Options shelf 0.67bn",
+        "kind": "gamma-shelf",
+        "dist": -12.1,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29566.7,
+        "name": "PD close",
+        "kind": "magnet",
+        "dist": -30.8,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29535.4,
+        "name": "PUT WALL \u25cf\u25cf\u25cb\u25cb\u25cb 0.60bn + Equal lows \u00d73",
+        "kind": "gamma",
+        "dist": -62.1,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 2
+      },
+      {
+        "price": 29530.1,
+        "name": "Asia Low (today)",
+        "kind": "liquidity",
+        "dist": -67.4,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29516.1,
+        "name": "London Low (today)",
+        "kind": "liquidity",
+        "dist": -81.4,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29490.2,
+        "name": "PD mid",
+        "kind": "magnet",
+        "dist": -107.3,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29485.4,
+        "name": "Options shelf 1.46bn",
+        "kind": "gamma-shelf",
+        "dist": -112.1,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29413.0,
+        "name": "London Low (prev-day)",
+        "kind": "liquidity",
+        "dist": -184.5,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29405.4,
+        "name": "MAX PAIN",
+        "kind": "gamma",
+        "dist": -192.1,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29360.8,
+        "name": "NY Low (prev-day)",
+        "kind": "liquidity",
+        "dist": -236.7,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29338.2,
+        "name": "PDL + Asia Low (prev-day)",
+        "kind": "liquidity",
+        "dist": -259.3,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 2
+      },
+      {
+        "price": 29265.1,
+        "name": "GAMMA FLIP",
+        "kind": "gamma",
+        "dist": -332.4,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 28785.4,
+        "name": "STRUCTURAL PUT WALL \u25cf\u25cf\u25cb\u25cb\u25cb 0.85bn",
+        "kind": "structural",
+        "dist": -812.1,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      }
+    ]
+  },
+  "inputs": {
+    "bias_components": [
+      {
+        "component": "gamma",
+        "points": 2,
+        "why": "above flip 29265.1 by 332.4pts \u2014 long-gamma, dips supported, upside grinds"
+      },
+      {
+        "component": "gamma",
+        "points": 2,
+        "why": "week net GEX 6.883 $bn/1% -> pinning likely"
+      },
+      {
+        "component": "gamma",
+        "points": 0,
+        "why": "price mid-band (29535.4-29735.4), 31% up the range"
+      },
+      {
+        "component": "vol",
+        "points": 2,
+        "why": "VXN 20.24 (-5.5%) \u2014 fear falling, bullish"
+      },
+      {
+        "component": "vol",
+        "points": 1,
+        "why": "VIX9D/VIX 0.838 contango \u2014 calm, mean-reversion favoured, mild upward drift"
+      },
+      {
+        "component": "vol",
+        "points": -1,
+        "why": "VXN/VIX 1.4 \u2014 tech-specific stress priced above the broad market"
+      },
+      {
+        "component": "vol",
+        "points": 0,
+        "why": "VVIX 82.9 \u2014 no tail-hedge bid"
+      },
+      {
+        "component": "rates",
+        "points": 0,
+        "why": "US10y 4.68 (+0.17%) \u2014 yields flat"
+      },
+      {
+        "component": "rates",
+        "points": 0,
+        "why": "DXY 99.17 (+0.01%) \u2014 dollar flat"
+      },
+      {
+        "component": "macro",
+        "points": -3,
+        "why": "**Real yield, 10y (DFII10)** \u2014 what lenders earn after inflation \u2014 is 2.34%, up 2bp today and 1bp over 5 days. Rising = tech gets hit hardest, because tech is valued on profits years away and those are worth less when rates rise."
+      },
+      {
+        "component": "macro",
+        "points": -1,
+        "why": "**10y nominal yield (DGS10)** moved 2bp up (2026-08-25 to 2026-08-26). That was driven by real rates \u2014 the harsher kind for tech, and an immediate headwind."
+      },
+      {
+        "component": "macro",
+        "points": 2,
+        "why": "**High-yield credit spread (HY OAS)** \u2014 the extra interest demanded to lend to riskier companies is 2.67% (-6bp over 5 days). Low and steady: the bond market is relaxed about risk, which gives stocks permission to rise."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Financial conditions (NFCI)** \u2014 how easy it is to borrow money across the economy \u2014 is EASIER than normal (-0.566). Cheap, available money is a background tailwind for stocks."
+      },
+      {
+        "component": "macro",
+        "points": -1,
+        "why": "**Fed balance sheet (WALCL) / reverse repo (RRP)** \u2014 cash in the financial system. The Fed is holding $6.73tn of assets, shrinking by $14.8bn this week, and the spare-cash buffer is down to $0.456bn. The Fed is quietly pulling money out of the system \u2014 a slow, persistent drag on stocks, not a day-trade signal."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Yield curve (10y\u20132y)** \u2014 long vs short bond yields. The 10-year pays +0.47% more than the 2-year. Barely moved."
+      },
+      {
+        "component": "breadth",
+        "points": 2,
+        "why": "mega-cap avg +3.83% (4/4 up): NVDA +8.74%, MSFT +1.75%, AAPL +0.36%, AVGO +4.49%"
+      },
+      {
+        "component": "breadth",
+        "points": 1,
+        "why": "NDX +1.43% vs ES +0.12% \u2014 tech leading, genuine risk appetite"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "ADR14 382.6, 33.4% used vs ~50% normal by 09:14 ET -> fuel_ratio 0.67 (normal) [ROOM_TO_EXPAND]"
+      },
+      {
+        "component": "structure",
+        "points": 1,
+        "why": "price above PD mid 29490.2 (PDH 29642.1 / PDL 29338.2)"
+      },
+      {
+        "component": "structure",
+        "points": 0,
+        "why": "price inside the prior-week range (29115.9-30245.8)"
+      },
+      {
+        "component": "structure",
+        "points": -1,
+        "why": "in-reach unmitigated pools: 1 above / 6 below \u2014 draw lower"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "0 auto-scored headline(s) (0 bull / 0 bear) -> NEUTRAL; 53 more need reading in context (not counted here)"
+      },
+      {
+        "component": "events",
+        "points": 0,
+        "why": "AVGO earnings 2026-09-02 time-after-hours (cons $2.83) \u2014 sector-relevant"
+      }
+    ],
+    "fuel": {
+      "adr14": 382.6,
+      "today_range": 127.7,
+      "adr_used_pct": 33.4,
+      "remaining_budget": 254.9,
+      "expansion_state": "ROOM_TO_EXPAND",
+      "volume_relative": 1.08,
+      "volume_state": "normal"
+    },
+    "gamma": {
+      "near_expiry_0_2dte": 5.724,
+      "this_week": 6.883,
+      "full_45dte": 9.87
+    },
+    "call_wall": 29735.4,
+    "put_wall": 29535.4,
+    "max_pain": 29405.4,
+    "vol": {
+      "vxn": 20.24,
+      "vix": 14.44,
+      "vix9d_over_vix": 0.838
+    },
+    "rates": {
+      "us10y": 4.68,
+      "dxy": 99.17
+    },
+    "news": {
+      "raw_score": 0,
+      "bias_points": 0,
+      "label": "NEUTRAL",
+      "scored_high_confidence": 0,
+      "needs_model_judgement": 53
+    },
+    "events_24h": [
+      {
+        "utc": "2026-08-28T14:00:00+00:00",
+        "impact": "High",
+        "title": "Fed Chairman Warsh Speaks",
+        "forecast": "",
+        "previous": "",
+        "hours_away": 0.8
+      },
+      {
+        "utc": "2026-08-28T14:00:00+00:00",
+        "impact": "High",
+        "title": "Prelim Benchmark Payrolls Revision",
+        "forecast": "",
+        "previous": "-911K",
+        "hours_away": 0.8
+      },
+      {
+        "utc": "2026-08-28T14:00:00+00:00",
+        "impact": "Medium",
+        "title": "Revised UoM Consumer Sentiment",
+        "forecast": "51.0",
+        "previous": "51.0",
+        "hours_away": 0.8
+      },
+      {
+        "utc": "2026-08-28T14:00:00+00:00",
+        "impact": "Medium",
+        "title": "Revised UoM Inflation Expectations",
+        "forecast": "",
+        "previous": "4.3%",
+        "hours_away": 0.8
+      }
+    ]
+  },
+  "outcome": null
+}
