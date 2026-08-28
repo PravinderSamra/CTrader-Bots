@@ -209,3 +209,164 @@ one close and missed another by 4.9pts.
 3. **H1 needs an unpinned day.** All three over-reads were long-gamma sessions.
 4. Friday: **weekly expiry.** Max pain gets strong, and the fuel model has not
    been tested on one.
+
+---
+
+# Second pass — re-graded 2026-08-28
+
+*Everything above is preserved unedited. This section is an independent re-grade
+of the same day from `review_day.py 2026-08-27 --json` and `track.py`. It exists
+because the first pass contains three factual errors, one of them load-bearing
+for H1.*
+
+## 1. Scoreboard
+
+Session **O 29,450.7 · H 29,642.1 · L 29,338.2 · C 29,566.7** · range **303.9** ·
+net **+116.0** · 276 bars.
+
+One gradeable scan (13:23 PRE_NY). Four `test_artefact` re-runs excluded.
+
+| | |
+|---|---|
+| Direction | **1 right / 0 wrong / 0 no-call** |
+| Levels touched | 7 / 10 = **0.70** |
+| — non-stretch | **7 / 7 = 1.00** |
+| — stretch (`reach: swing`) | **0 / 3 = 0.00** |
+| Fuel budget vs extension | 132.6 vs 46.2 = **0.35×** (err **−86.4**) |
+| Traversal vs budget | 281.3 = **2.12×** |
+
+Cross-day, 4 trading days / 10 deduped scans: direction **4 right / 3 wrong /
+3 no-call**, mean level hit rate **0.57**, H1 per-day mean **−27.5**.
+
+## 2. What the levels actually did
+
+| Level | Grade | up / down |
+|---|---|---|
+| 29,595.9 London High | broke DOWN through | 15.9 / 32.9 |
+| 29,588.6 Asia High | **stalled** | 23.2 / 21.2 |
+| 29,566.0 Equal highs ×2 | broke DOWN through | 3.7 / 118.2 |
+| 29,487.9 CALL WALL 2.22bn | chopped both sides | 48.2 / 127.1 |
+| 29,451.1 Equal lows ×2 | chopped both sides | 104.7 / 90.3 |
+| 29,413.0 London Low | chopped both sides | 142.8 / 52.2 |
+| 29,353.8 PDH + PD close | broke UP through | 202.0 / −7.0 |
+| 29,338.2 Asia Low | never reached | *stretch* |
+| 29,299.8 NY High (prev-day) | never reached | *stretch* |
+| 29,287.9 PUT WALL 0.48bn | never reached | *stretch* |
+
+**Every miss was a level the board had already flagged `stretch: true`, and every
+level it did not flag was touched.** The first pass reported 0.70 without this
+split, which is the more interesting number in both directions.
+
+**29,338.2 "Asia Low" is close to a tautology.** It is identical to the session
+low — an extreme *already printed* before the 13:23 scan. It grades "never
+reached" only because grading starts at publication. A level that has already
+done its job is not a forecast.
+
+The call wall did chop rather than cap, as the first pass says. Adding the
+magnitude: price closed **78.8 above it** and traded **154.2 above it**.
+
+## 3. What was wrong, and why
+
+**(a) The first pass overstates its own correct call.** It writes *"price never
+traded below the scan price in any meaningful way."* The grader's own output
+says otherwise: the call wall at 29,487.9 was touched at 13:25 with
+`travel_down 127.1`, putting price at **29,360.8 — 120.4 points below the
+29,481.2 scan price.** The review's own hourly table shows the 13:00 close at
+29,417.6, 63.6 below scan. The document contradicts itself. The call was right;
+the path was not the clean one described, and anyone sizing off that sentence
+would have been stopped out before being right.
+
+**(b) The stated explanation for H1 is falsified by the journal's own
+`bias_components`.** First pass §3: *"all three over-read days were long-gamma or
+pinning sessions, and the single under-read day was not."*
+
+| Day | Fuel err | `gamma` regime component |
+|---|---|---|
+| 24 Aug | **+61.2** (under) | −3 **SHORT gamma**, GEX −4.231 → *expansion likely* |
+| 25 Aug | −11.6 (over) | +2 long-gamma, GEX +5.225 → *pinning likely* |
+| 26 Aug | **−73.0** (over) | −3 **SHORT gamma**, GEX −2.103 → *expansion likely* |
+| 27 Aug | −86.4 (over) | +2 long-gamma, GEX +9.223 → *pinning likely* |
+
+26 Aug was **short-gamma and flagged for expansion, and still over-read by 73.0**.
+24 Aug was in the *same* regime and under-read by 61.2. Regime does not separate
+the errors: long-gamma gives (−11.6, −86.4), short-gamma gives (+61.2, −73.0).
+
+The consequence matters more than the error. First pass §8 item 3 says *"H1 needs
+an unpinned day. All three over-reads were long-gamma sessions."* **That blocker
+was already cleared, by 26 Aug, in the opposite direction to the one claimed.**
+H1 has been waiting on evidence it already had.
+
+**(c) The actual mechanism is that the budget has no regime term at all.**
+390.3 (ADR14) − 257.7 (range at scan) = **132.6** exactly. The budget is a pure
+linear ADR remainder. On the same scan the engine scored `gamma +2 — week net
+GEX 9.223 $bn/1% -> pinning likely`. **The model knew pinning was likely and the
+budget could not read it**, because nothing connects them. That is a structural
+gap, not a calibration error, which is why no multiplier fixes it.
+
+**(d) `fuel` is a zero-point component.** 25 emissions across 4 trading days,
+**every one 0 points**. Its own text says it dampens conviction rather than
+direction, so this is by design — but it is emitted inside `bias_components`
+carrying a `points` field, which is exactly where a reader looks for what moved
+the score.
+
+**(e) `events` scored 0 on all 14 emissions and its one falsifiable claim was
+wrong.** Every emission was NVDA: *"INDEX-DEFINING event; day before pins, day
+after expands."* Graded: 26 Aug (day before) extension **113.2**; 27 Aug (day
+after) extension **46.2**. The day after expanded *less than half* as much. The
+component made a testable statement, contributed nothing to score or budget, and
+the first instance we can grade went against it.
+
+**(f) "0.70 — the joint best of the four days" is wrong.** Per-day mean hit
+rates: 24 Aug 0.69, 25 Aug 0.34, **26 Aug 0.71**, 27 Aug 0.70. Second of four.
+
+## 4. Change proposals
+
+**One proposal. Everything else is an observation and is logged, not proposed.**
+
+### PROPOSED — split `level_hit_rate` by the board's own `stretch` flag (reporting only)
+
+**Evidence — 4 of 4 trading days, 15 scans, same sign every day:**
+
+| | touched / published | rate |
+|---|---|---|
+| non-stretch | 85 / 105 | **0.81** |
+| stretch (`reach: swing`) | 15 / 33 | **0.45** |
+
+Per day, non-stretch beats stretch on 24, 25, 26 and 27 Aug without exception.
+
+**What to change:** `review_day.py` / `track.py` report the two rates separately
+instead of one pooled number. **No change to what is published, and no change to
+any scoring.**
+
+**Expected effect:** the headline stops being a function of how many swing levels
+a scan happened to print. Published-level counts run from **1 to 22** across the
+record, and the pooled rate tracks that count more than it tracks board quality.
+
+**Explicit limit:** H6's own threshold is 5 days and we have 4. The stronger
+conclusion — *stop publishing stretch levels* — is **not** proposable and is not
+proposed here. 0.45 is a real reaction rate, not noise.
+
+### NOT PROPOSED — observations logged to HYPOTHESES.md
+
+1. **H1's regime explanation is falsified** (§3b). Logged as a correction. No
+   multiplier proposed: with n=2 per regime cell and both signs present in one
+   cell, there is nothing to fit.
+2. **Direction is not per-day weighted, while fuel now is.** 26 Aug 21:43 and
+   22:11 are 28 minutes apart, both bias **+13**, both graded CORRECT, both
+   counted. The 15-minute dedupe window cannot see them. Collapsing that pair
+   turns **4 right / 3 wrong** into **3 right / 3 wrong**. This is the same
+   evidence-inflation failure §6 above already caught on 27 Aug — the manual
+   `test_artefact` marking fixed that instance, not the mechanism. **One day of
+   evidence. Logged, not proposed.**
+3. **`mean_level_hit_rate` is contaminated by single-level scans.** 24 Aug 13:45
+   published 1 level and 25 Aug 21:56 published 1 level; both score 0.0 and both
+   enter the day mean unweighted. 25 Aug's day figure of **0.34** is that
+   artefact and nothing else. Two days. Logged.
+4. **`events` may be dead weight** (§3e). One gradeable instance. Needs 3.
+5. **Grader anchor mismatch.** `actual_after_scan.move` is **91.6**; close minus
+   the brief's own `price_at_scan` is **85.5**. A 6.1-point difference in what
+   "the move" is measured from. It did not change the sign today. Watching.
+
+**No new data point proposed.** The 27 Aug over-read is explained by a missing
+*connection* between two numbers the model already has (gamma regime → fuel
+budget), not by a number it lacks.

@@ -768,3 +768,112 @@ precisely the failure this register exists to prevent, and it is worse than
 forgetting, because H9 was subsequently referenced in a review task as though it
 existed. **A hypothesis is opened by writing it here, not by saying so.** It is
 created properly below.
+
+---
+
+# Observations appended 2026-08-28 (second-pass re-grade of trading day 2026-08-26/27)
+
+*Source: `review_day.py 2026-08-27 --json`, `track.py`, and `inputs.bias_components`
+read directly from the journal. 4 trading days on record (24–27 Aug). 2026-08-28
+is in progress and is excluded. `2026-08-28/2233-overnight.json` carries
+`scan_utc 2026-08-27T22:33Z` — that is the 21:00 roll working correctly, not a
+misfile — and is marked `test_artefact`, so it enters nothing.*
+
+## CORRECTION to H1 — the regime explanation is falsified
+
+The 27 Aug review recorded: *"all three over-read days were long-gamma or
+pinning sessions, and the single under-read day was not"*, and set the blocker
+*"H1 needs an unpinned day."* **Both statements are wrong.** From
+`bias_components`:
+
+| Day | Fuel err | `gamma` regime |
+|---|---|---|
+| 24 Aug | **+61.2** (under) | −3 SHORT gamma, GEX −4.231 → *expansion likely* |
+| 25 Aug | −11.6 (over) | +2 long-gamma, GEX +5.225 → *pinning likely* |
+| 26 Aug | **−73.0** (over) | −3 SHORT gamma, GEX −2.103 → *expansion likely* |
+| 27 Aug | −86.4 (over) | +2 long-gamma, GEX +9.223 → *pinning likely* |
+
+26 Aug was short-gamma, flagged for **expansion**, and over-read by 73.0. 24 Aug
+was in the same regime and under-read by 61.2. Long-gamma gives (−11.6, −86.4);
+short-gamma gives (+61.2, −73.0). **Regime does not separate the errors, and the
+unpinned day the review said it was waiting for already exists.**
+
+**The mechanism instead is structural.** 390.3 (ADR14) − 257.7 (range at scan)
+= 132.6 exactly: the budget is a pure linear ADR remainder with **no regime
+term**. On that same scan the engine scored `gamma +2 — pinning likely`. The
+model held the information and the budget had no way to read it.
+
+**Still no proposal.** With n=2 per regime cell and both signs inside one cell,
+there is nothing to fit. What changes is the *question*: H1 is not waiting on an
+unpinned day, it is waiting on a reason to connect two existing numbers.
+**Status: OBSERVING, blocker restated.**
+
+## H6 — strong split by the board's own `stretch` flag (4 of 5 days)
+
+Cross-tabulating `prediction.levels[].stretch` against `review_day` touches,
+all 15 gradeable scans:
+
+| | touched / published | rate |
+|---|---|---|
+| non-stretch | 85 / 105 | **0.81** |
+| stretch (`reach: swing`) | 15 / 33 | **0.45** |
+
+Non-stretch beats stretch on **24, 25, 26 and 27 Aug without exception**. On
+27 Aug the split was total: non-stretch **7/7**, stretch **0/3**.
+
+**H6's threshold is 5 days and this is day 4.** The conclusion *stop publishing
+stretch levels* is **not proposed** — 0.45 is a real reaction rate. The only
+thing proposed (in the 27 Aug review) is that the two rates be **reported
+separately**, which changes no scoring and nothing that is published.
+**Status: OBSERVING, 4/5.**
+
+## M3 — direction is not per-day weighted, while fuel now is
+
+M1 fixed the fuel mean by reporting per-day alongside per-scan. **The direction
+tally never got the same treatment.** 26 Aug 21:43 and 22:11 are **28 minutes
+apart**, both bias **+13**, both graded CORRECT, both counted. The 15-minute
+dedupe window cannot see them. Collapsing that pair takes the record from
+**4 right / 3 wrong** to **3 right / 3 wrong** — 57% to 50% on a 10-scan sample.
+
+This is the same failure §6 of the 27 Aug review caught: the `test_artefact`
+marking fixed *that instance*, not the *mechanism*. A 60-minute window would
+collapse this pair and nothing else currently on record (24 Aug 08:28/09:37 are
+69 min apart, 12:40/13:45 are 65 min) — but that is one day of evidence and one
+window fitted to one pair, which is exactly what the 3-day rule exists to stop.
+**One observation. No proposal.**
+
+## M4 — `mean_level_hit_rate` is contaminated by single-level scans
+
+24 Aug 13:45 published **1** level; 25 Aug 21:56 published **1** level. Both
+score 0.0 and both enter the day mean unweighted. **25 Aug's day figure of 0.34
+is that artefact and nothing else** — its only real scan graded 0.67. Published
+counts across the record run from **1 to 22**. Two days. **Logged, not proposed.**
+
+## H9 — first gradeable earnings instance goes AGAINST the component
+
+The `events` component fired 14 times across 4 days, **every one scoring 0**,
+every one NVDA: *"INDEX-DEFINING event; day before pins, day after expands."*
+
+Graded: 26 Aug (day before) range extension **113.2**; 27 Aug (day after)
+extension **46.2**. **The day after expanded less than half as much as the day
+before.** The component made a testable claim, contributed nothing to score or
+budget, and its first gradeable instance contradicted it.
+
+One instance. **Threshold 3. No proposal.** Watch whether `events` is dead
+weight or merely mute.
+
+## Minor corrections to the 27 Aug review (no hypothesis attached)
+
+- *"Price never traded below the scan price in any meaningful way"* — the
+  grader's own output has the call wall 29,487.9 touched at 13:25 with
+  `travel_down 127.1`, i.e. **29,360.8, 120.4 below the 29,481.2 scan price**.
+  The review's own hourly table shows the 13:00 close at 29,417.6.
+- *"0.70 — the joint best of the four days"* — per-day means are 24 Aug 0.69,
+  25 Aug 0.34, **26 Aug 0.71**, 27 Aug 0.70. **Second of four.**
+- **Grader anchor mismatch:** `actual_after_scan.move` = **91.6**, while close
+  minus the brief's own `price_at_scan` = **85.5**. 6.1 points of difference in
+  what "the move" is measured from. Did not change a sign on this day. Watching.
+- **`fuel` is a zero-point component** — 25 emissions, all 0. By design (its own
+  text says it dampens conviction, not direction), but it is emitted inside
+  `bias_components` with a `points` field, where a reader looks for score
+  drivers. Presentation issue, not dead weight.
