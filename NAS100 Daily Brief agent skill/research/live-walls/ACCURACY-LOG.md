@@ -133,3 +133,73 @@ in it is provisional; refit from scratch once the bounds figure is 100%.
 hard bounds, and prints why. Enforced in code, not only in the docs, because a
 cold session reads the code's behaviour long before it reads a note. Override is
 `--fit-anyway`, and only once the cause is understood.
+
+---
+
+## 2026-08-28 — the 27 Aug snapshots graded · bounds clean · the FIT IS WORSE
+
+Two snapshots existed for 27 Aug, and they differ only in which calibration
+produced them. Graded against the OI the OCC published this morning, actual
+ΔOI **+6,543** on 2,474 matched contracts (volume 17,845):
+
+| snapshot | calibration | estimated ΔOI | net error | within hard bounds |
+|---|---|---|---|---|
+| `2026-08-27-2121.json` | **prior** (untuned) | +7,244 | **+701 — +7.8%** | **100.0%** |
+| `2026-08-27-2223.json` | **fitted** | +8,434 | **+1,891 — +21.1%** | **100.0%** |
+
+Attribution confirmed two ways: by `calibration_source` read from each file
+directly, and by magnitude (the fitted snapshot's full-book estimate is +9,880
+against the prior's +8,689).
+
+### The fitted calibration is 2.7× worse than the priors it replaced
+
+Both are inside the 25% target; only the **untuned prior** is inside the 15%
+one. **On the only out-of-sample test that exists, fitting made the estimate
+worse.** That is what fitting on a dataset carrying an unexplained
+impossibility predicts, and it is the first direct evidence for it.
+
+`intraday_oi.py` is currently running on the **fitted** calibration and labels
+itself `[calibration is PROVISIONAL]` on every use. That calibration was fitted
+at 2026-08-27T21:21:46, i.e. **before** the block was imposed — the block was
+not breached. **It is still the worse of the two.**
+
+**No change made.** n=1 out-of-sample. Reverting to priors on one observation
+would repeat the error being diagnosed. Grade the 28 Aug snapshot tomorrow; if
+the fitted calibration is worse again, that is 2 and the revert has an argument.
+
+### The hard-bounds defect did NOT reproduce — but is NOT resolved
+
+Both snapshots graded **100.0% within hard bounds**, against the 98.9% that
+opened the defect. Two things stop this from closing it:
+
+1. **It is a different snapshot.** The violating instance is 26 Aug, now *"2
+   trading days old — gradeable only at 1"*. **It can never be re-graded.** The
+   defect instance is permanently unfalsifiable.
+2. **No cause was identified.** A clean run does not explain a dirty one.
+
+One candidate is now weaker. Candidate 2 was *"the snapshot preceded final
+volume"* — but the violating snapshot was taken at **21:37Z** and the clean one
+at **21:21Z**, *earlier*. Settling volume predicts the later snapshot is the
+cleaner one; the opposite happened. **Candidate 2 does not survive in its
+simple form.**
+
+**`--fit` stays blocked.** The log's rule is that the block lifts once the
+figure is 100%, and today it is — but on an instance that was never the
+defective one, with the defective one now ungradeable and its cause still
+unknown, and with the existing fit measurably worse than no fit at all.
+Lifting on that would be fitting noise with extra steps.
+
+### Walls unchanged for a third consecutive day — with a first sign flip
+
+Today's snapshot (22:16Z, NDX 29,433.43): 2,881 contracts, prior OI 60,261,
+volume 103,291, estimated net ΔOI **+8,464**. Call wall 29,450 and put wall
+29,400 both **unchanged**, published → estimated. That is **3 for 3** on the
+pattern the 26 Aug entry flagged as the central finding if it held: live OI
+moves how hard dealers hedge, not where.
+
+**New today:** net GEX published **+0.92bn → estimated −0.04bn** — the first
+time the estimate crosses **zero**, i.e. flips the sign of the regime rather
+than scaling it. If the walls are stable but the sign is not, "magnitude not
+location" is too coarse a summary: a sign flip is a regime call, and a regime
+call is exactly what the brief publishes. Watch whether it recurs. **Reporting
+only — this does not touch the brief.**

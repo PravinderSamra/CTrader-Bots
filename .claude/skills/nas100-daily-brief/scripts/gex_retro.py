@@ -81,7 +81,14 @@ def build(src_day, tgt_day, scan_time=None, gamma_only=False):
     graded = []
     for lv in levels:
         g = R.grade_level(lv, bars)
-        graded.append({**lv, **g, "outcome": classify(g.get("reaction"))})
+        # D5: role_reversal is additive — grade_level and `outcome` are
+        # untouched, so the written review and the chart still agree. It was
+        # wired into the ladder retro only, so every board retro reported
+        # `role: None` and the settled-behaviour read the register promised
+        # for "every touched level" was never actually computed here.
+        rr = role_reversal(lv["price"], bars)
+        graded.append({**lv, **g, "outcome": classify(g.get("reaction")),
+                       "role": rr})
     graded.sort(key=lambda l: -l["price"])
 
     lo = min(b["low"] for b in bars)

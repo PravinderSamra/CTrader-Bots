@@ -877,3 +877,81 @@ weight or merely mute.
   text says it dampens conviction, not direction), but it is emitted inside
   `bias_components` with a `points` field, where a reader looks for score
   drivers. Presentation issue, not dead weight.
+
+---
+
+# Observations appended 2026-08-28 (trading day 2026-08-28, graded post-roll)
+
+*Source: `review_day.py`, `track.py`, `gex_retro.py` and `oi_accuracy.py`, run
+after the 21:00 roll. **5 trading days on record (24–28 Aug).** One gradeable
+scan today (13:14 PRE_NY); `2026-08-28/2233-overnight` is `test_artefact` and
+enters nothing.*
+
+Day: O 29570.4 H 29748.3 L 29376.4 C 29454.8, range 371.9, net **−115.6**.
+The 13:14 scan called BULLISH +6 and price moved −143.7 — **WRONG**. Direction
+across 5 days is now **4 right / 4 wrong / 3 no-call**.
+
+## DEFECT D6 — D5's fix was wired into the ladder path only
+
+`role_reversal()` was added 27 Aug as the fix for D5 and D5 records that it
+*"now reports, for every touched level"*. It was called **only from
+`build_from_ladder()`**. `build()` — every board retro — never called it, so
+each level returned `role: None` and the day was scored on first touch alone,
+the rule D5's own docstring calls the worst possible sample. **The register's
+claim and the code disagreed, and the register was wrong.**
+
+Effect on today, same bars, same board:
+
+| of 16 reached | first touch | settled behaviour |
+|---|---|---|
+| held | **0 (0.0%)** | **13 (81%)** — 11 resistance, 2 support |
+
+The call wall 29,735.4 was reported **BROKE**. It was never closed above in
+1,375 minutes, worst excursion **+12.9**, and price fell 211.5 off it — it
+marked the high of the day to within 13 points.
+
+**Fixed** in `build()`, mirroring the ladder path. Additive as D5 requires:
+`grade_level` and `outcome` untouched, headline counts and chart unchanged, the
+settled read printed beside the first-touch grade. `test_consistency.py
+--offline` 16/16.
+
+**Carry forward:** `test_consistency.py` asserts *"role_reversal ignores levels
+price never reached"* and passed throughout — it tests the function, not that
+anything calls it. A unit test on a helper does not prove the helper is wired
+in. Both D5 and D6 are the same failure: **the measurement was wrong, not the
+market read.**
+
+## H1 — 5 days, still no consistent sign
+
+Per-day error: +61.2 / −11.6 / −73.0 / −86.4 / **−10.7**. Today is the second-
+smallest, on a 0.96 budget-to-extension ratio (254.9 vs 244.2). The sign still
+flips. The blocker restated on 27 Aug — the budget is a pure linear ADR
+remainder with no regime term — is untouched. **Status: OBSERVING. Nothing
+proposed.**
+
+## H6 — threshold MET (5 of 5 days), same sign every day
+
+Today by the board's own `stretch` flag: non-stretch **16/19 = 0.84**, stretch
+**0/3 = 0.00**. Fifth consecutive day the split runs the same way, no
+exceptions. Cumulative non-stretch **0.81**, stretch **0.45**.
+
+Threshold reached is permission to read the evidence, not to act.
+
+- **Recommended:** report the two rates separately in the review. No scoring
+  change; nothing published to the trader changes.
+- **NOT proposed:** dropping stretch levels. Cumulative 0.45 is a real reaction
+  rate, and today's 0/3 is three levels sitting 259–812 pts away on a day
+  budgeted for 255. **Status: OBSERVING → reporting split recommended.**
+
+## The direction call was wrong; the actionable brief was not
+
+Logged because the scoreboard cannot represent it. The regime section
+(long gamma, *"sweeps genuinely fail — this is your fade day,"* Strategy 1) was
+correct. The event gate held the trader out of a **292-point whipsaw** in the
+14:00 print hour. Its follow-on rule — post-print 30-min range H/L as the
+sweep levels — gave H 29,641.7; that high was swept at 14:35Z and price fell
+**265.3 points** off it. Sweep → fail → reverse, exactly as described, in the
+direction opposite the arrow.
+
+**No bias-engine change proposed.** One wrong call inside 4/4 is small-sample,
+not a defect.
