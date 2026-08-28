@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-08-27T18:17:54.734Z",
+  "generatedAt": "2026-08-28T01:55:39.023Z",
   "yields": {
-    "US10Y": 4.64,
-    "US2Y": 4.17,
-    "realYield10Y": 2.32,
-    "realYield5Y": 2.04,
+    "US10Y": 4.66,
+    "US2Y": 4.19,
+    "realYield10Y": 2.34,
+    "realYield5Y": 2.06,
     "curve2s10s": 47,
-    "breakeven10Y": 2.32,
+    "breakeven10Y": 2.33,
     "breakeven5Y": 2.31,
-    "forward5y5y": 2.33,
+    "forward5y5y": 2.35,
     "dayOverDay": {
-      "US10Y": -0.06,
-      "US2Y": -0.07,
-      "realYield10Y": -0.06
+      "US10Y": 0.02,
+      "US2Y": 0.02,
+      "realYield10Y": 0.02
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-09-16",
     "probCut": 0,
-    "probHold": 84,
-    "probHike": 16
+    "probHold": 80,
+    "probHike": 20
   },
   "marketVolatility": {
     "GVZ": 26.96,
@@ -35,26 +35,10 @@
   },
   "etfFlows": {
     "gldTonnes": 880,
-    "gldWoWChange": 1.1,
-    "trend3W": "INFLOW"
+    "gldWoWChange": null,
+    "trend3W": null
   },
-  "snapshotPrices": {
-    "XAUUSD": 4605.55,
-    "XAGUSD": 69.195,
-    "EURUSD": 1.16475,
-    "USDJPY": 159.4255,
-    "USDCHF": 0.80442,
-    "USDCNH": 6.71981,
-    "GBPUSD": 1.35872,
-    "USDCAD": 1.38584,
-    "USDSEK": 9.52366,
-    "US500": 7721.2,
-    "GER40": 26359.65,
-    "UK100": 10796.25,
-    "ADR_14day": 99.9,
-    "ADR_usedToday": 77.4,
-    "goldSilverRatio": 66.6
-  },
+  "snapshotPrices": null,
   "dollarLiquidity": {
     "stlfsi": -0.8107,
     "nfci": -0.566
@@ -69,13 +53,13 @@
       "headline": "Kansas City Fed's Schmid says inflation 'stubborn' and 'sticky,' policy rate not restrictive",
       "source": "CNBC",
       "publishedAt": "2026-08-27T12:20:30.000Z",
-      "hoursAgo": 6
+      "hoursAgo": 13.6
     },
     {
       "headline": "Canada excludes US seafood from retaliatory tariffs - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-27T08:24:37.000Z",
-      "hoursAgo": 9.9
+      "hoursAgo": 17.5
     }
   ],
   "briefing": null
