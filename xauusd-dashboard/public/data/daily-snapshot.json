@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-28T01:55:39.023Z",
+  "generatedAt": "2026-08-28T17:54:51.213Z",
   "yields": {
     "US10Y": 4.66,
     "US2Y": 4.19,
@@ -22,8 +22,8 @@
     "probHike": 20
   },
   "marketVolatility": {
-    "GVZ": 26.96,
-    "VIX": 15.21
+    "GVZ": 26.8,
+    "VIX": 14.51
   },
   "positioning": {
     "cotNetLong": 219495,
@@ -34,11 +34,27 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 880,
-    "gldWoWChange": null,
-    "trend3W": null
+    "gldTonnes": 906.1,
+    "gldWoWChange": 26.1,
+    "trend3W": "INFLOW"
   },
-  "snapshotPrices": null,
+  "snapshotPrices": {
+    "XAUUSD": 4472.825,
+    "XAGUSD": 66.8915,
+    "EURUSD": 1.158,
+    "USDJPY": 160.178,
+    "USDCHF": 0.80963,
+    "USDCNH": 6.73184,
+    "GBPUSD": 1.35311,
+    "USDCAD": 1.39054,
+    "USDSEK": 9.61635,
+    "US500": 7712.4,
+    "GER40": 26541.15,
+    "UK100": 10801.35,
+    "ADR_14day": 99.8,
+    "ADR_usedToday": 170.6,
+    "goldSilverRatio": 66.9
+  },
   "dollarLiquidity": {
     "stlfsi": -0.8107,
     "nfci": -0.566
@@ -50,16 +66,28 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Kansas City Fed's Schmid says inflation 'stubborn' and 'sticky,' policy rate not restrictive",
-      "source": "CNBC",
-      "publishedAt": "2026-08-27T12:20:30.000Z",
-      "hoursAgo": 13.6
+      "headline": "US hits Egyptian bank branches with Iran sanctions as war marks six months - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-28T15:56:18.000Z",
+      "hoursAgo": 2
     },
     {
-      "headline": "Canada excludes US seafood from retaliatory tariffs - Reuters",
+      "headline": "Iran urges other nations not to join new US sanctions, mediators focus on reopening strait - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-08-27T08:24:37.000Z",
-      "hoursAgo": 17.5
+      "publishedAt": "2026-08-28T15:29:15.000Z",
+      "hoursAgo": 2.4
+    },
+    {
+      "headline": "Oil slides on clues about Fed policy, rumors of Hormuz deal - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-28T01:16:00.000Z",
+      "hoursAgo": 16.6
+    },
+    {
+      "headline": "US-hosted G20 finance meeting to target growth, imbalances, Iran sanctions, Treasury official says - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-28T00:37:43.000Z",
+      "hoursAgo": 17.3
     }
   ],
   "briefing": null
