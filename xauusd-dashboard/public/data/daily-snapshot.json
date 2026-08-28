@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-28T17:54:51.213Z",
+  "generatedAt": "2026-08-28T19:27:03.130Z",
   "yields": {
     "US10Y": 4.66,
     "US2Y": 4.19,
@@ -34,26 +34,26 @@
     "openInterestChange": -2768
   },
   "etfFlows": {
-    "gldTonnes": 906.1,
-    "gldWoWChange": 26.1,
+    "gldTonnes": 908.2,
+    "gldWoWChange": 2.1,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4472.825,
-    "XAGUSD": 66.8915,
-    "EURUSD": 1.158,
-    "USDJPY": 160.178,
-    "USDCHF": 0.80963,
-    "USDCNH": 6.73184,
-    "GBPUSD": 1.35311,
-    "USDCAD": 1.39054,
-    "USDSEK": 9.61635,
-    "US500": 7712.4,
-    "GER40": 26541.15,
-    "UK100": 10801.35,
+    "XAUUSD": 4462.53,
+    "XAGUSD": 66.487,
+    "EURUSD": 1.15858,
+    "USDJPY": 160.066,
+    "USDCHF": 0.80933,
+    "USDCNH": 6.73203,
+    "GBPUSD": 1.35359,
+    "USDCAD": 1.39011,
+    "USDSEK": 9.60467,
+    "US500": 7712.5,
+    "GER40": 26552.15,
+    "UK100": 10810.15,
     "ADR_14day": 99.8,
-    "ADR_usedToday": 170.6,
-    "goldSilverRatio": 66.9
+    "ADR_usedToday": 185.8,
+    "goldSilverRatio": 67.1
   },
   "dollarLiquidity": {
     "stlfsi": -0.8107,
@@ -68,26 +68,26 @@
     {
       "headline": "US hits Egyptian bank branches with Iran sanctions as war marks six months - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-08-28T15:56:18.000Z",
-      "hoursAgo": 2
+      "publishedAt": "2026-08-28T17:37:19.000Z",
+      "hoursAgo": 1.8
     },
     {
       "headline": "Iran urges other nations not to join new US sanctions, mediators focus on reopening strait - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-28T15:29:15.000Z",
-      "hoursAgo": 2.4
+      "hoursAgo": 4
     },
     {
       "headline": "Oil slides on clues about Fed policy, rumors of Hormuz deal - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-28T01:16:00.000Z",
-      "hoursAgo": 16.6
+      "hoursAgo": 18.2
     },
     {
       "headline": "US-hosted G20 finance meeting to target growth, imbalances, Iran sanctions, Treasury official says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-28T00:37:43.000Z",
-      "hoursAgo": 17.3
+      "hoursAgo": 18.8
     }
   ],
   "briefing": null

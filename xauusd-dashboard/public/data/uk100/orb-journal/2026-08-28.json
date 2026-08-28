@@ -131,6 +131,65 @@
         "verdict": "UNSCORABLE",
         "signalVerdicts": []
       }
+    },
+    {
+      "at": "2026-08-28T19:27:10.077Z",
+      "londonTime": "20:27 BST",
+      "mode": "CLOSED",
+      "price": 10810.25,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — The obvious draw (PDH 10857.6) sits beyond what's left of a typical day's range — targets past it are stretch-only today.",
+      "signals": [
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDH 10857.6) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.75%) — the cross-market lean is up."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 1,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10840.2,
+        "orbLow": 10813.3,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10840.2,
+        "overnightLow": 10793.7,
+        "priorDayHigh": 10857.6,
+        "priorDayLow": 10762.4,
+        "gapPct": 0.13,
+        "adr14": 80.8,
+        "adrUsedPct": 63
+      },
+      "outcome": {
+        "resolvedAt": "2026-08-28T19:27:12.217Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
