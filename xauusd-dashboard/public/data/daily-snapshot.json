@@ -1,57 +1,57 @@
 {
-  "generatedAt": "2026-08-28T19:27:03.130Z",
+  "generatedAt": "2026-08-29T01:20:13.115Z",
   "yields": {
-    "US10Y": 4.66,
-    "US2Y": 4.19,
+    "US10Y": 4.67,
+    "US2Y": 4.2,
     "realYield10Y": 2.34,
-    "realYield5Y": 2.06,
+    "realYield5Y": 2.07,
     "curve2s10s": 47,
-    "breakeven10Y": 2.33,
-    "breakeven5Y": 2.31,
-    "forward5y5y": 2.35,
+    "breakeven10Y": 2.31,
+    "breakeven5Y": 2.3,
+    "forward5y5y": 2.32,
     "dayOverDay": {
-      "US10Y": 0.02,
-      "US2Y": 0.02,
-      "realYield10Y": 0.02
+      "US10Y": 0.01,
+      "US2Y": 0.01,
+      "realYield10Y": 0
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-09-16",
     "probCut": 0,
-    "probHold": 80,
-    "probHike": 20
+    "probHold": 76,
+    "probHike": 24
   },
   "marketVolatility": {
     "GVZ": 26.8,
     "VIX": 14.51
   },
   "positioning": {
-    "cotNetLong": 219495,
-    "cotWoWChange": 4639,
+    "cotNetLong": 242212,
+    "cotWoWChange": 22717,
     "crowding": "CROWDED_LONG",
-    "reportDate": "2026-08-18T00:00:00.000",
-    "openInterest": 561817,
-    "openInterestChange": -2768
+    "reportDate": "2026-08-25T00:00:00.000",
+    "openInterest": 644992,
+    "openInterestChange": 83175
   },
   "etfFlows": {
-    "gldTonnes": 908.2,
-    "gldWoWChange": 2.1,
+    "gldTonnes": 909.9,
+    "gldWoWChange": 1.7,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4462.53,
-    "XAGUSD": 66.487,
-    "EURUSD": 1.15858,
-    "USDJPY": 160.066,
-    "USDCHF": 0.80933,
-    "USDCNH": 6.73203,
-    "GBPUSD": 1.35359,
-    "USDCAD": 1.39011,
-    "USDSEK": 9.60467,
-    "US500": 7712.5,
-    "GER40": 26552.15,
+    "XAUUSD": 4454.345,
+    "XAGUSD": 66.3415,
+    "EURUSD": 1.15821,
+    "USDJPY": 160.099,
+    "USDCHF": 0.80934,
+    "USDCNH": 6.73151,
+    "GBPUSD": 1.35326,
+    "USDCAD": 1.39071,
+    "USDSEK": 9.60849,
+    "US500": 7712.9,
+    "GER40": 26563.35,
     "UK100": 10810.15,
-    "ADR_14day": 99.8,
+    "ADR_14day": 101.7,
     "ADR_usedToday": 185.8,
     "goldSilverRatio": 67.1
   },
@@ -66,28 +66,22 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Oil settles lower on clues about Fed policy, rumors of Hormuz deal - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-28T20:19:51.000Z",
+      "hoursAgo": 5
+    },
+    {
       "headline": "US hits Egyptian bank branches with Iran sanctions as war marks six months - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-28T17:37:19.000Z",
-      "hoursAgo": 1.8
+      "hoursAgo": 7.7
     },
     {
-      "headline": "Iran urges other nations not to join new US sanctions, mediators focus on reopening strait - Reuters",
+      "headline": "Iran lashes out at US sanctions amid economic toll at home - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-08-28T15:29:15.000Z",
-      "hoursAgo": 4
-    },
-    {
-      "headline": "Oil slides on clues about Fed policy, rumors of Hormuz deal - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-28T01:16:00.000Z",
-      "hoursAgo": 18.2
-    },
-    {
-      "headline": "US-hosted G20 finance meeting to target growth, imbalances, Iran sanctions, Treasury official says - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-28T00:37:43.000Z",
-      "hoursAgo": 18.8
+      "publishedAt": "2026-08-28T01:34:00.000Z",
+      "hoursAgo": 23.8
     }
   ],
   "briefing": null
