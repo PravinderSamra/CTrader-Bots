@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-29T01:20:13.115Z",
+  "generatedAt": "2026-08-31T12:12:17.172Z",
   "yields": {
     "US10Y": 4.67,
     "US2Y": 4.2,
@@ -34,26 +34,26 @@
     "openInterestChange": 83175
   },
   "etfFlows": {
-    "gldTonnes": 909.9,
-    "gldWoWChange": 1.7,
-    "trend3W": "INFLOW"
+    "gldTonnes": 909.5,
+    "gldWoWChange": -0.4,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4454.345,
-    "XAGUSD": 66.3415,
-    "EURUSD": 1.15821,
-    "USDJPY": 160.099,
-    "USDCHF": 0.80934,
-    "USDCNH": 6.73151,
-    "GBPUSD": 1.35326,
-    "USDCAD": 1.39071,
-    "USDSEK": 9.60849,
-    "US500": 7712.9,
-    "GER40": 26563.35,
+    "XAUUSD": 4455.975,
+    "XAGUSD": 67.3795,
+    "EURUSD": 1.15961,
+    "USDJPY": 159.719,
+    "USDCHF": 0.80851,
+    "USDCNH": 6.72098,
+    "GBPUSD": 1.35391,
+    "USDCAD": 1.38868,
+    "USDSEK": 9.58229,
+    "US500": 7694,
+    "GER40": 26419.45,
     "UK100": 10810.15,
-    "ADR_14day": 101.7,
-    "ADR_usedToday": 185.8,
-    "goldSilverRatio": 67.1
+    "ADR_14day": 111.3,
+    "ADR_usedToday": 75.8,
+    "goldSilverRatio": 66.1
   },
   "dollarLiquidity": {
     "stlfsi": -0.8107,
@@ -64,25 +64,6 @@
     "gprDate": "2026-07"
   },
   "economicCalendar": [],
-  "newsItems": [
-    {
-      "headline": "Oil settles lower on clues about Fed policy, rumors of Hormuz deal - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-28T20:19:51.000Z",
-      "hoursAgo": 5
-    },
-    {
-      "headline": "US hits Egyptian bank branches with Iran sanctions as war marks six months - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-28T17:37:19.000Z",
-      "hoursAgo": 7.7
-    },
-    {
-      "headline": "Iran lashes out at US sanctions amid economic toll at home - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-28T01:34:00.000Z",
-      "hoursAgo": 23.8
-    }
-  ],
+  "newsItems": [],
   "briefing": null
 }
