@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T12:12:17.172Z",
+  "generatedAt": "2026-08-31T15:07:04.466Z",
   "yields": {
     "US10Y": 4.67,
     "US2Y": 4.2,
@@ -22,8 +22,8 @@
     "probHike": 24
   },
   "marketVolatility": {
-    "GVZ": 26.8,
-    "VIX": 14.51
+    "GVZ": 25.17,
+    "VIX": 14.43
   },
   "positioning": {
     "cotNetLong": 242212,
@@ -34,26 +34,26 @@
     "openInterestChange": 83175
   },
   "etfFlows": {
-    "gldTonnes": 909.5,
-    "gldWoWChange": -0.4,
-    "trend3W": "FLAT"
+    "gldTonnes": 914.2,
+    "gldWoWChange": 4.7,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4455.975,
-    "XAGUSD": 67.3795,
-    "EURUSD": 1.15961,
-    "USDJPY": 159.719,
-    "USDCHF": 0.80851,
-    "USDCNH": 6.72098,
-    "GBPUSD": 1.35391,
-    "USDCAD": 1.38868,
-    "USDSEK": 9.58229,
-    "US500": 7694,
-    "GER40": 26419.45,
+    "XAUUSD": 4433.075,
+    "XAGUSD": 66.2705,
+    "EURUSD": 1.16157,
+    "USDJPY": 159.735,
+    "USDCHF": 0.80801,
+    "USDCNH": 6.71858,
+    "GBPUSD": 1.35525,
+    "USDCAD": 1.38647,
+    "USDSEK": 9.58501,
+    "US500": 7679.9,
+    "GER40": 26305.35,
     "UK100": 10810.15,
     "ADR_14day": 111.3,
     "ADR_usedToday": 75.8,
-    "goldSilverRatio": 66.1
+    "goldSilverRatio": 66.9
   },
   "dollarLiquidity": {
     "stlfsi": -0.8107,
@@ -64,6 +64,25 @@
     "gprDate": "2026-07"
   },
   "economicCalendar": [],
-  "newsItems": [],
+  "newsItems": [
+    {
+      "headline": "Bessent expects new US secondary sanctions weekly, aiming to increase pressure on Iran - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-30T23:52:00.000Z",
+      "hoursAgo": 15.2
+    },
+    {
+      "headline": "Trump criticizes NBC over election comment as Treasury denies some NYT, WSJ and Bloomberg reporters G20 credentials",
+      "source": "CNBC",
+      "publishedAt": "2026-08-30T16:55:14.000Z",
+      "hoursAgo": 22.2
+    },
+    {
+      "headline": "UAE, Egyptian central banks say they are coordinating on Banque Misr after US Treasury notice - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-30T16:50:11.000Z",
+      "hoursAgo": 22.3
+    }
+  ],
   "briefing": null
 }

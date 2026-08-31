@@ -50,6 +50,79 @@
         "adrUsedPct": 63
       },
       "outcome": null
+    },
+    {
+      "at": "2026-08-31T15:07:10.600Z",
+      "londonTime": "16:07 BST",
+      "mode": "POST_ORB",
+      "price": 10810.15,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — The obvious draw (PDL 10762.4) sits beyond what's left of a typical day's range — targets past it are stretch-only today.",
+      "signals": [
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10762.4) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 100th percentile of its 20-day range and still rising — a persistent FX headwind capping upside breaks (weak GBP is what lifts FTSE)."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.73%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -0.43% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": null,
+        "orbLow": null,
+        "orbBrokenDirection": null,
+        "overnightHigh": null,
+        "overnightLow": null,
+        "priorDayHigh": 10857.6,
+        "priorDayLow": 10762.4,
+        "gapPct": 0.13,
+        "adr14": 80.8,
+        "adrUsedPct": 63
+      },
+      "outcome": {
+        "resolvedAt": "2026-08-31T15:07:13.345Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
