@@ -64,13 +64,48 @@ M5 bars is more than the default. Call `Bars.LoadMoreHistory()` in a loop at sta
 until enough days are present, and handle the case where the broker returns nothing
 more (stop looping; do not spin).
 
-## Preferred variant: cumulative RVOL
+## Use the cumulative variant — it is the only one that fits this codebase
 
-Less noisy than a single bar, and it works for entries that fire later in the session —
-so one implementation covers both the DAX ORB and the NAS bot:
+**Revised after reviewing `ORB_Volume_Breakout_Bot_v2.cs`.**
 
-    RVOL = SUM(volume, session open -> now)
-           / median{ SUM(volume, session open -> same time of day), last 14 days }
+The single-bar definition above assumes the filter runs on a known bar (the opening bar).
+It does not. `EvaluateVolumeFilter(evalBarIndex, ...)` runs on the *evaluation bar*, which
+can be any confirmation bar in the session — the filter is signal qualification, not an
+entry gate, so a bar that fails does not stand the day down and a later bar can qualify.
+A fixed "bar at time T" baseline cannot serve that.
+
+The cumulative form generalises to any evaluation bar and must be the primary definition:
+
+    RVOL = SUM(volume, session open -> evaluation bar)
+           / median{ SUM(volume, session open -> same local time), last N days }
+
+This also handles the intrabar case for free: a partially formed bar contributes partial
+volume to both sides of the ratio.
+
+## Implementation notes specific to v2
+
+**Mirror the existing method signature.** `EvaluateVolumeFilter` returns bool with
+`out evalVol, out trailingAvg, out required, out ratio`. Add `EvaluateRvolFilter` with the
+same shape and select between them with a mode enum, so the call site and all logging stay
+unchanged:
+
+    [Parameter("Volume Filter Mode", Group = "Volume Filter", DefaultValue = VolumeFilterMode.TrailingBars)]
+    public VolumeFilterMode VolumeMode { get; set; }   // TrailingBars | RelativeToTypical
+
+**Preserve signal-qualification semantics.** A failed RVOL check must `return` as no-signal,
+not stand the day down. Same as the existing filter.
+
+**Do not build the baseline from the m1 confirmation series.** All live configs run
+`ConfirmationTimeFrame: m1`. Fourteen days of the DAX cash session at m1 is roughly 7,000
+bars, and cAlgo will not have that loaded by default. Build the RVOL baseline from a
+separate, coarser series — `MarketData.GetBars(TimeFrame.Minute5)` or m15 — which needs
+~1,400 bars for the same 14 days. Volume ratios are scale-free, so the coarser series gives
+the same answer at a fraction of the history.
+
+**Backtest warm-up.** The first N days of any backtest cannot compute a baseline. Either
+start the backtest 14 trading days before the evaluation window, or accept that the first
+fortnight produces no trades — and log which, so it is visible afterwards rather than being
+mistaken for a filter that is too tight.
 
 ## Starting thresholds for GER40
 
@@ -89,13 +124,15 @@ counts as a variant for the multiple-testing correction.
 
 ## Logging requirement
 
-**Log the RVOL value on every signal, pass or fail**, alongside the raw and typical
-volumes:
+v2 already logs `vol=... avg=... ratio=...` on the SIGNAL line, so passes are covered.
+Rejections currently log `required` but not `ratio`. Add the ratio to the rejection line so
+both sides are measurable from one grep:
 
     RVOL_DIAG time=<local> vol=<today> typical=<median> rvol=<ratio> n=<days used> passed=<bool>
 
-Without this the filter's real selectivity can only be inferred from proxies. That
-inference was made once in analysis and was wrong; the log line makes it a measurement.
+Without the ratio on both sides, the filter's real selectivity can only be inferred from
+proxies. That inference was made once during analysis and was wrong; the log line makes it
+a measurement.
 
 ## Caveat on the data
 
