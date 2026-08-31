@@ -25,8 +25,9 @@
 //      of days. Default here is RelativeToTypical.
 //   3. Defaults are the DAX strategy, not the parent's London/New York one:
 //      09:00-09:05 Europe/Berlin range, first entry 09:05, last entry 12:00, force
-//      close 17:30, 10-point entry offset, 25-point stop (10% of GER40's 249-point
-//      median 14-day ATR), 3R target, one trade per day, RVOL threshold 1.1.
+//      close 17:30 (last entry 11:00, which captures 96.6% of in-sample breakouts
+//      where 12:00 adds 0.3pp), 10-point entry offset, an ATR stop at 10% of the
+//      14-day ATR (~25pt on GER40), 3R target, one trade per day, RVOL 1.1.
 //
 // UNTESTED. No parameter here has been validated out-of-sample on GER40. The plan in
 // analysis/TEST_PLAN.md is to tune on 2022-2024 and leave 2025-2026 untouched; every
@@ -169,6 +170,29 @@ namespace cAlgo.Robots
  RelativeToTypical
  }
 
+ // How the initial stop distance is derived.
+ //
+ // FixedPoints  — a constant number of points from the estimated entry. What the
+ //                NAS100/US30 research used (40pt / 75pt).
+ // PercentOfOrb — sits that percentage inside the ORB edge. 0% is refused at OnStart:
+ //                it puts the stop exactly on the edge, leaving risk undefined.
+ // AtrMultiple  — AtrStopPercent% of the N-day ATR, recomputed each session. This is
+ //                Zarattini, Barbon & Aziz's rule (10% of the 14-day ATR). It scales
+ //                the stop with the instrument's current volatility instead of
+ //                assuming a fixed point value stays appropriate.
+ //
+ // Note when choosing: a volatility-scaled stop is not automatically better. A 50%-of-ORB
+ // stop was tested across five NAS100 years and made results materially worse
+ // (+$3,567 vs +$8,859, PF 1.19 vs 1.34), because with dollar-fixed risk a wider stop
+ // buys a smaller position and the same price move earns less. AtrMultiple is provided
+ // because it is the documented rule for this strategy, not because it is known to win.
+ public enum StopDistanceMode
+ {
+ FixedPoints,
+ PercentOfOrb,
+ AtrMultiple
+ }
+
  // =========================================================================
  // PER-POSITION STATE TRACKER
  // =========================================================================
@@ -270,7 +294,7 @@ namespace cAlgo.Robots
 
  // No NEW entries after this. An open trade is left alone - it runs to its stop
  // or target unless the force-close below is enabled and reached.
- [Parameter("Last Entry Time", Group = "Session 2 - Trading Window", DefaultValue = "12:00:00")]
+ [Parameter("Last Entry Time", Group = "Session 2 - Trading Window", DefaultValue = "11:00:00")]
  public string KillSwitchTimeUtcStr { get; set; }
 
  // NOTE: This setting USED to close positions at the same Last Entry Time.
@@ -495,18 +519,38 @@ namespace cAlgo.Robots
  // the fill happened to land. A 3.2pt stop then sized a position 31x too large
  // and one ordinary 30pt move cost 10R. The labels below name the switch first
  // and say which field each mode reads; OnStart rejects the 0% combination.
- [Parameter("Stop Type: Fixed Points? (No = % of ORB)", Group = "Stops & Targets", DefaultValue = true)]
- public bool EnableFixedPointStop { get; set; }
+ [Parameter("Stop Type", Group = "Stops & Targets", DefaultValue = StopDistanceMode.AtrMultiple)]
+ public StopDistanceMode StopMode { get; set; }
 
- // Used when Stop Type = Yes. Research stops were FIXED POINTS from entry
+ // Used when Stop Type = FixedPoints. Research stops were FIXED POINTS from entry
  // (NAS100 40pt / US30 75pt): slPrice = expectedEntry -/+ FixedStopPoints.
- [Parameter("...if Yes: Fixed Stop Points", Group = "Stops & Targets", DefaultValue = 25, MinValue = 0.1)]
+ [Parameter("...if FixedPoints: Stop Points", Group = "Stops & Targets", DefaultValue = 25, MinValue = 0.1)]
  public double FixedStopPoints { get; set; }
 
- // Used when Stop Type = No. The stop sits this far INSIDE the range from its
- // edge, so 0 means "exactly on the edge" - never what you want.
- [Parameter("...if No: Stop % of ORB Range", Group = "Stops & Targets", DefaultValue = 50.0, MinValue = 0.0)]
+ // Used when Stop Type = PercentOfOrb. The stop sits this far INSIDE the range from
+ // its edge, so 0 means "exactly on the edge" - never what you want.
+ [Parameter("...if PercentOfOrb: Stop % of ORB Range", Group = "Stops & Targets", DefaultValue = 50.0, MinValue = 0.0)]
  public double StopLossOrbPercent { get; set; }
+
+ // Used when Stop Type = AtrMultiple. Zarattini, Barbon & Aziz size the stop at 10% of
+ // the 14-day ATR. On GER40 that is ~25 points against a 249-point median ATR14, which
+ // is why FixedStopPoints defaults to 25 - the two modes start from the same place, so
+ // switching between them isolates the effect of letting the stop float with volatility.
+ [Parameter("...if AtrMultiple: % of Daily ATR", Group = "Stops & Targets", DefaultValue = 10.0, MinValue = 0.1)]
+ public double AtrStopPercent { get; set; }
+
+ [Parameter("...if AtrMultiple: ATR Days", Group = "Stops & Targets", DefaultValue = 14, MinValue = 2, MaxValue = 100)]
+ public int AtrStopDays { get; set; }
+
+ // Guard rails on the ATR-derived distance. A thin holiday week can collapse the ATR to
+ // a point where the stop is inside the spread and position size explodes - the same
+ // failure the 0%-of-ORB guard exists to prevent, arrived at from a different direction.
+ // A gap-driven ATR spike does the opposite and sizes the position to nothing.
+ [Parameter("...if AtrMultiple: Min Stop Points", Group = "Stops & Targets", DefaultValue = 10.0, MinValue = 0.1)]
+ public double AtrStopMinPoints { get; set; }
+
+ [Parameter("...if AtrMultiple: Max Stop Points", Group = "Stops & Targets", DefaultValue = 80.0, MinValue = 1.0)]
+ public double AtrStopMaxPoints { get; set; }
 
  [Parameter("Take Profit R", Group = "Stops & Targets", DefaultValue = 3.0)]
  public double TakeProfitR { get; set; }
@@ -705,6 +749,11 @@ namespace cAlgo.Robots
  // backtest. Safe to cache because history is only loaded in OnStart, so later bars are
  // appended and never shift earlier indices.
  private int _rvolTodayStartIdx = -1;
+
+ // Daily bars for the ATR stop, and the value computed for the current session.
+ private Bars _atrBars;
+ private double _atrStopPointsToday;
+ private DateTime _atrComputedFor = DateTime.MinValue;
 
  // Indicators
  private ExponentialMovingAverage _trendEma;
@@ -933,14 +982,48 @@ namespace cAlgo.Robots
  // an undefined one: a 3.2pt result sized a position 31x larger than intended and
  // one ordinary 30pt move cost 10R. Refuse to start rather than warn - by the time
  // a warning is noticed the backtest has already been read as if it were valid.
- if (!EnableFixedPointStop && StopLossOrbPercent <= 0)
+ if (StopMode == StopDistanceMode.PercentOfOrb && StopLossOrbPercent <= 0)
  {
- Print("ERROR: Stop Type is '% of ORB Range' but the percent is {0}. A 0% stop sits exactly on the "
+ Print("ERROR: Stop Type is PercentOfOrb but the percent is {0}. A 0% stop sits exactly on the "
  + "ORB edge, leaving risk undefined and position size unbounded. Set a percent above 0 "
- + "(20-25 is typical), or set Stop Type: Fixed Points? = Yes to use Fixed Stop Points.",
+ + "(20-25 is typical), or choose Stop Type = FixedPoints or AtrMultiple.",
  StopLossOrbPercent);
  Stop();
  return;
+ }
+
+ // Same failure from the other direction: an ATR stop clamped to a floor below the
+ // spread leaves risk effectively undefined and position size unbounded.
+ if (StopMode == StopDistanceMode.AtrMultiple)
+ {
+ if (AtrStopMinPoints >= AtrStopMaxPoints)
+ {
+ Print("ERROR: ATR Min Stop Points ({0}) must be below Max Stop Points ({1}).",
+ AtrStopMinPoints, AtrStopMaxPoints);
+ Stop();
+ return;
+ }
+ _atrBars = MarketData.GetBars(TimeFrame.Daily);
+ if (_atrBars == null)
+ {
+ Print("ERROR: Stop Type is AtrMultiple but daily bars could not be acquired.");
+ Stop();
+ return;
+ }
+ int guard = 0;
+ while (_atrBars.Count < AtrStopDays + 5 && guard < 20)
+ {
+ int before = _atrBars.Count;
+ try { _atrBars.LoadMoreHistory(); }
+ catch (Exception ex) { Print("WARNING: ATR history load stopped: {0}", ex.Message); break; }
+ if (_atrBars.Count <= before) break;
+ guard++;
+ }
+ Print("ATR stop enabled: {0}% of the {1}-day ATR, clamped to {2}-{3} points. Daily bars available: {4}.",
+ AtrStopPercent, AtrStopDays, AtrStopMinPoints, AtrStopMaxPoints, _atrBars.Count);
+ if (_atrBars.Count < AtrStopDays + 1)
+ Print("WARNING: only {0} daily bars for a {1}-day ATR. Early sessions will not trade.",
+ _atrBars.Count, AtrStopDays);
  }
 
  // Startup sanity warnings
@@ -2361,6 +2444,62 @@ namespace cAlgo.Robots
  }
 
  // =====================================================================
+ // ATR STOP
+ // =====================================================================
+ //
+ // Stop distance = AtrStopPercent% of the AtrStopDays-day ATR, recomputed once per
+ // session. Zarattini, Barbon & Aziz use 10% of the 14-day ATR; on GER40 that is ~25
+ // points against a 249-point median ATR14.
+ //
+ // ATR is computed here rather than through Indicators.AverageTrueRange for two
+ // reasons: today's daily bar is INCOMPLETE at 09:05 and including it would drag the
+ // average down exactly when the stop is being set, and the number needs clamping and
+ // logging in point units either way. Uses a simple mean of true ranges over completed
+ // daily bars, matching the research/analysis definition.
+ //
+ // Returns the stop distance in POINTS (already divided by _pointSize), or 0 if it
+ // cannot be computed - callers must treat 0 as "do not trade".
+ private double ComputeAtrStopPoints(DateTime sessionDate)
+ {
+ if (_atrBars == null || _atrBars.Count < 2) return 0;
+
+ // Completed daily bars strictly before today. The last bar is today's forming one
+ // whenever the session has started, so walk back from the end and drop any bar
+ // dated on or after the current session date.
+ int lastCompleted = _atrBars.Count - 1;
+ while (lastCompleted >= 0 && _atrBars.OpenTimes[lastCompleted].Date >= sessionDate.Date)
+ lastCompleted--;
+ if (lastCompleted < 1) return 0;
+
+ int need = AtrStopDays;
+ int first = lastCompleted - need + 1;
+ if (first < 1) first = 1; // need [i-1] for the previous close
+ int used = 0;
+ double sum = 0;
+ for (int i = first; i <= lastCompleted; i++)
+ {
+ double h = _atrBars.HighPrices[i];
+ double l = _atrBars.LowPrices[i];
+ double pc = _atrBars.ClosePrices[i - 1];
+ double tr = Math.Max(h - l, Math.Max(Math.Abs(h - pc), Math.Abs(l - pc)));
+ if (tr <= 0) continue;
+ sum += tr;
+ used++;
+ }
+ if (used < 2) return 0;
+
+ double atrPrice = sum / used;
+ double stopPoints = (AtrStopPercent / 100.0) * atrPrice / _pointSize;
+
+ double clamped = Math.Min(Math.Max(stopPoints, AtrStopMinPoints), AtrStopMaxPoints);
+ Log("ATR_STOP atrDays={0} used={1} atr={2:F1}pts pct={3:F1}% -> stop={4:F1}pts{5}",
+ AtrStopDays, used, atrPrice / _pointSize, AtrStopPercent, clamped,
+ (Math.Abs(clamped - stopPoints) > 1e-9)
+ ? string.Format(" (CLAMPED from {0:F1})", stopPoints) : "");
+ return clamped;
+ }
+
+ // =====================================================================
  // RVOL FILTER (time-of-day normalised volume)
  // =====================================================================
  //
@@ -3029,19 +3168,41 @@ namespace cAlgo.Robots
  {
  double expectedEntry = (tradeType == TradeType.Buy) ? Symbol.Ask : Symbol.Bid;
 
- // Compute the initial SL price. Two mutually-exclusive modes:
- // Phase 2: When EnableFixedPointStop = true, anchor the SL to the ESTIMATED ENTRY price at
- // FixedStopPoints * _pointSize (Point-Unit units), matching the research fixed-point stops
- // (NAS100 40pt / US30 75pt). When false, behaviour is byte-for-byte the original ORB-percent
- // logic. Both modes round to Symbol.TickSize identically, and everything downstream keys off
- // the resulting entry->SL distance (see estimatedRiskPips below), so no other code changes.
+ // Compute the initial SL price. Three mutually-exclusive modes, selected by StopMode:
+ //   FixedPoints  — anchor the SL to the ESTIMATED ENTRY at FixedStopPoints * _pointSize,
+ //                  matching the research fixed-point stops (NAS100 40pt / US30 75pt).
+ //   AtrMultiple  — same anchor, but the distance is AtrStopPercent% of the AtrStopDays-day
+ //                  ATR, computed once per session and clamped. Blocks the entry rather
+ //                  than guessing if the ATR cannot be computed.
+ //   PercentOfOrb — byte-for-byte the original v2.0 ORB-anchored logic.
+ // All three round to Symbol.TickSize identically, and everything downstream keys off the
+ // resulting entry->SL distance (see estimatedRiskPips below), so no other code changes.
  double slPrice;
- if (EnableFixedPointStop)
+ if (StopMode == StopDistanceMode.FixedPoints)
  {
  if (tradeType == TradeType.Buy)
  slPrice = expectedEntry - FixedStopPoints * _pointSize;
  else
  slPrice = expectedEntry + FixedStopPoints * _pointSize;
+ }
+ else if (StopMode == StopDistanceMode.AtrMultiple)
+ {
+ // Computed once per session, then reused for the day so every trade that day
+ // shares one stop distance and the log line appears once rather than per signal.
+ if (_atrComputedFor != _currentSessionDate)
+ {
+ _atrStopPointsToday = ComputeAtrStopPoints(_currentSessionDate);
+ _atrComputedFor = _currentSessionDate;
+ }
+ if (_atrStopPointsToday <= 0)
+ {
+ LogWarn("ENTRY BLOCKED: ATR stop could not be computed (insufficient daily history). No trade.");
+ return;
+ }
+ if (tradeType == TradeType.Buy)
+ slPrice = expectedEntry - _atrStopPointsToday * _pointSize;
+ else
+ slPrice = expectedEntry + _atrStopPointsToday * _pointSize;
  }
  else
  {
@@ -3398,9 +3559,14 @@ volumeInUnits = Symbol.NormalizeVolumeInUnits(volumeInUnits, RoundingMode.Down);
  _positionStates[position.Id] = state;
 
  // Phase 2: report the active stop mode once per trade.
- string stopModeStr = EnableFixedPointStop
- ? string.Format("FixedPoints({0}pt)", FixedStopPoints)
- : string.Format("OrbPercent({0}%)", StopLossOrbPercent);
+ string stopModeStr;
+ if (StopMode == StopDistanceMode.FixedPoints)
+ stopModeStr = string.Format("FixedPoints({0}pt)", FixedStopPoints);
+ else if (StopMode == StopDistanceMode.AtrMultiple)
+ stopModeStr = string.Format("Atr({0}% of {1}d = {2:F1}pt)",
+ AtrStopPercent, AtrStopDays, _atrStopPointsToday);
+ else
+ stopModeStr = string.Format("OrbPercent({0}%)", StopLossOrbPercent);
 
  Log("TRADE ENTERED: {0} {1} vol={2} entry={3} SL={4} TP={5} riskPips={6:F1} label={7} stopMode={8}",
  tradeType, SymbolName, position.VolumeInUnits, entryPriceActual, slPriceApplied, tpPriceApplied,

@@ -71,3 +71,39 @@ Enough to test.
 
 Local GER40/UK100 M5 starts 2023-07-02, so the 2022 portion of any in-sample
 run can only be verified from cTrader's own backtest, not cross-checked here.
+
+## Entry cutoff — derived, not chosen (analysis/entry_window.py)
+
+Measured on in-sample GER40 only (<= 2024-12-31): when the first close 10 points beyond
+the 09:00-09:05 range actually occurs. Timing distribution, not returns — choosing a
+cutoff from which hours were profitable would select on the thing under test.
+
+| Last entry | Breakouts captured |
+|---|---|
+| 10:00 | 84.5% |
+| 10:30 | 93.2% |
+| **11:00** | **96.6%** |
+| 11:30 | 96.6% |
+| 12:00 | 96.9% |
+| 14:00 | 99.0% |
+
+A breakout occurs on 99.7% of days; the median arrives 25 minutes after the open and the
+90th percentile by 10:15. **11:00 is the knee** — 11:30 adds nothing and 12:00 adds one day
+in 381 for an extra hour of exposure. Default set to 11:00.
+
+## Stop: ATR mode implemented
+
+`StopDistanceMode.AtrMultiple` computes the stop as AtrStopPercent% of the AtrStopDays-day
+ATR from completed daily bars, once per session, clamped to [AtrStopMinPoints,
+AtrStopMaxPoints]. Defaults 10% / 14 days, which is ~25pt against GER40's 249-point median
+ATR14 — deliberately the same starting distance as the FixedPoints default, so switching
+modes isolates the effect of letting the stop float with volatility rather than confounding
+it with a change of size.
+
+Today's daily bar is excluded: at 09:05 it holds five minutes and would drag the average
+down exactly when the stop is set.
+
+Note the prior: a volatility-scaled stop (50% of ORB) was tested across five NAS100 years
+and was materially worse (+$3,567 vs +$8,859, PF 1.19 vs 1.34), because with dollar-fixed
+risk a wider stop buys a smaller position. FixedPoints vs AtrMultiple is a real comparison
+to run, not a foregone conclusion — and it is two variants, not one.
