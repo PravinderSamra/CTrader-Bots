@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-08-31T19:19:01.905Z",
+  "generatedAt": "2026-08-31T23:30:51.462Z",
   "yields": {
-    "US10Y": 4.67,
-    "US2Y": 4.2,
-    "realYield10Y": 2.34,
-    "realYield5Y": 2.07,
-    "curve2s10s": 47,
+    "US10Y": 4.73,
+    "US2Y": 4.34,
+    "realYield10Y": 2.42,
+    "realYield5Y": 2.18,
+    "curve2s10s": 39,
     "breakeven10Y": 2.31,
-    "breakeven5Y": 2.3,
-    "forward5y5y": 2.32,
+    "breakeven5Y": 2.31,
+    "forward5y5y": 2.31,
     "dayOverDay": {
-      "US10Y": 0.01,
-      "US2Y": 0.01,
-      "realYield10Y": 0
+      "US10Y": 0.06,
+      "US2Y": 0.14,
+      "realYield10Y": 0.08
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-09-16",
     "probCut": 0,
-    "probHold": 76,
-    "probHike": 24
+    "probHold": 64,
+    "probHike": 36
   },
   "marketVolatility": {
     "GVZ": 25.17,
@@ -35,25 +35,25 @@
   },
   "etfFlows": {
     "gldTonnes": 914.1,
-    "gldWoWChange": -0.1,
-    "trend3W": "FLAT"
+    "gldWoWChange": null,
+    "trend3W": null
   },
   "snapshotPrices": {
-    "XAUUSD": 4433.52,
-    "XAGUSD": 66.204,
-    "EURUSD": 1.16163,
-    "USDJPY": 159.755,
-    "USDCHF": 0.80829,
-    "USDCNH": 6.71866,
-    "GBPUSD": 1.35479,
-    "USDCAD": 1.38554,
-    "USDSEK": 9.57535,
-    "US500": 7679.5,
-    "GER40": 26201.35,
+    "XAUUSD": 4443.515,
+    "XAGUSD": 66.47,
+    "EURUSD": 1.16159,
+    "USDJPY": 159.7985,
+    "USDCHF": 0.80849,
+    "USDCNH": 6.71793,
+    "GBPUSD": 1.35459,
+    "USDCAD": 1.38535,
+    "USDSEK": 9.58196,
+    "US500": 7693.8,
+    "GER40": 26229.05,
     "UK100": 10810.15,
-    "ADR_14day": 111.3,
-    "ADR_usedToday": 75.8,
-    "goldSilverRatio": 67
+    "ADR_14day": 108.1,
+    "ADR_usedToday": 14.1,
+    "goldSilverRatio": 66.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.8107,
@@ -69,13 +69,19 @@
       "headline": "Mortgage rates surge to the highest since June 2025 as new Middle East attacks push oil prices up",
       "source": "CNBC",
       "publishedAt": "2026-08-31T17:56:01.000Z",
-      "hoursAgo": 1.4
+      "hoursAgo": 5.6
+    },
+    {
+      "headline": "Yields rise, stocks ease, with oil gaining as US and Iran resume military attacks - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-08-31T00:38:00.000Z",
+      "hoursAgo": 22.9
     },
     {
       "headline": "Bessent expects new US secondary sanctions weekly, aiming to increase pressure on Iran - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-30T23:52:00.000Z",
-      "hoursAgo": 19.4
+      "hoursAgo": 23.6
     }
   ],
   "briefing": null
