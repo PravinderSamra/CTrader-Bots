@@ -21,7 +21,8 @@ START = datetime(2023, 7, 1, tzinfo=timezone.utc)   # ~3 years
 WINDOW_H = 8
 
 # plausible display-price ranges for divisor auto-detection
-RANGES = {"US30": (25000, 60000), "NAS100": (8000, 35000), "US500": (3000, 12000)}
+RANGES = {"US30": (25000, 60000), "NAS100": (8000, 35000), "US500": (3000, 12000),
+          "GER40": (12000, 40000), "UK100": (6000, 15000)}
 
 
 def detect_div(name, raw):
@@ -125,12 +126,16 @@ def download_m5(name, sym_id):
 
 
 def download_d1(name, sym_id, div):
-    """Daily bars back to START (few calls; 100/call ~ up to 100 days per window)."""
+    """Daily bars back to START.
+
+    The server rejects any range wider than 720h, so page in 30-day windows —
+    a 95-day window silently returned nothing on every call but the last.
+    """
     path = os.path.join(ROOT, "data", name, f"{name.lower()}_d1.csv")
     rows = load_existing(path)
     to = datetime.now(timezone.utc)
     while to > START:
-        frm = to - timedelta(days=95)
+        frm = to - timedelta(days=29)
         if frm < START:
             frm = START
         bars = cc.get_trendbars(sym_id, "D_1", iso(frm), iso(to))

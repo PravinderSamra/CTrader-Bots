@@ -1,0 +1,12 @@
+{
+  "instrument": "GER40",
+  "symbol_id": 200,
+  "period_primary": "M_5",
+  "price_divisor": 100000,
+  "m5_bars": 198996,
+  "coverage_first_utc": "2023-07-02 22:05:00",
+  "coverage_last_utc": "2026-08-20 14:05:00",
+  "source": "cTrader MCP (Pepperstone UK GBP spread-bet demo)",
+  "volume_note": "tick volume (price-update count), not real contract volume",
+  "downloaded_at": "2026-08-20T17:17:36.550056+00:00"
+}
