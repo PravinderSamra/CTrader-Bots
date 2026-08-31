@@ -2463,12 +2463,25 @@ namespace cAlgo.Robots
  {
  if (_atrBars == null || _atrBars.Count < 2) return 0;
 
- // Completed daily bars strictly before today. The last bar is today's forming one
- // whenever the session has started, so walk back from the end and drop any bar
- // dated on or after the current session date.
- int lastCompleted = _atrBars.Count - 1;
- while (lastCompleted >= 0 && _atrBars.OpenTimes[lastCompleted].Date >= sessionDate.Date)
- lastCompleted--;
+ // Completed daily bars only.
+ //
+ // Do NOT compare OpenTimes[i].Date against sessionDate: this broker stamps a daily
+ // bar with the PREVIOUS calendar day, opening at 21:00 or 22:00 UTC (verified across
+ // 797 GER40 D1 bars — 540 at 21:00, 257 at 22:00, the split being European DST).
+ // Wednesday's bar is therefore dated Tuesday, and a date comparison would admit
+ // today's half-formed bar as completed — the very thing this method excludes, since
+ // at 09:05 it holds five minutes of range and would drag the ATR down exactly when
+ // the stop is set.
+ //
+ // A bar is complete once a full day has elapsed from its open by the time today's
+ // session starts. That holds for any open-time convention (21:00, 22:00, midnight)
+ // and across weekends: Friday's bar opens Thursday 21:00, +1d = Friday 21:00, which
+ // is still before Monday's session open, so it is correctly included.
+ int lastCompleted = -1;
+ for (int i = _atrBars.Count - 1; i >= 0; i--)
+ {
+ if (_atrBars.OpenTimes[i].AddDays(1) <= _orbStartUtcToday) { lastCompleted = i; break; }
+ }
  if (lastCompleted < 1) return 0;
 
  int need = AtrStopDays;
@@ -2492,8 +2505,12 @@ namespace cAlgo.Robots
  double stopPoints = (AtrStopPercent / 100.0) * atrPrice / _pointSize;
 
  double clamped = Math.Min(Math.Max(stopPoints, AtrStopMinPoints), AtrStopMaxPoints);
- Log("ATR_STOP atrDays={0} used={1} atr={2:F1}pts pct={3:F1}% -> stop={4:F1}pts{5}",
- AtrStopDays, used, atrPrice / _pointSize, AtrStopPercent, clamped,
+ // Logs the window actually used so the completed-bar logic is verifiable from the
+ // log rather than taken on trust: lastBar must be the PREVIOUS session, never today.
+ Log("ATR_STOP atrDays={0} used={1} window={2:yyyy-MM-dd}..{3:yyyy-MM-dd} atr={4:F1}pts "
+ + "pct={5:F1}% -> stop={6:F1}pts{7}",
+ AtrStopDays, used, _atrBars.OpenTimes[first], _atrBars.OpenTimes[lastCompleted],
+ atrPrice / _pointSize, AtrStopPercent, clamped,
  (Math.Abs(clamped - stopPoints) > 1e-9)
  ? string.Format(" (CLAMPED from {0:F1})", stopPoints) : "");
  return clamped;
