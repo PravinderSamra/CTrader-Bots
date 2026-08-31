@@ -1,8 +1,39 @@
 // =============================================================================
-// ORB Volume Breakout cBot — v2.0 (Premarket Range + Volume Breakout, two-zone session)
+// DAX RVOL Breakout cBot — GER40 opening-range breakout at the Frankfurt cash open
 // Single compilable .cs file for cTrader Automate
 // -----------------------------------------------------------------------------
-// v2.0 change (this file): the session now resolves TWO timezones instead of one.
+// Forked from ORB_Volume_Breakout_Bot_v2.cs. That file stays untouched: it is the
+// NAS100 bot currently trading live, and nothing here should require rebuilding it.
+//
+// WHAT THIS BOT IS FOR
+// The two bots already running (US500 15m ORB, NAS100 volume breakout) both trade
+// the New York open and correlate at +0.50. Their combined drawdown is 18.1R against
+// the 18.6R they would produce if they were literally the same bot, so a third New
+// York index bot would add risk and no diversification. Measured correlation of the
+// GER40 Frankfurt open against the US500 New York bot is -0.04, and both lose together
+// on 32% of days — exactly what independence predicts. Decorrelation is the point of
+// this bot, not extra return.
+//
+// WHAT CHANGED FROM THE PARENT
+//   1. Class DaxRvolBreakoutBot, label prefix "DAXR" — runs side by side with the
+//      parent without label or history collisions.
+//   2. VolumeFilterMode selects between the parent's trailing-bars volume filter and
+//      a new time-of-day-normalised one (see the RVOL FILTER section below). The
+//      trailing filter cannot work at an opening range, because the bars preceding
+//      the breakout are pre-auction: on GER40 the median opening bar is 3.77x the
+//      preceding 20 minutes against the NAS's 1.78x, so a 1.2 threshold admits 100%
+//      of days. Default here is RelativeToTypical.
+//   3. Defaults are the DAX strategy, not the parent's London/New York one:
+//      09:00-09:05 Europe/Berlin range, first entry 09:05, last entry 12:00, force
+//      close 17:30, 10-point entry offset, 25-point stop (10% of GER40's 249-point
+//      median 14-day ATR), 3R target, one trade per day, RVOL threshold 1.1.
+//
+// UNTESTED. No parameter here has been validated out-of-sample on GER40. The plan in
+// analysis/TEST_PLAN.md is to tune on 2022-2024 and leave 2025-2026 untouched; every
+// variant tried counts toward the multiple-testing correction.
+//
+// -----------------------------------------------------------------------------
+// Inherited from v2.0: the session resolves TWO timezones instead of one.
 // The range START is anchored in RangeTimeZoneParam (London), while the range END,
 // trading start, kill switch and close are anchored in ExecutionTimeZoneParam
 // (New York). A London range feeding a New York open cannot share one clock: the
@@ -218,36 +249,36 @@ namespace cAlgo.Robots
  // weeks a year" special case - 09:30 New York is simply always the bell.
 
  // ----- Session 1: the range window -----
- [Parameter("Range Time Zone", Group = "Session 1 - Range Window", DefaultValue = SessionTimeZoneEnum.EuropeLondon)]
+ [Parameter("Range Time Zone", Group = "Session 1 - Range Window", DefaultValue = SessionTimeZoneEnum.EuropeBerlin)]
  public SessionTimeZoneEnum RangeTimeZoneParam { get; set; }
 
- [Parameter("Range Start (this zone)", Group = "Session 1 - Range Window", DefaultValue = "08:00:00")]
+ [Parameter("Range Start (this zone)", Group = "Session 1 - Range Window", DefaultValue = "09:00:00")]
  public string RangeStartTimeUtcStr { get; set; }
 
  // ----- Session 2: the trading window -----
- [Parameter("Trading Time Zone", Group = "Session 2 - Trading Window", DefaultValue = SessionTimeZoneEnum.AmericaNewYork)]
+ [Parameter("Trading Time Zone", Group = "Session 2 - Trading Window", DefaultValue = SessionTimeZoneEnum.EuropeBerlin)]
  public SessionTimeZoneEnum ExecutionTimeZoneParam { get; set; }
 
- [Parameter("Range End / Market Open", Group = "Session 2 - Trading Window", DefaultValue = "09:30:00")]
+ [Parameter("Range End / Market Open", Group = "Session 2 - Trading Window", DefaultValue = "09:05:00")]
  public string RangeEndTimeUtcStr { get; set; }
 
- [Parameter("First Entry Time", Group = "Session 2 - Trading Window", DefaultValue = "09:31:00")]
+ [Parameter("First Entry Time", Group = "Session 2 - Trading Window", DefaultValue = "09:05:00")]
  public string TradingStartTimeUtcStr { get; set; }
 
- [Parameter("Enable Last Entry Cutoff", Group = "Session 2 - Trading Window", DefaultValue = false)]
+ [Parameter("Enable Last Entry Cutoff", Group = "Session 2 - Trading Window", DefaultValue = true)]
  public bool EnableKillSwitch { get; set; }
 
  // No NEW entries after this. An open trade is left alone - it runs to its stop
  // or target unless the force-close below is enabled and reached.
- [Parameter("Last Entry Time", Group = "Session 2 - Trading Window", DefaultValue = "23:59:00")]
+ [Parameter("Last Entry Time", Group = "Session 2 - Trading Window", DefaultValue = "12:00:00")]
  public string KillSwitchTimeUtcStr { get; set; }
 
  // NOTE: This setting USED to close positions at the same Last Entry Time.
  // It now enables a *separate* force-close time (see parameter below).
- [Parameter("Enable Force Close", Group = "Session 2 - Trading Window", DefaultValue = false)]
+ [Parameter("Enable Force Close", Group = "Session 2 - Trading Window", DefaultValue = true)]
  public bool ClosePositionsAtKillSwitch { get; set; }
 
- [Parameter("Force Close Time", Group = "Session 2 - Trading Window", DefaultValue = "23:59:00")]
+ [Parameter("Force Close Time", Group = "Session 2 - Trading Window", DefaultValue = "17:30:00")]
  public string ClosePositionsTimeUtcStr { get; set; }
 
  // ----- Session 3: legacy escape hatch -----
@@ -361,7 +392,7 @@ namespace cAlgo.Robots
  // ----- Relative Volume (RVOL) filter -----
  // Only consulted when Volume Filter Mode = RelativeToTypical. Default keeps this file
  // behaviourally identical to ORB_Volume_Breakout_Bot_v2 until deliberately switched.
- [Parameter("Volume Filter Mode", Group = "Volume Filter", DefaultValue = VolumeFilterMode.TrailingBars)]
+ [Parameter("Volume Filter Mode", Group = "Volume Filter", DefaultValue = VolumeFilterMode.RelativeToTypical)]
  public VolumeFilterMode VolumeMode { get; set; }
 
  [Parameter("RVOL Threshold", Group = "Volume Filter", DefaultValue = 1.1, MinValue = 0.1)]
@@ -466,7 +497,7 @@ namespace cAlgo.Robots
 
  // Used when Stop Type = Yes. Research stops were FIXED POINTS from entry
  // (NAS100 40pt / US30 75pt): slPrice = expectedEntry -/+ FixedStopPoints.
- [Parameter("...if Yes: Fixed Stop Points", Group = "Stops & Targets", DefaultValue = 40, MinValue = 0.1)]
+ [Parameter("...if Yes: Fixed Stop Points", Group = "Stops & Targets", DefaultValue = 25, MinValue = 0.1)]
  public double FixedStopPoints { get; set; }
 
  // Used when Stop Type = No. The stop sits this far INSIDE the range from its
@@ -474,7 +505,7 @@ namespace cAlgo.Robots
  [Parameter("...if No: Stop % of ORB Range", Group = "Stops & Targets", DefaultValue = 50.0, MinValue = 0.0)]
  public double StopLossOrbPercent { get; set; }
 
- [Parameter("Take Profit R", Group = "Stops & Targets", DefaultValue = 2.0)]
+ [Parameter("Take Profit R", Group = "Stops & Targets", DefaultValue = 3.0)]
  public double TakeProfitR { get; set; }
 
  // ----- Multi Take Profit -----
