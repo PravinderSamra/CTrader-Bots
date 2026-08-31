@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T15:07:04.466Z",
+  "generatedAt": "2026-08-31T19:19:01.905Z",
   "yields": {
     "US10Y": 4.67,
     "US2Y": 4.2,
@@ -34,26 +34,26 @@
     "openInterestChange": 83175
   },
   "etfFlows": {
-    "gldTonnes": 914.2,
-    "gldWoWChange": 4.7,
-    "trend3W": "INFLOW"
+    "gldTonnes": 914.1,
+    "gldWoWChange": -0.1,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4433.075,
-    "XAGUSD": 66.2705,
-    "EURUSD": 1.16157,
-    "USDJPY": 159.735,
-    "USDCHF": 0.80801,
-    "USDCNH": 6.71858,
-    "GBPUSD": 1.35525,
-    "USDCAD": 1.38647,
-    "USDSEK": 9.58501,
-    "US500": 7679.9,
-    "GER40": 26305.35,
+    "XAUUSD": 4433.52,
+    "XAGUSD": 66.204,
+    "EURUSD": 1.16163,
+    "USDJPY": 159.755,
+    "USDCHF": 0.80829,
+    "USDCNH": 6.71866,
+    "GBPUSD": 1.35479,
+    "USDCAD": 1.38554,
+    "USDSEK": 9.57535,
+    "US500": 7679.5,
+    "GER40": 26201.35,
     "UK100": 10810.15,
     "ADR_14day": 111.3,
     "ADR_usedToday": 75.8,
-    "goldSilverRatio": 66.9
+    "goldSilverRatio": 67
   },
   "dollarLiquidity": {
     "stlfsi": -0.8107,
@@ -66,22 +66,16 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Mortgage rates surge to the highest since June 2025 as new Middle East attacks push oil prices up",
+      "source": "CNBC",
+      "publishedAt": "2026-08-31T17:56:01.000Z",
+      "hoursAgo": 1.4
+    },
+    {
       "headline": "Bessent expects new US secondary sanctions weekly, aiming to increase pressure on Iran - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-08-30T23:52:00.000Z",
-      "hoursAgo": 15.2
-    },
-    {
-      "headline": "Trump criticizes NBC over election comment as Treasury denies some NYT, WSJ and Bloomberg reporters G20 credentials",
-      "source": "CNBC",
-      "publishedAt": "2026-08-30T16:55:14.000Z",
-      "hoursAgo": 22.2
-    },
-    {
-      "headline": "UAE, Egyptian central banks say they are coordinating on Banque Misr after US Treasury notice - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-30T16:50:11.000Z",
-      "hoursAgo": 22.3
+      "hoursAgo": 19.4
     }
   ],
   "briefing": null
