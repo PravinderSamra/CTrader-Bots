@@ -335,6 +335,9 @@ namespace cAlgo.Robots
  // Purpose: If you intentionally start trading LATER than the ORB build window (e.g., build ORB 09:00-09:15
  // but only allow entries from 10:20), this can optionally join a move that is already outside the ORB
  // thresholds at/after TradingStart.
+  // Keep this OFF for this bot. TryCatchUpEntry applies the trend filter but NOT the
+ // volume filter, so a catch-up entry bypasses the RVOL check entirely — the one
+ // thing this fork exists to apply. Do not enable it without gating it on RVOL.
  [Parameter("Enable Catch-Up Entry", Group = "Catch-Up Entry", DefaultValue = false)]
  public bool EnableCatchUpEntry { get; set; }
 

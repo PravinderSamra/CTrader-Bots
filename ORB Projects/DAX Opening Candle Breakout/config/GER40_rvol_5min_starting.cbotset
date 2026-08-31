@@ -24,7 +24,7 @@
     "EnablePostLockConfirmReplay": false,
     "PostLockReplayConfirmBars": 1,
     "PostLockReplayMaxDelayMinutes": 30,
-    "EnableCatchUpEntry": true,
+    "EnableCatchUpEntry": false,
     "CatchUpRequiresConfirmationBars": false,
     "CatchUpMaxDistanceBeyondThresholdPips": 0.0,
     "EntryOffsetPipsManual": 10.0,
