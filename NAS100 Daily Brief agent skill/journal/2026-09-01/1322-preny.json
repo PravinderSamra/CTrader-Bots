@@ -1,0 +1,249 @@
+{
+  "schema": 1,
+  "scan_utc": "2026-09-01T13:22:45+00:00",
+  "scan_et": "2026-09-01 09:22 ET (Tue)",
+  "trading_day": "2026-09-01",
+  "session_window": "PRE_NY",
+  "is_trading_day": true,
+  "prediction": {
+    "price_at_scan": 29055.5,
+    "bias_score": -8,
+    "bias_label": "BEARISH",
+    "strategy": "STRATEGY 2 \u2014 CISD -> HH/HL -> fib OTE continuation. Below the flip in negative gamma: dealers amplify, sweeps run rather than fail. Strategy-1 fades have a materially lower hit rate here \u2014 only take them at the far walls.",
+    "event_gate": "STAND ASIDE \u2014 ISM Manufacturing PMI in 0.6h. No entries until 30min after the print; then use the post-print 30-min range H/L as the day's sweep levels.",
+    "expected_direction": -1,
+    "gamma_flip": 29575.6,
+    "expiry_shape": "COHERENT_SHORT",
+    "fuel_state": "EXHAUSTED",
+    "remaining_budget": 0.0,
+    "adr14": 384.3,
+    "adr_used_pct": 126.2,
+    "levels": [
+      {
+        "price": 29320.5,
+        "name": "STRUCTURAL CALL WALL \u25cf\u25cf\u25cf\u25cf\u25cf 1.39bn",
+        "kind": "structural",
+        "dist": 265.0,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 29020.5,
+        "name": "STRUCTURAL PUT WALL \u25cf\u25cf\u25cf\u25cb\u25cb 0.83bn",
+        "kind": "structural",
+        "dist": -35.0,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      }
+    ]
+  },
+  "inputs": {
+    "bias_components": [
+      {
+        "component": "gamma",
+        "points": -3,
+        "why": "below flip 29575.6 by 520.1pts \u2014 SHORT gamma, dealers amplify: downside accelerates, rallies unstable"
+      },
+      {
+        "component": "gamma",
+        "points": -2,
+        "why": "week net GEX -5.496 $bn/1% -> expansion likely"
+      },
+      {
+        "component": "gamma",
+        "points": 0,
+        "why": "price mid-band (28620.5-29520.5), 48% up the range"
+      },
+      {
+        "component": "vol",
+        "points": 0,
+        "why": "VXN 20.18 (-0.3%) \u2014 stable"
+      },
+      {
+        "component": "vol",
+        "points": 1,
+        "why": "VIX9D/VIX 0.772 contango \u2014 calm, mean-reversion favoured, mild upward drift"
+      },
+      {
+        "component": "vol",
+        "points": 0,
+        "why": "VXN/VIX 1.26 \u2014 normal tech premium"
+      },
+      {
+        "component": "vol",
+        "points": 0,
+        "why": "VVIX 86.29 \u2014 no tail-hedge bid"
+      },
+      {
+        "component": "rates",
+        "points": -1,
+        "why": "US10y 4.782 (+0.50%) \u2014 yields up, multiple compression, BEARISH tech"
+      },
+      {
+        "component": "rates",
+        "points": 0,
+        "why": "DXY 99.632 (+0.20%) \u2014 dollar flat"
+      },
+      {
+        "component": "macro",
+        "points": -3,
+        "why": "**Real yield, 10y (DFII10)** \u2014 what lenders earn after inflation \u2014 is 2.42%, up 8bp today and 2bp over 5 days. Rising = tech gets hit hardest, because tech is valued on profits years away and those are worth less when rates rise."
+      },
+      {
+        "component": "macro",
+        "points": -1,
+        "why": "**10y nominal yield (DGS10)** moved 6bp up (2026-08-27 to 2026-08-28). That was driven by real rates \u2014 the harsher kind for tech, and an immediate headwind."
+      },
+      {
+        "component": "macro",
+        "points": 2,
+        "why": "**High-yield credit spread (HY OAS)** \u2014 the extra interest demanded to lend to riskier companies is 2.6% (-10bp over 5 days). Low and steady: the bond market is relaxed about risk, which gives stocks permission to rise."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Financial conditions (NFCI)** \u2014 how easy it is to borrow money across the economy \u2014 is EASIER than normal (-0.566). Cheap, available money is a background tailwind for stocks."
+      },
+      {
+        "component": "macro",
+        "points": -1,
+        "why": "**Fed balance sheet (WALCL) / reverse repo (RRP)** \u2014 cash in the financial system. The Fed is holding $6.73tn of assets, shrinking by $14.8bn this week, and the spare-cash buffer is down to $6.726bn. The Fed is quietly pulling money out of the system \u2014 a slow, persistent drag on stocks, not a day-trade signal."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Yield curve (10y\u20132y)** \u2014 long vs short bond yields. The 10-year pays +0.41% more than the 2-year. Barely moved."
+      },
+      {
+        "component": "breadth",
+        "points": 0,
+        "why": "mega-cap avg -0.21% (1/3 up): NVDA +1.49%, MSFT -1.22%, AAPL -0.89%"
+      },
+      {
+        "component": "breadth",
+        "points": 0,
+        "why": "NDX -0.62% vs ES -0.72% \u2014 in line"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "ADR14 384.3, 126.2% used vs ~50% normal by 09:22 ET -> fuel_ratio 2.52 (burning hot) [EXHAUSTED]"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "fuel is short \u2014 this dampens CONVICTION in any continuation call, it does not change direction"
+      },
+      {
+        "component": "structure",
+        "points": -1,
+        "why": "price below PD mid 29356.7 (PDH 29489.5 / PDL 29223.8)"
+      },
+      {
+        "component": "structure",
+        "points": 0,
+        "why": "price inside the prior-week range (28872.9-29748.3)"
+      },
+      {
+        "component": "structure",
+        "points": 0,
+        "why": "in-reach unmitigated pools: 0 above / 0 below \u2014 draw balanced"
+      },
+      {
+        "component": "news",
+        "points": 1,
+        "why": "6 auto-scored headline(s) (3 bull / 3 bear) -> MILDLY BULLISH; 47 more need reading in context (not counted here)"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [cpi_hot] Fed\u2019s Preferred Inflation Gauge Remains Above Target Range - WSJ"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [cpi_cool] Fed Governor Barr says he'll support rate hike if inflation doesn't ease"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [cpi_cool] Fed Governor Barr says he'll support rate hike if inflation doesn't ease - CNBC"
+      },
+      {
+        "component": "events",
+        "points": 0,
+        "why": "AVGO earnings 2026-09-02 time-after-hours (cons $2.83) \u2014 sector-relevant"
+      }
+    ],
+    "fuel": {
+      "adr14": 384.3,
+      "today_range": 485.0,
+      "adr_used_pct": 126.2,
+      "remaining_budget": 0.0,
+      "expansion_state": "EXHAUSTED",
+      "volume_relative": 1.02,
+      "volume_state": "normal"
+    },
+    "gamma": {
+      "near_expiry_0_2dte": -3.413,
+      "this_week": -5.496,
+      "full_45dte": -7.991
+    },
+    "call_wall": 29520.5,
+    "put_wall": 28620.5,
+    "max_pain": 29520.5,
+    "vol": {
+      "vxn": 20.18,
+      "vix": 15.98,
+      "vix9d_over_vix": 0.772
+    },
+    "rates": {
+      "us10y": 4.782,
+      "dxy": 99.632
+    },
+    "news": {
+      "raw_score": 1.76,
+      "bias_points": 1,
+      "label": "MILDLY BULLISH",
+      "scored_high_confidence": 6,
+      "needs_model_judgement": 47
+    },
+    "events_24h": [
+      {
+        "utc": "2026-09-01T14:00:00+00:00",
+        "impact": "High",
+        "title": "ISM Manufacturing PMI",
+        "forecast": "55.2",
+        "previous": "55.6",
+        "hours_away": 0.6
+      },
+      {
+        "utc": "2026-09-01T14:00:00+00:00",
+        "impact": "Medium",
+        "title": "ISM Manufacturing Prices",
+        "forecast": "70.5",
+        "previous": "71.1",
+        "hours_away": 0.6
+      },
+      {
+        "utc": "2026-09-01T14:00:00+00:00",
+        "impact": "Medium",
+        "title": "JOLTS Job Openings",
+        "forecast": "7.33M",
+        "previous": "7.36M",
+        "hours_away": 0.6
+      },
+      {
+        "utc": "2026-09-02T12:15:00+00:00",
+        "impact": "Medium",
+        "title": "ADP Non-Farm Employment Change",
+        "forecast": "48K",
+        "previous": "44K",
+        "hours_away": 22.9
+      }
+    ]
+  },
+  "outcome": null
+}

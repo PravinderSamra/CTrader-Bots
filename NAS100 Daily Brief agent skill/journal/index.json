@@ -1,6 +1,6 @@
 {
-  "updated": "2026-08-31T13:28:35+00:00",
-  "count": 33,
+  "updated": "2026-09-01T13:22:45+00:00",
+  "count": 34,
   "scans": [
     "2026-08-23/1403-closed.json",
     "2026-08-23/1424-closed.json",
@@ -34,7 +34,8 @@
     "2026-08-27/1358-nyopen.json",
     "2026-08-28/1314-preny.json",
     "2026-08-28/2233-overnight.json",
-    "2026-08-31/1328-preny.json"
+    "2026-08-31/1328-preny.json",
+    "2026-09-01/1322-preny.json"
   ],
-  "latest": "2026-08-31/1328-preny.json"
+  "latest": "2026-09-01/1322-preny.json"
 }
