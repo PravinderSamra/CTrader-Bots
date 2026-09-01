@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-09-01T19:01:28.655Z",
+  "generatedAt": "2026-09-01T22:12:22.929Z",
   "yields": {
-    "US10Y": 4.73,
+    "US10Y": 4.75,
     "US2Y": 4.34,
-    "realYield10Y": 2.42,
+    "realYield10Y": 2.44,
     "realYield5Y": 2.18,
-    "curve2s10s": 39,
-    "breakeven10Y": 2.31,
-    "breakeven5Y": 2.31,
-    "forward5y5y": null,
+    "curve2s10s": 41,
+    "breakeven10Y": 2.35,
+    "breakeven5Y": 2.37,
+    "forward5y5y": 2.33,
     "dayOverDay": {
-      "US10Y": 0.06,
-      "US2Y": 0.14,
-      "realYield10Y": 0.08
+      "US10Y": 0.02,
+      "US2Y": 0,
+      "realYield10Y": 0.02
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-09-16",
     "probCut": 0,
-    "probHold": 64,
-    "probHike": 36
+    "probHold": 60,
+    "probHike": 40
   },
   "marketVolatility": {
     "GVZ": 24.4,
@@ -34,26 +34,26 @@
     "openInterestChange": 83175
   },
   "etfFlows": {
-    "gldTonnes": 935.6,
-    "gldWoWChange": 6.8,
+    "gldTonnes": 936.2,
+    "gldWoWChange": 0.6,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4331.775,
-    "XAGUSD": 64.1945,
-    "EURUSD": 1.15907,
-    "USDJPY": 160.204,
-    "USDCHF": 0.81173,
-    "USDCNH": 6.72259,
-    "GBPUSD": 1.35138,
-    "USDCAD": 1.38931,
-    "USDSEK": 9.61804,
-    "US500": 7625.9,
-    "GER40": 25851.05,
-    "UK100": 10745.25,
-    "ADR_14day": 108.1,
-    "ADR_usedToday": 135.4,
-    "goldSilverRatio": 67.5
+    "XAUUSD": 4329.065,
+    "XAGUSD": 64.0725,
+    "EURUSD": 1.15951,
+    "USDJPY": 160.167,
+    "USDCHF": 0.81149,
+    "USDCNH": 6.72212,
+    "GBPUSD": 1.35179,
+    "USDCAD": 1.38966,
+    "USDSEK": 9.61665,
+    "US500": 7633.9,
+    "GER40": 25845.05,
+    "UK100": 10748.15,
+    "ADR_14day": 110.6,
+    "ADR_usedToday": 6.1,
+    "goldSilverRatio": 67.6
   },
   "dollarLiquidity": {
     "stlfsi": -0.8107,
@@ -69,7 +69,7 @@
       "headline": "10-year yield hits highest since January 2025 as Middle East tensions return to focus",
       "source": "CNBC",
       "publishedAt": "2026-09-01T10:47:52.000Z",
-      "hoursAgo": 8.2
+      "hoursAgo": 11.4
     }
   ],
   "briefing": null

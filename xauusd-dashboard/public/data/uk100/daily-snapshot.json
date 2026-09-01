@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-09-01T19:01:45.338Z",
+  "generatedAt": "2026-09-01T22:12:27.556Z",
   "prices": {
-    "UK100": 10744.75,
-    "GBPUSD": 1.35129,
-    "GBPEUR": 1.16595,
-    "US500": 7626,
-    "NAS100": 29033.05,
-    "BRENT": 96.763,
-    "COPPER": 6.5224,
-    "VIX": 16.445,
-    "USDX": 99.717,
-    "XAUUSD": 4331.215,
-    "UK100_dayPct": -0.6
+    "UK100": 10748.15,
+    "GBPUSD": 1.35178,
+    "GBPEUR": 1.1658,
+    "US500": 7633.7,
+    "NAS100": 29065.15,
+    "BRENT": 96.828,
+    "COPPER": 6.5392,
+    "VIX": 16.405,
+    "USDX": 99.697,
+    "XAUUSD": 4329.415,
+    "UK100_dayPct": -0.56
   },
   "fx": {
-    "gbpUsdDayPct": -0.26,
+    "gbpUsdDayPct": 0.02,
     "gbpUsd20dPercentile": 55,
     "sterlingEri": 85.8245,
     "sterlingEriDayChange": 0.06,
@@ -30,29 +30,29 @@
     "gilt10yDayBp": 1,
     "gilt20yDayBp": 1,
     "slope5s20s": 1.25,
-    "giltUst10ySpread": 0.38,
+    "giltUst10ySpread": 0.36,
     "longEndStress": false,
     "nextMpcDate": "2026-09-17",
     "daysToMpc": 16
   },
   "usLinkage": {
-    "us500DayPct": -0.85,
-    "nas100DayPct": -1.47,
-    "vix": 16.445,
+    "us500DayPct": -0.05,
+    "nas100DayPct": -0.08,
+    "vix": 16.405,
     "vixRegime": "NORMAL",
-    "us10y": 4.73,
-    "usdx": 99.717
+    "us10y": 4.75,
+    "usdx": 99.697
   },
   "commodities": {
-    "brentDayPct": 4.73,
-    "copperDayPct": -2.52,
-    "goldDayPct": -2.65,
+    "brentDayPct": 4.8,
+    "copperDayPct": 0,
+    "goldDayPct": 0.02,
     "brent20dTrend": "DOWN"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": -1.06,
-    "dax40DayPct": -1.44,
-    "eurUsdDayPct": -0.23,
+    "eurostoxx50DayPct": -1.03,
+    "dax40DayPct": -1.46,
+    "eurUsdDayPct": 0.04,
     "ftseDaxCorr20d": 0.49,
     "ftseSx5eCorr20d": 0.48,
     "tapeAgreement": "ALIGNED",
@@ -69,15 +69,15 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent +4.73%",
+      "driver": "Brent +4.8%",
       "read": "BULLISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper -2.52%",
-      "read": "BEARISH",
+      "driver": "Copper +0%",
+      "read": "NEUTRAL",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
     {
@@ -115,39 +115,39 @@
   "newsItems": [],
   "riskTone": null,
   "bias": {
-    "score": -4,
-    "label": "BEARISH",
-    "conviction": "MEDIUM",
+    "score": -1,
+    "label": "NEUTRAL",
+    "conviction": "LOW",
     "drivers": [
       {
         "name": "GBP",
         "weight": 3,
         "impact": "NEUTRAL",
-        "detail": "GBP/USD -0.26% → FTSE tailwind (sign-flipped)"
+        "detail": "GBP/USD +0.02% → FTSE headwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
-        "impact": "BEARISH",
-        "detail": "US500 -0.85% today"
+        "impact": "NEUTRAL",
+        "detail": "US500 -0.05% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 16.445 — NORMAL regime"
+        "detail": "VIX 16.405 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
         "impact": "BULLISH",
-        "detail": "Brent +4.73% (energy majors)"
+        "detail": "Brent +4.8% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
-        "impact": "BEARISH",
-        "detail": "Copper -2.52% (miners/China)"
+        "impact": "NEUTRAL",
+        "detail": "Copper +0% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -171,13 +171,13 @@
         "name": "European tape (SX5E/DAX)",
         "weight": 1,
         "impact": "BEARISH",
-        "detail": "SX5E -1.06% / DAX -1.44%"
+        "detail": "SX5E -1.03% / DAX -1.46%"
       }
     ],
     "eventSuppressed": false
   },
   "orbContext": {
-    "computedAt": "2026-09-01T19:01:45.337Z",
+    "computedAt": "2026-09-01T22:12:27.555Z",
     "mode": "CLOSED",
     "cashOpenLondon": "08:00 BST",
     "overnightHigh": 10800.2,
@@ -187,8 +187,8 @@
     "priorClose": 10809.2,
     "prevWeekHigh": 10924.6,
     "prevWeekLow": 10762.4,
-    "gapPts": -64.5,
-    "gapPct": -0.6,
+    "gapPts": -61.1,
+    "gapPct": -0.56,
     "orbHigh": 10800.2,
     "orbLow": 10738.5,
     "orbBrokenDirection": "DOWN",
@@ -221,14 +221,7 @@
         "severity": "INFO",
         "source": "TAPE",
         "rule": "R8",
-        "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.06%) — the cross-market lean is down."
-      },
-      {
-        "direction": "FAVOURS_SHORT",
-        "severity": "INFO",
-        "source": "TAPE",
-        "rule": "R9",
-        "text": "Past 13:30 with US futures -0.85% — the 14:30 US handoff argues against holding longs into the US open."
+        "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.03%) — the cross-market lean is down."
       },
       {
         "direction": "BREAKOUT_SUSPECT",

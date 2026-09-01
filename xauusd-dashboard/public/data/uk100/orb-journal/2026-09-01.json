@@ -384,6 +384,65 @@
         "verdict": "UNSCORABLE",
         "signalVerdicts": []
       }
+    },
+    {
+      "at": "2026-09-01T22:12:27.687Z",
+      "londonTime": "23:12 BST",
+      "mode": "CLOSED",
+      "price": 10748.15,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 157% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "157% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.03%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -1,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10800.2,
+        "orbLow": 10738.5,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10800.2,
+        "overnightLow": 10738.5,
+        "priorDayHigh": 10840.2,
+        "priorDayLow": 10789.3,
+        "gapPct": -0.56,
+        "adr14": 79.1,
+        "adrUsedPct": 157
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-01T22:12:30.520Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
