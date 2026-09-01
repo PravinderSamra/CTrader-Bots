@@ -1,0 +1,225 @@
+{
+  "schema": 1,
+  "scan_utc": "2026-09-01T14:42:28+00:00",
+  "scan_et": "2026-09-01 10:42 ET (Tue)",
+  "trading_day": "2026-09-01",
+  "session_window": "NY_OPEN",
+  "is_trading_day": true,
+  "prediction": {
+    "price_at_scan": 29166.0,
+    "bias_score": -8,
+    "bias_label": "BEARISH",
+    "strategy": "STRATEGY 2 \u2014 CISD -> HH/HL -> fib OTE continuation. Below the flip in negative gamma: dealers amplify, sweeps run rather than fail. Strategy-1 fades have a materially lower hit rate here \u2014 only take them at the far walls.",
+    "event_gate": null,
+    "expected_direction": -1,
+    "gamma_flip": 29346.9,
+    "expiry_shape": "COHERENT_SHORT",
+    "fuel_state": "EXHAUSTED",
+    "remaining_budget": 0.0,
+    "adr14": 384.3,
+    "adr_used_pct": 137.7,
+    "levels": [
+      {
+        "price": 29339.4,
+        "name": "STRUCTURAL CALL WALL \u25cf\u25cf\u25cf\u25cf\u25cf 1.65bn",
+        "kind": "structural",
+        "dist": 173.4,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 28789.4,
+        "name": "STRUCTURAL PUT WALL \u25cf\u25cf\u25cf\u25cf\u25cb 1.33bn",
+        "kind": "structural",
+        "dist": -376.6,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      }
+    ]
+  },
+  "inputs": {
+    "bias_components": [
+      {
+        "component": "gamma",
+        "points": -3,
+        "why": "below flip 29346.9 by 180.9pts \u2014 SHORT gamma, dealers amplify: downside accelerates, rallies unstable"
+      },
+      {
+        "component": "gamma",
+        "points": -2,
+        "why": "week net GEX -4.841 $bn/1% -> expansion likely"
+      },
+      {
+        "component": "gamma",
+        "points": 2,
+        "why": "price sits in the bottom 20% of the wall band (29139.4-29539.4) \u2014 poor risk/reward for shorts"
+      },
+      {
+        "component": "vol",
+        "points": 0,
+        "why": "VXN 20.92 (+3.7%) \u2014 stable"
+      },
+      {
+        "component": "vol",
+        "points": 1,
+        "why": "VIX9D/VIX 0.85 contango \u2014 calm, mean-reversion favoured, mild upward drift"
+      },
+      {
+        "component": "vol",
+        "points": -1,
+        "why": "VXN/VIX 1.36 \u2014 tech-specific stress priced above the broad market"
+      },
+      {
+        "component": "vol",
+        "points": 0,
+        "why": "VVIX 88.28 \u2014 no tail-hedge bid"
+      },
+      {
+        "component": "rates",
+        "points": 0,
+        "why": "US10y 4.76 (+0.04%) \u2014 yields flat"
+      },
+      {
+        "component": "rates",
+        "points": 0,
+        "why": "DXY 99.54 (+0.11%) \u2014 dollar flat"
+      },
+      {
+        "component": "macro",
+        "points": -3,
+        "why": "**Real yield, 10y (DFII10)** \u2014 what lenders earn after inflation \u2014 is 2.42%, up 8bp today and 2bp over 5 days. Rising = tech gets hit hardest, because tech is valued on profits years away and those are worth less when rates rise."
+      },
+      {
+        "component": "macro",
+        "points": -1,
+        "why": "**10y nominal yield (DGS10)** moved 6bp up (2026-08-27 to 2026-08-28). That was driven by real rates \u2014 the harsher kind for tech, and an immediate headwind."
+      },
+      {
+        "component": "macro",
+        "points": 2,
+        "why": "**High-yield credit spread (HY OAS)** \u2014 the extra interest demanded to lend to riskier companies is 2.6% (-10bp over 5 days). Low and steady: the bond market is relaxed about risk, which gives stocks permission to rise."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Financial conditions (NFCI)** \u2014 how easy it is to borrow money across the economy \u2014 is EASIER than normal (-0.566). Cheap, available money is a background tailwind for stocks."
+      },
+      {
+        "component": "macro",
+        "points": -1,
+        "why": "**Fed balance sheet (WALCL) / reverse repo (RRP)** \u2014 cash in the financial system. The Fed is holding $6.73tn of assets, shrinking by $14.8bn this week, and the spare-cash buffer is down to $6.726bn. The Fed is quietly pulling money out of the system \u2014 a slow, persistent drag on stocks, not a day-trade signal."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Yield curve (10y\u20132y)** \u2014 long vs short bond yields. The 10-year pays +0.41% more than the 2-year. Barely moved."
+      },
+      {
+        "component": "breadth",
+        "points": 0,
+        "why": "mega-cap avg -0.25% (1/4 up): NVDA -1.40%, MSFT -0.73%, AAPL +2.46%, AVGO -1.33%"
+      },
+      {
+        "component": "breadth",
+        "points": -1,
+        "why": "NDX -0.99% vs ES -0.38% \u2014 tech lagging, rotation out of tech"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "ADR14 384.3, 137.7% used vs ~66% normal by 10:42 ET -> fuel_ratio 2.09 (burning hot) [EXHAUSTED]"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "fuel is short \u2014 this dampens CONVICTION in any continuation call, it does not change direction"
+      },
+      {
+        "component": "structure",
+        "points": -1,
+        "why": "price below PD mid 29356.7 (PDH 29489.5 / PDL 29223.8)"
+      },
+      {
+        "component": "structure",
+        "points": 0,
+        "why": "price inside the prior-week range (28872.9-29748.3)"
+      },
+      {
+        "component": "structure",
+        "points": 0,
+        "why": "in-reach unmitigated pools: 0 above / 0 below \u2014 draw balanced"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "6 auto-scored headline(s) (3 bull / 3 bear) -> NEUTRAL; 43 more need reading in context (not counted here)"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [cpi_hot] Fed\u2019s Preferred Inflation Gauge Remains Above Target Range - WSJ"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [cpi_cool] Fed Governor Barr says he'll support rate hike if inflation doesn't ease"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [cpi_cool] Fed Governor Barr says he'll support rate hike if inflation doesn't ease - CNBC"
+      },
+      {
+        "component": "events",
+        "points": 0,
+        "why": "AVGO earnings 2026-09-02 time-after-hours (cons $2.83) \u2014 sector-relevant"
+      }
+    ],
+    "fuel": {
+      "adr14": 384.3,
+      "today_range": 529.3,
+      "adr_used_pct": 137.7,
+      "remaining_budget": 0.0,
+      "expansion_state": "EXHAUSTED",
+      "volume_relative": 1.06,
+      "volume_state": "normal"
+    },
+    "gamma": {
+      "near_expiry_0_2dte": -3.649,
+      "this_week": -4.841,
+      "full_45dte": -5.234
+    },
+    "call_wall": 29539.4,
+    "put_wall": 29139.4,
+    "max_pain": 29539.4,
+    "vol": {
+      "vxn": 20.92,
+      "vix": 15.41,
+      "vix9d_over_vix": 0.85
+    },
+    "rates": {
+      "us10y": 4.76,
+      "dxy": 99.54
+    },
+    "news": {
+      "raw_score": 0.5,
+      "bias_points": 0,
+      "label": "NEUTRAL",
+      "scored_high_confidence": 6,
+      "needs_model_judgement": 43
+    },
+    "events_24h": [
+      {
+        "utc": "2026-09-02T12:15:00+00:00",
+        "impact": "Medium",
+        "title": "ADP Non-Farm Employment Change",
+        "forecast": "48K",
+        "previous": "44K",
+        "hours_away": 21.5
+      }
+    ]
+  },
+  "outcome": null
+}
