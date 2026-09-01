@@ -49,6 +49,81 @@
         "adr14": 80.8,
         "adrUsedPct": 63
       },
+      "outcome": {
+        "resolvedAt": "2026-09-01T10:48:55.757Z",
+        "fwd1hPct": -0.32,
+        "fwd3hPct": -0.35,
+        "toClosePct": -0.29,
+        "maxUpPct": -0.09,
+        "maxDownPct": -0.66,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-01T10:48:52.170Z",
+      "londonTime": "11:48 BST",
+      "mode": "POST_ORB",
+      "price": 10729.35,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 148% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "148% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "STRUCTURE",
+          "rule": "R3",
+          "text": "ORB break DOWN is aligned with the BEARISH macro bias (-6) — continuation has the backdrop behind it."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.5%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -6,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10800.2,
+        "orbLow": 10738.5,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10800.2,
+        "overnightLow": 10738.5,
+        "priorDayHigh": 10840.2,
+        "priorDayLow": 10789.3,
+        "gapPct": -0.74,
+        "adr14": 79.1,
+        "adrUsedPct": 148
+      },
       "outcome": null
     }
   ]

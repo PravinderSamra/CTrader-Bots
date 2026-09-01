@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T23:30:51.462Z",
+  "generatedAt": "2026-09-01T10:48:46.035Z",
   "yields": {
     "US10Y": 4.73,
     "US2Y": 4.34,
@@ -34,26 +34,26 @@
     "openInterestChange": 83175
   },
   "etfFlows": {
-    "gldTonnes": 914.1,
-    "gldWoWChange": null,
-    "trend3W": null
+    "gldTonnes": 925.5,
+    "gldWoWChange": 11.4,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4443.515,
-    "XAGUSD": 66.47,
-    "EURUSD": 1.16159,
-    "USDJPY": 159.7985,
-    "USDCHF": 0.80849,
-    "USDCNH": 6.71793,
-    "GBPUSD": 1.35459,
-    "USDCAD": 1.38535,
-    "USDSEK": 9.58196,
-    "US500": 7693.8,
-    "GER40": 26229.05,
-    "UK100": 10810.15,
+    "XAUUSD": 4379.14,
+    "XAGUSD": 64.9865,
+    "EURUSD": 1.15921,
+    "USDJPY": 160.095,
+    "USDCHF": 0.81015,
+    "USDCNH": 6.72393,
+    "GBPUSD": 1.35361,
+    "USDCAD": 1.38736,
+    "USDSEK": 9.59201,
+    "US500": 7650.9,
+    "GER40": 26002.25,
+    "UK100": 10728.65,
     "ADR_14day": 108.1,
-    "ADR_usedToday": 14.1,
-    "goldSilverRatio": 66.8
+    "ADR_usedToday": 97.2,
+    "goldSilverRatio": 67.4
   },
   "dollarLiquidity": {
     "stlfsi": -0.8107,
@@ -69,19 +69,7 @@
       "headline": "Mortgage rates surge to the highest since June 2025 as new Middle East attacks push oil prices up",
       "source": "CNBC",
       "publishedAt": "2026-08-31T17:56:01.000Z",
-      "hoursAgo": 5.6
-    },
-    {
-      "headline": "Yields rise, stocks ease, with oil gaining as US and Iran resume military attacks - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-31T00:38:00.000Z",
-      "hoursAgo": 22.9
-    },
-    {
-      "headline": "Bessent expects new US secondary sanctions weekly, aiming to increase pressure on Iran - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-08-30T23:52:00.000Z",
-      "hoursAgo": 23.6
+      "hoursAgo": 16.9
     }
   ],
   "briefing": null
