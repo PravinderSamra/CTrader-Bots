@@ -955,3 +955,50 @@ direction opposite the arrow.
 
 **No bias-engine change proposed.** One wrong call inside 4/4 is small-sample,
 not a defect.
+
+---
+
+# DEFECT D7 — `cpi_cool` scores negated inflation phrasing BACKWARDS (found 2026-09-01)
+
+Found while judging the news on the 2026-09-01 13:22 scan. **One story, four
+framings, three different verdicts.** Reproduced directly against
+`news_scorer.score_item`:
+
+| headline framing | rule | direction | weighted | confidence |
+|---|---|---|---|---|
+| "…support rate hike **if inflation doesn't ease**" | `cpi_cool` | **+1 BULL** | **+2.2** | HIGH |
+| "…Higher Rates Needed **If Inflation Doesn't Cool**" | `cpi_cool` | **+1 BULL** | **+2.2** | HIGH |
+| "…open to rate hike **if inflation does not moderate**" | `hawkish` | −1 bear | −1.8 | HIGH |
+| "**If** inflation doesn't moderate, **then** we should raise rates" | `hawkish` | none | 0.0 | NEEDS_JUDGEMENT |
+
+**The bug.** `cpi_cool` matches the tokens *ease* / *cool* and does not see the
+negation that inverts them. "Inflation doesn't cool" is hawkish; it is scored as
+though inflation cooled. The `hawkish` rule wins only when the phrasing happens
+to avoid those two words ("does not moderate"), so the verdict depends on which
+synonym a subeditor chose — not on what the story says.
+
+**This is the exact failure the pre-filter exists to prevent.** `MODAL` caught
+the fourth framing and correctly withheld it. The first two carry
+**confidence HIGH** and are auto-scored, so they never reach the judgement list
+where a human would catch them.
+
+**Compounding: the same story was counted four times.** Even correctly signed,
+one Fed speaker gets four votes because four outlets carried it. There is no
+dedupe on story identity, only on exact headline.
+
+**Effect on today's brief.** News published **MILDLY BULLISH +1.76**, worth
+**+1** to the bias, carrying **3 × +2.2 = +6.6** of spurious bullish weight from
+mis-signed duplicates of a hawkish story. Corrected, the news bucket is
+unambiguously bearish.
+
+**It did NOT change today's call** — the scan was already BEARISH −8 on gamma
+−5 and macro −3, and the correction only deepens it. **No level, regime or
+strategy output is affected.** Logged, not silently patched: this is a scoring
+surface, and the fix (negation handling in `cpi_cool`, plus story-level dedupe)
+wants its own test cases in `test_news_scorer.py` rather than an edit made
+mid-scan.
+
+**Carry forward:** the auto-scored bucket is the dangerous one. A wrong call in
+the judgement list gets read by a human; a wrong call at `confidence HIGH` goes
+straight into the bias score. Negation belongs in the pre-filter's refusal set
+alongside modals and contrast clauses.
