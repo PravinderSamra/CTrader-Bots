@@ -2227,7 +2227,20 @@ namespace cAlgo.Robots
  // the evaluation bar (evalBarIndex) is the bar checked in both cases. Post-lock replay also
  // routes through here, so volume is enforced on replayed bars too.
  double volEvalV = 0, volAvg = 0, volReq = 0, volRatio = 0;
- bool volFilterActive = EnableVolumeFilter;
+
+ // Skip the volume filter once no entry is possible today. Every condition below has
+ // a matching gate further down that logs and returns, so behaviour is unchanged — but
+ // the RVOL baseline scan is the expensive part of this method, and in a six-week GER40
+ // run 89% of evaluations (2,866 of 3,222) fell outside the entry window, mostly hours
+ // after the kill switch. That is ~9x the necessary work in a multi-year backtest, and
+ // it buries the RVOL_DIAG lines that make the filter auditable.
+ bool entryStillPossible =
+ !_noTradeToday
+ && nowUtc >= _tradingStartUtcToday
+ && !(ClosePositionsAtKillSwitch && nowUtc >= _closePositionsUtcToday)
+ && !(EnableKillSwitch && nowUtc >= _killSwitchUtcToday);
+
+ bool volFilterActive = EnableVolumeFilter && entryStillPossible;
  if (volFilterActive)
  {
  bool useRvol = (VolumeMode == VolumeFilterMode.RelativeToTypical);
