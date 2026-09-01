@@ -1002,3 +1002,148 @@ mid-scan.
 the judgement list gets read by a human; a wrong call at `confidence HIGH` goes
 straight into the bias score. Negation belongs in the pre-filter's refusal set
 alongside modals and contrast clauses.
+
+---
+
+# Observations appended 2026-09-01 (trading day 2026-08-31, graded post-roll)
+
+*Source: `review_day.py`, `track.py`, `gex_retro.py`. **6 trading days on record
+(24–28, 31 Aug).** One gradeable scan (13:28 PRE_NY); no test artefacts in the
+day. Graded a day late — 08-31 had no REVIEW.md when the 09-01 brief ran. The
+09-01 scan is held back by `track.py` and enters nothing.*
+
+Day: O 29464.7 H 29489.5 L 29223.8 C 29465.5, range 265.7, net **+0.8**.
+The 13:28 scan called BEARISH −7 and price moved **+78.5** — **WRONG**.
+Direction across 6 days is now **4 right / 5 wrong / 3 no-call**.
+
+**Both of the day's extremes were already set before the scan was published.**
+Range extension after the scan: **0.0**. The close finished 0.8 pts from the
+day's open and **3.3 pts from the published gamma flip**.
+
+## NEW — the two gamma terms are collinear by construction
+
+`gamma −3 "below flip"` and `gamma −2 "week net GEX → expansion likely"` are the
+same observation. The flip is *defined* as the spot where net GEX crosses zero,
+so the sign of net GEX and the side of the flip cannot disagree. Checked against
+**all 18 live scans on record (7 trading days): sign agreement is 18/18**, with
+no exception — (+2,+2) or (+2,0) above the flip, (−3,−2) below it.
+
+Effect: one fact carries **±5** of a score whose typical magnitude is 4–8. On
+08-31 gamma supplied −5 of the −7.
+
+If the −2 is removed, labels change on 3 of 9 graded calls (08-31 −7→−5,
+08-27 +7→+5, 08-28 +6→+4) and two calls drop below the ±3 threshold to
+no-call: **08-26 13:12 (was WRONG)** and **08-24 12:40 (was CORRECT)**. The
+direction scoreboard is a **wash**. **Proposed on grounds of construction, not
+measured accuracy** — it removes false conviction, not error. The −3 term is
+NOT proposed for change on this evidence.
+
+Second point against it: expansion has no sign. A short-gamma book forecasts a
+bigger *range*, not a lower *close*, and it is scored as bearish.
+
+## NEW — the below-flip rule is distance-invariant, and today that broke it
+
+Price was 87.4 pts below the flip at 13:28 and inside the flip's 8-pt tolerance
+by 13:30 — **the premise expired ~2 minutes after publication** and the day
+closed 3.3 above the flip. `−3` is emitted identically at 87.4, 134.2, 146.1,
+219.8, 249.1, 276.5 and **520.1** pts of distance. No proximity term, no reclaim
+term.
+
+**This is H10's defect in a heavier component.** H10 records that the
+prior-week-range rule scores a state with no reclaim condition; the flip rule
+has the same hole and more than twice the weight.
+
+Proximity vs outcome, 9 graded calls: |dist| <150 → **1 right / 3 wrong**;
+|dist| ≥200 → **3 right / 2 wrong**. Directionally consistent, far too thin.
+**Status: OBSERVING. Nothing proposed on proximity.**
+
+## NEW — the regime call was falsified, not just the arrow
+
+Unlike 28 Aug (arrow wrong, regime right, 265-pt short delivered), 08-31 failed
+at the regime layer. `COHERENT_SHORT` published *"expect range expansion and
+trends that persist… today's ADR can be exceeded."* Range extension **0.0**,
+181.6 pts of traversal inside an unchanged range, both extremes held, close
+returned to open. A pinning day — the Strategy 1 day the brief explicitly ruled
+out (*"fading is the wrong trade today"*).
+
+Short-gamma days' extension error so far: **+79.8 / −73.0 / −124.7**. Sign
+flips; n=3. **Nothing proposed.**
+
+## H1 — 6 days, sign now 5 of 6 negative, still not actionable
+
+Per-day error: +61.2 / −11.6 / −73.0 / −86.4 / −10.7 / **−124.7**. Mean
+**−40.9** (was −27.5 at 4 days). 5 of 6 negative is p≈0.22 two-sided — not a
+bias. Today's −124.7 is the entire budget, because the extremes were already in.
+
+**Tempting slice, explicitly rejected:** all three `MODERATE` days over-read
+(−73.0 / −86.4 / −124.7, mean −94.7) while `LOW_FUEL`, `EXHAUSTED` and
+`ROOM_TO_EXPAND` were near-exact (+61.2 / −11.6 / −10.7). That is 3 points out
+of 6 across 4 buckets, found after the fact. **Logged to test forward, not to
+fit.** The standing blocker is unchanged: the budget is a linear ADR remainder
+with no term for *where in the session the extremes were made*.
+**Status: OBSERVING. Nothing proposed.**
+
+## H4 — threshold MET (6 days). Verdict unchanged: not a magnet.
+
+Added: **28 Aug** flip 29,265.1 vs close 29,454.8 = **189.7 miss**.
+**31 Aug** flip 29,462.2 vs close 29,465.5 = **3.3 HIT**.
+
+Running: **2 hits / 4 misses** — 1.1, 3.3 · 189.7, 236.6, 255.2, 599.8.
+The register's verdict **"do not use the flip as a target" stands.**
+
+Curiosity logged, **not** proposed: both hits came from **below-flip** scans
+(2/2) and all four misses from **above-flip** scans (0/4). Two observations on
+the hit side is not evidence. Record the side of the flip alongside the
+close-to-flip distance from here.
+
+## H6 — 6th consecutive day, same sign, no exceptions
+
+Today by the board's `stretch` flag: non-stretch **6/7 = 0.86**, stretch
+**0/3 = 0.00**.
+
+Cumulative over 6 days, **pooled by level rather than averaged by scan** (per
+M4): non-stretch **107/131 = 0.82**, stretch **15/39 = 0.38**.
+
+- **Recommended (2nd time, unchanged):** report the two rates separately in the
+  review. No scoring change; nothing published to the trader changes.
+- **NOT proposed:** dropping stretch levels. 0.38 is a real reaction rate, and
+  today's 0/3 contains one degenerate grade (D8 below).
+
+## D8 CANDIDATE — a level that is already the day's extreme is graded as a forecast
+
+08-31 published **"Asia Low (today) 29,223.8"**. That price *was* the session
+low, made in Asia **before** the 13:28 scan.
+
+| grader | verdict | why it is meaningless |
+|---|---|---|
+| `review_day` (scan onward) | **never reached** | counted as a miss; hit rate 0.60, stretch bucket 0/3 |
+| `gex_retro` (whole day) | **BROKE**, settled above from open, worst **+0.0** | "worst excursion 0.0" is the level being the extreme by definition |
+
+Neither number carries information: the level cannot be wrong and cannot be
+right. Today it **deflated** the hit rate and **contaminated the H6 stretch
+statistic**, which is the statistic closest to being acted on.
+
+**This is a defect candidate, NOT a defect claim.** One clean instance is not
+grounds for a code change, and I have not counted how often a published level
+coincides with a pre-scan session extreme on earlier days.
+**Next step: count the instances across 24–31 Aug before anything is changed.**
+
+## Level classes — nothing is dead, nothing to stop publishing
+
+Touch rate by class over 6 days (pooled): PDH 6/6, PD close 7/7, PWL 11/11,
+NY Low 12/13, Asia High 10/11, London High 15/17, London Low 17/20, Equal highs
+8/10, Equal lows 6/8, CALL WALL 6/9, MAX PAIN 5/8, PDL 8/13, PUT WALL 6/11,
+**GAMMA FLIP 5/10**, **STRUCTURAL PUT WALL 3/10**. Lowest two are 0.30–0.50 over
+4 days each — low, not dead, and confounded by distance. **Nothing proposed.**
+
+## Not dead weight, despite scoring zero every time
+
+`fuel` scored 0 in **29/29** emissions and `events` in **17/17** across 7 days.
+Both are `add("fuel", 0, …)` / `add("events", 0, …)` — hardcoded narrative rows
+by design, not decayed signals. **Do not remove them as dead weight.** They do
+inflate the trader-facing "24 checks" count; cosmetic, not proposed.
+
+## D7 — not a factor on 08-31
+
+The single auto-scored headline (Warsh, hawkish) was correctly signed −1. The
+`cpi_cool` negation bug does not touch this scan.
