@@ -1303,3 +1303,80 @@ not accuracy.
 
 `fuel` and `events` scored 0 on both scans again — hardcoded narrative rows by
 design. **Do not remove.**
+
+---
+
+# MODEL CHANGES APPLIED 2026-09-02 (both authorised by the trader)
+
+Two changes, both proposed in reviews and both applied today. Recorded here
+because everything graded from this date carries different semantics.
+
+## C1 — the level board no longer borrows the range budget's zero
+
+**Was:** `reach = "intraday" if abs(price - px) <= budget`, and `keep()` held
+non-structural core levels only when `abs(dist) <= budget * 1.75`.
+
+**Defect:** at `remaining_budget == 0.0` both tests are unsatisfiable, so the
+board collapsed to `kind == "structural"` alone. Verified across the journal —
+the four zero-budget scans published **1, 1, 2 and 2** levels against **6–22**
+for every other live scan. The collapse landed precisely on the days the brief
+tells the trader the remaining opportunity is *inside* the range, and then
+offered only week/month walls it labels "not an intraday trigger".
+
+**Now:** both tests use `reach_span = max(budget, 0.25 * adr14)`. The budget is
+still the range forecast and is unchanged; only the markable-distance filter
+gets its own floor. A spent range does not mean price stops moving.
+
+**Published wording changed with it.** The caption said *"Today's remaining
+range budget is Npts — anything marked (stretch) is beyond that"*. Since
+`stretch` is now flagged against the span, quoting the budget would state a rule
+the board is not applying. It now reads **"Today's markable distance is Npts"**,
+with an explicit note when the floor is active.
+
+> ⚠️ **H6 MUST BE RE-BASED FROM 2026-09-02.** `stretch` no longer means the same
+> thing: on a zero-budget day, levels that would have been absent (or flagged
+> stretch) are now on the board unflagged. The 0.81 / 0.45 non-stretch vs
+> stretch split was measured under the old definition and **cannot be pooled
+> with anything graded after today.** Restart the count; do not merge the series.
+
+Also expect the **headline level hit rate to fall**, because the board now
+publishes more levels on exactly the days it used to publish almost none. That
+is a cost the reviewer stated in advance, not a regression.
+
+## C2 — the net-GEX gamma term is reported but no longer scored
+
+**Was:** `add("gamma", -2 if net < -0.2 else (+2 if net > 0.2 else 0), ...)`.
+
+**Defect:** the gamma flip *is* the spot where net GEX crosses zero, so "below
+flip" and "net GEX negative" are one fact stated twice. Across **every scan on
+record the two terms have never once carried opposite signs** (25 of 29 both
+non-zero and same-signed; the other 4 had the GEX term at zero). Scoring both
+let a single observation supply up to **±5 of a score whose typical magnitude is
+4–8** — on 08-31 gamma supplied −5 of the −7. Separately, expansion has **no
+direction**: a short-gamma book forecasts a wider *range*, not a lower *close*,
+so the sign it contributed was never earned.
+
+**Now:** scored `0`, with the regime read still published (`expansion likely` /
+`pinning likely`) and marked *"not scored: same fact as the flip term above"*.
+The information is preserved for the trader and for the shape section; only the
+double-count is gone.
+
+**Expected effect on the record: a wash.** Removing it changes labels on 3 of 9
+graded calls and drops two to no-call — one had been WRONG, one CORRECT. That
+is the point: **it removes false conviction, not error.** Anyone later reading
+an unchanged hit rate as "the fix did nothing" has misread it.
+
+Verified live on the 2026-09-02 chain (`--no-journal`): gamma printed **−3**
+where it would have printed −5, and the call read BEARISH −9.
+
+## What is NOT fixed by either change
+
+The below-flip term is still **distance-invariant with no reclaim condition** —
+an identical −3 at 107, 181, 204 and 520 points below the flip, all four
+observed this week. C2 removes the double-count; it does not make the remaining
+term proximity-aware. That is still open, and it is the same defect family as
+H10 in a component with twice the weight.
+
+`test_consistency.py`: **19 passed, 0 failed**, including three new checks — the
+board surviving a zero budget behaviourally, no floor being invented when ADR is
+also zero, and the net-GEX term scoring zero.

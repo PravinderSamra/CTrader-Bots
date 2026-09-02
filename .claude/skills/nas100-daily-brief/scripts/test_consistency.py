@@ -78,6 +78,39 @@ def offline_checks():
     check("role_reversal ignores levels price never reached",
           'b["low"] - 6 <= level <= b["high"] + 6 for b in bars' in rt)
 
+    # D6-style wiring is not enough here: assert the BEHAVIOUR, because the bug
+    # was that a zero budget made both markable-distance tests unsatisfiable and
+    # silently collapsed the board to structural walls only.
+    import brief as _BR
+
+    def _stub(budget, adr):
+        n = {"nas100": None}
+        return {"levels": {"price": 29000.0,
+                           "fuel": {"remaining_budget": budget, "adr14": adr},
+                           "levels": {"PDH": 29090.0, "PDL": 28950.0,
+                                      "PD_mid": 29020.0},
+                           "unmitigated_pools_above": [],
+                           "unmitigated_pools_below": [],
+                           "equal_highs": [], "equal_lows": [], "sessions": {}},
+                "gex": {"gamma_flip": n, "max_pain": n, "max_pain_week": n,
+                        "buckets": {"this_week": {}, "full_45dte": {}}}}
+
+    board, _far = _BR.level_board(_stub(0.0, 400.0))
+    nonstruct = [r for r in board if r["kind"] != "structural"]
+    check("level board survives a zero range budget", len(nonstruct) >= 3,
+          f"{len(nonstruct)} non-structural level(s) at budget=0, adr14=400")
+
+    board0, _f0 = _BR.level_board(_stub(0.0, 0.0))
+    check("no level floor invented when ADR is also zero", not board0,
+          f"{len(board0)} level(s) from nothing")
+
+    # the two gamma terms are the same fact; only one may carry points
+    be = open(os.path.join(HERE, "bias_engine.py")).read()
+    net_block = be.split("week net GEX")[0].rsplit("if net is not None:", 1)[-1]
+    check("net-GEX gamma term is reported but not scored",
+          'add("gamma", 0,' in net_block,
+          "it scores again — the flip term already encodes it")
+
     # the single grading rule
     check("track and gex_retro both import review_day (one grader)",
           "import journal, review_day as R" in tr and "review_day as R" in rt)

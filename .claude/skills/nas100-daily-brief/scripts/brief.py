@@ -31,7 +31,18 @@ def gather(last_scan_iso=None):
 def level_board(d):
     """Merge liquidity + gamma levels into one ranked, annotated board."""
     lv, gx, px = d["levels"], d["gex"], d["levels"]["price"]
+    # The budget is the RANGE forecast, and at EXHAUSTED it is legitimately
+    # 0.0. Using it raw as the markable-distance filter made both tests below
+    # unsatisfiable, so the board collapsed to `kind == "structural"` alone:
+    # the four zero-budget scans on record published 1, 1, 2 and 2 levels
+    # against 6-22 for every other live scan. That collapse landed exactly on
+    # the days the brief tells the trader the remaining opportunity is INSIDE
+    # the range, leaving only week/month walls it labels "not an intraday
+    # trigger". A spent range does not mean price stops moving, so the filter
+    # gets its own floor and stops borrowing the range budget's zero.
     budget = lv["fuel"]["remaining_budget"]
+    adr14 = lv["fuel"].get("adr14") or 0.0
+    reach_span = max(budget, 0.25 * adr14)
     wk = gx["buckets"].get("this_week", {})
     rows = []
 
@@ -41,7 +52,7 @@ def level_board(d):
         rows.append({"level": round(price, 1), "name": name, "kind": kind,
                      "dist": round(price - px, 1),
                      "side": "above" if price > px else "below",
-                     "reach": "intraday" if abs(price - px) <= budget else "swing",
+                     "reach": "intraday" if abs(price - px) <= reach_span else "swing",
                      "note": note})
 
     L = lv["levels"]
@@ -254,7 +265,7 @@ def level_board(d):
         if r["kind"] == "structural":
             return True
         core = any(c in r["name"] for c in CORE)
-        return core and abs(r["dist"]) <= budget * 1.75
+        return core and abs(r["dist"]) <= reach_span * 1.75
     board = [r for r in merged if keep(r)]
     far = [r for r in merged if not keep(r)]
     for r in board:
@@ -723,10 +734,17 @@ def markdown(d):
       "of the same type — how hard dealers must trade to stay hedged there. Not "
       "contract count: a far-away wall can hold 24x the contracts and still "
       "push price less, because gamma collapses with distance._\n")
+    # `stretch` is flagged against reach_span, not the raw budget — see
+    # level_board(). Quoting the budget here while flagging against the span
+    # would tell the trader a rule the board is not applying.
+    _span = max(f["remaining_budget"], 0.25 * (f.get("adr14") or 0.0))
+    _span_note = ("" if _span <= f["remaining_budget"]
+                  else " (floored at 0.25x ADR — the range budget is spent, "
+                       "but price still moves inside it)")
     A(f"_Same price = one line, so a level named twice is two reasons to "
-      f"respect it (⭐). Today's remaining range budget is "
-      f"**{f['remaining_budget']:.0f}pts** — anything marked _(stretch)_ is "
-      f"beyond that, so treat it as partials-only._\n")
+      f"respect it (⭐). Today's markable distance is **{_span:.0f}pts**"
+      f"{_span_note} — anything marked _(stretch)_ is beyond that, so treat "
+      f"it as partials-only._\n")
     A("| NAS100 | dist | level | what to expect |")
     A("|---|---|---|---|")
     for r in board:

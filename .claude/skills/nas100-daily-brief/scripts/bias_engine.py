@@ -64,9 +64,22 @@ def score(macro, levels, gex):
                 "but price is straddling the flip (<0.15%) — regime unstable, "
                 "reduce conviction")
     if net is not None:
-        add("gamma", -2 if net < -0.2 else (+2 if net > 0.2 else 0),
+        # Scored 0 deliberately — this is a narrative row, not an independent
+        # observation. The gamma flip IS the spot where net GEX crosses zero,
+        # so "below flip" and "net GEX negative" are the same fact stated
+        # twice: across every scan on record the two terms have never once
+        # carried opposite signs. Scoring both let one observation supply up
+        # to 5 points of a score whose typical magnitude is 4-8 (on 2026-08-31
+        # gamma supplied -5 of the -7). Expansion also has no direction: a
+        # short-gamma book forecasts a wider RANGE, not a lower CLOSE, so the
+        # sign it was contributing was never earned. Removing it changed
+        # labels on 3 of 9 graded calls and left the record a wash, which is
+        # the point — it removes false conviction, not error. The regime read
+        # itself is real and still published here and in the shape section.
+        add("gamma", 0,
             f"week net GEX {net} $bn/1% -> "
-            f"{'expansion likely' if net < 0 else 'pinning likely'}")
+            f"{'expansion likely' if net < 0 else 'pinning likely'} "
+            f"(regime read — not scored: same fact as the flip term above)")
 
     # walls relative to price
     cw = (wk.get("call_wall") or {}).get("nas100")
