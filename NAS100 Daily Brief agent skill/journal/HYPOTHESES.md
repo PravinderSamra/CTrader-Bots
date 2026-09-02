@@ -1147,3 +1147,159 @@ inflate the trader-facing "24 checks" count; cosmetic, not proposed.
 
 The single auto-scored headline (Warsh, hawkish) was correctly signed −1. The
 `cpi_cool` negation bug does not touch this scan.
+
+---
+
+# Observations appended 2026-09-02 (trading day 2026-09-01, graded post-roll)
+
+*Source: `review_day.py`, `track.py`, `brief.py` source. **7 trading days on
+record (24–28, 31 Aug, 1 Sep).** Two gradeable scans, no test artefacts, both
+committed by the archive flow at their own scan times. The 09-02 scan is held
+back by `track.py` and enters nothing.*
+
+Day: O 29464.6 H 29521.7 L 28954.2 C 29088.3, range **567.5 (147.7% of ADR14)**,
+net **−376.3**. 13:22 BEARISH −8 → **+24.9 WRONG**. 14:42 BEARISH −8 → **−97.9
+CORRECT**. Direction across 7 days: **5 right / 6 wrong / 3 no-call**.
+
+## NEW — the level board collapses to structural-only whenever the budget is 0
+
+`brief.py` sets `reach = "intraday" if abs(price - px) <= budget`, and `keep()`
+retains a non-structural core level only when `abs(dist) <= budget * 1.75`.
+**At `remaining_budget == 0.0` both tests are unsatisfiable.** Every session
+extreme, PDH/PDL, PWH/PWL and the gamma flip drops to the footnote; only
+`kind == "structural"` survives.
+
+Levels published by fuel state: 08-24 13:45 EXHAUSTED/0.0 → **1**; 08-25 13:04
+EXHAUSTED/12.0 → **3**; 09-01 13:22 and 14:42 EXHAUSTED/0.0 → **2** each; every
+other live scan (budget 88.7–408.7) → **6–22**. Three days, no exceptions —
+though only 08-24 and 09-01 had budget *exactly* 0.0, and the 08-25 21:56
+overnight scan (1 level) is excluded because its budget was corrupt per D1.
+
+The collapse lands precisely on the days the brief tells the trader that all the
+remaining opportunity is *inside* the range. On 09-01 the whole board was two
+structural walls that the brief itself labelled *"not an intraday trigger"*,
+while four of the six in-range gamma concentrations were traded.
+
+**PROPOSED** (publishing, not scoring; on grounds of construction, as with the
+collinear gamma terms): floor the reach filter at a fraction of ADR14, e.g.
+`max(budget, 0.25 * adr14)`. On 09-01 13:22 that would have put 29120.5,
+29070.5, 28970.5 and the running low 29036.7 on the board — all four traded.
+**Cost:** it lowers the headline hit rate by publishing more levels and it
+changes what `stretch` means, so **H6's split must be re-based from the change
+date.**
+
+## DEFECT CANDIDATE — the in-range gamma concentration table is never graded
+
+The *"Other gamma concentrations in range"* table is not written to
+`prediction.levels`, so no grader sees it. On 09-01 it went **4 of 6 touched**
+(29170.5, 29120.5, 29070.5 chopped or traded through; 28970.5 floored the day
+16.3 above the low) while the graded board went **1 of 4**. So today's
+`mean_level_hit_rate` of 0.25 was computed entirely off levels the brief told
+the trader not to trade.
+
+**One day of direct examination — NOT a proposal.** Next step: count, across
+24 Aug – 01 Sep, touches of published in-range concentrations against the graded
+board on the same scan. Sits with M4 and D8.
+
+## H2 — third instance, all three the same way. Threshold met, no change proposed.
+
+EXHAUSTED with price at a session extreme (≤0.1×ADR):
+
+| scan | spot vs running extreme | bias | outcome |
+|---|---|---|---|
+| 08-24 13:45 | at the day's low | −12 continuation | fell 30.6 more, rallied 253.8 — **fade** |
+| 08-25 13:04 | 0.4pt new high | 0 no-call | −256 into the range — **fade** |
+| 09-01 13:22 | **18.8 above the running low (0.05×ADR)** | −8 continuation | extended 82.5, reversed 275.9, closed +32.8 — **fade** |
+
+Continuation calls in this bucket: **0 right / 2 wrong**. Three days, same
+direction. **Nothing proposed**: the natural consequence is H3 (cap the score at
+extremes), and two wrong calls is not grounds to touch a scoring surface.
+09-01 14:42 is **not** in this bucket — 173.6 (0.45×ADR) off the running low.
+
+## The §2/§3 fade contradiction — 2 days, below threshold
+
+09-01 13:22 §2: *"Fading is the wrong trade today — Strategy 2 is the right
+one."* §3: *"Fading the extremes back into the range is the higher-probability
+side here, even when the gamma regime favours continuation."* §3 was right.
+Needs short gamma **and** exhausted fuel **and** price at an extreme: 08-24
+13:45 and 09-01 13:22 only — 08-25 13:04 was above the flip. **2 of 3. Nothing
+proposed.**
+
+## H7 — fourth large short-interval flip move, and the biggest by distance
+
+Flip **29575.6** at 13:22 → **29346.9** at 14:42: **−228.7 pts in 80 minutes**
+while spot rose **+110.5**. Drift **2.1× the price move**. Prior: 192pt/2min
+(08-24), 167.4pt/28min (08-25), 108.7pt overnight (08-26). The `gamma −3` term
+is also **distance-invariant** — identical at **520.1** pts below the flip today
+and at **87.4** on 08-31. **Status: OBSERVING. Nothing proposed.**
+
+## H4 — two more misses, and the below-flip curiosity is dead
+
+29575.6 vs close 29088.3 = **487.3 miss**; 29346.9 vs close = **258.6 miss**.
+Both from **below-flip** scans, which retires the 08-31 note that both hits came
+from below-flip scans. Per day: **2 hits / 5 misses**. *Do not use the flip as a
+target* stands.
+
+## H1 — 7 days, sign flips again
+
+Per-day error: +61.2 / −11.6 / −73.0 / −86.4 / −10.7 / −124.7 / **+60.4**. Mean
+**−26.4** (was −40.9 at 6 days). Today under-read on both scans (+82.5, +38.2)
+from a 0.0 budget, because the extremes were **not** in — price extended 82.5
+below the pre-scan low. That is the direct counter-case to 08-31, where a 0.0
+budget was exactly right. The standing blocker is unchanged: the budget is a
+linear ADR remainder with no term for where in the session the extremes were
+made. **Status: OBSERVING. Nothing proposed.**
+
+## H6 — 7th day. No non-stretch levels existed to measure.
+
+Every published level was `stretch`: **1/4 = 0.25**, non-stretch **n = 0**.
+Cumulative pooled by level: non-stretch **107/131 = 0.82**, stretch
+**16/43 = 0.37**. Note the interaction with the finding above — on zero-budget
+days the stretch bucket is the *only* bucket, so **the stretch statistic is
+partly an artefact of the reach filter**, not a property of distant levels.
+
+## The put wall floored the session again — 2nd consecutive day
+
+09-01 29020.5 STRUCTURAL PUT WALL: touched 13:30, travel up **110.0** vs down
+**28.1** (3.9:1), price rallied 275.9 off it. Graded *"chopped around it"*, which
+understates a bounce. Meanwhile the brief's in-range table says put-dominant
+strikes *"amplify… Not a floor."* Same on 08-31 (29263.1 PUT WALL ●●●●● floored
+a session the model said had no floors). **2 days. Logged, nothing proposed.**
+
+## D8 — a second instance, from the other direction
+
+09-01 13:22 published **29320.5 STRUCTURAL CALL WALL** with the text *"the
+ceiling for the WEEK/MONTH, not today… not an intraday trigger."* It was not
+reached (52.2 short) and was **graded a miss**. A level the brief explicitly
+says is not for today cannot be graded as a same-day forecast. D8's 08-31
+instance was a level that was already the day's extreme; this is the mirror
+case. **2 instances. Still a candidate, not a claim.**
+
+## Macro components are autocorrelated — statistics on them have an inflated n
+
+`macro −3` (real yield, DFII10) appears with **identical text and value**
+(*"2.42%, up 8bp today and 2bp over 5 days"*) on **08-25, 08-28, 09-01 and
+09-02**; `+3` on 08-26 and 08-27. DFII10 is a lagged daily FRED series, so
+consecutive days share a value. **Any accuracy claim about the macro bucket has
+an effective n far below the day count.** Recorded so no future review reads
+four repetitions of one number as four observations.
+
+## D7 — the fix makes this day's call worse, not better
+
+`news +1` on the 13:22 scan came from the `cpi_cool` negation bug: three
+mis-signed duplicates of a hawkish Barr story, **+6.6** of spurious bullish
+weight. Corrected, the bucket is bearish and the score goes **below −8** — the
+bug made a **wrong** call **less** wrong. D7 remains worth fixing as a
+correctness matter; it must not be counted as an accuracy improvement.
+
+## Gamma collinearity — now 20/20
+
+The two gamma terms agreed in sign on both 09-01 scans (−3 / −2 below the flip).
+**20/20 across all live scans.** Removing the −2 takes today's −8 to −6: still
+BEARISH, still wrong. Confirms the earlier read that the removal buys honesty,
+not accuracy.
+
+## Not dead weight
+
+`fuel` and `events` scored 0 on both scans again — hardcoded narrative rows by
+design. **Do not remove.**
