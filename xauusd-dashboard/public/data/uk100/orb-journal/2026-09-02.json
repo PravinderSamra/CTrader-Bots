@@ -49,7 +49,25 @@
         "adr14": 81.9,
         "adrUsedPct": 101
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-09-02T18:15:00.880Z",
+        "fwd1hPct": 0.33,
+        "fwd3hPct": 0.35,
+        "toClosePct": 0.12,
+        "maxUpPct": 0.51,
+        "maxDownPct": -0.19,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-09-02T12:07:35.991Z",
@@ -113,7 +131,33 @@
         "adr14": 81.9,
         "adrUsedPct": 113
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-09-02T18:15:00.994Z",
+        "fwd1hPct": 0.06,
+        "fwd3hPct": -0.17,
+        "toClosePct": -0.17,
+        "maxUpPct": 0.22,
+        "maxDownPct": -0.17,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R2",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-09-02T14:49:11.183Z",
@@ -184,7 +228,110 @@
         "adr14": 81.9,
         "adrUsedPct": 113
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-09-02T18:15:01.113Z",
+        "fwd1hPct": -0.28,
+        "fwd3hPct": null,
+        "toClosePct": -0.28,
+        "maxUpPct": -0.02,
+        "maxDownPct": -0.29,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R2",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R9",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-02T18:14:57.912Z",
+      "londonTime": "19:14 BST",
+      "mode": "CLOSED",
+      "price": 10765.05,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 113% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "113% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDH 10807.7) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.34%) — the cross-market lean is up."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures +0.42% — the 14:30 US handoff argues for holding longs into the US open."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 7,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": 10800.9,
+        "orbLow": 10754.3,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10800.9,
+        "overnightLow": 10733.4,
+        "priorDayHigh": 10807.7,
+        "priorDayLow": 10683.5,
+        "gapPct": 0.17,
+        "adr14": 81.9,
+        "adrUsedPct": 113
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-02T18:15:01.113Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
