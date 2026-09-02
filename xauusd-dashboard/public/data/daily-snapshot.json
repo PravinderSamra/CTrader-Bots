@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-01T22:12:22.929Z",
+  "generatedAt": "2026-09-02T10:13:18.221Z",
   "yields": {
     "US10Y": 4.75,
     "US2Y": 4.34,
@@ -34,25 +34,25 @@
     "openInterestChange": 83175
   },
   "etfFlows": {
-    "gldTonnes": 936.2,
-    "gldWoWChange": 0.6,
+    "gldTonnes": 941.6,
+    "gldWoWChange": 5.4,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4329.065,
-    "XAGUSD": 64.0725,
-    "EURUSD": 1.15951,
-    "USDJPY": 160.167,
-    "USDCHF": 0.81149,
-    "USDCNH": 6.72212,
-    "GBPUSD": 1.35179,
-    "USDCAD": 1.38966,
-    "USDSEK": 9.61665,
-    "US500": 7633.9,
-    "GER40": 25845.05,
-    "UK100": 10748.15,
+    "XAUUSD": 4304.265,
+    "XAGUSD": 63.6635,
+    "EURUSD": 1.15713,
+    "USDJPY": 159.882,
+    "USDCHF": 0.8154,
+    "USDCNH": 6.72386,
+    "GBPUSD": 1.34824,
+    "USDCAD": 1.39376,
+    "USDSEK": 9.66388,
+    "US500": 7613.8,
+    "GER40": 25775.85,
+    "UK100": 10728.65,
     "ADR_14day": 110.6,
-    "ADR_usedToday": 6.1,
+    "ADR_usedToday": 53.5,
     "goldSilverRatio": 67.6
   },
   "dollarLiquidity": {
@@ -69,7 +69,7 @@
       "headline": "10-year yield hits highest since January 2025 as Middle East tensions return to focus",
       "source": "CNBC",
       "publishedAt": "2026-09-01T10:47:52.000Z",
-      "hoursAgo": 11.4
+      "hoursAgo": 23.4
     }
   ],
   "briefing": null
