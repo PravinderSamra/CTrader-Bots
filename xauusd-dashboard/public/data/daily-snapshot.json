@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-09-03T10:25:06.328Z",
+  "generatedAt": "2026-09-03T12:06:37.863Z",
   "yields": {
-    "US10Y": 4.79,
+    "US10Y": null,
     "US2Y": 4.39,
     "realYield10Y": 2.44,
     "realYield5Y": 2.18,
-    "curve2s10s": 40,
+    "curve2s10s": null,
     "breakeven10Y": 2.34,
     "breakeven5Y": 2.35,
     "forward5y5y": 2.33,
     "dayOverDay": {
-      "US10Y": 0.04,
+      "US10Y": null,
       "US2Y": 0.05,
       "realYield10Y": 0
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-09-16",
-    "probCut": 0,
-    "probHold": 60,
-    "probHike": 40
+    "probCut": null,
+    "probHold": null,
+    "probHike": null
   },
   "marketVolatility": {
     "GVZ": 25.43,
@@ -34,26 +34,26 @@
     "openInterestChange": 83175
   },
   "etfFlows": {
-    "gldTonnes": 916.7,
-    "gldWoWChange": -6.9,
+    "gldTonnes": 911.2,
+    "gldWoWChange": -5.5,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4420.87,
-    "XAGUSD": 65.4515,
-    "EURUSD": 1.1602,
-    "USDJPY": 156.455,
-    "USDCHF": 0.80947,
-    "USDCNH": 6.7203,
-    "GBPUSD": 1.34929,
-    "USDCAD": 1.38101,
-    "USDSEK": 9.59207,
-    "US500": 7663.1,
-    "GER40": 25797.85,
-    "UK100": 10749.25,
+    "XAUUSD": 4447.92,
+    "XAGUSD": 65.8295,
+    "EURUSD": 1.16149,
+    "USDJPY": 156.002,
+    "USDCHF": 0.80841,
+    "USDCNH": 6.71884,
+    "GBPUSD": 1.34957,
+    "USDCAD": 1.37922,
+    "USDSEK": 9.5751,
+    "US500": 7668.9,
+    "GER40": 25869.15,
+    "UK100": 10806.05,
     "ADR_14day": 115.1,
-    "ADR_usedToday": 62.5,
-    "goldSilverRatio": 67.5
+    "ADR_usedToday": 67.8,
+    "goldSilverRatio": 67.6
   },
   "dollarLiquidity": {
     "stlfsi": -0.8526,
@@ -66,22 +66,28 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Shares, bonds rally as markets await Fed signals; yen jumps - Reuters",
+      "headline": "Stocks, bonds gain ahead of US data, Fed comments; yen rallies - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-03T02:02:00.000Z",
-      "hoursAgo": 8.4
+      "publishedAt": "2026-09-03T08:44:50.000Z",
+      "hoursAgo": 3.4
     },
     {
       "headline": "Stocks climb and US yields ease; yen jumps against dollar - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-02T22:01:50.000Z",
-      "hoursAgo": 12.4
+      "hoursAgo": 14.1
     },
     {
       "headline": "UK bond yields hit fresh 19-year high, adding to pressure on Healey - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-02T15:30:18.000Z",
-      "hoursAgo": 18.9
+      "hoursAgo": 20.6
+    },
+    {
+      "headline": "South African rand firms on softer dollar, US jobs data - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-02T14:37:06.000Z",
+      "hoursAgo": 21.5
     }
   ],
   "briefing": null
