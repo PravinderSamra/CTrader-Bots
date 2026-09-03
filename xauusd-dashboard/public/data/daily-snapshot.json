@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-03T14:49:20.870Z",
+  "generatedAt": "2026-09-03T18:15:11.859Z",
   "yields": {
     "US10Y": 4.79,
     "US2Y": 4.39,
@@ -34,26 +34,26 @@
     "openInterestChange": 83175
   },
   "etfFlows": {
-    "gldTonnes": 905.4,
-    "gldWoWChange": -5.8,
+    "gldTonnes": 903.7,
+    "gldWoWChange": -1.7,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4476.06,
-    "XAGUSD": 66.568,
-    "EURUSD": 1.16171,
-    "USDJPY": 155.6005,
-    "USDCHF": 0.80892,
-    "USDCNH": 6.71951,
-    "GBPUSD": 1.35074,
-    "USDCAD": 1.37987,
-    "USDSEK": 9.57182,
-    "US500": 7704.6,
-    "GER40": 25959.95,
-    "UK100": 10819.05,
+    "XAUUSD": 4484.905,
+    "XAGUSD": 66.9795,
+    "EURUSD": 1.16344,
+    "USDJPY": 155.4315,
+    "USDCHF": 0.80644,
+    "USDCNH": 6.71776,
+    "GBPUSD": 1.35426,
+    "USDCAD": 1.3786,
+    "USDSEK": 9.53735,
+    "US500": 7756.7,
+    "GER40": 26047.95,
+    "UK100": 10834.55,
     "ADR_14day": 115.1,
-    "ADR_usedToday": 114.8,
-    "goldSilverRatio": 67.2
+    "ADR_usedToday": 129.8,
+    "goldSilverRatio": 67
   },
   "dollarLiquidity": {
     "stlfsi": -0.8526,
@@ -66,22 +66,28 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Bond yields ease, stocks rally following Fed governor Waller comments - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-03T17:24:32.000Z",
+      "hoursAgo": 0.8
+    },
+    {
+      "headline": "US pressure on Iran starting to tell, as sanctions and blockade bite - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-03T15:04:15.000Z",
+      "hoursAgo": 3.2
+    },
+    {
       "headline": "ECB to raise rates a second time in September, but then done, say economists: Reuters poll - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-03T11:07:52.000Z",
-      "hoursAgo": 3.7
+      "hoursAgo": 7.1
     },
     {
       "headline": "Stocks climb and US yields ease; yen jumps against dollar - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-02T22:01:50.000Z",
-      "hoursAgo": 16.8
-    },
-    {
-      "headline": "UK bond yields hit fresh 19-year high, adding to pressure on Healey - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-02T15:30:18.000Z",
-      "hoursAgo": 23.3
+      "hoursAgo": 20.2
     }
   ],
   "briefing": null

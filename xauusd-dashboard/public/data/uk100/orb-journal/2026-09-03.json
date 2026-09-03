@@ -49,7 +49,25 @@
         "adr14": 84.6,
         "adrUsedPct": 49
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-09-03T18:15:21.262Z",
+        "fwd1hPct": 0.48,
+        "fwd3hPct": 0.84,
+        "toClosePct": 0.78,
+        "maxUpPct": 1.06,
+        "maxDownPct": 0.23,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R8",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          }
+        ]
+      }
     },
     {
       "at": "2026-09-03T12:06:42.612Z",
@@ -106,7 +124,33 @@
         "adr14": 84.6,
         "adrUsedPct": 94
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-09-03T18:15:21.435Z",
+        "fwd1hPct": 0.32,
+        "fwd3hPct": 0.25,
+        "toClosePct": 0.25,
+        "maxUpPct": 0.53,
+        "maxDownPct": -0.05,
+        "verdict": "RIGHT",
+        "signalVerdicts": [
+          {
+            "rule": "R1",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R4",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-09-03T14:49:25.695Z",
@@ -170,7 +214,113 @@
         "adr14": 84.6,
         "adrUsedPct": 155
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-09-03T18:15:21.614Z",
+        "fwd1hPct": 0.13,
+        "fwd3hPct": null,
+        "toClosePct": 0.13,
+        "maxUpPct": 0.17,
+        "maxDownPct": -0.1,
+        "verdict": "FLAT",
+        "signalVerdicts": [
+          {
+            "rule": "R1",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R4",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R9",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-03T18:15:17.661Z",
+      "londonTime": "19:15 BST",
+      "mode": "CLOSED",
+      "price": 10834.55,
+      "stance": "FADE_FAVOURED",
+      "stanceLine": "Fade day — the ORB break was a trap — ORB broke DOWN but price has fully reclaimed the range (back above 10765.7) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.",
+      "signals": [
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "STRONG",
+          "source": "STRUCTURE",
+          "rule": "R1",
+          "text": "ORB broke DOWN but price has fully reclaimed the range (back above 10765.7) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "155% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.27%) — the cross-market lean is up."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures +1.25% — the 14:30 US handoff argues for holding longs into the US open."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "INFO",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "US Nonfarm Payrolls prints tomorrow 13:30 BST — late-session moves today are as likely pre-event de-risking as conviction."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 4,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": 10765.7,
+        "orbLow": 10743.2,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10773,
+        "overnightLow": 10731.8,
+        "priorDayHigh": 10800.9,
+        "priorDayLow": 10708.6,
+        "gapPct": 0.65,
+        "adr14": 84.6,
+        "adrUsedPct": 155
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-03T18:15:21.614Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
