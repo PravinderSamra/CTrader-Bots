@@ -66,6 +66,29 @@ CASES = [
 ]
 
 
+# D7 (2026-09-01, fixed 2026-09-03) — one Fed story, four framings. The two
+# that matched `cpi_cool` scored +1 at HIGH confidence on an unambiguously
+# hawkish story, because the rule reads the tokens ease/cool without the
+# negation that inverts them. The Bloomberg framing additionally survived the
+# first fix on a CURLY apostrophe alone, so punctuation is normalised too.
+CASES += [
+    ("Fed Governor Barr says he'll support rate hike if inflation doesn't ease",
+     "NEEDS_JUDGEMENT", None, "D7: negated cpi_cool must not score bullish"),
+    ("Fed\u2019s Barr Says Higher Rates Needed If Inflation Doesn\u2019t Cool - Bloomberg.",
+     "NEEDS_JUDGEMENT", None, "D7: curly apostrophe must not bypass the negation guard"),
+    ("Fed\u2019s Barr: If inflation doesn\u2019t moderate, then we should raise rates",
+     "NEEDS_JUDGEMENT", None, "D7: modal + negation, read in context"),
+    ("Fed's Barr open to rate hike if inflation does not moderate - Reuters",
+     "HIGH", -1, "correctly hawkish — the fix must not break the framing that worked"),
+    ("US inflation cooled in August, CPI below forecast",
+     "HIGH", 1, "control: an un-negated cool print must still score bullish"),
+    ("US inflation surges in August, CPI above forecast",
+     "HIGH", -1, "control: an un-negated hot print must still score bearish"),
+    ("Inflation did not accelerate in August, CPI in line",
+     "NEEDS_JUDGEMENT", None, "negated cpi_hot demotes the same way"),
+]
+
+
 def main():
     fails = []
     for title, exp_conf, exp_dir, why in CASES:

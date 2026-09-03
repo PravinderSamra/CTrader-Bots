@@ -196,6 +196,26 @@ FILING_SPAM = re.compile(
 #     "Nvidia Stock MAY PLUNGE After Earnings, EVEN IF It BEATS" scored as a
 #     clean earnings beat. This one gate retires a whole class of misfire that
 #     was otherwise going to need a new regex per phrasing.
+# D7 (2026-09-01) — one Fed story, four framings, three different verdicts.
+# "…support rate hike if inflation doesn't ease" and "Higher Rates Needed If
+# Inflation Doesn't Cool" both matched `cpi_cool` at direction +1 / confidence
+# HIGH, because the rule matches the tokens ease/cool without seeing the
+# negation that inverts them. Meanwhile "does not moderate" (no ease/cool
+# token) correctly fell to `hawkish` at -1. Which verdict you got depended on
+# the synonym a subeditor chose. Those two carried 2 x +2.2 of BULLISH weight
+# on an unambiguously hawkish story, and at HIGH confidence they bypassed the
+# judgement list where a human would have caught them.
+#
+# Handled the way this file handles every other inverted reading: do NOT guess
+# the flipped sign, demote to the model. Tested against the matched span only,
+# so "inflation cooled in August" still scores and "inflation doesn't cool"
+# does not.
+NEGATOR = re.compile(
+    r"\b(?:doesn'?t|does not|do(?:n'?t| not)|didn'?t|did not|isn'?t|is not|"
+    r"aren'?t|are not|wasn'?t|was not|won'?t|will not|hasn'?t|has not|"
+    r"haven'?t|have not|fail(?:s|ed|ing)? to|refus(?:es|ed|ing) to|"
+    r"no sign of|short of|never|not)\b", re.I)
+
 MODAL = re.compile(
     r"\b(may|might|could|would|should|will likely|expected to|set to|poised to|"
     r"on track to|forecast to|predicted to|seen as|braces? for|ahead of|"
@@ -296,12 +316,24 @@ def score_item(it):
         return None
     if not RELEVANT.search(t):
         return None
-    low = t.lower()
+    # Feeds mix straight and curly punctuation for the same word, and every
+    # RULES pattern is written with straight apostrophes. Left un-normalised,
+    # "Doesn't Cool" and "Doesn’t Cool" take different paths through the
+    # scorer - which is how a curly apostrophe alone kept one framing of the
+    # D7 story scoring +2.2 BULLISH after the negation guard was added.
+    low = (t.lower().replace("’", "'").replace("‘", "'")
+                    .replace("“", '"').replace("”", '"')
+                    .replace("–", "-").replace("—", "-"))
     for name, pat, direction, mag, hl, note in RULES:
-        if not re.search(pat, low, re.I):
+        m = re.search(pat, low, re.I)
+        if not m:
             continue
 
         flags = []
+        # D7 — a negator INSIDE the matched phrase inverts the keyword's sense.
+        if NEGATOR.search(m.group(0)):
+            flags.append("negation inside the matched phrase — the keyword's "
+                         "sense is inverted; read it directly")
         # A reversal phrase inverts the plain-keyword reading. Rather than
         # guess the inverted sign, demote to the model — "climb after selloff"
         # is bullish, but "snaps slump" during a downtrend may just be a bounce.

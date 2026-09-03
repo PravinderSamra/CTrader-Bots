@@ -53,16 +53,36 @@ def score(macro, levels, gex):
     net = wk.get("net_gex_$bn_per_1pct")
     if gf is not None:
         dist_pct = (px - gf) / px * 100
+        # C3, 2026-09-03 — scored 0. Which side of the flip price sits on is a
+        # VOLATILITY statement, not a directional one: short gamma means dealers
+        # amplify whatever move is happening, so it forecasts a WIDER RANGE, not
+        # a LOWER CLOSE. Scoring it as direction was the single largest source
+        # of error in the first 8 days: gamma averaged -1.9/day and scored -5 on
+        # five days of eight, while every other component averaged within +/-0.6
+        # of zero. Gamma WAS the bias. It was also asymmetric (+2 above, -3
+        # below), so time spent below the flip made the model structurally
+        # bearish — it called bearish on 8 of 11 scans in a window where price
+        # rose on 8 of 11. The regime read is real and still published here, in
+        # the shape section, and in the strategy selection, which is where it
+        # belongs and where it has been working.
         if px > gf:
-            add("gamma", +2, f"above flip {gf} by {round(px-gf,1)}pts — long-gamma, "
-                             f"dips supported, upside grinds")
+            add("gamma", 0, f"above flip {gf} by {round(px-gf,1)}pts — long-gamma, "
+                            f"dips supported, upside grinds "
+                            f"(regime read — not scored: tells you the day's WIDTH, "
+                            f"not its direction)")
         else:
-            add("gamma", -3, f"below flip {gf} by {round(gf-px,1)}pts — SHORT gamma, "
-                             f"dealers amplify: downside accelerates, rallies unstable")
+            add("gamma", 0, f"below flip {gf} by {round(gf-px,1)}pts — SHORT gamma, "
+                            f"dealers amplify: downside accelerates, rallies unstable "
+                            f"(regime read — not scored: tells you the day's WIDTH, "
+                            f"not its direction)")
         if abs(dist_pct) < 0.15:
-            add("gamma", +1 if px > gf else +1,
+            # Also 0: this only ever existed to damp the flip term's score, and
+            # that score is now 0. It additionally carried a real bug — it read
+            # `+1 if px > gf else +1`, adding +1 on BOTH branches, so a term
+            # labelled "reduce conviction" INCREASED it above the flip (+2 -> +3).
+            add("gamma", 0,
                 "but price is straddling the flip (<0.15%) — regime unstable, "
-                "reduce conviction")
+                "treat the width read as low-confidence")
     if net is not None:
         # Scored 0 deliberately — this is a narrative row, not an independent
         # observation. The gamma flip IS the spot where net GEX crosses zero,

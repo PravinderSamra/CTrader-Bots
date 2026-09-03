@@ -1380,3 +1380,120 @@ H10 in a component with twice the weight.
 `test_consistency.py`: **19 passed, 0 failed**, including three new checks — the
 board surviving a zero budget behaviourally, no floor being invented when ADR is
 also zero, and the net-GEX term scoring zero.
+
+---
+
+# MODEL CHANGES APPLIED 2026-09-03 (authorised by the trader)
+
+## C3 — the gamma flip term is reported but no longer scored
+
+**Was:** `+2` above the flip, `−3` below it, plus a straddle adjustment.
+
+**The case, from the 8-day record (24 Aug – 2 Sep, 11 directional calls):**
+
+| finding | figure |
+|---|---|
+| direction calls right | **4 / 11 (36%)** |
+| when it called BEARISH | **2 / 8 (25%)** |
+| when it called BULLISH | 2 / 3 (67%) |
+| calls made below the flip | 8 of 11 |
+| days price actually rose | 8 of 11 |
+
+**The model called bearish 8 times out of 11 in a window where price rose 8
+times out of 11.** That single mismatch accounts for most of the miss rate.
+
+Per-component means per day: **gamma −1.9**, news −0.6, macro −0.2, structure
+−0.2, rates −0.1, breadth −0.1, vol +0.5, fuel/events exactly 0. **Gamma was
+effectively the entire bias** — everything else cancelled around it — and it
+scored −5 on five days of eight, never landing between −4 and +1.
+
+**Why it is wrong in principle, which is the actual justification.** Short gamma
+means dealers amplify whatever move is already happening. That forecasts a
+**wider range**, not a **lower close**. It is a volatility statement being
+scored as a directional one — the identical error removed from the net-GEX term
+in C2, in the term carrying more weight. The asymmetry (+2 vs −3) then made time
+spent below the flip a structural bearish lean.
+
+**Now:** both branches score `0` and publish as a regime read, marked *"tells
+you the day's WIDTH, not its direction"*. The read still drives the shape
+section and strategy selection, which is where it has been working.
+
+**Bug retired alongside it.** The straddle adjustment read
+`+1 if px > gf else +1` — **+1 on both branches** — so a term labelled "reduce
+conviction" *increased* it above the flip (+2 → +3). It scored 0 now regardless,
+since its only job was to damp a score that no longer exists.
+
+**Expected effect: fewer calls, not better ones.** With gamma neutral, direction
+comes from components that average near zero, so the model will return
+NEUTRAL / TWO-WAY far more often. That is the honest output for a signal with no
+demonstrated edge. On the recorded days this moves the hit rate 36% → 44% on 9
+calls instead of 11 — **not significant** (see below), and not the reason for
+the change.
+
+> **Do not read the counterfactual as proof.** Overall 4/11 vs a coin flip is
+> **p = 0.55**; bearish 2/8 is **p = 0.29**; bullish 2/3 is **p = 1.00**. None
+> of it is statistically significant. C3 is justified by the reasoning error,
+> which is visible in the code without any data. The record is only what
+> prompted the look.
+>
+> **Explicitly rejected: inverting the model.** Flipping every call scores 7/11
+> on this sample. It is three decisions from the current result, has no
+> mechanism, and fitting to it is exactly how a model gets worse.
+> **Do not re-propose.**
+
+## D7 — FIXED: negated inflation phrasing no longer scores backwards
+
+Logged 2026-09-01, fixed today. `cpi_cool` matched the tokens *ease* / *cool*
+without the negation that inverts them, so *"support rate hike if inflation
+doesn't ease"* scored **+1 BULLISH at HIGH confidence** on a hawkish story — and
+at HIGH confidence it bypassed the judgement list where a human would catch it.
+
+Fixed the way this file handles every other inverted reading: **do not guess the
+flipped sign, demote to the model.** A `NEGATOR` match *inside the matched span*
+adds a flag, and any flag routes the item to NEEDS_JUDGEMENT. Tested on the span
+only, so "inflation cooled in August" still scores and "inflation doesn't cool"
+does not.
+
+**Second defect found while fixing the first.** After the negation guard, the
+Bloomberg framing *still* scored +2.2 bullish — on a **curly apostrophe alone**.
+Every `RULES` pattern is written with straight apostrophes, and `low` was not
+normalised, so `Doesn't` and `Doesn’t` took different paths through the scorer.
+Punctuation is now normalised at source, which fixes the whole class rather than
+this instance.
+
+**NOT done, deliberately: story-level dedupe.** One Fed speaker still gets four
+votes when four outlets carry him. Title-token overlap across the four real
+framings is only ~50–60%, so any threshold tight enough to collapse them would
+also collapse unrelated stories — and this file's stated principle is that
+over-filtering is the dangerous failure. After the sign fix the duplication only
+inflates the *judgement list*, which a human reads and where duplication is
+visible and harmless. Left open.
+
+## Crash fix — the brief died when the vol feed had no prior close
+
+Found running the C3 verification at 21:15 UTC on 3 Sep, just after the roll.
+`vxn_c` was `None` and the volatility line formatted it as `{vxn_c:+.1f}`,
+raising `TypeError` and **killing the entire brief** — while the three lines
+immediately below already used `(vxn_c or 0)`. Now renders `chg n/a`. Not
+coerced to 0, which would report "unchanged" as though it had been measured.
+
+Pre-existing and unrelated to the model changes; it would have broken any scan
+run in that window.
+
+## Test coverage added
+
+`test_consistency.py` **22 passed, 0 failed** — new: the flip term carries no
+points, the news scorer demotes a negated match, punctuation is normalised.
+`test_news_scorer.py` **29 passed, 0 failed** — new: all four D7 framings, the
+curly-apostrophe framing specifically, plus controls proving un-negated hot and
+cool prints still score.
+
+## Where the evidence stands now
+
+**No scan has yet run under the full model.** C1/C2 landed after the 2 Sep
+13:25 scan and C3 today, so every graded day on record is pre-change. The
+next scan is day 1 of the new series. H6's stretch split re-bases from
+2026-09-02 and the direction record should be read the same way.
+
+**The most valuable next action is not another change — it is days.** Eleven
+calls cannot settle anything. Run the scan daily and let the record build.

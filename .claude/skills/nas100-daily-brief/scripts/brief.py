@@ -608,7 +608,13 @@ def markdown(d):
     vxn = v["vxn_nasdaq_ivol"].get("last"); vxn_c = v["vxn_nasdaq_ivol"].get("chg_pct")
     term = v.get("vix9d_over_vix"); vixl = v["vix"].get("last")
     implied = round(px * (vxn / 100) / (252 ** 0.5)) if vxn else None
-    A(f"**Volatility:** VXN **{vxn}** ({vxn_c:+.1f}%) \u00b7 VIX {vixl} \u00b7 "
+    # vxn_c is None whenever the vol feed has no prior close to difference
+    # against (seen live 2026-09-03 just after the 21:00 roll), and this line
+    # formatted it unguarded while the three lines below it already used
+    # `(vxn_c or 0)`. That crashed the whole brief. Show "n/a" rather than
+    # coercing to 0, which would report "unchanged" as though it were measured.
+    _vxn_c = f"{vxn_c:+.1f}%" if vxn_c is not None else "chg n/a"
+    A(f"**Volatility:** VXN **{vxn}** ({_vxn_c}) \u00b7 VIX {vixl} \u00b7 "
       f"VIX9D/VIX **{term}** \u2192 {v['term_read'].split(' — ')[0]} \u00b7 "
       f"VVIX {v['vvix'].get('last')}\n")
     A(f"> **VXN is the Nasdaq's own fear gauge.** At {vxn} it's "

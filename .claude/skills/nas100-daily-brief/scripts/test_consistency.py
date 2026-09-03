@@ -111,6 +111,23 @@ def offline_checks():
           'add("gamma", 0,' in net_block,
           "it scores again — the flip term already encodes it")
 
+    # C3 — which side of the flip price sits on is a width read, not a
+    # direction read. Both branches and the straddle adjustment score 0.
+    flip_block = be.split("if net is not None:")[0].rsplit("if gf is not None:", 1)[-1]
+    scored = [ln for ln in flip_block.splitlines()
+              if 'add("gamma"' in ln and 'add("gamma", 0' not in ln]
+    check("gamma flip term is reported but not scored", not scored,
+          f"{len(scored)} flip term(s) still carry points")
+
+    # D7 — negation guard and punctuation normalisation in the news scorer
+    ns = open(os.path.join(HERE, "news_scorer.py")).read()
+    check("news scorer demotes a negated keyword match",
+          "NEGATOR" in ns and "NEGATOR.search(m.group(0))" in ns,
+          "a negated cpi_cool would score bullish again")
+    check("news scorer normalises curly punctuation before matching",
+          '.replace("\u2019", "\'")' in ns,
+          "a curly apostrophe bypasses the rules")
+
     # the single grading rule
     check("track and gex_retro both import review_day (one grader)",
           "import journal, review_day as R" in tr and "review_day as R" in rt)
