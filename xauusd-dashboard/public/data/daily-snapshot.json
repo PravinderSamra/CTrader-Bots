@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-02T21:26:50.558Z",
+  "generatedAt": "2026-09-03T10:25:06.328Z",
   "yields": {
     "US10Y": 4.79,
     "US2Y": 4.39,
@@ -34,26 +34,26 @@
     "openInterestChange": 83175
   },
   "etfFlows": {
-    "gldTonnes": 923.6,
-    "gldWoWChange": -3.6,
+    "gldTonnes": 916.7,
+    "gldWoWChange": -6.9,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4388.265,
-    "XAGUSD": 65.3255,
-    "EURUSD": 1.15889,
-    "USDJPY": 158.6895,
-    "USDCHF": 0.81244,
-    "USDCNH": 6.71747,
-    "GBPUSD": 1.34895,
-    "USDCAD": 1.38424,
-    "USDSEK": 9.63064,
-    "US500": 7661.1,
-    "GER40": 25874.85,
-    "UK100": 10765.15,
+    "XAUUSD": 4420.87,
+    "XAGUSD": 65.4515,
+    "EURUSD": 1.1602,
+    "USDJPY": 156.455,
+    "USDCHF": 0.80947,
+    "USDCNH": 6.7203,
+    "GBPUSD": 1.34929,
+    "USDCAD": 1.38101,
+    "USDSEK": 9.59207,
+    "US500": 7663.1,
+    "GER40": 25797.85,
+    "UK100": 10749.25,
     "ADR_14day": 115.1,
-    "ADR_usedToday": 115,
-    "goldSilverRatio": 67.2
+    "ADR_usedToday": 62.5,
+    "goldSilverRatio": 67.5
   },
   "dollarLiquidity": {
     "stlfsi": -0.8526,
@@ -64,6 +64,25 @@
     "gprDate": "2026-08"
   },
   "economicCalendar": [],
-  "newsItems": [],
+  "newsItems": [
+    {
+      "headline": "Shares, bonds rally as markets await Fed signals; yen jumps - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-03T02:02:00.000Z",
+      "hoursAgo": 8.4
+    },
+    {
+      "headline": "Stocks climb and US yields ease; yen jumps against dollar - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-02T22:01:50.000Z",
+      "hoursAgo": 12.4
+    },
+    {
+      "headline": "UK bond yields hit fresh 19-year high, adding to pressure on Healey - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-02T15:30:18.000Z",
+      "hoursAgo": 18.9
+    }
+  ],
   "briefing": null
 }
