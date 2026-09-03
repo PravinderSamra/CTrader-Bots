@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-09-03T18:15:17.528Z",
+  "generatedAt": "2026-09-03T21:31:36.668Z",
   "prices": {
-    "UK100": 10834.55,
-    "GBPUSD": 1.35424,
-    "GBPEUR": 1.164,
-    "US500": 7756.7,
-    "NAS100": 29532.85,
-    "BRENT": 96.701,
-    "COPPER": 6.6823,
-    "VIX": 15.51,
-    "USDX": 98.942,
-    "XAUUSD": 4484.89,
-    "UK100_dayPct": 0.65
+    "UK100": 10832.55,
+    "GBPUSD": 1.35276,
+    "GBPEUR": 1.16359,
+    "US500": 7741.4,
+    "NAS100": 29462.15,
+    "BRENT": 97.336,
+    "COPPER": 6.6763,
+    "VIX": 15.355,
+    "USDX": 99.044,
+    "XAUUSD": 4473.075,
+    "UK100_dayPct": 0.63
   },
   "fx": {
-    "gbpUsdDayPct": 0.43,
+    "gbpUsdDayPct": 0.04,
     "gbpUsd20dPercentile": 55,
     "sterlingEri": 85.4576,
     "sterlingEriDayChange": -0.23,
@@ -36,23 +36,23 @@
     "daysToMpc": 14
   },
   "usLinkage": {
-    "us500DayPct": 1.25,
-    "nas100DayPct": 1.49,
-    "vix": 15.51,
+    "us500DayPct": 1.05,
+    "nas100DayPct": 1.25,
+    "vix": 15.355,
     "vixRegime": "NORMAL",
     "us10y": 4.79,
-    "usdx": 98.942
+    "usdx": 99.044
   },
   "commodities": {
-    "brentDayPct": -0.11,
-    "copperDayPct": 1.13,
-    "goldDayPct": 2.2,
+    "brentDayPct": 0.55,
+    "copperDayPct": 1.04,
+    "goldDayPct": 1.94,
     "brent20dTrend": "UP"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": 0.27,
+    "eurostoxx50DayPct": 0.26,
     "dax40DayPct": 0.67,
-    "eurUsdDayPct": 0.4,
+    "eurUsdDayPct": 0,
     "ftseDaxCorr20d": 0.51,
     "ftseSx5eCorr20d": 0.47,
     "tapeAgreement": "ALIGNED",
@@ -69,14 +69,14 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent -0.11%",
-      "read": "NEUTRAL",
+      "driver": "Brent +0.55%",
+      "read": "BULLISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper +1.13%",
+      "driver": "Copper +1.04%",
       "read": "BULLISH",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
@@ -117,44 +117,44 @@
       "headline": "ECB to raise rates a second time in September, but then done, say economists: Reuters poll - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQT185b0pjNmp2TVlHNnRrRW9GMDh5YmVmU2VfelMzQ0Z5VXVyTGNCZHlsM252N0pGOEF1bWtqaWh3bE5yTUp3eEQ1U0JHR001Q3FEZ2RrLXhKaTVHZUd4Q054V1VhSVJYV2h1X3ZFZVJtWUUxUHdGSW9QOUcyUGZDV0RpUEhUOHRpb1l0MG15Sl9RSmM4cTdFY1lnZHpSRFRSd3ZGOGdDOA?oc=5",
-      "hoursAgo": 7.1
+      "hoursAgo": 10.4
     }
   ],
   "riskTone": null,
   "bias": {
-    "score": 4,
+    "score": 6,
     "label": "BULLISH",
-    "conviction": "MEDIUM",
+    "conviction": "HIGH",
     "drivers": [
       {
         "name": "GBP",
         "weight": 3,
-        "impact": "BEARISH",
-        "detail": "GBP/USD +0.43% → FTSE headwind (sign-flipped)"
+        "impact": "NEUTRAL",
+        "detail": "GBP/USD +0.04% → FTSE headwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
         "impact": "BULLISH",
-        "detail": "US500 +1.25% today"
+        "detail": "US500 +1.05% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 15.51 — NORMAL regime"
+        "detail": "VIX 15.355 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "Brent -0.11% (energy majors)"
+        "detail": "Brent +0.55% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
         "impact": "BULLISH",
-        "detail": "Copper +1.13% (miners/China)"
+        "detail": "Copper +1.04% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -178,13 +178,13 @@
         "name": "European tape (SX5E/DAX)",
         "weight": 1,
         "impact": "BULLISH",
-        "detail": "SX5E +0.27% / DAX +0.67%"
+        "detail": "SX5E +0.26% / DAX +0.67%"
       }
     ],
     "eventSuppressed": false
   },
   "orbContext": {
-    "computedAt": "2026-09-03T18:15:17.527Z",
+    "computedAt": "2026-09-03T21:31:36.667Z",
     "mode": "CLOSED",
     "cashOpenLondon": "08:00 BST",
     "overnightHigh": 10773,
@@ -194,8 +194,8 @@
     "priorClose": 10764.2,
     "prevWeekHigh": 10924.6,
     "prevWeekLow": 10762.4,
-    "gapPts": 70.3,
-    "gapPct": 0.65,
+    "gapPts": 68.3,
+    "gapPct": 0.63,
     "orbHigh": 10765.7,
     "orbLow": 10743.2,
     "orbBrokenDirection": "DOWN",
@@ -235,14 +235,14 @@
         "severity": "INFO",
         "source": "TAPE",
         "rule": "R8",
-        "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.27%) — the cross-market lean is up."
+        "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.26%) — the cross-market lean is up."
       },
       {
         "direction": "FAVOURS_LONG",
         "severity": "INFO",
         "source": "TAPE",
         "rule": "R9",
-        "text": "Past 13:30 with US futures +1.25% — the 14:30 US handoff argues for holding longs into the US open."
+        "text": "Past 13:30 with US futures +1.05% — the 14:30 US handoff argues for holding longs into the US open."
       },
       {
         "direction": "NEUTRAL",
