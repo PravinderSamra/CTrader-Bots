@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-09-03T12:06:37.863Z",
+  "generatedAt": "2026-09-03T14:49:20.870Z",
   "yields": {
-    "US10Y": null,
+    "US10Y": 4.79,
     "US2Y": 4.39,
     "realYield10Y": 2.44,
     "realYield5Y": 2.18,
-    "curve2s10s": null,
+    "curve2s10s": 40,
     "breakeven10Y": 2.34,
     "breakeven5Y": 2.35,
     "forward5y5y": 2.33,
     "dayOverDay": {
-      "US10Y": null,
+      "US10Y": 0.04,
       "US2Y": 0.05,
       "realYield10Y": 0
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-09-16",
-    "probCut": null,
-    "probHold": null,
-    "probHike": null
+    "probCut": 0,
+    "probHold": 60,
+    "probHike": 40
   },
   "marketVolatility": {
-    "GVZ": 25.43,
-    "VIX": 16.34
+    "GVZ": 26.14,
+    "VIX": 15.2
   },
   "positioning": {
     "cotNetLong": 242212,
@@ -34,26 +34,26 @@
     "openInterestChange": 83175
   },
   "etfFlows": {
-    "gldTonnes": 911.2,
-    "gldWoWChange": -5.5,
+    "gldTonnes": 905.4,
+    "gldWoWChange": -5.8,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4447.92,
-    "XAGUSD": 65.8295,
-    "EURUSD": 1.16149,
-    "USDJPY": 156.002,
-    "USDCHF": 0.80841,
-    "USDCNH": 6.71884,
-    "GBPUSD": 1.34957,
-    "USDCAD": 1.37922,
-    "USDSEK": 9.5751,
-    "US500": 7668.9,
-    "GER40": 25869.15,
-    "UK100": 10806.05,
+    "XAUUSD": 4476.06,
+    "XAGUSD": 66.568,
+    "EURUSD": 1.16171,
+    "USDJPY": 155.6005,
+    "USDCHF": 0.80892,
+    "USDCNH": 6.71951,
+    "GBPUSD": 1.35074,
+    "USDCAD": 1.37987,
+    "USDSEK": 9.57182,
+    "US500": 7704.6,
+    "GER40": 25959.95,
+    "UK100": 10819.05,
     "ADR_14day": 115.1,
-    "ADR_usedToday": 67.8,
-    "goldSilverRatio": 67.6
+    "ADR_usedToday": 114.8,
+    "goldSilverRatio": 67.2
   },
   "dollarLiquidity": {
     "stlfsi": -0.8526,
@@ -66,28 +66,22 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Stocks, bonds gain ahead of US data, Fed comments; yen rallies - Reuters",
+      "headline": "ECB to raise rates a second time in September, but then done, say economists: Reuters poll - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-03T08:44:50.000Z",
-      "hoursAgo": 3.4
+      "publishedAt": "2026-09-03T11:07:52.000Z",
+      "hoursAgo": 3.7
     },
     {
       "headline": "Stocks climb and US yields ease; yen jumps against dollar - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-02T22:01:50.000Z",
-      "hoursAgo": 14.1
+      "hoursAgo": 16.8
     },
     {
       "headline": "UK bond yields hit fresh 19-year high, adding to pressure on Healey - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-02T15:30:18.000Z",
-      "hoursAgo": 20.6
-    },
-    {
-      "headline": "South African rand firms on softer dollar, US jobs data - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-02T14:37:06.000Z",
-      "hoursAgo": 21.5
+      "hoursAgo": 23.3
     }
   ],
   "briefing": null
