@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T12:08:29.595Z",
+  "generatedAt": "2026-09-04T14:37:52.528Z",
   "yields": {
     "US10Y": 4.79,
     "US2Y": 4.39,
@@ -22,8 +22,8 @@
     "probHike": 32
   },
   "marketVolatility": {
-    "GVZ": 26.14,
-    "VIX": 15.2
+    "GVZ": 27.18,
+    "VIX": 14.32
   },
   "positioning": {
     "cotNetLong": 242212,
@@ -34,26 +34,26 @@
     "openInterestChange": 83175
   },
   "etfFlows": {
-    "gldTonnes": 906.8,
-    "gldWoWChange": 0.3,
-    "trend3W": "FLAT"
+    "gldTonnes": 914.3,
+    "gldWoWChange": 7.5,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4469.165,
-    "XAGUSD": 66.933,
-    "EURUSD": 1.16223,
-    "USDJPY": 156.257,
-    "USDCHF": 0.80914,
-    "USDCNH": 6.70924,
-    "GBPUSD": 1.35307,
-    "USDCAD": 1.37991,
-    "USDSEK": 9.55251,
-    "US500": 7747.5,
-    "GER40": 26094.35,
-    "UK100": 10824.65,
+    "XAUUSD": 4432.765,
+    "XAGUSD": 66.085,
+    "EURUSD": 1.16182,
+    "USDJPY": 155.883,
+    "USDCHF": 0.80991,
+    "USDCNH": 6.70765,
+    "GBPUSD": 1.35147,
+    "USDCAD": 1.38526,
+    "USDSEK": 9.55699,
+    "US500": 7723.9,
+    "GER40": 26065.25,
+    "UK100": 10822.95,
     "ADR_14day": 117,
-    "ADR_usedToday": 30.7,
-    "goldSilverRatio": 66.8
+    "ADR_usedToday": 125.3,
+    "goldSilverRatio": 67.1
   },
   "dollarLiquidity": {
     "stlfsi": -0.8526,
@@ -66,10 +66,22 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "2-year yield rises to highest since January 2025 after hot jobs report boosts expectations that the Fed could raise rates",
+      "source": "CNBC",
+      "publishedAt": "2026-09-04T13:09:26.000Z",
+      "hoursAgo": 1.5
+    },
+    {
+      "headline": "Diesel hits record high as Ukraine and Iran wars knock out refineries, fueling inflation worries",
+      "source": "CNBC",
+      "publishedAt": "2026-09-04T12:40:43.000Z",
+      "hoursAgo": 2
+    },
+    {
       "headline": "US pressure on Iran starting to tell, as sanctions and blockade bite - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-03T14:59:00.000Z",
-      "hoursAgo": 21.2
+      "hoursAgo": 23.6
     }
   ],
   "briefing": null

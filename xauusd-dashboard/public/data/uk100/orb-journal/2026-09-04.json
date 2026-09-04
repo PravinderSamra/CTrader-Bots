@@ -100,6 +100,63 @@
         "adrUsedPct": 63
       },
       "outcome": null
+    },
+    {
+      "at": "2026-09-04T14:37:58.305Z",
+      "londonTime": "15:37 BST",
+      "mode": "POST_ORB",
+      "price": 10823.15,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — The obvious draw (PDL 10731.8) sits beyond what's left of a typical day's range — targets past it are stretch-only today.",
+      "signals": [
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10731.8) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "US Nonfarm Payrolls @ 13:30 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.25%) — the cross-market lean is up."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10833.4,
+        "orbLow": 10783.5,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10839,
+        "overnightLow": 10783.5,
+        "priorDayHigh": 10862.9,
+        "priorDayLow": 10731.8,
+        "gapPct": -0.08,
+        "adr14": 87.8,
+        "adrUsedPct": 63
+      },
+      "outcome": null
     }
   ]
 }
