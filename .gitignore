@@ -3,3 +3,9 @@
 
 # large intermediate log
 US30 London Range Breakout/data/download.log
+
+# Recorded GexBot snapshots. GexBot Classic is a PAID subscription and this
+# repo is PUBLIC — committing the recorded levels here would republish a paid
+# data product. Kept out of git until a private destination is chosen.
+# See Gex-Bot/docs/recorder.md.
+Gex-Bot/data/

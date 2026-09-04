@@ -21,5 +21,27 @@ service cloud.firestore {
     match /users/{uid}/trades/{tradeId} {
       allow read, write: if request.auth != null && request.auth.uid == uid;
     }
+
+    // GexBot gamma levels, written by .github/workflows/gexbot-record.yml via
+    // the Admin SDK (which bypasses these rules, same as sync-trades.ts).
+    //
+    // gex_latest    — one doc per ticker+scope, overwritten each poll. What the
+    //                 dashboard reads to plot current levels.
+    // gex_snapshots — append-only history for the volume-vs-OI analysis.
+    //
+    // Read requires sign-in. That is the point rather than a formality: GexBot
+    // Classic is a paid subscription, and the dashboard is served from a public
+    // GitHub Pages site, so anything readable without auth would republish paid
+    // data to anyone who found the URL. No client writes — the recorder is the
+    // only writer.
+    match /gex_latest/{docId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+
+    match /gex_snapshots/{docId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
   }
 }
