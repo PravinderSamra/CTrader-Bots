@@ -14,7 +14,50 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from firestore_sink import encode_fields, encode_value  # noqa: E402
+import json  # noqa: E402
+
+from firestore_sink import (  # noqa: E402
+    FirestoreError,
+    _parse_service_account,
+    encode_fields,
+    encode_value,
+)
+
+# A service account file, and the corruption seen in CI: the private key's
+# newline escapes expanded into real newlines, which are control characters
+# and illegal inside a JSON string.
+_SERVICE_ACCOUNT = {
+    "type": "service_account",
+    "project_id": "pravzella-test",
+    "private_key_id": "abc123",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANB\n-----END PRIVATE KEY-----\n",
+    "client_email": "svc@pravzella-test.iam.gserviceaccount.com",
+}
+_VALID_TEXT = json.dumps(_SERVICE_ACCOUNT, indent=2)
+_MANGLED_TEXT = _VALID_TEXT.replace("\\n", "\n")
+
+
+class TestParseServiceAccount(unittest.TestCase):
+    def test_valid_json_parses(self):
+        self.assertEqual(
+            _parse_service_account(_VALID_TEXT)["project_id"], "pravzella-test"
+        )
+
+    def test_mangled_private_key_is_recovered(self):
+        # The first CI run failed here: "Invalid control character at: line 5".
+        with self.assertRaises(json.JSONDecodeError):
+            json.loads(_MANGLED_TEXT)
+
+        info = _parse_service_account(_MANGLED_TEXT)
+        # The recovered key must equal what the escaped original decodes to --
+        # otherwise this is papering over corruption rather than repairing it.
+        self.assertEqual(info["private_key"], _SERVICE_ACCOUNT["private_key"])
+        self.assertIn("\n", info["private_key"])  # PEM needs real newlines
+        self.assertEqual(info["project_id"], "pravzella-test")
+
+    def test_genuinely_broken_json_still_raises(self):
+        with self.assertRaises(FirestoreError):
+            _parse_service_account("{not json at all")
 
 
 class TestEncodeValue(unittest.TestCase):
