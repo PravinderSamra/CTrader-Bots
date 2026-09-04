@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-03T21:31:31.278Z",
+  "generatedAt": "2026-09-04T10:12:44.800Z",
   "yields": {
     "US10Y": 4.79,
     "US2Y": 4.39,
@@ -34,26 +34,26 @@
     "openInterestChange": 83175
   },
   "etfFlows": {
-    "gldTonnes": 906,
-    "gldWoWChange": 2.3,
-    "trend3W": "INFLOW"
+    "gldTonnes": 906.5,
+    "gldWoWChange": 0.5,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4473.075,
-    "XAGUSD": 66.9885,
-    "EURUSD": 1.16257,
-    "USDJPY": 155.879,
-    "USDCHF": 0.8071,
-    "USDCNH": 6.71748,
-    "GBPUSD": 1.35276,
-    "USDCAD": 1.37912,
-    "USDSEK": 9.5517,
-    "US500": 7741.4,
-    "GER40": 26048.35,
-    "UK100": 10832.55,
-    "ADR_14day": 115.8,
-    "ADR_usedToday": 129.8,
-    "goldSilverRatio": 66.8
+    "XAUUSD": 4470.765,
+    "XAGUSD": 66.8395,
+    "EURUSD": 1.16185,
+    "USDJPY": 156.412,
+    "USDCHF": 0.80958,
+    "USDCNH": 6.70897,
+    "GBPUSD": 1.35242,
+    "USDCAD": 1.38032,
+    "USDSEK": 9.5586,
+    "US500": 7751.9,
+    "GER40": 26053.15,
+    "UK100": 10826.45,
+    "ADR_14day": 117,
+    "ADR_usedToday": 30.7,
+    "goldSilverRatio": 66.9
   },
   "dollarLiquidity": {
     "stlfsi": -0.8526,
@@ -64,6 +64,19 @@
     "gprDate": "2026-08"
   },
   "economicCalendar": [],
-  "newsItems": [],
+  "newsItems": [
+    {
+      "headline": "US pressure on Iran starting to tell, as sanctions and blockade bite - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-03T14:59:00.000Z",
+      "hoursAgo": 19.2
+    },
+    {
+      "headline": "ECB to raise rates a second time in September, but then done, say economists: Reuters poll - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-03T11:07:52.000Z",
+      "hoursAgo": 23.1
+    }
+  ],
   "briefing": null
 }
