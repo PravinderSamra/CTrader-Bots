@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-09-04T10:12:49.327Z",
+  "generatedAt": "2026-09-04T12:08:35.403Z",
   "prices": {
-    "UK100": 10826.15,
-    "GBPUSD": 1.35241,
-    "GBPEUR": 1.164,
-    "US500": 7751.9,
-    "NAS100": 29618.95,
-    "BRENT": 96.876,
-    "COPPER": 6.6511,
-    "VIX": 15.27,
-    "USDX": 99.149,
-    "XAUUSD": 4471.11,
+    "UK100": 10826.65,
+    "GBPUSD": 1.35312,
+    "GBPEUR": 1.1642,
+    "US500": 7748.2,
+    "NAS100": 29615.05,
+    "BRENT": 96.246,
+    "COPPER": 6.6638,
+    "VIX": 15.265,
+    "USDX": 99.099,
+    "XAUUSD": 4469.735,
     "UK100_dayPct": -0.05
   },
   "fx": {
-    "gbpUsdDayPct": 0.01,
+    "gbpUsdDayPct": 0.06,
     "gbpUsd20dPercentile": 55,
     "sterlingEri": 85.3438,
     "sterlingEriDayChange": -0.11,
@@ -36,25 +36,25 @@
     "daysToMpc": 13
   },
   "usLinkage": {
-    "us500DayPct": 0.14,
-    "nas100DayPct": 0.53,
-    "vix": 15.27,
+    "us500DayPct": 0.09,
+    "nas100DayPct": 0.52,
+    "vix": 15.265,
     "vixRegime": "NORMAL",
     "us10y": 4.79,
-    "usdx": 99.149
+    "usdx": 99.099
   },
   "commodities": {
-    "brentDayPct": -0.46,
-    "copperDayPct": -0.36,
-    "goldDayPct": -0.04,
+    "brentDayPct": -1.1,
+    "copperDayPct": -0.16,
+    "goldDayPct": -0.07,
     "brent20dTrend": "UP"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": 0.01,
-    "dax40DayPct": 0.02,
-    "eurUsdDayPct": -0.06,
+    "eurostoxx50DayPct": 0.13,
+    "dax40DayPct": 0.19,
+    "eurUsdDayPct": -0.02,
     "ftseDaxCorr20d": 0.51,
-    "ftseSx5eCorr20d": 0.51,
+    "ftseSx5eCorr20d": 0.5,
     "tapeAgreement": "ALIGNED",
     "preOpenLead": "NONE"
   },
@@ -69,14 +69,14 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent -0.46%",
-      "read": "NEUTRAL",
+      "driver": "Brent -1.1%",
+      "read": "BEARISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper -0.36%",
+      "driver": "Copper -0.16%",
       "read": "NEUTRAL",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
@@ -112,17 +112,10 @@
       "daysFromToday": 0
     }
   ],
-  "newsItems": [
-    {
-      "headline": "ECB to raise rates a second time in September, but then done, say economists: Reuters poll - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQT185b0pjNmp2TVlHNnRrRW9GMDh5YmVmU2VfelMzQ0Z5VXVyTGNCZHlsM252N0pGOEF1bWtqaWh3bE5yTUp3eEQ1U0JHR001Q3FEZ2RrLXhKaTVHZUd4Q054V1VhSVJYV2h1X3ZFZVJtWUUxUHdGSW9QOUcyUGZDV0RpUEhUOHRpb1l0MG15Sl9RSmM4cTdFY1lnZHpSRFRSd3ZGOGdDOA?oc=5",
-      "hoursAgo": 23.1
-    }
-  ],
+  "newsItems": [],
   "riskTone": null,
   "bias": {
-    "score": 0,
+    "score": -1,
     "label": "NEUTRAL",
     "conviction": "LOW",
     "drivers": [
@@ -130,31 +123,31 @@
         "name": "GBP",
         "weight": 3,
         "impact": "NEUTRAL",
-        "detail": "GBP/USD +0.01% → FTSE headwind (sign-flipped)"
+        "detail": "GBP/USD +0.06% → FTSE headwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
-        "impact": "BULLISH",
-        "detail": "US500 +0.14% today"
+        "impact": "NEUTRAL",
+        "detail": "US500 +0.09% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 15.27 — NORMAL regime"
+        "detail": "VIX 15.265 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
-        "impact": "NEUTRAL",
-        "detail": "Brent -0.46% (energy majors)"
+        "impact": "BEARISH",
+        "detail": "Brent -1.1% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "Copper -0.36% (miners/China)"
+        "detail": "Copper -0.16% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -178,13 +171,13 @@
         "name": "European tape (SX5E/DAX)",
         "weight": 2.5,
         "impact": "NEUTRAL",
-        "detail": "SX5E +0.01% / DAX +0.02%"
+        "detail": "SX5E +0.13% / DAX +0.19%"
       }
     ],
     "eventSuppressed": true
   },
   "orbContext": {
-    "computedAt": "2026-09-04T10:12:49.326Z",
+    "computedAt": "2026-09-04T12:08:35.402Z",
     "mode": "POST_ORB",
     "cashOpenLondon": "08:00 BST",
     "overnightHigh": 10839,
@@ -194,7 +187,7 @@
     "priorClose": 10831.6,
     "prevWeekHigh": 10924.6,
     "prevWeekLow": 10762.4,
-    "gapPts": -5.5,
+    "gapPts": -5,
     "gapPct": -0.05,
     "orbHigh": 10833.4,
     "orbLow": 10783.5,
@@ -211,23 +204,23 @@
     "expansionState": {
       "label": "NORMAL",
       "rangeSoFarPct": 63,
-      "expectedRangePctByNow": 76,
-      "rangeVsTypical": 0.83,
-      "expectedVolPctByNow": 46,
+      "expectedRangePctByNow": 82,
+      "rangeVsTypical": 0.77,
+      "expectedVolPctByNow": 65,
       "moveMostlyDone": false,
-      "note": "Range 63% of ADR vs ~76% typical by 11:00 BST (about the typical pace). only ~46% of volume typically done by now — an afternoon expansion is still possible."
+      "note": "Range 63% of ADR vs ~82% typical by 13:00 BST (about the typical pace). only ~65% of volume typically done by now — an afternoon expansion is still possible."
     }
   },
   "orbIntel": {
     "stance": "MIXED",
-    "stanceLine": "No clean edge — mixed signals — The obvious draw (PDH 10862.9) sits beyond what's left of a typical day's range — targets past it are stretch-only today.",
+    "stanceLine": "No clean edge — mixed signals — The obvious draw (PDL 10731.8) sits beyond what's left of a typical day's range — targets past it are stretch-only today.",
     "signals": [
       {
         "direction": "NEUTRAL",
         "severity": "CAUTION",
         "source": "RANGE",
         "rule": "R7",
-        "text": "The obvious draw (PDH 10862.9) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        "text": "The obvious draw (PDL 10731.8) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
       },
       {
         "direction": "BREAKOUT_SUSPECT",

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T10:12:44.800Z",
+  "generatedAt": "2026-09-04T12:08:29.595Z",
   "yields": {
     "US10Y": 4.79,
     "US2Y": 4.39,
@@ -34,26 +34,26 @@
     "openInterestChange": 83175
   },
   "etfFlows": {
-    "gldTonnes": 906.5,
-    "gldWoWChange": 0.5,
+    "gldTonnes": 906.8,
+    "gldWoWChange": 0.3,
     "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4470.765,
-    "XAGUSD": 66.8395,
-    "EURUSD": 1.16185,
-    "USDJPY": 156.412,
-    "USDCHF": 0.80958,
-    "USDCNH": 6.70897,
-    "GBPUSD": 1.35242,
-    "USDCAD": 1.38032,
-    "USDSEK": 9.5586,
-    "US500": 7751.9,
-    "GER40": 26053.15,
-    "UK100": 10826.45,
+    "XAUUSD": 4469.165,
+    "XAGUSD": 66.933,
+    "EURUSD": 1.16223,
+    "USDJPY": 156.257,
+    "USDCHF": 0.80914,
+    "USDCNH": 6.70924,
+    "GBPUSD": 1.35307,
+    "USDCAD": 1.37991,
+    "USDSEK": 9.55251,
+    "US500": 7747.5,
+    "GER40": 26094.35,
+    "UK100": 10824.65,
     "ADR_14day": 117,
     "ADR_usedToday": 30.7,
-    "goldSilverRatio": 66.9
+    "goldSilverRatio": 66.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.8526,
@@ -69,13 +69,7 @@
       "headline": "US pressure on Iran starting to tell, as sanctions and blockade bite - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-03T14:59:00.000Z",
-      "hoursAgo": 19.2
-    },
-    {
-      "headline": "ECB to raise rates a second time in September, but then done, say economists: Reuters poll - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-03T11:07:52.000Z",
-      "hoursAgo": 23.1
+      "hoursAgo": 21.2
     }
   ],
   "briefing": null
