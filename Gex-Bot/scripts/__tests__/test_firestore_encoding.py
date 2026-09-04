@@ -10,6 +10,7 @@ Run: python3 __tests__/test_firestore_encoding.py
 
 import os
 import sys
+import textwrap
 import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -58,6 +59,72 @@ class TestParseServiceAccount(unittest.TestCase):
     def test_genuinely_broken_json_still_raises(self):
         with self.assertRaises(FirestoreError):
             _parse_service_account("{not json at all")
+
+
+try:
+    from cryptography.hazmat.primitives import serialization
+    from cryptography.hazmat.primitives.asymmetric import rsa
+
+    import firestore_sink
+
+    _CRYPTO = True
+except ImportError:  # pragma: no cover
+    _CRYPTO = False
+
+
+@unittest.skipUnless(_CRYPTO, "cryptography/google-auth not installed")
+class TestLoadCredentials(unittest.TestCase):
+    """Repairing a mangled secret, validated against a real RSA key.
+
+    Both corruptions below were hit for real in CI. They need opposite fixes,
+    which is why the loader validates each candidate by building credentials
+    rather than guessing which one happened.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
+        cls.pem = key.private_bytes(
+            serialization.Encoding.PEM,
+            serialization.PrivateFormat.PKCS8,
+            serialization.NoEncryption(),
+        ).decode()
+        cls.email = "svc@pravzella-test.iam.gserviceaccount.com"
+        cls.good = json.dumps({
+            "type": "service_account",
+            "project_id": "pravzella-test",
+            "private_key_id": "abc123",
+            "private_key": cls.pem,
+            "client_email": cls.email,
+            "token_uri": "https://oauth2.googleapis.com/token",
+        })
+
+    def _assert_recovers_real_key(self, text):
+        creds, info = firestore_sink.load_credentials(text)
+        self.assertEqual(creds.service_account_email, self.email)
+        # The key must be the real one, not merely something that parsed --
+        # that distinction is the whole point of validating each candidate.
+        self.assertEqual(info["private_key"], self.pem)
+
+    def test_correct_secret(self):
+        self._assert_recovers_real_key(self.good)
+
+    def test_hard_wrapped_secret_is_repaired(self):
+        # The second CI failure: newlines injected at fixed columns, landing
+        # mid-word -- MismatchedTags("PRIVATE \nKEY", "PRIVATE KEY").
+        self._assert_recovers_real_key("\n".join(textwrap.wrap(self.good, 64)))
+
+    def test_expanded_escapes_are_repaired(self):
+        # The first CI failure: "Invalid control character at: line 5".
+        self._assert_recovers_real_key(self.good.replace("\\n", "\n"))
+
+    def test_unrecoverable_secret_raises_with_guidance(self):
+        # Wrapping on top of expanded escapes destroys the PEM line structure.
+        # Failing loudly beats handing back a subtly broken key.
+        both = "\n".join(textwrap.wrap(self.good.replace("\\n", "\n"), 64))
+        with self.assertRaises(FirestoreError) as ctx:
+            firestore_sink.load_credentials(both)
+        self.assertIn("Re-add it", str(ctx.exception))
 
 
 class TestEncodeValue(unittest.TestCase):
