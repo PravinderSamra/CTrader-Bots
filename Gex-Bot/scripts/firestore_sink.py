@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 import urllib.error
 import urllib.request
 
@@ -29,6 +30,40 @@ SERVICE_ACCOUNT_ENV = "FIREBASE_SERVICE_ACCOUNT_JSON"
 
 class FirestoreError(RuntimeError):
     pass
+
+
+def _parse_service_account(raw: str) -> dict:
+    """Parse the service account JSON, tolerating a mangled private key.
+
+    A downloaded service account file escapes the newlines in `private_key` as
+    a literal backslash-n, which is valid JSON. It is easy to lose that in
+    transit -- pasting through an editor or a shell that expands escapes turns
+    them into real newlines, which are control characters and illegal inside a
+    JSON string. The strict parser then fails at line 5, the private key.
+
+    json.loads(..., strict=False) permits control characters inside strings and
+    yields exactly the value we want anyway: PEM keys need real newlines, which
+    is what the escapes would have decoded to. So the relaxed parse is a
+    repair, not a fudge -- but it means the stored secret is malformed, so say
+    so rather than fixing it silently.
+    """
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError as strict_exc:
+        try:
+            info = json.loads(raw, strict=False)
+        except json.JSONDecodeError:
+            raise FirestoreError(
+                f"{SERVICE_ACCOUNT_ENV} is not valid JSON: {strict_exc}. "
+                "Re-copy the service account file verbatim into the secret."
+            ) from strict_exc
+        print(
+            f"WARN: {SERVICE_ACCOUNT_ENV} contains unescaped newlines "
+            f"({strict_exc}) -- parsed leniently. The secret is malformed: "
+            "re-copy the downloaded service account file verbatim to fix it.",
+            file=sys.stderr,
+        )
+        return info
 
 
 # ── value encoding ────────────────────────────────────────────────────────────
@@ -68,12 +103,7 @@ class FirestoreSink:
             raise FirestoreError(
                 f"{SERVICE_ACCOUNT_ENV} is not set -- cannot write to Firestore."
             )
-        try:
-            info = json.loads(raw)
-        except json.JSONDecodeError as exc:
-            raise FirestoreError(
-                f"{SERVICE_ACCOUNT_ENV} is not valid JSON: {exc}"
-            ) from exc
+        info = _parse_service_account(raw)
 
         self.project_id = project_id or info.get("project_id")
         if not self.project_id:
