@@ -188,10 +188,30 @@ class FirestoreSink:
         )
 
     def _token(self) -> str:
-        from google.auth.transport.requests import Request
+        try:
+            from google.auth.transport.requests import Request
+        except ImportError as exc:
+            # google-auth signs the assertion but leaves the HTTP exchange to a
+            # transport, and does not pull one in itself.
+            raise FirestoreError(
+                "google-auth's Request transport needs the requests package: "
+                "pip install google-auth requests"
+            ) from exc
+
+        from google.auth.exceptions import RefreshError
 
         if not self._creds.valid:
-            self._creds.refresh(Request())
+            try:
+                self._creds.refresh(Request())
+            except RefreshError as exc:
+                # The key was well-formed enough to sign with, so this is
+                # Google rejecting the account rather than a malformed secret:
+                # deleted service account, wrong project, or disabled key.
+                raise FirestoreError(
+                    f"Google rejected the service account: {exc}. The key "
+                    "parsed and signed correctly, so check the account still "
+                    "exists, is enabled, and belongs to this project."
+                ) from exc
         return self._creds.token
 
     def commit(self, writes: list[dict]) -> int:
