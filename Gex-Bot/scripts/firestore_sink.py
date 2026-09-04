@@ -32,7 +32,33 @@ class FirestoreError(RuntimeError):
     pass
 
 
-def _parse_service_account(raw: str) -> dict:
+def _candidates(raw: str):
+    """Yield (label, text) repair candidates for a possibly-mangled secret.
+
+    Two corruptions have been seen in practice, and they need opposite fixes:
+
+    - **Escapes expanded.** The private key's backslash-n became real newlines.
+      Illegal inside a JSON string, but the value is what we want -- PEM needs
+      real newlines. Fixed by parsing leniently.
+    - **Hard-wrapped.** Newlines were injected at arbitrary column positions,
+      including mid-word: the observed failure was
+      MismatchedTags("PRIVATE \\nKEY", "PRIVATE KEY"). Here the escapes are
+      intact and every literal newline is corruption, so they must be stripped
+      -- the opposite of the fix above. Removing them is safe because JSON
+      ignores whitespace between tokens, and no field in a service account file
+      legitimately contains a raw newline.
+
+    Rather than guess which happened, every candidate is handed to the crypto
+    library and the first one that yields usable credentials wins. That makes
+    the key itself the oracle instead of our inference.
+    """
+    yield "as stored", raw
+    unwrapped = raw.replace("\r", "").replace("\n", "")
+    if unwrapped != raw:
+        yield "with injected line breaks removed", unwrapped
+
+
+def _parse_service_account(raw: str, warn: bool = True) -> dict:
     """Parse the service account JSON, tolerating a mangled private key.
 
     A downloaded service account file escapes the newlines in `private_key` as
@@ -57,13 +83,62 @@ def _parse_service_account(raw: str) -> dict:
                 f"{SERVICE_ACCOUNT_ENV} is not valid JSON: {strict_exc}. "
                 "Re-copy the service account file verbatim into the secret."
             ) from strict_exc
-        print(
-            f"WARN: {SERVICE_ACCOUNT_ENV} contains unescaped newlines "
-            f"({strict_exc}) -- parsed leniently. The secret is malformed: "
-            "re-copy the downloaded service account file verbatim to fix it.",
-            file=sys.stderr,
-        )
+        if warn:
+            print(
+                f"WARN: {SERVICE_ACCOUNT_ENV} contains unescaped newlines "
+                f"({strict_exc}) -- parsed leniently. The secret is malformed: "
+                "re-copy the downloaded service account file verbatim to fix it.",
+                file=sys.stderr,
+            )
         return info
+
+
+def load_credentials(raw: str):
+    """Build Google credentials from the secret, repairing it if necessary.
+
+    Returns (credentials, service_account_info). Each repair candidate is
+    validated by actually constructing the credentials, so a candidate that
+    parses as JSON but yields a broken PEM key is rejected rather than used.
+    """
+    try:
+        from google.oauth2 import service_account
+    except ImportError as exc:  # pragma: no cover
+        raise FirestoreError(
+            "google-auth is required: pip install google-auth"
+        ) from exc
+
+    attempts = []
+    for label, text in _candidates(raw):
+        try:
+            info = _parse_service_account(text, warn=False)
+        except FirestoreError as exc:
+            attempts.append(f"{label}: {exc}")
+            continue
+        try:
+            creds = service_account.Credentials.from_service_account_info(
+                info, scopes=[SCOPE]
+            )
+        except (ValueError, TypeError, KeyError) as exc:
+            attempts.append(f"{label}: {exc}")
+            continue
+
+        if label != "as stored":
+            print(
+                f"WARN: {SERVICE_ACCOUNT_ENV} is malformed but was repaired "
+                f"({label}). Re-add the secret from the downloaded service "
+                "account file to remove this warning.",
+                file=sys.stderr,
+            )
+        return creds, info
+
+    detail = "; ".join(attempts) or "no candidates"
+    raise FirestoreError(
+        f"{SERVICE_ACCOUNT_ENV} could not be loaded -- the stored secret is "
+        f"corrupted and no repair worked [{detail}]. Re-add it by copying the "
+        "downloaded service account .json file verbatim, with no reformatting "
+        "or line wrapping (on a desktop: "
+        "gh secret set FIREBASE_SERVICE_ACCOUNT_JSON < service-account.json)."
+    )
 
 
 # ── value encoding ────────────────────────────────────────────────────────────
@@ -103,22 +178,11 @@ class FirestoreSink:
             raise FirestoreError(
                 f"{SERVICE_ACCOUNT_ENV} is not set -- cannot write to Firestore."
             )
-        info = _parse_service_account(raw)
+        self._creds, info = load_credentials(raw)
 
         self.project_id = project_id or info.get("project_id")
         if not self.project_id:
             raise FirestoreError("No project_id in the service account JSON.")
-
-        try:
-            from google.oauth2 import service_account
-        except ImportError as exc:  # pragma: no cover
-            raise FirestoreError(
-                "google-auth is required: pip install google-auth"
-            ) from exc
-
-        self._creds = service_account.Credentials.from_service_account_info(
-            info, scopes=[SCOPE]
-        )
         self._base = (
             f"{API_ROOT}/projects/{self.project_id}/databases/(default)/documents"
         )
