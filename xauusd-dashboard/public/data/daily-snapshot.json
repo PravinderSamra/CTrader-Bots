@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T17:54:49.205Z",
+  "generatedAt": "2026-09-04T20:03:23.785Z",
   "yields": {
     "US10Y": 4.79,
     "US2Y": 4.39,
@@ -26,34 +26,34 @@
     "VIX": 14.32
   },
   "positioning": {
-    "cotNetLong": 242212,
-    "cotWoWChange": 22717,
+    "cotNetLong": 222188,
+    "cotWoWChange": -20024,
     "crowding": "CROWDED_LONG",
-    "reportDate": "2026-08-25T00:00:00.000",
-    "openInterest": 644992,
-    "openInterestChange": 83175
+    "reportDate": "2026-09-01T00:00:00.000",
+    "openInterest": 578926,
+    "openInterestChange": -66065
   },
   "etfFlows": {
-    "gldTonnes": 917.1,
-    "gldWoWChange": 2.8,
-    "trend3W": "INFLOW"
+    "gldTonnes": 913.9,
+    "gldWoWChange": -3.2,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4419.3,
-    "XAGUSD": 65.901,
-    "EURUSD": 1.16141,
-    "USDJPY": 156.104,
-    "USDCHF": 0.80993,
-    "USDCNH": 6.70834,
-    "GBPUSD": 1.35139,
-    "USDCAD": 1.38397,
-    "USDSEK": 9.57455,
-    "US500": 7707.4,
-    "GER40": 26050.15,
-    "UK100": 10827.05,
+    "XAUUSD": 4434.495,
+    "XAGUSD": 66.2155,
+    "EURUSD": 1.16152,
+    "USDJPY": 156.2415,
+    "USDCHF": 0.80979,
+    "USDCNH": 6.70782,
+    "GBPUSD": 1.35194,
+    "USDCAD": 1.38329,
+    "USDSEK": 9.57157,
+    "US500": 7712.4,
+    "GER40": 26062.35,
+    "UK100": 10825.15,
     "ADR_14day": 117,
     "ADR_usedToday": 125.3,
-    "goldSilverRatio": 67.1
+    "goldSilverRatio": 67
   },
   "dollarLiquidity": {
     "stlfsi": -0.8526,
@@ -66,28 +66,34 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "US sanctions Turkish bank, two subsidiaries to pressure Iran - Reuters",
+      "headline": "What strong jobs data means for rates — plus, an out-of-favor trade shines this week",
+      "source": "CNBC",
+      "publishedAt": "2026-09-04T18:51:01.000Z",
+      "hoursAgo": 1.2
+    },
+    {
+      "headline": "US sanctions Turkish bank, two subsidiaries in latest pressure on Iran - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-04T15:38:23.000Z",
-      "hoursAgo": 2.3
+      "publishedAt": "2026-09-04T18:22:57.000Z",
+      "hoursAgo": 1.7
     },
     {
       "headline": "2-year yield rises to highest since January 2025 after hot jobs report boosts expectations that the Fed could raise rates",
       "source": "CNBC",
       "publishedAt": "2026-09-04T13:09:26.000Z",
-      "hoursAgo": 4.8
+      "hoursAgo": 6.9
     },
     {
       "headline": "US equity funds record second weekly outflow on Iran tensions, high yields - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-04T13:05:44.000Z",
-      "hoursAgo": 4.8
+      "hoursAgo": 7
     },
     {
       "headline": "Diesel hits record high as Ukraine and Iran wars knock out refineries, fueling inflation worries",
       "source": "CNBC",
       "publishedAt": "2026-09-04T12:40:43.000Z",
-      "hoursAgo": 5.2
+      "hoursAgo": 7.4
     }
   ],
   "briefing": null

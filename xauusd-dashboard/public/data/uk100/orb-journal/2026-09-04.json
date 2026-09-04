@@ -288,6 +288,86 @@
         "verdict": "UNSCORABLE",
         "signalVerdicts": []
       }
+    },
+    {
+      "at": "2026-09-04T20:03:28.087Z",
+      "londonTime": "21:03 BST",
+      "mode": "CLOSED",
+      "price": 10825.15,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 84% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "84% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10731.8) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "US Nonfarm Payrolls @ 13:30 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.19%) — the cross-market lean is up."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -0.38% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10833.4,
+        "orbLow": 10783.5,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10839,
+        "overnightLow": 10783.5,
+        "priorDayHigh": 10862.9,
+        "priorDayLow": 10731.8,
+        "gapPct": -0.06,
+        "adr14": 87.8,
+        "adrUsedPct": 84
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-04T20:03:30.253Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
