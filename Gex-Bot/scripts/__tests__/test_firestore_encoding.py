@@ -118,6 +118,29 @@ class TestLoadCredentials(unittest.TestCase):
         # The first CI failure: "Invalid control character at: line 5".
         self._assert_recovers_real_key(self.good.replace("\\n", "\n"))
 
+    def test_document_name_is_a_resource_path_not_a_url(self):
+        """Firestore rejects a document name that is a URL.
+
+        The fourth CI run failed with:
+          Document name "https://firestore.googleapis.com/v1/projects/..."
+          lacks "projects" at index 0.
+        because the REST endpoint URL and the document resource path were the
+        same string. They look alike and are not interchangeable.
+        """
+        sink = firestore_sink.FirestoreSink(service_account_json=self.good)
+        write = sink.make_write("gex_snapshots", "SPX_zero_1788552000", {"a": 1})
+        name = write["update"]["name"]
+
+        self.assertTrue(name.startswith("projects/"), name)
+        self.assertNotIn("http", name)
+        self.assertEqual(
+            name,
+            "projects/pravzella-test/databases/(default)/documents"
+            "/gex_snapshots/SPX_zero_1788552000",
+        )
+        # The endpoint URL, by contrast, must still be absolute.
+        self.assertTrue(sink._base.startswith("https://"))
+
     def test_unrecoverable_secret_raises_with_guidance(self):
         # Wrapping on top of expanded escapes destroys the PEM line structure.
         # Failing loudly beats handing back a subtly broken key.

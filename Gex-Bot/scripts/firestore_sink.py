@@ -183,9 +183,14 @@ class FirestoreSink:
         self.project_id = project_id or info.get("project_id")
         if not self.project_id:
             raise FirestoreError("No project_id in the service account JSON.")
-        self._base = (
-            f"{API_ROOT}/projects/{self.project_id}/databases/(default)/documents"
+        # Two different things that look alike, and mixing them up is a 400:
+        #   _doc_root is a RESOURCE PATH, used for a document's "name" field.
+        #             Firestore requires it to begin with "projects/".
+        #   _base     is a URL, used to address the REST endpoint.
+        self._doc_root = (
+            f"projects/{self.project_id}/databases/(default)/documents"
         )
+        self._base = f"{API_ROOT}/{self._doc_root}"
 
     def _token(self) -> str:
         try:
@@ -256,7 +261,8 @@ class FirestoreSink:
         """
         return {
             "update": {
-                "name": f"{self._base}/{collection}/{doc_id}",
+                # A resource path, NOT a URL -- see _doc_root above.
+                "name": f"{self._doc_root}/{collection}/{doc_id}",
                 "fields": encode_fields(fields),
             }
         }
