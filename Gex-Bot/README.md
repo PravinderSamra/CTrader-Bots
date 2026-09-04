@@ -5,12 +5,14 @@ API — reading dealer gamma positioning and building a strategy that
 trades between the major gamma levels.
 
 - **Phase 1 — connectivity.** Complete. See below.
-- **Phase 2 — strategy research.** Not started.
+- **Phase 2 — strategy research.** Source material gathered and analysed;
+  see [`youtube-research/`](youtube-research/) and the
+  [strategy synthesis](youtube-research/analysis/strategy-synthesis.md).
+  Nothing validated yet — open questions below.
 
 ## Phase 1 status: connectivity confirmed
 
-The `GEX_BOT_API_TOKEN` works and has full access to the API surface.
-Verified live on 2026-09-04:
+The `GEX_BOT_API_TOKEN` works. Verified live on 2026-09-04:
 
 ```
 [PASS] GEX_BOT_API_TOKEN found (57 chars)
@@ -111,30 +113,42 @@ trusted for live levels.
 
 ## Phase 2 — open questions
 
-1. **Which scope is Siento's "90-day open interest"?** He reads 90-day OI at
-   09:30 ET to see how the whole market is positioned for the day. That does
-   not map cleanly onto `zero` / `one` / `full` — `full` is "all expiries",
-   not a 90-day window. **This is the biggest blocker to implementing his
-   model** and needs resolving against the platform UI or support.
-2. **Refresh cadence during RTH.** Partly answered: the feed is static
-   outside cash hours, and volume fields populate once the session trades
-   (`sum_gex_vol` went 0 → 311,384 between our pre-open and mid-session
-   checks). The actual tick interval is still unmeasured.
-3. **Cross-validation against CBOE.** Do GexBot's walls agree with the
-   levels the existing `GEX&OI` pipeline computes?
-4. **What `zero_gamma` does once populated**, and how it behaves relative
-   to the walls.
-5. **`max_priors` semantics.** Six prior readings of the major levels — the
-   interval between them is unknown. If it is a fixed cadence this is
-   exactly the level-*migration* signal Siento describes (a put wall moving
-   5550 → 5530 mid-session), so it is worth decoding.
-6. **Backtest the actual claim.** Does price reverse at the largest OI gamma
-   level, in the first two hours, often enough to matter? His 75% is
-   self-reported on a sponsored podcast — it is a hypothesis, not a
+Two of the original blockers were **resolved** by the research (see
+[`youtube-research/`](youtube-research/)):
+
+- ~~Which scope is the "90-day" view?~~ **Answered.** "90-day" is an *expiry
+  selector in the GexBot UI*, not an OI lookback. The three UI options are
+  90-day / 0DTE / 1DTE, mapping to the API's `full` / `zero` / `one`.
+- ~~`max_priors` semantics.~~ **Answered.** It is the **max-change panel**:
+  the largest gamma change over the last 1, 5, 10, 15 and 30 minutes. Each
+  strike's `priors` array holds exactly those five readings, and they track
+  the **volume** column, not OI.
+
+Still open:
+
+1. **Volume or open interest?** The two videos disagree — the Classic
+   walkthrough says volume is what they track, the later interview says
+   90-day open interest. This is not cosmetic: on live data
+   `sum_gex_vol` was **+311,384** while `sum_gex_oi` was **-5,669**, giving
+   opposite regime calls, and the two disagreed on wall placement. **The
+   biggest blocker — a system built on the wrong one is inverted, not just
+   worse.** See [strategy-synthesis §5](youtube-research/analysis/strategy-synthesis.md).
+2. **Confirm `full` = the 90-day UI view** by comparing profiles.
+3. **Refresh cadence during RTH.** Partly answered: the feed is static
+   outside cash hours and volume fields populate once the session trades.
+   The actual tick interval is still unmeasured, and it decides whether this
+   can drive intraday entries or only level marking.
+4. **Backtest the core claim.** Does price reverse at the largest gamma
+   level in the first two hours, often enough to matter? All performance
+   claims are self-reported in promotional videos — a hypothesis, not a
    baseline.
-7. **Encode the slope rule.** Fast approach → wait for reclaim; slow
-   approach → take the level. This is the one discretionary element in his
-   model and needs a quantitative definition.
+5. **Quantify the slope rule.** Fast approach → wait for reclaim; slow →
+   take the level. The one discretionary element; needs a numeric
+   definition.
+6. **Define "clustering" numerically** from the `zero_gamma` time series —
+   it gates every entry in his framework.
+7. **Cross-validation against CBOE.** Do GexBot's walls agree with the
+   levels the existing `GEX&OI` pipeline computes?
 8. **Rate limits.** No documented limit; none hit during probing.
 
 ## Layout

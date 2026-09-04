@@ -18,16 +18,18 @@ youtube-research/
 
 | # | Video | Channel | Date | Length | Transcript | Analysis |
 |---|---|---|---|---|---|---|
-| 1 | *(link not yet supplied)* | — | — | — | — | — |
+| 1 | [Master Gexbot Classic - Trade Like a Pro with This Simple Yet Powerful Tool!](https://youtu.be/6r2329ybeb8) | GexFuture Trading | 2025-03-16 | 49:48 | [`.txt`](transcripts/gexfuture-master-classic-6r2329ybeb8.txt) | [analysis](analysis/gexfuture-master-gexbot-classic.md) |
 | 2 | [STEAL This INSANE 1-Minute Market Maker Trading Strategy (75% Win Rate)](https://youtu.be/35cyqDz-ej8) | Chart Fanatics | 2026-08-23 | 2:29:41 | [`.txt`](transcripts/chart-fanatics-35cyqDz-ej8.txt) | [analysis](analysis/chart-fanatics-freddy-siento.md) |
 
-Video 1 was requested but no URL came through in the message — the sentence
-"access the transcript for this YouTube video" arrived without a link. Add
-the link and it can be processed the same way.
+**[Strategy synthesis](analysis/strategy-synthesis.md)** merges both into one
+specification — read that first.
 
-Both requested videos feature **Freddy Siento**, a ~20-year institutional
-market maker who trades NQ futures off SPX/NDX options levels using GexBot's
-Classic package.
+Both videos are **Freddy Siento**, a ~20-year institutional market maker who
+trades NQ futures off SPX gamma levels using GexBot's Classic package.
+Video 1 is his own channel and is the *operational* one — the actual screen
+and rules. Video 2 is a long-form interview and is the *explanatory* one —
+why the levels work. Video 1 is more useful for implementation despite being
+17 months older.
 
 ## Fetching a transcript
 
