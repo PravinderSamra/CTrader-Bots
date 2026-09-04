@@ -118,12 +118,50 @@ def existing_keys(path: str) -> set:
     return keys
 
 
+SNAPSHOT_COLLECTION = "gex_snapshots"  # append-only history, for analysis
+LATEST_COLLECTION = "gex_latest"       # one doc per symbol, for the dashboard
+
+
+def upload_to_firestore(records: list[dict]) -> bool:
+    """Write each sample to history and refresh the per-symbol latest doc.
+
+    History doc ids embed the source timestamp, so a repeated poll of an
+    unchanged feed simply rewrites an identical document -- idempotent, and
+    cheaper than reading first to check.
+    """
+    try:
+        from firestore_sink import FirestoreError, FirestoreSink
+    except ImportError as exc:
+        print(f"FATAL: firestore_sink unavailable: {exc}", file=sys.stderr)
+        return False
+
+    try:
+        sink = FirestoreSink()
+        writes = []
+        for r in records:
+            key = f"{r['ticker']}_{r['scope']}"
+            writes.append(sink.make_write(
+                SNAPSHOT_COLLECTION, f"{key}_{r['source_ts']}", r))
+            writes.append(sink.make_write(LATEST_COLLECTION, key, r))
+        n = sink.commit(writes)
+        print(f"Firestore: {n} writes "
+              f"({len(records)} snapshots + {len(records)} latest)")
+        return True
+    except FirestoreError as exc:
+        print(f"FATAL: {exc}", file=sys.stderr)
+        return False
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--tickers", nargs="+", default=DEFAULT_TICKERS)
     ap.add_argument("--scopes", nargs="+", default=DEFAULT_SCOPES)
     ap.add_argument("--out-dir", default=DEFAULT_OUT_DIR)
     ap.add_argument("--stdout", action="store_true", help="print instead of writing")
+    ap.add_argument("--firestore", action="store_true",
+                    help="also upload to Firestore (needs FIREBASE_SERVICE_ACCOUNT_JSON)")
+    ap.add_argument("--no-local", action="store_true",
+                    help="skip the local JSONL write (for CI, where it is discarded)")
     args = ap.parse_args()
 
     now = dt.datetime.now(dt.timezone.utc)
@@ -152,6 +190,12 @@ def main() -> int:
     if args.stdout:
         for r in records:
             print(json.dumps(r))
+        return 0
+
+    if args.firestore and not upload_to_firestore(records):
+        return 1
+
+    if args.no_local:
         return 0
 
     os.makedirs(args.out_dir, exist_ok=True)
