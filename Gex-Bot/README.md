@@ -27,8 +27,14 @@ Verified live on 2026-09-04:
 RESULT: all checks passed -- GexBot connectivity confirmed
 ```
 
-Access level: **all 60 tickers × all 3 expiry scopes** returned 200. No
-tier restriction was hit.
+Access level: **Classic package** — `gex_zero`, `gex_one` and `gex_full`
+across all 60 tickers. `state` (delta/gamma/vanna/charm by strike),
+`orderflow`, historical downloads and WebSocket are **not** included; they
+return `403 {"error":"Classic package does not have access."}`.
+
+Classic is the same tier Freddy Siento uses for the strategy in the research
+below, so it covers his primary model. His secondary *convexity* model reads
+the volatility surface and would likely need **State** or **Research**.
 
 ### The one gotcha
 
@@ -69,11 +75,16 @@ No dependencies — stdlib only.
 
 ## What the API gives us
 
-One endpoint family: `GET /{ticker}/classic/{zero|one|full}`, plus a
-public `GET /tickers`. Each response is a ~3 KB snapshot containing spot,
-the gamma flip level, call/put walls computed both by open interest and
-by session volume, net GEX, and a per-strike gamma ladder with five
-prior readings per strike.
+Base URL `https://api.gex.bot/v2`. On our tier: `GET /{ticker}/classic/
+{zero|one|full}`, plus public `GET /tickers` and `GET /{package}/categories`.
+Each response is a ~3 KB snapshot containing spot, the gamma flip level,
+call/put walls computed both by open interest and by session volume, net
+GEX, and a per-strike gamma ladder with five prior readings per strike.
+
+Beyond our tier the API also offers `state` (per-strike delta, gamma, vanna,
+charm), `orderflow`, historical downloads, WebSocket streaming, and a
+separate *gexbot research* product on its own key. Full picture in
+[`docs/gexbot-platform-guide.md`](docs/gexbot-platform-guide.md).
 
 Two things matter for how we build on this:
 
@@ -100,21 +111,31 @@ trusted for live levels.
 
 ## Phase 2 — open questions
 
-Not yet investigated:
-
-1. **Refresh cadence during RTH.** Unmeasured. Determines whether this
-   can drive intraday decisions or only pre-session level marking.
-2. **Cross-validation against CBOE.** Do GexBot's walls agree with the
+1. **Which scope is Siento's "90-day open interest"?** He reads 90-day OI at
+   09:30 ET to see how the whole market is positioned for the day. That does
+   not map cleanly onto `zero` / `one` / `full` — `full` is "all expiries",
+   not a 90-day window. **This is the biggest blocker to implementing his
+   model** and needs resolving against the platform UI or support.
+2. **Refresh cadence during RTH.** Partly answered: the feed is static
+   outside cash hours, and volume fields populate once the session trades
+   (`sum_gex_vol` went 0 → 311,384 between our pre-open and mid-session
+   checks). The actual tick interval is still unmeasured.
+3. **Cross-validation against CBOE.** Do GexBot's walls agree with the
    levels the existing `GEX&OI` pipeline computes?
-3. **What `zero_gamma` does once populated**, and how it behaves relative
+4. **What `zero_gamma` does once populated**, and how it behaves relative
    to the walls.
-4. **`max_priors` semantics.** Six prior readings of the major levels —
-   the interval between them is unknown, so level *migration* through the
-   session is not yet readable.
-5. **Rate limits.** No documented limit; none hit during probing.
-6. **The strategy itself** — trading between major gamma levels: entry
-   logic, level invalidation, and how gamma regime (net positive vs
-   negative) changes the playbook.
+5. **`max_priors` semantics.** Six prior readings of the major levels — the
+   interval between them is unknown. If it is a fixed cadence this is
+   exactly the level-*migration* signal Siento describes (a put wall moving
+   5550 → 5530 mid-session), so it is worth decoding.
+6. **Backtest the actual claim.** Does price reverse at the largest OI gamma
+   level, in the first two hours, often enough to matter? His 75% is
+   self-reported on a sponsored podcast — it is a hypothesis, not a
+   baseline.
+7. **Encode the slope rule.** Fast approach → wait for reclaim; slow
+   approach → take the level. This is the one discretionary element in his
+   model and needs a quantitative definition.
+8. **Rate limits.** No documented limit; none hit during probing.
 
 ## Layout
 
@@ -122,8 +143,24 @@ Not yet investigated:
 Gex-Bot/
 ├── README.md
 ├── docs/
-│   └── api-reference.md        # endpoint map, schema, auth findings
+│   ├── api-reference.md            # endpoint map, schema, auth, tier codes
+│   └── gexbot-platform-guide.md    # what GexBot is, packages, concepts
+├── youtube-research/
+│   ├── README.md                   # video index + how to pull transcripts
+│   ├── vtt_to_text.py              # VTT -> clean de-duplicated text
+│   ├── transcripts/                # raw .vtt + cleaned .txt
+│   └── analysis/                   # written analysis per video
 └── scripts/
-    ├── gexbot_client.py        # client library (stdlib only)
-    └── check_connection.py     # Phase 1 verification script
+    ├── gexbot_client.py            # client library (stdlib only)
+    └── check_connection.py         # Phase 1 verification script
 ```
+
+## Research
+
+- [`youtube-research/`](youtube-research/) — transcripts and analysis of
+  practitioners explaining how they trade these levels. Currently: the
+  Chart Fanatics episode with **Freddy Siento**, a ~20-year institutional
+  market maker who trades NQ off SPX/NDX gamma levels
+  ([analysis](youtube-research/analysis/chart-fanatics-freddy-siento.md)).
+- [`docs/gexbot-platform-guide.md`](docs/gexbot-platform-guide.md) — what
+  GexBot computes, its packages, and the core concepts.

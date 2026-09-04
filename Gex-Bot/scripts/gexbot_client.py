@@ -5,6 +5,9 @@ Auth is an `Authorization: Bearer <token>` header. The `?key=` query
 parameter documented in some places is NOT accepted by this API and
 returns 401 -- see docs/api-reference.md.
 
+Our token is on the Classic package, so only the /classic/ endpoints are
+available; /state/ and /orderflow/ return 403.
+
 Stdlib only, no dependencies.
 """
 
@@ -16,7 +19,7 @@ import urllib.error
 import urllib.request
 from dataclasses import dataclass
 
-BASE_URL = "https://api.gexbot.com"
+BASE_URL = "https://api.gex.bot/v2"
 TOKEN_ENV_VAR = "GEX_BOT_API_TOKEN"
 
 # Aggregation scopes accepted by /{ticker}/classic/{scope}
@@ -31,6 +34,10 @@ class GexBotError(RuntimeError):
 
 class GexBotAuthError(GexBotError):
     """401 -- token missing, malformed, or not sent as a Bearer header."""
+
+
+class GexBotTierError(GexBotError):
+    """403 -- endpoint exists but is outside this token's subscription package."""
 
 
 @dataclass(frozen=True)
@@ -100,6 +107,11 @@ class GexBotClient:
                 raise GexBotAuthError(
                     f"401 Unauthorized for {path}. The token was rejected -- "
                     "check it is current and sent as an Authorization: Bearer header."
+                ) from exc
+            if exc.code == 403:
+                raise GexBotTierError(
+                    f"403 Forbidden for {path}. The endpoint exists but is "
+                    "outside this token's package (ours is Classic)."
                 ) from exc
             if exc.code == 404:
                 raise GexBotError(

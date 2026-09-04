@@ -1,10 +1,43 @@
 # GexBot API Reference
 
-Derived by probing the live API on 2026-09-04. There is no public OpenAPI
-spec or `/docs` route (`/docs` returns 404), so everything below was
-established empirically.
+Derived by probing the live API on 2026-09-04, then corrected against the
+official OpenAPI spec repo (`github.com/nfa-llc/gexbot-openapi`).
 
-Base URL: `https://api.gexbot.com`
+> **Corrections to the first version of this file.** Phase 1 probing found
+> a real but incomplete picture, and two claims here were wrong:
+>
+> - The base URL is **`https://api.gex.bot/v2`**, not `https://api.gexbot.com`.
+>   The latter resolves and serves the same `classic` data, which is why the
+>   error went unnoticed.
+> - "One data family, everything else 404" was wrong. `state`, `orderflow`,
+>   historical download and WebSocket endpoints all exist. They returned 404
+>   only because they were probed on the un-prefixed host with wrong paths;
+>   on `/v2` they return **403** — a tier boundary, not absence.
+>
+> There **is** a public OpenAPI spec (OpenAPI 3.0.1). See
+> `gexbot-platform-guide.md` for the full product and tier picture.
+
+Base URL: `https://api.gex.bot/v2`
+
+## Our access tier: Classic
+
+Out-of-tier requests return an explicit, diagnosable error:
+
+```
+GET /v2/spx/state/zero
+403 {"error":"Classic package does not have access."}
+```
+
+We have `gex_zero`, `gex_one`, `gex_full` on all 60 tickers. We do **not**
+have `state` (delta/gamma/vanna/charm by strike), `orderflow`, historical
+downloads or WebSocket. Distinguish the status codes:
+
+| Code | Meaning |
+|---|---|
+| 401 | Token missing or sent the wrong way (see below) |
+| 403 | Token fine, endpoint outside our package |
+| 400 | Endpoint exists, bad category/package combination |
+| 404 | Path genuinely does not exist |
 
 ## Authentication
 
@@ -66,10 +99,25 @@ The only data family that exists. Ticker is case-insensitive
 All three return an **identical schema**; only the aggregation scope
 differs. Verified 200 across all tested tickers × all three scopes.
 
-**404 on everything else.** These were probed and do not exist:
-`/{t}/gex/*`, `/{t}/oi/*`, `/{t}/volume/*`, `/{t}/greeks/*`,
-`/{t}/state`, `/{t}/maxchange`, and scopes `two`, `three`, `all`,
-`week`, `month`.
+Other scope spellings (`two`, `three`, `all`, `week`, `month`) and invented
+paths (`/{t}/gex/*`, `/{t}/oi/*`, `/{t}/volume/*`, `/{t}/maxchange`) do 404.
+But note the distinction the first draft of this file missed:
+
+| Path | Code | Reading |
+|---|---|---|
+| `/v2/{t}/state/{gamma,vanna,charm,delta}` | 403 | exists, needs State package |
+| `/v2/{t}/orderflow/orderflow` | 403 | exists, needs Orderflow package |
+| `/v2/{t}/orderflow/zero` | 400 | exists, invalid category/package combo |
+| `/v2/{package}/categories` | 200 | public, enumerates the package |
+
+`/{package}/categories` is the cheapest way to see what a tier contains
+without holding it:
+
+```
+/v2/classic/categories   -> ["gex_full","gex_zero","gex_one"]
+/v2/state/categories     -> the above + delta_/gamma_/vanna_/charm_{zero,one}
+/v2/orderflow/categories -> ["orderflow"]
+```
 
 ## Response schema
 
