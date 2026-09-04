@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T14:37:52.528Z",
+  "generatedAt": "2026-09-04T17:54:49.205Z",
   "yields": {
     "US10Y": 4.79,
     "US2Y": 4.39,
@@ -34,23 +34,23 @@
     "openInterestChange": 83175
   },
   "etfFlows": {
-    "gldTonnes": 914.3,
-    "gldWoWChange": 7.5,
+    "gldTonnes": 917.1,
+    "gldWoWChange": 2.8,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4432.765,
-    "XAGUSD": 66.085,
-    "EURUSD": 1.16182,
-    "USDJPY": 155.883,
-    "USDCHF": 0.80991,
-    "USDCNH": 6.70765,
-    "GBPUSD": 1.35147,
-    "USDCAD": 1.38526,
-    "USDSEK": 9.55699,
-    "US500": 7723.9,
-    "GER40": 26065.25,
-    "UK100": 10822.95,
+    "XAUUSD": 4419.3,
+    "XAGUSD": 65.901,
+    "EURUSD": 1.16141,
+    "USDJPY": 156.104,
+    "USDCHF": 0.80993,
+    "USDCNH": 6.70834,
+    "GBPUSD": 1.35139,
+    "USDCAD": 1.38397,
+    "USDSEK": 9.57455,
+    "US500": 7707.4,
+    "GER40": 26050.15,
+    "UK100": 10827.05,
     "ADR_14day": 117,
     "ADR_usedToday": 125.3,
     "goldSilverRatio": 67.1
@@ -66,22 +66,28 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "US sanctions Turkish bank, two subsidiaries to pressure Iran - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-04T15:38:23.000Z",
+      "hoursAgo": 2.3
+    },
+    {
       "headline": "2-year yield rises to highest since January 2025 after hot jobs report boosts expectations that the Fed could raise rates",
       "source": "CNBC",
       "publishedAt": "2026-09-04T13:09:26.000Z",
-      "hoursAgo": 1.5
+      "hoursAgo": 4.8
+    },
+    {
+      "headline": "US equity funds record second weekly outflow on Iran tensions, high yields - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-04T13:05:44.000Z",
+      "hoursAgo": 4.8
     },
     {
       "headline": "Diesel hits record high as Ukraine and Iran wars knock out refineries, fueling inflation worries",
       "source": "CNBC",
       "publishedAt": "2026-09-04T12:40:43.000Z",
-      "hoursAgo": 2
-    },
-    {
-      "headline": "US pressure on Iran starting to tell, as sanctions and blockade bite - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-03T14:59:00.000Z",
-      "hoursAgo": 23.6
+      "hoursAgo": 5.2
     }
   ],
   "briefing": null
