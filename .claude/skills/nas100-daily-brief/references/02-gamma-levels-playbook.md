@@ -194,6 +194,62 @@ equal highs/lows, PDH/PDL) as the **sweep**, and a wall as the **reclaim
 confirmation**. Sweeping into a wall and reclaiming it is a strong long; buying
 a first touch of one is not.
 
+## How option levels reach your CFD chart
+
+Options are struck on a different instrument from the one you trade, so every
+level is converted before it is printed. Three price series are involved:
+
+| | What it is | Where it sits |
+|---|---|---|
+| **NDX** | the cash index — what options are actually struck on | the base |
+| **NQ** | Nasdaq futures | NDX + basis (~+31pts at the time of writing) |
+| **NAS100** | your broker's CFD | tracks NQ, plus the broker's own spread/markup |
+
+**The conversion is a single additive offset, recomputed every scan:**
+
+```
+offset      = your_CFD_price − the_index_spot_the_levels_came_from
+chart_level = option_level + offset
+```
+
+**Additive, not multiplicative, and that is deliberate.** Futures fair value is
+`cash × e^((r−q)T)`, which is a *ratio*. Applying a ratio would scale distant
+levels differently from near ones. The error from using an offset instead is
+`(level − spot) × basis%`: with a ~0.1% basis, a level 400pts away is wrong by
+**0.4pts**. Below the width of the spread, and far below the width of any level
+worth marking.
+
+**Which index you anchor to does not matter, and that is provable.** GEXBot
+publishes both `NDX` and `NQ_NDX`, where `NQ_NDX = NDX + a constant`. Anchor to
+either and the constant cancels:
+
+```
+NDX_level + (CFD − NDX_spot)  ==  (NDX_level + k) + (CFD − NDX_spot − k)
+```
+
+Verified live: both routes produced **29,472.5** to the decimal. So the choice
+of endpoint is a matter of convenience, not accuracy.
+
+### The part that DOES go wrong: mismatched timestamps
+
+The offset is only meaningful if both prices are from **the same moment**.
+Subtract a stale feed's spot from a live CFD price and the difference silently
+absorbs every point price moved in between — and that error lands on **every
+level equally**.
+
+Measured 2026-09-05 against a 1,160-minute-old feed: the live-price offset was
+−57.5, the correctly matched one −43.0. **14.5 points of error on every level**,
+on a quiet weekend. Through a gap it would be far worse.
+
+The brief now looks up the CFD price at the feed's own timestamp whenever the
+feed is more than 10 minutes old, and prints which basis it used. This is the
+same defect as the stale NDX cash print that once inverted a trade call, and it
+is fixed the same way — by pairing like with like.
+
+**Practically:** mark the levels exactly as printed. They are already in your
+CFD's price space, and the header line tells you what offset was applied and
+whether it was matched or live.
+
 ## Honest limits
 
 **Open interest is T+1 — for everyone.** This is the single most important thing

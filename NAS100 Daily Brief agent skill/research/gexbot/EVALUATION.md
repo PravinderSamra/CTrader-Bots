@@ -143,3 +143,73 @@ The tick-stream review concluded the most valuable purchase would be a
 samples, not a backtestable history. It makes each future day richer; it does
 not make past days available. Both observations stand, and they are answers to
 different problems.
+
+---
+
+## 8. The sibling `Gex-Bot/` project already records this — do not duplicate it
+
+Discovered 2026-09-05. There is a separate project in this repo,
+`Gex-Bot/`, with a Firestore recorder that captures GEXBot snapshots every
+5 minutes through the US cash session.
+
+**It was built to answer the same question as H12.** From its own
+`docs/recorder.md`:
+
+> *"so we can answer from our own data the question the two source videos
+> disagree on: does price respect the volume-derived walls or the
+> open-interest-derived walls?"*
+
+Each record stores **both readings side by side and takes no view on which is
+correct** — `major_pos_vol` / `major_neg_vol` / `sum_gex_vol` against
+`major_pos_oi` / `major_neg_oi` / `sum_gex_oi`, plus derived
+`regimes_agree` / `walls_agree` flags so disagreement is directly queryable.
+
+Two collections: `gex_snapshots` (append-only, doc id `{TICKER}_{scope}_{ts}`)
+and `gex_latest`. Default symbols include **`ndx` and `nq_ndx`** at `zero`
+(0DTE) scope.
+
+### State as of 2026-09-05
+
+- The workflow `gexbot-record.yml` is on `main` with a cron of **every 5
+  minutes, 13:00–21:59 UTC, Mon–Fri**.
+- Runs 3–6 failed on Firestore credential handling. **Run 7, today at
+  14:48Z, succeeded.**
+- So the machinery works as of today, and **the archive starts now.** There is
+  no history to backtest against yet.
+
+### What this changes
+
+**H12 does not need a bespoke collection pipeline.** The right move is to read
+the sibling project's archive rather than build a second one — two recorders
+of the same feed would drift, and the register already carries that lesson from
+the two-graders problem.
+
+It also partly answers the constraint the tick-stream evaluation identified.
+That review concluded the binding limit was the *calendar* — evidence
+accumulating one session at a time. This does not retrieve the past, but from
+now on it accumulates at **5-minute resolution** rather than one scan a day,
+which is a large multiple on how fast H12 and H13 can be settled.
+
+### The blocker, and it is small
+
+**This session cannot read Firestore.** `FIREBASE_SERVICE_ACCOUNT_JSON` is a
+*repository* secret, available to Actions but not exported into the Claude
+environment, and `google-cloud-firestore` is not installed here.
+
+To use the archive from the brief, that credential needs to be available to the
+session the same way `GEX_BOT_API_TOKEN` is. Until then the brief reads GEXBot
+**live** on each scan, which works and is what it does today — it simply cannot
+look back at days when no scan was run.
+
+### One correction the sibling project's docs forced
+
+Its `docs/recorder.md` describes `max_priors` as a
+**1/5/10/15/30-minute max-change panel**, while `docs/api-reference.md` calls
+the per-strike array "5 prior gex readings". **Those are not the same claim**,
+and a multi-horizon panel read as an equal-interval series would produce a
+confident and wrong trend.
+
+`gexbot.wall_drift()` was already written to be ordering-agnostic — it reports
+which strikes appear and the spread between them, nothing about direction — and
+the caveat in `gexbot.py` now records why that must stay true until one of the
+two descriptions is confirmed.
