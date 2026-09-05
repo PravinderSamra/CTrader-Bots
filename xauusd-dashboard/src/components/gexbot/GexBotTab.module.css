@@ -2,10 +2,64 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--gap);
+  gap: 10px;
   padding: 14px 20px 24px;
   overflow-y: auto;
 }
+
+/* ── Header ──────────────────────────────────────────────── */
+
+.head {
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-2);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.spot {
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.1;
+  margin-top: 2px;
+}
+
+.headRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.toggle {
+  display: flex;
+  gap: 2px;
+  background: var(--surface-2);
+  border-radius: var(--radius);
+  padding: 2px;
+}
+
+.toggleOn,
+.toggleOff {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  padding: 5px 11px;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+
+.toggleOn  { background: var(--gold-dim); color: var(--gold); }
+.toggleOff { background: transparent;     color: var(--text-dim); }
+.toggleOff:hover { color: var(--text-muted); }
+
+.fresh { font-size: 10px; color: var(--text-dim); }
+.stale { font-size: 10px; color: var(--amber); font-weight: 600; }
 
 /* ── Banners ─────────────────────────────────────────────── */
 
@@ -13,7 +67,7 @@
 .staleBanner {
   font-size: 12px;
   line-height: 1.5;
-  padding: 10px 14px;
+  padding: 9px 13px;
   border-radius: var(--radius);
 }
 
@@ -23,8 +77,8 @@
   border: 1px solid rgba(224, 85, 72, 0.25);
 }
 
-/* Amber rather than red: stale levels outside RTH are expected, not broken.
-   They still must not be mistaken for live ones, hence the prominence. */
+/* Amber, not red: outside RTH a frozen feed is expected, not broken — but it
+   still must not be mistaken for live. */
 .staleBanner {
   color: var(--text);
   background: var(--amber-dim);
@@ -40,70 +94,21 @@
   text-align: center;
 }
 
-.empty code {
-  font-family: var(--mono);
-  color: var(--text-muted);
-}
+.empty code { font-family: var(--mono); color: var(--text-muted); }
 
-/* ── Cards ───────────────────────────────────────────────── */
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: var(--gap);
-}
-
-.cardHead {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.spot {
-  font-size: 22px;
-  font-weight: 500;
-  color: var(--text);
-  line-height: 1.1;
-  margin-top: 2px;
-}
-
-.cardMeta {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 3px;
-  font-size: 10px;
-}
-
-.scope {
-  font-family: var(--mono);
-  letter-spacing: 0.06em;
-  color: var(--gold);
-  background: var(--gold-dim);
-  border-radius: var(--radius-sm);
-  padding: 2px 6px;
-}
-
-.fresh { color: var(--text-dim); }
-.stale { color: var(--amber); font-weight: 600; }
-
-/* ── Regime ──────────────────────────────────────────────── */
+/* ── Regime strip ────────────────────────────────────────── */
 
 .regimeRow {
+  margin-top: 4px;
   display: flex;
+  align-items: flex-end;
   flex-wrap: wrap;
-  gap: 4px 14px;
-  margin: 10px 0 4px;
+  gap: 6px 20px;
   padding-bottom: 8px;
   border-bottom: 1px solid var(--border-2);
 }
 
-.regimeItem {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
+.regimeItem { display: flex; flex-direction: column; gap: 1px; }
 
 .regimeKey {
   font-size: 9px;
@@ -112,116 +117,170 @@
   color: var(--text-dim);
 }
 
-.regimeVal {
-  font-size: 12px;
-}
+.regimeVal { font-size: 13px; color: var(--text); }
 
-.regimeVal em {
-  font-style: normal;
+.pos { color: var(--green); }
+.neg { color: var(--red); }
+
+.legend {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 10px;
   color: var(--text-dim);
-  margin-left: 3px;
 }
 
-.awaiting {
-  font-size: 11px;
-  font-style: italic;
-  color: var(--text-dim);
+.legendDot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  box-shadow: 0 0 0 2px var(--surface);
 }
 
-.pos  { color: var(--green); }
-.neg  { color: var(--red); }
-.flat { color: var(--text-dim); }
-
-/* The two readings implying opposite regimes is the unresolved question at
-   the heart of this project, so it is called out rather than smoothed over. */
-.disagree {
-  align-self: center;
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--amber);
-  background: var(--amber-dim);
-  border-radius: var(--radius-sm);
-  padding: 3px 7px;
-  cursor: help;
-}
-
-/* ── Price ladder ────────────────────────────────────────── */
-/* Ordered high to low so it reads like a chart's price axis, which is how
-   these numbers get used — copied onto a chart as horizontal lines. */
+/* ── Ladder ──────────────────────────────────────────────── */
+/* High price at top, like a chart's price axis: these numbers get copied
+   onto a chart as horizontal lines, so the order must match. */
 
 .ladder {
   display: flex;
   flex-direction: column;
-  margin-top: 6px;
+  gap: 2px;               /* surface gap between bars, not borders */
+  margin-top: 2px;
 }
 
-.rung {
+.row,
+.spotRow,
+.zgRow {
   display: grid;
-  grid-template-columns: 1fr auto auto;
-  align-items: baseline;
-  gap: 8px;
-  padding: 5px 8px;
-  border-left: 2px solid transparent;
-  border-radius: var(--radius-sm);
+  grid-template-columns: 84px 1fr 108px;
+  align-items: center;
+  gap: 10px;
 }
 
-.rung + .rung { margin-top: 2px; }
+.row { padding: 1px 0; border-radius: var(--radius-sm); }
+.row:hover { background: var(--surface-2); }
 
-.rungPrice {
-  font-size: 13px;
-  color: var(--text);
-}
-
-.rungLabel {
-  font-size: 10px;
+.strike {
+  font-size: 11px;
   color: var(--text-muted);
-  white-space: nowrap;
-}
-
-.reading {
-  font-style: normal;
-  font-size: 9px;
-  letter-spacing: 0.04em;
-  color: var(--text-dim);
-  margin-left: 5px;
-  padding: 1px 4px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-}
-
-.rungDist {
-  font-size: 10px;
-  color: var(--text-dim);
-  min-width: 46px;
   text-align: right;
 }
 
-.call { border-left-color: var(--red);   background: var(--red-dim); }
-.put  { border-left-color: var(--green); background: var(--green-dim); }
-.zero { border-left-color: var(--blue);  background: var(--blue-dim); }
-
-/* Spot is the reference the distances are measured from, so it is the one
-   row that should be unmistakable at a glance. */
-.spotRung,
-.rung.spot {
-  border-left-color: var(--gold);
-  background: var(--gold-dim);
+.track {
+  position: relative;
+  height: 13px;
 }
 
-.rung.spot .rungPrice { color: var(--gold-light); font-weight: 600; }
-.rung.spot .rungLabel { color: var(--gold); }
+/* Hairline zero axis — recessive, solid, one shade off the surface. */
+.axis {
+  position: absolute;
+  left: 50%; top: 0; bottom: 0;
+  width: 1px;
+  background: var(--border);
+}
+
+.bar {
+  position: absolute;
+  top: 3px;
+  height: 7px;            /* thin mark */
+  border-radius: 1px;
+}
+
+/* Rounded on the data end only, anchored to the zero baseline. */
+.barPos {
+  background: var(--green);
+  border-radius: 1px 4px 4px 1px;
+}
+
+.barNeg {
+  background: var(--red);
+  border-radius: 4px 1px 1px 4px;
+}
+
+/* Prior samples: where this strike's gamma sat 1→30 minutes ago. The 2px
+   surface ring keeps them legible where they overlap the bar. */
+.prior {
+  position: absolute;
+  top: 50%;
+  width: 8px; height: 8px;
+  margin-left: -4px;
+  margin-top: -4px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  box-shadow: 0 0 0 2px var(--surface);
+  pointer-events: none;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+}
+
+.rankC,
+.rankP {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 1px 5px;
+  border-radius: var(--radius-sm);
+  min-width: 22px;
+  text-align: center;
+}
+
+.rankC { color: var(--green); background: var(--green-dim); }
+.rankP { color: var(--red);   background: var(--red-dim); }
+
+.sizeLabel { font-size: 10px; color: var(--text-muted); }
+
+.building  { color: var(--green); font-size: 9px; }
+.unwinding { color: var(--amber); font-size: 9px; }
+
+/* ── Reference markers ───────────────────────────────────── */
+/* Dashed here is deliberate and conventional: these are thresholds, not
+   gridlines. */
+
+.spotRow, .zgRow { height: 14px; }
+
+.spotLine, .zgLine {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.spotLine span, .zgLine span {
+  display: block;
+  width: 100%;
+  border-top: 1px dashed;
+}
+
+.spotLine span { border-color: var(--gold); }
+.zgLine span   { border-color: var(--blue); }
+
+.spotPrice { color: var(--gold-light); font-weight: 600; }
+.zgPrice   { color: var(--blue); }
+
+.spotTag, .zgTag {
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.spotTag { color: var(--gold); }
+.zgTag   { color: var(--blue); }
 
 /* ── Footnote ────────────────────────────────────────────── */
 
 .note {
   font-size: 11px;
-  line-height: 1.6;
+  line-height: 1.65;
   color: var(--text-dim);
-  margin: 6px 2px 0;
-  max-width: 68ch;
+  margin: 8px 2px 0;
+  max-width: 78ch;
 }
 
 .note strong { color: var(--text-muted); font-weight: 600; }
