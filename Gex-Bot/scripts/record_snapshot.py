@@ -74,8 +74,10 @@ def build_record(snap, fetched_at: str) -> dict:
         "min_dte": raw.get("min_dte"),
         "sec_min_dte": raw.get("sec_min_dte"),
         "delta_risk_reversal": snap.delta_risk_reversal,
-        # the max-change panel: [strike, change] at 1/5/10/15/30 min lookbacks
-        "max_priors": raw.get("max_priors"),
+        # The max-change panel. GexBot sends [[strike, change], ...] but
+        # Firestore forbids an array inside an array, so each pair becomes a
+        # map. Named rather than positional, which is clearer to query anyway.
+        "max_priors": _pairs_to_maps(raw.get("max_priors")),
         # derived, for convenience when analysing
         "regime_vol": _sign(snap.sum_gex_vol),
         "regime_oi": _sign(snap.sum_gex_oi),
@@ -88,6 +90,25 @@ def build_record(snap, fetched_at: str) -> dict:
             None if not snap.zero_gamma else _sign(snap.spot - snap.zero_gamma)
         ),
     }
+
+
+def _pairs_to_maps(pairs):
+    """Turn [[strike, change], ...] into [{"strike": .., "change": ..}, ...].
+
+    Firestore rejects an array whose elements are themselves arrays
+    ("Nested arrays are not allowed"), so the pairs cannot be stored as sent.
+    Anything not shaped like a pair is passed through untouched rather than
+    guessed at, so an unexpected payload surfaces instead of being mangled.
+    """
+    if not isinstance(pairs, list):
+        return pairs
+    out = []
+    for p in pairs:
+        if isinstance(p, (list, tuple)) and len(p) == 2:
+            out.append({"strike": p[0], "change": p[1]})
+        else:
+            out.append(p)
+    return out
 
 
 def _sign(x) -> int:

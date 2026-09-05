@@ -181,12 +181,26 @@ class TestEncodeValue(unittest.TestCase):
             ]}},
         )
 
-    def test_nested_array_like_max_priors(self):
-        # max_priors is a list of [strike, change] pairs -- the real shape.
-        out = encode_value([[7715, 823541.587]])
-        inner = out["arrayValue"]["values"][0]["arrayValue"]["values"]
-        self.assertEqual(inner[0], {"integerValue": "7715"})
-        self.assertEqual(inner[1], {"doubleValue": 823541.587})
+    def test_nested_arrays_are_rejected(self):
+        """Firestore refuses these, so the encoder must too.
+
+        An earlier version of this test asserted that [[7715, 823541.587]]
+        encoded "correctly" -- it checked the shape our encoder produced, not
+        whether Firestore would take it. GexBot's max_priors is exactly that
+        shape, and the run failed with "Nested arrays are not allowed". The
+        pairs are converted to maps upstream (_pairs_to_maps); this guards the
+        boundary so a nested array can never be sent again.
+        """
+        with self.assertRaises(TypeError) as ctx:
+            encode_value([[7715, 823541.587]])
+        self.assertIn("nested arrays", str(ctx.exception).lower())
+
+    def test_array_of_maps_is_allowed(self):
+        # The shape max_priors is converted into.
+        out = encode_value([{"strike": 7715, "change": 823541.587}])
+        fields = out["arrayValue"]["values"][0]["mapValue"]["fields"]
+        self.assertEqual(fields["strike"], {"integerValue": "7715"})
+        self.assertEqual(fields["change"], {"doubleValue": 823541.587})
 
     def test_map(self):
         self.assertEqual(
@@ -221,7 +235,8 @@ class TestRealRecord(unittest.TestCase):
             "sum_gex_vol": 311384.75,
             "sum_gex_oi": -5668.521,
             "min_dte": 0,
-            "max_priors": [[7715, 823541.587], [7720, -628489.845]],
+            "max_priors": [{"strike": 7715, "change": 823541.587},
+                           {"strike": 7720, "change": -628489.845}],
             "regime_vol": 1,
             "regimes_agree": False,         # the bool trap
             "walls_agree": False,
@@ -242,3 +257,30 @@ class TestRealRecord(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+
+class TestPairsToMaps(unittest.TestCase):
+    """GexBot's max_priors reshaping (record_snapshot._pairs_to_maps)."""
+
+    def setUp(self):
+        import record_snapshot
+        self.convert = record_snapshot._pairs_to_maps
+
+    def test_real_max_priors_shape(self):
+        # Exactly what the API returned in a live SPX sample.
+        raw = [[7715, 823541.587], [7715, -204253.609], [7720, -628489.845]]
+        out = self.convert(raw)
+        self.assertEqual(out[0], {"strike": 7715, "change": 823541.587})
+        self.assertEqual(out[2], {"strike": 7720, "change": -628489.845})
+        # and the result must now survive encoding
+        encode_value(out)
+
+    def test_quiet_market_zeros(self):
+        # Pre-open the panel is all [0, 0] -- must not be special-cased away.
+        self.assertEqual(self.convert([[0, 0]]), [{"strike": 0, "change": 0}])
+
+    def test_none_and_odd_shapes_pass_through(self):
+        self.assertIsNone(self.convert(None))
+        self.assertEqual(self.convert([]), [])
+        # Not a pair -> passed through rather than guessed at.
+        self.assertEqual(self.convert([[1, 2, 3]]), [[1, 2, 3]])
