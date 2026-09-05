@@ -158,6 +158,17 @@ def encode_value(v):
     if isinstance(v, str):
         return {"stringValue": v}
     if isinstance(v, (list, tuple)):
+        for x in v:
+            # Firestore rejects an array whose elements are arrays with
+            # "Nested arrays are not allowed". Fail here, naming the fix,
+            # rather than sending a payload the API will refuse. Wrap each
+            # element in a map instead (see _pairs_to_maps in
+            # record_snapshot.py).
+            if isinstance(x, (list, tuple)):
+                raise TypeError(
+                    "Firestore does not allow nested arrays; wrap each inner "
+                    "array in a map before encoding"
+                )
         return {"arrayValue": {"values": [encode_value(x) for x in v]}}
     if isinstance(v, dict):
         return {"mapValue": {"fields": encode_fields(v)}}
