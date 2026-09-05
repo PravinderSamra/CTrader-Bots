@@ -83,6 +83,34 @@ note whenever the two readings disagree on regime.
 
 Default symbols: `spx`, `nq_ndx`, `es_spx`, `ndx` at `zero` (0DTE) scope.
 
+### The strike ladder
+
+`gex_latest` also carries the full 142-strike ladder, one map per strike:
+
+```
+{ strike, gex_vol, gex_oi, priors: [5 earlier samples] }
+```
+
+It is written **only** to `gex_latest`, which is overwritten each poll and so
+stays a fixed ~40 KB (Firestore's document cap is 1 MiB). Appending it to
+`gex_snapshots` instead would add that much per symbol per poll — of the order
+of a gigabyte a month — to answer a question the compact record already
+answers.
+
+`priors` is what lets a wall be read as *building* or *being taken off*, and is
+what GexBot's own ladder plots as dots. Two caveats worth knowing:
+
+- **The ordering is inferred.** The GexFuture walkthrough describes the panel
+  as 1, 5, 10, 15 and 30 minutes, and the array has exactly five entries, so
+  index 0 is taken to be the most recent. The API does not state this, and it
+  could not be checked against a frozen weekend feed. Confirming it needs one
+  RTH session: poll twice five minutes apart and check the earlier reading
+  reappears at the expected index.
+- **They track the volume series, not open interest.** Verified against live
+  data — a far-OTM strike's priors equalled its `gex_vol` exactly while its
+  `gex_oi` differed. The dashboard therefore hides the dots on the
+  open-interest reading rather than borrowing another quantity's history.
+
 ## Volume against write quota
 
 4 symbols × 12 polls/hour × ~9 hours ≈ 430 snapshot writes/day, plus the same

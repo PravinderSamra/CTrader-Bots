@@ -17,6 +17,21 @@ export interface MaxPrior {
   change: number
 }
 
+/** One strike in the gamma ladder.
+ *
+ *  `priors` holds five earlier samples of this strike's gamma (1, 5, 10, 15
+ *  and 30 minutes ago, most recent first). They are what makes a wall
+ *  readable as building or being taken off, and are plotted as dots against
+ *  the same axis as the bar -- the feature GexBot's own ladder is built
+ *  around. The ordering is inferred from the GexFuture walkthrough rather
+ *  than stated by the API; see Gex-Bot/docs/recorder.md. */
+export interface LadderRung {
+  strike: number
+  gex_vol: number
+  gex_oi: number
+  priors: number[]
+}
+
 export interface GexSnapshot {
   /** When our recorder fetched it (ISO). */
   fetched_at: string
@@ -53,6 +68,10 @@ export interface GexSnapshot {
   regimes_agree: boolean
   walls_agree: boolean
   spot_vs_zero_gamma: number | null
+
+  /** Full per-strike ladder. Present on gex_latest only -- the history
+   *  collection stays compact deliberately. */
+  ladder?: LadderRung[]
 }
 
 /** Which of the two readings the UI is currently showing. */
