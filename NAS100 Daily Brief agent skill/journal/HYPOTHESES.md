@@ -428,6 +428,59 @@ better than the tool did.** The measurement was wrong, not just the conclusion.
 
 ---
 
+## H12 — Does the VOLUME-weighted wall hold better than the OI-weighted one?
+
+**Claim.** GEXBot's volume-weighted GEX identifies levels price respects better
+than our open-interest-weighted walls do.
+
+**Why it matters.** It is the question that decides whether GEXBot *replaces*
+the ladder or merely enriches it — and the volume lens is the one thing the
+CBOE pipeline cannot build honestly, because volume carries no side.
+
+**Evidence so far (0 sessions).** None. The only snapshot available at the time
+of writing was Friday 4 Sep's close, frozen, so nothing could be graded.
+
+What that snapshot *suggests*, and it is suggestion only: price closed at
+29,542.65; the volume lens put its heaviest concentration at 29,525–29,550,
+while our OI view showed 29,525 at approximately zero. One frozen observation,
+after the fact, on an expiry day. **It proves nothing** — it is the reason to
+run the test, not the result of it.
+
+**Threshold.** 5 sessions. Persist a GEXBot ladder alongside ours on every scan
+and grade both with `gex_retro.py --ladder` and `role_reversal()` — the same
+rule for both, so they cannot drift.
+
+**Status: OBSERVING. Do not swap the engine.**
+
+---
+
+## H13 — Is GEXBot's `zero_gamma` a real flip, or a fallback to spot?
+
+**Claim.** `zero_gamma` may not be an independently computed flip.
+
+**Why it matters.** The flip decides which of the two entry models the brief
+recommends. It is the single highest-consequence number in the scan, and H7
+already established that our own flip is unstable enough to be the largest
+contributor to a wrong call.
+
+**Evidence so far (1 frozen snapshot).** On 2026-09-04's close `zero_gamma`
+equalled `spot` **exactly** (29,542.65) for both `gex_full` and `gex_zero`. It
+differed for `gex_one` (29,470.0), which argues it is computed rather than
+stubbed, and Friday was an expiry with heavy pinning — so equality is
+plausible. But a computed value landing exactly on spot to two decimals earns
+suspicion, not the benefit of the doubt.
+
+For reference, our own flip on the same snapshot was **29,323.2 — 219 points
+away**.
+
+**Threshold.** 5 RTH samples. Record `zero_gamma`, their `spot`, and our flip on
+every scan. **If it tracks spot within a point every time, it is not a flip**
+and must never be used as one.
+
+**Status: OBSERVING. Do not use as the flip.**
+
+---
+
 ## Rejected after testing (recorded so they are not re-proposed)
 
 **R1 — Separate 0DTE-only gamma walls.** *Tested and rejected 2026-08-25.*

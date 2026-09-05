@@ -32,6 +32,7 @@ thing ships rather than after.
 | **Live wall estimation** — inferring today's open interest from today's volume | Collecting · **0 graded days** | [live-walls/METHOD.md](live-walls/METHOD.md) |
 | **Per-strike gamma chart** | **Shipped** | [gamma-chart.md](gamma-chart.md) |
 | **tick-stream.xyz** — vendor evaluation | Evaluated, nothing bought | [tickstream/EVALUATION.md](tickstream/EVALUATION.md) |
+| **GEXBot** — account held, client built | Additive only; H12/H13 open | [gexbot/EVALUATION.md](gexbot/EVALUATION.md) |
 
 **Nothing in an open thread is promoted into the scan until its accuracy log
 earns it.** The estimator writes only to `research/`; the brief does not read it.

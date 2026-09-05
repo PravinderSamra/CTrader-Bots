@@ -72,6 +72,25 @@ format; re-extracting or rewording it is how the output drifts.
 | `retro chart` | `python3 gex_retro.py --ladder auto --to <day>` | Grades a past CHART's ranked walls (C1-C3 / P1-P3). Different object from the board — see `research/gamma-chart.md`. Refuses if no ladder predates the target day |
 | `review` | `python3 review_day.py` **+ `python3 gex_retro.py`** | Skip the brief. Run the retrospective in the FOREGROUND, report it, and attach the retro chart. **After 21:00 UTC also run the live-wall grading — see below** |
 
+### Weekly GEXBot comparison (H12) — runs at the end-of-day review
+
+Every scan now persists TWO GEXBot ladders beside our own —
+`research/gexbot/ladders/<stamp>-vol.json` and `-oi.json`. Grade all three the
+same way, with the same rule:
+
+```
+python3 gex_retro.py --ladder <our ladder>            --to <day>
+python3 gex_retro.py --ladder <gexbot ...-vol.json>   --to <day>
+python3 gex_retro.py --ladder <gexbot ...-oi.json>    --to <day>
+```
+
+Record held / broke / chopped and the `role_reversal` excursion for each, in
+`journal/HYPOTHESES.md` under H12. **Do not swap the level board on a good
+week** — 5 sessions, same as every other threshold.
+
+Also log for H13 each scan: their `zero_gamma`, their `spot`, and our flip. If
+their flip tracks their spot within a point every time, it is not a flip.
+
 ### Before a review, PULL. Then read these two files. Every time.
 
 ```
