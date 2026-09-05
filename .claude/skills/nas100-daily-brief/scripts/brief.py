@@ -25,7 +25,66 @@ def gather(last_scan_iso=None):
     bs = bias_engine.score(mc, lv, gx)
     gx["expiry_structure"] = gex_levels.expiry_structure(gx)
     ctx = session_context.context(last_scan_iso=last_scan_iso)
-    return {"levels": lv, "macro": mc, "gex": gx, "bias": bs, "context": ctx}
+    # GEXBot is ADDITIVE and OPTIONAL. It informs nothing above it — not the
+    # bias score, not the level board, not the flip. If the token is missing or
+    # the feed is down, `gexbot` is None and the brief is byte-identical to
+    # what it was before. A paid feed must never be able to cost us a scan.
+    gb = None
+    try:
+        import gexbot
+        if gexbot.available():
+            gb = gexbot_block(gx, lv["price"])
+    except Exception as e:
+        gb = {"error": f"{type(e).__name__}: {e}"}
+    return {"levels": lv, "macro": mc, "gex": gx, "bias": bs, "context": ctx,
+            "gexbot": gb}
+
+
+def gexbot_block(gx, cfd_price):
+    """GEXBot's view of the same book, in our CFD price space.
+
+    Their levels are in NDX space; we shift by (our CFD price - their spot) so
+    everything lands on the trader's chart. Their field names are kept as
+    THEIRS — `major_neg` is the most negative strike anywhere, which is not our
+    put wall, and renaming it would repeat D4.
+    """
+    import gexbot
+    full = gexbot.levels("NDX", "gex_full")
+    if not full:
+        return {"error": gexbot.last_error() or "unavailable"}
+    off = round(cfd_price - full["spot"], 1)
+    out = {"offset_applied": off, "age_min": full["age_min"],
+           "our_flip": (gx.get("gamma_flip") or {}).get("nas100")}
+    for cat in ("gex_full", "gex_zero"):
+        lv = gexbot.levels("NDX", cat, offset=off)
+        if lv:
+            out[cat] = lv
+    out["drift"] = gexbot.wall_drift("NDX", "gex_full")
+    lad = gexbot.ladder("NDX", "gex_full", offset=off, span=400)
+    if lad:
+        out["ladder"] = lad
+        # Where the two lenses disagree is the whole point of having both —
+        # but only where the disagreement is MATERIAL. Without a magnitude
+        # floor the list fills with rows like "-2 by OI vs +2 by volume",
+        # which is noise wearing the costume of a signal and would bury the
+        # one row that mattered (29,472: -213 by OI against 44,814 by volume).
+        peak = max((abs(r["gex_vol"]) for r in lad), default=0) or 1
+        floor = peak * 0.02
+        dis = [r for r in lad
+               if r["gex_vol"] and r["gex_oi"]
+               and (r["gex_vol"] > 0) != (r["gex_oi"] > 0)
+               and abs(r["gex_vol"]) >= floor]
+        dis.sort(key=lambda r: -abs(r["gex_vol"]))
+        out["disagreements"] = dis[:5]
+        out["disagreement_floor"] = round(floor, 1)
+    # Persist BOTH lenses each scan. This is the raw material for H12: the same
+    # source, ranked two ways, graded by the same rule as our own ladder.
+    try:
+        out["saved"] = [gexbot.persist_ladder(offset=off, cfd_price=cfd_price,
+                                              weight=w) for w in ("vol", "oi")]
+    except Exception as e:
+        out["saved_error"] = f"{type(e).__name__}: {e}"
+    return out
 
 
 def level_board(d):
@@ -521,6 +580,94 @@ def secondary_walls_md(d, board):
     return o
 
 
+
+def gexbot_md(d):
+    """The volume-weighted view, rendered as enrichment beside our own board.
+
+    Framed around ONE question the CBOE pipeline cannot answer: our levels come
+    from open interest, which is yesterday's positioning published overnight.
+    This is the same book weighted by TODAY's trading. Where the two disagree is
+    where positioning has moved since the OCC last published — and that is the
+    only reason this section exists.
+    """
+    gb = d.get("gexbot")
+    if not gb:
+        return []
+    if gb.get("error"):
+        return [f"_[volume-weighted view unavailable: {gb['error']}]_\n"]
+    full = gb.get("gex_full")
+    if not full:
+        return []
+    o = ["## 7. Volume-weighted gamma — what TODAY's trading is building\n",
+         "_Every level above comes from **open interest**: yesterday's "
+         "positioning, published overnight by the OCC. The figures below are the "
+         "same option book weighted by **today's actual volume**. Where the two "
+         "disagree is where positioning has moved since the OCC last published — "
+         "which our own board structurally cannot see._\n"]
+    age = full.get("age_min")
+    if age is not None and age > 45:
+        o.append(f"> ⚠️ **This feed is {age:.0f} minutes old** — outside RTH it "
+                 f"holds the last close. Treat as context, not a live read.\n")
+    o.append("| | by OPEN INTEREST | by VOLUME (today) |")
+    o.append("|---|---|---|")
+    o.append(f"| Heaviest **positive** gamma | {full['major_pos_oi']:,.0f} | "
+             f"**{full['major_pos_vol']:,.0f}** |")
+    o.append(f"| Heaviest **negative** gamma | {full['major_neg_oi']:,.0f} | "
+             f"**{full['major_neg_vol']:,.0f}** |")
+    zero = gb.get("gex_zero")
+    if zero:
+        o.append(f"| 0DTE heaviest positive | {zero['major_pos_oi']:,.0f} | "
+                 f"**{zero['major_pos_vol']:,.0f}** |")
+    o.append("")
+    o.append(f"_These are GEXBot's own definitions: \"heaviest negative\" is the "
+             f"most negative strike **anywhere**, not a put wall below spot. It is "
+             f"not the same object as the PUT WALL on the board above._\n")
+
+    dr = gb.get("drift")
+    if dr and dr.get("distinct_strikes"):
+        if dr.get("moved"):
+            o.append(f"**The dominant strike is MOVING** — over the last "
+                     f"{len(dr['samples'])} samples it has sat at "
+                     f"{', '.join(f'{s:,.0f}' for s in dr['distinct_strikes'])} "
+                     f"(a {dr['range_pts']:.0f}pt spread). Walls are being built "
+                     f"or unwound; the board above is a snapshot and cannot show "
+                     f"this.\n")
+        else:
+            o.append(f"**The dominant strike is stable** at "
+                     f"{dr['distinct_strikes'][0]:,.0f} across "
+                     f"{len(dr['samples'])} samples — positioning is settled "
+                     f"there.\n")
+
+    dis = gb.get("disagreements") or []
+    if dis:
+        o.append("**Strikes where the two lenses disagree on SIGN** — open "
+                 "interest says one thing, today's trading says the other:\n")
+        o.append("| level | by OI | by volume | read |")
+        o.append("|---|---|---|---|")
+        for r in dis:
+            read = ("fresh BUYING of gamma here — acts as a brake that "
+                    "yesterday's book does not show"
+                    if r["gex_vol"] > 0 else
+                    "gamma being SOLD here — an accelerant the board above "
+                    "still shows as support")
+            o.append(f"| **{r['price']:,.0f}** | {r['gex_oi']:,.0f} | "
+                     f"{r['gex_vol']:,.0f} | {read} |")
+        o.append("")
+
+    ours = gb.get("our_flip")
+    if ours and full.get("zero_gamma"):
+        gap = full["zero_gamma"] - ours
+        flag = (" \u2014 **theirs equals their own spot exactly, which is "
+                "unverified (H13); do not trade off it**"
+                if full.get("zero_gamma_equals_spot") else "")
+        o.append(f"_Flip cross-check: ours **{ours:,.0f}**, theirs "
+                 f"**{full['zero_gamma']:,.0f}** ({gap:+,.0f}pts apart){flag}. "
+                 f"The board above uses OURS._\n")
+    o.append("_Research only — H12 and H13 are open. Nothing here feeds the "
+             "call, the level board or the fuel model._\n")
+    return o
+
+
 def markdown(d):
     lv, mc, gx, bs = d["levels"], d["macro"], d["gex"], d["bias"]
     px, f = lv["price"], lv["fuel"]
@@ -743,6 +890,9 @@ def markdown(d):
     for line in secondary_walls_md(d, board):
         A(line)
     A("")
+
+    for line in gexbot_md(d):
+        A(line)
 
     A("## 5. Events\n")
     up = mc["calendar"].get("upcoming_next_24h") or []

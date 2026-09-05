@@ -169,6 +169,69 @@ def wall_drift(ticker="NDX", category="gex_full"):
     }
 
 
+
+def persist_ladder(offset=0.0, cfd_price=None, root=None, weight="vol"):
+    """Write a GEXBot ladder in the SAME schema as our chart ladders.
+
+    Deliberately identical in shape so `gex_retro.py --ladder <path>` grades it
+    with the same rule — `review_day.grade_level` plus `role_reversal` — that
+    grades ours. Two graders would eventually disagree and there would be no
+    way to tell which was right; that lesson is already in the register.
+
+    `weight` picks which lens the C/P ranks are built from: "vol" is the point
+    of H12, "oi" is there so the same source can be graded both ways.
+    """
+    import datetime as _dt, json as _j, os as _os
+    d = fetch("NDX", "gex_full")
+    if not d or "strikes" not in d:
+        return None
+    root = root or _research_root()
+    _os.makedirs(root, exist_ok=True)
+    now = _dt.datetime.now(_dt.timezone.utc)
+    idx = 1 if weight == "vol" else 2
+    rows = [{"price": round(r[0] + offset, 1), "g": r[idx],
+             "gex_vol": r[1], "gex_oi": r[2]} for r in d["strikes"]]
+    pos = sorted([r for r in rows if r["g"] > 0], key=lambda r: -r["g"])[:3]
+    neg = sorted([r for r in rows if r["g"] < 0], key=lambda r: r["g"])[:3]
+    spot = d["spot"] + offset
+    doc = {
+        "schema": 1, "source": "gexbot", "weight": weight,
+        "book": "gexbot_" + weight,
+        "generated_utc": now.isoformat(timespec="seconds"),
+        "feed_timestamp": d.get("timestamp"),
+        "feed_age_min": (round((now.timestamp() - d["timestamp"]) / 60, 1)
+                         if d.get("timestamp") else None),
+        "spot": round(spot, 1),
+        "cfd_price": cfd_price,
+        "flip": round(d["zero_gamma"] + offset, 1),
+        "flip_equals_spot": d["zero_gamma"] == d["spot"],
+        "call_resistance": round(d["major_pos_" + weight] + offset, 1),
+        "put_support": round(d["major_neg_" + weight] + offset, 1),
+        "ranked_positive": [{"rank": f"C{n}", "price": r["price"],
+                             "net_$bn": r["g"], "oi": 0}
+                            for n, r in enumerate(pos, 1)],
+        "ranked_negative": [{"rank": f"P{n}", "price": r["price"],
+                             "net_$bn": r["g"], "oi": 0}
+                            for n, r in enumerate(neg, 1)],
+        "ladder": [{"price": r["price"], "net_$bn": r["g"],
+                    "gex_vol": r["gex_vol"], "gex_oi": r["gex_oi"],
+                    "call_oi": 0, "put_oi": 0} for r in rows],
+    }
+    path = _os.path.join(root, f"{now.strftime('%Y-%m-%d-%H%M')}-{weight}.json")
+    _j.dump(doc, open(path, "w"), indent=1)
+    return path
+
+
+def _research_root():
+    import os as _os
+    d = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                                       "..", "..", "..", ".."))
+    for base, _x, _y in _os.walk(d):
+        if base.endswith("NAS100 Daily Brief agent skill"):
+            return _os.path.join(base, "research", "gexbot", "ladders")
+    return _os.path.join(d, "research", "gexbot", "ladders")
+
+
 if __name__ == "__main__":
     import sys
     if not available():
