@@ -1,0 +1,227 @@
+.wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  padding: 14px 20px 24px;
+  overflow-y: auto;
+}
+
+/* ── Banners ─────────────────────────────────────────────── */
+
+.errorBanner,
+.staleBanner {
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+}
+
+.errorBanner {
+  color: var(--red);
+  background: var(--red-dim);
+  border: 1px solid rgba(224, 85, 72, 0.25);
+}
+
+/* Amber rather than red: stale levels outside RTH are expected, not broken.
+   They still must not be mistaken for live ones, hence the prominence. */
+.staleBanner {
+  color: var(--text);
+  background: var(--amber-dim);
+  border: 1px solid rgba(212, 144, 56, 0.28);
+}
+
+.staleBanner strong { color: var(--amber); }
+
+.empty {
+  font-size: 12px;
+  color: var(--text-dim);
+  padding: 28px 0;
+  text-align: center;
+}
+
+.empty code {
+  font-family: var(--mono);
+  color: var(--text-muted);
+}
+
+/* ── Cards ───────────────────────────────────────────────── */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--gap);
+}
+
+.cardHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.spot {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.1;
+  margin-top: 2px;
+}
+
+.cardMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  font-size: 10px;
+}
+
+.scope {
+  font-family: var(--mono);
+  letter-spacing: 0.06em;
+  color: var(--gold);
+  background: var(--gold-dim);
+  border-radius: var(--radius-sm);
+  padding: 2px 6px;
+}
+
+.fresh { color: var(--text-dim); }
+.stale { color: var(--amber); font-weight: 600; }
+
+/* ── Regime ──────────────────────────────────────────────── */
+
+.regimeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin: 10px 0 4px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-2);
+}
+
+.regimeItem {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.regimeKey {
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.regimeVal {
+  font-size: 12px;
+}
+
+.regimeVal em {
+  font-style: normal;
+  font-size: 10px;
+  color: var(--text-dim);
+  margin-left: 3px;
+}
+
+.awaiting {
+  font-size: 11px;
+  font-style: italic;
+  color: var(--text-dim);
+}
+
+.pos  { color: var(--green); }
+.neg  { color: var(--red); }
+.flat { color: var(--text-dim); }
+
+/* The two readings implying opposite regimes is the unresolved question at
+   the heart of this project, so it is called out rather than smoothed over. */
+.disagree {
+  align-self: center;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--amber);
+  background: var(--amber-dim);
+  border-radius: var(--radius-sm);
+  padding: 3px 7px;
+  cursor: help;
+}
+
+/* ── Price ladder ────────────────────────────────────────── */
+/* Ordered high to low so it reads like a chart's price axis, which is how
+   these numbers get used — copied onto a chart as horizontal lines. */
+
+.ladder {
+  display: flex;
+  flex-direction: column;
+  margin-top: 6px;
+}
+
+.rung {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: baseline;
+  gap: 8px;
+  padding: 5px 8px;
+  border-left: 2px solid transparent;
+  border-radius: var(--radius-sm);
+}
+
+.rung + .rung { margin-top: 2px; }
+
+.rungPrice {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.rungLabel {
+  font-size: 10px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.reading {
+  font-style: normal;
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  color: var(--text-dim);
+  margin-left: 5px;
+  padding: 1px 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.rungDist {
+  font-size: 10px;
+  color: var(--text-dim);
+  min-width: 46px;
+  text-align: right;
+}
+
+.call { border-left-color: var(--red);   background: var(--red-dim); }
+.put  { border-left-color: var(--green); background: var(--green-dim); }
+.zero { border-left-color: var(--blue);  background: var(--blue-dim); }
+
+/* Spot is the reference the distances are measured from, so it is the one
+   row that should be unmistakable at a glance. */
+.spotRung,
+.rung.spot {
+  border-left-color: var(--gold);
+  background: var(--gold-dim);
+}
+
+.rung.spot .rungPrice { color: var(--gold-light); font-weight: 600; }
+.rung.spot .rungLabel { color: var(--gold); }
+
+/* ── Footnote ────────────────────────────────────────────── */
+
+.note {
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--text-dim);
+  margin: 6px 2px 0;
+  max-width: 68ch;
+}
+
+.note strong { color: var(--text-muted); font-weight: 600; }
