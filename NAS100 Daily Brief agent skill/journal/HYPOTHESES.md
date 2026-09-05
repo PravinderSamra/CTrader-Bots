@@ -450,6 +450,25 @@ run the test, not the result of it.
 and grade both with `gex_retro.py --ladder` and `role_reversal()` — the same
 rule for both, so they cannot drift.
 
+**Update 2026-09-05 — Firestore archive read. Count UNCHANGED at 0 sessions.**
+The sibling recorder's archive became readable from a Claude session today, and
+was read (`research/gexbot/EVALUATION.md` §10). It contains **one poll of the
+frozen weekend feed** — the same Friday 4 Sep close already described above.
+Its four documents are two underlyings, not four: `NQ_NDX` and `ES_SPX` are
+exact constant offsets of `NDX` and `SPX`. **No new sample was added.** The
+first scheduled run is Monday 2026-09-07; accumulation starts there.
+
+Recorded because a working pipe reads like progress and is not one: the
+threshold is 5 *sessions*, and 5-minute polling does not convert one day into
+many. Twelve correlated polls of one session remain one session.
+
+One structural limit found, and it shapes the test: `gex_snapshots` never
+stores the 142-strike ladder (only the overwritten `gex_latest` does), so a
+retro **ranked C1–C3/P1–P3** comparison is impossible on days without a scan.
+The **wall** comparison — `major_pos_vol`/`major_neg_vol` against
+`major_pos_oi`/`major_neg_oi` — is fully available, and that is this
+hypothesis's actual claim. See `research/gexbot/PROPOSAL-ARCHIVE-RETRO.md`.
+
 **Status: OBSERVING. Do not swap the engine.**
 
 ---
@@ -476,6 +495,20 @@ away**.
 **Threshold.** 5 RTH samples. Record `zero_gamma`, their `spot`, and our flip on
 every scan. **If it tracks spot within a point every time, it is not a flip**
 and must never be used as one.
+
+**Update 2026-09-05 — read direct from Firestore. Count UNCHANGED at 1 frozen
+snapshot.** The archived record is the same 4 Sep close, now read field by
+field rather than off a live call. It adds one argument, and only one:
+
+On the *same feed at the same instant*, `zero_gamma` equals `spot` to the cent
+on NDX (29542.65) but sits **5.35 below** it on SPX (7712.50 vs 7717.85). A
+field stubbed to spot could not differ on SPX. So `zero_gamma` is **computed,
+not a stub** — the direction the `gex_one` observation above already pointed.
+
+That kills the *stub* reading. It does **not** rehabilitate the number: a
+computed flip that lands exactly on spot is still unusable as a flip, and on
+NDX — the only symbol that matters here — it did exactly that. Still one
+snapshot, still an expiry Friday, still 1 of 5.
 
 **Status: OBSERVING. Do not use as the flip.**
 

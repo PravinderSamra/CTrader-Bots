@@ -276,3 +276,146 @@ to build, but needs no new credential anywhere.
 **Until one of these exists the brief reads GEXBot live on every scan**, which
 works today. What it cannot do is look back at days when no scan was run —
 which is the entire reason to want the archive.
+
+---
+
+## 10. Firestore read achieved — and what the archive actually contains
+
+Checked 2026-09-05, after `FIREBASE_SERVICE_ACCOUNT_JSON` was added to the
+session environment (option **B** from §9). This section records a **real
+read**, not an inference.
+
+### The credential is well formed
+
+It parses as **strict JSON**. `json.loads(raw)` succeeds with no fallback, and
+`firestore_sink._candidates()` yields only `"as stored"` — the lenient
+`strict=False` repair path in `Gex-Bot/scripts/firestore_sink.py` is **not**
+exercised. `private_key` decodes to 28 real newlines from properly escaped
+`\n`, and begins and ends with intact PEM guards.
+
+This matters because the sink would have *worked either way*: it repairs a
+mangled secret and only warns on stderr. A secret that works via the fallback
+is still stored malformed. **This one is not** — the secret is clean.
+
+Two container fixes were needed, neither of them a project defect:
+
+- `google-cloud-firestore` is absent (as §9 predicted) — `pip install` fixes it.
+- The distro `cryptography` 41.0.7 at `/usr/lib/python3/dist-packages`
+  **panics** (`pyo3_runtime.PanicException`) the moment `google.oauth2` imports
+  it, which kills any credentialed call before it is made. It cannot be
+  uninstalled (Debian-managed, no RECORD file);
+  `pip install --upgrade --ignore-installed cryptography` shadows it and
+  resolves it. Worth knowing, because the failure looks like a credential
+  problem and is not.
+
+gRPC reaches Firestore through the agent proxy without special handling.
+
+### What is in there: four documents, one instant
+
+| | |
+|---|---|
+| `gex_latest` | **4 docs** — `SPX_zero`, `NDX_zero`, `NQ_NDX_zero`, `ES_SPX_zero` |
+| `gex_snapshots` | **4 docs** — same four symbols, one timestamp each |
+| Distinct `source_ts` | **2** — `1788551999` and `1788552000` |
+| Date range | a single point: **2026-09-04 19:59:59–20:00:00Z** (Friday's close) |
+| Distinct `fetched_at` | **1** — `2026-09-05T14:48:53Z` |
+| Scopes | `zero` only |
+
+So the archive holds **exactly one poll**: run 7, the manual `workflow_dispatch`
+that §8 recorded as the first success. The two `source_ts` values are one
+second apart and split by underlying, not by time — SPX/ES_SPX at `:20:00:00`,
+NDX/NQ_NDX at `:19:59:59`. That is per-symbol feed staleness, **not** a refresh.
+
+**Nothing has accumulated since.** The cron is `*/5 13-21 * * 1-5` and
+2026-09-05 is a **Saturday**, so no scheduled run has ever fired. The first one
+is Monday 2026-09-07 at 13:00Z.
+
+§8's "the archive starts now" was right about the machinery and optimistic
+about the calendar: what started was the *capability*, not the accumulation.
+
+### The four documents are two observations, not four
+
+`NQ_NDX` is `NDX` plus a constant **30.82**, and `ES_SPX` is `SPX` plus a
+constant **6.13** — verified across `spot` and every wall, exactly. They are
+basis-shifted representations of the same computation, so they carry **no
+independent information**. The archive holds **two** underlyings at **one**
+instant — and that instant is the same frozen Friday close already recorded
+against H12 and H13.
+
+**No new evidence exists. The session count for both hypotheses is unchanged.**
+
+### The refresh-cadence question is NOT settled
+
+`recorder.md` expected that "once a session of data exists, the distinct
+`source_ts` values will show how often the feed actually updates". That test
+**cannot run yet**: one poll of a frozen weekend feed yields one `source_ts`
+per symbol and zero refresh events. Measuring an interval needs at least two
+distinct values from the same symbol during RTH.
+
+The 5-minute cron therefore remains **a guess, not a derived figure**. The
+measurement becomes possible after the first RTH session — Monday 2026-09-07 —
+and the query is one line: count distinct `source_ts` per ticker per day and
+diff them.
+
+### The ladder is missing from `gex_latest`, and the reason is benign
+
+`recorder.md` says `gex_latest` carries the full 142-strike ladder. It does
+not — the `ladder` key is **absent entirely** from all four documents.
+
+This is not a defect. `git log` settles it:
+
+| | |
+|---|---|
+| `faa8dd5` 14:46:14Z | "Store max_priors as maps" — contains **no** ladder code |
+| **run 7** 14:48:53Z | the only successful write, from that commit |
+| `30ccd88` 15:42:04Z | adds `build_ladder()` and `{**r, "ladder": ladder}` |
+
+The ladder-writing code landed **54 minutes after** the only run that has ever
+succeeded. The next successful poll will write it. Nothing needs fixing —
+but until Monday proves it, the ladder path remains, like the Firestore write
+path before it, **unexecuted end to end**.
+
+### The one structural limit, and it constrains the H12 design
+
+**`gex_snapshots` does not carry the ladder — by design, permanently.** Per
+`recorder.md`, the 142-strike ladder goes *only* to `gex_latest`, which is
+overwritten every poll, because appending it to the history would cost of the
+order of a gigabyte a month.
+
+The consequence for H12 is precise, and it cuts both ways:
+
+- **Answerable from the archive**: the wall comparison. `major_pos_vol` /
+  `major_neg_vol` against `major_pos_oi` / `major_neg_oi`, plus `zero_gamma`,
+  are all in the compact per-timestamp record. This *is* H12's headline claim.
+- **Not answerable from the archive**: the ranked **C1–C3 / P1–P3 ladder**
+  comparison. Per-strike history is never retained, so a retro grading of the
+  full ranked ladder on a day no scan was run is **impossible** — not merely
+  unimplemented. Only `gex_latest`'s single live snapshot ever holds it.
+
+Any wiring that promises retro ladder grading is promising something the
+archive cannot supply. The wall grading it *can* supply is enough for H12.
+
+### The frozen snapshot, read directly
+
+| doc | spot | zero_gamma | Δ | pos_vol | pos_oi | neg_vol | neg_oi | regimes_agree | walls_agree |
+|---|---|---|---|---|---|---|---|---|---|
+| `NDX_zero` | 29542.65 | 29542.65 | **0.00** | 29530 | 29500 | 29580 | 29600 | True | False |
+| `NQ_NDX_zero` | 29573.47 | 29573.47 | **0.00** | 29560.82 | 29530.82 | 29610.82 | 29630.82 | True | False |
+| `SPX_zero` | 7717.85 | 7712.50 | 5.35 | 7720 | 7715 | 7710 | 7720 | False | False |
+| `ES_SPX_zero` | 7723.98 | 7718.63 | 5.35 | 7726.13 | 7721.13 | 7716.13 | 7726.13 | False | False |
+
+One observation is worth flagging for **H13**, without promoting it to
+evidence. On the *same feed at the same instant*, `zero_gamma` equals `spot`
+to the cent on NDX but sits **5.35 below** it on SPX. A field that is stubbed
+to spot could not differ on SPX. So the field is **computed, not a stub** —
+which is the direction H13's `gex_one` observation already pointed.
+
+That is an argument against the *stub* reading. It is **not** an argument that
+NDX's value is a usable flip: a computed value that lands exactly on spot is
+still useless as a flip, and on NDX — the only symbol that matters here — it
+did exactly that. `walls_agree` is **False on all four**, which is the
+disagreement H12 exists to adjudicate, and the volume walls (50pts apart)
+bracket spot far more tightly than the OI walls (100pts apart).
+
+**H13's threshold remains 5 RTH samples. This is still the same one frozen
+snapshot. Status unchanged: OBSERVING, do not use as the flip.**
