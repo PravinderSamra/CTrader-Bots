@@ -5,13 +5,30 @@ cash session, so we can answer from our own data the question the two source
 videos disagree on: **does price respect the volume-derived walls or the
 open-interest-derived walls?**
 
-## Why it has to run before we can analyse anything
+## What this recorder is for
 
-The GexBot Classic API serves only a **live snapshot**. There is no history
-endpoint on our tier — every history path returns 404, and `/negotiate`
-returns 403, meaning those endpoints exist but are gated to the Quant
-package. **Anything not recorded as it happens is gone.** We cannot go back
-and reconstruct last week; we can only start now.
+> **Correction (2026-09-05).** This section previously stated there was no
+> history endpoint on our tier and that past sessions were unrecoverable.
+> **That was wrong.** It came from probing guessed paths (`/hist`,
+> `/history`, `/download`, …), getting 404s, and mistaking "my guesses were
+> wrong" for "the capability does not exist". The real endpoint is
+> `/hist/eod/{TICKER}`, which returns the last completed session at 1–2
+> second resolution — roughly 200× denser than this recorder. The full
+> account is in [`../research/volume-vs-open-interest.md`](../research/volume-vs-open-interest.md).
+
+The Classic *live* endpoint serves only a current snapshot, so this recorder
+samples it every 5 minutes to drive the dashboard.
+
+It is **no longer the primary research instrument**. That job belongs to
+`archive_eod.py` and `.github/workflows/gexbot-eod.yml`, which capture each
+completed session at full resolution. This recorder remains useful as the
+live feed the dashboard reads, and as a same-day record if an EOD download is
+ever missed.
+
+One limit does still hold, for a narrower reason: the EOD report's `date`
+parameter is ignored and only ever serves the latest session, and the dated
+archive is Quant-tier (403). So a session missed is still a session lost —
+one day at a time, rather than all of history.
 
 ## Why Firestore rather than committing to the repo
 
@@ -77,6 +94,9 @@ max_priors                                      <- 1/5/10/15/30-min max-change p
 regime_vol, regime_oi, regimes_agree, walls_agree, spot_vs_zero_gamma
 ```
 
+`delta_risk_reversal` is also stored but is documented by the vendor as a
+discontinued metric, so it should not be relied on.
+
 The derived `regimes_agree` / `walls_agree` flags exist so disagreement is
 queryable directly rather than recomputed later. The recorder also prints a
 note whenever the two readings disagree on regime.
@@ -100,12 +120,10 @@ answers.
 `priors` is what lets a wall be read as *building* or *being taken off*, and is
 what GexBot's own ladder plots as dots. Two caveats worth knowing:
 
-- **The ordering is inferred.** The GexFuture walkthrough describes the panel
-  as 1, 5, 10, 15 and 30 minutes, and the array has exactly five entries, so
-  index 0 is taken to be the most recent. The API does not state this, and it
-  could not be checked against a frozen weekend feed. Confirming it needs one
-  RTH session: poll twice five minutes apart and check the earlier reading
-  reappears at the expected index.
+- **The ordering is confirmed** (2026-09-05), no longer inferred. GexBot's
+  own field reference documents the max-change intervals as 1, 5, 10, 15 and
+  30 minutes, with the sub-fields ordered most-recent-first. Index 0 is the
+  most recent sample.
 - **They track the volume series, not open interest.** Verified against live
   data — a far-OTM strike's priors equalled its `gex_vol` exactly while its
   `gex_oi` differed. The dashboard therefore hides the dots on the

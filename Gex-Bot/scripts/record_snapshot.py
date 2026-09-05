@@ -2,14 +2,16 @@
 """
 Record GexBot gamma snapshots as a time series.
 
-Purpose: the GexBot Classic API returns only a *live* snapshot -- there is no
-history endpoint on our tier, so past sessions are unrecoverable. This script
-captures the levels as they happen so we can answer, from our own data, the
-question the two source videos disagree on: does price respect the
-VOLUME-derived walls or the OPEN-INTEREST-derived walls?
+Purpose: the Classic *live* endpoint returns only a current snapshot, so this
+samples it every 5 minutes to drive the dashboard, recording BOTH the volume
+and open-interest readings side by side and taking no view on which is correct.
 
-It therefore records BOTH readings on every sample, side by side, and takes no
-view on which is correct.
+This is NOT the primary research instrument, despite an earlier belief that it
+was. That belief rested on the claim that no history existed on this tier,
+which was wrong -- /hist/eod/{TICKER} serves each completed session at 1-2
+second resolution, roughly 200x denser than this. archive_eod.py handles that.
+The mistake and its correction are written up in
+../research/volume-vs-open-interest.md.
 
 Storage is a JSON Lines file per UTC day -- append-only, one line per
 (ticker, scope) sample, trivially greppable and safe to interrupt.
@@ -101,10 +103,9 @@ def build_ladder(snap) -> list[dict]:
 
     `priors` is the feature that makes a wall readable as *building* or *being
     taken off*: five earlier samples of that strike's gamma, which is what the
-    dots in GexBot's own ladder plot. Ordering is taken to be most-recent
-    first (1, 5, 10, 15, 30 minutes ago) per the GexFuture walkthrough. That
-    ordering is an inference, not something the API states, and could not be
-    checked against a frozen weekend feed -- see docs/recorder.md.
+    dots in GexBot's own ladder plot. Ordering is most-recent first
+    (1, 5, 10, 15, 30 minutes ago), confirmed against the vendor's published
+    field reference rather than inferred -- see docs/recorder.md.
     """
     rows = []
     for r in snap.strikes:

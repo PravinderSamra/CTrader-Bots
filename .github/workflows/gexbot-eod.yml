@@ -1,0 +1,63 @@
+name: Archive GexBot session
+
+# Downloads the completed session's EOD report and stores the derived research
+# data in Firestore.
+#
+# Why this runs daily and cannot be caught up later: /hist/eod/{TICKER} serves
+# only the most recent completed session. Its `date` parameter is accepted but
+# IGNORED — every date returns the same file, confirmed by reading the
+# content-disposition filename. The dated archive that would allow backfill,
+# /v2/hist/{TICKER}/{PACKAGE}/{CATEGORY}/{DATE}, returns 403 on the Classic
+# package. So a session missed here is a session lost, exactly like the live
+# feed. See Gex-Bot/research/volume-vs-open-interest.md.
+#
+# The ~20 MB raw report is deliberately not retained. This repository is
+# public and the report is paid vendor data; the job derives the session's
+# statistics plus a downsampled spot-and-walls series (~330 KB) and stores
+# only that, privately.
+
+on:
+  schedule:
+    # 22:30 UTC weekdays — comfortably after the cash close under both EDT
+    # (20:00 UTC) and EST (21:00 UTC), leaving room for the report to publish.
+    - cron: '30 22 * * 1-5'
+  workflow_dispatch:
+
+concurrency:
+  group: gexbot-eod
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15      # a ~20 MB download plus parsing
+    strategy:
+      fail-fast: false       # one ticker failing must not lose the others
+      matrix:
+        ticker: [nq_ndx, spx]
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install --quiet google-auth requests
+
+      - name: Archive session
+        env:
+          GEX_BOT_API_TOKEN: ${{ secrets.GEX_BOT_API_TOKEN }}
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          python3 Gex-Bot/scripts/archive_eod.py \
+            --ticker ${{ matrix.ticker }} \
+            --scope gex_zero \
+            --firestore

@@ -23,8 +23,8 @@ export interface MaxPrior {
  *  and 30 minutes ago, most recent first). They are what makes a wall
  *  readable as building or being taken off, and are plotted as dots against
  *  the same axis as the bar -- the feature GexBot's own ladder is built
- *  around. The ordering is inferred from the GexFuture walkthrough rather
- *  than stated by the API; see Gex-Bot/docs/recorder.md. */
+ *  around. Ordering confirmed against the vendor's own field reference:
+ *  1, 5, 10, 15, 30 minutes, most recent first. */
 export interface LadderRung {
   strike: number
   gex_vol: number
