@@ -88,8 +88,14 @@ Record held / broke / chopped and the `role_reversal` excursion for each, in
 `journal/HYPOTHESES.md` under H12. **Do not swap the level board on a good
 week** — 5 sessions, same as every other threshold.
 
-Also log for H13 each scan: their `zero_gamma`, their `spot`, and our flip. If
-their flip tracks their spot within a point every time, it is not a flip.
+Also log for H13 each scan: their `zero_gamma`, their `spot`, and our flip —
+**for QQQ as well as NDX**. QQQ is the same underlying and its `zero_gamma` is
+known to differ from spot when NDX's does not, so it is a useful control.
+
+`zero_gamma` is **computed, not stubbed** — verified 2026-09-05, it differs
+from spot on SPX, RUT and QQQ. The open question is narrower than it was: why
+the one symbol we trade landed exactly on spot. It is still not usable as a
+flip.
 
 ### Before a review, PULL. Then read these two files. Every time.
 

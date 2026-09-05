@@ -446,9 +446,43 @@ while our OI view showed 29,525 at approximately zero. One frozen observation,
 after the fact, on an expiry day. **It proves nothing** — it is the reason to
 run the test, not the result of it.
 
-**Threshold.** 5 sessions. Persist a GEXBot ladder alongside ours on every scan
-and grade both with `gex_retro.py --ladder` and `role_reversal()` — the same
-rule for both, so they cannot drift.
+### The archive splits this hypothesis in two — verified 2026-09-05
+
+The sibling recorder stores the **compact record only**: the per-strike ladder
+goes to `gex_latest` (overwritten each poll) and is deliberately never appended
+to `gex_snapshots`, because doing so would cost roughly 1 GB/month.
+
+| Sub-question | Retro-answerable from the archive? |
+|---|---|
+| Does the **volume wall** hold better than the **OI wall**? | **Yes** — `major_pos_vol` / `major_neg_vol` / `major_pos_oi` / `major_neg_oi` are in every record |
+| Do the two lenses disagree, and when? | **Yes** — `regimes_agree` / `walls_agree` are precomputed |
+| Does the ranked **C1–C3 / P1–P3 ladder** hold? | **No, and never will** — per-strike history is not retained, by permanent design |
+
+The headline claim is the first row, so the archive is sufficient for H12 *as
+written*. The trap is that `gex_retro.py --ladder` grades a **ranked ladder
+file**; pointing it at the archive would silently promise a comparison the data
+cannot support. Any archive reader must use a separate path that marks its
+output walls-only, so the limit is enforced rather than remembered.
+
+**Threshold.** 5 sessions. For live scans, persist a GEXBot ladder alongside
+ours and grade both with `gex_retro.py --ladder` and `role_reversal()` — same
+rule for both, so they cannot drift. For archived days, walls only.
+
+**Count UNCHANGED at 0 of 5.** Nothing has been recorded since the single
+manual run against a frozen Friday feed; the cron is Mon–Fri and 5 Sep was a
+Saturday. **Four documents per poll are two observations**, not four —
+`NQ_NDX` is `NDX` plus a constant 30.82 and `ES_SPX` is `SPX` plus 6.13,
+verified exact across every wall field, so the futures rows carry no
+independent information.
+
+**Update 2026-09-05 — the archive was read directly, not inferred.** The
+sibling recorder's Firestore archive became readable from a Claude session and
+was read field by field (`research/gexbot/EVALUATION.md` §11); the split above
+is verified against the stored documents rather than against the recorder's
+code. It changes no count: the archive held that one frozen Friday poll and
+nothing else. A design for the walls-only reader — the one that must not reuse
+`--ladder` — is in `research/gexbot/PROPOSAL-ARCHIVE-RETRO.md`, unbuilt until
+Monday's data exists to test it against.
 
 **Status: OBSERVING. Do not swap the engine.**
 
@@ -473,9 +507,38 @@ suspicion, not the benefit of the doubt.
 For reference, our own flip on the same snapshot was **29,323.2 — 219 points
 away**.
 
+**The stub theory is dead — verified 2026-09-05.** On the *same feed at the same
+instant*, `zero_gamma` differs from `spot` on three of four symbols:
+
+| | spot | zero_gamma | diff |
+|---|---|---|---|
+| **NDX** | 29,542.65 | 29,542.65 | **0.00** |
+| SPX | 7,717.85 | 7,712.50 | −5.35 |
+| RUT | 2,975.32 | 2,970.08 | −5.24 |
+| QQQ | 718.95 | 717.34 | −1.61 |
+
+**A field stubbed to spot could not differ on SPX, RUT and QQQ.** So it is
+computed. QQQ matters most here: it is the *same underlying* as NDX and still
+returns −1.61, which rules out "their Nasdaq calculation degenerates" as the
+explanation.
+
+**This does not rehabilitate the number.** It reframes the question from *"is it
+a stub?"* (answered: no) to *"why does the one symbol we trade land exactly on
+spot?"* — for which coincidence on a heavily pinned expiry Friday remains the
+leading explanation, and one snapshot cannot distinguish it from anything else.
+A computed flip sitting on spot is just as unusable as a stubbed one.
+
+**Count UNCHANGED at 1 of 5.** A working credential and a cleaner argument both
+read like progress; neither is a second observation.
+
 **Threshold.** 5 RTH samples. Record `zero_gamma`, their `spot`, and our flip on
-every scan. **If it tracks spot within a point every time, it is not a flip**
-and must never be used as one.
+every scan — **and record it for QQQ alongside NDX**, since a same-underlying
+control is now known to be informative.
+
+*Provenance: the four-symbol table above was read out of the archived 4 Sep
+record field by field (`research/gexbot/EVALUATION.md` §11), on one feed at one
+instant — which is what makes the cross-symbol comparison valid. It is still
+that same single snapshot.*
 
 **Status: OBSERVING. Do not use as the flip.**
 

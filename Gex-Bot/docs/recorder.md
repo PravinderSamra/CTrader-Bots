@@ -144,15 +144,43 @@ python3 scripts/__tests__/test_firestore_encoding.py
 
 ## Known limitations
 
-- **The Firestore write path has not been executed end to end.** No service
-  account credentials were available in the development session, so the
-  encoder is unit-tested and both failure paths (missing and malformed
-  credentials) are verified, but the first real write will happen on the
-  first manual run. Check that run's log.
+- ~~**The Firestore write path has not been executed end to end.**~~
+  **Resolved 2026-09-05.** The first manual run (`workflow_dispatch`, 14:48Z)
+  wrote successfully, and the result has since been **read back** from a
+  Claude session with `FIREBASE_SERVICE_ACCOUNT_JSON` in its environment:
+  4 documents in each collection, field types intact. The encoder is correct
+  in practice, not only in unit test. The stored secret parses as **strict
+  JSON** — the lenient repair path in `firestore_sink.py` is not exercised.
 - **The RTH refresh cadence is still unmeasured**, so 5 minutes is a
   reasonable guess, not a derived figure. Once a session of data exists, the
   distinct `source_ts` values will show how often the feed actually updates,
   and the cron can be relaxed or tightened accordingly.
+
+  **Status as of 2026-09-05: still unmeasured, and not yet measurable.** The
+  archive holds exactly one poll — the manual run above — of a *frozen*
+  weekend feed. That yields one `source_ts` per symbol and **zero refresh
+  events**, and an interval cannot be derived from a single observation. The
+  cron is `*/5 13-21 * * 1-5` and 2026-09-05 is a Saturday, so no scheduled
+  run has fired yet; the first is Monday 2026-09-07 13:00Z. Re-run the check
+  after one full RTH session — count distinct `source_ts` per ticker per day
+  and diff consecutive values.
+
+- **The strike ladder has never actually been written.** `build_ladder()` and
+  the `{**r, "ladder": ladder}` write landed in `30ccd88` (15:42Z), **54
+  minutes after** the only successful run (14:48Z, from `faa8dd5`, which had
+  no ladder code). The `ladder` key is therefore absent from every document
+  currently in `gex_latest`. Expected, not a defect — but the ladder path is
+  now in exactly the position the write path was in above: coded, unit-tested,
+  and **not yet executed end to end.** Check the first Monday run's log.
+
+- **`gex_snapshots` will never carry the ladder, and that is permanent.** This
+  is the deliberate size trade documented above, but it has a consequence
+  worth stating plainly for anyone planning analysis: per-strike history is
+  **not retained**. Any question needing the full 142-strike ladder for a past
+  timestamp — a retro grading of the ranked C1-C3/P1-P3 walls, for instance —
+  cannot be answered from this archive at all. The compact record's
+  `major_pos_*` / `major_neg_*` / `zero_gamma` fields are what survive, and
+  they are what the volume-vs-open-interest question actually needs.
 - **Scheduled runs drift.** GitHub queues scheduled workflows on shared
   infrastructure and they are routinely minutes late, occasionally dropped.
   Harmless here — each record carries the feed's own `source_ts`, so a late
