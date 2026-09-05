@@ -174,8 +174,24 @@ and `gex_latest`. Default symbols include **`ndx` and `nq_ndx`** at `zero`
   minutes, 13:00–21:59 UTC, Mon–Fri**.
 - Runs 3–6 failed on Firestore credential handling. **Run 7, today at
   14:48Z, succeeded.**
-- So the machinery works as of today, and **the archive starts now.** There is
-  no history to backtest against yet.
+- So the machinery works as of today.
+
+**Correction (2026-09-05, after the first authenticated read).** This section
+originally said *"the archive starts now"*. That was optimistic about the
+calendar. What started on Saturday was the **capability**, not the
+accumulation: the cron is `*/5 13-21 * * 1-5`, 5 Sep was a **Saturday**, and
+run 7 was a manual dispatch against a frozen Friday feed. **Nothing has been
+recorded since, and nothing will be until Monday 2026-09-07 13:00Z.**
+
+The archive currently holds **4 documents — which are 2 observations**, from a
+single instant (2026-09-04 19:59:59–20:00:00Z). `NQ_NDX` is `NDX` plus a
+constant 30.82 and `ES_SPX` is `SPX` plus 6.13, exact across every wall field,
+so the futures rows are basis-shifted representations of the same computation
+and carry no independent information. Any sample count that treats the
+collection as four symbols overstates it by 2×.
+
+**A working pipe reads like progress and is not one.** H12 stays at 0 of 5 and
+H13 at 1 of 5.
 
 ### What this changes
 
@@ -276,3 +292,40 @@ to build, but needs no new credential anywhere.
 **Until one of these exists the brief reads GEXBot live on every scan**, which
 works today. What it cannot do is look back at days when no scan was run —
 which is the entire reason to want the archive.
+
+
+---
+
+## 10. What the archive can and cannot answer (verified 2026-09-05)
+
+The recorder stores the **compact record** in `gex_snapshots` and the
+142-strike ladder only in `gex_latest`, which is overwritten every poll.
+Appending the ladder to history would cost roughly 1 GB/month, so the trade is
+correct — but it has an analytical consequence worth stating plainly:
+
+> **Per-strike history is never retained. Any question needing the full ladder
+> at a past timestamp cannot be answered from this archive at all — not now,
+> not later.**
+
+That is fine for H12's headline claim (volume wall vs OI wall), which lives
+entirely in the compact fields. It permanently rules out retro-grading the
+ranked **C1–C3 / P1–P3** ladder, which is what `gex_retro.py --ladder`
+consumes. **An archive reader must therefore not reuse that flag** — it would
+promise a comparison the data cannot support. A separate path, with its output
+marked walls-only, keeps the limit enforced rather than remembered.
+
+Two further notes for whoever builds that reader:
+
+- **The index/CFD offset reconstructs itself.** Each snapshot carries both
+  `spot` and `source_ts`, so
+  `offset = CFD_close_of_the_M5_bar_covering(source_ts) − snapshot["spot"]`.
+  Per-snapshot, not per-day — the basis drifts intraday. If no bar covers
+  `source_ts` within a bar-width, **skip that snapshot**: a wrong offset shifts
+  every level uniformly and therefore looks entirely plausible. This is the
+  same failure that put 14.5pts on every level when the offset was taken
+  against a live price instead of a matched one.
+- **Any `generated_utc` must be the feed's `source_ts`, never `fetched_at`.**
+  The retro clips bars to those after publication to prevent look-ahead; using
+  the read time (14:48Z Saturday, for a Friday-close feed) would grade levels
+  against price action that predates them — the exact look-ahead bug that
+  survived once by luck and is recorded in D5.
