@@ -1,16 +1,23 @@
 # Volume vs open interest — and the history mistake that delayed answering it
 
-**Status:** open question, method established, one session analysed (not enough).
+**Status:** open question. Method established; one session analysed (not
+enough). The *composition* of both readings is now settled — see Part 3.
 **Last updated:** 2026-09-05.
 
 This file is written to be read cold, by someone with no context on this
 project — including another Claude session investigating a similar question.
-It has two halves:
+It has five parts:
 
 1. **A research-methodology failure** and how it was corrected. Generalisable;
    read this even if you do not care about options data.
 2. **The volume-vs-open-interest analysis** itself: question, method, results
    so far, and what would actually settle it.
+3. **What the two readings actually are**, established by rebuilding the
+   vendor's numbers from free public data. This is the most consequential
+   section: it shows the two readings differ by *recency*, not by direction
+   of flow, and that both rest on the same unverifiable assumption.
+4. **How to get more history**, and what it costs.
+5. **What the academic literature says**, and how far it can be trusted here.
 
 > **On sourcing:** this repository is public and GexBot is a paid
 > subscription, so this file describes findings in our own words and does not
@@ -86,6 +93,34 @@ documented fields and every API path, in about two minutes.
   (or the reverse) localises the problem to your tooling rather than the
   remote host.
 
+### The lesson had to be learned twice
+
+The bundle was extracted, and then *not read again*. Later, asked whether
+history existed for dates other than the last session, the same mistake
+repeated in a smaller form: probing `?date=`, `?day=`, `?session=` and
+reading the identical responses as evidence, instead of opening the contract
+that had already been pulled out of the bundle and was sitting in the working
+directory.
+
+Two minutes in that file would have said, without any probing:
+
+- the endpoint declares **no query parameters**, so no variant was ever going
+  to work;
+- today's report appears only after the evening export, and before then the
+  endpoint returns the prior session **silently** — a failure mode probing
+  would never have revealed, because every response is a valid 200;
+- the endpoint requires headers we were not sending;
+- the dated archive exists and is gated to a higher tier with a **rolling
+  90-day window** — the single most useful fact for planning, and entirely
+  invisible from the outside.
+
+The generalisable form: **the cost of reading documentation is bounded and
+small; the cost of inferring behaviour from responses is unbounded and the
+inferences are frequently wrong.** Probing tells you what happened once.
+Documentation tells you what is guaranteed, what is silent, and what exists
+but is not yours yet. When someone hands you a documentation link, that is
+not context — it is an instruction.
+
 ## What is actually available (Classic package, verified)
 
 | Endpoint | Result | Meaning |
@@ -111,14 +146,23 @@ report is roughly 200× denser and covers a session that had already happened.
 
 ### Two limits, verified rather than assumed
 
-- **The `date` parameter is accepted but ignored.** Requests for any date
-  return a byte-identical file; the `content-disposition` filename names the
-  most recent session regardless of what was asked. Confirmed across dates a
-  year apart.
-- **Backfill is therefore impossible on this tier.** The dated archive that
-  would allow it is 403. A session not downloaded on the day is lost — the
-  same conclusion as before, but for the correct reason and one day at a
-  time rather than for all history.
+- **The endpoint takes no parameters at all.** This was first established
+  empirically — every `?date=` variant returned a byte-identical file, with
+  the `content-disposition` filename naming the most recent session
+  regardless of what was asked, across dates a year apart. It was then
+  *confirmed in the vendor's published contract*, which lists the endpoint's
+  query parameters as an empty set and states that it returns the latest
+  available report for the ticker. There was never a parameter to find.
+- **Today's report only exists after the vendor's evening export.** Before
+  that, the endpoint returns the **previous** session's report — with a 200
+  and no error of any kind. A daily job that runs too early therefore
+  silently archives yesterday twice and loses today permanently. This is why
+  `archive_eod.py` takes `--expect-date` and `--fail-if-stale`, and why the
+  workflow's cron sits after the export rather than at the close.
+- **Backfill is impossible on this tier.** The dated archive that would allow
+  it is 403. A session not downloaded on the day is lost — the same
+  conclusion as before, but for the correct reason and one day at a time
+  rather than for all history. See Part 4 for what would lift this.
 
 ## The corrected design
 
@@ -161,6 +205,10 @@ The two primary sources for this strategy disagree about which to use:
 They may be complementary — open interest for structural positioning before
 the open, volume for what is happening now — but that is a hypothesis, not an
 established fact.
+
+> **Read Part 3 before acting on this section.** The reconstruction there
+> shows the "volume" reading is *not* a measure of flow direction, which
+> narrows what the question can even mean.
 
 ## Why it is not a cosmetic choice
 
@@ -286,3 +334,263 @@ done
   75% win rate, 1:10 reward-to-risk and "a stop every two or three weeks"
   quoted by the strategy's author come from promotional videos with no
   statistics shown. They are the hypothesis, not the baseline.
+
+---
+
+# Part 3 — What the two readings actually are
+
+Part 2 treats "volume GEX" and "OI GEX" as two competing measurements and asks
+which one price respects. That framing quietly assumes something about what
+they measure. This part tests that assumption instead of inheriting it, and
+the answer changes the question.
+
+## The assumption at the bottom of every gamma level
+
+Gamma is a property of a contract. **Gamma exposure is a property of a
+position**, and a position has a side. To turn one into the other you must
+assert who is holding what — and no public data feed knows that. Exchanges
+publish volume and open interest; they do not publish who was long.
+
+The near-universal convention resolves this by assumption: dealers are **long
+calls and short puts**, so call gamma enters positive and put gamma negative.
+That is the formula in every retail GEX tool. It is an inventory guess. If it
+is wrong, every wall in the ladder has the wrong sign, support and resistance
+swap, and the regime read inverts.
+
+So: does GexBot use that convention, and is that all it is doing?
+
+## The test
+
+`scripts/sign_convention_test.py`. The method is reconstruction:
+
+1. Take the final sample of a GexBot EOD report for the **next expiry** scope
+   (`gex_one`) — one expiry, unambiguous.
+2. Download Cboe's **free, public, unauthenticated** delayed NDX chain, which
+   carries per-contract gamma, open interest and session volume.
+3. Recover the strike basis. GexBot quotes NQ-futures-adjusted strikes; the
+   chain quotes NDX strikes. They differ by one constant, recovered by voting
+   across strike pairs and tie-broken by the observed spot difference — the
+   regular NDX strike grid means an offset fifty points wrong still aligns
+   every strike, so alignment count alone is not enough.
+4. Aggregate `Γ × OI` and `Γ × volume` per strike, per side.
+5. Fit all four sign conventions against GexBot's published per-strike values.
+
+Only `gex_one` can be tested, and that limit is worth stating precisely: the
+session's own 0DTE contracts have already expired and dropped out of the free
+chain by the time the EOD report exists, so `gex_zero` cannot be reconstructed
+at all and `gex_full` — which contains them — reconstructs only weakly
+(r ≈ 0.38 at any expiry window). This is a property of the free data, not a
+defect in the method.
+
+## Result
+
+NQ_NDX, 2026-09-04 final sample, next expiry 2026-09-08, ~110 strikes:
+
+| Convention | Open interest | Volume |
+|---|---|---|
+| **A  +calls −puts** (dealers long calls, short puts) | **r = +0.974, r² = 0.95** | **r = +0.978, r² = 0.96** |
+| B  −calls +puts (inverted) | r = −0.974 | r = −0.978 |
+| C  +calls +puts (no directional assumption) | r = +0.423 | r = +0.716 |
+| D  −calls −puts | r = −0.423 | r = −0.716 |
+
+B is not a rival hypothesis — it is A with the sign flipped, and only A
+reproduces the levels rather than their mirror image. C and D are decisively
+rejected.
+
+The fitted scale settles the units as well. Under convention A the regression
+slope is **98% of** `Γ × OI × 100 × S² × 0.01` expressed in millions — the
+textbook "notional gamma per 1% move, in $m". The remaining 2% is comfortably
+explained by the chain being a delayed end-of-day snapshot against a 15:59
+sample.
+
+**GexBot Classic is computing the standard formula with the standard sign
+convention, in the standard units.** Nothing proprietary is happening at this
+layer. That is a useful thing to know: it means the *levels* are reproducible
+and the value of the subscription is latency, coverage and packaging, not a
+secret model.
+
+## The consequence, and it is the important one
+
+Run the same fit against **volume** and the winner is the same convention,
+with the same call-positive/put-negative sign, at essentially the same scale.
+
+That means the volume reading is:
+
+```
+Σ Γ × (calls traded today)  −  Σ Γ × (puts traded today)
+```
+
+using **raw, unsigned contract volume**. Not buyer-initiated minus
+seller-initiated. Not opening minus closing. Just how many contracts changed
+hands, with the side *assumed* exactly as it is assumed for open interest.
+
+This is not a criticism of the vendor — raw volume carries no side, and no
+free or Classic-tier feed anywhere publishes signed options flow. It is a
+correction to how the two readings should be interpreted:
+
+> **The volume and OI readings do not differ in what they know about
+> direction. They differ only in recency.** Open interest is every contract
+> still outstanding, sign assumed. Volume is the contracts that traded today,
+> sign assumed identically. One is a stock, the other a flow, and both inherit
+> the same unverifiable dealer-inventory assumption.
+
+Three things follow:
+
+1. **"Volume shows what dealers are doing now" is wrong as stated.** It shows
+   what *traded* today. A strike where customers aggressively sold calls and
+   one where they aggressively bought them are indistinguishable in this
+   number, and are assigned the same sign.
+2. **The two readings cannot disagree about direction, only about horizon.**
+   The 43%-of-the-session regime disagreement documented in Part 2 is
+   therefore a disagreement between *today's turnover* and *the standing
+   book* — which is a meaningful and tradeable distinction, but a different
+   one from the one the source videos imply.
+3. **The touch test in Part 2 remains the right test**, but what it is
+   choosing between is now precisely defined: a recency-weighted level versus
+   a stock-weighted level, not "flow" versus "positioning".
+
+## What would falsify the sign convention itself
+
+Nothing above validates convention A as *true* — only that GexBot uses it.
+Establishing whether dealers really are net long calls and short puts requires
+data that says which side initiated each trade, and which of those trades
+opened versus closed a position. That is exactly what Cboe's Open-Close
+dataset contains, and why Part 4 prices it.
+
+## Reproducing Part 3
+
+```bash
+# free, no key, no account
+curl -o ndx.json \
+  https://cdn.cboe.com/api/global/delayed_quotes/options/_NDX.json
+
+python3 scripts/sign_convention_test.py \
+  --zip ./eod/eod_report_NQ_NDX_2026-09-04.zip --chain ndx.json
+```
+
+The chain must be fetched **before the next expiry expires**, or the contracts
+being reconstructed will have dropped out of it. In practice: run it the same
+weekend as the report.
+
+---
+
+# Part 4 — Getting more history, and what it costs
+
+Part 2 concluded that 20–30 sessions are needed and the daily archive supplies
+one per day — 4 to 6 weeks of waiting. The obvious question is whether that
+can be bought instead.
+
+## From GexBot itself
+
+**Read from the vendor's published contract, not inferred:**
+
+| | |
+|---|---|
+| `/hist/eod/{ticker}` (ours) | latest completed session only, no parameters |
+| Dated archive endpoint | **403 on Classic** — gated to the Quant package |
+| Quant's documented window | **a rolling 90 calendar days** |
+
+A 90-day rolling window is roughly **60 trading sessions** — twice what Part 2
+says is needed, available immediately rather than in six weeks. If any paid
+upgrade is worth making, this is the one, and it is the single most valuable
+thing the documentation revealed.
+
+**Pricing could not be established from any public source, and this should be
+treated as an open action rather than an answer.** The vendor's site renders
+its price table from an authenticated billing integration; the prices are not
+present in the JavaScript bundle (only the Research add-on's are — quoted
+there as a $50/month add-on or $100/month standalone). Third-party resale
+listings quote figures for other tiers, but reselling sites are not a
+citable source for a vendor's own prices and one search result conflated
+GexBot with a similarly-named competitor. **The reliable move is to open the
+pricing page while logged in** — thirty seconds with an account beats any
+amount of inference from outside, which is the same lesson as Part 1.
+
+## From free public data
+
+Part 3 is the proof of concept: **the OI walls are fully reconstructable for
+free.** Cboe's delayed chain endpoint needs no key and no account, carries
+gamma, open interest and volume per contract, and reproduces GexBot's
+per-strike numbers at r² ≈ 0.95.
+
+What that does and does not buy:
+
+- **It does buy** an independent check on any level, and the ability to build
+  OI-based walls for instruments GexBot does not cover.
+- **It does not buy history.** The endpoint serves the current chain only. It
+  has the same shape of limitation as the EOD report: snapshot it daily or
+  lose it. Archiving it is cheap and worth starting.
+- **It does not buy signed flow.** Raw volume carries no side (Part 3).
+
+## From Cboe, paid
+
+**Cboe Open-Close Volume Summary** is the dataset that actually answers the
+underlying question, because it classifies every trade by participant type
+(customer, professional customer, broker-dealer, market maker), by buy/sell,
+and by open/close. That is precisely the information the sign convention
+assumes rather than knows.
+
+- History: C1 end-of-day back to **2005**; intraday (1-minute and 10-minute)
+  from **2019**.
+- Pricing is **not published on the product page** — it points at fee
+  schedules filed with the SEC. A search result attributes a **$500/month**
+  end-of-day subscription to a Cboe exchange fee schedule; that figure was
+  *not* verified against the filing itself and should be treated as an
+  indication of magnitude, not a quote. Historical one-off extracts are
+  priced separately from subscriptions.
+
+For this project's purposes the relevant judgement is: this is
+institutional-grade pricing for a question about whether to trust one of two
+lines on a chart. **The 90-day Quant window is the proportionate purchase;
+Open-Close is not**, unless the sign convention itself becomes the thing being
+traded on.
+
+## Recommended order
+
+1. **Keep the daily archive running.** It is free, already built, and every
+   day of delay is a session that cannot be recovered.
+2. **Start archiving the free Cboe chain daily too.** Also free, and it is the
+   only independent check on the vendor's numbers.
+3. **Price the Quant upgrade from inside the account.** If it is in the range
+   the other tiers suggest, 60 sessions immediately is worth far more than the
+   subscription.
+4. **Leave Open-Close alone** unless the question changes.
+
+---
+
+# Part 5 — What the literature says
+
+Searched for peer-reviewed work on whether open interest or volume better
+explains dealer hedging pressure and price behaviour.
+
+**A caveat that must travel with this section: only abstracts were readable.**
+Every full PDF attempt failed — timeouts, 405s and 403s from the hosts. What
+follows is therefore a map of where to look, not a synthesis of findings, and
+nothing here should be cited onward without opening the papers.
+
+- **Ni, Pearson & Poteshman**, on stock price clustering at option expiration,
+  is the closest thing to a foundational result: it argues that option market
+  makers' hedging demonstrably moves the underlying toward strikes. It is the
+  strongest published support for the *mechanism* the whole strategy assumes.
+  Notably, it is built on **open interest at expiry**, not on volume.
+- **Barbon & Buraschi, "Gamma Fragility"**, models dealer gamma imbalance as a
+  driver of price fragility and amplification — the positive/negative gamma
+  regime distinction, formalised.
+- A **2024 paper on options market quality** appeared in results relating
+  dealer gamma positioning to liquidity and volatility.
+- An **SSRN paper by Chilingarian** makes precisely the argument Part 3
+  measured: that the call-positive/put-negative sign is an *inventory
+  assumption*, not a property of the greek, and that results are sensitive to
+  it. This is the one to read first, because Part 3 confirms empirically that
+  the assumption is in force in the data we are trading from.
+
+**What the literature does not settle.** The academic work concerns dealer
+gamma *positioning* — which is an open-interest concept. There appears to be
+no established literature endorsing "session volume gamma" as a positioning
+measure at all. Given Part 3's finding that the volume reading is unsigned
+turnover with an assumed side, that absence is unsurprising and is itself
+weak evidence for the open-interest reading.
+
+The honest summary: **theory supports the mechanism and leans open-interest;
+it does not adjudicate the specific intraday question this project is asking.**
+Our own archive still has to.

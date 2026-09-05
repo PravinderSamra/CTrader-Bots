@@ -25,10 +25,18 @@ completed session at full resolution. This recorder remains useful as the
 live feed the dashboard reads, and as a same-day record if an EOD download is
 ever missed.
 
-One limit does still hold, for a narrower reason: the EOD report's `date`
-parameter is ignored and only ever serves the latest session, and the dated
-archive is Quant-tier (403). So a session missed is still a session lost —
-one day at a time, rather than all of history.
+One limit does still hold, for a narrower reason: the EOD endpoint accepts
+**no query parameters at all** (confirmed in the vendor's published contract,
+not merely inferred from probing) and only ever serves the latest completed
+session, while the dated archive is Quant-tier (403). So a session missed is
+still a session lost — one day at a time, rather than all of history.
+
+A second, quieter limit: today's report only exists once the vendor's evening
+export has run. Before then the endpoint returns the **previous** session with
+a 200 and no error, so a job scheduled too early archives yesterday twice and
+loses today. `archive_eod.py --expect-date --fail-if-stale` exists to make
+that loud, and the EOD workflow's cron sits after the export rather than at
+the close.
 
 ## Why Firestore rather than committing to the repo
 

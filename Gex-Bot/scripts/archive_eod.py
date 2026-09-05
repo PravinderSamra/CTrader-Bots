@@ -99,6 +99,10 @@ def main() -> int:
     ap.add_argument("--firestore", action="store_true")
     ap.add_argument("--stdout", action="store_true")
     ap.add_argument("--zip", default=None, help="use a local zip instead of fetching")
+    ap.add_argument("--expect-date", default=None,
+                    help="YYYY-MM-DD the report should cover; warns if it does not")
+    ap.add_argument("--fail-if-stale", action="store_true",
+                    help="exit non-zero when the report is not --expect-date")
     args = ap.parse_args()
 
     if args.zip:
@@ -119,6 +123,22 @@ def main() -> int:
     samples.sort(key=lambda s: s["timestamp"])
 
     doc = derive(samples, args.step)
+
+    # Before 17:00 ET the vendor's export has not run and the endpoint returns
+    # the PRIOR session with a 200 and no error. Storing that is harmless --
+    # the doc id is keyed on the report's own date, so it overwrites itself --
+    # but it means the day we wanted was silently missed, and a missed day
+    # cannot be fetched later. Say so.
+    expected = args.expect_date
+    if expected and doc["date"] != expected:
+        msg = (f"report covers {doc['date']}, expected {expected} -- the "
+               "export had probably not completed. This session was NOT "
+               "captured and cannot be fetched later.")
+        print(f"{'FATAL' if args.fail_if_stale else 'WARN'}: {msg}",
+              file=sys.stderr)
+        if args.fail_if_stale:
+            return 1
+
     size = len(json.dumps(doc))
     print(f"{doc['ticker']} {doc['date']}: {doc['samples']:,} samples -> "
           f"{len(doc['series']):,} series rows, {size/1024:.0f} KB derived")

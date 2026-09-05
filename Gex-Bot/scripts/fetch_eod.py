@@ -10,9 +10,14 @@ full strike ladder on every sample -- roughly 15,000 samples a day, against
 the recorder's 78.
 
 Two limits, both verified rather than assumed:
-  * The `date` query parameter is IGNORED. Every date returns the same file;
-    confirmed by reading content-disposition, which names the latest session
-    whatever is asked for. So this must run daily to build an archive.
+  * There are NO query parameters. The published contract lists
+    `queryParameters: []` and states the endpoint returns "the latest
+    available EOD report for that ticker" -- so `?date=` and every variant of
+    it was never going to work. It must run daily to build an archive.
+  * Today's report only appears after 17:00 ET, once the vendor's
+    cold-storage export completes. Before then the endpoint returns the
+    PRIOR session's report, with a 200 and no error. That silent substitution
+    is why `expected_date` exists below.
   * The dated archive `/v2/hist/{TICKER}/{PACKAGE}/{CATEGORY}/{DATE}` returns
     403 on the Classic package -- that one is genuinely gated to Quant.
 
@@ -50,9 +55,17 @@ def download(ticker: str, token: str | None = None,
     if not token:
         raise EodError(f"{TOKEN_ENV_VAR} is not set.")
 
+    # The vendor documents User-Agent and Accept as required alongside the
+    # bearer token. Requests succeed without them today, but sending what the
+    # contract asks for costs nothing and avoids being the client that breaks
+    # when they start enforcing it.
     req = urllib.request.Request(
         f"{BASE_URL}/hist/eod/{ticker.lower()}",
-        headers={"Authorization": f"Bearer {token}"},
+        headers={
+            "Authorization": f"Bearer {token}",
+            "User-Agent": "CTrader-Bots/Gex-Bot (session archiver)",
+            "Accept": "application/zip",
+        },
     )
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
