@@ -25,8 +25,10 @@ import styles from './App.module.css'
 // Lazy-loaded: the Firebase SDK it pulls in is sizeable, and the Macro Dashboard /
 // Gold-Session AI tabs (the vast majority of page loads) never touch it.
 const PravzellaTab = lazy(() => import('./components/pravzella/PravzellaTab').then(m => ({ default: m.PravzellaTab })))
+// Same reasoning: GexBot reads Firestore, so it pulls in the Firebase SDK.
+const GexBotTab = lazy(() => import('./components/gexbot/GexBotTab').then(m => ({ default: m.GexBotTab })))
 
-type DashTab = 'dashboard' | 'gold-session' | 'uk100' | 'pravzella'
+type DashTab = 'dashboard' | 'gold-session' | 'uk100' | 'pravzella' | 'gexbot'
 
 export function App() {
   const [activeTab, setActiveTab] = useState<DashTab>('dashboard')
@@ -88,6 +90,12 @@ export function App() {
           UK100
         </button>
         <button
+          className={`${styles.tabBtn} ${activeTab === 'gexbot' ? styles.tabBtnActive : ''}`}
+          onClick={() => setActiveTab('gexbot')}
+        >
+          GexBot
+        </button>
+        <button
           className={`${styles.tabBtn} ${activeTab === 'pravzella' ? styles.tabBtnActive : ''}`}
           onClick={() => setActiveTab('pravzella')}
         >
@@ -146,6 +154,16 @@ export function App() {
         <div className={styles.sessionPane}>
           <Boundary label="UK100">
             <Uk100Tab />
+          </Boundary>
+        </div>
+      )}
+
+      {activeTab === 'gexbot' && (
+        <div className={styles.sessionPane}>
+          <Boundary label="GexBot">
+            <Suspense fallback={<div className={styles.tabLoading}>Loading…</div>}>
+              <GexBotTab />
+            </Suspense>
           </Boundary>
         </div>
       )}
