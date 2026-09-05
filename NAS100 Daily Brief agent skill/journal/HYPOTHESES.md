@@ -475,6 +475,15 @@ Saturday. **Four documents per poll are two observations**, not four —
 verified exact across every wall field, so the futures rows carry no
 independent information.
 
+**Update 2026-09-05 — the archive was read directly, not inferred.** The
+sibling recorder's Firestore archive became readable from a Claude session and
+was read field by field (`research/gexbot/EVALUATION.md` §11); the split above
+is verified against the stored documents rather than against the recorder's
+code. It changes no count: the archive held that one frozen Friday poll and
+nothing else. A design for the walls-only reader — the one that must not reuse
+`--ladder` — is in `research/gexbot/PROPOSAL-ARCHIVE-RETRO.md`, unbuilt until
+Monday's data exists to test it against.
+
 **Status: OBSERVING. Do not swap the engine.**
 
 ---
@@ -525,6 +534,11 @@ read like progress; neither is a second observation.
 **Threshold.** 5 RTH samples. Record `zero_gamma`, their `spot`, and our flip on
 every scan — **and record it for QQQ alongside NDX**, since a same-underlying
 control is now known to be informative.
+
+*Provenance: the four-symbol table above was read out of the archived 4 Sep
+record field by field (`research/gexbot/EVALUATION.md` §11), on one feed at one
+instant — which is what makes the cross-symbol comparison valid. It is still
+that same single snapshot.*
 
 **Status: OBSERVING. Do not use as the flip.**
 
