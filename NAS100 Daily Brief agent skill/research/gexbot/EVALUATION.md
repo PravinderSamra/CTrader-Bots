@@ -213,3 +213,66 @@ confident and wrong trend.
 which strikes appear and the spread between them, nothing about direction — and
 the caveat in `gexbot.py` now records why that must stay true until one of the
 two descriptions is confirmed.
+
+---
+
+## 9. Why no Claude session can read Firestore — and what would change that
+
+Checked 2026-09-05 after a reasonable challenge: the Gex-Bot and PravZella
+sessions never complained, so why does this one?
+
+**Because neither of them read Firestore either.** They wrote code that runs
+*elsewhere*, where the credentials live.
+
+The Gex-Bot project says so in its own documentation
+(`Gex-Bot/docs/recorder.md`):
+
+> *"The Firestore write path has not been executed end to end. **No service
+> account credentials were available in the development session**, so the
+> encoder is unit-tested … but the first real write will happen on the first
+> manual run."*
+
+That session hit **exactly this wall**. It unit-tested the encoder, verified
+both failure paths, and let GitHub Actions perform the first real write.
+
+Three separate trust boundaries are in play:
+
+| Who | How it authenticates | Where the credential is |
+|---|---|---|
+| **The recorder** | Admin SDK, service account | GitHub repo secret, injected by `gexbot-record.yml` |
+| **The dashboard** | Firebase Auth, signed-in user | **your browser**, at login |
+| **A Claude session** | — | **nothing** |
+
+Verified here: a full environment scan for anything matching
+`firebase|google|gcp|firestore|service_account|vite` returns **empty**, and
+`google-cloud-firestore` is not installed. An unauthenticated Firestore REST
+read returns **403 PERMISSION_DENIED**, which is the rules working as designed
+— `db/firestore.rules` requires `request.auth != null` on both `gex_latest`
+and `gex_snapshots`, deliberately, because GEXBot Classic is paid and the
+dashboard is served from a public site.
+
+### Options, least privilege first
+
+**A. A Firebase Auth user for the session (recommended).** Two env vars — the
+public web `apiKey` and an account email/password. Sign in through the Auth
+REST endpoint, read Firestore over its REST API. **No library to install and no
+rule changes.** Security rules still apply, and since both collections are
+`allow write: if false`, the access is **read-only by construction**. This is
+the dashboard's existing trust model, reused.
+
+**B. `FIREBASE_SERVICE_ACCOUNT_JSON` in the session env (quickest, widest).**
+Mirrors the workflow. But be clear about what it grants: **the Admin SDK
+bypasses security rules entirely** — full read *and write* across the whole
+project, including the trade journal, not just the two GEX collections. That is
+a large grant for a read-only need, and it is the reason A is preferred rather
+than a matter of taste. Also needs `google-cloud-firestore` installed.
+
+**C. Give this session nothing; let Actions do the comparison.** The recorder
+already runs where the credentials are. It could compute the H12 grading there
+and commit only the **verdict** — held/broke/chopped counts — rather than the
+feed itself, which keeps `recorder.md`'s no-republishing rule intact. Slowest
+to build, but needs no new credential anywhere.
+
+**Until one of these exists the brief reads GEXBot live on every scan**, which
+works today. What it cannot do is look back at days when no scan was run —
+which is the entire reason to want the archive.
