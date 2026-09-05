@@ -52,8 +52,35 @@ def gexbot_block(gx, cfd_price):
     full = gexbot.levels("NDX", "gex_full")
     if not full:
         return {"error": gexbot.last_error() or "unavailable"}
-    off = round(cfd_price - full["spot"], 1)
-    out = {"offset_applied": off, "age_min": full["age_min"],
+    # The offset must be measured between two prices from the SAME MOMENT.
+    #
+    # Subtracting GEXBot's spot from the LIVE CFD looks right and is wrong
+    # whenever the feed is behind: the difference then contains every point
+    # price has moved since the feed's timestamp, and that error lands on
+    # every level equally. Measured 2026-09-05 against a 1,160-minute-old feed
+    # it was 14.5pts, on a quiet weekend; through a gap it would be far worse.
+    # Same defect as the stale NDX cash print that once inverted a trade call,
+    # fixed the same way — by pairing like with like.
+    off, basis = round(cfd_price - full["spot"], 1), "live"
+    if (full.get("age_min") or 0) > 10:
+        try:
+            import ctrader_http as _ct, datetime as _dt
+            feed = (gexbot.fetch("NDX", "gex_full") or {}).get("timestamp")
+            if feed:
+                when = _dt.datetime.fromtimestamp(feed, _dt.timezone.utc)
+                bars = _ct.fetch_ohlcv_paged("NAS100", "M_5", days=4) or []
+                if bars:
+                    near = min(bars, key=lambda b: abs((b["time"] - when).total_seconds()))
+                    gap = abs((near["time"] - when).total_seconds()) / 60
+                    if gap <= 30:
+                        off = round(near["close"] - full["spot"], 1)
+                        basis = f"matched to feed time {when:%Y-%m-%d %H:%M}Z"
+                    else:
+                        basis = "UNMATCHED - no CFD bar near the feed time"
+        except Exception as e:
+            basis = f"match failed ({type(e).__name__}) - using live offset"
+    out = {"offset_applied": off, "offset_basis": basis,
+           "age_min": full["age_min"],
            "our_flip": (gx.get("gamma_flip") or {}).get("nas100")}
     for cat in ("gex_full", "gex_zero"):
         lv = gexbot.levels("NDX", cat, offset=off)
@@ -608,6 +635,12 @@ def gexbot_md(d):
     if age is not None and age > 45:
         o.append(f"> ⚠️ **This feed is {age:.0f} minutes old** — outside RTH it "
                  f"holds the last close. Treat as context, not a live read.\n")
+    bas = gb.get("offset_basis")
+    if bas and bas != "live":
+        o.append(f"> _Converted to your CFD chart with an offset of "
+                 f"**{gb['offset_applied']:+,.1f}**, {bas} — not against the live "
+                 f"price, which would fold the intervening move into every "
+                 f"level._\n")
     o.append("| | by OPEN INTEREST | by VOLUME (today) |")
     o.append("|---|---|---|")
     o.append(f"| Heaviest **positive** gamma | {full['major_pos_oi']:,.0f} | "

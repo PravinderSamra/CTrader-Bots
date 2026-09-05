@@ -28,9 +28,14 @@ Known caveats — read before trusting a number
   gex_full and gex_zero, though not for gex_one. That is either genuine pinning
   into a Friday close or a fallback. **UNVERIFIED — check during RTH before
   using it as a flip.**
-- The order of the `priors` array (newest-first vs oldest-first) is not
-  documented and cannot be established from a frozen weekend snapshot. **Sample
-  twice during RTH and compare before reading a trend from it.**
+- The `priors` array is NOT an equal-interval time series. The sibling
+  `Gex-Bot/` project in this repo documents `max_priors` as a
+  **1/5/10/15/30-minute max-change panel** (`Gex-Bot/docs/recorder.md`), while
+  its API reference calls the per-strike array "5 prior gex readings"
+  (`Gex-Bot/docs/api-reference.md`). Those are not the same claim. Until one is
+  confirmed, **read only ORDER-FREE facts from it** — which strikes appear, and
+  the spread between them. `wall_drift()` is written to be ordering-agnostic
+  for exactly this reason; do not add a "rising/falling" label on top of it.
 - Units on `gex_vol` / `gex_oi` are unstated and are NOT our $bn. Treat them as
   a relative scale within one response; never mix them with our figures.
 - Their major_neg is the most-negative strike ANYWHERE, not "below spot". Our
