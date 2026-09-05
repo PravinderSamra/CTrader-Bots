@@ -92,6 +92,34 @@ def build_record(snap, fetched_at: str) -> dict:
     }
 
 
+def build_ladder(snap) -> list[dict]:
+    """The full per-strike gamma ladder, as maps rather than packed arrays.
+
+    GexBot sends each row as [strike, gex_vol, gex_oi, [5 priors]]. Firestore
+    forbids an array directly inside an array, so the row becomes a map; the
+    priors array then sits inside a map and is legal.
+
+    `priors` is the feature that makes a wall readable as *building* or *being
+    taken off*: five earlier samples of that strike's gamma, which is what the
+    dots in GexBot's own ladder plot. Ordering is taken to be most-recent
+    first (1, 5, 10, 15, 30 minutes ago) per the GexFuture walkthrough. That
+    ordering is an inference, not something the API states, and could not be
+    checked against a frozen weekend feed -- see docs/recorder.md.
+    """
+    rows = []
+    for r in snap.strikes:
+        if not isinstance(r, (list, tuple)) or len(r) < 3:
+            continue  # surface an unexpected shape rather than guess at it
+        priors = r[3] if len(r) > 3 and isinstance(r[3], (list, tuple)) else []
+        rows.append({
+            "strike": r[0],
+            "gex_vol": r[1],
+            "gex_oi": r[2],
+            "priors": list(priors),
+        })
+    return rows
+
+
 def _pairs_to_maps(pairs):
     """Turn [[strike, change], ...] into [{"strike": .., "change": ..}, ...].
 
@@ -143,13 +171,21 @@ SNAPSHOT_COLLECTION = "gex_snapshots"  # append-only history, for analysis
 LATEST_COLLECTION = "gex_latest"       # one doc per symbol, for the dashboard
 
 
-def upload_to_firestore(records: list[dict]) -> bool:
+def upload_to_firestore(records: list[dict], ladders: dict | None = None) -> bool:
     """Write each sample to history and refresh the per-symbol latest doc.
 
     History doc ids embed the source timestamp, so a repeated poll of an
     unchanged feed simply rewrites an identical document -- idempotent, and
     cheaper than reading first to check.
+
+    The 142-strike ladder goes only into the latest doc, which is overwritten
+    each poll and so stays a fixed size (~40 KB, measured, against Firestore's
+    1 MiB document cap). Appending it to history instead would add that much
+    per symbol per poll -- of the order of a gigabyte a month -- to answer a
+    question the compact record already answers. The per-strike priors carry
+    their own 30 minutes of history anyway.
     """
+    ladders = ladders or {}
     try:
         from firestore_sink import FirestoreError, FirestoreSink
     except ImportError as exc:
@@ -159,14 +195,19 @@ def upload_to_firestore(records: list[dict]) -> bool:
     try:
         sink = FirestoreSink()
         writes = []
+        rungs = 0
         for r in records:
             key = f"{r['ticker']}_{r['scope']}"
             writes.append(sink.make_write(
                 SNAPSHOT_COLLECTION, f"{key}_{r['source_ts']}", r))
-            writes.append(sink.make_write(LATEST_COLLECTION, key, r))
+            ladder = ladders.get(key, [])
+            rungs += len(ladder)
+            writes.append(sink.make_write(
+                LATEST_COLLECTION, key, {**r, "ladder": ladder}))
         n = sink.commit(writes)
         print(f"Firestore: {n} writes "
-              f"({len(records)} snapshots + {len(records)} latest)")
+              f"({len(records)} snapshots + {len(records)} latest"
+              + (f", {rungs} ladder rungs" if rungs else "") + ")")
         return True
     except FirestoreError as exc:
         print(f"FATAL: {exc}", file=sys.stderr)
@@ -194,15 +235,19 @@ def main() -> int:
         print(f"FATAL: {exc}", file=sys.stderr)
         return 1
 
-    records, failures = [], 0
+    records, ladders, failures = [], {}, 0
     for ticker in args.tickers:
         for scope in args.scopes:
             try:
-                records.append(build_record(client.gex(ticker, scope), fetched_at))
+                snap = client.gex(ticker, scope)
             except GexBotError as exc:
                 # One bad symbol must not cost us the whole sample.
                 print(f"WARN: {ticker}/{scope}: {exc}", file=sys.stderr)
                 failures += 1
+                continue
+            record = build_record(snap, fetched_at)
+            records.append(record)
+            ladders[f"{record['ticker']}_{record['scope']}"] = build_ladder(snap)
 
     if not records:
         print("FATAL: every fetch failed", file=sys.stderr)
@@ -213,7 +258,7 @@ def main() -> int:
             print(json.dumps(r))
         return 0
 
-    if args.firestore and not upload_to_firestore(records):
+    if args.firestore and not upload_to_firestore(records, ladders):
         return 1
 
     if args.no_local:
