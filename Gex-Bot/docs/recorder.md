@@ -53,9 +53,13 @@ it never triggers `deploy-dashboard.yml`, and it adds no commit noise (a
 `Gex-Bot/data/` is gitignored so a local run can never accidentally land
 recorded data in the public repo.
 
-> Note: GexBot's terms were not directly readable (their site is
-> client-side rendered), so the redistribution concern above is a strong
-> inference rather than a quoted clause. It is the conservative default.
+> **Confirmed 2026-09-06.** This was previously flagged as an inference,
+> because the vendor's site is client-side rendered and the terms could not
+> be read. Their FAQ states the rule directly: downloaded files may be kept
+> locally, but the data is for **personal, non-commercial use only** — no
+> redistribution, resale or sharing, and the subscriber represents they are
+> a non-professional user. The design above is what the terms require, not
+> merely a cautious guess.
 
 ## Setup
 

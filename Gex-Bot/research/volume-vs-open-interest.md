@@ -114,12 +114,29 @@ Two minutes in that file would have said, without any probing:
   90-day window** — the single most useful fact for planning, and entirely
   invisible from the outside.
 
+And then a third time. Part 3 reconstructs GexBot's per-strike numbers from
+free public data to establish which dealer-inventory sign convention is in
+use — a genuinely useful exercise, run without first checking that the FAQ
+answers it in one sentence. It does: Classic is described there as *naive
+GEX*, all calls positive and all puts negative, with a companion paragraph
+conceding that volume cannot distinguish a buy from a sell. The measurement
+confirmed the documentation to two decimal places. The same FAQ also carried
+the licensing terms this project had been guessing at, a documented answer to
+the volume-vs-OI reconciliation, and a whole *Historical Data* section — none
+of which had been read, because the search had been for endpoints rather than
+for answers.
+
 The generalisable form: **the cost of reading documentation is bounded and
 small; the cost of inferring behaviour from responses is unbounded and the
 inferences are frequently wrong.** Probing tells you what happened once.
 Documentation tells you what is guaranteed, what is silent, and what exists
 but is not yours yet. When someone hands you a documentation link, that is
 not context — it is an instruction.
+
+And read *all* of it, not the part matching your current search term. Three
+of the four things this project spent the most effort on — the sign
+convention, the licensing position, and whether history could be bought —
+were sitting in an FAQ the whole time, in categories nobody had opened.
 
 ## What is actually available (Classic package, verified)
 
@@ -409,6 +426,23 @@ layer. That is a useful thing to know: it means the *levels* are reproducible
 and the value of the subscription is latency, coverage and packaging, not a
 secret model.
 
+> **This was documented before it was measured.** The vendor's FAQ describes
+> Classic as *naive GEX* — all calls treated as positive gamma, all puts
+> negative, from the OCC's daily open-interest tally — and contrasts it with
+> the State package's classified order flow. The metrics page goes further
+> and says outright that opening/closing data is not available intraday and
+> that wide spreads and mid-price prints make it hard to tell from Time &
+> Sales whether an option was bought or sold, describing volume as an
+> *"intermediary solution"* giving a *"rough idea"* of hedging.
+>
+> So the reconstruction below confirmed the documentation rather than
+> discovering anything the vendor had hidden. It still earns its place — it
+> pins the *scale* to 98% of textbook, proves the levels are reproducible
+> from free data, and turns "they say it is naive" into "we have verified it
+> is naive at r ≈ 0.97". But the reading order should have been documentation
+> first. See Part 1: this was the third time in this project that behaviour
+> was inferred from probing when it was written down.
+
 ## The consequence, and it is the important one
 
 Run the same fit against **volume** and the winner is the same convention,
@@ -451,11 +485,16 @@ Three things follow:
 
 ## What would falsify the sign convention itself
 
-Nothing above validates convention A as *true* — only that GexBot uses it.
-Establishing whether dealers really are net long calls and short puts requires
-data that says which side initiated each trade, and which of those trades
-opened versus closed a position. That is exactly what Cboe's Open-Close
-dataset contains, and why Part 4 prices it.
+Nothing above validates convention A as *true* — only that GexBot uses it,
+and says so. Establishing whether dealers really are net long calls and short
+puts requires data that says which side initiated each trade, and which of
+those trades opened versus closed a position.
+
+The vendor sells exactly that as the **State** package: classified
+order-flow imbalance derived from OPRA quote reactions, with matched trades
+filtered out to leave excess customer demand. So the escalation path for this
+question is an upgrade, not an exchange data purchase — see Part 4, which an
+earlier draft got wrong.
 
 ## Reproducing Part 3
 
@@ -482,18 +521,37 @@ can be bought instead.
 
 ## From GexBot itself
 
-**Read from the vendor's published contract, not inferred:**
+**Read from the vendor's published contract and FAQ, not inferred:**
 
 | | |
 |---|---|
 | `/hist/eod/{ticker}` (ours) | latest completed session only, no parameters |
 | Dated archive endpoint | **403 on Classic** — gated to the Quant package |
-| Quant's documented window | **a rolling 90 calendar days** |
+| Quant API access | a rolling 90-calendar-day window |
+| **Earliest date available at all** | **365 calendar days**, "for purchase or lookup" |
+| Historical granularity | **1-second snapshots, ~23,400 per session** |
+| What is fixed vs live in those files | Greeks, spot and IV move through the day; **OI and all OI-based levels are computed once near the open and stay fixed** |
 
-A 90-day rolling window is roughly **60 trading sessions** — twice what Part 2
-says is needed, available immediately rather than in six weeks. If any paid
-upgrade is worth making, this is the one, and it is the single most valuable
-thing the documentation revealed.
+Two things here matter more than the 90-day figure.
+
+**First: a year of history exists and is purchasable.** The FAQ states the
+earliest available date is 365 calendar days back, for *purchase or lookup*.
+That is a backfill path, not just a rolling window — so the "20–30 sessions"
+Part 2 asks for is a purchase decision, not a six-week wait. Ask what a
+backfill of ~30 sessions of NQ_NDX costs; that is a much smaller ask than a
+tier upgrade and may not need one.
+
+**Second, and this one changes how Part 2's results should be read: the OI
+levels cannot move intraday, by construction.** OI is tallied overnight by
+the OCC and GexBot recomputes the OI levels once daily near the open — the
+FAQ says the API's OI data updates once per day at 08:00 ET. So an "OI wall"
+is a fixed line for the whole session. The volume levels are the only
+Classic reading that responds to what is happening now.
+
+That is a *documented* answer to the reconciliation this project has been
+guessing at: open interest is a pre-open structural read because it is
+physically incapable of being anything else, and volume is the intraday one.
+The two source videos were not contradicting each other.
 
 **Pricing could not be established from any public source, and this should be
 treated as an open action rather than an answer.** The vendor's site renders
@@ -522,28 +580,37 @@ What that does and does not buy:
   lose it. Archiving it is cheap and worth starting.
 - **It does not buy signed flow.** Raw volume carries no side (Part 3).
 
-## From Cboe, paid
+## Signed flow: the State package, not Cboe
 
-**Cboe Open-Close Volume Summary** is the dataset that actually answers the
-underlying question, because it classifies every trade by participant type
-(customer, professional customer, broker-dealer, market maker), by buy/sell,
-and by open/close. That is precisely the information the sign convention
-assumes rather than knows.
+An earlier draft of this section recommended **Cboe Open-Close Volume
+Summary** as the dataset that would settle the sign question, since it
+classifies every trade by participant type, buy/sell and open/close. That is
+still true of the dataset. It was the wrong recommendation, because the
+vendor's own FAQ addresses it directly and takes the opposite view:
 
-- History: C1 end-of-day back to **2005**; intraday (1-minute and 10-minute)
-  from **2019**.
-- Pricing is **not published on the product page** — it points at fee
-  schedules filed with the SEC. A search result attributes a **$500/month**
-  end-of-day subscription to a Cboe exchange fee schedule; that figure was
-  *not* verified against the filing itself and should be treated as an
-  indication of magnitude, not a quote. Historical one-off extracts are
-  priced separately from subscriptions.
+> gexbot classifies transactions from OPRA's consolidated feed using
+> proprietary algorithms, based on how trades move the volatility surface —
+> **rather than purchasing static Cboe Open-Close inventory reports** —
+> on the grounds that it measures how market makers behave rather than what
+> they report.
 
-For this project's purposes the relevant judgement is: this is
-institutional-grade pricing for a question about whether to trust one of two
-lines on a chart. **The 90-day Quant window is the proportionate purchase;
-Open-Close is not**, unless the sign convention itself becomes the thing being
-traded on.
+So the classified, non-naive read already exists as a product: it is the
+**State** package. `Classic` is documented as *naive* GEX (Part 3); `State`
+is documented as classified order-flow imbalance that filters out matched
+trades to leave excess customer demand. Buying an institutional exchange
+feed to reproduce, at end-of-day granularity, something the vendor sells as
+a real-time upgrade would be an expensive way to arrive somewhere worse.
+
+Cboe Open-Close remains the right answer to a *different* question — an
+independent audit of the vendor's classification, rather than obtaining a
+classification at all. For reference: C1 end-of-day history goes back to
+2005, intraday to 2019, and pricing is not on the product page (it points at
+SEC-filed fee schedules; a search result attributes **$500/month** to an
+exchange fee schedule, **not verified against the filing** and to be treated
+as an order of magnitude, not a quote).
+
+**The proportionate purchases, in order: a history backfill, then State.**
+Not Open-Close.
 
 ## Recommended order
 
@@ -551,10 +618,26 @@ traded on.
    day of delay is a session that cannot be recovered.
 2. **Start archiving the free Cboe chain daily too.** Also free, and it is the
    only independent check on the vendor's numbers.
-3. **Price the Quant upgrade from inside the account.** If it is in the range
-   the other tiers suggest, 60 sessions immediately is worth far more than the
-   subscription.
-4. **Leave Open-Close alone** unless the question changes.
+3. **Ask what a backfill costs.** A year is available for purchase or lookup;
+   ~30 sessions of one ticker is the ask, and it may not require a tier
+   upgrade at all. This is now the fastest route to a powered result.
+4. **Then consider State**, if the question becomes "is the naive sign
+   assumption right" rather than "which naive reading works better".
+5. **Leave Open-Close alone** unless the goal becomes auditing the vendor.
+
+## Licensing — no longer an inference
+
+The terms were previously unreadable (client-rendered site), so this project
+made a conservative guess and kept vendor data out of the public repository.
+The FAQ now states the rule explicitly: downloaded files may be stored
+locally, but the data is for **personal, non-commercial use only** — no
+redistribution, resale, sharing, or use in managing assets for anyone else,
+and the subscriber represents they are a non-professional user.
+
+The guess was correct, and the design that followed from it — Firestore
+rather than the public repo, `Gex-Bot/data/` gitignored, only derived
+statistics committed — is what the terms actually require. It is now a quoted
+rule rather than a cautious assumption.
 
 ---
 
