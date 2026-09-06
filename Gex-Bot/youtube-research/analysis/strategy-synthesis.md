@@ -132,12 +132,38 @@ The two readings gave **opposite regime calls** and disagreed on wall
 placement. A system built on the wrong one is not a slightly worse system,
 it is an inverted one.
 
-**Most likely reconciliation** (untested): OI answers *"where is the market
-positioned for today"* — a pre-open, structural read, which is what he
-describes at 09:30 in the interview. Volume answers *"what is happening
-now"* — the intraday read, which is what the Classic screen and the
-max-change panel track. They are complementary rather than contradictory,
-and he may simply have been describing different moments.
+**Reconciliation — no longer a hypothesis (confirmed 2026-09-06).** This
+section previously offered the complementary reading as an untested guess.
+The vendor's own FAQ settles it, and more strongly than the guess did:
+
+- **OI-based levels are recomputed once a day, near the open** (the API's OI
+  data updates at 08:00 ET), and stay **fixed for the whole session**. The
+  OCC tallies opening and closing orders overnight; intraday there is
+  nothing to update them with.
+- **Volume is therefore the only Classic reading that can respond to the
+  session at all.**
+
+So OI is a pre-open structural read *by construction* — it is physically
+incapable of being an intraday signal — and volume is the intraday one. The
+two sources were describing different moments, exactly as suspected, and the
+question "which one is correct" was malformed.
+
+What remains genuinely open is narrower and worth stating precisely:
+**does price respect the fixed OI levels better than the moving volume
+levels?** That is what `analyse_vol_vs_oi.py` measures, and it is still
+unanswered for want of sessions.
+
+Two further documented facts that bear on this:
+
+- Classic volume GEX is **naive and unsigned**. The vendor states that
+  opening/closing data is unavailable intraday and that wide spreads and
+  mid-price prints make buy/sell direction hard to infer from Time & Sales,
+  describing volume as an *"intermediary solution"* giving a *"rough idea"*
+  of hedging. Confirmed empirically at r ≈ 0.98 — see
+  `../../research/volume-vs-open-interest.md` Part 3.
+- **1DTE is documented as the out-of-hours choice**: the FAQ notes that many
+  non-US subscribers use the 1DTE levels for the Globex session. That is a
+  better-founded reason to toggle `one` than the interview's passing mention.
 
 Supporting evidence for the volume side: the per-strike `priors` series
 tracks the `gex_vol` column, so the max-change panel — which he uses for
