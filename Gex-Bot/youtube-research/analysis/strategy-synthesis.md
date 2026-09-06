@@ -38,47 +38,65 @@ level is not resistance; it is where the dealer is compelled to reverse.
 
 ## 3. The levels
 
-> ### Correction (2026-09-06): the majors are exits, not entries
+> ### Note (2026-09-06, revised 2026-09-07): how the founders use the majors
 >
-> The table below encoded "sell the call wall, buy the put wall" as the entry
-> rule. **The vendor's own trader says that is the less effective use**, and
-> so, on camera, does Siento — the trader this whole specification was derived
-> from. See [the channel corpus](gexbot-channel-corpus.md) §1.
+> An earlier version of this note claimed the majors are "exits, not entries"
+> and that this section had it wrong. **That was an overstatement and has been
+> withdrawn.** The rule below stands.
 >
-> GexBot's co-founder, who trades NQ off these levels daily: the majors are
-> *"best for taking your core off when you're heading towards the level …
-> better to trim … that just seems to be a lot more effective than trying to
-> actively fade against the level."*
+> Siento is explicit that the majors are entries, and calls it one of his main
+> setups: don't sell in the middle, wait for price to reach the level; buy at
+> major negative with the stop below; *"this is how you use these two, major
+> positive gamma and major negative gamma, to enter a trade."* He describes
+> them as profit-taking places **in the same breath** — go short at major
+> positive, "or if you've been long, this is the place you take profit." Both
+> uses were always in the source. There was no conflict to correct.
 >
-> Siento, in the same interview: *"that's where I get out of my long … only
-> because SPX was showing maximum gamma there"*, and *"SPX I just use it for
-> levels to get out, basically, to take profits."*
+> What is true is that **the two founders differ**, and neither forbids
+> entering at a major:
 >
-> Entries come instead from the **transitions between call-gamma and
-> put-gamma distributions** — the "line in the sand" — with the majors as the
-> targets at the far end. Nothing below has been deleted, because it is a
-> faithful reading of the two source videos; but where it conflicts with the
-> people who built the product, they win.
+> - **Jass** prefers trimming into them: *"major positive or major negative,
+>   they're really best for taking your core off when you're heading towards
+>   the level … that just seems to be a lot more effective than trying to
+>   actively fade against the level."* Said of a specific ranging day where
+>   neither entry was clean, and he points to a smaller node as the better
+>   entry. A preference about relative effectiveness, not a prohibition.
+> - **John** actively fades them: of his major negative, *"every time we come
+>   up into 35 it's worth a fade … that's more or less what I've been doing
+>   all day."*
 >
-> This also means the touch test in `analyse_vol_vs_oi.py` has been measuring
-> a claim the vendor never made.
+> Note that John is fading major **negative** approached from **below** —
+> i.e. as resistance. That is evidence for the pivot framing below, not
+> against the rule.
+>
+> **What genuinely does not survive** is narrower: treating the *appearance*
+> of a large position as a forecast that price will travel to it. See the
+> magnet note under the table.
 
 | Level | API field | Role |
 |---|---|---|
-| Major positive gamma (call wall) | `major_pos_vol` / `major_pos_oi` | **Target** — trim longs into it |
-| Major negative gamma (put wall) | `major_neg_vol` / `major_neg_oi` | **Target** — trim shorts into it |
+| Major positive gamma (call wall) | `major_pos_vol` / `major_pos_oi` | Ceiling — **sell** here; also where longs take profit |
+| Major negative gamma (put wall) | `major_neg_vol` / `major_neg_oi` | Floor — **buy** here; also where shorts take profit |
 | Zero gamma | `zero_gamma` | Regime divider — **never trade here** |
 | Net GEX | `sum_gex_vol` / `sum_gex_oi` | Regime direction (naive; see below) |
 | Max-change panel | `max_priors`, per-strike `priors` | 1/5/10/15/30-min gamma change |
-| **Sign transitions in the ladder** | derived from `ladder` | **Entry** — the line in the sand |
+| **Sign transitions in the ladder** | derived from `ladder` | Jass's preferred entry — the "line in the sand" |
 
 Two further corrections from the same source:
 
-- **A big put wall is not a magnet.** The retail reading — dealers must sell
-  futures into it, so price is drawn there — is explicitly contradicted: a
-  large long-gamma position *lifts the vols at that strike, making it less
-  liquid, so price is **less** likely to trade there.* Siento is shown acting
-  on the magnet reading, cutting a long, and price never reaching the level.
+- **A newly-appearing wall is not a directional signal.** This is a narrower
+  point than an earlier draft claimed, and it does *not* contradict the rule
+  above. Siento sees a large put position appear intraday and infers price
+  will be *drawn down to it*, so he cuts his long. Jass corrects that
+  specific inference: a fresh long-gamma position lifts the vols at that
+  strike, making it less liquid, so price is **less likely to travel there**.
+  Price never reached the level.
+
+  So: "price reaches the level and reverses" (the rule above) and "the level
+  repels price" are the *same* claim, not competing ones — a barrier pushes
+  price away once reached and is hard to push through. What fails is the
+  separate inference that the wall's appearance predicts price will go to
+  it.
 - **Direction is not a property of the level.** Above it, it is support;
   below it, resistance. The claim is only that spot wants to move *away*.
 

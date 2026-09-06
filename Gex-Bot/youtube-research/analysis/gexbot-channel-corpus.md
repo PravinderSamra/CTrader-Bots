@@ -21,33 +21,53 @@ how.
 
 ---
 
-## 1. The correction that matters most: the majors are EXITS, not entries
+## 1. How the founders use the majors — and a retraction
 
-Our specification says: price reaches major positive → sell it; price reaches
-major negative → buy it. Everything in `analyse_vol_vs_oi.py` tests that.
+> **Retracted 2026-09-07.** This section originally claimed the majors are
+> "exits, not entries", that our specification had it wrong, and that the
+> touch test was "measuring a claim the vendor never made". **All three were
+> overstatements.** They came from reading one founder's stated preference as
+> doctrine, and from quoting Siento describing a single trade rather than his
+> actual rule. The corrected version follows.
 
-The founder says the opposite:
+Siento's rule, from the source video, is unambiguous and it does treat the
+majors as entries — he calls it one of his main setups. Don't sell in the
+middle; wait for price to reach the level. Buy at major negative with the stop
+below. *"This is how you use these two, major positive gamma and major
+negative gamma, to enter a trade."*
 
-> "major positive or major negative — they're really best for **taking your
-> core off** when you're heading towards the level. So if you're long and
-> you're coming into major positive it's better to trim, or if you're short
-> and you're hitting major negative it's better to trim. That just seems to be
-> a lot more effective than **trying to actively fade against the level**."
-> — Jass, *NQ Fade using Gex Profile*
+He also, **in the same breath**, describes them as profit-taking places: go
+short at major positive, "or if you've been long, this is the place you take
+profit." Both uses were in our source material all along. There was no
+conflict to correct, and the earlier claim that we had encoded the wrong one
+was simply wrong.
 
-And Freddy Siento — the trader our whole spec is derived from — does exactly
-this on camera, without our having noticed:
+**Where there is a real difference is between the two founders**, and neither
+forbids entering at a major:
 
-> "that 5922, that's where I get out of my long … only because SPX was showing
-> maximum gamma there"
->
-> "to go directional you have to look at the SPY, not the [SPX] … **SPX I just
-> use it for levels to get out**, basically, to take profits"
+- **Jass** prefers trimming into them:
 
-So both the vendor and our own source treat the majors as **profit-taking
-targets**. We encoded them as entry signals. That is not a nuance — a level
-that is a good place to close a position is not the same claim as a level that
-reverses price, and it is the second claim we have been testing.
+  > "major positive or major negative — they're really best for taking your
+  > core off when you're heading towards the level … that just seems to be a
+  > lot more effective than trying to actively fade against the level."
+
+  Context matters: he says this about a specific ranging day where he judged
+  *neither* the breakout nor the fade to have a clean entry, and he points to
+  a smaller node where "someone is actively short" as the better entry. It is
+  a claim about relative effectiveness, not a prohibition.
+
+- **John** actively fades them:
+
+  > "5835 has been a really big level all day, it's our major negative … every
+  > time we come up into 35 it's worth a fade … that's more or less what I've
+  > been doing all day."
+
+  Note he is fading major *negative* approached from *below* — as resistance.
+  That supports the pivot framing in §3 rather than contradicting the rule.
+
+So the honest summary: **entering at the majors is a real, practitioner-backed
+setup, and the touch test is a legitimate test of it.** What §2 adds is a
+second entry method (transitions), not a replacement.
 
 ## 2. What they actually enter on: distributions and transitions
 
@@ -91,6 +111,11 @@ that scores the correct outcome as a failure. **That was a real bug and it is
 now fixed** — the script scores both framings side by side. See §8 for what
 happened when it was re-run, which is not what I expected.
 
+This one is unaffected by the §1 retraction: it is a scoring defect either
+way, and John fading major negative *from below* as resistance is direct
+evidence that which side price approaches from is what decides the
+expectation.
+
 ## 4. Long gamma is a low-volume node; short gamma is a high-volume node
 
 The cleanest mental model in the whole corpus:
@@ -116,21 +141,30 @@ or short, which requires the classified (State) product. On Classic's naive
 model every put is assumed bought and every call sold, so the distinction
 collapses. We cannot compute this on our tier.
 
-## 5. The magnet intuition is backwards
+## 5. A wall's appearance is not a directional signal
 
-Freddy describes the standard retail reading — a big negative-gamma strike is
-a magnet, because dealers must sell futures into it — and says he cut a long
-because of it. The answer:
+This one survives, but narrower than first written — and it does **not**
+contradict §1.
 
-> the participant "is lifting the volatility surface and making the option
-> more expensive, so **less likely the spot to go there**"
+Siento sees a large put position appear intraday, reads it the retail way (a
+magnet: dealers must sell futures into it, so price gets pulled down), and
+cuts his long. Jass corrects that specific inference: the participant "is
+lifting the volatility surface and making the option more expensive, so **less
+likely the spot to go there**." Siento's own outcome: *"the price never went
+there."*
 
-and Freddy's own outcome: *"the price never went there."*
+The distinction that an earlier draft blurred:
 
-A large long-gamma position at a strike **repels** price. Our
-`strategy-synthesis.md` carries the magnet reading. Again, this is stated in
-terms of the classified view, so it does not translate directly to Classic's
-`major_neg_*` — but it should stop us describing put walls as magnets.
+| Claim | Verdict |
+|---|---|
+| Price reaches the level and reverses off it | **Stands** — this is Siento's rule and John trades it |
+| The level is hard to push through; it pushes price away | **Stands** — this is the same claim as above, seen from the other side |
+| A large position *appearing* means price will travel to it | **Fails** — this is what cost Siento the long |
+
+"Repels" and "acts as support you can buy" are not competing descriptions.
+A barrier both pushes price away when reached and is hard to get through.
+What fails is using the wall's appearance as a forecast of *direction of
+travel*.
 
 ## 6. The NDX question, substantially answered — and favourably
 
@@ -289,10 +323,10 @@ it is the most persuasive argument for an upgrade in the whole corpus.
 
 | # | Change | Why |
 |---|---|---|
-| 1 | Stop treating majors as entry signals; document them as **targets** | §1 — the vendor and our own source both use them that way |
-| 2 | Compute **distributions and sign-transitions** from the stored ladder and show those, not just a size ranking | §2 — this is the read the founders actually use |
+| 1 | ~~Stop treating majors as entry signals~~ **Withdrawn** — majors are entries *and* targets, as the source always said | §1 — retracted overstatement |
+| 2 | Compute **distributions and sign-transitions** from the stored ladder and show those *alongside* the size ranking | §2 — Jass's preferred entry; an addition, not a replacement |
 | 3 | Store raw `ndx` levels alongside `nq_ndx` and derive a **live premium** | §7 — our levels currently carry a stale basis of several points |
 | 4 | Re-examine the touch tolerances once §3 lands | §7–§8 — tight tolerances may be measuring basis error |
 | 5 | Treat **net convexity** as the strongest argument for a State/Orderflow upgrade | §10 |
-| 6 | Correct the "put wall is a magnet" language | §5 |
+| 6 | Narrow the "magnet" language: a wall's *appearance* is not a forecast of travel, but reversal at the level stands | §5 |
 | 7 | Drop the SPX-vs-NDX escalation | §6 — largely answered, and favourably |
