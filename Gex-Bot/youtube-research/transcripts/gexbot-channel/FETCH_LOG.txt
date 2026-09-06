@@ -5,3 +5,37 @@
 6i6Dtth-0Ik: genuinely no captions
 79qxyM-e178: HAS captions
 DROy4T9gwWs: genuinely no captions
+GkluIe8Ioyg: genuinely no captions
+N3Q704qw4Ko: genuinely no captions
+O9h0eDUW_4Y: genuinely no captions
+SYdkW1yKk3A: genuinely no captions
+Ue6mKuT2tsU: genuinely no captions
+YnQxDjLjXEU: genuinely no captions
+Z6PGAUZv1IE: genuinely no captions
+h5YZ4kXKc_s: genuinely no captions
+n5X3zgWmq3M: HAS captions
+psxtILQn2BE: genuinely no captions
+xgDUDAcoOK0: genuinely no captions
+zonIw39fcDs: genuinely no captions
+
+== pass 2: download (spanish + any found above) ==
+eonlRevJwsA: FAILED after 5 tries -- ERROR: Unable to download video subtitles for 'en': HTTP Error 429: Too Many Requests
+K-RiP1RHlNk: FAILED after 5 tries -- ERROR: Unable to download video subtitles for 'en': HTTP Error 429: Too Many Requests
+gzOuu4ndHCI: FAILED after 5 tries -- ERROR: Unable to download video subtitles for 'en': HTTP Error 429: Too Many Requests
+k2yFrQ2pMEU: FAILED after 5 tries -- ERROR: Unable to download video subtitles for 'en': HTTP Error 429: Too Many Requests
+e5Uz6vDp694: ok on try 2 -- 7180 words
+q-x9mCeQPvw: ok on try 1 -- 7744 words
+79qxyM-e178: FAILED after 5 tries -- 
+n5X3zgWmq3M: FAILED after 5 tries -- 
+
+DONE 2026-09-06T18:10:46Z
+
+== corrections after the run ==
+79qxyM-e178: NOT captioned. Re-checked by hand: it carries only a live_chat
+  track. The pass-1 grep matched the "Available subtitles for ...:" header
+  rather than a language row, so a chat-log-only video was classed as
+  captioned. The pattern in fetch_remaining.sh has been tightened.
+
+Corrected tally of the 18 non-Spanish videos: 17 genuinely have no caption
+track of any kind; 1 (n5X3zgWmq3M) has captions and is still unfetched,
+blocked by the rate limiter rather than absent.

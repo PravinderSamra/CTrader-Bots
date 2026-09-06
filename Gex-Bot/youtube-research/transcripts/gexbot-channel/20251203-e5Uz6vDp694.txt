@@ -1,0 +1,222 @@
+[00:00:12] Because we're live. If it sounds good. Well, good morning.
+
+[00:01:03] Good morning. Good morning. Good morning. Good morning. Well, yes, it sounds perfect. Let's see, let's see, let's see, let's see what we find today connecting some users. Let's see if I can also stream on Discord. We'll put Discord here. They can
+
+[00:02:05] barely hear anything here. Okay, I think we're ready here with Discord too. We'll be broadcasting via Boomap. Uh-huh . Ready. So, we have... Good morning everyone. Let's begin this session by providing market context and explaining some things we're seeing, as well as some
+
+[00:02:41] Orderflow indicators. So, this is going to be an extremely good session, one that we're going to incorporate. Ready? Okay, let's see, let's see, let's see. Come on, we're starting here. Let's take a moment to see how things are going on Discord. Okay. Ready. Well, for those on Discord I'll be streaming a
+
+[00:03:14] different screen, since on Discord I can only stream one screen, but on YouTube... Remember that they have a link on YouTube so you can also go and watch it, where it looks much, much better. Ready. I'm here on Bootmap. We already have a shift in what is the zero range here, right? The different levels. Remember that
+
+[00:03:50] the line is the open interest. This little red one is also open interest. Uh, the green lines we found here are from Classic, Classic volume. This red line down here from the Classic, I also show it here on YouTube. There it is. Let's see if we can put it on top. There it is. Perfect. Here I am again explaining it here on YouTube.
+
+[00:04:24] Well, then we 're relatively bullish. Well, I'm working, I'm here working on another computer. Ready? Therefore, you will see that we will be a little more fluid in what we were doing yesterday. Okay, so you also have this in mind, we're going to be a little more fluid in this session. Uh, let's go to
+
+[00:04:57] Exactly. Let's go here for what's on the web. Ready. Let's go to state. We're also going to open up what is order flow. Uh-huh . If we see that it's working quite fast, uh, when is the computer change? Okay, let's see it as we have it. Let's remove this for a moment. Let's put here what the net is, the net gets. Let's do a
+
+[00:05:30] quick summary of what we've seen so far in the market. It's been approximately 7 minutes since opening. Once again we have everything that is bullish gets. All these days we have been totally bullish on the net gets e while we are going to see the orders. We are in the delta. There we see the delta. Ah, but here I have to change, excuse me. Change instrument. I'm standing on, let's put CPX correlated with it.
+
+[00:06:05] Remember that we have different stickers that are related, they are practically multiplied, right? We're already there. Perfect. And perfect. Or well, here we see it differently. We're starting with the guest. Well, at this moment we are starting bullish with the get above 250, we also have the get below which is the net 1 of t, right? Just a moment, please.
+
+[00:06:51] There we are. What a shame about this place. Okay, so , what are we talking about? Okay, today we're going to explain some indicators, uh, some Order Flow metrics. Ready. Let's focus on the aggregate metric, which I've been asked about quite a few times . Several people have written to me asking me to explain a little bit about the order flow metrics of our Orderflow package.
+
+[00:07:24] Remember that we have different packages available. We're going to work on the order flow package. Remember that we also have a 50% discount for the first month, which you can try out on the platform. Okay, let's open up what is the aggregate. Here it is. Let's just leave what is the agricate eh of the certo. So that we don't get too
+
+[00:07:58] confused. Ready. Let's put it right here. What are we going to find here? Let's find a middle ground, a point, here it is, a middle ground, right? Which would be Siam, right? The Siam line the Siam line. We have what is the aggregate of the put, right? It's the aggregate of the
+
+[00:08:32] red putí and the aggregate of the call, green line, right? What are we going to find in this aggregate? different delta impulses and that's why it tells you here that it is the aggregate of the remember it is a calculation of the delta. Therefore, any incoming volume aggregation can be visualized here more
+
+[00:09:05] graphically and compared to a truly exponential movement in price. We'll go and see it. Ready. We're also going to do a historical survey so we can see and visualize it. Let's say, what happened in the delta? And we're also going to look at what the state is, but the orders are completely separate from strike to
+
+[00:09:37] strike. Remember that we have the different filters, right?, from the profile option, which are delta, gamma, bama, char, right? And we'll stop pressing one of these, right? We're going to see that type of graph, right? Which is completely independent of all call sales and purchases. We'll see him explain. Okay, we'll
+
+[00:10:13] explain it. Let's see. Ah, well, while we're explaining, we're also learning a little bit about how the market is being managed, because they're also interested in visualizing what the market is like, in addition to the explanation. Let's leave it at that for now. Let's leave it at that for now . We are located here. We're going to let it run its course, but we 'll explain it if something happens. Ready. When an event happens, we're going to explain
+
+[00:10:47] what happened, right? And we're going to buy it, let's say, with the previous days. Let's see if we can find something similar. Ready. Uh, I'm going to open it, just a moment. that open this way. Oh, I hope I haven't cut the "
+
+[00:11:31] Wait until I connect another computer" and I do n't want to. Ah, yes, I cut it. I cut it, I cut it, I cut it. Too bad. I've cut the live stream of " A ver" here. I'm sorry about you. I cut the live stream of what Bootmap is on Discord. Hey, when you can, you can show the
+
+[00:12:06] zero line comparison in the Bobmap. Uh, well, they also asked me about the line zero of the Bootmap. This indicator is in test mode for bootmap. The zero line is being developed, since more things will be integrated into the history of the different indicators. So, we're going to start having a history of the delta. My idea is that we have a history of the Delta, a
+
+[00:12:39] history of the Gamma, and a history of the Classic, too. Oh no, even here we have the history classit. This is the history of Classic that we see here. Hey, the green line is here. Here is the green line. I believe it was also situated at this point. This is the history. This is the history of what the Classic is in open interest. Ready? So, we're going to have that update soon, uh, not right now, but we will have it soon.
+
+[00:13:15] Uh, in what we saw yesterday, we had taken a long position because I think it turned out positive directly on the zero range. Remember that you can take positions on the break of the zero range if the break is relatively large or if it is going to be the continuation of the upward trend. By putting less here, I can place an operation and I can continue the transaction, knowing that there are still orders to consume, right? Ah, I'm going to the side.
+
+[00:13:51] Well, I think we still don't see anything in what is the aggregate. Well, I'll explain this here too. Then I want to see what it is. Here we are. Here. So, as we visualized yesterday, remember that our zero-range line is a midpoint, right? This allows us to visualize, in a
+
+[00:14:26] partial way, whether we are going to build a bearish trend or an upward trend. Uh, regarding that calculation. Notice that as an indicator, right? At the beginning of the market, while it's being reorganized, right? As it opens up , notice how our zero-gamut is functioning as support, right? That's definitely a point in their favor. A break below indicates, well,
+
+[00:14:59] a short bearish trend, depending on the different indicators we look at. Okay, let's believe Okay, we're here in G. We're already here. So, what did we find? Let's duplicate that tab. The good thing is that here on this computer
+
+[00:15:31] I can duplicate as many tabs as I can because it doesn't stick directly. What are we going to see? We'll see that we have a balanced chart today, right? We have a balanced chart, right? As on other days, we found a bit of an imbalance on the side of purchases in the different filters. the different filters. I'm going to open the chat here too so I can read your messages.
+
+[00:16:04] Yes, perfect. Uh, the different filters that we apply, right?, from 0 to 1. Notice that at this moment we find that there is a small balance within the market. There has n't been an explosion yet, let's say, bullish or bearish. And let's move on now to what the delta is. We found the same thing. We have a positive delta support point at 78830. Over here we have a delta of
+
+[00:16:40] 6795. Remember that this can change as we move forward directly through the market. There's little documentation here. Here it is. Uh, what else? What else do we have here? Let's also look at what the range is. Uh, we have the relatively
+
+[00:17:16] negative range, right? This negative range gives us a small bearish push for the moment, right? It has to be balanced, let's say, with the positive range. We have a negative gamma at 68825, which I think we can visualize in Boomap. Let's go here, to Boom, so we can see it too, you can visualize it. Remember that our tool here in the integration with Bomma we can also see
+
+[00:17:48] the level relatively at 6825. Let's mark it, let's put this line here. 6825. There it is. TRUE? That would be like our first, let's say, foothold. Notice that he keeps changing. He has a yellow outline. It has a yellow outline that allows us to see that this would be the peak. Ready? Let's see, looking over here, we have
+
+[00:18:21] a negative delta way down here, right? Let's say, it's not correlated. Remember that correlation is much better. When both are located at the same price within the spot, notice how our price has already been indicated below the zero range. This gives it a small, let's say, downward momentum. Let's see what happened. Vamosica, it's a shame there's so much
+
+[00:18:57] screen swapping, but I think it's much better this way. Look, now we're going to see the example here. Do you remember that I told you we were going to look at the example about 5 minutes ago? 10 minutes, five. 10 minutes. Exactly. Uh, we see that there is a drop in the aggregate. This little drop, the aggregate, right? It is a put event. Look how it falls, right? There we see that there is a drop. What can you see? Well, to
+
+[00:19:30] have a small average, right? an average of how many points it is falling, let's say, in volume by volume, referring to these values ​​on the left side of the screen that we can all visualize. It goes from line zero, right? These are all the metrics. Remember that all metrics have a dotted line within the graph, and above is positive and below is negative.
+
+[00:20:04] We have a maximum that reached 200, around 241 here. We also have a minimum here that is around 675. That leads me to believe that the aggregation at this moment has just surpassed the point of going below zero. Let's take a look at this little movement, shall we ? At what point did a strike happen,
+
+[00:20:40] right? It's relatively small, but let's see if we can find it. Ready. Let's get started. Remember that we have the schedule, we have the schedule below. If you look, we have the schedule right below and it tells us that it's at 9:50. Okay. Let's go at 9:50. Let's go over here , sorry, let's go over here. TRUE? We can take 950 this way . And let's see, we're going to point them out,
+
+[00:21:16] although it's relatively small, so we won't be able to see it, but the idea is that you can see it. 950 con02. Let's see if we can play it . Let's see if the increase can be observed. Okay. It's not relatively. Ah, no, I found it here. Yes, I
+
+[00:21:51] think I've found it here. No, I didn't find it. [laughs] Wait a moment. Let's see if we can visualize it. I'm going to make it a little bit bigger. Let's see if we can find it visually here. He's going to pause it and put them on one by one.
+
+[00:22:26] If the movement is relatively small , I do n't think we'll be able to visualize the expansion. Ah, okay. Here it is. Here it is. Did you see it? I'm going to center it. I'm going to elaborate a little. Look at our... Well, here I have to explain directly how this type of graph works. This small chart is relatively important if we want to
+
+[00:23:01] see what is happening internally at each price level. On the left side, if you draw an imaginary line, right? We have the lines. Uh, let's see if we can change their color, but we will explain. Okay, on the right side, on the right side we have the calls, right?, orange ones. Let's go here.
+
+[00:23:36] These are the calls. If you press, if you press, no, or if you place the mouse, you will find volume call, volume call, volume call, which are the orange bar lines on the right side, right? These are cabbage purchases, ready? so that they take it into account. A purchase of calls and the purple one is a purchase of puts, right? Otherwise, we have a
+
+[00:24:17] cabbage purchase, right? A purchase of a colcista (a type of stock) is considered bullish, right? Uh, and the opposite case, that is, the other left side, we have a short, a what? A short call, well, a call sale, sorry, a bearish call sale, right? Which is basically being a bass player. Okay, and here we also have the buyer's put option, right? And on the opposite side we have the seller's put.
+
+[00:24:51] What's going on with these levels? Okay, here we go a little bit into visualizing how order pushing is very similar to the Bookmap order book. Because? Um, when you place a limit order, notice that when you place a limit order, when you see a limited liquidity order, it can push the price up or pull it down, right? In other words, it functions as part of the liquidity, which can push the
+
+[00:25:25] price from one side to the other or attract it. Therefore, these points act as a price attraction, right? These points act as a price attraction, as liquidity. It's, let's say, like the same terminology when it comes to comparing it to the Boomman. Well, graphically it's quite convenient, and it allows us to identify
+
+[00:25:59] what happened within the aggregate. So, the aggregate tells you, uh, look, a small volume of change on the side of a put or a call, right? It can be bearish or it can be bullish. like the one we see right here. This was set at 50.03. 950.03. Here it is 950 with 03. Let's see. That must have been
+
+[00:26:35] a put, right? If we can see it here, let's back up. Go ahead a little bit. There it is. Look, did you see it? There it is. volume put. That's why the aggregate indicates that it's a put aggregate, right? And an aggregate of put, what? A bearish put aggregate. Did you understand me? Ready. It clearly
+
+[00:27:08] tells me he's a bear because he pulled down. Okay. And if we look here, here at this, add it, we see it here, there you'll see it, man. He's a bass player, right? What price range are we aiming for? At 68.35. 68.35 at 50.03. You'll see that they took this [ __ ] away from me, right? They
+
+[00:27:44] took this bullish put out of my pocket, right? And they added it to the book a little further up. That could work in my favor, giving me room for the price to continue falling, right? And I bet the price will continue the downward trend. In other words, that small aggregate tells me that two options can occur. I'll
+
+[00:28:17] explain it here. Two options can occur . Remove an aggregate, remove a put, right? Or a call, right? And add one for me immediately, right? that we will be able to visualize in the aggregate of the order flow. Or they might also add me without needing to remove any part of the " del" of a call or a put. Ready? It's exactly the same. The same can be said for those
+
+[00:28:50] who have studied bootmap. It's exactly the same. We're going to put the bootmap here. Momentico. It's exactly the same when I'm adding a limit order to push the price up or when I'm removing the order to let the price continue, right? In this example case, we will visualize it here. Look, let's put it here. Look, when I add a limit order here, right?
+
+[00:29:23] When I add it, right? Limited order quantity? Ah, 137. A limit order of 137 drives the price up because it's a buy limit order , right? There he is telling me, look, it's an order of 137 compared to the book. Remember that you can visually compare books. If you look closely, this is Boommap's order book. And he tells me, ah, look, you guys are more or less getting a visual average, it's not going over 107, 77 here 80 89 uh, here 140
+
+[00:30:01] 3, look, it marks that it's a maximum point, right? It's an aggregate. It's exactly the same, it's the same terminology, right? So, we can combine both tools to tell him, "Oh, look, they're doing a put aggregation and a bearish limit order aggregation , uh, a bearish limit order to create a continuation, right?" That can boost the price, uh, like in this case that we saw, uh,
+
+[00:30:35] that we saw in our Acábot. It's super important that you also look into this. Ah, here we found the aggregate. Let's see, yes, look, see. Did you see it again? I want you to visualize these types of movements very clearly. When you see this, it's an addition that we can consider. Remember that our state package is presented
+
+[00:31:08] in a way that's a little more visual, yes, but with the exact price. With the exact price and location, right? In comparison, let's say, with this order flow, we see that the aggregate, right? It settled right here, although the price we're seeing continued to be slightly bullish. Let's see how far it went. It reached 68.31. The order came
+
+[00:31:44] at 68.35. One can refer to it completely as if it were a resistor, right? I mean, I can place, let's say, well, this is also another super important point. You will find that the aggregates can be close to the price or they can be far from the price. Well, let's say we do n't know for sure exactly when we can get to the point where we can apply exponential motion,
+
+[00:32:18] but it's very similar to how Boa works, an aggregation of one order in terms of volume, right? If I add a volume close to the price, it tends to influence it because I'm adding liquidity and unbalancing the book. It works exactly the same way here in the options. I create an imbalance in the book. And how do I unbalance the book? Well, by adding one or two orders to an option, right? Uh, obviously for the purpose
+
+[00:32:56] of tracking, well, so that they can see it visually in each of their tools. Ready? Not only will we be able to visualize what a single-strike aggregate is, but we will also be able to visualize continuous ones. What are continua? Okay, let's see, let's see what continuous things are. That's why I'd like to show you an example, so to speak. Let's go to
+
+[00:33:31] mm which are continuous. Well, they are continuous and for me they are also relatively important to a bearish or bullish impulse, right? Depending on where it's located, but let's say in this case we're going to zoom in a little bit here so we can see the profile a little bigger so you can see it here the aggregate changes sides, right? There. And what is continuous?
+
+[00:34:07] That at the moment I remove this volume of put, right? This bullish put volume that you were indicating, ah, look, we were working this bullish put volume at 68.30, right? And we immediately add a bearish put volume, right? Otherwise, right? But simultaneously, we will be able to see, relatively occasionally, that
+
+[00:34:43] two volumes are added at different levels. That won't be indicated by the aggregate. In other words , the aggregate won't show us this . We can see in the aggregate that it was totally bearish, right? But he's not going to tell you how many were bearish, he's not going to say, "Oh, look, a strike was added at such and such a price, I don't know, with 200 volume, and another strike at such and such a price with 5000 volume, right?" Instead, he's going to tell you, "A volume was added, right? You consider that bearish volume at this moment and we
+
+[00:35:19] expect the move to be bearish, right?" But it's extremely important when they're simultaneous. What happens when they're simultaneous? Well, the aggregation of a simultaneous bearish put can give me a much bigger impulse. What do I mean by much bigger? In this case, if this aggregate, right, that was located here, had not only appeared here at 68.35, but if another one had been added here at 68.45,
+
+[00:35:54] we have two aggregate volumes of bearish puts coming in, and that can give me A power that continues to be bearish, right? And they can clearly act as support or resistance, right? Remember that this doesn't only happen with puts, but also with bullish calls or a put or a buy put as
+
+[00:36:28] well. Did you understand? Any questions? I hope it wasn't a little tedious and I hope everyone in this session understood. I know it's a little difficult to visualize, but in reference to any type of trading you do, right? It's good to consider because it allows you to see where
+
+[00:37:02] the participants with the biggest hands are entering , right? You could say the strongest hands. Uh, let's see, let's see, let's see. Okay. Uh, well, we see that we made a bullish addition. There we see. Well, look at what I was telling you. Let's see, over here we have, let's see what happened here.
+
+[00:37:38] Well, we have here that our zero range was working As support, right? It breaks through and positions itself as resistance. Notice how it positions itself as resistance. Again, this resistance, this zero range, propels us again with the breakout. This happens every day. Like I told you yesterday, this happens practically every day. It's good, let's say, for us to
+
+[00:38:10] take positions with the zero range. It's simple enough that you can analyze it daily and not complicate things with all the tools that Gesbot offers. Everyone has their own way of managing their trading style, right? Since we're all different. I'm explaining this to you, but you might apply it differently, and the idea is to use it as a reference for your trading. The breakout of the zero range gives me all this bullish momentum, right? Let's
+
+[00:38:47] see, over here we have this small positive range that we see was referenced with a limit order. It can also be referenced as a bullish entry point. This movement reflects all the movement that has occurred, right? I can, let's say, take an order here, a buy order, right? Let's see, they're written, yes? I can take a buy order. Why? Because I have
+
+[00:39:22] references. Let's say that's all context, what I'm seeing, it's not for you to directly place an order, I'm explaining, I'm entering directly, but it's what one is seeing, what we're analyzing in part, but there are, let's say, many points missing to analyze, let's say, those types of entries. We have the zero range. I can, let's say, place my stop below, I can support this zero range, I can assume that there is liquidity above, although I still see liquidity below, as if to defend, let's say, directly the zone. We have
+
+[00:39:55] all the upward momentum, we are seeing bullish increases above the zero range. We would have to use other types of tools, let's say, I don't know, in Order Flow, in order, in Delta, to Let's see if our position is, let's say, completely valid. But these trading points are exactly very good for taking steps within our trade. We needed to know exactly what happened here in this step,
+
+[00:40:29] in this downward step, because it may have already been a small upward movement and a continuation is coming, but let's see how it could affect our trade, right? Look, notice that at this moment it reaches our line again, our zero line. It can take hold there again as part of the support, right? Remember that our zero line is our reference point. That's why I put this precisely below the
+
+[00:41:02] zero line, right? Below this level of the range, because the zero line tells you, "Ah, look, this is relatively ours, I don't know if you've seen what the Bwap is." It is very similar, practically very similar to what the BWAT is. Uh, they can even combine both tools, what is BW and what is zero gamut, right? which is like a weighted midpoint of volume, you could say, right? Uh, but when you guys take an entry within BW, you obviously
+
+[00:41:35] reference it with another type of analysis, right? Okay, let's move on here, let's move on to what's here again. We're going to change. Okay, let's see if there was any other movement inside. Ah, here it's more perfect. Look at this, look at this. So, what is this little [ __ ] referring to then? This little put is telling me, "Ah, look, it's a
+
+[00:42:07] bullish put, right? It's a bullish one that was added within the book, and we're placing it right here at this little point, right? What I was telling you is, we have to look at the other tools to see what's happening. Here we also have a small bearish volume, right? We're also referencing it here. Ah, let's see, yes, we're also referencing it here. Here again we also have another bullish put, but relatively
+
+[00:42:40] small as well. I think the largest one was this one here. Let's visualize it now on our state chart. Okay. Let's look at our state chart. These are right at 13. Ah, well, this one too. Let's see, you're also going to notice these aggregates are very similar in volume
+
+[00:43:15] on certain timeframes. I think I'll explain that another day, but you will find the timeframes very , very similar. We have It 's 10:3 here, it's 10:13. Let's look for it, uh, although you know what, let's look for it in the, in the, in the delta. Yes, let's look for the
+
+[00:43:52] delta. I like the delta better, that one, yeah, that's a little bit, like knowing where it went, but what the delta does is make that little negative and positive distribution, right? Uh, that negative and positive distribution, but I really like it a little bit more. And let's, I think we've got it loaded now. Let's look for it, let's see it soon. I do n't see it. It
+
+[00:44:37] must be this one. Like the Acab, if it appears. If it appears, even better. Let's see, uh, give me a moment, please. I'm going to get a little bit of water. What a shame, I almost drowned here. Uh
+
+[00:45:48] , well, wait a moment. Let's go back to our, to our boom. Uh, look at our line, our zero line, well, uh, look, if we had placed the stop below the point Zero, because it would have triggered our stop loss, right? Um, you can directly take an entry point, since we'd have to see, let's say, what happened here at this point. I was telling you, always try to combine it with other types of
+
+[00:46:21] tools. Perhaps in order flow, this small point here could have been a really exponential delta directly in futures that gave me this small upward impulse, right? Up to here, right? Um, it picks up to this point where the pulse occurred, where the upward point occurred. This 10 o'clock, I think it could have been some kind of news, if I'm not mistaken. Um, and the continuity, notice that in the continuity, right there it refers to the impulse. Let's
+
+[00:46:58] see, just a moment. Okay, continuing here, uh, and let's
+
+[00:47:33] see what happened with that aggregation. Okay, let's look for it here. If we find it here, we have to find it. That small aggregation. I think we could be there. I'll play the audio while they talk here. In the background. Ah. Well, here we are again, sorry to be
+
+[00:51:15] back here. Um, we have the aggregation here, right? Well, because here 's the audio. Uh, this put aggregation was bullish, as you could see. Look, of the 103 with 17. Did you see it here? Here it is. It would be this one with approximately -89, but way, way below. It's way, way below. I do
+
+[00:51:52] n't see another one here. Here they made another small aggregation, right? But bearish. Immediately, when we see this aggregation, right? This aggregation, let's see if we can see it. This is a radiation of -89 in volume, right? I'm not going to talk about millions, I'm not going to talk about trillions, just 89 so as not to confuse you, right? Which are
+
+[00:52:24] the values ​​we are visualizing here within our chart. Uh, immediately, a second later, a small aggregation on the bearish side. We go from... 313 to 373, right? But they're working it
+
+[00:52:57] just below, and they're also adding a little bit of volume here, if I'm not mistaken. Uh-huh. Yes, down there, right? So, notice that at those points, they're adding a bullish put here, and immediately a second later they return it, but they maintain it up to here. Uh, it 's good, let's say, for us to see it here
+
+[00:53:30] directly, in what I think is... I don't see it anymore. This must have been... I don't see it. Ah, it's not this one. This is... Uh-huh . This has to be at three o'clock, and of course, here they are. Here you can see it perfectly. The tricky part is finding the exact point. I have to zoom in quite a bit on the
+
+[00:54:04] chart. What we're going to do is find the exact point, right? We're going to locate ourselves here on the aggregate. And look, it places you here. Look, it's from 3:18 to 3:19. Is it... Remember when I told you that simultaneous orders could be added? Right? When simultaneous orders are added, it's, let's say, more relative to a certain movement.
+
+[00:54:39] Notice that what we're doing is adding them. The simultaneous orders were added. I lost track of it. Here it is. If they are simultaneous orders above the price. You saw it. Here they are. Okay, here are this put and this put. Let's visualize it so you can see it . There it is. This is the example I wanted to show you,
+
+[00:55:16] this simultaneous order aggregation we were talking about. If you've left any comments, no, everything's fine here. If you have any questions, don't hesitate. Uh, for those on Discord, remember that I'm explaining, I have a Discord stream here to Bootmap, this would be it. Let's zoom in a little more on the chart so you can see it. There it is. Right? And over here, on YouTube, I have the
+
+[00:55:51] stream on our platform. It's our platform directly on The website. Let's see that it's much more detailed than what actually happened at that point. Look at this small aggregation. This aggregation, this double volume aggregation, although it may be bullish, right? It's an aggregation, let's say, like the order book, I mean, it's kind of stopping me, it stops the price, I mean, it
+
+[00:56:25] stops it and tells me, "Look, you're not going past here, you're not going to go past, although relatively above it, right?" There were queamos we are in son -23 and around here -214. Adding it all up, it's a pretty relative volume, huh? We also see the volume starting from 300 here. This was the 300, what? Here are 302
+
+[00:56:59] through 599. Here it is. Did you see it? The 302,599. So this small volume aggregation, right? He tells me, "Look, there are two ways we can interpret it. A pause, a pause in an exponential movement within the market, because let 's say the price is, I mean, the price is going up, up, up, up, up, up, up, up , up, and it tells you, look,
+
+[00:57:33] pin, make a pause, I just added a relatively large volume that allows me to pause. It seems like a small pause to me, and that's why this small point can act as resistance. Notice, it acts as resistance. Did you see that? That's why we saw that small shift. Understood so far? Hm.
+
+[00:58:08] I think I 'll leave the explanation of how to interpret it, how to interpret this volume above the price and how to interpret it below the price, for tomorrow. Also, how to interpret it... because it's already 10:30. Tell me a little more about the topic, but yes, we're going to explain it, we're going to explain it in the following videos, how to interpret it when it's added..." Precisely
+
+[00:58:42] close to the price, right? How they're added remotely. Here we have it completely remotely. Exactly. Yes, sir. Let's see it. Ah, well, let's see it in the delta. Let's see the Delta. Tir, tir, ton. Here it is. If it's this. No, tan, tan, tan, tan, tanan. Let's
+
+[00:59:15] load the history. Remember that we can load the history when we refresh the tab here. On YouTube, it's a positive pause. Sir, sir, that's correct, huh? Still. Come out here, here, here. P. There they are, there they are. Boom. Uh, how do you know? How do you know? Uh, here on YouTube, it's a high positive pause. Yes, sir.
+
+[00:59:50] Very good. There it is. There it is. Okay. Aggregation of positive volumes, right? You can visualize it. Uh, clearly I wanted to do them here because this is doing the split. It's doing the order split. Uh, there it is. Uh, then that little pause tells me, "Well, look, we do n't want, like, you to go too far from there."
+
+[01:00:24] Well, there are two things here. Remember that this adds up for me. This delta thing, well, it's relatively like the weighted sum, let's say, of all the strides, right? Uh, the nu puntu goes precisely if the study is located precisely, let's say, in this whole part of this whole volume. Here we can visualize it a little more graphically, but here directly in the delta it is much more graphic, much more
+
+[01:01:01] graphic. Ready. Please keep that in mind. Look, at that moment for us, that can be attraction; obviously, it's the little pause, right? But it can also attract me, it can also work for me like an imam. Well, well, looking at the bootmap we have here, I'm going to get the news, let's say. I can make my
+
+[01:01:33] point here, where is it? I don't know about this, I'd say get it to break even, right? Break after this move. It's a shame I 'm not showing you the bootmap here. There it is. What could we have found? Well, our Coglama worked as a support. We saw that it fluctuates a bit, returning again to our range zone, right? reacting
+
+[01:02:05] the next time and we're almost catching up. We have a small resistance here in the delta section, right? We have a negative delta here . Let's assume that we're going to take, let's say, our profit at that point because it's already a negative delta. That might influence me to make a small bearish move, huh? And what else? What else? What else? What else? What else? What else? So
+
+[01:02:39] , what are they doing there? Questions, questions for now. If you have any questions, feel free to write to me here. Uh, you saw that uh, it already took, let's say, as our target. Remember that it is entirely theoretical; this entry is not meant to be taken. Investment advice is included in our description of our shipment. Uh, this little pause that we saw here, right?, a price hold due to
+
+[01:03:13] this negative delta, right? major negative delta. Um, what I was telling you yesterday is that if we're referring to a downward trend, then let's try to find positions in negative delta. If we are in an upward trend, let's try to find positions at a positive delta to continue the trend. There we saw that there was precisely the breaking of this positive delta and so let's say it can continue directly to look for higher points.
+
+[01:03:45] Notice how the deltap has shifted upwards, it's swapped upwards, did you see it? and it is directly correlating with this negative gamma. This correlation between the two, this correlation between the two, is much greater than the price, let's say, tends to flow and arrive as a point of attraction of the price or point of resistance. Understood? Uh, I did
+
+[01:04:28] n't understand, they wrote to me here on YouTube. The fact that the small company moved north also raises the price. A little more explanation. Implied volatility. Let's look at the beacon over here. I'll have to explain that in the next videos, but let's make a short clip of this live stream. Ready? Well, I'll say goodbye here. I hope you really enjoyed today's analysis
+
+[01:05:01] of what aggregate is, right? We can visualize what the aggregate is. It's a very, very good indicator, in terms of taking a reference point towards liquidity. Right , don't worry. And also, let's talk about how to identify the movements that will pause the price. Tomorrow we might see what implicit oratily is. Ready. I would like us to see that, I
+
+[01:05:35] mean, this, these little dots, we are going to visualize all these dots . all these little dots. We are going to explain this implicit profile, which is also relatively important. Everything is important. The point is that you should look for the best, look for what's best for your operations. Ready.
+
+[01:06:11] All these movements that you see here in the delta of this entire aggregation, right? Notice how it moves, how they remove liquidity, how they remove, how they add, add, add and add, add and add. All of this is so that they can start studying it because they will be able to see how it behaves, see where the market is headed. Can we test the indicator for Boom?
+
+[01:06:44] No, he hasn't seen the available version yet . There is a version that can be found on our Discord channel. You'll find it there in the bootmap section under integrations. You can scroll through it and you'll find that version. Uh, let's see if we're also in the mood to talk to Bootmap about doing this integration. Remember that there is no other indicator that shows us the profile and shows it to us in this way, so beautifully, so beautifully, when we
+
+[01:07:24] see these charts, right? From seeing these reaction zones. Right now we're working on getting it marked, I'd like us to stop, uh, here I am, here I am showing the boomar. Ah. Ah. Well, I didn't show them the other one . Too bad. Here we are seeing what it is... What would we like to put? I would like to at least include the history. The history of the delta. I think the history of the delta is extremely important. Because?
+
+[01:07:59] Because if you look closely, this delta keeps changing, right? It keeps changing from side to side. It moves from positive delta to negative delta. And I'd like to see that story on Boom. Uh, exactly like it was the zero range. The Cer Gama includes the History and the Cero Gama, right? Which tells me the areas where the zero range is moving. And that is extremely important. Hey, 10:40, say hi to them here. My name is Juan. Remember that my name
+
+[01:08:34] is Juan. You can find me here on Discord and write to me with any questions or comments about these videos. If you liked it, don't forget to like the video here for many more videos. Uh, they would directly support our channel and a subscription as well. Thanks a lot. See you tomorrow.
+

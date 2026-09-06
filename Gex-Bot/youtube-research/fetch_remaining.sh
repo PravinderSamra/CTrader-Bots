@@ -20,7 +20,10 @@ for V in $OTHERS; do
   R=$($YT --list-subs "https://youtu.be/$V" 2>&1)
   if echo "$R" | grep -q "has no automatic captions" && echo "$R" | grep -q "has no subtitles"; then
     echo "$V: genuinely no captions" >> $LOG
-  elif echo "$R" | grep -qE "^en |Available (automatic captions|subtitles)"; then
+  elif echo "$R" | grep -qE "^en[ -]"; then
+    # Match a real language row, not the "Available subtitles for X:" header.
+    # Matching the header treats a live_chat-only video as captioned, which
+    # is how 79qxyM-e178 was first misreported as having captions.
     echo "$V: HAS captions" >> $LOG; HAVE="$HAVE $V"
   else
     echo "$V: unclear -- $(echo "$R" | tail -1)" >> $LOG
