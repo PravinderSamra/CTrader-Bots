@@ -72,6 +72,17 @@ export interface GexSnapshot {
   /** Full per-strike ladder. Present on gex_latest only -- the history
    *  collection stays compact deliberately. */
   ladder?: LadderRung[]
+
+  /** Raw NDX index spot, and the constant GexBot added to every price field
+   *  on this record to express it in NQ terms. Present on NQ_NDX only, and
+   *  only when the paired NDX sample carried the same `source_ts`.
+   *
+   *  The constant is computed pre-market and held fixed all session while the
+   *  real basis drifts, so `spot` here is NOT a futures price. Correcting for
+   *  the drift needs a price from outside GexBot -- see the chart-price
+   *  control in the tab. */
+  ndx_spot?: number
+  vendor_basis?: number
 }
 
 /** Which of the two readings the UI is currently showing. */

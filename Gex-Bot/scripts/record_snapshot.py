@@ -221,6 +221,45 @@ def upload_to_firestore(records: list[dict], ladders: dict | None = None) -> boo
         return False
 
 
+def attach_index_basis(records: list[dict]) -> None:
+    """Record the constant GexBot adds to turn NDX prices into NQ prices.
+
+    `NQ_NDX` is not a futures feed. It is the NDX data with one constant added
+    to every price field -- spot, zero gamma and all four walls -- and that
+    constant is computed pre-market and held fixed for the session while the
+    real NDX/NQ basis drifts by a few points. Verified rather than assumed: on
+    2026-09-04 every field of NQ_NDX sat exactly +30.82 from the same field of
+    NDX, in both the zero and full scopes.
+
+    Two consequences, and this function addresses the second:
+
+      * Fetching the `ndx` ticker adds no information -- it is the same numbers
+        shifted. Anyone hoping to recover a live basis by differencing the two
+        tickers will get the frozen constant back.
+      * The constant is worth storing anyway, because it is the only way to get
+        back to raw index prices from an archived record. Analysis that wants
+        to line these levels up against an index chain (or against a real
+        futures feed) needs `ndx_spot`, not the shifted value.
+
+    Correcting the levels to a live futures price needs a price from OUTSIDE
+    GexBot -- the trader's own feed. That is a presentation concern and is
+    handled in the dashboard, which shifts every level by the difference
+    between the user's spot and the vendor's.
+    """
+    index = {r["scope"]: r for r in records if r["ticker"] == "NDX"}
+    for r in records:
+        if r["ticker"] != "NQ_NDX":
+            continue
+        idx = index.get(r["scope"])
+        # Only pair samples the vendor stamped identically; a mismatch means
+        # the two fetches straddled an update and the difference would be
+        # part basis, part price move.
+        if not idx or idx["source_ts"] != r["source_ts"]:
+            continue
+        r["ndx_spot"] = idx["spot"]
+        r["vendor_basis"] = round(r["spot"] - idx["spot"], 4)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--tickers", nargs="+", default=DEFAULT_TICKERS)
@@ -259,6 +298,8 @@ def main() -> int:
     if not records:
         print("FATAL: every fetch failed", file=sys.stderr)
         return 1
+
+    attach_index_basis(records)
 
     if args.stdout:
         for r in records:

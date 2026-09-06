@@ -204,11 +204,26 @@ Directly from the interview, and this one is ours to fix:
 
 Consequences for us:
 
-- **Every `NQ_NDX` strike we store carries a stale basis**, fixed at the open
-  and drifting by several points through the session. Independently
-  corroborated: the sign-convention reconstruction recovered a constant basis
-  of **+30.82** for the whole of 2026-09-04, against a spot difference of
-  **+29.32** at the close — a 1.5-point drift on a quiet day.
+- **Every `NQ_NDX` price we store carries that fixed basis** — and it is worse
+  than "the levels drift": measured on 2026-09-04, **every field** of `NQ_NDX`
+  sat exactly **+30.82** from the same field of `NDX`, in both scopes. Spot,
+  zero gamma and all four walls. So `NQ_NDX.spot` is **not a futures price**;
+  it is the index price plus the same constant.
+
+  > **Correction (2026-09-07).** An earlier version of this bullet cited a
+  > "1.5-point drift on a quiet day", from comparing `NQ_NDX.spot` (29,573.47)
+  > against Cboe's NDX close (29,544.15). That was wrong. GexBot's *own* NDX
+  > spot is 29,542.65, exactly 30.82 below its NQ figure. The 1.5 points was
+  > disagreement between two vendors' NDX prices, not basis drift — drift
+  > cannot be measured from GexBot data at all, because both tickers are the
+  > same numbers shifted by one constant.
+
+- **Fetching the `ndx` ticker therefore adds no information.** The obvious fix
+  — record the raw index alongside and difference the two — recovers only the
+  frozen constant. Correcting to a live basis needs a futures price from
+  *outside* GexBot: the trader's own feed. That is what the dashboard's
+  chart-price control does, and since the vendor's spot and its levels carry
+  the same constant, the whole correction is a single subtraction.
 - **Our touch tolerance is contaminated.** Testing "within 5 points of the
   wall" is not meaningful when the wall itself carries up to ~10 points of
   translation error. The tight tolerances in the sweep may be measuring

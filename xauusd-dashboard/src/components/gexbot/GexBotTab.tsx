@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { LoginGate } from '../pravzella/LoginGate'
 import { useAuth } from '../../hooks/useAuth'
 import { useGexLevels, describeFreshness, isUsCashOpen } from '../../hooks/useGexLevels'
@@ -10,6 +10,7 @@ import {
 import styles from './GexBotTab.module.css'
 
 const NAS100 = 'NQ_NDX'
+const CHART_PRICE_KEY = 'gexbot.chartPrice'
 
 // One chart, one price scale, two panels: price over time on the left, the
 // strike ladder on the right. The vendor's own view overlays both on a single
@@ -66,11 +67,14 @@ export function levelsFor(zero: GexSnapshot | null, full: GexSnapshot | null): L
   return out
 }
 
-function Chart({ snap, history, levels, reading }: {
+function Chart({ snap, history, levels, reading, offset }: {
   snap: GexSnapshot
   history: GexSnapshot[]
   levels: Level[]
   reading: GexReading
+  /** Points to add to every displayed price to match the trader's own feed.
+   *  A uniform shift, so it changes labels only -- never the geometry. */
+  offset: number
 }) {
   const view = buildLadderView(snap, reading)
   const { rows, scale } = view
@@ -115,7 +119,7 @@ function Chart({ snap, history, levels, reading }: {
               width={Math.max(w, 0.5)} height={rowH} rx={2}
               className={pos ? styles.barPos : styles.barNeg}
             >
-              <title>{`${price(r.strike)} · ${size(v)}`}</title>
+              <title>{`${price(r.strike + offset)} · ${size(v)}`}</title>
             </rect>
             {showsPriors(r, scale) && r.priors.map((p, i) => (
               <circle key={i} cx={ZERO_X + (p / scale) * LAD_HALF} cy={y(r.strike)}
@@ -139,7 +143,9 @@ function Chart({ snap, history, levels, reading }: {
           <line x1={PAD_L} x2={LAD_X1} y1={y(l.value)} y2={y(l.value)}
                 className={`${styles.level} ${styles[l.kind]}`} />
           <text x={PAD_L - 6} y={y(l.value) + 3} textAnchor="end"
-                className={`${styles.pill} ${styles[l.kind]}`}>{price(l.value)}</text>
+                className={`${styles.pill} ${styles[l.kind]}`}>
+            {price(l.value + offset)}
+          </text>
         </g>
       ))}
 
@@ -147,7 +153,7 @@ function Chart({ snap, history, levels, reading }: {
       <line x1={PAD_L} x2={LAD_X1} y1={y(snap.spot)} y2={y(snap.spot)}
             className={styles.spotLine} />
       <text x={PAD_L - 6} y={y(snap.spot) + 3} textAnchor="end"
-            className={styles.spotPill}>{price(snap.spot)}</text>
+            className={styles.spotPill}>{price(snap.spot + offset)}</text>
 
       {history.length > 1 && (
         <>
@@ -186,10 +192,32 @@ export function GexBotView({ zero, full, history, now = new Date() }: {
 }) {
   const [scope, setScope] = useState<'zero' | 'full'>('zero')
   const [reading, setReading] = useState<GexReading>('vol')
+  // The trader's own NAS100 price, used to re-base every level onto his chart.
+  const [chartPrice, setChartPrice] = useState<string>('')
+  useEffect(() => {
+    try { setChartPrice(localStorage.getItem(CHART_PRICE_KEY) ?? '') } catch { /* private mode */ }
+  }, [])
+  const setAndStore = (v: string) => {
+    setChartPrice(v)
+    try {
+      if (v) localStorage.setItem(CHART_PRICE_KEY, v)
+      else localStorage.removeItem(CHART_PRICE_KEY)
+    } catch { /* private mode: the value still applies for this session */ }
+  }
+
   const snap = scope === 'zero' ? zero : full
   const levels = levelsFor(zero, full)
 
   if (!snap) return <div className={styles.empty}>No {scope} scope recorded yet.</div>
+
+  // GexBot expresses NDX levels in NQ terms by adding a constant fixed before
+  // the open, so its spot is not a futures price and drifts from a real feed
+  // through the session. Both its spot AND its levels carry the same constant,
+  // so the whole correction is one subtraction — exactly what the vendor's own
+  // trader describes doing in his head.
+  const typed = Number(chartPrice)
+  const offset = chartPrice && Number.isFinite(typed) && typed > 0 ? typed - snap.spot : 0
+  const p = (v: number) => price(v + offset)
 
   const fresh = describeFreshness(snap.source_ts, now)
   const marketOpen = isUsCashOpen(now)
@@ -199,7 +227,7 @@ export function GexBotView({ zero, full, history, now = new Date() }: {
       <div className={styles.head}>
         <div>
           <div className="tile-eyebrow">NAS100 · {snap.ticker}</div>
-          <div className={`${styles.spot} mono`}>{price(snap.spot)}</div>
+          <div className={`${styles.spot} mono`}>{p(snap.spot)}</div>
         </div>
         <div className={styles.headRight}>
           <div className={styles.toggle} role="group" aria-label="Expiry scope">
@@ -218,6 +246,33 @@ export function GexBotView({ zero, full, history, now = new Date() }: {
         </div>
       </div>
 
+      <div className={styles.basisRow}>
+        <label className={styles.basisLabel} htmlFor="gex-chart-price">
+          Your NAS100 price
+        </label>
+        <input
+          id="gex-chart-price" type="number" inputMode="decimal"
+          className={`${styles.basisInput} mono`}
+          placeholder={price(snap.spot)} value={chartPrice}
+          onChange={e => setAndStore(e.target.value)}
+        />
+        {offset !== 0 ? (
+          <span className={styles.basisOn}>
+            levels shifted <strong className="mono">{offset > 0 ? '+' : ''}{offset.toFixed(2)}</strong>
+            {' '}to match your feed
+          </span>
+        ) : (
+          <span className={styles.basisOff}>
+            showing GexBot's own prices — its NQ conversion is a constant fixed
+            before the open, so it drifts from a live feed during the session.
+            Type your platform's current price to re-base every level onto your chart.
+          </span>
+        )}
+        {chartPrice && (
+          <button className={styles.basisClear} onClick={() => setAndStore('')}>clear</button>
+        )}
+      </div>
+
       {fresh.stale && (
         <div className={styles.staleBanner}>
           <strong>Not live.</strong>{' '}
@@ -228,29 +283,30 @@ export function GexBotView({ zero, full, history, now = new Date() }: {
       )}
 
       <div className={styles.layout}>
-        <Chart snap={snap} history={history} levels={levels} reading={reading} />
+        <Chart snap={snap} history={history} levels={levels} reading={reading}
+               offset={offset} />
 
         <aside className={styles.panel}>
           <Block title="update" rows={[
             { k: 'time', v: clock(snap.source_ts) + ' UTC' },
-            { k: 'spot', v: price(snap.spot) },
+            { k: 'spot', v: p(snap.spot) },
             { k: 'scope', v: scope === 'zero' ? '0DTE' : '90 day' },
           ]} />
           <Block title="volume" rows={[
-            { k: 'zero gamma', v: snap.zero_gamma > 0 ? price(snap.zero_gamma) : '—', cls: styles.kZero },
-            { k: 'major positive', v: price(snap.major_pos_vol), cls: styles.kPos },
-            { k: 'major negative', v: price(snap.major_neg_vol), cls: styles.kNeg },
+            { k: 'zero gamma', v: snap.zero_gamma > 0 ? p(snap.zero_gamma) : '—', cls: styles.kZero },
+            { k: 'major positive', v: p(snap.major_pos_vol), cls: styles.kPos },
+            { k: 'major negative', v: p(snap.major_neg_vol), cls: styles.kNeg },
             { k: 'net gex', v: size(snap.sum_gex_vol) },
           ]} />
           <Block title="open interest" rows={[
-            { k: 'major positive', v: price(snap.major_pos_oi), cls: styles.kPos },
-            { k: 'major negative', v: price(snap.major_neg_oi), cls: styles.kNeg },
+            { k: 'major positive', v: p(snap.major_pos_oi), cls: styles.kPos },
+            { k: 'major negative', v: p(snap.major_neg_oi), cls: styles.kNeg },
             { k: 'net gex', v: size(snap.sum_gex_oi) },
           ]} />
           {snap.max_priors && snap.max_priors.length > 0 && (
             <Block title="max change gex" rows={snap.max_priors.slice(0, 5).map((m, i) => ({
               k: PRIOR_LABELS[i] ?? `${i}`,
-              v: `${price(m.strike)}  ${size(m.change)}`,
+              v: `${p(m.strike)}  ${size(m.change)}`,
             }))} />
           )}
         </aside>
