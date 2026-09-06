@@ -153,6 +153,21 @@ What remains genuinely open is narrower and worth stating precisely:
 levels?** That is what `analyse_vol_vs_oi.py` measures, and it is still
 unanswered for want of sessions.
 
+The vendor's own walkthrough ([video 3](gexbot-official-understanding-visualizations.md))
+sharpens even that. The founder endorses naive volume for **levels** —
+*"high volume options nodes are still going to be very effective in terms of
+giving you good levels to trade off of"* — and withholds the endorsement for
+**direction**: *"the issue is how well does the gex model actually apply in
+terms of determining market direction."* So the regime-sign disagreement
+above is the vendor's own known limitation of the naive model, not a defect
+we discovered; the levels claim is separate and survives it.
+
+**The larger open risk is instrument, not reading.** The naive assumption is
+claimed to hold *for SPX*, and explicitly not for individual equities. NDX is
+neither. See video 3 §2 — and note that Siento takes his levels from **SPX**
+and merely executes on NQ, which may be the correct response to this rather
+than a preference.
+
 Two further documented facts that bear on this:
 
 - Classic volume GEX is **naive and unsigned**. The vendor states that
