@@ -1,3 +1,10 @@
+/* GexBot ladder — one price scale, two panels.
+ *
+ * Price over time sits left, the strike ladder right, both hung off the same
+ * vertical price scale so a bar's height IS its strike. Levels are drawn
+ * across both panels, which is the whole point: you watch price approach a
+ * wall in the left panel and see the size behind it in the right. */
+
 .wrap {
   flex: 1;
   display: flex;
@@ -18,7 +25,6 @@
   gap: 16px;
   flex-wrap: wrap;
 }
-
 .spot {
   font-size: 26px;
   font-weight: 500;
@@ -26,14 +32,13 @@
   line-height: 1.1;
   margin-top: 2px;
 }
-
 .headRight {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 6px;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
-
 .toggle {
   display: flex;
   gap: 2px;
@@ -41,7 +46,6 @@
   border-radius: var(--radius);
   padding: 2px;
 }
-
 .toggleOn,
 .toggleOff {
   font-family: var(--mono);
@@ -53,7 +57,6 @@
   cursor: pointer;
   transition: background 0.12s, color 0.12s;
 }
-
 .toggleOn  { background: var(--gold-dim); color: var(--gold); }
 .toggleOff { background: transparent;     color: var(--text-dim); }
 .toggleOff:hover { color: var(--text-muted); }
@@ -61,7 +64,110 @@
 .fresh { font-size: 10px; color: var(--text-dim); }
 .stale { font-size: 10px; color: var(--amber); font-weight: 600; }
 
-/* ── Banners ─────────────────────────────────────────────── */
+/* ── Layout: chart + side panel ──────────────────────────── */
+
+.layout {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.chart {
+  /* An SVG with only a viewBox collapses to zero height inside a flex row,
+   * which is exactly how this first rendered: panel fine, chart invisible.
+   * Give it a width to fill and let aspect-ratio supply the height. */
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1000 / 560;
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+/* ── Chart marks ─────────────────────────────────────────── */
+
+.barPos { fill: var(--green); }
+.barNeg { fill: var(--red); }
+.prior  { fill: var(--blue); stroke: var(--surface); stroke-width: 1.5; }
+.axis   { stroke: var(--border-2); stroke-width: 1; }
+.tick   { fill: var(--text-dim); font-size: 10px; font-family: var(--mono); }
+
+.priceLine {
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  opacity: 0.85;
+}
+
+.level { stroke-width: 1.5; }
+.pill {
+  font-size: 10px;
+  font-family: var(--mono);
+  font-weight: 600;
+}
+
+/* Structural anchors: 90-day open interest, fixed for the session. Solid and
+ * heavier, because they are the lines that get drawn on the chart and left. */
+.anchor-pos { stroke: var(--green); stroke-width: 2; }
+.anchor-neg { stroke: var(--red);   stroke-width: 2; }
+text.anchor-pos { fill: var(--green); stroke: none; }
+text.anchor-neg { fill: var(--red);   stroke: none; }
+
+/* Intraday: 0DTE volume walls, which move through the session. */
+.intraday-pos { stroke: var(--green); stroke-dasharray: 5 4; opacity: 0.75; }
+.intraday-neg { stroke: var(--red);   stroke-dasharray: 5 4; opacity: 0.75; }
+text.intraday-pos { fill: var(--green); stroke: none; opacity: 0.9; }
+text.intraday-neg { fill: var(--red);   stroke: none; opacity: 0.9; }
+
+.zero { stroke: var(--amber); stroke-dasharray: 2 3; }
+text.zero { fill: var(--amber); stroke: none; }
+
+.spotLine { stroke: var(--text-muted); stroke-width: 1; opacity: 0.5; }
+.spotPill {
+  fill: var(--text);
+  font-size: 10px;
+  font-family: var(--mono);
+  font-weight: 700;
+}
+
+/* ── Side panel ──────────────────────────────────────────── */
+
+.panel {
+  flex: 0 0 208px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.block {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 9px 11px;
+}
+.blockTitle {
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+.blockRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 2px 0;
+  font-size: 11px;
+}
+.blockKey { color: var(--text-dim); white-space: nowrap; }
+.blockVal { color: var(--text); }
+.kPos  { color: var(--green); }
+.kNeg  { color: var(--red); }
+.kZero { color: var(--amber); }
+
+/* ── Banners and notes ───────────────────────────────────── */
 
 .errorBanner,
 .staleBanner {
@@ -70,217 +176,31 @@
   padding: 9px 13px;
   border-radius: var(--radius);
 }
-
 .errorBanner {
   color: var(--red);
   background: var(--red-dim);
   border: 1px solid rgba(224, 85, 72, 0.25);
 }
-
-/* Amber, not red: outside RTH a frozen feed is expected, not broken — but it
-   still must not be mistaken for live. */
 .staleBanner {
   color: var(--text);
   background: var(--amber-dim);
   border: 1px solid rgba(212, 144, 56, 0.28);
 }
-
-.staleBanner strong { color: var(--amber); }
-
 .empty {
   font-size: 12px;
   color: var(--text-dim);
   padding: 28px 0;
   text-align: center;
 }
-
-.empty code { font-family: var(--mono); color: var(--text-muted); }
-
-/* ── Regime strip ────────────────────────────────────────── */
-
-.regimeRow {
-  margin-top: 4px;
-  display: flex;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  gap: 6px 20px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--border-2);
-}
-
-.regimeItem { display: flex; flex-direction: column; gap: 1px; }
-
-.regimeKey {
-  font-size: 9px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-}
-
-.regimeVal { font-size: 13px; color: var(--text); }
-
-.pos { color: var(--green); }
-.neg { color: var(--red); }
-
-.legend {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 10px;
-  color: var(--text-dim);
-}
-
-.legendDot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--text-muted);
-  box-shadow: 0 0 0 2px var(--surface);
-}
-
-/* ── Ladder ──────────────────────────────────────────────── */
-/* High price at top, like a chart's price axis: these numbers get copied
-   onto a chart as horizontal lines, so the order must match. */
-
-.ladder {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;               /* surface gap between bars, not borders */
-  margin-top: 2px;
-}
-
-.row,
-.spotRow,
-.zgRow {
-  display: grid;
-  grid-template-columns: 84px 1fr 108px;
-  align-items: center;
-  gap: 10px;
-}
-
-.row { padding: 1px 0; border-radius: var(--radius-sm); }
-.row:hover { background: var(--surface-2); }
-
-.strike {
-  font-size: 11px;
-  color: var(--text-muted);
-  text-align: right;
-}
-
-.track {
-  position: relative;
-  height: 13px;
-}
-
-/* Hairline zero axis — recessive, solid, one shade off the surface. */
-.axis {
-  position: absolute;
-  left: 50%; top: 0; bottom: 0;
-  width: 1px;
-  background: var(--border);
-}
-
-.bar {
-  position: absolute;
-  top: 3px;
-  height: 7px;            /* thin mark */
-  border-radius: 1px;
-}
-
-/* Rounded on the data end only, anchored to the zero baseline. */
-.barPos {
-  background: var(--green);
-  border-radius: 1px 4px 4px 1px;
-}
-
-.barNeg {
-  background: var(--red);
-  border-radius: 4px 1px 1px 4px;
-}
-
-/* Prior samples: where this strike's gamma sat 1→30 minutes ago. The 2px
-   surface ring keeps them legible where they overlap the bar. */
-.prior {
-  position: absolute;
-  top: 50%;
-  width: 8px; height: 8px;
-  margin-left: -4px;
-  margin-top: -4px;
-  border-radius: 50%;
-  background: var(--text-muted);
-  box-shadow: 0 0 0 2px var(--surface);
-  pointer-events: none;
-}
-
-.meta {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 10px;
-}
-
-.rankC,
-.rankP {
-  font-family: var(--mono);
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  padding: 1px 5px;
-  border-radius: var(--radius-sm);
-  min-width: 22px;
-  text-align: center;
-}
-
-.rankC { color: var(--green); background: var(--green-dim); }
-.rankP { color: var(--red);   background: var(--red-dim); }
-
-.sizeLabel { font-size: 10px; color: var(--text-muted); }
-
-.building  { color: var(--green); font-size: 9px; }
-.unwinding { color: var(--amber); font-size: 9px; }
-
-/* ── Reference markers ───────────────────────────────────── */
-/* Dashed here is deliberate and conventional: these are thresholds, not
-   gridlines. */
-
-.spotRow, .zgRow { height: 14px; }
-
-.spotLine, .zgLine {
-  position: relative;
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
-
-.spotLine span, .zgLine span {
-  display: block;
-  width: 100%;
-  border-top: 1px dashed;
-}
-
-.spotLine span { border-color: var(--gold); }
-.zgLine span   { border-color: var(--blue); }
-
-.spotPrice { color: var(--gold-light); font-weight: 600; }
-.zgPrice   { color: var(--blue); }
-
-.spotTag, .zgTag {
-  font-size: 9px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.spotTag { color: var(--gold); }
-.zgTag   { color: var(--blue); }
-
-/* ── Footnote ────────────────────────────────────────────── */
-
 .note {
   font-size: 11px;
   line-height: 1.65;
   color: var(--text-dim);
   margin: 8px 2px 0;
-  max-width: 78ch;
+  max-width: 82ch;
 }
 
-.note strong { color: var(--text-muted); font-weight: 600; }
+@media (max-width: 900px) {
+  .layout { flex-direction: column; }
+  .panel  { flex: 1 1 auto; display: grid; grid-template-columns: 1fr 1fr; }
+}

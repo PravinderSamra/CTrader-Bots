@@ -9,3 +9,9 @@ US30 London Range Breakout/data/download.log
 # data product. Kept out of git until a private destination is chosen.
 # See Gex-Bot/docs/recorder.md.
 Gex-Bot/data/
+
+# Preview fixture: a real recorded GexBot session (full strike ladder + spot
+# series). Paid vendor data, licensed personal and non-commercial with no
+# redistribution -- and this repository is public. The harness that consumes
+# it is committed; the data never is. See xauusd-dashboard/src/preview/README.md
+xauusd-dashboard/src/preview/gexFixture.json

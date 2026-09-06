@@ -38,7 +38,13 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from gexbot_client import GexBotClient, GexBotError  # noqa: E402
 
 DEFAULT_TICKERS = ["spx", "nq_ndx", "es_spx", "ndx"]
-DEFAULT_SCOPES = ["zero"]
+# zero = 0DTE, the intraday engine: the volume walls and the max-change panel
+# that say whether a level is being defended right now.
+# full = the 90-day aggregate. Its OPEN INTEREST walls are the two structural
+# lines the strategy is actually drawn from -- recomputed once near the open and
+# fixed all session. Recording only `zero` meant the levels the trader marks on
+# his chart were never captured at all.
+DEFAULT_SCOPES = ["zero", "full"]
 DEFAULT_OUT_DIR = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data"
 )

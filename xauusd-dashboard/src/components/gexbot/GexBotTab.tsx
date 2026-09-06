@@ -1,269 +1,295 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
+import { LoginGate } from '../pravzella/LoginGate'
 import { useAuth } from '../../hooks/useAuth'
 import { useGexLevels, describeFreshness, isUsCashOpen } from '../../hooks/useGexLevels'
-import { LoginGate } from '../pravzella/LoginGate'
+import { useGexHistory } from '../../hooks/useGexHistory'
 import type { GexSnapshot } from '../../types/gex'
 import {
-  buildLadderView, DEFAULT_WINDOW, PRIOR_LABELS, showsPriors,
-  type GexReading, type PlottedRung,
+  type GexReading, buildLadderView, showsPriors, PRIOR_LABELS,
 } from './ladder'
 import styles from './GexBotTab.module.css'
 
-/** The NAS100 instrument. NQ_NDX is the futures-basis symbol, so its strikes
- *  already sit in futures space and line up with the CFD actually traded —
- *  cash NDX runs ~45 points low. */
 const NAS100 = 'NQ_NDX'
+
+// One chart, one price scale, two panels: price over time on the left, the
+// strike ladder on the right. The vendor's own view overlays both on a single
+// plot area with two x-axes; keeping them as adjacent panels sharing the y
+// axis reads the same -- a bar still sits at its strike's height -- without
+// two x-scales in one region inviting comparisons that are not meaningful.
+const W = 1000, H = 560
+const PAD_L = 62, PAD_T = 14, PAD_B = 26
+const PRICE_X0 = PAD_L, PRICE_X1 = 600
+const LAD_X0 = 620, LAD_X1 = 980
+const ZERO_X = (LAD_X0 + LAD_X1) / 2
+const LAD_HALF = ZERO_X - LAD_X0
 
 function price(v: number): string {
   return v.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 }
-
-/** Gamma spans several orders of magnitude across a ladder, so sizes are
- *  abbreviated — the comparison between bars is the point, not the digits. */
 function size(v: number): string {
   const a = Math.abs(v)
-  if (a >= 1_000_000) return `${(a / 1_000_000).toFixed(1)}M`
-  if (a >= 1_000) return `${(a / 1_000).toFixed(1)}k`
-  if (a >= 1) return a.toFixed(0)
-  return a.toFixed(2)
+  if (a >= 1e9) return `${(v / 1e9).toFixed(2)}Bn`
+  if (a >= 1e6) return `${(v / 1e6).toFixed(2)}M`
+  if (a >= 1e3) return `${(v / 1e3).toFixed(1)}k`
+  return v.toFixed(2)
+}
+function clock(ts: number): string {
+  return new Date(ts * 1000).toLocaleTimeString('en-GB',
+    { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' })
 }
 
-function signed(v: number): string {
-  const s = Math.round(v).toLocaleString('en-GB')
-  return v > 0 ? `+${s}` : s
+/** A level to draw across the whole chart. */
+interface Level {
+  value: number
+  label: string
+  kind: 'anchor-pos' | 'anchor-neg' | 'intraday-pos' | 'intraday-neg' | 'zero'
 }
 
-/** Position on the diverging axis, as a percentage. 50% is zero. */
-function pct(value: number, scale: number): number {
-  if (scale === 0) return 50
-  return 50 + (value / scale) * 50
-}
-
-const TREND_MARK: Record<string, string> = {
-  building: '▲', unwinding: '▼', flat: '',
-}
-
-function LadderRow({ rung, scale, showPriors }: {
-  rung: PlottedRung
-  scale: number
-  showPriors: boolean
-}) {
-  const positive = rung.value > 0
-  const raw = Math.abs(pct(rung.value, scale) - 50)
-  // Only ranked walls get a minimum width. A ranked wall must always be
-  // visible -- on the volume book positive gamma routinely dwarfs negative,
-  // so P1 can be a sub-pixel sliver. Applying the same floor to unranked
-  // strikes would inflate near-zero noise into apparent signal.
-  const width = rung.value === 0 ? 0 : rung.rank ? Math.max(raw, 0.6) : raw
-  const left = positive ? 50 : 50 - width
-
-  const tip = [
-    `${price(rung.strike)}`,
-    `gamma ${signed(rung.value)}`,
-    rung.rank ? `rank ${rung.rank}` : null,
-    showPriors && rung.priors.length
-      ? `was ${rung.priors.map((p, i) => `${PRIOR_LABELS[i]} ${size(p)}`).join(' · ')}`
-      : null,
-  ].filter(Boolean).join('\n')
-
-  return (
-    <div className={styles.row} title={tip}>
-      <span className={`${styles.strike} mono`}>{price(rung.strike)}</span>
-
-      <div className={styles.track}>
-        <span className={styles.axis} aria-hidden="true" />
-        <span
-          className={`${styles.bar} ${positive ? styles.barPos : styles.barNeg}`}
-          style={{ left: `${left}%`, width: `${width}%` }}
-        />
-        {/* Where this strike's gamma sat 1/5/10/15/30 minutes ago. A dot
-            outside the bar's end means the wall is coming off; inside means
-            it is being built. */}
-        {showPriors && rung.priors.map((p, i) => (
-          <span
-            key={i}
-            className={styles.prior}
-            style={{ left: `${pct(p, scale)}%`, opacity: 0.85 - i * 0.13 }}
-          />
-        ))}
-      </div>
-
-      <span className={styles.meta}>
-        {rung.rank && (
-          <span className={rung.rank.startsWith('C') ? styles.rankC : styles.rankP}>
-            {rung.rank}
-          </span>
-        )}
-        {/* Only ranked walls get a number. A value beside every rung is noise. */}
-        {rung.rank && <span className={`${styles.sizeLabel} mono`}>{size(rung.value)}</span>}
-        {rung.rank && rung.trend !== 'flat' && (
-          <span
-            className={rung.trend === 'building' ? styles.building : styles.unwinding}
-            title={rung.trend === 'building'
-              ? 'Larger than 5 minutes ago — wall building'
-              : 'Smaller than 5 minutes ago — wall coming off'}
-          >
-            {TREND_MARK[rung.trend]}
-          </span>
-        )}
-      </span>
-    </div>
-  )
-}
-
-function SpotMarker({ spot, label }: { spot: number; label: string }) {
-  return (
-    <div className={styles.spotRow}>
-      <span className={`${styles.strike} mono ${styles.spotPrice}`}>{price(spot)}</span>
-      <div className={styles.spotLine}><span /></div>
-      <span className={styles.spotTag}>{label}</span>
-    </div>
-  )
-}
-
-function Ladder({ snap, reading }: { snap: GexSnapshot; reading: GexReading }) {
-  const { rows, scale } = useMemo(
-    () => buildLadderView(snap, reading, DEFAULT_WINDOW),
-    [snap, reading],
-  )
-
-  if (!rows.length) {
-    return (
-      <div className={styles.empty}>
-        No ladder in this snapshot. The recorder began storing the full strike
-        ladder recently — it appears after the next run.
-      </div>
-    )
+/** Which levels to draw, and why each one is there.
+ *
+ *  The two 90-day open-interest walls are the structural anchors: recomputed
+ *  once near the open and fixed for the session. The 0DTE volume walls and
+ *  zero gamma move through the day. Both are shown at once deliberately --
+ *  the vendor's UI toggles between scopes, but the whole point here is seeing
+ *  where the fixed anchors and the live levels agree.
+ */
+export function levelsFor(zero: GexSnapshot | null, full: GexSnapshot | null): Level[] {
+  const out: Level[] = []
+  const push = (v: number | undefined, label: string, kind: Level['kind']) => {
+    if (typeof v === 'number' && v > 0) out.push({ value: v, label, kind })
   }
-
-  // Spot sits between strikes; drop its marker into the right gap so distance
-  // to each wall can be read straight off the column.
-  const out: React.ReactNode[] = []
-  rows.forEach((r, i) => {
-    const next = rows[i + 1]
-    out.push(
-      <LadderRow
-        key={r.strike}
-        rung={r}
-        scale={scale}
-        showPriors={reading === 'vol' && showsPriors(r, scale)}
-      />,
-    )
-    if (next && snap.spot <= r.strike && snap.spot > next.strike) {
-      out.push(<SpotMarker key="spot" spot={snap.spot} label="spot" />)
-    }
-    if (snap.zero_gamma > 0 && next
-        && snap.zero_gamma <= r.strike && snap.zero_gamma > next.strike) {
-      out.push(
-        <div key="zg" className={styles.zgRow}>
-          <span className={`${styles.strike} mono ${styles.zgPrice}`}>{price(snap.zero_gamma)}</span>
-          <div className={styles.zgLine}><span /></div>
-          <span className={styles.zgTag}>zero gamma</span>
-        </div>,
-      )
-    }
-  })
-
-  return <div className={styles.ladder}>{out}</div>
+  push(full?.major_pos_oi, '90d OI major +', 'anchor-pos')
+  push(full?.major_neg_oi, '90d OI major −', 'anchor-neg')
+  push(zero?.major_pos_vol, '0DTE vol major +', 'intraday-pos')
+  push(zero?.major_neg_vol, '0DTE vol major −', 'intraday-neg')
+  push(zero?.zero_gamma, 'zero gamma', 'zero')
+  return out
 }
 
-/** Presentation only, so it can be rendered from a fixture without auth or
- *  Firestore. GexBotContent supplies the snapshot. */
-export function GexBotView({ snap, now = new Date() }: { snap: GexSnapshot; now?: Date }) {
+function Chart({ snap, history, levels, reading }: {
+  snap: GexSnapshot
+  history: GexSnapshot[]
+  levels: Level[]
+  reading: GexReading
+}) {
+  const view = buildLadderView(snap, reading)
+  const { rows, scale } = view
+
+  const prices = [
+    ...rows.map(r => r.strike),
+    ...levels.map(l => l.value),
+    ...history.map(h => h.spot),
+    snap.spot,
+  ].filter(v => v > 0)
+  const lo = Math.min(...prices), hi = Math.max(...prices)
+  const pad = (hi - lo) * 0.04 || 10
+  const y = (p: number) =>
+    PAD_T + (H - PAD_T - PAD_B) * (1 - (p - (lo - pad)) / ((hi + pad) - (lo - pad)))
+
+  const t0 = history.length ? history[0].source_ts : 0
+  const t1 = history.length ? history[history.length - 1].source_ts : 1
+  const x = (ts: number) =>
+    PRICE_X0 + (PRICE_X1 - PRICE_X0) * (t1 === t0 ? 1 : (ts - t0) / (t1 - t0))
+
+  // Bar height must come from the PRICE scale, not the row count: NDX strikes
+  // are 5, 10 and 25 apart, so evenly-sized rows would draw bars that do not
+  // line up with where their strike actually sits on the axis.
+  const gaps = rows.slice(1).map((r, i) => Math.abs(r.strike - rows[i].strike))
+    .filter(g => g > 0).sort((a, b) => a - b)
+  const step = gaps.length ? gaps[Math.floor(gaps.length / 2)] : 10
+  const rowH = Math.max(2, Math.abs(y(lo) - y(lo + step)) - 2)
+  const line = history.map(h => `${x(h.source_ts)},${y(h.spot)}`).join(' ')
+
+  return (
+    <svg className={styles.chart} viewBox={`0 0 ${W} ${H}`} role="img"
+         aria-label={`${snap.ticker} gamma ladder against price`}>
+      {/* ladder bars */}
+      {rows.map(r => {
+        const v = r.value   // already signed for the active reading
+        const w = Math.abs(v) / scale * LAD_HALF
+        const pos = v >= 0
+        return (
+          <g key={r.strike}>
+            <rect
+              x={pos ? ZERO_X : ZERO_X - w} y={y(r.strike) - rowH / 2}
+              width={Math.max(w, 0.5)} height={rowH} rx={2}
+              className={pos ? styles.barPos : styles.barNeg}
+            >
+              <title>{`${price(r.strike)} · ${size(v)}`}</title>
+            </rect>
+            {showsPriors(r, scale) && r.priors.map((p, i) => (
+              <circle key={i} cx={ZERO_X + (p / scale) * LAD_HALF} cy={y(r.strike)}
+                      r={2.5} className={styles.prior}>
+                <title>{`${PRIOR_LABELS[i]} ago · ${size(p)}`}</title>
+              </circle>
+            ))}
+          </g>
+        )
+      })}
+      <line x1={ZERO_X} x2={ZERO_X} y1={PAD_T} y2={H - PAD_B} className={styles.axis} />
+
+      {/* price series */}
+      {history.length > 1 && (
+        <polyline points={line} className={styles.priceLine} />
+      )}
+
+      {/* levels, drawn across both panels */}
+      {levels.map(l => (
+        <g key={`${l.kind}-${l.value}`}>
+          <line x1={PAD_L} x2={LAD_X1} y1={y(l.value)} y2={y(l.value)}
+                className={`${styles.level} ${styles[l.kind]}`} />
+          <text x={PAD_L - 6} y={y(l.value) + 3} textAnchor="end"
+                className={`${styles.pill} ${styles[l.kind]}`}>{price(l.value)}</text>
+        </g>
+      ))}
+
+      {/* spot */}
+      <line x1={PAD_L} x2={LAD_X1} y1={y(snap.spot)} y2={y(snap.spot)}
+            className={styles.spotLine} />
+      <text x={PAD_L - 6} y={y(snap.spot) + 3} textAnchor="end"
+            className={styles.spotPill}>{price(snap.spot)}</text>
+
+      {history.length > 1 && (
+        <>
+          <text x={PRICE_X0} y={H - 8} className={styles.tick}>{clock(t0)}</text>
+          <text x={PRICE_X1} y={H - 8} textAnchor="end" className={styles.tick}>
+            {clock(t1)}
+          </text>
+        </>
+      )}
+    </svg>
+  )
+}
+
+function Block({ title, rows }: {
+  title: string
+  rows: { k: string; v: string; cls?: string }[]
+}) {
+  return (
+    <div className={styles.block}>
+      <div className={styles.blockTitle}>{title}</div>
+      {rows.map(r => (
+        <div key={r.k} className={styles.blockRow}>
+          <span className={`${styles.blockKey} ${r.cls ?? ''}`}>{r.k}</span>
+          <span className={`${styles.blockVal} mono`}>{r.v}</span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export function GexBotView({ zero, full, history, now = new Date() }: {
+  zero: GexSnapshot | null
+  full: GexSnapshot | null
+  history: GexSnapshot[]
+  now?: Date
+}) {
+  const [scope, setScope] = useState<'zero' | 'full'>('zero')
   const [reading, setReading] = useState<GexReading>('vol')
+  const snap = scope === 'zero' ? zero : full
+  const levels = levelsFor(zero, full)
+
+  if (!snap) return <div className={styles.empty}>No {scope} scope recorded yet.</div>
+
   const fresh = describeFreshness(snap.source_ts, now)
   const marketOpen = isUsCashOpen(now)
 
   return (
-        <>
-          <div className={styles.head}>
-            <div>
-              <div className="tile-eyebrow">NAS100 · {snap.ticker}</div>
-              <div className={`${styles.spot} mono`}>{price(snap.spot)}</div>
-            </div>
-
-            <div className={styles.headRight}>
-              <div className={styles.toggle} role="group" aria-label="Gamma reading">
-                <button
-                  className={reading === 'vol' ? styles.toggleOn : styles.toggleOff}
-                  onClick={() => setReading('vol')}
-                >Volume</button>
-                <button
-                  className={reading === 'oi' ? styles.toggleOn : styles.toggleOff}
-                  onClick={() => setReading('oi')}
-                >Open interest</button>
-              </div>
-              <span className={fresh?.stale ? styles.stale : styles.fresh}>
-                {snap.scope === 'zero' ? '0DTE' : snap.scope} · {fresh?.label}
-              </span>
-            </div>
+    <>
+      <div className={styles.head}>
+        <div>
+          <div className="tile-eyebrow">NAS100 · {snap.ticker}</div>
+          <div className={`${styles.spot} mono`}>{price(snap.spot)}</div>
+        </div>
+        <div className={styles.headRight}>
+          <div className={styles.toggle} role="group" aria-label="Expiry scope">
+            <button className={scope === 'zero' ? styles.toggleOn : styles.toggleOff}
+                    onClick={() => setScope('zero')}>0DTE</button>
+            <button className={scope === 'full' ? styles.toggleOn : styles.toggleOff}
+                    onClick={() => setScope('full')}>90d agg</button>
           </div>
+          <div className={styles.toggle} role="group" aria-label="Gamma reading">
+            <button className={reading === 'vol' ? styles.toggleOn : styles.toggleOff}
+                    onClick={() => setReading('vol')}>Volume</button>
+            <button className={reading === 'oi' ? styles.toggleOn : styles.toggleOff}
+                    onClick={() => setReading('oi')}>Open interest</button>
+          </div>
+          <span className={fresh.stale ? styles.stale : styles.fresh}>{fresh.label}</span>
+        </div>
+      </div>
 
-          {fresh?.stale && (
-            <div className={styles.staleBanner}>
-              <strong>Not live.</strong>{' '}
-              {marketOpen
-                ? 'The US session is open, so the recorder may have stopped — check the workflow before trading these.'
-                : 'The US cash session is closed; GexBot repeats its last reading until it reopens.'}
-            </div>
+      {fresh.stale && (
+        <div className={styles.staleBanner}>
+          <strong>Not live.</strong>{' '}
+          {marketOpen
+            ? 'The US session is open, so the recorder may have stopped — check the workflow before trading these.'
+            : 'The US cash session is closed; GexBot repeats its last reading until it reopens.'}
+        </div>
+      )}
+
+      <div className={styles.layout}>
+        <Chart snap={snap} history={history} levels={levels} reading={reading} />
+
+        <aside className={styles.panel}>
+          <Block title="update" rows={[
+            { k: 'time', v: clock(snap.source_ts) + ' UTC' },
+            { k: 'spot', v: price(snap.spot) },
+            { k: 'scope', v: scope === 'zero' ? '0DTE' : '90 day' },
+          ]} />
+          <Block title="volume" rows={[
+            { k: 'zero gamma', v: snap.zero_gamma > 0 ? price(snap.zero_gamma) : '—', cls: styles.kZero },
+            { k: 'major positive', v: price(snap.major_pos_vol), cls: styles.kPos },
+            { k: 'major negative', v: price(snap.major_neg_vol), cls: styles.kNeg },
+            { k: 'net gex', v: size(snap.sum_gex_vol) },
+          ]} />
+          <Block title="open interest" rows={[
+            { k: 'major positive', v: price(snap.major_pos_oi), cls: styles.kPos },
+            { k: 'major negative', v: price(snap.major_neg_oi), cls: styles.kNeg },
+            { k: 'net gex', v: size(snap.sum_gex_oi) },
+          ]} />
+          {snap.max_priors && snap.max_priors.length > 0 && (
+            <Block title="max change gex" rows={snap.max_priors.slice(0, 5).map((m, i) => ({
+              k: PRIOR_LABELS[i] ?? `${i}`,
+              v: `${price(m.strike)}  ${size(m.change)}`,
+            }))} />
           )}
+        </aside>
+      </div>
 
-          <div className={styles.regimeRow}>
-            <span className={styles.regimeItem}>
-              <span className={styles.regimeKey}>Net GEX {reading === 'vol' ? 'vol' : 'OI'}</span>
-              <span className={`${styles.regimeVal} mono ${
-                (reading === 'vol' ? snap.sum_gex_vol : snap.sum_gex_oi) > 0 ? styles.pos : styles.neg
-              }`}>
-                {signed(reading === 'vol' ? snap.sum_gex_vol : snap.sum_gex_oi)}
-              </span>
-            </span>
-            <span className={styles.regimeItem}>
-              <span className={styles.regimeKey}>Zero gamma</span>
-              <span className={`${styles.regimeVal} mono`}>
-                {snap.zero_gamma > 0 ? price(snap.zero_gamma) : '—'}
-              </span>
-            </span>
-            {reading === 'vol' && (
-              <span className={styles.legend}>
-                <span className={styles.legendDot} /> gamma 1 · 5 · 10 · 15 · 30 min ago
-              </span>
-            )}
-          </div>
-
-          <Ladder snap={snap} reading={reading} />
-
-          <p className={styles.note}>
-            Bars are gamma per strike — <strong>green right</strong> positive,{' '}
-            <strong>red left</strong> negative — ranked <strong>C1…C5</strong> and{' '}
-            <strong>P1…P5</strong> by size. On the volume reading, dots mark where each
-            strike sat 1 to 30 minutes ago: dots outside the bar mean the wall is
-            coming off, inside means it is building; the arrow compares against
-            the 5-minute sample. Open interest carries no priors,
-            so dots are hidden there rather than borrowed from the volume series.
-          </p>
-        </>
+      <p className={styles.note}>
+        Two <strong>90-day open-interest</strong> levels are the structural
+        anchors — recomputed once near the open and fixed all session. The{' '}
+        <strong>0DTE volume</strong> levels and zero gamma move through the day.
+        Bars are gamma per strike for the selected scope: positive right,
+        negative left, so the sign is carried by direction as well as colour.
+        Dots on the volume reading mark where a strike sat 1–30 minutes ago.
+        A major negative sitting above a major positive is not an error — the
+        vendor documents it as ITM put activity flipping the expected order.
+        The price line is a 5-minute recording, not a tick chart.
+      </p>
+    </>
   )
 }
 
 function GexBotContent() {
   const { user } = useAuth()
   const { snapshots, loading, error } = useGexLevels(user)
-  const snap = snapshots.find(s => s.ticker === NAS100) ?? null
+  const { history } = useGexHistory(user, NAS100, 'zero')
+
+  const zero = snapshots.find(s => s.ticker === NAS100 && s.scope === 'zero') ?? null
+  const full = snapshots.find(s => s.ticker === NAS100 && s.scope === 'full') ?? null
 
   return (
     <div className={styles.wrap}>
       {error && <div className={styles.errorBanner}>Failed to load levels: {error}</div>}
-
       {loading && <div className={styles.empty}>Loading ladder…</div>}
-
-      {!loading && !snap && !error && (
+      {!loading && !zero && !full && !error && (
         <div className={styles.empty}>
           No {NAS100} levels recorded yet. They appear once the{' '}
           <code>Record GexBot snapshots</code> workflow has run.
         </div>
       )}
-
-      {snap && <GexBotView snap={snap} />}
+      {(zero || full) && <GexBotView zero={zero} full={full} history={history} />}
     </div>
   )
 }
