@@ -38,16 +38,54 @@ level is not resistance; it is where the dealer is compelled to reverse.
 
 ## 3. The levels
 
+> ### Correction (2026-09-06): the majors are exits, not entries
+>
+> The table below encoded "sell the call wall, buy the put wall" as the entry
+> rule. **The vendor's own trader says that is the less effective use**, and
+> so, on camera, does Siento — the trader this whole specification was derived
+> from. See [the channel corpus](gexbot-channel-corpus.md) §1.
+>
+> GexBot's co-founder, who trades NQ off these levels daily: the majors are
+> *"best for taking your core off when you're heading towards the level …
+> better to trim … that just seems to be a lot more effective than trying to
+> actively fade against the level."*
+>
+> Siento, in the same interview: *"that's where I get out of my long … only
+> because SPX was showing maximum gamma there"*, and *"SPX I just use it for
+> levels to get out, basically, to take profits."*
+>
+> Entries come instead from the **transitions between call-gamma and
+> put-gamma distributions** — the "line in the sand" — with the majors as the
+> targets at the far end. Nothing below has been deleted, because it is a
+> faithful reading of the two source videos; but where it conflicts with the
+> people who built the product, they win.
+>
+> This also means the touch test in `analyse_vol_vs_oi.py` has been measuring
+> a claim the vendor never made.
+
 | Level | API field | Role |
 |---|---|---|
-| Major positive gamma (call wall) | `major_pos_vol` / `major_pos_oi` | Ceiling — **sell** here |
-| Major negative gamma (put wall) | `major_neg_vol` / `major_neg_oi` | Floor — **buy** here |
+| Major positive gamma (call wall) | `major_pos_vol` / `major_pos_oi` | **Target** — trim longs into it |
+| Major negative gamma (put wall) | `major_neg_vol` / `major_neg_oi` | **Target** — trim shorts into it |
 | Zero gamma | `zero_gamma` | Regime divider — **never trade here** |
-| Net GEX | `sum_gex_vol` / `sum_gex_oi` | Regime direction |
+| Net GEX | `sum_gex_vol` / `sum_gex_oi` | Regime direction (naive; see below) |
 | Max-change panel | `max_priors`, per-strike `priors` | 1/5/10/15/30-min gamma change |
+| **Sign transitions in the ladder** | derived from `ladder` | **Entry** — the line in the sand |
 
-Only the **single largest** level is an entry. Secondary large levels are
-**targets**.
+Two further corrections from the same source:
+
+- **A big put wall is not a magnet.** The retail reading — dealers must sell
+  futures into it, so price is drawn there — is explicitly contradicted: a
+  large long-gamma position *lifts the vols at that strike, making it less
+  liquid, so price is **less** likely to trade there.* Siento is shown acting
+  on the magnet reading, cutting a long, and price never reaching the level.
+- **Direction is not a property of the level.** Above it, it is support;
+  below it, resistance. The claim is only that spot wants to move *away*.
+
+> **Tier caveat.** The long-gamma / short-gamma distinction the founders
+> actually trade requires *classified* order flow (State). On Classic's naive
+> model every put is assumed bought and every call sold, so the distinction
+> collapses. We can see the levels; we cannot see who is long them.
 
 ---
 

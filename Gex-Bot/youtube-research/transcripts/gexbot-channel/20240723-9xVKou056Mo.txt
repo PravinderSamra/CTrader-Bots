@@ -1,0 +1,24 @@
+[00:00:01] hey guys it's Jas and today I'm going be going a little example of what I'm looking for on gex spot in combination with f profile to make a trading decision so in this example uh it's a little bit before London close we've come up to this level we've just had this kind of bizarre straight up rally we slammed into major positive at 78 and it's also happens to be the edge or the top end of the volume profile
+
+[00:00:36] right now here you kind of have two choices right either you're looking for some entry to join what looks like a breakout right and then you're looking to go up and on gex spot you know in that case it would be okay we get over 78 we get over that peak of long convexity and then we have a clear Target which is at 150 so we see this positioning and you know that's where we're looking to either trim or flatten or or what have
+
+[00:01:10] you right the other choice you have is to fade it all right so you're fading the edge of distribution you're saying okay well this is Peak long convexity now I'm expecting us to you know return maybe bounce a little bit return and then your you know Runners maybe down to Major negative at 928 so that's kind of the path that I'm in my head whenever I see some you know
+
+[00:01:43] position like this this is the path that sort of emerges uh in my head right so you have areas where you know there are transitions between positive and negative and these usually give you either you know ideally you can you're adding to your your position right um but it can be places where you trim you know say you just fade major you go back to this position at 38 and then you take your core off and then you maybe try to ride your Runner down to Major negative
+
+[00:02:15] right uh now in the context of that um you know which which way do we pick right do we pick the breakout or do we pick the fade now usually I'm thinking about you know a number of things right so it's Tuesday it's not a Friday right you know Fridays you can kind of get a little bit more loose with things but it's just a Tuesday it's pretty quiet there's no data um you know we're waiting for Tech earnings after the close you know if
+
+[00:02:49] you're looking at initial balance it's just ranging action right there's no one here it's just people fading the edges you know going between your hvns and just like Ping ponging back and forth right okay so really the odds are you know either you were lucky and you snag this long and then you exit here right and you decide just flatten or you're looking to actively short this right now you know I think for both long and
+
+[00:03:23] shorts you have sort of the same pivot in this example uh which is ibh which is at 44 um now I think you know obviously this is a bit of hindsight but if you were looking for that Trend continuation you just did not have a good entry like you maybe try to go along here and then it's doing this wiggling thing right um no and you don't have a good place to set your stop or you're getting chopped
+
+[00:03:55] up right or you're trying to short and usually you know it's hard to short off um in this case you know you might think that okay well if major positive is Max complexity for Longs then maybe I take an active short against it right but what I found is that generally you know major positive or major negative they're really best for taking your core off when you're heading towards the level right so if you're long and you're coming into major
+
+[00:04:28] positive it's better to trim or if you're short and you're hitting major negative it's better to trim um that just seems to be a lot more effective than trying to actively fade against the level now in this example right we have ibh but we also have this guy here at 39 so there is actually someone who is actively short here on gex spot and this is where you know you can generally look for some entry where it's
+
+[00:05:02] some sort of retrace right like whether you're looking for an Impulse High um some sort of quick pullback where you can see buyers or shorts getting caught um and then trying to enter off of that right so in this case you know if your turn is short maybe you wait for us to get underneath 39 and then you wait for the pullback you join this guy and then you know your core positioning maybe you just try to Traverse this distribution
+
+[00:05:35] this positive gex area to the 20K which is [ __ ] tiny uh but then that also forms sort of the upper end of this pullback as you can leave the rest of your shorts down to ideally 928 which then ends up being the LOD and yeah that's all I have to say about that um thanks for watching I hope to do a few more of these and you know that was my first one so please bear
+
+[00:06:10] with me um be try to make more of these and hopefully it provide some value to you guys
+

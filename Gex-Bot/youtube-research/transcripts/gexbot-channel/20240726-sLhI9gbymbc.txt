@@ -1,0 +1,32 @@
+[00:00:01] hey it's Jos so last video I feel like I had a bit of a contrived or maybe a bit of a overly specific example we're talking about gex spot the gex ladder and today I want to speak in a more General sense of what's going on uh going through my head you know what I'm thinking uh how I'm planning execution you know how to actually use this a little bit more practic Ally in a broader sense and the way I use it is very
+
+[00:00:35] similar to volume profile now for those unfamiliar with volume profile basically you take volume transacted at each price you aggregate it so you get rid of the time Dimension and then you basically see where most people have been transacting uh and where that volume tapers off and so like the classic way of trading volume proog profile is you know you're looking for the edges of the distribution and your assumption is that okay well historically you know people
+
+[00:01:10] aren't really willing to transact at these prices and so I'm expecting it to return to where people are willing to transact so you're looking to fade the edges right um you know so this is range trade and then there's the break out trade where you're looking for exits from these distributions and you're looking for traversal across low volume areas to some other node or an hvn high volume
+
+[00:01:48] node so gex is the same thing literally the only difference is that these are live positions and they're not historical so so you get to see with the bird's eye view you know before we reach some level whether or not people are angling for some area or where they're positioned you know as a pivot right so when I'm looking at this all I'm doing in my head is segmenting positive versus negative or
+
+[00:02:22] call versus put gam right so we have this distribution we have a pivot here this little put bar um I'm thinking about transition areas too right where it's positive there's one bar that's sticking out in the opposite direction uh we have a small positive distribution here and then it's mostly puts right and here's are Majors so ideally or the the rule of thumb generally is okay if we're inside
+
+[00:02:55] some distribution and of course there there are many pivots to inside here right either places to trim or to flatten um these are convexity Peaks right so you know an options perspective maybe this is where someone's hitting the belly of that curve on their contract and they're looking to take profit right so if you're trading Futures it might also be a good idea to trim a position anyway I'm thinking okay so if we're in in some distribution I'm
+
+[00:03:29] looking to take Longs towards major if we're accepting into this area right if I'm short biased uh then I'm looking for pivots right so I'm looking for transition areas like this and this so either I'm looking for ranging action then an Impulse high at this put bar I can join it and then look for continuation short
+
+[00:04:03] continuation right or if we've already accepted into this area there's always these local versals right local revisions where you come down to some bar we pull back then I'm looking for you know this is my line of the sand between these two distributions where I'm hoping that or I'm Angling for a short continue as long as we maintain this line of the sand and then we can continue down with generally
+
+[00:04:38] my targets being the majors right so this is where either we're trimming or you're taking you know your core here and then you're leaving a runner or you're flattening right these are kind of like the targets effectively and yeah that's basically it I think that was a little too simple maybe but I'm going to keep making these as we go I do have an example from
+
+[00:05:12] today sort of the thought process it's really short and sweet I promise so today we open inside the previous day range and immediately we see this positioning at 57 and then we see this at 230 which was also overnight high now again thinking about distributions right I'm seeing this bar this put bar this is all negative it's all put gamma
+
+[00:05:49] and then it there's a transition it changes positive there's a put bar and then positive now we're inside this distribution so I'm looking for short scalps to Major 257 and in this example I'm actually not looking for any sort of breakthrough you know so I came into this with a pretty strong short
+
+[00:06:23] bias uh but I know that did not align with the context right so it's a Friday we just had a week of pretty serious selling and generally you know we're you know Fridays you're going to see some sort of volt Crush right you're going to see some sort of bid to cover some sort of ramp and some sort of ridiculous squeeze right so at the very most and I can't change my bias right I'm I'm bias short I think it's fine to have a bias
+
+[00:06:57] that doesn't align with context it's just important to not let it get in the way of execution right or to know to to sit in her hands so with that in mind all I'm looking for are just scalps to this level and I'm not trying to I'm not even going to leave a runner to go because I know it's going to bounce I know that it's very likely I'm gonna get stopped at break even and even on a runner that just you know it's
+
+[00:07:30] a prone to tilt type of style right so all I'm doing is just taking the scalps to that level obviously in hindsight you know the optimal trade was okay well it's probably V Crush Friday or'll probably see a bunch of short covering just look for bids off of this level right look for a long and look for that ramp to that transition level or to Major positive for your Runners uh but at least for me in this
+
+[00:08:04] even with that context in mind I felt like okay well we had like prior day close down here PRI day low here very easily we could have gone down to these levels as well even with this positioning in the way so it just wasn't ideal in my head to look for those Longs um and when you know the action was generally pretty whippy this morning so those shorts were much quick to to pull off rather than you know we did eventually ramp off of 57 but you would have been waiting there for like a
+
+[00:08:37] [ __ ] hour I think like two hours it was past like IB close but yeah I think that's it for this video uh I hope that provides some value and yeah see you next time
+

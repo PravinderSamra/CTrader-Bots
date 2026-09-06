@@ -73,8 +73,41 @@ def spot_after(samples: list[dict], i: int, horizon_s: int) -> float | None:
     return samples[lo]["spot"]
 
 
+def approach_side(samples, i, field, tol):
+    """Which side spot came from, walking back to before the touch.
+
+    Returns +1 if spot was above the level, -1 if below, 0 if undetermined
+    (the session started inside the tolerance band).
+    """
+    for j in range(i - 1, -1, -1):
+        wall = samples[j].get(field)
+        if not wall or wall <= 0:
+            continue
+        gap = samples[j]["spot"] - wall
+        if abs(gap) > tol:
+            return 1 if gap > 0 else -1
+    return 0
+
+
 def find_touches(samples, field, tol, cooldown_s, horizon_s, min_move):
-    """Discrete touch events for one wall, with the forward outcome."""
+    """Discrete touch events for one wall, with the forward outcome.
+
+    Two verdicts are recorded per touch, because the two sources disagree
+    about what a gamma level even predicts:
+
+      * `respected_directional` -- price fell from a call wall, rose from a
+        put wall. This is the reading the strategy videos imply and the one
+        this script originally tested alone.
+      * `respected_away` -- price moved back the way it came, whatever the
+        wall's type. This is the vendor's own framing: "spot wants to move
+        away from these levels", with support/resistance decided by which
+        side spot is on rather than by whether the strike is a call or a put.
+
+    They are not the same test. On a touch from the far side they are exact
+    opposites, so scoring only the first marks a correct outcome as a failure
+    roughly half the time -- which is enough on its own to drag a real effect
+    down to a coin flip.
+    """
     events, armed_until = [], 0
     for i, s in enumerate(samples):
         wall = s.get(field)
@@ -89,11 +122,17 @@ def find_touches(samples, field, tol, cooldown_s, horizon_s, min_move):
         if after is None:
             continue
         move = after - s["spot"]
+        side = approach_side(samples, i, field, tol)
         events.append({
             "ts": s["timestamp"],
             "wall": wall,
             "spot": s["spot"],
             "move": move,
+            "side": side,
+            # Away = ended up back on the side it came from, and clear of the
+            # band rather than still loitering in it.
+            "away": bool(side) and (after - wall) * side > 0
+                    and abs(after - wall) > tol,
             "decisive": abs(move) >= min_move,
         })
         armed_until = s["timestamp"] + cooldown_s
@@ -137,6 +176,7 @@ def analyse(samples, tol, horizon_min, cooldown_min, min_move):
         respected = [e for e in ev if (e["move"] < 0) == (want < 0) and e["move"] != 0]
         dec = [e for e in ev if e["decisive"]]
         dec_ok = [e for e in dec if (e["move"] < 0) == (want < 0)]
+        sided = [e for e in ev if e["side"]]
         results.append({
             "field": field, "reading": reading, "kind": kind,
             "touches": len(ev),
@@ -145,6 +185,10 @@ def analyse(samples, tol, horizon_min, cooldown_min, min_move):
             "decisive_respect_pct": 100 * len(dec_ok) / len(dec) if dec else None,
             "median_move": statistics.median(e["move"] for e in ev),
             "mean_abs_move": statistics.fmean(abs(e["move"]) for e in ev),
+            # The vendor's framing, scored separately.
+            "sided_touches": len(sided),
+            "away_pct": (100 * sum(e["away"] for e in sided) / len(sided)
+                         if sided else None),
         })
     return results
 
@@ -209,14 +253,18 @@ def main() -> int:
 
     res = analyse(samples, args.tol, args.horizon, args.cooldown, args.min_move)
     print(f"Touch within {args.tol:g} pts, outcome {args.horizon:g} min later:")
-    print(f"  {'wall':<32} {'touches':>7} {'respected':>10} {'decisive':>9} {'respected':>10}")
+    print(f"  {'wall':<30} {'touches':>7} {'directional':>12} {'away':>8} "
+          f"{'decisive':>9} {'dir.':>6}")
     for r in res:
         if not r["touches"]:
-            print(f"  {r['reading']+' '+r['kind']:<32} {0:>7}")
+            print(f"  {r['reading']+' '+r['kind']:<30} {0:>7}")
             continue
         dr = f"{r['decisive_respect_pct']:.0f}%" if r["decisive_respect_pct"] is not None else "-"
-        print(f"  {r['reading']+' '+r['kind']:<32} {r['touches']:>7} "
-              f"{r['respect_pct']:>9.0f}% {r['decisive_touches']:>9} {dr:>10}")
+        aw = f"{r['away_pct']:.0f}%" if r["away_pct"] is not None else "-"
+        print(f"  {r['reading']+' '+r['kind']:<30} {r['touches']:>7} "
+              f"{r['respect_pct']:>11.0f}% {aw:>8} {r['decisive_touches']:>9} {dr:>6}")
+    print("\n  directional = fell from a call wall / rose from a put wall")
+    print("  away        = moved back the way it came, whichever wall it is")
 
     if args.json:
         json.dump({"agreement": ag, "baseline": br, "walls": res,
