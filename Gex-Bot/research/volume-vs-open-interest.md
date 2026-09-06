@@ -347,6 +347,15 @@ done
 - **Walls move intraday.** Each touch is tested against the wall as it stood
   at that moment, which is correct but means "the wall" is not one fixed
   price across the day.
+- **Some large volume walls are probably phantoms, and the test cannot tell.**
+  The vendor describes nodes where "all those orders are matched — even though
+  there's a lot of volume, that level isn't necessarily super important,
+  because there's no disagreement about that level." A matched node leaves
+  nobody holding an imbalance to hedge. Naive volume GEX cannot distinguish
+  that from a real wall, so the touch sample is diluted with levels that were
+  never going to do anything. This is a plausible reason for a near-coin-flip
+  result that does not require the approach to be wrong — and it is the
+  specific thing the State package's classification is built to filter.
 - **The performance claims that motivated this project are unverified.** The
   75% win rate, 1:10 reward-to-risk and "a stop every two or three weeks"
   quoted by the strategy's author come from promotional videos with no
@@ -435,6 +444,14 @@ secret model.
 > Sales whether an option was bought or sold, describing volume as an
 > *"intermediary solution"* giving a *"rough idea"* of hedging.
 >
+> The founders say the same thing on camera, in their own walkthrough
+> (2023-10-14): *"so far our classic gexbot, we're making the assumption
+> where **all puts are bought and all calls are sold**, and therefore the
+> naive gex still works generally well"*, and elsewhere *"assuming that puts
+> are negative gamma and calls are positive gamma"*. Customers buying puts
+> and selling calls means dealers short puts and long calls — convention A,
+> stated outright.
+>
 > So the reconstruction below confirmed the documentation rather than
 > discovering anything the vendor had hidden. It still earns its place — it
 > pins the *scale* to 98% of textbook, proves the levels are reproducible
@@ -483,10 +500,37 @@ Three things follow:
    choosing between is now precisely defined: a recency-weighted level versus
    a stock-weighted level, not "flow" versus "positioning".
 
+## The convention is scoped to SPX — and we do not trade SPX
+
+The same walkthrough carries a limit that neither of the trader videos
+mentions and that this project had not identified:
+
+> "this is really something that's **only true for SPX**, due to the nature of
+> the agents who are actually trading SPX. Now **for individual equities,
+> generally that assumption does not hold**, and so making an assumption like
+> that can really distort what the actual landscape looks like."
+
+The naive sign assumption is not offered as a universal truth. It is offered
+as an empirical claim about **who trades SPX**, verified by the vendor against
+their own classified data for SPX, and explicitly denied for single stocks.
+
+**We trade `NQ_NDX`.** An index sits on the SPX side of that line rather than
+the single-stock side, but NDX is not SPX, its participant mix is not SPX's,
+and the vendor makes no claim about it — at the time of that video NDX was not
+even a covered ticker.
+
+This matters more than anything else in Part 2, because it is not a question
+our archive can answer. Every level we record already has the assumption baked
+in. Touch-testing volume walls against OI walls compares two readings that
+share the assumption; if the assumption is wrong for NDX, both are distorted
+and the test cannot see it. **This is now the single best question to put to
+the vendor**, and the reason the trader in the source videos may take his
+levels from SPX and merely *execute* on NQ.
+
 ## What would falsify the sign convention itself
 
 Nothing above validates convention A as *true* — only that GexBot uses it,
-and says so. Establishing whether dealers really are net long calls and short
+says so, and claims to have verified it for SPX specifically. Establishing whether dealers really are net long calls and short
 puts requires data that says which side initiated each trade, and which of
 those trades opened versus closed a position.
 
