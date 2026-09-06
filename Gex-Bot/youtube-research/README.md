@@ -39,6 +39,19 @@ and rules. Video 2 is a long-form interview and is the *explanatory* one —
 why the levels work. Video 1 is more useful for implementation despite being
 17 months older.
 
+## The vendor's own channel
+
+`transcripts/gexbot-channel/` holds every English transcript from
+[@gexbot](https://youtube.com/@gexbot) — 37 videos found, 12 captioned,
+~87k words, with `MANIFEST.md` recording which had no captions and why.
+
+**[Channel corpus analysis](analysis/gexbot-channel-corpus.md)** is the write-up,
+and it outranks the trader videos on anything factual: it is the founders
+explaining their own model, including one of them trading **NQ**, our
+instrument, for 90 minutes. It corrects three things this project had wrong —
+the majors are exits rather than entries, put walls repel rather than attract,
+and our stored NQ levels carry a stale pre-market basis.
+
 ## Fetching a transcript
 
 ```bash
