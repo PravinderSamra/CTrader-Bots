@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-09-04T20:03:23.785Z",
+  "generatedAt": "2026-09-07T11:05:09.544Z",
   "yields": {
-    "US10Y": 4.79,
-    "US2Y": 4.39,
-    "realYield10Y": 2.45,
-    "realYield5Y": 2.19,
-    "curve2s10s": 40,
+    "US10Y": 4.77,
+    "US2Y": 4.34,
+    "realYield10Y": 2.42,
+    "realYield5Y": 2.15,
+    "curve2s10s": 43,
     "breakeven10Y": 2.35,
     "breakeven5Y": 2.37,
     "forward5y5y": 2.33,
     "dayOverDay": {
-      "US10Y": 0,
-      "US2Y": 0,
-      "realYield10Y": 0.01
+      "US10Y": -0.02,
+      "US2Y": -0.05,
+      "realYield10Y": -0.03
     }
   },
   "fedExpectations": {
@@ -34,26 +34,26 @@
     "openInterestChange": -66065
   },
   "etfFlows": {
-    "gldTonnes": 913.9,
-    "gldWoWChange": -3.2,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1083,
+    "gldWoWChange": 169.1,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4434.495,
-    "XAGUSD": 66.2155,
-    "EURUSD": 1.16152,
-    "USDJPY": 156.2415,
-    "USDCHF": 0.80979,
-    "USDCNH": 6.70782,
-    "GBPUSD": 1.35194,
-    "USDCAD": 1.38329,
-    "USDSEK": 9.57157,
-    "US500": 7712.4,
-    "GER40": 26062.35,
-    "UK100": 10825.15,
-    "ADR_14day": 117,
-    "ADR_usedToday": 125.3,
-    "goldSilverRatio": 67
+    "XAUUSD": 4391.22,
+    "XAGUSD": 65.596,
+    "EURUSD": 1.16242,
+    "USDJPY": 154.6855,
+    "USDCHF": 0.80888,
+    "USDCNH": 6.70953,
+    "GBPUSD": 1.35377,
+    "USDCAD": 1.38172,
+    "USDSEK": 9.59714,
+    "US500": 7705.5,
+    "GER40": 25969.35,
+    "UK100": 10846.05,
+    "ADR_14day": 111.6,
+    "ADR_usedToday": 49.8,
+    "goldSilverRatio": 66.9
   },
   "dollarLiquidity": {
     "stlfsi": -0.8526,
@@ -66,34 +66,22 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "What strong jobs data means for rates — plus, an out-of-favor trade shines this week",
-      "source": "CNBC",
-      "publishedAt": "2026-09-04T18:51:01.000Z",
-      "hoursAgo": 1.2
-    },
-    {
-      "headline": "US sanctions Turkish bank, two subsidiaries in latest pressure on Iran - Reuters",
+      "headline": "Morning Bid: Diesel the real spoiler for US inflation doves - reuters.com",
       "source": "Reuters",
-      "publishedAt": "2026-09-04T18:22:57.000Z",
-      "hoursAgo": 1.7
+      "publishedAt": "2026-09-07T04:34:00.000Z",
+      "hoursAgo": 6.5
     },
     {
-      "headline": "2-year yield rises to highest since January 2025 after hot jobs report boosts expectations that the Fed could raise rates",
-      "source": "CNBC",
-      "publishedAt": "2026-09-04T13:09:26.000Z",
-      "hoursAgo": 6.9
-    },
-    {
-      "headline": "US equity funds record second weekly outflow on Iran tensions, high yields - Reuters",
+      "headline": "Indian central bank likely intervened to support rupee, traders say - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-04T13:05:44.000Z",
-      "hoursAgo": 7
+      "publishedAt": "2026-09-07T03:45:00.000Z",
+      "hoursAgo": 7.3
     },
     {
-      "headline": "Diesel hits record high as Ukraine and Iran wars knock out refineries, fueling inflation worries",
-      "source": "CNBC",
-      "publishedAt": "2026-09-04T12:40:43.000Z",
-      "hoursAgo": 7.4
+      "headline": "Stocks rattled by inflation risk from rising oil, dicey geopolitics - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-07T01:06:00.000Z",
+      "hoursAgo": 10
     }
   ],
   "briefing": null
