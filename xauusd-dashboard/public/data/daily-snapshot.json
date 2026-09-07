@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-07T13:31:13.592Z",
+  "generatedAt": "2026-09-07T16:53:08.896Z",
   "yields": {
     "US10Y": 4.77,
     "US2Y": 4.34,
     "realYield10Y": 2.42,
-    "realYield5Y": null,
+    "realYield5Y": 2.15,
     "curve2s10s": 43,
     "breakeven10Y": 2.35,
     "breakeven5Y": 2.37,
@@ -34,26 +34,26 @@
     "openInterestChange": -66065
   },
   "etfFlows": {
-    "gldTonnes": 1083,
-    "gldWoWChange": null,
-    "trend3W": null
+    "gldTonnes": 1077.4,
+    "gldWoWChange": -5.6,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4405.42,
-    "XAGUSD": 65.8955,
-    "EURUSD": 1.16249,
-    "USDJPY": 154.48,
-    "USDCHF": 0.80929,
-    "USDCNH": 6.70941,
-    "GBPUSD": 1.3537,
-    "USDCAD": 1.38193,
-    "USDSEK": 9.60238,
-    "US500": 7709.2,
-    "GER40": 26014.15,
-    "UK100": 10866.05,
+    "XAUUSD": 4414.035,
+    "XAGUSD": 66.331,
+    "EURUSD": 1.1629,
+    "USDJPY": 154.3185,
+    "USDCHF": 0.80904,
+    "USDCNH": 6.70921,
+    "GBPUSD": 1.35468,
+    "USDCAD": 1.38096,
+    "USDSEK": 9.58743,
+    "US500": 7704.2,
+    "GER40": 26015.15,
+    "UK100": 10814.15,
     "ADR_14day": 111.6,
     "ADR_usedToday": 53.9,
-    "goldSilverRatio": 66.9
+    "goldSilverRatio": 66.5
   },
   "dollarLiquidity": {
     "stlfsi": -0.8526,
@@ -69,19 +69,19 @@
       "headline": "Morning Bid: Diesel the real spoiler for US inflation doves - reuters.com",
       "source": "Reuters",
       "publishedAt": "2026-09-07T04:34:00.000Z",
-      "hoursAgo": 9
+      "hoursAgo": 12.3
     },
     {
       "headline": "Indian central bank likely intervened to support rupee, traders say - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-07T03:45:00.000Z",
-      "hoursAgo": 9.8
+      "hoursAgo": 13.1
     },
     {
       "headline": "Stocks dented by inflation risk from rising oil, dicey geopolitics - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-07T01:06:00.000Z",
-      "hoursAgo": 12.4
+      "hoursAgo": 15.8
     }
   ],
   "briefing": null
