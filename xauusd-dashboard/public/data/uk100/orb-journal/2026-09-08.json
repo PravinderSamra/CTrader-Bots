@@ -1,0 +1,55 @@
+{
+  "date": "2026-09-08",
+  "entries": [
+    {
+      "at": "2026-09-08T10:19:03.135Z",
+      "londonTime": "11:19 BST",
+      "mode": "POST_ORB",
+      "price": 10817.25,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 72% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "72% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDH 10868.9) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10831.6,
+        "orbLow": 10796.4,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10831.6,
+        "overnightLow": 10769.6,
+        "priorDayHigh": 10868.9,
+        "priorDayLow": 10790.7,
+        "gapPct": 0.01,
+        "adr14": 86.5,
+        "adrUsedPct": 72
+      },
+      "outcome": null
+    }
+  ]
+}

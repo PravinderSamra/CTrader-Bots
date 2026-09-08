@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-07T20:17:20.468Z",
+  "generatedAt": "2026-09-08T10:18:58.253Z",
   "yields": {
     "US10Y": 4.77,
     "US2Y": 4.34,
@@ -34,25 +34,25 @@
     "openInterestChange": -66065
   },
   "etfFlows": {
-    "gldTonnes": 1079.3,
-    "gldWoWChange": 1.9,
+    "gldTonnes": 1081.3,
+    "gldWoWChange": 2,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4406.145,
-    "XAGUSD": 66.171,
-    "EURUSD": 1.16223,
-    "USDJPY": 154.3765,
-    "USDCHF": 0.8096,
-    "USDCNH": 6.70962,
-    "GBPUSD": 1.35407,
-    "USDCAD": 1.38137,
-    "USDSEK": 9.59473,
-    "US500": 7703.5,
-    "GER40": 26012.15,
-    "UK100": 10817.05,
-    "ADR_14day": 111.6,
-    "ADR_usedToday": 53.9,
+    "XAUUSD": 4398.215,
+    "XAGUSD": 65.994,
+    "EURUSD": 1.16125,
+    "USDJPY": 154.064,
+    "USDCHF": 0.81115,
+    "USDCNH": 6.70998,
+    "GBPUSD": 1.35288,
+    "USDCAD": 1.38033,
+    "USDSEK": 9.6072,
+    "US500": 7700.6,
+    "GER40": 25935.15,
+    "UK100": 10817.55,
+    "ADR_14day": 106.3,
+    "ADR_usedToday": 55.3,
     "goldSilverRatio": 66.6
   },
   "dollarLiquidity": {
@@ -66,22 +66,16 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Morning Bid: Diesel the real spoiler for US inflation doves - reuters.com",
+      "headline": "Gold ticks up with US inflation data on radar - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-07T04:34:00.000Z",
-      "hoursAgo": 15.7
+      "publishedAt": "2026-09-08T02:28:00.000Z",
+      "hoursAgo": 7.8
     },
     {
-      "headline": "Indian central bank likely intervened to support rupee, traders say - Reuters",
+      "headline": "Yen's rally to seven-month high weighs on dollar ahead of US CPI - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-07T03:45:00.000Z",
-      "hoursAgo": 16.5
-    },
-    {
-      "headline": "Stocks dented by inflation risk from rising oil, dicey geopolitics - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-07T01:06:00.000Z",
-      "hoursAgo": 19.2
+      "publishedAt": "2026-09-08T00:56:00.000Z",
+      "hoursAgo": 9.4
     }
   ],
   "briefing": null
