@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-09-08T18:12:20.430Z",
+  "generatedAt": "2026-09-08T21:31:18.296Z",
   "yields": {
-    "US10Y": 4.77,
-    "US2Y": 4.34,
-    "realYield10Y": 2.42,
-    "realYield5Y": 2.15,
-    "curve2s10s": 43,
-    "breakeven10Y": 2.35,
-    "breakeven5Y": 2.37,
-    "forward5y5y": 2.33,
+    "US10Y": 4.78,
+    "US2Y": 4.37,
+    "realYield10Y": 2.43,
+    "realYield5Y": 2.17,
+    "curve2s10s": 41,
+    "breakeven10Y": 2.37,
+    "breakeven5Y": 2.4,
+    "forward5y5y": 2.34,
     "dayOverDay": {
-      "US10Y": -0.02,
-      "US2Y": -0.05,
-      "realYield10Y": -0.03
+      "US10Y": 0.01,
+      "US2Y": 0.03,
+      "realYield10Y": 0.01
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-09-16",
     "probCut": 0,
-    "probHold": 68,
-    "probHike": 32
+    "probHold": 84,
+    "probHike": 16
   },
   "marketVolatility": {
     "GVZ": 26.63,
@@ -34,26 +34,26 @@
     "openInterestChange": -66065
   },
   "etfFlows": {
-    "gldTonnes": 1084.2,
-    "gldWoWChange": 1.7,
+    "gldTonnes": 1091.9,
+    "gldWoWChange": 7.7,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4386.41,
-    "XAGUSD": 66.3495,
-    "EURUSD": 1.16257,
-    "USDJPY": 154.333,
-    "USDCHF": 0.8091,
-    "USDCNH": 6.70662,
-    "GBPUSD": 1.35413,
-    "USDCAD": 1.37824,
-    "USDSEK": 9.58065,
-    "US500": 7694,
-    "GER40": 25970.15,
-    "UK100": 10788.65,
+    "XAUUSD": 4355.605,
+    "XAGUSD": 65.7535,
+    "EURUSD": 1.16249,
+    "USDJPY": 153.941,
+    "USDCHF": 0.80932,
+    "USDCNH": 6.70664,
+    "GBPUSD": 1.3536,
+    "USDCAD": 1.37885,
+    "USDSEK": 9.5823,
+    "US500": 7674.3,
+    "GER40": 25884.15,
+    "UK100": 10762.05,
     "ADR_14day": 106.3,
-    "ADR_usedToday": 62.3,
-    "goldSilverRatio": 66.1
+    "ADR_usedToday": 97.5,
+    "goldSilverRatio": 66.2
   },
   "dollarLiquidity": {
     "stlfsi": -0.8526,
@@ -66,40 +66,46 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Wall Street slides, oil surges amid worries over inflation, Middle East - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-08T20:17:40.000Z",
+      "hoursAgo": 1.2
+    },
+    {
+      "headline": "US Treasury ratchets up pressure on Iran with sweeping new aviation sanctions - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-08T19:07:09.000Z",
+      "hoursAgo": 2.4
+    },
+    {
       "headline": "UK publishes legislation for tougher sanctions on Iran over nuclear programme - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-08T16:24:47.000Z",
-      "hoursAgo": 1.8
-    },
-    {
-      "headline": "US Treasury targets Iran's aviation sector with sweeping new sanctions - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-08T16:08:44.000Z",
-      "hoursAgo": 2.1
+      "hoursAgo": 5.1
     },
     {
       "headline": "UK announces new Israel sanctions, despite U.S. warning of economic consequences",
       "source": "CNBC",
       "publishedAt": "2026-09-08T14:12:12.000Z",
-      "hoursAgo": 4
+      "hoursAgo": 7.3
     },
     {
       "headline": "Indian central bank extends intervention streak to support rupee, traders say - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-08T04:41:00.000Z",
-      "hoursAgo": 13.5
+      "hoursAgo": 16.8
     },
     {
       "headline": "Gold ticks up with US inflation data on radar - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-08T02:28:00.000Z",
-      "hoursAgo": 15.7
+      "hoursAgo": 19.1
     },
     {
       "headline": "Yen hovers near seven-month high, dollar steadies - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-08T00:56:00.000Z",
-      "hoursAgo": 17.3
+      "hoursAgo": 20.6
     }
   ],
   "briefing": null
