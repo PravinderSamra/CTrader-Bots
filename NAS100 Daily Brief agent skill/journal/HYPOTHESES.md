@@ -528,8 +528,31 @@ spot?"* — for which coincidence on a heavily pinned expiry Friday remains the
 leading explanation, and one snapshot cannot distinguish it from anything else.
 A computed flip sitting on spot is just as unusable as a stubbed one.
 
-**Count UNCHANGED at 1 of 5.** A working credential and a cleaner argument both
-read like progress; neither is a second observation.
+**Update 2026-09-08 15:39Z — second observation, and the pattern does not hold.
+Count 1 -> 2 of 5.** Read live during the RTH scan, off the same feed:
+
+| | spot | zero_gamma | diff |
+|---|---|---|---|
+| **NDX** (`gex_full`) | 29,582.66 | 29,532.36 | **-50.30** |
+| **NDX** (`gex_zero`) | 29,583.02 | 29,491.02 | -92.00 |
+| **QQQ** | 720.06 | 717.59 | -2.47 |
+
+On 4 Sep NDX's `zero_gamma` sat **exactly** on spot. On a live RTH feed it does
+not -- it is 50pts below, and the two books disagree with each other (-50.30 vs
+-92.00), which a spot fallback could not do on either count.
+
+**This is evidence FOR the coincidence reading, not merely absence of evidence
+against it.** 4 Sep was a heavily pinned expiry Friday; the equality did not
+survive the first non-expiry session. Nothing structural about the Nasdaq
+calculation degenerating -- it computes, and today it computed away from spot.
+
+It is still not usable as a flip, and the reason is unchanged: on the same
+snapshot ours read 29,405 and theirs 29,525, **119pts apart**, and the board
+uses ours. Two of five. Three more RTH samples before this says anything.
+
+*Earlier framing, kept because it was the reasoning at the time:* a working
+credential and a cleaner argument both read like progress; neither was a second
+observation.
 
 **Threshold.** 5 RTH samples. Record `zero_gamma`, their `spot`, and our flip on
 every scan — **and record it for QQQ alongside NDX**, since a same-underlying
@@ -884,3 +907,111 @@ precisely the failure this register exists to prevent, and it is worse than
 forgetting, because H9 was subsequently referenced in a review task as though it
 existed. **A hypothesis is opened by writing it here, not by saying so.** It is
 created properly below.
+
+---
+
+# Observations appended 2026-09-08 (trading day 2026-08-28 — NOT GRADED)
+
+Full working: `journal/2026-08-28/REVIEW.md`. **Nothing below is a calibration
+proposal, and no hypothesis count advances.**
+
+**Status: the evidence base did not move.** `track.py` still reads **4 trading
+days / 10 scans (24–27 Aug)**. 2026-08-28's only journal entry carries
+`test_artefact: true` ("Run to verify sync_archive.py self-commits a scan"), so
+`review_day.py` correctly returns *no journal entries*. Today's 2026-09-08 scan
+is correctly `HELD BACK — day not finished` (D3's fix working as intended; it
+was not graded).
+
+**The binding constraint is not calibration, it is observation rate.** 08-28 has
+no real scan, and **31 Aug and 1–4 Sep have none at all** — confirmed against
+`research/chart-ladders/`, which jumps `2026-08-27-2233` → `2026-09-08-1539`.
+Nothing was lost; nothing was run. Eleven calendar days have passed since the
+last graded session and H4/H6 (5 days) and H8 (10 days) are exactly where they
+were. No amount of analysis substitutes for sessions.
+
+**H1 — no new point.** Per-day series unchanged: `+61.2 → −11.6 → −73.0 → −86.4`,
+mean −27.5. Still a monotonic trend, still no multiplier proposed. Still waiting
+on an unpinned / short-gamma day.
+
+**H4 — no countable point.** The 08-28 flip 29145.6 sat **231 pts below** the
+session low (29376.4) and was never approached. Consistent with 1 hit / 2 miss,
+but **excluded**; the register stays at 3 of 5 days.
+
+**H6 — do not let this reach threshold on the current instrument.** See M4 below.
+PD mid chopped again on 08-28 (`up 258.1 / dn 46.1`), a fourth consecutive
+session — **not counted**.
+
+**H10 — not testable on 08-28.** The scan read `structure 0, price inside the
+prior-week range (29115.9–30245.8)`. Still **1 of 3**.
+
+**Checked and found to be nothing (recorded so it is not re-proposed).**
+Across all graded scans the `fuel` component scores 0 points in **25 of 25**
+instances and `events` in **14 of 14**. That is not dead weight — D1 already
+states *"fuel reports and never votes"*, and `bias_engine.py:176,181,239`
+hard-codes `add(..., 0, ...)`. **No proposal.** Every other component is live:
+gamma 64% nonzero, vol 63%, breadth 60%, macro 58%, structure 53%, rates 47%,
+news 26%. The only residue is presentational — non-voting rows sit inside
+`bias_components` carrying a `points` field alongside the rows that do vote,
+which invites a reader (or a reviewer agent) to infer they contribute.
+
+**Not opened, 1 instance, recorded so the count is honest.** On the 08-28
+artefact `breadth +2` came from *"mega-cap avg +3.83%, NVDA +8.74%"* — a
+post-earnings pop read as forward direction, on a day that closed −115.6. One
+instance is not a hypothesis. It is **not** being opened here; if it recurs
+twice more, write it up properly. (Per the H9 lesson: a hypothesis is opened by
+writing it in this register, not by mentioning it.)
+
+## Methodology items awaiting a decision (not calibration, so not 3-day gated)
+
+**M3 — `latest_unreviewed()` returns a day it then refuses to grade, and calls
+the refusal an error.** `review_day.py:204` filters on `is_trading_day` but not
+on `test_artefact`, unlike the matching filters at `review_day.py:75` and
+`track.py:82`. It returns `2026-08-28`; `review()` then answers `{"error": ...}`
+instead of the `{"status": "skipped"}` shape that exists for non-gradeable days,
+so a caller distinguishing *skip* from *failure* sees a failure. Separately,
+nothing in the codebase reads `REVIEW.md` — `grep -rn "REVIEW.md" --include=*.py`
+returns nothing — so "unreviewed" is a misnomer: it returns the most recent
+trading day whether or not it has been reviewed. Same shape as D1/D3: **a filter
+written in three places and kept consistent in only two.**
+
+**M4 — H6 is being tallied off a label D5 already established is unreliable.**
+D5 recorded that `grade_level` scores the first touch only, has no concept of
+role reversal, and that *"broke UP through it counts as a failure"*. Its fix was
+deliberately **additive**: `gex_retro.role_reversal()` was added and
+`grade_level` left unchanged. But `review_day.py` still emits the `grade_level`
+string, and H6's evidence (*"traded both sides — chopped remains the dominant
+outcome"*, hit rate 0.56–0.58) is tallied from exactly that string. Two
+sub-faults, each verifiable from a single row:
+
+1. **Near-misses count as touches, and then as breaks.** `TOUCH_TOL = 8.0`
+   admits bars whose high never reached the level; the reaction string then
+   reports the direction of subsequent travel. Instances in the graded archive:
+   08-24 08:28 `MAX PAIN 29099.3` (`travel_down −5.1`, "broke UP through it");
+   08-24 08:30/32/33 `PWL 29115.9` (`−0.9`); 08-27 13:23 `PDH 29353.8` (`−7.0`);
+   and, unmasked but not counted, 08-28 `CALL WALL 29645.0` (`travel_up −4.5`).
+   **Two graded days plus one excluded day.** This is already inside an open
+   hypothesis: H6's cull case against MAX PAIN (*"touched on 3 of 4 scans and
+   never stalled price once"*) rests partly on a 5.1-pt near-miss.
+2. **First-touch blindness is still in the published output.** On 08-28 the
+   heaviest level on the board — `29645 CALL WALL ●●●●● 1.30bn` — graded
+   *"broke DOWN through it"* off a 02:15 UTC near-miss, while price traded
+   **above it for 14 bars (14:35–15:40 UTC) to a high 103.3 pts through it**.
+   The output says the wall broke downward on a day price broke it upward.
+
+*Decision needed before H6 reaches 5 days:* is H6 tallied from
+`role_reversal()` or from `grade_level`, and should `travel_up < 0` /
+`travel_down < 0` report a near-miss rather than a touch-and-break? Re-deriving
+after the threshold is hit would mean culling levels on a polluted statistic.
+
+**M5 — `test_artefact` is one flag doing two different jobs.** On 27 Aug it
+marked **verification re-runs**: one market state journalled five times, where
+exclusion is unarguably right because counting them turns one observation into
+five. On 28 Aug it marks a **plumbing test that produced a unique, live,
+uncontaminated forecast** — a market state sampled exactly once, on a real
+trading day, `prediction` written before the outcome was known. Excluding the
+first prevents inflation; excluding the second **discards a real observation**,
+and here it discarded a **wrong** one (bias +4 MILDLY BULLISH; the session closed
+−115.6), i.e. it failed in the flattering direction — the precise shape of the
+D1/D3 lesson. **Not proposed and not counted.** But the flag needs two names —
+`duplicate_of` vs `provenance: plumbing-test` — and which one 28 Aug carries is
+the trader's call, not the reviewer's.
