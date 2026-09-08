@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-08T10:18:58.253Z",
+  "generatedAt": "2026-09-08T12:09:16.287Z",
   "yields": {
     "US10Y": 4.77,
     "US2Y": 4.34,
@@ -34,26 +34,26 @@
     "openInterestChange": -66065
   },
   "etfFlows": {
-    "gldTonnes": 1081.3,
-    "gldWoWChange": 2,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1080.2,
+    "gldWoWChange": -1.1,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4398.215,
-    "XAGUSD": 65.994,
-    "EURUSD": 1.16125,
-    "USDJPY": 154.064,
-    "USDCHF": 0.81115,
-    "USDCNH": 6.70998,
-    "GBPUSD": 1.35288,
-    "USDCAD": 1.38033,
-    "USDSEK": 9.6072,
-    "US500": 7700.6,
-    "GER40": 25935.15,
-    "UK100": 10817.55,
+    "XAUUSD": 4402.65,
+    "XAGUSD": 66.1735,
+    "EURUSD": 1.16139,
+    "USDJPY": 154.3125,
+    "USDCHF": 0.81153,
+    "USDCNH": 6.70904,
+    "GBPUSD": 1.35455,
+    "USDCAD": 1.38047,
+    "USDSEK": 9.60337,
+    "US500": 7698.3,
+    "GER40": 25993.45,
+    "UK100": 10823.45,
     "ADR_14day": 106.3,
     "ADR_usedToday": 55.3,
-    "goldSilverRatio": 66.6
+    "goldSilverRatio": 66.5
   },
   "dollarLiquidity": {
     "stlfsi": -0.8526,
@@ -66,16 +66,22 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "UK publishes legislation for tougher sanctions on Iran - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-08T10:46:17.000Z",
+      "hoursAgo": 1.4
+    },
+    {
       "headline": "Gold ticks up with US inflation data on radar - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-08T02:28:00.000Z",
-      "hoursAgo": 7.8
+      "hoursAgo": 9.7
     },
     {
-      "headline": "Yen's rally to seven-month high weighs on dollar ahead of US CPI - Reuters",
+      "headline": "Yen climbs to seven-month high on hawkish BOJ bets - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-08T00:56:00.000Z",
-      "hoursAgo": 9.4
+      "hoursAgo": 11.2
     }
   ],
   "briefing": null

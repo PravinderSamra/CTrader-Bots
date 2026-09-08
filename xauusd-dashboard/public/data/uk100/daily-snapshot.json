@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-09-08T10:19:03.000Z",
+  "generatedAt": "2026-09-08T12:09:21.261Z",
   "prices": {
-    "UK100": 10817.25,
-    "GBPUSD": 1.35288,
-    "GBPEUR": 1.16505,
-    "US500": 7700.9,
-    "NAS100": 29560.15,
-    "BRENT": 99.908,
-    "COPPER": 6.8138,
-    "VIX": 15.955,
-    "USDX": 98.998,
-    "XAUUSD": 4398.275,
-    "UK100_dayPct": 0.01
+    "UK100": 10823.55,
+    "GBPUSD": 1.35452,
+    "GBPEUR": 1.16632,
+    "US500": 7698.3,
+    "NAS100": 29550.95,
+    "BRENT": 99.818,
+    "COPPER": 6.8224,
+    "VIX": 15.93,
+    "USDX": 99.003,
+    "XAUUSD": 4403.12,
+    "UK100_dayPct": 0.07
   },
   "fx": {
-    "gbpUsdDayPct": -0.08,
+    "gbpUsdDayPct": 0.04,
     "gbpUsd20dPercentile": 55,
     "sterlingEri": 85.4308,
     "sterlingEriDayChange": 0.1,
@@ -36,24 +36,24 @@
     "daysToMpc": 9
   },
   "usLinkage": {
-    "us500DayPct": -0.03,
-    "nas100DayPct": -0.03,
-    "vix": 15.955,
+    "us500DayPct": -0.06,
+    "nas100DayPct": -0.07,
+    "vix": 15.93,
     "vixRegime": "NORMAL",
     "us10y": 4.77,
-    "usdx": 98.998
+    "usdx": 99.003
   },
   "commodities": {
-    "brentDayPct": 1.35,
-    "copperDayPct": 1.51,
-    "goldDayPct": -0.18,
+    "brentDayPct": 1.26,
+    "copperDayPct": 1.63,
+    "goldDayPct": -0.07,
     "brent20dTrend": "UP"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": 0.02,
-    "dax40DayPct": -0.29,
-    "eurUsdDayPct": -0.09,
-    "ftseDaxCorr20d": 0.47,
+    "eurostoxx50DayPct": 0.12,
+    "dax40DayPct": -0.07,
+    "eurUsdDayPct": -0.07,
+    "ftseDaxCorr20d": 0.48,
     "ftseSx5eCorr20d": 0.48,
     "tapeAgreement": "ALIGNED",
     "preOpenLead": "NONE"
@@ -69,14 +69,14 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent +1.35%",
+      "driver": "Brent +1.26%",
       "read": "BULLISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper +1.51%",
+      "driver": "Copper +1.63%",
       "read": "BULLISH",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
@@ -117,7 +117,7 @@
       "headline": "Gold ticks up with US inflation data on radar - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPZVFOMG93MEp4ZjJ0VUtRcWQxVTRKYTJOb3RwbTZpMnNyZlJ5eFdCRGhNTXF4b2MyRGpXWTh0T1N1d28tUGRfSW80bmFNT1RNelFYMTlLU2ctZEZpYmsyNjZRb2ROTnVqMkVuX2Z3UU12UDlCV2cxSmd1MzR2dktuNUtOR3ZXdjR2YnAyUlJDYjFtWmwybURmNEdLMHk3SFBQNVE?oc=5",
-      "hoursAgo": 7.9
+      "hoursAgo": 9.7
     }
   ],
   "riskTone": null,
@@ -130,31 +130,31 @@
         "name": "GBP",
         "weight": 3,
         "impact": "NEUTRAL",
-        "detail": "GBP/USD -0.08% → FTSE tailwind (sign-flipped)"
+        "detail": "GBP/USD +0.04% → FTSE headwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
         "impact": "NEUTRAL",
-        "detail": "US500 -0.03% today"
+        "detail": "US500 -0.06% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 15.955 — NORMAL regime"
+        "detail": "VIX 15.93 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
         "impact": "BULLISH",
-        "detail": "Brent +1.35% (energy majors)"
+        "detail": "Brent +1.26% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
         "impact": "BULLISH",
-        "detail": "Copper +1.51% (miners/China)"
+        "detail": "Copper +1.63% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -178,13 +178,13 @@
         "name": "European tape (SX5E/DAX)",
         "weight": 2.5,
         "impact": "NEUTRAL",
-        "detail": "SX5E +0.02% / DAX -0.29%"
+        "detail": "SX5E +0.12% / DAX -0.07%"
       }
     ],
     "eventSuppressed": false
   },
   "orbContext": {
-    "computedAt": "2026-09-08T10:19:02.999Z",
+    "computedAt": "2026-09-08T12:09:21.260Z",
     "mode": "POST_ORB",
     "cashOpenLondon": "08:00 BST",
     "overnightHigh": 10831.6,
@@ -194,34 +194,34 @@
     "priorClose": 10816.1,
     "prevWeekHigh": 10862.9,
     "prevWeekLow": 10683.5,
-    "gapPts": 1.1,
-    "gapPct": 0.01,
+    "gapPts": 7.4,
+    "gapPct": 0.07,
     "orbHigh": 10831.6,
     "orbLow": 10796.4,
     "orbBrokenDirection": "DOWN",
     "eventWindows": [],
     "adr14": 86.5,
-    "adrUsedPct": 72,
+    "adrUsedPct": 89,
     "expansionState": {
       "label": "NORMAL",
-      "rangeSoFarPct": 72,
-      "expectedRangePctByNow": 76,
-      "rangeVsTypical": 0.95,
-      "expectedVolPctByNow": 46,
+      "rangeSoFarPct": 89,
+      "expectedRangePctByNow": 83,
+      "rangeVsTypical": 1.07,
+      "expectedVolPctByNow": 66,
       "moveMostlyDone": false,
-      "note": "Range 72% of ADR vs ~76% typical by 11:00 BST (about the typical pace). only ~46% of volume typically done by now — an afternoon expansion is still possible."
+      "note": "Range 89% of ADR vs ~83% typical by 13:00 BST (about the typical pace). only ~66% of volume typically done by now — an afternoon expansion is still possible."
     }
   },
   "orbIntel": {
     "stance": "MIXED",
-    "stanceLine": "No clean edge — mixed signals — 72% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+    "stanceLine": "No clean edge — mixed signals — 89% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
     "signals": [
       {
         "direction": "BREAKOUT_SUSPECT",
         "severity": "CAUTION",
         "source": "RANGE",
         "rule": "R4",
-        "text": "72% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        "text": "89% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
       },
       {
         "direction": "NEUTRAL",
