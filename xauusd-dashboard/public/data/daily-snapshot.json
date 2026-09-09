@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-09T12:20:59.139Z",
+  "generatedAt": "2026-09-09T14:55:37.916Z",
   "yields": {
     "US10Y": 4.78,
     "US2Y": 4.37,
@@ -22,8 +22,8 @@
     "probHike": 16
   },
   "marketVolatility": {
-    "GVZ": 26.63,
-    "VIX": 15.3
+    "GVZ": 27.26,
+    "VIX": 15.72
   },
   "positioning": {
     "cotNetLong": 222188,
@@ -34,26 +34,26 @@
     "openInterestChange": -66065
   },
   "etfFlows": {
-    "gldTonnes": 1080.8,
-    "gldWoWChange": -1.3,
+    "gldTonnes": 1076.7,
+    "gldWoWChange": -4.1,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4400.36,
-    "XAGUSD": 66.1265,
-    "EURUSD": 1.16515,
-    "USDJPY": 153.3095,
-    "USDCHF": 0.80681,
-    "USDCNH": 6.70415,
-    "GBPUSD": 1.35594,
-    "USDCAD": 1.37691,
-    "USDSEK": 9.56901,
-    "US500": 7644.9,
-    "GER40": 25585.05,
-    "UK100": 10680.85,
+    "XAUUSD": 4417.015,
+    "XAGUSD": 67.9515,
+    "EURUSD": 1.16474,
+    "USDJPY": 153.2695,
+    "USDCHF": 0.80797,
+    "USDCNH": 6.70466,
+    "GBPUSD": 1.35612,
+    "USDCAD": 1.37935,
+    "USDSEK": 9.57837,
+    "US500": 7651.8,
+    "GER40": 25557.25,
+    "UK100": 10653.55,
     "ADR_14day": 105.6,
-    "ADR_usedToday": 74.6,
-    "goldSilverRatio": 66.5
+    "ADR_usedToday": 93.2,
+    "goldSilverRatio": 65
   },
   "dollarLiquidity": {
     "stlfsi": -0.8526,
@@ -66,46 +66,40 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Bessent bond plan details to be revealed as Treasury secretary warns FX traders he's 'the house now'",
+      "source": "CNBC",
+      "publishedAt": "2026-09-09T12:25:50.000Z",
+      "hoursAgo": 2.5
+    },
+    {
       "headline": "U.K. defends sanctions on Israeli settlements after 30-day consulate closure order",
       "source": "CNBC",
       "publishedAt": "2026-09-09T12:10:31.000Z",
-      "hoursAgo": 0.2
+      "hoursAgo": 2.8
     },
     {
       "headline": "Yen stands tall as dollar wobbles, oil's run towards $100 chills sentiment - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-09T01:59:00.000Z",
-      "hoursAgo": 10.4
+      "hoursAgo": 12.9
     },
     {
       "headline": "UK publishes legislation for tougher sanctions on Iran over nuclear programme - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-08T16:24:47.000Z",
-      "hoursAgo": 19.9
+      "hoursAgo": 22.5
     },
     {
       "headline": "UK borrows at highest interest rate since 1998, showing pressure on public finances - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-08T15:39:35.000Z",
-      "hoursAgo": 20.7
+      "hoursAgo": 23.3
     },
     {
       "headline": "US Treasury ratchets up pressure on Iran with sweeping new aviation sanctions - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-08T14:53:00.000Z",
-      "hoursAgo": 21.5
-    },
-    {
-      "headline": "UK announces new Israel sanctions, despite U.S. warning of economic consequences",
-      "source": "CNBC",
-      "publishedAt": "2026-09-08T14:12:12.000Z",
-      "hoursAgo": 22.1
-    },
-    {
-      "headline": "Bank of England to hold rates, show patience with war-driven inflation: Reuters poll - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-08T12:41:10.000Z",
-      "hoursAgo": 23.7
+      "hoursAgo": 24
     }
   ],
   "briefing": null
