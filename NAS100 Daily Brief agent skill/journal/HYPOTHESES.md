@@ -1108,3 +1108,230 @@ days / 11 scans and holds today back as unfinished, which is correct.
 doing two jobs. It is written here but **no reader consumes it yet**; the M3/M5
 decision should settle how all three sites filter, rather than a fourth
 condition being bolted on mid-scan.
+
+---
+
+# Observations added 2026-09-08 review (written 2026-09-09)
+
+Source: `review_day.py 2026-09-08 --json`, `track.py`, plus a live FRED read.
+One gradeable scan (15:39Z NY_MIDDAY), 0 test artefacts. Full write-up in
+`journal/2026-09-08/REVIEW.md`. **One item proposed (P1, a defect). Everything
+else is an observation appended to an existing open item.**
+
+## P1 — FRED observations carry an age and nothing reads it; the brief says "today"
+
+**PROPOSED — defect, not calibration.** The 09-08 call was bias **+4 MILDLY
+BULLISH**; price fell 83.3 and the session closed −82.6. Bucket decomposition:
+`gamma +2, vol −3, rates 0, macro +6, breadth +1, fuel 0, structure −1,
+news −1`. **Strip macro and the score is −2 — the correct sign.** Macro alone
+flipped the call.
+
+Inside macro: `real_yields` **+3**, `yield_decomp` +1, `credit` +2, rest 0.
+`real_yields` is the **heaviest single term in the whole engine**
+(`bias_engine.py:136`, `_W["real_yields"] = 3`) and it read DFII10 as *"down 3bp
+**today**"*. DFII10's latest observation available on 2026-09-08 was
+**2026-09-03** — a Thursday value printed as "today" on a Tuesday, **3 business
+days stale**. `bias_engine.py:132-133` justifies the macro weight with *"FRED
+publishes with a 1-2 day lag"*. Nothing enforces it.
+
+The staleness was visible **in the same brief**: `yield_decomp` honestly printed
+*"(2026-09-02 to 2026-09-03)"* directly under a "today" that contradicted it.
+
+**Structural aggravator.** `aligned_change()` exists precisely to stop
+cross-series lag mismatches — and only `yield_decomp` (weight 1) uses it.
+`real_yields` (weight 3) takes DFII10's own `chg_1`, unaligned and unaged. **The
+heaviest term is fed by the stalest series, by construction.** Verified live
+2026-09-09: `T10YIE` and `BAMLH0A0HYM2` current to 09-08 while `DFII10`/`DGS10`
+stop at **09-04** — a 4-day spread across series the engine mixes.
+
+**Systemic — decomp interval vs scan date, all 6 gradeable days:** 08-24 uses
+08-19→08-20 (4d) · 08-25 uses 08-20→08-21 (4d) · 08-26 uses 08-21→08-24 (2d) ·
+08-27 uses 08-24→08-25 (2d) · **09-08 uses 09-02→09-03 (5d)** · 09-09 uses
+09-03→09-04 (5d).
+
+**Why this is not gated:** same family as **D6** — a component justified in a
+comment by an assumed freshness that no code enforces. D6/D7 precedent is that
+defects are fixed on discovery. **No new data point is needed:** `series()`
+already returns the observation `date`; `interpret()` never reads it.
+
+*What to change (user's call, nothing edited):* render the observation date
+instead of "today", and damp or zero a FRED item older than N business days.
+**N is deliberately unspecified — that is calibration and needs its own
+evidence.** Expected effect on 09-08: `real_yields +3` does not fire, bias lands
+at +1 or −2 instead of +4, direction call goes from WRONG to neutral-or-correct.
+
+**What was right and got outvoted:** the engine already held −6 of same-day,
+tech-specific bearish evidence — `gamma −2` (price **84.8%** up the
+29402.2–29602.2 wall band; it turned within 43pts), `vol −3` (VXN 21.68 **+8.2%**,
+VXN/VIX 1.4), `structure −1` (below PD mid). All three correct, all outvoted by
+last week's rates data.
+
+## NOT proposed — new watch items opened 2026-09-08
+
+**W1 — macro block weight.** `|macro| ≥ 5` on the **last 5 consecutive deduped scans**
+(08-26 13:12 onward), and on 5 of 11 scans overall. Macro alone flipped the sign
+of the bias on **2 of the 5 gradeable days**: 08-25 13:04
+(bullish→neutral, directionally **right**) and 09-08 (bearish→bullish,
+**wrong**). **1–1 is not evidence.** Watching: how often macro alone determines
+the sign, and its hit rate when it does. **Do not touch `_W`.**
+
+**W2 — `credit` scores a level, not a change.** `fred_probe.py:187` is
+`signal = 1 if hyv < 3.0`, weighted 2. HY OAS has been below 3.0 on **every day
+on record** (2.65% on 09-08) — a standing +2 to the bull side rather than a
+signal. This is the "component is dead weight" test, but there is no session yet
+where HY OAS was above 3.0 or widened >15bp/5d, so what it does when it *moves*
+is unknown. Watching: the first such session.
+
+**W3 — PD mid / PD close may be noise.** On 09-08 they were published at
+**+3.1** and **−1.5** from spot. A level 2–3pts from price cannot be a reaction
+point. One scan. Watching: distance-from-spot at publication, and reaction
+grade, across 3+ scans before any cull is argued.
+
+**W4 — level hit rate is not independent of the fuel budget.** `brief.py:359`
+sizes the board by `budget * 1.75`, so an EXHAUSTED day publishes a narrow board
+and scores a high hit rate almost by construction. 09-08: budget 26.2 → board
+span **84.2pts**, post-scan traversal **146.6pts**, hit rate **1.00** (0.86 on
+strict touches). **H6 should normalise hit rate by board span ÷ traversal**, or
+it will read "levels are working" hardest on the days the board says least.
+
+## Evidence appended to existing items
+
+**M4 — third graded day, and its worst instance yet.** 3 of 7 published levels
+were admitted by `TOUCH_TOL = 8.0` without price reaching them: **29614.9**
+(`travel_up −0.8` — **never touched at all**, post-scan high 29614.1, yet graded
+*"broke DOWN through it"*), 29574.9 (1.9 short), 29570.3 (6.5 short).
+
+**For the first time the tolerance changed the VERDICT, not just the
+timestamp.** Starting the 12-bar window at 15:40 instead of the true first touch
+at 15:55 gives PD mid `travel_up 39.2` and PD close `43.8` → *"traded both sides
+— chopped"*. From the true touch they are **16.5** and **21.1**, both under
+`REJECT_PTS = 25` → *"broke DOWN through it"*. H6's headline result is *"chopped
+is the dominant outcome"*; on this day **2 of its 3 chop verdicts are tolerance
+artefacts**, and they mask clean downside breaks on a day that closed −82.6.
+**The M4 decision should be made before H6 reaches 5 days.**
+
+**H2 — the sample does not match the claim.** `track.py:208` selects on
+`fuel_state in ("LOW_FUEL","EXHAUSTED")` only; H2's own text requires
+`LOW_FUEL`/`EXHAUSTED`-**at-extreme**. Position within the range-so-far at scan,
+for the 6 rows the tracker lists: **18%, 33%, 29%, 5%, 77%, 52%** (09-08 is the
+52%). Only 08-24 13:45 (5%) qualifies. **H2 stands at 1 valid observation of 3,
+not 6.** Same shape as M3/M4 — a statistic tallied off a filter that does not
+implement the definition it is labelled with. **09-08 must NOT be counted toward
+H2.** Recorded; not proposed.
+
+**H1 — 5th point breaks the monotone run.** Per-day errors: +61.2, −11.6, −73.0,
+−86.4, **−26.2** (mean −27.2). The four-point slope H1 refused to fit a
+multiplier to is gone; the series now reads as noise around −27.2 rather than a
+trend, which **strengthens** H1's existing "do not fit a multiplier" conclusion.
+Caveat: the 09-08 point is **low-information** — a NY_MIDDAY scan at 92.8% ADR
+with both extremes already in can only score near-zero extension. Fuel was in
+fact the model's best call of the day: budget 26.2, extension **exactly 0.0**.
+
+**H4 — 5 of 5 days recorded, still weak.** Flip 29405.3, close 29496.0 →
+**90.7pts**. Series: 1.1 / 236.6 / 255.2 / 599.8 / 90.7 — one hit, four misses.
+Do not use the flip as a target.
+
+**H12 — first live trading-day observation (1 of 5).** GEXBot volume lens
+29,452–29,592; OI lens 28,992–29,267. Post-scan range **29,467.5–29,614.1**. The
+volume band bracketed the actual range to within **16–22pts**; the **OI band sat
+entirely outside the day**, ~200pts below the session low. Our own CBOE call
+wall (29,602.2) agreed with the volume lens to 10pts and marked the post-scan
+high. One session, graded post-hoc, with the OI book mid-roll — **it proves
+nothing**. Count 1 of 5.
+
+**D7's open question — second instance, one day EARLIER than D7 itself.** On
+09-08 `keep()`'s `budget * 1.75` cap was **45.8pts** against a 26.2pt EXHAUSTED
+budget, so the board was a ±46pt window while the day's range was **339.3**.
+**PUT WALL 29402.2, MAX PAIN 29427.2 and GAMMA FLIP 29405.3 were all dropped.**
+The session low was **29394.8 — 7.4pts below the put wall, 10.5pts below the
+flip** — and the 177pt bounce that carried price up to the scan started there.
+The brief's own text called 29402.2 *"dealers are SHORT gamma here… price
+accelerates THROUGH rather than stall. **Not a floor**"*. It was the floor. Not
+forward-gradeable (the low was pre-scan), and D7's footnote fix landed 09-09, so
+this is evidence for the **open question** — should a wall be subject to a
+range-budget filter at all — not for the fix.
+
+## One more thing worth recording: the prose contradicted the score, and the prose won
+
+§3 of the 09-08 brief said *"The day's range is set… Fading the extremes back
+into the range is the higher-probability side here, **even when the gamma regime
+favours continuation**."* That was exactly right — extension 0.0, and the
+post-scan high at 29614.1 was faded 147pts. The headline said **MILDLY
+BULLISH**. Two outputs of the same document disagreed, neither acknowledged the
+other, and a reader following the headline lost while a reader following the
+fuel paragraph won. Not a hypothesis and not proposed — but if it recurs twice
+more it should be written up as one.
+
+## P1 — the heaviest macro term is fed by the stalest series, by construction
+
+Raised by the 2026-09-08 review; the structural half verified independently
+2026-09-09.
+
+**The day.** 08-09 scored `+4 MILDLY BULLISH`; the session closed **-82.6**.
+Component split: `gamma +2, vol -3, rates 0, macro +6, breadth +1, fuel 0,
+structure -1, news -1`. **Strip macro and the score is -2 — the correct sign.**
+Macro alone flipped it, and -6 of correct same-day evidence (price 84.8% up the
+wall band, VXN +8.2%, below PD mid) was outvoted by it.
+
+**Where the +6 came from.** `real_yields` contributed +3 — the heaviest single
+term in the engine — off DFII10 reading "down 3bp **today**". DFII10's latest
+observation available that day was **2026-09-03**, three business days old.
+
+**Verified live on 2026-09-09**, independently of the review: DFII10's latest
+observation is `2026-09-04`, three business days stale, and the rendered line
+said "up 1bp **today**". The `date` field is present in the payload and gated
+nothing.
+
+**The structural fault.** `fred_probe.aligned_change()` exists precisely to stop
+this — its own docstring says *"FRED series publish on different lags"*. It is
+used at `fred_probe.py:164` by `yield_decomp`, **weight 1**. `real_yields`,
+**weight 3**, takes DFII10's raw `chg_1` at `fred_probe.py:145`. And
+`bias_engine.py:130-131` justifies the macro weights with *"FRED publishes with
+a 1-2 day lag"* — a constraint asserted in a comment with nothing enforcing it.
+
+**Same family as D6**, one day apart: a rule stated in prose rather than code.
+D6 was a guard against a proxy; this is a guard that was never written at all.
+
+**Done now (correctness, not calibration):** the line no longer says "today"
+about an older observation. It prints the observation date, warns when FRED has
+not published in more than one business day, and carries `obs_date` and
+`obs_age_business_days` in the payload. This makes the staleness visible on
+every scan.
+
+**NOT done, and deliberately: a stale reading still VOTES at full weight.**
+Whether it should — decay the weight, gate the signal past N business days, or
+route `real_yields` through `aligned_change()` like `yield_decomp` — is
+calibration and belongs behind the evidence gate. One day is one day, however
+cleanly the arithmetic reads. **The user's call.**
+
+## Additional evidence on M4, from the 2026-09-08 review
+
+**First case where the touch tolerance changed a VERDICT, not just a label.**
+29,614.9 was never touched — the post-scan high was 29,614.1 — yet it graded
+*"broke DOWN through it"* off `travel_up -0.8`. Separately, starting the window
+at 15:40 instead of the true 15:55 touch turned PD mid / PD close from
+`travel_up 16.5 / 21.1` ("broke DOWN") into `39.2 / 43.8` ("chopped").
+
+**H6's headline result is "chop is dominant". Two of this day's three chop
+verdicts are artefacts of the tolerance**, and they masked clean downside breaks
+on a -82.6 day. **The M4 decision needs making before H6 reaches 5 days**, or
+the hypothesis gets settled by its instrument rather than by the market.
+
+## H2's sample does not implement H2's definition
+
+`track.py:208` filters on **fuel state alone**; H2 is defined as *at-extreme*
+fading. Position-in-range for its six listed rows: 18%, 33%, 29%, **5%**, 77%,
+52% — only one qualifies. **H2 is at 1 of 3, not 6**, and 2026-09-08 should not
+count toward it. Recorded, not fixed: changing the filter changes the sample.
+
+## The 7/7 level hit rate is close to tautological
+
+`keep()` sizes the board by `budget * 1.75`, so 08-09's 26.2pt budget produced a
+±46pt board inside a 147pt traversal — levels that near price are almost
+guaranteed to be touched. Strict-touch scoring gives **6/7 (0.86)**, not 1.00.
+
+Meanwhile the same filter dropped the put wall, max pain and the flip — and the
+session low (29,394.8) landed **7.4pts below the put wall and 10.5 below the
+flip**, which is where the 177pt bounce began. **This is a second instance of
+D7's open question, observed the day before D7 was found.** Two instances, not
+three. Still observing.

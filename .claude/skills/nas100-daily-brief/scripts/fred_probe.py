@@ -15,7 +15,7 @@ Free key: https://fredaccount.stlouisfed.org/apikey  (120 req/min, no card)
     python3 fred_probe.py --json
 """
 import json, os, ssl, sys, urllib.parse, urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timezone, date, timedelta
 
 _KEY = next((os.environ[v].strip() for v in ("FRED_API_KEY", "FRED_KEY")
              if os.environ.get(v, "").strip()), "")
@@ -133,6 +133,23 @@ def run(ids=None):
             "data": data, "read": read}
 
 
+def _business_days_old(iso_date):
+    """Business days between an observation date and today. -> int or None."""
+    if not iso_date:
+        return None
+    try:
+        d0 = date.fromisoformat(str(iso_date))
+    except Exception:
+        return None
+    n, cur = 0, d0
+    today = date.today()
+    while cur < today:
+        cur += timedelta(days=1)
+        if cur.weekday() < 5:
+            n += 1
+    return n
+
+
 def interpret(d):
     """The lines the brief actually prints — signed for NAS100."""
     out = []
@@ -146,17 +163,32 @@ def interpret(d):
     r10_5 = g("DFII10", "chg_5")
     if r10 is not None:
         bp = round(r10 * 100)
+        # "today" was a lie whenever FRED had not published. On 2026-09-08 the
+        # latest DFII10 observation was 2026-09-03 -- three business days old --
+        # and this line still said "down 3bp today", contributing +3 (the
+        # heaviest single term) to a bias that graded WRONG. The date is right
+        # there in the payload; say it. Whether a stale reading should still
+        # VOTE is a weighting question and is deliberately NOT decided here.
+        r10_date = (d.get("DFII10") or {}).get("date")
+        age_bd = _business_days_old(r10_date)
+        when = "today" if (age_bd or 0) <= 1 else f"as of {r10_date}"
+        stale_note = ("" if (age_bd or 0) <= 1 else
+                      f" ⚠️ FRED has not published since {r10_date} "
+                      f"({age_bd} business days ago) — this is last week's "
+                      f"reading, not today's.")
         out.append({
             "tag": "real_yields", "signal": -1 if r10 > 0.01 else (1 if r10 < -0.01 else 0),
+            "obs_date": r10_date, "obs_age_business_days": age_bd,
             "text": f"**Real yield, 10y (DFII10)** — what lenders earn after inflation — "
                     f"is {r10v}%, {'up' if r10 > 0 else 'down' if r10 < 0 else 'flat'} "
-                    f"{abs(bp)}bp today and {abs((r10_5 or 0)*100):.0f}bp over 5 days. "
+                    f"{abs(bp)}bp {when} and {abs((r10_5 or 0)*100):.0f}bp over 5 days.{stale_note} "
                     + ("Rising = tech gets hit hardest, because tech is valued on "
                        "profits years away and those are worth less when rates rise."
                        if r10 > 0.01 else
                        "Falling = a direct tailwind for tech, for the same reason "
                        "in reverse." if r10 < -0.01
-                       else "No change today — watch the 5-day direction instead.")})
+                       else f"No change in that reading — watch the 5-day "
+                            f"direction instead.")})
 
     # --- decompose a nominal move into real vs breakeven --------------------
     # Measured over a date interval common to all three series, never over each
