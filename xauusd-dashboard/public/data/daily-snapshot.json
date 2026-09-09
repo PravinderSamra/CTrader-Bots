@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-09-04T20:03:23.785Z",
+  "generatedAt": "2026-09-09T18:11:38.421Z",
   "yields": {
-    "US10Y": 4.79,
-    "US2Y": 4.39,
-    "realYield10Y": 2.45,
-    "realYield5Y": 2.19,
-    "curve2s10s": 40,
-    "breakeven10Y": 2.35,
-    "breakeven5Y": 2.37,
-    "forward5y5y": 2.33,
+    "US10Y": 4.78,
+    "US2Y": 4.37,
+    "realYield10Y": 2.43,
+    "realYield5Y": 2.17,
+    "curve2s10s": 41,
+    "breakeven10Y": 2.37,
+    "breakeven5Y": 2.4,
+    "forward5y5y": 2.34,
     "dayOverDay": {
-      "US10Y": 0,
-      "US2Y": 0,
+      "US10Y": 0.01,
+      "US2Y": 0.03,
       "realYield10Y": 0.01
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-09-16",
     "probCut": 0,
-    "probHold": 68,
-    "probHike": 32
+    "probHold": 84,
+    "probHike": 16
   },
   "marketVolatility": {
-    "GVZ": 27.18,
-    "VIX": 14.32
+    "GVZ": 27.26,
+    "VIX": 15.72
   },
   "positioning": {
     "cotNetLong": 222188,
@@ -34,29 +34,29 @@
     "openInterestChange": -66065
   },
   "etfFlows": {
-    "gldTonnes": 913.9,
-    "gldWoWChange": -3.2,
+    "gldTonnes": 1076.1,
+    "gldWoWChange": -0.6,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4434.495,
-    "XAGUSD": 66.2155,
-    "EURUSD": 1.16152,
-    "USDJPY": 156.2415,
-    "USDCHF": 0.80979,
-    "USDCNH": 6.70782,
-    "GBPUSD": 1.35194,
-    "USDCAD": 1.38329,
-    "USDSEK": 9.57157,
-    "US500": 7712.4,
-    "GER40": 26062.35,
-    "UK100": 10825.15,
-    "ADR_14day": 117,
-    "ADR_usedToday": 125.3,
-    "goldSilverRatio": 67
+    "XAUUSD": 4419.47,
+    "XAGUSD": 67.887,
+    "EURUSD": 1.16384,
+    "USDJPY": 153.48,
+    "USDCHF": 0.80956,
+    "USDCNH": 6.70651,
+    "GBPUSD": 1.35584,
+    "USDCAD": 1.38027,
+    "USDSEK": 9.58982,
+    "US500": 7642.8,
+    "GER40": 25554.15,
+    "UK100": 10644.25,
+    "ADR_14day": 105.6,
+    "ADR_usedToday": 93.2,
+    "goldSilverRatio": 65.1
   },
   "dollarLiquidity": {
-    "stlfsi": -0.8526,
+    "stlfsi": -0.7884,
     "nfci": -0.558
   },
   "geopoliticalRisk": {
@@ -66,34 +66,34 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "What strong jobs data means for rates — plus, an out-of-favor trade shines this week",
+      "headline": "Why Cramer still recommends being 'a little more reserved' about data center stocks",
       "source": "CNBC",
-      "publishedAt": "2026-09-04T18:51:01.000Z",
-      "hoursAgo": 1.2
+      "publishedAt": "2026-09-09T16:11:20.000Z",
+      "hoursAgo": 2
     },
     {
-      "headline": "US sanctions Turkish bank, two subsidiaries in latest pressure on Iran - Reuters",
+      "headline": "Bessent bond plan details to be revealed as Treasury secretary warns FX traders he's 'the house now'",
+      "source": "CNBC",
+      "publishedAt": "2026-09-09T12:25:50.000Z",
+      "hoursAgo": 5.8
+    },
+    {
+      "headline": "U.K. defends sanctions on Israeli settlements after 30-day consulate closure order",
+      "source": "CNBC",
+      "publishedAt": "2026-09-09T12:10:31.000Z",
+      "hoursAgo": 6
+    },
+    {
+      "headline": "UK food price inflation to rise above 6% next year, industry says - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-04T18:22:57.000Z",
-      "hoursAgo": 1.7
+      "publishedAt": "2026-09-09T08:25:36.000Z",
+      "hoursAgo": 9.8
     },
     {
-      "headline": "2-year yield rises to highest since January 2025 after hot jobs report boosts expectations that the Fed could raise rates",
-      "source": "CNBC",
-      "publishedAt": "2026-09-04T13:09:26.000Z",
-      "hoursAgo": 6.9
-    },
-    {
-      "headline": "US equity funds record second weekly outflow on Iran tensions, high yields - Reuters",
+      "headline": "Yen stands tall as dollar wobbles, oil's run towards $100 chills sentiment - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-04T13:05:44.000Z",
-      "hoursAgo": 7
-    },
-    {
-      "headline": "Diesel hits record high as Ukraine and Iran wars knock out refineries, fueling inflation worries",
-      "source": "CNBC",
-      "publishedAt": "2026-09-04T12:40:43.000Z",
-      "hoursAgo": 7.4
+      "publishedAt": "2026-09-09T01:59:00.000Z",
+      "hoursAgo": 16.2
     }
   ],
   "briefing": null

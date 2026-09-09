@@ -1,0 +1,327 @@
+{
+  "date": "2026-09-09",
+  "entries": [
+    {
+      "at": "2026-09-09T10:26:15.645Z",
+      "londonTime": "11:26 BST",
+      "mode": "POST_ORB",
+      "price": 10737.25,
+      "stance": "FADE_FAVOURED",
+      "stanceLine": "Fade day — the ORB break was a trap — ORB broke UP but price has fully reclaimed the range (back below 10749.7) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "STRUCTURE",
+          "rule": "R1",
+          "text": "ORB broke UP but price has fully reclaimed the range (back below 10749.7) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "89% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.11%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -3,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10792.2,
+        "orbLow": 10749.7,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10810.8,
+        "overnightLow": 10743,
+        "priorDayHigh": 10850.5,
+        "priorDayLow": 10761.1,
+        "gapPct": -0.22,
+        "adr14": 87.2,
+        "adrUsedPct": 89
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-09T18:11:46.058Z",
+        "fwd1hPct": -0.48,
+        "fwd3hPct": -0.45,
+        "toClosePct": -0.79,
+        "maxUpPct": -0.12,
+        "maxDownPct": -0.84,
+        "verdict": "RIGHT",
+        "signalVerdicts": [
+          {
+            "rule": "R1",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R4",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-09T12:21:06.278Z",
+      "londonTime": "13:21 BST",
+      "mode": "POST_ORB",
+      "price": 10681.85,
+      "stance": "FADE_FAVOURED",
+      "stanceLine": "Fade day — the ORB break was a trap — ORB broke UP but price has fully reclaimed the range (back below 10749.7) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "STRUCTURE",
+          "rule": "R1",
+          "text": "ORB broke UP but price has fully reclaimed the range (back below 10749.7) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "161% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.41%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -5,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10792.2,
+        "orbLow": 10749.7,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10810.8,
+        "overnightLow": 10743,
+        "priorDayHigh": 10850.5,
+        "priorDayLow": 10761.1,
+        "gapPct": -0.74,
+        "adr14": 87.2,
+        "adrUsedPct": 161
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-09T18:11:46.170Z",
+        "fwd1hPct": 0.07,
+        "fwd3hPct": -0.28,
+        "toClosePct": -0.28,
+        "maxUpPct": 0.39,
+        "maxDownPct": -0.32,
+        "verdict": "RIGHT",
+        "signalVerdicts": [
+          {
+            "rule": "R1",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R4",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-09T14:55:44.096Z",
+      "londonTime": "15:55 BST",
+      "mode": "POST_ORB",
+      "price": 10652.65,
+      "stance": "FADE_FAVOURED",
+      "stanceLine": "Fade day — the ORB break was a trap — ORB broke UP but price has fully reclaimed the range (back below 10749.7) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "STRUCTURE",
+          "rule": "R1",
+          "text": "ORB broke UP but price has fully reclaimed the range (back below 10749.7) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "183% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.14%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10792.2,
+        "orbLow": 10749.7,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10810.8,
+        "overnightLow": 10743,
+        "priorDayHigh": 10850.5,
+        "priorDayLow": 10761.1,
+        "gapPct": -1.01,
+        "adr14": 87.2,
+        "adrUsedPct": 183
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-09T18:11:46.287Z",
+        "fwd1hPct": -0.01,
+        "fwd3hPct": null,
+        "toClosePct": -0.01,
+        "maxUpPct": 0.18,
+        "maxDownPct": -0.05,
+        "verdict": "FLAT",
+        "signalVerdicts": [
+          {
+            "rule": "R1",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R4",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-09T18:11:43.191Z",
+      "londonTime": "19:11 BST",
+      "mode": "CLOSED",
+      "price": 10644.25,
+      "stance": "FADE_FAVOURED",
+      "stanceLine": "Fade day — the ORB break was a trap — ORB broke UP but price has fully reclaimed the range (back below 10749.7) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "STRUCTURE",
+          "rule": "R1",
+          "text": "ORB broke UP but price has fully reclaimed the range (back below 10749.7) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "198% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.14%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -0.41% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -1,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10792.2,
+        "orbLow": 10749.7,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10810.8,
+        "overnightLow": 10743,
+        "priorDayHigh": 10850.5,
+        "priorDayLow": 10761.1,
+        "gapPct": -1.09,
+        "adr14": 87.2,
+        "adrUsedPct": 198
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-09T18:11:46.287Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
+    }
+  ]
+}

@@ -528,8 +528,31 @@ spot?"* — for which coincidence on a heavily pinned expiry Friday remains the
 leading explanation, and one snapshot cannot distinguish it from anything else.
 A computed flip sitting on spot is just as unusable as a stubbed one.
 
-**Count UNCHANGED at 1 of 5.** A working credential and a cleaner argument both
-read like progress; neither is a second observation.
+**Update 2026-09-08 15:39Z — second observation, and the pattern does not hold.
+Count 1 -> 2 of 5.** Read live during the RTH scan, off the same feed:
+
+| | spot | zero_gamma | diff |
+|---|---|---|---|
+| **NDX** (`gex_full`) | 29,582.66 | 29,532.36 | **-50.30** |
+| **NDX** (`gex_zero`) | 29,583.02 | 29,491.02 | -92.00 |
+| **QQQ** | 720.06 | 717.59 | -2.47 |
+
+On 4 Sep NDX's `zero_gamma` sat **exactly** on spot. On a live RTH feed it does
+not -- it is 50pts below, and the two books disagree with each other (-50.30 vs
+-92.00), which a spot fallback could not do on either count.
+
+**This is evidence FOR the coincidence reading, not merely absence of evidence
+against it.** 4 Sep was a heavily pinned expiry Friday; the equality did not
+survive the first non-expiry session. Nothing structural about the Nasdaq
+calculation degenerating -- it computes, and today it computed away from spot.
+
+It is still not usable as a flip, and the reason is unchanged: on the same
+snapshot ours read 29,405 and theirs 29,525, **119pts apart**, and the board
+uses ours. Two of five. Three more RTH samples before this says anything.
+
+*Earlier framing, kept because it was the reasoning at the time:* a working
+credential and a cleaner argument both read like progress; neither was a second
+observation.
 
 **Threshold.** 5 RTH samples. Record `zero_gamma`, their `spot`, and our flip on
 every scan — **and record it for QQQ alongside NDX**, since a same-underlying
@@ -884,3 +907,431 @@ precisely the failure this register exists to prevent, and it is worse than
 forgetting, because H9 was subsequently referenced in a review task as though it
 existed. **A hypothesis is opened by writing it here, not by saying so.** It is
 created properly below.
+
+---
+
+# Observations appended 2026-09-08 (trading day 2026-08-28 — NOT GRADED)
+
+Full working: `journal/2026-08-28/REVIEW.md`. **Nothing below is a calibration
+proposal, and no hypothesis count advances.**
+
+**Status: the evidence base did not move.** `track.py` still reads **4 trading
+days / 10 scans (24–27 Aug)**. 2026-08-28's only journal entry carries
+`test_artefact: true` ("Run to verify sync_archive.py self-commits a scan"), so
+`review_day.py` correctly returns *no journal entries*. Today's 2026-09-08 scan
+is correctly `HELD BACK — day not finished` (D3's fix working as intended; it
+was not graded).
+
+**The binding constraint is not calibration, it is observation rate.** 08-28 has
+no real scan, and **31 Aug and 1–4 Sep have none at all** — confirmed against
+`research/chart-ladders/`, which jumps `2026-08-27-2233` → `2026-09-08-1539`.
+Nothing was lost; nothing was run. Eleven calendar days have passed since the
+last graded session and H4/H6 (5 days) and H8 (10 days) are exactly where they
+were. No amount of analysis substitutes for sessions.
+
+**H1 — no new point.** Per-day series unchanged: `+61.2 → −11.6 → −73.0 → −86.4`,
+mean −27.5. Still a monotonic trend, still no multiplier proposed. Still waiting
+on an unpinned / short-gamma day.
+
+**H4 — no countable point.** The 08-28 flip 29145.6 sat **231 pts below** the
+session low (29376.4) and was never approached. Consistent with 1 hit / 2 miss,
+but **excluded**; the register stays at 3 of 5 days.
+
+**H6 — do not let this reach threshold on the current instrument.** See M4 below.
+PD mid chopped again on 08-28 (`up 258.1 / dn 46.1`), a fourth consecutive
+session — **not counted**.
+
+**H10 — not testable on 08-28.** The scan read `structure 0, price inside the
+prior-week range (29115.9–30245.8)`. Still **1 of 3**.
+
+**Checked and found to be nothing (recorded so it is not re-proposed).**
+Across all graded scans the `fuel` component scores 0 points in **25 of 25**
+instances and `events` in **14 of 14**. That is not dead weight — D1 already
+states *"fuel reports and never votes"*, and `bias_engine.py:176,181,239`
+hard-codes `add(..., 0, ...)`. **No proposal.** Every other component is live:
+gamma 64% nonzero, vol 63%, breadth 60%, macro 58%, structure 53%, rates 47%,
+news 26%. The only residue is presentational — non-voting rows sit inside
+`bias_components` carrying a `points` field alongside the rows that do vote,
+which invites a reader (or a reviewer agent) to infer they contribute.
+
+**Not opened, 1 instance, recorded so the count is honest.** On the 08-28
+artefact `breadth +2` came from *"mega-cap avg +3.83%, NVDA +8.74%"* — a
+post-earnings pop read as forward direction, on a day that closed −115.6. One
+instance is not a hypothesis. It is **not** being opened here; if it recurs
+twice more, write it up properly. (Per the H9 lesson: a hypothesis is opened by
+writing it in this register, not by mentioning it.)
+
+## Methodology items awaiting a decision (not calibration, so not 3-day gated)
+
+**M3 — `latest_unreviewed()` returns a day it then refuses to grade, and calls
+the refusal an error.** `review_day.py:204` filters on `is_trading_day` but not
+on `test_artefact`, unlike the matching filters at `review_day.py:75` and
+`track.py:82`. It returns `2026-08-28`; `review()` then answers `{"error": ...}`
+instead of the `{"status": "skipped"}` shape that exists for non-gradeable days,
+so a caller distinguishing *skip* from *failure* sees a failure. Separately,
+nothing in the codebase reads `REVIEW.md` — `grep -rn "REVIEW.md" --include=*.py`
+returns nothing — so "unreviewed" is a misnomer: it returns the most recent
+trading day whether or not it has been reviewed. Same shape as D1/D3: **a filter
+written in three places and kept consistent in only two.**
+
+**M4 — H6 is being tallied off a label D5 already established is unreliable.**
+D5 recorded that `grade_level` scores the first touch only, has no concept of
+role reversal, and that *"broke UP through it counts as a failure"*. Its fix was
+deliberately **additive**: `gex_retro.role_reversal()` was added and
+`grade_level` left unchanged. But `review_day.py` still emits the `grade_level`
+string, and H6's evidence (*"traded both sides — chopped remains the dominant
+outcome"*, hit rate 0.56–0.58) is tallied from exactly that string. Two
+sub-faults, each verifiable from a single row:
+
+1. **Near-misses count as touches, and then as breaks.** `TOUCH_TOL = 8.0`
+   admits bars whose high never reached the level; the reaction string then
+   reports the direction of subsequent travel. Instances in the graded archive:
+   08-24 08:28 `MAX PAIN 29099.3` (`travel_down −5.1`, "broke UP through it");
+   08-24 08:30/32/33 `PWL 29115.9` (`−0.9`); 08-27 13:23 `PDH 29353.8` (`−7.0`);
+   and, unmasked but not counted, 08-28 `CALL WALL 29645.0` (`travel_up −4.5`).
+   **Two graded days plus one excluded day.** This is already inside an open
+   hypothesis: H6's cull case against MAX PAIN (*"touched on 3 of 4 scans and
+   never stalled price once"*) rests partly on a 5.1-pt near-miss.
+2. **First-touch blindness is still in the published output.** On 08-28 the
+   heaviest level on the board — `29645 CALL WALL ●●●●● 1.30bn` — graded
+   *"broke DOWN through it"* off a 02:15 UTC near-miss, while price traded
+   **above it for 14 bars (14:35–15:40 UTC) to a high 103.3 pts through it**.
+   The output says the wall broke downward on a day price broke it upward.
+
+*Decision needed before H6 reaches 5 days:* is H6 tallied from
+`role_reversal()` or from `grade_level`, and should `travel_up < 0` /
+`travel_down < 0` report a near-miss rather than a touch-and-break? Re-deriving
+after the threshold is hit would mean culling levels on a polluted statistic.
+
+**M5 — `test_artefact` is one flag doing two different jobs.** On 27 Aug it
+marked **verification re-runs**: one market state journalled five times, where
+exclusion is unarguably right because counting them turns one observation into
+five. On 28 Aug it marks a **plumbing test that produced a unique, live,
+uncontaminated forecast** — a market state sampled exactly once, on a real
+trading day, `prediction` written before the outcome was known. Excluding the
+first prevents inflation; excluding the second **discards a real observation**,
+and here it discarded a **wrong** one (bias +4 MILDLY BULLISH; the session closed
+−115.6), i.e. it failed in the flattering direction — the precise shape of the
+D1/D3 lesson. **Not proposed and not counted.** But the flag needs two names —
+`duplicate_of` vs `provenance: plumbing-test` — and which one 28 Aug carries is
+the trader's call, not the reviewer's.
+
+---
+
+# Defects found 2026-09-09 (during the live scan, before delivery)
+
+## D6 — a FRESH timestamp on a STALE price inverted the regime call
+
+**What happened.** The 15:13Z build published `CFD/index offset -131.3`, from
+`NDX reference 29498.6` against a CFD at 29367.3. The true offset was about
+**-3**. Every options level on the board — call wall, put wall, max pain, the
+flip, every secondary concentration — was **~128pts too low**.
+
+**Why it mattered more than a shift.** The flip published at 29281.8 with price
+85.5pts above it, so the brief called **long gamma, Strategy 1, "this is your
+fade day"**. Corrected, the flip sat at ~29,409 with price at ~29,371 —
+**below** it. The regime was inverted, and with it the entry model.
+
+**How it got through.** `_cash_is_stale()` checks the quote's *timestamp*.
+CBOE's `_NDX` returned `last_trade_time` 16 minutes old — inside the 30-minute
+tolerance — alongside `current_price` 29,510.7 while the index was actually at
+29,376. On a later poll the timestamp advanced by a minute and the price did
+not move at all: the feed was ticking its clock, not its value. The quote's own
+reported session low (29,393) was already above the live index, which is
+internally impossible and was the tell.
+
+**The root cause is one already in this register:** a guard written against a
+**proxy** (recency of the timestamp) rather than the **definition** (is this
+price current?). Same family as D3's `bars < 150` and D4's missing dominance
+test. The docstring on `_nq_implied_cash` records the *previous* time this bug
+bit — a -200.7 offset from a stale Monday pre-market close — and the fix then
+was the very timestamp check that failed here.
+
+**Two independent confirmations, which is what made this safe to act on:** live
+`^NDX` read 29,376.2 and GEXBot's own `spot` read 29,372.72. CBOE alone
+disagreed.
+
+**Fix.** `_ndx_live_yahoo()` provides an independent live print;
+`gex_levels.build()` compares it against CBOE's and, past
+`CASH_DIVERGENCE_TOL = 25.0` pts, anchors to the independent print and labels
+the basis `live_cash_divergence_corrected`. The divergence is now always
+recorded in `basis` even when it passes, so the check is visible rather than
+silent. The timestamp path is unchanged and still handles the closed-market
+case, where both sources agree on the same close and the value check correctly
+does not fire.
+
+**What this does NOT fix.** Both sources could lag together. The check proves
+disagreement, never freshness.
+
+## D7 — the strongest ceiling on the chain appeared nowhere in the brief
+
+Found while verifying D6's fix: the corrected 15:16Z board carried **no CALL
+WALL row at all**, though the wall existed (29,500 NDX, 1.32bn, 18,832
+contracts, and the 45-day call wall too).
+
+Two filters compounded:
+
+1. `keep()` in `brief.py` drops a CORE level beyond `budget * 1.75`. Against a
+   64pt budget the cap was 112pts. The call wall at +140 was dropped; the put
+   wall at -110 survived **by two points**. The asymmetry was accidental — it
+   tracked where price happened to sit, not anything about the walls.
+2. The footnote then rendered `far[:6]`. Six liquidity levels sorted ahead of
+   the call wall, so it was truncated out of the fallback as well.
+
+Dropped from the board *and* from the footnote, the level ceased to exist in
+the output — with no warning, because each filter did what it was written to do.
+This breaks the skill's own contract (*"Never invent a level. Everything
+markable comes from the level board"*): a level absent from the board cannot be
+marked. It defeats the wall-to-wall strategy this chart was built to serve.
+
+**Fix.** `far_line()` partitions the footnote so `CALL WALL`, `PUT WALL`,
+`GAMMA FLIP` and `MAX PAIN` are never truncated; the 6-item cap now applies to
+what remains. **`keep()` is deliberately unchanged** — altering it would change
+which levels get marked and their stretch tags, which is model behaviour and
+belongs behind the evidence gate. This fix only guarantees that a wall the
+budget filter rejects still gets *said*, in the footnote, where it always
+should have been.
+
+**Open question for the register, not acted on:** whether a wall should be
+subject to the range-budget filter at all. It is a dealer-hedging boundary, not
+a distance-from-price forecast, and the stated strategy is to trade from one
+wall to the next. Needs evidence, not a same-day edit.
+
+## Journal hygiene for 2026-09-09
+
+Three entries exist for one scan (1513, 1517, 1520). **1520 is the record.**
+1513 is marked `test_artefact` with `artefact_reason: defective_build` (D6),
+1517 with `artefact_reason: verification_rerun`. `track.py` reads 5 trading
+days / 11 scans and holds today back as unfinished, which is correct.
+
+`artefact_reason` is the discriminator **M5** asks for — the same flag was
+doing two jobs. It is written here but **no reader consumes it yet**; the M3/M5
+decision should settle how all three sites filter, rather than a fourth
+condition being bolted on mid-scan.
+
+---
+
+# Observations added 2026-09-08 review (written 2026-09-09)
+
+Source: `review_day.py 2026-09-08 --json`, `track.py`, plus a live FRED read.
+One gradeable scan (15:39Z NY_MIDDAY), 0 test artefacts. Full write-up in
+`journal/2026-09-08/REVIEW.md`. **One item proposed (P1, a defect). Everything
+else is an observation appended to an existing open item.**
+
+## P1 — FRED observations carry an age and nothing reads it; the brief says "today"
+
+**PROPOSED — defect, not calibration.** The 09-08 call was bias **+4 MILDLY
+BULLISH**; price fell 83.3 and the session closed −82.6. Bucket decomposition:
+`gamma +2, vol −3, rates 0, macro +6, breadth +1, fuel 0, structure −1,
+news −1`. **Strip macro and the score is −2 — the correct sign.** Macro alone
+flipped the call.
+
+Inside macro: `real_yields` **+3**, `yield_decomp` +1, `credit` +2, rest 0.
+`real_yields` is the **heaviest single term in the whole engine**
+(`bias_engine.py:136`, `_W["real_yields"] = 3`) and it read DFII10 as *"down 3bp
+**today**"*. DFII10's latest observation available on 2026-09-08 was
+**2026-09-03** — a Thursday value printed as "today" on a Tuesday, **3 business
+days stale**. `bias_engine.py:132-133` justifies the macro weight with *"FRED
+publishes with a 1-2 day lag"*. Nothing enforces it.
+
+The staleness was visible **in the same brief**: `yield_decomp` honestly printed
+*"(2026-09-02 to 2026-09-03)"* directly under a "today" that contradicted it.
+
+**Structural aggravator.** `aligned_change()` exists precisely to stop
+cross-series lag mismatches — and only `yield_decomp` (weight 1) uses it.
+`real_yields` (weight 3) takes DFII10's own `chg_1`, unaligned and unaged. **The
+heaviest term is fed by the stalest series, by construction.** Verified live
+2026-09-09: `T10YIE` and `BAMLH0A0HYM2` current to 09-08 while `DFII10`/`DGS10`
+stop at **09-04** — a 4-day spread across series the engine mixes.
+
+**Systemic — decomp interval vs scan date, all 6 gradeable days:** 08-24 uses
+08-19→08-20 (4d) · 08-25 uses 08-20→08-21 (4d) · 08-26 uses 08-21→08-24 (2d) ·
+08-27 uses 08-24→08-25 (2d) · **09-08 uses 09-02→09-03 (5d)** · 09-09 uses
+09-03→09-04 (5d).
+
+**Why this is not gated:** same family as **D6** — a component justified in a
+comment by an assumed freshness that no code enforces. D6/D7 precedent is that
+defects are fixed on discovery. **No new data point is needed:** `series()`
+already returns the observation `date`; `interpret()` never reads it.
+
+*What to change (user's call, nothing edited):* render the observation date
+instead of "today", and damp or zero a FRED item older than N business days.
+**N is deliberately unspecified — that is calibration and needs its own
+evidence.** Expected effect on 09-08: `real_yields +3` does not fire, bias lands
+at +1 or −2 instead of +4, direction call goes from WRONG to neutral-or-correct.
+
+**What was right and got outvoted:** the engine already held −6 of same-day,
+tech-specific bearish evidence — `gamma −2` (price **84.8%** up the
+29402.2–29602.2 wall band; it turned within 43pts), `vol −3` (VXN 21.68 **+8.2%**,
+VXN/VIX 1.4), `structure −1` (below PD mid). All three correct, all outvoted by
+last week's rates data.
+
+## NOT proposed — new watch items opened 2026-09-08
+
+**W1 — macro block weight.** `|macro| ≥ 5` on the **last 5 consecutive deduped scans**
+(08-26 13:12 onward), and on 5 of 11 scans overall. Macro alone flipped the sign
+of the bias on **2 of the 5 gradeable days**: 08-25 13:04
+(bullish→neutral, directionally **right**) and 09-08 (bearish→bullish,
+**wrong**). **1–1 is not evidence.** Watching: how often macro alone determines
+the sign, and its hit rate when it does. **Do not touch `_W`.**
+
+**W2 — `credit` scores a level, not a change.** `fred_probe.py:187` is
+`signal = 1 if hyv < 3.0`, weighted 2. HY OAS has been below 3.0 on **every day
+on record** (2.65% on 09-08) — a standing +2 to the bull side rather than a
+signal. This is the "component is dead weight" test, but there is no session yet
+where HY OAS was above 3.0 or widened >15bp/5d, so what it does when it *moves*
+is unknown. Watching: the first such session.
+
+**W3 — PD mid / PD close may be noise.** On 09-08 they were published at
+**+3.1** and **−1.5** from spot. A level 2–3pts from price cannot be a reaction
+point. One scan. Watching: distance-from-spot at publication, and reaction
+grade, across 3+ scans before any cull is argued.
+
+**W4 — level hit rate is not independent of the fuel budget.** `brief.py:359`
+sizes the board by `budget * 1.75`, so an EXHAUSTED day publishes a narrow board
+and scores a high hit rate almost by construction. 09-08: budget 26.2 → board
+span **84.2pts**, post-scan traversal **146.6pts**, hit rate **1.00** (0.86 on
+strict touches). **H6 should normalise hit rate by board span ÷ traversal**, or
+it will read "levels are working" hardest on the days the board says least.
+
+## Evidence appended to existing items
+
+**M4 — third graded day, and its worst instance yet.** 3 of 7 published levels
+were admitted by `TOUCH_TOL = 8.0` without price reaching them: **29614.9**
+(`travel_up −0.8` — **never touched at all**, post-scan high 29614.1, yet graded
+*"broke DOWN through it"*), 29574.9 (1.9 short), 29570.3 (6.5 short).
+
+**For the first time the tolerance changed the VERDICT, not just the
+timestamp.** Starting the 12-bar window at 15:40 instead of the true first touch
+at 15:55 gives PD mid `travel_up 39.2` and PD close `43.8` → *"traded both sides
+— chopped"*. From the true touch they are **16.5** and **21.1**, both under
+`REJECT_PTS = 25` → *"broke DOWN through it"*. H6's headline result is *"chopped
+is the dominant outcome"*; on this day **2 of its 3 chop verdicts are tolerance
+artefacts**, and they mask clean downside breaks on a day that closed −82.6.
+**The M4 decision should be made before H6 reaches 5 days.**
+
+**H2 — the sample does not match the claim.** `track.py:208` selects on
+`fuel_state in ("LOW_FUEL","EXHAUSTED")` only; H2's own text requires
+`LOW_FUEL`/`EXHAUSTED`-**at-extreme**. Position within the range-so-far at scan,
+for the 6 rows the tracker lists: **18%, 33%, 29%, 5%, 77%, 52%** (09-08 is the
+52%). Only 08-24 13:45 (5%) qualifies. **H2 stands at 1 valid observation of 3,
+not 6.** Same shape as M3/M4 — a statistic tallied off a filter that does not
+implement the definition it is labelled with. **09-08 must NOT be counted toward
+H2.** Recorded; not proposed.
+
+**H1 — 5th point breaks the monotone run.** Per-day errors: +61.2, −11.6, −73.0,
+−86.4, **−26.2** (mean −27.2). The four-point slope H1 refused to fit a
+multiplier to is gone; the series now reads as noise around −27.2 rather than a
+trend, which **strengthens** H1's existing "do not fit a multiplier" conclusion.
+Caveat: the 09-08 point is **low-information** — a NY_MIDDAY scan at 92.8% ADR
+with both extremes already in can only score near-zero extension. Fuel was in
+fact the model's best call of the day: budget 26.2, extension **exactly 0.0**.
+
+**H4 — 5 of 5 days recorded, still weak.** Flip 29405.3, close 29496.0 →
+**90.7pts**. Series: 1.1 / 236.6 / 255.2 / 599.8 / 90.7 — one hit, four misses.
+Do not use the flip as a target.
+
+**H12 — first live trading-day observation (1 of 5).** GEXBot volume lens
+29,452–29,592; OI lens 28,992–29,267. Post-scan range **29,467.5–29,614.1**. The
+volume band bracketed the actual range to within **16–22pts**; the **OI band sat
+entirely outside the day**, ~200pts below the session low. Our own CBOE call
+wall (29,602.2) agreed with the volume lens to 10pts and marked the post-scan
+high. One session, graded post-hoc, with the OI book mid-roll — **it proves
+nothing**. Count 1 of 5.
+
+**D7's open question — second instance, one day EARLIER than D7 itself.** On
+09-08 `keep()`'s `budget * 1.75` cap was **45.8pts** against a 26.2pt EXHAUSTED
+budget, so the board was a ±46pt window while the day's range was **339.3**.
+**PUT WALL 29402.2, MAX PAIN 29427.2 and GAMMA FLIP 29405.3 were all dropped.**
+The session low was **29394.8 — 7.4pts below the put wall, 10.5pts below the
+flip** — and the 177pt bounce that carried price up to the scan started there.
+The brief's own text called 29402.2 *"dealers are SHORT gamma here… price
+accelerates THROUGH rather than stall. **Not a floor**"*. It was the floor. Not
+forward-gradeable (the low was pre-scan), and D7's footnote fix landed 09-09, so
+this is evidence for the **open question** — should a wall be subject to a
+range-budget filter at all — not for the fix.
+
+## One more thing worth recording: the prose contradicted the score, and the prose won
+
+§3 of the 09-08 brief said *"The day's range is set… Fading the extremes back
+into the range is the higher-probability side here, **even when the gamma regime
+favours continuation**."* That was exactly right — extension 0.0, and the
+post-scan high at 29614.1 was faded 147pts. The headline said **MILDLY
+BULLISH**. Two outputs of the same document disagreed, neither acknowledged the
+other, and a reader following the headline lost while a reader following the
+fuel paragraph won. Not a hypothesis and not proposed — but if it recurs twice
+more it should be written up as one.
+
+## P1 — the heaviest macro term is fed by the stalest series, by construction
+
+Raised by the 2026-09-08 review; the structural half verified independently
+2026-09-09.
+
+**The day.** 08-09 scored `+4 MILDLY BULLISH`; the session closed **-82.6**.
+Component split: `gamma +2, vol -3, rates 0, macro +6, breadth +1, fuel 0,
+structure -1, news -1`. **Strip macro and the score is -2 — the correct sign.**
+Macro alone flipped it, and -6 of correct same-day evidence (price 84.8% up the
+wall band, VXN +8.2%, below PD mid) was outvoted by it.
+
+**Where the +6 came from.** `real_yields` contributed +3 — the heaviest single
+term in the engine — off DFII10 reading "down 3bp **today**". DFII10's latest
+observation available that day was **2026-09-03**, three business days old.
+
+**Verified live on 2026-09-09**, independently of the review: DFII10's latest
+observation is `2026-09-04`, three business days stale, and the rendered line
+said "up 1bp **today**". The `date` field is present in the payload and gated
+nothing.
+
+**The structural fault.** `fred_probe.aligned_change()` exists precisely to stop
+this — its own docstring says *"FRED series publish on different lags"*. It is
+used at `fred_probe.py:164` by `yield_decomp`, **weight 1**. `real_yields`,
+**weight 3**, takes DFII10's raw `chg_1` at `fred_probe.py:145`. And
+`bias_engine.py:130-131` justifies the macro weights with *"FRED publishes with
+a 1-2 day lag"* — a constraint asserted in a comment with nothing enforcing it.
+
+**Same family as D6**, one day apart: a rule stated in prose rather than code.
+D6 was a guard against a proxy; this is a guard that was never written at all.
+
+**Done now (correctness, not calibration):** the line no longer says "today"
+about an older observation. It prints the observation date, warns when FRED has
+not published in more than one business day, and carries `obs_date` and
+`obs_age_business_days` in the payload. This makes the staleness visible on
+every scan.
+
+**NOT done, and deliberately: a stale reading still VOTES at full weight.**
+Whether it should — decay the weight, gate the signal past N business days, or
+route `real_yields` through `aligned_change()` like `yield_decomp` — is
+calibration and belongs behind the evidence gate. One day is one day, however
+cleanly the arithmetic reads. **The user's call.**
+
+## Additional evidence on M4, from the 2026-09-08 review
+
+**First case where the touch tolerance changed a VERDICT, not just a label.**
+29,614.9 was never touched — the post-scan high was 29,614.1 — yet it graded
+*"broke DOWN through it"* off `travel_up -0.8`. Separately, starting the window
+at 15:40 instead of the true 15:55 touch turned PD mid / PD close from
+`travel_up 16.5 / 21.1` ("broke DOWN") into `39.2 / 43.8` ("chopped").
+
+**H6's headline result is "chop is dominant". Two of this day's three chop
+verdicts are artefacts of the tolerance**, and they masked clean downside breaks
+on a -82.6 day. **The M4 decision needs making before H6 reaches 5 days**, or
+the hypothesis gets settled by its instrument rather than by the market.
+
+## H2's sample does not implement H2's definition
+
+`track.py:208` filters on **fuel state alone**; H2 is defined as *at-extreme*
+fading. Position-in-range for its six listed rows: 18%, 33%, 29%, **5%**, 77%,
+52% — only one qualifies. **H2 is at 1 of 3, not 6**, and 2026-09-08 should not
+count toward it. Recorded, not fixed: changing the filter changes the sample.
+
+## The 7/7 level hit rate is close to tautological
+
+`keep()` sizes the board by `budget * 1.75`, so 08-09's 26.2pt budget produced a
+±46pt board inside a 147pt traversal — levels that near price are almost
+guaranteed to be touched. Strict-touch scoring gives **6/7 (0.86)**, not 1.00.
+
+Meanwhile the same filter dropped the put wall, max pain and the flip — and the
+session low (29,394.8) landed **7.4pts below the put wall and 10.5 below the
+flip**, which is where the 177pt bounce began. **This is a second instance of
+D7's open question, observed the day before D7 was found.** Two instances, not
+three. Still observing.

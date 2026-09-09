@@ -114,6 +114,22 @@ def gexbot_block(gx, cfd_price):
     return out
 
 
+def far_line(far, cap=6):
+    """Render the out-of-budget footnote WITHOUT letting a wall fall off it.
+
+    far[:6] silently dropped the CALL WALL on 2026-09-09: six liquidity levels
+    sorted ahead of it, so the strongest ceiling on the chain (1.32bn, 18.8k
+    contracts, and the 45-day call wall too) appeared nowhere in the brief --
+    not on the board, not in the footnote. The board is the only thing the
+    trader marks, and the strategy this skill serves is wall-to-wall, so a
+    vanishing wall is the one truncation that must never happen.
+    """
+    NEVER_DROP = ("CALL WALL", "PUT WALL", "GAMMA FLIP", "MAX PAIN")
+    walls = [r for r in far if any(k in r["name"] for k in NEVER_DROP)]
+    rest = [r for r in far if r not in walls]
+    return walls + rest[:max(0, cap - len(walls))]
+
+
 def level_board(d):
     """Merge liquidity + gamma levels into one ranked, annotated board."""
     lv, gx, px = d["levels"], d["gex"], d["levels"]["price"]
@@ -488,7 +504,7 @@ def markdown_levels_only(d):
         A(f"| **{r['level']}** | {dist} | {r['name']}{star}{tag} | {r['note']} |")
     if far:
         A("\n_Beyond today's range (context only, don't mark): "
-          + " \u00b7 ".join(f"{r['level']:.0f} {r['name']}" for r in far[:6]) + "_")
+          + " \u00b7 ".join(f"{r['level']:.0f} {r['name']}" for r in far_line(far)) + "_")
     sw = secondary_walls_md(d, board)
     if sw:
         A("")
@@ -918,7 +934,7 @@ def markdown(d):
     A("")
     if far:
         A("_Beyond today's range (context only, don't mark): "
-          + " · ".join(f"{r['level']:.0f} {r['name']}" for r in far[:6]) + "_\n")
+          + " · ".join(f"{r['level']:.0f} {r['name']}" for r in far_line(far)) + "_\n")
 
     for line in secondary_walls_md(d, board):
         A(line)
