@@ -61,12 +61,15 @@ jobs:
           GEX_BOT_API_TOKEN: ${{ secrets.GEX_BOT_API_TOKEN }}
           FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
         run: |
-          # At 23:30 UTC the ET date is still the same calendar day, so the
-          # session we expect is simply today. Failing loudly on a mismatch
-          # matters because a missed session cannot be fetched later.
+          # The session date is the ET calendar date, NOT the UTC one.
+          # GitHub routinely delays this run; on 2026-09-09 it fired at 01:18
+          # UTC, `date -u +%F` had already rolled over, and the guard rejected
+          # a valid report for 2026-09-08. In ET that moment was still
+          # 2026-09-08 21:18, so the ET date is the one that matches the
+          # session. No --fail-if-stale: the archive is written either way and
+          # a mismatch warns rather than discarding the data.
           python3 Gex-Bot/scripts/archive_eod.py \
             --ticker ${{ matrix.ticker }} \
             --scope gex_zero \
-            --expect-date "$(date -u +%F)" \
-            --fail-if-stale \
+            --expect-date "$(TZ=America/New_York date +%F)" \
             --firestore

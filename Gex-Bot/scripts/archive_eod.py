@@ -124,20 +124,17 @@ def main() -> int:
 
     doc = derive(samples, args.step)
 
-    # Before 17:00 ET the vendor's export has not run and the endpoint returns
-    # the PRIOR session with a 200 and no error. Storing that is harmless --
-    # the doc id is keyed on the report's own date, so it overwrites itself --
-    # but it means the day we wanted was silently missed, and a missed day
-    # cannot be fetched later. Say so.
-    expected = args.expect_date
-    if expected and doc["date"] != expected:
-        msg = (f"report covers {doc['date']}, expected {expected} -- the "
-               "export had probably not completed. This session was NOT "
-               "captured and cannot be fetched later.")
-        print(f"{'FATAL' if args.fail_if_stale else 'WARN'}: {msg}",
-              file=sys.stderr)
-        if args.fail_if_stale:
-            return 1
+    # Whatever the report covers, ARCHIVE IT FIRST, then complain.
+    #
+    # This used to check the date before writing and bail out on a mismatch,
+    # which cost two real sessions: GitHub delayed the 23:30 UTC run past
+    # midnight, `date -u +%F` had rolled to the next day, and the guard
+    # rejected a perfectly good report for being "stale". The data was there;
+    # the guard threw it away to signal a problem it could not fix.
+    #
+    # Storing an unexpected date is harmless -- the doc id is keyed on the
+    # report's own date, so a repeat overwrites itself.
+    stale = bool(args.expect_date) and doc["date"] != args.expect_date
 
     size = len(json.dumps(doc))
     print(f"{doc['ticker']} {doc['date']}: {doc['samples']:,} samples -> "
@@ -160,6 +157,18 @@ def main() -> int:
             print(f"Firestore: wrote {SESSIONS_COLLECTION}/{doc_id}")
         except FirestoreError as exc:
             print(f"FATAL: {exc}", file=sys.stderr)
+            return 1
+
+    if stale:
+        # The session IS recoverable, contrary to what this used to claim: the
+        # endpoint serves the latest completed session, so the previous day can
+        # still be pulled until the next evening's export replaces it. 2026-09-08
+        # was recovered this way the day after the guard rejected it.
+        print(f"WARN: report covers {doc['date']}, expected {args.expect_date}. "
+              f"It has been archived regardless. If a session is genuinely "
+              f"missing, re-run with --expect-date {doc['date']} before the "
+              f"next export completes (about 17:00 ET).", file=sys.stderr)
+        if args.fail_if_stale:
             return 1
     return 0
 
