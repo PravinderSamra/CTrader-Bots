@@ -40,9 +40,15 @@ def _pct(x):
     return None if x is None else round(x, 2)
 
 
-def score(macro, levels, gex):
+def score(macro, levels, gex, session=None):
     """Each rule appends (component, points, reason). Points are signed:
-    positive = bullish NAS100."""
+    positive = bullish NAS100.
+
+    `session` is the session window (e.g. "OVERNIGHT"). It exists for one
+    reason: the flip is not stable across the 21:00 roll, so on an overnight
+    scan the votes DERIVED FROM THE FLIP are withheld. Passing None keeps the
+    old behaviour exactly.
+    """
     R = []
     add = lambda c, p, why: R.append({"component": c, "points": p, "why": why})
 
@@ -51,7 +57,25 @@ def score(macro, levels, gex):
     px = levels["price"]
     wk = (gex.get("buckets") or {}).get("this_week") or {}
     net = wk.get("net_gex_$bn_per_1pct")
-    if gf is not None:
+
+    # H7, 2026-09-09. The brief already refuses to name a regime or pick a
+    # strategy overnight, because the flip moved up to 389pts while price moved
+    # 259 and every multi-scan day contradicted its own label. Letting the same
+    # number keep VOTING while refusing to state its conclusion was half a fix:
+    # on the 09-09 22:08 build it was still worth -5.
+    #
+    # Only the FLIP-DERIVED votes are withheld. The net-GEX and wall-band votes
+    # below read the option book and the strikes, not the flip's position, and
+    # nothing measured says they are unstable overnight -- so they stand. This
+    # needs no new weight: it applies the existing rule to the same input.
+    flip_unreliable = (session or "").upper() == "OVERNIGHT"
+
+    if gf is not None and flip_unreliable:
+        add("gamma", 0, f"flip {gf} WITHHELD on an overnight scan — measured "
+                        f"unstable across the roll (up to 389pts vs 259pts of "
+                        f"price), so it does not vote. Book and wall reads below "
+                        f"are unaffected")
+    elif gf is not None:
         dist_pct = (px - gf) / px * 100
         if px > gf:
             add("gamma", +2, f"above flip {gf} by {round(px-gf,1)}pts — long-gamma, "

@@ -1559,3 +1559,41 @@ settled read, that the first-touch verdict is still reported, and that
 
 This is the same lesson as D6 and P1 in a third costume: **a rule asserted about
 code is not a rule enforced on code.**
+
+## 3b. The gamma weight, made consistent (2026-09-09, same evening)
+
+The half-fix above is closed. `bias_engine.score()` takes a `session` argument
+and, on `OVERNIGHT`, **withholds the flip-derived votes** — the `+2 above flip /
+-3 below flip` pair and the `+1 straddling` rider. It emits an explicit `+0` row
+saying so, rather than silently omitting them, so the scoring table shows the
+withholding instead of hiding it.
+
+**This introduced no new calibration number.** It applies the rule already in
+force for the regime label to the same input. The alternative — decaying the
+weight — would have required inventing a figure the evidence does not supply:
+the flip's *instability* is measured, the correct discounted weight for it is
+not.
+
+**Only the flip-derived votes are withheld.** The net-GEX vote reads the option
+book and the wall-band vote reads the strikes; neither depends on the flip's
+position relative to spot, and nothing measured says either is unstable
+overnight. They still count.
+
+Verified on the live 22:18 BST overnight build: gamma went **-5 to -2**, headline
+**BEARISH (-7) to MILDLY BEARISH (-4)**, with the withheld row visible in the
+breakdown and the book/wall rows untouched. The direction call still stands on
+its own evidence (overnight direction was 2 right / 1 wrong).
+
+**The invariant is now enforced, not just intended.** Three checks in
+`test_consistency.py` assert the flip contributes 0 overnight, non-zero
+in-session, and that non-flip gamma rows survive the suppression. The two
+suppressions shipped a commit apart and the gap was worth -5 points on a live
+brief; a test is the only thing that stops them drifting apart again. The stub
+is a minimal REAL payload rather than an auto-filling mock, deliberately: if
+`bias_engine` grows a required field this test should fail loudly rather than
+pass against a fiction.
+
+**Still open, and not addressed by this:** whether the flip should carry its
+current in-session weight at all. In-session strategy selection was 4 right / 1
+wrong / 1 mixed, so there is no evidence against it — but that is 6 observations.
+Nothing proposed.

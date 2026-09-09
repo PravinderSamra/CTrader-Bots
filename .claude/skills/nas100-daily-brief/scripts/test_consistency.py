@@ -90,6 +90,41 @@ def offline_checks():
     check("role_reversal still reads a level price did reach",
           (_GR.role_reversal(29495.0, _bars) or {}).get("held") is True)
 
+    # H7: the flip must not vote when the brief refuses to quote it. These two
+    # suppressions were shipped a commit apart and the gap was worth -5 points
+    # on a live build, so the invariant is that they move TOGETHER.
+    import bias_engine as _BE
+
+    # Minimal REAL payload rather than a magic auto-dict: if bias_engine grows
+    # a new required field this test should fail loudly, not silently pass.
+    _lv = {"price": 29400.0,
+           "fuel": {"adr_used_pct": 50.0, "adr14": 300.0,
+                    "expansion_state": "MODERATE"},
+           "levels": {}}
+    _gx = {"gamma_flip": {"nas100": 29500.0},
+           "buckets": {"this_week": {"net_gex_$bn_per_1pct": 0.5,
+                                     "call_wall": {"nas100": 29600.0},
+                                     "put_wall": {"nas100": 29200.0}}}}
+    _mc = {"volatility": {"vxn_nasdaq_ivol": {}, "vix": {}, "vvix": {}},
+           "rates_fx": {"us10y": {}, "us5y": {}, "dxy": {}},
+           "breadth_proxy": {}, "index": {"ndx_daily": {}, "es_daily": {}},
+           "calendar": {}, "fred": {}}
+
+    def _gamma_pts(sess):
+        try:
+            r = _BE.score(_mc, _lv, _gx, session=sess)
+        except Exception:
+            return None
+        return sum(c["points"] for c in r["components"]
+                   if c["component"] == "gamma" and "flip" in c["why"])
+
+    _on, _off = _gamma_pts("OVERNIGHT"), _gamma_pts("PRE_NY")
+    check("flip-derived gamma votes are withheld overnight", _on == 0)
+    check("flip-derived gamma votes still count in session", (_off or 0) != 0)
+    check("non-flip gamma votes survive the overnight suppression",
+          any(c["component"] == "gamma" and "flip" not in c["why"]
+              for c in _BE.score(_mc, _lv, _gx, session="OVERNIGHT")["components"]))
+
     # the settled read is the official verdict, first-touch kept for comparison
     _g = R_MOD.grade_level({"price": 29495.0, "name": "T"}, _bars)
     check("grade_level verdict comes from the settled read",

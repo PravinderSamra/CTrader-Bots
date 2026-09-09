@@ -22,9 +22,11 @@ def gather(last_scan_iso=None):
         return {"error": "cTrader unavailable", "detail": lv}
     mc = macro_probe.run()
     gx = gex_levels.build(lv["price"])
-    bs = bias_engine.score(mc, lv, gx)
-    gx["expiry_structure"] = gex_levels.expiry_structure(gx)
+    # ctx must be resolved BEFORE scoring: the session window decides whether
+    # the flip-derived gamma votes count (H7).
     ctx = session_context.context(last_scan_iso=last_scan_iso)
+    bs = bias_engine.score(mc, lv, gx, session=ctx.get("session_window"))
+    gx["expiry_structure"] = gex_levels.expiry_structure(gx)
     # H7, decided 2026-09-09: OVERNIGHT scans picked the wrong strategy 3 of 3,
     # because the flip they read it from is not stable across the roll -- on
     # 08-24 it moved 389pts while price moved 259, and two scans two minutes
