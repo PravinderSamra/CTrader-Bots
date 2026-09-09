@@ -25,6 +25,23 @@ def gather(last_scan_iso=None):
     bs = bias_engine.score(mc, lv, gx)
     gx["expiry_structure"] = gex_levels.expiry_structure(gx)
     ctx = session_context.context(last_scan_iso=last_scan_iso)
+    # H7, decided 2026-09-09: OVERNIGHT scans picked the wrong strategy 3 of 3,
+    # because the flip they read it from is not stable across the roll -- on
+    # 08-24 it moved 389pts while price moved 259, and two scans two minutes
+    # apart published opposite regime labels. Suppress the regime CALL and the
+    # strategy pick on that window; the levels, walls and fuel still stand, and
+    # the direction call is untouched (overnight direction was 2 right / 1
+    # wrong, so this must not be generalised into "overnight is useless").
+    if (ctx.get("session_window") or "").upper() == "OVERNIGHT":
+        bs["strategy_suppressed"] = True
+        bs["strategy_call_withheld"] = bs.get("strategy_call")
+        bs["strategy_call"] = (
+            "NO STRATEGY CALL on an overnight scan. The flip this would be "
+            "chosen from is not stable across the 21:00 roll: measured over "
+            "5 sessions it moved up to 389pts while price moved 259, and every "
+            "multi-scan day contradicted its own regime label. Overnight "
+            "strategy picks were wrong 3 times out of 3. Mark the levels below "
+            "and choose the model from the first in-session scan.")
     # GEXBot is ADDITIVE and OPTIONAL. It informs nothing above it — not the
     # bias score, not the level board, not the flip. If the token is missing or
     # the feed is down, `gexbot` is None and the brief is byte-identical to
@@ -768,7 +785,17 @@ def markdown(d):
     A(f"**Gamma:** flip at **{flip}**, price {px} \u2192 "
       f"**{gx['gamma_flip']['spot_position']}** \u00b7 "
       f"this week's net GEX **{net} $bn per 1% move**\n")
-    if long_gamma:
+    if (d.get("bias") or {}).get("strategy_suppressed"):
+        A(f"> ⚠️ **No regime call on an overnight scan.** Price is "
+          f"{'above' if long_gamma else 'below'} the flip *as computed now*, but "
+          f"that reading has not survived the roll: over 5 sessions this number "
+          f"moved as much as **389pts while price moved 259**, and on every day "
+          f"with more than one scan it named both regimes. Overnight strategy "
+          f"picks were **wrong 3 times out of 3**.\n"
+          f">\n"
+          f"> ➤ **Mark the levels. Do not pick a model from this scan** — take "
+          f"that from the first in-session read, when the chain has settled.\n")
+    elif long_gamma:
         A(f"> The big options desks are **leaning against** today's move. When "
           f"price runs up they sell into it; when it dips they buy. That squashes "
           f"the range and makes moves fade back.\n"

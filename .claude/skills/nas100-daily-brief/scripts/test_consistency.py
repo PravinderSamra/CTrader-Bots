@@ -57,6 +57,7 @@ def offline_checks():
           '"--no-journal" in sys.argv' in brief)
 
     # both graders honour test_artefact
+    import review_day as R_MOD
     rv = open(os.path.join(HERE, "review_day.py")).read()
     tr = open(os.path.join(HERE, "track.py")).read()
     check("review_day excludes test_artefact entries", 'test_artefact' in rv)
@@ -75,8 +76,29 @@ def offline_checks():
           'b["time"] >= born' in rt)
     check("ladder auto-pick refuses pre-fix (non-week) ladders",
           '.get("book") == "week"' in rt)
-    check("role_reversal ignores levels price never reached",
-          'b["low"] - 6 <= level <= b["high"] + 6 for b in bars' in rt)
+    # Behavioural, not a grep: the guard moved to review_day when the settled
+    # read became the official verdict, and a source-text assertion silently
+    # passed on the wrong file. Exercise it instead.
+    import datetime as _dt
+    import gex_retro as _GR
+    _t0 = _dt.datetime(2026, 9, 9, 13, 0, tzinfo=_dt.timezone.utc)
+    _bars = [{"time": _t0 + _dt.timedelta(minutes=5 * i), "open": 29500.0,
+              "high": 29510.0, "low": 29490.0, "close": 29500.0}
+             for i in range(40)]
+    check("role_reversal returns None for a level price never reached",
+          _GR.role_reversal(28850.0, _bars) is None)
+    check("role_reversal still reads a level price did reach",
+          (_GR.role_reversal(29495.0, _bars) or {}).get("held") is True)
+
+    # the settled read is the official verdict, first-touch kept for comparison
+    _g = R_MOD.grade_level({"price": 29495.0, "name": "T"}, _bars)
+    check("grade_level verdict comes from the settled read",
+          "held as" in _g.get("reaction", ""))
+    check("grade_level still reports the superseded first-touch verdict",
+          "first_touch_reaction" in _g)
+    check("a touched-but-unsettled level is not counted as a break",
+          _GR.classify("touched, no settled read (too few bars on one side)")
+          == "unsettled")
 
     # the single grading rule
     check("track and gex_retro both import review_day (one grader)",

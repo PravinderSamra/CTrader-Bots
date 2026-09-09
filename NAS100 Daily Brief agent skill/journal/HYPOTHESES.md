@@ -1452,3 +1452,110 @@ slipped in through a retrospective.
 1 wrong — it is specifically the *flip*, and therefore the strategy selection,
 that overnight gets wrong. Do not generalise it into "overnight scans are
 useless".
+
+---
+
+# Decisions taken 2026-09-09 (trader's call, three of them)
+
+## 1. The settled read is now the OFFICIAL verdict, and history is re-graded
+
+`review_day.grade_level` now takes its verdict from `settled_read()`; the
+first-touch rule is retained as `_first_touch()` and reported on every level as
+`first_touch_reaction`, so nothing is quietly overwritten. `role_reversal()` in
+`gex_retro.py` delegates to it — **one implementation, one grader**, which is
+what the invariant always claimed.
+
+### The re-grade, 7 trading days, 122 levels price actually reached
+
+| outcome | NEW (settled) | OLD (first touch) |
+|---|---|---|
+| respected / held | **75** | 8 |
+| chopped | **0** | 70 |
+| broke | 21 | 44 |
+| unsettled (no read) | 26 | 0 |
+| untouched | 45 | 45 |
+
+**Held: 61% under the new grader, 7% under the old. 112 verdicts changed.**
+
+### Read this before quoting the reversal
+
+**"Chop went from 70 to 0" is NOT evidence that chop was disproved.** The
+settled read has no chop category *by construction* — it asks which side price
+settled on and measures the worst excursion from there, so "traded both sides"
+cannot be an answer it gives. The honest comparison is narrower and still
+decisive: of the levels the old grader called broken or chopped, the settled read
+finds most were **poked and then respected**, with worst excursions in the
+4–15pt range. Examples from 08-24 alone: `Asia Low + CALL WALL 29,200.6` broke →
+held, worst **7.0pts**; `London High + PDL 29,136.4` broke → held, worst
+**12.4pts**; `MAX PAIN 29,099.3` broke → held, worst **11.8pts**.
+
+**The new grader also abstains more: 26 of 122 are "unsettled"** — touched, but
+price never held one side long enough to judge. That is a real cost of the
+change. It shrinks the judged sample in exchange for not manufacturing verdicts
+out of near-misses. `classify()` maps it to its own bucket and **never to
+"broke"**, because counting an absent verdict as a failure is exactly how the
+old instrument produced 44 breaks.
+
+**It did not flatter everything.** `PUT WALL 28,999.3` on 08-24 went
+chopped → **broke**, worst excursion **−34.2pts**. The settled read is harder on
+genuine failures, not softer.
+
+**H6 must be re-read from scratch.** Its recorded finding ("chop is dominant,
+hit rate 0.56") was produced by the superseded instrument and no longer stands.
+It is not replaced by "levels held 61%" either — that is one re-grade of 7 days,
+not 5 fresh sessions under the new rule.
+
+## 2. 2026-08-28 counts as an observation
+
+`test_artefact` set to `false`, `artefact_reason:
+counted_by_decision_2026-09-09`. It was a genuine forecast on a real trading day
+off live data. The 2026-08-27 exclusion stands and is a different thing — one
+market state journalled five times.
+
+**Effect, and it went the unflattering way, as expected:** `track.py` moves from
+5 trading days / 11 scans to **7 / 13** (09-09 also completed), and the direction
+record from **4 right / 4 wrong** to **4 right / 5 wrong**. Excluding it had been
+flattering the model. H1 per-day is now **−30.1pts over 7 days, negative on 6 of
+7** — the strongest signal in the register and stronger for the extra day.
+
+## 3. Overnight scans no longer name a regime or pick a strategy
+
+Implemented in `brief.py`. On an `OVERNIGHT` window the strategy line is
+replaced with an explicit refusal, the section-2 regime prose is replaced with a
+warning, and the withheld pick is preserved as `strategy_call_withheld` for the
+record. Verified live on the 2026-09-09 22:08 BST build, which is an overnight
+scan and rendered both.
+
+**Deliberately NOT changed:**
+
+- **The direction call.** Overnight direction was 2 right / 1 wrong. This is a
+  finding about the *flip*, not about overnight scans in general.
+- **The levels, walls, max pain and fuel.** All still published — they come from
+  strike data, not from the flip's position relative to spot.
+- **The `gamma` bias components**, which still vote off the same unstable flip
+  (`above flip by Npts` was +2 on the 09-09 build). That is an inconsistency and
+  it is recorded as one: suppressing the label while the number still votes is
+  half a fix. It is left alone because changing a scoring weight is calibration
+  and there is no evidence for a specific replacement — the flip's *instability*
+  is measured, the right weight for it is not. **Next open question.**
+
+## 4. M3 fixed — no decision needed, it was a bug
+
+`review_day.latest_unreviewed()` now filters `test_artefact` as well as
+`is_trading_day`, matching `review_day():75` and `track.py:82`. It had returned a
+day that `review()` then refused with `"error"` instead of the `"skipped"` shape
+built for it. Listing this as a decision for the trader was a mistake on my part.
+
+## 5. The consistency test that would have caught the wrong thing
+
+`test_consistency.py`'s "role_reversal ignores levels price never reached" check
+was a **grep of `gex_retro.py`'s source text**. When the implementation moved to
+`review_day.py`, the string vanished and the check failed — but had the move gone
+the other way it would have kept passing against a file that no longer held the
+logic. Replaced with four behavioural checks that call the functions: the
+untested-level guard, a level that was reached, that the verdict comes from the
+settled read, that the first-touch verdict is still reported, and that
+`unsettled` is not classified as a break. 20 checks, all passing.
+
+This is the same lesson as D6 and P1 in a third costume: **a rule asserted about
+code is not a rule enforced on code.**

@@ -320,6 +320,8 @@
   ]
  },
  "outcome": null,
- "test_artefact": true,
- "test_artefact_note": "Run to verify sync_archive.py self-commits a scan. Not an independent observation."
+ "test_artefact": false,
+ "test_artefact_note": "Run to verify sync_archive.py self-commits a scan. Not an independent observation.",
+ "artefact_reason": "counted_by_decision_2026-09-09",
+ "artefact_note": "Originally flagged to verify sync_archive.py self-commits a scan. The trader's decision on 2026-09-09: it COUNTS. It was a genuine forecast on a real trading day off live data (bias +4 MILDLY BULLISH; the session closed -115.6), and excluding a wrong observation flatters the model. Distinct from the 2026-08-27 case, which was one market state journalled five times -- that exclusion stands."
 }

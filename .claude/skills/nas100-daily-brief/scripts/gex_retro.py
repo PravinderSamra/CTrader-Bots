@@ -28,9 +28,10 @@ OUT_COL = {
     "broke": "#f85149",         # price went through
     "chopped": "#d29922",       # traded both sides
     "untouched": "#484f58",     # never reached
+    "unsettled": "#6e7681",     # touched, never settled a side long enough to judge
 }
 OUT_LABEL = {"respected": "HELD", "broke": "BROKE", "chopped": "CHOP",
-             "untouched": "not reached"}
+             "untouched": "not reached", "unsettled": "no read"}
 
 
 def _esc(s):
@@ -40,6 +41,11 @@ def _esc(s):
 def classify(reaction):
     if not reaction or reaction == "never reached":
         return "untouched"
+    # Touched but never settled a side for long enough. Must NOT fall through to
+    # "broke" -- absence of a verdict is not a failure, and counting it as one
+    # is how the old grader manufactured breaks out of near-misses.
+    if "no settled read" in reaction:
+        return "unsettled"
     if "stalled" in reaction:
         return "respected"
     if "chopped" in reaction:
@@ -188,56 +194,15 @@ def latest_ladder(before_day=None):
 
 
 def role_reversal(level, bars, tol=25.0):
-    """Did the level hold AFTER price settled on one side of it?
+    """Delegates to review_day.settled_read — the ONE implementation.
 
-    `grade_level` scores the FIRST touch and a window of bars after it. On a
-    news-driven open the first touch is the worst possible sample: it grades
-    the noise and ignores everything that follows.
-
-    It also has no concept of ROLE REVERSAL. A call wall that caps price, gets
-    reclaimed, and then acts as support is a level doing its job well — the
-    first-touch rule calls that "chopped". And "broke UP through it" is scored
-    as a failure even when the level sits below price and is simply never
-    revisited, which for a call wall in a rally is normal.
-
-    On 2026-08-27 the trader read C1 29,464 as: swept once, reclaimed, then
-    support for the rest of the day, never broken again. The tool graded it
-    CHOP. The trader was right. This measures what he actually looked at.
+    This logic used to live here while review_day.grade_level kept the
+    first-touch rule, so the project had two graders disagreeing by design. As
+    of 2026-09-09 the settled read IS the official verdict and lives in
+    review_day; this alias stays so existing callers and the consistency test
+    keep working.
     """
-    if not bars:
-        return None
-    # A level price never went near cannot have "held" anything. Without this
-    # a strike 650pts below spot scored as SUPPORT with a +651.6 excursion,
-    # because the minimum low was trivially above it. Untested is not passed.
-    if not any(b["low"] - 6 <= level <= b["high"] + 6 for b in bars):
-        return None
-    last_far = None
-    side_above = bars[-1]["close"] >= level
-    for b in bars:
-        if (b["close"] < level) if side_above else (b["close"] > level):
-            last_far = b["time"]
-    after = [b for b in bars if last_far is None or b["time"] > last_far]
-    if len(after) < 6:
-        return None
-    touches = [b for b in after if b["low"] - 6 <= level <= b["high"] + 6]
-    if side_above:
-        worst = min(b["low"] for b in after)
-        held = worst >= level - tol
-        excursion = worst - level
-    else:
-        worst = max(b["high"] for b in after)
-        held = worst <= level + tol
-        excursion = worst - level
-    return {
-        "settled_side": "above" if side_above else "below",
-        "settled_from": last_far.strftime("%H:%M") if last_far else "open",
-        "minutes_held": len(after) * 5,
-        "touches_after": len(touches),
-        "worst_excursion": round(excursion, 1),
-        "held": held,
-        "acted_as": ("support" if side_above else "resistance") if held else "lost",
-    }
-
+    return R.settled_read(level, bars, tol=tol)
 
 def score(d):
     lv = d["levels"]

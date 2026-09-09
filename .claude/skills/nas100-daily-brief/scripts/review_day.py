@@ -39,8 +39,63 @@ def fetch_day_bars(day):
     return [b for b in bars if LF.trading_day(b["time"]) == target]
 
 
-def grade_level(lv, bars, i_from=0):
-    """Did price reach this level, and what happened when it did?"""
+SETTLE_TOL = 25.0    # pts of adverse excursion allowed once price picks a side
+MIN_SETTLED_BARS = 6 # bars needed on one side before "it held" means anything
+
+
+def settled_read(price, bars, tol=SETTLE_TOL):
+    """Once price picked a side of this level, did the level hold it?
+
+    THIS IS THE OFFICIAL VERDICT as of 2026-09-09. It replaced the first-touch
+    read, which lost 0-of-8 against it on identical data (see the retrospective
+    in HYPOTHESES.md). The first touch is the worst possible sample: on a
+    news-driven open it grades the noise and ignores the rest of the day, and it
+    has no concept of ROLE REVERSAL -- a wall that caps price, gets reclaimed,
+    then acts as support is a level doing its job, and first-touch called that
+    "chopped".
+
+    Two cases settled it. C3 29,602 on 09-09: first touch said "broke DOWN,
+    79pts"; the worst excursion was 0.8pts across 870 minutes with two rejected
+    re-tests. C1 29,464 on 08-27: worst excursion -4.7pts over 430 minutes,
+    which is the trader's own reading of that level reproduced to the point.
+    """
+    if not bars:
+        return None
+    # A level price never went near cannot have "held" anything. Without this a
+    # strike 650pts away scored as SUPPORT with a +651.6 excursion, because the
+    # minimum low was trivially above it. Untested is not passed.
+    if not any(b["low"] - 6 <= price <= b["high"] + 6 for b in bars):
+        return None
+    last_far = None
+    side_above = bars[-1]["close"] >= price
+    for b in bars:
+        if (b["close"] < price) if side_above else (b["close"] > price):
+            last_far = b["time"]
+    after = [b for b in bars if last_far is None or b["time"] > last_far]
+    if len(after) < MIN_SETTLED_BARS:
+        return None
+    touches = [b for b in after if b["low"] - 6 <= price <= b["high"] + 6]
+    if side_above:
+        worst = min(b["low"] for b in after)
+    else:
+        worst = max(b["high"] for b in after)
+    excursion = worst - price
+    held = (worst >= price - tol) if side_above else (worst <= price + tol)
+    return {
+        "settled_side": "above" if side_above else "below",
+        "settled_from": last_far.strftime("%H:%M") if last_far else "open",
+        "minutes_held": len(after) * 5,
+        "touches_after": len(touches),
+        "worst_excursion": round(excursion, 1),
+        "held": held,
+        "acted_as": ("support" if side_above else "resistance") if held else "lost",
+    }
+
+
+def _first_touch(lv, bars, i_from=0):
+    """The SUPERSEDED first-touch read. Kept, computed and reported, never the
+    verdict -- so that re-graded history can always be compared against what
+    the old instrument said rather than quietly overwritten."""
     price, name = lv["price"], lv["name"]
     for i in range(i_from, len(bars)):
         b = bars[i]
@@ -65,6 +120,32 @@ def grade_level(lv, bars, i_from=0):
                     "bar_index": i, "reaction": react,
                     "travel_up": round(up, 1), "travel_down": round(down, 1)}
     return {"touched": False, "reaction": "never reached"}
+
+
+def grade_level(lv, bars, i_from=0):
+    """The one grader. Verdict from settled_read; first-touch kept alongside.
+
+    Returns the same keys consumers already read (`touched`, `reaction`,
+    `travel_up`, `travel_down`), so track.py and gex_retro.py need no change --
+    but `reaction` now comes from the settled read where one is available.
+    """
+    ft = _first_touch(lv, bars, i_from)
+    st = settled_read(lv["price"], bars[i_from:] if i_from else bars)
+    if not ft.get("touched"):
+        return {**ft, "first_touch_reaction": ft["reaction"], "settled": None}
+    if st is None:
+        # Touched, but never settled on one side for long enough to judge.
+        # Report it as such rather than borrowing the first-touch verdict.
+        return {**ft, "first_touch_reaction": ft["reaction"], "settled": None,
+                "reaction": "touched, no settled read (too few bars on one side)"}
+    if st["held"]:
+        react = (f"stalled at it — held as {st['acted_as']} for "
+                 f"{st['minutes_held']}min, worst {st['worst_excursion']:+.1f}pts")
+    else:
+        react = (f"broke {'DOWN' if st['settled_side'] == 'above' else 'UP'} "
+                 f"through it — lost by {abs(st['worst_excursion']):.1f}pts")
+    return {**ft, "reaction": react,
+            "first_touch_reaction": ft["reaction"], "settled": st}
 
 
 def review(day, root=None):
@@ -201,7 +282,12 @@ def latest_unreviewed(root=None):
     past = [d for d in days if d < today]
     # walk back to the most recent day that actually has a gradeable scan
     for d in reversed(past):
-        if any(s.get("is_trading_day") for s in journal.load_day(d, root)):
+        # M3: this filter must match the two at review():75 and track.py:82.
+        # It used to test is_trading_day only, so it returned a day whose only
+        # entries were artefacts and review() then answered "error" instead of
+        # the "skipped" shape built for exactly that case.
+        if any(s.get("is_trading_day") and not s.get("test_artefact")
+               for s in journal.load_day(d, root)):
             return d
     return None
 
