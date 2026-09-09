@@ -315,3 +315,29 @@ without saying why.
 
 Full research (data sources, methodology, decisions) lives in the repo at
 `NAS100 Daily Brief agent skill/research/` and `docs/`.
+
+## A scheduled scan runs itself every weekday — do not create a second one
+
+A Routine fires a FRESH session at **12:45 UTC, Mon–Fri**, which runs one
+journalled scan (`trig_01SYwS3WnQJfHbSzVHWSFiuP`, "NAS100 daily brief — pre-NY
+scan"). Its only job is to accumulate observations: the register was starved at
+5 trading days across 3 weeks, and every open hypothesis is blocked on
+observation count rather than on analysis.
+
+**Consequences for any session working on this skill:**
+
+- **PULL before a review.** The scheduled run self-commits its journal entry,
+  chart ladder and GEXBot ladders. A session that does not pull grades an
+  incomplete day and reports it as complete — D3 wearing a different hat.
+- **Expect two scans on days the trader also asks for one.** That is fine and
+  already deduped by `track.py`. It is not journal inflation — inflation is the
+  *same market state* written more than once (see `artefact_reason`).
+- **Do not create another Routine for this.** Check `list_triggers` first. Two
+  schedules would double-journal every day and quietly corrupt every count.
+- The Routine needs **no MCP connectors**, which is why the skill routes broker
+  data through `ctrader_http.py` rather than the `mcp__ctrader__*` tools. That
+  design decision is what makes the unattended run possible at all.
+
+The schedule is fixed **UTC**, so it drifts against the NY session at the DST
+changeover: 12:45 UTC is 08:45 ET in summer but 07:45 ET in winter. Move it to
+`45 13 * * 1-5` when US clocks change if a pre-NY read is still wanted.
