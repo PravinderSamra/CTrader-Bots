@@ -1015,3 +1015,96 @@ and here it discarded a **wrong** one (bias +4 MILDLY BULLISH; the session close
 D1/D3 lesson. **Not proposed and not counted.** But the flag needs two names —
 `duplicate_of` vs `provenance: plumbing-test` — and which one 28 Aug carries is
 the trader's call, not the reviewer's.
+
+---
+
+# Defects found 2026-09-09 (during the live scan, before delivery)
+
+## D6 — a FRESH timestamp on a STALE price inverted the regime call
+
+**What happened.** The 15:13Z build published `CFD/index offset -131.3`, from
+`NDX reference 29498.6` against a CFD at 29367.3. The true offset was about
+**-3**. Every options level on the board — call wall, put wall, max pain, the
+flip, every secondary concentration — was **~128pts too low**.
+
+**Why it mattered more than a shift.** The flip published at 29281.8 with price
+85.5pts above it, so the brief called **long gamma, Strategy 1, "this is your
+fade day"**. Corrected, the flip sat at ~29,409 with price at ~29,371 —
+**below** it. The regime was inverted, and with it the entry model.
+
+**How it got through.** `_cash_is_stale()` checks the quote's *timestamp*.
+CBOE's `_NDX` returned `last_trade_time` 16 minutes old — inside the 30-minute
+tolerance — alongside `current_price` 29,510.7 while the index was actually at
+29,376. On a later poll the timestamp advanced by a minute and the price did
+not move at all: the feed was ticking its clock, not its value. The quote's own
+reported session low (29,393) was already above the live index, which is
+internally impossible and was the tell.
+
+**The root cause is one already in this register:** a guard written against a
+**proxy** (recency of the timestamp) rather than the **definition** (is this
+price current?). Same family as D3's `bars < 150` and D4's missing dominance
+test. The docstring on `_nq_implied_cash` records the *previous* time this bug
+bit — a -200.7 offset from a stale Monday pre-market close — and the fix then
+was the very timestamp check that failed here.
+
+**Two independent confirmations, which is what made this safe to act on:** live
+`^NDX` read 29,376.2 and GEXBot's own `spot` read 29,372.72. CBOE alone
+disagreed.
+
+**Fix.** `_ndx_live_yahoo()` provides an independent live print;
+`gex_levels.build()` compares it against CBOE's and, past
+`CASH_DIVERGENCE_TOL = 25.0` pts, anchors to the independent print and labels
+the basis `live_cash_divergence_corrected`. The divergence is now always
+recorded in `basis` even when it passes, so the check is visible rather than
+silent. The timestamp path is unchanged and still handles the closed-market
+case, where both sources agree on the same close and the value check correctly
+does not fire.
+
+**What this does NOT fix.** Both sources could lag together. The check proves
+disagreement, never freshness.
+
+## D7 — the strongest ceiling on the chain appeared nowhere in the brief
+
+Found while verifying D6's fix: the corrected 15:16Z board carried **no CALL
+WALL row at all**, though the wall existed (29,500 NDX, 1.32bn, 18,832
+contracts, and the 45-day call wall too).
+
+Two filters compounded:
+
+1. `keep()` in `brief.py` drops a CORE level beyond `budget * 1.75`. Against a
+   64pt budget the cap was 112pts. The call wall at +140 was dropped; the put
+   wall at -110 survived **by two points**. The asymmetry was accidental — it
+   tracked where price happened to sit, not anything about the walls.
+2. The footnote then rendered `far[:6]`. Six liquidity levels sorted ahead of
+   the call wall, so it was truncated out of the fallback as well.
+
+Dropped from the board *and* from the footnote, the level ceased to exist in
+the output — with no warning, because each filter did what it was written to do.
+This breaks the skill's own contract (*"Never invent a level. Everything
+markable comes from the level board"*): a level absent from the board cannot be
+marked. It defeats the wall-to-wall strategy this chart was built to serve.
+
+**Fix.** `far_line()` partitions the footnote so `CALL WALL`, `PUT WALL`,
+`GAMMA FLIP` and `MAX PAIN` are never truncated; the 6-item cap now applies to
+what remains. **`keep()` is deliberately unchanged** — altering it would change
+which levels get marked and their stretch tags, which is model behaviour and
+belongs behind the evidence gate. This fix only guarantees that a wall the
+budget filter rejects still gets *said*, in the footnote, where it always
+should have been.
+
+**Open question for the register, not acted on:** whether a wall should be
+subject to the range-budget filter at all. It is a dealer-hedging boundary, not
+a distance-from-price forecast, and the stated strategy is to trade from one
+wall to the next. Needs evidence, not a same-day edit.
+
+## Journal hygiene for 2026-09-09
+
+Three entries exist for one scan (1513, 1517, 1520). **1520 is the record.**
+1513 is marked `test_artefact` with `artefact_reason: defective_build` (D6),
+1517 with `artefact_reason: verification_rerun`. `track.py` reads 5 trading
+days / 11 scans and holds today back as unfinished, which is correct.
+
+`artefact_reason` is the discriminator **M5** asks for — the same flag was
+doing two jobs. It is written here but **no reader consumes it yet**; the M3/M5
+decision should settle how all three sites filter, rather than a fourth
+condition being bolted on mid-scan.

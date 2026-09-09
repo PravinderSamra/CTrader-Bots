@@ -191,6 +191,33 @@ def _nq_implied_cash(cash_close):
         return None, None
 
 
+# Two independent prints of the same index should agree within feed jitter.
+# 25pts on a ~29,400 index is 0.085% -- far above the few points that separate
+# two live sources, far below the 100pt+ gap a lagging feed opens up.
+CASH_DIVERGENCE_TOL = 25.0
+
+
+def _ndx_live_yahoo():
+    """An independent live NDX print, for cross-checking CBOE's. -> px or None.
+
+    CBOE's _NDX quote can carry a FRESH timestamp on a STALE price: on
+    2026-09-09 it returned last_trade_time 16 minutes old alongside 29,510.7
+    while the index was actually at 29,376 -- a value already below the same
+    quote's own reported session low. A timestamp check cannot see that, so the
+    board shifted every options level 128pts and inverted the regime call.
+    """
+    try:
+        u = ("https://query1.finance.yahoo.com/v8/finance/chart/"
+             "%5ENDX?range=1d&interval=5m")
+        req = urllib.request.Request(u, headers=G.UA)
+        with urllib.request.urlopen(req, timeout=20, context=ssl.create_default_context()) as r:
+            m = json.loads(r.read().decode())["chart"]["result"][0]["meta"]
+        px = m.get("regularMarketPrice")
+        return float(px) if px else None
+    except Exception:
+        return None
+
+
 def _cash_is_stale(quote, max_age_min=30):
     """-> (stale, age_minutes, last_trade_iso)."""
     ts = quote.get("last_trade_time")
@@ -214,6 +241,29 @@ def build(cfd_price, max_dte=45):
     stale, age_min, last_trade = _cash_is_stale(quote)
     basis = {"method": "live_cash", "ndx_reference": round(S_ndx, 1),
              "cash_last_trade": last_trade, "cash_age_min": age_min}
+
+    # A fresh timestamp does not make the PRICE fresh. Cross-check the value
+    # against an independent live print; when they disagree by more than feed
+    # jitter, CBOE's number is wrong however recent it claims to be.
+    ref = _ndx_live_yahoo()
+    if ref:
+        div = round(S_ndx - ref, 1)
+        basis["cash_divergence_vs_yahoo"] = div
+        if abs(div) > CASH_DIVERGENCE_TOL:
+            basis = {"method": "live_cash_divergence_corrected",
+                     "cbo_cash": round(S_ndx, 1),
+                     "ndx_reference": round(ref, 1),
+                     "cash_last_trade": last_trade, "cash_age_min": age_min,
+                     "cash_divergence_vs_yahoo": div,
+                     "note": (f"CBOE _NDX quoted {S_ndx:.1f} with a "
+                              f"{age_min:.0f} min old timestamp, but an "
+                              f"independent live print reads {ref:.1f} "
+                              f"({div:+.1f}). Anchored to the independent "
+                              f"print — a timestamp check cannot see a stale "
+                              f"VALUE, and the gap shifts every level below.")}
+            S_ndx = ref
+            stale = False
+
     if stale:
         implied, fut_move = _nq_implied_cash(S_ndx)
         if implied:
