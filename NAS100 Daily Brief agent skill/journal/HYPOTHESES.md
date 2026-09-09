@@ -1335,3 +1335,120 @@ session low (29,394.8) landed **7.4pts below the put wall and 10.5 below the
 flip**, which is where the 177pt bounce began. **This is a second instance of
 D7's open question, observed the day before D7 was found.** Two instances, not
 three. Still observing.
+
+---
+
+# Retrospective 2026-09-09: the gamma engine against 12 days of price
+
+Ran on request. Method: `fetch_ohlcv_paged` 16 days of M5 (3,263 bars, 08-25 to
+09-09), every post-fix ladder graded against the next trading day, and each
+published flip/strategy cross-tabbed against what the day actually did.
+
+**Ladders EXCLUDED as invalid, per H11's withdrawal:** `2026-08-26-2212` and
+`2026-08-27-1323`, both `pre_fix: True` (45-day book, before the book-mismatch
+and wall-dominance fixes). The first draft of this retrospective used both and
+had to be thrown away — the same error H11 already records. Valid pairs:
+`08-27-1358 -> 08-27` (clipped to post-publication bars), `08-27-2233 -> 08-28`,
+`09-08-1539 -> 09-09`. 18 rungs.
+
+## H11 — the ranked walls WORK, and the grader was hiding it
+
+**9 of 18 rungs were touched. Of the 8 with a settled read, 7 HELD.**
+
+| rung | day | worst excursion | held for | re-tests | settled verdict |
+|---|---|---|---|---|---|
+| C3 29,602 | 09-09 | **+0.8** | 870 min | 2 | HELD as resistance |
+| C2 29,414 | 08-27 | +1.6 | 540 min | 1 | HELD as support |
+| C1 29,464 | 08-27 | **-4.7** | 430 min | 2 | HELD as support |
+| C3 29,514 | 08-27 | -11.2 | 240 min | 2 | HELD as support |
+| C1 29,495 | 08-28 | +12.6 | 280 min | 1 | HELD as resistance |
+| C3 29,645 | 08-28 | +14.9 | 315 min | 1 | HELD as resistance |
+| P1 29,352 | 09-09 | -18.2 | 325 min | 1 | HELD as support |
+| P2 29,402 | 09-09 | -30.4 | 260 min | 8 | **LOST** |
+
+**The same 8 rungs under the shipped first-touch grader: FOUR "chopped", TWO
+"broke DOWN", ONE "broke UP", ZERO recorded as holding.**
+
+**0 of 8 versus 7 of 8, on identical data.** This is no longer an argument about
+M4 — it is a measurement. Two cases carry it on their own:
+
+- **C3 29,602 on 09-09.** First touch at 02:40 says *"broke DOWN, 79pts"*. The
+  settled read: worst excursion **0.8 points**, held **870 minutes**, re-tested
+  twice and rejected both times. That is close to a perfect ceiling and the tool
+  called it broken.
+- **C1 29,464 on 08-27.** Worst excursion **-4.7pts** over 430 minutes. This is
+  the level the trader described as *"swept through and reversed back above it
+  soon after and never broke through again and worked as support"* — his reading
+  reproduced to the point. The tool said CHOP.
+
+**H6's headline finding ("chop is dominant") is an artefact of its instrument.**
+Under the settled read, chop is not dominant; holding is, 7 to 1.
+
+### The put ladder is the half that does not work
+
+Split by side, the picture is completely different:
+
+| | rungs | touched | held |
+|---|---|---|---|
+| Calls (C1-C3) | 9 | 6 | **6 of 6** |
+| Puts (P1-P3) | 9 | **2** | 1 of 2 |
+
+Six of nine put rungs were **never reached** — 08-27's P1 sat 331pts below spot
+and P2 631pts below; 08-28's P1 was 479pts below. **The put side is ranked by
+gamma force with no proximity filter and lands outside any tradeable distance.**
+That is precisely H11's original claim, now with valid evidence behind it, and it
+is a *side-specific* failure rather than the whole-ladder failure the withdrawn
+observation asserted.
+
+The one put failure is also the one rung with **8 re-tests** — repeated tapping
+looks like distribution rather than defence, and may be a usable tell. One
+instance; noted, not proposed.
+
+**Count: 3 valid ladder-days.** The 5-day threshold is not met. Nothing changes.
+
+## H7 — the overnight flip is worse than unreliable; it inverts the strategy
+
+Strategy recommendation against what each day actually paid (day shape = where
+price closed in its range; >=75% or <=25% means the move RAN and Strategy 2 was
+right; 35-65% means it FAILED BACK and Strategy 1 was right):
+
+| day | shape | close@ | scans -> strategy |
+|---|---|---|---|
+| 08-25 | FAILED BACK (S1) | 50% | 13:04 **S1 ✓** · 21:56 S2 ✗ |
+| 08-26 | RAN (S2) | 99% | 13:12 **S2 ✓** · 13:14 **S2 ✓** · 21:43 S1 ✗ · 22:11 S1 ✗ |
+| 08-27 | mixed | 65% | 13:23 S1 ~ |
+| 09-08 | RAN (S2) | 23% | 15:39 S1 ✗ |
+| 09-09 | FAILED BACK (S1) | 40% | 15:20 **S1 ✓** |
+
+**Overall 4 right / 4 wrong — the same coin flip as the direction call. But it
+separates cleanly by session:**
+
+- **In-session scans (PRE_NY, NY_MIDDAY): 4 right, 1 wrong, 1 mixed.**
+- **OVERNIGHT scans: 0 right, 3 wrong.**
+
+Every overnight scan called the wrong strategy, and did so by naming the wrong
+regime. The mechanism is measurable in the published numbers:
+
+| day | flip range across the day's scans | price moved | regime label |
+|---|---|---|---|
+| 08-24 | **389.1pts** over 8 scans | 258.7 | ABOVE *and* BELOW — **contradicted itself** |
+| 08-25 | 294.7pts over 2 scans | 201.6 | ABOVE *and* BELOW — **contradicted itself** |
+| 08-26 | 299.6pts over 4 scans | 153.2 | ABOVE *and* BELOW — **contradicted itself** |
+
+On 08-24 the flip moved **389 points while price moved 259** — the flip is more
+volatile than the thing it is measuring. Two scans **two minutes apart** (08:28
+and 08:30, price 9pts apart) published flips 192pts apart and *opposite* regime
+labels, which means opposite strategies.
+
+**This is 3 of 3 on the overnight sub-claim and 3 of 3 on self-contradiction —
+the threshold is met and the evidence points one way.** It is now the
+best-supported finding in this register. Reading it, not acting on it, per the
+rule: a proposal belongs in its own entry with a stated mechanism, and the
+obvious candidate (suppress the regime label and the strategy recommendation on
+OVERNIGHT scans, keep the levels) needs writing up as one rather than being
+slipped in through a retrospective.
+
+**What this does NOT say.** The direction call from overnight scans was 2 right /
+1 wrong — it is specifically the *flip*, and therefore the strategy selection,
+that overnight gets wrong. Do not generalise it into "overnight scans are
+useless".
