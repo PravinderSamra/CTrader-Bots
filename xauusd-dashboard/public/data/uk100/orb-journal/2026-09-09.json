@@ -57,6 +57,63 @@
         "adrUsedPct": 89
       },
       "outcome": null
+    },
+    {
+      "at": "2026-09-09T12:21:06.278Z",
+      "londonTime": "13:21 BST",
+      "mode": "POST_ORB",
+      "price": 10681.85,
+      "stance": "FADE_FAVOURED",
+      "stanceLine": "Fade day — the ORB break was a trap — ORB broke UP but price has fully reclaimed the range (back below 10749.7) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "STRUCTURE",
+          "rule": "R1",
+          "text": "ORB broke UP but price has fully reclaimed the range (back below 10749.7) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "161% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.41%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -5,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10792.2,
+        "orbLow": 10749.7,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10810.8,
+        "overnightLow": 10743,
+        "priorDayHigh": 10850.5,
+        "priorDayLow": 10761.1,
+        "gapPct": -0.74,
+        "adr14": 87.2,
+        "adrUsedPct": 161
+      },
+      "outcome": null
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-09T10:26:10.701Z",
+  "generatedAt": "2026-09-09T12:20:59.139Z",
   "yields": {
     "US10Y": 4.78,
     "US2Y": 4.37,
@@ -34,26 +34,26 @@
     "openInterestChange": -66065
   },
   "etfFlows": {
-    "gldTonnes": 1082.1,
-    "gldWoWChange": -9.8,
+    "gldTonnes": 1080.8,
+    "gldWoWChange": -1.3,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4395,
-    "XAGUSD": 66.2715,
-    "EURUSD": 1.16259,
-    "USDJPY": 153.5855,
-    "USDCHF": 0.8101,
-    "USDCNH": 6.70601,
-    "GBPUSD": 1.35353,
-    "USDCAD": 1.37839,
-    "USDSEK": 9.59935,
-    "US500": 7656.9,
-    "GER40": 25654.35,
-    "UK100": 10737.15,
+    "XAUUSD": 4400.36,
+    "XAGUSD": 66.1265,
+    "EURUSD": 1.16515,
+    "USDJPY": 153.3095,
+    "USDCHF": 0.80681,
+    "USDCNH": 6.70415,
+    "GBPUSD": 1.35594,
+    "USDCAD": 1.37691,
+    "USDSEK": 9.56901,
+    "US500": 7644.9,
+    "GER40": 25585.05,
+    "UK100": 10680.85,
     "ADR_14day": 105.6,
-    "ADR_usedToday": 71.6,
-    "goldSilverRatio": 66.3
+    "ADR_usedToday": 74.6,
+    "goldSilverRatio": 66.5
   },
   "dollarLiquidity": {
     "stlfsi": -0.8526,
@@ -66,40 +66,46 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "U.K. defends sanctions on Israeli settlements after 30-day consulate closure order",
+      "source": "CNBC",
+      "publishedAt": "2026-09-09T12:10:31.000Z",
+      "hoursAgo": 0.2
+    },
+    {
       "headline": "Yen stands tall as dollar wobbles, oil's run towards $100 chills sentiment - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-09T01:59:00.000Z",
-      "hoursAgo": 8.5
+      "hoursAgo": 10.4
     },
     {
       "headline": "UK publishes legislation for tougher sanctions on Iran over nuclear programme - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-08T16:24:47.000Z",
-      "hoursAgo": 18
+      "hoursAgo": 19.9
     },
     {
       "headline": "UK borrows at highest interest rate since 1998, showing pressure on public finances - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-08T15:39:35.000Z",
-      "hoursAgo": 18.8
+      "hoursAgo": 20.7
     },
     {
       "headline": "US Treasury ratchets up pressure on Iran with sweeping new aviation sanctions - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-08T14:53:00.000Z",
-      "hoursAgo": 19.6
+      "hoursAgo": 21.5
     },
     {
       "headline": "UK announces new Israel sanctions, despite U.S. warning of economic consequences",
       "source": "CNBC",
       "publishedAt": "2026-09-08T14:12:12.000Z",
-      "hoursAgo": 20.2
+      "hoursAgo": 22.1
     },
     {
       "headline": "Bank of England to hold rates, show patience with war-driven inflation: Reuters poll - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-08T12:41:10.000Z",
-      "hoursAgo": 21.7
+      "hoursAgo": 23.7
     }
   ],
   "briefing": null
