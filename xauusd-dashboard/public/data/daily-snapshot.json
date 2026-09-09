@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-09T14:55:37.916Z",
+  "generatedAt": "2026-09-09T18:11:38.421Z",
   "yields": {
     "US10Y": 4.78,
     "US2Y": 4.37,
@@ -34,29 +34,29 @@
     "openInterestChange": -66065
   },
   "etfFlows": {
-    "gldTonnes": 1076.7,
-    "gldWoWChange": -4.1,
+    "gldTonnes": 1076.1,
+    "gldWoWChange": -0.6,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4417.015,
-    "XAGUSD": 67.9515,
-    "EURUSD": 1.16474,
-    "USDJPY": 153.2695,
-    "USDCHF": 0.80797,
-    "USDCNH": 6.70466,
-    "GBPUSD": 1.35612,
-    "USDCAD": 1.37935,
-    "USDSEK": 9.57837,
-    "US500": 7651.8,
-    "GER40": 25557.25,
-    "UK100": 10653.55,
+    "XAUUSD": 4419.47,
+    "XAGUSD": 67.887,
+    "EURUSD": 1.16384,
+    "USDJPY": 153.48,
+    "USDCHF": 0.80956,
+    "USDCNH": 6.70651,
+    "GBPUSD": 1.35584,
+    "USDCAD": 1.38027,
+    "USDSEK": 9.58982,
+    "US500": 7642.8,
+    "GER40": 25554.15,
+    "UK100": 10644.25,
     "ADR_14day": 105.6,
     "ADR_usedToday": 93.2,
-    "goldSilverRatio": 65
+    "goldSilverRatio": 65.1
   },
   "dollarLiquidity": {
-    "stlfsi": -0.8526,
+    "stlfsi": -0.7884,
     "nfci": -0.558
   },
   "geopoliticalRisk": {
@@ -66,40 +66,34 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Why Cramer still recommends being 'a little more reserved' about data center stocks",
+      "source": "CNBC",
+      "publishedAt": "2026-09-09T16:11:20.000Z",
+      "hoursAgo": 2
+    },
+    {
       "headline": "Bessent bond plan details to be revealed as Treasury secretary warns FX traders he's 'the house now'",
       "source": "CNBC",
       "publishedAt": "2026-09-09T12:25:50.000Z",
-      "hoursAgo": 2.5
+      "hoursAgo": 5.8
     },
     {
       "headline": "U.K. defends sanctions on Israeli settlements after 30-day consulate closure order",
       "source": "CNBC",
       "publishedAt": "2026-09-09T12:10:31.000Z",
-      "hoursAgo": 2.8
+      "hoursAgo": 6
+    },
+    {
+      "headline": "UK food price inflation to rise above 6% next year, industry says - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-09T08:25:36.000Z",
+      "hoursAgo": 9.8
     },
     {
       "headline": "Yen stands tall as dollar wobbles, oil's run towards $100 chills sentiment - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-09T01:59:00.000Z",
-      "hoursAgo": 12.9
-    },
-    {
-      "headline": "UK publishes legislation for tougher sanctions on Iran over nuclear programme - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-08T16:24:47.000Z",
-      "hoursAgo": 22.5
-    },
-    {
-      "headline": "UK borrows at highest interest rate since 1998, showing pressure on public finances - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-08T15:39:35.000Z",
-      "hoursAgo": 23.3
-    },
-    {
-      "headline": "US Treasury ratchets up pressure on Iran with sweeping new aviation sanctions - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-08T14:53:00.000Z",
-      "hoursAgo": 24
+      "hoursAgo": 16.2
     }
   ],
   "briefing": null
