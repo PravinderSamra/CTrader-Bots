@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-08T21:31:18.296Z",
+  "generatedAt": "2026-09-09T10:26:10.701Z",
   "yields": {
     "US10Y": 4.78,
     "US2Y": 4.37,
@@ -34,26 +34,26 @@
     "openInterestChange": -66065
   },
   "etfFlows": {
-    "gldTonnes": 1091.9,
-    "gldWoWChange": 7.7,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1082.1,
+    "gldWoWChange": -9.8,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4355.605,
-    "XAGUSD": 65.7535,
-    "EURUSD": 1.16249,
-    "USDJPY": 153.941,
-    "USDCHF": 0.80932,
-    "USDCNH": 6.70664,
-    "GBPUSD": 1.3536,
-    "USDCAD": 1.37885,
-    "USDSEK": 9.5823,
-    "US500": 7674.3,
-    "GER40": 25884.15,
-    "UK100": 10762.05,
-    "ADR_14day": 106.3,
-    "ADR_usedToday": 97.5,
-    "goldSilverRatio": 66.2
+    "XAUUSD": 4395,
+    "XAGUSD": 66.2715,
+    "EURUSD": 1.16259,
+    "USDJPY": 153.5855,
+    "USDCHF": 0.8101,
+    "USDCNH": 6.70601,
+    "GBPUSD": 1.35353,
+    "USDCAD": 1.37839,
+    "USDSEK": 9.59935,
+    "US500": 7656.9,
+    "GER40": 25654.35,
+    "UK100": 10737.15,
+    "ADR_14day": 105.6,
+    "ADR_usedToday": 71.6,
+    "goldSilverRatio": 66.3
   },
   "dollarLiquidity": {
     "stlfsi": -0.8526,
@@ -66,46 +66,40 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Wall Street slides, oil surges amid worries over inflation, Middle East - Reuters",
+      "headline": "Yen stands tall as dollar wobbles, oil's run towards $100 chills sentiment - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-08T20:17:40.000Z",
-      "hoursAgo": 1.2
-    },
-    {
-      "headline": "US Treasury ratchets up pressure on Iran with sweeping new aviation sanctions - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-08T19:07:09.000Z",
-      "hoursAgo": 2.4
+      "publishedAt": "2026-09-09T01:59:00.000Z",
+      "hoursAgo": 8.5
     },
     {
       "headline": "UK publishes legislation for tougher sanctions on Iran over nuclear programme - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-08T16:24:47.000Z",
-      "hoursAgo": 5.1
+      "hoursAgo": 18
+    },
+    {
+      "headline": "UK borrows at highest interest rate since 1998, showing pressure on public finances - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-08T15:39:35.000Z",
+      "hoursAgo": 18.8
+    },
+    {
+      "headline": "US Treasury ratchets up pressure on Iran with sweeping new aviation sanctions - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-08T14:53:00.000Z",
+      "hoursAgo": 19.6
     },
     {
       "headline": "UK announces new Israel sanctions, despite U.S. warning of economic consequences",
       "source": "CNBC",
       "publishedAt": "2026-09-08T14:12:12.000Z",
-      "hoursAgo": 7.3
+      "hoursAgo": 20.2
     },
     {
-      "headline": "Indian central bank extends intervention streak to support rupee, traders say - Reuters",
+      "headline": "Bank of England to hold rates, show patience with war-driven inflation: Reuters poll - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-08T04:41:00.000Z",
-      "hoursAgo": 16.8
-    },
-    {
-      "headline": "Gold ticks up with US inflation data on radar - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-08T02:28:00.000Z",
-      "hoursAgo": 19.1
-    },
-    {
-      "headline": "Yen hovers near seven-month high, dollar steadies - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-08T00:56:00.000Z",
-      "hoursAgo": 20.6
+      "publishedAt": "2026-09-08T12:41:10.000Z",
+      "hoursAgo": 21.7
     }
   ],
   "briefing": null
