@@ -1,6 +1,6 @@
 {
-  "updated": "2026-09-10T08:12:09+00:00",
-  "count": 36,
+  "updated": "2026-09-10T15:07:11+00:00",
+  "count": 37,
   "scans": [
     "2026-08-23/1403-closed.json",
     "2026-08-23/1424-closed.json",
@@ -37,7 +37,8 @@
     "2026-09-09/1513-nymidday.json",
     "2026-09-09/1517-nymidday.json",
     "2026-09-09/1520-nymidday.json",
-    "2026-09-10/0812-london.json"
+    "2026-09-10/0812-london.json",
+    "2026-09-10/1507-nymidday.json"
   ],
-  "latest": "2026-09-10/0812-london.json"
+  "latest": "2026-09-10/1507-nymidday.json"
 }
