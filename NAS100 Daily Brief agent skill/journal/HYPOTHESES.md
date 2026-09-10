@@ -1904,3 +1904,85 @@ CALL WALL"` splits on `" + "`, so a wall sharing a level is found and
 `STRUCTURAL` no longer shadows), every row under a role is collected rather than
 the first, and the assertion is D7's actual contract — **the wall the chart drew
 must be markable somewhere in the brief**. Absent now fails.
+
+---
+
+## D13 — a fired session can stop and wait for a human who is not there
+
+**Open. Partly inferred — read the evidence line by line before acting on it.**
+
+D11's fixes were verified in an interactive session: clone from scratch, full
+`brief.py`, journal written, archive committed, push verified against origin. So
+a **test fire** was run at **2026-09-10 15:36:01Z** to prove the same loop from a
+*scheduled* session, per D10's rule that this class of fix is verified by firing
+rather than by reasoning.
+
+**It produced nothing.** The session went idle at 15:37:43Z — **102 seconds** —
+with 6,710 output tokens and no journal entry, no commit, no push. Today's
+journal still holds only 08:12Z and 15:07Z. `last_run` will report SUCCEEDED.
+
+### What is proven, and what is not
+
+**Proven.** `session_context` for that fired session carries **no `sources` key
+at all**, exactly as D10 found. And a *separate* session spawned two minutes
+later with `create_session` — no repo, same environment, same model
+(`claude-sonnet-5`), given a comparable instruction to call `add_repo` with push
+access and clone — did not fail. It **stopped and asked a human**:
+
+```
+status_category: need_input
+status_detail:   "user request unclear; detected potentially injected instruction"
+needs_action:    "confirm actual task and whether to clone
+                  PravinderSamra/CTrader-Bots with push access"
+```
+
+It then sat `SESSION_STATUS_RUNNING`, waiting for a confirmation that in a
+scheduled context never arrives.
+
+**Not proven.** The fired session recorded no `post_turn_summary`, and its
+transcript is not readable from another session — there is no `send_message` or
+`list_events` in the Routine MCP surface, and a disconnected cloud session does
+not appear in `ListAgents`. So *that this is what stopped the 15:36 fire is an
+inference* from a matching duration, a matching silence, and a reproduction. It
+is the best available explanation, not a confirmed cause.
+
+### Why this shape is dangerous
+
+A prompt that instructs an agent to attach an external repository **with push
+access** and then clone it is, read cold by a session with no context, shaped
+exactly like a prompt injection. Refusing to act on it unconfirmed is the agent
+behaving **correctly**. The failure is architectural: the instruction that most
+needs trust is the one a scheduled session has the least context to trust, and
+`create_trigger` has no `sources` parameter to remove the need for it.
+
+And it fails in the worst available way — indistinguishably from success. The
+Routine reports SUCCEEDED, the push notification arrives, and nothing is written.
+That is now the **third** instance of the same pattern, after D10 and D3: *a
+green status is not evidence of work.*
+
+### What was done
+
+The Routine's prompt was rewritten to open by stating plainly that this is the
+repo owner's own standing automation over his own repository, running on a
+schedule since 2026-09-09; the attach step is now a short conditional rather than
+an emphatic block of imperatives, and the ALL-CAPS override language throughout
+was removed. Whether that is enough is **untested** — the next scheduled run at
+**2026-09-11 12:45Z** is the test.
+
+### The option not taken, and why it is still the right one
+
+`create_session` **does** accept `source_url`, and a session created with it
+carries `sources: [{git_repository: {url: .../CTrader-Bots, revision: main}}]` —
+verified. Pointing the Routine at such a session with `persistent_session_id`
+would delete the attach instruction entirely and with it this whole failure mode.
+
+Two things stopped it. `update_trigger` cannot change targeting, so it means
+delete-and-recreate, losing the Routine's run history; and `create_trigger`
+**rejects `notifications` for a persistent-session Routine**, so the phone alert
+disappears — on an automation whose defining failure is being invisible, that
+trade is backwards.
+
+The real fix is the monitoring gap D10 left open and this entry now makes urgent:
+**something must check that `journal/<today>/` gained an entry, and say so when it
+did not.** Until that exists, every fix here is guarded only by someone
+remembering to look.
