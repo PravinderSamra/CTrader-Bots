@@ -1729,3 +1729,46 @@ honest check is not the trigger's status but the artefact: **does
 a "scheduled run missing" line, so a silent no-op announces itself. Not built
 today — one instance, and the fix above may make it moot. Recorded so it is not
 rediscovered.
+
+## D7 instance 3 — the level board emptied itself on the day it mattered most
+
+**2026-09-10 15:06Z.** Range 463.9 = **132.8% of ADR**, `EXHAUSTED`, remaining
+budget **0.0**. `keep()` sizes the board by `budget * 1.75`, so the cap was
+**zero** and every non-structural level was pushed to the footnote. The board
+shipped **two rows**, both 45-day structural walls (+78 and -472).
+
+Sent to the footnote and labelled *"context only, don't mark"*:
+
+- **PUT WALL ●●●●● 0.69bn at 29,194 — 22 points below spot.**
+- GAMMA FLIP 29,339 (+122), the level deciding the strategy the brief recommends.
+- MAX PAIN 29,444, CALL WALL 29,494, PDH, PWH.
+
+The strongest put wall on the week's chain, 22pts from price, on a day the brief
+calls STRONGLY BEARISH in short gamma — filtered off the board as unreachable,
+because a range-budget rule was applied to a dealer-hedging boundary.
+
+**D7's fix is why they were visible at all.** Before it they would have vanished
+from board and footnote together. The fix works; the underlying rule is still
+wrong.
+
+**Third instance, so the 3-day threshold is MET:**
+
+| date | dropped | consequence |
+|---|---|---|
+| 09-08 | put wall, max pain, flip | session low landed **7.4pts below the put wall**, where the 177pt bounce began |
+| 09-09 | call wall (+140 vs a 112 cap) | put wall survived by **2pts**; the asymmetry tracked where price sat, nothing about the walls |
+| 09-10 | **everything except two structural walls** | budget 0 -> cap 0 |
+
+**The mechanism, stated plainly:** the range budget forecasts how far the day's
+RANGE can still grow. A wall is a price at which dealers must hedge. These are
+unrelated quantities. An exhausted budget says nothing about whether price will
+*reach* a level — H1 shows the budget over-forecasts extension on 6 of 7 days,
+and today price travelled 463.9pts on a day that opened with 206pts of budget.
+Filtering walls by it is a category error, and it fails hardest exactly when the
+day is most volatile, because that is when the budget is most exhausted.
+
+**Proposal (threshold met, NOT yet applied):** exempt `CALL WALL`, `PUT WALL`,
+`GAMMA FLIP` and `MAX PAIN` from the budget filter the way `structural` already
+is, and keep the `_(stretch)_` tag to mark distance. Session extremes and PD/PW
+levels keep the budget rule — those ARE reachability claims, so the rule fits
+them. This changes what gets marked, so it is the trader's call.
