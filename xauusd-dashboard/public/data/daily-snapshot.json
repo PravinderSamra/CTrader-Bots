@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-10T14:42:32.789Z",
+  "generatedAt": "2026-09-10T17:58:09.219Z",
   "yields": {
     "US10Y": 4.8,
     "US2Y": 4.39,
@@ -22,8 +22,8 @@
     "probHike": 24
   },
   "marketVolatility": {
-    "GVZ": 27.26,
-    "VIX": 15.72
+    "GVZ": 27.79,
+    "VIX": 16.46
   },
   "positioning": {
     "cotNetLong": 222188,
@@ -34,30 +34,30 @@
     "openInterestChange": -66065
   },
   "etfFlows": {
-    "gldTonnes": 1089.3,
-    "gldWoWChange": 2.2,
+    "gldTonnes": 1092.9,
+    "gldWoWChange": 3.6,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4365.955,
-    "XAGUSD": 64.5355,
-    "EURUSD": 1.16262,
-    "USDJPY": 153.9975,
-    "USDCHF": 0.81161,
-    "USDCNH": 6.71092,
-    "GBPUSD": 1.35234,
-    "USDCAD": 1.3818,
-    "USDSEK": 9.65363,
-    "US500": 7608.3,
-    "GER40": 25423.75,
-    "UK100": 10607.65,
+    "XAUUSD": 4351.42,
+    "XAGUSD": 64.1675,
+    "EURUSD": 1.16193,
+    "USDJPY": 154.284,
+    "USDCHF": 0.81258,
+    "USDCNH": 6.71396,
+    "GBPUSD": 1.35207,
+    "USDCAD": 1.38238,
+    "USDSEK": 9.67502,
+    "US500": 7597.8,
+    "GER40": 25337.75,
+    "UK100": 10590.65,
     "ADR_14day": 106.2,
     "ADR_usedToday": 110.7,
-    "goldSilverRatio": 67.7
+    "goldSilverRatio": 67.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.7884,
-    "nfci": -0.558
+    "nfci": -0.564
   },
   "geopoliticalRisk": {
     "gpr": 117.9,
@@ -66,52 +66,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "VIEW ECB hikes rates as Iran war adds to inflation angst - Reuters",
+      "headline": "ECB hikes rates as Iran war adds to inflation angst - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-10T12:53:54.000Z",
-      "hoursAgo": 1.8
+      "publishedAt": "2026-09-10T15:18:26.000Z",
+      "hoursAgo": 2.7
     },
     {
       "headline": "Treasury yields move higher as investors await key wholesale inflation data",
       "source": "CNBC",
       "publishedAt": "2026-09-10T10:44:07.000Z",
-      "hoursAgo": 4
+      "hoursAgo": 7.2
+    },
+    {
+      "headline": "EXCLUSIVE: How a billion-dollar sanctions dodge kept Chinese goods flowing to Iran - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-10T06:37:27.000Z",
+      "hoursAgo": 11.3
     },
     {
       "headline": "South African rand slips as dollar, oil outweigh mixed economic data - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-10T06:07:00.000Z",
-      "hoursAgo": 8.6
-    },
-    {
-      "headline": "EXCLUSIVE: How a billion-dollar sanctions dodge kept Chinese goods flowing to Iran - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-10T06:05:00.000Z",
-      "hoursAgo": 8.6
+      "hoursAgo": 11.9
     },
     {
       "headline": "Gold edges higher on weaker dollar, US inflation data in focus - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-10T02:56:00.000Z",
-      "hoursAgo": 11.8
+      "hoursAgo": 15
     },
     {
-      "headline": "ECB to hike rates as Iran war fuels fresh inflation fears - Reuters",
+      "headline": "ECB raises interest rates, bolstering bets for further moves - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-09T22:02:00.000Z",
-      "hoursAgo": 16.7
+      "hoursAgo": 19.9
     },
     {
       "headline": "US Treasury to buy up to $6 billion in Sept 10 buyback operation - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-09T21:04:41.000Z",
-      "hoursAgo": 17.6
+      "hoursAgo": 20.9
     },
     {
       "headline": "Turkey takes note of US/Iran-related sanctions announcement, finance minister says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-09T18:32:32.000Z",
-      "hoursAgo": 20.2
+      "hoursAgo": 23.4
     }
   ],
   "briefing": null
