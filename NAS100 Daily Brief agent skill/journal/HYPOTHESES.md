@@ -2207,3 +2207,41 @@ forecasts how much further the RANGE can grow; these are levels price can still
 REACH inside the range, which is a different question and the one that matters
 when fuel is exhausted but price is still travelling 250pts."* The board never
 got it. Three instances to notice that the reasoning existed one function away.
+
+## D13 resolved — the Routine fires into a bound runner that already has the repo
+
+The clone instruction was the problem, so it was removed rather than reworded.
+
+`session_01M7sro1DKMp5T7EBDusm6pM` was created with `source_url` set, so its
+`sources` attach permanently. Trigger `trig_01ANoKamVDbvjvzpb1S5Dgza` fires into
+it weekdays at 12:45Z; `trig_01SYwS3WnQJfHbSzVHWSFiuP` (fresh-session-per-fire)
+is deleted.
+
+**Readiness verified before rebinding**, per D10's rule that this class of fix is
+proven by running it and not by reasoning: repo present, pull works, 29 checks
+pass — **48 seconds, no clone, no injection refusal.**
+
+**Why rewording was rejected.** D13's refusal was not a wording accident: an
+instruction to call `add_repo` and clone a repository with push access is
+injection-shaped, and no phrasing makes it less so. Removing the need for it is
+the only fix that does not depend on a model's judgement call going the right way
+every weekday.
+
+**The cost, stated plainly.** The runner resumes one conversation daily, so its
+context grows — which cuts against the trader's stated preference for fresh
+sessions. Accepted deliberately in exchange for a scan that runs. Mitigation:
+recreate the runner about monthly (new session with `source_url`, then delete and
+recreate the trigger — `update_trigger` cannot repoint a bound trigger and cannot
+edit its prompt from another session at all, which is itself worth knowing before
+relying on being able to tune it later).
+
+**Three ways this failed in one day, all reporting SUCCEEDED:** no repo (D10),
+the archive not carrying every path it wrote so the observation died with the
+container (D11), and the session stalling on an injection-shaped instruction
+(D13). The common thread is the one already recorded against D10 — **a green
+status is not evidence of work**, and the artefact on origin is the only check
+that means anything.
+
+**Not yet proven.** No scheduled run has produced an observation. 2026-09-11
+12:45Z is the first test of the bound runner, and until one lands this is a fix
+that has passed its readiness check and nothing more.

@@ -338,16 +338,40 @@ observation count rather than on analysis.
   data through `ctrader_http.py` rather than the `mcp__ctrader__*` tools. That
   design decision is what makes the unattended run possible at all.
 
-**The scheduled session starts with NO repository** (`sources: []`), unlike an
-interactive one. Its prompt carries a Step 0 that calls `add_repo` with **push**
-access, clones, and calls `register_repo_root` before anything else. Do not
-remove it, and do not assume a checkout exists in any scheduled context. The
-first run (2026-09-10 12:45Z) died on its first command for exactly this reason
-and the Routine still reported SUCCEEDED — see D10.
+**The Routine now fires into a BOUND RUNNER SESSION that already has the repo**
+(`session_01M7sro1DKMp5T7EBDusm6pM`, trigger `trig_01ANoKamVDbvjvzpb1S5Dgza`).
+It was created with `source_url` set, so its `sources` are attached permanently
+and **no clone is ever needed**.
+
+This replaced fresh-session-per-fire on 2026-09-10 after three failures in one
+day. `create_trigger` has no `sources` parameter, so a fresh fired session starts
+with `sources: []` (D10) — and telling it to clone does not work either, because
+an instruction to call `add_repo` and clone a repo with push access **reads as
+prompt injection**: a session given exactly that stopped with *"user request
+unclear; detected potentially injected instruction"* and waited for a human who,
+on a schedule, never arrives (D13).
+
+Consequences:
+
+- **The runner resumes one conversation daily, so its context grows.** Recreate
+  it roughly monthly: new session with `source_url`, then delete and recreate the
+  trigger against it (`update_trigger` cannot repoint a bound trigger, and cannot
+  even edit its prompt from another session).
+- **Never add a clone step to its prompt.** It does not need one, and the
+  instruction is what breaks it.
+- A brief.py failure in that session is a *code* problem, not a setup problem.
 
 **A Routine's `last_run.status` is not evidence the scan ran.** It reports
-success when the session fires and exits. The artefact is the check: an entry in
-`journal/<today>/` timed near the fire.
+success when the session fires and exits — all three of 2026-09-10's failures
+reported SUCCEEDED. The artefact is the check: an entry in `journal/<today>/`
+timed near the fire, **and on origin**. A push exiting 0 is a different claim
+from origin holding the commit (D11).
+
+**Walls moved on 2026-09-10 and it was a fix, not a fault.** D12 made the board
+reprice its greeks at current spot, so the brief and the chart now agree and the
+basis reads `repriced_bs_at_current_spot`. Put walls sit roughly 100–200pts lower
+than in journal entries dated before that. Do not "correct" it, and do not
+compare a post-fix wall against a pre-fix one without saying which is which.
 
 The schedule is fixed **UTC**, so it drifts against the NY session at the DST
 changeover: 12:45 UTC is 08:45 ET in summer but 07:45 ET in winter. Move it to
