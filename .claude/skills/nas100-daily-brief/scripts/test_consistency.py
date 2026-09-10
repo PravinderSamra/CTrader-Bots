@@ -9,6 +9,12 @@ ever come back, because every one of them was silent.
     python3 test_consistency.py            # live data, ~2 min
     python3 test_consistency.py --offline  # structural checks only, no network
 """
+import os as _os
+# The LIVE half calls gather(), which persists GEXBot ladders. Those are
+# archive artefacts now (D11 put the directory in sync_archive PATHS), so a
+# test run must not manufacture them. Set before brief is imported.
+_os.environ["NAS100_NO_PERSIST"] = "1"
+
 import glob, json, os, subprocess, sys
 from datetime import datetime, timezone
 
@@ -169,19 +175,62 @@ def live_checks():
           f"brief {bf} vs chart {c['flip']}")
 
     # walls must agree to bin rounding
-    board, _far = B.level_board(d)
-    def find(tag):
-        for r in board:
-            if tag in r["name"]:
-                return r["level"]
-        return None
+    board, far = B.level_board(d)
+
+    def levels_for(tag):
+        """EVERY level the brief prints under this wall role, board + footnote.
+
+        Three bugs lived in the single-row version of this lookup.
+
+        It searched only `board`. D7's fix deliberately moved un-truncatable
+        walls into the `far` footnote so a wall pushed off the board still
+        appears somewhere — so the wall the chart drew read as "missing"
+        whenever that fix did its job.
+
+        It substring-matched `tag in name`, so "STRUCTURAL CALL WALL" shadowed
+        "CALL WALL" and the check compared two different levels: on 2026-09-10
+        that printed as brief 29308.4 vs chart 29508.0 and failed a build whose
+        walls agreed to 0.1pt.
+
+        And it took the FIRST match, but the brief ranks secondary walls and
+        prints several rows under one role — so the nearest weak wall was
+        compared against the chart's strongest one, ~200pts away.
+
+        The contract is not "the first row matches". It is D7's contract: the
+        wall the chart drew must be markable from the brief. So collect them
+        all and let the caller ask whether any of them is the chart's.
+
+        Names are matched per confluence segment. A row that carries several
+        roles prints them joined — "PDL + London Low (prev-day) + STRUCTURAL
+        CALL WALL" — so a plain `startswith` on the whole name misses a wall
+        sharing a level with anything else, and reports a false D7. Splitting on
+        " + " first keeps the exact-role match that stops "STRUCTURAL CALL WALL"
+        shadowing "CALL WALL", while still finding a wall inside a confluence.
+        """
+        out = []
+        for r in list(board) + list(far):
+            if r.get("level") is None:
+                continue
+            parts = str(r.get("name", "")).split(" + ")
+            if any(seg.strip().startswith(tag) for seg in parts):
+                out.append(r["level"])
+        return out
+
     for tag, key in (("CALL WALL", "call_res"), ("PUT WALL", "put_sup")):
-        bl, cl = find(tag), (c.get(key) or {}).get("price")
-        if bl is None or cl is None:
-            check(f"{tag} present in both", True, "absent from one — not comparable")
+        levels, cl = levels_for(tag), (c.get(key) or {}).get("price")
+        if cl is None:
+            # The chart drew no such wall — nothing to compare against.
+            check(f"{tag} present in the chart build", True,
+                  "chart has no such wall — not comparable")
             continue
-        check(f"{tag} agrees within bin rounding", abs(bl - cl) <= 26,
-              f"brief {bl} vs chart {cl}")
+        # A wall the chart drew but the brief prints NOWHERE is defect D7, the
+        # exact failure this check exists to catch. The old code asserted True
+        # in this branch and passed, so the guard was blind to the one thing it
+        # guarded.
+        check(f"{tag} the chart drew is markable from the brief",
+              any(abs(b - cl) <= 26 for b in levels),
+              f"chart drew {cl}; brief prints {levels or 'no such row'} — D7"
+              if not any(abs(b - cl) <= 26 for b in levels) else "")
 
     # D4 — no strike may carry contradictory labels
     problems = GC.consistency_check(c)

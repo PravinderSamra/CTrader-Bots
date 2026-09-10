@@ -15,9 +15,12 @@ import json, os, sys
 from datetime import datetime, timezone, timedelta
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
+# Sibling skill relative to this file; see levels_fuel.py for why the
+# hardcoded ~/CTrader-Bots path could not be relied on.
 for _c in [_HERE,
-           os.path.expanduser("~/CTrader-Bots/.claude/skills/"
-                              "liquidity-inducement-phone/scripts")]:
+           os.path.abspath(os.path.join(_HERE, "..", "..",
+                                        "liquidity-inducement-phone",
+                                        "scripts"))]:
     if os.path.isfile(os.path.join(_c, "ctrader_http.py")):
         sys.path.insert(0, os.path.abspath(_c)); break
 

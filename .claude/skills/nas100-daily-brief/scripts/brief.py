@@ -10,7 +10,7 @@ numbers a script can compute exactly.
     python3 brief.py            # markdown brief
     python3 brief.py --json     # full structured payload
 """
-import json, sys
+import json, os, sys
 from datetime import datetime, timezone
 
 import macro_probe, levels_fuel, gex_levels, bias_engine, session_context, journal
@@ -125,11 +125,21 @@ def gexbot_block(gx, cfd_price):
         out["disagreement_floor"] = round(floor, 1)
     # Persist BOTH lenses each scan. This is the raw material for H12: the same
     # source, ranked two ways, graded by the same rule as our own ladder.
-    try:
-        out["saved"] = [gexbot.persist_ladder(offset=off, cfd_price=cfd_price,
-                                              weight=w) for w in ("vol", "oi")]
-    except Exception as e:
-        out["saved_error"] = f"{type(e).__name__}: {e}"
+    #
+    # NAS100_NO_PERSIST exists for test runs. test_consistency.py's LIVE half
+    # calls gather(), so every suite run used to drop two ladder files into
+    # research/gexbot/ladders — harmless while that directory was never staged,
+    # but D11 added it to sync_archive's PATHS, and from then on a test run
+    # followed by a real scan would have swept test artefacts into the evidence
+    # archive as though they were observations.
+    if os.environ.get("NAS100_NO_PERSIST"):
+        out["saved"] = None
+    else:
+        try:
+            out["saved"] = [gexbot.persist_ladder(offset=off, cfd_price=cfd_price,
+                                                  weight=w) for w in ("vol", "oi")]
+        except Exception as e:
+            out["saved_error"] = f"{type(e).__name__}: {e}"
     return out
 
 
@@ -1028,7 +1038,34 @@ def markdown(d):
     return "\n".join(o)
 
 
+USAGE = """brief.py — build the NAS100 daily brief.
+
+    python3 brief.py                        full brief to stdout, journalled
+    python3 brief.py --chart PATH.svg       also draw the gamma chart
+    python3 brief.py --no-journal           build but do not record an observation
+    python3 brief.py --levels               level board only
+    python3 brief.py --json                 raw scan dict
+
+Every run WITHOUT --no-journal writes a journal entry and pushes it. That is a
+real observation in the evidence register, so it is not a thing to do casually.
+"""
+
+_FLAGS = {"--chart", "--no-journal", "--levels", "--json"}
+
 if __name__ == "__main__":
+    # Unknown flags used to be ignored, which meant `brief.py --help` did not
+    # print help — it ran a full scan and committed a journal entry, and so did
+    # any typo of --no-journal. A flag the program does not understand must
+    # never fall through into recording an observation.
+    _bad = [a for a in sys.argv[1:]
+            if a.startswith("--") and a not in _FLAGS]
+    if "--help" in sys.argv or "-h" in sys.argv:
+        print(USAGE); sys.exit(0)
+    if _bad:
+        print(USAGE, file=sys.stderr)
+        print(f"unknown option(s): {' '.join(_bad)}", file=sys.stderr)
+        sys.exit(2)
+
     # Chain scans together: the previous scan's timestamp is what lets the
     # brief say "new trading day" vs "continuation".
     d = gather(last_scan_iso=journal.last_scan_utc())
@@ -1096,9 +1133,19 @@ if __name__ == "__main__":
                 if not r.get("ok"):
                     print(f"\n_[ARCHIVE NOT SAVED: {r.get('why')} — commit by "
                           f"hand or this scan is lost]_", file=sys.stderr)
+                elif r.get("committed") and not r.get("pushed"):
+                    # Committed locally but not on origin is the same outcome
+                    # as never running: the container is reclaimed and the
+                    # observation goes with it. This used to print as a quiet
+                    # `pushed=False` at the end of a successful-looking line,
+                    # which is exactly how it got missed.
+                    print(f"\n_[ARCHIVE NOT PUSHED: {r['committed']} file(s) "
+                          f"committed locally as {r.get('head')} but NOT on "
+                          f"origin — {r.get('why')}. This scan is lost unless "
+                          f"you push it by hand.]_", file=sys.stderr)
                 elif r.get("committed"):
                     print(f"\n_[archive: {r['committed']} file(s) committed, "
-                          f"pushed={r.get('pushed')}]_", file=sys.stderr)
+                          f"pushed=True ({r.get('head')})]_", file=sys.stderr)
             except Exception as e:
                 print(f"\n_[ARCHIVE SYNC ERROR: {type(e).__name__}: {e}]_",
                       file=sys.stderr)

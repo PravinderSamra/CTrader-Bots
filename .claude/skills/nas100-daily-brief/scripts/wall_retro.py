@@ -12,14 +12,29 @@ then respected.
 import json, sys, datetime as dt
 from pathlib import Path
 
-sys.path.insert(0, "/home/user/CTrader-Bots/.claude/skills/nas100-daily-brief/scripts")
+# These were absolute paths under /home/user/CTrader-Bots. A scheduled session
+# gets its checkout wherever add_repo puts it — which is lower-cased
+# /home/user/ctrader-bots — so anything pinned to the capitalised path is
+# broken everywhere except the machine it was written on. Derive from __file__.
+_HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(_HERE))
 import gex_retro as R
 
 BARS = [{"time": dt.datetime.fromisoformat(b["t"]), "open": b["o"],
          "high": b["h"], "low": b["l"], "close": b["c"]}
         for b in json.load(open("/tmp/nas100_m5.json"))]
 
-LAD = Path("/home/user/CTrader-Bots/NAS100 Daily Brief agent skill/research/chart-ladders")
+def _skill_research():
+    """Locate 'NAS100 Daily Brief agent skill/research' from this file's position."""
+    for base in _HERE.parents:
+        cand = base / "NAS100 Daily Brief agent skill" / "research"
+        if cand.is_dir():
+            return cand
+    raise SystemExit("could not locate 'NAS100 Daily Brief agent skill/research' "
+                     f"above {_HERE}")
+
+
+LAD = _skill_research() / "chart-ladders"
 
 
 def day_bars(day, after=None):
