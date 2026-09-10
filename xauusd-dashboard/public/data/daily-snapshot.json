@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-10T10:17:07.287Z",
+  "generatedAt": "2026-09-10T12:14:26.360Z",
   "yields": {
     "US10Y": 4.8,
     "US2Y": 4.39,
@@ -34,26 +34,26 @@
     "openInterestChange": -66065
   },
   "etfFlows": {
-    "gldTonnes": 1080.8,
-    "gldWoWChange": 0.4,
-    "trend3W": "FLAT"
+    "gldTonnes": 1087.1,
+    "gldWoWChange": 6.3,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4400.035,
-    "XAGUSD": 66.5755,
-    "EURUSD": 1.16353,
-    "USDJPY": 153.7295,
-    "USDCHF": 0.81029,
-    "USDCNH": 6.70608,
-    "GBPUSD": 1.35488,
-    "USDCAD": 1.38087,
-    "USDSEK": 9.60006,
-    "US500": 7646.9,
-    "GER40": 25576.55,
-    "UK100": 10631.65,
+    "XAUUSD": 4374.555,
+    "XAGUSD": 65.7115,
+    "EURUSD": 1.16158,
+    "USDJPY": 154.2855,
+    "USDCHF": 0.81207,
+    "USDCNH": 6.70952,
+    "GBPUSD": 1.35213,
+    "USDCAD": 1.38153,
+    "USDSEK": 9.6414,
+    "US500": 7628.9,
+    "GER40": 25539.45,
+    "UK100": 10620.45,
     "ADR_14day": 106.2,
-    "ADR_usedToday": 46.4,
-    "goldSilverRatio": 66.1
+    "ADR_usedToday": 64.8,
+    "goldSilverRatio": 66.6
   },
   "dollarLiquidity": {
     "stlfsi": -0.7884,
@@ -66,52 +66,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Treasury yields move higher as investors await key wholesale inflation data",
+      "source": "CNBC",
+      "publishedAt": "2026-09-10T10:44:07.000Z",
+      "hoursAgo": 1.5
+    },
+    {
       "headline": "EXCLUSIVE: How a billion-dollar sanctions dodge kept Chinese goods flowing to Iran - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-10T06:05:00.000Z",
-      "hoursAgo": 4.2
-    },
-    {
-      "headline": "Yemen's Houthis close in on stranglehold over strategic Bab el-Mandeb Strait - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-10T04:58:00.000Z",
-      "hoursAgo": 5.3
+      "hoursAgo": 6.2
     },
     {
       "headline": "Gold edges higher on weaker dollar, US inflation data in focus - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-10T02:56:00.000Z",
-      "hoursAgo": 7.4
+      "hoursAgo": 9.3
     },
     {
       "headline": "ECB to hike rates as Iran war fuels fresh inflation fears - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-09T22:02:00.000Z",
-      "hoursAgo": 12.3
+      "hoursAgo": 14.2
     },
     {
       "headline": "US Treasury to buy up to $6 billion in Sept 10 buyback operation - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-09T21:04:41.000Z",
-      "hoursAgo": 13.2
+      "hoursAgo": 15.2
     },
     {
       "headline": "Turkey takes note of US/Iran-related sanctions announcement, finance minister says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-09T18:32:32.000Z",
-      "hoursAgo": 15.7
+      "hoursAgo": 17.7
     },
     {
       "headline": "Why Cramer still recommends being 'a little more reserved' about data center stocks",
       "source": "CNBC",
       "publishedAt": "2026-09-09T16:11:20.000Z",
-      "hoursAgo": 18.1
+      "hoursAgo": 20.1
     },
     {
       "headline": "Bessent bond plan details to be revealed as Treasury secretary warns FX traders he's 'the house now'",
       "source": "CNBC",
       "publishedAt": "2026-09-09T12:25:50.000Z",
-      "hoursAgo": 21.9
+      "hoursAgo": 23.8
     }
   ],
   "briefing": null
