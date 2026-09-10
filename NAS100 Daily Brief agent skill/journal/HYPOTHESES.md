@@ -1597,3 +1597,74 @@ pass against a fiction.
 current in-session weight at all. In-session strategy selection was 4 right / 1
 wrong / 1 mixed, so there is no evidence against it — but that is 6 observations.
 Nothing proposed.
+
+---
+
+# Defects found in the 2026-09-10 08:11Z scan (recorded, NOT fixed mid-scan)
+
+Neither was fixed on the spot, deliberately: re-running `brief.py` to ship a fix
+would journal the same market state twice, which is the inflation problem the
+`artefact_reason` split exists to prevent. Recorded now, fixed on the next code
+pass.
+
+## D8 — "Straddling the flip" is printed when price is not straddling the flip
+
+Today's brief published **"Straddling the flip — reduce size and let the regime
+resolve"** with price 29,419.5 and flip 29,371.5 — **48pts apart, 0.163%**. The
+engine's own straddle threshold is **0.15%**, so by its own definition this is
+not a straddle, and the scoring table agrees: it printed
+`+2 above flip 29371.5 by 48.0pts` with **no** straddling rider.
+
+The cause is the strategy selector's `else` branch at `bias_engine.py:249`:
+
+```
+if   gf and px > gf and (net or 0) > 0:   -> Strategy 1
+elif gf and px < gf:                      -> Strategy 2
+else:                                     -> "Straddling the flip"
+```
+
+Price above the flip with `net <= 0` satisfies neither arm, so it lands in a
+catch-all that names a condition it did not test. Today `net = -0.058`.
+
+**The advice is defensible; the stated reason is false.** "Above the flip but the
+week's book is net short gamma" is a genuine conflict and reducing size is
+reasonable — but a trader who checks the distance, sees 48pts, and finds no
+straddle has been given a wrong reason, which costs more trust than saying
+nothing. This is the same failure mode as the FRED line saying "today" about a
+three-day-old print.
+
+**Fix when next touching the file:** name the real state — flip and book
+disagreeing — and reserve the straddle wording for the case that actually meets
+the 0.15% test.
+
+## D9 — the news tagger reads a keyword without its subject
+
+`"US stocks fall as oil prices jump above $100 a barrel"` was tagged **`risk_on`**.
+The `risk_on` pattern at `news_scorer.py:109` matches `\bjump\b`; the thing
+jumping is **oil**, and the sentence's actual subject is **US stocks falling**.
+Oil through $100 is risk-off and inflationary — the exact opposite of the tag,
+and doubly wrong on a PPI morning.
+
+**No damage today**: it fell into NEEDS_JUDGEMENT and never scored, so the +0 in
+the table is correct. The tag was still backwards, and the pre-filter is the
+thing that decides what a future scorer might auto-score.
+
+**Scope, stated honestly:** this is one instance of the general problem the
+NEEDS_JUDGEMENT queue exists for — keyword matching without a subject. It is not
+a case for more regex. Recorded so that if it recurs it can be counted rather
+than rediscovered.
+
+## What WORKED on this scan, recorded because near-misses should be too
+
+- **D6's guard chain behaved correctly on the pre-market path.** NDX cash was
+  717 min stale (it does not print outside US hours), the `nq_implied` fallback
+  rolled it forward by the NQ move to 29,422.3, greeks were repriced at current
+  spot, and the offset came out at **-2.8**. The value cross-check did not fire
+  because it had no live cash print to disagree with — which is the designed
+  behaviour, not a gap.
+- **P1's staleness warning fired and cost the score nothing it should not have.**
+  DFII10 is 2 business days old, the line said so, and `real_yields` contributed
+  **+0** rather than the +3 that flipped 08 Sep.
+- **The GEXBot offset was matched to feed time** (-12.3 at 2026-09-09 20:00Z)
+  rather than taken against the live price, and the 732-minute feed age is
+  stated at the top of the section.
