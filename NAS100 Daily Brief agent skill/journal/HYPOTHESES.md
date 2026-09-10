@@ -1843,49 +1843,97 @@ paths exist. All three now derive from `__file__`.
 
 ## D12 — the brief and the chart disagree about the put wall by ~200pts
 
-**Open. Recorded, not fixed.**
+**Root cause found 2026-09-10. Fix identified and A/B verified, NOT applied —
+it changes which level gets marked, so it is the owner's call under the 3-day
+rule.**
 
-The two are supposed to be one computation delivered as two files — that is why
-`--chart` exists and why running `gex_chart.py` separately is forbidden. The flip
-agrees exactly, build after build. The put wall does not, in roughly two builds
-out of three, and the gap is consistently **~200pts, always with the brief
-above the chart**:
+The two are meant to be one computation delivered as two files. The flip agrees
+exactly, build after build. The put wall disagreed on roughly two builds in
+three, always with the brief **above** the chart, always by a clean multiple of
+the 50pt bin.
 
-| build | chart `put_sup` | brief `PUT WALL` | gap |
+### The cause: two different sets of greeks on one board
+
+Both paths bin identically (`bin_pts=50` in each). Both use the same formula.
+They differ in **one argument**:
+
+| | call |
+|---|---|
+| `gex_chart.collect()` | `gl.bucket(rows, S_ndx, dte_max, bin_pts=50, reprice=True)` |
+| `gex_levels.build()`  | `bucket(rows, S_ndx, dte, reprice=stale)` |
+
+`reprice=True` recomputes gamma with Black-Scholes at the **current** spot.
+`reprice=False` trusts **CBOE's published greeks**, which carry the timestamp of
+the last chain recompute. So on any day the cash quote is not stale — that is,
+on a normal live session — the brief selects its walls from published greeks
+while the chart reprices.
+
+**And `gamma_flip()` reprices unconditionally.** It has no `reprice` parameter
+and always calls `bs_gamma`. So the brief prints a **repriced flip beside
+published-greek walls**: two numbers on one board, computed at two different
+spots. That is precisely the mixing `bucket()`'s own docstring was written about
+— *"the figure was being printed beside a flip that WAS repriced."* The fix was
+generalised to net GEX and to the chart, and this call was left conditional.
+
+`reprice=stale` also guards the wrong clock. `_cash_is_stale()` ages the **cash
+quote** (30-minute threshold); it says nothing about when CBOE last recomputed
+the **greeks**. Measured mid-session on 2026-09-10 with `stale=False` and
+`basis.greeks = cboe_published`:
+
+```
+current NDX spot            29132.2
+spot stamped on CBOE greeks 29161.6   (n=1501 contracts)
+drift                          -29.4 pts
+```
+
+A fresh cash quote, and greeks 29pts out of date.
+
+### Why 29pts moves a wall 200pts
+
+Published greeks put the gamma peak at the spot CBOE last used, inflating the
+strike nearest *that* spot. It turns wall selection into a near-tie, and the tie
+lands differently as the drift changes:
+
+```
+published greeks (what the brief uses)   repriced BS (what the chart uses)
+  NDX 29000   0.858bn   <- winner          NDX 29000   1.008bn   <- winner
+  NDX 29100   0.764bn                      NDX 29100   0.547bn
+  margin over 2nd: 0.094bn                 margin over 2nd: 0.461bn
+```
+
+The brief decides its put wall by a **0.094bn** margin; the chart by **0.461bn**,
+five times wider. A near-tie decided by stale greeks is why the answer moved
+between builds while the chart's stayed put, and why the loser was always the
+bin nearer spot — that is the one published greeks over-weight.
+
+### A/B, same market, minutes apart
+
+`bucket(rows, S_ndx, dte, reprice=stale)` -> `reprice=True`, one line:
+
+| | run 1 | run 2 | run 3 |
 |---|---|---|---|
-| 1 | 28948.0 | 29147.8 | 199.8 |
-| 2 | 28911.0 | 29111.4 | 200.4 |
-| 3 | 28931.0 | 29130.8 | 199.8 |
+| `reprice=stale` (current) | FAIL 28951 vs 29101.3 | FAIL 28925 vs 29125.2 | FAIL 28939 vs 29039.2 |
+| `reprice=True` (proposed) | PASS 31/31 | PASS 31/31 | PASS 31/31 |
 
-Both paths use the same formula, and the comment in `gex_chart.collect()` says
-so deliberately: heaviest put-dominated level below spot, `max(..., key=put_gex)`
-with a dominance test. The obvious explanation is granularity — the chart bins to
-50pts, `gex_levels.build()` selects among raw strikes — **but that does not
-survive the numbers.** From build 3:
+Six consecutive builds on the same live chain. The change also makes `build()`
+consistent with `gamma_flip()`, which already reprices unconditionally, and with
+`gex_chart`, which already passes `reprice=True`.
 
-```
-brief  raw strike NDX 29150 -> NAS100 29130.8   put_gex 0.801bn  oi 23,052
-chart  50pt bin        29131.0                  put_gex 0.542bn
-chart  50pt bin        28931.0  <- chosen       put_gex 0.666bn
-```
+**Not applied.** It changes which level is marked on the board, which is model
+behaviour, and the rule is that nothing changes the model without the owner
+deciding. The evidence is here; the change is one line in `gex_levels.build()`.
 
-The bin at 29131 **contains** the strike the brief chose, yet reports *less* put
-gamma than that single strike. A bin cannot hold less than its own contents, so
-the two paths are not summing the same book — candidates are `book="week"` vs the
-`this_week` bucket, and `collect()`'s `span=650` truncation. Not chased further.
+### An earlier version of this entry reasoned wrongly — corrected
 
-**Why this is not fixed here.** Changing wall selection changes which levels get
-marked and their stretch tags. That is model behaviour, and the rule is 3+
-trading days of evidence pointing the same way before it moves. This entry is
-that evidence starting to accumulate, not a licence to skip it.
-
-**Until it is closed, `test_consistency.py` will FAIL its PUT WALL check on most
-builds. That failure is KNOWN — do not report it as a fresh regression.** The
-CALL WALL check passing is meaningful; the PUT WALL one is pinned to this entry.
+It claimed the brief selected among **raw strikes** while the chart binned, and
+called the numbers impossible because "a bin cannot hold less than its own
+contents". Both figures were the same 50pt bin, one quoted in NDX strike space
+and the other in CFD price space, 4.4pts apart. The conclusion that granularity
+was not the cause was right; the reasoning under it was not.
 
 ### The check that was supposed to catch this, and didn't
 
-D12 was invisible because `test_consistency.py`'s wall comparison was broken
+D12 stayed invisible because `test_consistency.py`'s wall comparison was broken
 three ways at once:
 
 - It searched only the level **board**, never the `far` footnote — but D7's fix
@@ -1904,8 +1952,6 @@ CALL WALL"` splits on `" + "`, so a wall sharing a level is found and
 `STRUCTURAL` no longer shadows), every row under a role is collected rather than
 the first, and the assertion is D7's actual contract — **the wall the chart drew
 must be markable somewhere in the brief**. Absent now fails.
-
----
 
 ## D13 — a fired session can stop and wait for a human who is not there
 
