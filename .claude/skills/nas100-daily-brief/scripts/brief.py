@@ -224,7 +224,21 @@ def level_board(d):
     flip_px = gf.get("nas100")
     # We KNOW which regime we're in, so state what applies today rather than
     # printing both branches and making the reader work out which is live.
-    long_gamma = flip_px is not None and px > flip_px
+    # H14, 2026-09-10. This used to be `px > flip_px` alone, while the strategy
+    # selector in bias_engine requires `px > flip AND net > 0` before it will
+    # recommend fading. Two definitions of "long gamma" in one document, and on
+    # 2026-09-10 08:12 they disagreed: price was 48pts above the flip with week
+    # net GEX at -0.058, so the strategy line refused to commit while the board
+    # confidently told the reader to expect a bounce and a long-sweep at the put
+    # wall. Neither put wall floored anything that day; both became resistance,
+    # and a long at 29,397 would have sat through a 379pt drawdown.
+    #
+    # Same test as the strategy selector now. When they disagree the book is
+    # CONFLICTED, and the notes below say so rather than promising a bounce.
+    net_wk = (gx["buckets"].get("this_week") or {}).get("net_gex_$bn_per_1pct")
+    above_flip = flip_px is not None and px > flip_px
+    long_gamma = above_flip and (net_wk or 0) > 0
+    conflicted = above_flip and not long_gamma
     push("GAMMA FLIP", flip_px, "gamma",
          ("The line where the big desks switch from damping moves to pushing "
           "them. We're ABOVE it: they're damping, so fades work. Lose this and "
@@ -296,6 +310,12 @@ def level_board(d):
              pw["nas100"], "gamma",
              (f"Heaviest floor this week ({oi_short(pw['oi'])} contracts) — "
               f"expect a bounce and a good long-sweep here.{extra}" if long_gamma
+              else
+              f"Heaviest floor this week ({oi_short(pw['oi'])} contracts), but "
+              f"the book is CONFLICTED — price is above the flip while the "
+              f"week's net gamma is negative. Do not treat this as a reliable "
+              f"floor: if it goes, it can accelerate. Wait for a reaction "
+              f"rather than buying into it.{extra}" if conflicted
               else
               f"Heaviest floor this week ({oi_short(pw['oi'])} contracts), BUT "
               f"today the desks are pushing moves along — if it breaks, expect "
@@ -374,8 +394,25 @@ def level_board(d):
     # away against a 156pt budget — technically out of budget, but it is the
     # level most likely to be swept all day. Core levels stay on the board and
     # get flagged as a stretch instead; only genuinely distant things drop out.
-    CORE = ("PDH", "PDL", "PWH", "PWL", "High", "Low", "GAMMA FLIP",
-            "CALL WALL", "PUT WALL")
+    CORE = ("PDH", "PDL", "PWH", "PWL", "High", "Low")
+    # D7, decided 2026-09-10 after three instances. A wall is a price at which
+    # dealers MUST hedge; the range budget forecasts how much further the day's
+    # RANGE can grow. Unrelated quantities, so filtering one by the other is a
+    # category error -- and it fails hardest exactly when the day is most
+    # volatile, because that is when the budget is most exhausted.
+    #
+    # 09-08: put wall, max pain and the flip dropped; the session low landed
+    #        7.4pts BELOW that put wall, where the 177pt bounce began.
+    # 09-09: the call wall dropped at +140 against a 112pt cap while the put
+    #        wall survived by 2pts -- an asymmetry that tracked where price
+    #        happened to sit, nothing about the walls.
+    # 09-10: budget 0.0 (range 132.8% of ADR) -> cap 0 -> the board shipped TWO
+    #        rows. The 29,194 put wall went to the "don't mark" footnote and was
+    #        then respected to 4.8pts across three re-tests.
+    #
+    # This is the same reasoning secondary_walls() already documents for its own
+    # ADR window; the board simply never got it.
+    ALWAYS = ("CALL WALL", "PUT WALL", "GAMMA FLIP", "MAX PAIN")
     def keep(r):
         if r["reach"] == "intraday":
             return True
@@ -384,6 +421,12 @@ def level_board(d):
         # point of them.
         if r["kind"] == "structural":
             return True
+        # Dealer-hedging boundaries: always on the board, tagged _(stretch)_ when
+        # far. Distance is information, not grounds for removal.
+        if any(k in r["name"] for k in ALWAYS):
+            return True
+        # Session extremes and PD/PW levels DO keep the budget rule: those are
+        # genuine reachability claims, so the rule fits them.
         core = any(c in r["name"] for c in CORE)
         return core and abs(r["dist"]) <= budget * 1.75
     board = [r for r in merged if keep(r)]

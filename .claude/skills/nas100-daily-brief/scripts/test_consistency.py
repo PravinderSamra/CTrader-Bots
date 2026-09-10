@@ -131,6 +131,23 @@ def offline_checks():
           any(c["component"] == "gamma" and "flip" not in c["why"]
               for c in _BE.score(_mc, _lv, _gx, session="OVERNIGHT")["components"]))
 
+    # D7: walls and the flip must survive a zero budget. On 2026-09-10 an
+    # EXHAUSTED read gave budget 0 -> cap 0 -> a two-row board, and the put wall
+    # it dropped was then respected to 4.8pts.
+    _bf = open(os.path.join(HERE, "brief.py")).read()
+    check("walls and flip are exempt from the range-budget filter",
+          'ALWAYS = ("CALL WALL", "PUT WALL", "GAMMA FLIP", "MAX PAIN")' in _bf
+          and 'if any(k in r["name"] for k in ALWAYS):' in _bf)
+    check("session extremes still keep the budget rule",
+          'core and abs(r["dist"]) <= budget * 1.75' in _bf)
+
+    # H14: one definition of "long gamma" per document. The board used
+    # `px > flip` while the strategy selector required `px > flip AND net > 0`.
+    check("the board's long_gamma matches the strategy selector's test",
+          "long_gamma = above_flip and (net_wk or 0) > 0" in _bf)
+    check("the conflicted book is named on the put wall note",
+          "conflicted" in _bf and "book is CONFLICTED" in _bf)
+
     # D8: "Straddling the flip" must only be said when price IS straddling it.
     _gx_conf = {"gamma_flip": {"nas100": 29371.5},
                 "buckets": {"this_week": {"net_gex_$bn_per_1pct": -0.058,

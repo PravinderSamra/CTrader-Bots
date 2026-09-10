@@ -2142,3 +2142,68 @@ right — it flagged the downside path as clear with nothing structural until
 29,197, and price ran to 29,018 — but the score sat at -1 and the board's
 strategy was Strategy 1 (fade), which was the wrong model for what followed. The
 15:06 rebuild had the regime, the model and the direction right.
+
+---
+
+## ⚠️ H14's first statement was WRONG and is withdrawn
+
+The 2026-09-10 review claimed *"the level board's wall notes are REGIME-BLIND,
+and the secondary table is not"*. **That is false.** `brief.py` already carried a
+correct short-gamma branch for the put wall — *"BUT today the desks are pushing
+moves along — if it breaks, expect it to speed UP, not bounce. Don't buy the
+break."* It simply was not taken, because at 08:12 price was 29,419.5 against a
+flip of 29,371.5, so `long_gamma` was True and the confident branch was correct
+*for the regime as the code computed it*.
+
+I asserted an internal contradiction without reading the branch I was accusing.
+Same failure as the withdrawn H11 observation: a conclusion stated before the
+artefact behind it was checked.
+
+## H14 restated — two definitions of "long gamma" in one document
+
+The real inconsistency is narrower and does exist:
+
+| | test used |
+|---|---|
+| `brief.py` level board | `px > flip` |
+| `bias_engine.py` strategy selector | `px > flip` **AND** `net_gex > 0` |
+
+On 2026-09-10 08:12 they disagreed. Price was **48pts above the flip** with week
+net GEX at **-0.058**. The strategy selector's Strategy-1 arm failed its
+`net > 0` condition and fell through; the board, needing only `px > flip`, told
+the reader to *"expect a bounce and a good long-sweep"* at the put wall.
+
+Neither put wall floored anything that day. Both became resistance. **A long at
+29,397 on the board's instruction would have sat through a 379-point drawdown.**
+
+**Fix (applied):** the board now uses the selector's test. Where they disagree
+the state is named `conflicted`, and the put wall note reads *"the book is
+CONFLICTED — price is above the flip while the week's net gamma is negative. Do
+not treat this as a reliable floor: if it goes, it can accelerate. Wait for a
+reaction rather than buying into it."*
+
+**No new calibration.** One document, one definition — the stricter one, already
+in use for the decision that matters most. Guarded by two consistency checks.
+
+**What remains genuinely open, and is NOT settled by this:** whether a put wall
+acts as resistance-after-break in short gamma as a *general* rule. That is 1
+session, 4 of 4, and stays below the gate. Today's fix is about internal
+consistency; the empirical claim still needs 2 more sessions.
+
+## D7 applied — walls exempt from the range-budget filter
+
+`CALL WALL`, `PUT WALL`, `GAMMA FLIP` and `MAX PAIN` now always reach the board,
+tagged `_(stretch)_` by distance, exactly as `structural` already was. Session
+extremes and PD/PW levels keep the budget rule, since those are genuine
+reachability claims and the rule fits them.
+
+Verified on a live post-close build: the board carries MAX PAIN at +652, the CALL
+WALL at +602 and the GAMMA FLIP at +590, all correctly tagged. Before this they
+would have been dropped and, on a six-item footnote, possibly truncated out
+entirely.
+
+The argument was already written down inside `secondary_walls()` — *"the budget
+forecasts how much further the RANGE can grow; these are levels price can still
+REACH inside the range, which is a different question and the one that matters
+when fuel is exhausted but price is still travelling 250pts."* The board never
+got it. Three instances to notice that the reasoning existed one function away.
