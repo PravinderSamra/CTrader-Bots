@@ -86,6 +86,77 @@
         "adrUsedPct": 74
       },
       "outcome": null
+    },
+    {
+      "at": "2026-09-10T14:42:38.460Z",
+      "londonTime": "15:42 BST",
+      "mode": "POST_ORB",
+      "price": 10607.65,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 100% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "100% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "STRUCTURE",
+          "rule": "R3",
+          "text": "ORB break DOWN is aligned with the BEARISH macro bias (-3) — continuation has the backdrop behind it."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.42%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -0.47% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "INFO",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "US CPI prints tomorrow 13:30 BST — late-session moves today are as likely pre-event de-risking as conviction."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -3,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10683.6,
+        "orbLow": 10652.7,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10683.6,
+        "overnightLow": 10621.1,
+        "priorDayHigh": 10810.8,
+        "priorDayLow": 10636.2,
+        "gapPct": -0.32,
+        "adr14": 94.9,
+        "adrUsedPct": 100
+      },
+      "outcome": null
     }
   ]
 }
