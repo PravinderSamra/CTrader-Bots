@@ -303,7 +303,18 @@ def build(cfd_price, max_dte=45):
              "buckets": {}}
 
     for label, dte in (("near_expiry_0_2dte", 2), ("this_week", 7), ("full_45dte", max_dte)):
-        pack = bucket(rows, S_ndx, dte, reprice=stale)
+        # ALWAYS reprice. `reprice=stale` selected these walls from CBOE's
+        # published greeks on any live session, while gamma_flip() next door
+        # reprices unconditionally — so the board printed a repriced flip beside
+        # published-greek walls, two numbers computed at two different spots.
+        # `stale` also ages the CASH QUOTE, which says nothing about when CBOE
+        # last recomputed the greeks: measured mid-session on 2026-09-10 with
+        # stale=False, the greeks were stamped 29.4pts away from live spot.
+        # That drift inflates the bin nearest CBOE's spot and turned put-wall
+        # selection into a 0.094bn near-tie the chart won by 0.461bn — the whole
+        # of D12. Six A/B builds on one chain: reprice=stale failed 3/3,
+        # reprice=True passed 3/3.
+        pack = bucket(rows, S_ndx, dte, reprice=True)
         if not pack:
             continue
         net = sum(p["net_gex"] for p in pack)
@@ -381,8 +392,11 @@ def build(cfd_price, max_dte=45):
                            "nas100": cfd(flip),
                            "spot_position": ("ABOVE flip — long gamma" if flip and S_ndx > flip
                                              else "BELOW flip — short gamma" if flip else None)}
-    basis["greeks"] = ("repriced_bs_at_current_spot" if stale
-                       else "cboe_published")
+    # Unconditional, because every number on this board now is. The flip always
+    # repriced; as of the D12 fix the buckets do too. Leaving this conditional
+    # would print `cboe_published` over repriced walls — the same class of defect
+    # as D12 itself, a label describing a computation that no longer happens.
+    basis["greeks"] = "repriced_bs_at_current_spot"
     near = [r for r in rows if r["dte"] <= 7 and r["src"] == "NDX"]
     mp = G.max_pain(near)
     board["max_pain_week"] = {"ndx": mp, "nas100": cfd(mp)}

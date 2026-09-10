@@ -1843,9 +1843,9 @@ paths exist. All three now derive from `__file__`.
 
 ## D12 — the brief and the chart disagree about the put wall by ~200pts
 
-**Root cause found 2026-09-10. Fix identified and A/B verified, NOT applied —
-it changes which level gets marked, so it is the owner's call under the 3-day
-rule.**
+**Root cause found, fixed and verified 2026-09-10. Applied on the owner's
+decision after the A/B below; the 3-day rule was waived deliberately because
+this is not a model preference — it is one board carrying two sets of greeks.**
 
 The two are meant to be one computation delivered as two files. The flip agrees
 exactly, build after build. The put wall disagreed on roughly two builds in
@@ -1919,9 +1919,26 @@ Six consecutive builds on the same live chain. The change also makes `build()`
 consistent with `gamma_flip()`, which already reprices unconditionally, and with
 `gex_chart`, which already passes `reprice=True`.
 
-**Not applied.** It changes which level is marked on the board, which is model
-behaviour, and the rule is that nothing changes the model without the owner
-deciding. The evidence is here; the change is one line in `gex_levels.build()`.
+### Applied
+
+`gex_levels.build()` now passes `reprice=True` unconditionally. Verified over
+three further builds after the change: 31/31 each time.
+
+`basis["greeks"]` was conditional on the same `stale` flag and had to go with it
+— left alone it would have printed `cboe_published` over repriced walls, which is
+the same defect as D12 itself: a label describing a computation that no longer
+happens. It is now unconditionally `repriced_bs_at_current_spot`, which is what
+every number on the board is.
+
+**What changed in the output.** Put walls move, typically to a bin 100-200pts
+below where the brief used to put them — the bin the chart has been drawing all
+along. Nothing else on the board is touched: `keep()`, the scoring, the wall
+ranks and the grader are all unchanged. The flip does not move, because it was
+always repriced.
+
+**Worth grading over the coming days:** whether price respects the repriced wall
+better than the published-greek one did. The argument for it is internal
+consistency, not a measured hit rate, and the two are not the same claim.
 
 ### An earlier version of this entry reasoned wrongly — corrected
 
