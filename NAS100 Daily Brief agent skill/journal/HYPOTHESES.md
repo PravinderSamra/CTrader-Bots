@@ -2049,3 +2049,96 @@ The real fix is the monitoring gap D10 left open and this entry now makes urgent
 **something must check that `journal/<today>/` gained an entry, and say so when it
 did not.** Until that exists, every fix here is guarded only by someone
 remembering to look.
+
+---
+
+# 2026-09-10 provisional review (day NOT closed — roll is 21:00Z, graded at 20:20Z)
+
+`track.py` will not count this until after 21:00Z (D3). Numbers below are the
+cash session plus the first 20 minutes after; the final hour of CFD trade could
+still move the close. **Provisional.**
+
+Session: O 29,437.9 · H 29,482.2 · L 29,018.3 · C 29,126.8 · **range 463.9
+(132.8% of ADR14)**. Hot PPI; US10y +1.59% to 4.914%.
+
+## Every put-side level that price reached HELD — and every one held as RESISTANCE
+
+| level (from) | price | worst excursion | held | re-tests | role |
+|---|---|---|---|---|---|
+| PUT WALL ●●●○○ 3k (08:12) | 29,397.2 | **+6.4** | 680 min | 7 | resistance |
+| GAMMA FLIP (08:12) | 29,371.5 | +24.5 | 620 min | 11 | resistance |
+| PUT WALL ●●●●● 9.5k (15:07) | 29,194.4 | **+4.8** | 185 min | 3 | resistance |
+| 2nd put concentration 18.5k (15:07) | 29,144.4 | +5.5 | 85 min | 8 | resistance |
+
+Ranked ladder rungs agree: P1 29,397 (+6.6, 7 re-tests) and P3 29,197 (+2.2)
+from the 08:12 ladder, P3 29,194 (+5.2, 3 re-tests) from the 15:07 ladder — all
+**HELD as resistance**. Four named levels and three ranked rungs, **7 for 7**,
+worst excursions of 2 to 25 points on a 464-point day.
+
+**As levels, this is the best single-day result recorded.** As *labels*, the put
+side was wrong every time.
+
+## H14 (new) — the level board's wall notes are REGIME-BLIND, and the secondary table is not
+
+The board printed, for both put walls: *"Heaviest floor this week — expect a
+bounce and a good long-sweep here."* Neither floored anything. Price went
+through both and each became the ceiling on every subsequent bounce. **A long
+taken on that instruction at 29,397 would have sat through a 379-point
+drawdown** to the 29,018 low.
+
+The wording is fixed text attached to the PUT WALL row. It says the same thing
+whether the book is long or short gamma.
+
+**The secondary-walls table in the SAME brief got it right**, because its note is
+generated from dominance and regime: for 29,194 and 29,144 it printed *"dealers
+are SHORT gamma here, so they amplify: price tends to accelerate THROUGH rather
+than stall. **Not a floor**"* — which is exactly what happened. On 2026-09-09,
+with a net-long book, the same generator softened it to *"treat it as a
+speed-bump rather than an accelerant."*
+
+**So the brief contains both a regime-aware and a regime-blind description of the
+same class of level, and the regime-blind one is the headline.** That is the same
+family as D2 (put labels inverted) and D4 (a wall named for a side without
+checking dominance) — naming a level by what it is called rather than by what the
+book says it will do.
+
+**Mechanism, and why it should be believed:** a put wall is put-dominant, so
+dealers are short gamma there. Short gamma amplifies. In a downtrend it cannot be
+a floor — it is the next ceiling once lost. The "bounce and long-sweep" reading
+only fits a long-gamma book.
+
+**Evidence: 1 session, 4 of 4 put-side levels.** Below the 3-day threshold.
+Nothing changed. The candidate fix is to generate the board's wall note the way
+the secondary table already does, from dominance and net regime, rather than from
+fixed text — which needs no new calibration, only reuse of a generator that is
+already correct in the same file.
+
+## Fuel — the asymmetry held, and today was its sharpest test
+
+| scan | state | budget | actual extension | error |
+|---|---|---|---|---|
+| 08:12Z | MODERATE | 206.2 | **320.8** | **+114.6** |
+| 15:06Z | **EXHAUSTED** | 0.0 | **0.0** | **0.0** |
+
+The EXHAUSTED read was **exact**. The MODERATE read under-forecast by 115pts on a
+hot-PPI day — and note the sign: H1 is negative on 6 of 7 prior days (budget
+over-forecasts), so a **+114.6** is a genuine outlier, not more of the same. A
+news day is where the budget breaks, and it breaks in the direction that hurts a
+fade.
+
+This strengthens what was said to the trader on 2026-09-09: the **low** readings
+are the reliable half. Three EXHAUSTED/LOW_FUEL observations now (08-25: 12.0 vs
+0.4; 09-08: 26.2 vs 0.0; 09-10: 0.0 vs 0.0).
+
+## Direction
+
+| scan | call | move to close | verdict |
+|---|---|---|---|
+| 08:12Z | NEUTRAL / TWO-WAY (-1) | -279.8 | no call — no credit either way |
+| 15:06Z | **STRONGLY BEARISH (-10)** | -72.7 | **CORRECT** |
+
+The morning brief called nothing on a day that fell 280 points. Its *warning* was
+right — it flagged the downside path as clear with nothing structural until
+29,197, and price ran to 29,018 — but the score sat at -1 and the board's
+strategy was Strategy 1 (fade), which was the wrong model for what followed. The
+15:06 rebuild had the regime, the model and the direction right.
