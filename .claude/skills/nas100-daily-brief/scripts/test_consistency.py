@@ -131,6 +131,16 @@ def offline_checks():
           any(c["component"] == "gamma" and "flip" not in c["why"]
               for c in _BE.score(_mc, _lv, _gx, session="OVERNIGHT")["components"]))
 
+    # D8: "Straddling the flip" must only be said when price IS straddling it.
+    _gx_conf = {"gamma_flip": {"nas100": 29371.5},
+                "buckets": {"this_week": {"net_gex_$bn_per_1pct": -0.058,
+                                          "call_wall": {"nas100": 29497.0},
+                                          "put_wall": {"nas100": 29397.0}}}}
+    _lv_conf = dict(_lv, price=29419.5)          # 48pts above = 0.163%, NOT a straddle
+    _s = _BE.score(_mc, _lv_conf, _gx_conf, session="PRE_NY")["strategy_call"]
+    check("a non-straddle is not called a straddle", "Straddling" not in _s)
+    check("flip/book conflict is named as such", "CONFLICTED" in _s)
+
     # the settled read is the official verdict, first-touch kept for comparison
     _g = R_MOD.grade_level({"price": 29495.0, "name": "T"}, _bars)
     check("grade_level verdict comes from the settled read",
