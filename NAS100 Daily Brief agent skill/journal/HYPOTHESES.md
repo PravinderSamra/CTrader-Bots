@@ -1772,3 +1772,135 @@ day is most volatile, because that is when the budget is most exhausted.
 is, and keep the `_(stretch)_` tag to mark distance. Session extremes and PD/PW
 levels keep the budget rule — those ARE reachability claims, so the rule fits
 them. This changes what gets marked, so it is the trader's call.
+---
+
+## D11 — the scan ran, wrote the journal, and pushed nothing
+
+**2026-09-10, found while diagnosing why a scheduled run did minutes of work and
+left no commit.** The scan itself was never the problem. `sync_archive.py`'s
+`PATHS` list carried three archive directories:
+
+```
+journal/ · research/chart-ladders/ · research/live-walls/
+```
+
+but every scan also writes **`research/gexbot/ladders/<stamp>-oi.json`** and
+`-vol.json`, and that directory **is tracked in git** (22 files at the time).
+It was simply absent from the list. So each scan left two tracked-directory
+files permanently unstaged.
+
+That alone loses data quietly. The second-order effect lost the whole scan:
+
+1. The scan commits the journal, pushes, and loses the race — `main` takes
+   commits from `xauusd-data-bot` and `GEX Agent Bot` on their own schedules, so
+   losing a push race is the **normal** case on this branch, not an error case.
+2. The recovery was `git rebase origin/main`, which refuses outright when
+   untracked files in the tree would be overwritten by the incoming commits.
+   The stale gexbot ladders were exactly those files.
+3. `rebase --abort` ran, `sync()` returned `pushed=False`, and the observation
+   stayed in a container that was about to be reclaimed.
+
+**The reporting made it invisible.** A failed push printed as `pushed=False` at
+the tail of an otherwise successful-looking `archive: N file(s) committed` line.
+Nothing shouted. Same shape as D10: *the run looked like it worked.*
+
+Worse, `sync()` reported `pushed=True` **whenever the push command returned 0**,
+which is not the same claim. Observed on this date: a scan pushed successfully,
+a later `rebase --abort` rewound the local branch off the commit it had just
+pushed, and the local repo then disagreed with origin in both directions with no
+warning.
+
+### Fix
+
+- `research/gexbot/ladders` added to `PATHS`. Writing a path the archive does not
+  carry is the same defect as not writing it.
+- Rebase recovery uses `--autostash`, and a conflict now retries instead of
+  giving up on the first one — a conflict is usually a concurrent scan touching
+  `index.json`, and the next attempt re-fetches a settled origin. Only a
+  conflict surviving every attempt is real.
+- **`pushed` is no longer inferred from the push command's exit code.** After the
+  loop, `sync()` fetches and asks whether `origin/<branch>` actually contains
+  `HEAD`. It reports that, and nothing else.
+- `brief.py` prints `ARCHIVE NOT PUSHED … This scan is lost unless you push it by
+  hand` on its own line when the commit did not land.
+
+### Also fixed alongside
+
+**`brief.py` ignored unknown arguments.** `brief.py --help` did not print help —
+it ran a full scan and recorded a journal entry, and so did any typo of
+`--no-journal`. Found by doing exactly that while diagnosing this. A flag the
+program does not understand must never fall through into recording an
+observation; unknown options now exit 2 before any network call.
+
+**Three files pinned paths to `/home/user/CTrader-Bots`** (`wall_retro.py`
+absolutely; `levels_fuel.py` and `review_day.py` via `~/CTrader-Bots`). A
+scheduled session's checkout is named by `add_repo`, which returns the
+**lower-cased** `/home/user/ctrader-bots` and instructs cloning there — so a
+session that follows its instruction literally lands somewhere none of those
+paths exist. All three now derive from `__file__`.
+
+---
+
+## D12 — the brief and the chart disagree about the put wall by ~200pts
+
+**Open. Recorded, not fixed.**
+
+The two are supposed to be one computation delivered as two files — that is why
+`--chart` exists and why running `gex_chart.py` separately is forbidden. The flip
+agrees exactly, build after build. The put wall does not, in roughly two builds
+out of three, and the gap is consistently **~200pts, always with the brief
+above the chart**:
+
+| build | chart `put_sup` | brief `PUT WALL` | gap |
+|---|---|---|---|
+| 1 | 28948.0 | 29147.8 | 199.8 |
+| 2 | 28911.0 | 29111.4 | 200.4 |
+| 3 | 28931.0 | 29130.8 | 199.8 |
+
+Both paths use the same formula, and the comment in `gex_chart.collect()` says
+so deliberately: heaviest put-dominated level below spot, `max(..., key=put_gex)`
+with a dominance test. The obvious explanation is granularity — the chart bins to
+50pts, `gex_levels.build()` selects among raw strikes — **but that does not
+survive the numbers.** From build 3:
+
+```
+brief  raw strike NDX 29150 -> NAS100 29130.8   put_gex 0.801bn  oi 23,052
+chart  50pt bin        29131.0                  put_gex 0.542bn
+chart  50pt bin        28931.0  <- chosen       put_gex 0.666bn
+```
+
+The bin at 29131 **contains** the strike the brief chose, yet reports *less* put
+gamma than that single strike. A bin cannot hold less than its own contents, so
+the two paths are not summing the same book — candidates are `book="week"` vs the
+`this_week` bucket, and `collect()`'s `span=650` truncation. Not chased further.
+
+**Why this is not fixed here.** Changing wall selection changes which levels get
+marked and their stretch tags. That is model behaviour, and the rule is 3+
+trading days of evidence pointing the same way before it moves. This entry is
+that evidence starting to accumulate, not a licence to skip it.
+
+**Until it is closed, `test_consistency.py` will FAIL its PUT WALL check on most
+builds. That failure is KNOWN — do not report it as a fresh regression.** The
+CALL WALL check passing is meaningful; the PUT WALL one is pinned to this entry.
+
+### The check that was supposed to catch this, and didn't
+
+D12 was invisible because `test_consistency.py`'s wall comparison was broken
+three ways at once:
+
+- It searched only the level **board**, never the `far` footnote — but D7's fix
+  moved un-truncatable walls *into* that footnote, so the wall the chart drew
+  read as "missing" precisely when D7's fix was working.
+- It substring-matched `"CALL WALL" in name`, so the row **"STRUCTURAL CALL
+  WALL"** shadowed the real one and it compared two different levels. This
+  produced a false failure — `brief 29308.4 vs chart 29508.0` — on a build whose
+  call walls agreed to 0.1pt.
+- When a wall was absent it called `check(..., True, "absent from one — not
+  comparable")` — it **asserted success on the exact condition it existed to
+  detect**. A wall vanishing from the brief is D7, and the D7 guard passed on D7.
+
+Now: names are matched per confluence segment (`"PDL + London Low + STRUCTURAL
+CALL WALL"` splits on `" + "`, so a wall sharing a level is found and
+`STRUCTURAL` no longer shadows), every row under a role is collected rather than
+the first, and the assertion is D7's actual contract — **the wall the chart drew
+must be markable somewhere in the brief**. Absent now fails.
