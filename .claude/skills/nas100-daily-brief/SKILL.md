@@ -338,6 +338,17 @@ observation count rather than on analysis.
   data through `ctrader_http.py` rather than the `mcp__ctrader__*` tools. That
   design decision is what makes the unattended run possible at all.
 
+**The scheduled session starts with NO repository** (`sources: []`), unlike an
+interactive one. Its prompt carries a Step 0 that calls `add_repo` with **push**
+access, clones, and calls `register_repo_root` before anything else. Do not
+remove it, and do not assume a checkout exists in any scheduled context. The
+first run (2026-09-10 12:45Z) died on its first command for exactly this reason
+and the Routine still reported SUCCEEDED — see D10.
+
+**A Routine's `last_run.status` is not evidence the scan ran.** It reports
+success when the session fires and exits. The artefact is the check: an entry in
+`journal/<today>/` timed near the fire.
+
 The schedule is fixed **UTC**, so it drifts against the NY session at the DST
 changeover: 12:45 UTC is 08:45 ET in summer but 07:45 ET in winter. Move it to
 `45 13 * * 1-5` when US clocks change if a pre-NY read is still wanted.

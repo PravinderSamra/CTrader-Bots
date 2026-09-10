@@ -1668,3 +1668,64 @@ than rediscovered.
 - **The GEXBot offset was matched to feed time** (-12.3 at 2026-09-09 20:00Z)
   rather than taken against the live price, and the 732-minute feed age is
   stated at the top of the section.
+
+---
+
+## D10 — the scheduled scan had no repository, and the Routine called it a success
+
+**2026-09-10 12:45:40Z.** The first scheduled run fired, ran for **85 seconds**,
+and produced nothing. No journal entry for 12:45 exists; today's only entry is
+the manual 08:12Z scan.
+
+**Cause, confirmed by comparing the two session records rather than inferred:**
+
+| | `sources` |
+|---|---|
+| This (interactive) session | `[{git_repository: {url: .../CTrader-Bots, revision: refs/heads/main}}]` |
+| The Routine's fired session | **`[]`** |
+
+A scheduled session starts with **no repository cloned**. The prompt's step 1 was
+`git -C /home/user/CTrader-Bots pull` against a path that did not exist, so the
+run died on its first command and every later step was unreachable.
+
+**`create_trigger` has no `sources` parameter** — only `create_session` does. So
+the Routine could not have been given the checkout at creation time through the
+tool that made it. The `mcp_connections: []` warning at creation was visible and
+I read it as connectors-only; the empty `sources` beside it was the real problem
+and I did not check it.
+
+### The part that matters more than the bug
+
+**`last_run.status` was `ROUTINE_RUN_STATUS_SUCCEEDED`.** The scheduler reports
+success when the session *fires and exits*, regardless of whether the work
+happened. A push notification went out saying it ran.
+
+Left alone, this fails **silently every weekday**: the trigger reports green, the
+notification arrives, and no observation accumulates — while the whole point of
+the automation is observation count. It would have been discovered weeks later by
+noticing the register had not grown, which is the same shape as D3 (a day graded
+as complete when it was not) and D1 (a range read as used when the session had
+not started). **A green status is not evidence of work.**
+
+### Fix
+
+The prompt now opens with a **Step 0** that tests for
+`scripts/brief.py`, and if it is absent calls `add_repo` (owner
+`PravinderSamra`, repo `CTrader-Bots`, **access `push`** — a read-only clone
+would lose the journal commit, which is the observation), clones, and calls
+`register_repo_root`. If `add_repo` refuses it must STOP and relay the refusal
+verbatim rather than improvising.
+
+**Verified by a manual test fire rather than by reasoning**, because the previous
+failure came from assuming an environment behaved a certain way. The test fire is
+instructed to state as its first line whether the repo was already present or had
+to be cloned.
+
+### Monitoring gap left open, deliberately
+
+Nothing yet checks that a scheduled run actually *journalled* anything. The
+honest check is not the trigger's status but the artefact: **does
+`journal/<today>/` contain an entry near 12:45Z?** Worth adding to `track.py` as
+a "scheduled run missing" line, so a silent no-op announces itself. Not built
+today — one instance, and the fix above may make it moot. Recorded so it is not
+rediscovered.
