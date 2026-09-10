@@ -1,0 +1,301 @@
+{
+  "date": "2026-09-10",
+  "entries": [
+    {
+      "at": "2026-09-10T10:17:11.785Z",
+      "londonTime": "11:17 BST",
+      "mode": "POST_ORB",
+      "price": 10631.65,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 73% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "73% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -1,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10683.6,
+        "orbLow": 10652.7,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10683.6,
+        "overnightLow": 10621.1,
+        "priorDayHigh": 10810.8,
+        "priorDayLow": 10636.2,
+        "gapPct": -0.09,
+        "adr14": 94.9,
+        "adrUsedPct": 73
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-10T17:58:16.787Z",
+        "fwd1hPct": -0.1,
+        "fwd3hPct": -0.23,
+        "toClosePct": -0.34,
+        "maxUpPct": 0.13,
+        "maxDownPct": -0.4,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-10T12:14:31.199Z",
+      "londonTime": "13:14 BST",
+      "mode": "POST_ORB",
+      "price": 10621.45,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 74% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "74% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -1,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10683.6,
+        "orbLow": 10652.7,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10683.6,
+        "overnightLow": 10621.1,
+        "priorDayHigh": 10810.8,
+        "priorDayLow": 10636.2,
+        "gapPct": -0.19,
+        "adr14": 94.9,
+        "adrUsedPct": 74
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-10T17:58:16.951Z",
+        "fwd1hPct": -0.14,
+        "fwd3hPct": -0.24,
+        "toClosePct": -0.24,
+        "maxUpPct": 0.21,
+        "maxDownPct": -0.26,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-10T14:42:38.460Z",
+      "londonTime": "15:42 BST",
+      "mode": "POST_ORB",
+      "price": 10607.65,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 100% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "100% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "STRUCTURE",
+          "rule": "R3",
+          "text": "ORB break DOWN is aligned with the BEARISH macro bias (-3) — continuation has the backdrop behind it."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.42%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -0.47% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "INFO",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "US CPI prints tomorrow 13:30 BST — late-session moves today are as likely pre-event de-risking as conviction."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -3,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10683.6,
+        "orbLow": 10652.7,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10683.6,
+        "overnightLow": 10621.1,
+        "priorDayHigh": 10810.8,
+        "priorDayLow": 10636.2,
+        "gapPct": -0.32,
+        "adr14": 94.9,
+        "adrUsedPct": 100
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-10T17:58:17.125Z",
+        "fwd1hPct": -0.11,
+        "fwd3hPct": null,
+        "toClosePct": -0.11,
+        "maxUpPct": 0.06,
+        "maxDownPct": -0.13,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R3",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R9",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-10T17:58:14.544Z",
+      "londonTime": "18:58 BST",
+      "mode": "CLOSED",
+      "price": 10591.15,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 105% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "105% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.63%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -0.59% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "INFO",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "US CPI prints tomorrow 13:30 BST — late-session moves today are as likely pre-event de-risking as conviction."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -4,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10683.6,
+        "orbLow": 10652.7,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10683.6,
+        "overnightLow": 10621.1,
+        "priorDayHigh": 10810.8,
+        "priorDayLow": 10636.2,
+        "gapPct": -0.48,
+        "adr14": 94.9,
+        "adrUsedPct": 105
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-10T17:58:17.125Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
+    }
+  ]
+}

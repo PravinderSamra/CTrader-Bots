@@ -1335,3 +1335,717 @@ session low (29,394.8) landed **7.4pts below the put wall and 10.5 below the
 flip**, which is where the 177pt bounce began. **This is a second instance of
 D7's open question, observed the day before D7 was found.** Two instances, not
 three. Still observing.
+
+---
+
+# Retrospective 2026-09-09: the gamma engine against 12 days of price
+
+Ran on request. Method: `fetch_ohlcv_paged` 16 days of M5 (3,263 bars, 08-25 to
+09-09), every post-fix ladder graded against the next trading day, and each
+published flip/strategy cross-tabbed against what the day actually did.
+
+**Ladders EXCLUDED as invalid, per H11's withdrawal:** `2026-08-26-2212` and
+`2026-08-27-1323`, both `pre_fix: True` (45-day book, before the book-mismatch
+and wall-dominance fixes). The first draft of this retrospective used both and
+had to be thrown away — the same error H11 already records. Valid pairs:
+`08-27-1358 -> 08-27` (clipped to post-publication bars), `08-27-2233 -> 08-28`,
+`09-08-1539 -> 09-09`. 18 rungs.
+
+## H11 — the ranked walls WORK, and the grader was hiding it
+
+**9 of 18 rungs were touched. Of the 8 with a settled read, 7 HELD.**
+
+| rung | day | worst excursion | held for | re-tests | settled verdict |
+|---|---|---|---|---|---|
+| C3 29,602 | 09-09 | **+0.8** | 870 min | 2 | HELD as resistance |
+| C2 29,414 | 08-27 | +1.6 | 540 min | 1 | HELD as support |
+| C1 29,464 | 08-27 | **-4.7** | 430 min | 2 | HELD as support |
+| C3 29,514 | 08-27 | -11.2 | 240 min | 2 | HELD as support |
+| C1 29,495 | 08-28 | +12.6 | 280 min | 1 | HELD as resistance |
+| C3 29,645 | 08-28 | +14.9 | 315 min | 1 | HELD as resistance |
+| P1 29,352 | 09-09 | -18.2 | 325 min | 1 | HELD as support |
+| P2 29,402 | 09-09 | -30.4 | 260 min | 8 | **LOST** |
+
+**The same 8 rungs under the shipped first-touch grader: FOUR "chopped", TWO
+"broke DOWN", ONE "broke UP", ZERO recorded as holding.**
+
+**0 of 8 versus 7 of 8, on identical data.** This is no longer an argument about
+M4 — it is a measurement. Two cases carry it on their own:
+
+- **C3 29,602 on 09-09.** First touch at 02:40 says *"broke DOWN, 79pts"*. The
+  settled read: worst excursion **0.8 points**, held **870 minutes**, re-tested
+  twice and rejected both times. That is close to a perfect ceiling and the tool
+  called it broken.
+- **C1 29,464 on 08-27.** Worst excursion **-4.7pts** over 430 minutes. This is
+  the level the trader described as *"swept through and reversed back above it
+  soon after and never broke through again and worked as support"* — his reading
+  reproduced to the point. The tool said CHOP.
+
+**H6's headline finding ("chop is dominant") is an artefact of its instrument.**
+Under the settled read, chop is not dominant; holding is, 7 to 1.
+
+### The put ladder is the half that does not work
+
+Split by side, the picture is completely different:
+
+| | rungs | touched | held |
+|---|---|---|---|
+| Calls (C1-C3) | 9 | 6 | **6 of 6** |
+| Puts (P1-P3) | 9 | **2** | 1 of 2 |
+
+Six of nine put rungs were **never reached** — 08-27's P1 sat 331pts below spot
+and P2 631pts below; 08-28's P1 was 479pts below. **The put side is ranked by
+gamma force with no proximity filter and lands outside any tradeable distance.**
+That is precisely H11's original claim, now with valid evidence behind it, and it
+is a *side-specific* failure rather than the whole-ladder failure the withdrawn
+observation asserted.
+
+The one put failure is also the one rung with **8 re-tests** — repeated tapping
+looks like distribution rather than defence, and may be a usable tell. One
+instance; noted, not proposed.
+
+**Count: 3 valid ladder-days.** The 5-day threshold is not met. Nothing changes.
+
+## H7 — the overnight flip is worse than unreliable; it inverts the strategy
+
+Strategy recommendation against what each day actually paid (day shape = where
+price closed in its range; >=75% or <=25% means the move RAN and Strategy 2 was
+right; 35-65% means it FAILED BACK and Strategy 1 was right):
+
+| day | shape | close@ | scans -> strategy |
+|---|---|---|---|
+| 08-25 | FAILED BACK (S1) | 50% | 13:04 **S1 ✓** · 21:56 S2 ✗ |
+| 08-26 | RAN (S2) | 99% | 13:12 **S2 ✓** · 13:14 **S2 ✓** · 21:43 S1 ✗ · 22:11 S1 ✗ |
+| 08-27 | mixed | 65% | 13:23 S1 ~ |
+| 09-08 | RAN (S2) | 23% | 15:39 S1 ✗ |
+| 09-09 | FAILED BACK (S1) | 40% | 15:20 **S1 ✓** |
+
+**Overall 4 right / 4 wrong — the same coin flip as the direction call. But it
+separates cleanly by session:**
+
+- **In-session scans (PRE_NY, NY_MIDDAY): 4 right, 1 wrong, 1 mixed.**
+- **OVERNIGHT scans: 0 right, 3 wrong.**
+
+Every overnight scan called the wrong strategy, and did so by naming the wrong
+regime. The mechanism is measurable in the published numbers:
+
+| day | flip range across the day's scans | price moved | regime label |
+|---|---|---|---|
+| 08-24 | **389.1pts** over 8 scans | 258.7 | ABOVE *and* BELOW — **contradicted itself** |
+| 08-25 | 294.7pts over 2 scans | 201.6 | ABOVE *and* BELOW — **contradicted itself** |
+| 08-26 | 299.6pts over 4 scans | 153.2 | ABOVE *and* BELOW — **contradicted itself** |
+
+On 08-24 the flip moved **389 points while price moved 259** — the flip is more
+volatile than the thing it is measuring. Two scans **two minutes apart** (08:28
+and 08:30, price 9pts apart) published flips 192pts apart and *opposite* regime
+labels, which means opposite strategies.
+
+**This is 3 of 3 on the overnight sub-claim and 3 of 3 on self-contradiction —
+the threshold is met and the evidence points one way.** It is now the
+best-supported finding in this register. Reading it, not acting on it, per the
+rule: a proposal belongs in its own entry with a stated mechanism, and the
+obvious candidate (suppress the regime label and the strategy recommendation on
+OVERNIGHT scans, keep the levels) needs writing up as one rather than being
+slipped in through a retrospective.
+
+**What this does NOT say.** The direction call from overnight scans was 2 right /
+1 wrong — it is specifically the *flip*, and therefore the strategy selection,
+that overnight gets wrong. Do not generalise it into "overnight scans are
+useless".
+
+---
+
+# Decisions taken 2026-09-09 (trader's call, three of them)
+
+## 1. The settled read is now the OFFICIAL verdict, and history is re-graded
+
+`review_day.grade_level` now takes its verdict from `settled_read()`; the
+first-touch rule is retained as `_first_touch()` and reported on every level as
+`first_touch_reaction`, so nothing is quietly overwritten. `role_reversal()` in
+`gex_retro.py` delegates to it — **one implementation, one grader**, which is
+what the invariant always claimed.
+
+### The re-grade, 7 trading days, 122 levels price actually reached
+
+| outcome | NEW (settled) | OLD (first touch) |
+|---|---|---|
+| respected / held | **75** | 8 |
+| chopped | **0** | 70 |
+| broke | 21 | 44 |
+| unsettled (no read) | 26 | 0 |
+| untouched | 45 | 45 |
+
+**Held: 61% under the new grader, 7% under the old. 112 verdicts changed.**
+
+### Read this before quoting the reversal
+
+**"Chop went from 70 to 0" is NOT evidence that chop was disproved.** The
+settled read has no chop category *by construction* — it asks which side price
+settled on and measures the worst excursion from there, so "traded both sides"
+cannot be an answer it gives. The honest comparison is narrower and still
+decisive: of the levels the old grader called broken or chopped, the settled read
+finds most were **poked and then respected**, with worst excursions in the
+4–15pt range. Examples from 08-24 alone: `Asia Low + CALL WALL 29,200.6` broke →
+held, worst **7.0pts**; `London High + PDL 29,136.4` broke → held, worst
+**12.4pts**; `MAX PAIN 29,099.3` broke → held, worst **11.8pts**.
+
+**The new grader also abstains more: 26 of 122 are "unsettled"** — touched, but
+price never held one side long enough to judge. That is a real cost of the
+change. It shrinks the judged sample in exchange for not manufacturing verdicts
+out of near-misses. `classify()` maps it to its own bucket and **never to
+"broke"**, because counting an absent verdict as a failure is exactly how the
+old instrument produced 44 breaks.
+
+**It did not flatter everything.** `PUT WALL 28,999.3` on 08-24 went
+chopped → **broke**, worst excursion **−34.2pts**. The settled read is harder on
+genuine failures, not softer.
+
+**H6 must be re-read from scratch.** Its recorded finding ("chop is dominant,
+hit rate 0.56") was produced by the superseded instrument and no longer stands.
+It is not replaced by "levels held 61%" either — that is one re-grade of 7 days,
+not 5 fresh sessions under the new rule.
+
+## 2. 2026-08-28 counts as an observation
+
+`test_artefact` set to `false`, `artefact_reason:
+counted_by_decision_2026-09-09`. It was a genuine forecast on a real trading day
+off live data. The 2026-08-27 exclusion stands and is a different thing — one
+market state journalled five times.
+
+**Effect, and it went the unflattering way, as expected:** `track.py` moves from
+5 trading days / 11 scans to **7 / 13** (09-09 also completed), and the direction
+record from **4 right / 4 wrong** to **4 right / 5 wrong**. Excluding it had been
+flattering the model. H1 per-day is now **−30.1pts over 7 days, negative on 6 of
+7** — the strongest signal in the register and stronger for the extra day.
+
+## 3. Overnight scans no longer name a regime or pick a strategy
+
+Implemented in `brief.py`. On an `OVERNIGHT` window the strategy line is
+replaced with an explicit refusal, the section-2 regime prose is replaced with a
+warning, and the withheld pick is preserved as `strategy_call_withheld` for the
+record. Verified live on the 2026-09-09 22:08 BST build, which is an overnight
+scan and rendered both.
+
+**Deliberately NOT changed:**
+
+- **The direction call.** Overnight direction was 2 right / 1 wrong. This is a
+  finding about the *flip*, not about overnight scans in general.
+- **The levels, walls, max pain and fuel.** All still published — they come from
+  strike data, not from the flip's position relative to spot.
+- **The `gamma` bias components**, which still vote off the same unstable flip
+  (`above flip by Npts` was +2 on the 09-09 build). That is an inconsistency and
+  it is recorded as one: suppressing the label while the number still votes is
+  half a fix. It is left alone because changing a scoring weight is calibration
+  and there is no evidence for a specific replacement — the flip's *instability*
+  is measured, the right weight for it is not. **Next open question.**
+
+## 4. M3 fixed — no decision needed, it was a bug
+
+`review_day.latest_unreviewed()` now filters `test_artefact` as well as
+`is_trading_day`, matching `review_day():75` and `track.py:82`. It had returned a
+day that `review()` then refused with `"error"` instead of the `"skipped"` shape
+built for it. Listing this as a decision for the trader was a mistake on my part.
+
+## 5. The consistency test that would have caught the wrong thing
+
+`test_consistency.py`'s "role_reversal ignores levels price never reached" check
+was a **grep of `gex_retro.py`'s source text**. When the implementation moved to
+`review_day.py`, the string vanished and the check failed — but had the move gone
+the other way it would have kept passing against a file that no longer held the
+logic. Replaced with four behavioural checks that call the functions: the
+untested-level guard, a level that was reached, that the verdict comes from the
+settled read, that the first-touch verdict is still reported, and that
+`unsettled` is not classified as a break. 20 checks, all passing.
+
+This is the same lesson as D6 and P1 in a third costume: **a rule asserted about
+code is not a rule enforced on code.**
+
+## 3b. The gamma weight, made consistent (2026-09-09, same evening)
+
+The half-fix above is closed. `bias_engine.score()` takes a `session` argument
+and, on `OVERNIGHT`, **withholds the flip-derived votes** — the `+2 above flip /
+-3 below flip` pair and the `+1 straddling` rider. It emits an explicit `+0` row
+saying so, rather than silently omitting them, so the scoring table shows the
+withholding instead of hiding it.
+
+**This introduced no new calibration number.** It applies the rule already in
+force for the regime label to the same input. The alternative — decaying the
+weight — would have required inventing a figure the evidence does not supply:
+the flip's *instability* is measured, the correct discounted weight for it is
+not.
+
+**Only the flip-derived votes are withheld.** The net-GEX vote reads the option
+book and the wall-band vote reads the strikes; neither depends on the flip's
+position relative to spot, and nothing measured says either is unstable
+overnight. They still count.
+
+Verified on the live 22:18 BST overnight build: gamma went **-5 to -2**, headline
+**BEARISH (-7) to MILDLY BEARISH (-4)**, with the withheld row visible in the
+breakdown and the book/wall rows untouched. The direction call still stands on
+its own evidence (overnight direction was 2 right / 1 wrong).
+
+**The invariant is now enforced, not just intended.** Three checks in
+`test_consistency.py` assert the flip contributes 0 overnight, non-zero
+in-session, and that non-flip gamma rows survive the suppression. The two
+suppressions shipped a commit apart and the gap was worth -5 points on a live
+brief; a test is the only thing that stops them drifting apart again. The stub
+is a minimal REAL payload rather than an auto-filling mock, deliberately: if
+`bias_engine` grows a required field this test should fail loudly rather than
+pass against a fiction.
+
+**Still open, and not addressed by this:** whether the flip should carry its
+current in-session weight at all. In-session strategy selection was 4 right / 1
+wrong / 1 mixed, so there is no evidence against it — but that is 6 observations.
+Nothing proposed.
+
+---
+
+# Defects found in the 2026-09-10 08:11Z scan (recorded, NOT fixed mid-scan)
+
+Neither was fixed on the spot, deliberately: re-running `brief.py` to ship a fix
+would journal the same market state twice, which is the inflation problem the
+`artefact_reason` split exists to prevent. Recorded now, fixed on the next code
+pass.
+
+## D8 — "Straddling the flip" is printed when price is not straddling the flip
+
+Today's brief published **"Straddling the flip — reduce size and let the regime
+resolve"** with price 29,419.5 and flip 29,371.5 — **48pts apart, 0.163%**. The
+engine's own straddle threshold is **0.15%**, so by its own definition this is
+not a straddle, and the scoring table agrees: it printed
+`+2 above flip 29371.5 by 48.0pts` with **no** straddling rider.
+
+The cause is the strategy selector's `else` branch at `bias_engine.py:249`:
+
+```
+if   gf and px > gf and (net or 0) > 0:   -> Strategy 1
+elif gf and px < gf:                      -> Strategy 2
+else:                                     -> "Straddling the flip"
+```
+
+Price above the flip with `net <= 0` satisfies neither arm, so it lands in a
+catch-all that names a condition it did not test. Today `net = -0.058`.
+
+**The advice is defensible; the stated reason is false.** "Above the flip but the
+week's book is net short gamma" is a genuine conflict and reducing size is
+reasonable — but a trader who checks the distance, sees 48pts, and finds no
+straddle has been given a wrong reason, which costs more trust than saying
+nothing. This is the same failure mode as the FRED line saying "today" about a
+three-day-old print.
+
+**Fix when next touching the file:** name the real state — flip and book
+disagreeing — and reserve the straddle wording for the case that actually meets
+the 0.15% test.
+
+## D9 — the news tagger reads a keyword without its subject
+
+`"US stocks fall as oil prices jump above $100 a barrel"` was tagged **`risk_on`**.
+The `risk_on` pattern at `news_scorer.py:109` matches `\bjump\b`; the thing
+jumping is **oil**, and the sentence's actual subject is **US stocks falling**.
+Oil through $100 is risk-off and inflationary — the exact opposite of the tag,
+and doubly wrong on a PPI morning.
+
+**No damage today**: it fell into NEEDS_JUDGEMENT and never scored, so the +0 in
+the table is correct. The tag was still backwards, and the pre-filter is the
+thing that decides what a future scorer might auto-score.
+
+**Scope, stated honestly:** this is one instance of the general problem the
+NEEDS_JUDGEMENT queue exists for — keyword matching without a subject. It is not
+a case for more regex. Recorded so that if it recurs it can be counted rather
+than rediscovered.
+
+## What WORKED on this scan, recorded because near-misses should be too
+
+- **D6's guard chain behaved correctly on the pre-market path.** NDX cash was
+  717 min stale (it does not print outside US hours), the `nq_implied` fallback
+  rolled it forward by the NQ move to 29,422.3, greeks were repriced at current
+  spot, and the offset came out at **-2.8**. The value cross-check did not fire
+  because it had no live cash print to disagree with — which is the designed
+  behaviour, not a gap.
+- **P1's staleness warning fired and cost the score nothing it should not have.**
+  DFII10 is 2 business days old, the line said so, and `real_yields` contributed
+  **+0** rather than the +3 that flipped 08 Sep.
+- **The GEXBot offset was matched to feed time** (-12.3 at 2026-09-09 20:00Z)
+  rather than taken against the live price, and the 732-minute feed age is
+  stated at the top of the section.
+
+---
+
+## D10 — the scheduled scan had no repository, and the Routine called it a success
+
+**2026-09-10 12:45:40Z.** The first scheduled run fired, ran for **85 seconds**,
+and produced nothing. No journal entry for 12:45 exists; today's only entry is
+the manual 08:12Z scan.
+
+**Cause, confirmed by comparing the two session records rather than inferred:**
+
+| | `sources` |
+|---|---|
+| This (interactive) session | `[{git_repository: {url: .../CTrader-Bots, revision: refs/heads/main}}]` |
+| The Routine's fired session | **`[]`** |
+
+A scheduled session starts with **no repository cloned**. The prompt's step 1 was
+`git -C /home/user/CTrader-Bots pull` against a path that did not exist, so the
+run died on its first command and every later step was unreachable.
+
+**`create_trigger` has no `sources` parameter** — only `create_session` does. So
+the Routine could not have been given the checkout at creation time through the
+tool that made it. The `mcp_connections: []` warning at creation was visible and
+I read it as connectors-only; the empty `sources` beside it was the real problem
+and I did not check it.
+
+### The part that matters more than the bug
+
+**`last_run.status` was `ROUTINE_RUN_STATUS_SUCCEEDED`.** The scheduler reports
+success when the session *fires and exits*, regardless of whether the work
+happened. A push notification went out saying it ran.
+
+Left alone, this fails **silently every weekday**: the trigger reports green, the
+notification arrives, and no observation accumulates — while the whole point of
+the automation is observation count. It would have been discovered weeks later by
+noticing the register had not grown, which is the same shape as D3 (a day graded
+as complete when it was not) and D1 (a range read as used when the session had
+not started). **A green status is not evidence of work.**
+
+### Fix
+
+The prompt now opens with a **Step 0** that tests for
+`scripts/brief.py`, and if it is absent calls `add_repo` (owner
+`PravinderSamra`, repo `CTrader-Bots`, **access `push`** — a read-only clone
+would lose the journal commit, which is the observation), clones, and calls
+`register_repo_root`. If `add_repo` refuses it must STOP and relay the refusal
+verbatim rather than improvising.
+
+**Verified by a manual test fire rather than by reasoning**, because the previous
+failure came from assuming an environment behaved a certain way. The test fire is
+instructed to state as its first line whether the repo was already present or had
+to be cloned.
+
+### Monitoring gap left open, deliberately
+
+Nothing yet checks that a scheduled run actually *journalled* anything. The
+honest check is not the trigger's status but the artefact: **does
+`journal/<today>/` contain an entry near 12:45Z?** Worth adding to `track.py` as
+a "scheduled run missing" line, so a silent no-op announces itself. Not built
+today — one instance, and the fix above may make it moot. Recorded so it is not
+rediscovered.
+
+## D7 instance 3 — the level board emptied itself on the day it mattered most
+
+**2026-09-10 15:06Z.** Range 463.9 = **132.8% of ADR**, `EXHAUSTED`, remaining
+budget **0.0**. `keep()` sizes the board by `budget * 1.75`, so the cap was
+**zero** and every non-structural level was pushed to the footnote. The board
+shipped **two rows**, both 45-day structural walls (+78 and -472).
+
+Sent to the footnote and labelled *"context only, don't mark"*:
+
+- **PUT WALL ●●●●● 0.69bn at 29,194 — 22 points below spot.**
+- GAMMA FLIP 29,339 (+122), the level deciding the strategy the brief recommends.
+- MAX PAIN 29,444, CALL WALL 29,494, PDH, PWH.
+
+The strongest put wall on the week's chain, 22pts from price, on a day the brief
+calls STRONGLY BEARISH in short gamma — filtered off the board as unreachable,
+because a range-budget rule was applied to a dealer-hedging boundary.
+
+**D7's fix is why they were visible at all.** Before it they would have vanished
+from board and footnote together. The fix works; the underlying rule is still
+wrong.
+
+**Third instance, so the 3-day threshold is MET:**
+
+| date | dropped | consequence |
+|---|---|---|
+| 09-08 | put wall, max pain, flip | session low landed **7.4pts below the put wall**, where the 177pt bounce began |
+| 09-09 | call wall (+140 vs a 112 cap) | put wall survived by **2pts**; the asymmetry tracked where price sat, nothing about the walls |
+| 09-10 | **everything except two structural walls** | budget 0 -> cap 0 |
+
+**The mechanism, stated plainly:** the range budget forecasts how far the day's
+RANGE can still grow. A wall is a price at which dealers must hedge. These are
+unrelated quantities. An exhausted budget says nothing about whether price will
+*reach* a level — H1 shows the budget over-forecasts extension on 6 of 7 days,
+and today price travelled 463.9pts on a day that opened with 206pts of budget.
+Filtering walls by it is a category error, and it fails hardest exactly when the
+day is most volatile, because that is when the budget is most exhausted.
+
+**Proposal (threshold met, NOT yet applied):** exempt `CALL WALL`, `PUT WALL`,
+`GAMMA FLIP` and `MAX PAIN` from the budget filter the way `structural` already
+is, and keep the `_(stretch)_` tag to mark distance. Session extremes and PD/PW
+levels keep the budget rule — those ARE reachability claims, so the rule fits
+them. This changes what gets marked, so it is the trader's call.
+---
+
+## D11 — the scan ran, wrote the journal, and pushed nothing
+
+**2026-09-10, found while diagnosing why a scheduled run did minutes of work and
+left no commit.** The scan itself was never the problem. `sync_archive.py`'s
+`PATHS` list carried three archive directories:
+
+```
+journal/ · research/chart-ladders/ · research/live-walls/
+```
+
+but every scan also writes **`research/gexbot/ladders/<stamp>-oi.json`** and
+`-vol.json`, and that directory **is tracked in git** (22 files at the time).
+It was simply absent from the list. So each scan left two tracked-directory
+files permanently unstaged.
+
+That alone loses data quietly. The second-order effect lost the whole scan:
+
+1. The scan commits the journal, pushes, and loses the race — `main` takes
+   commits from `xauusd-data-bot` and `GEX Agent Bot` on their own schedules, so
+   losing a push race is the **normal** case on this branch, not an error case.
+2. The recovery was `git rebase origin/main`, which refuses outright when
+   untracked files in the tree would be overwritten by the incoming commits.
+   The stale gexbot ladders were exactly those files.
+3. `rebase --abort` ran, `sync()` returned `pushed=False`, and the observation
+   stayed in a container that was about to be reclaimed.
+
+**The reporting made it invisible.** A failed push printed as `pushed=False` at
+the tail of an otherwise successful-looking `archive: N file(s) committed` line.
+Nothing shouted. Same shape as D10: *the run looked like it worked.*
+
+Worse, `sync()` reported `pushed=True` **whenever the push command returned 0**,
+which is not the same claim. Observed on this date: a scan pushed successfully,
+a later `rebase --abort` rewound the local branch off the commit it had just
+pushed, and the local repo then disagreed with origin in both directions with no
+warning.
+
+### Fix
+
+- `research/gexbot/ladders` added to `PATHS`. Writing a path the archive does not
+  carry is the same defect as not writing it.
+- Rebase recovery uses `--autostash`, and a conflict now retries instead of
+  giving up on the first one — a conflict is usually a concurrent scan touching
+  `index.json`, and the next attempt re-fetches a settled origin. Only a
+  conflict surviving every attempt is real.
+- **`pushed` is no longer inferred from the push command's exit code.** After the
+  loop, `sync()` fetches and asks whether `origin/<branch>` actually contains
+  `HEAD`. It reports that, and nothing else.
+- `brief.py` prints `ARCHIVE NOT PUSHED … This scan is lost unless you push it by
+  hand` on its own line when the commit did not land.
+
+### Also fixed alongside
+
+**`brief.py` ignored unknown arguments.** `brief.py --help` did not print help —
+it ran a full scan and recorded a journal entry, and so did any typo of
+`--no-journal`. Found by doing exactly that while diagnosing this. A flag the
+program does not understand must never fall through into recording an
+observation; unknown options now exit 2 before any network call.
+
+**Three files pinned paths to `/home/user/CTrader-Bots`** (`wall_retro.py`
+absolutely; `levels_fuel.py` and `review_day.py` via `~/CTrader-Bots`). A
+scheduled session's checkout is named by `add_repo`, which returns the
+**lower-cased** `/home/user/ctrader-bots` and instructs cloning there — so a
+session that follows its instruction literally lands somewhere none of those
+paths exist. All three now derive from `__file__`.
+
+---
+
+## D12 — the brief and the chart disagree about the put wall by ~200pts
+
+**Root cause found, fixed and verified 2026-09-10. Applied on the owner's
+decision after the A/B below; the 3-day rule was waived deliberately because
+this is not a model preference — it is one board carrying two sets of greeks.**
+
+The two are meant to be one computation delivered as two files. The flip agrees
+exactly, build after build. The put wall disagreed on roughly two builds in
+three, always with the brief **above** the chart, always by a clean multiple of
+the 50pt bin.
+
+### The cause: two different sets of greeks on one board
+
+Both paths bin identically (`bin_pts=50` in each). Both use the same formula.
+They differ in **one argument**:
+
+| | call |
+|---|---|
+| `gex_chart.collect()` | `gl.bucket(rows, S_ndx, dte_max, bin_pts=50, reprice=True)` |
+| `gex_levels.build()`  | `bucket(rows, S_ndx, dte, reprice=stale)` |
+
+`reprice=True` recomputes gamma with Black-Scholes at the **current** spot.
+`reprice=False` trusts **CBOE's published greeks**, which carry the timestamp of
+the last chain recompute. So on any day the cash quote is not stale — that is,
+on a normal live session — the brief selects its walls from published greeks
+while the chart reprices.
+
+**And `gamma_flip()` reprices unconditionally.** It has no `reprice` parameter
+and always calls `bs_gamma`. So the brief prints a **repriced flip beside
+published-greek walls**: two numbers on one board, computed at two different
+spots. That is precisely the mixing `bucket()`'s own docstring was written about
+— *"the figure was being printed beside a flip that WAS repriced."* The fix was
+generalised to net GEX and to the chart, and this call was left conditional.
+
+`reprice=stale` also guards the wrong clock. `_cash_is_stale()` ages the **cash
+quote** (30-minute threshold); it says nothing about when CBOE last recomputed
+the **greeks**. Measured mid-session on 2026-09-10 with `stale=False` and
+`basis.greeks = cboe_published`:
+
+```
+current NDX spot            29132.2
+spot stamped on CBOE greeks 29161.6   (n=1501 contracts)
+drift                          -29.4 pts
+```
+
+A fresh cash quote, and greeks 29pts out of date.
+
+### Why 29pts moves a wall 200pts
+
+Published greeks put the gamma peak at the spot CBOE last used, inflating the
+strike nearest *that* spot. It turns wall selection into a near-tie, and the tie
+lands differently as the drift changes:
+
+```
+published greeks (what the brief uses)   repriced BS (what the chart uses)
+  NDX 29000   0.858bn   <- winner          NDX 29000   1.008bn   <- winner
+  NDX 29100   0.764bn                      NDX 29100   0.547bn
+  margin over 2nd: 0.094bn                 margin over 2nd: 0.461bn
+```
+
+The brief decides its put wall by a **0.094bn** margin; the chart by **0.461bn**,
+five times wider. A near-tie decided by stale greeks is why the answer moved
+between builds while the chart's stayed put, and why the loser was always the
+bin nearer spot — that is the one published greeks over-weight.
+
+### A/B, same market, minutes apart
+
+`bucket(rows, S_ndx, dte, reprice=stale)` -> `reprice=True`, one line:
+
+| | run 1 | run 2 | run 3 |
+|---|---|---|---|
+| `reprice=stale` (current) | FAIL 28951 vs 29101.3 | FAIL 28925 vs 29125.2 | FAIL 28939 vs 29039.2 |
+| `reprice=True` (proposed) | PASS 31/31 | PASS 31/31 | PASS 31/31 |
+
+Six consecutive builds on the same live chain. The change also makes `build()`
+consistent with `gamma_flip()`, which already reprices unconditionally, and with
+`gex_chart`, which already passes `reprice=True`.
+
+### Applied
+
+`gex_levels.build()` now passes `reprice=True` unconditionally. Verified over
+three further builds after the change: 31/31 each time.
+
+`basis["greeks"]` was conditional on the same `stale` flag and had to go with it
+— left alone it would have printed `cboe_published` over repriced walls, which is
+the same defect as D12 itself: a label describing a computation that no longer
+happens. It is now unconditionally `repriced_bs_at_current_spot`, which is what
+every number on the board is.
+
+**What changed in the output.** Put walls move, typically to a bin 100-200pts
+below where the brief used to put them — the bin the chart has been drawing all
+along. Nothing else on the board is touched: `keep()`, the scoring, the wall
+ranks and the grader are all unchanged. The flip does not move, because it was
+always repriced.
+
+**Worth grading over the coming days:** whether price respects the repriced wall
+better than the published-greek one did. The argument for it is internal
+consistency, not a measured hit rate, and the two are not the same claim.
+
+### An earlier version of this entry reasoned wrongly — corrected
+
+It claimed the brief selected among **raw strikes** while the chart binned, and
+called the numbers impossible because "a bin cannot hold less than its own
+contents". Both figures were the same 50pt bin, one quoted in NDX strike space
+and the other in CFD price space, 4.4pts apart. The conclusion that granularity
+was not the cause was right; the reasoning under it was not.
+
+### The check that was supposed to catch this, and didn't
+
+D12 stayed invisible because `test_consistency.py`'s wall comparison was broken
+three ways at once:
+
+- It searched only the level **board**, never the `far` footnote — but D7's fix
+  moved un-truncatable walls *into* that footnote, so the wall the chart drew
+  read as "missing" precisely when D7's fix was working.
+- It substring-matched `"CALL WALL" in name`, so the row **"STRUCTURAL CALL
+  WALL"** shadowed the real one and it compared two different levels. This
+  produced a false failure — `brief 29308.4 vs chart 29508.0` — on a build whose
+  call walls agreed to 0.1pt.
+- When a wall was absent it called `check(..., True, "absent from one — not
+  comparable")` — it **asserted success on the exact condition it existed to
+  detect**. A wall vanishing from the brief is D7, and the D7 guard passed on D7.
+
+Now: names are matched per confluence segment (`"PDL + London Low + STRUCTURAL
+CALL WALL"` splits on `" + "`, so a wall sharing a level is found and
+`STRUCTURAL` no longer shadows), every row under a role is collected rather than
+the first, and the assertion is D7's actual contract — **the wall the chart drew
+must be markable somewhere in the brief**. Absent now fails.
+
+## D13 — a fired session can stop and wait for a human who is not there
+
+**Open. Partly inferred — read the evidence line by line before acting on it.**
+
+D11's fixes were verified in an interactive session: clone from scratch, full
+`brief.py`, journal written, archive committed, push verified against origin. So
+a **test fire** was run at **2026-09-10 15:36:01Z** to prove the same loop from a
+*scheduled* session, per D10's rule that this class of fix is verified by firing
+rather than by reasoning.
+
+**It produced nothing.** The session went idle at 15:37:43Z — **102 seconds** —
+with 6,710 output tokens and no journal entry, no commit, no push. Today's
+journal still holds only 08:12Z and 15:07Z. `last_run` will report SUCCEEDED.
+
+### What is proven, and what is not
+
+**Proven.** `session_context` for that fired session carries **no `sources` key
+at all**, exactly as D10 found. And a *separate* session spawned two minutes
+later with `create_session` — no repo, same environment, same model
+(`claude-sonnet-5`), given a comparable instruction to call `add_repo` with push
+access and clone — did not fail. It **stopped and asked a human**:
+
+```
+status_category: need_input
+status_detail:   "user request unclear; detected potentially injected instruction"
+needs_action:    "confirm actual task and whether to clone
+                  PravinderSamra/CTrader-Bots with push access"
+```
+
+It then sat `SESSION_STATUS_RUNNING`, waiting for a confirmation that in a
+scheduled context never arrives.
+
+**Not proven.** The fired session recorded no `post_turn_summary`, and its
+transcript is not readable from another session — there is no `send_message` or
+`list_events` in the Routine MCP surface, and a disconnected cloud session does
+not appear in `ListAgents`. So *that this is what stopped the 15:36 fire is an
+inference* from a matching duration, a matching silence, and a reproduction. It
+is the best available explanation, not a confirmed cause.
+
+### Why this shape is dangerous
+
+A prompt that instructs an agent to attach an external repository **with push
+access** and then clone it is, read cold by a session with no context, shaped
+exactly like a prompt injection. Refusing to act on it unconfirmed is the agent
+behaving **correctly**. The failure is architectural: the instruction that most
+needs trust is the one a scheduled session has the least context to trust, and
+`create_trigger` has no `sources` parameter to remove the need for it.
+
+And it fails in the worst available way — indistinguishably from success. The
+Routine reports SUCCEEDED, the push notification arrives, and nothing is written.
+That is now the **third** instance of the same pattern, after D10 and D3: *a
+green status is not evidence of work.*
+
+### What was done
+
+The Routine's prompt was rewritten to open by stating plainly that this is the
+repo owner's own standing automation over his own repository, running on a
+schedule since 2026-09-09; the attach step is now a short conditional rather than
+an emphatic block of imperatives, and the ALL-CAPS override language throughout
+was removed. Whether that is enough is **untested** — the next scheduled run at
+**2026-09-11 12:45Z** is the test.
+
+### The option not taken, and why it is still the right one
+
+`create_session` **does** accept `source_url`, and a session created with it
+carries `sources: [{git_repository: {url: .../CTrader-Bots, revision: main}}]` —
+verified. Pointing the Routine at such a session with `persistent_session_id`
+would delete the attach instruction entirely and with it this whole failure mode.
+
+Two things stopped it. `update_trigger` cannot change targeting, so it means
+delete-and-recreate, losing the Routine's run history; and `create_trigger`
+**rejects `notifications` for a persistent-session Routine**, so the phone alert
+disappears — on an automation whose defining failure is being invisible, that
+trade is backwards.
+
+The real fix is the monitoring gap D10 left open and this entry now makes urgent:
+**something must check that `journal/<today>/` gained an entry, and say so when it
+did not.** Until that exists, every fix here is guarded only by someone
+remembering to look.

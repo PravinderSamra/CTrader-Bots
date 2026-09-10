@@ -10,7 +10,7 @@ numbers a script can compute exactly.
     python3 brief.py            # markdown brief
     python3 brief.py --json     # full structured payload
 """
-import json, sys
+import json, os, sys
 from datetime import datetime, timezone
 
 import macro_probe, levels_fuel, gex_levels, bias_engine, session_context, journal
@@ -22,9 +22,28 @@ def gather(last_scan_iso=None):
         return {"error": "cTrader unavailable", "detail": lv}
     mc = macro_probe.run()
     gx = gex_levels.build(lv["price"])
-    bs = bias_engine.score(mc, lv, gx)
-    gx["expiry_structure"] = gex_levels.expiry_structure(gx)
+    # ctx must be resolved BEFORE scoring: the session window decides whether
+    # the flip-derived gamma votes count (H7).
     ctx = session_context.context(last_scan_iso=last_scan_iso)
+    bs = bias_engine.score(mc, lv, gx, session=ctx.get("session_window"))
+    gx["expiry_structure"] = gex_levels.expiry_structure(gx)
+    # H7, decided 2026-09-09: OVERNIGHT scans picked the wrong strategy 3 of 3,
+    # because the flip they read it from is not stable across the roll -- on
+    # 08-24 it moved 389pts while price moved 259, and two scans two minutes
+    # apart published opposite regime labels. Suppress the regime CALL and the
+    # strategy pick on that window; the levels, walls and fuel still stand, and
+    # the direction call is untouched (overnight direction was 2 right / 1
+    # wrong, so this must not be generalised into "overnight is useless").
+    if (ctx.get("session_window") or "").upper() == "OVERNIGHT":
+        bs["strategy_suppressed"] = True
+        bs["strategy_call_withheld"] = bs.get("strategy_call")
+        bs["strategy_call"] = (
+            "NO STRATEGY CALL on an overnight scan. The flip this would be "
+            "chosen from is not stable across the 21:00 roll: measured over "
+            "5 sessions it moved up to 389pts while price moved 259, and every "
+            "multi-scan day contradicted its own regime label. Overnight "
+            "strategy picks were wrong 3 times out of 3. Mark the levels below "
+            "and choose the model from the first in-session scan.")
     # GEXBot is ADDITIVE and OPTIONAL. It informs nothing above it — not the
     # bias score, not the level board, not the flip. If the token is missing or
     # the feed is down, `gexbot` is None and the brief is byte-identical to
@@ -106,11 +125,21 @@ def gexbot_block(gx, cfd_price):
         out["disagreement_floor"] = round(floor, 1)
     # Persist BOTH lenses each scan. This is the raw material for H12: the same
     # source, ranked two ways, graded by the same rule as our own ladder.
-    try:
-        out["saved"] = [gexbot.persist_ladder(offset=off, cfd_price=cfd_price,
-                                              weight=w) for w in ("vol", "oi")]
-    except Exception as e:
-        out["saved_error"] = f"{type(e).__name__}: {e}"
+    #
+    # NAS100_NO_PERSIST exists for test runs. test_consistency.py's LIVE half
+    # calls gather(), so every suite run used to drop two ladder files into
+    # research/gexbot/ladders — harmless while that directory was never staged,
+    # but D11 added it to sync_archive's PATHS, and from then on a test run
+    # followed by a real scan would have swept test artefacts into the evidence
+    # archive as though they were observations.
+    if os.environ.get("NAS100_NO_PERSIST"):
+        out["saved"] = None
+    else:
+        try:
+            out["saved"] = [gexbot.persist_ladder(offset=off, cfd_price=cfd_price,
+                                                  weight=w) for w in ("vol", "oi")]
+        except Exception as e:
+            out["saved_error"] = f"{type(e).__name__}: {e}"
     return out
 
 
@@ -768,7 +797,17 @@ def markdown(d):
     A(f"**Gamma:** flip at **{flip}**, price {px} \u2192 "
       f"**{gx['gamma_flip']['spot_position']}** \u00b7 "
       f"this week's net GEX **{net} $bn per 1% move**\n")
-    if long_gamma:
+    if (d.get("bias") or {}).get("strategy_suppressed"):
+        A(f"> ⚠️ **No regime call on an overnight scan.** Price is "
+          f"{'above' if long_gamma else 'below'} the flip *as computed now*, but "
+          f"that reading has not survived the roll: over 5 sessions this number "
+          f"moved as much as **389pts while price moved 259**, and on every day "
+          f"with more than one scan it named both regimes. Overnight strategy "
+          f"picks were **wrong 3 times out of 3**.\n"
+          f">\n"
+          f"> ➤ **Mark the levels. Do not pick a model from this scan** — take "
+          f"that from the first in-session read, when the chain has settled.\n")
+    elif long_gamma:
         A(f"> The big options desks are **leaning against** today's move. When "
           f"price runs up they sell into it; when it dips they buy. That squashes "
           f"the range and makes moves fade back.\n"
@@ -999,7 +1038,34 @@ def markdown(d):
     return "\n".join(o)
 
 
+USAGE = """brief.py — build the NAS100 daily brief.
+
+    python3 brief.py                        full brief to stdout, journalled
+    python3 brief.py --chart PATH.svg       also draw the gamma chart
+    python3 brief.py --no-journal           build but do not record an observation
+    python3 brief.py --levels               level board only
+    python3 brief.py --json                 raw scan dict
+
+Every run WITHOUT --no-journal writes a journal entry and pushes it. That is a
+real observation in the evidence register, so it is not a thing to do casually.
+"""
+
+_FLAGS = {"--chart", "--no-journal", "--levels", "--json"}
+
 if __name__ == "__main__":
+    # Unknown flags used to be ignored, which meant `brief.py --help` did not
+    # print help — it ran a full scan and committed a journal entry, and so did
+    # any typo of --no-journal. A flag the program does not understand must
+    # never fall through into recording an observation.
+    _bad = [a for a in sys.argv[1:]
+            if a.startswith("--") and a not in _FLAGS]
+    if "--help" in sys.argv or "-h" in sys.argv:
+        print(USAGE); sys.exit(0)
+    if _bad:
+        print(USAGE, file=sys.stderr)
+        print(f"unknown option(s): {' '.join(_bad)}", file=sys.stderr)
+        sys.exit(2)
+
     # Chain scans together: the previous scan's timestamp is what lets the
     # brief say "new trading day" vs "continuation".
     d = gather(last_scan_iso=journal.last_scan_utc())
@@ -1067,9 +1133,19 @@ if __name__ == "__main__":
                 if not r.get("ok"):
                     print(f"\n_[ARCHIVE NOT SAVED: {r.get('why')} — commit by "
                           f"hand or this scan is lost]_", file=sys.stderr)
+                elif r.get("committed") and not r.get("pushed"):
+                    # Committed locally but not on origin is the same outcome
+                    # as never running: the container is reclaimed and the
+                    # observation goes with it. This used to print as a quiet
+                    # `pushed=False` at the end of a successful-looking line,
+                    # which is exactly how it got missed.
+                    print(f"\n_[ARCHIVE NOT PUSHED: {r['committed']} file(s) "
+                          f"committed locally as {r.get('head')} but NOT on "
+                          f"origin — {r.get('why')}. This scan is lost unless "
+                          f"you push it by hand.]_", file=sys.stderr)
                 elif r.get("committed"):
                     print(f"\n_[archive: {r['committed']} file(s) committed, "
-                          f"pushed={r.get('pushed')}]_", file=sys.stderr)
+                          f"pushed=True ({r.get('head')})]_", file=sys.stderr)
             except Exception as e:
                 print(f"\n_[ARCHIVE SYNC ERROR: {type(e).__name__}: {e}]_",
                       file=sys.stderr)

@@ -19,10 +19,13 @@ from datetime import datetime, timezone, timedelta
 from zoneinfo import ZoneInfo
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
+# The sibling skill, found relative to this file rather than under a
+# hardcoded ~/CTrader-Bots — a scheduled session's checkout is named by
+# add_repo, not by us, and the capitalised path does not exist there.
 _CANDIDATES = [
     _HERE,
-    os.path.expanduser("~/CTrader-Bots/.claude/skills/"
-                       "liquidity-inducement-phone/scripts"),
+    os.path.abspath(os.path.join(_HERE, "..", "..",
+                                 "liquidity-inducement-phone", "scripts")),
 ]
 for _c in _CANDIDATES:
     if os.path.isfile(os.path.join(_c, "ctrader_http.py")):
