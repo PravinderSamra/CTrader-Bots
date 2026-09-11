@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-09-10T20:25:40.687Z",
+  "generatedAt": "2026-09-11T10:15:39.239Z",
   "yields": {
     "US10Y": 4.83,
     "US2Y": 4.43,
     "realYield10Y": 2.46,
     "realYield5Y": 2.2,
     "curve2s10s": 40,
-    "breakeven10Y": 2.37,
-    "breakeven5Y": 2.41,
-    "forward5y5y": 2.33,
+    "breakeven10Y": 2.4,
+    "breakeven5Y": 2.46,
+    "forward5y5y": 2.34,
     "dayOverDay": {
       "US10Y": 0.03,
       "US2Y": 0.04,
@@ -34,26 +34,26 @@
     "openInterestChange": -66065
   },
   "etfFlows": {
-    "gldTonnes": 1101.3,
-    "gldWoWChange": 8.4,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1094.2,
+    "gldWoWChange": -7.1,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4318.105,
-    "XAGUSD": 63.545,
-    "EURUSD": 1.16064,
-    "USDJPY": 154.42,
-    "USDCHF": 0.81348,
-    "USDCNH": 6.71497,
-    "GBPUSD": 1.3505,
-    "USDCAD": 1.38383,
-    "USDSEK": 9.6909,
-    "US500": 7601.4,
-    "GER40": 25335.95,
-    "UK100": 10596.05,
-    "ADR_14day": 106.2,
-    "ADR_usedToday": 121.1,
-    "goldSilverRatio": 68
+    "XAUUSD": 4346.24,
+    "XAGUSD": 64.0165,
+    "EURUSD": 1.15956,
+    "USDJPY": 154.122,
+    "USDCHF": 0.81505,
+    "USDCNH": 6.70913,
+    "GBPUSD": 1.35077,
+    "USDCAD": 1.38496,
+    "USDSEK": 9.68612,
+    "US500": 7637.9,
+    "GER40": 25545.15,
+    "UK100": 10656.95,
+    "ADR_14day": 108.7,
+    "ADR_usedToday": 59.9,
+    "goldSilverRatio": 67.9
   },
   "dollarLiquidity": {
     "stlfsi": -0.7884,
@@ -66,46 +66,34 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Treasury yields steady as traders await consumer inflation data amid oil price pressure",
+      "source": "CNBC",
+      "publishedAt": "2026-09-11T08:35:57.000Z",
+      "hoursAgo": 1.7
+    },
+    {
+      "headline": "Trump administration to sanction unnamed 'large' bank on Monday, Bessent says - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-10T22:46:20.000Z",
+      "hoursAgo": 11.5
+    },
+    {
+      "headline": "US slaps new sanctions on networks aiding Iran's proxies in Middle East - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-10T20:32:11.000Z",
+      "hoursAgo": 13.7
+    },
+    {
       "headline": "ECB hikes rates as Iran war adds to inflation angst - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-10T15:18:26.000Z",
-      "hoursAgo": 5.1
+      "hoursAgo": 19
     },
     {
       "headline": "Treasury yields move higher as investors await key wholesale inflation data",
       "source": "CNBC",
       "publishedAt": "2026-09-10T10:44:07.000Z",
-      "hoursAgo": 9.7
-    },
-    {
-      "headline": "South African rand slips as dollar, oil outweigh mixed economic data - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-10T06:07:00.000Z",
-      "hoursAgo": 14.3
-    },
-    {
-      "headline": "EXCLUSIVE: How a billion-dollar sanctions dodge kept Chinese goods flowing to Iran - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-10T06:05:00.000Z",
-      "hoursAgo": 14.3
-    },
-    {
-      "headline": "Gold edges higher on weaker dollar, US inflation data in focus - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-10T02:56:00.000Z",
-      "hoursAgo": 17.5
-    },
-    {
-      "headline": "ECB raises interest rates, bolstering bets for further moves - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-09T22:02:00.000Z",
-      "hoursAgo": 22.4
-    },
-    {
-      "headline": "US Treasury to buy up to $6 billion in Sept 10 buyback operation - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-09T21:04:41.000Z",
-      "hoursAgo": 23.3
+      "hoursAgo": 23.5
     }
   ],
   "briefing": null
