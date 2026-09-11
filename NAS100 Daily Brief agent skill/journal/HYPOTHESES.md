@@ -2396,3 +2396,84 @@ being made independent of a variable it should not depend on.
   **29,429.3** / C **29,108.0**, a 18.8pt difference in the close. Pre-roll
   grading is a convenience, not a record — D3 already holds the day until 21:00Z,
   and provisional numbers should not be cited in a threshold count.
+
+---
+
+## D14 — a zero meaning "no data yet" was published as a price
+
+**2026-09-11 13:23Z**, six minutes before the US open. Section 7 printed:
+
+| | by OPEN INTEREST | by VOLUME (today) |
+|---|---|---|
+| Heaviest positive gamma | 29,458 | **183** |
+| Heaviest negative gamma | 29,183 | **183** |
+| 0DTE heaviest positive | 29,623 | **183** |
+
+and *"Flip cross-check: ours 29,034, theirs **183** (-28,852pts apart)"*, and
+*"The dominant strike is stable at **0** across 6 samples — positioning is
+settled there."*
+
+**Cause, confirmed by reading the feed directly:**
+
+```
+full | spot= 29105.7 | zero_gamma= 0 | major_pos_vol= 0 | major_pos_oi= 29275
+zero | spot= 29105.7 | zero_gamma= 0 | major_pos_vol= 0 | major_pos_oi= 29440
+one  | spot= 29105.7 | zero_gamma= 0 | major_pos_vol= 0 | major_pos_oi= 29100
+```
+
+The OI fields are healthy. The **volume-weighted** fields are `0` — correctly, because
+**no volume has traded yet today**. The code then applied the CFD offset
+(`+182.6`) to that zero and published **183** as a strike price.
+
+**This is not a vendor outage.** It is a sentinel — 0 meaning *"nothing yet"* —
+being arithmetic'd into a price. `zero_gamma` was 0 too, which is also an H13
+data point: the field can read 0 pre-RTH, so a `zero_gamma` of 0 must never be
+counted as an observation of where the flip is.
+
+**Root cause is the family already in this register**: no guard between a value
+and the claim made of it. D6 was a fresh timestamp on a stale price; this is a
+zero on a live feed. A strike 28,852 points from our flip, and a "dominant strike
+stable at 0", are both self-evidently impossible and were rendered anyway.
+
+**Damage: none to the call, the board or the fuel model** — section 7 is
+research-only and says so. But it was printed as if meaningful, and H12 counts
+observations out of exactly these fields, so a 0 must not enter that count.
+
+**Fix when next touching the file** — not applied mid-scan, since re-running
+would journal this market state twice:
+
+1. Treat a volume-weighted field of `0`, or any value more than ~5% from the
+   feed's own `spot`, as **absent**. Print "no volume yet today (pre-open)"
+   rather than a converted number.
+2. Never convert an absent value through the offset — the offset is what turned
+   0 into a plausible-looking 183.
+3. Suppress the flip cross-check when either side is absent. A -28,852pt
+   disagreement is not a disagreement, it is a missing value.
+4. **H12 and H13 must not count a scan whose volume fields are 0.**
+
+## D15 — a zero budget degenerates the path read, the same way it emptied the board
+
+Same brief. With `budget = 0.0` (EXHAUSTED at 127.2% of ADR), the path text read:
+
+> **DOWNSIDE path: mostly clear.** First real brake is 29398.0 (**6pts away**),
+> which is **beyond today's 0pt budget** — so inside today's range there is
+> little to stop a breakdown.
+
+Every distance is "beyond" a zero budget, so the comparison stops carrying
+information and the sentence asserts a clear path to a brake **six points away**.
+
+Worse, the secondary table in the same brief lists that exact level —
+**29,398, 1.55bn, 55,906 contracts** — as *"in-the-money call gamma… dealers are
+LONG gamma here… expect a stall and dip-buying, it acts as **support**"*. The
+largest single concentration on the page, six points below spot, described as
+clear air by one section and as support by another.
+
+**This is D7's defect in a second location.** D7 was fixed for the level board on
+2026-09-10; the path read takes the same budget and degenerates the same way.
+Fixing one instance of a category error does not fix the category — the same
+question ("can price REACH this?") is still being answered with the range budget
+("how much further can the range GROW?").
+
+**Candidate fix:** window the path read on ADR as `secondary_walls()` already
+does, not on the remaining budget. No new calibration — the same substitution
+already made twice.
