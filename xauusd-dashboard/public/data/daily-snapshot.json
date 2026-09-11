@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-11T14:43:26.197Z",
+  "generatedAt": "2026-09-11T18:01:42.101Z",
   "yields": {
     "US10Y": 4.83,
     "US2Y": 4.43,
@@ -35,26 +35,10 @@
   },
   "etfFlows": {
     "gldTonnes": 1088.3,
-    "gldWoWChange": -9.9,
-    "trend3W": "OUTFLOW"
+    "gldWoWChange": null,
+    "trend3W": null
   },
-  "snapshotPrices": {
-    "XAUUSD": 4369.985,
-    "XAGUSD": 64.639,
-    "EURUSD": 1.16084,
-    "USDJPY": 153.635,
-    "USDCHF": 0.81513,
-    "USDCNH": 6.70786,
-    "GBPUSD": 1.35248,
-    "USDCAD": 1.38759,
-    "USDSEK": 9.68698,
-    "US500": 7656.1,
-    "GER40": 25525.65,
-    "UK100": 10645.95,
-    "ADR_14day": 108.7,
-    "ADR_usedToday": 110.4,
-    "goldSilverRatio": 67.6
-  },
+  "snapshotPrices": null,
   "dollarLiquidity": {
     "stlfsi": -0.7884,
     "nfci": -0.564
@@ -66,40 +50,46 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "In pictures: The U.S. commemorates the 25th anniversary of 9/11",
+      "source": "CNBC",
+      "publishedAt": "2026-09-11T16:41:40.000Z",
+      "hoursAgo": 1.3
+    },
+    {
       "headline": "Yemen's Houthis reach strategic island at mouth of vital shipping lane - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-11T12:56:15.000Z",
-      "hoursAgo": 1.8
+      "publishedAt": "2026-09-11T16:39:23.000Z",
+      "hoursAgo": 1.4
+    },
+    {
+      "headline": "Oil tanker rates hit record highs following Iran, US shipping attacks - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-11T14:37:33.000Z",
+      "hoursAgo": 3.4
     },
     {
       "headline": "Wealthy investors are pouring billions into this new tax strategy despite risks",
       "source": "CNBC",
       "publishedAt": "2026-09-11T12:00:01.000Z",
-      "hoursAgo": 2.7
+      "hoursAgo": 6
     },
     {
       "headline": "Treasury yields steady as traders await consumer inflation data amid oil price pressure",
       "source": "CNBC",
       "publishedAt": "2026-09-11T08:35:57.000Z",
-      "hoursAgo": 6.1
+      "hoursAgo": 9.4
     },
     {
       "headline": "Trump administration to sanction unnamed 'large' bank on Monday, Bessent says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-10T22:46:20.000Z",
-      "hoursAgo": 16
+      "hoursAgo": 19.2
     },
     {
       "headline": "US slaps new sanctions on networks aiding Iran's proxies in Middle East - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-10T20:32:11.000Z",
-      "hoursAgo": 18.2
-    },
-    {
-      "headline": "ECB hikes rates as Iran war adds to inflation angst - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-10T15:18:26.000Z",
-      "hoursAgo": 23.4
+      "hoursAgo": 21.5
     }
   ],
   "briefing": null
