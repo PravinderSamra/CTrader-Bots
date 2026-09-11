@@ -2477,3 +2477,80 @@ question ("can price REACH this?") is still being answered with the range budget
 **Candidate fix:** window the path read on ADR as `secondary_walls()` already
 does, not on the remaining budget. No new calibration — the same substitution
 already made twice.
+
+---
+
+# ⚠️ H7's headline statistic was contaminated. "Overnight 0 of 3" is WITHDRAWN.
+
+Found 2026-09-11 while grading the day. **This matters because the overnight
+strategy suppression was shipped on the strength of it.**
+
+## The flaw
+
+The 2026-09-09 retrospective scored strategy selection with **day shape** — where
+price closed within **the whole session's** range. For a scan published at 12:47,
+that statistic includes the move from 04:00 onward: **hours of price action that
+predate the forecast.** A forecast graded against data older than itself is the
+look-ahead error of D5 turned around, and M4's window fault in a third costume.
+
+Today made it visible. 2026-09-11 closed at **77% of the day's range → "RAN",
+Strategy 2**, so both scans would score WRONG. But the low was set at **04:00Z**
+and the high at **13:00Z**. Measured from each scan forward, post-scan close sits
+at **36% of the post-scan range → "FAILED BACK", Strategy 1** — which is what
+both briefs recommended. **Both correct, scored wrong by the old statistic.**
+
+## Re-graded, 22 scans
+
+| statistic | result |
+|---|---|
+| whole-day (what the 09-09 retro used) | 6 right / 7 wrong |
+| **post-scan (graded from publication)** | **9 right / 12 wrong** |
+
+By session window, post-scan:
+
+| window | right / wrong |
+|---|---|
+| PRE_NY | **5 / 3** |
+| LONDON | 2 / 4 |
+| NY_MIDDAY | 1 / 2 |
+| **OVERNIGHT** | **1 / 2** |
+| NY_OPEN | 0 / 1 |
+
+**OVERNIGHT is 1 right / 2 wrong, not 0 of 3.** On three observations that is
+noise. **The threshold is not met and the claim is withdrawn.**
+
+## What survives, and what does not
+
+**Withdrawn:** *"every overnight scan called the wrong strategy"*. It rested on a
+statistic that graded forecasts against pre-forecast price.
+
+**Still standing, because it was never measured this way:** the flip's raw
+instability. Those figures came from the published flip values themselves —
+**389pts of movement while price moved 259 on 08-24; two scans two minutes apart
+with price 9pts apart publishing flips 192pts apart with opposite regime labels;
+all three multi-scan days contradicting their own regime label.** None of that
+depends on day shape.
+
+So the overnight suppression still has a justification — *the number is too
+unstable across the roll to name a regime from* — but **it is no longer the
+justification it was shipped with**, and the trader approved it on the withdrawn
+one. That is his call to revisit and he has been told.
+
+## Also true, and worse than previously reported
+
+Overall strategy selection is **9 right / 12 wrong** — below a coin flip, not the
+4-and-4 reported on 09-09. Two caveats, neither of which rescues it: 08-24
+contributes 8 scans, several within minutes of each other, so it is over-weighted
+(`track.py` dedups; this ad-hoc count did not), and 21 graded observations is
+thin.
+
+## The rule this should have followed
+
+**Never grade a forecast against a window that starts before it was published.**
+`gex_retro.py` already clips bars to `b["time"] >= born` for exactly this reason
+(D5). The strategy cross-tab was written fresh and did not reuse it — the fourth
+time a correct guard existed somewhere in this repo and the new code did not call
+it (see also D7's board filter vs `secondary_walls()`).
+
+**Action taken:** none to the model. This is a measurement correction, and the
+decision it undermines belongs to the trader.
