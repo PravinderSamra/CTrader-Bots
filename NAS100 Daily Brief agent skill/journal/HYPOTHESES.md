@@ -2245,3 +2245,154 @@ that means anything.
 **Not yet proven.** No scheduled run has produced an observation. 2026-09-11
 12:45Z is the first test of the bound runner, and until one lands this is a fix
 that has passed its readiness check and nothing more.
+
+---
+
+## H15 — `credit` is a constant, not a signal (22 of 22 observations)
+
+**Opened 2026-09-11** from the 2026-09-10 final review. **Threshold met at 8
+trading days.** Proposed as **P4**; the user decides.
+
+**Claim.** `credit` has contributed **+2 on every scan ever recorded** — 22 of 22,
+including the non-trading PREP runs. A term with one observed value is an offset,
+not a signal, and it makes the engine's effective neutral point +2 rather than 0.
+
+**Mechanism** (`fred_probe.py:220`):
+
+```python
+wide = (hy5 or 0) > 0.15
+"signal": -2 if wide else (1 if hyv < 3.0 else 0)
+```
+
+The bear branch is a **change** test needing +15bp over 5 days. The bull branch is
+a **level** test needing only HY OAS < 3.0. Observed across 8 graded days: level
+**2.65–2.75%** (never near 3.0), 5-day change **+4, +3, −1, −5, −6, +2, +2, +5 bp**
+(never within a third of +15). In a calm-credit regime only one branch can fire.
+
+**The sibling term is the control.** `fin_conditions` in the same function scores
+the *change* in NFCI and therefore printed **0** on 2026-09-10 while its prose
+called the *level* a tailwind. One function, two conventions; the wrong one is on
+the weight-2 term.
+
+**Regraded across all 15 deduped scans** (signed score minus the credit
+contribution, relabelled through `bias_engine.py:271`):
+
+| | now | credit centred at 0 |
+|---|---|---|
+| CORRECT | 5 | **7** |
+| WRONG | 5 | **3** |
+| no call | 5 | 5 |
+
+Changed: 08-24 09:37 and **09-10 08:12** no-call → CORRECT; 08-28 22:33 and
+09-08 15:39 WRONG → no-call. **Zero correct calls broken.** 4 of 8 days improve,
+0 degrade.
+
+**On 2026-09-10 08:12 it was the whole difference.** Score −1; macro's only
+positive content was credit +2; `bias_engine.py:271` calls −3 MILDLY BEARISH. The
+brief called **nothing** on a day that fell **321 points**.
+
+**Interaction that must not be ignored.** 08-28 and 09-08 are days **P1** (FRED
+staleness) also claims — the two proposals overlap and must be judged together.
+**2026-09-10 is clean of it:** `real_yields` scored 0 that day, so the result is
+attributable to credit alone. That is the day to decide on.
+
+**Not a deletion.** The fix is to make the bull side a change test symmetric with
+the widening branch, keeping `-2` intact, so a real credit event still fires hard.
+`chg_5` is already fetched. **No new data point needed.**
+
+---
+
+## M6 — the grader's verdict is a function of the session close
+
+**Opened 2026-09-11** from the 2026-09-10 final review. Proposed; not edited.
+
+`review_day.py:73` sets the settled side from **`bars[-1]["close"]`**, and line 94
+derives `acted_as` from it. For any level price crossed once on a day that closed
+far beyond it and never returned, `worst_excursion` is small **by construction**
+and `held` is `True` **necessarily**. The metric measures "price crossed this once
+and did not come back" — a property of the day's trend, not of the level.
+
+**Evidence: 8 sessions, near-total separation by day sign.**
+
+| | resistance | support |
+|---|---|---|
+| 5 down days (08-24, 08-28, 09-08, 09-09, 09-10) | **37** | 5 |
+| 3 up days (08-25, 08-26, 08-27) | 3 | **37** |
+
+**2026-09-10 is the extreme case**: the largest-range day on record (463.9,
+132.8% of ADR, net −321.3) produced a **100% hold rate (7/7)** and the **lowest
+level hit rate of all 8 days (0.18)** simultaneously. Those are the same fact
+reported twice, and neither is about the levels.
+
+**What this invalidates until fixed.**
+
+1. **The provisional commit `22e9c1c`'s headline** — *"walls 7/7… the best
+   single-day level result recorded"*. **Withdrawn.** 7/7 was not available to be
+   otherwise on a day that closed 90pts below its lowest touched level.
+2. **H6** ("is the level board producing clean reactions") is measuring drift.
+3. **H14's remaining empirical claim** — does a put wall act as
+   resistance-after-break in short gamma. The 7 recorded put-wall touches split
+   **4 resistance / 1 support / 2 lost**, which looks supportive and **is not
+   evidence**, because the split is derived from the close side. H14's empirical
+   half cannot advance until M6 is resolved, regardless of how many sessions
+   accumulate.
+
+**Fix direction.** Grade against the **direction of approach** and a reversal
+threshold measured from the touch; report `acted_as` only where a reaction is
+distinguishable from the day's drift. No threshold is being tuned — a verdict is
+being made independent of a variable it should not depend on.
+
+---
+
+## Observations appended 2026-09-11 (no proposal attached)
+
+- **H1 gains its 8th point, +57.3**, and the series (+61.2, −11.6, −73.0, −86.4,
+  −10.7, −26.2, −64.0, +57.3; mean −19.2) still flips sign. "Do not fit a
+  multiplier" stands. **New angle:** day error correlates with realised session
+  range at **r = 0.951**, slope **0.648** — the only two under-reads are the two
+  largest-range days (530.9, 463.9). That is the signature of too little
+  *dispersion*, which an offset or multiplier cannot fix. **But error-vs-outcome
+  correlation is also what regression to the mean produces mechanically, so this
+  is not a finding yet.** What would settle it: regress `budget` directly on
+  realised extension and read *that* slope. Nothing proposed.
+- **The fuel model's low end is 3 for 3 exact** (08-25 12.0 vs 0.4; 09-08 26.2 vs
+  0.0; 09-10 **0.0 vs 0.0**). Whatever happens to H1, do not touch it.
+- **Unmitigated-pool term: 3 right / 3 wrong over 6 firings across 5 days**, zero
+  on 16 of 22 scans. 09-10 08:12 scored **+1** *"6 above / 4 below — draw higher"*
+  on a day that ignored all six above and swept all four below. Day gate met, but
+  3–3 on n=6 is chance, and chance is not a demonstrated absence of skill.
+  *Watching the next 4 firings.* Do not touch `_W`.
+- **Wall-band position term: 2 non-zero observations.** 09-10 15:07 gave **+2**
+  (*"bottom 20% — poor risk/reward for shorts"*) on a scan that then fell 91pts
+  to the close, having already made its low 198pts lower; 09-10 08:12 gave **0**
+  at 22% up the band, 2 points the wrong side of its own threshold; 09-08 gave a
+  correct −2 at the top. Far too few. *Watching the next 3 firings.*
+- **New watch item — gamma's flip term is a step function with no proximity
+  scaling.** 09-10 08:12 awarded the full **+2** for being **48pts** above the
+  flip — **14% of ADR14**, inside one bar's noise on a day that ran 464 — and the
+  flip broke by **10:00Z**, then held as resistance for 655 minutes with 11
+  rejected re-tests. Same family as **H10** (a displacement rule with no reclaim
+  condition) on a different term. **1 session.** *Watching:* distance-from-flip at
+  scan versus whether the flip survived, for the next 3 scans scoring non-zero
+  gamma within 0.25 ADR of the flip.
+- **D7 — third recorded instance, and the fix post-dates it.** The 09-10 **15:07**
+  board published exactly **2 levels, both self-disclaimed** (*"Mark it and leave
+  it… not an intraday trigger"*), and **neither was touched — hit rate 0.00**.
+  The level that actually mattered, **PUT WALL 29,194.4 at 22pts from spot**, was
+  pushed into the *"context only, don't mark"* footnote by `budget * 1.75` against
+  a **0pt** budget — carrying, in the secondary table, the **correct** short-gamma
+  note (*"accelerate THROUGH rather than stall. Not a floor"*), which is exactly
+  what price did on its way to 29,018.3. D7's fix landed in `113a5a1`, **after**
+  this scan. Logged as confirmation; no new proposal.
+- **PD close is noise for the third time** — published **+10.0** from spot on a
+  464pt day, worst excursion +1.7. Tally of distance-at-publication: 09-08 +3.1,
+  −1.5; 09-10 +10.0. Still 2 days. Note this **cannot be settled before M6**,
+  because the reaction grade is the contaminated variable.
+- **Journal hygiene.** 11 `is_trading_day: false` PREP scans (2026-08-23) and 6
+  `test_artefact` entries excluded from every statistic above. No fabricated or
+  backfilled entries found.
+- **Provisional-vs-final drift, for the record.** `22e9c1c` graded 09-10 at 20:23Z
+  pre-roll as O 29,437.9 / C 29,126.8; the final post-roll figures are O
+  **29,429.3** / C **29,108.0**, a 18.8pt difference in the close. Pre-roll
+  grading is a convenience, not a record — D3 already holds the day until 21:00Z,
+  and provisional numbers should not be cited in a threshold count.
