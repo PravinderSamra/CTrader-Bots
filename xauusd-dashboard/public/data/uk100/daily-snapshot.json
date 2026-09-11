@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-09-11T10:15:44.758Z",
+  "generatedAt": "2026-09-11T12:12:44.310Z",
   "prices": {
-    "UK100": 10656.45,
-    "GBPUSD": 1.35078,
-    "GBPEUR": 1.16493,
-    "US500": 7637.9,
-    "NAS100": 29300.05,
-    "BRENT": 104.932,
-    "COPPER": 6.553,
-    "VIX": 16.835,
-    "USDX": 99.197,
-    "XAUUSD": 4346.525,
-    "UK100_dayPct": 0.58
+    "UK100": 10666.15,
+    "GBPUSD": 1.35099,
+    "GBPEUR": 1.16537,
+    "US500": 7638.3,
+    "NAS100": 29305.3,
+    "BRENT": 105.617,
+    "COPPER": 6.5372,
+    "VIX": 16.785,
+    "USDX": 99.212,
+    "XAUUSD": 4329.52,
+    "UK100_dayPct": 0.67
   },
   "fx": {
-    "gbpUsdDayPct": -0.02,
+    "gbpUsdDayPct": -0.01,
     "gbpUsd20dPercentile": 25,
     "sterlingEri": 85.4105,
     "sterlingEriDayChange": -0.05,
@@ -36,23 +36,23 @@
     "daysToMpc": 6
   },
   "usLinkage": {
-    "us500DayPct": 0.55,
-    "nas100DayPct": 0.66,
-    "vix": 16.835,
+    "us500DayPct": 0.56,
+    "nas100DayPct": 0.68,
+    "vix": 16.785,
     "vixRegime": "NORMAL",
     "us10y": 4.83,
-    "usdx": 99.197
+    "usdx": 99.212
   },
   "commodities": {
-    "brentDayPct": -4.69,
-    "copperDayPct": 0.31,
-    "goldDayPct": 0.7,
+    "brentDayPct": -4.06,
+    "copperDayPct": 0.06,
+    "goldDayPct": 0.3,
     "brent20dTrend": "UP"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": 0.96,
-    "dax40DayPct": 0.82,
-    "eurUsdDayPct": -0.11,
+    "eurostoxx50DayPct": 0.9,
+    "dax40DayPct": 0.72,
+    "eurUsdDayPct": -0.13,
     "ftseDaxCorr20d": 0.74,
     "ftseSx5eCorr20d": 0.76,
     "tapeAgreement": "ALIGNED",
@@ -69,14 +69,14 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent -4.69%",
+      "driver": "Brent -4.06%",
       "read": "BEARISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper +0.31%",
+      "driver": "Copper +0.06%",
       "read": "NEUTRAL",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
@@ -114,28 +114,34 @@
   ],
   "newsItems": [
     {
+      "headline": "Wealthy investors are pouring billions into this new tax strategy despite risks",
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/09/11/wealthy-investors-tax-aware-long-short-strategies.html",
+      "hoursAgo": 0.2
+    },
+    {
+      "headline": "Yemen's Houthis reach strategic island at mouth of vital shipping lane - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOUk9oUjNYejhGeW1YblJUVWdfQ0JaZU52dHNPZUZVdnpMSkxYS3pKTWhLdjU0REdNUGdubUhnRl9KUXZabHRfbEQyOUJZeXUxQzZfcGFlbFV5V1BlSTVmRkhzdGJaNkpQa3p3OG9LZUt3Q3VXYkdrc2ZRWW9fcWQ4TkYxNFgxNFI0dlhIV0UyUU5Dbk44blJMempZVFVqVm5XbUlfV2dqSlN3YXBNUDlUQmVxS3JQMUxQ?oc=5",
+      "hoursAgo": 1.5
+    },
+    {
       "headline": "Treasury yields steady as traders await consumer inflation data amid oil price pressure",
       "source": "CNBC",
       "url": "https://www.cnbc.com/2026/09/11/us-treasurys-bonds-yields.html",
-      "hoursAgo": 1.7
+      "hoursAgo": 3.6
     },
     {
       "headline": "UK economy grows by most since early 2025 on possible AI boost - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE5XSDFBSllVM3pZWVBqSlo3UGhUaVB2VXpyTXJMMUVpTmQ0U3NrMjVFblZDZHJnY3pKbHJ3S0l1aWRFMmJGYWR3eTBidlU3aksybDVpMWJxaXk5anI3OXYtREoxbXh3R0ZTZUJ2cklkQVlmNi1YX0Rz?oc=5",
-      "hoursAgo": 4.2
+      "hoursAgo": 6.2
     },
     {
       "headline": "ECB hikes rates as Iran war adds to inflation angst - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOY0VWcFhfaVg1bHdEUzlqVTlvNlREOFdweDVteVNCVWFCY29MVFJMRVdWeEJuSDAxWlY3cjU4ZGlxdkNremFBTThYSVQ5cFNBaTliSGMwbmJRR0NkNkwtUUhORFFwZ3gwLXJSZnNOR1ZfVDlEanZ5TzFNZ3FsX1hobnkyODI3cE96RkI2S3htVk5LRWNWbmF1c1FvNA?oc=5",
-      "hoursAgo": 19
-    },
-    {
-      "headline": "Treasury yields move higher as investors await key wholesale inflation data",
-      "source": "CNBC",
-      "url": "https://www.cnbc.com/2026/09/10/us-treasurys-bonds-yield.html",
-      "hoursAgo": 23.5
+      "hoursAgo": 20.9
     }
   ],
   "riskTone": null,
@@ -148,31 +154,31 @@
         "name": "GBP",
         "weight": 3,
         "impact": "NEUTRAL",
-        "detail": "GBP/USD -0.02% → FTSE tailwind (sign-flipped)"
+        "detail": "GBP/USD -0.01% → FTSE tailwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
         "impact": "BULLISH",
-        "detail": "US500 +0.55% today"
+        "detail": "US500 +0.56% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 16.835 — NORMAL regime"
+        "detail": "VIX 16.785 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
         "impact": "BEARISH",
-        "detail": "Brent -4.69% (energy majors)"
+        "detail": "Brent -4.06% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "Copper +0.31% (miners/China)"
+        "detail": "Copper +0.06% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -196,13 +202,13 @@
         "name": "European tape (SX5E/DAX)",
         "weight": 2.5,
         "impact": "BULLISH",
-        "detail": "SX5E +0.96% / DAX +0.82%"
+        "detail": "SX5E +0.9% / DAX +0.72%"
       }
     ],
     "eventSuppressed": true
   },
   "orbContext": {
-    "computedAt": "2026-09-11T10:15:44.757Z",
+    "computedAt": "2026-09-11T12:12:44.309Z",
     "mode": "POST_ORB",
     "cashOpenLondon": "08:00 BST",
     "overnightHigh": 10634,
@@ -212,8 +218,8 @@
     "priorClose": 10595.1,
     "prevWeekHigh": 10862.9,
     "prevWeekLow": 10683.5,
-    "gapPts": 61.4,
-    "gapPct": 0.58,
+    "gapPts": 71,
+    "gapPct": 0.67,
     "orbHigh": 10633,
     "orbLow": 10597.5,
     "orbBrokenDirection": "UP",
@@ -225,27 +231,27 @@
       }
     ],
     "adr14": 96.3,
-    "adrUsedPct": 75,
+    "adrUsedPct": 89,
     "expansionState": {
       "label": "NORMAL",
-      "rangeSoFarPct": 75,
-      "expectedRangePctByNow": 76,
-      "rangeVsTypical": 0.99,
-      "expectedVolPctByNow": 46,
+      "rangeSoFarPct": 89,
+      "expectedRangePctByNow": 83,
+      "rangeVsTypical": 1.07,
+      "expectedVolPctByNow": 66,
       "moveMostlyDone": false,
-      "note": "Range 75% of ADR vs ~76% typical by 11:00 BST (about the typical pace). only ~46% of volume typically done by now — an afternoon expansion is still possible."
+      "note": "Range 89% of ADR vs ~83% typical by 13:00 BST (about the typical pace). only ~66% of volume typically done by now — an afternoon expansion is still possible."
     }
   },
   "orbIntel": {
     "stance": "LONG_FAVOURED",
-    "stanceLine": "Backdrop favours upside breaks — 75% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+    "stanceLine": "Backdrop favours upside breaks — 89% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
     "signals": [
       {
         "direction": "BREAKOUT_SUSPECT",
         "severity": "CAUTION",
         "source": "RANGE",
         "rule": "R4",
-        "text": "75% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        "text": "89% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
       },
       {
         "direction": "NEUTRAL",
@@ -273,7 +279,7 @@
         "severity": "INFO",
         "source": "TAPE",
         "rule": "R8",
-        "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.96%) — the cross-market lean is up."
+        "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.9%) — the cross-market lean is up."
       },
       {
         "direction": "BREAKOUT_SUSPECT",

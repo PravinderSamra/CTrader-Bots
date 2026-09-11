@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-11T10:15:39.239Z",
+  "generatedAt": "2026-09-11T12:12:38.861Z",
   "yields": {
     "US10Y": 4.83,
     "US2Y": 4.43,
@@ -34,26 +34,26 @@
     "openInterestChange": -66065
   },
   "etfFlows": {
-    "gldTonnes": 1094.2,
-    "gldWoWChange": -7.1,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1098.2,
+    "gldWoWChange": 4,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4346.24,
-    "XAGUSD": 64.0165,
-    "EURUSD": 1.15956,
-    "USDJPY": 154.122,
-    "USDCHF": 0.81505,
-    "USDCNH": 6.70913,
-    "GBPUSD": 1.35077,
-    "USDCAD": 1.38496,
-    "USDSEK": 9.68612,
-    "US500": 7637.9,
-    "GER40": 25545.15,
-    "UK100": 10656.95,
+    "XAUUSD": 4330.29,
+    "XAGUSD": 64.01,
+    "EURUSD": 1.1593,
+    "USDJPY": 154.0065,
+    "USDCHF": 0.81512,
+    "USDCNH": 6.70929,
+    "GBPUSD": 1.351,
+    "USDCAD": 1.38587,
+    "USDSEK": 9.69286,
+    "US500": 7639.4,
+    "GER40": 25520.65,
+    "UK100": 10667.15,
     "ADR_14day": 108.7,
     "ADR_usedToday": 59.9,
-    "goldSilverRatio": 67.9
+    "goldSilverRatio": 67.7
   },
   "dollarLiquidity": {
     "stlfsi": -0.7884,
@@ -66,34 +66,40 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Wealthy investors are pouring billions into this new tax strategy despite risks",
+      "source": "CNBC",
+      "publishedAt": "2026-09-11T12:00:01.000Z",
+      "hoursAgo": 0.2
+    },
+    {
+      "headline": "Yemen's Houthis reach strategic island at mouth of vital shipping lane - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-11T10:40:22.000Z",
+      "hoursAgo": 1.5
+    },
+    {
       "headline": "Treasury yields steady as traders await consumer inflation data amid oil price pressure",
       "source": "CNBC",
       "publishedAt": "2026-09-11T08:35:57.000Z",
-      "hoursAgo": 1.7
+      "hoursAgo": 3.6
     },
     {
       "headline": "Trump administration to sanction unnamed 'large' bank on Monday, Bessent says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-10T22:46:20.000Z",
-      "hoursAgo": 11.5
+      "hoursAgo": 13.4
     },
     {
       "headline": "US slaps new sanctions on networks aiding Iran's proxies in Middle East - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-10T20:32:11.000Z",
-      "hoursAgo": 13.7
+      "hoursAgo": 15.7
     },
     {
       "headline": "ECB hikes rates as Iran war adds to inflation angst - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-10T15:18:26.000Z",
-      "hoursAgo": 19
-    },
-    {
-      "headline": "Treasury yields move higher as investors await key wholesale inflation data",
-      "source": "CNBC",
-      "publishedAt": "2026-09-10T10:44:07.000Z",
-      "hoursAgo": 23.5
+      "hoursAgo": 20.9
     }
   ],
   "briefing": null
