@@ -2791,3 +2791,26 @@ resolved.**
 2026-09-11 scans, and again carried the brief's own warning: *"FRED has not
 published since 2026-09-09 (2 business days ago) — this is last week's reading,
 not today's."* The item is already open; nothing new proposed.
+
+## D14 confirmed pre-open-specific; H14's fix confirmed working (2026-09-14 17:22Z)
+
+**D14 did not recur.** Mid-RTH, section 7 returned real strikes (29,307 / 29,087 /
+29,307) rather than the offset-converted zeros of 2026-09-11 13:23Z. That matches
+the diagnosis exactly: the volume-weighted fields are 0 only while no volume has
+traded, i.e. before the US open. The guard is still needed — the 12:45Z scheduled
+run lands 45 minutes pre-open every weekday and will keep hitting it.
+
+**H14's fix produced the correct label on its first short-gamma day.** Price
+29,246.7 below the flip 29,351.2, so the put wall note read *"Heaviest floor this
+week (62k contracts), BUT today the desks are pushing moves along — if it breaks,
+expect it to speed UP, not bounce. Don't buy the break."* That is the branch that
+did not fire on 2026-09-10, when both put walls were called reliable floors and
+neither floored anything.
+
+**D7's fix likewise.** Budget 0.0 again (129.8% of ADR) and the board carried five
+rows — flip, call wall, max pain, put wall, structural put wall — all tagged
+`_(stretch)_`. Pre-fix that board would have held one row.
+
+**D15 is still live and unfixed**, as recorded: *"UPSIDE path: mostly clear. First
+real brake is 29317.4 (71pts away), which is beyond today's 0pt budget."* Every
+distance is beyond a zero budget. Second observation.
