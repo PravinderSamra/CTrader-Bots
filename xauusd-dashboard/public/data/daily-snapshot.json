@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-14T11:17:16.294Z",
+  "generatedAt": "2026-09-14T14:04:44.095Z",
   "yields": {
     "US10Y": 4.95,
     "US2Y": 4.56,
@@ -22,8 +22,8 @@
     "probHike": 64
   },
   "marketVolatility": {
-    "GVZ": 28.48,
-    "VIX": 17.84
+    "GVZ": 25.68,
+    "VIX": 15.84
   },
   "positioning": {
     "cotNetLong": 223928,
@@ -34,26 +34,26 @@
     "openInterestChange": 3737
   },
   "etfFlows": {
-    "gldTonnes": 1107.6,
-    "gldWoWChange": 14,
+    "gldTonnes": 1114.6,
+    "gldWoWChange": 7,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4293.78,
-    "XAGUSD": 62.9715,
-    "EURUSD": 1.15458,
-    "USDJPY": 154.533,
-    "USDCHF": 0.81729,
-    "USDCNH": 6.70885,
-    "GBPUSD": 1.34898,
-    "USDCAD": 1.38909,
-    "USDSEK": 9.77549,
-    "US500": 7611.5,
-    "GER40": 25503.35,
-    "UK100": 10722.85,
+    "XAUUSD": 4266.785,
+    "XAGUSD": 62.833,
+    "EURUSD": 1.15252,
+    "USDJPY": 154.9255,
+    "USDCHF": 0.81885,
+    "USDCNH": 6.71389,
+    "GBPUSD": 1.34668,
+    "USDCAD": 1.39263,
+    "USDSEK": 9.79717,
+    "US500": 7618.1,
+    "GER40": 25471.05,
+    "UK100": 10715.85,
     "ADR_14day": 106.1,
-    "ADR_usedToday": 77.2,
-    "goldSilverRatio": 68.2
+    "ADR_usedToday": 101.7,
+    "goldSilverRatio": 67.9
   },
   "dollarLiquidity": {
     "stlfsi": -0.7884,
@@ -64,6 +64,13 @@
     "gprDate": "2026-08"
   },
   "economicCalendar": [],
-  "newsItems": [],
+  "newsItems": [
+    {
+      "headline": "Iranian strait authority issues updated list of sanctioned vessels - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-14T10:16:18.000Z",
+      "hoursAgo": 3.8
+    }
+  ],
   "briefing": null
 }
