@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-11T21:27:05.973Z",
+  "generatedAt": "2026-09-14T11:17:16.294Z",
   "yields": {
     "US10Y": 4.95,
     "US2Y": 4.56,
@@ -34,26 +34,26 @@
     "openInterestChange": 3737
   },
   "etfFlows": {
-    "gldTonnes": 1093.6,
-    "gldWoWChange": 5.3,
+    "gldTonnes": 1107.6,
+    "gldWoWChange": 14,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4348.805,
-    "XAGUSD": 64.483,
-    "EURUSD": 1.15976,
-    "USDJPY": 153.5015,
-    "USDCHF": 0.8165,
-    "USDCNH": 6.70855,
-    "GBPUSD": 1.35278,
-    "USDCAD": 1.38727,
-    "USDSEK": 9.70299,
-    "US500": 7657.6,
-    "GER40": 25564.55,
-    "UK100": 10661.75,
-    "ADR_14day": 110.4,
-    "ADR_usedToday": 110.4,
-    "goldSilverRatio": 67.4
+    "XAUUSD": 4293.78,
+    "XAGUSD": 62.9715,
+    "EURUSD": 1.15458,
+    "USDJPY": 154.533,
+    "USDCHF": 0.81729,
+    "USDCNH": 6.70885,
+    "GBPUSD": 1.34898,
+    "USDCAD": 1.38909,
+    "USDSEK": 9.77549,
+    "US500": 7611.5,
+    "GER40": 25503.35,
+    "UK100": 10722.85,
+    "ADR_14day": 106.1,
+    "ADR_usedToday": 77.2,
+    "goldSilverRatio": 68.2
   },
   "dollarLiquidity": {
     "stlfsi": -0.7884,
@@ -64,43 +64,6 @@
     "gprDate": "2026-08"
   },
   "economicCalendar": [],
-  "newsItems": [
-    {
-      "headline": "Yemen's Houthis reach strategic island at mouth of vital shipping lane - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-11T19:19:05.000Z",
-      "hoursAgo": 2.1
-    },
-    {
-      "headline": "In pictures: The U.S. commemorates the 25th anniversary of 9/11",
-      "source": "CNBC",
-      "publishedAt": "2026-09-11T16:41:40.000Z",
-      "hoursAgo": 4.8
-    },
-    {
-      "headline": "Oil tanker rates hit record highs following Iran, US shipping attacks - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-11T14:37:33.000Z",
-      "hoursAgo": 6.8
-    },
-    {
-      "headline": "Wealthy investors are pouring billions into this new tax strategy despite risks",
-      "source": "CNBC",
-      "publishedAt": "2026-09-11T12:00:01.000Z",
-      "hoursAgo": 9.5
-    },
-    {
-      "headline": "Treasury yields steady as traders await consumer inflation data amid oil price pressure",
-      "source": "CNBC",
-      "publishedAt": "2026-09-11T08:35:57.000Z",
-      "hoursAgo": 12.9
-    },
-    {
-      "headline": "Trump administration to sanction unnamed 'large' bank on Monday, Bessent says - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-10T22:46:20.000Z",
-      "hoursAgo": 22.7
-    }
-  ],
+  "newsItems": [],
   "briefing": null
 }

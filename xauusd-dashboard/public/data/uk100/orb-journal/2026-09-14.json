@@ -1,0 +1,69 @@
+{
+  "date": "2026-09-14",
+  "entries": [
+    {
+      "at": "2026-09-14T11:17:21.040Z",
+      "londonTime": "12:17 BST",
+      "mode": "POST_ORB",
+      "price": 10723.55,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 98% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "98% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "STRUCTURE",
+          "rule": "R2",
+          "text": "ORB broke UP against a BEARISH macro bias (-5) — counter-bias breaks fail more often; treat continuation as suspect."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10592.1) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is diverging from a united European tape — it's trading its own story today; tape-based confirmation is unreliable."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -5,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10716.2,
+        "orbLow": 10658.6,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10730.3,
+        "overnightLow": 10641.5,
+        "priorDayHigh": 10714.3,
+        "priorDayLow": 10592.1,
+        "gapPct": 0.59,
+        "adr14": 97.9,
+        "adrUsedPct": 98
+      },
+      "outcome": null
+    }
+  ]
+}
