@@ -2554,3 +2554,240 @@ it (see also D7's board filter vs `secondary_walls()`).
 
 **Action taken:** none to the model. This is a measurement correction, and the
 decision it undermines belongs to the trader.
+
+---
+
+# From the 2026-09-11 review (written 2026-09-14)
+
+## D16 — the straddle rider's ternary is a no-op, and above the flip it INCREASES conviction
+
+`bias_engine.py:86-89`:
+
+```python
+if abs(dist_pct) < 0.15:
+    add("gamma", +1 if px > gf else +1,
+        "but price is straddling the flip (<0.15%) — regime unstable, "
+        "reduce conviction")
+```
+
+`+1 if px > gf else +1` — both branches are `+1`. Above the flip this is added to
+the `+2 above flip` vote, so gamma reads **+3**: the rider that says "reduce
+conviction" makes the bullish vote **50% larger**. Below the flip it softens
+`−3` to `−2`, which is what the text promises. The intent is almost certainly
+`-1 if px > gf else +1` — pull the magnitude toward zero from either side.
+
+**Every firing on record is above the flip, so every firing has the wrong sign:**
+
+```
+2026-09-09 15:17  px 29397.5  flip 29392.5  above  +1
+2026-09-09 15:20  px 29418.8  flip 29403.1  above  +1
+2026-09-11 12:47  px 29336.2  flip 29312.4  above  +1   (0.081%)
+```
+
+3 firings, 2 distinct trading days. On 2026-09-11 12:47 gamma totalled **+5**
+while straddling the flip by 23.8pts, against **+4** on the 13:24 scan sitting
+cleanly 370pts above it — *less* certain scored *more*. No label was changed on
+any firing (09-11 would have been −8 rather than −7), so the measured impact is
+conviction magnitude, not direction.
+
+This is a code defect, not a calibration preference, so it is not gated on the
+3-session rule — same class as D8, D14, D15. **Not fixed by the reviewer.
+Decision belongs to the owner.** Same family as D8: a printed rationale that
+describes a computation the code does not perform.
+
+---
+
+## H7 — fourth observation, and the first one with a measurable cost
+
+**2026-09-11, 12:47Z → 13:24Z, 37 minutes: flip moved −277.9pts (29312.4 →
+29034.5) while price moved +68.3. The largest sub-hour flip move in the
+journal**, exceeding the 192pt/2min anomaly. Ratio 4.1×.
+
+Full consecutive-scan drift table, all days, pairs under 16h:
+
+```
+08-24 08:28→08:30    2min   dPrice   +8.9   dFlip +192.0   21.6x
+08-24 08:30→08:32    2min   dPrice   +6.9   dFlip  +16.0    2.3x
+08-24 08:32→08:33    1min   dPrice   -6.7   dFlip   -0.4    0.1x
+08-24 08:33→09:37   64min   dPrice  +44.9   dFlip +181.2    4.0x
+08-24 09:37→12:40  183min   dPrice  -14.7   dFlip  -42.1    2.9x
+08-24 12:40→12:46    7min   dPrice  -14.7   dFlip  +12.4    0.8x
+08-24 12:46→13:45   59min   dPrice -229.3   dFlip -359.4    1.6x
+08-26 13:12→13:14    2min   dPrice  +22.7   dFlip  +23.5    1.0x
+08-26 21:43→22:11   28min   dPrice  +12.7   dFlip +167.4   13.2x
+09-10 08:12→15:07  415min   dPrice -202.7   dFlip  -35.3    0.2x
+09-11 12:47→13:24   37min   dPrice  +68.3   dFlip -277.9    4.1x
+```
+
+**What is new is not the instability — it is that the revision destroyed a
+working level.** The 12:47 flip (29312.4) held as support for **485 minutes with
+a worst excursion of −0.9pts**. The 13:24 revision put it at 29034.5, 370pts
+below spot, **never touched**. H7 has so far argued the flip is too unstable to
+name a regime from; this is the first day showing the later reading is not
+merely different but *worse* than the one it replaced.
+
+**Status unchanged: OBSERVING.** The remedy now most likely sits under the
+completeness gate below rather than in H7 itself.
+
+---
+
+## H16 (new) — the gamma block has a freshness gate and no COMPLETENESS gate
+
+**Claim.** Pre-cash-open CBOE chain pulls return a *fresh timestamp* over a
+*materially incomplete book*, and the entire gamma block — flip, walls, max
+pain, net GEX — is computed and voted on as though the book were whole.
+
+**Evidence — 3 distinct trading days.** Every early scan in the journal reports
+a 45DTE net GEX an order of magnitude below the same day's later scan:
+
+| day | early | 45DTE GEX | later | 45DTE GEX |
+|---|---|---|---|---|
+| 2026-08-24 | 08:28–08:33 (×4) | **0.024**, byte-identical ×4 | 09:37 | −5.48 |
+| 2026-09-10 | 08:12 | **1.114** (wk −0.058) | 15:07 | −4.645 |
+| 2026-09-11 | 12:47 | **0.599** (wk 1.81) | 13:24 | **8.131** (wk 8.119) |
+
+Scans from ~13:00Z onward are stable against each other same-day
+(08-27 13:23 / 13:41 / 13:43 → 11.925 / 11.773 / 11.817).
+
+2026-09-11's pair in full, 37 minutes apart, both chains timestamped fresh
+(`12:40:23`, `13:23:05`):
+
+```
+flip            29312.4 -> 29034.5   (-277.9)
+call wall       29466.2 -> 29648.0   (+181.8)
+put wall        29016.2 -> 28998.0
+net GEX 0-2DTE    0.643 ->   3.887   ( 6.0x)
+net GEX week       1.81 ->   8.119   ( 4.5x)
+net GEX 45DTE     0.599 ->   8.131   (13.6x)
+45d call-wall contracts  59k -> 120k ( 2.0x)
+CFD/index offset  +16.2 ->    -2.0
+```
+
+A 45-day book cannot change 13.6× in 37 minutes, and its call wall cannot take
+on 61k contracts pre-open.
+
+**It subsumes two open items rather than adding a third.**
+
+- **H7's headline anomaly gets a mechanism.** On 08-24 08:28→08:30 the 45DTE GEX
+  is identical to three decimals (0.024) while the flip moves 192pts on 8.9pts of
+  spot. Same chain, different spot, wildly different flip — a repriced
+  zero-crossing on a near-empty book is ill-conditioned, because the gamma
+  profile is flat and the root is unconstrained. H7 calls this "possibly a
+  cold-start artefact"; this is what the artefact *is*.
+- **D8's trigger was itself an artefact.** D8 fired on 2026-09-10 08:12 because
+  `net = -0.058` fell into the strategy selector's `net <= 0` catch-all. That
+  −0.058 is the empty-chain reading; the same day at 15:07 it was −3.795. D8's
+  stated condition was not a market state.
+
+**Proposed change (owner's decision, not implemented).** Add a completeness
+check beside the existing age check — total 45DTE contract count, or
+`abs(full_45dte)`, against a trailing median for the symbol. On failure, withhold
+the flip-derived votes and mark the walls provisional, reusing the
+`flip_unreliable` mechanism already in `bias_engine.py:70-77` for OVERNIGHT
+rather than inventing a new weight.
+
+**Counter-evidence, recorded deliberately.** On 2026-09-11 the *thin* 12:47 board
+was the better one: its call wall held the session high to **9.6pts** and its
+flip held as support to **0.9pts**, while the fuller 13:24 board missed the high
+by 172pts and had **0 of 4** levels touched. One day does not settle which
+snapshot is truer. The proposal is therefore *not* "the early board is wrong" —
+it is "a quantity that moves 13.6× in 37 minutes is not a measurement the model
+should vote on as though it were", and the gate should suppress **votes and
+regime labels, not the level board**.
+
+**Threshold.** Met on the GEX-jump evidence (3 days). Not met on whether gating
+improves outcomes — that needs the gate built and run. Do not implement without
+the owner.
+
+---
+
+## H17 (new, OBSERVING) — the direction grade has no magnitude deadband
+
+`review_day.py:204` takes the sign of the post-scan move:
+
+```python
+call = ("no call (neutral)" if exp == 0 else
+        "CORRECT" if exp == dir_after else "WRONG")
+```
+
+**2026-09-11 12:47 is graded CORRECT on a −1.1pt move — 0.2% of the day's
+457.5pt range.** Post-scan move as a share of session range, every graded scan:
+
+```
+08-26 13:12  76.7%   08-26 21:43  37.4%   08-26 22:11  39.4%
+08-27 13:23  30.1%   08-28 22:33  31.8%   09-08 15:39  24.6%
+09-09 15:20  29.8%   09-10 08:12  64.4%   09-10 15:07  19.7%
+09-11 12:47   0.2%   09-11 13:24   7.2%
+```
+
+The two smallest are both from 2026-09-11 — **one trading day**. One session is
+noise and nothing is proposed. The day-level irony worth recording: the index
+closed **+252.1** and the scoreboard reads **2/2 correct BEARISH**, because both
+scans landed near the high.
+
+**Watching:** whether graded calls under ~5% of range recur on further sessions.
+If they do, the grade should read `no call (inside noise)` rather than CORRECT,
+and the direction statistic should be restated. **Threshold: 3 days with at
+least one sub-5% graded call.** 1 of 3.
+
+---
+
+## M7 (new) — track.py and review_day.py disagree about which days are gradeable
+
+Not calibration — a bookkeeping defect that contaminates the statistic H1 is
+quoted from. `track.py` reports "**7 trading day(s), 11 scans (deduped)**" and
+"6 entries marked test_artefact". Only **2** journal files carry an artefact
+flag (09-09 1513 `defective_build`, 09-09 1517 `verification_rerun`).
+
+**Gap 1 — 2026-08-24 is permanently ungradeable and silently absent.** 8 clean
+scans, `is_trading_day: true`, no artefact flag, and `review_day.py 2026-08-24`
+returns `{"error": "no NAS100 bars for 2026-08-24", "scans_found": 8}`. The M5
+history aged out of the broker feed. This is the day that produced H7's
+192pt/2min anomaly and part of D12's evidence, and no future analysis can ever
+re-grade it. **Snapshot the graded session's M5 bars into the journal at grade
+time**, or every day quietly expires on the same clock. Local, free, no new
+external dependency.
+
+**Gap 2 — 2026-08-25 is held back by one grader and graded by the other.**
+track.py: "HELD BACK - day not finished (grades after 21:00 UTC on its own date):
+2026-08-25 98 bars so far". review_day.py grades it complete:
+`O 29260.9 H 29342.6 L 29086.1 C 29212.9`, range 256.5, net −48.0, 430-minute
+level holds, direction 1 right / 0 wrong / 1 no-call.
+
+**Why it is material.** 08-25 13:04's fuel error is **+219.8** (budget 12.0 vs
+extension 231.8) — larger in magnitude than any of the seven days currently in
+H1's per-day mean of **−22.7**, and of the opposite sign. Admitting one day of
+that size to a seven-day mean is capable of flipping H1's headline from "the
+model over-budgets" to "the model under-budgets".
+
+**Deliberately NOT recomputed here.** The reviewer recomputing H1 by hand is how
+a second disputed number gets created. track.py must recompute once the
+held-back day is admitted. **Until it does, H1's −22.7 should not be quoted as
+settled.** Note also that the 2026-09-10 review's "8 trading days, 15 deduped
+scans" does not reconcile with today's "7 / 11" either.
+
+---
+
+## Zero-budget scans score a free bullseye (evidence appended, no proposal)
+
+When a scan fires after the session high and low are both already set,
+`range_at_scan` equals the full session range, so extension is necessarily 0.0.
+With budget also 0.0, `review_day.py` grades "about right" and track.py logs
+`err 0.0` — indistinguishable from a genuine bullseye, on an observation that
+carries no information.
+
+Instances: **2026-09-11 13:24** (budget 0.0, extension 0.0, range_at_scan 457.5
+= session range), 2026-09-10 15:07, 2026-09-09 15:20, 2026-09-08 15:39.
+
+Entangled with M7 — both change H1's denominator, and acting on either alone
+would produce a mean that is wrong in a new way. **No proposal until M7 is
+resolved.**
+
+---
+
+## P1 — third consecutive session (evidence appended)
+
+`macro −3` from **DFII10** was again the largest single component in both
+2026-09-11 scans, and again carried the brief's own warning: *"FRED has not
+published since 2026-09-09 (2 business days ago) — this is last week's reading,
+not today's."* The item is already open; nothing new proposed.
