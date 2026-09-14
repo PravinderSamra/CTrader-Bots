@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-09-14T17:16:37.061Z",
+  "generatedAt": "2026-09-14T21:11:51.925Z",
   "yields": {
-    "US10Y": 4.95,
-    "US2Y": 4.56,
-    "realYield10Y": 2.55,
-    "realYield5Y": 2.29,
-    "curve2s10s": 39,
-    "breakeven10Y": 2.36,
+    "US10Y": 4.96,
+    "US2Y": 4.63,
+    "realYield10Y": 2.6,
+    "realYield5Y": 2.38,
+    "curve2s10s": 33,
+    "breakeven10Y": 2.37,
     "breakeven5Y": 2.4,
-    "forward5y5y": 2.32,
+    "forward5y5y": 2.34,
     "dayOverDay": {
-      "US10Y": 0.12,
-      "US2Y": 0.13,
-      "realYield10Y": 0.09
+      "US10Y": 0.01,
+      "US2Y": 0.07,
+      "realYield10Y": 0.05
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-09-16",
     "probCut": 0,
-    "probHold": 36,
-    "probHike": 64
+    "probHold": 28,
+    "probHike": 72
   },
   "marketVolatility": {
     "GVZ": 25.68,
@@ -34,26 +34,26 @@
     "openInterestChange": 3737
   },
   "etfFlows": {
-    "gldTonnes": 1103,
-    "gldWoWChange": -11.6,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1106.2,
+    "gldWoWChange": 3.2,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4311.485,
-    "XAGUSD": 63.6705,
-    "EURUSD": 1.15589,
-    "USDJPY": 154.3715,
-    "USDCHF": 0.81598,
-    "USDCNH": 6.7084,
-    "GBPUSD": 1.35066,
-    "USDCAD": 1.3899,
-    "USDSEK": 9.73687,
-    "US500": 7636.8,
-    "GER40": 25563.25,
-    "UK100": 10722.45,
+    "XAUUSD": 4299.045,
+    "XAGUSD": 63.237,
+    "EURUSD": 1.15491,
+    "USDJPY": 154.3425,
+    "USDCHF": 0.81719,
+    "USDCNH": 6.7088,
+    "GBPUSD": 1.3501,
+    "USDCAD": 1.39021,
+    "USDSEK": 9.75713,
+    "US500": 7630.6,
+    "GER40": 25541.05,
+    "UK100": 10695.95,
     "ADR_14day": 106.1,
     "ADR_usedToday": 101.7,
-    "goldSilverRatio": 67.7
+    "goldSilverRatio": 68
   },
   "dollarLiquidity": {
     "stlfsi": -0.7884,
@@ -66,10 +66,22 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "U.S. imposes Iran-related sanctions on Russia's VTB - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-14T19:04:23.000Z",
+      "hoursAgo": 2.1
+    },
+    {
+      "headline": "Counting the votes: Warsh faces a tough battle as the Fed girds for expected interest rate hike",
+      "source": "CNBC",
+      "publishedAt": "2026-09-14T18:50:32.000Z",
+      "hoursAgo": 2.4
+    },
+    {
       "headline": "Iranian strait authority issues updated list of sanctioned vessels - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-14T10:16:18.000Z",
-      "hoursAgo": 7
+      "hoursAgo": 10.9
     }
   ],
   "briefing": null
