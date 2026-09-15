@@ -128,6 +128,86 @@
         "adrUsedPct": 119
       },
       "outcome": null
+    },
+    {
+      "at": "2026-09-15T15:21:00.183Z",
+      "londonTime": "16:21 BST",
+      "mode": "POST_ORB",
+      "price": 10656.85,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 119% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "119% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10641.5) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.62%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -0.59% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "INFO",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "FOMC Rate Decision prints tomorrow 19:00 BST — late-session moves today are as likely pre-event de-risking as conviction."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10669.4,
+        "orbLow": 10617.1,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10704,
+        "overnightLow": 10591.8,
+        "priorDayHigh": 10744,
+        "priorDayLow": 10641.5,
+        "gapPct": -0.36,
+        "adr14": 100.3,
+        "adrUsedPct": 119
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-15T15:21:03.146Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }

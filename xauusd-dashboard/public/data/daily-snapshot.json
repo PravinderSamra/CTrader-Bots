@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-15T12:41:40.608Z",
+  "generatedAt": "2026-09-15T15:20:55.076Z",
   "yields": {
     "US10Y": 4.96,
     "US2Y": 4.63,
@@ -22,8 +22,8 @@
     "probHike": 72
   },
   "marketVolatility": {
-    "GVZ": 25.68,
-    "VIX": 15.84
+    "GVZ": 26.54,
+    "VIX": 17.1
   },
   "positioning": {
     "cotNetLong": 223928,
@@ -34,26 +34,26 @@
     "openInterestChange": 3737
   },
   "etfFlows": {
-    "gldTonnes": 1111.1,
-    "gldWoWChange": -0.7,
+    "gldTonnes": 1109.4,
+    "gldWoWChange": -1.7,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4280.055,
-    "XAGUSD": 63.4355,
-    "EURUSD": 1.15457,
-    "USDJPY": 155.0035,
-    "USDCHF": 0.81826,
-    "USDCNH": 6.71236,
-    "GBPUSD": 1.3484,
-    "USDCAD": 1.3925,
-    "USDSEK": 9.77163,
-    "US500": 7615.3,
-    "GER40": 25434.05,
-    "UK100": 10664.25,
+    "XAUUSD": 4286.81,
+    "XAGUSD": 63.218,
+    "EURUSD": 1.1543,
+    "USDJPY": 155.1535,
+    "USDCHF": 0.8192,
+    "USDCNH": 6.713,
+    "GBPUSD": 1.34839,
+    "USDCAD": 1.39183,
+    "USDSEK": 9.77821,
+    "US500": 7586.1,
+    "GER40": 25441.05,
+    "UK100": 10656.75,
     "ADR_14day": 105.7,
     "ADR_usedToday": 55.9,
-    "goldSilverRatio": 67.5
+    "goldSilverRatio": 67.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.7884,
@@ -66,28 +66,46 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "What to expect from stocks and bonds if interest rates remain higher for longer, according to investing pros",
+      "source": "CNBC",
+      "publishedAt": "2026-09-15T14:00:02.000Z",
+      "hoursAgo": 1.3
+    },
+    {
+      "headline": "Fed up with AI interviews, some job seekers are dropping out as candidates and blacklisting companies from consideration",
+      "source": "CNBC",
+      "publishedAt": "2026-09-15T13:05:01.000Z",
+      "hoursAgo": 2.3
+    },
+    {
       "headline": "No one and done: The Fed will hike at least two times over the next year, according to CNBC survey",
       "source": "CNBC",
       "publishedAt": "2026-09-15T11:10:05.000Z",
-      "hoursAgo": 1.5
+      "hoursAgo": 4.2
+    },
+    {
+      "headline": "Dollar ticks up as oil prices climb, Fed rate hike chances firm - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-15T01:58:00.000Z",
+      "hoursAgo": 13.4
     },
     {
       "headline": "Bonds slump as US 10-year Treasury yields hit highest since 2007 - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-15T01:44:00.000Z",
-      "hoursAgo": 11
+      "hoursAgo": 13.6
     },
     {
       "headline": "US imposes fresh sanctions on Russia's VTB Bank over alleged Iran ties - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-14T21:12:07.000Z",
-      "hoursAgo": 15.5
+      "hoursAgo": 18.1
     },
     {
       "headline": "Counting the votes: Warsh faces a tough battle as the Fed girds for expected interest rate hike",
       "source": "CNBC",
       "publishedAt": "2026-09-14T18:50:32.000Z",
-      "hoursAgo": 17.9
+      "hoursAgo": 20.5
     }
   ],
   "briefing": null

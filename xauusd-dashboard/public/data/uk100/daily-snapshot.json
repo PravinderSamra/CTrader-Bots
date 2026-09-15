@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-09-15T12:41:46.181Z",
+  "generatedAt": "2026-09-15T15:20:59.997Z",
   "prices": {
-    "UK100": 10663.75,
-    "GBPUSD": 1.34835,
-    "GBPEUR": 1.16786,
-    "US500": 7614.8,
-    "NAS100": 29116.55,
-    "BRENT": 107.167,
+    "UK100": 10656.85,
+    "GBPUSD": 1.34841,
+    "GBPEUR": 1.16812,
+    "US500": 7585.4,
+    "NAS100": 28979.15,
+    "BRENT": 109.108,
     "COPPER": 6.442,
-    "VIX": 16.715,
-    "USDX": 99.626,
-    "XAUUSD": 4279.845,
-    "UK100_dayPct": -0.29
+    "VIX": 16.865,
+    "USDX": 99.651,
+    "XAUUSD": 4286.47,
+    "UK100_dayPct": -0.36
   },
   "fx": {
     "gbpUsdDayPct": -0.12,
@@ -36,23 +36,23 @@
     "daysToMpc": 2
   },
   "usLinkage": {
-    "us500DayPct": -0.2,
-    "nas100DayPct": -0.23,
-    "vix": 16.715,
+    "us500DayPct": -0.59,
+    "nas100DayPct": -0.7,
+    "vix": 16.865,
     "vixRegime": "NORMAL",
     "us10y": 4.96,
-    "usdx": 99.626
+    "usdx": 99.651
   },
   "commodities": {
-    "brentDayPct": 0.06,
+    "brentDayPct": 1.88,
     "copperDayPct": 0.48,
-    "goldDayPct": -0.44,
+    "goldDayPct": -0.29,
     "brent20dTrend": "UP"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": -0.36,
-    "dax40DayPct": -0.42,
-    "eurUsdDayPct": -0.03,
+    "eurostoxx50DayPct": -0.62,
+    "dax40DayPct": -0.39,
+    "eurUsdDayPct": -0.06,
     "ftseDaxCorr20d": 0.77,
     "ftseSx5eCorr20d": 0.7,
     "tapeAgreement": "ALIGNED",
@@ -69,8 +69,8 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent +0.06%",
-      "read": "NEUTRAL",
+      "driver": "Brent +1.88%",
+      "read": "BULLISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
@@ -122,17 +122,29 @@
   ],
   "newsItems": [
     {
+      "headline": "What to expect from stocks and bonds if interest rates remain higher for longer, according to investing pros",
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/09/15/what-higher-for-longer-interest-rates-mean-for-your-investments.html",
+      "hoursAgo": 1.3
+    },
+    {
+      "headline": "Dollar ticks up as oil prices climb, Fed rate hike chances firm - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOeGtqRlJ4LWF3TVM5VklxS09fMU16eHE3bWRLZ3lRS3NuS18wWGcyY3cwRWg2eEtzS3dFRVZGWHB6Z21NNGpzUUcydm10VXpIU29Ca3RnRDRrRUxsVWlNbE5yV0x6ejVQUTZXR1FHRHgtTUExOC1VazhaaGo0b3p0dTNVcDJ5YWdjeWkyQVZRRlhOUUZYUkpmdWsyeHJjNTF6QjlYdEtRcy1NVUg2RWNmOA?oc=5",
+      "hoursAgo": 13.4
+    },
+    {
       "headline": "Counting the votes: Warsh faces a tough battle as the Fed girds for expected interest rate hike",
       "source": "CNBC",
       "url": "https://www.cnbc.com/2026/09/14/counting-the-votes-warsh-faces-tough-battle-as-fed-girds-for-expected-rate-hike.html",
-      "hoursAgo": 17.9
+      "hoursAgo": 20.5
     }
   ],
   "riskTone": null,
   "bias": {
-    "score": -3,
-    "label": "BEARISH",
-    "conviction": "MEDIUM",
+    "score": -2,
+    "label": "NEUTRAL",
+    "conviction": "LOW",
     "drivers": [
       {
         "name": "GBP",
@@ -144,19 +156,19 @@
         "name": "US futures",
         "weight": 2.5,
         "impact": "BEARISH",
-        "detail": "US500 -0.2% today"
+        "detail": "US500 -0.59% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 16.715 — NORMAL regime"
+        "detail": "VIX 16.865 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
-        "impact": "NEUTRAL",
-        "detail": "Brent +0.06% (energy majors)"
+        "impact": "BULLISH",
+        "detail": "Brent +1.88% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
@@ -184,15 +196,15 @@
       },
       {
         "name": "European tape (SX5E/DAX)",
-        "weight": 2.5,
+        "weight": 1,
         "impact": "BEARISH",
-        "detail": "SX5E -0.36% / DAX -0.42%"
+        "detail": "SX5E -0.62% / DAX -0.39%"
       }
     ],
     "eventSuppressed": false
   },
   "orbContext": {
-    "computedAt": "2026-09-15T12:41:46.180Z",
+    "computedAt": "2026-09-15T15:20:59.996Z",
     "mode": "POST_ORB",
     "cashOpenLondon": "08:00 BST",
     "overnightHigh": 10704,
@@ -202,8 +214,8 @@
     "priorClose": 10695,
     "prevWeekHigh": 10868.9,
     "prevWeekLow": 10578.6,
-    "gapPts": -31.2,
-    "gapPct": -0.29,
+    "gapPts": -38.1,
+    "gapPct": -0.36,
     "orbHigh": 10669.4,
     "orbLow": 10617.1,
     "orbBrokenDirection": "DOWN",
@@ -211,13 +223,13 @@
     "adr14": 100.3,
     "adrUsedPct": 119,
     "expansionState": {
-      "label": "EXPANSION",
+      "label": "NORMAL",
       "rangeSoFarPct": 119,
-      "expectedRangePctByNow": 83,
-      "rangeVsTypical": 1.43,
-      "expectedVolPctByNow": 65,
+      "expectedRangePctByNow": 100,
+      "rangeVsTypical": 1.19,
+      "expectedVolPctByNow": 100,
       "moveMostlyDone": true,
-      "note": "Range 119% of ADR vs ~83% typical by 13:00 BST (ahead of the typical pace (expansion)). ~65% of a typical day's volume already done — expect a rangebound remainder, tighten targets."
+      "note": "Range 119% of ADR vs ~100% typical by 16:00 BST (about the typical pace). ~100% of a typical day's volume already done — expect a rangebound remainder, tighten targets."
     }
   },
   "orbIntel": {
@@ -241,16 +253,23 @@
       {
         "direction": "FAVOURS_SHORT",
         "severity": "INFO",
-        "source": "STRUCTURE",
-        "rule": "R3",
-        "text": "ORB break DOWN is aligned with the BEARISH macro bias (-3) — continuation has the backdrop behind it."
+        "source": "TAPE",
+        "rule": "R8",
+        "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.62%) — the cross-market lean is down."
       },
       {
         "direction": "FAVOURS_SHORT",
         "severity": "INFO",
         "source": "TAPE",
-        "rule": "R8",
-        "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.36%) — the cross-market lean is down."
+        "rule": "R9",
+        "text": "Past 13:30 with US futures -0.59% — the 14:30 US handoff argues against holding longs into the US open."
+      },
+      {
+        "direction": "NEUTRAL",
+        "severity": "INFO",
+        "source": "EVENT",
+        "rule": "R13",
+        "text": "FOMC Rate Decision prints tomorrow 19:00 BST — late-session moves today are as likely pre-event de-risking as conviction."
       },
       {
         "direction": "BREAKOUT_SUSPECT",
