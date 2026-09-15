@@ -2814,3 +2814,173 @@ rows — flip, call wall, max pain, put wall, structural put wall — all tagged
 **D15 is still live and unfixed**, as recorded: *"UPSIDE path: mostly clear. First
 real brake is 29317.4 (71pts away), which is beyond today's 0pt budget."* Every
 distance is beyond a zero budget. Second observation.
+
+---
+
+# Observations appended 2026-09-15 (grading the 2026-09-14 session)
+
+Source: `review_day.py 2026-09-14 --json`, `track.py`, and `review_day.py`
+re-runs across 08-27 … 09-11. Full write-up in `2026-09-14/REVIEW.md`.
+Session: O 29053.7 / H 29291.4 / L 28804.7 / C 29183.0, range 486.7 (137.3% of
+ADR14 354.5), net +129.3. Two scans, 1 direction right / 1 wrong.
+
+## H1 — budget vs range extension: the split that matters is zero vs non-zero
+
+**Seventh trading day.** 13:04 PRE_NY budget 61.9 → extension **194.1**
+(**+132.2**, the largest under-read on record). 17:23 NY_MIDDAY budget 0.0 →
+extension 26.6 (+26.6). Per-day error now **−86.4, −10.7, −26.2, −64.0, +57.3,
++44.3, +79.4**; mean **−0.9**.
+
+The per-day mean sitting on zero is the point. Four over-reads followed by three
+under-reads is not a bias a multiplier can fix. But splitting on the budget
+value is sharp:
+
+| budget | scans | errors | MAE |
+|---|---|---|---|
+| **= 0.0** | 3 | 0.0, 0.0, +26.6 | **8.9** |
+| **> 0.0** | 7 | −86.4, −10.7, −26.2, −64.0, +114.6, +88.7, +132.2 | **74.7** |
+
+Mean budget when > 0 is 147pts; MAE is **51% of it**. The exhausted-point claim
+is now **4-for-4 across four days** (counting 24 Aug 13:45's +5.3). Proposed in
+REVIEW §4 P4: keep the number when it is zero, print a band when it is not.
+
+**Negative result, recorded so it is not re-run.** I tested whether `fuel_ratio`
+("burning hot") predicts the under-read. It does not: ratio 2.75 → err −10.7;
+1.06 → −64.0; 2.17 → +88.7; 1.65 → +132.2; 1.32 → −86.4. No relationship.
+
+## H2 / H3 — third instance, and the sample is directionally contaminated
+
+13:04 PRE_NY: `LOW_FUEL`, 82.5% of ADR already spent, price **26.0pts above the
+session low which was already in from London**, bias **−11 STRONGLY BEARISH**
+(continuation). Price ran **+352.1** and closed +129.3 on the day. **The fade
+was the trade, for the third time** (after 24 Aug 13:45 and 25 Aug 13:04).
+
+Threshold met on count. **Still not proposing**, for a reason worth writing
+down: all three instances are *bearish* calls printed at *lows*. That is
+consistent with over-commitment at extremes (H3) and equally consistent with a
+plain bearish skew in the engine. One instance of a max-conviction *bullish*
+call at a session *high* would separate them. Until then a cap would be fitted
+to a one-sided sample.
+
+## H4 — flip as magnet: threshold long met, claim fails
+
+Close-to-flip distance, all days on record: 1.1, 236.6, 255.2, 599.8, 309.2,
+26.2, −263.5, 57.7 / 335.6, **−408.3 / −168.2**. **Nine days: three near, six
+far.** Both of 09-14's flips were misses and neither was reached intraday
+(29591.3 published **761pts** from spot on a day budgeted at 61.9). The standing
+verdict — *do not use the flip as a target* — is confirmed and needs no new
+proposal, since the flip is not published as a target.
+
+**New sub-observation for H7, not H4.** The `gamma −3` penalty is awarded in
+full at 760.6pts below the flip exactly as it would be at 5pts below. Distance
+does not scale it. One clean instance; logged, not proposed.
+
+## H6 — the hit-rate denominator is polluted by structural walls
+
+**5 publications across 3 trading days (09-09, 09-10 ×2, 09-14), 0 touches** —
+and that is correct behaviour, because the brief labels them *"the floor for the
+WEEK/MONTH… mark it and leave it, not an intraday trigger."* Grading a
+deliberately multi-day level on intraday touch is a measurement error.
+
+Corpus: **0.544 all levels → 0.581 excluding `kind: structural`.** Proposed in
+REVIEW §4 P3: exclude them from the statistic, keep publishing them. This should
+land *before* H6 is read at its 5-day threshold, or H6 will be read off a biased
+denominator.
+
+## H10 — prior-week-range rule: now 0-for-4
+
+Fourth firing. 13:04 PRE_NY: `structure −3`, *"price is BELOW the entire
+prior-week range (29018.3-29734.1) — PWL 29018.3 is now resistance."* Price
+reclaimed it and **closed 164.7pts above it**. The engine's own 17:23 scan
+prints `structure 0 — "price inside the prior-week range"` — the premise died
+within **4h19m** and the −3 was live for all of it.
+
+Record to date, every firing on a graded day:
+
+| Firing | Score | Outcome |
+|---|---|---|
+| 24 Aug 13:45 | −12 | WRONG, closed +147 above the scan |
+| 25 Aug 21:56Z (26 Aug session) | −15 | WRONG, closed +140 |
+| 26 Aug 13:12 | −4 | WRONG by 249.8pts; reclaimed within the hour |
+| **14 Sep 13:04** | **−11** | **WRONG by 352.1pts; reclaimed within 4h19m** |
+
+**0-for-4.** Proposed in REVIEW §4 P2 as a reclaim term — not a smaller
+constant. Caveat kept on the record: three of the four sit in one cluster of
+consecutive August sessions and may be one market condition rather than four
+independent tests. The proposal rests on the visible absence of a reclaim term,
+not on the count reaching four.
+
+**Honest limit.** Removing this −3 gives −8 on 09-14 — still STRONGLY BEARISH.
+This fix does not rescue the day on its own.
+
+---
+
+## H18 (NEW, opened 2026-09-15) — a stale FRED series still moves the score
+
+**Claim.** When a FRED series stops publishing, the macro component keeps
+scoring it at full weight, and — worse — the score *changes* while the data does
+not, because the 5-day comparison window rolls forward past a frozen endpoint.
+
+**Why it matters.** `DFII10` (10y real yield) carries **±3**, the largest single
+macro weight in the engine. The engine already *detects* staleness and prints
+the warning in the `why` string. It just does not act on it.
+
+**Evidence (4 trading days).** DFII10 frozen at the 2026-09-10 print since
+2026-09-10. Scores over the stale window, in order:
+
+`09-10 0, 09-10 0, 09-11 −3, 09-11 −3, 09-14 −3, 09-14 −3, 09-15 −3`
+
+**The score moved from 0 to −3 with no new data.** On 09-14 13:04 that −3 was
+27% of a −11 call that was wrong by 352 points.
+
+**Threshold.** Already met on mechanism — this is a defect, not a distributional
+claim. Proposed in REVIEW §4 P1: scale the points toward 0 when the series is
+≥1 business day stale. Recorded here because the general form (any FRED-derived
+component, not just DFII10) still needs watching across more series.
+
+## H19 (NEW, opened 2026-09-15) — is the news auto-scorer sampling-biased bearish?
+
+**Claim.** The keyword patterns that make a headline auto-scorable skew toward
+alarm, so the `news` component reads bearish regardless of the actual tape.
+
+**Why it matters.** `news` is the most negative block in the engine: **sum −19
+across 10 graded scans**, against structure −5, rates −8, vol −8. It is a large
+weight derived from a tiny, non-random subset.
+
+**Evidence (11 days, 32 scans).** Sign of the auto-scored reading: **20 bearish,
+4 bullish, 7 flat** — and all four bullish readings fall on a single day
+(24 Aug). Coverage is the other half: median ~2 headlines counted, median ~47
+left uncounted. On 09-14 13:04 it was **5 counted of 52** — a −3 block set by a
+9.6% sample.
+
+Either the news genuinely has been bearish for eleven straight days, or the
+sampling is biased. Nothing here distinguishes the two yet.
+
+**Threshold / what would settle it.** Hand-score the *uncounted* headlines on
+three separate days and compare the sign of the full set to the auto-scored
+subset. Free, no new data source, no API. **Record every scan:** counted count,
+uncounted count, sign.
+
+**Status: OBSERVING. Do not implement.** No weight change until the hand-score
+test is run.
+
+---
+
+## Numbering collision, corrected 2026-09-15
+
+The 09-14 review opened two new hypotheses as **H12** and **H13**. Both numbers
+were already taken — H12 is the volume-weighted wall question (line ~431) and
+H13 is GEXBot's `zero_gamma` (line ~491), and the brief itself prints "Research
+only — H12 and H13 are open" in its volume-weighted gamma section, meaning the
+generated output would have pointed at two different claims under one ID.
+
+Renumbered to **H18** (stale FRED series) and **H19** (news sampling bias);
+H14–H17 were already in use. Only the two new headings changed — no evidence,
+no counts and no history were touched.
+
+This is the same class of error as the 26 Aug naming fix recorded under H1: one
+object, two names, in the file whose entire job is to stop double-counting. The
+open IDs now run H1–H19 with D1–D16 alongside; a new entry takes the next free
+number, and reviewers should grep the headings before assigning one.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
