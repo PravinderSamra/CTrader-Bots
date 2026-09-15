@@ -64,6 +64,70 @@
         "adrUsedPct": 119
       },
       "outcome": null
+    },
+    {
+      "at": "2026-09-15T12:41:46.371Z",
+      "londonTime": "13:41 BST",
+      "mode": "POST_ORB",
+      "price": 10663.75,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 119% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "119% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10641.5) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "STRUCTURE",
+          "rule": "R3",
+          "text": "ORB break DOWN is aligned with the BEARISH macro bias (-3) — continuation has the backdrop behind it."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.36%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -3,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10669.4,
+        "orbLow": 10617.1,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10704,
+        "overnightLow": 10591.8,
+        "priorDayHigh": 10744,
+        "priorDayLow": 10641.5,
+        "gapPct": -0.29,
+        "adr14": 100.3,
+        "adrUsedPct": 119
+      },
+      "outcome": null
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-15T10:42:57.922Z",
+  "generatedAt": "2026-09-15T12:41:40.608Z",
   "yields": {
     "US10Y": 4.96,
     "US2Y": 4.63,
@@ -34,26 +34,26 @@
     "openInterestChange": 3737
   },
   "etfFlows": {
-    "gldTonnes": 1111.8,
-    "gldWoWChange": 5.6,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1111.1,
+    "gldWoWChange": -0.7,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4277.41,
-    "XAGUSD": 63.134,
-    "EURUSD": 1.1539,
-    "USDJPY": 154.7895,
-    "USDCHF": 0.81777,
-    "USDCNH": 6.713,
-    "GBPUSD": 1.34773,
-    "USDCAD": 1.39091,
-    "USDSEK": 9.76667,
-    "US500": 7603.7,
-    "GER40": 25424.95,
-    "UK100": 10676.75,
+    "XAUUSD": 4280.055,
+    "XAGUSD": 63.4355,
+    "EURUSD": 1.15457,
+    "USDJPY": 155.0035,
+    "USDCHF": 0.81826,
+    "USDCNH": 6.71236,
+    "GBPUSD": 1.3484,
+    "USDCAD": 1.3925,
+    "USDSEK": 9.77163,
+    "US500": 7615.3,
+    "GER40": 25434.05,
+    "UK100": 10664.25,
     "ADR_14day": 105.7,
     "ADR_usedToday": 55.9,
-    "goldSilverRatio": 67.8
+    "goldSilverRatio": 67.5
   },
   "dollarLiquidity": {
     "stlfsi": -0.7884,
@@ -66,22 +66,28 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "No one and done: The Fed will hike at least two times over the next year, according to CNBC survey",
+      "source": "CNBC",
+      "publishedAt": "2026-09-15T11:10:05.000Z",
+      "hoursAgo": 1.5
+    },
+    {
       "headline": "Bonds slump as US 10-year Treasury yields hit highest since 2007 - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-15T01:44:00.000Z",
-      "hoursAgo": 9
+      "hoursAgo": 11
     },
     {
       "headline": "US imposes fresh sanctions on Russia's VTB Bank over alleged Iran ties - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-14T21:12:07.000Z",
-      "hoursAgo": 13.5
+      "hoursAgo": 15.5
     },
     {
       "headline": "Counting the votes: Warsh faces a tough battle as the Fed girds for expected interest rate hike",
       "source": "CNBC",
       "publishedAt": "2026-09-14T18:50:32.000Z",
-      "hoursAgo": 15.9
+      "hoursAgo": 17.9
     }
   ],
   "briefing": null
