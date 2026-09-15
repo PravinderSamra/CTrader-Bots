@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-14T21:11:51.925Z",
+  "generatedAt": "2026-09-15T10:42:57.922Z",
   "yields": {
     "US10Y": 4.96,
     "US2Y": 4.63,
@@ -34,26 +34,26 @@
     "openInterestChange": 3737
   },
   "etfFlows": {
-    "gldTonnes": 1106.2,
-    "gldWoWChange": 3.2,
+    "gldTonnes": 1111.8,
+    "gldWoWChange": 5.6,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4299.045,
-    "XAGUSD": 63.237,
-    "EURUSD": 1.15491,
-    "USDJPY": 154.3425,
-    "USDCHF": 0.81719,
-    "USDCNH": 6.7088,
-    "GBPUSD": 1.3501,
-    "USDCAD": 1.39021,
-    "USDSEK": 9.75713,
-    "US500": 7630.6,
-    "GER40": 25541.05,
-    "UK100": 10695.95,
-    "ADR_14day": 106.1,
-    "ADR_usedToday": 101.7,
-    "goldSilverRatio": 68
+    "XAUUSD": 4277.41,
+    "XAGUSD": 63.134,
+    "EURUSD": 1.1539,
+    "USDJPY": 154.7895,
+    "USDCHF": 0.81777,
+    "USDCNH": 6.713,
+    "GBPUSD": 1.34773,
+    "USDCAD": 1.39091,
+    "USDSEK": 9.76667,
+    "US500": 7603.7,
+    "GER40": 25424.95,
+    "UK100": 10676.75,
+    "ADR_14day": 105.7,
+    "ADR_usedToday": 55.9,
+    "goldSilverRatio": 67.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.7884,
@@ -66,22 +66,22 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "U.S. imposes Iran-related sanctions on Russia's VTB - Reuters",
+      "headline": "Bonds slump as US 10-year Treasury yields hit highest since 2007 - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-14T19:04:23.000Z",
-      "hoursAgo": 2.1
+      "publishedAt": "2026-09-15T01:44:00.000Z",
+      "hoursAgo": 9
+    },
+    {
+      "headline": "US imposes fresh sanctions on Russia's VTB Bank over alleged Iran ties - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-14T21:12:07.000Z",
+      "hoursAgo": 13.5
     },
     {
       "headline": "Counting the votes: Warsh faces a tough battle as the Fed girds for expected interest rate hike",
       "source": "CNBC",
       "publishedAt": "2026-09-14T18:50:32.000Z",
-      "hoursAgo": 2.4
-    },
-    {
-      "headline": "Iranian strait authority issues updated list of sanctioned vessels - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-14T10:16:18.000Z",
-      "hoursAgo": 10.9
+      "hoursAgo": 15.9
     }
   ],
   "briefing": null
