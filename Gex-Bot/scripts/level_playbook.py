@@ -31,10 +31,16 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 from collections import defaultdict
 
-LEVELS = [("pv", "volume call"), ("nv", "volume put"),
-          ("po", "OI call"), ("no", "OI put"), ("zg", "zero gamma")]
+# C1-C3 / P1-P3 as the platform ranks them, for both readings, plus zero
+# gamma. Sessions archived before 2026-09-16 carry only the C1/P1 majors;
+# rows without the ranked fields are skipped rather than treated as zero.
+LEVELS = [(f"{t}{s}{i}", f"{n} {s.upper()}{i}")
+          for t, n in (("v", "volume"), ("o", "OI"))
+          for s in ("c", "p")
+          for i in (1, 2, 3)] + [("zg", "zero gamma")]
 
 
 def classify(series, i, field, tol, stop, window_s):
@@ -108,34 +114,18 @@ def classify(series, i, field, tol, stop, window_s):
             "retest_mfe": retest_result}
 
 
-def main() -> int:
-    ap = argparse.ArgumentParser(description=__doc__,
-        formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--sessions", default="/tmp/sessions.json")
-    ap.add_argument("--ticker", default="NQ_NDX")
-    ap.add_argument("--tol", type=float, default=10.0, help="touch band, points")
-    ap.add_argument("--stop", type=float, default=15.0, help="risk, points")
-    ap.add_argument("--window", type=float, default=30.0, help="minutes forward")
-    ap.add_argument("--cooldown", type=float, default=20.0, help="minutes")
-    ap.add_argument("--placebo", type=float, default=0.0,
-                    help="displace every level by this many points before "
-                         "testing. The control: if a fake level scores like a "
-                         "real one, the level is not what produced the score.")
-    args = ap.parse_args()
-
-    sessions = [s for s in json.load(open(args.sessions))
-                if s["ticker"] == args.ticker]
-    sessions.sort(key=lambda s: s["date"])
+def collect(sessions, args, placebo: float):
+    """Run the simulation over every session, optionally on displaced lines."""
     window_s, cooldown_s = args.window * 60, args.cooldown * 60
 
     agg = defaultdict(lambda: {"n": 0, "BOUNCE": 0, "BREAK": 0, "CHOP": 0,
                                "mr": [], "retests": 0, "cont": []})
     for s in sessions:
         series = sorted(s["series"], key=lambda r: r["t"])
-        if args.placebo:
+        if placebo:
             # Shift the level itself, keeping the price path untouched, so the
             # only thing that changes is whether the line means anything.
-            series = [dict(r, **{f: (r[f] + args.placebo if r.get(f, 0) > 0 else 0)
+            series = [dict(r, **{f: (r[f] + placebo if r.get(f, 0) > 0 else 0)
                                  for f, _ in LEVELS}) for r in series]
         for field, name in LEVELS:
             armed = 0
@@ -158,44 +148,82 @@ def main() -> int:
                 armed = r["t"] + cooldown_s
 
     R = args.stop
-    print(f"{args.ticker}: {len(sessions)} sessions  |  touch band {args.tol:g}pts, "
-          f"risk {R:g}pts, {args.window:g}min window\n")
+    return agg
 
-    print("WHAT HAPPENS FIRST")
-    print(f"  {'level':<13} {'touches':>8} {'bounce':>8} {'break':>7} {'chop':>7}")
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--sessions", default="/tmp/sessions.json")
+    ap.add_argument("--ticker", default="NQ_NDX")
+    # Without this the collection pools 0DTE and 90-day sessions, which are
+    # different levels entirely -- the 0DTE OI wall jumps hundreds of points a
+    # session while the 90-day one drifts about ten.
+    ap.add_argument("--scope", default="gex_zero",
+                    choices=["gex_zero", "gex_full"])
+    ap.add_argument("--tol", type=float, default=15.0, help="touch band, points")
+    ap.add_argument("--stop", type=float, default=25.0, help="risk, points")
+    ap.add_argument("--window", type=float, default=30.0, help="minutes forward")
+    ap.add_argument("--cooldown", type=float, default=20.0, help="minutes")
+    args = ap.parse_args()
+
+    sessions = [s for s in json.load(open(args.sessions))
+                if s["ticker"] == args.ticker
+                and s.get("scope", "gex_zero") == args.scope]
+    sessions.sort(key=lambda s: s["date"])
+    if not sessions:
+        print(f"no {args.ticker} {args.scope} sessions"); return 1
+    ranked = [s for s in sessions
+              if s["series"] and "vc1" in s["series"][0]]
+
+    real = collect(sessions, args, 0.0)
+    # The control is not optional. Every real number is printed beside what the
+    # same test scores on lines displaced from the level, because a bounce rate
+    # with no placebo measures the instrument, not the level.
+    OFFSETS = (-140, -110, -80, -60, 60, 80, 110, 140)
+    plac = defaultdict(lambda: {"n": 0, "BOUNCE": 0, "BREAK": 0, "CHOP": 0,
+                                "mr": [], "retests": 0, "cont": []})
+    for off in OFFSETS:
+        for k, v in collect(sessions, args, off).items():
+            t = plac[k]
+            for f in ("n", "BOUNCE", "BREAK", "CHOP", "retests"):
+                t[f] += v[f]
+            t["mr"] += v["mr"]; t["cont"] += v["cont"]
+
+    R = args.stop
+    print(f"{args.ticker} {args.scope}: {len(sessions)} sessions "
+          f"({len(ranked)} with C1-C3)  |  band {args.tol:g}pts, "
+          f"risk {R:g}pts, {args.window:g}min window")
+    print(f"placebo: same test on lines displaced {OFFSETS} points\n")
+
+    print(f"  {'level':<14} {'touches':>8} {'bounce':>8} "
+          f"{'placebo':>9} {'diff':>7} {'z':>6}")
+    tot_r = tot_rb = tot_p = tot_pb = 0
     for _, name in LEVELS:
-        a = agg[name]
-        if not a["n"]:
+        a, b = real.get(name), plac.get(name)
+        if not a or not a["n"]:
             continue
-        n = a["n"]
-        print(f"  {name:<13} {n:>8} {100*a['BOUNCE']/n:>7.0f}% "
-              f"{100*a['BREAK']/n:>6.0f}% {100*a['CHOP']/n:>6.0f}%")
+        rn, rb = a["n"], a["BOUNCE"]
+        pn, pb = (b["n"], b["BOUNCE"]) if b else (0, 0)
+        tot_r += rn; tot_rb += rb; tot_p += pn; tot_pb += pb
+        if pn < 20:
+            print(f"  {name:<14} {rn:>8} {100*rb/rn:>7.0f}% {'thin':>9} {'-':>7} {'-':>6}")
+            continue
+        d = 100*rb/rn - 100*pb/pn
+        pp = (rb+pb)/(rn+pn)
+        se = math.sqrt(pp*(1-pp)*(1/rn+1/pn))*100
+        print(f"  {name:<14} {rn:>8} {100*rb/rn:>7.0f}% {100*pb/pn:>8.0f}% "
+              f"{d:>+6.1f} {d/se if se else 0:>+6.2f}")
+    if tot_r and tot_p:
+        d = 100*tot_rb/tot_r - 100*tot_pb/tot_p
+        pp = (tot_rb+tot_pb)/(tot_r+tot_p)
+        se = math.sqrt(pp*(1-pp)*(1/tot_r+1/tot_p))*100
+        print(f"  {'ALL POOLED':<14} {tot_r:>8} {100*tot_rb/tot_r:>7.0f}% "
+              f"{100*tot_pb/tot_p:>8.0f}% {d:>+6.1f} {d/se if se else 0:>+6.2f}")
 
-    print(f"\nMEAN REVERSION — fade at the level, {R:g}pt stop through it")
-    print(f"  {'level':<13} {'trades':>7} {'hit 1R':>8} {'hit 2R':>8} {'hit 3R':>8}")
-    for _, name in LEVELS:
-        a = agg[name]
-        if not a["mr"]:
-            continue
-        m = a["mr"]
-        f = lambda k: 100 * sum(1 for x in m if x >= k * R) / len(m)
-        print(f"  {name:<13} {len(m):>7} {f(1):>7.0f}% {f(2):>7.0f}% {f(3):>7.0f}%")
-
-    print(f"\nCONTINUATION — break, then enter on the retest, {R:g}pt stop")
-    print(f"  {'level':<13} {'breaks':>7} {'retested':>9} {'hit 1R':>8} {'hit 2R':>8}")
-    for _, name in LEVELS:
-        a = agg[name]
-        if not a["BREAK"]:
-            continue
-        c = a["cont"]
-        if not c:
-            print(f"  {name:<13} {a['BREAK']:>7} {0:>9} {'-':>8} {'-':>8}")
-            continue
-        f = lambda k: 100 * sum(1 for x in c if x >= k * R) / len(c)
-        print(f"  {name:<13} {a['BREAK']:>7} {len(c):>9} {f(1):>7.0f}% {f(2):>7.0f}%")
-
-    print("\n  'hit 1R' = reached one multiple of risk in favour before the stop.\n"
-          "  Not a strategy result: no costs, no slippage, best-case exit.")
+    print(f"\n  bounce = reached {R:g}pts back toward the approach side before "
+          f"{R:g}pts through.\n  z beyond +/-1.96 is significant at 5%. "
+          f"Anything less is the instrument,\n  not the level.")
     return 0
 
 

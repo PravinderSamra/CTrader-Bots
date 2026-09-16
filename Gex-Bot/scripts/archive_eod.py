@@ -46,7 +46,35 @@ SESSIONS_COLLECTION = "gex_sessions"
 SWEEP = [(5, 15), (10, 15), (25, 15), (50, 5)]
 
 
-def derive(samples: list[dict], step_s: int) -> dict:
+def top_levels(strikes: list, n: int = 3) -> dict:
+    """The n largest call-side and put-side strikes, for both readings.
+
+    The archive previously kept only the single biggest wall per side, so a
+    question about the second and third levels could not be asked of history at
+    all -- the full ladder lives only in `gex_latest`, which each poll
+    overwrites. These are the C1-C3 / P1-P3 the platform ranks.
+
+    A row is [strike, gex_vol, gex_oi, priors]. "Call side" means positive
+    gamma and "put side" negative, which is the naive convention the vendor
+    documents; it is not a claim about who holds what.
+
+    Strikes only, not magnitudes: the strike is what gets drawn on a chart and
+    what a touch is measured against, and doubling the field count would push
+    the document towards Firestore's 1 MiB cap for no analytical gain.
+    """
+    out = {}
+    for idx, tag in ((1, "v"), (2, "o")):
+        pos = sorted((r for r in strikes if r[idx] > 0),
+                     key=lambda r: -r[idx])[:n]
+        neg = sorted((r for r in strikes if r[idx] < 0),
+                     key=lambda r: r[idx])[:n]
+        for i in range(n):
+            out[f"{tag}c{i+1}"] = pos[i][0] if i < len(pos) else 0
+            out[f"{tag}p{i+1}"] = neg[i][0] if i < len(neg) else 0
+    return out
+
+
+def derive(samples: list[dict], step_s: int, scope: str = "") -> dict:
     ts = [s["timestamp"] for s in samples]
     spots = [s["spot"] for s in samples]
     day = dt.datetime.fromtimestamp(ts[0], dt.timezone.utc)
@@ -66,6 +94,7 @@ def derive(samples: list[dict], step_s: int) -> dict:
             "zg": s.get("zero_gamma", 0),
             "gv": s.get("sum_gex_vol", 0),
             "go": s.get("sum_gex_oi", 0),
+            **top_levels(s.get("strikes") or []),
         })
 
     sweep = []
@@ -77,6 +106,10 @@ def derive(samples: list[dict], step_s: int) -> dict:
 
     return {
         "ticker": samples[0]["ticker"],
+        # Stored explicitly: the scope was previously only in the document id,
+        # so any consumer that loaded the collection pooled 0DTE and 90-day
+        # sessions together without noticing.
+        "scope": scope,
         "date": day.strftime("%Y-%m-%d"),
         "samples": len(samples),
         "first_ts": ts[0],
@@ -95,7 +128,12 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--ticker", default="nq_ndx")
     ap.add_argument("--scope", default="gex_zero")
-    ap.add_argument("--step", type=int, default=10, help="series step, seconds")
+    ap.add_argument("--step", type=int, default=15, help="series step, seconds")
+    # 15s, not 10s. Carrying the C1-C3/P1-P3 strikes adds twelve fields a row
+    # and took a 10-second series to 775 KB against a 1 MiB hard cap -- close
+    # enough that a busier session would fail the write and lose the day.
+    # Horizons here are 15-30 minutes against bands of tens of points, so
+    # 15-second sampling costs the analysis nothing.
     ap.add_argument("--firestore", action="store_true")
     ap.add_argument("--stdout", action="store_true")
     ap.add_argument("--zip", default=None, help="use a local zip instead of fetching")
@@ -122,7 +160,7 @@ def main() -> int:
     samples = json.loads(gzip.decompress(z.read(names[0])))
     samples.sort(key=lambda s: s["timestamp"])
 
-    doc = derive(samples, args.step)
+    doc = derive(samples, args.step, args.scope)
 
     # Whatever the report covers, ARCHIVE IT FIRST, then complain.
     #
