@@ -42,6 +42,11 @@ jobs:
       fail-fast: false       # one ticker failing must not lose the others
       matrix:
         ticker: [nq_ndx, spx]
+        # Both scopes. Archiving only gex_zero meant a week of analysis
+        # measured 0DTE walls while believing it measured the 90-day ones --
+        # and the 90-day open-interest walls are the levels the strategy is
+        # actually drawn from. gex_full is where those live.
+        scope: [gex_zero, gex_full]
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -70,6 +75,6 @@ jobs:
           # a mismatch warns rather than discarding the data.
           python3 Gex-Bot/scripts/archive_eod.py \
             --ticker ${{ matrix.ticker }} \
-            --scope gex_zero \
+            --scope ${{ matrix.scope }} \
             --expect-date "$(TZ=America/New_York date +%F)" \
             --firestore
