@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-15T22:33:21.678Z",
+  "generatedAt": "2026-09-16T10:30:56.320Z",
   "yields": {
     "US10Y": 4.97,
     "US2Y": 4.65,
@@ -34,25 +34,25 @@
     "openInterestChange": 3737
   },
   "etfFlows": {
-    "gldTonnes": 1106.8,
-    "gldWoWChange": 0.8,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1094.1,
+    "gldWoWChange": -12.7,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4296.695,
-    "XAGUSD": 63.812,
-    "EURUSD": 1.15418,
-    "USDJPY": 155.067,
-    "USDCHF": 0.81873,
-    "USDCNH": 6.71216,
-    "GBPUSD": 1.34787,
-    "USDCAD": 1.39199,
-    "USDSEK": 9.77455,
-    "US500": 7596.6,
-    "GER40": 25451.25,
-    "UK100": 10683.75,
+    "XAUUSD": 4346.58,
+    "XAGUSD": 64.5465,
+    "EURUSD": 1.15354,
+    "USDJPY": 155.1865,
+    "USDCHF": 0.8193,
+    "USDCNH": 6.70812,
+    "GBPUSD": 1.34671,
+    "USDCAD": 1.39311,
+    "USDSEK": 9.79454,
+    "US500": 7604.4,
+    "GER40": 25495.55,
+    "UK100": 10719.05,
     "ADR_14day": 101.6,
-    "ADR_usedToday": 7.6,
+    "ADR_usedToday": 73.7,
     "goldSilverRatio": 67.3
   },
   "dollarLiquidity": {
@@ -66,52 +66,40 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "US Treasury's Bessent says bond yields reflect 'global issues' - Reuters",
+      "headline": "Yield on 10-year Treasury hovers above 5% as investors await Fed decision",
+      "source": "CNBC",
+      "publishedAt": "2026-09-16T08:58:16.000Z",
+      "hoursAgo": 1.5
+    },
+    {
+      "headline": "US Treasury's Bessent will meet with China's He Lifeng this weekend - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-15T18:41:11.000Z",
-      "hoursAgo": 3.9
+      "publishedAt": "2026-09-15T16:52:02.000Z",
+      "hoursAgo": 17.6
     },
     {
       "headline": "Cramer says these 2 stocks are still buys, warns against playing Fed rate 'parlor game'",
       "source": "CNBC",
       "publishedAt": "2026-09-15T16:12:59.000Z",
-      "hoursAgo": 6.3
+      "hoursAgo": 18.3
     },
     {
       "headline": "What to expect from stocks and bonds if interest rates remain higher for longer, according to investing pros",
       "source": "CNBC",
       "publishedAt": "2026-09-15T14:00:02.000Z",
-      "hoursAgo": 8.6
+      "hoursAgo": 20.5
     },
     {
       "headline": "Fed up with AI interviews, some job seekers are dropping out as candidates and blacklisting companies from consideration",
       "source": "CNBC",
       "publishedAt": "2026-09-15T13:05:01.000Z",
-      "hoursAgo": 9.5
+      "hoursAgo": 21.4
     },
     {
       "headline": "No one and done: The Fed will hike at least two times over the next year, according to CNBC survey",
       "source": "CNBC",
       "publishedAt": "2026-09-15T11:10:05.000Z",
-      "hoursAgo": 11.4
-    },
-    {
-      "headline": "UK jobs market stays soft before BoE rate call - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-15T06:05:00.000Z",
-      "hoursAgo": 16.5
-    },
-    {
-      "headline": "Dollar ticks up as oil prices climb, Fed rate hike chances firm - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-15T01:58:00.000Z",
-      "hoursAgo": 20.6
-    },
-    {
-      "headline": "Bonds slump as US 10-year Treasury yields hit highest since 2007 - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-15T01:44:00.000Z",
-      "hoursAgo": 20.8
+      "hoursAgo": 23.3
     }
   ],
   "briefing": null
