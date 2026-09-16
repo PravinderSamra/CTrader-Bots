@@ -37,8 +37,21 @@ def fetch_day_bars(day):
     """M_5 bars for one trading day, bucketed on the 17:00 ET / 21:00 UTC roll."""
     target = datetime.fromisoformat(day).date()
     now = datetime.now(timezone.utc)
+    # D16: this was min(days_back, 20). The cap is invisible and it EATS THE
+    # EVIDENCE BASE as time passes -- on 2026-09-16 the tracker read 7 trading
+    # days / 10 scans where five days earlier it read 9 / 17, with no data
+    # removed and none added: 08-24, 08-25 and 08-26 had simply aged past 20
+    # days and 08-27 came back with 16 bars. Every figure quoted off it was a
+    # moving number that got worse over time, in a project whose only real
+    # constraint is observation count.
+    #
+    # The broker does serve them -- a days=30 fetch returns 08-20 onward -- so
+    # this was self-inflicted. Raised to 45; beyond that the honest fix is to
+    # persist graded outcomes rather than re-derive them from bars that will not
+    # exist forever.
     days_back = max(2, (now.date() - target).days + 3)
-    bars = ct.fetch_ohlcv_paged("NAS100", "M_5", days=min(days_back, 20))
+    bars = ct.fetch_ohlcv_paged("NAS100", "M_5", days=min(days_back, 45),
+                                max_calls=300)
     return [b for b in bars if LF.trading_day(b["time"]) == target]
 
 
