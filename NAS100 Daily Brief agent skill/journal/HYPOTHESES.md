@@ -2984,3 +2984,203 @@ open IDs now run H1–H19 with D1–D16 alongside; a new entry takes the next fr
 number, and reviewers should grep the headings before assigning one.
 
 Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+
+---
+
+# Observations appended 2026-09-16 (grading the 2026-09-15 session)
+
+Source: `review_day.py --json` (resolved to 2026-09-15), `track.py`, and the
+`prediction` block of `2026-09-15/1246-preny.json`. Full write-up in
+`2026-09-15/REVIEW.md`. Session: O 29174.2 / H 29189.4 / L 28909.8 / C 28983.4,
+range 279.6 (77.5% of ADR14 360.9), net −190.8. One gradeable scan, direction
+**CORRECT**. Integrity clean (commit `2f3a37e`, authored 4s after `scan_utc`).
+
+## H1 — eighth trading day; the zero/non-zero split holds, the bias does not exist
+
+12:46 PRE_NY budget **97.3** → extension **16.0** (**−81.3**, second-largest
+over-read on record after 08-27's −86.4). Traversal 269.3 (2.77×).
+
+| budget | scans | MAE |
+|---|---|---|
+| **= 0.0** | 3 | **8.9** |
+| **> 0.0** | **8** | **75.5** |
+
+Mean budget when >0 is ~147pts; MAE is **51% of it** — the same ratio reported at
+7 scans. Per-DAY error across 7 days: −10.7, −26.2, −64.0, +57.3, +44.3, +79.4,
+**−81.3**; mean **−0.2**. Dispersion without bias. **P4 (print a band when the
+budget is non-zero) strengthened; no new proposal.**
+
+## H1 sub-observation — the budget's correct reading is not reaching the prose
+
+New, and the sharpest instance so far of H1's own claim block ("the extremes are
+probably in — expect movement *between* them").
+
+At scan, price was 29119.3 and the session low **28925.8 was already in**
+(inferred: `range_at_scan` 263.6 below a high of 29189.4, and "Asia High (today)
+29189.4" grades as never-reached post-scan). So **193.5pts of pure retracement
+to an existing low** was available at zero range-extension cost — and the day's
+actual new low was **16.0pts**, matching `range_extension` exactly.
+
+Result: the fuel block printed `LOW_FUEL` and *"this dampens CONVICTION"*, and
+the brief wrote *"nothing structural to slow a breakdown… If it goes, it has
+room. Do not fade it."* It had 16pts of room. The trade was worth **−209.5** from
+the scan price anyway, because of where price sat in the range.
+
+**Mechanism.** The fuel block reports `remaining_budget`, `adr_used_pct` and
+`expansion_state`, and **reports no distance to the existing session extremes**.
+The prose therefore has no field with which to say "the available move is back to
+the low, not beyond it". Logged under H1. **No proposal** — one instance, and the
+right fix is a reporting field, which should wait for a second observation.
+
+## H18 — the clincher, on the next scan
+
+DFII10 froze at the 09-10 print. Score over the freeze and its release:
+
+`09-10 0, 09-10 0, 09-11 −3, 09-11 −3, 09-14 −3, 09-14 −3, 09-15 −3, **09-16 0**`
+
+On **2026-09-16 12:46Z** FRED published through 09-14 and the same series scored
+**0**, with the 5-day move essentially unchanged (**18bp → 17bp**). **The series
+moved 1bp; the score moved 3 points twice.** The −3 existed only inside the stale
+window and died when real data arrived — which is precisely H18's claim, now
+demonstrated end-to-end on one series rather than inferred from a drifting
+window.
+
+On 09-15 that −3 was **25% of a −12** call. It pointed the right way. That is
+luck; a component scoring data it knows it does not have is a defect whether the
+day agrees with it or not. **P1 (scale toward 0 when the series is stale) should
+be prioritised.** No new proposal — P1 already covers it.
+
+## H19 — the news score's magnitude tracks MATCH COUNT, not sentiment
+
+New mechanism observation; the sampling-bias question is untouched.
+
+| scan | counted | uncounted | sign of counted | score |
+|---|---|---|---|---|
+| 2026-09-15 12:46 | 4 (0 bull / 4 bear) | 53 | **100% bearish** | **−3** |
+| 2026-09-16 12:46 | 1 (0 bull / 1 bear) | 49 | **100% bearish** | **0** (NEUTRAL) |
+
+Both days were unanimously bearish among the headlines the scorer could read.
+The scores differ by 3 points, and the only thing that differed is **how many
+headlines happened to trip a keyword**. A minimum-count floor is a defensible
+design; the consequence is that −3 and 0 here are not two readings of the news,
+they are two sample sizes — on 7.0% and 2.0% coverage respectively.
+
+**Status: OBSERVING, unchanged. No weight change.** The hand-score test (score
+the *uncounted* headlines on three days, compare the sign of the full set to the
+subset) has still not been run, and nothing below it should move the weight.
+**Record `counted`, `uncounted` and `sign` every scan** — now also record the
+resulting score, because this table is what made the mechanism visible.
+
+## M6 — ninth session, and the cleanest instance yet
+
+A −190.8 day. Of 9 touched levels, **8 graded "held as resistance" and 1 "held as
+support"** — and the 1 is the only level below the close. The close (28983.4)
+sits between 28963.1 (support) and 29005.8 (resistance), and the verdicts
+partition exactly there. `minutes_held` reads 385–490 for nearly every level:
+the whole session, because price crossed once and never returned.
+
+Day-sign separation now: **6 down days** against 3 up days, with the same
+near-total split reported at 8 sessions. Nothing has changed except the count.
+
+**M6 is the blocker on every level statistic** — H6, H14's empirical half, and
+any `acted_as` tally. Its fix direction (grade against direction of approach and
+a reversal threshold measured from the touch, not from the close) is already
+written up and needs a decision, not more evidence. I am not re-proposing it.
+
+## H6 — the density artefact, quantified again
+
+Hit rate 0.64 (9/14); **0.69 (9/13) excluding the one `kind: structural` level**.
+The nine touched levels span **219.9pts** inside a **269.3pt** traversal — the
+board is denser than the path, so touching most of it is close to arithmetic.
+
+`first_touch_reaction` is the only non-degenerate column, and it reads: 3 broke
+down through, 6 chopped both sides, **0 clean rejections** on a 279.6-point trend
+day. Watching whether a clean rejection ever appears.
+
+**STRUCTURAL PUT WALL: 6th publication across 4 trading days, 0 touches** — and
+correct behaviour, since its own note reads *"the floor for the WEEK/MONTH… mark
+it and leave it, not an intraday trigger."* **P3 strengthened.**
+
+## H14 — the regime-aware wall note worked, second recorded time
+
+29019.4 published as *"Heaviest floor this week… BUT today the desks are pushing
+moves along — if it breaks, expect it to speed UP, not bounce. Don't buy the
+break."* Price chopped around it, broke, and ran 109.6pts to the low without a
+bounce. It did not act as a floor.
+
+This is the *label* half of H14, which is decidable from first-touch behaviour.
+**H14's empirical half — does a put wall act as resistance-after-break in short
+gamma — remains blocked by M6** and gains nothing today, because today's
+"resistance" verdict is close-derived like all the others.
+
+## H3 / H2 — the missing cell arrived and does not settle anything
+
+Bias **−12** printed at 29119.3 — **73% up the range already established at
+scan** (28925.8–29189.4), 70.1pts below the session high. **CORRECT.**
+
+All three contaminating H3 instances (24 Aug 13:45, 25 Aug 13:04, 14 Sep 13:04)
+were max-conviction bearish calls printed at *lows*, all wrong. This is the first
+printed near a *high*, and it was right.
+
+**It is not the separator.** A plain bearish skew predicts today exactly as well
+as H3 does: the engine printed −12 and the day fell. Nothing distinguishes
+"correctly read the top of the range" from "is always bearish and met a down
+day". The separator remains **one max-conviction BULLISH call**, and after 8
+graded days there has not been one. **No cap proposed.**
+
+## H10 — did not fire
+
+`structure 0 — "price inside the prior-week range (29018.3–29734.1)"`. The
+prior-week-range rule stays **0-for-4**; today adds no observation to it.
+
+---
+
+## P5 (NEW proposal) — the secondary gamma table is published and never graded
+
+**Claim.** The brief's *"Other gamma concentrations in range"* table publishes
+strikes with explicit behavioural claims in their own words — "call-dominant
+strikes brake a move, put-dominant strikes speed it up… They are not all
+support" — and **none of those strikes is written into `prediction.levels`**, so
+`review_day.py` has never scored one.
+
+**Evidence, whole journal.** The table appears in **every brief**. Across all
+trading-day scans with a paired `.md`: **107 strike-publications, 22 scans, 10
+separate trading days, 0 graded.**
+
+| day | scans | secondary strikes | graded |
+|---|---|---|---|
+| 08-26 … 08-28 | 10 | 46 | 0 |
+| 09-08 … 09-11 | 8 | 45 | 0 |
+| 09-14 … 09-16 | 4 | 16 | 0 |
+
+(09-16 is not a graded day; it is counted here as a *publication*, which is what
+this proposal measures, not as an outcome observation.)
+
+**Today's ungraded near-miss.** 28919.4 was published as *"dealers are SHORT
+gamma here, so they amplify: price tends to accelerate THROUGH rather than stall.
+**Not a floor.**"* The session low was **28909.8** — 9.6pts through it — and price
+closed **73.6pts back above**. It acted as a floor. n=1 and ungraded, which is
+the point.
+
+**Why this clears the bar as a new proposal.** It changes no scoring logic and
+tunes nothing; it converts an unmeasured published output into a measured one.
+The 3-session rule exists to stop fitting to noise — this adds observations
+rather than spending them.
+
+**Expected effect.** First evidence on whether the put-dominant "accelerates
+through, not a floor" note is true, which is currently asserted in every brief on
+no data.
+
+**Sequencing caveat.** It enlarges the hit-rate denominator, so it must land
+**with or after P3**, and before H6 is read at its 5-day threshold — otherwise
+H6 is read off a denominator that moved underneath it.
+
+## No new data point is warranted
+
+Every gap found today is in data the engine already holds and does not read:
+FRED's own staleness (P1), the fuel block's distance to the existing session
+extremes (H1 sub-observation), the news scorer's uncounted headlines (H19), and
+strikes the brief already computes and prints (P5). Nothing here argues for a new
+feed.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
