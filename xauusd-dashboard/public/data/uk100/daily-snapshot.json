@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-09-16T12:36:56.209Z",
+  "generatedAt": "2026-09-16T15:13:11.373Z",
   "prices": {
-    "UK100": 10721.15,
-    "GBPUSD": 1.34527,
-    "GBPEUR": 1.16622,
-    "US500": 7610.9,
-    "NAS100": 29099.95,
-    "BRENT": 108.219,
-    "COPPER": 6.5317,
-    "VIX": 16.525,
-    "USDX": 99.728,
-    "XAUUSD": 4340.655,
-    "UK100_dayPct": 0.36
+    "UK100": 10706.65,
+    "GBPUSD": 1.34542,
+    "GBPEUR": 1.16588,
+    "US500": 7620.5,
+    "NAS100": 29220.05,
+    "BRENT": 105.429,
+    "COPPER": 6.532,
+    "VIX": 16.575,
+    "USDX": 99.68,
+    "XAUUSD": 4353.915,
+    "UK100_dayPct": 0.22
   },
   "fx": {
-    "gbpUsdDayPct": -0.17,
+    "gbpUsdDayPct": -0.16,
     "gbpUsd20dPercentile": 16,
     "sterlingEri": 85.5725,
     "sterlingEriDayChange": 0.09,
@@ -36,25 +36,25 @@
     "daysToMpc": 1
   },
   "usLinkage": {
-    "us500DayPct": 0.21,
-    "nas100DayPct": 0.4,
-    "vix": 16.525,
+    "us500DayPct": 0.33,
+    "nas100DayPct": 0.82,
+    "vix": 16.575,
     "vixRegime": "NORMAL",
     "us10y": 4.97,
-    "usdx": 99.728
+    "usdx": 99.68
   },
   "commodities": {
-    "brentDayPct": -0.99,
+    "brentDayPct": -3.54,
     "copperDayPct": 0.89,
-    "goldDayPct": 1.08,
+    "goldDayPct": 1.39,
     "brent20dTrend": "UP"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": 0.42,
-    "dax40DayPct": 0.18,
-    "eurUsdDayPct": -0.05,
+    "eurostoxx50DayPct": 0.58,
+    "dax40DayPct": 0.64,
+    "eurUsdDayPct": -0.01,
     "ftseDaxCorr20d": 0.78,
-    "ftseSx5eCorr20d": 0.72,
+    "ftseSx5eCorr20d": 0.71,
     "tapeAgreement": "ALIGNED",
     "preOpenLead": "NONE"
   },
@@ -69,7 +69,7 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent -0.99%",
+      "driver": "Brent -3.54%",
       "read": "BEARISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
@@ -125,19 +125,13 @@
       "headline": "Boeing, Korean Air finalize order for 103 aircraft - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxObWZwd2lERklzamhHY3NBNWVVQlY1N1ZrdDc3X1poWmJPZ3dYX19UOG5wTGtLT2NyVlRnNXNQWWZadWlnVDBDZ3d2SjNUSlZxczFYWVlJVDFBWmRhV3NlVENzcUdtei1GX0tZXzZpYnB5Q3hRalYtRFlYR0FxTERES1J3bnhnSm1yRUh3WWtWT3dRS2tTanN5SElfX05xRFVRYzJYU0FtTVVGNmFl?oc=5",
-      "hoursAgo": 10.3
+      "hoursAgo": 12.9
     },
     {
       "headline": "Cramer says these 2 stocks are still buys, warns against playing Fed rate 'parlor game'",
       "source": "CNBC",
       "url": "https://www.cnbc.com/2026/09/15/cramer-says-these-2-stocks-are-still-buys-warns-against-playing-fed-rate-parlor-game.html",
-      "hoursAgo": 20.4
-    },
-    {
-      "headline": "What to expect from stocks and bonds if interest rates remain higher for longer, according to investing pros",
-      "source": "CNBC",
-      "url": "https://www.cnbc.com/2026/09/15/what-higher-for-longer-interest-rates-mean-for-your-investments.html",
-      "hoursAgo": 22.6
+      "hoursAgo": 23
     }
   ],
   "riskTone": null,
@@ -150,25 +144,25 @@
         "name": "GBP",
         "weight": 3,
         "impact": "NEUTRAL",
-        "detail": "GBP/USD -0.17% → FTSE tailwind (sign-flipped)"
+        "detail": "GBP/USD -0.16% → FTSE tailwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
         "impact": "BULLISH",
-        "detail": "US500 +0.21% today"
+        "detail": "US500 +0.33% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 16.525 — NORMAL regime"
+        "detail": "VIX 16.575 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
         "impact": "BEARISH",
-        "detail": "Brent -0.99% (energy majors)"
+        "detail": "Brent -3.54% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
@@ -196,15 +190,15 @@
       },
       {
         "name": "European tape (SX5E/DAX)",
-        "weight": 2.5,
-        "impact": "NEUTRAL",
-        "detail": "SX5E +0.42% / DAX +0.18%"
+        "weight": 1,
+        "impact": "BULLISH",
+        "detail": "SX5E +0.58% / DAX +0.64%"
       }
     ],
     "eventSuppressed": true
   },
   "orbContext": {
-    "computedAt": "2026-09-16T12:36:56.208Z",
+    "computedAt": "2026-09-16T15:13:11.372Z",
     "mode": "POST_ORB",
     "cashOpenLondon": "08:00 BST",
     "overnightHigh": 10715.5,
@@ -214,8 +208,8 @@
     "priorClose": 10682.8,
     "prevWeekHigh": 10868.9,
     "prevWeekLow": 10578.6,
-    "gapPts": 38.4,
-    "gapPct": 0.36,
+    "gapPts": 23.9,
+    "gapPct": 0.22,
     "orbHigh": 10704.7,
     "orbLow": 10686.7,
     "orbBrokenDirection": "UP",
@@ -229,13 +223,13 @@
     "adr14": 102.9,
     "adrUsedPct": 62,
     "expansionState": {
-      "label": "NORMAL",
+      "label": "COMPRESSED",
       "rangeSoFarPct": 62,
-      "expectedRangePctByNow": 83,
-      "rangeVsTypical": 0.75,
-      "expectedVolPctByNow": 65,
-      "moveMostlyDone": false,
-      "note": "Range 62% of ADR vs ~83% typical by 13:00 BST (about the typical pace). only ~65% of volume typically done by now — an afternoon expansion is still possible."
+      "expectedRangePctByNow": 100,
+      "rangeVsTypical": 0.62,
+      "expectedVolPctByNow": 100,
+      "moveMostlyDone": true,
+      "note": "Range 62% of ADR vs ~100% typical by 16:00 BST (below the typical pace (compressed/range)). ~100% of a typical day's volume already done — expect a rangebound remainder, tighten targets."
     }
   },
   "orbIntel": {
@@ -261,7 +255,14 @@
         "severity": "INFO",
         "source": "TAPE",
         "rule": "R8",
-        "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.42%) — the cross-market lean is up."
+        "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.58%) — the cross-market lean is up."
+      },
+      {
+        "direction": "FAVOURS_LONG",
+        "severity": "INFO",
+        "source": "TAPE",
+        "rule": "R9",
+        "text": "Past 13:30 with US futures +0.33% — the 14:30 US handoff argues for holding longs into the US open."
       },
       {
         "direction": "BREAKOUT_SUSPECT",

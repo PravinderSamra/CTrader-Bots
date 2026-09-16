@@ -114,6 +114,79 @@
         "adrUsedPct": 62
       },
       "outcome": null
+    },
+    {
+      "at": "2026-09-16T15:13:11.626Z",
+      "londonTime": "16:13 BST",
+      "mode": "POST_ORB",
+      "price": 10706.65,
+      "stance": "LONG_FAVOURED",
+      "stanceLine": "Backdrop favours upside breaks — FOMC Rate Decision @ 19:00 BST today — pre-release breaks are positioning, not conviction.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "FOMC Rate Decision @ 19:00 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "STRUCTURE",
+          "rule": "R3",
+          "text": "ORB break UP is aligned with the BULLISH macro bias (+3) — continuation has the backdrop behind it."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.58%) — the cross-market lean is up."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures +0.33% — the 14:30 US handoff argues for holding longs into the US open."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 3,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": 10704.7,
+        "orbLow": 10686.7,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10715.5,
+        "overnightLow": 10673.2,
+        "priorDayHigh": 10704,
+        "priorDayLow": 10584.6,
+        "gapPct": 0.22,
+        "adr14": 102.9,
+        "adrUsedPct": 62
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-16T15:13:14.726Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
