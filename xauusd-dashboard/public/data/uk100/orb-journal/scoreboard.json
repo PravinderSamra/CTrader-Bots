@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-09-10T17:58:17.127Z",
-  "entriesScored": 86,
+  "updatedAt": "2026-09-16T19:13:32.001Z",
+  "entriesScored": 95,
   "byStance": {
     "SHORT_FAVOURED": {
       "n": 16,
@@ -10,32 +10,32 @@
       "avgToClosePct": 0.28
     },
     "LONG_FAVOURED": {
-      "n": 7,
+      "n": 11,
       "right": 3,
-      "wrong": 2,
-      "flat": 2,
-      "avgToClosePct": 0.05
+      "wrong": 4,
+      "flat": 4,
+      "avgToClosePct": 0
     },
     "FADE_FAVOURED": {
-      "n": 8,
+      "n": 9,
       "right": 3,
-      "wrong": 3,
+      "wrong": 4,
       "flat": 2,
       "avgToClosePct": -0.15
     }
   },
   "byRule": {
     "R13": {
-      "n": 30,
-      "right": 10,
+      "n": 35,
+      "right": 11,
       "wrong": 5,
-      "flat": 15
+      "flat": 19
     },
     "R11b": {
-      "n": 81,
-      "right": 21,
+      "n": 90,
+      "right": 25,
       "wrong": 7,
-      "flat": 53
+      "flat": 58
     },
     "R6": {
       "n": 1,
@@ -44,10 +44,10 @@
       "flat": 0
     },
     "R8": {
-      "n": 58,
-      "right": 23,
-      "wrong": 19,
-      "flat": 16
+      "n": 67,
+      "right": 25,
+      "wrong": 21,
+      "flat": 21
     },
     "R12": {
       "n": 9,
@@ -56,22 +56,22 @@
       "flat": 3
     },
     "R2": {
-      "n": 18,
-      "right": 6,
+      "n": 20,
+      "right": 7,
       "wrong": 3,
-      "flat": 9
+      "flat": 10
     },
     "R4": {
-      "n": 45,
-      "right": 21,
+      "n": 52,
+      "right": 25,
       "wrong": 1,
-      "flat": 23
+      "flat": 26
     },
     "R9": {
-      "n": 9,
+      "n": 11,
       "right": 2,
       "wrong": 4,
-      "flat": 3
+      "flat": 5
     },
     "R10": {
       "n": 15,
@@ -80,10 +80,10 @@
       "flat": 13
     },
     "R3": {
-      "n": 11,
+      "n": 16,
       "right": 4,
-      "wrong": 4,
-      "flat": 3
+      "wrong": 6,
+      "flat": 6
     },
     "R11": {
       "n": 5,
@@ -92,9 +92,9 @@
       "flat": 3
     },
     "R1": {
-      "n": 8,
+      "n": 9,
       "right": 3,
-      "wrong": 3,
+      "wrong": 4,
       "flat": 2
     },
     "R8b": {
@@ -105,9 +105,9 @@
     }
   },
   "breakoutsSuspect": {
-    "n": 26,
-    "noExtensionRate": 0.08,
-    "avgMaxUpPct": 0.39,
-    "avgMaxDownPct": -0.2
+    "n": 29,
+    "noExtensionRate": 0.1,
+    "avgMaxUpPct": 0.37,
+    "avgMaxDownPct": -0.21
   }
 }

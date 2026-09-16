@@ -18,7 +18,7 @@ import cboe_gex as G
 
 
 _CHAIN_CACHE = {}
-_CHAIN_TTL = 90          # seconds
+_CHAIN_TTL = 900         # seconds
 
 
 def load_combined(max_dte=45, _cache=True):
@@ -28,15 +28,42 @@ def load_combined(max_dte=45, _cache=True):
     rows for the per-strike bars, which loaded it again — four HTTP round trips
     to CBOE for one picture, and enough to earn a 429. The chain does not
     change inside a single scan, so serve it from a short TTL cache instead.
+
+    The cache is keyed by max_dte, and that alone did NOT stop the re-fetch.
+    build() takes the 45-day book and the chart draws the WEEK book, so the two
+    callers in one scan asked for keys 45 and 7, missed each other every single
+    time, and the picture cost a second full download of both chains. That is
+    what actually spent the rate-limit budget: the chart failed with HTTP 429 on
+    2026-09-15 and 2026-09-16 while the brief beside it succeeded.
+
+    A chain loaded for 45 days CONTAINS every row a 7-day load would return —
+    load_chain's only dte rule is `dte > max_dte -> drop`. So a cached superset
+    is served by filtering it, never by going back to CBOE. Downstream is
+    unchanged by this: bucket() re-applies `r["dte"] > dte_max` itself, so the
+    filter here is belt-and-braces rather than a new behaviour.
+
+    TTL is 900s, not 90s. The chart is drawn after the journal write, and a
+    90-second window could expire during that gap on a slow scan — a TTL that
+    lapses mid-scan reintroduces exactly the fetch it exists to prevent. The
+    chain is published on a delay and does not move within one scan.
     """
     import time
-    key = max_dte
-    if _cache and key in _CHAIN_CACHE:
-        ts, payload = _CHAIN_CACHE[key]
-        if time.time() - ts < _CHAIN_TTL:
-            return payload
+    now = time.time()
+    if _cache:
+        hit = _CHAIN_CACHE.get(max_dte)
+        if hit and now - hit[0] < _CHAIN_TTL:
+            return hit[1]
+        # No exact entry — any FRESHER-OR-EQUAL, WIDER book already in hand
+        # answers this request. Smallest adequate superset, so the filter does
+        # the least work.
+        for key in sorted(k for k in _CHAIN_CACHE if k > max_dte):
+            ts, payload = _CHAIN_CACHE[key]
+            if now - ts < _CHAIN_TTL:
+                rows, S_ndx, S_qqq, ratio, asof = payload
+                return ([r for r in rows if r["dte"] <= max_dte],
+                        S_ndx, S_qqq, ratio, asof)
     payload = _load_combined_uncached(max_dte)
-    _CHAIN_CACHE[key] = (time.time(), payload)
+    _CHAIN_CACHE[max_dte] = (time.time(), payload)
     return payload
 
 

@@ -280,8 +280,19 @@ def score(macro, levels, gex, session=None):
                  "Below the flip in negative gamma: dealers amplify, sweeps run "
                  "rather than fail. Strategy-1 fades have a materially lower hit "
                  "rate here — only take them at the far walls.")
-    else:
+    elif gf and abs((px - gf) / px * 100) < 0.15:
         strat = "Straddling the flip — reduce size and let the regime resolve."
+    else:
+        # D8: this branch is reached when price is ABOVE the flip but the week's
+        # book is net short gamma (net <= 0) -- the two disagree. It used to
+        # print "Straddling the flip", naming a condition it had not tested: on
+        # 2026-09-10 it said so at 48pts / 0.163%, past its own 0.15% threshold,
+        # while the scoring table right above printed "+2 above flip by 48.0pts"
+        # with no straddling rider. The advice was defensible; the reason was false.
+        strat = (f"CONFLICTED — price is above the flip ({gf}) but this week's "
+                 f"book is net SHORT gamma ({net} $bn/1%). The flip says fade, "
+                 f"the book says moves get amplified. Reduce size and take the "
+                 f"walls as soft boundaries until the two agree.")
 
     return {"score": total, "label": label, "components": R,
             "event_gate": gate, "strategy_call": strat,

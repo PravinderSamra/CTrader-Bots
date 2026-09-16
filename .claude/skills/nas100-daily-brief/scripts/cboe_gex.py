@@ -17,7 +17,7 @@ Outputs the level set the brief needs:
   - top OI strikes, max pain
   - each level translated from NDX index points to the broker's NAS100 CFD price
 """
-import json, math, ssl, sys, urllib.request
+import json, math, ssl, sys, time, urllib.error, urllib.request
 from datetime import datetime, timezone, date
 from collections import defaultdict
 
@@ -29,11 +29,60 @@ CONTRACT_MULT = 100          # NDX / QQQ options both 100x
 R = 0.0425                   # risk-free proxy; refresh from ^IRX in production
 
 
-def _get(url, timeout=60):
+_RETRY_STATUS = (429, 500, 502, 503, 504)
+_RETRY_WAITS = (2, 5, 12)     # seconds; total worst case 19s + the failed calls
+
+
+def _get(url, timeout=60, _sleep=None):
+    """Fetch JSON from CBOE, retrying a rate-limit or a transient server error.
+
+    This used to be a bare urlopen, so a single HTTP 429 anywhere killed
+    whatever was asking. CBOE sits behind Cloudflare and rate-limits by source
+    IP (the body reads `error code: 1015`), and this host shares that IP with
+    the other bots that scan on their own schedules — so 429 is a NORMAL
+    condition here, not an exceptional one, and it was being treated as fatal.
+
+    Measured on 2026-09-16: gentle polling (one request per 45s) cleared the
+    limit in ~90 seconds, and it re-tripped the moment a full scan fired its
+    burst. Sequential waits of 2/5/12s therefore cover the observed recovery
+    without hammering — each retry is strictly slower than the last, and a
+    Retry-After header wins over the schedule when the server sends one.
+
+    Only the statuses in _RETRY_STATUS are retried. A 404 is a real answer
+    about a symbol and must fail immediately rather than three seconds later.
+    """
+    sleep = _sleep or time.sleep
     req = urllib.request.Request(url, headers=UA)
-    with urllib.request.urlopen(req, timeout=timeout,
-                                context=ssl.create_default_context()) as r:
-        return json.loads(r.read().decode())
+    last = None
+    for attempt, wait in enumerate(_RETRY_WAITS + (None,)):
+        try:
+            with urllib.request.urlopen(req, timeout=timeout,
+                                        context=ssl.create_default_context()) as r:
+                return json.loads(r.read().decode())
+        except urllib.error.HTTPError as e:
+            last = e
+            if e.code not in _RETRY_STATUS or wait is None:
+                raise
+            # Honour Retry-After when present; it is the server's own answer
+            # and guessing shorter just burns another request.
+            try:
+                wait = max(wait, min(int(e.headers.get("Retry-After", 0)), 60))
+            except (TypeError, ValueError):
+                pass
+            print(f"_[cboe {e.code} on {url.rsplit('/', 1)[-1]}; "
+                  f"retry {attempt + 1}/{len(_RETRY_WAITS)} in {wait}s]_",
+                  file=sys.stderr)
+            sleep(wait)
+        except (urllib.error.URLError, TimeoutError) as e:
+            # A dropped connection is the same class of problem as a 503.
+            last = e
+            if wait is None:
+                raise
+            print(f"_[cboe {type(e).__name__} on {url.rsplit('/', 1)[-1]}; "
+                  f"retry {attempt + 1}/{len(_RETRY_WAITS)} in {wait}s]_",
+                  file=sys.stderr)
+            sleep(wait)
+    raise last
 
 
 def parse_osi(sym):
