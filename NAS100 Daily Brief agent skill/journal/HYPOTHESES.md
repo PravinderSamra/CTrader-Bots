@@ -3244,3 +3244,113 @@ because `"HEAD"` is non-empty. Hand-pushed daily since 09-11. Left alone here
 because this change set is about the chart.
 
 Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+
+---
+
+# D16 — the evidence base was silently eroding, and every quoted figure moved with it
+
+**2026-09-16.** `track.py` read **7 trading days / 10 scans**. Five days earlier
+it read **9 / 17**. No data was added and none was deleted.
+
+`review_day.fetch_day_bars` fetched `days=min(days_back, 20)`. Today minus 20 days
+is 2026-08-27, so 08-24, 08-25 and 08-26 fell off the back and 08-27 returned
+**16 bars**. The broker still serves them — a `days=30` fetch returns 08-20 onward
+— so this was self-inflicted and invisible.
+
+**Why it matters more than a stale number.** This project's only real constraint
+is observation count. A cap that quietly drops the oldest days means the register
+**loses evidence faster than scanning adds it** on any week with fewer than ~3
+scans, and every figure quoted off it silently gets worse over time. H1's per-day
+mean read -12.1 on 09-11, -0.2 today, and **-10.1 after the fix** — three
+different numbers for the same underlying data.
+
+**Fixed:** cap raised to 45 days, `max_calls=300`. Restored to **11 trading days /
+20 scans**.
+
+**Not fixed, and the durable answer:** graded outcomes should be **persisted**
+rather than re-derived from bars on every run. No broker keeps M5 forever, so this
+recurs at 45 days instead of 20 unless the outcome of a graded day is written down
+once and kept. Recorded, not built — it is a storage design, not a one-line cap.
+
+**Family:** a limit asserted in code with no report when it binds. The same shape
+as D10's SUCCEEDED-on-nothing and D11's `pushed=True` from an exit code. **Silence
+on a failed assumption is the recurring defect in this project, not any individual
+miscalculation.**
+
+# Analysis 2026-09-16 — 11 trading days, 20 scans
+
+## The walls are the product. Everything else is still noise.
+
+Every post-fix ladder graded from its own publication, deduped to one observation
+per (day, side, 25pt bucket):
+
+**17 reached and judgeable. 17 HELD. Zero lost.** Median worst excursion
+**8.2pts**, worst case 24.1pts. Spread across six days (08-27, 09-08, 09-09,
+09-10, 09-11, 09-14).
+
+**The binding limitation is reach, not accuracy:**
+
+| | rungs | reached |
+|---|---|---|
+| C1–C3 | 40 | 11 (**28%**) |
+| P1–P3 | 41 | 6 (**15%**) |
+
+A level that holds 100% of the time but is reached once in four is a good signal
+with a distribution problem. **H11's proximity claim is the live issue, and it is
+worse on the put side** — which is also where D7's budget filter used to drop
+levels, so the two compounded.
+
+**Role, once reached:** C rungs split 6 support / 5 resistance; **P rungs went
+resistance 4 of 6.** That is the direction H14 predicted, now at 6 observations
+rather than 4, but it remains a side-note rather than a finding.
+
+## Direction: 9 right / 6 wrong / 5 no-call
+
+Marginally positive for the first time. 15 committed calls across 11 days is still
+too few to separate from chance, and the 5 no-calls are not free — a NEUTRAL
+printed on a day that moves 280pts (09-10 08:12) is a miss the scoreboard does not
+charge for.
+
+## Strategy selection, on the corrected post-scan statistic
+
+Graded from each scan forward, never against price that predates it (the flaw that
+withdrew H7's headline):
+
+**Overall 10 right / 12 wrong** across 22 judgeable scans — below a coin flip.
+By day, which dedups the eight near-identical 08-24 scans: **4 right / 3 wrong**.
+
+**The split by date is the interesting part:**
+
+| period | scans | right | wrong |
+|---|---|---|---|
+| 08-24 → 09-09 (pre-fix) | 17 | 5 | 12 |
+| **09-10 → 09-14 (post-fix)** | **5** | **5** | **0** |
+
+**Do not read that as proof.** Five scans over three days, and two more days
+(09-14 13:04, 09-15) came back `mixed` and were excluded. But there is a plausible
+mechanism rather than pure coincidence: **D12** made the board reprice greeks at
+current spot on 09-10, which changes the flip, and the flip is what selects the
+strategy. If the pre-fix flip was being computed from stale greeks, a bad strategy
+pick is exactly what that would produce.
+
+**This needs two more clean weeks before it means anything.** Recorded as the
+thing to watch, proposed as nothing.
+
+## Fuel
+
+H1 per-day **-10.1pts over 11 days** — the budget still over-forecasts range
+extension, but the effect has weakened as the sample grew (it read -30.1 at 7
+days). The low-reading asymmetry holds at **4 of 5**: EXHAUSTED/LOW_FUEL calls
+were near-exact on 08-25, 09-08, 09-10 and 09-11 13:24, and wrong by 89 on
+09-11 12:47.
+
+## What this says about where the effort should go
+
+1. **Stop tuning the direction score.** 15 committed calls cannot distinguish a
+   +4 from a -4 weighting, and every hour spent there is an hour not spent on
+   the one thing that measurably works.
+2. **The walls need REACH, not accuracy.** 100% held is not improvable; 22%
+   reached is. That is H11, and it is the highest-value open question in the
+   register.
+3. **Persist graded outcomes** (D16's durable half), or this analysis cannot be
+   reproduced in six weeks.
