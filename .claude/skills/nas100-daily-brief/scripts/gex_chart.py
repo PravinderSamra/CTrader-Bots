@@ -115,13 +115,40 @@ def collect(d=None, cfd_price=None, span=650, bin_pts=50, book="week"):
     # amplify). An earlier version ranked by |net| on each side of spot, which
     # on a call-dominated chain like NDX stamped "P1" on a strongly POSITIVE
     # bar — the label said accelerant while the bar said brake.
-    pos = sorted([b for b in bars if b["net"] > 0], key=lambda b: -b["net"])[:3]
-    neg = sorted([b for b in bars if b["net"] < 0], key=lambda b: b["net"])[:3]
+    # H11, 2026-09-16: rank within REACH, not across the whole chain.
+    #
+    # Ranking by force alone put 78% of rungs where price never went. Measured
+    # over 102 post-fix rungs on 6 sessions, hit rate against distance from spot:
+    #
+    #     0-50pts   (0.14 ADR)   92%        200-300pts  (0.85)    6%
+    #     50-100    (0.28)       58%        300-500      (1.41)   8%
+    #     100-150   (0.42)       22%        500+                  0%  (0 of 19)
+    #     150-200   (0.56)       33%
+    #
+    # Inside 0.6x ADR: 22 of 39 reached (56%). Outside it: 3 of 63 (5%). The
+    # window is that cliff, not a chosen number. A rung price cannot reach is
+    # not a level — it is trivia with a rank stamped on it.
+    #
+    # Far heavy strikes are DEMOTED, never dropped: that was D7's lesson, where
+    # filtering a wall off the board removed the only thing worth marking. They
+    # ride along in `context` with no C/P rank, because the rank is a promise
+    # about tradeability.
+    adr = (((d or {}).get("levels") or {}).get("fuel") or {}).get("adr14")
+    reach = (adr or 0) * 0.6
+    in_reach = ([b for b in bars if abs(b["price"] - cfd_price) <= reach]
+                if reach else bars)
+    far = [b for b in bars if b not in in_reach]
+
+    pos = sorted([b for b in in_reach if b["net"] > 0], key=lambda b: -b["net"])[:3]
+    neg = sorted([b for b in in_reach if b["net"] < 0], key=lambda b: b["net"])[:3]
+    ranked = {id(b) for b in pos + neg}
+    context = sorted([b for b in far if abs(b["net"]) > 0],
+                     key=lambda b: -abs(b["net"]))[:3]
     return {
         "bars": bars, "spot": cfd_price, "flip": flip,
         "call_res": call_res, "put_sup": put_sup, "most_neg": most_neg,
-        "book": book,
-        "ranked_up": pos, "ranked_dn": neg,
+        "book": book, "reach_pts": round(reach, 0) if reach else None,
+        "ranked_up": pos, "ranked_dn": neg, "context": context,
         "net_total": sum(b["net"] for b in bars),
         "generated": datetime.now(timezone.utc),
         "bin_pts": bin_pts, "dte_max": dte_max,
@@ -355,6 +382,11 @@ def persist(c, root=None):
                              "net_$bn": round(b["net"] / 1e9, 3),
                              "oi": int(b["put_oi"])}
                             for n, b in enumerate(c["ranked_dn"], 1)],
+        "reach_pts": c.get("reach_pts"),
+        "context_far": [{"price": b["price"],
+                         "net_$bn": round(b["net"] / 1e9, 3),
+                         "dist": round(b["price"] - c["spot"], 0)}
+                        for b in c.get("context", [])],
         "ladder": [{"price": b["price"], "net_$bn": round(b["net"] / 1e9, 4),
                     "call_oi": int(b["call_oi"]), "put_oi": int(b["put_oi"])}
                    for b in c["bars"]],

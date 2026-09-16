@@ -3430,3 +3430,55 @@ before the US open every weekday, which is exactly the window that produces the
 zeros.
 
 Five consistency checks added across the two. **36 offline checks passing.**
+
+## H11 acted on — ranked rungs are now chosen from within reach
+
+The measurement that settled it, across 102 post-fix rungs on 6 sessions —
+hit rate against distance from spot at publication:
+
+| distance | as ADR | reached |
+|---|---|---|
+| 0–50pts | 0.14 | **92%** |
+| 50–100 | 0.28 | **58%** |
+| 100–150 | 0.42 | 22% |
+| 150–200 | 0.56 | 33% |
+| 200–300 | 0.85 | 6% |
+| 300–500 | 1.41 | 8% |
+| 500+ | — | **0% (0 of 19)** |
+
+**Inside 0.6× ADR: 22 of 39 reached (56%). Outside it: 3 of 63 (5%).** The window
+is that cliff. It is measured, not chosen.
+
+`gex_chart.collect()` now ranks C1–C3 / P1–P3 among bars within `adr * 0.6`.
+Expected effect on the headline number: the ladder went from **25% of ranked
+rungs reachable to roughly 56%**.
+
+**Far heavy strikes are DEMOTED, not dropped** — they ride in `context_far` with
+no C/P rank, because a rank is a promise about tradeability. That is D7's lesson
+applied before the mistake rather than after it.
+
+Verified on the 2026-09-16 20:26Z build (spot 28,946.5, reach 215pts):
+
+- **old C1 would have been 29,301 at +354pts** (net +2.190bn) — the heaviest bar
+  on the chain, in a band with an 8% historical hit rate
+- **new C1 is 29,151 at +204pts** (net +0.083bn), inside the window
+- 29,301 / 29,451 / 29,551 demoted to context, still visible
+
+### The honest tension this creates, recorded rather than papered over
+
+**Reachability is now guaranteed; significance is not.** Today's C1 carries
+**0.083bn against the demoted strike's 2.190bn — 26× weaker.** On a day when all
+the force sits far away, the C-rungs will be thin, and the ladder will rank
+something barely worth the name.
+
+No minimum-force threshold was added, deliberately: that would be an invented
+number, and it would mean some days produce no ranks at all. The `$bn` figure and
+the ●●●○○ rating are both already on the board, so the strength is visible and the
+trader can judge it.
+
+**New open question:** does a weak-but-near rung behave like a strong one? Every
+observation so far is of rungs that were heavy AND near. **Unknown, and the new
+ranking will start generating exactly the data needed to answer it.** Nothing
+proposed.
+
+Four consistency checks added. 40 offline checks passing.
