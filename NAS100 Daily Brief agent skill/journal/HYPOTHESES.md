@@ -3354,3 +3354,43 @@ were near-exact on 08-25, 09-08, 09-10 and 09-11 13:24, and wrong by 89 on
    register.
 3. **Persist graded outcomes** (D16's durable half), or this analysis cannot be
    reproduced in six weeks.
+
+## The 17/17 needs a large qualifier: 12 of them were PIERCED first
+
+Measured 2026-09-16, and it changes what the walls can be used for.
+
+`settled_read()` judges a level **after price has chosen a side**. It says nothing
+about what happened on the way there. Splitting the same 17 observations by
+whether price ever *closed* through the level first:
+
+| | count | detail |
+|---|---|---|
+| held cleanly — never closed through | **5** | tradeable at the touch |
+| **pierced, then reclaimed** | **12** | **median pierce 65pts, max 223.7pts** |
+
+So the honest statement is **not** "these levels hold". It is:
+
+> **Once price settles a side, the level defends it to a median wick of 8.2pts
+> (75th 11.5, max 24.1). Getting to that point often costs a 65-point excursion
+> through the level first.**
+
+**This makes the walls a CONFIRMATION signal, not an entry-at-touch signal.**
+Buying a put wall on first touch with a 25pt stop would have been stopped out on
+12 of 17 occasions before the level did its work. That is exactly the mistake the
+old board text invited ("expect a bounce and a good long-sweep here") and which
+H14 half-corrected.
+
+**Geometry for anyone building a rule on this:**
+
+- adjacent ranked walls sit a **median 150pts apart** (min 50, max 400)
+- spot to the nearest wall is a **median 71pts above / 79pts below**
+- the retest wick after settling is **median 8.2pts, max 24.1pts**
+
+So a retest entry with a ~30pt stop targeting the next wall is roughly **5:1** on
+the full gap, ~2.5:1 to the nearest one. **That arithmetic is not a backtest** —
+it has no entry timing, no slippage, no account of the setup failing to appear —
+and the setup only appears because a rung is reached, which happens 28% of the
+time on the call side and 15% on the put side.
+
+**What 17/17 does establish:** the *location* is real. **What it does not:** that
+a trade at that location wins.
