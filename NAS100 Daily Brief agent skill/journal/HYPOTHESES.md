@@ -3184,3 +3184,63 @@ strikes the brief already computes and prints (P5). Nothing here argues for a ne
 feed.
 
 Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+
+---
+
+## D17 — the chart re-downloaded the chain it already had, and 429 was fatal
+
+**2026-09-15 and 2026-09-16: the brief succeeded and the chart died, both days,
+with `chart FAILED: HTTPError: HTTP Error 429`.** Two scans delivered a brief
+and no picture. The cause is two defects that only bite together.
+
+**1. The chain cache could never hit for the chart.** `load_combined` is keyed
+by `max_dte`. `build()` takes the **45**-day book; `gex_chart.collect()` draws
+the **week** book and asks for **7**. Different key, guaranteed miss, every
+scan — so drawing the picture meant a second full download of both the NDX and
+QQQ chains plus two quote calls. The cache docstring says it exists to stop
+"four HTTP round trips to CBOE for one picture, and enough to earn a 429";
+it did not stop them, because the two callers in one scan never share a key.
+
+**2. `cboe_gex._get` was a bare `urlopen`.** One 429 anywhere killed the
+caller. CBOE sits behind Cloudflare and rate-limits by source IP (`error code:
+1015`), and this host shares that IP with the other bots scanning on their own
+schedules — so 429 is a *normal* condition here and was being treated as fatal.
+On 09-14 it cost four attempts and ~40 minutes to get any brief at all.
+
+Measured 2026-09-16: one request per 45s cleared the limit in ~90 seconds, and
+a full scan's burst re-tripped it immediately. The budget is small and shared.
+
+### Fix
+
+- **`load_combined` serves a cached superset.** A 45-day book contains every
+  row a 7-day load returns (`load_chain` drops only `dte > max_dte`), so a
+  wider fresh entry is filtered rather than re-fetched. Verified equal to a
+  genuine 7-day fetch: 3497 rows both ways, identical `(src, exp, cp, strike,
+  oi)` tuples, max dte served 7. Chart fetches for a scan: **1 -> 0.**
+- **TTL 90s -> 900s.** The chart is drawn mid-scan; a 90-second window could
+  lapse before it ran, reintroducing the fetch the cache exists to prevent.
+- **`_get` retries 429/5xx** at 2/5/12s, honouring `Retry-After` when sent.
+  404 still fails immediately — it is a real answer about a symbol, not a
+  transient. Exhausting the retries re-raises the original error.
+- **The chart is drawn BEFORE the journal write and the archive commit.** It
+  writes `research/chart-ladders/<stamp>.json`, which `sync_archive` carries;
+  drawn last, that file was created *after* the commit and was left untracked
+  every scan (hand-committed 09-11 and 09-14). This is D11's rule — writing a
+  path the archive does not carry is the same defect as not writing it.
+
+### Not fixed here, still open
+
+`--no-journal` suppresses the journal but **not** the research ladders, so a
+verification run still writes `chart-ladders/` and `gexbot/ladders/` entries.
+Three were written while verifying this fix and deleted by hand. Same family as
+the 2026-08-27 problem, where verification runs entered the evidence as real
+observations.
+
+The archive push still fails on every scheduled run: the container checks out a
+**detached HEAD**, and `sync_archive` derives the branch with `rev-parse
+--abbrev-ref HEAD`, which returns the literal string `"HEAD"`, so it pushes and
+rebases against a ref that is not `main`. The `or "main"` fallback never fires
+because `"HEAD"` is non-empty. Hand-pushed daily since 09-11. Left alone here
+because this change set is about the chart.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>

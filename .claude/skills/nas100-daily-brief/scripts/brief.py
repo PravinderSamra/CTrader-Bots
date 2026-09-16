@@ -1149,6 +1149,22 @@ if __name__ == "__main__":
     else:
         text = markdown(d)
         print(text)
+        # Chart BEFORE the journal and the archive commit, for two reasons.
+        #
+        # 1. It writes research/chart-ladders/<stamp>.json, and sync_archive
+        #    carries that directory. Drawn last, the ladder was created after
+        #    the commit had already been made, so it was left untracked every
+        #    single scan and had to be committed by hand (2026-09-11, -09-14).
+        #    Writing a path the archive does not carry is D11's defect exactly.
+        # 2. It re-reads the option chain from the in-process cache. Running it
+        #    after the journal write and a push that retries means minutes can
+        #    pass first, and a lapsed cache sends it back to a rate-limited
+        #    CBOE — which is how the chart died on 09-15 and 09-16.
+        #
+        # It stays inside its own try/except, so a failed picture still cannot
+        # cost us the observation.
+        if "--chart" in sys.argv:
+            _chart()
         # Journal AFTER rendering, and never let a write failure break output.
         d.setdefault("level_board", level_board(d)[0])
         # A scan run to VERIFY CODE is not an observation of the market.
@@ -1192,5 +1208,3 @@ if __name__ == "__main__":
             except Exception as e:
                 print(f"\n_[ARCHIVE SYNC ERROR: {type(e).__name__}: {e}]_",
                       file=sys.stderr)
-        if "--chart" in sys.argv:
-            _chart()
