@@ -57,6 +57,63 @@
         "adrUsedPct": 44
       },
       "outcome": null
+    },
+    {
+      "at": "2026-09-16T12:36:56.464Z",
+      "londonTime": "13:36 BST",
+      "mode": "POST_ORB",
+      "price": 10721.15,
+      "stance": "LONG_FAVOURED",
+      "stanceLine": "Backdrop favours upside breaks — FOMC Rate Decision @ 19:00 BST today — pre-release breaks are positioning, not conviction.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "FOMC Rate Decision @ 19:00 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "STRUCTURE",
+          "rule": "R3",
+          "text": "ORB break UP is aligned with the BULLISH macro bias (+3) — continuation has the backdrop behind it."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.42%) — the cross-market lean is up."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 3,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": 10704.7,
+        "orbLow": 10686.7,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10715.5,
+        "overnightLow": 10673.2,
+        "priorDayHigh": 10704,
+        "priorDayLow": 10584.6,
+        "gapPct": 0.36,
+        "adr14": 102.9,
+        "adrUsedPct": 62
+      },
+      "outcome": null
     }
   ]
 }
