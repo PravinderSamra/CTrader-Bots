@@ -3482,3 +3482,59 @@ ranking will start generating exactly the data needed to answer it.** Nothing
 proposed.
 
 Four consistency checks added. 40 offline checks passing.
+
+## H11 REVERTED the same day — the reach window now runs as a shadow
+
+**The trader called this, and he was right.** The published ranking is back to
+force-across-the-chain, exactly as it was before 2026-09-16. The reach-window
+scheme is computed on every build and persisted under `shadow`, rendered nowhere.
+
+### Why the revert is correct and the original change was not
+
+The *reach* measurement is solid — 22 of 39 rungs reached inside 0.6× ADR against
+3 of 63 outside. What was never measured is **the consequence**: whether a rung
+that is near but weak defends its level the way a rung that is heavy and near
+does.
+
+**Every one of the 17 observations behind the playbook is of a rung that was
+heavy AND near.** The playbook's numbers — median retest wick 8.2pts, worst 24.1,
+which is what makes a 30pt stop viable — are calibrated on that population. A
+reach-ranked C1 is a different population. On 2026-09-16 it would have carried
+**0.139bn against the 2.131bn strike it displaced, 15× weaker.**
+
+So the change swapped the levels he trades for levels whose behaviour is unknown,
+on the strength of an argument rather than an observation. **That is precisely
+what the 3-day evidence gate exists to prevent, and I walked through it** —
+having spent the same session writing that walls need REACH not accuracy, which
+made the argument feel like evidence. It was not.
+
+### What runs now
+
+| | ranking | rendered | purpose |
+|---|---|---|---|
+| `ranked_positive` / `ranked_negative` | heaviest within sign, whole chain | board + chart | what he trades |
+| `shadow.ranked_*` | heaviest within sign, inside 0.6× ADR | **nowhere** | graded later |
+
+Both come from **one build on one set of bars**, so they can be graded against
+identical price action — no drift, no separate fetch, none of the 16-second
+divergence that caused the earlier chart/brief mismatch.
+
+Verified on the 20:38Z build (spot 28,951.5, reach 215pts): published C1 is
+29,306 at +354pts / 2.131bn, shadow C1 is 29,156 at +204pts / 0.139bn, and
+`shadow` appears nowhere in the rendered brief.
+
+### How to settle it
+
+After ~3 weeks of ladders carrying both, grade each with `wall_retro.py` on the
+same days and compare on **two** axes, because they trade against each other:
+
+1. **reach** — what fraction of ranked rungs price actually touched
+2. **quality** — of those touched, the held rate and the retest wick
+
+The reach window is expected to win axis 1 by construction. **It only wins
+overall if axis 2 holds up**, and that is the open question. If the wick widens
+materially past ~25pts, the window buys setups that cannot carry a 30pt stop, and
+the current ranking stays.
+
+**Do not read a shadow-vs-published comparison before 3 weeks**, and do not
+switch on axis 1 alone.

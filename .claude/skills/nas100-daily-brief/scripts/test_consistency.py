@@ -131,20 +131,21 @@ def offline_checks():
           any(c["component"] == "gamma" and "flip" not in c["why"]
               for c in _BE.score(_mc, _lv, _gx, session="OVERNIGHT")["components"]))
 
-    # H11: C1-C3 / P1-P3 must be ranked within reach. Ranking by force across
-    # the whole chain put 78% of rungs where price never went (3 of 63 reached
-    # beyond 0.6x ADR, against 22 of 39 inside it).
+    # H11: the PUBLISHED ranking stays force-across-the-chain. The reach-window
+    # scheme runs as a shadow only, until both have been graded on the same days.
+    # The playbook the trader uses is calibrated on rungs that were heavy AND
+    # near; a reach-ranked rung can be near but weak, and that is unmeasured.
     _gc = open(os.path.join(HERE, "gex_chart.py")).read()
-    check("ranked rungs are chosen from within a reach window",
-          "reach = (adr or 0) * 0.6" in _gc
-          and 'abs(b["price"] - cfd_price) <= reach' in _gc)
-    check("ranking draws from in_reach, not the whole chain",
-          'for b in in_reach if b["net"] > 0' in _gc
-          and 'for b in in_reach if b["net"] < 0' in _gc)
-    check("far heavy strikes are demoted to context, never dropped (D7's lesson)",
-          '"context": context' in _gc and '"context_far"' in _gc)
-    check("the reach window is recorded on the persisted ladder",
-          '"reach_pts": c.get("reach_pts")' in _gc)
+    check("published ranks are chosen from the whole chain, not a reach window",
+          'pos = sorted([b for b in bars if b["net"] > 0]' in _gc
+          and 'neg = sorted([b for b in bars if b["net"] < 0]' in _gc)
+    check("the reach-window scheme is computed as a shadow",
+          'shadow_pos = sorted([b for b in in_reach' in _gc
+          and 'shadow_dn' in _gc)
+    check("the shadow is persisted for later grading",
+          '"scheme": "reach_window_0.6_adr"' in _gc)
+    check("the shadow is never rendered on the chart or board",
+          "shadow" not in open(os.path.join(HERE, "brief.py")).read())
 
     # D14: a volume-weighted field of 0 means "no volume yet", not a price.
     # Converting it through the CFD offset published 183 as a strike on
