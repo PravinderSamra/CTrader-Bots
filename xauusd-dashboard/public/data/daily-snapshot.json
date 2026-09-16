@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-16T15:13:06.142Z",
+  "generatedAt": "2026-09-16T19:13:23.498Z",
   "yields": {
     "US10Y": 4.97,
     "US2Y": 4.65,
@@ -34,26 +34,26 @@
     "openInterestChange": 3737
   },
   "etfFlows": {
-    "gldTonnes": 1092.4,
-    "gldWoWChange": -3.2,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1121.7,
+    "gldWoWChange": 29.3,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4353.605,
-    "XAGUSD": 64.7375,
-    "EURUSD": 1.15396,
-    "USDJPY": 155.0365,
-    "USDCHF": 0.81858,
-    "USDCNH": 6.70566,
-    "GBPUSD": 1.34541,
-    "USDCAD": 1.39396,
-    "USDSEK": 9.77178,
-    "US500": 7620.4,
-    "GER40": 25612.85,
-    "UK100": 10706.15,
+    "XAUUSD": 4239.825,
+    "XAGUSD": 62.535,
+    "EURUSD": 1.14688,
+    "USDJPY": 155.9845,
+    "USDCHF": 0.825,
+    "USDCNH": 6.71375,
+    "GBPUSD": 1.33807,
+    "USDCAD": 1.39925,
+    "USDSEK": 9.86585,
+    "US500": 7528.7,
+    "GER40": 25463.45,
+    "UK100": 10648.05,
     "ADR_14day": 101.6,
-    "ADR_usedToday": 85,
-    "goldSilverRatio": 67.3
+    "ADR_usedToday": 131.9,
+    "goldSilverRatio": 67.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.7884,
@@ -69,25 +69,13 @@
       "headline": "US House takes up Russia sanctions bill backed by late senator Graham - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-16T12:14:16.000Z",
-      "hoursAgo": 3
+      "hoursAgo": 7
     },
     {
       "headline": "Yield on 10-year Treasury hovers above 5% as investors await Fed decision",
       "source": "CNBC",
       "publishedAt": "2026-09-16T08:58:16.000Z",
-      "hoursAgo": 6.2
-    },
-    {
-      "headline": "US Treasury's Bessent will meet with China's He Lifeng this weekend - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-15T16:52:02.000Z",
-      "hoursAgo": 22.4
-    },
-    {
-      "headline": "Cramer says these 2 stocks are still buys, warns against playing Fed rate 'parlor game'",
-      "source": "CNBC",
-      "publishedAt": "2026-09-15T16:12:59.000Z",
-      "hoursAgo": 23
+      "hoursAgo": 10.3
     }
   ],
   "briefing": null
