@@ -3394,3 +3394,39 @@ time on the call side and 15% on the put side.
 
 **What 17/17 does establish:** the *location* is real. **What it does not:** that
 a trade at that location wins.
+
+## D14 and D15 fixed (2026-09-16)
+
+**D15 — the path read no longer measures reachability with the range budget.**
+`path_read()` compared each brake's distance against `remaining_budget`, so on an
+EXHAUSTED day every distance was "beyond" a budget of zero and the comparison
+stopped carrying information. It is now floored:
+
+```
+reach = max(budget, adr * 0.25)
+```
+
+No new model, and the constant is evidenced rather than chosen: the smallest
+full-session traversal recorded is about **0.35× ADR**, and on 2026-09-10 price
+travelled **463pts against a 206pt budget**. A quarter of ADR is deliberately
+conservative against that. The renderer no longer cites the budget as a distance
+at all — "beyond today's 0pt budget" was the phrase that made the nonsense
+visible.
+
+Verified on a live build with `budget 0.0`, `ADR 357.6` → reach 89.4: a brake
+305pts away still reads *mostly clear* (correct), where a brake 6pts away now
+reads *has friction* instead of clear (the 09-11 failure).
+
+**D14 — a zero is treated as absent, not as a price.** `gexbot.levels()` runs
+every strike field through a `strike()` helper that returns `None` for a falsy
+value **or** for anything more than 20% from the feed's own spot. Absent figures
+render as "—", the section says *"No volume has traded yet today"* out loud, and
+the flip cross-check skips itself because it already guarded on truthiness.
+`volume_fields_absent` is exported so **H12 and H13 can refuse to count a scan
+with no volume in it**.
+
+This mattered daily, not occasionally: the scheduled 12:45Z scan lands 45 minutes
+before the US open every weekday, which is exactly the window that produces the
+zeros.
+
+Five consistency checks added across the two. **36 offline checks passing.**

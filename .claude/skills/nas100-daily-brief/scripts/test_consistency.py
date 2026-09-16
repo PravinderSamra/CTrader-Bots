@@ -131,6 +131,33 @@ def offline_checks():
           any(c["component"] == "gamma" and "flip" not in c["why"]
               for c in _BE.score(_mc, _lv, _gx, session="OVERNIGHT")["components"]))
 
+    # D14: a volume-weighted field of 0 means "no volume yet", not a price.
+    # Converting it through the CFD offset published 183 as a strike on
+    # 2026-09-11, and the 12:45Z scheduled scan lands pre-open every weekday.
+    import gexbot as _GB
+    _gsrc = open(os.path.join(HERE, "gexbot.py")).read()
+    check("gexbot treats a zero strike as absent, not as a price",
+          "def strike(field):" in _gsrc and "if not v:" in _gsrc
+          and "return None" in _gsrc)
+    check("gexbot rejects a strike implausibly far from its own spot",
+          "abs(v - sp) > sp * 0.20" in _gsrc)
+    check("gexbot flags a scan with no volume so H12/H13 can skip it",
+          '"volume_fields_absent"' in _gsrc)
+    _bsrc = open(os.path.join(HERE, "brief.py")).read()
+    check("section 7 renders an absent volume figure rather than a number",
+          'if v is None:' in _bsrc and '"—"' in _bsrc)
+    check("section 7 says out loud when no volume has traded yet",
+          "No volume has traded yet today" in _bsrc)
+
+    # D15: the path read must not call a nearby brake "clear" just because the
+    # range budget is 0. reach is floored at a quarter of ADR.
+    _bf0 = open(os.path.join(HERE, "brief.py")).read()
+    check("path_read floors its reach yardstick on ADR, not the budget",
+          "reach = max(budget, adr * 0.25)" in _bf0
+          and 'abs(brake["nas100"] - px) > reach' in _bf0)
+    check("the path read no longer cites the budget as a distance",
+          "beyond today's {budget_txt(d)} budget" not in _bf0)
+
     # D7: walls and the flip must survive a zero budget. On 2026-09-10 an
     # EXHAUSTED read gave budget 0 -> cap 0 -> a two-row board, and the put wall
     # it dropped was then respected to 4.8pts.

@@ -495,6 +495,21 @@ def path_read(d):
     gx, lv = d["gex"], d["levels"]
     px = lv["price"]; budget = lv["fuel"]["remaining_budget"]
     adr = lv["fuel"]["adr14"] or 1
+    # D15: this compared brake distance against the RANGE BUDGET alone. On an
+    # EXHAUSTED day the budget is 0, every distance is "beyond" it, and the
+    # comparison stops carrying information -- 2026-09-11 printed "DOWNSIDE
+    # path: mostly clear, first real brake is 29398.0 (6pts away), which is
+    # beyond today's 0pt budget" while the secondary table on the same page
+    # listed that strike as the largest concentration on the chain.
+    #
+    # The budget forecasts how much further the day's RANGE can grow. Whether
+    # price can REACH a level is a different question, and the answer is never
+    # zero: the smallest full-session traversal recorded is ~0.35x ADR, and on
+    # 2026-09-10 price travelled 463pts against a 206pt budget. So the reach
+    # yardstick is floored at a quarter of ADR -- conservative against that
+    # 0.35 -- rather than trusting a budget the evidence says over-forecasts
+    # (H1: negative on 6 of 7 days when measured).
+    reach = max(budget, adr * 0.25)
     wk = gx["buckets"].get("this_week", {})
     shelves = wk.get("largest_abs_gex") or []
     out = {}
@@ -519,9 +534,9 @@ def path_read(d):
             "corridor_end": far["nas100"],
             "corridor_pts": round(dist_to_far, 0),
             "corridor_adr": round(dist_to_far / adr, 2),
-            "in_budget": dist_to_far <= budget,
+            "in_budget": dist_to_far <= reach,
             "friction": "NONE" if brake is None else
-                        ("LOW" if brake and abs(brake["nas100"] - px) > budget else "SOME"),
+                        ("LOW" if brake and abs(brake["nas100"] - px) > reach else "SOME"),
         }
     return out
 
@@ -552,7 +567,7 @@ def markdown_levels_only(d):
               f"Don't fade it.")
         elif r["friction"] == "LOW":
             A(f"- **{label} path mostly clear** \u2014 first brake "
-              f"{r['first_brake']} is beyond today's budget.")
+              f"{r['first_brake']} is out of reach today.")
         else:
             A(f"- **{label} stalls at {r['first_brake']}** "
               f"({r['brake_dist']:.0f}pts) \u2014 partials into it.")
@@ -729,16 +744,28 @@ def gexbot_md(d):
                  f"**{gb['offset_applied']:+,.1f}**, {bas} — not against the live "
                  f"price, which would fold the intervening move into every "
                  f"level._\n")
+    # D14: a volume field of 0 means "no volume has traded yet", not a price.
+    # gexbot.levels() now returns None for those; render the absence.
+    def cell(v, bold=False):
+        if v is None:
+            return "—"
+        return f"**{v:,.0f}**" if bold else f"{v:,.0f}"
+
+    if full.get("volume_fields_absent"):
+        o.append("> ⚠️ **No volume has traded yet today** — the US cash session "
+                 "is not open, so every volume-weighted figure below is empty "
+                 "rather than zero. The open-interest column still stands.\n")
+
     o.append("| | by OPEN INTEREST | by VOLUME (today) |")
     o.append("|---|---|---|")
-    o.append(f"| Heaviest **positive** gamma | {full['major_pos_oi']:,.0f} | "
-             f"**{full['major_pos_vol']:,.0f}** |")
-    o.append(f"| Heaviest **negative** gamma | {full['major_neg_oi']:,.0f} | "
-             f"**{full['major_neg_vol']:,.0f}** |")
+    o.append(f"| Heaviest **positive** gamma | {cell(full['major_pos_oi'])} | "
+             f"{cell(full['major_pos_vol'], True)} |")
+    o.append(f"| Heaviest **negative** gamma | {cell(full['major_neg_oi'])} | "
+             f"{cell(full['major_neg_vol'], True)} |")
     zero = gb.get("gex_zero")
     if zero:
-        o.append(f"| 0DTE heaviest positive | {zero['major_pos_oi']:,.0f} | "
-                 f"**{zero['major_pos_vol']:,.0f}** |")
+        o.append(f"| 0DTE heaviest positive | {cell(zero['major_pos_oi'])} | "
+                 f"{cell(zero['major_pos_vol'], True)} |")
     o.append("")
     o.append(f"_These are GEXBot's own definitions: \"heaviest negative\" is the "
              f"most negative strike **anywhere**, not a put wall below spot. It is "
@@ -982,9 +1009,8 @@ def markdown(d):
               f"fade it.")
         elif r["friction"] == "LOW":
             A(f"- **{label} path: mostly clear.** First real brake is "
-              f"{r['first_brake']} ({r['brake_dist']:.0f}pts away), which is "
-              f"beyond today's {budget_txt(d)} budget — so inside today's range "
-              f"there is little to stop a {verb}.")
+              f"{r['first_brake']} ({r['brake_dist']:.0f}pts away) — far enough "
+              f"that little stands in the way of a {verb} before it.")
         else:
             A(f"- **{label} path: has friction.** Expect a stall at "
               f"{r['first_brake']} ({r['brake_dist']:.0f}pts away) — take "

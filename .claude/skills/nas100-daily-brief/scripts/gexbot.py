@@ -111,6 +111,31 @@ def levels(ticker="NDX", category="gex_full", offset=0.0):
     if not d or "strikes" not in d:
         return None
     o = offset
+
+    def strike(field):
+        """A strike price, or None when the feed is telling us it has nothing.
+
+        D14: before the US open no volume has traded, so every volume-weighted
+        field comes back as literal 0 -- and 0 is a sentinel, not a price. On
+        2026-09-11 13:23Z (six minutes pre-open) the offset was added to those
+        zeros and the brief published 183 as the heaviest strike on all three
+        rows, a flip cross-check reading "ours 29,034, theirs 183", and "the
+        dominant strike is stable at 0 across 6 samples".
+
+        This bites the scheduled 12:45Z scan EVERY weekday, since it lands 45
+        minutes before the open. Two tests, both cheap: a hard 0, and anything
+        more than 20% from the feed's own spot, which no real strike on this
+        chain ever is.
+        """
+        v = d.get(field)
+        if not v:
+            return None
+        sp = d.get("spot")
+        if sp and abs(v - sp) > sp * 0.20:
+            return None
+        return round(v + o, 1)
+
+    zg = strike("zero_gamma")
     return {
         "source": "gexbot", "ticker": d.get("ticker", ticker),
         "category": category,
@@ -118,12 +143,16 @@ def levels(ticker="NDX", category="gex_full", offset=0.0):
         "age_min": (round((time.time() - d["timestamp"]) / 60, 1)
                     if d.get("timestamp") else None),
         "spot": round(d["spot"] + o, 1),
-        "zero_gamma": round(d["zero_gamma"] + o, 1),
-        "zero_gamma_equals_spot": d["zero_gamma"] == d["spot"],
-        "major_pos_vol": round(d["major_pos_vol"] + o, 1),
-        "major_pos_oi": round(d["major_pos_oi"] + o, 1),
-        "major_neg_vol": round(d["major_neg_vol"] + o, 1),
-        "major_neg_oi": round(d["major_neg_oi"] + o, 1),
+        "zero_gamma": zg,
+        "zero_gamma_equals_spot": (zg is not None
+                                   and d["zero_gamma"] == d["spot"]),
+        "major_pos_vol": strike("major_pos_vol"),
+        "major_pos_oi": strike("major_pos_oi"),
+        "major_neg_vol": strike("major_neg_vol"),
+        "major_neg_oi": strike("major_neg_oi"),
+        # Flagged so H12/H13 can refuse to count a scan with no volume in it.
+        "volume_fields_absent": (not d.get("major_pos_vol")
+                                 and not d.get("major_neg_vol")),
         "sum_gex_vol": d.get("sum_gex_vol"),
         "sum_gex_oi": d.get("sum_gex_oi"),
         "delta_risk_reversal": d.get("delta_risk_reversal"),
