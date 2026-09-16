@@ -3538,3 +3538,61 @@ the current ranking stays.
 
 **Do not read a shadow-vs-published comparison before 3 weeks**, and do not
 switch on axis 1 alone.
+
+## Does gamma sign change how a wall behaves? Measured 2026-09-16
+
+Two different things get called "gamma" here and they must not be merged:
+
+1. **The rung's own sign** — a C rung is call-dominant (dealers long gamma, a
+   brake); a P rung is put-dominant (dealers short gamma, an accelerant).
+   Per-strike.
+2. **The day's regime** — price above or below the flip. Whole-session.
+
+Split the 17 observations both ways:
+
+| split | n | pierced | median pierce | median wick after settling |
+|---|---|---|---|---|
+| **C rung** (positive) | 11 | 64% | **53pts** | 8.2 |
+| **P rung** (negative) | 6 | 67% | **119pts** | 7.9 |
+| **LONG gamma day** | 13 | 62% | **59pts** | 8.2 |
+| **SHORT gamma day** | 4 | 75% | **116pts** | 6.5 |
+
+### Three findings, in descending order of confidence
+
+**1. The retest wick is flat everywhere — and this is the strongest claim.**
+Across all eight cells it sits between 3.4 and 9.2pts. Once price settles a side,
+the level defends it just as tightly in negative gamma as positive. **The 30pt
+stop survives in every regime.** This is what makes the playbook's procedure
+regime-independent.
+
+**2. Pierce DEPTH roughly doubles in negative gamma — 53 → 119pts by rung sign,
+59 → 116pts by day regime.** It shows on both splits independently, which is weak
+corroboration rather than one artefact counted twice. The mechanism agrees:
+short-gamma dealers amplify, so an excursion through the level runs further.
+
+**3. Pierce RATE barely moves — 64% vs 67%, 62% vs 75%.** No detectable effect,
+and with n=17 none would be detectable unless it were large. **Gamma does not
+appear to change WHETHER a wall holds. It changes how far price travels while
+deciding.**
+
+### The practical consequence
+
+**The procedure is unchanged — arrive, hands off, wait for the settle, trade the
+retest.** What changes is the geometry of the wait: in negative gamma expect to
+sit through roughly **twice the excursion** before the level becomes tradeable,
+so the retest arrives from further away and later.
+
+That argues for *patience*, not for a different play, and explicitly **not** for a
+wider stop — the wick data says the stop stays at 30.
+
+### Caveats
+
+n=17, and the three-way cells are n=1 to n=10. The eye-catching cell — **P rung
+on a SHORT gamma day pierced 3 of 3 at a median 116pts**, the trapdoor
+combination — is **three observations**. Mechanistically it is the case where
+rung and regime both amplify, so it should be the worst, but it is not evidence
+yet. Only 4 of 17 observations are short-gamma days at all, which is the binding
+limit on findings 2 and 3.
+
+**Nothing proposed. The playbook stands as written** — its procedure is confirmed
+regime-independent, which is the useful result here.
