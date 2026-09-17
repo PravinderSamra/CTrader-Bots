@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-17T15:22:40.059Z",
+  "generatedAt": "2026-09-17T19:25:44.097Z",
   "yields": {
     "US10Y": 5,
     "US2Y": 4.67,
@@ -17,9 +17,9 @@
   },
   "fedExpectations": {
     "nextMeeting": "2026-10-28",
-    "probCut": 0,
-    "probHold": 28,
-    "probHike": 72
+    "probCut": 28,
+    "probHold": 72,
+    "probHike": 0
   },
   "marketVolatility": {
     "GVZ": 26.55,
@@ -35,25 +35,25 @@
   },
   "etfFlows": {
     "gldTonnes": 1090.3,
-    "gldWoWChange": 1.3,
-    "trend3W": "INFLOW"
+    "gldWoWChange": null,
+    "trend3W": null
   },
   "snapshotPrices": {
-    "XAUUSD": 4361.925,
-    "XAGUSD": 65.8135,
-    "EURUSD": 1.14824,
-    "USDJPY": 155.7935,
-    "USDCHF": 0.82415,
-    "USDCNH": 6.70394,
+    "XAUUSD": 4349.64,
+    "XAGUSD": 65.299,
+    "EURUSD": 1.14789,
+    "USDJPY": 155.991,
+    "USDCHF": 0.82452,
+    "USDCNH": 6.70364,
     "GBPUSD": 1.33567,
-    "USDCAD": 1.39891,
-    "USDSEK": 9.81984,
-    "US500": 7625.3,
-    "GER40": 25758.05,
-    "UK100": 10820.35,
+    "USDCAD": 1.39904,
+    "USDSEK": 9.81958,
+    "US500": 7640.6,
+    "GER40": 25667.55,
+    "UK100": 10816.45,
     "ADR_14day": 106.2,
     "ADR_usedToday": 123.6,
-    "goldSilverRatio": 66.3
+    "goldSilverRatio": 66.6
   },
   "dollarLiquidity": {
     "stlfsi": -0.8477,
@@ -66,28 +66,22 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Stocks stage a comeback after Fed-induced declines — plus, what's ailing Boeing",
+      "source": "CNBC",
+      "publishedAt": "2026-09-17T16:37:00.000Z",
+      "hoursAgo": 2.8
+    },
+    {
       "headline": "Bank of England set to defy Fed’s rate-hike lead, despite rising inflation",
       "source": "CNBC",
       "publishedAt": "2026-09-17T05:20:23.000Z",
-      "hoursAgo": 10
+      "hoursAgo": 14.1
     },
     {
-      "headline": "Turkey approves liquidation of US-sanctioned Golden Global's funds - Reuters",
+      "headline": "Turkey approves liquidation of US-sanctioned Golden Global's funds - reuters.com",
       "source": "Reuters",
       "publishedAt": "2026-09-17T04:22:00.000Z",
-      "hoursAgo": 11
-    },
-    {
-      "headline": "Fed delivers its first hike in 3 years. Plus, what's moving Starbucks and GE Vernova",
-      "source": "CNBC",
-      "publishedAt": "2026-09-16T19:00:14.000Z",
-      "hoursAgo": 20.4
-    },
-    {
-      "headline": "US Treasury gathers global financial institutions to advance Iran sanctions - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-16T17:42:29.000Z",
-      "hoursAgo": 21.7
+      "hoursAgo": 15.1
     }
   ],
   "briefing": null
