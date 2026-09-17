@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-16T22:29:52.495Z",
+  "generatedAt": "2026-09-17T10:40:50.714Z",
   "yields": {
     "US10Y": 5,
     "US2Y": 4.67,
@@ -16,7 +16,7 @@
     }
   },
   "fedExpectations": {
-    "nextMeeting": "2026-09-16",
+    "nextMeeting": "2026-10-28",
     "probCut": 0,
     "probHold": 28,
     "probHike": 72
@@ -34,26 +34,26 @@
     "openInterestChange": 3737
   },
   "etfFlows": {
-    "gldTonnes": 1115.8,
-    "gldWoWChange": -5.9,
+    "gldTonnes": 1102,
+    "gldWoWChange": -13.8,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4262.165,
-    "XAGUSD": 62.933,
-    "EURUSD": 1.14672,
-    "USDJPY": 156.2165,
-    "USDCHF": 0.82581,
-    "USDCNH": 6.71246,
-    "GBPUSD": 1.33799,
-    "USDCAD": 1.39878,
-    "USDSEK": 9.86251,
-    "US500": 7565.4,
-    "GER40": 25527.45,
-    "UK100": 10680.15,
+    "XAUUSD": 4315.6,
+    "XAGUSD": 63.957,
+    "EURUSD": 1.14761,
+    "USDJPY": 155.633,
+    "USDCHF": 0.82546,
+    "USDCNH": 6.70725,
+    "GBPUSD": 1.34017,
+    "USDCAD": 1.39945,
+    "USDSEK": 9.82578,
+    "US500": 7619.6,
+    "GER40": 25702.15,
+    "UK100": 10711.85,
     "ADR_14day": 106.2,
-    "ADR_usedToday": 6.2,
-    "goldSilverRatio": 67.7
+    "ADR_usedToday": 78,
+    "goldSilverRatio": 67.5
   },
   "dollarLiquidity": {
     "stlfsi": -0.8477,
@@ -66,22 +66,28 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Bank of England set to defy Fed’s rate-hike lead, despite rising inflation",
+      "source": "CNBC",
+      "publishedAt": "2026-09-17T05:20:23.000Z",
+      "hoursAgo": 5.3
+    },
+    {
       "headline": "Fed delivers its first hike in 3 years. Plus, what's moving Starbucks and GE Vernova",
       "source": "CNBC",
       "publishedAt": "2026-09-16T19:00:14.000Z",
-      "hoursAgo": 3.5
+      "hoursAgo": 15.7
     },
     {
-      "headline": "US House expected to pass Russia sanctions bill backed by late Senator Graham - Reuters",
+      "headline": "US Treasury gathers global financial institutions to advance Iran sanctions - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-16T18:29:12.000Z",
-      "hoursAgo": 4
+      "publishedAt": "2026-09-16T17:42:29.000Z",
+      "hoursAgo": 17
     },
     {
-      "headline": "Yield on 10-year Treasury hovers above 5% as investors await Fed decision",
-      "source": "CNBC",
-      "publishedAt": "2026-09-16T08:58:16.000Z",
-      "hoursAgo": 13.5
+      "headline": "South African rand dips as markets brace for Fed decision - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-16T15:06:23.000Z",
+      "hoursAgo": 19.6
     }
   ],
   "briefing": null
