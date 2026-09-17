@@ -3596,3 +3596,152 @@ limit on findings 2 and 3.
 
 **Nothing proposed. The playbook stands as written** — its procedure is confirmed
 regime-independent, which is the useful result here.
+
+---
+
+# Observations appended 2026-09-17 (grading the 2026-09-16 session — FOMC, hike 3.75% -> 4.00%)
+
+Full grade: `journal/2026-09-16/REVIEW.md`. Three proposals were made there
+(P-A straddle-rider sign, P-B held/lost tolerance, P-C event gate), all at
+>=3 sessions. What follows is the material that did **not** reach threshold.
+
+## H20 (NEW, OBSERVING) — do scheduled High-impact events blow the fuel budget?
+
+The 12:46Z PRE_NY scan budgeted 145.6pts of extension with FOMC 5.2h away.
+Actual extension 282.0, error **+136.4** — the largest in the record. The only
+other scan in the journal with a High-impact print inside its own forecast
+session is 2026-09-10 08:12Z LONDON (PPI 4.3h away), error **+114.6** per scan.
+
+**These are the two largest positive fuel errors in the whole 12-day record.**
+Next largest is +79.4 (09-14, no event). Per-day mean is +2.1.
+
+**n = 2. Nothing proposed.** This is deliberately kept separate from P-C, which
+proposes a prose/gating change on the "gate has never fired in 21 scans"
+evidence and explicitly proposes **no** score or budget change.
+
+**Watching:** the fuel error on every session containing a scheduled High-impact
+event. **Threshold: 3 such days.** 2 of 3. If it reaches 3 in the same direction,
+the candidate change is a budget multiplier on event days — and note in advance
+that a multiplier fitted to 3 points that are all large-positive will fit the
+tail, not the level (the H1 lesson).
+
+## H21 (NEW, CLOSED-NEGATIVE) — VIX9D/VIX does not predict the fuel error
+
+Worth recording precisely because 09-16 makes the opposite look obvious: the
+backwardation row (`vol -2`, "expect range expansion") was the **only** component
+that called the 494pt day, and it was outvoted +4 to -2 by two gamma pinning rows.
+
+The tempting change is to let term structure scale the fuel budget. The data
+says no:
+
+| VIX9D/VIX (first scan) | fuel error (per day) |
+|---|---|
+| 0.790 | +61.2 | 
+| 0.817 | +79.4 |
+| 0.834 | -10.7 |
+| 0.855 | -73.0 |
+| 0.887 | -86.4 |
+| 0.888 | -11.6 |
+| 0.931 | -26.2 |
+| 0.950 | -64.0 |
+| 0.954 | +57.3 |
+| 0.992 | -81.3 |
+| 1.043 | +44.3 |
+| 1.001 | +136.4 |
+
+**Pearson r = 0.053 over 12 days. No relationship.** The three backwardated /
+near-flat days are +44.3, **-81.3**, +136.4 — opposite signs.
+
+**Closed negative.** Do not connect term structure to the budget. If this is
+revisited, it needs a mechanism and a fresh sample, not these 12 points.
+
+## Unarbitrated conflict: two gamma rows vs one vol row
+
+Not yet a hypothesis, recorded so it can become one. On 09-16 the table contained
+both `gamma +2 "week net GEX 3.111 -> pinning likely"` and
+`vol -2 "BACKWARDATED — expect range expansion"`. These are direct contradictions
+about the same quantity (how far price will travel), and the engine simply sums
+them. The pinning rows won on points and produced the headline
+*"Expect a tight, pinned range... breakouts mostly fail"* on a 1.38x-ADR day.
+
+**Watching:** how often net-GEX-pinning and vol-expansion rows co-occur, and who
+is right when they do. **Threshold: 3 co-occurrences.** 1 of 3 (09-16).
+
+## H17 — no new data point
+
+Sub-5%-of-range graded direction calls: **still 1 of 3 days** (both instances
+remain 2026-09-11). 09-16's post-scan move was -129.5 = **26.2%** of range and
+does not add.
+
+**Related but distinct, n=1, opened here only as a note:** 09-16 closed **+1.0**
+on a 494pt range — |net|/range = **0.00**, by far the flattest in the record
+(every other day is 0.24-0.69). The scan was graded WRONG on the scan-relative
+move, which is the right grade; a close-to-close grade would have scored it
+CORRECT on a one-point move. **No change proposed and no threshold set** — this is
+an argument *for* the current scan-relative grading, recorded so the next flat day
+is not mistaken for a new finding.
+
+## Max pain's day-of-week qualifier — one instance against
+
+The brief prints max pain as *"weak on a Monday, strong by Thursday/Friday"*. On
+**Wednesday** 09-16, max pain 29190.2 was the **best level on the board**: held as
+resistance 170 minutes, worst excursion 22.6pts, and the only level above spot
+that held anything. Everything else on the board lost.
+
+**n = 1. Nothing proposed.** Watching whether the qualifier's midweek prediction
+keeps failing. **Threshold: 3 days where max pain is touched.** Across the record
+max pain has been touched on only 2 of the 6 days it was published, so this will
+accumulate slowly.
+
+## Level-kind touch rates, 12 days (context for P-B, not a proposal)
+
+Unique (day, price) published levels, deduped within a day:
+
+| kind | published | touched | rate | held / touched |
+|---|---|---|---|---|
+| liquidity | 83 | 60 | 0.72 | 0.57 |
+| gamma | 63 | 34 | 0.54 | 0.74 |
+| structural | 18 | 5 | **0.28** | 0.60 |
+| magnet | 11 | 10 | 0.91 | 0.70 |
+| gamma-shelf | 10 | 8 | 0.80 | 0.50 |
+
+Structural walls have the lowest touch rate by a wide margin. **This is not
+proposed for removal** — a far outer boundary is supposed to be rarely touched,
+and 3 of the 5 touches held. Recorded because it is the single biggest drag on
+the headline hit-rate denominator (H6), and because P-B's clustering proposal
+would change all five of these numbers; re-measure after P-B, not before.
+
+## The `events` component has never scored
+
+14 rows across the journal, **all 0 points** — it is hard-coded
+`add("events", 0, ...)` and only ever lists earnings. Combined with the event
+gate never firing (P-C), the model has no channel at all through which a
+scheduled macro event reaches the output. Noted as the mechanism behind P-C, not
+as a separate proposal: adding points for events would be a scoring change on
+n=2 outcome evidence (see H20).
+
+---
+
+## P-A is D16, re-found — cross-reference added 2026-09-17
+
+The 09-16 review raised **P-A**, "the straddle rider adds +1 on both ternary
+branches at `bias_engine.py:86-89`". That is **D16**, filed 2026-09-15 from the
+09-11 review: same file, same lines, same `+1 if px > gf else +1`, same reading
+that a row captioned "reduce conviction" enlarges the vote above the flip.
+
+Recorded here rather than by editing either entry, because the two were reached
+independently and the second one **adds evidence**: three dated firings
+(09-09, 09-11, 09-16), and the note that 09-16 lands exactly on the +3 boundary
+where a label could flip. That evidence belongs to D16.
+
+**It is not a second defect, and must not be counted as one.** D16 has one
+instance count, not two. Anyone reading the register for how many scoring
+defects are open should count this once.
+
+Same failure mode as the H12/H13 collision corrected on 09-15: an entry arriving
+under a fresh name for something the register already holds. The register's own
+rule from H1 applies — one object, one name. A reviewer opening an item should
+grep the existing D- and H- entries for the file and line it is about, not only
+for the wording it would use.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
