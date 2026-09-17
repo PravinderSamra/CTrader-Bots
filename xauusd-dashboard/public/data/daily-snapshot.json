@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-17T10:40:50.714Z",
+  "generatedAt": "2026-09-17T12:36:18.600Z",
   "yields": {
     "US10Y": 5,
     "US2Y": 4.67,
@@ -34,26 +34,26 @@
     "openInterestChange": 3737
   },
   "etfFlows": {
-    "gldTonnes": 1102,
-    "gldWoWChange": -13.8,
+    "gldTonnes": 1089,
+    "gldWoWChange": -13,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4315.6,
-    "XAGUSD": 63.957,
-    "EURUSD": 1.14761,
-    "USDJPY": 155.633,
-    "USDCHF": 0.82546,
-    "USDCNH": 6.70725,
-    "GBPUSD": 1.34017,
-    "USDCAD": 1.39945,
-    "USDSEK": 9.82578,
-    "US500": 7619.6,
-    "GER40": 25702.15,
-    "UK100": 10711.85,
+    "XAUUSD": 4366.89,
+    "XAGUSD": 65.365,
+    "EURUSD": 1.14874,
+    "USDJPY": 155.544,
+    "USDCHF": 0.824,
+    "USDCNH": 6.70427,
+    "GBPUSD": 1.33881,
+    "USDCAD": 1.39877,
+    "USDSEK": 9.80748,
+    "US500": 7652.2,
+    "GER40": 25813.25,
+    "UK100": 10782.35,
     "ADR_14day": 106.2,
-    "ADR_usedToday": 78,
-    "goldSilverRatio": 67.5
+    "ADR_usedToday": 123.6,
+    "goldSilverRatio": 66.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.8477,
@@ -69,25 +69,25 @@
       "headline": "Bank of England set to defy Fed’s rate-hike lead, despite rising inflation",
       "source": "CNBC",
       "publishedAt": "2026-09-17T05:20:23.000Z",
-      "hoursAgo": 5.3
+      "hoursAgo": 7.3
     },
     {
       "headline": "Fed delivers its first hike in 3 years. Plus, what's moving Starbucks and GE Vernova",
       "source": "CNBC",
       "publishedAt": "2026-09-16T19:00:14.000Z",
-      "hoursAgo": 15.7
+      "hoursAgo": 17.6
     },
     {
       "headline": "US Treasury gathers global financial institutions to advance Iran sanctions - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-16T17:42:29.000Z",
-      "hoursAgo": 17
+      "hoursAgo": 18.9
     },
     {
       "headline": "South African rand dips as markets brace for Fed decision - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-16T15:06:23.000Z",
-      "hoursAgo": 19.6
+      "hoursAgo": 21.5
     }
   ],
   "briefing": null
