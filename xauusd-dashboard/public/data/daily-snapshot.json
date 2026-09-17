@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-09-17T19:25:44.097Z",
+  "generatedAt": "2026-09-17T22:32:47.474Z",
   "yields": {
-    "US10Y": 5,
-    "US2Y": 4.67,
-    "realYield10Y": 2.62,
-    "realYield5Y": 2.42,
-    "curve2s10s": 33,
+    "US10Y": 5.01,
+    "US2Y": 4.74,
+    "realYield10Y": 2.68,
+    "realYield5Y": 2.51,
+    "curve2s10s": 27,
     "breakeven10Y": 2.33,
-    "breakeven5Y": 2.35,
-    "forward5y5y": 2.31,
+    "breakeven5Y": 2.32,
+    "forward5y5y": 2.34,
     "dayOverDay": {
-      "US10Y": 0.03,
-      "US2Y": 0.02,
-      "realYield10Y": 0.02
+      "US10Y": 0.01,
+      "US2Y": 0.07,
+      "realYield10Y": 0.06
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-10-28",
-    "probCut": 28,
-    "probHold": 72,
+    "probCut": 16,
+    "probHold": 84,
     "probHike": 0
   },
   "marketVolatility": {
@@ -34,26 +34,26 @@
     "openInterestChange": 3737
   },
   "etfFlows": {
-    "gldTonnes": 1090.3,
-    "gldWoWChange": null,
-    "trend3W": null
+    "gldTonnes": 1093.9,
+    "gldWoWChange": 3.6,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4349.64,
-    "XAGUSD": 65.299,
-    "EURUSD": 1.14789,
-    "USDJPY": 155.991,
-    "USDCHF": 0.82452,
-    "USDCNH": 6.70364,
-    "GBPUSD": 1.33567,
-    "USDCAD": 1.39904,
-    "USDSEK": 9.81958,
-    "US500": 7640.6,
-    "GER40": 25667.55,
-    "UK100": 10816.45,
-    "ADR_14day": 106.2,
-    "ADR_usedToday": 123.6,
-    "goldSilverRatio": 66.6
+    "XAUUSD": 4347.345,
+    "XAGUSD": 65.364,
+    "EURUSD": 1.14778,
+    "USDJPY": 156.011,
+    "USDCHF": 0.82434,
+    "USDCNH": 6.70378,
+    "GBPUSD": 1.33591,
+    "USDCAD": 1.39898,
+    "USDSEK": 9.8171,
+    "US500": 7632.1,
+    "GER40": 25670.75,
+    "UK100": 10806.55,
+    "ADR_14day": 105,
+    "ADR_usedToday": 5.5,
+    "goldSilverRatio": 66.5
   },
   "dollarLiquidity": {
     "stlfsi": -0.8477,
@@ -66,22 +66,28 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Russia, China end mandate for independent monitoring of UN sanctions on Iran - reuters.com",
+      "source": "Reuters",
+      "publishedAt": "2026-09-17T17:17:44.000Z",
+      "hoursAgo": 5.3
+    },
+    {
       "headline": "Stocks stage a comeback after Fed-induced declines — plus, what's ailing Boeing",
       "source": "CNBC",
       "publishedAt": "2026-09-17T16:37:00.000Z",
-      "hoursAgo": 2.8
+      "hoursAgo": 5.9
     },
     {
       "headline": "Bank of England set to defy Fed’s rate-hike lead, despite rising inflation",
       "source": "CNBC",
       "publishedAt": "2026-09-17T05:20:23.000Z",
-      "hoursAgo": 14.1
+      "hoursAgo": 17.2
     },
     {
       "headline": "Turkey approves liquidation of US-sanctioned Golden Global's funds - reuters.com",
       "source": "Reuters",
       "publishedAt": "2026-09-17T04:22:00.000Z",
-      "hoursAgo": 15.1
+      "hoursAgo": 18.2
     }
   ],
   "briefing": null
