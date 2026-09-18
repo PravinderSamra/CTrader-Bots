@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-17T22:32:47.474Z",
+  "generatedAt": "2026-09-18T10:16:29.090Z",
   "yields": {
     "US10Y": 5.01,
     "US2Y": 4.74,
@@ -34,26 +34,26 @@
     "openInterestChange": 3737
   },
   "etfFlows": {
-    "gldTonnes": 1093.9,
-    "gldWoWChange": 3.6,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1086.2,
+    "gldWoWChange": -7.7,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4347.345,
-    "XAGUSD": 65.364,
-    "EURUSD": 1.14778,
-    "USDJPY": 156.011,
-    "USDCHF": 0.82434,
-    "USDCNH": 6.70378,
-    "GBPUSD": 1.33591,
-    "USDCAD": 1.39898,
-    "USDSEK": 9.8171,
-    "US500": 7632.1,
-    "GER40": 25670.75,
-    "UK100": 10806.55,
+    "XAUUSD": 4378.5,
+    "XAGUSD": 66.9375,
+    "EURUSD": 1.14836,
+    "USDJPY": 157.8795,
+    "USDCHF": 0.82486,
+    "USDCNH": 6.69685,
+    "GBPUSD": 1.33686,
+    "USDCAD": 1.39988,
+    "USDSEK": null,
+    "US500": 7652.7,
+    "GER40": 25548.35,
+    "UK100": 10746.65,
     "ADR_14day": 105,
-    "ADR_usedToday": 5.5,
-    "goldSilverRatio": 66.5
+    "ADR_usedToday": 65.5,
+    "goldSilverRatio": 65.4
   },
   "dollarLiquidity": {
     "stlfsi": -0.8477,
@@ -66,28 +66,34 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Russia, China end mandate for independent monitoring of UN sanctions on Iran - reuters.com",
+      "headline": "Jim Cramer says history offers a playbook for navigating a Fed rate-hiking cycle",
+      "source": "CNBC",
+      "publishedAt": "2026-09-17T22:58:28.000Z",
+      "hoursAgo": 11.3
+    },
+    {
+      "headline": "Ocean container shipping rates could test record highs as Iran war fuel spike drives rise, analysts say - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-17T20:49:44.000Z",
+      "hoursAgo": 13.4
+    },
+    {
+      "headline": "US sanctions Iranian financier's crypto exchange, says it processes Hormuz payments - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-17T18:03:45.000Z",
+      "hoursAgo": 16.2
+    },
+    {
+      "headline": "Russia, China end mandate for independent monitoring of UN sanctions on Iran - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-17T17:17:44.000Z",
-      "hoursAgo": 5.3
+      "hoursAgo": 17
     },
     {
       "headline": "Stocks stage a comeback after Fed-induced declines — plus, what's ailing Boeing",
       "source": "CNBC",
       "publishedAt": "2026-09-17T16:37:00.000Z",
-      "hoursAgo": 5.9
-    },
-    {
-      "headline": "Bank of England set to defy Fed’s rate-hike lead, despite rising inflation",
-      "source": "CNBC",
-      "publishedAt": "2026-09-17T05:20:23.000Z",
-      "hoursAgo": 17.2
-    },
-    {
-      "headline": "Turkey approves liquidation of US-sanctioned Golden Global's funds - reuters.com",
-      "source": "Reuters",
-      "publishedAt": "2026-09-17T04:22:00.000Z",
-      "hoursAgo": 18.2
+      "hoursAgo": 17.7
     }
   ],
   "briefing": null

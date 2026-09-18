@@ -1,0 +1,62 @@
+{
+  "date": "2026-09-18",
+  "entries": [
+    {
+      "at": "2026-09-18T10:16:35.251Z",
+      "londonTime": "11:16 BST",
+      "mode": "POST_ORB",
+      "price": 10745.55,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 90% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "90% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10700.2) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.58%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10806.7,
+        "orbLow": 10775.3,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10824.1,
+        "overnightLow": 10762.4,
+        "priorDayHigh": 10837.8,
+        "priorDayLow": 10700.2,
+        "gapPct": -0.56,
+        "adr14": 107.7,
+        "adrUsedPct": 90
+      },
+      "outcome": null
+    }
+  ]
+}
