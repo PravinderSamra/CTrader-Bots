@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-18T12:14:33.199Z",
+  "generatedAt": "2026-09-18T14:42:16.842Z",
   "yields": {
     "US10Y": 5.01,
     "US2Y": 4.74,
@@ -22,8 +22,8 @@
     "probHike": 0
   },
   "marketVolatility": {
-    "GVZ": 26.55,
-    "VIX": 17.71
+    "GVZ": 24.98,
+    "VIX": 15.44
   },
   "positioning": {
     "cotNetLong": 223928,
@@ -34,26 +34,26 @@
     "openInterestChange": 3737
   },
   "etfFlows": {
-    "gldTonnes": 1087.7,
-    "gldWoWChange": 1.5,
+    "gldTonnes": 1092.3,
+    "gldWoWChange": 4.6,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4372.435,
-    "XAGUSD": 66.4405,
-    "EURUSD": 1.14601,
-    "USDJPY": 157.9055,
-    "USDCHF": 0.82585,
-    "USDCNH": 6.69878,
-    "GBPUSD": 1.33434,
-    "USDCAD": 1.40143,
-    "USDSEK": 9.85627,
-    "US500": 7636.4,
-    "GER40": 25429.65,
-    "UK100": 10687.15,
+    "XAUUSD": 4354.015,
+    "XAGUSD": 66.3255,
+    "EURUSD": 1.14634,
+    "USDJPY": 157.7695,
+    "USDCHF": 0.82465,
+    "USDCNH": 6.69965,
+    "GBPUSD": 1.3354,
+    "USDCAD": 1.40102,
+    "USDSEK": 9.86441,
+    "US500": 7622,
+    "GER40": 25343.25,
+    "UK100": 10657.95,
     "ADR_14day": 105,
     "ADR_usedToday": 65.5,
-    "goldSilverRatio": 65.8
+    "goldSilverRatio": 65.6
   },
   "dollarLiquidity": {
     "stlfsi": -0.8477,
@@ -69,31 +69,31 @@
       "headline": "Jim Cramer says history offers a playbook for navigating a Fed rate-hiking cycle",
       "source": "CNBC",
       "publishedAt": "2026-09-17T22:58:28.000Z",
-      "hoursAgo": 13.3
+      "hoursAgo": 15.7
     },
     {
       "headline": "Ocean container shipping rates could test record highs as Iran war fuel spike drives rise, analysts say - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-17T20:49:44.000Z",
-      "hoursAgo": 15.4
+      "hoursAgo": 17.9
     },
     {
       "headline": "US sanctions Iranian financier's crypto exchange, says it processes Hormuz payments - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-17T18:03:45.000Z",
-      "hoursAgo": 18.2
+      "hoursAgo": 20.6
     },
     {
       "headline": "Russia, China end mandate for independent monitoring of UN sanctions on Iran - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-17T17:17:44.000Z",
-      "hoursAgo": 18.9
+      "hoursAgo": 21.4
     },
     {
       "headline": "Stocks stage a comeback after Fed-induced declines — plus, what's ailing Boeing",
       "source": "CNBC",
       "publishedAt": "2026-09-17T16:37:00.000Z",
-      "hoursAgo": 19.6
+      "hoursAgo": 22.1
     }
   ],
   "briefing": null
