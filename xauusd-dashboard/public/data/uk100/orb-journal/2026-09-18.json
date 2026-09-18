@@ -56,7 +56,29 @@
         "adr14": 107.7,
         "adrUsedPct": 90
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-09-18T17:58:43.210Z",
+        "fwd1hPct": -0.35,
+        "fwd3hPct": -0.78,
+        "toClosePct": -1.08,
+        "maxUpPct": -0.05,
+        "maxDownPct": -1.11,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          }
+        ]
+      }
     },
     {
       "at": "2026-09-18T12:14:38.598Z",
@@ -106,7 +128,29 @@
         "adr14": 107.7,
         "adrUsedPct": 128
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-09-18T17:58:43.356Z",
+        "fwd1hPct": -0.24,
+        "fwd3hPct": -0.54,
+        "toClosePct": -0.54,
+        "maxUpPct": 0.18,
+        "maxDownPct": -0.57,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-09-18T14:42:21.935Z",
@@ -156,7 +200,88 @@
         "adr14": 107.7,
         "adrUsedPct": 156
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-09-18T17:58:43.497Z",
+        "fwd1hPct": -0.26,
+        "fwd3hPct": null,
+        "toClosePct": -0.26,
+        "maxUpPct": 0.04,
+        "maxDownPct": -0.29,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-18T17:58:40.818Z",
+      "londonTime": "18:58 BST",
+      "mode": "CLOSED",
+      "price": 10619.95,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 198% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "198% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.36%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10806.7,
+        "orbLow": 10775.3,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10824.1,
+        "overnightLow": 10762.4,
+        "priorDayHigh": 10837.8,
+        "priorDayLow": 10700.2,
+        "gapPct": -1.72,
+        "adr14": 107.7,
+        "adrUsedPct": 198
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-18T17:58:43.497Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
