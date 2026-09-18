@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-18T10:16:29.090Z",
+  "generatedAt": "2026-09-18T12:14:33.199Z",
   "yields": {
     "US10Y": 5.01,
     "US2Y": 4.74,
@@ -34,26 +34,26 @@
     "openInterestChange": 3737
   },
   "etfFlows": {
-    "gldTonnes": 1086.2,
-    "gldWoWChange": -7.7,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1087.7,
+    "gldWoWChange": 1.5,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4378.5,
-    "XAGUSD": 66.9375,
-    "EURUSD": 1.14836,
-    "USDJPY": 157.8795,
-    "USDCHF": 0.82486,
-    "USDCNH": 6.69685,
-    "GBPUSD": 1.33686,
-    "USDCAD": 1.39988,
-    "USDSEK": null,
-    "US500": 7652.7,
-    "GER40": 25548.35,
-    "UK100": 10746.65,
+    "XAUUSD": 4372.435,
+    "XAGUSD": 66.4405,
+    "EURUSD": 1.14601,
+    "USDJPY": 157.9055,
+    "USDCHF": 0.82585,
+    "USDCNH": 6.69878,
+    "GBPUSD": 1.33434,
+    "USDCAD": 1.40143,
+    "USDSEK": 9.85627,
+    "US500": 7636.4,
+    "GER40": 25429.65,
+    "UK100": 10687.15,
     "ADR_14day": 105,
     "ADR_usedToday": 65.5,
-    "goldSilverRatio": 65.4
+    "goldSilverRatio": 65.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.8477,
@@ -69,31 +69,31 @@
       "headline": "Jim Cramer says history offers a playbook for navigating a Fed rate-hiking cycle",
       "source": "CNBC",
       "publishedAt": "2026-09-17T22:58:28.000Z",
-      "hoursAgo": 11.3
+      "hoursAgo": 13.3
     },
     {
       "headline": "Ocean container shipping rates could test record highs as Iran war fuel spike drives rise, analysts say - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-17T20:49:44.000Z",
-      "hoursAgo": 13.4
+      "hoursAgo": 15.4
     },
     {
       "headline": "US sanctions Iranian financier's crypto exchange, says it processes Hormuz payments - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-17T18:03:45.000Z",
-      "hoursAgo": 16.2
+      "hoursAgo": 18.2
     },
     {
       "headline": "Russia, China end mandate for independent monitoring of UN sanctions on Iran - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-17T17:17:44.000Z",
-      "hoursAgo": 17
+      "hoursAgo": 18.9
     },
     {
       "headline": "Stocks stage a comeback after Fed-induced declines — plus, what's ailing Boeing",
       "source": "CNBC",
       "publishedAt": "2026-09-17T16:37:00.000Z",
-      "hoursAgo": 17.7
+      "hoursAgo": 19.6
     }
   ],
   "briefing": null
