@@ -3745,3 +3745,204 @@ grep the existing D- and H- entries for the file and line it is about, not only
 for the wording it would use.
 
 Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+
+---
+
+# Observations appended 2026-09-18 (grading the 2026-09-17 session — day after the FOMC hike)
+
+Source: `review_day.py 2026-09-17 --json`, 1 scan, 0 test artefacts. `track.py`
+at 13 trading days / 22 deduped scans. The session was O 28983.4 / H 29500.5 /
+L 28955.7 / C 29430.9, range 544.8 (1.47x ADR), net +447.5 — but **the whole
+move was pre-scan** (`range_at_scan` 504.8 of 544.8; post-scan +9.4), so this day
+grades almost nothing about direction. Bias was −2 NEUTRAL, no call.
+
+## D18 (NEW) — the news scorer cannot read a bullish headline that contains a bearish keyword
+
+**Two independent defects in `news_scorer.py` that compound.** Reproduced from
+source on 2026-09-18:
+
+```
+'Nasdaq, S&P 500 Futures Rebound After Fed Rate Hike...'           rule=hawkish  dir=-1  conf=HIGH  flags=[]
+'S&P 500, Nasdaq, Dow Futures Inch Higher As Investors Digest...'  rule=hawkish  dir=-1  conf=HIGH  flags=[]
+'Stock Market Today: Dow Rises On Surprise Inflation Data; ...'    rule=cpi_hot  dir=-1  conf=HIGH  flags=[]
+'Nasdaq, S&P 500 Futures Surge As Wall Street Cheers US-Iran...'   rule=hawkish  dir=-1  conf=HIGH  flags=[]
+```
+
+Every one of these headlines states, in its own text, that the index went **up**.
+All four were **counted**, at **HIGH** confidence, with **no flags**, each voting
+**−1**.
+
+1. **First-match-wins over an ordered rule list.** `score_item` iterates `RULES`
+   and **returns on the first regex hit**. `hawkish` sits at **line 71**;
+   `risk_on` (`rally|surge|soar|jump|rebound|…`) at **line 109**. A headline
+   holding both "rate hike" and "rebound" is structurally incapable of being read
+   as anything but hawkish — the competing evidence in the same sentence is never
+   examined.
+2. **`HIGH_CONFIDENCE` is asymmetric.** It contains `hawkish`, `cpi_hot`,
+   `cpi_cool`, `dovish`, `jobs_strong`, both tariff rules, `earnings_beat/miss`,
+   `capex_up/down`, `credit_stress`, `shutdown` — and **not `risk_on`**. The
+   bearish reading wins the race *and* is the only one permitted to vote.
+
+The flag machinery does not help: `REVERSAL_UP`, `CONTRAST`, `MODAL` and
+`HYPOTHETICAL` are all empty on "Futures Rebound After Fed Rate Hike" — "after"
+is not a contrast token.
+
+**Evidence: 3 trading days, 5 headline instances.**
+
+| day | scan | headline (truncated) | rule | counted? |
+|---|---|---|---|---|
+| 2026-08-24 | 08:28–08:33 | "Nasdaq, S&P 500 Futures **Surge** As Wall Street Cheers US-Iran Deal, **Brushes Off** Hawkish Fed" | `hawkish` | yes, −1 (net that scan was +1, offset by `cpi_cool`) |
+| 2026-09-11 | 12:47 | "Dow **Rises** On Surprise Inflation Data; AI Name Oracle **Jumps** On Earnings" | `cpi_hot` | yes, −1 (scan block −4, 0 bull / 4 bear) |
+| 2026-09-11 | 13:24 | "Dow **Rallies** On Surprise Inflation Data; Nvidia **Rebounds**, Oracle Jumps" | `cpi_hot` | yes, −1 (scan block −4, 0 bull / 10 bear) |
+| 2026-09-17 | 12:46 | "Nasdaq, S&P 500 Futures **Rebound** After Fed Rate Hike" | `hawkish` | yes, −1 (scan block −2, 0 bull / 4 bear) |
+| 2026-09-17 | 12:46 | "S&P 500, Nasdaq, Dow Futures **Inch Higher** As Investors Digest First Rate Hike Since 2023" | `hawkish` | yes, −1 (same block) |
+
+**Relationship to existing entries — this is neither of them.**
+
+- **Not D9.** D9 is the same family ("a keyword without its subject") but the
+  **opposite sign and zero damage**: there a bearish headline took a bullish tag
+  and fell into NEEDS_JUDGEMENT, scoring 0. D9's closing line asked that a
+  recurrence be *counted rather than rediscovered* — D18 is that count, and
+  unlike D9 these votes were cast at full weight.
+- **Not H19.** H19 concerns which headlines get **sampled**. D18 concerns the
+  **sampled subset being misread**, which H19 assumes away. H19's hand-score test
+  is unaffected and still unrun.
+
+**Status: FILED, deliberately NOT PROPOSED FOR IMMEDIATE FIX.** Threshold is met
+and the change is small, but it alters a **scoring input**, and H19's unrun
+hand-score test needs the current scorer as its baseline. Fix when H19 resolves
+or when `news_scorer.py` is next opened, whichever is first. Candidate fix:
+evaluate **all** matching rules rather than returning on the first, and demote to
+NEEDS_JUDGEMENT when a bearish-regime rule and a market-direction rule both match
+the same headline — the honest answer there is "a human should read this", not a
+guess at the sign.
+
+## H18 — fifth instance; sequence extended, no damage this time
+
+DFII10 again scored **−3** on 09-17 with the `why` string itself saying *"FRED has
+not published since 2026-09-15 (2 business days ago) — this is last week's
+reading, not today's."*
+
+`09-10 0, 09-10 0, 09-11 −3, 09-11 −3, 09-14 −3, 09-14 −3, 09-15 −3, 09-16 0, 09-17 −3`
+
+**Damage today: none.** Total −2; without the stale −3 it is +1, and both are
+`NEUTRAL / TWO-WAY`. No label flipped, no call changed. Recorded because a
+component that votes on data it has itself flagged as missing is a defect
+independent of whether the day punishes it. **P1 already covers it. No new
+proposal.**
+
+## H1 — zero-budget bucket doubles its MAE, and the estimator is one-sided
+
+09-17: budget **0.0** → extension **40.0**, error **+40.0**. This is the
+**largest zero-budget error on record**, beating 09-14 17:23's +26.6.
+
+| budget | scans | errors | MAE |
+|---|---|---|---|
+| **= 0.0** | **4** | 0.0, 0.0, +26.6, **+40.0** | **16.7** (was 8.9 at n=3) |
+| **> 0.0** | 8 | −86.4, −10.7, −26.2, −64.0, +114.6, +88.7, +132.2, −81.3 | ~75.5 |
+
+The zero/non-zero split survives — 16.7 against 75.5 is still a factor of 4.5 —
+but the "keep the number when it is zero" half of **P4** is weaker than it looked
+at n=3, and the trend is one-way.
+
+**The structural point, which should be written down before P4 is decided:** when
+the budget is 0.0 the error is `extension − 0 = extension`, and extension cannot
+be negative. **A zero budget can only ever be wrong in one direction.** Its MAE
+is therefore a biased estimator that can only rise as the sample grows, and the
+8.9 → 16.7 move is partly the sample filling in, not the model degrading. The
+zero bucket's low MAE is **not** evidence that a zero budget is a good forecast;
+it is evidence that days which exhaust their budget usually do not extend much
+further. Those are different claims and P4 currently rests on the first one.
+
+Per-DAY error across 13 days now: mean **+5.0** (`track.py`). Dispersion without
+bias, unchanged. **No new proposal.**
+
+## The gamma-pinning vs vol-expansion conflict now has one instance on each side
+
+Logged 2026-09-17 as an unarbitrated conflict. Both sides now have a day:
+
+| day | `gamma` pinning rows | `vol` backwardation row | outcome | who was right |
+|---|---|---|---|---|
+| 09-16 | +2 "pinning likely" | −2 "expect range expansion" | 1.38x ADR, largest traversal on record | **vol** |
+| 09-17 | +2 "pinning likely" | −2 "expect range expansion" | extension 40.0 on a 0pt budget, price traversed 186.6 **inside** | **gamma** |
+
+One each. **n=2, nothing proposed.** Recorded because the conflict is real and
+neither row is reliably the better one — which is an argument for arbitration
+rather than for deleting either. What would settle it: whether the *combination*
+(positive net GEX **and** backwardated VIX9D/VIX) resolves toward expansion or
+pinning across ≥3 more instances. Record both values every scan.
+
+## Max pain's day-of-week qualifier — second instance against, in the opposite direction
+
+The qualifier reads *"weak on a Monday, strong by Thursday/Friday"*.
+
+- **09-16 (Wednesday):** max pain was the **single best level on the board** —
+  held as resistance 170min, worst excursion 22.6pts.
+- **09-17 (Thursday):** max pain was **never reached**, nearest approach 245.8pts.
+
+Two instances, both contradicting the qualifier, in **opposite directions** —
+which is weaker evidence than two in the same direction, and consistent with the
+qualifier simply carrying no information. **n=2 of the 3 required** (threshold:
+3 days on which max pain is published; touched is not required, since a miss on a
+Thursday is itself evidence against). Nothing proposed.
+
+## `events` has now scored 0 on 15 of 15 rows
+
+Including **the day after an FOMC rate hike**. Unchanged mechanism
+(`add("events", 0, ...)`, earnings only), unchanged status: this is the mechanism
+behind **P-C**, not a separate proposal.
+
+## New observation — the board has no field for "price already tested this today"
+
+The 09-17 brief presented the 29451.5 call wall as **"+26 away"** and offered
+*"a held close above flips that selling to buying and it becomes a launchpad"* as
+a forward scenario. Inferred from the graded numbers (`range_at_scan` 504.8 above
+a session low of 28955.7, and the low is provably pre-scan because post-scan
+traversal was only 186.6), **the pre-scan high was 29460.5 — 9.0pts above that
+wall.** The level had already been tested and rejected that morning.
+
+The level board carries `dist`, `reach`, `stretch` and `confluence`, and **no
+field for prior-session interaction with the level**. Same shape as the H1
+sub-observation of 09-16 (the fuel block reports no distance to existing session
+extremes, so the prose cannot say "the move available is back to the low"): the
+generator lacks the field it would need to say the true thing. **n=1. Logged, not
+proposed** — and if it recurs, it and the H1 sub-observation are probably one
+proposal about session-context fields, not two.
+
+
+---
+
+## Proposal index, reconciled 2026-09-18
+
+The register now carries **two parallel proposal series** and they are not the
+same sequence: **P1–P5** (numeric, opened by the 09-14 and 09-15 reviews) and
+**P-A–P-D** (lettered, opened by the 09-16 and 09-17 reviews). "P1" and "P-A"
+are different proposals about different code. Nothing is mis-numbered, but the
+two schemes cannot be read as one list, and anyone asking "how many proposals
+are open" gets no answer from a grep.
+
+Left in place rather than renamed: both series are already referenced by name
+inside committed REVIEW.md files, and renaming would break those citations to
+fix a cosmetic problem. The index is the fix.
+
+| id | claim | status |
+|---|---|---|
+| P1 | FRED staleness — macro scores a frozen series at full weight (= H18) | standing, strengthened 5 sessions |
+| P2 | prior-week-range rule needs a reclaim term (H10) | 0-for-4, did not fire 09-15 |
+| P3 | exclude `kind: structural` from the level hit rate | standing |
+| P4 | stop quoting a point-precise budget above zero | standing; see the one-sided-estimator caveat below |
+| P5 | grade the secondary gamma table (107 publications, 0 graded) | standing, must land with/after P3 |
+| P-A | straddle-rider ternary sign | **NOT a separate item — this is D16**, see the 09-17 cross-reference |
+| P-B | held/lost verdict unstable inside the grader's tolerances | standing, measurement only |
+| P-C | event gate unreachable — 0 fires in 21 scans | standing |
+| P-D | board filter inverts at zero budget | standing, overlaps P-B(b), re-measure together |
+
+Sequencing already recorded across the reviews, repeated here because it is
+scattered: **P3 before P5** (P5 enlarges the hit-rate denominator), **P-B and
+P-D together** (both move the same numbers), and **H6 read only after both**.
+P-A is not a fifth lettered proposal; D16 holds that evidence.
+
+A future review opening a proposal should continue the **lettered** series from
+P-E, and grep this index first.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
