@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-09-18T17:58:36.025Z",
+  "generatedAt": "2026-09-18T20:27:57.814Z",
   "yields": {
-    "US10Y": 5.01,
-    "US2Y": 4.74,
-    "realYield10Y": 2.68,
-    "realYield5Y": 2.51,
+    "US10Y": 4.94,
+    "US2Y": 4.67,
+    "realYield10Y": 2.61,
+    "realYield5Y": 2.46,
     "curve2s10s": 27,
     "breakeven10Y": 2.33,
     "breakeven5Y": 2.32,
     "forward5y5y": 2.34,
     "dayOverDay": {
-      "US10Y": 0.01,
-      "US2Y": 0.07,
-      "realYield10Y": 0.06
+      "US10Y": -0.07,
+      "US2Y": -0.07,
+      "realYield10Y": -0.07
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-10-28",
-    "probCut": 16,
-    "probHold": 84,
+    "probCut": 12,
+    "probHold": 88,
     "probHike": 0
   },
   "marketVolatility": {
@@ -26,34 +26,34 @@
     "VIX": 15.44
   },
   "positioning": {
-    "cotNetLong": 223928,
-    "cotWoWChange": 1740,
+    "cotNetLong": 220717,
+    "cotWoWChange": -3211,
     "crowding": "CROWDED_LONG",
-    "reportDate": "2026-09-08T00:00:00.000",
-    "openInterest": 582664,
-    "openInterestChange": 3737
+    "reportDate": "2026-09-15T00:00:00.000",
+    "openInterest": 577454,
+    "openInterestChange": -5210
   },
   "etfFlows": {
-    "gldTonnes": 1082.5,
-    "gldWoWChange": -9.8,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1085.3,
+    "gldWoWChange": 2.8,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4393.21,
-    "XAGUSD": 66.741,
-    "EURUSD": 1.14799,
-    "USDJPY": 156.6955,
-    "USDCHF": 0.82215,
-    "USDCNH": 6.69604,
-    "GBPUSD": 1.33885,
-    "USDCAD": 1.39948,
-    "USDSEK": 9.83634,
-    "US500": 7628.2,
-    "GER40": 25307.05,
-    "UK100": 10620.45,
+    "XAUUSD": 4382.105,
+    "XAGUSD": 66.4345,
+    "EURUSD": 1.14887,
+    "USDJPY": 156.77,
+    "USDCHF": 0.82176,
+    "USDCNH": 6.69466,
+    "GBPUSD": 1.33979,
+    "USDCAD": 1.39898,
+    "USDSEK": 9.82999,
+    "US500": 7659.5,
+    "GER40": 25331.05,
+    "UK100": 10628.25,
     "ADR_14day": 105,
     "ADR_usedToday": 65.5,
-    "goldSilverRatio": 65.8
+    "goldSilverRatio": 66
   },
   "dollarLiquidity": {
     "stlfsi": -0.8477,
@@ -66,22 +66,22 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "COMMENTARY: Global rates reset, AI angst and oil's long haul: The financial week in five charts - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-18T12:32:15.000Z",
+      "hoursAgo": 7.9
+    },
+    {
       "headline": "Jim Cramer says history offers a playbook for navigating a Fed rate-hiking cycle",
       "source": "CNBC",
       "publishedAt": "2026-09-17T22:58:28.000Z",
-      "hoursAgo": 19
+      "hoursAgo": 21.5
     },
     {
       "headline": "Ocean container shipping rates could test record highs as Iran war fuel spike drives rise, analysts say - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-17T20:49:44.000Z",
-      "hoursAgo": 21.1
-    },
-    {
-      "headline": "US sanctions Iranian financier's crypto exchange, says it processes Hormuz payments - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-17T18:03:45.000Z",
-      "hoursAgo": 23.9
+      "hoursAgo": 23.6
     }
   ],
   "briefing": null
