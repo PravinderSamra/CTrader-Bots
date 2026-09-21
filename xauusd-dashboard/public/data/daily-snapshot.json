@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-21T14:10:41.775Z",
+  "generatedAt": "2026-09-21T17:28:19.614Z",
   "yields": {
     "US10Y": 4.94,
     "US2Y": 4.67,
@@ -34,26 +34,26 @@
     "openInterestChange": -5210
   },
   "etfFlows": {
-    "gldTonnes": 1096.7,
-    "gldWoWChange": 4.4,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1094.9,
+    "gldWoWChange": -1.8,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4336.25,
-    "XAGUSD": 66.1815,
-    "EURUSD": 1.14671,
-    "USDJPY": 157.4525,
-    "USDCHF": 0.82264,
-    "USDCNH": 6.69363,
-    "GBPUSD": 1.33708,
-    "USDCAD": 1.4019,
-    "USDSEK": 9.84181,
-    "US500": 7708.1,
-    "GER40": 25579.15,
-    "UK100": 10733.95,
+    "XAUUSD": 4343.35,
+    "XAGUSD": 65.909,
+    "EURUSD": 1.14702,
+    "USDJPY": 157.4175,
+    "USDCHF": 0.82098,
+    "USDCNH": 6.6929,
+    "GBPUSD": 1.33725,
+    "USDCAD": 1.40283,
+    "USDSEK": 9.83343,
+    "US500": 7759.2,
+    "GER40": 25662.25,
+    "UK100": 10752.05,
     "ADR_14day": 95.5,
     "ADR_usedToday": 60.8,
-    "goldSilverRatio": 65.5
+    "goldSilverRatio": 65.9
   },
   "dollarLiquidity": {
     "stlfsi": -0.8477,
@@ -64,6 +64,13 @@
     "gprDate": "2026-08"
   },
   "economicCalendar": [],
-  "newsItems": [],
+  "newsItems": [
+    {
+      "headline": "Wall St rises on AI gains as oil slides, Treasury yields retreat - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-21T15:57:01.000Z",
+      "hoursAgo": 1.5
+    }
+  ],
   "briefing": null
 }

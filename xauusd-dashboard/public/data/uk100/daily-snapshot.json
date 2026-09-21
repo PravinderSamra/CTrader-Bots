@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-09-21T14:11:05.921Z",
+  "generatedAt": "2026-09-21T17:28:24.772Z",
   "prices": {
-    "UK100": 10734.55,
-    "GBPUSD": 1.33709,
-    "GBPEUR": 1.16595,
-    "US500": 7709.7,
-    "NAS100": 30142.95,
-    "BRENT": 101.681,
-    "COPPER": 6.8217,
-    "VIX": 16.275,
-    "USDX": 100.405,
-    "XAUUSD": 4336.91,
-    "UK100_dayPct": 1.01
+    "UK100": 10752.05,
+    "GBPUSD": 1.33725,
+    "GBPEUR": 1.16588,
+    "US500": 7758.9,
+    "NAS100": 30393.05,
+    "BRENT": 100.678,
+    "COPPER": 6.7876,
+    "VIX": 16.43,
+    "USDX": 100.388,
+    "XAUUSD": 4343.29,
+    "UK100_dayPct": 1.17
   },
   "fx": {
-    "gbpUsdDayPct": -0.17,
+    "gbpUsdDayPct": -0.16,
     "gbpUsd20dPercentile": 16,
     "sterlingEri": 85.1567,
     "sterlingEriDayChange": 0.18,
@@ -36,25 +36,25 @@
     "daysToMpc": 45
   },
   "usLinkage": {
-    "us500DayPct": 0.67,
-    "nas100DayPct": 1.59,
-    "vix": 16.275,
+    "us500DayPct": 1.31,
+    "nas100DayPct": 2.44,
+    "vix": 16.43,
     "vixRegime": "NORMAL",
     "us10y": 4.94,
-    "usdx": 100.405
+    "usdx": 100.388
   },
   "commodities": {
-    "brentDayPct": -2.3,
-    "copperDayPct": 1.3,
-    "goldDayPct": -0.95,
+    "brentDayPct": -3.26,
+    "copperDayPct": 0.79,
+    "goldDayPct": -0.81,
     "brent20dTrend": "UP"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": 1.16,
-    "dax40DayPct": 1.01,
-    "eurUsdDayPct": -0.16,
-    "ftseDaxCorr20d": 0.84,
-    "ftseSx5eCorr20d": 0.83,
+    "eurostoxx50DayPct": 1.65,
+    "dax40DayPct": 1.31,
+    "eurUsdDayPct": -0.13,
+    "ftseDaxCorr20d": 0.85,
+    "ftseSx5eCorr20d": 0.84,
     "tapeAgreement": "ALIGNED",
     "preOpenLead": "NONE"
   },
@@ -69,14 +69,14 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent -2.3%",
+      "driver": "Brent -3.26%",
       "read": "BEARISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper +1.3%",
+      "driver": "Copper +0.79%",
       "read": "BULLISH",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
@@ -106,7 +106,7 @@
   "newsItems": [],
   "riskTone": null,
   "bias": {
-    "score": 5,
+    "score": 4,
     "label": "BULLISH",
     "conviction": "MEDIUM",
     "drivers": [
@@ -114,31 +114,31 @@
         "name": "GBP",
         "weight": 3,
         "impact": "NEUTRAL",
-        "detail": "GBP/USD -0.17% → FTSE tailwind (sign-flipped)"
+        "detail": "GBP/USD -0.16% → FTSE tailwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
         "impact": "BULLISH",
-        "detail": "US500 +0.67% today"
+        "detail": "US500 +1.31% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 16.275 — NORMAL regime"
+        "detail": "VIX 16.43 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
         "impact": "BEARISH",
-        "detail": "Brent -2.3% (energy majors)"
+        "detail": "Brent -3.26% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
         "impact": "BULLISH",
-        "detail": "Copper +1.3% (miners/China)"
+        "detail": "Copper +0.79% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -160,16 +160,16 @@
       },
       {
         "name": "European tape (SX5E/DAX)",
-        "weight": 1.47,
+        "weight": 1,
         "impact": "BULLISH",
-        "detail": "SX5E +1.16% / DAX +1.01%"
+        "detail": "SX5E +1.65% / DAX +1.31%"
       }
     ],
     "eventSuppressed": false
   },
   "orbContext": {
-    "computedAt": "2026-09-21T14:11:05.920Z",
-    "mode": "POST_ORB",
+    "computedAt": "2026-09-21T17:28:24.772Z",
+    "mode": "CLOSED",
     "cashOpenLondon": "08:00 BST",
     "overnightHigh": 10711.4,
     "overnightLow": 10643.8,
@@ -178,8 +178,8 @@
     "priorClose": 10627.3,
     "prevWeekHigh": 10837.8,
     "prevWeekLow": 10584.6,
-    "gapPts": 107.3,
-    "gapPct": 1.01,
+    "gapPts": 124.8,
+    "gapPct": 1.17,
     "orbHigh": 10705.1,
     "orbLow": 10673.2,
     "orbBrokenDirection": "UP",
@@ -189,11 +189,11 @@
     "expansionState": {
       "label": "NORMAL",
       "rangeSoFarPct": 111,
-      "expectedRangePctByNow": 97,
-      "rangeVsTypical": 1.14,
-      "expectedVolPctByNow": 92,
+      "expectedRangePctByNow": 100,
+      "rangeVsTypical": 1.11,
+      "expectedVolPctByNow": 100,
       "moveMostlyDone": true,
-      "note": "Range 111% of ADR vs ~97% typical by 15:00 BST (about the typical pace). ~92% of a typical day's volume already done — expect a rangebound remainder, tighten targets."
+      "note": "Range 111% of ADR vs ~100% typical by 16:00 BST (about the typical pace). ~100% of a typical day's volume already done — expect a rangebound remainder, tighten targets."
     }
   },
   "orbIntel": {
@@ -217,23 +217,16 @@
       {
         "direction": "FAVOURS_LONG",
         "severity": "INFO",
-        "source": "STRUCTURE",
-        "rule": "R3",
-        "text": "ORB break UP is aligned with the BULLISH macro bias (+5) — continuation has the backdrop behind it."
-      },
-      {
-        "direction": "FAVOURS_LONG",
-        "severity": "INFO",
         "source": "TAPE",
         "rule": "R8",
-        "text": "FTSE is tracking a firmer European tape (Euro Stoxx +1.16%) — the cross-market lean is up."
+        "text": "FTSE is tracking a firmer European tape (Euro Stoxx +1.65%) — the cross-market lean is up."
       },
       {
         "direction": "FAVOURS_LONG",
         "severity": "INFO",
         "source": "TAPE",
         "rule": "R9",
-        "text": "Past 13:30 with US futures +0.67% — the 14:30 US handoff argues for holding longs into the US open."
+        "text": "Past 13:30 with US futures +1.31% — the 14:30 US handoff argues for holding longs into the US open."
       },
       {
         "direction": "BREAKOUT_SUSPECT",
