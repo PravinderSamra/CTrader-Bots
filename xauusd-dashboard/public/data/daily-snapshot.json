@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-09-21T17:28:19.614Z",
+  "generatedAt": "2026-09-21T21:26:06.214Z",
   "yields": {
-    "US10Y": 4.94,
-    "US2Y": 4.67,
-    "realYield10Y": 2.61,
-    "realYield5Y": 2.46,
-    "curve2s10s": 27,
-    "breakeven10Y": 2.33,
-    "breakeven5Y": 2.31,
+    "US10Y": 5.01,
+    "US2Y": 4.76,
+    "realYield10Y": 2.68,
+    "realYield5Y": 2.55,
+    "curve2s10s": 25,
+    "breakeven10Y": 2.34,
+    "breakeven5Y": 2.33,
     "forward5y5y": 2.35,
     "dayOverDay": {
-      "US10Y": -0.07,
-      "US2Y": -0.07,
-      "realYield10Y": -0.07
+      "US10Y": 0.07,
+      "US2Y": 0.09,
+      "realYield10Y": 0.07
     }
   },
   "fedExpectations": {
@@ -34,26 +34,26 @@
     "openInterestChange": -5210
   },
   "etfFlows": {
-    "gldTonnes": 1094.9,
-    "gldWoWChange": -1.8,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1094.8,
+    "gldWoWChange": -0.1,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4343.35,
-    "XAGUSD": 65.909,
-    "EURUSD": 1.14702,
-    "USDJPY": 157.4175,
-    "USDCHF": 0.82098,
-    "USDCNH": 6.6929,
-    "GBPUSD": 1.33725,
-    "USDCAD": 1.40283,
-    "USDSEK": 9.83343,
-    "US500": 7759.2,
-    "GER40": 25662.25,
-    "UK100": 10752.05,
+    "XAUUSD": 4343.995,
+    "XAGUSD": 66.029,
+    "EURUSD": 1.14657,
+    "USDJPY": 157.3575,
+    "USDCHF": 0.82134,
+    "USDCNH": 6.69306,
+    "GBPUSD": 1.33692,
+    "USDCAD": 1.40307,
+    "USDSEK": 9.82902,
+    "US500": 7765.8,
+    "GER40": 25659.05,
+    "UK100": 10754.05,
     "ADR_14day": 95.5,
     "ADR_usedToday": 60.8,
-    "goldSilverRatio": 65.9
+    "goldSilverRatio": 65.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.8477,
@@ -66,10 +66,10 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Wall St rises on AI gains as oil slides, Treasury yields retreat - Reuters",
+      "headline": "Wall Street ends sharply higher as AI optimism reignites and Treasury yields retreat - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-21T15:57:01.000Z",
-      "hoursAgo": 1.5
+      "publishedAt": "2026-09-21T20:01:13.000Z",
+      "hoursAgo": 1.4
     }
   ],
   "briefing": null
