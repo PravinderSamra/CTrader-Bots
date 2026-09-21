@@ -8,6 +8,30 @@ between sessions.
 Run `python3 track.py` (in the skill's `scripts/`) to regenerate the evidence
 table. Append observations below; do not rewrite history.
 
+## ID allocation — CHECK THIS BEFORE OPENING ANY NEW ENTRY
+
+Three collisions happened in one week because each reviewer picked "the next
+free number" from the entries it could see, while other entries were being
+added between runs. H12/H13 were each opened twice for unrelated claims
+(corrected 09-15); P-A was opened for what was already D16 (cross-referenced
+09-17); D19 was opened for a `freshness` defect hours after D19 had been taken
+by the VIX9D null-guard (renumbered to D20/D21 here, 09-21).
+
+**Highest allocated as of 2026-09-21: H21 · D21 · P5 and P-E · M7.**
+
+Opening an entry: take the next number above those, then
+`grep -n "^## " HYPOTHESES.md` to confirm it is unused before you write it.
+Proposals continue the **lettered** series (next: P-F) — see the proposal index
+lower in this file for why two series coexist.
+
+Before opening a defect, also grep for the **file and line** it concerns, not
+just the wording you would use: D16 and P-A were the same four lines of
+`bias_engine.py` found twice under different names, three days apart.
+
+This block is the only part of the file that is meant to be edited in place.
+Everything below is append-only.
+
+
 **Status:** 3 trading days on record (24, 25, 26 Aug). Only **H1** has actually
 reached its own threshold, and its evidence is a trend rather than a level, so
 nothing is proposed. H9 and H10 opened 27 Aug.
@@ -3990,3 +4014,154 @@ holds whether the gap lasts two minutes or all day, and D17's retry logic cannot
 see this case at all, since the HTTP call succeeds.
 
 Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+
+---
+
+# 2026-09-18 (graded 2026-09-21) — observations appended
+
+## D18 — fourth trading day, eighth headline instance
+
+Reproduced from source again on 2026-09-18's own three scored headlines. Two of
+the three contain an explicit upward direction word in their own title:
+
+```
+'Stock Market Today (Sept. 18, 2026): Nasdaq futures RISE after Fed rate hike lifts stocks'
+   -> rule=hawkish  dir=-1  conf=HIGH  flags=[]  weighted=-1.8
+"What the Fed's interest rate hike reveals about Warsh, Trump and inflation"
+   -> rule=hawkish  dir=-1  conf=HIGH  flags=[]  weighted=-1.8
+'Exchange-Traded Funds, Equity Futures HIGHER Pre-Bell Thursday ... Fed Rate Hike'
+   -> rule=hawkish  dir=-1  conf=HIGH  flags=[]  weighted=-1.8
+```
+
+Day count **4** (08-24, 09-11, 09-17, 09-18); headline instances **8**.
+Component reported "0 bull / 3 bear -> MILDLY BEARISH", worth **-1**.
+
+**Damage on 09-18: conviction, not label sign.** Net +4 MILDLY BULLISH; without
+the news -1 and the stale macro -3 it is +8 BULLISH. Day closed **+234.9 (68% of
+range) in the called direction**. So the defect suppressed a correct call by one
+label notch rather than flipping a wrong one.
+
+**Status unchanged: FILED, NOT PROPOSED.** The blocker was never the evidence
+count — it is that this is a **scoring input** and **H19's hand-score test is
+still unrun**, so a fix now destroys H19's baseline. More days do not unblock it.
+
+## D20 (NEW) — `freshness` scores yesterday's headline at full weight
+
+Separate defect, same 09-18 news block, **opposite axis to D18** (D18 is sign,
+this is age). Headline 3's own title reads *"Pre-Bell **Thursday**"*. It was
+scored on **Friday 09-18** with **`freshness: 1.0`** — full weight, no decay.
+
+A headline that names its own weekday, one day stale, should not carry the same
+weight as a same-session print. **n=1. Watching only.** If it recurs twice more
+it is a one-line change in the freshness computation. Not proposed.
+
+## H18 — sixth instance; first time the stale row cost conviction on a CORRECT call
+
+DFII10 scored **-3** on 09-18 with its own `why` string reading *"FRED has not
+published since 2026-09-16 (2 business days ago) — this is last week's reading,
+not today's."*
+
+`09-10 0, 09-10 0, 09-11 -3, 09-11 -3, 09-14 -3, 09-14 -3, 09-15 -3, 09-16 0, 09-17 -3, 09-18 -3`
+
+**Damage: one label notch, on a day the engine got right.** Every prior instance
+either did no damage or sat on a day that was already wrong. This is the first
+where removing the stale row would have produced a *stronger and more accurate*
+call (+8 BULLISH vs +4 MILDLY BULLISH; actual +234.9). Worth recording because it
+answers the standing objection that the stale row is harmless when it happens to
+agree with the eventual outcome — here it disagreed with a correct call.
+**P1 already covers it. No new proposal.**
+
+## D21 (NEW) — `gamma -2` "top 20% of the wall band": first instance AGAINST
+
+Record was unbroken: correct and outvoted 08-28, correct 09-08, *"the sharpest
+row on the page"* 09-17.
+
+**09-18 it was wrong.** Price sat in the top 20% of the band 29419.3-29519.3 and,
+instead of poor risk/reward for longs, **left the band upward and never returned**
+— the band's ceiling became the day's floor (call wall held as *support* 130min,
+worst excursion -17.3). Session high **+185pts above** the band top.
+
+Record **3 for / 1 against**. One counter-instance does not overturn three.
+Logged so the row stops being treated as infallible. **Not proposed.**
+
+## P-E (NEW, PROPOSED) — the call wall is bimodal; the prose asserts a lid
+
+**Prose and board construction only. No scoring change.**
+
+7 tested call-wall instances over 14 trading days (figures from prior REVIEW.md,
+not recomputed):
+
+| day | outcome | overshoot / run-through |
+|---|---|---|
+| 08-26 | capped | "best call of the day" |
+| 09-08 | capped | +11.9 through, failed, fell 70.3 |
+| 09-11 | capped | **+9.6**, held 485min |
+| 09-14 | capped | **+3.6**, held 475min |
+| 08-27 | **sliced** | closed +79 above, traded +154 above |
+| 08-28 | **sliced** | ran +103 through |
+| 09-18 | **sliced** | ran +185 through, closed +151 above |
+| 09-15, 09-16 | never reached | untested, excluded |
+
+**4 capped / 3 sliced, and the distribution has no middle:** capped overshoot
+3.6-11.9pts, sliced run-through 103-185pts. **No instance between 12 and 103.**
+The board describes this with one unconditional sentence — *"rallies stall. Take
+profit into it"* — plus, on 09-18, an explicit *"CISD = short"* at the PDH. On
+the 3 failure days that instruction sat on the wrong side of 103, 154 and 185pt
+moves.
+
+Not new analysis: the **08-27** review already wrote *"in a long-gamma regime a
+call wall is a brake, not a lid… I described it as though it would stop one."*
+That was never given a count. It has one now, and 09-18 is its largest instance.
+
+**Explicitly NOT proposed: a discriminator for which mode.** Breadth is the
+obvious candidate (09-18 was `breadth +3`, mega-caps 4/4, NDX leading ES, and it
+sliced) but 09-08 capped on a positive bias too. Fitting a predictor to 7 points
+split 4/3 is the noise-tuning the standing rule forbids. Named as the thing to
+watch.
+
+## H1 — n=14; the per-day aggregate is now essentially zero
+
+09-18: budget 65.6, extension 26.7, error **-38.9**, `about right`.
+Per-day mean moves to **+1.9 (n=14)**.
+
+The series `+61.2 -11.6 -73.0 -86.4 -10.7 -26.2 -64.0 +57.3 +44.3 +79.4 -81.3
++136.4 +40.0 -38.9` has a mean of ~2 and a spread of over 200. **This is the
+strongest argument yet against any global multiplier** — there is no bias to
+correct, only variance. P4 not re-proposed.
+
+## Negative result — "pinned range" does NOT predict chop
+
+Worth recording so it is not rediscovered. 09-18's brief led with *"tight, pinned
+range… breakouts mostly fail"*; range came in at **0.90x ADR** (correct) but net
+move was **68% of range** — a trend day, every sweep succeeded.
+
+Tested across all graded days, range-ratio -> |net|/range:
+`0.78->38%  0.78->68%  0.90->68%  0.97->35%  1.27->55%  1.33->69%  1.37->27%
+1.38->0.2%  1.47->82%`
+
+Mean ~52% for sub-ADR days vs ~47% for above-ADR days. **No relationship in
+either direction.** Pinning constrains the *range*; it says nothing about whether
+the day is directional. The prose conflates the two, but the fix is not a new
+rule — there is no signal here to build one from. **Rejected, not proposed.**
+
+## Level clustering — clean instance for P-B(b)
+
+09-18 published 9 levels, **5 inside the 100pt band 29419.3-29519.3**. With
+`TOUCH_TOL` 8pts, one move at ~13:00 registered as "touching" three separate
+levels within five minutes (12:55, 13:00, 13:25). `Options shelf 2.36bn` (29469.3)
+sits 9.6pts from London Low and 12.3pts from the PUT WALL pair.
+
+The 0.78 hit rate and the 7/7 held rate are therefore **not 9 independent
+observations**. Folded into **P-B(b)** (cluster within `TOUCH_TOL` before
+grading); not raised separately.
+
+## Standing caution recorded — hit rate measures placement, not quality
+
+09-18: hit rate **0.78**, 7/7 touched levels held. 09-16: hit rate **0.95**, 16 of
+18 levels **lost**. On 09-18 every published level was at or below the scan price
+on a +174pt day — the board was not tested, it was outrun.
+
+**`level_hit_rate` and the held-rate are functions of where the levels sat
+relative to price, not of whether the levels were good.** Both days' headline
+numbers are uninformative about board quality in opposite directions. No claim
+should be built on either without conditioning on side. n=2 clear instances.
