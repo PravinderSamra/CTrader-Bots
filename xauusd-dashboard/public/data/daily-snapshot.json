@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-21T11:29:37.283Z",
+  "generatedAt": "2026-09-21T14:10:41.775Z",
   "yields": {
     "US10Y": 4.94,
     "US2Y": 4.67,
@@ -22,8 +22,8 @@
     "probHike": 0
   },
   "marketVolatility": {
-    "GVZ": 24.98,
-    "VIX": 15.44
+    "GVZ": 23.31,
+    "VIX": 14.81
   },
   "positioning": {
     "cotNetLong": 220717,
@@ -34,26 +34,26 @@
     "openInterestChange": -5210
   },
   "etfFlows": {
-    "gldTonnes": 1092.3,
-    "gldWoWChange": 7,
+    "gldTonnes": 1096.7,
+    "gldWoWChange": 4.4,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4353.785,
-    "XAGUSD": 66.171,
-    "EURUSD": 1.14846,
-    "USDJPY": 157.2245,
-    "USDCHF": 0.82181,
-    "USDCNH": 6.69325,
-    "GBPUSD": 1.33896,
-    "USDCAD": 1.40072,
-    "USDSEK": 9.82188,
-    "US500": 7700.2,
-    "GER40": 25631.35,
-    "UK100": 10773.05,
+    "XAUUSD": 4336.25,
+    "XAGUSD": 66.1815,
+    "EURUSD": 1.14671,
+    "USDJPY": 157.4525,
+    "USDCHF": 0.82264,
+    "USDCNH": 6.69363,
+    "GBPUSD": 1.33708,
+    "USDCAD": 1.4019,
+    "USDSEK": 9.84181,
+    "US500": 7708.1,
+    "GER40": 25579.15,
+    "UK100": 10733.95,
     "ADR_14day": 95.5,
-    "ADR_usedToday": 43.5,
-    "goldSilverRatio": 65.8
+    "ADR_usedToday": 60.8,
+    "goldSilverRatio": 65.5
   },
   "dollarLiquidity": {
     "stlfsi": -0.8477,
