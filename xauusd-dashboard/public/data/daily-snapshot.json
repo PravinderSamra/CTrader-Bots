@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-18T20:27:57.814Z",
+  "generatedAt": "2026-09-21T11:29:37.283Z",
   "yields": {
     "US10Y": 4.94,
     "US2Y": 4.67,
@@ -7,8 +7,8 @@
     "realYield5Y": 2.46,
     "curve2s10s": 27,
     "breakeven10Y": 2.33,
-    "breakeven5Y": 2.32,
-    "forward5y5y": 2.34,
+    "breakeven5Y": 2.31,
+    "forward5y5y": 2.35,
     "dayOverDay": {
       "US10Y": -0.07,
       "US2Y": -0.07,
@@ -34,26 +34,26 @@
     "openInterestChange": -5210
   },
   "etfFlows": {
-    "gldTonnes": 1085.3,
-    "gldWoWChange": 2.8,
+    "gldTonnes": 1092.3,
+    "gldWoWChange": 7,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4382.105,
-    "XAGUSD": 66.4345,
-    "EURUSD": 1.14887,
-    "USDJPY": 156.77,
-    "USDCHF": 0.82176,
-    "USDCNH": 6.69466,
-    "GBPUSD": 1.33979,
-    "USDCAD": 1.39898,
-    "USDSEK": 9.82999,
-    "US500": 7659.5,
-    "GER40": 25331.05,
-    "UK100": 10628.25,
-    "ADR_14day": 105,
-    "ADR_usedToday": 65.5,
-    "goldSilverRatio": 66
+    "XAUUSD": 4353.785,
+    "XAGUSD": 66.171,
+    "EURUSD": 1.14846,
+    "USDJPY": 157.2245,
+    "USDCHF": 0.82181,
+    "USDCNH": 6.69325,
+    "GBPUSD": 1.33896,
+    "USDCAD": 1.40072,
+    "USDSEK": 9.82188,
+    "US500": 7700.2,
+    "GER40": 25631.35,
+    "UK100": 10773.05,
+    "ADR_14day": 95.5,
+    "ADR_usedToday": 43.5,
+    "goldSilverRatio": 65.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.8477,
@@ -64,25 +64,6 @@
     "gprDate": "2026-08"
   },
   "economicCalendar": [],
-  "newsItems": [
-    {
-      "headline": "COMMENTARY: Global rates reset, AI angst and oil's long haul: The financial week in five charts - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-18T12:32:15.000Z",
-      "hoursAgo": 7.9
-    },
-    {
-      "headline": "Jim Cramer says history offers a playbook for navigating a Fed rate-hiking cycle",
-      "source": "CNBC",
-      "publishedAt": "2026-09-17T22:58:28.000Z",
-      "hoursAgo": 21.5
-    },
-    {
-      "headline": "Ocean container shipping rates could test record highs as Iran war fuel spike drives rise, analysts say - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-17T20:49:44.000Z",
-      "hoursAgo": 23.6
-    }
-  ],
+  "newsItems": [],
   "briefing": null
 }
