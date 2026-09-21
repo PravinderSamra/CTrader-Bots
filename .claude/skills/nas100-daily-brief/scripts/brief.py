@@ -902,8 +902,17 @@ def markdown(d):
     vxn = v["vxn_nasdaq_ivol"].get("last"); vxn_c = v["vxn_nasdaq_ivol"].get("chg_pct")
     term = v.get("vix9d_over_vix"); vixl = v["vix"].get("last")
     implied = round(px * (vxn / 100) / (252 ** 0.5)) if vxn else None
+    # term_read is None whenever the VIX9D/VIX ratio could not be formed, and
+    # that is a NORMAL upstream state, not an error: on 2026-09-21 CBOE served
+    # _VIX9D with `last: None` and no error at all, and on 2026-09-14 a 429
+    # lost the same quote mid-scan. This line used to call .split() on it
+    # unconditionally and took the ENTIRE brief down with an AttributeError --
+    # while the paragraph twelve lines below already reads `if term is not
+    # None`. One absent vol series must degrade one clause, never the document.
+    term_txt = (v["term_read"].split(" — ")[0] if v.get("term_read")
+                else "n/a (VIX9D unavailable)")
     A(f"**Volatility:** VXN **{vxn}** ({vxn_c:+.1f}%) \u00b7 VIX {vixl} \u00b7 "
-      f"VIX9D/VIX **{term}** \u2192 {v['term_read'].split(' — ')[0]} \u00b7 "
+      f"VIX9D/VIX **{term if term is not None else 'n/a'}** \u2192 {term_txt} \u00b7 "
       f"VVIX {v['vvix'].get('last')}\n")
     A(f"> **VXN is the Nasdaq's own fear gauge.** At {vxn} it's "
       f"{'down' if (vxn_c or 0) < 0 else 'up'} {abs(vxn_c or 0):.1f}% \u2014 "

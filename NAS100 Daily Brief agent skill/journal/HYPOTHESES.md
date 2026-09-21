@@ -3946,3 +3946,47 @@ A future review opening a proposal should continue the **lettered** series from
 P-E, and grep this index first.
 
 Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+
+---
+
+## D19 — one absent vol series took down the whole brief
+
+**2026-09-21, found while re-running the scan to answer "the walls are all below
+price".** `brief.py:906` rendered the volatility header with
+
+```python
+f"VIX9D/VIX **{term}** -> {v['term_read'].split(' — ')[0]} · "
+```
+
+`macro_probe` sets `term_read` to `None` whenever the VIX9D/VIX ratio cannot be
+formed — a deliberate, correct null. `.split()` on it raises AttributeError and
+kills the entire brief: no call, no levels, no fuel, no journal entry, exit 1.
+
+**Twelve lines below, the same value is already guarded** (`if term is not
+None:`). The None case was anticipated for the prose paragraph and missed on the
+header line, so the document died for the one clause that could have read "n/a".
+
+Seen twice. 2026-09-14: a 429 lost `_VIX9D` mid-scan. 2026-09-21: CBOE served
+`_VIX9D` with `last: None` and **`error: None`** — a successful fetch of an
+empty value, which no retry logic would have caught, because nothing failed.
+
+It was first identified on 09-14 and **left unfixed**, on the reasoning that the
+day's other failures were rate-limit crashes a null-guard would not have saved.
+That reasoning was about that day, not about the defect, and it cost the 09-21
+scan as well.
+
+### Fix
+
+The header degrades to `VIX9D/VIX **n/a** -> n/a (VIX9D unavailable)` and the
+brief renders in full. One absent optional series now costs one clause.
+
+### Note on the intermittency
+
+The direct probe returned `last: None` and the scan two minutes later returned
+0.827, so the gap is **intermittent, not a sustained outage**. When this was
+diagnosed live the conclusion "a retry will not help" was stated and was wrong:
+a retry would have helped that minute. The guard is still the right fix — it
+holds whether the gap lasts two minutes or all day, and D17's retry logic cannot
+see this case at all, since the HTTP call succeeds.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
