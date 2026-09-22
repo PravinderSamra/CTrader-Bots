@@ -229,6 +229,58 @@
         "verdict": "UNSCORABLE",
         "signalVerdicts": []
       }
+    },
+    {
+      "at": "2026-09-22T22:33:05.285Z",
+      "londonTime": "23:33 BST",
+      "mode": "CLOSED",
+      "price": 10750.95,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — FTSE is tracking a firmer European tape (Euro Stoxx +0.23%) — the cross-market lean is up.",
+      "signals": [
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.23%) — the cross-market lean is up."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 0,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10775.9,
+        "orbLow": 10733.9,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10775.9,
+        "overnightLow": 10714.7,
+        "priorDayHigh": 10775.9,
+        "priorDayLow": 10643.8,
+        "gapPct": -0.02,
+        "adr14": 119.9,
+        "adrUsedPct": 59
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-22T22:33:06.985Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }

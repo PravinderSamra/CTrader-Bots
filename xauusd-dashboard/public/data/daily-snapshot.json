@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-09-22T19:25:02.447Z",
+  "generatedAt": "2026-09-22T22:32:59.476Z",
   "yields": {
-    "US10Y": 5.01,
+    "US10Y": 4.96,
     "US2Y": 4.76,
-    "realYield10Y": 2.68,
-    "realYield5Y": 2.55,
-    "curve2s10s": 25,
-    "breakeven10Y": 2.34,
-    "breakeven5Y": 2.33,
-    "forward5y5y": 2.35,
+    "realYield10Y": 2.62,
+    "realYield5Y": 2.5,
+    "curve2s10s": 20,
+    "breakeven10Y": 2.33,
+    "breakeven5Y": 2.32,
+    "forward5y5y": 2.34,
     "dayOverDay": {
-      "US10Y": 0.07,
-      "US2Y": 0.09,
-      "realYield10Y": 0.07
+      "US10Y": -0.05,
+      "US2Y": 0,
+      "realYield10Y": -0.06
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-10-28",
-    "probCut": 12,
-    "probHold": 88,
+    "probCut": 16,
+    "probHold": 84,
     "probHike": 0
   },
   "marketVolatility": {
@@ -34,26 +34,26 @@
     "openInterestChange": -5210
   },
   "etfFlows": {
-    "gldTonnes": 1091,
-    "gldWoWChange": -4.7,
+    "gldTonnes": 1089.8,
+    "gldWoWChange": -1.2,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4359.11,
-    "XAGUSD": 67.0485,
-    "EURUSD": 1.14446,
-    "USDJPY": 157.465,
-    "USDCHF": 0.82088,
-    "USDCNH": 6.6982,
-    "GBPUSD": 1.33397,
-    "USDCAD": 1.40664,
-    "USDSEK": 9.84366,
-    "US500": 7775.6,
-    "GER40": 25700.05,
-    "UK100": 10755.35,
-    "ADR_14day": 92.3,
-    "ADR_usedToday": 84.9,
-    "goldSilverRatio": 65
+    "XAUUSD": 4363.955,
+    "XAGUSD": 67.272,
+    "EURUSD": 1.14477,
+    "USDJPY": 157.457,
+    "USDCHF": 0.82056,
+    "USDCNH": 6.69777,
+    "GBPUSD": 1.33449,
+    "USDCAD": 1.40651,
+    "USDSEK": 9.8324,
+    "US500": 7770.7,
+    "GER40": 25716.65,
+    "UK100": 10750.95,
+    "ADR_14day": 91.7,
+    "ADR_usedToday": 4.9,
+    "goldSilverRatio": 64.9
   },
   "dollarLiquidity": {
     "stlfsi": -0.8477,
@@ -66,46 +66,46 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "EU renews Russia sanctions, drops Russian billionaires Usmanov and Fridman - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-22T17:37:37.000Z",
+      "hoursAgo": 4.9
+    },
+    {
       "headline": "Egypt's NBE steps in to buy Banque Misr's UAE operations after sanctions threat - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-22T14:49:33.000Z",
-      "hoursAgo": 4.6
+      "hoursAgo": 7.7
     },
     {
       "headline": "ECB, EU central banks oppose stablecoin bank deposit rule - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-22T10:20:53.000Z",
-      "hoursAgo": 9.1
+      "hoursAgo": 12.2
     },
     {
       "headline": "India's PhonePe gets initial UAE central bank nod for payment licences - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-22T06:49:00.000Z",
-      "hoursAgo": 12.6
+      "hoursAgo": 15.7
     },
     {
       "headline": "Gold slips as Fed officials signal rate hikes - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-22T02:19:00.000Z",
-      "hoursAgo": 17.1
+      "hoursAgo": 20.2
     },
     {
       "headline": "Binance faces US scrutiny over possible Iran sanctions violations, source says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-22T02:04:00.000Z",
-      "hoursAgo": 17.3
+      "hoursAgo": 20.5
     },
     {
-      "headline": "Dollar choppy as investors weigh oil drop against Fed rate path - Reuters",
+      "headline": "Dollar rises in choppy trading as investors weigh inflation prospects - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-22T00:53:00.000Z",
-      "hoursAgo": 18.5
-    },
-    {
-      "headline": "Wall Street ends sharply higher as AI optimism reignites and Treasury yields retreat - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-21T20:01:13.000Z",
-      "hoursAgo": 23.4
+      "hoursAgo": 21.7
     }
   ],
   "briefing": null
