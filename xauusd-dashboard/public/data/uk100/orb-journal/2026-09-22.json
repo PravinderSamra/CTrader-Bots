@@ -79,6 +79,65 @@
         "adrUsedPct": 51
       },
       "outcome": null
+    },
+    {
+      "at": "2026-09-22T15:16:41.684Z",
+      "londonTime": "16:16 BST",
+      "mode": "POST_ORB",
+      "price": 10732.35,
+      "stance": "LONG_FAVOURED",
+      "stanceLine": "Backdrop favours upside breaks — ORB broke DOWN against a BULLISH macro bias (+3) — counter-bias breaks fail more often; treat continuation as suspect.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "STRUCTURE",
+          "rule": "R2",
+          "text": "ORB broke DOWN against a BULLISH macro bias (+3) — counter-bias breaks fail more often; treat continuation as suspect."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 11th percentile of its 20-day range and falling — a weak-GBP tailwind for the index's dollar earners."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 3,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": 10775.9,
+        "orbLow": 10733.9,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10775.9,
+        "overnightLow": 10714.7,
+        "priorDayHigh": 10775.9,
+        "priorDayLow": 10643.8,
+        "gapPct": -0.19,
+        "adr14": 119.9,
+        "adrUsedPct": 53
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-22T15:16:43.260Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }

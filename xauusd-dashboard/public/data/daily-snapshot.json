@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-22T12:37:37.474Z",
+  "generatedAt": "2026-09-22T15:16:34.444Z",
   "yields": {
     "US10Y": 5.01,
     "US2Y": 4.76,
@@ -22,8 +22,8 @@
     "probHike": 0
   },
   "marketVolatility": {
-    "GVZ": 23.31,
-    "VIX": 14.81
+    "GVZ": 23.38,
+    "VIX": 14.87
   },
   "positioning": {
     "cotNetLong": 220717,
@@ -34,26 +34,26 @@
     "openInterestChange": -5210
   },
   "etfFlows": {
-    "gldTonnes": 1096.1,
-    "gldWoWChange": -2.4,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1095.7,
+    "gldWoWChange": -0.4,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4338.635,
-    "XAGUSD": 65.839,
-    "EURUSD": 1.1462,
-    "USDJPY": 157.183,
-    "USDCHF": 0.8194,
-    "USDCNH": 6.69917,
-    "GBPUSD": 1.33642,
-    "USDCAD": 1.40455,
-    "USDSEK": 9.80739,
-    "US500": 7775.3,
-    "GER40": 25758.65,
-    "UK100": 10755.85,
+    "XAUUSD": 4340.34,
+    "XAGUSD": 66.0845,
+    "EURUSD": 1.14418,
+    "USDJPY": 157.3165,
+    "USDCHF": 0.82091,
+    "USDCNH": 6.69924,
+    "GBPUSD": 1.33431,
+    "USDCAD": 1.40671,
+    "USDSEK": 9.85225,
+    "US500": 7769.5,
+    "GER40": 25657.95,
+    "UK100": 10731.35,
     "ADR_14day": 92.3,
     "ADR_usedToday": 84.9,
-    "goldSilverRatio": 65.9
+    "goldSilverRatio": 65.7
   },
   "dollarLiquidity": {
     "stlfsi": -0.8477,
@@ -69,25 +69,37 @@
       "headline": "ECB, EU central banks oppose stablecoin bank deposit rule - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-22T10:20:53.000Z",
-      "hoursAgo": 2.3
+      "hoursAgo": 4.9
+    },
+    {
+      "headline": "India's PhonePe gets initial UAE central bank nod for payment licences - reuters.com",
+      "source": "Reuters",
+      "publishedAt": "2026-09-22T06:49:00.000Z",
+      "hoursAgo": 8.5
     },
     {
       "headline": "Gold slips as Fed officials signal rate hikes - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-22T02:19:00.000Z",
-      "hoursAgo": 10.3
+      "hoursAgo": 13
     },
     {
-      "headline": "Binance under US scrutiny over possible Iran sanctions violations, Bloomberg News reports - Reuters",
+      "headline": "Binance under US scrutiny over possible Iran sanctions violations, Bloomberg News reports - reuters.com",
       "source": "Reuters",
       "publishedAt": "2026-09-22T02:04:00.000Z",
-      "hoursAgo": 10.6
+      "hoursAgo": 13.2
+    },
+    {
+      "headline": "Dollar falters after Iran's offer to reopen Hormuz sends oil lower - reuters.com",
+      "source": "Reuters",
+      "publishedAt": "2026-09-22T00:53:00.000Z",
+      "hoursAgo": 14.4
     },
     {
       "headline": "Wall Street ends sharply higher as AI optimism reignites and Treasury yields retreat - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-21T20:01:13.000Z",
-      "hoursAgo": 16.6
+      "hoursAgo": 19.3
     }
   ],
   "briefing": null
