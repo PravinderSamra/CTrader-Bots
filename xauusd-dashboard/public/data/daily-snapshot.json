@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-21T21:26:06.214Z",
+  "generatedAt": "2026-09-22T10:37:08.020Z",
   "yields": {
     "US10Y": 5.01,
     "US2Y": 4.76,
@@ -34,26 +34,26 @@
     "openInterestChange": -5210
   },
   "etfFlows": {
-    "gldTonnes": 1094.8,
-    "gldWoWChange": -0.1,
-    "trend3W": "FLAT"
+    "gldTonnes": 1098.5,
+    "gldWoWChange": 3.7,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4343.995,
-    "XAGUSD": 66.029,
-    "EURUSD": 1.14657,
-    "USDJPY": 157.3575,
-    "USDCHF": 0.82134,
-    "USDCNH": 6.69306,
-    "GBPUSD": 1.33692,
-    "USDCAD": 1.40307,
-    "USDSEK": 9.82902,
-    "US500": 7765.8,
-    "GER40": 25659.05,
-    "UK100": 10754.05,
-    "ADR_14day": 95.5,
-    "ADR_usedToday": 60.8,
-    "goldSilverRatio": 65.8
+    "XAUUSD": 4329.15,
+    "XAGUSD": 65.591,
+    "EURUSD": 1.14653,
+    "USDJPY": 157.07,
+    "USDCHF": 0.81883,
+    "USDCNH": 6.699,
+    "GBPUSD": 1.33679,
+    "USDCAD": 1.40333,
+    "USDSEK": 9.80729,
+    "US500": 7774.8,
+    "GER40": 25728.15,
+    "UK100": 10759.25,
+    "ADR_14day": 92.3,
+    "ADR_usedToday": 84.9,
+    "goldSilverRatio": 66
   },
   "dollarLiquidity": {
     "stlfsi": -0.8477,
@@ -66,10 +66,22 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Indian shares edge higher on easing oil prices, bond yields; IT caps gains - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-22T02:27:00.000Z",
+      "hoursAgo": 8.2
+    },
+    {
+      "headline": "Binance under US scrutiny over possible Iran sanctions violations, Bloomberg News reports - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-22T02:04:00.000Z",
+      "hoursAgo": 8.6
+    },
+    {
       "headline": "Wall Street ends sharply higher as AI optimism reignites and Treasury yields retreat - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-21T20:01:13.000Z",
-      "hoursAgo": 1.4
+      "hoursAgo": 14.6
     }
   ],
   "briefing": null
