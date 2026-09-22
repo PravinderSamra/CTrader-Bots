@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-22T15:16:34.444Z",
+  "generatedAt": "2026-09-22T19:25:02.447Z",
   "yields": {
     "US10Y": 5.01,
     "US2Y": 4.76,
@@ -34,26 +34,26 @@
     "openInterestChange": -5210
   },
   "etfFlows": {
-    "gldTonnes": 1095.7,
-    "gldWoWChange": -0.4,
-    "trend3W": "FLAT"
+    "gldTonnes": 1091,
+    "gldWoWChange": -4.7,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4340.34,
-    "XAGUSD": 66.0845,
-    "EURUSD": 1.14418,
-    "USDJPY": 157.3165,
-    "USDCHF": 0.82091,
-    "USDCNH": 6.69924,
-    "GBPUSD": 1.33431,
-    "USDCAD": 1.40671,
-    "USDSEK": 9.85225,
-    "US500": 7769.5,
-    "GER40": 25657.95,
-    "UK100": 10731.35,
+    "XAUUSD": 4359.11,
+    "XAGUSD": 67.0485,
+    "EURUSD": 1.14446,
+    "USDJPY": 157.465,
+    "USDCHF": 0.82088,
+    "USDCNH": 6.6982,
+    "GBPUSD": 1.33397,
+    "USDCAD": 1.40664,
+    "USDSEK": 9.84366,
+    "US500": 7775.6,
+    "GER40": 25700.05,
+    "UK100": 10755.35,
     "ADR_14day": 92.3,
     "ADR_usedToday": 84.9,
-    "goldSilverRatio": 65.7
+    "goldSilverRatio": 65
   },
   "dollarLiquidity": {
     "stlfsi": -0.8477,
@@ -66,40 +66,46 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Egypt's NBE steps in to buy Banque Misr's UAE operations after sanctions threat - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-22T14:49:33.000Z",
+      "hoursAgo": 4.6
+    },
+    {
       "headline": "ECB, EU central banks oppose stablecoin bank deposit rule - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-22T10:20:53.000Z",
-      "hoursAgo": 4.9
+      "hoursAgo": 9.1
     },
     {
-      "headline": "India's PhonePe gets initial UAE central bank nod for payment licences - reuters.com",
+      "headline": "India's PhonePe gets initial UAE central bank nod for payment licences - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-22T06:49:00.000Z",
-      "hoursAgo": 8.5
+      "hoursAgo": 12.6
     },
     {
       "headline": "Gold slips as Fed officials signal rate hikes - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-22T02:19:00.000Z",
-      "hoursAgo": 13
+      "hoursAgo": 17.1
     },
     {
-      "headline": "Binance under US scrutiny over possible Iran sanctions violations, Bloomberg News reports - reuters.com",
+      "headline": "Binance faces US scrutiny over possible Iran sanctions violations, source says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-22T02:04:00.000Z",
-      "hoursAgo": 13.2
+      "hoursAgo": 17.3
     },
     {
-      "headline": "Dollar falters after Iran's offer to reopen Hormuz sends oil lower - reuters.com",
+      "headline": "Dollar choppy as investors weigh oil drop against Fed rate path - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-22T00:53:00.000Z",
-      "hoursAgo": 14.4
+      "hoursAgo": 18.5
     },
     {
       "headline": "Wall Street ends sharply higher as AI optimism reignites and Treasury yields retreat - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-21T20:01:13.000Z",
-      "hoursAgo": 19.3
+      "hoursAgo": 23.4
     }
   ],
   "briefing": null
