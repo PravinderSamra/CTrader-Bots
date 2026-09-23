@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-23T15:14:18.931Z",
+  "generatedAt": "2026-09-23T19:20:22.726Z",
   "yields": {
     "US10Y": 4.96,
     "US2Y": 4.76,
@@ -34,29 +34,29 @@
     "openInterestChange": -5210
   },
   "etfFlows": {
-    "gldTonnes": 1107.1,
-    "gldWoWChange": 1.8,
+    "gldTonnes": 1110.1,
+    "gldWoWChange": 3,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4295.535,
-    "XAGUSD": 64.7895,
-    "EURUSD": 1.13994,
-    "USDJPY": 158.258,
-    "USDCHF": 0.82429,
-    "USDCNH": 6.7118,
-    "GBPUSD": 1.32636,
-    "USDCAD": 1.40976,
-    "USDSEK": 9.89931,
-    "US500": 7730.7,
-    "GER40": 25437.15,
-    "UK100": 10714.75,
+    "XAUUSD": 4284.215,
+    "XAGUSD": 64.4125,
+    "EURUSD": 1.13834,
+    "USDJPY": 158.321,
+    "USDCHF": 0.82473,
+    "USDCNH": 6.71138,
+    "GBPUSD": 1.32392,
+    "USDCAD": 1.40969,
+    "USDSEK": 9.91836,
+    "US500": 7709.5,
+    "GER40": 25386.95,
+    "UK100": 10690.75,
     "ADR_14day": 91.7,
-    "ADR_usedToday": 91.4,
-    "goldSilverRatio": 66.3
+    "ADR_usedToday": 94.5,
+    "goldSilverRatio": 66.5
   },
   "dollarLiquidity": {
-    "stlfsi": -0.8477,
+    "stlfsi": -0.9075,
     "nfci": -0.555
   },
   "geopoliticalRisk": {
@@ -66,46 +66,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Bond yields spike and stocks drop — plus, why Boeing is bucking the trend",
+      "source": "CNBC",
+      "publishedAt": "2026-09-23T18:42:17.000Z",
+      "hoursAgo": 0.6
+    },
+    {
       "headline": "OECD raises Turkey inflation forecast, trims growth outlook - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-23T08:03:44.000Z",
-      "hoursAgo": 7.2
+      "hoursAgo": 11.3
     },
     {
       "headline": "Gold loses shine as rate hike bets foster a stronger dollar - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-23T04:53:00.000Z",
-      "hoursAgo": 10.4
+      "hoursAgo": 14.5
     },
     {
       "headline": "Rupee slips as dollar gets Fed hike expectations tailwind - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-23T02:46:00.000Z",
-      "hoursAgo": 12.5
+      "hoursAgo": 16.6
     },
     {
-      "headline": "Dollar hits near two-month high on Fed rate hike prospects - Reuters",
+      "headline": "US stocks fall as 10-year Treasury yield hits highest since 2007 - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-23T01:51:00.000Z",
+      "hoursAgo": 17.5
+    },
+    {
+      "headline": "Dollar jumps to near two-month high on Fed outlook, oil climb - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-23T01:43:00.000Z",
-      "hoursAgo": 13.5
+      "hoursAgo": 17.6
     },
     {
       "headline": "PODCAST: Trump's UN speech, ICC sanctions and Turkey's LGBTQ+ crackdown (Updated) - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-22T20:31:42.000Z",
-      "hoursAgo": 18.7
+      "hoursAgo": 22.8
     },
     {
       "headline": "Iraq suspends Iranian flights to Baghdad after US sanctions threat, sources say - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-22T19:23:05.000Z",
-      "hoursAgo": 19.9
-    },
-    {
-      "headline": "EU renews Russia sanctions, drops Russian billionaires Usmanov and Fridman - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-22T17:37:37.000Z",
-      "hoursAgo": 21.6
+      "hoursAgo": 24
     }
   ],
   "briefing": null

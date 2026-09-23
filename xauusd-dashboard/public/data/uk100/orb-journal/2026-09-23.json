@@ -56,7 +56,29 @@
         "adr14": 118.4,
         "adrUsedPct": 54
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-09-23T19:20:29.901Z",
+        "fwd1hPct": -0.1,
+        "fwd3hPct": -0.01,
+        "toClosePct": -0.16,
+        "maxUpPct": 0.27,
+        "maxDownPct": -0.32,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R10",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-09-23T12:45:57.362Z",
@@ -113,7 +135,33 @@
         "adr14": 118.4,
         "adrUsedPct": 79
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-09-23T19:20:30.013Z",
+        "fwd1hPct": 0.17,
+        "fwd3hPct": 0.07,
+        "toClosePct": 0.07,
+        "maxUpPct": 0.5,
+        "maxDownPct": 0.02,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R10",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-09-23T15:14:24.235Z",
@@ -179,6 +227,79 @@
       },
       "outcome": {
         "resolvedAt": "2026-09-23T15:14:26.441Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
+    },
+    {
+      "at": "2026-09-23T19:20:27.319Z",
+      "londonTime": "20:20 BST",
+      "mode": "CLOSED",
+      "price": 10690.75,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 91% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "91% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.97%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -0.72% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 11th percentile of its 20-day range and falling — a weak-GBP tailwind for the index's dollar earners."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -1,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10767.8,
+        "orbLow": 10743.6,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10776.8,
+        "overnightLow": 10730.8,
+        "priorDayHigh": 10775.9,
+        "priorDayLow": 10705,
+        "gapPct": -0.55,
+        "adr14": 118.4,
+        "adrUsedPct": 91
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-23T19:20:30.013Z",
         "fwd1hPct": null,
         "fwd3hPct": null,
         "toClosePct": 0,
