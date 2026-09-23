@@ -32,6 +32,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import statistics
 from collections import defaultdict
 
 # C1-C3 / P1-P3 as the platform ranks them, for both readings, plus zero
@@ -180,7 +181,13 @@ def main() -> int:
     # The control is not optional. Every real number is printed beside what the
     # same test scores on lines displaced from the level, because a bounce rate
     # with no placebo measures the instrument, not the level.
-    OFFSETS = (-140, -110, -80, -60, 60, 80, 110, 140)
+    # Offsets scale with the instrument. Fixed point offsets displaced an SPX
+    # level clean out of the day's 45-point range, so the control registered
+    # almost no touches and reported "thin" -- the same mistake as a fixed
+    # touch tolerance, one level up.
+    rng = statistics.median([s["high"] - s["low"] for s in sessions])
+    OFFSETS = tuple(round(rng * f) for f in
+                    (-0.55, -0.45, -0.35, -0.25, 0.25, 0.35, 0.45, 0.55))
     plac = defaultdict(lambda: {"n": 0, "BOUNCE": 0, "BREAK": 0, "CHOP": 0,
                                 "mr": [], "retests": 0, "cont": []})
     for off in OFFSETS:
@@ -194,7 +201,8 @@ def main() -> int:
     print(f"{args.ticker} {args.scope}: {len(sessions)} sessions "
           f"({len(ranked)} with C1-C3)  |  band {args.tol:g}pts, "
           f"risk {R:g}pts, {args.window:g}min window")
-    print(f"placebo: same test on lines displaced {OFFSETS} points\n")
+    print(f"placebo: lines displaced {OFFSETS} pts "
+          f"(0.25-0.55 x the {rng:.0f}pt median range)\n")
 
     print(f"  {'level':<14} {'touches':>8} {'bounce':>8} "
           f"{'placebo':>9} {'diff':>7} {'z':>6}")
