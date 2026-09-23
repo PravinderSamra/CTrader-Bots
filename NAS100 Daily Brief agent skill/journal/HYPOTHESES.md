@@ -4651,3 +4651,131 @@ the grid explains the bimodality then the prose should describe the grid, not
 a dealer behaviour.
 
 Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+
+---
+
+## P-E — the opening-bar tag: fading it loses, and the break is NOT the mirror trade
+
+**2026-09-23, user-initiated.** Scripts in `research/wall-studies/`; all figures
+re-derivable. Levels are each day's `prediction.levels` (`kind` in `gamma`,
+`gamma-shelf`) from the last scan **before 13:30Z**, so no lookahead. 14 days
+have a pre-open scan and full RTH bars.
+
+### 1. The day's extreme lands on a level about as often as chance
+
+| tol | high on a level | low | either | **null** |
+|---|---|---|---|---|
+| ±8 | 2/14 (14%) | 0/14 | 2/14 (14%) | 8% |
+| ±15 | 3/14 (21%) | 0/14 | 3/14 (21%) | 15% |
+| ±25 | 3/14 (21%) | 2/14 | 5/14 (36%) | 24% |
+
+The null is per-day: the fraction of that day's own RTH range lying within tol
+of some level — the chance a uniformly-placed extreme looks like a hit. **2 vs
+1.1 expected is noise.** Lows essentially never land on a level, consistent with
+the put side being far and thin all month.
+
+2026-09-23 is one of the two hits: RTH open 30,737.1, **high 30,737.4 in the
+opening 5 minutes**, 4.5pts above the 30,732.9 shelf, then -368 to the low. The
+phenomenon is real; it is not frequent.
+
+### 2. Fading the first post-open tag loses, and the level adds nothing
+
+n=12, 5 wins, mean **-77.7**, total **-932.7**. A control taking the same trade
+at the same bar 50pts away — the empty half of the grid — did **better**
+(-332.7, 6/12). The level location contributes nothing.
+
+Split by when the tag happened:
+
+| | n | wins | mean | drop-one worst |
+|---|---|---|---|---|
+| tag in the **opening bar** | 8 | 2/8 | **-152.2** | still -95.9 |
+| tag later in the session | 4 | 3/4 | +71.2 | +18.4 |
+
+The opening-bar result is sign-stable under drop-one **including** dropping the
+-546 on 09-21. The later-tag result is not robust: drop 09-16 and it falls to
++18.4, so it rests on one trade.
+
+### 3. The break is not the answer either
+
+"Wait for a 5-minute bar to CLOSE beyond the level, then go with it":
+
+| | n | wins | mean | median | total |
+|---|---|---|---|---|---|
+| all | 12 | 7 | +47.5 | +10.9 | +569.7 |
+| **excl. 09-21/22/23** | 9 | 4 | **-44.6** | -11.6 | -401.7 |
+
+**09-21 alone is +94% of the total**; drop it and the mean is +3.1. The apparent
+edge is three days of the strongest directional run in the record. Mean adverse
+excursion after entry is **136.4pts** (worst 444.7) against a median gain of
+10.9 — unusable even if the sign were real.
+
+Note also that confirmation costs ~40% of the idealised number (+79.5 entering
+at the level vs +47.5 on confirmation). **Sign-flipping a losing rule does not
+produce a winning one**: A and C are the same 12 events, and the middle outcome
+— chop around the level — loses both ways.
+
+### What this supports
+
+One claim, and it is a **negative** one: **an OI level tagged in the opening bar
+should not be faded.** It is robust to drop-one, independent of the rally days,
+and it contradicts the board's standing prose (*"rallies stall. Take profit into
+it"*), which has now been wrong on 6 of 8 opening-bar tags.
+
+**Nothing proposed as an entry rule.** 12 events, and the timing split was found
+after looking at the data.
+
+---
+
+## H14 / P-E — the gamma REGIME does not predict how price reacts at a wall
+
+**Same date and dataset.** This is the sharper finding, because **strategy
+selection is a deterministic function of regime** (S1 above the flip, S2 below;
+09-10 the lone exception, suppressed as straddling). Cutting by strategy and
+cutting by regime are the same cut, so this tests the selector itself.
+
+Metric is **penetration**: how far past the level price travelled after first
+touch. Continuous and measured to the post-touch extreme, deliberately, so it
+does not inherit the held/lost tolerance instability of M6 and P-B.
+
+| | n | median pts | %ADR | >=100pts | **% of that day's realised range** |
+|---|---|---|---|---|---|
+| POSITIVE gamma (S1), all | 16 | 164.0 | 39.1% | 69% | **53.9%** |
+| POSITIVE gamma, excl. 09-21/22/23 | 9 | 97.8 | 25.5% | 44% | **36.3%** |
+| NEGATIVE gamma (S2) | 6 | 85.1 | 21.3% | 50% | **39.5%** |
+
+Raw, positive gamma looks *worse* — walls penetrated twice as far in the regime
+the brief says is damped. That is the rally again. Normalised by each day's own
+realised range and with those three days out: **36.3% vs 39.5%. No difference.**
+
+**The single hardest fact: 0 of 16 positive-gamma wall touches held within
+25pts.** Not one. Strategy 1's stated premise — *"Positive gamma above the flip:
+dealers fade extensions, so sweeps genuinely fail"* — has **zero supporting
+instances**. Negative gamma managed 1 of 6, no better but not a clean zero.
+
+This is consistent with P-E (4 capped / 5 sliced, no middle), with the
+opening-tag result above, and with H14's original complaint that the wall notes
+are regime-blind — the notes may be regime-blind because **the regime does not
+carry the information the notes assume it does.**
+
+### The confound, stated plainly
+
+Positive-gamma days in this window (08-25, 08-27, 09-16 … 09-23) are almost
+exactly the days the index rallied; negative-gamma days (08-24, 08-26, 09-14,
+09-15) are the down days. Late September was one sustained advance, so **"positive
+gamma" and "the market went up" are nearly the same variable here.** 22 events,
+12 days, only 6 events on 4 days in negative gamma.
+
+**Nothing proposed.** The selector cannot be judged until the record contains a
+long-gamma, range-bound stretch. What can be said now is narrower and does not
+depend on the confound: the *prose* asserting that sweeps fail in positive gamma
+is unsupported at 0/16 and should stop being stated as fact.
+
+### Falsifiable from here
+
+1. A long-gamma chop stretch: if walls hold there, the regime claim survives and
+   the confound was the whole story.
+2. Any positive-gamma wall touch holding within 25pts — the first one moves this
+   off zero.
+3. Re-run `04_penetration_by_regime.py` at n>=40 events before any weight change.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
