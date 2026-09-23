@@ -22,7 +22,7 @@ stop — never ask the main agent to wait for you.
 ## What to run
 
 ```bash
-cd "NAS100 Daily Brief agent skill/prototypes"
+cd "$(git rev-parse --show-toplevel)/.claude/skills/nas100-daily-brief/scripts"
 python3 review_day.py --json          # most recent completed day
 python3 review_day.py 2026-08-26 --json   # or a specific day
 ```

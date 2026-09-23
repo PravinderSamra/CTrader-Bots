@@ -1,63 +1,63 @@
 {
-  "generatedAt": "2026-09-16T19:13:23.498Z",
+  "generatedAt": "2026-09-23T12:45:51.677Z",
   "yields": {
-    "US10Y": 4.97,
-    "US2Y": 4.65,
-    "realYield10Y": 2.6,
-    "realYield5Y": 2.4,
-    "curve2s10s": 32,
-    "breakeven10Y": 2.38,
-    "breakeven5Y": 2.41,
-    "forward5y5y": 2.35,
+    "US10Y": 4.96,
+    "US2Y": 4.76,
+    "realYield10Y": 2.62,
+    "realYield5Y": 2.5,
+    "curve2s10s": 20,
+    "breakeven10Y": 2.33,
+    "breakeven5Y": 2.32,
+    "forward5y5y": 2.34,
     "dayOverDay": {
-      "US10Y": 0.01,
-      "US2Y": 0.02,
-      "realYield10Y": 0
+      "US10Y": -0.05,
+      "US2Y": 0,
+      "realYield10Y": -0.06
     }
   },
   "fedExpectations": {
-    "nextMeeting": "2026-09-16",
-    "probCut": 0,
-    "probHold": 24,
-    "probHike": 76
+    "nextMeeting": "2026-10-28",
+    "probCut": 16,
+    "probHold": 84,
+    "probHike": 0
   },
   "marketVolatility": {
-    "GVZ": 26.9,
-    "VIX": 17.2
+    "GVZ": 23.38,
+    "VIX": 14.87
   },
   "positioning": {
-    "cotNetLong": 223928,
-    "cotWoWChange": 1740,
+    "cotNetLong": 220717,
+    "cotWoWChange": -3211,
     "crowding": "CROWDED_LONG",
-    "reportDate": "2026-09-08T00:00:00.000",
-    "openInterest": 582664,
-    "openInterestChange": 3737
+    "reportDate": "2026-09-15T00:00:00.000",
+    "openInterest": 577454,
+    "openInterestChange": -5210
   },
   "etfFlows": {
-    "gldTonnes": 1121.7,
-    "gldWoWChange": 29.3,
+    "gldTonnes": 1105.3,
+    "gldWoWChange": 3.7,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4239.825,
-    "XAGUSD": 62.535,
-    "EURUSD": 1.14688,
-    "USDJPY": 155.9845,
-    "USDCHF": 0.825,
-    "USDCNH": 6.71375,
-    "GBPUSD": 1.33807,
-    "USDCAD": 1.39925,
-    "USDSEK": 9.86585,
-    "US500": 7528.7,
-    "GER40": 25463.45,
-    "UK100": 10648.05,
-    "ADR_14day": 101.6,
-    "ADR_usedToday": 131.9,
-    "goldSilverRatio": 67.8
+    "XAUUSD": 4302.83,
+    "XAGUSD": 64.9535,
+    "EURUSD": 1.14003,
+    "USDJPY": 157.9515,
+    "USDCHF": 0.82365,
+    "USDCNH": 6.70845,
+    "GBPUSD": 1.32648,
+    "USDCAD": 1.40939,
+    "USDSEK": 9.89729,
+    "US500": 7758.8,
+    "GER40": 25435.95,
+    "UK100": 10692.15,
+    "ADR_14day": 91.7,
+    "ADR_usedToday": 74.6,
+    "goldSilverRatio": 66.2
   },
   "dollarLiquidity": {
-    "stlfsi": -0.7884,
-    "nfci": -0.56
+    "stlfsi": -0.8477,
+    "nfci": -0.555
   },
   "geopoliticalRisk": {
     "gpr": 117.9,
@@ -66,16 +66,46 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "US House takes up Russia sanctions bill backed by late senator Graham - Reuters",
+      "headline": "Gold retreats as hawkish Fed comments reinforce policy tightening bets - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-16T12:14:16.000Z",
-      "hoursAgo": 7
+      "publishedAt": "2026-09-23T04:53:00.000Z",
+      "hoursAgo": 7.9
     },
     {
-      "headline": "Yield on 10-year Treasury hovers above 5% as investors await Fed decision",
-      "source": "CNBC",
-      "publishedAt": "2026-09-16T08:58:16.000Z",
-      "hoursAgo": 10.3
+      "headline": "Rupee slips as dollar gets Fed hike expectations tailwind - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-23T02:46:00.000Z",
+      "hoursAgo": 10
+    },
+    {
+      "headline": "Dollar at 2-month highs as Fed outlook 'dominant' - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-23T01:43:00.000Z",
+      "hoursAgo": 11
+    },
+    {
+      "headline": "PODCAST: Trump's UN speech, ICC sanctions and Turkey's LGBTQ+ crackdown (Updated) - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-22T20:31:42.000Z",
+      "hoursAgo": 16.2
+    },
+    {
+      "headline": "Iraq suspends Iranian flights to Baghdad after US sanctions threat, sources say - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-22T19:23:05.000Z",
+      "hoursAgo": 17.4
+    },
+    {
+      "headline": "EU renews Russia sanctions, drops Russian billionaires Usmanov and Fridman - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-22T17:37:37.000Z",
+      "hoursAgo": 19.1
+    },
+    {
+      "headline": "Egypt's NBE steps in to buy Banque Misr's UAE operations after sanctions threat - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-22T13:38:00.000Z",
+      "hoursAgo": 23.1
     }
   ],
   "briefing": null

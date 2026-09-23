@@ -1,0 +1,286 @@
+{
+  "date": "2026-09-22",
+  "entries": [
+    {
+      "at": "2026-09-22T10:37:13.949Z",
+      "londonTime": "11:37 BST",
+      "mode": "POST_ORB",
+      "price": 10758.85,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE).",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 1,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10775.9,
+        "orbLow": 10733.9,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10775.9,
+        "overnightLow": 10714.7,
+        "priorDayHigh": 10775.9,
+        "priorDayLow": 10643.8,
+        "gapPct": 0.05,
+        "adr14": 119.9,
+        "adrUsedPct": 51
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-22T19:25:09.936Z",
+        "fwd1hPct": -0.06,
+        "fwd3hPct": -0.29,
+        "toClosePct": -0.35,
+        "maxUpPct": 0.15,
+        "maxDownPct": -0.5,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-22T12:37:42.259Z",
+      "londonTime": "13:37 BST",
+      "mode": "POST_ORB",
+      "price": 10755.85,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — Sterling is at the 11th percentile of its 20-day range and falling — a weak-GBP tailwind for the index's dollar earners.",
+      "signals": [
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 11th percentile of its 20-day range and falling — a weak-GBP tailwind for the index's dollar earners."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10775.9,
+        "orbLow": 10733.9,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10775.9,
+        "overnightLow": 10714.7,
+        "priorDayHigh": 10775.9,
+        "priorDayLow": 10643.8,
+        "gapPct": 0.03,
+        "adr14": 119.9,
+        "adrUsedPct": 51
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-22T19:25:10.123Z",
+        "fwd1hPct": -0.26,
+        "fwd3hPct": -0.32,
+        "toClosePct": -0.32,
+        "maxUpPct": 0.18,
+        "maxDownPct": -0.47,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R10",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-22T15:16:41.684Z",
+      "londonTime": "16:16 BST",
+      "mode": "POST_ORB",
+      "price": 10732.35,
+      "stance": "LONG_FAVOURED",
+      "stanceLine": "Backdrop favours upside breaks — ORB broke DOWN against a BULLISH macro bias (+3) — counter-bias breaks fail more often; treat continuation as suspect.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "STRUCTURE",
+          "rule": "R2",
+          "text": "ORB broke DOWN against a BULLISH macro bias (+3) — counter-bias breaks fail more often; treat continuation as suspect."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 11th percentile of its 20-day range and falling — a weak-GBP tailwind for the index's dollar earners."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 3,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": 10775.9,
+        "orbLow": 10733.9,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10775.9,
+        "overnightLow": 10714.7,
+        "priorDayHigh": 10775.9,
+        "priorDayLow": 10643.8,
+        "gapPct": -0.19,
+        "adr14": 119.9,
+        "adrUsedPct": 53
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-22T15:16:43.260Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
+    },
+    {
+      "at": "2026-09-22T19:25:07.328Z",
+      "londonTime": "20:25 BST",
+      "mode": "CLOSED",
+      "price": 10754.85,
+      "stance": "LONG_FAVOURED",
+      "stanceLine": "Backdrop favours upside breaks — FTSE is tracking a firmer European tape (Euro Stoxx +0.19%) — the cross-market lean is up.",
+      "signals": [
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.19%) — the cross-market lean is up."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 11th percentile of its 20-day range and falling — a weak-GBP tailwind for the index's dollar earners."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 4,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": 10775.9,
+        "orbLow": 10733.9,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10775.9,
+        "overnightLow": 10714.7,
+        "priorDayHigh": 10775.9,
+        "priorDayLow": 10643.8,
+        "gapPct": 0.02,
+        "adr14": 119.9,
+        "adrUsedPct": 59
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-22T19:25:10.124Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
+    },
+    {
+      "at": "2026-09-22T22:33:05.285Z",
+      "londonTime": "23:33 BST",
+      "mode": "CLOSED",
+      "price": 10750.95,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — FTSE is tracking a firmer European tape (Euro Stoxx +0.23%) — the cross-market lean is up.",
+      "signals": [
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.23%) — the cross-market lean is up."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 0,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10775.9,
+        "orbLow": 10733.9,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10775.9,
+        "overnightLow": 10714.7,
+        "priorDayHigh": 10775.9,
+        "priorDayLow": 10643.8,
+        "gapPct": -0.02,
+        "adr14": 119.9,
+        "adrUsedPct": 59
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-22T22:33:06.985Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
+    }
+  ]
+}

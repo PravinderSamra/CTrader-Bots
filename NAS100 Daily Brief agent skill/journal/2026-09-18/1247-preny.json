@@ -1,0 +1,274 @@
+{
+  "schema": 1,
+  "scan_utc": "2026-09-18T12:47:28+00:00",
+  "scan_et": "2026-09-18 08:47 ET (Fri)",
+  "trading_day": "2026-09-18",
+  "session_window": "PRE_NY",
+  "is_trading_day": true,
+  "prediction": {
+    "price_at_scan": 29502.0,
+    "bias_score": 4,
+    "bias_label": "MILDLY BULLISH",
+    "strategy": "STRATEGY 1 \u2014 sweep -> failed re-break -> CISD reversal. Positive gamma above the flip: dealers fade extensions, so sweeps genuinely fail. Trade the walls and the day-frame levels.",
+    "event_gate": null,
+    "expected_direction": 1,
+    "gamma_flip": 29316.8,
+    "expiry_shape": "COHERENT_LONG",
+    "fuel_state": "LOW_FUEL",
+    "remaining_budget": 65.6,
+    "adr14": 383.5,
+    "adr_used_pct": 82.9,
+    "levels": [
+      {
+        "price": 29566.3,
+        "name": "Equal highs \u00d72",
+        "kind": "liquidity",
+        "dist": 64.3,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29519.3,
+        "name": "CALL WALL \u25cf\u25cf\u25cf\u25cf\u25cf 4.72bn + Options shelf 1.61bn",
+        "kind": "gamma",
+        "dist": 17.3,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 2
+      },
+      {
+        "price": 29500.5,
+        "name": "PDH + NY High (prev-day)",
+        "kind": "liquidity",
+        "dist": -1.5,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 2
+      },
+      {
+        "price": 29478.9,
+        "name": "London Low (today)",
+        "kind": "liquidity",
+        "dist": -23.1,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29469.3,
+        "name": "Options shelf 2.36bn",
+        "kind": "gamma-shelf",
+        "dist": -32.7,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29431.6,
+        "name": "London High (prev-day) + PD close",
+        "kind": "liquidity",
+        "dist": -70.4,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 2
+      },
+      {
+        "price": 29419.3,
+        "name": "PUT WALL \u25cf\u25cf\u25cf\u25cb\u25cb 2.39bn",
+        "kind": "gamma",
+        "dist": -82.7,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 29316.8,
+        "name": "GAMMA FLIP + NY Low (prev-day)",
+        "kind": "gamma",
+        "dist": -185.2,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 2
+      },
+      {
+        "price": 29294.3,
+        "name": "MAX PAIN",
+        "kind": "gamma",
+        "dist": -207.7,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      }
+    ]
+  },
+  "inputs": {
+    "bias_components": [
+      {
+        "component": "gamma",
+        "points": 2,
+        "why": "above flip 29316.8 by 185.2pts \u2014 long-gamma, dips supported, upside grinds"
+      },
+      {
+        "component": "gamma",
+        "points": 2,
+        "why": "week net GEX 7.697 $bn/1% -> pinning likely"
+      },
+      {
+        "component": "gamma",
+        "points": -2,
+        "why": "price sits in the top 20% of the wall band (29419.3-29519.3) \u2014 poor risk/reward for longs"
+      },
+      {
+        "component": "vol",
+        "points": 2,
+        "why": "VXN 19.96 (-11.1%) \u2014 fear falling, bullish"
+      },
+      {
+        "component": "vol",
+        "points": 1,
+        "why": "VIX9D/VIX 0.86 contango \u2014 calm, mean-reversion favoured, mild upward drift"
+      },
+      {
+        "component": "vol",
+        "points": 0,
+        "why": "VXN/VIX 1.28 \u2014 normal tech premium"
+      },
+      {
+        "component": "vol",
+        "points": 0,
+        "why": "VVIX 87.72 \u2014 no tail-hedge bid"
+      },
+      {
+        "component": "rates",
+        "points": -1,
+        "why": "US10y 4.976 (+0.59%) \u2014 yields up, multiple compression, BEARISH tech"
+      },
+      {
+        "component": "rates",
+        "points": 0,
+        "why": "DXY 100.491 (+0.27%) \u2014 dollar flat"
+      },
+      {
+        "component": "macro",
+        "points": -3,
+        "why": "**Real yield, 10y (DFII10)** \u2014 what lenders earn after inflation \u2014 is 2.68%, up 6bp as of 2026-09-16 and 22bp over 5 days. \u26a0\ufe0f FRED has not published since 2026-09-16 (2 business days ago) \u2014 this is last week's reading, not today's. Rising = tech gets hit hardest, because tech is valued on profits years away and those are worth less when rates rise."
+      },
+      {
+        "component": "macro",
+        "points": -1,
+        "why": "**10y nominal yield (DGS10)** moved 1bp up (2026-09-15 to 2026-09-16). That was driven by real rates \u2014 the harsher kind for tech, and an immediate headwind."
+      },
+      {
+        "component": "macro",
+        "points": 2,
+        "why": "**High-yield credit spread (HY OAS)** \u2014 the extra interest demanded to lend to riskier companies is 2.7% (-1bp over 5 days). Low and steady: the bond market is relaxed about risk, which gives stocks permission to rise."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Financial conditions (NFCI)** \u2014 how easy it is to borrow money across the economy \u2014 is EASIER than normal (-0.56). Cheap, available money is a background tailwind for stocks."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Fed balance sheet (WALCL) / reverse repo (RRP)** \u2014 cash in the financial system. The Fed is holding $6.75tn of assets, growing by $5.9bn this week, and the spare-cash buffer is down to $0.276bn."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Yield curve (10y\u20132y)** \u2014 long vs short bond yields. The 10-year pays +0.27% more than the 2-year. Barely moved."
+      },
+      {
+        "component": "breadth",
+        "points": 2,
+        "why": "mega-cap avg +1.93% (4/4 up): NVDA +2.54%, MSFT +1.52%, AAPL +1.38%, AVGO +2.29%"
+      },
+      {
+        "component": "breadth",
+        "points": 1,
+        "why": "NDX +1.73% vs ES +0.82% \u2014 tech leading, genuine risk appetite"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "ADR14 383.5, 82.9% used vs ~45% normal by 08:47 ET -> fuel_ratio 1.84 (burning hot) [LOW_FUEL]"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "fuel is short \u2014 this dampens CONVICTION in any continuation call, it does not change direction"
+      },
+      {
+        "component": "structure",
+        "points": 1,
+        "why": "price above PD mid 29228.1 (PDH 29500.5 / PDL 28955.7)"
+      },
+      {
+        "component": "structure",
+        "points": 0,
+        "why": "price inside the prior-week range (29018.3-29734.1)"
+      },
+      {
+        "component": "structure",
+        "points": -1,
+        "why": "in-reach unmitigated pools: 1 above / 2 below \u2014 draw lower"
+      },
+      {
+        "component": "news",
+        "points": -1,
+        "why": "3 auto-scored headline(s) (0 bull / 3 bear) -> MILDLY BEARISH; 47 more need reading in context (not counted here)"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [hawkish] Stock Market Today (Sept. 18, 2026): Nasdaq futures rise after Fed rate hike lifts stock"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [hawkish] What the Fed's interest rate hike reveals about Warsh, Trump and inflation - CBS News"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [hawkish] Exchange-Traded Funds, Equity Futures Higher Pre-Bell Thursday Amid Economic Data, Fed R"
+      }
+    ],
+    "fuel": {
+      "adr14": 383.5,
+      "today_range": 317.9,
+      "adr_used_pct": 82.9,
+      "remaining_budget": 65.6,
+      "expansion_state": "LOW_FUEL",
+      "volume_relative": 1.03,
+      "volume_state": "normal"
+    },
+    "gamma": {
+      "near_expiry_0_2dte": 8.001,
+      "this_week": 7.697,
+      "full_45dte": 7.783
+    },
+    "call_wall": 29519.3,
+    "put_wall": 29419.3,
+    "max_pain": 29294.3,
+    "vol": {
+      "vxn": 19.96,
+      "vix": 15.57,
+      "vix9d_over_vix": 0.86
+    },
+    "rates": {
+      "us10y": 4.976,
+      "dxy": 100.491
+    },
+    "news": {
+      "raw_score": -2.88,
+      "bias_points": -1,
+      "label": "MILDLY BEARISH",
+      "scored_high_confidence": 3,
+      "needs_model_judgement": 47
+    },
+    "events_24h": []
+  },
+  "outcome": null
+}

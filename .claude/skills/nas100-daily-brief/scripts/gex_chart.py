@@ -115,13 +115,41 @@ def collect(d=None, cfd_price=None, span=650, bin_pts=50, book="week"):
     # amplify). An earlier version ranked by |net| on each side of spot, which
     # on a call-dominated chain like NDX stamped "P1" on a strongly POSITIVE
     # bar — the label said accelerant while the bar said brake.
+    # PUBLISHED RANKING: heaviest within sign, across the whole chain.
+    # This is the PRE-H11 behaviour and it is deliberately unchanged.
+    #
+    # On 2026-09-16 it was replaced with a reach-window ranking, then reverted
+    # the same day at the trader's direction, and he was right: the playbook he
+    # trades from is calibrated on 17 observations of rungs that were heavy AND
+    # near (median retest wick 8.2pts). A reach-ranked C1 can be near but weak —
+    # today's would have carried 0.083bn against the 2.190bn strike it displaced,
+    # 26x weaker — and nothing establishes that a weak rung defends its level the
+    # way a heavy one does. Changing what he marks before measuring that is
+    # exactly the move the 3-day evidence gate exists to prevent, and I made it.
     pos = sorted([b for b in bars if b["net"] > 0], key=lambda b: -b["net"])[:3]
     neg = sorted([b for b in bars if b["net"] < 0], key=lambda b: b["net"])[:3]
+
+    # SHADOW RANKING: recorded on every ladder, rendered nowhere.
+    #
+    # Ranks the same bars within 0.6x ADR, the distance cliff measured over 102
+    # post-fix rungs on 6 sessions: inside it 22 of 39 rungs were reached (56%),
+    # outside it 3 of 63 (5%). Persisted so that in a few weeks both rankings can
+    # be graded against the same price action with `wall_retro.py`, and the
+    # choice made on evidence instead of on a plausible argument.
+    adr = (((d or {}).get("levels") or {}).get("fuel") or {}).get("adr14")
+    reach = (adr or 0) * 0.6
+    in_reach = ([b for b in bars if abs(b["price"] - cfd_price) <= reach]
+                if reach else bars)
+    shadow_pos = sorted([b for b in in_reach if b["net"] > 0],
+                        key=lambda b: -b["net"])[:3]
+    shadow_neg = sorted([b for b in in_reach if b["net"] < 0],
+                        key=lambda b: b["net"])[:3]
     return {
         "bars": bars, "spot": cfd_price, "flip": flip,
         "call_res": call_res, "put_sup": put_sup, "most_neg": most_neg,
-        "book": book,
+        "book": book, "reach_pts": round(reach, 0) if reach else None,
         "ranked_up": pos, "ranked_dn": neg,
+        "shadow_up": shadow_pos, "shadow_dn": shadow_neg,
         "net_total": sum(b["net"] for b in bars),
         "generated": datetime.now(timezone.utc),
         "bin_pts": bin_pts, "dte_max": dte_max,
@@ -355,6 +383,21 @@ def persist(c, root=None):
                              "net_$bn": round(b["net"] / 1e9, 3),
                              "oi": int(b["put_oi"])}
                             for n, b in enumerate(c["ranked_dn"], 1)],
+        # Shadow ranking — recorded for comparison, rendered nowhere. Grade it
+        # against the same price action as ranked_positive/negative to decide
+        # whether a reach window beats raw force. See H11.
+        "shadow": {
+            "scheme": "reach_window_0.6_adr",
+            "reach_pts": c.get("reach_pts"),
+            "ranked_positive": [{"rank": f"C{n}", "price": b["price"],
+                                 "net_$bn": round(b["net"] / 1e9, 3),
+                                 "oi": int(b["call_oi"])}
+                                for n, b in enumerate(c.get("shadow_up", []), 1)],
+            "ranked_negative": [{"rank": f"P{n}", "price": b["price"],
+                                 "net_$bn": round(b["net"] / 1e9, 3),
+                                 "oi": int(b["put_oi"])}
+                                for n, b in enumerate(c.get("shadow_dn", []), 1)],
+        },
         "ladder": [{"price": b["price"], "net_$bn": round(b["net"] / 1e9, 4),
                     "call_oi": int(b["call_oi"]), "put_oi": int(b["put_oi"])}
                    for b in c["bars"]],
