@@ -4556,3 +4556,98 @@ prerequisite, not as a proposal.
 traversal 317.0 = 1.85x budget. Series unchanged in character: one tail point
 (09-21 +569.2) still carries the entire mean. **No multiplier. P4 not
 re-proposed.**
+
+---
+
+## P-E — a mechanism for the empty middle: the wall sits on a fixed round-number grid
+
+**Raised 2026-09-23 from a user observation** — that C1/C2/C3 are repeatedly
+100pts apart (30,833 / 30,733 / 30,633) — and checked against the chain and the
+whole journal. It proposes no change. It reframes what P-E's 4-capped/5-sliced
+split is measuring, and it is falsifiable.
+
+### The walls are not placed by the market; they are placed on a grid
+
+Three measurements, today's `_NDX` week book (`dte<=7`) unless stated:
+
+1. **NDX lists strikes every 10pts** in the near book — 565 call strikes, gaps
+   of 10 and 5. The 100pt spacing is **not** the listing grid.
+2. **Open interest clusters on round hundreds.** 65.2% of near-dated call OI
+   sits on strikes divisible by 100, which are only 163 of those 565 strikes.
+   A further 17.9% is on the ...50s; 16.9% is spread over everything else.
+3. **The board buckets at `bin_pts=50`**, so the bins alternate heavy/light:
+
+   | NDX bin | call OI | | NDX bin | call OI |
+   |---|---|---|---|---|
+   | 30,600 | **21,873** (C2) | | 30,650 | 5,203 |
+   | 30,700 | **16,526** (C3) | | 30,750 | 4,104 |
+   | 30,800 | **29,185** (C1) | | 30,850 | 4,117 |
+   | 31,000 | **26,697** | | 31,050 | 3,925 |
+
+   Round-hundred bins carry **4-7x** the contracts of the ...50 bins between
+   them. Ranking picks the heavy ones, so the ranked walls are ~100 apart by
+   construction.
+
+**Census of every call wall ever published** (parsed from the journal briefs,
+strike = published wall - that scan's CFD offset; deduped to one row per day per
+strike): **19 walls over 16 trading days — 14 on a round-100 NDX strike, 5 on a
+round-50, 0 on anything else.** The wall has never once landed off the grid.
+
+The `...33`/`...3.4`/`...8.8` endings readers notice are only the CFD offset:
+30,832.9 is NDX 30,800 + 32.9, exactly as 30,523.4 was 30,500 + 23.4 and
+30,008.8 was 30,000 + 8.8.
+
+### Why this bears on P-E
+
+P-E records **no instance between 12 and 103pts** of run-through in nine
+observations, and asks whether that is real bimodality or a `SETTLE_TOL`
+artefact. The grid offers a third explanation, and a simpler one:
+
+- A **cap** is price failing at the wall's own bin. The bin is 50pts wide, so a
+  cap cannot overshoot by much more than its half-width, 25pts. Observed caps:
+  **3.6 / 9.6 / 11.9** — all inside it.
+- A **slice** is price leaving that bin, and the next place with enough OI to
+  slow it is the next round hundred. So the smallest possible slice is about
+  **100pts**. Observed minimum slice: **103**.
+
+The empty middle is then not a fact about dealer behaviour at all. It is the
+distance between two adjacent pools on a fixed grid, and **no outcome can land
+there because there is nothing there to stop at.**
+
+This explains the *gap*; it does **not** explain the *tail*. Slices of
+103/154/185/205/573 are 1 to ~6 grid steps, so the grid says where price can
+next rest, not how far it goes.
+
+### What would falsify it
+
+1. **A wall on a ...50 strike should show a ~50pt gap, not ~100.** Five such
+   walls already exist (08-26, 08-28, 09-11 x2, 09-17). Their caps and slices
+   have never been segregated by grid step. **This is measurable today from the
+   existing record and is the first thing to do.**
+2. **Any run-through between 12 and 103 on a round-100 wall** falsifies it —
+   the same observation P-E is already watching for, now with a reason to
+   expect its absence.
+3. If the concentration is an artefact of one chain, the whole thing collapses.
+   **The 65.2% figure is n=1, measured on 2026-09-23 only**, and must be
+   re-measured across days before anything leans on it.
+
+### Consequences if it holds
+
+- *"The call wall is 150 away"* is then partly an arithmetic statement about
+  the grid, not a market-derived distance, and the board should not imply that
+  a nearer wall is a stronger one.
+- It raises the same question for the **put** side and the **flip**, neither of
+  which has been censused.
+- It sharpens the 09-22 finding that the session high was set 14.7pts above the
+  heaviest strike by **contract count** while the dollar-gamma wall sat 264.7pts
+  below: if pools sit on a grid, which pool matters is a ranking question, and
+  the ranking currently uses dollar gamma alone. That comparison still cannot be
+  tested historically, because the secondary table is not persisted in the
+  journal JSON.
+
+**Nothing proposed.** Falsification test 1 costs nothing and uses data already
+in the record; it should run before P-E's prose change is written, because if
+the grid explains the bimodality then the prose should describe the grid, not
+a dealer behaviour.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
