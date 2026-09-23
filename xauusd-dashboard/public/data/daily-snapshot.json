@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-09-23T19:20:22.726Z",
+  "generatedAt": "2026-09-23T22:34:09.206Z",
   "yields": {
     "US10Y": 4.96,
-    "US2Y": 4.76,
-    "realYield10Y": 2.62,
-    "realYield5Y": 2.5,
-    "curve2s10s": 20,
-    "breakeven10Y": 2.33,
-    "breakeven5Y": 2.32,
-    "forward5y5y": 2.34,
+    "US2Y": 4.71,
+    "realYield10Y": 2.63,
+    "realYield5Y": 2.51,
+    "curve2s10s": 25,
+    "breakeven10Y": 2.35,
+    "breakeven5Y": 2.34,
+    "forward5y5y": 2.36,
     "dayOverDay": {
-      "US10Y": -0.05,
-      "US2Y": 0,
-      "realYield10Y": -0.06
+      "US10Y": 0,
+      "US2Y": -0.05,
+      "realYield10Y": 0.01
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-10-28",
-    "probCut": 16,
-    "probHold": 84,
+    "probCut": 12,
+    "probHold": 88,
     "probHike": 0
   },
   "marketVolatility": {
@@ -34,25 +34,25 @@
     "openInterestChange": -5210
   },
   "etfFlows": {
-    "gldTonnes": 1110.1,
-    "gldWoWChange": 3,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1108.7,
+    "gldWoWChange": -1.4,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4284.215,
-    "XAGUSD": 64.4125,
-    "EURUSD": 1.13834,
-    "USDJPY": 158.321,
-    "USDCHF": 0.82473,
-    "USDCNH": 6.71138,
-    "GBPUSD": 1.32392,
-    "USDCAD": 1.40969,
-    "USDSEK": 9.91836,
-    "US500": 7709.5,
-    "GER40": 25386.95,
-    "UK100": 10690.75,
-    "ADR_14day": 91.7,
-    "ADR_usedToday": 94.5,
+    "XAUUSD": 4289.285,
+    "XAGUSD": 64.499,
+    "EURUSD": 1.1384,
+    "USDJPY": 158.302,
+    "USDCHF": 0.82483,
+    "USDCNH": 6.71105,
+    "GBPUSD": 1.32414,
+    "USDCAD": 1.41026,
+    "USDSEK": 9.9156,
+    "US500": 7714.9,
+    "GER40": 25382.95,
+    "UK100": 10687.65,
+    "ADR_14day": 95.1,
+    "ADR_usedToday": 7.9,
     "goldSilverRatio": 66.5
   },
   "dollarLiquidity": {
@@ -66,52 +66,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Wall Street ends down as oil prices, Treasury yields rise - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-23T20:24:16.000Z",
+      "hoursAgo": 2.2
+    },
+    {
       "headline": "Bond yields spike and stocks drop — plus, why Boeing is bucking the trend",
       "source": "CNBC",
       "publishedAt": "2026-09-23T18:42:17.000Z",
-      "hoursAgo": 0.6
+      "hoursAgo": 3.9
+    },
+    {
+      "headline": "European stocks slip as lack of progress on US-Iran peace lifts oil, yields - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-23T16:25:37.000Z",
+      "hoursAgo": 6.1
+    },
+    {
+      "headline": "Rupee slips as dollar gets Fed hike expectations tailwind - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-23T10:08:31.000Z",
+      "hoursAgo": 12.4
     },
     {
       "headline": "OECD raises Turkey inflation forecast, trims growth outlook - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-23T08:03:44.000Z",
-      "hoursAgo": 11.3
+      "hoursAgo": 14.5
     },
     {
       "headline": "Gold loses shine as rate hike bets foster a stronger dollar - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-23T04:53:00.000Z",
-      "hoursAgo": 14.5
-    },
-    {
-      "headline": "Rupee slips as dollar gets Fed hike expectations tailwind - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-23T02:46:00.000Z",
-      "hoursAgo": 16.6
+      "hoursAgo": 17.7
     },
     {
       "headline": "US stocks fall as 10-year Treasury yield hits highest since 2007 - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-23T01:51:00.000Z",
-      "hoursAgo": 17.5
+      "hoursAgo": 20.7
     },
     {
-      "headline": "Dollar jumps to near two-month high on Fed outlook, oil climb - Reuters",
+      "headline": "Dollar jumps to near two-month high on Fed outlook, inflation concern - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-23T01:43:00.000Z",
-      "hoursAgo": 17.6
-    },
-    {
-      "headline": "PODCAST: Trump's UN speech, ICC sanctions and Turkey's LGBTQ+ crackdown (Updated) - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-22T20:31:42.000Z",
-      "hoursAgo": 22.8
-    },
-    {
-      "headline": "Iraq suspends Iranian flights to Baghdad after US sanctions threat, sources say - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-22T19:23:05.000Z",
-      "hoursAgo": 24
+      "hoursAgo": 20.9
     }
   ],
   "briefing": null
