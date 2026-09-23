@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-23T10:29:45.764Z",
+  "generatedAt": "2026-09-23T12:45:51.677Z",
   "yields": {
     "US10Y": 4.96,
     "US2Y": 4.76,
@@ -34,30 +34,30 @@
     "openInterestChange": -5210
   },
   "etfFlows": {
-    "gldTonnes": 1101.6,
-    "gldWoWChange": 11.8,
+    "gldTonnes": 1105.3,
+    "gldWoWChange": 3.7,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4317.2,
-    "XAGUSD": 65.2945,
-    "EURUSD": 1.14105,
-    "USDJPY": 157.8315,
-    "USDCHF": 0.82273,
-    "USDCNH": 6.707,
-    "GBPUSD": 1.32822,
-    "USDCAD": 1.40852,
-    "USDSEK": 9.86935,
-    "US500": 7776,
-    "GER40": 25496.35,
-    "UK100": 10717.85,
+    "XAUUSD": 4302.83,
+    "XAGUSD": 64.9535,
+    "EURUSD": 1.14003,
+    "USDJPY": 157.9515,
+    "USDCHF": 0.82365,
+    "USDCNH": 6.70845,
+    "GBPUSD": 1.32648,
+    "USDCAD": 1.40939,
+    "USDSEK": 9.89729,
+    "US500": 7758.8,
+    "GER40": 25435.95,
+    "UK100": 10692.15,
     "ADR_14day": 91.7,
-    "ADR_usedToday": 60.9,
-    "goldSilverRatio": 66.1
+    "ADR_usedToday": 74.6,
+    "goldSilverRatio": 66.2
   },
   "dollarLiquidity": {
     "stlfsi": -0.8477,
-    "nfci": -0.56
+    "nfci": -0.555
   },
   "geopoliticalRisk": {
     "gpr": 117.9,
@@ -66,46 +66,46 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Gold retreats as hawkish Fed comments reinforce policy tightening bets - reuters.com",
+      "headline": "Gold retreats as hawkish Fed comments reinforce policy tightening bets - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-23T04:53:00.000Z",
-      "hoursAgo": 5.6
+      "hoursAgo": 7.9
     },
     {
-      "headline": "Rupee edges lower as dollar firms on Fed hike wagers - reuters.com",
+      "headline": "Rupee slips as dollar gets Fed hike expectations tailwind - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-23T02:46:00.000Z",
-      "hoursAgo": 7.7
+      "hoursAgo": 10
     },
     {
-      "headline": "Dollar at 2-month highs as markets weigh rate hikes, Iran diplomacy - reuters.com",
+      "headline": "Dollar at 2-month highs as Fed outlook 'dominant' - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-23T01:43:00.000Z",
-      "hoursAgo": 8.8
+      "hoursAgo": 11
     },
     {
       "headline": "PODCAST: Trump's UN speech, ICC sanctions and Turkey's LGBTQ+ crackdown (Updated) - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-22T20:31:42.000Z",
-      "hoursAgo": 14
+      "hoursAgo": 16.2
     },
     {
-      "headline": "Iraq suspends Iranian flights to Baghdad after US sanctions threat, sources say - reuters.com",
+      "headline": "Iraq suspends Iranian flights to Baghdad after US sanctions threat, sources say - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-22T19:23:05.000Z",
-      "hoursAgo": 15.1
+      "hoursAgo": 17.4
     },
     {
       "headline": "EU renews Russia sanctions, drops Russian billionaires Usmanov and Fridman - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-22T17:37:37.000Z",
-      "hoursAgo": 16.9
+      "hoursAgo": 19.1
     },
     {
-      "headline": "Egypt's NBE steps in to buy Banque Misr's UAE operations after sanctions threat - reuters.com",
+      "headline": "Egypt's NBE steps in to buy Banque Misr's UAE operations after sanctions threat - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-22T13:38:00.000Z",
-      "hoursAgo": 20.9
+      "hoursAgo": 23.1
     }
   ],
   "briefing": null
