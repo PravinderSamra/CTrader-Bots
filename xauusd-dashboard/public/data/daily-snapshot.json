@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-22T22:32:59.476Z",
+  "generatedAt": "2026-09-23T10:29:45.764Z",
   "yields": {
     "US10Y": 4.96,
     "US2Y": 4.76,
@@ -34,26 +34,26 @@
     "openInterestChange": -5210
   },
   "etfFlows": {
-    "gldTonnes": 1089.8,
-    "gldWoWChange": -1.2,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1101.6,
+    "gldWoWChange": 11.8,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4363.955,
-    "XAGUSD": 67.272,
-    "EURUSD": 1.14477,
-    "USDJPY": 157.457,
-    "USDCHF": 0.82056,
-    "USDCNH": 6.69777,
-    "GBPUSD": 1.33449,
-    "USDCAD": 1.40651,
-    "USDSEK": 9.8324,
-    "US500": 7770.7,
-    "GER40": 25716.65,
-    "UK100": 10750.95,
+    "XAUUSD": 4317.2,
+    "XAGUSD": 65.2945,
+    "EURUSD": 1.14105,
+    "USDJPY": 157.8315,
+    "USDCHF": 0.82273,
+    "USDCNH": 6.707,
+    "GBPUSD": 1.32822,
+    "USDCAD": 1.40852,
+    "USDSEK": 9.86935,
+    "US500": 7776,
+    "GER40": 25496.35,
+    "UK100": 10717.85,
     "ADR_14day": 91.7,
-    "ADR_usedToday": 4.9,
-    "goldSilverRatio": 64.9
+    "ADR_usedToday": 60.9,
+    "goldSilverRatio": 66.1
   },
   "dollarLiquidity": {
     "stlfsi": -0.8477,
@@ -66,46 +66,46 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "EU renews Russia sanctions, drops Russian billionaires Usmanov and Fridman - Reuters",
+      "headline": "Gold retreats as hawkish Fed comments reinforce policy tightening bets - reuters.com",
       "source": "Reuters",
-      "publishedAt": "2026-09-22T17:37:37.000Z",
-      "hoursAgo": 4.9
+      "publishedAt": "2026-09-23T04:53:00.000Z",
+      "hoursAgo": 5.6
     },
     {
-      "headline": "Egypt's NBE steps in to buy Banque Misr's UAE operations after sanctions threat - Reuters",
+      "headline": "Rupee edges lower as dollar firms on Fed hike wagers - reuters.com",
       "source": "Reuters",
-      "publishedAt": "2026-09-22T14:49:33.000Z",
+      "publishedAt": "2026-09-23T02:46:00.000Z",
       "hoursAgo": 7.7
     },
     {
-      "headline": "ECB, EU central banks oppose stablecoin bank deposit rule - Reuters",
+      "headline": "Dollar at 2-month highs as markets weigh rate hikes, Iran diplomacy - reuters.com",
       "source": "Reuters",
-      "publishedAt": "2026-09-22T10:20:53.000Z",
-      "hoursAgo": 12.2
+      "publishedAt": "2026-09-23T01:43:00.000Z",
+      "hoursAgo": 8.8
     },
     {
-      "headline": "India's PhonePe gets initial UAE central bank nod for payment licences - Reuters",
+      "headline": "PODCAST: Trump's UN speech, ICC sanctions and Turkey's LGBTQ+ crackdown (Updated) - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-22T06:49:00.000Z",
-      "hoursAgo": 15.7
+      "publishedAt": "2026-09-22T20:31:42.000Z",
+      "hoursAgo": 14
     },
     {
-      "headline": "Gold slips as Fed officials signal rate hikes - Reuters",
+      "headline": "Iraq suspends Iranian flights to Baghdad after US sanctions threat, sources say - reuters.com",
       "source": "Reuters",
-      "publishedAt": "2026-09-22T02:19:00.000Z",
-      "hoursAgo": 20.2
+      "publishedAt": "2026-09-22T19:23:05.000Z",
+      "hoursAgo": 15.1
     },
     {
-      "headline": "Binance faces US scrutiny over possible Iran sanctions violations, source says - Reuters",
+      "headline": "EU renews Russia sanctions, drops Russian billionaires Usmanov and Fridman - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-22T02:04:00.000Z",
-      "hoursAgo": 20.5
+      "publishedAt": "2026-09-22T17:37:37.000Z",
+      "hoursAgo": 16.9
     },
     {
-      "headline": "Dollar rises in choppy trading as investors weigh inflation prospects - Reuters",
+      "headline": "Egypt's NBE steps in to buy Banque Misr's UAE operations after sanctions threat - reuters.com",
       "source": "Reuters",
-      "publishedAt": "2026-09-22T00:53:00.000Z",
-      "hoursAgo": 21.7
+      "publishedAt": "2026-09-22T13:38:00.000Z",
+      "hoursAgo": 20.9
     }
   ],
   "briefing": null
