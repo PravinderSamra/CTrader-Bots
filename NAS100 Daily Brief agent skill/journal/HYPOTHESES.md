@@ -4389,3 +4389,170 @@ draw has flipped bullish; PWH 29704.2 is now support"* — and it was the single
 largest **correct** component of a +13 call. Price never came within 250pts of
 PWH all day. **n=1 for the positive branch.** It does not rehabilitate the
 negative branch, and it is logged so the two are not scored as one rule.
+
+---
+
+# Observations appended 2026-09-23 (grading the 2026-09-22 session)
+
+Session 30510.8 / **30788.1** / 30394.0 / **30728.1**, range 394.1 = **0.94x
+ADR14**, net +217.3 = 55% of range. 1 gradeable scan (12:47:09Z PRE_NY), 0 test
+artefacts, `is_trading_day: true`. The 2026-09-23 scan is excluded everywhere
+(179 bars, held back by `track.py`). Direction **CORRECT** (+6 BULLISH).
+
+**No new IDs opened. Highest allocated is unchanged: H22 · D21 · P5 and P-F · M7.**
+Everything below appends to an existing item, deliberately.
+
+## D21 — THIRD consecutive counter-instance, and the planned merge into P-F is dead
+
+`gamma −2` *"price sits in the top 20% of the wall band (30273.4–30523.4) — poor
+risk/reward for longs"*. Price left the band upward and never returned: high
+**+264.7 above the band top**, close **+204.7 above**. Word for word 09-18 and
+09-21.
+
+Record **3 for (08-28, 09-08, 09-17) / 3 against (09-18, 09-21, 09-22)**.
+
+The 09-21 entry said *"both counter-instances share a condition the row does not
+test: price was already outside the prior day's range, so the band is stale… if a
+third arrives, it merges with P-F."* **It does not.** On 09-22 `price_at_scan`
+30492.5 was **inside** the prior day's range (PDH 30581.9 / PDL 29623.5). The
+stale-band mechanism explains 2 of 3 counter-instances, not 3.
+
+**The obvious fix was tested and fails its own ledger.** Demoting the ±2 to
+prose, across all **8 firings** on record (published score -> score without the
+row, vs actual direction):
+
+`08-27 +7->+9 (+1) · 08-28 +4->+6 (-1) · 09-08 +4->+6 (-1) · 09-09 -2->0 (-1) ·
+09-17 -2->0 (+1) · 09-18 +4->+6 (+1) · 09-21 +13->+15 (+1) · 09-22 +6->+8 (+1)`
+
+**The row has never flipped a direction call's sign in 8 firings.** It moves
+conviction only: 5 days more conviction in the correct direction, **2 days
+(08-28, 09-08) more conviction in a wrong one** — on both it is the only bearish
+row on a wrong bullish call — and 2 days (09-09, 09-17) lose their sign to zero.
+**No label sign changes at all.** Demoting it therefore cannot be argued as an
+accuracy fix; it is conviction scaling. **Evidence appended, NOT proposed.** What
+breaks the 3/3 tie is a discriminator (breadth is the candidate); 6 tested
+instances will not support fitting one.
+
+## M6 — 11th session; three inverted verdicts in one grade, and the cheap fix is falsified
+
+`review_day.py` graded PDH + NY High *"broke DOWN through it — lost by 90.9pts"*,
+shelf 0.43bn + London High *"lost by 82.4"*, and the CALL WALL *"lost by 32.4"* —
+on a day that closed **146.2, 154.7 and 204.7 points ABOVE them**. All three were
+broken **upward** and held as support into the bell. In all three objects
+`settled_side: "above"` sits next to `held: false`: the field and the English
+contradict each other inside the same record.
+
+**The `SETTLE_TOL` rescaling sub-note (opened 09-21, n=2) is now falsified.** The
+three excursions are **8.2%, 21% and 23% of the 394.1pt range** — all above the
+5.0% (09-18, graded held) / 5.6% (09-21, graded lost) band that motivated scaling
+the tolerance. A range-relative tolerance would have graded all three "lost" too.
+**Only M6's written fix — grade against direction of approach, reversal measured
+from the touch — addresses this.** Recorded so the cheaper alternative is not
+re-proposed. M6 still needs a decision, not more evidence.
+
+## P-E — 9th instance: 4 capped / 5 sliced, and three consecutive slices
+
+CALL WALL 30523.4 (1.50bn, *"the strongest ceiling on the board … rallies stall.
+Take profit into it"*): 32.4pts of retest, high **+264.7 above**, close **+204.7
+above**.
+
+| mode | instances | magnitude |
+|---|---|---|
+| capped | 08-26, 09-08, 09-11, 09-14 | overshoot **3.6 – 11.9** |
+| sliced | 08-27, 08-28, 09-18, 09-21, **09-22** | run-through **103 / 154 / 185 / 573 / 205** |
+
+**Still nothing between 12 and 103, in nine observations.** The last three
+sessions are all slices. The brief's own escape clause (*"a held close above flips
+that selling to buying and it becomes a launchpad"*) described the outcome
+correctly on all three and is the sentence a reader is least likely to act on,
+because the unconditional lid is stated first. P-E already proposed as prose;
+no discriminator proposed. **Watching for one instance between 12 and 103** — an
+empty middle in nine observations is either real bimodality or an artefact of
+`SETTLE_TOL`, and a middle observation separates those.
+
+## P-F — sub-note, n=2: the fade-first strategy also misfires INSIDE the prior-day range
+
+`STRATEGY 1 — sweep → failed re-break → CISD reversal`, justified as *"positive
+gamma above the flip: dealers fade extensions, so sweeps genuinely fail."* Four
+liquidity sweeps above price (Asia High, equal highs ×3, London High, PDH) were
+all taken and all held; the PDH note's explicit *"CISD = short"* sat under a
+146.2pt close-above.
+
+By the register's own grading rule (net ≥75% or ≤25% of range) **55% is not
+judgeable**, so no right/wrong is claimed for the selector. The *premise sentence*
+was false on every level it applied to, and this is the **4th consecutive session
+above the flip** where that held (09-17, 09-18, 09-21, 09-22). **09-18 and 09-22
+were inside the prior-day range**, so P-F's condition would not have suppressed
+the fade-first prose on either. n=2 on that sub-mechanism. **Recorded, not
+proposed** — P-F is already the one prose change queued for this block and
+shipping a second makes neither measurable (H22's reasoning).
+
+## P3 / H6 — structural wall: 0 touches on 9 publications across 8 trading days
+
+08-24, 08-25, 08-26, 09-10, 09-14, 09-15, 09-21, 09-22. Today at **−1469pts =
+3.52x ADR14**, the largest distance recorded. Still correct behaviour for a level
+whose own note reads *"mark it and leave it"*. **P3 strengthened** (exclude
+`kind: structural` from the hit-rate denominator, keep publishing it).
+
+## P-B(b) — the cleanest clustering instance in the record
+
+16 levels published occupy **10 distinct price zones**. 9 levels graded "touched"
+resolve to **4 independent events**:
+
+| zone | levels | first touches |
+|---|---|---|
+| 30639.6 / 30629.5 / 30623.4 (16.2pt band) | Asia High · Equal highs ×3 · shelf 0.62bn | 13:35, 13:40, 13:40 |
+| 30581.9 / 30573.4 (8.5pt) | PDH + NY High · shelf 0.43bn + London High | 13:30, 13:30 |
+| 30523.4 | CALL WALL | 13:30 |
+| 30495.6 / 30489.8 / 30473.4 (22.2pt) | PD close · Asia Low · shelf 0.36bn | 13:00, 12:50, 12:50 |
+
+**Published hit rate 0.56; zone hit rate 0.40** (0.44 excluding the structural
+wall). The three levels reported as "held support for 255–270min" are one level
+counted three times. Same object as the 09-18 instance; folded into P-B(b).
+
+## H18 / P1 — seventh instance, second consecutive on a CORRECT call
+
+DFII10 scored **−3** with its own `why` string reading *"FRED has not published
+since 2026-09-18 (2 business days ago) — this is last week's reading, not
+today's."* Removing it gives **+9 vs the published +6** — stronger and more
+accurate on a day that closed +217.3. P1 covers it; still blocked on H19's
+unrun hand-score baseline. **No new proposal.**
+
+## News sampling bias — standing record
+
+| scan | counted | uncounted | coverage | sign of counted | score |
+|---|---|---|---|---|---|
+| 2026-09-22 12:47 | 2 (0 bull / 2 bear) | 51 | **3.8%** | 100% bearish | **−1** |
+
+**Not a D18 sign instance:** both counted headlines are genuinely hawkish-Fed
+("says inflation persistence led her to support interest rate hike"). This is the
+sample-size mechanism only — 4 counted scored −3 on 09-15, 2 counted scored −1
+today, on an identical 100%-bearish subset sign.
+
+## H10 — the `+3` branch fired a second time and was right again
+
+*"price is ABOVE the entire prior-week range (28757.3–29704.2) — the weekly draw
+has flipped bullish; PWH 29704.2 is now support"* — the largest correct component
+of a correct +6. Price never came within 690pts of PWH. **n=2 for the positive
+branch.** The `−3` branch stays **0-for-4** and did not fire. The two branches
+must not be scored as one rule on the strength of the positive one.
+
+## D7-shaped instance — the high was set by contract count, not dollar gamma
+
+Session high 30788.1 stopped **14.7pts** above the secondary table's **30773.4
+(0.52bn but 25,732 contracts — the largest contract count anywhere on the page)**.
+The headline CALL WALL (1.50bn, 22k contracts) was **264.7pts** below the high.
+The strike that marked the extreme appeared only in a table the brief labels
+*"context only, don't mark"*.
+
+**n=1 and, as things stand, permanently n=1: the secondary gamma table is not
+persisted in the journal JSON**, so this claim cannot be counted historically. The
+prerequisite for ever testing it is persisting that table. Recorded as the
+prerequisite, not as a proposal.
+
+## H1 — n=16, mean +39.7 → +35.8
+
+09-22: budget 171.5, extension 148.5, error **−23.0**, `about right` (0.87x);
+traversal 317.0 = 1.85x budget. Series unchanged in character: one tail point
+(09-21 +569.2) still carries the entire mean. **No multiplier. P4 not
+re-proposed.**
