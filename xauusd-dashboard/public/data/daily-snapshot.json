@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-24T10:46:20.730Z",
+  "generatedAt": "2026-09-24T12:44:16.091Z",
   "yields": {
     "US10Y": 4.96,
     "US2Y": 4.71,
@@ -34,26 +34,26 @@
     "openInterestChange": -5210
   },
   "etfFlows": {
-    "gldTonnes": 1108.7,
-    "gldWoWChange": null,
-    "trend3W": null
+    "gldTonnes": 1113.5,
+    "gldWoWChange": 4.8,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4258.9,
-    "XAGUSD": 63.7025,
-    "EURUSD": 1.13695,
-    "USDJPY": 158.7745,
-    "USDCHF": 0.82732,
-    "USDCNH": 6.71622,
-    "GBPUSD": 1.32225,
-    "USDCAD": 1.41167,
-    "USDSEK": 9.90425,
-    "US500": 7669.4,
+    "XAUUSD": 4270.905,
+    "XAGUSD": 63.544,
+    "EURUSD": 1.13677,
+    "USDJPY": 158.7735,
+    "USDCHF": 0.82753,
+    "USDCNH": 6.71472,
+    "GBPUSD": 1.32227,
+    "USDCAD": 1.41205,
+    "USDSEK": 9.913,
+    "US500": 7672,
     "GER40": 25377.05,
-    "UK100": 10712.55,
+    "UK100": 10715.45,
     "ADR_14day": 95.1,
     "ADR_usedToday": 58.9,
-    "goldSilverRatio": 66.9
+    "goldSilverRatio": 67.2
   },
   "dollarLiquidity": {
     "stlfsi": -0.9075,
@@ -69,49 +69,49 @@
       "headline": "New York Fed’s Williams says it's 'reasonable' to expect another rate hike by year-end",
       "source": "CNBC",
       "publishedAt": "2026-09-24T09:06:18.000Z",
-      "hoursAgo": 1.7
+      "hoursAgo": 3.6
     },
     {
-      "headline": "Netanyahu expected to berate New York's Mamdani in 'campaign speech' of UN address - Reuters",
+      "headline": "Netanyahu expected to berate New York's Mamdani in 'campaign speech' of UN address - reuters.com",
       "source": "Reuters",
       "publishedAt": "2026-09-24T05:04:00.000Z",
-      "hoursAgo": 5.7
+      "hoursAgo": 7.7
     },
     {
-      "headline": "US and Indian top diplomats discuss Russia sanctions bill signed by Trump - Reuters",
+      "headline": "US and Indian top diplomats discuss Russia sanctions bill signed by Trump - reuters.com",
       "source": "Reuters",
       "publishedAt": "2026-09-24T03:51:00.000Z",
-      "hoursAgo": 6.9
+      "hoursAgo": 8.9
     },
     {
-      "headline": "Gold muted on Fed policy tightening bets, decline in oil - Reuters",
+      "headline": "Rupee declines to one-week low as oil rally fans global rate hike worries - reuters.com",
+      "source": "Reuters",
+      "publishedAt": "2026-09-24T02:45:00.000Z",
+      "hoursAgo": 10
+    },
+    {
+      "headline": "Gold slips as rising oil prices, Treasury yields dent appeal - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-24T02:23:00.000Z",
-      "hoursAgo": 8.4
+      "hoursAgo": 10.4
     },
     {
       "headline": "Wall Street ends down as oil prices, Treasury yields rise - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-23T23:20:00.000Z",
-      "hoursAgo": 11.4
+      "hoursAgo": 13.4
     },
     {
       "headline": "Bond yields spike and stocks drop — plus, why Boeing is bucking the trend",
       "source": "CNBC",
       "publishedAt": "2026-09-23T18:42:17.000Z",
-      "hoursAgo": 16.1
+      "hoursAgo": 18
     },
     {
-      "headline": "Gold loses shine as rate hike bets foster a stronger dollar - Reuters",
+      "headline": "Gold loses shine as rate hike bets foster a stronger dollar - reuters.com",
       "source": "Reuters",
       "publishedAt": "2026-09-23T17:53:49.000Z",
-      "hoursAgo": 16.9
-    },
-    {
-      "headline": "European stocks slip as lack of progress on US-Iran peace lifts oil, yields - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-23T16:25:37.000Z",
-      "hoursAgo": 18.3
+      "hoursAgo": 18.8
     }
   ],
   "briefing": null

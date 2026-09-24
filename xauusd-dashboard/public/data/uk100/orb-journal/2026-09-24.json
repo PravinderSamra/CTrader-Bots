@@ -43,6 +43,56 @@
         "adrUsedPct": 57
       },
       "outcome": null
+    },
+    {
+      "at": "2026-09-24T12:44:21.764Z",
+      "londonTime": "13:44 BST",
+      "mode": "POST_ORB",
+      "price": 10715.45,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — Past 13:30 with US futures -0.49% — the 14:30 US handoff argues against holding longs into the US open.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -0.49% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 11th percentile of its 20-day range and falling — a weak-GBP tailwind for the index's dollar earners."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10706.6,
+        "orbLow": 10661.6,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10728.4,
+        "overnightLow": 10661.6,
+        "priorDayHigh": 10776.8,
+        "priorDayLow": 10669.3,
+        "gapPct": 0.27,
+        "adr14": 116.7,
+        "adrUsedPct": 57
+      },
+      "outcome": null
     }
   ]
 }
