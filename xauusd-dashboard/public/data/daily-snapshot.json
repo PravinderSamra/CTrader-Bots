@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-09-24T19:37:21.900Z",
+  "generatedAt": "2026-09-24T22:50:16.600Z",
   "yields": {
-    "US10Y": 4.96,
-    "US2Y": 4.71,
-    "realYield10Y": 2.63,
-    "realYield5Y": 2.51,
-    "curve2s10s": 25,
-    "breakeven10Y": 2.35,
-    "breakeven5Y": 2.34,
-    "forward5y5y": 2.36,
+    "US10Y": 5.11,
+    "US2Y": 4.85,
+    "realYield10Y": 2.76,
+    "realYield5Y": 2.65,
+    "curve2s10s": 26,
+    "breakeven10Y": 2.33,
+    "breakeven5Y": 2.33,
+    "forward5y5y": 2.33,
     "dayOverDay": {
-      "US10Y": 0,
-      "US2Y": -0.05,
-      "realYield10Y": 0.01
+      "US10Y": 0.15,
+      "US2Y": 0.14,
+      "realYield10Y": 0.13
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-10-28",
-    "probCut": 12,
-    "probHold": 88,
+    "probCut": 4,
+    "probHold": 96,
     "probHike": 0
   },
   "marketVolatility": {
@@ -34,26 +34,26 @@
     "openInterestChange": -5210
   },
   "etfFlows": {
-    "gldTonnes": 1113.2,
-    "gldWoWChange": -6.3,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1113.3,
+    "gldWoWChange": 0.1,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4272.295,
-    "XAGUSD": 63.681,
-    "EURUSD": 1.13749,
-    "USDJPY": 158.88,
-    "USDCHF": 0.82827,
-    "USDCNH": 6.71645,
-    "GBPUSD": 1.3216,
-    "USDCAD": 1.41393,
-    "USDSEK": 9.92513,
-    "US500": 7707.9,
-    "GER40": 25404.15,
-    "UK100": 10710.05,
-    "ADR_14day": 95.1,
-    "ADR_usedToday": 58.9,
-    "goldSilverRatio": 67.1
+    "XAUUSD": 4271.625,
+    "XAGUSD": 63.763,
+    "EURUSD": 1.13772,
+    "USDJPY": 158.767,
+    "USDCHF": 0.82783,
+    "USDCNH": 6.71601,
+    "GBPUSD": 1.32162,
+    "USDCAD": 1.41416,
+    "USDSEK": 9.92545,
+    "US500": 7696.6,
+    "GER40": 25407.15,
+    "UK100": 10711.95,
+    "ADR_14day": 91.9,
+    "ADR_usedToday": 8.1,
+    "goldSilverRatio": 67
   },
   "dollarLiquidity": {
     "stlfsi": -0.9075,
@@ -66,52 +66,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "History shows financial calamities occur when rates rise rapidly like this: 'Something always breaks'",
+      "source": "CNBC",
+      "publishedAt": "2026-09-24T20:57:11.000Z",
+      "hoursAgo": 1.9
+    },
+    {
       "headline": "New US sanctions shut down Iranian flights - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-24T17:27:27.000Z",
-      "hoursAgo": 2.2
+      "hoursAgo": 5.4
     },
     {
       "headline": "Meta nears first new high in a year as Muse success showcases winning AI strategy",
       "source": "CNBC",
       "publishedAt": "2026-09-24T17:07:45.000Z",
-      "hoursAgo": 2.5
+      "hoursAgo": 5.7
     },
     {
       "headline": "Saudi oil export strategy hits new hurdle as Red Sea insurance costs soar - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-24T16:57:33.000Z",
-      "hoursAgo": 2.7
+      "hoursAgo": 5.9
     },
     {
       "headline": "Philadelphia Fed's Anna Paulson says 'modest' rate moves likely ahead to tame inflation",
       "source": "CNBC",
       "publishedAt": "2026-09-24T14:14:16.000Z",
-      "hoursAgo": 5.4
+      "hoursAgo": 8.6
     },
     {
       "headline": "Family offices double down on stocks and private equity even as inflation spurs worry, Citi survey finds",
       "source": "CNBC",
       "publishedAt": "2026-09-24T12:30:01.000Z",
-      "hoursAgo": 7.1
+      "hoursAgo": 10.3
     },
     {
       "headline": "New York Fed’s Williams says it's 'reasonable' to expect another rate hike by year-end",
       "source": "CNBC",
       "publishedAt": "2026-09-24T09:06:18.000Z",
-      "hoursAgo": 10.5
-    },
-    {
-      "headline": "Netanyahu expected to berate New York's Mamdani in 'campaign speech' at UN - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-24T05:04:00.000Z",
-      "hoursAgo": 14.6
+      "hoursAgo": 13.7
     },
     {
       "headline": "US and Indian top diplomats discuss Russia sanctions bill signed by Trump - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-24T03:51:00.000Z",
-      "hoursAgo": 15.8
+      "hoursAgo": 19
     }
   ],
   "briefing": null

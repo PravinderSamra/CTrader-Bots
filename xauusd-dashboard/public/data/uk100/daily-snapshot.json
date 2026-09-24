@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-09-24T19:37:27.819Z",
+  "generatedAt": "2026-09-24T22:50:21.986Z",
   "prices": {
-    "UK100": 10710.05,
-    "GBPUSD": 1.3216,
-    "GBPEUR": 1.16183,
-    "US500": 7707.8,
-    "NAS100": 30486.05,
-    "BRENT": 106.058,
-    "COPPER": 6.809,
-    "VIX": 16.375,
-    "USDX": 101.294,
-    "XAUUSD": 4272.295,
-    "UK100_dayPct": 0.22
+    "UK100": 10711.95,
+    "GBPUSD": 1.32163,
+    "GBPEUR": 1.16166,
+    "US500": 7696.6,
+    "NAS100": 30464.45,
+    "BRENT": 105.539,
+    "COPPER": 6.8043,
+    "VIX": 16.63,
+    "USDX": 101.264,
+    "XAUUSD": 4271.645,
+    "UK100_dayPct": 0.24
   },
   "fx": {
-    "gbpUsdDayPct": -0.18,
+    "gbpUsdDayPct": -0.01,
     "gbpUsd20dPercentile": 11,
     "sterlingEri": 84.7912,
     "sterlingEriDayChange": -0.29,
@@ -30,29 +30,29 @@
     "gilt10yDayBp": 2,
     "gilt20yDayBp": 3,
     "slope5s20s": 0.98,
-    "giltUst10ySpread": 0.25,
+    "giltUst10ySpread": 0.1,
     "longEndStress": false,
     "nextMpcDate": "2026-11-05",
     "daysToMpc": 42
   },
   "usLinkage": {
     "us500DayPct": -0.03,
-    "nas100DayPct": -0.04,
-    "vix": 16.375,
+    "nas100DayPct": 0,
+    "vix": 16.63,
     "vixRegime": "NORMAL",
-    "us10y": 4.96,
-    "usdx": 101.294
+    "us10y": 5.11,
+    "usdx": 101.264
   },
   "commodities": {
-    "brentDayPct": 2.52,
-    "copperDayPct": -0.12,
-    "goldDayPct": -0.35,
+    "brentDayPct": 2.02,
+    "copperDayPct": 0.06,
+    "goldDayPct": -0.05,
     "brent20dTrend": "UP"
   },
   "europeanTape": {
     "eurostoxx50DayPct": 0.22,
-    "dax40DayPct": 0.08,
-    "eurUsdDayPct": -0.07,
+    "dax40DayPct": 0.1,
+    "eurUsdDayPct": -0.02,
     "ftseDaxCorr20d": 0.85,
     "ftseSx5eCorr20d": 0.86,
     "tapeAgreement": "ALIGNED",
@@ -69,14 +69,14 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent +2.52%",
+      "driver": "Brent +2.02%",
       "read": "BULLISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper -0.12%",
+      "driver": "Copper +0.06%",
       "read": "NEUTRAL",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
@@ -105,52 +105,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "History shows financial calamities occur when rates rise rapidly like this: 'Something always breaks'",
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/09/24/history-shows-financial-calamities-occur-when-rates-rise-rapidly-like-this-something-always-breaks.html",
+      "hoursAgo": 1.9
+    },
+    {
+      "headline": "What must happen for Boeing stock to get unstuck. The company needs, at least, to do its part",
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/09/24/what-must-happen-for-boeing-stock-to-get-unstuck-the-company-needs-to-do-its-part.html",
+      "hoursAgo": 3.4
+    },
+    {
       "headline": "Meta nears first new high in a year as Muse success showcases winning AI strategy",
       "source": "CNBC",
       "url": "https://www.cnbc.com/2026/09/24/meta-nears-first-new-high-in-a-year-as-muse-success-showcases-winning-ai-strategy.html",
-      "hoursAgo": 2.5
+      "hoursAgo": 5.7
     },
     {
       "headline": "Saudi oil export strategy hits new hurdle as Red Sea insurance costs soar - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxQZTRXRkRnZzBpWmo3VklXUlM4NzZOUXZKTjlndXgydERQalUwdHZDV2loS1F4YnRreHRWYlhUb1RnWGt3Nm1NaERsMC1Gb3QxSlZaTWZGWllwbnVwOWhtRkNlc0JFQUdNYTU2X1lTRGxweTBqTk1Gdk5RdTY0NldlUmlSbDgxbGFfM2NqVWk5UHRCTVZCb3NBSS1BcnF4ZHVqVUNlU3Zpd1lyM1BVWkhzT1h0cVZmX0ozQlZUdUFEYw?oc=5",
-      "hoursAgo": 2.7
+      "hoursAgo": 5.9
     },
     {
       "headline": "Philadelphia Fed's Anna Paulson says 'modest' rate moves likely ahead to tame inflation",
       "source": "CNBC",
       "url": "https://www.cnbc.com/2026/09/24/philadelphia-feds-anna-paulson-says-modest-rate-moves-likely-ahead-to-tame-inflation.html",
-      "hoursAgo": 5.4
+      "hoursAgo": 8.6
     },
     {
       "headline": "Family offices double down on stocks and private equity even as inflation spurs worry, Citi survey finds",
       "source": "CNBC",
       "url": "https://www.cnbc.com/2026/09/24/citi-family-offices-inflation-investing.html",
-      "hoursAgo": 7.1
+      "hoursAgo": 10.3
     },
     {
       "headline": "New York Fed’s Williams says it's 'reasonable' to expect another rate hike by year-end",
       "source": "CNBC",
       "url": "https://www.cnbc.com/2026/09/24/feds-williams-another-rate-hike-by-year-end.html",
-      "hoursAgo": 10.5
-    },
-    {
-      "headline": "Netanyahu expected to berate New York's Mamdani in 'campaign speech' at UN - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxOR21xaG03TDh6WUlBZVQ0RkhicmlGOFZkbTluZWh2b3E1UFJ5d2RiaFBRY0xtWkl2NjE0SHBqUWhYbElRZmFRMWU5UVExZHlCMHZZRGJKSDZsa3k5eUdJWTJvV3NMakNhdEdyaE9sQ1JLMlEta0pEMzVNbWJ6VkxqZ3lOWjliekcwa280eXl1aHFMekNVSklsTGdjNEc0dEVIcHl4TGFVakNaS1h1STRwZFFjd2NadGhQNmZ4Nl9uN0VnZw?oc=5",
-      "hoursAgo": 14.6
+      "hoursAgo": 13.7
     },
     {
       "headline": "Rupee declines to one-week low as oil rally fans global rate hike worries - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQYWxRcGJGem9jUEZ0dXY2NDVGblVTZElHakV4bmVHQXl5SHpyemdjME1vZFlOMldrWk5uWm5ncFI3dHNpdUJpS2FPUHFxTGc3bVFFQjF3bmR2ckdpaU1NUXl6OUNudzlYLWE4ZEVHelRFNk5GdzRRQzV2ZFRlNmJUSGtZSFhTWEFmMmdIdlRTVjlucjVhTEE3STJtdGppemZpM2Vka0RsTE1qbjZJZHlZ?oc=5",
-      "hoursAgo": 16.9
-    },
-    {
-      "headline": "Yields elevated as inflation fears keep markets on edge - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxOWEltUDlJNE9jWHA5VlhOV21YTl9vZnZzMjQ1ZldQTmNSOHQ4NDMyZzlVbHVXZ1NqN01WR0d1aWxKVTQ1LURRTGhKQjlYbzUydHBYRVVuUkt3dFhRWDB1VDdWQTZhVy1Fb0pIM1hRa0UtTWZGQ1ZIa0MzSm1SUEdPR2pjNA?oc=5",
-      "hoursAgo": 17.8
+      "hoursAgo": 20.1
     }
   ],
   "riskTone": null,
@@ -163,7 +163,7 @@
         "name": "GBP",
         "weight": 3,
         "impact": "NEUTRAL",
-        "detail": "GBP/USD -0.18% → FTSE tailwind (sign-flipped)"
+        "detail": "GBP/USD -0.01% → FTSE tailwind (sign-flipped)"
       },
       {
         "name": "US futures",
@@ -175,19 +175,19 @@
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 16.375 — NORMAL regime"
+        "detail": "VIX 16.63 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
         "impact": "BULLISH",
-        "detail": "Brent +2.52% (energy majors)"
+        "detail": "Brent +2.02% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "Copper -0.12% (miners/China)"
+        "detail": "Copper +0.06% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -211,13 +211,13 @@
         "name": "European tape (SX5E/DAX)",
         "weight": 1,
         "impact": "NEUTRAL",
-        "detail": "SX5E +0.22% / DAX +0.08%"
+        "detail": "SX5E +0.22% / DAX +0.1%"
       }
     ],
     "eventSuppressed": false
   },
   "orbContext": {
-    "computedAt": "2026-09-24T19:37:27.818Z",
+    "computedAt": "2026-09-24T22:50:21.985Z",
     "mode": "CLOSED",
     "cashOpenLondon": "08:00 BST",
     "overnightHigh": 10728.4,
@@ -227,8 +227,8 @@
     "priorClose": 10686.7,
     "prevWeekHigh": 10837.8,
     "prevWeekLow": 10584.6,
-    "gapPts": 23.3,
-    "gapPct": 0.22,
+    "gapPts": 25.3,
+    "gapPct": 0.24,
     "orbHigh": 10706.6,
     "orbLow": 10661.6,
     "orbBrokenDirection": "UP",
