@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-23T22:34:09.206Z",
+  "generatedAt": "2026-09-24T10:46:20.730Z",
   "yields": {
     "US10Y": 4.96,
     "US2Y": 4.71,
@@ -35,25 +35,25 @@
   },
   "etfFlows": {
     "gldTonnes": 1108.7,
-    "gldWoWChange": -1.4,
-    "trend3W": "OUTFLOW"
+    "gldWoWChange": null,
+    "trend3W": null
   },
   "snapshotPrices": {
-    "XAUUSD": 4289.285,
-    "XAGUSD": 64.499,
-    "EURUSD": 1.1384,
-    "USDJPY": 158.302,
-    "USDCHF": 0.82483,
-    "USDCNH": 6.71105,
-    "GBPUSD": 1.32414,
-    "USDCAD": 1.41026,
-    "USDSEK": 9.9156,
-    "US500": 7714.9,
-    "GER40": 25382.95,
-    "UK100": 10687.65,
+    "XAUUSD": 4258.9,
+    "XAGUSD": 63.7025,
+    "EURUSD": 1.13695,
+    "USDJPY": 158.7745,
+    "USDCHF": 0.82732,
+    "USDCNH": 6.71622,
+    "GBPUSD": 1.32225,
+    "USDCAD": 1.41167,
+    "USDSEK": 9.90425,
+    "US500": 7669.4,
+    "GER40": 25377.05,
+    "UK100": 10712.55,
     "ADR_14day": 95.1,
-    "ADR_usedToday": 7.9,
-    "goldSilverRatio": 66.5
+    "ADR_usedToday": 58.9,
+    "goldSilverRatio": 66.9
   },
   "dollarLiquidity": {
     "stlfsi": -0.9075,
@@ -66,52 +66,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "New York Fed’s Williams says it's 'reasonable' to expect another rate hike by year-end",
+      "source": "CNBC",
+      "publishedAt": "2026-09-24T09:06:18.000Z",
+      "hoursAgo": 1.7
+    },
+    {
+      "headline": "Netanyahu expected to berate New York's Mamdani in 'campaign speech' of UN address - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-24T05:04:00.000Z",
+      "hoursAgo": 5.7
+    },
+    {
+      "headline": "US and Indian top diplomats discuss Russia sanctions bill signed by Trump - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-24T03:51:00.000Z",
+      "hoursAgo": 6.9
+    },
+    {
+      "headline": "Gold muted on Fed policy tightening bets, decline in oil - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-24T02:23:00.000Z",
+      "hoursAgo": 8.4
+    },
+    {
       "headline": "Wall Street ends down as oil prices, Treasury yields rise - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-23T20:24:16.000Z",
-      "hoursAgo": 2.2
+      "publishedAt": "2026-09-23T23:20:00.000Z",
+      "hoursAgo": 11.4
     },
     {
       "headline": "Bond yields spike and stocks drop — plus, why Boeing is bucking the trend",
       "source": "CNBC",
       "publishedAt": "2026-09-23T18:42:17.000Z",
-      "hoursAgo": 3.9
+      "hoursAgo": 16.1
+    },
+    {
+      "headline": "Gold loses shine as rate hike bets foster a stronger dollar - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-23T17:53:49.000Z",
+      "hoursAgo": 16.9
     },
     {
       "headline": "European stocks slip as lack of progress on US-Iran peace lifts oil, yields - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-23T16:25:37.000Z",
-      "hoursAgo": 6.1
-    },
-    {
-      "headline": "Rupee slips as dollar gets Fed hike expectations tailwind - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-23T10:08:31.000Z",
-      "hoursAgo": 12.4
-    },
-    {
-      "headline": "OECD raises Turkey inflation forecast, trims growth outlook - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-23T08:03:44.000Z",
-      "hoursAgo": 14.5
-    },
-    {
-      "headline": "Gold loses shine as rate hike bets foster a stronger dollar - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-23T04:53:00.000Z",
-      "hoursAgo": 17.7
-    },
-    {
-      "headline": "US stocks fall as 10-year Treasury yield hits highest since 2007 - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-23T01:51:00.000Z",
-      "hoursAgo": 20.7
-    },
-    {
-      "headline": "Dollar jumps to near two-month high on Fed outlook, inflation concern - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-23T01:43:00.000Z",
-      "hoursAgo": 20.9
+      "hoursAgo": 18.3
     }
   ],
   "briefing": null

@@ -1,0 +1,48 @@
+{
+  "date": "2026-09-24",
+  "entries": [
+    {
+      "at": "2026-09-24T10:46:26.491Z",
+      "londonTime": "11:46 BST",
+      "mode": "POST_ORB",
+      "price": 10713.05,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — Sterling is at the 11th percentile of its 20-day range and falling — a weak-GBP tailwind for the index's dollar earners.",
+      "signals": [
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 11th percentile of its 20-day range and falling — a weak-GBP tailwind for the index's dollar earners."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10706.6,
+        "orbLow": 10661.6,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10728.4,
+        "overnightLow": 10661.6,
+        "priorDayHigh": 10776.8,
+        "priorDayLow": 10669.3,
+        "gapPct": 0.25,
+        "adr14": 116.7,
+        "adrUsedPct": 57
+      },
+      "outcome": null
+    }
+  ]
+}
