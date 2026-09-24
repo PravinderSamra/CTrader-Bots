@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-24T12:44:16.091Z",
+  "generatedAt": "2026-09-24T15:35:54.497Z",
   "yields": {
     "US10Y": 4.96,
     "US2Y": 4.71,
@@ -34,23 +34,23 @@
     "openInterestChange": -5210
   },
   "etfFlows": {
-    "gldTonnes": 1113.5,
-    "gldWoWChange": 4.8,
+    "gldTonnes": 1119.5,
+    "gldWoWChange": 6,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4270.905,
-    "XAGUSD": 63.544,
-    "EURUSD": 1.13677,
-    "USDJPY": 158.7735,
-    "USDCHF": 0.82753,
-    "USDCNH": 6.71472,
-    "GBPUSD": 1.32227,
-    "USDCAD": 1.41205,
-    "USDSEK": 9.913,
-    "US500": 7672,
-    "GER40": 25377.05,
-    "UK100": 10715.45,
+    "XAUUSD": 4248.06,
+    "XAGUSD": 63.194,
+    "EURUSD": 1.13659,
+    "USDJPY": 158.989,
+    "USDCHF": 0.82915,
+    "USDCNH": 6.71725,
+    "GBPUSD": 1.32126,
+    "USDCAD": 1.41479,
+    "USDSEK": 9.95319,
+    "US500": 7668.4,
+    "GER40": 25282.15,
+    "UK100": 10678.55,
     "ADR_14day": 95.1,
     "ADR_usedToday": 58.9,
     "goldSilverRatio": 67.2
@@ -66,52 +66,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Philadelphia Fed's Anna Paulson says 'modest' rate moves likely ahead to tame inflation",
+      "source": "CNBC",
+      "publishedAt": "2026-09-24T14:14:16.000Z",
+      "hoursAgo": 1.4
+    },
+    {
+      "headline": "Family offices double down on stocks and private equity even as inflation spurs worry, Citi survey finds",
+      "source": "CNBC",
+      "publishedAt": "2026-09-24T12:30:01.000Z",
+      "hoursAgo": 3.1
+    },
+    {
       "headline": "New York Fed’s Williams says it's 'reasonable' to expect another rate hike by year-end",
       "source": "CNBC",
       "publishedAt": "2026-09-24T09:06:18.000Z",
-      "hoursAgo": 3.6
+      "hoursAgo": 6.5
     },
     {
-      "headline": "Netanyahu expected to berate New York's Mamdani in 'campaign speech' of UN address - reuters.com",
+      "headline": "Netanyahu expected to berate New York's Mamdani in 'campaign speech' at UN - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-24T05:04:00.000Z",
-      "hoursAgo": 7.7
+      "hoursAgo": 10.5
     },
     {
-      "headline": "US and Indian top diplomats discuss Russia sanctions bill signed by Trump - reuters.com",
+      "headline": "US and Indian top diplomats discuss Russia sanctions bill signed by Trump - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-24T03:51:00.000Z",
-      "hoursAgo": 8.9
+      "hoursAgo": 11.7
     },
     {
-      "headline": "Rupee declines to one-week low as oil rally fans global rate hike worries - reuters.com",
+      "headline": "Rupee declines to one-week low as oil rally fans global rate hike worries - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-24T02:45:00.000Z",
-      "hoursAgo": 10
+      "hoursAgo": 12.8
     },
     {
       "headline": "Gold slips as rising oil prices, Treasury yields dent appeal - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-24T02:23:00.000Z",
-      "hoursAgo": 10.4
+      "hoursAgo": 13.2
     },
     {
       "headline": "Wall Street ends down as oil prices, Treasury yields rise - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-23T23:20:00.000Z",
-      "hoursAgo": 13.4
-    },
-    {
-      "headline": "Bond yields spike and stocks drop — plus, why Boeing is bucking the trend",
-      "source": "CNBC",
-      "publishedAt": "2026-09-23T18:42:17.000Z",
-      "hoursAgo": 18
-    },
-    {
-      "headline": "Gold loses shine as rate hike bets foster a stronger dollar - reuters.com",
-      "source": "Reuters",
-      "publishedAt": "2026-09-23T17:53:49.000Z",
-      "hoursAgo": 18.8
+      "hoursAgo": 16.3
     }
   ],
   "briefing": null

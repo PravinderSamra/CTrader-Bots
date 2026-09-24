@@ -42,7 +42,25 @@
         "adr14": 116.7,
         "adrUsedPct": 57
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-09-24T15:36:02.303Z",
+        "fwd1hPct": 0.03,
+        "fwd3hPct": -0.12,
+        "toClosePct": -0.34,
+        "maxUpPct": 0.26,
+        "maxDownPct": -0.36,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R10",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-09-24T12:44:21.764Z",
@@ -92,7 +110,95 @@
         "adr14": 116.7,
         "adrUsedPct": 57
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-09-24T15:36:02.592Z",
+        "fwd1hPct": -0.15,
+        "fwd3hPct": -0.36,
+        "toClosePct": -0.36,
+        "maxUpPct": 0.23,
+        "maxDownPct": -0.38,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R9",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R10",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-24T15:35:59.671Z",
+      "londonTime": "16:35 BST",
+      "mode": "CLOSED",
+      "price": 10678.55,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — FTSE is tracking a softer European tape (Euro Stoxx -0.32%) — the cross-market lean is down.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.32%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -0.54% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 11th percentile of its 20-day range and falling — a weak-GBP tailwind for the index's dollar earners."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10706.6,
+        "orbLow": 10661.6,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10728.4,
+        "overnightLow": 10661.6,
+        "priorDayHigh": 10776.8,
+        "priorDayLow": 10669.3,
+        "gapPct": -0.08,
+        "adr14": 116.7,
+        "adrUsedPct": 68
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-24T15:36:02.592Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
