@@ -17,11 +17,11 @@ added between runs. H12/H13 were each opened twice for unrelated claims
 09-17); D19 was opened for a `freshness` defect hours after D19 had been taken
 by the VIX9D null-guard (renumbered to D20/D21 here, 09-21).
 
-**Highest allocated as of 2026-09-22: H22 · D21 · P5 and P-F · M7.**
+**Highest allocated as of 2026-09-24: H22 · D23 · P5 and P-G · M7.**
 
 Opening an entry: take the next number above those, then
 `grep -n "^## " HYPOTHESES.md` to confirm it is unused before you write it.
-Proposals continue the **lettered** series (next: P-G) — see the proposal index
+Proposals continue the **lettered** series (next: P-H) — see the proposal index
 lower in this file for why two series coexist.
 
 Before opening a defect, also grep for the **file and line** it concerns, not
@@ -4777,5 +4777,270 @@ is unsupported at 0/16 and should stop being stated as fact.
 2. Any positive-gamma wall touch holding within 25pts — the first one moves this
    off zero.
 3. Re-run `04_penetration_by_regime.py` at n>=40 events before any weight change.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+
+---
+
+## D22 (NEW, OPENED) — `yahoo_series` percent-changes are not guaranteed to be prior-session, and the NDX/ES legs cover different windows
+
+**Graded 2026-09-24 from the 2026-09-23 session.** Two parts, separated by how
+well each is evidenced. `bias_engine.py:186-192` reads
+`macro["index"]["ndx_daily"]` and `breadth_proxy["es_sp500"]`, both produced by
+`macro_probe.yahoo_series` (`macro_probe.py:207, 224`).
+
+### (a) Window mismatch — certain from the code, present on every PRE_NY scan
+
+`^NDX` is fetched with the default `range=10d`; it does not print pre-market, so
+`last` (= `regularMarketPrice`) is yesterday's cash close and `chg_pct` is
+**yesterday's cash session**. `ES=F` is fetched `range=5d` and trades overnight,
+so its `chg_pct` is **this morning's globex move**. The two legs of
+*"NDX x% vs ES y% — tech leading / lagging"* are offset by one session, always,
+on every pre-NY scan (11 on record).
+
+09-23 concretely: *"NDX +3.67% vs ES −0.10% — tech leading, genuine risk
+appetite"*, `+1`, printed 42 minutes before the index began a 232pt slide.
+
+**Worth nothing on accuracy.** Recomputed with both legs on the overnight window
+(NQ −0.15% vs ES −0.10% → *"in line"*, 0), 09-23 goes **+13 → +12, same label,
+same direction call**. Not proposed this cycle: P-G is already a prose change
+into the same board and the 09-21 "one change at a time" rule applies.
+
+### (b) Two-session skip on the NDX leg — n=2, OBSERVING, NOTHING PROPOSED
+
+Reported `ndx_daily.chg_pct` reconciled against the journal's own close series
+(closes from `review_day.py`, not recomputed):
+
+| scan | reported | actual prior session | error |
+|---|---|---|---|
+| 09-10 | −0.29% | −0.23% | ok |
+| 09-11 | −1.08% | −1.09% | ok |
+| 09-15 | −0.82% | −0.64% | ok |
+| 09-16 | −0.65% | −0.68% | ok |
+| 09-17 | +0.03% | −0.04% | ok |
+| 09-18 | +1.73% | +1.59% | ok |
+| 09-21 | +0.67% | +0.81% | ok |
+| 09-22 | +2.83% | +2.78% | ok |
+| **09-23** | **+3.67%** | **+0.76%** | **+2.91pp** |
+| **09-24** | **−0.04%** | **−0.75%** | **+0.71pp, sign flip** |
+
+Baseline noise is ±0.15pp (CFD-vs-cash offset). The two failures are
+categorically different: 09-23's figure matches the **09-18 → 09-22** two-session
+move (+3.57%), 09-24's matches the **09-21 → 09-23** two-session move (+0.01%).
+Suspected mechanism, `macro_probe.py:55`:
+
+```python
+closes = [c for c in q["close"] if c is not None]
+prev = closes[-2] if len(closes) > 1 else last
+```
+
+Null-stripping collapses date gaps, so `closes[-2]` need not be the prior
+session — the same class of bug as the `chartPreviousClose` error the code's own
+comment at lines 59-63 records fixing.
+
+**Two sessions is below the three-session bar. Nothing proposed.** Blast radius
+if confirmed is wider than the ±1 row: the same derivation feeds `rates` (US10y,
+DXY) and `breadth` (four mega-caps) — 6 of 24 rows and ±8 points on 09-23. Those
+were **not** shown to be wrong and are not claimed to be.
+
+**Settles in one call:** print the dated closes `yahoo_series("^NDX")` returns
+and compare the last four against the journal's PD-close series. A missing date
+confirms (b); no missing date closes it negative. Free, reliable, no new data
+source.
+
+---
+
+## P-G (NEW, PROPOSED) — session-extreme prose is chosen by level kind, not by which side price is on
+
+**Prose only. No score, no board membership, no hit-rate change.** Choose the
+note for `Asia/London/NY High|Low` from `sign(level − price_at_scan)` with a
+±25pt "sitting on it" band. A session high **below** current price has already
+had its stops run.
+
+**9 instances across 5 of 11 PRE_NY scans**, from `prediction.levels` and
+`price_at_scan`:
+
+| day | level | offset vs price | published note |
+|---|---|---|---|
+| 09-15 | London High (prev-day) | **−145.0** | *"stops run above it"* |
+| 09-23 | London High (prev-day) | **−110.7** | *"stops run above it"* |
+| 09-18 | London High (prev-day) + PD close | **−70.4** | *"stops run above it"* |
+| 09-23 | Equal lows ×2 + Asia High (prev-day) | −40.8 | *"stops run above it"* |
+| 09-15 | Asia High (prev-day) + Equal lows ×2 | −29.6 | *"stops run above it"* |
+| 09-23 | Asia Low (today) | +26.7 | *"stops run below it"* |
+| 09-11 | Asia Low (prev-day) | +2.9 | *"stops run below it"* |
+| 09-16 | Asia High (today) | −2.3 | *"stops run above it"* |
+| 09-18 | PDH + NY High (prev-day) | −1.5 | *"stops run above it"* |
+
+Four are inside 3pts and any tolerance catches them. **Three are 70–145pts** —
+a directional instruction for an event already past, twice on a ⭐ level.
+
+Distinct from the standing item *"the board has no field for 'price already
+tested this today'"*: that is about intraday tests, this is about the side price
+occupies at scan, which the generator already knows exactly.
+
+---
+
+## P-E(b) — the shelves are what should replace the call wall's top line
+
+P-E proposes stripping *"rallies stall. Take profit into it"*. It has never said
+what to mark instead. **Folded into P-E, not a competing proposal.**
+
+| family | sessions | instances | worst penetration |
+|---|---|---|---|
+| Options shelf | 09-18, 09-21, 09-22, 09-23 | 7 | −5.0, −21.3, −9.1, −2.3, +4.5, +12.9, +10.3 — **all inside 22pts** |
+| CALL WALL ●●●●● | 08-27 … 09-22 | 9 | capped 3.6–11.9 **or** sliced 103 / 154 / 185 / 205 / 573 |
+
+**Caveats.** M6 applies to "held as support/resistance"; the worst-excursion
+figures do not depend on it and are what the table uses. 09-18's shelf sat 9.6pts
+from the call wall and that review called it redundant — treat as clustered,
+leaving **6 independent holds over 4 sessions**. Board ordering and emphasis
+only; no `gex_levels.py` change proposed.
+
+---
+
+## D21 — 9th firing, and the width defect that explains why the tally reads as noise
+
+The row fires on **percent of the wall band with no normalisation for band
+width**. Across 15 firings the band spans **100 → 800pts**, so "top 20%" is a
+trigger window of **20 to 160pts** — 4.7% to 37% of ADR14. The same `−2` is
+awarded for *17pts under the call wall* (09-18) and *150pts under it* (09-23).
+**The 9 graded firings D21 has been tallying are a mixture of two physically
+different conditions.**
+
+Band widths: 08-24 200 · 08-27 200/300 · 08-28 800 · 09-08 200 · 09-09 100 ·
+09-10 300 · 09-14 500 · 09-17 450 · 09-18 100 · 09-21 750 · 09-22 250 ·
+09-23 800 · 09-24 500.
+
+Re-cut by **absolute distance to the call wall**, the 8 graded firings invert:
+
+| bucket | firings (dist to call wall) | realised direction |
+|---|---|---|
+| within 50pts | 08-27 +7, 09-18 +17, 09-17 +26, 09-08 +30, 09-22 +31, 09-21 +46 | **5 up / 1 down** — claim wrong 5 of 6 |
+| beyond 50pts | 08-28 +71, 09-23 +150 | **2 down / 0 up** — claim right 2 of 2 |
+
+**NOT PROPOSED.** n=8, and the cut was found after looking at the outcomes —
+exactly the procedure the standing rule forbids acting on. Logged as a
+**pre-registered test**: 09-24 fired TOP at **+30 (within 50)**, so the cut
+predicts an **UP day on 09-24**. Written here, not into any `prediction` block.
+
+---
+
+## H10 — `+3` branch fails on its third firing, and the missing term is distance
+
+Four consecutive firings off the **identical** prior-week range
+(28757.3–29704.2), with price walking away from it:
+
+| day | distance above PWH | graded direction |
+|---|---|---|
+| 09-21 | +259 | ✓ |
+| 09-22 | +788 | ✓ |
+| **09-23** | **+979** | **✗** |
+| 09-24 | +490 | ungraded |
+
+A reclaim three sessions and 979pts old scores exactly like one made this
+morning. `+3` branch **2-for-3**; with the `−3` branch at 0-for-4 the row is
+**2-for-7** while carrying the largest single weight in the structure block.
+**No decay proposed** — the failure sits at the largest distance on n=3.
+Falsification: the next `+3` firing at >700pts above PWH.
+
+---
+
+## Tested and rejected — "price below the prior close at the PRE_NY scan predicts a down day"
+
+The tempting post-hoc story for 09-23 (price 45pts under PD close, structure
+scored `+1` for "above PD mid"). Tested on the 9 recoverable PRE_NY scans:
+**5 right, 4 wrong** — ✓ 09-15, 09-17, 09-18, 09-21, 09-23 · ✗ 09-11, 09-14,
+09-16, 09-22. A coin flip. **Not proposed, and the 09-23 narrative it would have
+supported is retired.**
+
+---
+
+## 2026-09-23 — the day nothing on the register would have caught
+
+`+13 STRONGLY BULLISH` against a −232.3 close; a bearish call needed −14. Every
+register proposal plus both new ones, applied together, reaches roughly **+9**.
+The engine's only bearish information was `rates −3` and one mis-specified
+`gamma −2`. Recording that plainly, because manufacturing a fix that reaches −14
+would be fitting a single session.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01M7sro1DKMp5T7EBDusm6pM
+
+---
+
+## D23 — CBOE served a TWO-SESSION-STALE chain and the brief published a full board off it
+
+**2026-09-24 12:47Z.** The scan completed, the chart drew, the archive pushed,
+and every number on the options side was built on Tuesday's book.
+
+Probed directly at 12:48Z, minutes after the scan:
+
+```
+_NDX option chain timestamp : 2026-09-23 03:44:16   (~33 hours old)
+QQQ  option chain timestamp : 2026-09-23 03:56:14
+_NDX quote last_trade_time  : 2026-09-22T16:14:59   (Tuesday's close)
+now                         : 2026-09-24T12:48:31Z
+```
+
+CBOE's delayed feed had not advanced through Wednesday's session at all. The
+CFD meanwhile had moved ~490pts from Wednesday's scan (30,683 -> 30,194).
+
+### What it produced
+
+`CFD/index offset **-276.3**` — **~7x the ~40pt D6 threshold** — with basis
+`live_cash_divergence_corrected`. The guard fired and did what it could, but it
+corrects a stale *cash price*; nothing checks the age of the *chain*. So the
+call wall, put wall, flip, max pain, every shelf, and `gamma +2` of a `+3` call
+were all derived from a two-session-old option book and then converted onto the
+live chart through a 276pt fudge.
+
+**The brief printed the stale timestamp in its own data-ages block and scored,
+ranked and published as normal.** Staleness was visible and inert — the same
+shape as D6, D10 and D11: the run looked like it worked.
+
+### What was NOT affected
+
+Fuel and range come from cTrader: ADR14 420.8, range 441.9, 105.0% used,
+budget 0.0, `EXHAUSTED`, fuel_ratio 2.33. Rates, breadth and news are
+independent of CBOE. The only trustworthy reading on the page is that the day's
+range was already spent.
+
+### The second-order problem, which is the bigger one
+
+The scan sits in the journal as an ordinary observation. Graded as-is it feeds
+corrupt levels into P-E, P-E(b), H6, M6, the hit-rate series and the wall
+census — manufacturing conclusions out of a feed outage, which is what W1/W2
+were withdrawn for.
+
+**Precedent exists and points the right way.** D1 quarantined corrupt *fuel*
+fields on the rollover scans while keeping the direction call, because the
+corruption was field-level. This is the mirror image: quarantine the *options*
+fields, keep fuel. Direction is contaminated here too — gamma supplied +2 of
+the +3 — so unlike D1 the call itself should not be graded either.
+
+**Also void: the pre-registered D21 test from the 09-23 review.** It states
+"09-24 fired TOP at +30, so the cut predicts an UP day on 09-24". That trigger
+was computed from this stale chain, so the prediction was never a real one.
+It must not be scored either way — scoring it would put a coin-flip into the
+register dressed as a pre-registration.
+
+### Not fixed here, and why
+
+Two changes are needed and both are off-limits on a scheduled run: the
+quarantine lives in `track.py` (grading code) and the age gate belongs in
+`gex_levels` / `brief.py` (wall code).
+
+Proposed when someone has the go-ahead:
+
+1. **A chain-age gate.** If the option chain timestamp is older than roughly one
+   session, refuse to publish the levels and say so at the top, rather than
+   printing an age nobody reads. The cash-staleness guard already has this
+   shape; the chain has no equivalent.
+2. **A D6 hard stop.** An offset beyond ~40pts should abort the options block
+   outright. Today it printed -276.3 and carried on. Note 2026-08-26 already
+   recorded a -177.5 offset in the wall census, so this is the second occurrence.
+3. **Field-level quarantine** for 2026-09-24, on the D1 pattern, excluding the
+   options fields AND the direction call.
 
 Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
