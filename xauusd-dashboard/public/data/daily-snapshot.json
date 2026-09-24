@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-24T15:35:54.497Z",
+  "generatedAt": "2026-09-24T19:37:21.900Z",
   "yields": {
     "US10Y": 4.96,
     "US2Y": 4.71,
@@ -34,26 +34,26 @@
     "openInterestChange": -5210
   },
   "etfFlows": {
-    "gldTonnes": 1119.5,
-    "gldWoWChange": 6,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1113.2,
+    "gldWoWChange": -6.3,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4248.06,
-    "XAGUSD": 63.194,
-    "EURUSD": 1.13659,
-    "USDJPY": 158.989,
-    "USDCHF": 0.82915,
-    "USDCNH": 6.71725,
-    "GBPUSD": 1.32126,
-    "USDCAD": 1.41479,
-    "USDSEK": 9.95319,
-    "US500": 7668.4,
-    "GER40": 25282.15,
-    "UK100": 10678.55,
+    "XAUUSD": 4272.295,
+    "XAGUSD": 63.681,
+    "EURUSD": 1.13749,
+    "USDJPY": 158.88,
+    "USDCHF": 0.82827,
+    "USDCNH": 6.71645,
+    "GBPUSD": 1.3216,
+    "USDCAD": 1.41393,
+    "USDSEK": 9.92513,
+    "US500": 7707.9,
+    "GER40": 25404.15,
+    "UK100": 10710.05,
     "ADR_14day": 95.1,
     "ADR_usedToday": 58.9,
-    "goldSilverRatio": 67.2
+    "goldSilverRatio": 67.1
   },
   "dollarLiquidity": {
     "stlfsi": -0.9075,
@@ -66,52 +66,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "New US sanctions shut down Iranian flights - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-24T17:27:27.000Z",
+      "hoursAgo": 2.2
+    },
+    {
+      "headline": "Meta nears first new high in a year as Muse success showcases winning AI strategy",
+      "source": "CNBC",
+      "publishedAt": "2026-09-24T17:07:45.000Z",
+      "hoursAgo": 2.5
+    },
+    {
+      "headline": "Saudi oil export strategy hits new hurdle as Red Sea insurance costs soar - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-24T16:57:33.000Z",
+      "hoursAgo": 2.7
+    },
+    {
       "headline": "Philadelphia Fed's Anna Paulson says 'modest' rate moves likely ahead to tame inflation",
       "source": "CNBC",
       "publishedAt": "2026-09-24T14:14:16.000Z",
-      "hoursAgo": 1.4
+      "hoursAgo": 5.4
     },
     {
       "headline": "Family offices double down on stocks and private equity even as inflation spurs worry, Citi survey finds",
       "source": "CNBC",
       "publishedAt": "2026-09-24T12:30:01.000Z",
-      "hoursAgo": 3.1
+      "hoursAgo": 7.1
     },
     {
       "headline": "New York Fed’s Williams says it's 'reasonable' to expect another rate hike by year-end",
       "source": "CNBC",
       "publishedAt": "2026-09-24T09:06:18.000Z",
-      "hoursAgo": 6.5
+      "hoursAgo": 10.5
     },
     {
       "headline": "Netanyahu expected to berate New York's Mamdani in 'campaign speech' at UN - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-24T05:04:00.000Z",
-      "hoursAgo": 10.5
+      "hoursAgo": 14.6
     },
     {
       "headline": "US and Indian top diplomats discuss Russia sanctions bill signed by Trump - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-24T03:51:00.000Z",
-      "hoursAgo": 11.7
-    },
-    {
-      "headline": "Rupee declines to one-week low as oil rally fans global rate hike worries - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-24T02:45:00.000Z",
-      "hoursAgo": 12.8
-    },
-    {
-      "headline": "Gold slips as rising oil prices, Treasury yields dent appeal - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-24T02:23:00.000Z",
-      "hoursAgo": 13.2
-    },
-    {
-      "headline": "Wall Street ends down as oil prices, Treasury yields rise - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-23T23:20:00.000Z",
-      "hoursAgo": 16.3
+      "hoursAgo": 15.8
     }
   ],
   "briefing": null

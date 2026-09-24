@@ -199,6 +199,79 @@
         "verdict": "UNSCORABLE",
         "signalVerdicts": []
       }
+    },
+    {
+      "at": "2026-09-24T19:37:27.980Z",
+      "londonTime": "20:37 BST",
+      "mode": "CLOSED",
+      "price": 10710.05,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 74% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "74% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDH 10776.8) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.22%) — the cross-market lean is up."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 11th percentile of its 20-day range and falling — a weak-GBP tailwind for the index's dollar earners."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10706.6,
+        "orbLow": 10661.6,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10728.4,
+        "overnightLow": 10661.6,
+        "priorDayHigh": 10776.8,
+        "priorDayLow": 10669.3,
+        "gapPct": 0.22,
+        "adr14": 116.7,
+        "adrUsedPct": 74
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-24T19:37:30.264Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
