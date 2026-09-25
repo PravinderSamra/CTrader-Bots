@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-25T12:47:11.017Z",
+  "generatedAt": "2026-09-25T15:41:11.583Z",
   "yields": {
     "US10Y": 5.11,
     "US2Y": 4.85,
@@ -34,26 +34,26 @@
     "openInterestChange": -5210
   },
   "etfFlows": {
-    "gldTonnes": 1105.2,
-    "gldWoWChange": 0.8,
+    "gldTonnes": 1111.6,
+    "gldWoWChange": 6.4,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4303.17,
-    "XAGUSD": 64.771,
-    "EURUSD": 1.14007,
-    "USDJPY": 157.701,
-    "USDCHF": 0.82836,
-    "USDCNH": 6.72315,
-    "GBPUSD": 1.32539,
-    "USDCAD": 1.41427,
-    "USDSEK": 9.90343,
-    "US500": 7726.9,
-    "GER40": 25488.05,
-    "UK100": 10709.85,
+    "XAUUSD": 4278.19,
+    "XAGUSD": 64.107,
+    "EURUSD": 1.13912,
+    "USDJPY": 157.3475,
+    "USDCHF": 0.82925,
+    "USDCNH": 6.72507,
+    "GBPUSD": 1.32336,
+    "USDCAD": 1.41443,
+    "USDSEK": 9.92399,
+    "US500": 7715.3,
+    "GER40": 25428.05,
+    "UK100": 10694.75,
     "ADR_14day": 91.9,
-    "ADR_usedToday": 59.3,
-    "goldSilverRatio": 66.4
+    "ADR_usedToday": 61.1,
+    "goldSilverRatio": 66.7
   },
   "dollarLiquidity": {
     "stlfsi": -0.9075,
@@ -69,49 +69,49 @@
       "headline": "Gold rises, but on track for weekly loss as Fed rate hike expectations build - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-25T02:23:00.000Z",
-      "hoursAgo": 10.4
+      "hoursAgo": 13.3
     },
     {
       "headline": "Britain warns Iran it will not tolerate hostile activity on UK soil - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-24T23:01:00.000Z",
-      "hoursAgo": 13.8
+      "hoursAgo": 16.7
     },
     {
       "headline": "History shows financial calamities occur when rates rise rapidly like this: 'Something always breaks'",
       "source": "CNBC",
       "publishedAt": "2026-09-24T20:57:11.000Z",
-      "hoursAgo": 15.8
+      "hoursAgo": 18.7
     },
     {
       "headline": "US Treasury accepted $4.078 billion in buyback operation - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-24T18:19:43.000Z",
-      "hoursAgo": 18.5
+      "hoursAgo": 21.4
     },
     {
       "headline": "New US sanctions shut down Iranian flights - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-24T17:27:27.000Z",
-      "hoursAgo": 19.3
+      "hoursAgo": 22.2
     },
     {
       "headline": "Meta nears first new high in a year as Muse success showcases winning AI strategy",
       "source": "CNBC",
       "publishedAt": "2026-09-24T17:07:45.000Z",
-      "hoursAgo": 19.7
+      "hoursAgo": 22.6
     },
     {
       "headline": "Saudi oil export strategy hits new hurdle as Red Sea insurance costs soar - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-24T16:57:33.000Z",
-      "hoursAgo": 19.8
+      "hoursAgo": 22.7
     },
     {
       "headline": "Bank of England rate setters warn of 'sparks in the tinderbox' - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-24T16:19:18.000Z",
-      "hoursAgo": 20.5
+      "hoursAgo": 23.4
     }
   ],
   "briefing": null
