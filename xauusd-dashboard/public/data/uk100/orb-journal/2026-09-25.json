@@ -1,0 +1,55 @@
+{
+  "date": "2026-09-25",
+  "entries": [
+    {
+      "at": "2026-09-25T10:51:31.245Z",
+      "londonTime": "11:51 BST",
+      "mode": "POST_ORB",
+      "price": 10697.85,
+      "stance": "FADE_FAVOURED",
+      "stanceLine": "Fade day — the ORB break was a trap — ORB broke UP but price has fully reclaimed the range (back below 10711) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "STRUCTURE",
+          "rule": "R1",
+          "text": "ORB broke UP but price has fully reclaimed the range (back below 10711) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "RATES",
+          "rule": "R11",
+          "text": "20Y gilt +8bp — a fiscal-stress selloff; this historically drags the whole index regardless of the banks rotation."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -1,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10742,
+        "orbLow": 10711,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10742.9,
+        "overnightLow": 10689.1,
+        "priorDayHigh": 10747.4,
+        "priorDayLow": 10661.6,
+        "gapPct": -0.12,
+        "adr14": 117.5,
+        "adrUsedPct": 56
+      },
+      "outcome": null
+    }
+  ]
+}
