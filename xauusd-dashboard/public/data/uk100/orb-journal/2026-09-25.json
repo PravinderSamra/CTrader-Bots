@@ -319,6 +319,79 @@
         "verdict": "UNSCORABLE",
         "signalVerdicts": []
       }
+    },
+    {
+      "at": "2026-09-25T22:58:37.299Z",
+      "londonTime": "23:58 BST",
+      "mode": "CLOSED",
+      "price": 10745.25,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 20Y gilt +8bp — a fiscal-stress selloff; this historically drags the whole index regardless of the banks rotation.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "RATES",
+          "rule": "R11",
+          "text": "20Y gilt +8bp — a fiscal-stress selloff; this historically drags the whole index regardless of the banks rotation."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "75% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.61%) — the cross-market lean is up."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures +0.61% — the 14:30 US handoff argues for holding longs into the US open."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 0,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10742,
+        "orbLow": 10711,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10742.9,
+        "overnightLow": 10689.1,
+        "priorDayHigh": 10747.4,
+        "priorDayLow": 10661.6,
+        "gapPct": 0.32,
+        "adr14": 117.5,
+        "adrUsedPct": 75
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-25T22:58:39.517Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }

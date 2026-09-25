@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-09-25T19:43:27.506Z",
+  "generatedAt": "2026-09-25T22:58:30.894Z",
   "yields": {
-    "US10Y": 5.11,
-    "US2Y": 4.85,
-    "realYield10Y": 2.76,
-    "realYield5Y": 2.65,
-    "curve2s10s": 26,
-    "breakeven10Y": 2.33,
-    "breakeven5Y": 2.33,
-    "forward5y5y": 2.33,
+    "US10Y": 5.18,
+    "US2Y": 4.87,
+    "realYield10Y": 2.85,
+    "realYield5Y": 2.7,
+    "curve2s10s": 31,
+    "breakeven10Y": 2.34,
+    "breakeven5Y": 2.34,
+    "forward5y5y": 2.34,
     "dayOverDay": {
-      "US10Y": 0.15,
-      "US2Y": 0.14,
-      "realYield10Y": 0.13
+      "US10Y": 0.07,
+      "US2Y": 0.02,
+      "realYield10Y": 0.09
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-10-28",
-    "probCut": 4,
+    "probCut": 0,
     "probHold": 96,
-    "probHike": 0
+    "probHike": 4
   },
   "marketVolatility": {
     "GVZ": 23.59,
@@ -34,24 +34,24 @@
     "openInterestChange": -6163
   },
   "etfFlows": {
-    "gldTonnes": 1107.6,
-    "gldWoWChange": -4,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1109.8,
+    "gldWoWChange": 2.2,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4293.735,
-    "XAGUSD": 64.4795,
-    "EURUSD": 1.13976,
-    "USDJPY": 157.225,
-    "USDCHF": 0.8283,
-    "USDCNH": 6.72313,
-    "GBPUSD": 1.32534,
-    "USDCAD": 1.4145,
-    "USDSEK": 9.90597,
-    "US500": 7742.9,
-    "GER40": 25564.05,
-    "UK100": 10738.75,
-    "ADR_14day": 91.9,
+    "XAUUSD": 4285.095,
+    "XAGUSD": 64.3275,
+    "EURUSD": 1.13922,
+    "USDJPY": 157.333,
+    "USDCHF": 0.82864,
+    "USDCNH": 6.7233,
+    "GBPUSD": 1.32448,
+    "USDCAD": 1.41419,
+    "USDSEK": 9.91645,
+    "US500": 7745.4,
+    "GER40": 25566.85,
+    "UK100": 10745.25,
+    "ADR_14day": 91.7,
     "ADR_usedToday": 61.1,
     "goldSilverRatio": 66.6
   },
@@ -69,25 +69,19 @@
       "headline": "10-year Treasury yield hit a 19-year high—and some investors see opportunity to buy bonds",
       "source": "CNBC",
       "publishedAt": "2026-09-25T16:40:09.000Z",
-      "hoursAgo": 3.1
+      "hoursAgo": 6.3
     },
     {
       "headline": "Gold rises, but on track for weekly loss as Fed rate hike expectations build - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-25T02:23:00.000Z",
-      "hoursAgo": 17.3
+      "hoursAgo": 20.6
     },
     {
-      "headline": "Britain warns Iran it will not tolerate hostile activity on UK soil - reuters.com",
+      "headline": "Britain warns Iran it will not tolerate hostile activity on UK soil - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-24T23:01:00.000Z",
-      "hoursAgo": 20.7
-    },
-    {
-      "headline": "History shows financial calamities occur when rates rise rapidly like this: 'Something always breaks'",
-      "source": "CNBC",
-      "publishedAt": "2026-09-24T20:57:11.000Z",
-      "hoursAgo": 22.8
+      "hoursAgo": 24
     }
   ],
   "briefing": null
