@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-28T12:24:32.622Z",
+  "generatedAt": "2026-09-28T15:29:30.480Z",
   "yields": {
     "US10Y": 5.18,
     "US2Y": 4.87,
@@ -34,25 +34,25 @@
     "openInterestChange": -6163
   },
   "etfFlows": {
-    "gldTonnes": 1142.5,
-    "gldWoWChange": 32.7,
+    "gldTonnes": 1152.9,
+    "gldWoWChange": 10.4,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4162.67,
-    "XAGUSD": 61.641,
-    "EURUSD": 1.13764,
-    "USDJPY": 156.9775,
-    "USDCHF": 0.83187,
-    "USDCNH": 6.7137,
-    "GBPUSD": 1.3262,
-    "USDCAD": 1.41683,
-    "USDSEK": 9.94895,
-    "US500": 7718.6,
-    "GER40": 25492.75,
-    "UK100": 10749.25,
+    "XAUUSD": 4125.005,
+    "XAGUSD": 61.1225,
+    "EURUSD": 1.13705,
+    "USDJPY": 157.3975,
+    "USDCHF": 0.83174,
+    "USDCNH": 6.71363,
+    "GBPUSD": 1.32557,
+    "USDCAD": 1.41667,
+    "USDSEK": 9.95823,
+    "US500": 7682.5,
+    "GER40": 25441.15,
+    "UK100": 10702.65,
     "ADR_14day": 83.9,
-    "ADR_usedToday": 134.7,
+    "ADR_usedToday": 164.5,
     "goldSilverRatio": 67.5
   },
   "dollarLiquidity": {
@@ -66,28 +66,28 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "US, Iran set to hold separate talks with mediators on Monday or Tuesday, official says - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-28T13:49:45.000Z",
+      "hoursAgo": 1.7
+    },
+    {
       "headline": "COMMENTARY: Cash-rich oil majors face post-Iran strategy rethink - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-28T06:00:00.000Z",
-      "hoursAgo": 6.4
+      "hoursAgo": 9.5
     },
     {
       "headline": "Gold drops more than 2% on US rate-hike bets - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-28T01:41:00.000Z",
-      "hoursAgo": 10.7
+      "hoursAgo": 13.8
     },
     {
-      "headline": "Dollar steadies near two-month high as US-Iran stalemate lifts oil, Fed rate hike bets build - Reuters",
+      "headline": "Dollar near two-month high as US-Iran stalemate bolsters oil, Fed rate hike bets - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-28T01:35:00.000Z",
-      "hoursAgo": 10.8
-    },
-    {
-      "headline": "Stocks slip in Asia as oil and yields climb - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-28T00:50:00.000Z",
-      "hoursAgo": 11.6
+      "hoursAgo": 13.9
     }
   ],
   "briefing": null
