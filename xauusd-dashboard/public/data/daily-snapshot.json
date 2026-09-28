@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-25T22:58:30.894Z",
+  "generatedAt": "2026-09-28T12:24:32.622Z",
   "yields": {
     "US10Y": 5.18,
     "US2Y": 4.87,
@@ -34,26 +34,26 @@
     "openInterestChange": -6163
   },
   "etfFlows": {
-    "gldTonnes": 1109.8,
-    "gldWoWChange": 2.2,
+    "gldTonnes": 1142.5,
+    "gldWoWChange": 32.7,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4285.095,
-    "XAGUSD": 64.3275,
-    "EURUSD": 1.13922,
-    "USDJPY": 157.333,
-    "USDCHF": 0.82864,
-    "USDCNH": 6.7233,
-    "GBPUSD": 1.32448,
-    "USDCAD": 1.41419,
-    "USDSEK": 9.91645,
-    "US500": 7745.4,
-    "GER40": 25566.85,
-    "UK100": 10745.25,
-    "ADR_14day": 91.7,
-    "ADR_usedToday": 61.1,
-    "goldSilverRatio": 66.6
+    "XAUUSD": 4162.67,
+    "XAGUSD": 61.641,
+    "EURUSD": 1.13764,
+    "USDJPY": 156.9775,
+    "USDCHF": 0.83187,
+    "USDCNH": 6.7137,
+    "GBPUSD": 1.3262,
+    "USDCAD": 1.41683,
+    "USDSEK": 9.94895,
+    "US500": 7718.6,
+    "GER40": 25492.75,
+    "UK100": 10749.25,
+    "ADR_14day": 83.9,
+    "ADR_usedToday": 134.7,
+    "goldSilverRatio": 67.5
   },
   "dollarLiquidity": {
     "stlfsi": -0.9075,
@@ -66,22 +66,28 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "10-year Treasury yield hit a 19-year high—and some investors see opportunity to buy bonds",
-      "source": "CNBC",
-      "publishedAt": "2026-09-25T16:40:09.000Z",
-      "hoursAgo": 6.3
+      "headline": "COMMENTARY: Cash-rich oil majors face post-Iran strategy rethink - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-28T06:00:00.000Z",
+      "hoursAgo": 6.4
     },
     {
-      "headline": "Gold rises, but on track for weekly loss as Fed rate hike expectations build - Reuters",
+      "headline": "Gold drops more than 2% on US rate-hike bets - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-25T02:23:00.000Z",
-      "hoursAgo": 20.6
+      "publishedAt": "2026-09-28T01:41:00.000Z",
+      "hoursAgo": 10.7
     },
     {
-      "headline": "Britain warns Iran it will not tolerate hostile activity on UK soil - Reuters",
+      "headline": "Dollar steadies near two-month high as US-Iran stalemate lifts oil, Fed rate hike bets build - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-24T23:01:00.000Z",
-      "hoursAgo": 24
+      "publishedAt": "2026-09-28T01:35:00.000Z",
+      "hoursAgo": 10.8
+    },
+    {
+      "headline": "Stocks slip in Asia as oil and yields climb - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-28T00:50:00.000Z",
+      "hoursAgo": 11.6
     }
   ],
   "briefing": null
