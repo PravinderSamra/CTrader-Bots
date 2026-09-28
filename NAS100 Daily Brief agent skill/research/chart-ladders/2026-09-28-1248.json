@@ -1,0 +1,235 @@
+{
+ "schema": 1,
+ "generated_utc": "2026-09-28T12:48:00+00:00",
+ "spot": 30473.8,
+ "flip": 30680.2,
+ "bin_pts": 50,
+ "dte_max": 7,
+ "book": "week",
+ "net_total_$bn": -6.519,
+ "call_resistance": 30746.0,
+ "put_support": 30346.0,
+ "ranked_positive": [
+  {
+   "rank": "C1",
+   "price": 30196.0,
+   "net_$bn": 0.571,
+   "oi": 36685
+  },
+  {
+   "rank": "C2",
+   "price": 30946.0,
+   "net_$bn": 0.406,
+   "oi": 58199
+  },
+  {
+   "rank": "C3",
+   "price": 30746.0,
+   "net_$bn": 0.271,
+   "oi": 28091
+  }
+ ],
+ "ranked_negative": [
+  {
+   "rank": "P1",
+   "price": 30346.0,
+   "net_$bn": -3.061,
+   "oi": 143506
+  },
+  {
+   "rank": "P2",
+   "price": 30596.0,
+   "net_$bn": -1.24,
+   "oi": 42177
+  },
+  {
+   "rank": "P3",
+   "price": 30496.0,
+   "net_$bn": -0.934,
+   "oi": 27070
+  }
+ ],
+ "shadow": {
+  "scheme": "reach_window_0.6_adr",
+  "reach_pts": 269.0,
+  "ranked_positive": [],
+  "ranked_negative": [
+   {
+    "rank": "P1",
+    "price": 30346.0,
+    "net_$bn": -3.061,
+    "oi": 143506
+   },
+   {
+    "rank": "P2",
+    "price": 30596.0,
+    "net_$bn": -1.24,
+    "oi": 42177
+   },
+   {
+    "rank": "P3",
+    "price": 30496.0,
+    "net_$bn": -0.934,
+    "oi": 27070
+   }
+  ]
+ },
+ "ladder": [
+  {
+   "price": 31096.0,
+   "net_$bn": 0.0194,
+   "call_oi": 7177,
+   "put_oi": 2066
+  },
+  {
+   "price": 31046.0,
+   "net_$bn": 0.1131,
+   "call_oi": 15698,
+   "put_oi": 2773
+  },
+  {
+   "price": 30996.0,
+   "net_$bn": 0.0334,
+   "call_oi": 7546,
+   "put_oi": 3133
+  },
+  {
+   "price": 30946.0,
+   "net_$bn": 0.4061,
+   "call_oi": 58199,
+   "put_oi": 22828
+  },
+  {
+   "price": 30896.0,
+   "net_$bn": 0.0107,
+   "call_oi": 5534,
+   "put_oi": 6659
+  },
+  {
+   "price": 30846.0,
+   "net_$bn": 0.1201,
+   "call_oi": 8615,
+   "put_oi": 6111
+  },
+  {
+   "price": 30796.0,
+   "net_$bn": 0.0038,
+   "call_oi": 5790,
+   "put_oi": 8116
+  },
+  {
+   "price": 30746.0,
+   "net_$bn": 0.2712,
+   "call_oi": 28091,
+   "put_oi": 29850
+  },
+  {
+   "price": 30696.0,
+   "net_$bn": -0.481,
+   "call_oi": 3970,
+   "put_oi": 30094
+  },
+  {
+   "price": 30646.0,
+   "net_$bn": -0.0658,
+   "call_oi": 3735,
+   "put_oi": 8883
+  },
+  {
+   "price": 30596.0,
+   "net_$bn": -1.2397,
+   "call_oi": 3367,
+   "put_oi": 42177
+  },
+  {
+   "price": 30546.0,
+   "net_$bn": -0.5333,
+   "call_oi": 19995,
+   "put_oi": 26408
+  },
+  {
+   "price": 30496.0,
+   "net_$bn": -0.9344,
+   "call_oi": 3967,
+   "put_oi": 27070
+  },
+  {
+   "price": 30446.0,
+   "net_$bn": -0.2782,
+   "call_oi": 7534,
+   "put_oi": 8762
+  },
+  {
+   "price": 30396.0,
+   "net_$bn": -0.0789,
+   "call_oi": 2722,
+   "put_oi": 4640
+  },
+  {
+   "price": 30346.0,
+   "net_$bn": -3.0611,
+   "call_oi": 16992,
+   "put_oi": 143506
+  },
+  {
+   "price": 30296.0,
+   "net_$bn": -0.1411,
+   "call_oi": 2037,
+   "put_oi": 6502
+  },
+  {
+   "price": 30246.0,
+   "net_$bn": -0.5674,
+   "call_oi": 10323,
+   "put_oi": 43079
+  },
+  {
+   "price": 30196.0,
+   "net_$bn": 0.5709,
+   "call_oi": 36685,
+   "put_oi": 7394
+  },
+  {
+   "price": 30146.0,
+   "net_$bn": -0.3066,
+   "call_oi": 47678,
+   "put_oi": 71177
+  },
+  {
+   "price": 30096.0,
+   "net_$bn": 0.0093,
+   "call_oi": 1374,
+   "put_oi": 5645
+  },
+  {
+   "price": 30046.0,
+   "net_$bn": -0.0544,
+   "call_oi": 2024,
+   "put_oi": 9630
+  },
+  {
+   "price": 29996.0,
+   "net_$bn": 0.1144,
+   "call_oi": 20551,
+   "put_oi": 11686
+  },
+  {
+   "price": 29946.0,
+   "net_$bn": -0.3893,
+   "call_oi": 13898,
+   "put_oi": 61371
+  },
+  {
+   "price": 29896.0,
+   "net_$bn": -0.0362,
+   "call_oi": 1700,
+   "put_oi": 8405
+  },
+  {
+   "price": 29846.0,
+   "net_$bn": -0.0241,
+   "call_oi": 2002,
+   "put_oi": 7270
+  }
+ ]
+}
