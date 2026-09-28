@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-28T15:29:30.480Z",
+  "generatedAt": "2026-09-28T19:55:10.964Z",
   "yields": {
     "US10Y": 5.18,
     "US2Y": 4.87,
@@ -34,26 +34,26 @@
     "openInterestChange": -6163
   },
   "etfFlows": {
-    "gldTonnes": 1152.9,
-    "gldWoWChange": 10.4,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1153.2,
+    "gldWoWChange": 0.3,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4125.005,
-    "XAGUSD": 61.1225,
-    "EURUSD": 1.13705,
-    "USDJPY": 157.3975,
-    "USDCHF": 0.83174,
-    "USDCNH": 6.71363,
-    "GBPUSD": 1.32557,
-    "USDCAD": 1.41667,
-    "USDSEK": 9.95823,
-    "US500": 7682.5,
-    "GER40": 25441.15,
-    "UK100": 10702.65,
+    "XAUUSD": 4124.03,
+    "XAGUSD": 60.865,
+    "EURUSD": 1.13681,
+    "USDJPY": 157.4165,
+    "USDCHF": 0.83203,
+    "USDCNH": 6.71301,
+    "GBPUSD": 1.32549,
+    "USDCAD": 1.41766,
+    "USDSEK": 9.95968,
+    "US500": 7684.2,
+    "GER40": 25527.75,
+    "UK100": 10722.75,
     "ADR_14day": 83.9,
     "ADR_usedToday": 164.5,
-    "goldSilverRatio": 67.5
+    "goldSilverRatio": 67.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.9075,
@@ -66,28 +66,46 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Wall St declines as oil prices, Treasury yields remain elevated - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-28T18:48:36.000Z",
+      "hoursAgo": 1.1
+    },
+    {
+      "headline": "Feds can't withhold counterterrorism funds from states to force election admin changes, judge rules",
+      "source": "CNBC",
+      "publishedAt": "2026-09-28T18:41:51.000Z",
+      "hoursAgo": 1.2
+    },
+    {
       "headline": "US, Iran set to hold separate talks with mediators on Monday or Tuesday, official says - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-28T13:49:45.000Z",
-      "hoursAgo": 1.7
+      "publishedAt": "2026-09-28T18:08:38.000Z",
+      "hoursAgo": 1.8
+    },
+    {
+      "headline": "EU imposes sanctions over deportation of Ukrainian children to Russia - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-28T10:19:31.000Z",
+      "hoursAgo": 9.6
     },
     {
       "headline": "COMMENTARY: Cash-rich oil majors face post-Iran strategy rethink - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-28T06:00:00.000Z",
-      "hoursAgo": 9.5
+      "hoursAgo": 13.9
     },
     {
       "headline": "Gold drops more than 2% on US rate-hike bets - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-28T01:41:00.000Z",
-      "hoursAgo": 13.8
+      "hoursAgo": 18.2
     },
     {
-      "headline": "Dollar near two-month high as US-Iran stalemate bolsters oil, Fed rate hike bets - Reuters",
+      "headline": "Dollar flat as US-Iran stand-off lifts oil, yields - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-28T01:35:00.000Z",
-      "hoursAgo": 13.9
+      "hoursAgo": 18.3
     }
   ],
   "briefing": null

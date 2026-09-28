@@ -56,7 +56,29 @@
         "adr14": 118.3,
         "adrUsedPct": 46
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-09-28T19:55:20.875Z",
+        "fwd1hPct": 0.09,
+        "fwd3hPct": -0.44,
+        "toClosePct": -0.44,
+        "maxUpPct": 0.1,
+        "maxDownPct": -0.62,
+        "verdict": "RIGHT",
+        "signalVerdicts": [
+          {
+            "rule": "R2",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-09-28T15:29:44.842Z",
@@ -115,6 +137,65 @@
       },
       "outcome": {
         "resolvedAt": "2026-09-28T15:29:46.194Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
+    },
+    {
+      "at": "2026-09-28T19:55:17.791Z",
+      "londonTime": "20:55 BST",
+      "mode": "CLOSED",
+      "price": 10722.25,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — The obvious draw (PDL 10667.2) sits beyond what's left of a typical day's range — targets past it are stretch-only today.",
+      "signals": [
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10667.2) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -0.79% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -6,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10741.5,
+        "orbLow": 10713.8,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10748.1,
+        "overnightLow": 10707.7,
+        "priorDayHigh": 10755.4,
+        "priorDayLow": 10667.2,
+        "gapPct": -0.21,
+        "adr14": 118.3,
+        "adrUsedPct": 67
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-28T19:55:20.875Z",
         "fwd1hPct": null,
         "fwd3hPct": null,
         "toClosePct": 0,
