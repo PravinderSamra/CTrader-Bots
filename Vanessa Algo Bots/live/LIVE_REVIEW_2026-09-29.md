@@ -40,3 +40,21 @@ August size). Backtest expectation ≈ +1.6R over 8 trades with a spread of roug
 ## FTMO exposure
 Worst combined bot day so far ≈ −$594 (2026-09-16). At $300 per bot the bots' worst realistic day is ~0.6% of the
 account, far inside the 5% daily limit. The largest single loss in the period was manual (NEWS Trading, 2026-08-12, −$1,531.75).
+
+## Update after Vanessa's answers (same day)
+- 2026-09-11 08:30 US100 trade: confirmed manual news trade, mis-tagged.
+- 2026-08-25 09:44 US500 trade (70 lots): probably also a manual news trade. Treating it as manual, the US500 bot has
+  19 trades, −5.17R; a 19-trade stretch this bad occurs about **8%** of the time in the backtest. Normal bad luck.
+- US100 bot stop distances, checked against each trade's maximum favourable move:
+  | Date | Result (pts) | Best point in trade (pts) | Reading |
+  |---|---|---|---|
+  | 08-18 | −67.25 | n/a | 60-pt stop + slippage |
+  | 08-26 | −64.90 | never positive | 60-pt stop + slippage |
+  | 09-16 | −56.45 | never positive | 60-pt stop, entry filled a few points better than the signal price |
+  | 08-24 | −40.70 | +66.8 (≈1.1R) | stop had been tightened: consistent with early risk reduction |
+  | 09-22 | −44.65 | +66.0 (≈1.1R) | same |
+  | 09-03 | −38.39 in 63 s | +15.8 (≈0.26R) | not explained by risk reduction at ~1R; manual close or restart? |
+- So early risk reduction appears to be switched on live. In the five-year study it was only tested on 2026
+  (+$553 → +$844); the 2022–2025 check was never run, so the live configuration is not the proven one.
+- cTrader desktop freezes regularly and has to be restarted. While it is frozen or closed the bots are not running:
+  broker-side stops still protect open trades, but trailing, risk reduction, time exits and entries do not happen.
