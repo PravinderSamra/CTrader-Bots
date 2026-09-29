@@ -1108,7 +1108,7 @@ namespace cAlgo.Robots
  {
  var tz = TimeZoneInfo.FindSystemTimeZoneById(id);
  // Log once at startup for visibility.
- Print("SESSION_TIMEZONE resolved='{0}' id='{1}'", tz.DisplayName, id);
+ if (!TradesOnlyLog) Print("SESSION_TIMEZONE resolved='{0}' id='{1}'", tz.DisplayName, id);
  return tz;
  }
  catch
@@ -1117,7 +1117,7 @@ namespace cAlgo.Robots
  }
  }
 
- Print("WARNING: Could not resolve session timezone for {0}. Falling back to UTC.", zone);
+ if (!TradesOnlyLog) Print("WARNING: Could not resolve session timezone for {0}. Falling back to UTC.", zone);
  return TimeZoneInfo.Utc;
  }
 
@@ -1149,7 +1149,7 @@ namespace cAlgo.Robots
  }
  if (tz.IsAmbiguousTime(localDt))
  {
- Print("WARNING: Ambiguous time {0} in {1} (DST fall-back). Using standard-time interpretation.", localDt, tz.Id);
+ if (!TradesOnlyLog) Print("WARNING: Ambiguous time {0} in {1} (DST fall-back). Using standard-time interpretation.", localDt, tz.Id);
  }
  return TimeZoneInfo.ConvertTimeToUtc(localDt, tz);
  }
@@ -3123,14 +3123,14 @@ volumeInUnits = Symbol.NormalizeVolumeInUnits(volumeInUnits, RoundingMode.Down);
  if (VerboseLogging)
  {
  double spreadPts = (Symbol.Ask - Symbol.Bid) / _pointSize;
- Print("[{0}] ENTRY_DIAG symbol={1} side={2} volume={3} entry={4} sl={5} tp={6} riskPips={7:F2} spreadPts={8:F2} Account.Balance={9:F2} Account.Equity={10:F2} Account.Margin={11:F2} Account.FreeMargin={12:F2} Account.MarginLevel={13}",
+ if (!TradesOnlyLog) Print("[{0}] ENTRY_DIAG symbol={1} side={2} volume={3} entry={4} sl={5} tp={6} riskPips={7:F2} spreadPts={8:F2} Account.Balance={9:F2} Account.Equity={10:F2} Account.Margin={11:F2} Account.FreeMargin={12:F2} Account.MarginLevel={13}",
  BotLabelPrefix, SymbolName, tradeType, position.VolumeInUnits,
  entryPriceActual, slPriceApplied, tpPriceApplied, riskPipsApplied, spreadPts,
  Account.Balance, Account.Equity, Account.Margin, Account.FreeMargin,
  (!Account.MarginLevel.HasValue || double.IsNaN(Account.MarginLevel.Value) || double.IsInfinity(Account.MarginLevel.Value)) ? "N/A" : Account.MarginLevel.Value.ToString("F2"));
  if (EnableDebugLogging)
  {
- Print("[{0}] EXECUTION_RISK_DIAG enabled={1} slipAssumedPips={2:F1} maxLoss={3:F2}",
+ if (!TradesOnlyLog) Print("[{0}] EXECUTION_RISK_DIAG enabled={1} slipAssumedPips={2:F1} maxLoss={3:F2}",
  label, EnableExecutionRiskCap, AssumedStopSlippagePips, MaxLossPerTradeAccountCcy);
  }
  }
@@ -3895,7 +3895,7 @@ volumeInUnits = Symbol.NormalizeVolumeInUnits(volumeInUnits, RoundingMode.Down);
  try { commStr = pos.Commissions.ToString("F2"); } catch { commStr = "N/A"; }
  try { swapStr = pos.Swap.ToString("F2"); } catch { swapStr = "N/A"; }
 
- Print("[{0}] CLOSE_DIAG label={1} reason={2} net={3:F2} gross={4:F2} commission={5} swap={6} pips={7:F1} entry={8} balance={9:F2} equity={10:F2} margin={11:F2} freeMargin={12:F2} marginLevel={13}",
+ if (!TradesOnlyLog) Print("[{0}] CLOSE_DIAG label={1} reason={2} net={3:F2} gross={4:F2} commission={5} swap={6} pips={7:F1} entry={8} balance={9:F2} equity={10:F2} margin={11:F2} freeMargin={12:F2} marginLevel={13}",
  BotLabelPrefix, pos.Label, args.Reason,
  pos.NetProfit, pos.GrossProfit, commStr, swapStr,
  pos.Pips, pos.EntryPrice,
