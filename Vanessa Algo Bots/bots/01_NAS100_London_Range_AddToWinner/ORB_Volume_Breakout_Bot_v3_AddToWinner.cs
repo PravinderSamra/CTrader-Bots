@@ -582,8 +582,9 @@ namespace cAlgo.Robots
  [Parameter("Bot Label Prefix", Group = "Diagnostics", DefaultValue = "ORBVA")]
  public string BotLabelPrefix { get; set; }
 
- // v3.0: for long backtests. Hides only the repeating "VOLUME FILTER ... rejected" and
- // "ENTRY BLOCKED" warnings, which can fill cTrader's log in days. Trading is unaffected.
+ // v3.0: for long backtests. Hides the repeating "VOLUME FILTER ... rejected" and "ENTRY BLOCKED"
+ // warnings and shows every other warning at most 3 times a day, so a multi-year log is not cut off.
+ // "ADD TO WINNER" lines are never hidden. Trading is unaffected.
  [Parameter("Quiet Log (hide repeated warnings)", Group = "Diagnostics", DefaultValue = false)]
  public bool QuietLog { get; set; }
 
@@ -4279,9 +4280,23 @@ volumeInUnits = Symbol.NormalizeVolumeInUnits(volumeInUnits, RoundingMode.Down);
  PrintWithPrefix("ERROR: ", message, args);
  }
 
+ // v3.0 Quiet Log: per-day count of each warning template.
+ private readonly Dictionary<string, int> _quietWarnCounts = new Dictionary<string, int>();
+ private DateTime _quietWarnDay = DateTime.MinValue;
+
  private void LogWarn(string message, params object[] args)
  {
- if (QuietLog && (message.StartsWith("VOLUME FILTER") || message.StartsWith("ENTRY BLOCKED"))) return;
+ if (QuietLog && !message.StartsWith("ADD TO WINNER"))
+ {
+ if (message.StartsWith("VOLUME FILTER") || message.StartsWith("ENTRY BLOCKED")) return;
+ // Any other warning (e.g. "Trend filter blocked", which repeats every second) prints at most 3 times a day.
+ DateTime day = Server.Time.Date;
+ if (day != _quietWarnDay) { _quietWarnDay = day; _quietWarnCounts.Clear(); }
+ int n;
+ _quietWarnCounts.TryGetValue(message, out n);
+ _quietWarnCounts[message] = n + 1;
+ if (n >= 3) return;
+ }
  PrintWithPrefix("WARNING: ", message, args);
  }
 

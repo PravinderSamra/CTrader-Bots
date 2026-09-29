@@ -63,3 +63,7 @@ That was an estimate from where each trade finished; the backtests above are the
 - **Your live risk reduction** (seen in the log): stop moved to leave **70% of the risk at +0.75R**, so only 0.3R is
   removed. At Add Size 1.0 the add is therefore small (about 0.18x the original size at a 1.0R trigger).
   Add Size 2.0 or 3.0 may be more informative here; the Max Total Risk cap (default 2.0x) still applies.
+
+- **Quiet Log update (v3.0.2):** it now also caps every other warning at 3 per day (e.g. the catch-up
+  "Trend filter blocked" warning, which repeated every second and cut a 2021 log off in August).
+  `ADD TO WINNER` lines are never hidden. Re-copy the bot from `main` and rebuild before re-running.
