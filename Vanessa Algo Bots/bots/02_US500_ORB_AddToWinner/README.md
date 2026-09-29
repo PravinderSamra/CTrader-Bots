@@ -33,3 +33,7 @@ So on US500 it is worth testing **Add Trigger R = 1.0 and 1.2** as well as the A
 - **Use the same data setting for every run** (tick data *or* 1-minute bars, not a mix).
 - **Set "Quiet Log (hide repeated warnings)" = Yes** (Diagnostics group) so a multi-year log is not cut off by
   repeated warnings. Trading is unaffected. For the match check, compare the backtest summary numbers.
+
+- **Quiet Log update (v3.0.2):** it now also caps every other warning at 3 per day (e.g. the catch-up
+  "Trend filter blocked" warning, which repeated every second and cut a 2021 log off in August).
+  `ADD TO WINNER` lines are never hidden. Re-copy the bot from `main` and rebuild before re-running.
