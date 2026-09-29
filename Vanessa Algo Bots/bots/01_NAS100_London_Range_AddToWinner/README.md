@@ -67,3 +67,7 @@ That was an estimate from where each trade finished; the backtests above are the
 - **Quiet Log update (v3.0.2):** it now also caps every other warning at 3 per day (e.g. the catch-up
   "Trend filter blocked" warning, which repeated every second and cut a 2021 log off in August).
   `ADD TO WINNER` lines are never hidden. Re-copy the bot from `main` and rebuild before re-running.
+- **Trades-Only Log (v3.0.3), for multi-year backtests:** cTrader's log window holds only about 2,300 lines,
+  so even a quiet 2021–2026 log is cut off in the first year. Set **"Trades-Only Log (one line per trade)" = Yes**:
+  the bot then prints one `T|…` line per closed position (main trades and adds) and nothing else except errors.
+  About 1,000 lines for 2021–2026, well under the limit. Trading is unaffected.
