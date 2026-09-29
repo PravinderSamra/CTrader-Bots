@@ -28,3 +28,8 @@ So on US500 it is worth testing **Add Trigger R = 1.0 and 1.2** as well as the A
 2. **Enable Add To Winner = No** first: the result must match your original backtest.
 3. Then Add Size **1.0, 1.5, 2.0**, each with Add Trigger R **1.0** and **1.2** (six runs).
 4. Send me the logs; every add prints an `ADD TO WINNER:` line.
+
+## Before you run (added after the first match check)
+- **Use the same data setting for every run** (tick data *or* 1-minute bars, not a mix).
+- **Set "Quiet Log (hide repeated warnings)" = Yes** (Diagnostics group) so a multi-year log is not cut off by
+  repeated warnings. Trading is unaffected. For the match check, compare the backtest summary numbers.

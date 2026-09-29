@@ -52,3 +52,14 @@ after an add now costs more than it used to.
 From the 2022–2026 logs with risk reduction at 1R / 50%: a one-third-size add at +1R (Add Size 1.0) would have added
 about **+28R** over 399 trades (+16R in the worst case), positive in every year (+5.4R to +6.2R each).
 That was an estimate from where each trade finished; the backtests above are the real test.
+
+## Before you run (added after the first match check)
+- **Use the same data setting for every run**, original and v3 alike (tick data *or* 1-minute bars, not a mix).
+  The first check compared a tick-data run with a 1-minute-bar run, so the results could not match.
+- **Set "Quiet Log (hide repeated warnings)" = Yes** (Diagnostics group). It hides only the repeating
+  "VOLUME FILTER … rejected" and "ENTRY BLOCKED" lines, which filled cTrader's log within days. Trading is unaffected.
+  The original bot has no such setting, so for the match check compare the backtest **summary** (trades, net profit,
+  max drawdown) rather than the log.
+- **Your live risk reduction** (seen in the log): stop moved to leave **70% of the risk at +0.75R**, so only 0.3R is
+  removed. At Add Size 1.0 the add is therefore small (about 0.18x the original size at a 1.0R trigger).
+  Add Size 2.0 or 3.0 may be more informative here; the Max Total Risk cap (default 2.0x) still applies.
