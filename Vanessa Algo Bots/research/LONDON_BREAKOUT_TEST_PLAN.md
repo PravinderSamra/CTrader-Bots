@@ -29,3 +29,9 @@ net mean R at base cost among those with >= 150 trades (tie: the smaller stop). 
 2. positive in each calendar half-year of the test period, allowing at most one negative half-year;
 3. still positive after removing the 5 best trades;
 4. still positive at the stress cost.
+
+## Amendment 1 (2026-09-29, after the gold run, before any EURUSD result was seen)
+The gold 1-minute tick volume from this cTrader feed is capped (maximum per minute fell from ~520 to 240 by 2026),
+so on busy mornings every bar sits at the cap and the 1.2x volume test cannot pass. Before running EURUSD:
+check its 5-minute tick volume for the same cap (a hard ceiling that many bars sit on, in any quarter).
+If capped, the volume filter is dropped for EURUSD over the whole period, training and test alike. Nothing else changes.
