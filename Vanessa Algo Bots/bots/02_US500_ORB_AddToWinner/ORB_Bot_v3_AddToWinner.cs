@@ -494,6 +494,11 @@ namespace cAlgo.Robots
  [Parameter("Bot Label Prefix", Group = "Diagnostics", DefaultValue = "ORBA")]
  public string BotLabelPrefix { get; set; }
 
+ // v3.0: for long backtests. Hides only the repeating "VOLUME FILTER ... rejected" and
+ // "ENTRY BLOCKED" warnings, which can fill cTrader's log in days. Trading is unaffected.
+ [Parameter("Quiet Log (hide repeated warnings)", Group = "Diagnostics", DefaultValue = false)]
+ public bool QuietLog { get; set; }
+
  [Parameter("Enable Debug Logging", Group = "Diagnostics", DefaultValue = true)]
  public bool EnableDebugLogging { get; set; }
 
@@ -4054,6 +4059,7 @@ volumeInUnits = Symbol.NormalizeVolumeInUnits(volumeInUnits, RoundingMode.Down);
 
  private void LogWarn(string message, params object[] args)
  {
+ if (QuietLog && (message.StartsWith("VOLUME FILTER") || message.StartsWith("ENTRY BLOCKED"))) return;
  PrintWithPrefix("WARNING: ", message, args);
  }
 
