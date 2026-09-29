@@ -500,6 +500,11 @@ namespace cAlgo.Robots
  [Parameter("Quiet Log (hide repeated warnings)", Group = "Diagnostics", DefaultValue = false)]
  public bool QuietLog { get; set; }
 
+ // v3.0: for multi-year backtests. cTrader's log window holds only ~2,300 lines, so this prints ONE line
+ // per closed position (main trades and adds) and nothing else except errors. Trading is unaffected.
+ [Parameter("Trades-Only Log (one line per trade)", Group = "Diagnostics", DefaultValue = false)]
+ public bool TradesOnlyLog { get; set; }
+
  [Parameter("Enable Debug Logging", Group = "Diagnostics", DefaultValue = true)]
  public bool EnableDebugLogging { get; set; }
 
@@ -3636,6 +3641,13 @@ volumeInUnits = Symbol.NormalizeVolumeInUnits(volumeInUnits, RoundingMode.Down);
  var pos = args.Position;
  if (!IsBotPosition(pos)) return;
 
+ // v3.0 Trades-Only Log: one machine-readable line per closed position.
+ // T|open time|close time|label|side|volume|entry|net P/L|pips|reason|balance
+ if (TradesOnlyLog)
+ Print("T|{0:yyyy-MM-dd HH:mm:ss}|{1:yyyy-MM-dd HH:mm:ss}|{2}|{3}|{4}|{5}|{6:F2}|{7:F1}|{8}|{9:F2}",
+ pos.EntryTime, Server.Time, pos.Label, pos.TradeType, pos.VolumeInUnits, pos.EntryPrice,
+ pos.NetProfit, pos.Pips, args.Reason, Account.Balance);
+
  // v3.0: an add closing must not change the main trade's close reason (re-entry logic).
  if (!IsAddPosition(pos))
  {
@@ -4080,6 +4092,7 @@ volumeInUnits = Symbol.NormalizeVolumeInUnits(volumeInUnits, RoundingMode.Down);
 
  private void PrintWithPrefix(string levelPrefix, string message, params object[] args)
  {
+ if (TradesOnlyLog && levelPrefix != "ERROR: ") return;
  string formatted;
  if (args != null && args.Length > 0)
  {
