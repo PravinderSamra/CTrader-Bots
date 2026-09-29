@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-09-28T19:55:10.964Z",
+  "generatedAt": "2026-09-29T00:03:59.899Z",
   "yields": {
-    "US10Y": 5.18,
-    "US2Y": 4.87,
-    "realYield10Y": 2.85,
-    "realYield5Y": 2.7,
-    "curve2s10s": 31,
+    "US10Y": 5.17,
+    "US2Y": 4.81,
+    "realYield10Y": 2.83,
+    "realYield5Y": 2.64,
+    "curve2s10s": 36,
     "breakeven10Y": 2.34,
-    "breakeven5Y": 2.34,
-    "forward5y5y": 2.34,
+    "breakeven5Y": 2.33,
+    "forward5y5y": 2.35,
     "dayOverDay": {
-      "US10Y": 0.07,
-      "US2Y": 0.02,
-      "realYield10Y": 0.09
+      "US10Y": -0.01,
+      "US2Y": -0.06,
+      "realYield10Y": -0.02
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-10-28",
     "probCut": 0,
-    "probHold": 96,
-    "probHike": 4
+    "probHold": 84,
+    "probHike": 16
   },
   "marketVolatility": {
     "GVZ": 23.59,
@@ -35,26 +35,10 @@
   },
   "etfFlows": {
     "gldTonnes": 1153.2,
-    "gldWoWChange": 0.3,
-    "trend3W": "FLAT"
+    "gldWoWChange": null,
+    "trend3W": null
   },
-  "snapshotPrices": {
-    "XAUUSD": 4124.03,
-    "XAGUSD": 60.865,
-    "EURUSD": 1.13681,
-    "USDJPY": 157.4165,
-    "USDCHF": 0.83203,
-    "USDCNH": 6.71301,
-    "GBPUSD": 1.32549,
-    "USDCAD": 1.41766,
-    "USDSEK": 9.95968,
-    "US500": 7684.2,
-    "GER40": 25527.75,
-    "UK100": 10722.75,
-    "ADR_14day": 83.9,
-    "ADR_usedToday": 164.5,
-    "goldSilverRatio": 67.8
-  },
+  "snapshotPrices": null,
   "dollarLiquidity": {
     "stlfsi": -0.9075,
     "nfci": -0.555
@@ -66,46 +50,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Wall St declines as oil prices, Treasury yields remain elevated - Reuters",
+      "headline": "US, Iran separately talk with mediators in latest bid to end war - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-28T18:48:36.000Z",
-      "hoursAgo": 1.1
+      "publishedAt": "2026-09-28T22:42:23.000Z",
+      "hoursAgo": 1.4
+    },
+    {
+      "headline": "Stocks fall as higher oil prices, Treasury yields weigh - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-28T20:38:51.000Z",
+      "hoursAgo": 3.4
+    },
+    {
+      "headline": "EXCLUSIVE: US to grant sanctions waiver for flights between Iran and Iraq's Najaf, source says - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-28T20:31:13.000Z",
+      "hoursAgo": 3.5
     },
     {
       "headline": "Feds can't withhold counterterrorism funds from states to force election admin changes, judge rules",
       "source": "CNBC",
       "publishedAt": "2026-09-28T18:41:51.000Z",
-      "hoursAgo": 1.2
-    },
-    {
-      "headline": "US, Iran set to hold separate talks with mediators on Monday or Tuesday, official says - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-28T18:08:38.000Z",
-      "hoursAgo": 1.8
+      "hoursAgo": 5.4
     },
     {
       "headline": "EU imposes sanctions over deportation of Ukrainian children to Russia - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-28T10:19:31.000Z",
-      "hoursAgo": 9.6
+      "hoursAgo": 13.7
     },
     {
       "headline": "COMMENTARY: Cash-rich oil majors face post-Iran strategy rethink - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-28T06:00:00.000Z",
-      "hoursAgo": 13.9
+      "hoursAgo": 18.1
     },
     {
-      "headline": "Gold drops more than 2% on US rate-hike bets - Reuters",
+      "headline": "Gold hits seven-week low as oil surge fuels rate hike bets - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-28T01:41:00.000Z",
-      "hoursAgo": 18.2
+      "hoursAgo": 22.4
     },
     {
       "headline": "Dollar flat as US-Iran stand-off lifts oil, yields - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-28T01:35:00.000Z",
-      "hoursAgo": 18.3
+      "hoursAgo": 22.5
     }
   ],
   "briefing": null
