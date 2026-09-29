@@ -100,6 +100,70 @@
         "adrUsedPct": 53
       },
       "outcome": null
+    },
+    {
+      "at": "2026-09-29T14:05:28.968Z",
+      "londonTime": "15:05 BST",
+      "mode": "POST_ORB",
+      "price": 10677.05,
+      "stance": "FADE_FAVOURED",
+      "stanceLine": "Fade day — the ORB break was a trap — ORB broke UP but price has fully reclaimed the range (back below 10704.1) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "STRUCTURE",
+          "rule": "R1",
+          "text": "ORB broke UP but price has fully reclaimed the range (back below 10704.1) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "81% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 11th percentile of its 20-day range and falling — a weak-GBP tailwind for the index's dollar earners."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "INFO",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "US PCE Price Index prints tomorrow 13:30 BST — late-session moves today are as likely pre-event de-risking as conviction."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10728.6,
+        "orbLow": 10704.1,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10758.3,
+        "overnightLow": 10704.1,
+        "priorDayHigh": 10762.4,
+        "priorDayLow": 10682.8,
+        "gapPct": -0.47,
+        "adr14": 117.6,
+        "adrUsedPct": 81
+      },
+      "outcome": null
     }
   ]
 }
