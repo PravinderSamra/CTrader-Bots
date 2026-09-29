@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-29T14:05:17.642Z",
+  "generatedAt": "2026-09-29T17:19:02.664Z",
   "yields": {
     "US10Y": 5.17,
     "US2Y": 4.81,
@@ -34,26 +34,26 @@
     "openInterestChange": -6163
   },
   "etfFlows": {
-    "gldTonnes": 1141.7,
-    "gldWoWChange": -11.5,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1146.8,
+    "gldWoWChange": 5.1,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4165.505,
-    "XAGUSD": 61.0285,
-    "EURUSD": 1.13449,
-    "USDJPY": 157.383,
-    "USDCHF": 0.83359,
-    "USDCNH": 6.70744,
-    "GBPUSD": 1.32295,
-    "USDCAD": 1.41872,
-    "USDSEK": 9.9795,
-    "US500": 7682.5,
-    "GER40": 25548.05,
-    "UK100": 10678.05,
+    "XAUUSD": 4147.035,
+    "XAGUSD": 60.8235,
+    "EURUSD": 1.13168,
+    "USDJPY": 157.4365,
+    "USDCHF": 0.83561,
+    "USDCNH": 6.71051,
+    "GBPUSD": 1.32095,
+    "USDCAD": 1.41974,
+    "USDSEK": 10.02855,
+    "US500": 7657.1,
+    "GER40": 25367.05,
+    "UK100": 10615.05,
     "ADR_14day": 91.2,
-    "ADR_usedToday": 52,
-    "goldSilverRatio": 68.3
+    "ADR_usedToday": 61.9,
+    "goldSilverRatio": 68.2
   },
   "dollarLiquidity": {
     "stlfsi": -0.9075,
@@ -66,52 +66,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Battered bond market braces for a new era of interest rates - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-29T16:12:46.000Z",
+      "hoursAgo": 1.1
+    },
+    {
+      "headline": "Cramer weighs in on Goldman amid CEO succession talks — plus, Boeing bounces back",
+      "source": "CNBC",
+      "publishedAt": "2026-09-29T16:08:12.000Z",
+      "hoursAgo": 1.2
+    },
+    {
       "headline": "Investors who have shunned diversification face maybe the best buying opportunity for bonds in decades",
       "source": "CNBC",
       "publishedAt": "2026-09-29T13:22:56.000Z",
-      "hoursAgo": 0.7
+      "hoursAgo": 3.9
     },
     {
       "headline": "Coinbase Ventures and CMCC Global close strategic funding round with trading firm Raven",
       "source": "CNBC",
       "publishedAt": "2026-09-29T13:05:06.000Z",
-      "hoursAgo": 1
+      "hoursAgo": 4.2
     },
     {
-      "headline": "Trump denies offering Iran sanctions relief, Tehran says ready for talks - Reuters",
+      "headline": "Trump denies offering Iran sanctions relief, Tehran says it is ready for talks - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-29T06:45:00.000Z",
-      "hoursAgo": 7.3
-    },
-    {
-      "headline": "Battered bond market braces for a new era of interest rates - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-29T04:47:00.000Z",
-      "hoursAgo": 9.3
+      "hoursAgo": 10.6
     },
     {
       "headline": "Trump denies offering Iran sanctions relief for nuclear concessions - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-29T03:15:00.000Z",
-      "hoursAgo": 10.8
+      "hoursAgo": 14.1
     },
     {
-      "headline": "Gold ticks up after hitting over 7-week low; US data in focus - Reuters",
+      "headline": "Gold ticks up after hitting over 7-week low; US data in focus - reuters.com",
       "source": "Reuters",
       "publishedAt": "2026-09-29T02:59:00.000Z",
-      "hoursAgo": 11.1
+      "hoursAgo": 14.3
     },
     {
       "headline": "Dollar firms near two-month peak as oil, US yields rise; jobs data looms - reuters.com",
       "source": "Reuters",
       "publishedAt": "2026-09-29T01:57:00.000Z",
-      "hoursAgo": 12.1
-    },
-    {
-      "headline": "Stocks fall as higher oil prices, Treasury yields weigh - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-28T23:16:32.000Z",
-      "hoursAgo": 14.8
+      "hoursAgo": 15.4
     }
   ],
   "briefing": null
