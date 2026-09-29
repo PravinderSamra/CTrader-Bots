@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-29T00:03:59.899Z",
+  "generatedAt": "2026-09-29T11:50:11.991Z",
   "yields": {
     "US10Y": 5.17,
     "US2Y": 4.81,
@@ -38,7 +38,23 @@
     "gldWoWChange": null,
     "trend3W": null
   },
-  "snapshotPrices": null,
+  "snapshotPrices": {
+    "XAUUSD": 4155.99,
+    "XAGUSD": 61.0045,
+    "EURUSD": 1.13507,
+    "USDJPY": 157.169,
+    "USDCHF": 0.83333,
+    "USDCNH": 6.70409,
+    "GBPUSD": 1.32443,
+    "USDCAD": 1.41847,
+    "USDSEK": 9.97288,
+    "US500": 7707.7,
+    "GER40": 25623.85,
+    "UK100": 10719.15,
+    "ADR_14day": 91.2,
+    "ADR_usedToday": 48.1,
+    "goldSilverRatio": 68.1
+  },
   "dollarLiquidity": {
     "stlfsi": -0.9075,
     "nfci": -0.555
@@ -50,52 +66,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "US, Iran separately talk with mediators in latest bid to end war - Reuters",
+      "headline": "Trump denies offering Iran sanctions relief, Tehran says ready for talks - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-28T22:42:23.000Z",
-      "hoursAgo": 1.4
+      "publishedAt": "2026-09-29T06:45:00.000Z",
+      "hoursAgo": 5.1
+    },
+    {
+      "headline": "Battered bond market braces for a new era of interest rates - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-29T04:47:00.000Z",
+      "hoursAgo": 7.1
+    },
+    {
+      "headline": "Trump denies offering Iran sanctions relief for nuclear concessions - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-29T03:15:00.000Z",
+      "hoursAgo": 8.6
+    },
+    {
+      "headline": "Gold ticks up after hitting over 7-week low; US data in focus - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-29T02:59:00.000Z",
+      "hoursAgo": 8.9
+    },
+    {
+      "headline": "Dollar firms near two-month peak as oil, US yields rise; jobs data looms - reuters.com",
+      "source": "Reuters",
+      "publishedAt": "2026-09-29T01:57:00.000Z",
+      "hoursAgo": 9.9
     },
     {
       "headline": "Stocks fall as higher oil prices, Treasury yields weigh - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-28T20:38:51.000Z",
-      "hoursAgo": 3.4
-    },
-    {
-      "headline": "EXCLUSIVE: US to grant sanctions waiver for flights between Iran and Iraq's Najaf, source says - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-28T20:31:13.000Z",
-      "hoursAgo": 3.5
+      "publishedAt": "2026-09-28T23:16:32.000Z",
+      "hoursAgo": 12.6
     },
     {
       "headline": "Feds can't withhold counterterrorism funds from states to force election admin changes, judge rules",
       "source": "CNBC",
       "publishedAt": "2026-09-28T18:41:51.000Z",
-      "hoursAgo": 5.4
+      "hoursAgo": 17.1
     },
     {
-      "headline": "EU imposes sanctions over deportation of Ukrainian children to Russia - Reuters",
+      "headline": "EXCLUSIVE: US to grant sanctions waiver for flights between Iran and Iraq's Najaf, source says - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-28T10:19:31.000Z",
-      "hoursAgo": 13.7
-    },
-    {
-      "headline": "COMMENTARY: Cash-rich oil majors face post-Iran strategy rethink - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-28T06:00:00.000Z",
+      "publishedAt": "2026-09-28T17:45:00.000Z",
       "hoursAgo": 18.1
-    },
-    {
-      "headline": "Gold hits seven-week low as oil surge fuels rate hike bets - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-28T01:41:00.000Z",
-      "hoursAgo": 22.4
-    },
-    {
-      "headline": "Dollar flat as US-Iran stand-off lifts oil, yields - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-28T01:35:00.000Z",
-      "hoursAgo": 22.5
     }
   ],
   "briefing": null

@@ -35,6 +35,70 @@
         "adr14": 118.3,
         "adrUsedPct": 67
       },
+      "outcome": {
+        "resolvedAt": "2026-09-29T11:50:21.453Z",
+        "fwd1hPct": -0.05,
+        "fwd3hPct": -0.15,
+        "toClosePct": -0.08,
+        "maxUpPct": 0.28,
+        "maxDownPct": -0.31,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-29T11:50:18.659Z",
+      "londonTime": "12:50 BST",
+      "mode": "POST_ORB",
+      "price": 10719.75,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — FTSE is tracking a firmer European tape (Euro Stoxx +0.35%) — the cross-market lean is up.",
+      "signals": [
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.35%) — the cross-market lean is up."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 11th percentile of its 20-day range and falling — a weak-GBP tailwind for the index's dollar earners."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10728.6,
+        "orbLow": 10704.1,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10758.3,
+        "overnightLow": 10704.1,
+        "priorDayHigh": 10762.4,
+        "priorDayLow": 10682.8,
+        "gapPct": -0.08,
+        "adr14": 117.6,
+        "adrUsedPct": 53
+      },
       "outcome": null
     }
   ]
