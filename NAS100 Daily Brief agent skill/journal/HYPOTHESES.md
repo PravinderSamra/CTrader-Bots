@@ -5044,3 +5044,77 @@ Proposed when someone has the go-ahead:
    options fields AND the direction call.
 
 Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+
+---
+
+## D23 CORRECTED — the fault was the CONVERSION, not the chain; and the offset was 305pts wrong
+
+**Supersedes the D23 entry above, which is wrong in two places.** Left in place
+rather than rewritten, per append-only; this is the account to use.
+
+### Correction 1 — the chain was ONE session stale, not two
+
+The chain was stamped `2026-09-23 03:44:16`, i.e. before Wednesday's session, so
+its open interest was **Tuesday's close**. On a Thursday scan the right book is
+Wednesday's close. That is **one** session stale. The *quote* (`last_trade_time
+2026-09-22T16:14:59`) was two sessions stale. D23 conflated the two.
+
+A one-session-old OI book is a mild defect. It is not what broke the board.
+
+### Correction 2 — the -276.3 offset was not "a guard doing what it could"
+
+It was a **305-point error**, and it is the whole story.
+
+`NQ=F` had rolled to the **December contract**, which carries a **+291.2**
+premium over cash (measured at Wednesday's close: NQ 30,761.5 vs NDX 30,470.3).
+The brief anchored its NDX reference to Wednesday's frozen cash close instead of
+rolling forward, so it read the futures premium as a collapse in the CFD basis.
+
+The arithmetic, from the live feeds that afternoon:
+
+```
+CFD 30,245.0   NQ 30,507.5   CFD-NQ  -262.5
+premium P                            +291.2
+strike -> chart offset = P + (CFD-NQ) = +28.7      <- correct
+published offset                      -276.3      <- what shipped
+error                                  305.0 pts
+```
+
+**+28.7 is the ordinary basis** — the same 8-33pt range seen every other day
+that week. Nothing unusual happened to the CFD at all. Every published level was
+~305pts too low: the CALL WALL printed at 30,223.7 actually sat at **30,526**,
+and the session high of 30,542.8 came within **14pts** of it. The wall was
+tested and the board pointed 300pts away from it.
+
+### The real lesson: D6 fired and was talked out of it
+
+The 40pt tripwire **did** trigger at -276.3. It was overridden because the basis
+label read `live_cash_divergence_corrected`, which sounds like a guard that
+handled it. A label is not a check.
+
+**The check that works, and it is cheap.** Compare the brief's NDX reference
+against futures-minus-premium:
+
+| date | brief ref | futures-implied | gap | verdict |
+|---|---|---|---|---|
+| 2026-09-24 | 30,470.3 | ~30,214 | **+256** | broken |
+| 2026-09-28 | 30,427.9 | 30,420.0 | **+7.9** | fine, despite a 45.9pt offset |
+
+Run live on 09-28, when the offset was 45.9 and past the D6 line: the
+cross-check cleared it in one call. **It separates a genuine large basis from a
+broken conversion, which a fixed threshold cannot.** Propose it as the D6
+replacement: gate on reference-vs-futures agreement, not on offset magnitude.
+
+Caveat: the premium is measured at the last cash close and decays toward expiry,
+so it needs re-measuring rather than hard-coding, and it will shift at each
+quarterly roll — which is exactly the event that caused this.
+
+### Quarantine still required for 2026-09-24
+
+Unchanged from D23 and now better justified: the options fields AND the
+direction call must be excluded. Every level was 305pts out, and gamma supplied
++2 of the +3 score. Fuel, rates, breadth and news are independent of CBOE and
+stand. The 09-23 review's pre-registered D21 test remains void — its trigger was
+computed from this board.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
