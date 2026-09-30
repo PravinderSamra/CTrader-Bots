@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-29T21:40:31.311Z",
+  "generatedAt": "2026-09-30T11:36:49.885Z",
   "yields": {
     "US10Y": 5.24,
     "US2Y": 4.92,
@@ -34,26 +34,26 @@
     "openInterestChange": -6163
   },
   "etfFlows": {
-    "gldTonnes": 1137.1,
-    "gldWoWChange": -9.7,
+    "gldTonnes": 1135.6,
+    "gldWoWChange": -1.5,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4182.155,
-    "XAGUSD": 61.4805,
-    "EURUSD": 1.13432,
-    "USDJPY": 157.3,
-    "USDCHF": 0.834,
-    "USDCNH": 6.70899,
-    "GBPUSD": 1.32286,
-    "USDCAD": 1.41898,
-    "USDSEK": 9.98775,
-    "US500": 7682.1,
-    "GER40": 25457.85,
-    "UK100": 10654.95,
-    "ADR_14day": 91.2,
-    "ADR_usedToday": 72,
-    "goldSilverRatio": 68
+    "XAUUSD": 4187.91,
+    "XAGUSD": 60.7195,
+    "EURUSD": 1.13563,
+    "USDJPY": 157.037,
+    "USDCHF": 0.8342,
+    "USDCNH": 6.7073,
+    "GBPUSD": 1.32906,
+    "USDCAD": 1.41779,
+    "USDSEK": 9.97795,
+    "US500": 7677.5,
+    "GER40": 25369.45,
+    "UK100": 10650.35,
+    "ADR_14day": 89.6,
+    "ADR_usedToday": 36.8,
+    "goldSilverRatio": 69
   },
   "dollarLiquidity": {
     "stlfsi": -0.9075,
@@ -66,52 +66,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Holiday retail sales are expected to top $1 trillion as inflation boosts growth",
+      "source": "CNBC",
+      "publishedAt": "2026-09-30T11:30:01.000Z",
+      "hoursAgo": 0.1
+    },
+    {
+      "headline": "US, Iran separately talk with mediators in latest bid to end war - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-30T01:45:59.000Z",
+      "hoursAgo": 9.8
+    },
+    {
       "headline": "US imposes sanctions on 13 tied to Iran weapons procurement - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-29T21:03:51.000Z",
-      "hoursAgo": 0.6
+      "hoursAgo": 14.5
     },
     {
       "headline": "Goldman Sachs CEO succession planning faces one big problem",
       "source": "CNBC",
       "publishedAt": "2026-09-29T20:50:10.000Z",
-      "hoursAgo": 0.8
+      "hoursAgo": 14.8
+    },
+    {
+      "headline": "Somali pirates killed 5 crew members of hijacked tanker before rescue mission, Puntland says - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-29T19:29:09.000Z",
+      "hoursAgo": 16.1
     },
     {
       "headline": "Cramer weighs in on Goldman amid CEO succession talks — plus, Boeing bounces back",
       "source": "CNBC",
       "publishedAt": "2026-09-29T16:08:12.000Z",
-      "hoursAgo": 5.5
+      "hoursAgo": 19.5
     },
     {
       "headline": "Investors who have shunned diversification face maybe the best buying opportunity for bonds in decades",
       "source": "CNBC",
       "publishedAt": "2026-09-29T13:22:56.000Z",
-      "hoursAgo": 8.3
+      "hoursAgo": 22.2
     },
     {
       "headline": "Coinbase Ventures and CMCC Global close strategic funding round with trading firm Raven",
       "source": "CNBC",
       "publishedAt": "2026-09-29T13:05:06.000Z",
-      "hoursAgo": 8.6
-    },
-    {
-      "headline": "Trump denies offering Iran sanctions relief, Tehran says it is ready for talks - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-29T06:45:00.000Z",
-      "hoursAgo": 14.9
-    },
-    {
-      "headline": "Battered bond market braces for a new era of interest rates - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-29T04:47:00.000Z",
-      "hoursAgo": 16.9
-    },
-    {
-      "headline": "Trump denies offering Iran sanctions relief for nuclear concessions - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-29T03:15:00.000Z",
-      "hoursAgo": 18.4
+      "hoursAgo": 22.5
     }
   ],
   "briefing": null
