@@ -51,3 +51,14 @@ On this account gold's pip is $1, so Fixed Stop Points = the stop in dollars.
 
 **PROVISIONAL, TO BE RE-RUN:** these runs used bar data, not tick data (Vanessa, 30 Sep). With stops this tight, bar data
 can get the order of stop and target wrong, so they don't count yet. All three lost; the re-run on tick data decides.
+
+### Bitcoin (BTCUSD), tuning 2021-01-01 .. 2023-12-31, tick data, Add To Winner off, $300 risk (run 30 Sep 2026)
+On this account bitcoin's pip is $1, so Fixed Stop Points = the stop in dollars.
+
+| Stop | Net profit | Max equity DD | Wins / trades |
+|---|---|---|---|
+| $300 | +$3,487.53 | 9.64% | 120 / 360 |
+| **$450** | **+$8,397.81** | **7.70%** | **140 / 360** |
+| $600 | +$5,895.55 | 6.43% | 151 / 360 |
+
+**Chosen by the rule (highest net profit): $450.** The test (2024-01-01 .. 2026-09-28) is run once with a $450 stop.
