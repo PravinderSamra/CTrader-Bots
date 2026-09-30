@@ -31,7 +31,7 @@ YEARS_OF_DATA = 5.74
 N_PATHS, BLOCK = 5000, 10
 # Max equity drawdown as reported by cTrader for the real runs ($300 risk)
 CTRADER_DD = {"Control": "4.04%", "Size 1": "4.65%", "Size 2": "5.22%", "Size 3": "5.78%", "Size 4": "6.32%",
-              "Size 5": "6.83%", "Size 6.5": "7.56%"}
+              "Size 5": "6.83%", "Size 6.5": "7.56%", "Size 10": "9.10%"}
 T_RE = re.compile(r"T\|[\d\- :]+\|[\d\- :]+\|([^|]+)\|\w+\|[\d.]+\|[\d.]+\|(-?[\d.]+)\|")
 
 
@@ -125,9 +125,10 @@ def main():
         ("Size 4", load("NE_0.7_x4.trades.txt")),
         ("Size 5", load("NG_0.7_x5.trades.txt")),
         ("Size 6.5", load("NH_0.7_x6.5.trades.txt")),
+        ("Size 10", load("NI_0.7_x10.trades.txt")),
     ])
     total_risk = {"Control": "0.70R", "Size 1": "1.00R", "Size 2": "1.30R", "Size 3": "1.60R",
-                  "Size 4": "1.90R", "Size 5": "2.20R", "Size 6.5": "2.65R"}
+                  "Size 4": "1.90R", "Size 5": "2.20R", "Size 6.5": "2.65R", "Size 10": "3.70R"}
     names = list(runs)
     S = {}
     for n in names:
@@ -244,7 +245,7 @@ def build_pdf(names, S, total_risk):
     rows.append(r)
     r = ["Profit made by the adds"] + ["–"] + [money(S[n]["adds"]) for n in names[1:]]
     rows.append(r)
-    story.append(table(rows, [34 * mm] + [34 * mm] * len(names)))
+    story.append(table(rows, [30 * mm] + [30 * mm] * len(names)))
     story.append(Paragraph("Green = extra profit compared with the control in the same year. "
                            "Every size beat the control in every year.", small))
 
@@ -306,6 +307,9 @@ def build_pdf(names, S, total_risk):
         "<b>The ladder is what keeps you safe.</b> Dropping risk as the balance falls cuts the chance of hitting $90k "
         f"sharply compared with a fixed $500 (size 3: {100 * S['Size 3']['now_500'][0]:.1f}% down to "
         f"{100 * S['Size 3']['now_ladder'][0]:.1f}%) — see section 4.",
+        "<b>Size 10 is the 'greed' test.</b> Its worst losing run cost $12,534 at $300 risk ($20,890 at $500), more than "
+        "the $10,000 of room a fresh $100k account has above $90k. It only survived the backtest because the run came when "
+        "the account was already at about $143k.",
         "<b>Settings for sizes above 4.33:</b> raise 'Max Total Risk' to at least the 'total risk after add' figure "
         "(size 5 → 2.2, size 6.5 → 2.7), otherwise the add gets capped.",
         "<b>Caveats:</b> backtests are not guarantees; strategies usually earn less after going live. The simulations "
