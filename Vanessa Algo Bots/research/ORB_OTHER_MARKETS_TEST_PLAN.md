@@ -81,3 +81,21 @@ too strict. Each bot loses on about 64% of its days, so two completely unrelated
 shared days; 44% is only slightly above that. The combined journey test (`results/COMBINED_NAS100_BTC.md`) is the real
 measure, and it improves both speed and pass rate. **Verdict: PASS on the combined test, subject to FTMO's real
 bitcoin commission** (the edge disappears if extra costs exceed about 0.10% of the trade value per round trip).
+
+### Bitcoin with FTMO's real commission (30 Sep 2026)
+FTMO charges 0.065% of trade value per round trip on crypto (checked with a live 0.10-lot trade: $5.48 on about $8,420).
+In cTrader backtests this is Commission = 325 (per million, per side).
+
+| Bitcoin $450 stop, TP 4R, 2021–2026 | Net | Max DD | Commission |
+|---|---|---|---|
+| Backtest commission about 30 | +$26,385.67 | 6.83% | about −$2,250 |
+| **Commission 325 (FTMO real)** | **+$3,083.52** | **8.37%** | **−$22,681.91** |
+
+Target test (commission about 30): 3R +$20,827.93, 4R +$26,385.67, 5R +$25,595.39, so 4R stays.
+**Verdict: the edge is real before costs, but FTMO's crypto commission (about $32 = 0.1R per trade) takes about 85% of it.
+Bitcoin is shelved unless the $600 stop (smaller positions, so less commission) is clearly profitable with commission 325.**
+
+### Next (1 Oct 2026)
+- Bitcoin $600 stop, commission 325, 2021–2026: let it finish.
+- Gold re-run on tick data, commission 7 (FTMO: spread 0.35, commission 0.0014%), stops 6 / 8 / 10, 2021–2023.
+- Silver only if gold passes (it mostly moves with gold).
