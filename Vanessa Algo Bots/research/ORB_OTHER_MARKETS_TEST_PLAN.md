@@ -49,5 +49,5 @@ On this account gold's pip is $1, so Fixed Stop Points = the stop in dollars.
 | $8 | −$5,877.15 |
 | $10 | −$4,997.81 |
 
-**FAIL.** No stop size is profitable in the tuning years, so the test years (2024–2026) are not run.
-The losses shrink as the stop widens, but even the widest stop loses about 17R over three years.
+**PROVISIONAL, TO BE RE-RUN:** these runs used bar data, not tick data (Vanessa, 30 Sep). With stops this tight, bar data
+can get the order of stop and target wrong, so they don't count yet. All three lost; the re-run on tick data decides.
