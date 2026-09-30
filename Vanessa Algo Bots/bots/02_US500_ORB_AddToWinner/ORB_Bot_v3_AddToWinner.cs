@@ -365,7 +365,7 @@ namespace cAlgo.Robots
 
  // 1.0 = add back exactly the risk taken off (total risk returns to the original).
  // 1.5 / 2.0 = add more than was taken off (total risk goes above the original).
- [Parameter("Add Size (x risk removed)", Group = "Add To Winner", DefaultValue = 1.0, MinValue = 0.1, MaxValue = 5.0)]
+ [Parameter("Add Size (x risk removed)", Group = "Add To Winner", DefaultValue = 1.0, MinValue = 0.1, MaxValue = 10.0)]
  public double AddSizeMultiplier { get; set; }
 
  // Hard ceiling on the combined risk of main + adds, as a multiple of the original risk.
