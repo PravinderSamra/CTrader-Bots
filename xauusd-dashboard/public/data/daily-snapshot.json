@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-30T13:45:31.284Z",
+  "generatedAt": "2026-09-30T17:16:33.350Z",
   "yields": {
-    "US10Y": null,
+    "US10Y": 5.24,
     "US2Y": 4.92,
     "realYield10Y": 2.9,
     "realYield5Y": 2.73,
-    "curve2s10s": null,
-    "breakeven10Y": null,
+    "curve2s10s": 32,
+    "breakeven10Y": 2.35,
     "breakeven5Y": 2.34,
     "forward5y5y": 2.36,
     "dayOverDay": {
-      "US10Y": null,
+      "US10Y": 0.07,
       "US2Y": 0.11,
       "realYield10Y": 0.07
     }
@@ -23,7 +23,7 @@
   },
   "marketVolatility": {
     "GVZ": 24.37,
-    "VIX": null
+    "VIX": 16.04
   },
   "positioning": {
     "cotNetLong": 217747,
@@ -34,26 +34,26 @@
     "openInterestChange": -6163
   },
   "etfFlows": {
-    "gldTonnes": 1137,
-    "gldWoWChange": 1.4,
+    "gldTonnes": 1145.4,
+    "gldWoWChange": 8.4,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4182.55,
-    "XAGUSD": 60.8895,
-    "EURUSD": 1.13562,
-    "USDJPY": 156.8915,
-    "USDCHF": 0.83434,
-    "USDCNH": 6.70674,
-    "GBPUSD": 1.32827,
-    "USDCAD": 1.41822,
-    "USDSEK": 9.98095,
-    "US500": 7700,
-    "GER40": 25260.45,
-    "UK100": 10609.75,
+    "XAUUSD": 4152.015,
+    "XAGUSD": 60.1205,
+    "EURUSD": 1.13396,
+    "USDJPY": 157.2625,
+    "USDCHF": 0.835,
+    "USDCNH": 6.70916,
+    "GBPUSD": 1.32673,
+    "USDCAD": 1.42165,
+    "USDSEK": 9.99689,
+    "US500": 7701.5,
+    "GER40": 25177.75,
+    "UK100": 10599.85,
     "ADR_14day": 89.6,
-    "ADR_usedToday": 53.8,
-    "goldSilverRatio": 68.7
+    "ADR_usedToday": 68.3,
+    "goldSilverRatio": 69.1
   },
   "dollarLiquidity": {
     "stlfsi": -0.9075,
@@ -66,34 +66,40 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Higher interest rates can be scary for stocks — but it's not that simple",
+      "source": "CNBC",
+      "publishedAt": "2026-09-30T15:43:56.000Z",
+      "hoursAgo": 1.5
+    },
+    {
       "headline": "Holiday retail sales are expected to top $1 trillion as inflation boosts growth",
       "source": "CNBC",
       "publishedAt": "2026-09-30T11:30:01.000Z",
-      "hoursAgo": 2.3
+      "hoursAgo": 5.8
+    },
+    {
+      "headline": "US, Iran separately talk with mediators in latest bid to end war - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-30T01:45:59.000Z",
+      "hoursAgo": 15.5
     },
     {
       "headline": "US imposes sanctions on 13 tied to Iran weapons procurement - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-29T21:03:51.000Z",
-      "hoursAgo": 16.7
+      "hoursAgo": 20.2
     },
     {
       "headline": "Goldman Sachs CEO succession planning faces one big problem",
       "source": "CNBC",
       "publishedAt": "2026-09-29T20:50:10.000Z",
-      "hoursAgo": 16.9
+      "hoursAgo": 20.4
     },
     {
       "headline": "Somali pirates killed 5 crew members of hijacked tanker before rescue mission, Puntland says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-29T19:29:09.000Z",
-      "hoursAgo": 18.3
-    },
-    {
-      "headline": "Cramer weighs in on Goldman amid CEO succession talks — plus, Boeing bounces back",
-      "source": "CNBC",
-      "publishedAt": "2026-09-29T16:08:12.000Z",
-      "hoursAgo": 21.6
+      "hoursAgo": 21.8
     }
   ],
   "briefing": null

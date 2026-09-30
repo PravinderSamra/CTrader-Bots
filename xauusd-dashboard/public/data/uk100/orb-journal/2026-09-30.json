@@ -70,7 +70,37 @@
         "adr14": 115.9,
         "adrUsedPct": 83
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-09-30T17:16:41.104Z",
+        "fwd1hPct": -0.24,
+        "fwd3hPct": -0.44,
+        "toClosePct": -0.44,
+        "maxUpPct": 0.1,
+        "maxDownPct": -0.64,
+        "verdict": "RIGHT",
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R13",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R3",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-09-30T13:45:48.464Z",
@@ -134,7 +164,106 @@
         "adr14": 115.9,
         "adrUsedPct": 103
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-09-30T17:16:41.334Z",
+        "fwd1hPct": -0.05,
+        "fwd3hPct": null,
+        "toClosePct": -0.05,
+        "maxUpPct": 0.44,
+        "maxDownPct": -0.25,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R13",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-30T17:16:38.294Z",
+      "londonTime": "18:16 BST",
+      "mode": "CLOSED",
+      "price": 10599.35,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 127% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "127% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDH 10758.3) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "US PCE Price Index @ 13:30 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.18%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 0,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10729.8,
+        "orbLow": 10662.5,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10729.8,
+        "overnightLow": 10657.7,
+        "priorDayHigh": 10758.3,
+        "priorDayLow": 10606.4,
+        "gapPct": -0.51,
+        "adr14": 115.9,
+        "adrUsedPct": 127
+      },
+      "outcome": {
+        "resolvedAt": "2026-09-30T17:16:41.334Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
