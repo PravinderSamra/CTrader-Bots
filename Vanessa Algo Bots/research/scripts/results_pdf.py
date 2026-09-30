@@ -2,10 +2,12 @@
 
 Reads the Trades-Only logs in research/data/nas100_atw_logs/ (all run at $300 risk, 2021-01-01 .. 2026-09-28).
 Sizes 5 and 6.5 are simulated from the size-1 log as main + k x add (validated on sizes 3 and 4 to within $50).
-Run from the repo root:  python3 "Vanessa Algo Bots/research/scripts/results_pdf.py"
+Run from the repo root:  python3 "Vanessa Algo Bots/research/scripts/results_pdf.py" [--v2]
+--v2 writes the shareable version: every simulation starts from a fresh $100,000 and today's balance is not mentioned.
 """
 import random
 import re
+import sys
 from collections import OrderedDict, defaultdict
 from pathlib import Path
 
@@ -17,8 +19,12 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, Tabl
 
 ROOT = Path(__file__).resolve().parents[3]
 LOGS = ROOT / "Vanessa Algo Bots/research/data/nas100_atw_logs"
-OUT = ROOT / "Vanessa Algo Bots/research/results/NAS100_AddToWinner_Results_trigger0.7.pdf"
-BASE_RISK, START, FLOOR, NOW = 300.0, 100000.0, 90000.0, 96952.19
+V2 = "--v2" in sys.argv
+OUT = ROOT / ("Vanessa Algo Bots/research/results/NAS100_AddToWinner_Results_trigger0.7"
+             + ("_v2.pdf" if V2 else ".pdf"))
+BASE_RISK, START, FLOOR = 300.0, 100000.0, 90000.0
+NOW = START if V2 else 96952.19
+FROM = "$100,000" if V2 else "$96,952"
 LADDER = [(104000.0, 500.0), (98000.0, 400.0), (95000.0, 300.0), (0.0, 200.0)]
 LEVELS = [r for _, r in LADDER]
 YEARS_OF_DATA = 5.74
@@ -215,7 +221,7 @@ def build_pdf(names, S, total_risk):
                      pct(100 * s["now_ladder"][0]), money(s["now_ladder"][1])])
     story.append(table(rows, [20 * mm, 20 * mm, 25 * mm, 32 * mm, 22 * mm, 22 * mm, 30 * mm, 22 * mm, 34 * mm, 26 * mm]))
     story.append(Spacer(1, 3))
-    story.append(Paragraph("* From today's balance of $96,952 using your risk ladder with the 4-loss rule (see section 4). "
+    story.append(Paragraph(("* Starting from a fresh $100,000" if V2 else "* From today's balance of $96,952") + " using the risk ladder with the 4-loss rule (see section 4). "
                            "cTrader max equity DD for simulated sizes is extrapolated from sizes 1–4. "
                            "All money figures in sections 1–3 are at $300 risk; at $500 multiply by 1.67.", small))
 
@@ -265,22 +271,24 @@ def build_pdf(names, S, total_risk):
     story.append(Paragraph("4. Risk of hitting FTMO's $90,000 floor (blowing the challenge)", h2))
     story.append(Paragraph("5,000 simulated futures built from real runs of 10 consecutive trading days, so real losing "
                            "streaks stay intact. NAS100 bot on its own — the US500 bot will add its own risk. "
-                           "<b>Your ladder:</b> $104k+ → $500, $98k+ → $400, $95k+ → $300, below → $200; "
+                           "<b>Risk ladder:</b> $104k+ → $500, $98k+ → $400, $95k+ → $300, below → $200; "
                            "one level lower after 4 losing days in a row until the next winning day.", body))
-    rows = [["", "From $96,952: fixed $300", "From $96,952: fixed $500", "From $96,952: your ladder",
-             "Increase in risk vs control (ladder)", "Over 3 years (ladder, approx.)",
-             "Fresh $100k (e.g. after a payout): ladder", "Bad year, 1 in 10 (ladder, from $96,952)"]]
+    rows = [["", f"From {FROM}: fixed $300", f"From {FROM}: fixed $500", f"From {FROM}: risk ladder",
+             "Increase in risk vs control (ladder)", "Over 3 years (ladder, approx.)"]
+            + ([] if V2 else ["Fresh $100k (e.g. after a payout): ladder"])
+            + [f"Bad year, 1 in 10 (ladder, from {FROM})"]]
     for n in names:
         s = S[n]
         p = s["now_ladder"][0]
         extra = "–" if n == "Control" else f"{100 * (p - ctrl['now_ladder'][0]):+.1f} points"
         rows.append([n, pct(100 * s["now_300"][0]), pct(100 * s["now_500"][0]), f"<b>{pct(100 * p)}</b>", extra,
-                     pct(100 * (1 - (1 - p) ** 3)), pct(100 * s["fresh_ladder"][0]), money(s["now_ladder"][2])])
-    story.append(table(rows, [22 * mm, 30 * mm, 30 * mm, 30 * mm, 32 * mm, 30 * mm, 36 * mm, 36 * mm]))
+                     pct(100 * (1 - (1 - p) ** 3))] + ([] if V2 else [pct(100 * s["fresh_ladder"][0])])
+                    + [money(s["now_ladder"][2])])
+    story.append(table(rows, [22 * mm, 30 * mm, 30 * mm, 30 * mm, 32 * mm, 30 * mm] + ([] if V2 else [36 * mm]) + [36 * mm]))
 
     story.append(PageBreak())
-    story.append(Paragraph("5. Typical profit over the next 12 months (median of the simulations, from $96,952)", h2))
-    rows = [["", "Fixed $300", "Fixed $500", "Your ladder", "Increase vs control (ladder)",
+    story.append(Paragraph(f"5. Typical profit over 12 months (median of the simulations, from {FROM})", h2))
+    rows = [["", "Fixed $300", "Fixed $500", "Risk ladder", "Increase vs control (ladder)",
              "Replay 2021–26 with ladder from $100k: final balance", "Replay: deepest drawdown"]]
     for n in names:
         s = S[n]
@@ -302,12 +310,13 @@ def build_pdf(names, S, total_risk):
         "<b>Win rate and losing streaks don't change.</b> About 36% of days win at every size, and the longest losing run "
         "stays at 11 days. What changes is how much a bad run costs.",
         "<b>The ladder is what keeps you safe.</b> Dropping risk as the balance falls cuts the chance of hitting $90k "
-        "sharply compared with a fixed $500 (size 3: about 16% down to about 1%) — see section 4.",
+        f"sharply compared with a fixed $500 (size 3: {100 * S['Size 3']['now_500'][0]:.1f}% down to "
+        f"{100 * S['Size 3']['now_ladder'][0]:.1f}%) — see section 4.",
         "<b>Settings for sizes above 4.33:</b> raise 'Max Total Risk' to at least the 'total risk after add' figure "
         "(size 5 → 2.2, size 6.5 → 2.7), otherwise the add gets capped.",
         "<b>Caveats:</b> backtests are not guarantees; strategies usually earn less after going live. The simulations "
         "reuse 2021–26 behaviour — a new kind of market could be worse. Sizes 5 and 6.5 are simulated; "
-        "today's size 6.5 run will confirm them. Please double-check with FTMO that a payout resets the "
+        "a real size 6.5 run will confirm them. Please double-check with FTMO that a payout resets the "
         "balance to $100k with the floor staying at $90k.",
     ]:
         story.append(Paragraph("• " + t, body))
