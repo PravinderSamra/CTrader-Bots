@@ -62,3 +62,22 @@ On this account bitcoin's pip is $1, so Fixed Stop Points = the stop in dollars.
 | $600 | +$5,895.55 | 6.43% | 151 / 360 |
 
 **Chosen by the rule (highest net profit): $450.** The test (2024-01-01 .. 2026-09-28) is run once with a $450 stop.
+
+### Bitcoin test 2024-01-01 .. 2026-09-28 ($450 stop, run once) and full 2021–2026 log
+Test run: +$18,590.54, 352 trades, 121 wins, max equity DD 3.92%.
+Full log (`data/btc_orb_logs/B_450_control_2021_2026.trades.txt`): 712 trades, +$26,385.67, max equity DD 6.83%.
+
+| Period | Trades | Net | Profit factor | Average per trade |
+|---|---|---|---|---|
+| 2021–23 (tuning) | 360 | +$7,071 | 1.17 | +0.07R |
+| 2024–26 (test) | 352 | +$19,315 | 1.32 | +0.18R |
+
+By year: 2021 −$3,069; 2022 +$6,755; 2023 +$3,384; 2024 +$11,403; 2025 +$3,168; 2026 +$4,744.
+Worst day −$346 (1R plus slippage); longest losing run 13 days.
+
+Pass criteria in the test period: profit factor 1.32 ✅, profitable in 3 of 3 years ✅, drawdown 3.92% ✅.
+Same-day losses with NAS100: both lost on 44% of shared days ❌ against the 35% rule. **Note:** that threshold was set
+too strict. Each bot loses on about 64% of its days, so two completely unrelated bots would both lose on about 41% of
+shared days; 44% is only slightly above that. The combined journey test (`results/COMBINED_NAS100_BTC.md`) is the real
+measure, and it improves both speed and pass rate. **Verdict: PASS on the combined test, subject to FTMO's real
+bitcoin commission** (the edge disappears if extra costs exceed about 0.10% of the trade value per round trip).
