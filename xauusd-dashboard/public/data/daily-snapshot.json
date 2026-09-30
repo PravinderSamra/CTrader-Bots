@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-30T11:36:49.885Z",
+  "generatedAt": "2026-09-30T13:45:31.284Z",
   "yields": {
-    "US10Y": 5.24,
+    "US10Y": null,
     "US2Y": 4.92,
     "realYield10Y": 2.9,
     "realYield5Y": 2.73,
-    "curve2s10s": 32,
-    "breakeven10Y": 2.35,
+    "curve2s10s": null,
+    "breakeven10Y": null,
     "breakeven5Y": 2.34,
     "forward5y5y": 2.36,
     "dayOverDay": {
-      "US10Y": 0.07,
+      "US10Y": null,
       "US2Y": 0.11,
       "realYield10Y": 0.07
     }
@@ -22,8 +22,8 @@
     "probHike": 16
   },
   "marketVolatility": {
-    "GVZ": 24.83,
-    "VIX": 16.07
+    "GVZ": 24.37,
+    "VIX": null
   },
   "positioning": {
     "cotNetLong": 217747,
@@ -34,30 +34,30 @@
     "openInterestChange": -6163
   },
   "etfFlows": {
-    "gldTonnes": 1135.6,
-    "gldWoWChange": -1.5,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1137,
+    "gldWoWChange": 1.4,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4187.91,
-    "XAGUSD": 60.7195,
-    "EURUSD": 1.13563,
-    "USDJPY": 157.037,
-    "USDCHF": 0.8342,
-    "USDCNH": 6.7073,
-    "GBPUSD": 1.32906,
-    "USDCAD": 1.41779,
-    "USDSEK": 9.97795,
-    "US500": 7677.5,
-    "GER40": 25369.45,
-    "UK100": 10650.35,
+    "XAUUSD": 4182.55,
+    "XAGUSD": 60.8895,
+    "EURUSD": 1.13562,
+    "USDJPY": 156.8915,
+    "USDCHF": 0.83434,
+    "USDCNH": 6.70674,
+    "GBPUSD": 1.32827,
+    "USDCAD": 1.41822,
+    "USDSEK": 9.98095,
+    "US500": 7700,
+    "GER40": 25260.45,
+    "UK100": 10609.75,
     "ADR_14day": 89.6,
-    "ADR_usedToday": 36.8,
-    "goldSilverRatio": 69
+    "ADR_usedToday": 53.8,
+    "goldSilverRatio": 68.7
   },
   "dollarLiquidity": {
     "stlfsi": -0.9075,
-    "nfci": -0.555
+    "nfci": -0.548
   },
   "geopoliticalRisk": {
     "gpr": 117.9,
@@ -69,49 +69,31 @@
       "headline": "Holiday retail sales are expected to top $1 trillion as inflation boosts growth",
       "source": "CNBC",
       "publishedAt": "2026-09-30T11:30:01.000Z",
-      "hoursAgo": 0.1
-    },
-    {
-      "headline": "US, Iran separately talk with mediators in latest bid to end war - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-30T01:45:59.000Z",
-      "hoursAgo": 9.8
+      "hoursAgo": 2.3
     },
     {
       "headline": "US imposes sanctions on 13 tied to Iran weapons procurement - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-29T21:03:51.000Z",
-      "hoursAgo": 14.5
+      "hoursAgo": 16.7
     },
     {
       "headline": "Goldman Sachs CEO succession planning faces one big problem",
       "source": "CNBC",
       "publishedAt": "2026-09-29T20:50:10.000Z",
-      "hoursAgo": 14.8
+      "hoursAgo": 16.9
     },
     {
       "headline": "Somali pirates killed 5 crew members of hijacked tanker before rescue mission, Puntland says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-29T19:29:09.000Z",
-      "hoursAgo": 16.1
+      "hoursAgo": 18.3
     },
     {
       "headline": "Cramer weighs in on Goldman amid CEO succession talks — plus, Boeing bounces back",
       "source": "CNBC",
       "publishedAt": "2026-09-29T16:08:12.000Z",
-      "hoursAgo": 19.5
-    },
-    {
-      "headline": "Investors who have shunned diversification face maybe the best buying opportunity for bonds in decades",
-      "source": "CNBC",
-      "publishedAt": "2026-09-29T13:22:56.000Z",
-      "hoursAgo": 22.2
-    },
-    {
-      "headline": "Coinbase Ventures and CMCC Global close strategic funding round with trading firm Raven",
-      "source": "CNBC",
-      "publishedAt": "2026-09-29T13:05:06.000Z",
-      "hoursAgo": 22.5
+      "hoursAgo": 21.6
     }
   ],
   "briefing": null
