@@ -1,7 +1,7 @@
 """Year-by-year results PDF for the NAS100 Add To Winner bot (trigger 0.7).
 
 Reads the Trades-Only logs in research/data/nas100_atw_logs/ (all run at $300 risk, 2021-01-01 .. 2026-09-28).
-Size 6.5 is simulated from the size-1 log as main + k x add (validated on sizes 3, 4 and 5 to within $75).
+All runs are real cTrader backtests.
 Run from the repo root:  python3 "Vanessa Algo Bots/research/scripts/results_pdf.py" [--v2]
 --v2 writes the shareable version: every simulation starts from a fresh $100,000 and today's balance is not mentioned.
 """
@@ -30,9 +30,8 @@ LEVELS = [r for _, r in LADDER]
 YEARS_OF_DATA = 5.74
 N_PATHS, BLOCK = 5000, 10
 # Max equity drawdown as reported by cTrader for the real runs ($300 risk)
-# Size 6.5 extrapolated in a straight line from sizes 1-5 (about +0.55% per size step)
 CTRADER_DD = {"Control": "4.04%", "Size 1": "4.65%", "Size 2": "5.22%", "Size 3": "5.78%", "Size 4": "6.32%",
-              "Size 5": "6.83%", "Size 6.5*": "~7.7%"}
+              "Size 5": "6.83%", "Size 6.5": "7.56%"}
 T_RE = re.compile(r"T\|[\d\- :]+\|[\d\- :]+\|([^|]+)\|\w+\|[\d.]+\|[\d.]+\|(-?[\d.]+)\|")
 
 
@@ -51,10 +50,6 @@ def daily(trades):
     for day, _, pl in trades:
         d[day] += pl
     return OrderedDict(sorted(d.items()))
-
-
-def simulate(size1, k):
-    return [(d, a, pl * k if a else pl) for d, a, pl in size1]
 
 
 def level(bal):
@@ -122,18 +117,17 @@ def max_dd(vals):
 
 
 def main():
-    size1 = load("NB_0.7_x1.trades.txt")
     runs = OrderedDict([
         ("Control", load("N0_control.trades.txt")),
-        ("Size 1", size1),
+        ("Size 1", load("NB_0.7_x1.trades.txt")),
         ("Size 2", load("NC_0.7_x2.trades.txt")),
         ("Size 3", load("ND_0.7_x3.trades.txt")),
         ("Size 4", load("NE_0.7_x4.trades.txt")),
         ("Size 5", load("NG_0.7_x5.trades.txt")),
-        ("Size 6.5*", simulate(size1, 6.5)),
+        ("Size 6.5", load("NH_0.7_x6.5.trades.txt")),
     ])
     total_risk = {"Control": "0.70R", "Size 1": "1.00R", "Size 2": "1.30R", "Size 3": "1.60R",
-                  "Size 4": "1.90R", "Size 5": "2.20R", "Size 6.5*": "2.65R"}
+                  "Size 4": "1.90R", "Size 5": "2.20R", "Size 6.5": "2.65R"}
     names = list(runs)
     S = {}
     for n in names:
@@ -203,8 +197,8 @@ def build_pdf(names, S, total_risk):
              Paragraph("Prepared for Vanessa, 30 September 2026. Backtest 1 Jan 2021 – 28 Sep 2026, $100,000 account, "
                        "$300 risk per trade, tick data, risk reduction to 70% at 0.7R, TP 4R. "
                        "Control = the live bot with Add To Winner switched off. "
-                       "Sizes 1–5 are your real cTrader runs; size 6.5* is simulated from the size-1 run "
-                       "(the add profits scale exactly with size — checked against your real size 3, 4 and 5 runs to within $75).",
+                       "Every size is a real cTrader backtest."
+                       "",
                        body), Spacer(1, 4)]
 
     # 1. Headline
@@ -222,7 +216,7 @@ def build_pdf(names, S, total_risk):
     story.append(table(rows, [20 * mm, 20 * mm, 25 * mm, 32 * mm, 22 * mm, 22 * mm, 30 * mm, 22 * mm, 34 * mm, 26 * mm]))
     story.append(Spacer(1, 3))
     story.append(Paragraph(("* Starting from a fresh $100,000" if V2 else "* From today's balance of $96,952") + " using the risk ladder with the 4-loss rule (see section 4). "
-                           "cTrader max equity DD for simulated sizes is extrapolated from sizes 1–5. "
+                           ""
                            "All money figures in sections 1–3 are at $300 risk; at $500 multiply by 1.67.", small))
 
     # 2. Year by year
@@ -315,8 +309,8 @@ def build_pdf(names, S, total_risk):
         "<b>Settings for sizes above 4.33:</b> raise 'Max Total Risk' to at least the 'total risk after add' figure "
         "(size 5 → 2.2, size 6.5 → 2.7), otherwise the add gets capped.",
         "<b>Caveats:</b> backtests are not guarantees; strategies usually earn less after going live. The simulations "
-        "reuse 2021–26 behaviour — a new kind of market could be worse. Size 6.5 is simulated; "
-        "a real size 6.5 run will confirm them. Please double-check with FTMO that a payout resets the "
+        "reuse 2021–26 behaviour — a new kind of market could be worse. "
+        "Please double-check with FTMO that a payout resets the "
         "balance to $100k with the floor staying at $90k.",
     ]:
         story.append(Paragraph("• " + t, body))
