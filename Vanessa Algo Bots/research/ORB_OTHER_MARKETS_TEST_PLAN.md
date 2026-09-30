@@ -90,12 +90,13 @@ In cTrader backtests this is Commission = 325 (per million, per side).
 |---|---|---|---|
 | Backtest commission about 30 | +$26,385.67 | 6.83% | about −$2,250 |
 | **Commission 325 (FTMO real)** | **+$3,083.52** | **8.37%** | **−$22,681.91** |
+| $600 stop, commission 325 | +$4,930.63 | 8.24% | −$19,318.68 |
 
 Target test (commission about 30): 3R +$20,827.93, 4R +$26,385.67, 5R +$25,595.39, so 4R stays.
 **Verdict: the edge is real before costs, but FTMO's crypto commission (about $32 = 0.1R per trade) takes about 85% of it.
 Bitcoin is shelved unless the $600 stop (smaller positions, so less commission) is clearly profitable with commission 325.**
 
 ### Next (1 Oct 2026)
-- Bitcoin $600 stop, commission 325, 2021–2026: let it finish.
+- ~~Bitcoin $600 stop~~ done: +$4,930.63, DD 8.24%, 274/712 wins. **Bitcoin shelved** (about $860 a year for an 8% drawdown).
 - Gold re-run on tick data, commission 7 (FTMO: spread 0.35, commission 0.0014%), stops 6 / 8 / 10, 2021–2023.
 - Silver only if gold passes (it mostly moves with gold).
