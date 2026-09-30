@@ -15,3 +15,9 @@ Days both bots traded: 492. Both lost on the same day: 203 (41% of shared days).
 
 US500 control by year at $300: 2021 −$5,573; 2022 +$6,919; 2023 +$2,999; 2024 +$5,328; 2025 +$3,555; 2026 +$1,884.
 Deepest closed-day drawdown $10,294 (Jan 2021 → Feb 2022). Daily win rate 48%.
+
+| NAS100 size 5 + US500 U2 (add at break-even) at 25% | 81.6% | **13.2 mo** | 7.7 mo | 21.6 mo | -$2,939 |
+| NAS100 size 5 + US500 U2 (add at break-even) at 50% | 79.6% | **11.9 mo** | 7.1 mo | 19.5 mo | -$3,198 |
+| NAS100 size 5 + US500 U2 (add at break-even) at 100% | 71.3% | **9.4 mo** | 5.5 mo | 15.8 mo | -$3,716 |
+
+US500 U2 (Add Trigger 1.2 = break-even, size 1): 1396 positions, $21,547.89; by year 2021 $-6,315, 2022 $10,569, 2023 $3,816, 2024 $7,182, 2025 $4,364, 2026 $1,930. Both lost on 45% of shared days.
