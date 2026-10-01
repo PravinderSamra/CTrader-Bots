@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-30T21:41:17.458Z",
+  "generatedAt": "2026-10-01T12:05:55.813Z",
   "yields": {
     "US10Y": 5.26,
     "US2Y": 4.89,
@@ -34,26 +34,26 @@
     "openInterestChange": -6163
   },
   "etfFlows": {
-    "gldTonnes": 1144.1,
-    "gldWoWChange": -1.3,
+    "gldTonnes": 1137.6,
+    "gldWoWChange": -6.5,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4156.775,
-    "XAGUSD": 60.403,
-    "EURUSD": 1.13316,
-    "USDJPY": 157.353,
-    "USDCHF": 0.83544,
-    "USDCNH": 6.70917,
-    "GBPUSD": 1.32682,
-    "USDCAD": 1.42328,
-    "USDSEK": 10.0076,
-    "US500": 7664.5,
-    "GER40": 25129.05,
-    "UK100": 10581.35,
-    "ADR_14day": 88.5,
-    "ADR_usedToday": 72,
-    "goldSilverRatio": 68.8
+    "XAUUSD": 4180.58,
+    "XAGUSD": 60.971,
+    "EURUSD": 1.13022,
+    "USDJPY": 157.944,
+    "USDCHF": 0.83526,
+    "USDCNH": 6.71671,
+    "GBPUSD": 1.32366,
+    "USDCAD": 1.4244,
+    "USDSEK": 10.02411,
+    "US500": 7686.6,
+    "GER40": 25220.95,
+    "UK100": 10512.15,
+    "ADR_14day": 87.1,
+    "ADR_usedToday": 53.4,
+    "goldSilverRatio": 68.6
   },
   "dollarLiquidity": {
     "stlfsi": -0.8074,
@@ -66,28 +66,34 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "UK 30-year gilt yields top 6% for the first time since 1998 - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-01T11:23:12.000Z",
+      "hoursAgo": 0.7
+    },
+    {
+      "headline": "US oil, gas output up in Q3, producers wary of price outlook, Dallas Fed says - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-09-30T16:34:02.000Z",
+      "hoursAgo": 19.5
+    },
+    {
       "headline": "Higher interest rates can be scary for stocks — but it's not that simple",
       "source": "CNBC",
       "publishedAt": "2026-09-30T15:43:56.000Z",
-      "hoursAgo": 6
+      "hoursAgo": 20.4
     },
     {
-      "headline": "Holiday retail sales are expected to top $1 trillion as inflation boosts growth",
-      "source": "CNBC",
-      "publishedAt": "2026-09-30T11:30:01.000Z",
-      "hoursAgo": 10.2
-    },
-    {
-      "headline": "US, Iran separately talk with mediators in latest bid to end war - Reuters",
+      "headline": "German inflation hits highest level in almost 3 years - reuters.com",
       "source": "Reuters",
-      "publishedAt": "2026-09-30T01:45:59.000Z",
-      "hoursAgo": 19.9
+      "publishedAt": "2026-09-30T14:45:54.000Z",
+      "hoursAgo": 21.3
     },
     {
-      "headline": "Battered bond market braces for a new era of interest rates - Reuters",
+      "headline": "Most Gulf stocks in red as Trump rebuffs Iran sanctions easing - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-09-30T00:47:37.000Z",
-      "hoursAgo": 20.9
+      "publishedAt": "2026-09-30T13:47:25.000Z",
+      "hoursAgo": 22.3
     }
   ],
   "briefing": null
