@@ -100,3 +100,9 @@ Bitcoin is shelved unless the $600 stop (smaller positions, so less commission) 
 - ~~Bitcoin $600 stop~~ done: +$4,930.63, DD 8.24%, 274/712 wins. **Bitcoin shelved** (about $860 a year for an 8% drawdown).
 - Gold re-run on tick data, commission 7 (FTMO: spread 0.35, commission 0.0014%), stops 6 / 8 / 10, 2021–2023.
 - Silver only if gold passes (it mostly moves with gold).
+
+### Costs check (1 Oct 2026, FTMO Ticker)
+- Gold: spread about $0.41, commission 0.0014% (backtest setting 7). About 0.04–0.07R per trade on a $6–10 stop, so affordable.
+- Silver: spread $0.055, commission 0.0014%. About 0.16–0.27R per trade on an equivalent $0.20–0.35 stop, which is more
+  than NAS100's whole edge. **Silver dropped without testing.**
+- NAS100 "hold until target or stop" (no force close): $39,106 against $58,447 closing at 15:50. **Keep the 15:50 close.**
