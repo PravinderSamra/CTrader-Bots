@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-01T14:29:15.910Z",
+  "generatedAt": "2026-10-01T18:38:20.446Z",
   "yields": {
     "US10Y": 5.26,
     "US2Y": 4.89,
@@ -34,26 +34,26 @@
     "openInterestChange": -6163
   },
   "etfFlows": {
-    "gldTonnes": 1142.9,
-    "gldWoWChange": 5.3,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1138.2,
+    "gldWoWChange": -4.7,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4161.11,
-    "XAGUSD": 60.8775,
-    "EURUSD": 1.12855,
-    "USDJPY": 157.8975,
-    "USDCHF": 0.83173,
-    "USDCNH": 6.71801,
-    "GBPUSD": 1.32227,
-    "USDCAD": 1.42389,
-    "USDSEK": 10.03208,
-    "US500": 7635,
-    "GER40": 25001.95,
-    "UK100": 10418.45,
+    "XAUUSD": 4178.375,
+    "XAGUSD": 60.825,
+    "EURUSD": 1.12328,
+    "USDJPY": 158.1415,
+    "USDCHF": 0.83201,
+    "USDCNH": 6.71634,
+    "GBPUSD": 1.31909,
+    "USDCAD": 1.4238,
+    "USDSEK": 10.06339,
+    "US500": 7674.8,
+    "GER40": 24979.95,
+    "UK100": 10447.65,
     "ADR_14day": 87.1,
     "ADR_usedToday": 53.4,
-    "goldSilverRatio": 68.4
+    "goldSilverRatio": 68.7
   },
   "dollarLiquidity": {
     "stlfsi": -0.8074,
@@ -66,28 +66,22 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "UK 30-year gilt yields top 6% for the first time since 1998 - reuters.com",
+      "headline": "US sanctions target Iran's auto, rail sectors after blockade chokes shipping lanes - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-01T17:53:43.000Z",
+      "hoursAgo": 0.7
+    },
+    {
+      "headline": "Bank of England official says central bank mishandled its first response to Iran shock - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-01T14:32:24.000Z",
+      "hoursAgo": 4.1
+    },
+    {
+      "headline": "UK 30-year gilt yields top 6% for the first time since 1998 - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-01T11:23:12.000Z",
-      "hoursAgo": 3.1
-    },
-    {
-      "headline": "US oil, gas output up in Q3, producers wary of price outlook, Dallas Fed says - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-30T16:34:02.000Z",
-      "hoursAgo": 21.9
-    },
-    {
-      "headline": "Higher interest rates can be scary for stocks — but it's not that simple",
-      "source": "CNBC",
-      "publishedAt": "2026-09-30T15:43:56.000Z",
-      "hoursAgo": 22.8
-    },
-    {
-      "headline": "German inflation hits highest level in almost 3 years - reuters.com",
-      "source": "Reuters",
-      "publishedAt": "2026-09-30T14:45:54.000Z",
-      "hoursAgo": 23.7
+      "hoursAgo": 7.3
     }
   ],
   "briefing": null
