@@ -71,6 +71,77 @@
         "adrUsedPct": 163
       },
       "outcome": null
+    },
+    {
+      "at": "2026-10-01T14:29:22.307Z",
+      "londonTime": "15:29 BST",
+      "mode": "POST_ORB",
+      "price": 10418.65,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 163% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "163% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "STRUCTURE",
+          "rule": "R3",
+          "text": "ORB break DOWN is aligned with the BEARISH macro bias (-3) — continuation has the backdrop behind it."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.04%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -0.39% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 11th percentile of its 20-day range and falling — a weak-GBP tailwind for the index's dollar earners."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "INFO",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "US Nonfarm Payrolls prints tomorrow 13:30 BST — late-session moves today are as likely pre-event de-risking as conviction."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -3,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10495.9,
+        "orbLow": 10426.8,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10577.5,
+        "overnightLow": 10401.5,
+        "priorDayHigh": 10729.8,
+        "priorDayLow": 10567.3,
+        "gapPct": -1.53,
+        "adr14": 120,
+        "adrUsedPct": 163
+      },
+      "outcome": null
     }
   ]
 }

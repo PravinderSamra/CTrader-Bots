@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-01T12:05:55.813Z",
+  "generatedAt": "2026-10-01T14:29:15.910Z",
   "yields": {
     "US10Y": 5.26,
     "US2Y": 4.89,
@@ -22,8 +22,8 @@
     "probHike": 16
   },
   "marketVolatility": {
-    "GVZ": 24.37,
-    "VIX": 16.04
+    "GVZ": 23.74,
+    "VIX": 16.34
   },
   "positioning": {
     "cotNetLong": 217747,
@@ -34,66 +34,60 @@
     "openInterestChange": -6163
   },
   "etfFlows": {
-    "gldTonnes": 1137.6,
-    "gldWoWChange": -6.5,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1142.9,
+    "gldWoWChange": 5.3,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4180.58,
-    "XAGUSD": 60.971,
-    "EURUSD": 1.13022,
-    "USDJPY": 157.944,
-    "USDCHF": 0.83526,
-    "USDCNH": 6.71671,
-    "GBPUSD": 1.32366,
-    "USDCAD": 1.4244,
-    "USDSEK": 10.02411,
-    "US500": 7686.6,
-    "GER40": 25220.95,
-    "UK100": 10512.15,
+    "XAUUSD": 4161.11,
+    "XAGUSD": 60.8775,
+    "EURUSD": 1.12855,
+    "USDJPY": 157.8975,
+    "USDCHF": 0.83173,
+    "USDCNH": 6.71801,
+    "GBPUSD": 1.32227,
+    "USDCAD": 1.42389,
+    "USDSEK": 10.03208,
+    "US500": 7635,
+    "GER40": 25001.95,
+    "UK100": 10418.45,
     "ADR_14day": 87.1,
     "ADR_usedToday": 53.4,
-    "goldSilverRatio": 68.6
+    "goldSilverRatio": 68.4
   },
   "dollarLiquidity": {
     "stlfsi": -0.8074,
     "nfci": -0.548
   },
   "geopoliticalRisk": {
-    "gpr": 117.9,
-    "gprDate": "2026-08"
+    "gpr": 146.2,
+    "gprDate": "2026-09"
   },
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "UK 30-year gilt yields top 6% for the first time since 1998 - Reuters",
+      "headline": "UK 30-year gilt yields top 6% for the first time since 1998 - reuters.com",
       "source": "Reuters",
       "publishedAt": "2026-10-01T11:23:12.000Z",
-      "hoursAgo": 0.7
+      "hoursAgo": 3.1
     },
     {
       "headline": "US oil, gas output up in Q3, producers wary of price outlook, Dallas Fed says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-09-30T16:34:02.000Z",
-      "hoursAgo": 19.5
+      "hoursAgo": 21.9
     },
     {
       "headline": "Higher interest rates can be scary for stocks — but it's not that simple",
       "source": "CNBC",
       "publishedAt": "2026-09-30T15:43:56.000Z",
-      "hoursAgo": 20.4
+      "hoursAgo": 22.8
     },
     {
       "headline": "German inflation hits highest level in almost 3 years - reuters.com",
       "source": "Reuters",
       "publishedAt": "2026-09-30T14:45:54.000Z",
-      "hoursAgo": 21.3
-    },
-    {
-      "headline": "Most Gulf stocks in red as Trump rebuffs Iran sanctions easing - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-09-30T13:47:25.000Z",
-      "hoursAgo": 22.3
+      "hoursAgo": 23.7
     }
   ],
   "briefing": null
