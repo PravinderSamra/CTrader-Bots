@@ -6450,3 +6450,56 @@ No spread, no slippage, no partials. MFE is the best close before the stop, whic
 assumes an exit nobody achieves. Levels cluster, so one price move can register
 as several setups — the 822 are **not independent**. These numbers rank setups
 against each other; they do not predict account return.
+
+## Equal highs/lows — how they actually form (measured 2026-10-02)
+
+The brief's definition, for the record: **4-bar M5 pivots, unmitigated, clustered
+within `max(12, ADR×0.03)` = ~14pts, over a 6-day lookback**
+(`levels_fuel.swing_points` → `unmitigated` → `cluster`). 93 confirmed pools
+(2+ touches) found across 27 days by replaying the detector day by day.
+
+**Touches per pool:** 2 → 57, 3 → 21, 4 → 12, 5 → 3.
+
+**Gap between consecutive touches:**
+
+| | |
+|---|---|
+| min | **5 min** |
+| p25 | 40 min |
+| **median** | **85 min** |
+| p75 | 7.2 h |
+| max | **101 h (4.2 days)** |
+
+**Whole pool, first touch to last:** median **3.2 h**, p90 35.7 h, max 101 h.
+
+**Formation window:**
+
+| span | share |
+|---|---|
+| within 1 hour | 28% |
+| 1–4 hours | 34% |
+| 4–12 hours | 6% |
+| 12–24 hours | 15% |
+| 1–3 days | 15% |
+| 3–6 days | 1% |
+
+**So it is both, and the split matters for charting: ~62% form inside 4 hours
+(same session), but ~31% take over 12 hours and span days.** A trader marking
+only intraday equal highs misses a third of them; one scanning weeks finds
+nothing extra, since only 1% exceed 3 days.
+
+### Performance within the type
+
+| | n | ≥1R | ≥2R | med move | med risk | med R |
+|---|---|---|---|---|---|---|
+| 2 touches | 65 | 58% | 49% | 81pts | 39 | 1.99 |
+| 3 touches | 8 | 75% | 75% | 143pts | 45 | 3.55 |
+| equal **HIGHS** swept → short | 35 | 54% | — | 63pts | — | 1.84 |
+| equal **LOWS** swept → long | 38 | **66%** | — | **95pts** | — | **2.59** |
+
+The 3-touch row is **n=8 — not a finding**, though it points the way the
+mechanism would predict. The high/low asymmetry (38 vs 35 observations) is worth
+watching but is one month of a rising tape, which is exactly the condition that
+would flatter equal lows.
+
+**Nothing proposed.** This is charting guidance, not a model change.
