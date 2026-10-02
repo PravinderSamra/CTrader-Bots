@@ -45,3 +45,9 @@ setting. The target barely matters once trailing is on (4R, 5R and 6R are within
 base with a slightly lower drawdown (6.61% against 6.83%), and a trade that reaches +2.5R can no longer become a full loss.
 Note: 11 variants were tried, so expect a little of the gain to be luck; the plateau (2.5–3R all at or above the base) is the
 reassurance.
+
+Addendum: DS4b + TP 4.5R = $64,758.49, max DD 6.73%, 427 winners. Targets from 4R to 6R are all within about $1,200 (a flat
+plateau, i.e. noise), so tuning stops here. Either 4.5R or 5R is fine.
+Addendum 2: BE 2.5R (+2 pts), **step 0.1R**, TP 4.5R = **$65,832.08**, max DD 6.72%, 430 winners. Finer steps help a little and
+consistently (step 0.5 → 0.25 → 0.1), because the stop tracks new highs more closely while staying 2.5R behind.
+**Final live choice: BE trigger 2.5R, extra 2 pts, step 0.1R, TP 4.5R.** Tuning closed.
