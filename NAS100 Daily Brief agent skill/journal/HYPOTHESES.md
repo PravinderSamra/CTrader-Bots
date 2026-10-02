@@ -6503,3 +6503,102 @@ watching but is one month of a rising tape, which is exactly the condition that
 would flatter equal lows.
 
 **Nothing proposed.** This is charting guidance, not a model change.
+
+---
+
+## H24 — searching for an overlooked high-probability setup: three candidates, two dead, one negative result that stands
+
+**Asked:** having measured the levels price touches, is there a higher-probability
+setup in the data we have never looked at? Three candidates were tested against
+the 822 confirmed sweep → lower-high/higher-low setups (`sw_conf.json`, 19 trading
+days, close-based grading, stop 8pts beyond the sweep extreme).
+
+### Candidate 1 — the NEAR MISS. **Rejected.**
+
+Every prior analysis required price to *touch* a level. On 2026-10-02 the day high
+was set 9.6pts short of the call wall, which no touch-based measure can see. So:
+a swing extreme lands inside a band below (above) a level, never trades through it,
+and turns. Observable at the turn, therefore not hindsight. `scratchpad/nearmiss.py`.
+
+| band | n | ≥1R | ≥2R | stop | med R | med move | med risk |
+|---|---|---|---|---|---|---|---|
+| within 10pts | 44 | 48% | 32% | 77% | 0.88 | 29pts | 30pts |
+| within 20pts | 91 | 41% | 25% | 85% | 0.72 | 22pts | 31pts |
+| within 35pts | 169 | 41% | 24% | 86% | 0.84 | 24pts | 31pts |
+| **baseline** swept + LH/HL | 822 | 50% | 31% | 63% | 0.98 | **63pts** | — |
+
+Worse on every measure and the move is less than half the size. The mechanism is
+visible in the stop column: with no sweep there is no liquidation extreme to hide
+the stop behind, so the stop sits inside noise and 77–86% of them are taken. The
+2026-10-02 call wall was a good observation and a bad generalisation. **Recorded so
+it is not proposed again.**
+
+### Candidate 2 — CONFLUENCE as an entry filter. **Not established.**
+
+Do two *different kinds* of level stacked on one price reverse better? Families:
+`gamma` (walls, flip, shelf, max pain), `pool` (equal highs/lows), `session`
+(Asia/London/NY H-L), `day/week` (PDH/PDL/PWH/PWL/PD mid/close).
+`scratchpad/confluence.py`.
+
+Tolerance sensitivity, ≥1R:
+
+| bucket | 5pts | 12pts | 25pts | 40pts |
+|---|---|---|---|---|
+| gamma + structure | 75% (6 pairs) | 55% (36) | 48% (72) | 48% (87) |
+| structure + structure | 65% (7) | 61% (18) | 65% (27) | 64% (24) |
+| pool alone | 60% (10) | 63% (5) | 70% (2) | 70% (2) |
+| gamma alone | 46% (50) | 44% (37) | 39% (26) | 41% (18) |
+
+`gamma + structure` is the headline that does not survive: 75% at 5pts rests on
+**six distinct day/level pairs**, and the rate decays monotonically to 48% as the
+band widens — the signature of a bucket absorbing everything, not of an edge.
+
+`structure + structure` looked like the real one — stable 61–65% at every
+tolerance. It fails the **same-day control**: on the 6 days that contain it,
+61% ≥1R against 54% for every other level on those same days, and per day it beat
+the day's own baseline on only **2 of 6** (09-29, 09-30), tying or losing on
+09-10, 09-15, 09-16, 09-22. 18 distinct pairs. Suggestive, not evidence.
+
+### Candidate 3 — the Nth sweep of the same level. **Rejected, no signal.**
+
+| attempt | rows | pairs | ≥1R | ≥2R | med R | med move |
+|---|---|---|---|---|---|---|
+| 1st | 240 | 139 | 53% | 32% | 1.06 | 78pts |
+| 2nd | 181 | 113 | 53% | 39% | 1.18 | 66pts |
+| 3rd | 147 | 94 | 50% | 27% | 0.98 | 60pts |
+| 4th+ | 254 | 74 | 44% | 27% | 0.88 | 58pts |
+
+Flat through three attempts with a mild decay after. On the 19 days holding both,
+first 53% vs later 48%. Nothing to trade.
+
+### The one result that survives: **a gamma level ALONE is the worst sweep-reversal trigger in the dataset.**
+
+Same-day control, so it is not a function of which days had gamma levels:
+
+| | rows | pairs | ≥1R | ≥2R | med R | med move |
+|---|---|---|---|---|---|---|
+| gamma alone (5pt band) | 291 | 50 | 46% | 29% | 0.93 | 57pts |
+| every other level, same days | 531 | 89 | **51%** | 33% | 1.05 | **69pts** |
+| gamma alone (12pt band) | 209 | 37 | 44% | 24% | 0.86 | 49pts |
+| every other level, same days | 504 | 84 | **51%** | 30% | 1.03 | **66pts** |
+
+Gamma-alone underperformed the same day's other levels on **12 of 16** days
+carrying ≥4 such setups, at both tolerances. 37–50 distinct pairs — the largest
+sample of any bucket here.
+
+This does not contradict the gamma work; it bounds it. A wall is a good
+**magnet and brake** — that is what the playbook measures and what the 8.2pt
+retest wick is. It is a poor **sweep-reversal entry trigger**, because dealer
+hedging at a wall absorbs the move rather than reversing it: the move after a
+wall sweep is ~25% smaller (49–57pts vs 66–69pts) and reaches 1R less often.
+The two roles were being conflated.
+
+**Proposed:** nothing in code yet. The actionable form is playbook guidance —
+when a sweep setup presents at a gamma level **and nothing else**, it is a
+below-average instance of the pattern, not a confluence bonus. Needs the user's
+decision before it goes in the playbook, since it changes how the C1–C3 / P1–P3
+rungs are read for entries.
+
+**Still open:** `structure + structure` is worth carrying as a watch item — if it
+keeps beating the same-day baseline over another 10–15 days it becomes real. It is
+not real on 2 of 6 days.
