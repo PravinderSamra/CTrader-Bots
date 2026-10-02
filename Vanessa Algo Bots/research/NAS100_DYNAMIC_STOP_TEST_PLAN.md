@@ -21,3 +21,27 @@ Break Even Extra Pips = 22 makes the whole position (main + size-5 add entered a
 ## Decision rule
 Switch only if a run beats $58,447 in net profit, or is within about 5% of it with a clearly smaller drawdown
 (about 1 percentage point or more). Otherwise keep the current setup: today's trade was an unlucky day, not a pattern.
+
+## Results (2 Oct 2026)
+| Run | BE trigger | Extra pts | Step | TP | Net 2021–26 | Max equity DD | Winners |
+|---|---|---|---|---|---|---|---|
+| Base (no trailing) | – | – | – | 4R | $58,446.89 | 6.83% | 420 |
+| DS1 | 1.0 | 22 | 0.25 | 4R | $15,096.80 | 6.72% | 508 |
+| DS2 | 1.5 | 22 | 0.5 | 4R | $39,401.38 | 7.22% | 477 |
+| DS2b | 1.5 | 2 | 0.5 | 4R | $42,601.90 | 7.53% | 432 |
+| DS3 | 2.0 | 22 | 0.5 | 4R | $49,642.93 | 7.46% | 452 |
+| DS3b | 2.0 | 2 | 0.5 | 4R | $52,074.96 | 7.35% | 421 |
+| DS4 | 2.5 | 2 | 0.5 | 4R | $62,877.35 | 6.88% | 423 |
+| **DS4b** | **2.5** | **2** | **0.25** | 4R | **$63,941.03** | 6.87% | 427 |
+| DS4b + TP5 | 2.5 | 2 | 0.25 | **5R** | $63,637.42 | **6.61%** | 427 |
+| DS4b + TP6 | 2.5 | 2 | 0.25 | 6R | $63,556.11 | 6.71% | 427 |
+| DS5 | 3.0 | 2 | 0.5 | 4R | $59,668.48 | 6.83% | 422 |
+
+**Findings.** A trailing stop that starts early (1–2R) cuts the big winners and loses money against the base. It peaks at
+**2.5R** (DS4 and DS4b both beat the base, and 3R is still above it), so the benefit is a plateau rather than one lucky
+setting. The target barely matters once trailing is on (4R, 5R and 6R are within $400).
+
+**Decision: DS4b with TP 5R**: break-even at 2.5R (+2 pts), trail in 0.25R steps, target 5R. About +$5,200 (+9%) over the
+base with a slightly lower drawdown (6.61% against 6.83%), and a trade that reaches +2.5R can no longer become a full loss.
+Note: 11 variants were tried, so expect a little of the gain to be luck; the plateau (2.5–3R all at or above the base) is the
+reassurance.
