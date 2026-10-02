@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-02T13:53:09.333Z",
+  "generatedAt": "2026-10-02T17:04:45.408Z",
   "yields": {
     "US10Y": 5.29,
     "US2Y": 4.88,
@@ -34,26 +34,26 @@
     "openInterestChange": -6163
   },
   "etfFlows": {
-    "gldTonnes": 1136.6,
-    "gldWoWChange": -0.7,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1148.3,
+    "gldWoWChange": 11.7,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4184.11,
-    "XAGUSD": 61.4255,
-    "EURUSD": 1.1265,
-    "USDJPY": 157.547,
-    "USDCHF": 0.82793,
-    "USDCNH": 6.70416,
-    "GBPUSD": 1.32361,
-    "USDCAD": 1.4226,
-    "USDSEK": 10.01809,
-    "US500": 7738.6,
-    "GER40": 25245.45,
-    "UK100": 10479.05,
+    "XAUUSD": 4141.645,
+    "XAGUSD": 60.234,
+    "EURUSD": 1.12582,
+    "USDJPY": 157.811,
+    "USDCHF": 0.82917,
+    "USDCNH": 6.70636,
+    "GBPUSD": 1.32333,
+    "USDCAD": 1.42566,
+    "USDSEK": 10.03674,
+    "US500": 7724.5,
+    "GER40": 25253.05,
+    "UK100": 10476.45,
     "ADR_14day": 86.9,
-    "ADR_usedToday": 93,
-    "goldSilverRatio": 68.1
+    "ADR_usedToday": 101.4,
+    "goldSilverRatio": 68.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.8074,
@@ -66,28 +66,34 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "US issues sanctions against Hamas financing network, Treasury says - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-02T14:33:45.000Z",
+      "hoursAgo": 2.5
+    },
+    {
       "headline": "Treasury yields inch higher as investors await key jobs report",
       "source": "CNBC",
       "publishedAt": "2026-10-02T07:47:49.000Z",
-      "hoursAgo": 6.1
+      "hoursAgo": 9.3
     },
     {
       "headline": "US sanctions target Iran's auto, rail sectors as blockade chokes ship lanes - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-01T20:52:13.000Z",
-      "hoursAgo": 17
+      "hoursAgo": 20.2
     },
     {
       "headline": "The September jobs report will be released Friday. Here's what to expect",
       "source": "CNBC",
       "publishedAt": "2026-10-01T18:55:02.000Z",
-      "hoursAgo": 19
+      "hoursAgo": 22.2
     },
     {
       "headline": "Putin says Russia won't supply diesel to global markets until sanctions are lifted - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-01T17:43:29.000Z",
-      "hoursAgo": 20.2
+      "hoursAgo": 23.4
     }
   ],
   "briefing": null
