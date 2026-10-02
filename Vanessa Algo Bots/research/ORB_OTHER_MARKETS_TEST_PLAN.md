@@ -118,3 +118,20 @@ All three are profitable on tick data (the bar-data losses above were wrong). **
 average gold price (about $1,850). Because gold's price has risen sharply since, the 2024–26 test uses the same stop
 **as a % of price (0.32%)** via bot v3.4 (`bots/03_XAUUSD_London_Range`), not a fixed $6. This is a design change made before
 seeing any 2024–26 result, not tuning.
+Gold tuning settings (confirmed by Vanessa): **TP 4.5R, Dynamic Stop off, risk reduction to 70% at 0.7R on, Add To Winner off**,
+commission 7, tick data. The check and the 2024–26 test use exactly these, with Stop Method = PercentOfEntryPrice at 0.32%.
+
+### Gold check run: 0.32% of price stop, 2021-01-01 .. 2023-12-31 (tuning years, no decision taken from it)
++$9,577.03, max equity DD 4.23%, 369 trades, 164 winners. Same trades and winners as the fixed $6 run (as expected), with
+slightly better sizing. The % option works as intended.
+Note: an accidental run to 2024-12-31 gave +$6,165.53 (460 trades). That implies **2024 alone was roughly −$3,400**. This was seen
+before the test; nothing is changed because of it. The 2024–26 test still runs once with the settings fixed above.
+
+### Gold test 2024-01-01 .. 2026-09-28 (run once, 0.32% stop, settings as above)
+**−$1,913.25. FAIL** (the rule needs net profit > 0). Combined with the accidental 2024 run, roughly 2024 −$3,400 and
+2025–Sep 2026 +$1,500. The 2021–23 edge did not carry into the test years. **Gold is out**; no re-tuning (it would only fit the test years).
+
+## Conclusion (2 Oct 2026)
+Tested beyond NAS100: US500 (thin edge, bad days coincide with NAS100), bitcoin (real edge, but FTMO's 0.065% commission
+takes about 85% of it), silver (spread too large, not tested), gold (worked 2021–23, failed 2024–26), and the NAS100 opening-range
+variants (15 and 30 minutes, both failed). **NAS100 London Range stays the only bot.**
