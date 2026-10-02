@@ -1,9 +1,10 @@
 // =============================================================================
 // ORB Volume Breakout cBot — v3.4 STOP AS % OF PRICE (Vanessa Algo Bots) — built for XAUUSD
 // -----------------------------------------------------------------------------
-// v3.4 = v3.0 Add To Winner UNCHANGED, plus one option: "Fixed Stop as % of Price" (default 0 = off).
-//   With Enable Fixed Point Stop = Yes and this > 0, the stop distance is that % of the expected
-//   entry price instead of Fixed Stop Points, so the stop grows with the market's price level
+// v3.4 = v3.0 Add To Winner UNCHANGED, except the stop settings: one "Stop Method" choice
+//   (PointsFromEntry / PercentOfEntryPrice / PercentOfMorningRange) with one size field per method.
+//   PercentOfEntryPrice (the default) sets the stop distance as a % of the expected entry price,
+//   so the stop grows with the market's price level
 //   (e.g. 0.32% = about $5.9 at $1,850 gold and about $11 at $3,500). Everything downstream
 //   (position size, R, risk reduction, adds, trailing) keys off that distance, exactly as before.
 // Identity: class OrbVolumeBreakoutBotV34PctStop, Bot Label Prefix default "ORBG".
@@ -92,6 +93,14 @@ namespace cAlgo.Robots
  // =========================================================================
  // ENUMS
  // =========================================================================
+
+ // v3.4: how the stop distance is measured (one choice, one size field each).
+ public enum StopMethod
+ {
+ PointsFromEntry,
+ PercentOfEntryPrice,
+ PercentOfMorningRange
+ }
 
  public enum PointUnitMode
  {
@@ -436,23 +445,25 @@ namespace cAlgo.Robots
  // the fill happened to land. A 3.2pt stop then sized a position 31x too large
  // and one ordinary 30pt move cost 10R. The labels below name the switch first
  // and say which field each mode reads; OnStart rejects the 0% combination.
- [Parameter("Stop Type: Fixed Points? (No = % of ORB)", Group = "Stops & Targets", DefaultValue = true)]
- public bool EnableFixedPointStop { get; set; }
+ // v3.4: ONE choice decides how the stop is measured; each size field below says which choice it belongs to.
+ // The fields for the other two choices are ignored.
+ [Parameter("Stop Method", Group = "Stops & Targets", DefaultValue = StopMethod.PercentOfEntryPrice)]
+ public StopMethod StopMethodParam { get; set; }
 
- // Used when Stop Type = Yes. Research stops were FIXED POINTS from entry
- // (NAS100 40pt / US30 75pt): slPrice = expectedEntry -/+ FixedStopPoints.
- [Parameter("...if Yes: Fixed Stop Points", Group = "Stops & Targets", DefaultValue = 40, MinValue = 0.1)]
+ // Stop Method = PointsFromEntry: stop this many points (gold on FTMO: $1 per point) from the entry price.
+ [Parameter("Stop size, Points from entry (for PointsFromEntry)", Group = "Stops & Targets", DefaultValue = 6, MinValue = 0.1)]
  public double FixedStopPoints { get; set; }
 
- // v3.4: when > 0 (and Enable Fixed Point Stop = Yes), the stop distance is this % of the expected entry price
- // and Fixed Stop Points is ignored. 0 = off (use Fixed Stop Points as before).
- [Parameter("Fixed Stop as % of Price", Group = "Stops & Targets", DefaultValue = 0.0, MinValue = 0.0, MaxValue = 10.0)]
+ // Stop Method = PercentOfEntryPrice: stop this % of the entry price away (0.32 = about $5.9 at $1,850, $11 at $3,500).
+ [Parameter("Stop size, % of entry price (for PercentOfEntryPrice)", Group = "Stops & Targets", DefaultValue = 0.32, MinValue = 0.01, MaxValue = 10.0)]
  public double FixedStopPercentOfPrice { get; set; }
 
- // Used when Stop Type = No. The stop sits this far INSIDE the range from its
- // edge, so 0 means "exactly on the edge" - never what you want.
- [Parameter("...if No: Stop % of ORB Range", Group = "Stops & Targets", DefaultValue = 50.0, MinValue = 0.0)]
+ // Stop Method = PercentOfMorningRange: stop this % of the 02:00-09:30 range inside the broken edge (0 is refused).
+ [Parameter("Stop size, % of morning range (for PercentOfMorningRange)", Group = "Stops & Targets", DefaultValue = 50.0, MinValue = 0.0)]
  public double StopLossOrbPercent { get; set; }
+
+ // Kept for the rest of the code: true for the two entry-anchored methods.
+ private bool EnableFixedPointStop { get { return StopMethodParam != StopMethod.PercentOfMorningRange; } }
 
  [Parameter("Take Profit R", Group = "Stops & Targets", DefaultValue = 2.0)]
  public double TakeProfitR { get; set; }
@@ -873,9 +884,9 @@ namespace cAlgo.Robots
  // a warning is noticed the backtest has already been read as if it were valid.
  if (!EnableFixedPointStop && StopLossOrbPercent <= 0)
  {
- Print("ERROR: Stop Type is '% of ORB Range' but the percent is {0}. A 0% stop sits exactly on the "
- + "ORB edge, leaving risk undefined and position size unbounded. Set a percent above 0 "
- + "(20-25 is typical), or set Stop Type: Fixed Points? = Yes to use Fixed Stop Points.",
+ Print("ERROR: Stop Method is PercentOfMorningRange but the percent is {0}. A 0% stop sits exactly on the "
+ + "range edge, leaving risk undefined and position size unbounded. Set a percent above 0 "
+ + "(20-25 is typical), or choose another Stop Method.",
  StopLossOrbPercent);
  Stop();
  return;
@@ -2767,7 +2778,7 @@ namespace cAlgo.Robots
  if (EnableFixedPointStop)
  {
  // v3.4: stop distance as a % of the entry price when set, otherwise Fixed Stop Points.
- double stopDistance = FixedStopPercentOfPrice > 0
+ double stopDistance = StopMethodParam == StopMethod.PercentOfEntryPrice
  ? expectedEntry * FixedStopPercentOfPrice / 100.0
  : FixedStopPoints * _pointSize;
  if (tradeType == TradeType.Buy)
@@ -3131,7 +3142,7 @@ volumeInUnits = Symbol.NormalizeVolumeInUnits(volumeInUnits, RoundingMode.Down);
 
  // Phase 2: report the active stop mode once per trade.
  string stopModeStr = EnableFixedPointStop
- ? (FixedStopPercentOfPrice > 0 ? string.Format("PctOfPrice({0}%)", FixedStopPercentOfPrice) : string.Format("FixedPoints({0}pt)", FixedStopPoints))
+ ? (StopMethodParam == StopMethod.PercentOfEntryPrice ? string.Format("PctOfPrice({0}%)", FixedStopPercentOfPrice) : string.Format("FixedPoints({0}pt)", FixedStopPoints))
  : string.Format("OrbPercent({0}%)", StopLossOrbPercent);
 
  Log("TRADE ENTERED: {0} {1} vol={2} entry={3} SL={4} TP={5} riskPips={6:F1} label={7} stopMode={8}",
