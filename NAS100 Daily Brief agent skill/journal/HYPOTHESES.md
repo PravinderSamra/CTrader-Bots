@@ -5997,3 +5997,339 @@ opportunity for the correction to be dropped silently. **Reaffirmed.**
 
 Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_01M7sro1DKMp5T7EBDusm6pM
+
+---
+
+# Observations appended 2026-10-02 (grading the 2026-10-01 session)
+
+1 gradeable PRE_NY scan (12:47:53Z), `is_trading_day: true`, 0 test artefacts,
+276 M5 bars (09-30 22:00Z → 10-01 20:55Z). O 30462.5 / H 30903.4 / L 30285.5 /
+C 30526.8, range **617.9 = 1.33x** ADR14 463.3, net **+64.3** (39.1% close
+position). Bias **+2 NEUTRAL — no direction call**; post-scan move **−74.7**
+(direction −1) on traversal 351.8. Fuel budget **0.0** vs extension **153.7** →
+**+153.7, UNDER**. Hit rate **0.67** published (2/3), **0.67** distinct. Scan bar
+178 of 276. Pre-scan H **30903.4 (06:10Z)** / L 30439.2 (the opening bar);
+post-scan H 30637.3 (17:45Z) / L **30285.5 (15:10Z)** — the extension was
+**entirely downside**.
+
+**2026-09-24 remains excluded** from the options fields, the direction tally,
+the hit-rate series, P-E, P-E(b), H6 and M6 per *D23 CORRECTED*; its fuel error
+(+13.6) is kept on the D1 precedent and sits inside `track.py`'s H1 series, so
+H1 needs no hand correction. `track.py` has no quarantine and still prints
+09-24 CORRECT, so the direction counts are carried by hand off its per-scan
+table, as the 09-28, 09-29 and 09-30 reviews did. **09-25's row is cited from the
+09-28 review's register entry**, not re-derived; no review file was back-dated
+for 09-24 or 09-25. The 09-23 pre-registered D21 test stays void.
+
+Record, 09-24 excluded: PRE_NY **9 right / 5 wrong / 4 no-call over 18 days**.
+All sessions **14 / 9 / 8**. (`track.py` raw: 15 / 9 / 8.)
+
+## H18 / P1 — 10th instance, and it REVERSES the 09-30 proposal's sign
+
+Score **+2**; `bias_engine.py` labels `MILDLY BULLISH if total >= 3`.
+
+| row | pts | its own words |
+|---|---|---|
+| macro HY OAS 3.08% | **−2** | *"+40bp over 5 days… the bond market is getting nervous"* — **no observation date rendered at all** |
+| macro DGS10 | **−1** | *"moved 2bp up (2026-09-28 to 2026-09-29)"* — stale AND duplicated |
+| rates US10y | **0** | *"5.283 (−0.19%) — yields flat"* — the live read on the same instrument |
+| macro DFII10 2.91% | **0** | observation 2026-09-29; scored zero, no damage |
+
+The 09-30 entry PROPOSED, as shipping, (a) an age-gate zeroing FRED rows more
+than one business day old and (b) suppressing DGS10 whenever a live US10y read
+exists. DGS10's observation is 09-29, two business days back, so **either half
+zeroes it → score +3 → `MILDLY BULLISH` → a long call into a −74.7 post-scan
+move. Yesterday's fix manufactures a WRONG call on the very next session.**
+
+**Across its only two damage instances the fix is accuracy-neutral: it removes
+one WRONG (09-30) and creates one (10-01).** The 6th/7th/8th instances landed on
+correct calls. **PROPOSED → the accuracy case is RETRACTED.** The duplication and
+the stale rows are code-certain and should be fixed on **correctness** grounds
+only, coupling to D22(a) unchanged.
+
+**Blocker found for the age-gate.** `HY OAS` is now the largest surviving macro
+row (−2 of macro −3) and renders **no observation date**. Whether it can be
+age-gated at all is unverified; if it cannot, the gate silently exempts the
+biggest contributor. Resolve before shipping.
+
+**DGS10 duplication, third sign configuration.** 09-29 stale and live agreed
+(+2 between them); 09-30 opposite signs cancelling; 10-01 stale **−1** against
+live **0**, so the stale row is the entire net. Code-certain in all three.
+
+**DFII10 textual sub-defect, 2nd consecutive instance.** *"this is last week's
+reading, not today's"* renders unconditionally; the observation date is
+**2026-09-29, Tuesday of the current week** (Mon 09-28 / Tue 09-29 / Wed 09-30 /
+Thu 10-01). Scored 0, so no damage. Wrong on 09-30 and wrong again today.
+
+## D7 — the degenerate case, and it is the clean instance the register lacked
+
+`keep()` filters session-extreme and PD/PW levels by `abs(dist) <= budget*1.75`.
+With **`budget = 0.0` the cap is 0.0**, so the predicate passes only at
+`dist == 0` and **every non-exempt level is rejected regardless of distance.**
+
+That is what collapsed the board to **3 gamma rows** — the smallest in the record
+— and pushed six real levels into the footnote *"Beyond today's range (context
+only, don't mark)"*:
+
+| demoted level | dist from scan | what happened |
+|---|---|---|
+| 30903 Asia High (today) | +300 | **it is the session high, to 0.4pt** (06:10Z) |
+| 30512 London Low (today) | **−91.5** | first touched 13:30Z, penetrated by **226.5** |
+| 30487 Asia High (prev-day) | **−116.5** | first touched 13:30Z, penetrated by **201.5** |
+| 30655 PDH+NY High / 30797 London High / 30820 PWH | +52 to +217 | not reached post-scan |
+
+Forward-only breach of the ±0.0 cap: **+33.8 above, +318.0 below.** 09-17 is the
+only other zero-budget PRE_NY day and breached +470.1. **D7's second half is
+re-proposed with the mechanism named: exempt session-extreme and PD/PW levels as
+the gamma levels already are, or floor the cap at a fraction of ADR so a zero
+budget cannot reject the whole board.**
+
+**Side effect worth recording: H6/P3 cannot accumulate evidence on low-budget
+days**, because no `structural` level survives to be published.
+
+## P-B(b) — 9th session, inflation 1.00x, and the mechanism is now proven
+
+3 published / 2 touched / **2 distinct → 1.00x**, the first session in the series
+with no inflation at all, immediately after 09-30's worst-ever **1.96x**. The
+only difference is that D7's zero budget stripped the dense structural cluster
+and left three levels 400 and 28pts apart. **The inflation is caused by
+publishing clustered structural levels, not by `TOUCH_TOL`.**
+
+| day | published | touched | distinct | pub rate | distinct rate |
+|---|---|---|---|---|---|
+| 09-18 | 9 | 7 | 7 | 0.78 | 0.78 |
+| 09-21 | 7 | 3 | 2 | 0.43 | 0.29 |
+| 09-22 | 16 | 9 | 5 | 0.56 | 0.31 |
+| 09-23 | 21 | 12 | 7 | 0.57 | 0.33 |
+| 09-25 | 14 | 7 | 6 | 0.50 | 0.42 |
+| 09-28 | 7 | 4 | 4 | 0.57 | 0.57 |
+| 09-29 | 15 | 10 | 7 | 0.67 | 0.47 |
+| 09-30 | 17 | 8 | 4 | 0.47 | 0.24 |
+| **10-01** | **3** | **2** | **2** | **0.67** | **0.67** |
+
+**Warning about the scoreboard itself: 0.67 is above the 0.53 series mean and was
+bought by publishing almost nothing**, on a board that missed the session high by
+167pts. Hit rate alone is not a quality measure — it is trivially gamed by
+shrinking the board, and D7's zero-budget branch does exactly that automatically.
+
+## Session-context field — 5th session, and the strongest instance yet
+
+Already PROPOSED on 09-29 (`tested_today` per `prediction.levels`; grade against
+the whole session). Today the **headline level on the board** is the instance.
+
+**CALL WALL 30736.0**, published at 12:47Z as *"Heaviest ceiling this week…
+rallies stall. Take profit into it… the strongest ceiling on the board"*, under a
+banner reading *"everything below is fresh"*. In the same graded session,
+**29 bars printed highs above it and 27 bars CLOSED above it, 04:50Z → 07:10Z,
+reaching 30903.4 = 167.4pts through** — a 2h20 hold ending six hours before the
+brief was written. `review_day` grades it **"never reached."** Forward-only that
+is correct: the post-scan high 30637.3 sat 98.7 below it.
+
+With 09-17, 09-28, 09-29 and 09-30 that is **5 sessions**. The proposal is
+unchanged.
+
+## H23 — instance 2 of 3, and yesterday's framing needs a correction
+
+| session | brake | dist | outcome |
+|---|---|---|---|
+| 09-30 | 30487.7 upside | +26 | **sliced +167.5** (0.36x ADR); on **no** table |
+| 10-01 | 30586.0 downside | −18 | **sliced 300.5** (0.65x ADR); on the secondary table |
+| 10-01 | 30636.0 upside | +32 | **capped at +1.3** — it *is* the post-scan high; on the secondary table |
+
+**n=2 sessions against a 3-session threshold → NOT actionable, nothing
+proposed.** Two corrections to the 09-30 opening entry: both of today's named
+strikes **do** appear on the secondary-concentrations table, so *"the trader
+cannot mark it"* is day-dependent rather than structural; and the brake aligned
+**with** the day's dominant leg was sliced 300.5 while the one **against** it
+capped at 1.3 (n=1, recorded only so a second instance is counted).
+
+## P-E — no forward-only instance; the empty middle survives either way
+
+The CALL WALL was **untouched post-scan**, so there is no 11th instance on the
+forward-only convention. Census unchanged: **4 capped / 6 sliced**, cap mode
+3.6–11.9, slice mode 103/117.5/154/185/205/573. Were the pre-scan penetration
+counted it would be **+167.4**, which lands inside the existing slice mode, so
+**the empty 12–103 band is not disturbed on either convention.**
+
+## P-E(b) — shelf family 9th instance at +1.3, and distance is non-monotonic
+
+The lid was the options shelf **30636.0**, which capped the post-scan high at
+**+1.3**. Shelf family now **8 of 9 inside 22pts**.
+
+Today again contradicts the 09-29 *"session extreme is the lid"* reading — all
+four upside session extremes were pre-scan and never revisited. **The 09-29 flip
+stays WITHDRAWN, per the 09-30 entry; it is not re-flipped back.** 5 vs 2 is not
+a resolution.
+
+**The census's undeclared selection on distance is now demonstrably
+non-monotonic:** 09-30's nearest shelf (+26) failed while the far one (+150)
+capped; 10-01's nearest (+32) capped. **Which** shelf will cap remains
+unpredicted. Caveat live. Nothing proposed beyond what P-E already proposes.
+
+## M6 — 16 sessions; an understatement and an inversion on the day's best call
+
+**`review_day` mislabels the single best call in the document as a failure.**
+
+PUT WALL 30336.0, published *"expect a bounce and a good long-sweep here"*:
+first touch 14:05Z, swept **50.5pts through** to the session low 30285.5 at
+15:10Z, reclaimed, settled above from 15:50Z, closed **+190.8 above** after a
+**+241.3** reversal. Rendered *"broke DOWN through it — **lost by 25.3pts**"*,
+`acted_as: "lost"`, `held: false` — while `first_touch_reaction` on the **same
+row** says *"broke UP through it"*.
+
+- **Understatement, the standing mechanism:** reported 25.3 vs actual **50.5** —
+  **2.0x**, because `settled_read` measures `worst_excursion` only over bars
+  after the final settle.
+- **English inversion:** *"broke DOWN"* on a level that closed 190.8 above.
+- GAMMA FLIP 30307.8's figure is **accurate** today (reported −22.3 = 30307.8 −
+  30285.5), because its `last_far` falls early. The defect is intermittent in its
+  visible effect, not in its mechanism.
+
+**16 sessions. M6 needs a decision, not more evidence. Not re-proposed.**
+
+## H1 — n=23, a fifth consecutive large error, and the mean is now ~zero
+
+10-01: budget **0.0**, extension **153.7**, error **+153.7**. Series: `+61.2
+−11.6 −73.0 −86.4 −10.7 −26.2 −64.0 +57.3 +44.3 +79.4 −81.3 +136.4 +40.0 −38.9
++569.2 −23.0 +25.9 +13.6 −124.4 +113.9 −112.2 −75.2 +153.7`. Mean **+24.7**
+(n=23); **−0.08 without 09-21**. MAE **87.9** against a mean budget of **103.5**
+— the typical error is **85% of the typical budget**, up from 82% (09-29) and
+79% (09-30).
+
+Last five: **−124.4, +113.9, −112.2, −75.2, +153.7.**
+
+**The multiplier branch should be closed SETTLED-NEGATIVE.** At n=22 excluding
+the 09-21 outlier the mean error is **−0.08** — an unbiased estimator carrying no
+per-day information. A multiplier corrects bias; there is none left to correct.
+Third consecutive entry making this recommendation.
+
+**The qualitative state was wrong on its specific claim and right on its
+advice.** `EXHAUSTED` text: *"the day's range is set… expect real movement still,
+just **within** the extremes rather than beyond them. Continuation into new
+highs/lows is the low-probability trade."* Price made a **new session low**,
+153.7 beyond the pre-scan low. The *"Stop management"* paragraph — fade the
+extremes back into the range — then caught the +241.3 reversal off that low.
+
+## H4 — 2nd consecutive clean flip read, and STRATEGY 1 was right this time
+
+GAMMA FLIP 30307.8 held as **support**, worst **−22.3**, 490min, closed **+219.0**
+above; the `gamma +2` row was the most useful line in the document. 09-30's worst
+was −4.4.
+
+**Counter-instance to the 09-30 strategy-text failure.** *"Dealers fade
+extensions… this is your fade day"* was **correct** post-scan: the sweep of the
+put wall and the flip failed and reversed +241.3, and the overhead shelf capped
+at +1.3. Note the cell differs — 09-30 was long-gamma / **MODERATE** fuel, today
+is long-gamma / **EXHAUSTED** — so this does not settle 09-30's n=1. Both stand.
+
+## D23 — 4th clean offset; cross-check still circular; 3rd consecutive split grid
+
+Offset **+36.0**: reference **30567.5** (cash close rolled forward by the NQ move
+**+159.0**) against CFD 30603.5. Ordinary basis, 8–46pt range.
+
+**Again an `nq_implied` roll-path day, so the proposed cross-check reports
+nothing and is NOT validated.** Per the 09-29 and 09-30 entries, comparing the
+brief's reference against futures-minus-premium is circular when the reference
+*is* the futures delta. It still needs re-specifying against an independently
+measured NQ-minus-premium level before it can replace D6.
+
+**Two offsets for one grid — 3rd CONSECUTIVE instance, threshold met.** Level
+board **+36.0**, section 7 **+194.0**: **158.0pts apart** (09-29: 150.1; 09-30:
+58.0). All three are damage-free only because section 7 is research-only and had
+no volume (*"No volume has traded yet today"*), and all three sit behind the
+label *"matched to feed time"*. **PROPOSED: derive both grids from one
+conversion, or make section 7 reuse the board's offset and print the feed-time
+delta separately.** Expected effect: no change to any call today; removes a 158pt
+latent error that becomes live the first time H12/H13 promote section 7.
+
+## Dead-weight audit — refreshed counts, and they are decisive
+
+Measured across the first scan of every `is_trading_day: true` entry (**24 scans,
+23 completed days**):
+
+| row | days it scored ≠ 0 |
+|---|---|
+| `macro` NFCI financial conditions | **0 / 24** |
+| `macro` yield curve 10y–2y | **0 / 24** |
+| `macro` WALCL / RRP | **5 / 24**, all 08-24…08-28 — **0 of the last 19** |
+
+For contrast, on the same basis: DGS10 **23 / 23**, DFII10 18 / 24, pools
+13 / 24, prior-week range 9 / 24.
+
+**PROPOSED: drop or replace NFCI, the yield curve and WALCL/RRP.** Expected
+effect: no score changes on any day in the record, a shorter macro block, and the
+audit's stale *"0 / 16"* figure retired.
+
+## H19 — lowest coverage recorded
+
+| scan | counted | uncounted | sign | raw | score | coverage |
+|---|---|---|---|---|---|---|
+| 2026-10-01 12:47 | 1 (1 bull / 0 bear) | 55 | 100% bullish | +0.66 | **0** | **1.8%** of 56 relevant |
+
+The single scored headline was bullish and was then **rounded to 0** by the
+`NEUTRAL` label threshold, so news contributed nothing. The uncounted pile held
+*"Broadcom to lend Anthropic up to $42 billion to lease its chips, filing says"*
+and *"These 5 AI chip stocks are must-own into Q4, BofA says"* — both NDX-
+material. Previous low was 3.8% (09-30). Status **OBSERVING**; the weight does
+not move without the hand-score test.
+
+**No D18 instance.** The one scored headline matched `cpi_cool` and contains no
+`risk_on` token (`rally|surge|soar|jump|record high|all-?time high|rebound`);
+*"hold gains"* is not in the pattern. First-match-wins did not fire.
+
+## Max pain — a hit, and it is unusable
+
+30306.0 was **touched and held as support** (worst −22.3, 490min) on a
+**Thursday**, consistent with the brief's own *"weak on a Monday, strong by
+Thursday/Friday"*. **But it sat 1.8pts from the gamma flip**, so the hold cannot
+be attributed to max pain rather than to the flip. **Confounded — not counted as
+max pain's first clean in-reach success.** Evidence days now 7, of which 4 are
+distance misses (246, 340, 103, 175) and 1 is confounded. The recommendation to
+tighten the threshold to *"3 days on which max pain is within reach"* stands and
+remains ungradeable until M6 is decided.
+
+## H22 — the label is not discriminating
+
+Week net GEX **5.58 $bn/1%** → *"pinning likely"*. **09-30 printed the same words
+at 0.036.** A 155x difference in the input, the same output label, and the larger
+reading produced the **wider** realised range (1.33x vs 0.84x ADR). Graded
+forward-only the pin claim is defensible — price reverted 241 of 318 and the
+overhead shelf capped at +1.3; graded on the session it is not. n=2, logged, no
+claim, and the session-context confound applies here too.
+
+## No instance today
+
+- **D21** — `gamma +0` *"price mid-band (30336.0–30736.0), 67% up the range"*;
+  the row did not fire. The 09-23 pre-registered test stays void per
+  *D23 CORRECTED*.
+- **H6 / P3** — no `structural` level published, because D7 stripped them all.
+- **P-C / `events`** — **no `events` row at all** again (24 components, none
+  `events`): the component is `add("events", 0, …)` over
+  `heavyweight_earnings_next_5d` only, and there were none. Two **Medium** items
+  1.2h out (14:00Z Waller, 14:00Z ISM Manufacturing) and three **High** items at
+  +23.7h (NFP, AHE, U-rate), `event_gate: None`. The day's low landed **15:10Z,
+  1h10 after** the 14:00Z pair, so **no H20 instance**.
+- **P-F** — price inside the prior-day range at the scan (51.7 below PDH, 341.5
+  above PDL): inside-range control, error **+153.7**. Control becomes **19 days**.
+- **The structure row's tolerance band** — `price_at_scan − PD mid = +144.9`, far
+  outside the 30pt window. Stays **2 of 3**; the third-instance test unchanged.
+- **P-G** — no sidedness failure; the demoted footnote levels are counted under
+  D7 and the session-context entry, not here. P-G stays at **11**.
+- **18 of 24 scored rows were 0**; the +2 came from 6 rows.
+
+## Journal hygiene
+
+No fabricated or backfilled entries; no `prediction` block touched. 09-24
+quarantined as directed. 09-25 cited from the 09-28 entry, not re-derived; no
+review file back-dated for 09-24 or 09-25. 2026-10-02's scan exists and is
+correctly **held back** by `track.py` (179 bars so far) — it is counted only in
+the dead-weight component census, where its scan-time values are valid and its
+outcome is irrelevant.
+
+**Fourth consecutive review to carry the 09-24 exclusion by hand.** The 09-29
+entry's proposed `quarantine` field in the journal schema, read by `track.py` and
+`review_day.py`, is **reaffirmed** — today adds only another opportunity for the
+correction to be dropped silently.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01M7sro1DKMp5T7EBDusm6pM
