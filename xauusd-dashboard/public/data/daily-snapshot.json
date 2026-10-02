@@ -1,59 +1,59 @@
 {
-  "generatedAt": "2026-10-02T17:04:45.408Z",
+  "generatedAt": "2026-10-02T21:37:07.391Z",
   "yields": {
-    "US10Y": 5.29,
-    "US2Y": 4.88,
-    "realYield10Y": 2.93,
-    "realYield5Y": 2.73,
-    "curve2s10s": 41,
+    "US10Y": 5.24,
+    "US2Y": 4.78,
+    "realYield10Y": 2.88,
+    "realYield5Y": 2.65,
+    "curve2s10s": 46,
     "breakeven10Y": 2.36,
-    "breakeven5Y": 2.36,
-    "forward5y5y": 2.36,
+    "breakeven5Y": 2.37,
+    "forward5y5y": 2.35,
     "dayOverDay": {
-      "US10Y": 0.03,
-      "US2Y": -0.01,
-      "realYield10Y": 0.02
+      "US10Y": -0.05,
+      "US2Y": -0.1,
+      "realYield10Y": -0.05
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-10-28",
     "probCut": 0,
-    "probHold": 92,
-    "probHike": 8
+    "probHold": 76,
+    "probHike": 24
   },
   "marketVolatility": {
     "GVZ": 23.32,
     "VIX": 16.39
   },
   "positioning": {
-    "cotNetLong": 217747,
-    "cotWoWChange": -2970,
+    "cotNetLong": 210181,
+    "cotWoWChange": -7566,
     "crowding": "CROWDED_LONG",
-    "reportDate": "2026-09-22T00:00:00.000",
-    "openInterest": 571291,
-    "openInterestChange": -6163
+    "reportDate": "2026-09-29T00:00:00.000",
+    "openInterest": 541982,
+    "openInterestChange": -29309
   },
   "etfFlows": {
-    "gldTonnes": 1148.3,
-    "gldWoWChange": 11.7,
+    "gldTonnes": 1148.9,
+    "gldWoWChange": 0.6,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4141.645,
-    "XAGUSD": 60.234,
-    "EURUSD": 1.12582,
-    "USDJPY": 157.811,
-    "USDCHF": 0.82917,
-    "USDCNH": 6.70636,
-    "GBPUSD": 1.32333,
-    "USDCAD": 1.42566,
-    "USDSEK": 10.03674,
-    "US500": 7724.5,
-    "GER40": 25253.05,
-    "UK100": 10476.45,
-    "ADR_14day": 86.9,
+    "XAUUSD": 4139.445,
+    "XAGUSD": 60.37,
+    "EURUSD": 1.12508,
+    "USDJPY": 157.8475,
+    "USDCHF": 0.82881,
+    "USDCNH": 6.70631,
+    "GBPUSD": 1.32381,
+    "USDCAD": 1.42572,
+    "USDSEK": 10.03946,
+    "US500": 7721.6,
+    "GER40": 25282.05,
+    "UK100": 10493.55,
+    "ADR_14day": 82.8,
     "ADR_usedToday": 101.4,
-    "goldSilverRatio": 68.8
+    "goldSilverRatio": 68.6
   },
   "dollarLiquidity": {
     "stlfsi": -0.8074,
@@ -69,31 +69,13 @@
       "headline": "US issues sanctions against Hamas financing network, Treasury says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-02T14:33:45.000Z",
-      "hoursAgo": 2.5
+      "hoursAgo": 7.1
     },
     {
       "headline": "Treasury yields inch higher as investors await key jobs report",
       "source": "CNBC",
       "publishedAt": "2026-10-02T07:47:49.000Z",
-      "hoursAgo": 9.3
-    },
-    {
-      "headline": "US sanctions target Iran's auto, rail sectors as blockade chokes ship lanes - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-01T20:52:13.000Z",
-      "hoursAgo": 20.2
-    },
-    {
-      "headline": "The September jobs report will be released Friday. Here's what to expect",
-      "source": "CNBC",
-      "publishedAt": "2026-10-01T18:55:02.000Z",
-      "hoursAgo": 22.2
-    },
-    {
-      "headline": "Putin says Russia won't supply diesel to global markets until sanctions are lifted - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-01T17:43:29.000Z",
-      "hoursAgo": 23.4
+      "hoursAgo": 13.8
     }
   ],
   "briefing": null
