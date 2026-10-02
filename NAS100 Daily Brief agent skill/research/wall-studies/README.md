@@ -15,13 +15,17 @@ bars; none writes to the journal.
 | `07_confluence.py` | do two different KINDS of level stacked reverse better? | not established; gamma+structure's 75% rests on 6 distinct pairs |
 | `08_repeat_sweep.py` | is the 2nd sweep of a level better than the 1st? | no signal, flat through three attempts |
 
-**Read the caveats in HYPOTHESES.md before quoting any of these.** All four run
-on 12-14 trading days, and the positive-gamma days in this window are almost
-exactly the days the index rallied, so regime and direction are confounded.
+**Read the caveats in HYPOTHESES.md before quoting any of these.**
 
-Levels come from each day's journal `prediction.levels` (`kind` in `gamma`,
-`gamma-shelf`), taken from the last scan BEFORE 13:30Z, so nothing uses
-information published after the open.
+01-04 run on 12-14 trading days, and the positive-gamma days in that window are
+almost exactly the days the index rallied, so regime and direction are
+confounded. Their levels come from each day's journal `prediction.levels`
+(`kind` in `gamma`, `gamma-shelf`), taken from the last scan BEFORE 13:30Z, so
+nothing uses information published after the open.
+
+05-08 run on 19 trading days and take EVERY published level, not only the gamma
+ones, excluding names containing `STRUCTURAL`. That is one month of a rising
+tape, which flatters any setup that is long-biased — equal lows especially.
 
 ## Running 05-08
 
