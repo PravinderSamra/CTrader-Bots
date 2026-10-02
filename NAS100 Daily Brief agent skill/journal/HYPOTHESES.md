@@ -6333,3 +6333,120 @@ correction to be dropped silently.
 
 Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_01M7sro1DKMp5T7EBDusm6pM
+
+---
+
+# Sweep → failed re-break → reversal, measured. 2026-10-02
+
+First quantitative test of **Strategy 1 itself** rather than of the levels it
+uses. 19 trading days of M5 (2026-09-08 → 10-02), every level the brief
+published, every sweep of every level.
+
+**Method.** A sweep of level P: price below P trades beyond P+2pts, then CLOSES
+back inside within 24 bars. Entry = that reclaiming close. Stop = sweep extreme
++ 8pts. Graded on **closes, not wicks** — a setup "reaches 1R" only if a bar
+CLOSES at the target before the stop is touched, which is the difference between
+a number and a fill. Run to the end of the trading day.
+
+## H15 — the lower-high confirmation earns its keep
+
+The trader's own refinement: after the reclaim, wait for a **lower high**
+(bearish) or **higher low** (bullish) before entering. It costs entry price. Does
+it pay?
+
+| | n | ≥1R | ≥2R | ≥3R | stopped | median R |
+|---|---|---|---|---|---|---|
+| plain reclaim | 1631 | 41% | 25% | 17% | 72% | 0.69 |
+| **+ LH/HL confirmation** | **822** | **50%** | **31%** | **20%** | **63%** | **0.98** |
+
+**+9pp on 1R, +6pp on 2R, −9pp on stop-outs, and median R from 0.69 to 0.98 —
+for half the setups.** That is the correct trade: fewer, better. **Confirmed, and
+it is his instinct that was being tested, not mine.**
+
+## The risk-size effect is ARITHMETIC, not predictive — checked before reporting
+
+By R, tight setups look overwhelming: risk ≤25pts → 72% ≥1R and median R 2.94,
+against 33% and 0.65 for risk >70pts. **That result does not survive the obvious
+check.** Measured in absolute points instead:
+
+| risk bucket | n | med risk | med MFE pts | reached +50pts | reached +80pts |
+|---|---|---|---|---|---|
+| ≤25 | 87 | 19 | 60 | 54% | 36% |
+| 25–40 | 201 | 32 | 48 | 48% | 36% |
+| 40–70 | 222 | 52 | 64 | 59% | 46% |
+| >70 | 312 | 102 | 70 | **64%** | **45%** |
+
+**The move is the same size regardless — if anything slightly larger on wide
+setups.** A tight stop does not predict a better move; it makes the same move
+worth more R.
+
+**That still matters, but the reason is different from the one the R table
+implies.** It is not "tight setups work better" — it is **"your R is set almost
+entirely by your stop distance, because the move is ~60–70pts either way."** The
+response to a wide sweep is therefore to find a tighter entry, not to skip the
+level and not to widen the target.
+
+## Level type — this one IS real, it survives the points test
+
+| level | n | med risk | med MFE | +50pts | +80pts | med R |
+|---|---|---|---|---|---|---|
+| **equal highs/lows** | 73 | 40 | **90** | 63% | **53%** | **2.26** |
+| prev-day H/L | 51 | **91** | 79 | 67% | 49% | 1.05 |
+| London H/L | 112 | 62 | 81 | 62% | 51% | 1.15 |
+| max pain | 35 | 42 | 71 | 60% | 31% | 1.35 |
+| Asia H/L | 140 | 46 | 61 | 57% | 36% | 0.88 |
+| gamma flip | 53 | 46 | 60 | 57% | 43% | 1.06 |
+| **gamma wall** | 107 | 61 | **54** | 53% | 36% | 0.89 |
+| options shelf | 107 | 52 | 58 | 50% | 38% | 0.86 |
+| NY H/L | 27 | 76 | **43** | 41% | 26% | 0.41 |
+
+**Equal highs/lows wins on both axes** — the largest median move (90pts) at the
+second-tightest structure (40pts). That is a genuine edge, not a denominator
+artefact. Mechanically unsurprising: equal highs are where resting stops actually
+sit.
+
+**Gamma walls are middling as SWEEP levels (54pts median move), which is not a
+contradiction of the wall playbook.** The playbook measures whether a wall holds
+once price settles a side; this measures the move available from sweeping it.
+Different questions, and a wall can be an excellent barrier while being a
+mediocre sweep trigger.
+
+**prev-day H/L is the "right level, wrong stop" case** — 79pts of move, but 91pts
+of structure, so the R dies. That argues for a tighter entry technique at PDH/PDL
+rather than avoiding them.
+
+## Session — NY morning is structurally WIDE
+
+| session | n | med risk | med MFE | +50pts |
+|---|---|---|---|---|
+| Asia 22–06 | 190 | 48 | 68 | 60% |
+| London 06–12 | 241 | 42 | 70 | 60% |
+| **NY am 12–16** | 235 | **90** | 65 | 58% |
+| NY pm 16–21 | 156 | 50 | 50 | 50% |
+
+**The NY morning move is the same size as everyone else's (65pts). Its structure
+is twice as wide (90 vs 42).** That is why NY-am R looked bad in the first cut —
+not a worse market, a wider sweep. Same remedy: tighter entry, not avoidance.
+
+## Today as the worked example
+
+2026-10-02. Published `CALL WALL 31,046.7`. **Day high 31,037.1 at 14:27 — the
+wall was never touched, missed by 9.6pts.** Then four consecutive lower highs on
+the 1m: 31,028.8 → 31,007.5 → 30,957.5 → 30,850.0, and **283.5pts of downside**
+to 30,753.6. A 30,984 entry with the stop above the wall is ~71pts of risk →
+**3.3R.**
+
+Also exact on the board: the trader's chart C1 and C2 are the published
+`Options shelf 1.42bn` at 30,846.7 and `Options shelf 1.27bn + London High
+(prev-day)` at 30,797.1.
+
+**The brief's directional call was NEUTRAL (+1) and gave no help.** The *levels*
+did all the work — which is the same conclusion as every previous review, now
+with a 3.3R example attached.
+
+## What this is NOT
+
+No spread, no slippage, no partials. MFE is the best close before the stop, which
+assumes an exit nobody achieves. Levels cluster, so one price move can register
+as several setups — the 822 are **not independent**. These numbers rank setups
+against each other; they do not predict account return.

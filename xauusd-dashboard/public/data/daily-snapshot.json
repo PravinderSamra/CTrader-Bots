@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-02T11:36:55.503Z",
+  "generatedAt": "2026-10-02T13:53:09.333Z",
   "yields": {
     "US10Y": 5.29,
     "US2Y": 4.88,
@@ -22,8 +22,8 @@
     "probHike": 8
   },
   "marketVolatility": {
-    "GVZ": 23.74,
-    "VIX": 16.34
+    "GVZ": 23.32,
+    "VIX": 16.39
   },
   "positioning": {
     "cotNetLong": 217747,
@@ -34,26 +34,26 @@
     "openInterestChange": -6163
   },
   "etfFlows": {
-    "gldTonnes": 1137.3,
-    "gldWoWChange": -0.8,
+    "gldTonnes": 1136.6,
+    "gldWoWChange": -0.7,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4181.6,
-    "XAGUSD": 61.029,
-    "EURUSD": 1.12401,
-    "USDJPY": 157.727,
-    "USDCHF": 0.82847,
-    "USDCNH": 6.70732,
-    "GBPUSD": 1.32094,
-    "USDCAD": 1.42429,
-    "USDSEK": 10.04932,
-    "US500": 7707.6,
-    "GER40": 25235.95,
-    "UK100": 10453.45,
+    "XAUUSD": 4184.11,
+    "XAGUSD": 61.4255,
+    "EURUSD": 1.1265,
+    "USDJPY": 157.547,
+    "USDCHF": 0.82793,
+    "USDCNH": 6.70416,
+    "GBPUSD": 1.32361,
+    "USDCAD": 1.4226,
+    "USDSEK": 10.01809,
+    "US500": 7738.6,
+    "GER40": 25245.45,
+    "UK100": 10479.05,
     "ADR_14day": 86.9,
-    "ADR_usedToday": 63.5,
-    "goldSilverRatio": 68.5
+    "ADR_usedToday": 93,
+    "goldSilverRatio": 68.1
   },
   "dollarLiquidity": {
     "stlfsi": -0.8074,
@@ -69,25 +69,25 @@
       "headline": "Treasury yields inch higher as investors await key jobs report",
       "source": "CNBC",
       "publishedAt": "2026-10-02T07:47:49.000Z",
-      "hoursAgo": 3.8
+      "hoursAgo": 6.1
     },
     {
       "headline": "US sanctions target Iran's auto, rail sectors as blockade chokes ship lanes - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-01T20:52:13.000Z",
-      "hoursAgo": 14.7
+      "hoursAgo": 17
     },
     {
       "headline": "The September jobs report will be released Friday. Here's what to expect",
       "source": "CNBC",
       "publishedAt": "2026-10-01T18:55:02.000Z",
-      "hoursAgo": 16.7
+      "hoursAgo": 19
     },
     {
-      "headline": "Bank of England official says central bank mishandled its first response to Iran shock - Reuters",
+      "headline": "Putin says Russia won't supply diesel to global markets until sanctions are lifted - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-10-01T12:44:00.000Z",
-      "hoursAgo": 22.9
+      "publishedAt": "2026-10-01T17:43:29.000Z",
+      "hoursAgo": 20.2
     }
   ],
   "briefing": null
