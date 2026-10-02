@@ -1,8 +1,13 @@
 # XAUUSD London Range breakout — v3.4 (stop as % of price)
 
-A copy of the NAS100 v3.0 Add To Winner bot with one extra setting in "Stops & Targets": **Fixed Stop as % of Price**.
-With Enable Fixed Point Stop = Yes and this above 0, the stop distance is that % of the entry price, so it grows with
-gold's price level. At 0 it behaves exactly like v3.0 (Fixed Stop Points).
+A copy of the NAS100 v3.0 Add To Winner bot with clearer stop settings in "Stops & Targets": one **Stop Method** choice
+and one size field per method (the other two fields are ignored):
+
+| Stop Method | Size field it uses | Example |
+|---|---|---|
+| PointsFromEntry | Stop size, Points from entry | 6 = $6 on gold |
+| **PercentOfEntryPrice** (default) | **Stop size, % of entry price** | 0.32 = about $5.9 at $1,850, $11 at $3,500 |
+| PercentOfMorningRange | Stop size, % of morning range | the old "% of ORB" stop |
 
 Why: gold was about $1,650–2,100 in 2021–23 but much higher since, so a fixed $6 stop gets relatively tighter every year.
 
@@ -12,8 +17,8 @@ entries 10:00–11:00 NY, close 15:50 NY), plus:
 
 | Setting | Value |
 |---|---|
-| Enable Fixed Point Stop | Yes |
-| **Fixed Stop as % of Price** | **0.32** (= the winning $6 stop at the 2021–23 average gold price of about $1,850) |
+| **Stop Method** | **PercentOfEntryPrice** |
+| **Stop size, % of entry price** | **0.32** (= the winning $6 stop at the 2021–23 average gold price of about $1,850) |
 | Max / Min ORB Range Pips | 0 / 0 |
 | Commission | 7 (FTMO: 0.0014%) |
 | Risk Amount | 300 |
