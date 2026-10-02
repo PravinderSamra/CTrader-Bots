@@ -1,0 +1,282 @@
+{
+  "schema": 1,
+  "scan_utc": "2026-10-02T12:47:44+00:00",
+  "scan_et": "2026-10-02 08:47 ET (Fri)",
+  "trading_day": "2026-10-02",
+  "session_window": "PRE_NY",
+  "is_trading_day": true,
+  "prediction": {
+    "price_at_scan": 30865.5,
+    "bias_score": 1,
+    "bias_label": "NEUTRAL / TWO-WAY",
+    "strategy": "STRATEGY 1 \u2014 sweep -> failed re-break -> CISD reversal. Positive gamma above the flip: dealers fade extensions, so sweeps genuinely fail. Trade the walls and the day-frame levels.",
+    "event_gate": null,
+    "expected_direction": 0,
+    "gamma_flip": 30343.9,
+    "expiry_shape": "COHERENT_LONG",
+    "fuel_state": "LOW_FUEL",
+    "remaining_budget": 93.7,
+    "adr14": 474.8,
+    "adr_used_pct": 80.3,
+    "levels": [
+      {
+        "price": 31046.7,
+        "name": "CALL WALL \u25cf\u25cf\u25cf\u25cf\u25cf 1.08bn",
+        "kind": "gamma",
+        "dist": 181.2,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 30903.4,
+        "name": "PDH + Asia High (prev-day)",
+        "kind": "liquidity",
+        "dist": 37.9,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 2
+      },
+      {
+        "price": 30896.7,
+        "name": "Options shelf 0.56bn",
+        "kind": "gamma-shelf",
+        "dist": 31.2,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 30846.7,
+        "name": "Options shelf 1.42bn",
+        "kind": "gamma-shelf",
+        "dist": -18.8,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 30820.3,
+        "name": "PWH",
+        "kind": "liquidity",
+        "dist": -45.2,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 30797.1,
+        "name": "London High (prev-day) + Options shelf 1.27bn",
+        "kind": "liquidity",
+        "dist": -68.4,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 2
+      },
+      {
+        "price": 30790.0,
+        "name": "London High (today)",
+        "kind": "liquidity",
+        "dist": -75.5,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 30343.9,
+        "name": "GAMMA FLIP",
+        "kind": "gamma",
+        "dist": -521.6,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 30276.7,
+        "name": "MAX PAIN",
+        "kind": "gamma",
+        "dist": -588.8,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 30046.7,
+        "name": "PUT WALL \u25cf\u25cb\u25cb\u25cb\u25cb 0.25bn",
+        "kind": "gamma",
+        "dist": -818.8,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 29596.7,
+        "name": "STRUCTURAL PUT WALL \u25cf\u25cb\u25cb\u25cb\u25cb 0.42bn",
+        "kind": "structural",
+        "dist": -1268.8,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      }
+    ]
+  },
+  "inputs": {
+    "bias_components": [
+      {
+        "component": "gamma",
+        "points": 2,
+        "why": "above flip 30343.9 by 521.6pts \u2014 long-gamma, dips supported, upside grinds"
+      },
+      {
+        "component": "gamma",
+        "points": 2,
+        "why": "week net GEX 9.526 $bn/1% -> pinning likely"
+      },
+      {
+        "component": "gamma",
+        "points": -2,
+        "why": "price sits in the top 20% of the wall band (30046.7-31046.7) \u2014 poor risk/reward for longs"
+      },
+      {
+        "component": "vol",
+        "points": 0,
+        "why": "VXN 22.51 (+0.2%) \u2014 stable"
+      },
+      {
+        "component": "vol",
+        "points": 1,
+        "why": "VIX9D/VIX 0.89 contango \u2014 calm, mean-reversion favoured, mild upward drift"
+      },
+      {
+        "component": "vol",
+        "points": -1,
+        "why": "VXN/VIX 1.43 \u2014 tech-specific stress priced above the broad market"
+      },
+      {
+        "component": "vol",
+        "points": 0,
+        "why": "VVIX 92.01 \u2014 no tail-hedge bid"
+      },
+      {
+        "component": "rates",
+        "points": 3,
+        "why": "US10y 5.159 (-1.49%) \u2014 yields down, BULLISH tech"
+      },
+      {
+        "component": "rates",
+        "points": 0,
+        "why": "DXY 101.868 (-0.23%) \u2014 dollar flat"
+      },
+      {
+        "component": "macro",
+        "points": -3,
+        "why": "**Real yield, 10y (DFII10)** \u2014 what lenders earn after inflation \u2014 is 2.93%, up 2bp as of 2026-09-30 and 17bp over 5 days. \u26a0\ufe0f FRED has not published since 2026-09-30 (2 business days ago) \u2014 this is last week's reading, not today's. Rising = tech gets hit hardest, because tech is valued on profits years away and those are worth less when rates rise."
+      },
+      {
+        "component": "macro",
+        "points": -1,
+        "why": "**10y nominal yield (DGS10)** moved 3bp up (2026-09-29 to 2026-09-30). That was driven by real rates \u2014 the harsher kind for tech, and an immediate headwind."
+      },
+      {
+        "component": "macro",
+        "points": -2,
+        "why": "**High-yield credit spread (HY OAS)** \u2014 the extra interest demanded to lend to riskier companies is 3.12% (+39bp over 5 days). It's WIDENING: the bond market is getting nervous while stocks aren't. Bonds are usually right first \u2014 this is a warning."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Financial conditions (NFCI)** \u2014 how easy it is to borrow money across the economy \u2014 is EASIER than normal (-0.548). Cheap, available money is a background tailwind for stocks."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Fed balance sheet (WALCL) / reverse repo (RRP)** \u2014 cash in the financial system. The Fed is holding $6.74tn of assets, shrinking by $4.7bn this week, and the spare-cash buffer is down to $0.35bn."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Yield curve (10y\u20132y)** \u2014 long vs short bond yields. The 10-year pays +0.46% more than the 2-year. The gap widened because LONG rates rose \u2014 investors demanding more to hold debt. Risk-off."
+      },
+      {
+        "component": "breadth",
+        "points": 0,
+        "why": "mega-cap avg -0.47% (1/4 up): NVDA +1.09%, MSFT -0.02%, AAPL -0.81%, AVGO -2.15%"
+      },
+      {
+        "component": "breadth",
+        "points": -2,
+        "why": "index up while mega-caps are down \u2014 narrow, tail-carried rally; these fade into the close"
+      },
+      {
+        "component": "breadth",
+        "points": -1,
+        "why": "NDX +0.31% vs ES +0.91% \u2014 tech lagging, rotation out of tech"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "ADR14 474.8, 80.3% used vs ~45% normal by 08:47 ET -> fuel_ratio 1.78 (burning hot) [LOW_FUEL]"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "fuel is short \u2014 this dampens CONVICTION in any continuation call, it does not change direction"
+      },
+      {
+        "component": "structure",
+        "points": 1,
+        "why": "price above PD mid 30594.5 (PDH 30903.4 / PDL 30285.5)"
+      },
+      {
+        "component": "structure",
+        "points": 3,
+        "why": "price is ABOVE the entire prior-week range (29623.5-30820.3) \u2014 weekly draw has flipped bullish; PWH 30820.3 is now support, not resistance"
+      },
+      {
+        "component": "structure",
+        "points": 1,
+        "why": "in-reach unmitigated pools: 1 above / 0 below \u2014 draw higher"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "0 auto-scored headline(s) (0 bull / 0 bear) -> NEUTRAL; 47 more need reading in context (not counted here)"
+      }
+    ],
+    "fuel": {
+      "adr14": 474.8,
+      "today_range": 381.1,
+      "adr_used_pct": 80.3,
+      "remaining_budget": 93.7,
+      "expansion_state": "LOW_FUEL",
+      "volume_relative": 1.03,
+      "volume_state": "normal"
+    },
+    "gamma": {
+      "near_expiry_0_2dte": 6.379,
+      "this_week": 9.526,
+      "full_45dte": 12.995
+    },
+    "call_wall": 31046.7,
+    "put_wall": 30046.7,
+    "max_pain": 30276.7,
+    "vol": {
+      "vxn": 22.51,
+      "vix": 15.73,
+      "vix9d_over_vix": 0.89
+    },
+    "rates": {
+      "us10y": 5.159,
+      "dxy": 101.868
+    },
+    "news": {
+      "raw_score": 0,
+      "bias_points": 0,
+      "label": "NEUTRAL",
+      "scored_high_confidence": 0,
+      "needs_model_judgement": 47
+    },
+    "events_24h": []
+  },
+  "outcome": null
+}

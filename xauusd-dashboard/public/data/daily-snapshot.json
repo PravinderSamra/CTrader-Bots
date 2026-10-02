@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-10-01T18:38:20.446Z",
+  "generatedAt": "2026-10-02T11:36:55.503Z",
   "yields": {
-    "US10Y": 5.26,
-    "US2Y": 4.89,
-    "realYield10Y": 2.91,
-    "realYield5Y": 2.72,
-    "curve2s10s": 37,
+    "US10Y": 5.29,
+    "US2Y": 4.88,
+    "realYield10Y": 2.93,
+    "realYield5Y": 2.73,
+    "curve2s10s": 41,
     "breakeven10Y": 2.36,
     "breakeven5Y": 2.36,
     "forward5y5y": 2.36,
     "dayOverDay": {
-      "US10Y": 0.02,
-      "US2Y": -0.03,
-      "realYield10Y": 0.01
+      "US10Y": 0.03,
+      "US2Y": -0.01,
+      "realYield10Y": 0.02
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-10-28",
     "probCut": 0,
-    "probHold": 84,
-    "probHike": 16
+    "probHold": 92,
+    "probHike": 8
   },
   "marketVolatility": {
     "GVZ": 23.74,
@@ -34,26 +34,26 @@
     "openInterestChange": -6163
   },
   "etfFlows": {
-    "gldTonnes": 1138.2,
-    "gldWoWChange": -4.7,
+    "gldTonnes": 1137.3,
+    "gldWoWChange": -0.8,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4178.375,
-    "XAGUSD": 60.825,
-    "EURUSD": 1.12328,
-    "USDJPY": 158.1415,
-    "USDCHF": 0.83201,
-    "USDCNH": 6.71634,
-    "GBPUSD": 1.31909,
-    "USDCAD": 1.4238,
-    "USDSEK": 10.06339,
-    "US500": 7674.8,
-    "GER40": 24979.95,
-    "UK100": 10447.65,
-    "ADR_14day": 87.1,
-    "ADR_usedToday": 53.4,
-    "goldSilverRatio": 68.7
+    "XAUUSD": 4181.6,
+    "XAGUSD": 61.029,
+    "EURUSD": 1.12401,
+    "USDJPY": 157.727,
+    "USDCHF": 0.82847,
+    "USDCNH": 6.70732,
+    "GBPUSD": 1.32094,
+    "USDCAD": 1.42429,
+    "USDSEK": 10.04932,
+    "US500": 7707.6,
+    "GER40": 25235.95,
+    "UK100": 10453.45,
+    "ADR_14day": 86.9,
+    "ADR_usedToday": 63.5,
+    "goldSilverRatio": 68.5
   },
   "dollarLiquidity": {
     "stlfsi": -0.8074,
@@ -66,22 +66,28 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "US sanctions target Iran's auto, rail sectors after blockade chokes shipping lanes - Reuters",
+      "headline": "Treasury yields inch higher as investors await key jobs report",
+      "source": "CNBC",
+      "publishedAt": "2026-10-02T07:47:49.000Z",
+      "hoursAgo": 3.8
+    },
+    {
+      "headline": "US sanctions target Iran's auto, rail sectors as blockade chokes ship lanes - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-10-01T17:53:43.000Z",
-      "hoursAgo": 0.7
+      "publishedAt": "2026-10-01T20:52:13.000Z",
+      "hoursAgo": 14.7
+    },
+    {
+      "headline": "The September jobs report will be released Friday. Here's what to expect",
+      "source": "CNBC",
+      "publishedAt": "2026-10-01T18:55:02.000Z",
+      "hoursAgo": 16.7
     },
     {
       "headline": "Bank of England official says central bank mishandled its first response to Iran shock - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-10-01T14:32:24.000Z",
-      "hoursAgo": 4.1
-    },
-    {
-      "headline": "UK 30-year gilt yields top 6% for the first time since 1998 - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-01T11:23:12.000Z",
-      "hoursAgo": 7.3
+      "publishedAt": "2026-10-01T12:44:00.000Z",
+      "hoursAgo": 22.9
     }
   ],
   "briefing": null
