@@ -118,3 +118,5 @@ All three are profitable on tick data (the bar-data losses above were wrong). **
 average gold price (about $1,850). Because gold's price has risen sharply since, the 2024–26 test uses the same stop
 **as a % of price (0.32%)** via bot v3.4 (`bots/03_XAUUSD_London_Range`), not a fixed $6. This is a design change made before
 seeing any 2024–26 result, not tuning.
+Gold tuning settings (confirmed by Vanessa): **TP 4.5R, Dynamic Stop off, risk reduction to 70% at 0.7R on, Add To Winner off**,
+commission 7, tick data. The check and the 2024–26 test use exactly these, with Stop Method = PercentOfEntryPrice at 0.32%.
