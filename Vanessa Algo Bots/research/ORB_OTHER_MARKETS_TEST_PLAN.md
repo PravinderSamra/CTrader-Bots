@@ -106,3 +106,15 @@ Bitcoin is shelved unless the $600 stop (smaller positions, so less commission) 
 - Silver: spread $0.055, commission 0.0014%. About 0.16–0.27R per trade on an equivalent $0.20–0.35 stop, which is more
   than NAS100's whole edge. **Silver dropped without testing.**
 - NAS100 "hold until target or stop" (no force close): $39,106 against $58,447 closing at 15:50. **Keep the 15:50 close.**
+
+### Gold re-run on tick data (2 Oct 2026), tuning 2021-01-01 .. 2023-12-31, commission 7, Add To Winner off
+| Stop | Net profit | Max equity DD | Wins / trades |
+|---|---|---|---|
+| **$6** | **+$8,302.14** | 4.67% | 164 / 369 |
+| $8 | +$7,748.88 | 3.96% | 179 / 369 |
+| $10 | +$6,485.56 | 3.30% | 184 / 369 |
+
+All three are profitable on tick data (the bar-data losses above were wrong). **Chosen by the rule: $6**, which is 0.32% of the 2021–23
+average gold price (about $1,850). Because gold's price has risen sharply since, the 2024–26 test uses the same stop
+**as a % of price (0.32%)** via bot v3.4 (`bots/03_XAUUSD_London_Range`), not a fixed $6. This is a design change made before
+seeing any 2024–26 result, not tuning.
