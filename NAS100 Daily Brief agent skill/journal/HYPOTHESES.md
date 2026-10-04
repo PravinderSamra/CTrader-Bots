@@ -6617,3 +6617,114 @@ is worth acting on.**
 gamma-alone magnitude gap. Re-run `07_confluence.py` after another 10–15 trading
 days; either becomes real if the same-day control holds up, and both are
 currently one month of a rising tape.
+
+---
+
+## H25 — the realistic target is a DISTANCE, not an R multiple, so the exit rule has to change with the stop
+
+**Asked (trader, 2026-10-04):** "my trades may not always hit 1 or 2R because
+realistically price may not move in my direction long enough. If my stop is
+30pts, 1R may be acceptable; if it is 70pts, maybe only half an R is realistic.
+I need a table of probability for each target against varying stop sizes."
+
+Measured on the 822 confirmed sweep → lower-high/higher-low setups, 19 trading
+days. `research/wall-studies/09_target_by_stop_size.py` and `10_exit_rules.py`.
+
+### The intuition is right, and the mechanism is the reverse of the obvious one
+
+| stop size | n | pairs | median stop | **median run** | p75 run | P ≥50pts | P ≥100pts |
+|---|---|---|---|---|---|---|---|
+| ≤25pts | 87 | 51 | 19pts | **60pts** | 137pts | 54% | 33% |
+| 26–40 | 201 | 88 | 32pts | **48pts** | 151pts | 48% | 31% |
+| 41–55 | 126 | 64 | 46pts | **60pts** | 135pts | 55% | 39% |
+| 56–75 | 124 | 82 | 64pts | **65pts** | 156pts | 59% | 39% |
+| 76–100 | 117 | 69 | 89pts | **79pts** | 127pts | 64% | 44% |
+| >100 | 167 | 94 | 134pts | **70pts** | 118pts | 67% | 37% |
+
+**The run is flat — 48 to 79pts of median favourable close whatever the stop
+was.** A wider stop does not buy a longer move; it buys a smaller R multiple for
+the same move. P(≥100pts) sits in a 31–44% band across every bucket. So R is a
+unit of risk, not a unit of distance, and a fixed "take 1R" rule is six
+different bets depending on which setup presented.
+
+The practical conversion: **target in R ≈ 55 / stop in points.**
+
+### Probability of reaching each target
+
+| stop size | 0.5R | 0.75R | 1R | 1.5R | 2R | 3R | med R |
+|---|---|---|---|---|---|---|---|
+| ≤25pts | 85% | 79% | 72% | 66% | 56% | 49% | 2.94 |
+| 26–40 | 76% | 69% | 59% | 50% | 45% | 33% | 1.45 |
+| 41–55 | 75% | 61% | 56% | 45% | 39% | 25% | 1.21 |
+| 56–75 | 69% | 59% | 52% | 41% | 32% | 14% | 1.05 |
+| 76–100 | 67% | 57% | 44% | 21% | 15% | 4% | 0.88 |
+| >100 | 56% | 37% | 25% | 9% | 6% | 1% | 0.54 |
+
+Max favourable excursion on CLOSES before the stop was touched. Not an
+achievable exit: no spread, slippage, commission or partials anywhere in this.
+
+### Which exit rule wins, per stop size
+
+`10_exit_rules.py` re-derives each setup from the M5 bars so stop MOVEMENT can
+be tested, which 09 cannot do. Resting orders fill on the wick; within one bar
+the stop is checked BEFORE the target, so a bar that does both books the loss.
+Expectancy in R per trade:
+
+| stop size | med stop | best rule | E(R) | runner-up | E(R) |
+|---|---|---|---|---|---|
+| ≤25pts | 19pts | hard 3R | **+1.41** | 3R, BE@1R | +1.19 |
+| 26–40 | 32pts | trail 1R | **+0.59** | 3R, BE@1R | +0.55 |
+| 41–55 | 46pts | hard 3R | **+0.39** | hard 2R | +0.33 |
+| 56–75 | 64pts | trail 0.5R | **+0.41** | 2R, BE@1R | +0.36 |
+| 76–100 | 89pts | 1R, BE@0.5R | **+0.21** | hard 1R | +0.14 |
+| >100 | 134pts | hard 0.5R | **+0.14** | 1R, BE@0.5R | +0.12 |
+
+**So the trader's rule is directionally correct but stops short of the real
+conclusion.** On a 76–100pt stop, 1.5R and 2R targets are NEGATIVE (−0.05,
+−0.08) and only a 1R cap with an early breakeven stays positive. On a >100pt
+stop every rule tested is between −0.15 and +0.14 — the answer there is not
+"take half an R", it is **do not take the setup**.
+
+### What the breakeven stop trades away (target 2R, BE at 1R)
+
+| stop size | 2R hit, hard | 2R hit, with BE | scratched | full loss, hard | full loss, with BE |
+|---|---|---|---|---|---|
+| ≤25pts | 62% | 60% | 18% | 32% | **20%** |
+| 26–40 | 48% | 39% | 31% | 46% | **25%** |
+| 41–55 | 42% | 30% | 28% | 51% | **35%** |
+| 56–75 | 36% | 31% | 19% | 46% | **34%** |
+| 76–100 | 17% | 16% | 24% | 58% | **38%** |
+| >100 | 6% | 6% | 22% | 33% | **29%** |
+
+The breakeven stop is a good trade on **wide** stops and a bad one on
+**mid-size** stops. On 76–100pts it costs one 2R winner in seventeen and
+removes a fifth of the full losses. On 26–40pts it costs nine 2R winners in a
+hundred to remove twenty-one full losses — which still nets positive, but it is
+the bucket where it takes the most from the upside, and trailing beats it there
+(+0.59 vs +0.55).
+
+### Caveats, and one that reorders nothing but shrinks everything
+
+**Spread and commission are absent and they do not fall equally.** Cost in R is
+`spread / stop`, so a 2pt spread is 0.11R on a 19pt stop and 0.015R on a 134pt
+stop. Applying it: ≤25pts +1.41 → +1.30, 26–40 +0.59 → +0.53, 41–55 +0.39 →
++0.35, 56–75 +0.41 → +0.38, 76–100 +0.21 → +0.19, >100 +0.14 → +0.12. The
+ranking survives; the tight-stop advantage is the most overstated of the six.
+
+**The ≤25pt bucket is the least trustworthy row despite the best numbers.** A
+19pt stop only exists when the sweep was tiny, so the bucket selects for quiet
+conditions, and 87 rows over 51 pairs is the second-smallest sample here.
+
+**The >100pt rows are the next least trustworthy.** In 09's outcome model 33–66%
+of those setups neither hit the target nor the stop before the day ended, against
+1–8% in the tight buckets — so their expectancies rest mostly on a mark-out, not
+on a resolved trade.
+
+**19 trading days of a rising tape**, 822 rows but 139 distinct day/level pairs.
+Every long-biased setup is flattered.
+
+**Proposed:** publish the stop-size → target mapping as desk guidance, and add
+the stop size at entry to the brief's management note. **Nothing coded yet —
+the trader's call.** The one change with evidence behind it independent of the
+tape direction is the negative: a >100pt stop on this setup has no exit rule
+that pays, which argues for a position-size or skip rule rather than a target.
