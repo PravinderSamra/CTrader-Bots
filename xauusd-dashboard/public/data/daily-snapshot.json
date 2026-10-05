@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-02T21:37:07.391Z",
+  "generatedAt": "2026-10-05T13:04:54.420Z",
   "yields": {
     "US10Y": 5.24,
     "US2Y": 4.78,
@@ -34,26 +34,26 @@
     "openInterestChange": -29309
   },
   "etfFlows": {
-    "gldTonnes": 1148.9,
-    "gldWoWChange": 0.6,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1144.5,
+    "gldWoWChange": -4.4,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4139.445,
-    "XAGUSD": 60.37,
-    "EURUSD": 1.12508,
-    "USDJPY": 157.8475,
-    "USDCHF": 0.82881,
-    "USDCNH": 6.70631,
-    "GBPUSD": 1.32381,
-    "USDCAD": 1.42572,
-    "USDSEK": 10.03946,
-    "US500": 7721.6,
-    "GER40": 25282.05,
-    "UK100": 10493.55,
-    "ADR_14day": 82.8,
-    "ADR_usedToday": 101.4,
-    "goldSilverRatio": 68.6
+    "XAUUSD": 4155.47,
+    "XAGUSD": 61.518,
+    "EURUSD": 1.1211,
+    "USDJPY": 158.227,
+    "USDCHF": 0.83108,
+    "USDCNH": 6.70722,
+    "GBPUSD": 1.32202,
+    "USDCAD": 1.42511,
+    "USDSEK": 10.04189,
+    "US500": 7718.4,
+    "GER40": 25310.85,
+    "UK100": 10504.95,
+    "ADR_14day": 82.3,
+    "ADR_usedToday": 45.8,
+    "goldSilverRatio": 67.5
   },
   "dollarLiquidity": {
     "stlfsi": -0.8074,
@@ -64,19 +64,6 @@
     "gprDate": "2026-09"
   },
   "economicCalendar": [],
-  "newsItems": [
-    {
-      "headline": "US issues sanctions against Hamas financing network, Treasury says - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-02T14:33:45.000Z",
-      "hoursAgo": 7.1
-    },
-    {
-      "headline": "Treasury yields inch higher as investors await key jobs report",
-      "source": "CNBC",
-      "publishedAt": "2026-10-02T07:47:49.000Z",
-      "hoursAgo": 13.8
-    }
-  ],
+  "newsItems": [],
   "briefing": null
 }
