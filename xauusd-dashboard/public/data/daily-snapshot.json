@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-10-05T16:02:02.152Z",
+  "generatedAt": "2026-10-05T21:23:18.918Z",
   "yields": {
-    "US10Y": 5.24,
-    "US2Y": 4.78,
-    "realYield10Y": 2.88,
-    "realYield5Y": 2.65,
-    "curve2s10s": 46,
+    "US10Y": 5.28,
+    "US2Y": 4.83,
+    "realYield10Y": 2.92,
+    "realYield5Y": 2.69,
+    "curve2s10s": 45,
     "breakeven10Y": 2.36,
-    "breakeven5Y": 2.37,
-    "forward5y5y": 2.35,
+    "breakeven5Y": 2.36,
+    "forward5y5y": 2.36,
     "dayOverDay": {
-      "US10Y": -0.05,
-      "US2Y": -0.1,
-      "realYield10Y": -0.05
+      "US10Y": 0.04,
+      "US2Y": 0.05,
+      "realYield10Y": 0.04
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-10-28",
     "probCut": 0,
-    "probHold": 76,
-    "probHike": 24
+    "probHold": 84,
+    "probHike": 16
   },
   "marketVolatility": {
     "GVZ": 23.23,
@@ -34,26 +34,26 @@
     "openInterestChange": -29309
   },
   "etfFlows": {
-    "gldTonnes": 1150.3,
-    "gldWoWChange": 5.8,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1148.6,
+    "gldWoWChange": -1.7,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4134.48,
-    "XAGUSD": 61.095,
-    "EURUSD": 1.12096,
-    "USDJPY": 157.9895,
-    "USDCHF": 0.83143,
-    "USDCNH": 6.70572,
-    "GBPUSD": 1.32148,
-    "USDCAD": 1.42464,
-    "USDSEK": 10.04803,
-    "US500": 7760.9,
-    "GER40": 25278.75,
-    "UK100": 10502.45,
+    "XAUUSD": 4140.615,
+    "XAGUSD": 61.0655,
+    "EURUSD": 1.12212,
+    "USDJPY": 157.912,
+    "USDCHF": 0.83106,
+    "USDCNH": 6.70438,
+    "GBPUSD": 1.32212,
+    "USDCAD": 1.42546,
+    "USDSEK": 10.03697,
+    "US500": 7778.2,
+    "GER40": 25336.75,
+    "UK100": 10523.45,
     "ADR_14day": 82.3,
     "ADR_usedToday": 47.2,
-    "goldSilverRatio": 67.7
+    "goldSilverRatio": 67.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.8074,
