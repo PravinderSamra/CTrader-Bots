@@ -56,7 +56,95 @@
         "adr14": 124.6,
         "adrUsedPct": 65
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-10-05T16:02:16.558Z",
+        "fwd1hPct": 0,
+        "fwd3hPct": null,
+        "toClosePct": -0.01,
+        "maxUpPct": 0.04,
+        "maxDownPct": -0.31,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R8",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R10",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-10-05T16:02:13.685Z",
+      "londonTime": "17:02 BST",
+      "mode": "CLOSED",
+      "price": 10502.35,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — FTSE is tracking a softer European tape (Euro Stoxx -0.19%) — the cross-market lean is down.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.19%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures +0.51% — the 14:30 US handoff argues for holding longs into the US open."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 11th percentile of its 20-day range and falling — a weak-GBP tailwind for the index's dollar earners."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10521.1,
+        "orbLow": 10462.7,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10524.4,
+        "overnightLow": 10449.9,
+        "priorDayHigh": 10501.4,
+        "priorDayLow": 10408,
+        "gapPct": 0.09,
+        "adr14": 124.6,
+        "adrUsedPct": 65
+      },
+      "outcome": {
+        "resolvedAt": "2026-10-05T16:02:16.558Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
