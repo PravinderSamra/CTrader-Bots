@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-10-06T18:42:31.205Z",
+  "generatedAt": "2026-10-06T22:50:58.433Z",
   "yields": {
-    "US10Y": 5.28,
-    "US2Y": 4.83,
-    "realYield10Y": 2.92,
-    "realYield5Y": 2.69,
-    "curve2s10s": 45,
+    "US10Y": 5.31,
+    "US2Y": 4.84,
+    "realYield10Y": 2.95,
+    "realYield5Y": 2.7,
+    "curve2s10s": 47,
     "breakeven10Y": 2.36,
-    "breakeven5Y": 2.36,
-    "forward5y5y": 2.36,
+    "breakeven5Y": 2.37,
+    "forward5y5y": 2.35,
     "dayOverDay": {
-      "US10Y": 0.04,
-      "US2Y": 0.05,
-      "realYield10Y": 0.04
+      "US10Y": 0.03,
+      "US2Y": 0.01,
+      "realYield10Y": 0.03
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-10-28",
     "probCut": 0,
-    "probHold": 84,
-    "probHike": 16
+    "probHold": 80,
+    "probHike": 20
   },
   "marketVolatility": {
     "GVZ": 23.18,
@@ -34,26 +34,26 @@
     "openInterestChange": -29309
   },
   "etfFlows": {
-    "gldTonnes": 1140.6,
-    "gldWoWChange": -4.6,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1142.5,
+    "gldWoWChange": 1.9,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4169.315,
-    "XAGUSD": 61.5365,
-    "EURUSD": 1.1257,
-    "USDJPY": 158.1165,
-    "USDCHF": 0.83152,
-    "USDCNH": 6.7023,
-    "GBPUSD": 1.32746,
-    "USDCAD": 1.42122,
-    "USDSEK": 9.99247,
-    "US500": 7827.7,
-    "GER40": 25395.75,
-    "UK100": 10546.65,
-    "ADR_14day": 79.1,
-    "ADR_usedToday": 75.1,
-    "goldSilverRatio": 67.8
+    "XAUUSD": 4162.575,
+    "XAGUSD": 61.3025,
+    "EURUSD": 1.12587,
+    "USDJPY": 158.175,
+    "USDCHF": 0.83198,
+    "USDCNH": 6.70099,
+    "GBPUSD": 1.32729,
+    "USDCAD": 1.42099,
+    "USDSEK": 9.99441,
+    "US500": 7829.9,
+    "GER40": 25370.75,
+    "UK100": 10534.15,
+    "ADR_14day": 79.2,
+    "ADR_usedToday": 5.4,
+    "goldSilverRatio": 67.9
   },
   "dollarLiquidity": {
     "stlfsi": -0.8074,
@@ -66,52 +66,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "'I'm getting fed up': voters line up before dawn as early voting begins in Ohio - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-06T18:52:59.000Z",
+      "hoursAgo": 4
+    },
+    {
+      "headline": "Most Gulf markets slip as geopolitical risks weigh - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-06T13:35:59.000Z",
+      "hoursAgo": 9.2
+    },
+    {
       "headline": "High inflation has become embedded in Britain, Bank of England's Mann says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-06T10:19:58.000Z",
-      "hoursAgo": 8.4
+      "hoursAgo": 12.5
     },
     {
       "headline": "ECB's Lane: Not seeing strong second-round inflation impacts - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-06T07:24:38.000Z",
-      "hoursAgo": 11.3
+      "hoursAgo": 15.4
     },
     {
       "headline": "Japan aims to agree on action plans with Asian partners to bolster oil reserves - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-06T04:40:00.000Z",
-      "hoursAgo": 14
+      "hoursAgo": 18.2
     },
     {
       "headline": "Gulf oil flows rise to average 81% of pre-war rate in September, data shows - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-06T03:03:00.000Z",
-      "hoursAgo": 15.7
+      "hoursAgo": 19.8
     },
     {
       "headline": "Indian shares extend gains ahead of RBI rate decision - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-06T01:54:00.000Z",
-      "hoursAgo": 16.8
+      "hoursAgo": 20.9
     },
     {
       "headline": "South African rand pressured by stronger dollar, local fuel price hike - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-06T01:51:47.000Z",
-      "hoursAgo": 16.8
-    },
-    {
-      "headline": "Euro bounces as falling French bond yields temper debt concerns - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-06T01:14:00.000Z",
-      "hoursAgo": 17.5
-    },
-    {
-      "headline": "US says foreign financial institutions doing business with Iran may be sanctioned without notice - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-05T20:29:44.000Z",
-      "hoursAgo": 22.2
+      "hoursAgo": 21
     }
   ],
   "briefing": null
