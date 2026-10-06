@@ -63,7 +63,33 @@
         "adr14": 122.5,
         "adrUsedPct": 79
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-10-06T18:42:38.007Z",
+        "fwd1hPct": -0.2,
+        "fwd3hPct": 0.16,
+        "toClosePct": 0.16,
+        "maxUpPct": 0.19,
+        "maxDownPct": -0.27,
+        "verdict": "WRONG",
+        "signalVerdicts": [
+          {
+            "rule": "R1",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R4",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-10-06T14:12:56.338Z",
@@ -134,7 +160,103 @@
         "adr14": 122.5,
         "adrUsedPct": 80
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-10-06T18:42:38.148Z",
+        "fwd1hPct": 0.31,
+        "fwd3hPct": null,
+        "toClosePct": 0.31,
+        "maxUpPct": 0.33,
+        "maxDownPct": 0.09,
+        "verdict": "WRONG",
+        "signalVerdicts": [
+          {
+            "rule": "R1",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R4",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R9",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-10-06T18:42:35.732Z",
+      "londonTime": "19:42 BST",
+      "mode": "CLOSED",
+      "price": 10546.65,
+      "stance": "FADE_FAVOURED",
+      "stanceLine": "Fade day — the ORB break was a trap — ORB broke UP but price has fully reclaimed the range (back below 10547) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "STRUCTURE",
+          "rule": "R1",
+          "text": "ORB broke UP but price has fully reclaimed the range (back below 10547) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "81% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures +0.64% — the 14:30 US handoff argues for holding longs into the US open."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 1,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10591.6,
+        "orbLow": 10547,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10597,
+        "overnightLow": 10508.1,
+        "priorDayHigh": 10540.4,
+        "priorDayLow": 10449.9,
+        "gapPct": 0.23,
+        "adr14": 122.5,
+        "adrUsedPct": 81
+      },
+      "outcome": {
+        "resolvedAt": "2026-10-06T18:42:38.148Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }

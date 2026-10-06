@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-06T14:12:51.489Z",
+  "generatedAt": "2026-10-06T18:42:31.205Z",
   "yields": {
     "US10Y": 5.28,
     "US2Y": 4.83,
@@ -34,26 +34,26 @@
     "openInterestChange": -29309
   },
   "etfFlows": {
-    "gldTonnes": 1145.2,
-    "gldWoWChange": 6.5,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1140.6,
+    "gldWoWChange": -4.6,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4152.765,
-    "XAGUSD": 61.005,
-    "EURUSD": 1.1256,
-    "USDJPY": 158.0665,
-    "USDCHF": 0.8321,
-    "USDCNH": 6.70249,
-    "GBPUSD": 1.32733,
-    "USDCAD": 1.42403,
-    "USDSEK": 9.9879,
-    "US500": 7831.4,
-    "GER40": 25482.25,
-    "UK100": 10519.65,
+    "XAUUSD": 4169.315,
+    "XAGUSD": 61.5365,
+    "EURUSD": 1.1257,
+    "USDJPY": 158.1165,
+    "USDCHF": 0.83152,
+    "USDCNH": 6.7023,
+    "GBPUSD": 1.32746,
+    "USDCAD": 1.42122,
+    "USDSEK": 9.99247,
+    "US500": 7827.7,
+    "GER40": 25395.75,
+    "UK100": 10546.65,
     "ADR_14day": 79.1,
     "ADR_usedToday": 75.1,
-    "goldSilverRatio": 68.1
+    "goldSilverRatio": 67.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.8074,
@@ -69,19 +69,49 @@
       "headline": "High inflation has become embedded in Britain, Bank of England's Mann says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-06T10:19:58.000Z",
-      "hoursAgo": 3.9
+      "hoursAgo": 8.4
+    },
+    {
+      "headline": "ECB's Lane: Not seeing strong second-round inflation impacts - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-06T07:24:38.000Z",
+      "hoursAgo": 11.3
+    },
+    {
+      "headline": "Japan aims to agree on action plans with Asian partners to bolster oil reserves - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-06T04:40:00.000Z",
+      "hoursAgo": 14
     },
     {
       "headline": "Gulf oil flows rise to average 81% of pre-war rate in September, data shows - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-06T03:03:00.000Z",
-      "hoursAgo": 11.2
+      "hoursAgo": 15.7
+    },
+    {
+      "headline": "Indian shares extend gains ahead of RBI rate decision - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-06T01:54:00.000Z",
+      "hoursAgo": 16.8
+    },
+    {
+      "headline": "South African rand pressured by stronger dollar, local fuel price hike - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-06T01:51:47.000Z",
+      "hoursAgo": 16.8
+    },
+    {
+      "headline": "Euro bounces as falling French bond yields temper debt concerns - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-06T01:14:00.000Z",
+      "hoursAgo": 17.5
     },
     {
       "headline": "US says foreign financial institutions doing business with Iran may be sanctioned without notice - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-05T20:29:44.000Z",
-      "hoursAgo": 17.7
+      "hoursAgo": 22.2
     }
   ],
   "briefing": null
