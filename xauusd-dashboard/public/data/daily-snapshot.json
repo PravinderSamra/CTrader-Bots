@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-06T12:27:37.243Z",
+  "generatedAt": "2026-10-06T14:12:51.489Z",
   "yields": {
     "US10Y": 5.28,
     "US2Y": 4.83,
@@ -22,8 +22,8 @@
     "probHike": 16
   },
   "marketVolatility": {
-    "GVZ": 23.23,
-    "VIX": 15.31
+    "GVZ": 23.18,
+    "VIX": 15.52
   },
   "positioning": {
     "cotNetLong": 210181,
@@ -34,26 +34,26 @@
     "openInterestChange": -29309
   },
   "etfFlows": {
-    "gldTonnes": 1138.7,
-    "gldWoWChange": -9.9,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1145.2,
+    "gldWoWChange": 6.5,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4176.43,
-    "XAGUSD": 61.3815,
-    "EURUSD": 1.12656,
-    "USDJPY": 158.2025,
-    "USDCHF": 0.83085,
-    "USDCNH": 6.70095,
-    "GBPUSD": 1.3272,
-    "USDCAD": 1.42518,
-    "USDSEK": 9.97837,
-    "US500": 7809.4,
-    "GER40": 25426.55,
-    "UK100": 10533.75,
+    "XAUUSD": 4152.765,
+    "XAGUSD": 61.005,
+    "EURUSD": 1.1256,
+    "USDJPY": 158.0665,
+    "USDCHF": 0.8321,
+    "USDCNH": 6.70249,
+    "GBPUSD": 1.32733,
+    "USDCAD": 1.42403,
+    "USDSEK": 9.9879,
+    "US500": 7831.4,
+    "GER40": 25482.25,
+    "UK100": 10519.65,
     "ADR_14day": 79.1,
     "ADR_usedToday": 75.1,
-    "goldSilverRatio": 68
+    "goldSilverRatio": 68.1
   },
   "dollarLiquidity": {
     "stlfsi": -0.8074,
@@ -64,6 +64,25 @@
     "gprDate": "2026-09"
   },
   "economicCalendar": [],
-  "newsItems": [],
+  "newsItems": [
+    {
+      "headline": "High inflation has become embedded in Britain, Bank of England's Mann says - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-06T10:19:58.000Z",
+      "hoursAgo": 3.9
+    },
+    {
+      "headline": "Gulf oil flows rise to average 81% of pre-war rate in September, data shows - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-06T03:03:00.000Z",
+      "hoursAgo": 11.2
+    },
+    {
+      "headline": "US says foreign financial institutions doing business with Iran may be sanctioned without notice - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-05T20:29:44.000Z",
+      "hoursAgo": 17.7
+    }
+  ],
   "briefing": null
 }
