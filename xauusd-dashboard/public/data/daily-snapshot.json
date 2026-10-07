@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-10-07T19:08:53.257Z",
+  "generatedAt": "2026-10-07T23:56:32.946Z",
   "yields": {
-    "US10Y": 5.31,
-    "US2Y": 4.84,
-    "realYield10Y": 2.95,
-    "realYield5Y": 2.7,
-    "curve2s10s": 47,
+    "US10Y": 5.27,
+    "US2Y": 4.79,
+    "realYield10Y": 2.91,
+    "realYield5Y": 2.66,
+    "curve2s10s": 48,
     "breakeven10Y": 2.36,
     "breakeven5Y": 2.37,
     "forward5y5y": 2.35,
     "dayOverDay": {
-      "US10Y": 0.03,
-      "US2Y": 0.01,
-      "realYield10Y": 0.03
+      "US10Y": -0.04,
+      "US2Y": -0.05,
+      "realYield10Y": -0.04
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-10-28",
     "probCut": 0,
-    "probHold": 80,
-    "probHike": 20
+    "probHold": 76,
+    "probHike": 24
   },
   "marketVolatility": {
     "GVZ": 22.97,
@@ -34,26 +34,26 @@
     "openInterestChange": -29309
   },
   "etfFlows": {
-    "gldTonnes": 1158.5,
-    "gldWoWChange": -0.8,
+    "gldTonnes": 1157.3,
+    "gldWoWChange": -1.2,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4105.04,
-    "XAGUSD": 59.672,
-    "EURUSD": 1.1197,
-    "USDJPY": 157.999,
+    "XAUUSD": 4109.48,
+    "XAGUSD": 59.801,
+    "EURUSD": 1.12003,
+    "USDJPY": 158.074,
     "USDCHF": 0.83308,
-    "USDCNH": 6.70235,
-    "GBPUSD": 1.32159,
-    "USDCAD": 1.42532,
-    "USDSEK": 10.00248,
-    "US500": 7803.1,
-    "GER40": 25145.45,
-    "UK100": 10473.45,
-    "ADR_14day": 79.2,
-    "ADR_usedToday": 103.8,
-    "goldSilverRatio": 68.8
+    "USDCNH": 6.70205,
+    "GBPUSD": 1.32134,
+    "USDCAD": 1.42592,
+    "USDSEK": 9.99958,
+    "US500": 7802.7,
+    "GER40": 25130.75,
+    "UK100": 10472.55,
+    "ADR_14day": 82.8,
+    "ADR_usedToday": 11.8,
+    "goldSilverRatio": 68.7
   },
   "dollarLiquidity": {
     "stlfsi": -0.4681,
@@ -68,32 +68,32 @@
     {
       "headline": "IEA to accelerate oil reserve release, says 100 million barrels still to come - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-10-07T17:04:31.000Z",
-      "hoursAgo": 2.1
+      "publishedAt": "2026-10-07T19:28:08.000Z",
+      "hoursAgo": 4.5
     },
     {
       "headline": "Iraq devalues dinar to 1,520 per US dollar, state news agency says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-07T09:57:43.000Z",
-      "hoursAgo": 9.2
+      "hoursAgo": 14
     },
     {
       "headline": "India joins global rate-tightening wave with first hike in nearly 4 years - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-07T04:33:00.000Z",
-      "hoursAgo": 14.6
+      "hoursAgo": 19.4
     },
     {
       "headline": "Gold slips as dollar gains; investors await Fed minutes for rate clues - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-07T02:18:00.000Z",
-      "hoursAgo": 16.8
+      "hoursAgo": 21.6
     },
     {
-      "headline": "Oil prices fall as IEA agrees to accelerate oil stock release - Reuters",
+      "headline": "Oil prices settle down as IEA agrees to accelerate oil stock release - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-07T00:48:00.000Z",
-      "hoursAgo": 18.3
+      "hoursAgo": 23.1
     }
   ],
   "briefing": null
