@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-07T12:20:40.260Z",
+  "generatedAt": "2026-10-07T14:31:23.921Z",
   "yields": {
     "US10Y": 5.31,
     "US2Y": 4.84,
@@ -22,8 +22,8 @@
     "probHike": 20
   },
   "marketVolatility": {
-    "GVZ": 23.18,
-    "VIX": 15.52
+    "GVZ": 22.97,
+    "VIX": 15.01
   },
   "positioning": {
     "cotNetLong": 210181,
@@ -34,30 +34,30 @@
     "openInterestChange": -29309
   },
   "etfFlows": {
-    "gldTonnes": 1153.8,
-    "gldWoWChange": 11.3,
+    "gldTonnes": 1159.3,
+    "gldWoWChange": 5.5,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4121.825,
-    "XAGUSD": 60.2575,
-    "EURUSD": 1.11711,
-    "USDJPY": 158.2545,
-    "USDCHF": 0.833,
-    "USDCNH": 6.70901,
-    "GBPUSD": 1.32021,
-    "USDCAD": 1.42589,
-    "USDSEK": 10.04541,
-    "US500": 7791.9,
-    "GER40": 25139.55,
-    "UK100": 10480.55,
+    "XAUUSD": 4102.18,
+    "XAGUSD": 59.7805,
+    "EURUSD": 1.11848,
+    "USDJPY": 158.1845,
+    "USDCHF": 0.83217,
+    "USDCNH": 6.70541,
+    "GBPUSD": 1.321,
+    "USDCAD": 1.42455,
+    "USDSEK": 10.02498,
+    "US500": 7772.6,
+    "GER40": 25081.55,
+    "UK100": 10454.55,
     "ADR_14day": 79.2,
-    "ADR_usedToday": 61.2,
-    "goldSilverRatio": 68.4
+    "ADR_usedToday": 103.8,
+    "goldSilverRatio": 68.6
   },
   "dollarLiquidity": {
     "stlfsi": -0.8074,
-    "nfci": -0.548
+    "nfci": -0.494
   },
   "geopoliticalRisk": {
     "gpr": 146.2,
@@ -68,50 +68,32 @@
     {
       "headline": "Iraq devalues dinar to 1,520 per US dollar, state news agency says - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-10-07T08:28:26.000Z",
-      "hoursAgo": 3.9
+      "publishedAt": "2026-10-07T09:57:43.000Z",
+      "hoursAgo": 4.6
     },
     {
       "headline": "India joins global rate-tightening wave with first hike in nearly 4 years - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-07T04:33:00.000Z",
-      "hoursAgo": 7.8
+      "hoursAgo": 10
     },
     {
       "headline": "Gold slips as dollar gains; investors await Fed minutes for rate clues - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-07T02:18:00.000Z",
-      "hoursAgo": 10
+      "hoursAgo": 12.2
     },
     {
       "headline": "'I'm getting fed up': early US midterm voters line up before dawn in Ohio - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-06T18:52:00.000Z",
-      "hoursAgo": 17.5
+      "hoursAgo": 19.7
     },
     {
       "headline": "EU envoys set to approve major new Russia sanctions on Wednesday - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-06T16:39:20.000Z",
-      "hoursAgo": 19.7
-    },
-    {
-      "headline": "Most Gulf markets slip as geopolitical risks weigh - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-06T13:35:59.000Z",
-      "hoursAgo": 22.7
-    },
-    {
-      "headline": "Cost-of-living crises have lasting impact on inflation expectations, poverty, IMF says - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-06T13:12:23.000Z",
-      "hoursAgo": 23.1
-    },
-    {
-      "headline": "Swaps signal risk of outsized India RBI rate hike to usher in global rate catch-up - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-06T12:19:23.000Z",
-      "hoursAgo": 24
+      "hoursAgo": 21.9
     }
   ],
   "briefing": null
