@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-07T14:31:23.921Z",
+  "generatedAt": "2026-10-07T19:08:53.257Z",
   "yields": {
     "US10Y": 5.31,
     "US2Y": 4.84,
@@ -34,29 +34,29 @@
     "openInterestChange": -29309
   },
   "etfFlows": {
-    "gldTonnes": 1159.3,
-    "gldWoWChange": 5.5,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1158.5,
+    "gldWoWChange": -0.8,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4102.18,
-    "XAGUSD": 59.7805,
-    "EURUSD": 1.11848,
-    "USDJPY": 158.1845,
-    "USDCHF": 0.83217,
-    "USDCNH": 6.70541,
-    "GBPUSD": 1.321,
-    "USDCAD": 1.42455,
-    "USDSEK": 10.02498,
-    "US500": 7772.6,
-    "GER40": 25081.55,
-    "UK100": 10454.55,
+    "XAUUSD": 4105.04,
+    "XAGUSD": 59.672,
+    "EURUSD": 1.1197,
+    "USDJPY": 157.999,
+    "USDCHF": 0.83308,
+    "USDCNH": 6.70235,
+    "GBPUSD": 1.32159,
+    "USDCAD": 1.42532,
+    "USDSEK": 10.00248,
+    "US500": 7803.1,
+    "GER40": 25145.45,
+    "UK100": 10473.45,
     "ADR_14day": 79.2,
     "ADR_usedToday": 103.8,
-    "goldSilverRatio": 68.6
+    "goldSilverRatio": 68.8
   },
   "dollarLiquidity": {
-    "stlfsi": -0.8074,
+    "stlfsi": -0.4681,
     "nfci": -0.494
   },
   "geopoliticalRisk": {
@@ -66,34 +66,34 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "IEA to accelerate oil reserve release, says 100 million barrels still to come - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-07T17:04:31.000Z",
+      "hoursAgo": 2.1
+    },
+    {
       "headline": "Iraq devalues dinar to 1,520 per US dollar, state news agency says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-07T09:57:43.000Z",
-      "hoursAgo": 4.6
+      "hoursAgo": 9.2
     },
     {
       "headline": "India joins global rate-tightening wave with first hike in nearly 4 years - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-07T04:33:00.000Z",
-      "hoursAgo": 10
+      "hoursAgo": 14.6
     },
     {
       "headline": "Gold slips as dollar gains; investors await Fed minutes for rate clues - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-07T02:18:00.000Z",
-      "hoursAgo": 12.2
+      "hoursAgo": 16.8
     },
     {
-      "headline": "'I'm getting fed up': early US midterm voters line up before dawn in Ohio - Reuters",
+      "headline": "Oil prices fall as IEA agrees to accelerate oil stock release - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-10-06T18:52:00.000Z",
-      "hoursAgo": 19.7
-    },
-    {
-      "headline": "EU envoys set to approve major new Russia sanctions on Wednesday - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-06T16:39:20.000Z",
-      "hoursAgo": 21.9
+      "publishedAt": "2026-10-07T00:48:00.000Z",
+      "hoursAgo": 18.3
     }
   ],
   "briefing": null
