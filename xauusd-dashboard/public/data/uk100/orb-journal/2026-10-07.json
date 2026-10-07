@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-07",
+  "entries": [
+    {
+      "at": "2026-10-07T12:20:45.169Z",
+      "londonTime": "13:20 BST",
+      "mode": "POST_ORB",
+      "price": 10478.55,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — 79% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "79% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "STRUCTURE",
+          "rule": "R3",
+          "text": "ORB break DOWN is aligned with the BEARISH macro bias (-4) — continuation has the backdrop behind it."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.25%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -4,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10510.8,
+        "orbLow": 10491.6,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10546.5,
+        "overnightLow": 10474,
+        "priorDayHigh": 10605.4,
+        "priorDayLow": 10506.2,
+        "gapPct": -0.52,
+        "adr14": 122,
+        "adrUsedPct": 79
+      },
+      "outcome": null
+    }
+  ]
+}

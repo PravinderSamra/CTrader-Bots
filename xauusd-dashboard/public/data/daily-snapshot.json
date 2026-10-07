@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-06T22:50:58.433Z",
+  "generatedAt": "2026-10-07T12:20:40.260Z",
   "yields": {
     "US10Y": 5.31,
     "US2Y": 4.84,
@@ -34,26 +34,26 @@
     "openInterestChange": -29309
   },
   "etfFlows": {
-    "gldTonnes": 1142.5,
-    "gldWoWChange": 1.9,
+    "gldTonnes": 1153.8,
+    "gldWoWChange": 11.3,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4162.575,
-    "XAGUSD": 61.3025,
-    "EURUSD": 1.12587,
-    "USDJPY": 158.175,
-    "USDCHF": 0.83198,
-    "USDCNH": 6.70099,
-    "GBPUSD": 1.32729,
-    "USDCAD": 1.42099,
-    "USDSEK": 9.99441,
-    "US500": 7829.9,
-    "GER40": 25370.75,
-    "UK100": 10534.15,
+    "XAUUSD": 4121.825,
+    "XAGUSD": 60.2575,
+    "EURUSD": 1.11711,
+    "USDJPY": 158.2545,
+    "USDCHF": 0.833,
+    "USDCNH": 6.70901,
+    "GBPUSD": 1.32021,
+    "USDCAD": 1.42589,
+    "USDSEK": 10.04541,
+    "US500": 7791.9,
+    "GER40": 25139.55,
+    "UK100": 10480.55,
     "ADR_14day": 79.2,
-    "ADR_usedToday": 5.4,
-    "goldSilverRatio": 67.9
+    "ADR_usedToday": 61.2,
+    "goldSilverRatio": 68.4
   },
   "dollarLiquidity": {
     "stlfsi": -0.8074,
@@ -66,52 +66,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "'I'm getting fed up': voters line up before dawn as early voting begins in Ohio - Reuters",
+      "headline": "Iraq devalues dinar to 1,520 per US dollar, state news agency says - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-10-06T18:52:59.000Z",
-      "hoursAgo": 4
+      "publishedAt": "2026-10-07T08:28:26.000Z",
+      "hoursAgo": 3.9
+    },
+    {
+      "headline": "India joins global rate-tightening wave with first hike in nearly 4 years - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-07T04:33:00.000Z",
+      "hoursAgo": 7.8
+    },
+    {
+      "headline": "Gold slips as dollar gains; investors await Fed minutes for rate clues - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-07T02:18:00.000Z",
+      "hoursAgo": 10
+    },
+    {
+      "headline": "'I'm getting fed up': early US midterm voters line up before dawn in Ohio - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-06T18:52:00.000Z",
+      "hoursAgo": 17.5
+    },
+    {
+      "headline": "EU envoys set to approve major new Russia sanctions on Wednesday - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-06T16:39:20.000Z",
+      "hoursAgo": 19.7
     },
     {
       "headline": "Most Gulf markets slip as geopolitical risks weigh - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-06T13:35:59.000Z",
-      "hoursAgo": 9.2
+      "hoursAgo": 22.7
     },
     {
-      "headline": "High inflation has become embedded in Britain, Bank of England's Mann says - Reuters",
+      "headline": "Cost-of-living crises have lasting impact on inflation expectations, poverty, IMF says - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-10-06T10:19:58.000Z",
-      "hoursAgo": 12.5
+      "publishedAt": "2026-10-06T13:12:23.000Z",
+      "hoursAgo": 23.1
     },
     {
-      "headline": "ECB's Lane: Not seeing strong second-round inflation impacts - Reuters",
+      "headline": "Swaps signal risk of outsized India RBI rate hike to usher in global rate catch-up - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-10-06T07:24:38.000Z",
-      "hoursAgo": 15.4
-    },
-    {
-      "headline": "Japan aims to agree on action plans with Asian partners to bolster oil reserves - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-06T04:40:00.000Z",
-      "hoursAgo": 18.2
-    },
-    {
-      "headline": "Gulf oil flows rise to average 81% of pre-war rate in September, data shows - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-06T03:03:00.000Z",
-      "hoursAgo": 19.8
-    },
-    {
-      "headline": "Indian shares extend gains ahead of RBI rate decision - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-06T01:54:00.000Z",
-      "hoursAgo": 20.9
-    },
-    {
-      "headline": "South African rand pressured by stronger dollar, local fuel price hike - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-06T01:51:47.000Z",
-      "hoursAgo": 21
+      "publishedAt": "2026-10-06T12:19:23.000Z",
+      "hoursAgo": 24
     }
   ],
   "briefing": null
