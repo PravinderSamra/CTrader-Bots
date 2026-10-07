@@ -1,0 +1,341 @@
+{
+  "schema": 1,
+  "scan_utc": "2026-10-07T12:50:43+00:00",
+  "scan_et": "2026-10-07 08:50 ET (Wed)",
+  "trading_day": "2026-10-07",
+  "session_window": "PRE_NY",
+  "is_trading_day": true,
+  "prediction": {
+    "price_at_scan": 31031.7,
+    "bias_score": -10,
+    "bias_label": "STRONGLY BEARISH",
+    "strategy": "STRATEGY 2 \u2014 CISD -> HH/HL -> fib OTE continuation. Below the flip in negative gamma: dealers amplify, sweeps run rather than fail. Strategy-1 fades have a materially lower hit rate here \u2014 only take them at the far walls.",
+    "event_gate": null,
+    "expected_direction": -1,
+    "gamma_flip": 31114.3,
+    "expiry_shape": "COHERENT_SHORT",
+    "fuel_state": "MODERATE",
+    "remaining_budget": 158.9,
+    "adr14": 472.8,
+    "adr_used_pct": 66.4,
+    "levels": [
+      {
+        "price": 31475.8,
+        "name": "STRUCTURAL CALL WALL \u25cf\u25cf\u25cf\u25cf\u25cf 1.35bn",
+        "kind": "structural",
+        "dist": 444.1,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 31309.0,
+        "name": "London High (prev-day)",
+        "kind": "liquidity",
+        "dist": 277.3,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 31288.5,
+        "name": "Asia High (today) + Equal highs \u00d73",
+        "kind": "liquidity",
+        "dist": 256.8,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 2
+      },
+      {
+        "price": 31254.4,
+        "name": "London High (today)",
+        "kind": "liquidity",
+        "dist": 222.7,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 31232.0,
+        "name": "PD mid + NY Low (prev-day)",
+        "kind": "liquidity",
+        "dist": 200.3,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 2
+      },
+      {
+        "price": 31225.8,
+        "name": "CALL WALL \u25cf\u25cf\u25cf\u25cf\u25cb 0.87bn + Equal highs \u00d72",
+        "kind": "gamma",
+        "dist": 194.1,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 2
+      },
+      {
+        "price": 31203.2,
+        "name": "Asia Low (today)",
+        "kind": "liquidity",
+        "dist": 171.5,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 31181.0,
+        "name": "Asia High (prev-day)",
+        "kind": "liquidity",
+        "dist": 149.3,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 31114.3,
+        "name": "GAMMA FLIP + London Low (prev-day)",
+        "kind": "gamma",
+        "dist": 82.6,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 2
+      },
+      {
+        "price": 31078.9,
+        "name": "PDL + Asia Low (prev-day)",
+        "kind": "liquidity",
+        "dist": 47.2,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 2
+      },
+      {
+        "price": 31037.1,
+        "name": "PWH",
+        "kind": "liquidity",
+        "dist": 5.4,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 31025.8,
+        "name": "PUT WALL \u25cf\u25cf\u25cf\u25cf\u25cf 1.15bn",
+        "kind": "gamma",
+        "dist": -5.9,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 30979.1,
+        "name": "London Low (today)",
+        "kind": "liquidity",
+        "dist": -52.6,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 30973.1,
+        "name": "Equal lows \u00d72",
+        "kind": "liquidity",
+        "dist": -58.6,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 30825.8,
+        "name": "MAX PAIN",
+        "kind": "gamma",
+        "dist": -205.9,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      }
+    ]
+  },
+  "inputs": {
+    "bias_components": [
+      {
+        "component": "gamma",
+        "points": -3,
+        "why": "below flip 31114.3 by 82.6pts \u2014 SHORT gamma, dealers amplify: downside accelerates, rallies unstable"
+      },
+      {
+        "component": "gamma",
+        "points": -2,
+        "why": "week net GEX -4.447 $bn/1% -> expansion likely"
+      },
+      {
+        "component": "gamma",
+        "points": 2,
+        "why": "price sits in the bottom 20% of the wall band (31025.8-31225.8) \u2014 poor risk/reward for shorts"
+      },
+      {
+        "component": "vol",
+        "points": 0,
+        "why": "VXN 21.15 (-2.5%) \u2014 stable"
+      },
+      {
+        "component": "vol",
+        "points": 1,
+        "why": "VIX9D/VIX 0.76 contango \u2014 calm, mean-reversion favoured, mild upward drift"
+      },
+      {
+        "component": "vol",
+        "points": 0,
+        "why": "VXN/VIX 1.34 \u2014 normal tech premium"
+      },
+      {
+        "component": "vol",
+        "points": 0,
+        "why": "VVIX 82.59 \u2014 no tail-hedge bid"
+      },
+      {
+        "component": "rates",
+        "points": -3,
+        "why": "US10y 5.337 (+1.29%) \u2014 yields up, multiple compression, BEARISH tech"
+      },
+      {
+        "component": "rates",
+        "points": -2,
+        "why": "DXY 102.457 (+0.62%) \u2014 dollar bid, risk-off"
+      },
+      {
+        "component": "macro",
+        "points": -3,
+        "why": "**Real yield, 10y (DFII10)** \u2014 what lenders earn after inflation \u2014 is 2.95%, up 3bp as of 2026-10-05 and 5bp over 5 days. \u26a0\ufe0f FRED has not published since 2026-10-05 (2 business days ago) \u2014 this is last week's reading, not today's. Rising = tech gets hit hardest, because tech is valued on profits years away and those are worth less when rates rise."
+      },
+      {
+        "component": "macro",
+        "points": -1,
+        "why": "**10y nominal yield (DGS10)** moved 3bp up (2026-10-02 to 2026-10-05). That was driven by real rates \u2014 the harsher kind for tech, and an immediate headwind."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**High-yield credit spread (HY OAS)** \u2014 the extra interest demanded to lend to riskier companies is 3.12% (+10bp over 5 days). Middling \u2014 no strong signal either way."
+      },
+      {
+        "component": "macro",
+        "points": -1,
+        "why": "**Financial conditions (NFCI)** \u2014 how easy it is to borrow money across the economy \u2014 is EASIER than normal (-0.494). It got tighter again this week, which tends to show up in stock prices a few weeks later \u2014 an early warning."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Fed balance sheet (WALCL) / reverse repo (RRP)** \u2014 cash in the financial system. The Fed is holding $6.74tn of assets, shrinking by $4.7bn this week, and the spare-cash buffer is down to $0.414bn."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Yield curve (10y\u20132y)** \u2014 long vs short bond yields. The 10-year pays +0.48% more than the 2-year. Barely moved."
+      },
+      {
+        "component": "breadth",
+        "points": 2,
+        "why": "mega-cap avg +1.20% (4/4 up): NVDA +0.14%, MSFT +0.78%, AAPL +0.22%, AVGO +3.67%"
+      },
+      {
+        "component": "breadth",
+        "points": 1,
+        "why": "NDX +0.48% vs ES -0.39% \u2014 tech leading, genuine risk appetite"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "ADR14 472.8, 66.4% used vs ~45% normal by 08:50 ET -> fuel_ratio 1.48 (burning hot) [MODERATE]"
+      },
+      {
+        "component": "structure",
+        "points": -1,
+        "why": "price below PD mid 31232.0 (PDH 31385.1 / PDL 31078.9)"
+      },
+      {
+        "component": "structure",
+        "points": 0,
+        "why": "price inside the prior-week range (30101.2-31037.1)"
+      },
+      {
+        "component": "structure",
+        "points": 0,
+        "why": "in-reach unmitigated pools: 2 above / 2 below \u2014 draw balanced"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "0 auto-scored headline(s) (0 bull / 0 bear) -> NEUTRAL; 26 more need reading in context (not counted here)"
+      }
+    ],
+    "fuel": {
+      "adr14": 472.8,
+      "today_range": 313.9,
+      "adr_used_pct": 66.4,
+      "remaining_budget": 158.9,
+      "expansion_state": "MODERATE",
+      "volume_relative": 1.13,
+      "volume_state": "normal"
+    },
+    "gamma": {
+      "near_expiry_0_2dte": -3.879,
+      "this_week": -4.447,
+      "full_45dte": -1.522
+    },
+    "call_wall": 31225.8,
+    "put_wall": 31025.8,
+    "max_pain": 30825.8,
+    "vol": {
+      "vxn": 21.15,
+      "vix": 15.83,
+      "vix9d_over_vix": 0.76
+    },
+    "rates": {
+      "us10y": 5.337,
+      "dxy": 102.457
+    },
+    "news": {
+      "raw_score": 0,
+      "bias_points": 0,
+      "label": "NEUTRAL",
+      "scored_high_confidence": 0,
+      "needs_model_judgement": 26
+    },
+    "events_24h": [
+      {
+        "utc": "2026-10-07T17:00:00+00:00",
+        "impact": "Medium",
+        "title": "President Trump Speaks",
+        "forecast": "",
+        "previous": "",
+        "hours_away": 4.2
+      },
+      {
+        "utc": "2026-10-07T18:00:00+00:00",
+        "impact": "High",
+        "title": "FOMC Meeting Minutes",
+        "forecast": "",
+        "previous": "",
+        "hours_away": 5.2
+      },
+      {
+        "utc": "2026-10-08T08:30:00+00:00",
+        "impact": "Medium",
+        "title": "FOMC Member Waller Speaks",
+        "forecast": "",
+        "previous": "",
+        "hours_away": 19.7
+      },
+      {
+        "utc": "2026-10-08T12:30:00+00:00",
+        "impact": "Medium",
+        "title": "Unemployment Claims",
+        "forecast": "200K",
+        "previous": "197K",
+        "hours_away": 23.7
+      }
+    ]
+  },
+  "outcome": null
+}
