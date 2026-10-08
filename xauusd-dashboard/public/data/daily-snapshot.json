@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-07T23:56:32.946Z",
+  "generatedAt": "2026-10-08T12:30:29.583Z",
   "yields": {
     "US10Y": 5.27,
     "US2Y": 4.79,
@@ -17,9 +17,9 @@
   },
   "fedExpectations": {
     "nextMeeting": "2026-10-28",
-    "probCut": 0,
-    "probHold": 76,
-    "probHike": 24
+    "probCut": null,
+    "probHold": null,
+    "probHike": null
   },
   "marketVolatility": {
     "GVZ": 22.97,
@@ -34,26 +34,26 @@
     "openInterestChange": -29309
   },
   "etfFlows": {
-    "gldTonnes": 1157.3,
-    "gldWoWChange": -1.2,
+    "gldTonnes": 1151.9,
+    "gldWoWChange": -5.4,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4109.48,
-    "XAGUSD": 59.801,
-    "EURUSD": 1.12003,
-    "USDJPY": 158.074,
-    "USDCHF": 0.83308,
-    "USDCNH": 6.70205,
-    "GBPUSD": 1.32134,
-    "USDCAD": 1.42592,
-    "USDSEK": 9.99958,
-    "US500": 7802.7,
-    "GER40": 25130.75,
-    "UK100": 10472.55,
+    "XAUUSD": 4128.46,
+    "XAGUSD": 58.942,
+    "EURUSD": 1.11954,
+    "USDJPY": 158.187,
+    "USDCHF": 0.83322,
+    "USDCNH": 6.70461,
+    "GBPUSD": 1.32109,
+    "USDCAD": 1.42556,
+    "USDSEK": 10.00089,
+    "US500": 7772.7,
+    "GER40": 24910.85,
+    "UK100": 10446.95,
     "ADR_14day": 82.8,
-    "ADR_usedToday": 11.8,
-    "goldSilverRatio": 68.7
+    "ADR_usedToday": 40.2,
+    "goldSilverRatio": 70
   },
   "dollarLiquidity": {
     "stlfsi": -0.4681,
@@ -69,31 +69,13 @@
       "headline": "IEA to accelerate oil reserve release, says 100 million barrels still to come - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-07T19:28:08.000Z",
-      "hoursAgo": 4.5
+      "hoursAgo": 17
     },
     {
-      "headline": "Iraq devalues dinar to 1,520 per US dollar, state news agency says - Reuters",
+      "headline": "US 30-year mortgage rate hits highest in nearly three years - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-10-07T09:57:43.000Z",
-      "hoursAgo": 14
-    },
-    {
-      "headline": "India joins global rate-tightening wave with first hike in nearly 4 years - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-07T04:33:00.000Z",
-      "hoursAgo": 19.4
-    },
-    {
-      "headline": "Gold slips as dollar gains; investors await Fed minutes for rate clues - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-07T02:18:00.000Z",
-      "hoursAgo": 21.6
-    },
-    {
-      "headline": "Oil prices settle down as IEA agrees to accelerate oil stock release - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-07T00:48:00.000Z",
-      "hoursAgo": 23.1
+      "publishedAt": "2026-10-07T19:19:49.000Z",
+      "hoursAgo": 17.2
     }
   ],
   "briefing": null
