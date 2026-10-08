@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-08T12:30:29.583Z",
+  "generatedAt": "2026-10-08T14:36:03.131Z",
   "yields": {
     "US10Y": 5.27,
     "US2Y": 4.79,
@@ -17,13 +17,13 @@
   },
   "fedExpectations": {
     "nextMeeting": "2026-10-28",
-    "probCut": null,
-    "probHold": null,
-    "probHike": null
+    "probCut": 0,
+    "probHold": 76,
+    "probHike": 24
   },
   "marketVolatility": {
-    "GVZ": 22.97,
-    "VIX": 15.01
+    "GVZ": 23.39,
+    "VIX": 15.08
   },
   "positioning": {
     "cotNetLong": 210181,
@@ -34,26 +34,26 @@
     "openInterestChange": -29309
   },
   "etfFlows": {
-    "gldTonnes": 1151.9,
-    "gldWoWChange": -5.4,
+    "gldTonnes": 1150.3,
+    "gldWoWChange": -1.6,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4128.46,
-    "XAGUSD": 58.942,
-    "EURUSD": 1.11954,
-    "USDJPY": 158.187,
-    "USDCHF": 0.83322,
-    "USDCNH": 6.70461,
-    "GBPUSD": 1.32109,
-    "USDCAD": 1.42556,
-    "USDSEK": 10.00089,
-    "US500": 7772.7,
-    "GER40": 24910.85,
-    "UK100": 10446.95,
+    "XAUUSD": 4134.285,
+    "XAGUSD": 59.24,
+    "EURUSD": 1.12211,
+    "USDJPY": 158.0845,
+    "USDCHF": 0.83249,
+    "USDCNH": 6.70285,
+    "GBPUSD": 1.32422,
+    "USDCAD": 1.4226,
+    "USDSEK": 9.9626,
+    "US500": 7792,
+    "GER40": 24949.55,
+    "UK100": 10466.05,
     "ADR_14day": 82.8,
     "ADR_usedToday": 40.2,
-    "goldSilverRatio": 70
+    "goldSilverRatio": 69.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.4681,
@@ -69,13 +69,13 @@
       "headline": "IEA to accelerate oil reserve release, says 100 million barrels still to come - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-07T19:28:08.000Z",
-      "hoursAgo": 17
+      "hoursAgo": 19.1
     },
     {
       "headline": "US 30-year mortgage rate hits highest in nearly three years - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-07T19:19:49.000Z",
-      "hoursAgo": 17.2
+      "hoursAgo": 19.3
     }
   ],
   "briefing": null

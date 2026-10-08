@@ -136,6 +136,63 @@
         "adrUsedPct": 94
       },
       "outcome": null
+    },
+    {
+      "at": "2026-10-08T14:36:08.909Z",
+      "londonTime": "15:36 BST",
+      "mode": "POST_ORB",
+      "price": 10464.75,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 115% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "115% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10442.9) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.4%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10394,
+        "orbLow": 10359.2,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10471.9,
+        "overnightLow": 10359.2,
+        "priorDayHigh": 10546.5,
+        "priorDayLow": 10442.9,
+        "gapPct": -0.07,
+        "adr14": 119.5,
+        "adrUsedPct": 115
+      },
+      "outcome": null
     }
   ]
 }
