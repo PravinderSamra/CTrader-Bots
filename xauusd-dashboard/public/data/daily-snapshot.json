@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-08T14:36:03.131Z",
+  "generatedAt": "2026-10-08T19:05:00.847Z",
   "yields": {
     "US10Y": 5.27,
     "US2Y": 4.79,
@@ -34,25 +34,25 @@
     "openInterestChange": -29309
   },
   "etfFlows": {
-    "gldTonnes": 1150.3,
-    "gldWoWChange": -1.6,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1151.8,
+    "gldWoWChange": 1.5,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4134.285,
-    "XAGUSD": 59.24,
-    "EURUSD": 1.12211,
-    "USDJPY": 158.0845,
-    "USDCHF": 0.83249,
-    "USDCNH": 6.70285,
-    "GBPUSD": 1.32422,
-    "USDCAD": 1.4226,
-    "USDSEK": 9.9626,
-    "US500": 7792,
-    "GER40": 24949.55,
-    "UK100": 10466.05,
+    "XAUUSD": 4128.825,
+    "XAGUSD": 59.123,
+    "EURUSD": 1.12104,
+    "USDJPY": 157.8495,
+    "USDCHF": 0.83156,
+    "USDCNH": 6.70395,
+    "GBPUSD": 1.32264,
+    "USDCAD": 1.42246,
+    "USDSEK": 9.97446,
+    "US500": 7755,
+    "GER40": 24956.85,
+    "UK100": 10510.65,
     "ADR_14day": 82.8,
-    "ADR_usedToday": 40.2,
+    "ADR_usedToday": 42.9,
     "goldSilverRatio": 69.8
   },
   "dollarLiquidity": {
@@ -66,16 +66,28 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "US imposes fresh sanctions on Iran's shadow fleet - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-08T17:25:14.000Z",
+      "hoursAgo": 1.7
+    },
+    {
+      "headline": "10-year Treasury yield is little changed as Fed's Waller says more hikes needed, investors await 30-year auction",
+      "source": "CNBC",
+      "publishedAt": "2026-10-08T14:11:18.000Z",
+      "hoursAgo": 4.9
+    },
+    {
       "headline": "IEA to accelerate oil reserve release, says 100 million barrels still to come - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-07T19:28:08.000Z",
-      "hoursAgo": 19.1
+      "hoursAgo": 23.6
     },
     {
       "headline": "US 30-year mortgage rate hits highest in nearly three years - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-07T19:19:49.000Z",
-      "hoursAgo": 19.3
+      "hoursAgo": 23.8
     }
   ],
   "briefing": null
