@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-09T00:03:48.518Z",
+  "generatedAt": "2026-10-09T12:18:57.780Z",
   "yields": {
     "US10Y": 5.28,
     "US2Y": 4.77,
@@ -34,26 +34,26 @@
     "openInterestChange": -29309
   },
   "etfFlows": {
-    "gldTonnes": 1146.3,
-    "gldWoWChange": -5.5,
+    "gldTonnes": 1137.3,
+    "gldWoWChange": -9,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4148.85,
-    "XAGUSD": 59.6195,
-    "EURUSD": 1.12124,
-    "USDJPY": 158.1055,
-    "USDCHF": 0.83159,
-    "USDCNH": 6.70367,
-    "GBPUSD": 1.32282,
-    "USDCAD": 1.42244,
-    "USDSEK": 9.97122,
-    "US500": 7772.3,
-    "GER40": 24991.85,
-    "UK100": 10524.25,
+    "XAUUSD": 4181.61,
+    "XAGUSD": 60.315,
+    "EURUSD": 1.1204,
+    "USDJPY": 158.227,
+    "USDCHF": 0.83118,
+    "USDCNH": 6.69243,
+    "GBPUSD": 1.32187,
+    "USDCAD": 1.42278,
+    "USDSEK": 9.969,
+    "US500": 7794.6,
+    "GER40": 25139.05,
+    "UK100": 10566.45,
     "ADR_14day": 79.3,
-    "ADR_usedToday": 19,
-    "goldSilverRatio": 69.6
+    "ADR_usedToday": 77.1,
+    "goldSilverRatio": 69.3
   },
   "dollarLiquidity": {
     "stlfsi": -0.4681,
@@ -66,22 +66,34 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Treasury yields steady as Trump strikes diplomatic tone on Iran ahead of midterms",
+      "source": "CNBC",
+      "publishedAt": "2026-10-09T08:24:50.000Z",
+      "hoursAgo": 3.9
+    },
+    {
+      "headline": "Gold adds over 1% on easing oil prices, softer dollar - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-09T01:58:00.000Z",
+      "hoursAgo": 10.3
+    },
+    {
       "headline": "Treasury yields are 'really, really high,' but can come down soon, Bessent's new adviser says",
       "source": "CNBC",
       "publishedAt": "2026-10-08T19:38:14.000Z",
-      "hoursAgo": 4.4
+      "hoursAgo": 16.7
     },
     {
       "headline": "US imposes fresh sanctions on Iran's shadow fleet - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-08T18:35:24.000Z",
-      "hoursAgo": 5.5
+      "hoursAgo": 17.7
     },
     {
       "headline": "10-year Treasury yield is little changed as Fed's Waller says more hikes needed, investors await 30-year auction",
       "source": "CNBC",
       "publishedAt": "2026-10-08T14:11:18.000Z",
-      "hoursAgo": 9.9
+      "hoursAgo": 22.1
     }
   ],
   "briefing": null
