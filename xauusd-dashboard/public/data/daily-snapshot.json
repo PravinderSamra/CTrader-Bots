@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-09T12:18:57.780Z",
+  "generatedAt": "2026-10-09T14:23:04.760Z",
   "yields": {
     "US10Y": 5.28,
     "US2Y": 4.77,
@@ -22,8 +22,8 @@
     "probHike": 28
   },
   "marketVolatility": {
-    "GVZ": 23.39,
-    "VIX": 15.08
+    "GVZ": 22.68,
+    "VIX": 15.41
   },
   "positioning": {
     "cotNetLong": 210181,
@@ -34,26 +34,26 @@
     "openInterestChange": -29309
   },
   "etfFlows": {
-    "gldTonnes": 1137.3,
-    "gldWoWChange": -9,
+    "gldTonnes": 1135.9,
+    "gldWoWChange": -1.4,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4181.61,
-    "XAGUSD": 60.315,
-    "EURUSD": 1.1204,
-    "USDJPY": 158.227,
-    "USDCHF": 0.83118,
-    "USDCNH": 6.69243,
-    "GBPUSD": 1.32187,
-    "USDCAD": 1.42278,
-    "USDSEK": 9.969,
-    "US500": 7794.6,
-    "GER40": 25139.05,
-    "UK100": 10566.45,
+    "XAUUSD": 4186.81,
+    "XAGUSD": 60.8835,
+    "EURUSD": 1.11934,
+    "USDJPY": 158.347,
+    "USDCHF": 0.83122,
+    "USDCNH": 6.69341,
+    "GBPUSD": 1.32271,
+    "USDCAD": 1.42744,
+    "USDSEK": 10.00736,
+    "US500": 7790,
+    "GER40": 25123.05,
+    "UK100": 10553.05,
     "ADR_14day": 79.3,
     "ADR_usedToday": 77.1,
-    "goldSilverRatio": 69.3
+    "goldSilverRatio": 68.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.4681,
@@ -69,31 +69,25 @@
       "headline": "Treasury yields steady as Trump strikes diplomatic tone on Iran ahead of midterms",
       "source": "CNBC",
       "publishedAt": "2026-10-09T08:24:50.000Z",
-      "hoursAgo": 3.9
+      "hoursAgo": 6
     },
     {
       "headline": "Gold adds over 1% on easing oil prices, softer dollar - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-09T01:58:00.000Z",
-      "hoursAgo": 10.3
+      "hoursAgo": 12.4
     },
     {
       "headline": "Treasury yields are 'really, really high,' but can come down soon, Bessent's new adviser says",
       "source": "CNBC",
       "publishedAt": "2026-10-08T19:38:14.000Z",
-      "hoursAgo": 16.7
+      "hoursAgo": 18.7
     },
     {
       "headline": "US imposes fresh sanctions on Iran's shadow fleet - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-08T18:35:24.000Z",
-      "hoursAgo": 17.7
-    },
-    {
-      "headline": "10-year Treasury yield is little changed as Fed's Waller says more hikes needed, investors await 30-year auction",
-      "source": "CNBC",
-      "publishedAt": "2026-10-08T14:11:18.000Z",
-      "hoursAgo": 22.1
+      "hoursAgo": 19.8
     }
   ],
   "briefing": null
