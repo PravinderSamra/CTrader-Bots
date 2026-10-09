@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-09",
+  "entries": [
+    {
+      "at": "2026-10-09T00:03:53.001Z",
+      "londonTime": "01:03 BST",
+      "mode": "PRE_OPEN",
+      "price": 10524.25,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 140% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "140% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10442.9) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is diverging from a united European tape — it's trading its own story today; tape-based confirmation is unreliable."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": null,
+        "orbLow": null,
+        "orbBrokenDirection": null,
+        "overnightHigh": null,
+        "overnightLow": null,
+        "priorDayHigh": 10546.5,
+        "priorDayLow": 10442.9,
+        "gapPct": 0.5,
+        "adr14": 119.5,
+        "adrUsedPct": 140
+      },
+      "outcome": null
+    }
+  ]
+}
