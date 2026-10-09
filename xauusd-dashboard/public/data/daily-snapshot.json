@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-09T14:23:04.760Z",
+  "generatedAt": "2026-10-09T18:35:37.228Z",
   "yields": {
     "US10Y": 5.28,
     "US2Y": 4.77,
@@ -34,26 +34,26 @@
     "openInterestChange": -29309
   },
   "etfFlows": {
-    "gldTonnes": 1135.9,
-    "gldWoWChange": -1.4,
+    "gldTonnes": 1134.3,
+    "gldWoWChange": -1.6,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4186.81,
-    "XAGUSD": 60.8835,
-    "EURUSD": 1.11934,
-    "USDJPY": 158.347,
-    "USDCHF": 0.83122,
-    "USDCNH": 6.69341,
-    "GBPUSD": 1.32271,
-    "USDCAD": 1.42744,
-    "USDSEK": 10.00736,
-    "US500": 7790,
-    "GER40": 25123.05,
-    "UK100": 10553.05,
+    "XAUUSD": 4192.665,
+    "XAGUSD": 60.8055,
+    "EURUSD": 1.1198,
+    "USDJPY": 158.269,
+    "USDCHF": 0.83007,
+    "USDCNH": 6.69328,
+    "GBPUSD": 1.32374,
+    "USDCAD": 1.42711,
+    "USDSEK": 9.99772,
+    "US500": 7811.4,
+    "GER40": 25166.85,
+    "UK100": 10564.05,
     "ADR_14day": 79.3,
     "ADR_usedToday": 77.1,
-    "goldSilverRatio": 68.8
+    "goldSilverRatio": 69
   },
   "dollarLiquidity": {
     "stlfsi": -0.4681,
@@ -66,28 +66,40 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Trump created a committee to dig into the Fed's Lisa Cook. What is it and what comes next?",
+      "source": "CNBC",
+      "publishedAt": "2026-10-09T18:20:57.000Z",
+      "hoursAgo": 0.2
+    },
+    {
+      "headline": "Four signs it is about to get uglier in the bond market as yields rise - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-09T16:18:35.000Z",
+      "hoursAgo": 2.3
+    },
+    {
       "headline": "Treasury yields steady as Trump strikes diplomatic tone on Iran ahead of midterms",
       "source": "CNBC",
       "publishedAt": "2026-10-09T08:24:50.000Z",
-      "hoursAgo": 6
+      "hoursAgo": 10.2
     },
     {
-      "headline": "Gold adds over 1% on easing oil prices, softer dollar - Reuters",
+      "headline": "Gold hits one-week high on softer oil prices - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-09T01:58:00.000Z",
-      "hoursAgo": 12.4
+      "hoursAgo": 16.6
     },
     {
       "headline": "Treasury yields are 'really, really high,' but can come down soon, Bessent's new adviser says",
       "source": "CNBC",
       "publishedAt": "2026-10-08T19:38:14.000Z",
-      "hoursAgo": 18.7
+      "hoursAgo": 23
     },
     {
       "headline": "US imposes fresh sanctions on Iran's shadow fleet - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-08T18:35:24.000Z",
-      "hoursAgo": 19.8
+      "hoursAgo": 24
     }
   ],
   "briefing": null
