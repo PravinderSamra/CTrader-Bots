@@ -311,6 +311,72 @@
         "verdict": "UNSCORABLE",
         "signalVerdicts": []
       }
+    },
+    {
+      "at": "2026-10-09T22:58:49.481Z",
+      "londonTime": "23:58 BST",
+      "mode": "CLOSED",
+      "price": 10578.95,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 20Y gilt +8bp — a fiscal-stress selloff; this historically drags the whole index regardless of the banks rotation.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "RATES",
+          "rule": "R11",
+          "text": "20Y gilt +8bp — a fiscal-stress selloff; this historically drags the whole index regardless of the banks rotation."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.56%) — the cross-market lean is up."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures +0.57% — the 14:30 US handoff argues for holding longs into the US open."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 5,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": 10533.8,
+        "orbLow": 10508.5,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10541.6,
+        "overnightLow": 10503.9,
+        "priorDayHigh": 10526.2,
+        "priorDayLow": 10359.2,
+        "gapPct": 0.53,
+        "adr14": 116.2,
+        "adrUsedPct": 65
+      },
+      "outcome": {
+        "resolvedAt": "2026-10-09T22:58:50.890Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }

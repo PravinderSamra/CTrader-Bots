@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-10-09T18:35:42.165Z",
+  "generatedAt": "2026-10-09T22:58:49.364Z",
   "prices": {
-    "UK100": 10564.05,
-    "GBPUSD": 1.32376,
-    "GBPEUR": 1.18212,
-    "US500": 7811.4,
-    "NAS100": 30881.45,
-    "BRENT": 107.873,
-    "COPPER": 6.7523,
-    "VIX": 16.58,
-    "USDX": 102.28,
-    "XAUUSD": 4192.855,
-    "UK100_dayPct": 0.39
+    "UK100": 10578.95,
+    "GBPUSD": 1.32363,
+    "GBPEUR": 1.18159,
+    "US500": 7814.9,
+    "NAS100": 30907.45,
+    "BRENT": 107.613,
+    "COPPER": 6.7575,
+    "VIX": 16.53,
+    "USDX": 102.25,
+    "XAUUSD": 4194.435,
+    "UK100_dayPct": 0.53
   },
   "fx": {
-    "gbpUsdDayPct": 0.07,
+    "gbpUsdDayPct": 0.06,
     "gbpUsd20dPercentile": 21,
     "sterlingEri": 85.2857,
     "sterlingEriDayChange": -0.01,
@@ -30,53 +30,53 @@
     "gilt10yDayBp": 7,
     "gilt20yDayBp": 8,
     "slope5s20s": 1.07,
-    "giltUst10ySpread": 0.16,
+    "giltUst10ySpread": 0.22,
     "longEndStress": true,
     "nextMpcDate": "2026-11-05",
     "daysToMpc": 27
   },
   "usLinkage": {
-    "us500DayPct": 0.53,
-    "nas100DayPct": 0.29,
-    "vix": 16.58,
+    "us500DayPct": 0.57,
+    "nas100DayPct": 0.38,
+    "vix": 16.53,
     "vixRegime": "NORMAL",
-    "us10y": 5.28,
-    "usdx": 102.28
+    "us10y": 5.22,
+    "usdx": 102.25
   },
   "commodities": {
-    "brentDayPct": 0.52,
-    "copperDayPct": 2.4,
-    "goldDayPct": 1.44,
+    "brentDayPct": 0.28,
+    "copperDayPct": 2.48,
+    "goldDayPct": 1.48,
     "brent20dTrend": "UP"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": 0.51,
-    "dax40DayPct": 0.7,
-    "eurUsdDayPct": -0.11,
+    "eurostoxx50DayPct": 0.56,
+    "dax40DayPct": 0.73,
+    "eurUsdDayPct": -0.08,
     "ftseDaxCorr20d": 0.79,
     "ftseSx5eCorr20d": 0.79,
     "tapeAgreement": "ALIGNED",
     "preOpenLead": "NONE"
   },
   "positioning": {
-    "gbpCotNetLong": -102088,
-    "gbpCotWoWChange": -11491,
+    "gbpCotNetLong": -107993,
+    "gbpCotWoWChange": -5905,
     "crowding": "CROWDED_SHORT",
-    "reportDate": "2026-09-29T00:00:00.000",
+    "reportDate": "2026-10-06T00:00:00.000",
     "ftseReadthrough": "BEARISH"
   },
   "sectorPanel": [
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent +0.52%",
-      "read": "BULLISH",
+      "driver": "Brent +0.28%",
+      "read": "NEUTRAL",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper +2.4%",
+      "driver": "Copper +2.48%",
       "read": "BULLISH",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
@@ -103,7 +103,20 @@
     }
   ],
   "economicCalendar": [],
-  "newsItems": [],
+  "newsItems": [
+    {
+      "headline": "Wall Street posts weekly gains with earnings, inflation data on tap - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNY0hWbFNBUlE5SFJjLVpMMnIwZzFpN2hVNEd2YkxlalYyVDRKTDZxcGJ0REJLUERXb0tlVVVreVZLMHFodlAtZlY0eDhuN2xiOHcybjM1c3gxMlBNTmZMWWdrdkhQOG9Pc2JRdTEwYXM5N181QmttRVEyRkdXTy1LT2J0ZVA4d2FXdjZZeGZwaGRaSUtDUXJUZXFjSU94cnprbTVUSXRpXzFtQzV2TWtpR1dNSjdaWVplUlE?oc=5",
+      "hoursAgo": 2.7
+    },
+    {
+      "headline": "London stocks post weekly gains as gilt yields retreat; telecom stocks fall - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPNVpWYUFMM2hlY2dnS0N0Q1VkcTFqLUJ1cGJzcVdJTWUzYjRvUWZXeDgyMmZsYXhsYl9wbEd1X1lRbU50dXA5c3lXLTZvd0N5clhnS1gxZHlpYUp1M01ha1BBQkp4Y0VacnRZWEFEWms0WG5UWEYtTE96ZzRuNDlsUzB6eXRUWEdKUGMzd3VGbkdsUTR1Z0VRbGtKUFZOeDVu?oc=5",
+      "hoursAgo": 6.4
+    }
+  ],
   "riskTone": null,
   "bias": {
     "score": 5,
@@ -114,31 +127,31 @@
         "name": "GBP",
         "weight": 3,
         "impact": "NEUTRAL",
-        "detail": "GBP/USD +0.07% → FTSE headwind (sign-flipped)"
+        "detail": "GBP/USD +0.06% → FTSE headwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
         "impact": "BULLISH",
-        "detail": "US500 +0.53% today"
+        "detail": "US500 +0.57% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 16.58 — NORMAL regime"
+        "detail": "VIX 16.53 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "Brent +0.52% (energy majors)"
+        "detail": "Brent +0.28% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
         "impact": "BULLISH",
-        "detail": "Copper +2.4% (miners/China)"
+        "detail": "Copper +2.48% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -162,13 +175,13 @@
         "name": "European tape (SX5E/DAX)",
         "weight": 1,
         "impact": "BULLISH",
-        "detail": "SX5E +0.51% / DAX +0.7%"
+        "detail": "SX5E +0.56% / DAX +0.73%"
       }
     ],
     "eventSuppressed": false
   },
   "orbContext": {
-    "computedAt": "2026-10-09T18:35:42.165Z",
+    "computedAt": "2026-10-09T22:58:49.364Z",
     "mode": "CLOSED",
     "cashOpenLondon": "08:00 BST",
     "overnightHigh": 10541.6,
@@ -178,22 +191,22 @@
     "priorClose": 10523.3,
     "prevWeekHigh": 10762.4,
     "prevWeekLow": 10382.4,
-    "gapPts": 40.8,
-    "gapPct": 0.39,
+    "gapPts": 55.7,
+    "gapPct": 0.53,
     "orbHigh": 10533.8,
     "orbLow": 10508.5,
     "orbBrokenDirection": "UP",
     "eventWindows": [],
     "adr14": 116.2,
-    "adrUsedPct": 63,
+    "adrUsedPct": 65,
     "expansionState": {
       "label": "COMPRESSED",
-      "rangeSoFarPct": 63,
+      "rangeSoFarPct": 65,
       "expectedRangePctByNow": 100,
-      "rangeVsTypical": 0.63,
+      "rangeVsTypical": 0.65,
       "expectedVolPctByNow": 100,
       "moveMostlyDone": true,
-      "note": "Range 63% of ADR vs ~100% typical by 16:00 BST (below the typical pace (compressed/range)). ~100% of a typical day's volume already done — expect a rangebound remainder, tighten targets."
+      "note": "Range 65% of ADR vs ~100% typical by 16:00 BST (below the typical pace (compressed/range)). ~100% of a typical day's volume already done — expect a rangebound remainder, tighten targets."
     }
   },
   "orbIntel": {
@@ -212,14 +225,14 @@
         "severity": "INFO",
         "source": "TAPE",
         "rule": "R8",
-        "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.51%) — the cross-market lean is up."
+        "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.56%) — the cross-market lean is up."
       },
       {
         "direction": "FAVOURS_LONG",
         "severity": "INFO",
         "source": "TAPE",
         "rule": "R9",
-        "text": "Past 13:30 with US futures +0.53% — the 14:30 US handoff argues for holding longs into the US open."
+        "text": "Past 13:30 with US futures +0.57% — the 14:30 US handoff argues for holding longs into the US open."
       },
       {
         "direction": "BREAKOUT_SUSPECT",

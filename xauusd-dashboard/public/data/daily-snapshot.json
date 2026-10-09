@@ -1,57 +1,57 @@
 {
-  "generatedAt": "2026-10-09T18:35:37.228Z",
+  "generatedAt": "2026-10-09T22:58:44.834Z",
   "yields": {
-    "US10Y": 5.28,
-    "US2Y": 4.77,
-    "realYield10Y": 2.92,
-    "realYield5Y": 2.66,
-    "curve2s10s": 51,
-    "breakeven10Y": 2.35,
-    "breakeven5Y": 2.37,
-    "forward5y5y": 2.33,
+    "US10Y": 5.22,
+    "US2Y": 4.75,
+    "realYield10Y": 2.87,
+    "realYield5Y": 2.62,
+    "curve2s10s": 47,
+    "breakeven10Y": 2.33,
+    "breakeven5Y": 2.34,
+    "forward5y5y": 2.32,
     "dayOverDay": {
-      "US10Y": 0.01,
+      "US10Y": -0.06,
       "US2Y": -0.02,
-      "realYield10Y": 0.01
+      "realYield10Y": -0.05
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-10-28",
     "probCut": 0,
-    "probHold": 72,
-    "probHike": 28
+    "probHold": 44,
+    "probHike": 56
   },
   "marketVolatility": {
     "GVZ": 22.68,
     "VIX": 15.41
   },
   "positioning": {
-    "cotNetLong": 210181,
-    "cotWoWChange": -7566,
+    "cotNetLong": 201579,
+    "cotWoWChange": -8602,
     "crowding": "CROWDED_LONG",
-    "reportDate": "2026-09-29T00:00:00.000",
-    "openInterest": 541982,
-    "openInterestChange": -29309
+    "reportDate": "2026-10-06T00:00:00.000",
+    "openInterest": 527641,
+    "openInterestChange": -14341
   },
   "etfFlows": {
-    "gldTonnes": 1134.3,
-    "gldWoWChange": -1.6,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1133.8,
+    "gldWoWChange": -0.5,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4192.665,
-    "XAGUSD": 60.8055,
-    "EURUSD": 1.1198,
-    "USDJPY": 158.269,
-    "USDCHF": 0.83007,
-    "USDCNH": 6.69328,
-    "GBPUSD": 1.32374,
-    "USDCAD": 1.42711,
-    "USDSEK": 9.99772,
-    "US500": 7811.4,
-    "GER40": 25166.85,
-    "UK100": 10564.05,
-    "ADR_14day": 79.3,
+    "XAUUSD": 4194.435,
+    "XAGUSD": 60.813,
+    "EURUSD": 1.12021,
+    "USDJPY": 158.299,
+    "USDCHF": 0.83025,
+    "USDCNH": 6.69318,
+    "GBPUSD": 1.32363,
+    "USDCAD": 1.42552,
+    "USDSEK": 9.99315,
+    "US500": 7814.9,
+    "GER40": 25173.85,
+    "UK100": 10578.95,
+    "ADR_14day": 77.9,
     "ADR_usedToday": 77.1,
     "goldSilverRatio": 69
   },
@@ -66,40 +66,40 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Wall Street posts weekly gains with earnings, inflation data on tap - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-09T20:16:44.000Z",
+      "hoursAgo": 2.7
+    },
+    {
       "headline": "Trump created a committee to dig into the Fed's Lisa Cook. What is it and what comes next?",
       "source": "CNBC",
       "publishedAt": "2026-10-09T18:20:57.000Z",
-      "hoursAgo": 0.2
+      "hoursAgo": 4.6
+    },
+    {
+      "headline": "London stocks post weekly gains as gilt yields retreat; telecom stocks fall - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-09T16:35:20.000Z",
+      "hoursAgo": 6.4
     },
     {
       "headline": "Four signs it is about to get uglier in the bond market as yields rise - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-09T16:18:35.000Z",
-      "hoursAgo": 2.3
+      "hoursAgo": 6.7
     },
     {
       "headline": "Treasury yields steady as Trump strikes diplomatic tone on Iran ahead of midterms",
       "source": "CNBC",
       "publishedAt": "2026-10-09T08:24:50.000Z",
-      "hoursAgo": 10.2
+      "hoursAgo": 14.6
     },
     {
       "headline": "Gold hits one-week high on softer oil prices - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-09T01:58:00.000Z",
-      "hoursAgo": 16.6
-    },
-    {
-      "headline": "Treasury yields are 'really, really high,' but can come down soon, Bessent's new adviser says",
-      "source": "CNBC",
-      "publishedAt": "2026-10-08T19:38:14.000Z",
-      "hoursAgo": 23
-    },
-    {
-      "headline": "US imposes fresh sanctions on Iran's shadow fleet - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-08T18:35:24.000Z",
-      "hoursAgo": 24
+      "hoursAgo": 21
     }
   ],
   "briefing": null
