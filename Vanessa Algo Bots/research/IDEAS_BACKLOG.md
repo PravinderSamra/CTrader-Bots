@@ -7,6 +7,7 @@ day from NAS100 at 10:00 NY, mechanical rules. Non-USD symbols carry FTMO's 0.70
 ## Maybes (only if nothing better turns up)
 | Idea | Source | Status | Next step if revived |
 |---|---|---|---|
+| **ICT London sweep + inversion FVG (NAS100, 02:00-05:00 NY = 07:00-10:00 UK)**: after Asia (20:00-00:00 NY) high/low is swept, enter when a 5-min close inverts a fair value gap the other way; stop beyond the sweep extreme (skip if > 25 pts), target 2-3R, flat by 07:00 NY | Candace Lau, Chart Fanatics | **Most promising so far.** Rough m5 screen 2023-26 (3 variants tried): +0.07R (2R) to +0.14R (3R) per trade, ~140 trades a year, positive every year at the 25-pt cap; correlation with the NAS bot +0.02 to +0.06 (different hours). Sensitive to spread: 2R breaks even at ~1.7 pts, 3R stays positive at 2 pts | Check FTMO US100 spread 07:00-10:00 UK; write rules first; cBot; tune 2021-23 on tick data, test 2024-26 once |
 | Drift VWAP Pullback (NAS100, 10:30-15:55 NY) | Matteo Conti, Chart Fanatics | Screened: 63% win, +1.5 pts/trade after spread, positive every year; thin edge, correlation +0.39 with the NAS bot | cBot + cTrader tick-data test to measure real slippage |
 | Gold pullback to an untapped open (London/NY/daily), two broken 5-min swings, 1:2 RR | Claudia, Prop Firm Trader | Not tested; her full method is discretionary, this is the codeable core | Write rules first, build cBot, Vanessa backtests on tick data |
 
