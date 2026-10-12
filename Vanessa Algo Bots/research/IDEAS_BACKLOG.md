@@ -4,6 +4,11 @@ Live: NAS100 London Range (v3.2 Auto Ladder). Goal: a second, ideally uncorrelat
 Filter for new ideas: intraday, flat before 20:59 UK (swap), big moves relative to the spread, different market or time of
 day from NAS100 at 10:00 NY, mechanical rules. Non-USD symbols carry FTMO's 0.70% P&L conversion fee.
 
+## Ready for Vanessa to backtest (queue)
+| Bot | File | First run |
+|---|---|---|
+| Stock Swing Scanner v1.0 (Clement Ang) | bots/04_Stock_Swing_Scanner/Stock_Swing_Scanner.cs | Any chart; tick data; 1 Jan 2020 - 31 Dec 2023; $100k; defaults; send the Log (O|, P|, X|, H| lines). Do not run 2024-26 yet. Plan: STOCK_SWING_TEST_PLAN.md |
+
 ## Maybes (only if nothing better turns up), in order
 | Idea | Source | Status | Next step if revived |
 |---|---|---|---|
