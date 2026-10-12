@@ -57,3 +57,13 @@ in the direction of the return from the previous 16:00 close to 10:00; exit at 1
 Spread 0.65 per trade. Data: cTrader (Pepperstone) NAS100 M30.
 Pass (all): net > 0 after spread; average >= +3 pts per trade; positive in at least 2 of 2021, 2022, 2023 (half);
 correlation between signal and last-30-min return > 0. Shown for reference only: all days, and GEX >= 0 days.
+
+### Result of the pre-registered test (2021-01-04 .. 2023-07-05): FAIL, closed
+| Days | Days | Corr | Total (pts, after spread) | Per trade | Win | By year |
+|---|---|---|---|---|---|---|
+| **GEX < 0 (the rule)** | 130 | -0.07 | **-883** | -6.8 | 45% | 2021 -436 (16), 2022 -575 (104), 2023 +127 (10) |
+| All days (reference) | 625 | -0.05 | -2,823 | -4.5 | 47% | |
+| GEX >= 0 (reference) | 495 | -0.04 | -1,939 | -3.9 | 47% | |
+Fails every pass rule. In 2022, with 104 negative-gamma days, the morning direction did not carry into the last 30 minutes
+on NAS100; if anything it slightly reversed. The 2023-26 "lowest quarter" result was luck. Box closed.
+Data kept: `data/nas100_m30/nas100_m30_2021_2023.csv` (cTrader Pepperstone NAS100 M30, 2020-12-28 .. 2023-07-07).
