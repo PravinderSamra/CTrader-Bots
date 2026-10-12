@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T13:56:26.482Z",
+  "generatedAt": "2026-10-12T16:45:14.985Z",
   "yields": {
     "US10Y": 5.22,
     "US2Y": 4.75,
@@ -34,26 +34,26 @@
     "openInterestChange": -14341
   },
   "etfFlows": {
-    "gldTonnes": 1057,
-    "gldWoWChange": -76.8,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1058.9,
+    "gldWoWChange": 1.9,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4169.865,
-    "XAGUSD": 60.525,
-    "EURUSD": 1.11764,
-    "USDJPY": 158.638,
-    "USDCHF": 0.83337,
-    "USDCNH": 6.69445,
-    "GBPUSD": 1.32296,
-    "USDCAD": 1.42617,
-    "USDSEK": 10.01792,
-    "US500": 7816,
-    "GER40": 25300.95,
-    "UK100": 10634.85,
+    "XAUUSD": 4162.11,
+    "XAGUSD": 60.224,
+    "EURUSD": 1.11587,
+    "USDJPY": 158.7005,
+    "USDCHF": 0.83471,
+    "USDCNH": 6.69524,
+    "GBPUSD": 1.32058,
+    "USDCAD": 1.42823,
+    "USDSEK": 10.04448,
+    "US500": 7809,
+    "GER40": 25269.95,
+    "UK100": 10655.45,
     "ADR_14day": 81.4,
     "ADR_usedToday": 62.7,
-    "goldSilverRatio": 68.9
+    "goldSilverRatio": 69.1
   },
   "dollarLiquidity": {
     "stlfsi": -0.4681,
@@ -66,16 +66,28 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Europe set for another year of high gas prices as reserves hit lows - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-12T14:03:01.000Z",
+      "hoursAgo": 2.7
+    },
+    {
       "headline": "India Sept inflation nears RBI tolerance ceiling, boosting case for further rate hikes - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-12T12:21:58.000Z",
-      "hoursAgo": 1.6
+      "hoursAgo": 4.4
     },
     {
-      "headline": "Dollar firm near 18-month highs, as Gulf unrest, US inflation keep investors on edge - Reuters",
+      "headline": "India inflation jumps to 5.54% in September, strengthening case for further rate hikes - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-12T12:13:42.000Z",
+      "hoursAgo": 4.5
+    },
+    {
+      "headline": "Dollar hovers near 18-month high as Gulf unrest, US inflation keep investors on edge - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-12T01:51:00.000Z",
-      "hoursAgo": 12.1
+      "hoursAgo": 14.9
     }
   ],
   "briefing": null
