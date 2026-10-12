@@ -29,3 +29,4 @@ day from NAS100 at 10:00 NY, mechanical rules. Non-USD symbols carry FTMO's 0.70
 | Idea | Evidence | If revived |
 |---|---|---|
 | Skip the day after a calm NY session (previous range < 0.877% of price) | Pre-registered 2021-23 test passed narrowly: -0.20R (49 days); 2023-26 -0.11R (80 days) | New bot version with a switch (default off), full 2021-26 tick-data run on vs off. See NAS100_VOL_REGIME_TEST_PLAN.md |
+| Watch only: VIX-expiry Wednesdays (Wednesday 30 days before next month's 3rd Friday) | Bot 2021-26: 31 days, 19% win, -0.23R vs +0.35R overall; monthly OPEX and triple witching days normal. Too few days to act on | Track live results on those Wednesdays; revisit with more data |
