@@ -23,7 +23,9 @@ Skip if the stop distance is more than 1x ADR.
 Size: fixed risk per trade (same $ amount). Max 4 open positions; max total open risk 4x one trade.
 Exits: sell 1/3 when profit >= 2x ADR (then stop to break-even); sell 1/3 when the close is > 10 ATR(14) above the 50-day
 SMA; sell the rest on a daily close below the 10 EMA. Initial stop always active.
-Costs: FTMO commission, spread and swap as shown in Symbol info (to be filled in from Vanessa's screenshot).
+Costs (FTMO Symbol info, NVDA, 12 Oct 2026): commission 0.00%; spread ~$0.11 at $225 (0.05%); lot = 1 share, min 1 share;
+swap long -$0.0528/share/night (~8.4%/yr), short -$0.0418, triple on Friday, charged 20:59 UTC; CFD hours 13:35-20:00 UTC.
+Backtests use cTrader tick data, so spread and swap are applied by cTrader. Note: volume rules use CFD tick volume.
 Earnings: not filtered in the first test (no calendar); measured afterwards from gap days.
 
 ## Test
