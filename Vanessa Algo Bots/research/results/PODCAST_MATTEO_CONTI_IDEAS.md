@@ -32,3 +32,21 @@ Verdict: the win rate reproduces (63% vs his 64%) and it made money every year, 
 extra point of slippage per trade would remove two-thirds of it. It also trades NAS100 in the same session as the NAS bot.
 A candidate for a proper cTrader tick-data test only if live-like slippage can be checked; not a "golden ticket" on FTMO
 (10% target and a static 10% floor, not a cheap futures evaluation with a small target).
+
+## Gamma test: does the first 30 minutes predict the last 30 on low-gamma days? (12 Oct 2026)
+Theory (Baltussen et al.): market intraday momentum comes from dealers hedging when short gamma. Gamma = SqueezeMetrics
+GEX (S&P 500), previous day's value only (known before the open). Trade 15:30-15:55 NY in the direction of the signal,
+spread 0.65. NAS100 m5, July 2023 - July 2026 (739 days).
+
+| Days | Signal | Days | Corr | Total | Per day |
+|---|---|---|---|---|---|
+| All | gap + first 30 min | 739 | -0.01 | -506 | -0.7 |
+| GEX < 0 | gap + first 30 min | 32 | +0.25 | +160 | +5.0 |
+| GEX < 0 | first 30 min only | 32 | +0.35 | -31 | -1.0 |
+| Lowest quarter of GEX | gap + first 30 min | 185 | +0.00 | +117 | +0.6 |
+| Lowest quarter of GEX | first 30 min only | 185 | +0.14 | +961 | +5.2 (2025 alone +612) |
+| Top three quarters | first 30 min only | 554 | -0.06 | -1,325 | -2.4 |
+
+Reading: the direction matches the theory (some momentum when gamma is low, none or a slight reversal when it is high),
+but only 32 negative-gamma days in this period, the best row is one of eight cuts and comes mostly from 2025.
+Inconclusive. The decisive sample is 2021-2022, when negative-gamma days were common.
