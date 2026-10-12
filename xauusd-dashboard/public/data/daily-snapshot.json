@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-09T22:58:44.834Z",
+  "generatedAt": "2026-10-12T13:56:26.482Z",
   "yields": {
     "US10Y": 5.22,
     "US2Y": 4.75,
@@ -22,8 +22,8 @@
     "probHike": 56
   },
   "marketVolatility": {
-    "GVZ": 22.68,
-    "VIX": 15.41
+    "GVZ": 22.79,
+    "VIX": 14.84
   },
   "positioning": {
     "cotNetLong": 201579,
@@ -34,26 +34,26 @@
     "openInterestChange": -14341
   },
   "etfFlows": {
-    "gldTonnes": 1133.8,
-    "gldWoWChange": -0.5,
-    "trend3W": "FLAT"
+    "gldTonnes": 1057,
+    "gldWoWChange": -76.8,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4194.435,
-    "XAGUSD": 60.813,
-    "EURUSD": 1.12021,
-    "USDJPY": 158.299,
-    "USDCHF": 0.83025,
-    "USDCNH": 6.69318,
-    "GBPUSD": 1.32363,
-    "USDCAD": 1.42552,
-    "USDSEK": 9.99315,
-    "US500": 7814.9,
-    "GER40": 25173.85,
-    "UK100": 10578.95,
-    "ADR_14day": 77.9,
-    "ADR_usedToday": 77.1,
-    "goldSilverRatio": 69
+    "XAUUSD": 4169.865,
+    "XAGUSD": 60.525,
+    "EURUSD": 1.11764,
+    "USDJPY": 158.638,
+    "USDCHF": 0.83337,
+    "USDCNH": 6.69445,
+    "GBPUSD": 1.32296,
+    "USDCAD": 1.42617,
+    "USDSEK": 10.01792,
+    "US500": 7816,
+    "GER40": 25300.95,
+    "UK100": 10634.85,
+    "ADR_14day": 81.4,
+    "ADR_usedToday": 62.7,
+    "goldSilverRatio": 68.9
   },
   "dollarLiquidity": {
     "stlfsi": -0.4681,
@@ -66,40 +66,16 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Wall Street posts weekly gains with earnings, inflation data on tap - Reuters",
+      "headline": "India Sept inflation nears RBI tolerance ceiling, boosting case for further rate hikes - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-10-09T20:16:44.000Z",
-      "hoursAgo": 2.7
+      "publishedAt": "2026-10-12T12:21:58.000Z",
+      "hoursAgo": 1.6
     },
     {
-      "headline": "Trump created a committee to dig into the Fed's Lisa Cook. What is it and what comes next?",
-      "source": "CNBC",
-      "publishedAt": "2026-10-09T18:20:57.000Z",
-      "hoursAgo": 4.6
-    },
-    {
-      "headline": "London stocks post weekly gains as gilt yields retreat; telecom stocks fall - Reuters",
+      "headline": "Dollar firm near 18-month highs, as Gulf unrest, US inflation keep investors on edge - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-10-09T16:35:20.000Z",
-      "hoursAgo": 6.4
-    },
-    {
-      "headline": "Four signs it is about to get uglier in the bond market as yields rise - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-09T16:18:35.000Z",
-      "hoursAgo": 6.7
-    },
-    {
-      "headline": "Treasury yields steady as Trump strikes diplomatic tone on Iran ahead of midterms",
-      "source": "CNBC",
-      "publishedAt": "2026-10-09T08:24:50.000Z",
-      "hoursAgo": 14.6
-    },
-    {
-      "headline": "Gold hits one-week high on softer oil prices - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-09T01:58:00.000Z",
-      "hoursAgo": 21
+      "publishedAt": "2026-10-12T01:51:00.000Z",
+      "hoursAgo": 12.1
     }
   ],
   "briefing": null
