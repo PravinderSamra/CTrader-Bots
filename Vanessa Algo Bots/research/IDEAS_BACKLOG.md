@@ -36,6 +36,7 @@ Stage 2: TradeZella strategy PDFs, same screen and same ranked list.
 | Gold London Range | Worked 2021-23, failed 2024-26 | ORB_OTHER_MARKETS_TEST_PLAN.md |
 | Silver | Spread too large | ORB_OTHER_MARKETS_TEST_PLAN.md |
 | NAS100 15/30-min opening range | Both failed | NAS100 test notes |
+| Gala Trades price action (hourly trend + hourly pivot levels, 5-min wick-below/body-above retest after the first 5-min candle, stop under the wick, 2R or half at 2R and run, max 2 tries per level, 3 trades a day) | NAS100 m5 screen 2023-26 (proxy for QQQ, 9:35-10:30 NY): ~190 trades, 35% win; at 1.2 pts spread 2R -0.04R/trade, trim version +0.05R but only 2024 positive (2025 -14R); 6 of 7 variants flat or negative. The hourly trend filter matters (without it -0.16R). His edge is discretion (skipping "weird" charts from 10 names, Bookmap, options sizing), not codeable rules. Also same market and hour as the NAS bot | scratchpad gala.py |
 | JJ Simon "fair pricing": revert to the 9:30 open on displacement candles, SL 25 / TP 38, stop after 3 losses | NAS100 m5 screen 2023-26: 34-40% win, -1,028 to -1,941 pts in every version, lost every full year; his edge is prop-firm economics (45 cheap futures evals, ~$400k spent), not the signal | this file |
 
 ## Parked improvements to the live NAS bot (Vanessa: leave the live bot as is for now)
