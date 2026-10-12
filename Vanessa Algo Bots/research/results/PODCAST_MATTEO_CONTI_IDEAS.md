@@ -50,3 +50,10 @@ spread 0.65. NAS100 m5, July 2023 - July 2026 (739 days).
 Reading: the direction matches the theory (some momentum when gamma is low, none or a slight reversal when it is high),
 but only 32 negative-gamma days in this period, the best row is one of eight cuts and comes mostly from 2025.
 Inconclusive. The decisive sample is 2021-2022, when negative-gamma days were common.
+
+### Pre-registered test on 2021-01-04 .. 2023-07-05 (written before downloading the data)
+Rule (the research version, not the best-looking cut above): if the previous day's GEX < 0, at 15:30 NY trade NAS100
+in the direction of the return from the previous 16:00 close to 10:00; exit at 16:00 (M30 data; live would exit 15:55).
+Spread 0.65 per trade. Data: cTrader (Pepperstone) NAS100 M30.
+Pass (all): net > 0 after spread; average >= +3 pts per trade; positive in at least 2 of 2021, 2022, 2023 (half);
+correlation between signal and last-30-min return > 0. Shown for reference only: all days, and GEX >= 0 days.
