@@ -4,6 +4,12 @@ Live: NAS100 London Range (v3.2 Auto Ladder). Goal: a second, ideally uncorrelat
 Filter for new ideas: intraday, flat before 20:59 UK (swap), big moves relative to the spread, different market or time of
 day from NAS100 at 10:00 NY, mechanical rules. Non-USD symbols carry FTMO's 0.70% P&L conversion fee.
 
+## Research plan (agreed 12 Oct 2026)
+Stage 1: screen all Chart Fanatics transcripts (sent 3-5 at a time), rank every idea on one list: data result after
+FTMO costs and trade count, low correlation with the NAS bot, FTMO fit (floor, daily limit, swap), ease of running.
+Build every idea that clears the bar (no fixed number), best first; rules pre-registered before each test.
+Stage 2: TradeZella strategy PDFs, same screen and same ranked list.
+
 ## Ready for Vanessa to backtest (queue)
 | Bot | File | First run |
 |---|---|---|
