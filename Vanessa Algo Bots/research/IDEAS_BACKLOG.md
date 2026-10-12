@@ -24,3 +24,8 @@ day from NAS100 at 10:00 NY, mechanical rules. Non-USD symbols carry FTMO's 0.70
 | Silver | Spread too large | ORB_OTHER_MARKETS_TEST_PLAN.md |
 | NAS100 15/30-min opening range | Both failed | NAS100 test notes |
 | JJ Simon "fair pricing": revert to the 9:30 open on displacement candles, SL 25 / TP 38, stop after 3 losses | NAS100 m5 screen 2023-26: 34-40% win, -1,028 to -1,941 pts in every version, lost every full year; his edge is prop-firm economics (45 cheap futures evals, ~$400k spent), not the signal | this file |
+
+## Parked improvements to the live NAS bot (Vanessa: leave the live bot as is for now)
+| Idea | Evidence | If revived |
+|---|---|---|
+| Skip the day after a calm NY session (previous range < 0.877% of price) | Pre-registered 2021-23 test passed narrowly: -0.20R (49 days); 2023-26 -0.11R (80 days) | New bot version with a switch (default off), full 2021-26 tick-data run on vs off. See NAS100_VOL_REGIME_TEST_PLAN.md |
