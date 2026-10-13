@@ -36,3 +36,8 @@ Test period 2024-01-01 .. 2026-09-30: run once.
 ## Pass (test period)
 Expectancy >= +0.25R per trade after costs; profit factor >= 1.3 with the best 5 trades removed still > 1.0;
 at least 60 trades; profitable in at least 2 of 2024, 2025, 2026; correlation of daily P/L with the NAS bot < 0.3.
+
+## Data check (agreed 13 Oct 2026)
+First run 2020-23 on tick data (commission 0). Then the same run on m1 bars from server with a fixed 5-pip ($0.05) spread.
+If net P/L, trade count and win rate agree within a few percent, later runs of this bot (and other daily stock bots) use m1.
+Intraday-entry bots (NAS bot, capitulation bot VWAP entries) stay on tick data.
