@@ -1,11 +1,14 @@
-// Stock Swing Scanner cBot v1.1 (Vanessa Algo Bots)
+// Stock Swing Scanner cBot v1.2 (Vanessa Algo Bots)
 // Long-only daily swing bot after Clement Ang / Oliver Kell's price cycle: wedge pop, tight base, breakout.
-// Rules are pre-registered in research/STOCK_SWING_TEST_PLAN.md. Attach to ANY chart: the bot reads the daily bars of
+// Rules are pre-registered in research/STOCK_SWING_TEST_PLAN.md. Attach to a chart that is NOT in the Symbols list
+// (e.g. US100.cash, Daily): in backtests the chart's own symbol gets no history before the start date. The bot reads the daily bars of
 // every symbol in "Symbols" itself. Each time a stock's new daily bar opens, it judges the bar that just closed,
 // cancels that stock's unfilled order from the day before, manages open positions and, if the setup is there,
 // places a buy-stop just above the base day's high with the stop just below its low.
 // Log lines for analysis: O| (position opened), P| (partial close), X| (signal skipped), H| (history at the end),
 // S| (each symbol's daily bars at start), D| (count of why setups failed, printed at the end). v1.1 adds S| and D| only.
+// v1.2 fixes the relative-strength date match (FTMO daily bars open the evening before, so the old lookup compared a
+// stock's close with the benchmark's previous-day close). Default Min ADR 2% (plan amendment 14 Oct 2026).
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +34,7 @@ namespace cAlgo.Robots
         [Parameter("Max Open Positions", Group = "Risk", DefaultValue = 4, MinValue = 1)]
         public int MaxPositions { get; set; }
 
-        [Parameter("Min ADR %", Group = "Setup", DefaultValue = 3.0)]
+        [Parameter("Min ADR %", Group = "Setup", DefaultValue = 2.0)]
         public double MinAdrPct { get; set; }
 
         [Parameter("Wedge Pop Volume x 50d Avg", Group = "Setup", DefaultValue = 1.5)]
@@ -232,7 +235,7 @@ namespace cAlgo.Robots
 
         private double Ratio(Bars d, int i)
         {
-            int bi = _bench.OpenTimes.GetIndexByTime(d.OpenTimes[i].Date.AddHours(19));
+            int bi = _bench.OpenTimes.GetIndexByTime(d.OpenTimes[i].AddHours(5));
             if (bi < 0) return 0;
             double bc = _bench.ClosePrices[bi];
             return bc > 0 ? d.ClosePrices[i] / bc : 0;

@@ -41,3 +41,20 @@ at least 60 trades; profitable in at least 2 of 2024, 2025, 2026; correlation of
 First run 2020-23 on tick data (commission 0). Then the same run on m1 bars from server with a fixed 5-pip ($0.05) spread.
 If net P/L, trade count and win rate agree within a few percent, later runs of this bot (and other daily stock bots) use m1.
 Intraday-entry bots (NAS bot, capitulation bot VWAP entries) stay on tick data.
+
+## Amendment (14 Oct 2026, before any trade results were seen)
+First runs (tick and m1, 2020-23 requested) showed:
+- FTMO stock data in the backtester starts 3 Jan 2022 (about 300 daily bars of history load before that, so the
+  210-bar warm-up is fine). META, RTX, LMT, ARM, SPCX had no data at the start; the chart symbol (NVDA) got no history.
+- Zero trades. Funnel over 2022-23 (stock-days): trend filter 13,020 (2022 bear market), ADR < 3% 6,062,
+  no wedge pop 929, base checks 266, valid setups 1 (gapped above the trigger).
+Changes:
+1. Min ADR 3% -> 2%. The 3% figure comes from small/mid-cap traders (Kell, Ang). FTMO's list is mega caps: median ADR
+   2022-23 is 2.4% and only 34% of stock-days reach 3% (Yahoo data). 2% keeps two thirds of stock-days. This is a
+   universe correction, not a fit to results (there are no results yet).
+2. Bug fix: relative strength compared each stock's close with the benchmark's previous-day close (FTMO daily bars
+   open the evening before). Fixed in v1.2.
+3. Attach the bot to a chart that is not in the symbol list (US100.cash, Daily).
+4. Test periods: in-sample 2022-23 (FTMO data starts 2022), out-of-sample 2024-26 run once. m1 bars with commission 0;
+   one tick-data run of the final version to confirm.
+All other rules unchanged.
