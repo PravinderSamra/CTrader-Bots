@@ -85,6 +85,23 @@ No location = no trade.
 **Entry and risk:** enter on the order flow, not on a candle close. This keeps the stop tight,
 and his trades target 4-10R. He reviews his data every week.
 
+
+**Episode 2 (his exact strategy): the low-volume-node (LVN) pullback**
+1. Mark a supply/demand zone or support/resistance: the consolidation right before an impulsive move (15m-30m chart).
+2. Wait for price to come back to the zone and react strongly (the bounce proves buyers are there). Don't buy the zone itself.
+3. Volume profile over that reaction leg: find the LVN, the thin price area the move went through quickly.
+   Prefer the LVN near the start of the move (just off the zone), not one at the top of an extended move.
+   (His losing example: buying an LVN at the day's high after an extended rally.)
+4. Wait for the pullback into the LVN and for order-flow confirmation there: passive buyers on the heat map actually
+   getting filled (big sell prints that don't push price lower = absorption), or a large delta outlier against the move.
+   Enter on that, before the 1-5 minute candle closes (that's where the 4-6R comes from).
+5. Stop: a few points beyond the low of the entry candle / the absorption. Target: low/high of day, the next LVN,
+   or the next level where the other side could take profit. Scale out at the next LVN; hold more only if it's reclaimed.
+- Risk: fixed dollar risk per trade (he uses $3.5-4.5k), contracts sized to the stop distance, so every loss is the same size.
+- Rule CLC: Context, Location, Confirmation. First 2-3 hours of the session only. Label every trade with its setup name.
+- Tools: volume profile (volume by price), heat map (Bookmap), footprint/delta. His YouTube order-flow series explains them.
+- His results shown: +$15k (4.5R), +$21.75k (5.5R), +$17k (3.5R), and one -$4.3k loss (1R).
+
 **What to practise first:** pre-mark 2-3 levels before the open and only watch the order flow when price
 reaches one. Journal (TradeZella) whether absorption at the level held.
 
