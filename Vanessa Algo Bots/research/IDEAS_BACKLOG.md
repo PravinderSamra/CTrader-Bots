@@ -9,6 +9,9 @@ Stage 1: screen all Chart Fanatics transcripts (sent 3-5 at a time), rank every 
 FTMO costs and trade count, low correlation with the NAS bot, FTMO fit (floor, daily limit, swap), ease of running.
 Build every idea that clears the bar (no fixed number), best first; rules pre-registered before each test.
 Stage 2: TradeZella strategy PDFs, same screen and same ranked list.
+Stage 3: Market Wizards (Schwager) - short excerpts of specific trading rules (e.g. Kullamagi's breakouts, episodic pivots,
+parabolic shorts) photographed by Vanessa, screened the same way.
+Future candidate: episodic pivot on FTMO stocks (price-only proxy: gap >= 10% on several times normal volume near highs).
 
 ## Ready for Vanessa to backtest (queue)
 | Bot | File | First run |
