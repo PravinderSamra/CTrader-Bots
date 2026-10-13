@@ -74,3 +74,10 @@ the opening spread. v1.4: decision at 09:35 New York, 'gapped' judged on Bid, X|
 With ~4 setups a year a 2022-23 in-sample run cannot guide any choice, so the rules are now frozen and the single
 evaluation is one run over all FTMO data, 2022-01-01 to the latest date (m1 bars, commission 0). Verdict rule: keep the bot
 only if it is net positive after swaps with at least 15 trades; otherwise park it.
+
+## Verdict (14 Oct 2026): PARKED
+Final run, v1.4, 2022-01-01 .. 2026-10-13 (m1, commission 0): 43 valid setups, 16 trades, 2 winners (MSTR, JPM),
+net -$3,706 on $300 risk per trade (about -12R). Fails the pass rule (>= 15 trades AND net positive).
+Two defects seen in passing, not fixed because the bot is parked: one position (GM, 3 Nov 2025) opened with no stop,
+and BRK.B lost 3x its planned risk (gap through the stop). Rules were frozen before the run; nothing to tune.
+Takeaway: Kell/Ang's price-cycle breakouts need fast small/mid caps; FTMO's mega caps rarely set up and fail when they do.

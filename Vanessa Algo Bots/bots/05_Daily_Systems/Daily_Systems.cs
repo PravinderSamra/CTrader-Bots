@@ -1,0 +1,318 @@
+// Daily Systems cBot v1.0 (Vanessa Algo Bots)
+// Six simple daily-bar systems on several FTMO instruments, each with its own on/off switch. Rules are pre-registered in
+// research/DAILY_SYSTEMS_TEST_PLAN.md (14 Oct 2026):
+//   A Pavel mean reversion, B Pavel short-term momentum, C Pavel trend following, D Naoufel RSI(2),
+//   E Turnaround Tuesday, F Marcy Silver measured move (both sides). A-E are long-only.
+// Attach to any chart (e.g. US500.cash, Daily). Signals use the daily bar that has just closed; orders are sent
+// "Order Delay" minutes after the new daily bar opens, to avoid the wide spreads around the daily rollover.
+// Each position's label is "<Label>-<system>", e.g. DSY-D.
+// Log lines: S| (bars loaded), D| (signal counts at the end), O| (opened), X| (skipped), G| (daily guard),
+// H| (history at the end: id|label|symbol|entry time|close time|volume|entry|close|gross|swap|commission|net).
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using cAlgo.API;
+using cAlgo.API.Indicators;
+using cAlgo.API.Internals;
+
+namespace cAlgo.Robots
+{
+    [Robot(AccessRights = AccessRights.None, TimeZone = TimeZones.UTC)]
+    public class DailySystems : Robot
+    {
+        [Parameter("Symbols", Group = "Universe", DefaultValue = "US500.cash,US100.cash,US30.cash,GER40.cash,XAUUSD")]
+        public string SymbolList { get; set; }
+
+        [Parameter("A Pavel Mean Reversion", Group = "Systems", DefaultValue = true)]
+        public bool UseA { get; set; }
+
+        [Parameter("B Pavel Momentum", Group = "Systems", DefaultValue = true)]
+        public bool UseB { get; set; }
+
+        [Parameter("C Pavel Trend Following", Group = "Systems", DefaultValue = true)]
+        public bool UseC { get; set; }
+
+        [Parameter("D Naoufel RSI(2)", Group = "Systems", DefaultValue = true)]
+        public bool UseD { get; set; }
+
+        [Parameter("E Turnaround Tuesday", Group = "Systems", DefaultValue = true)]
+        public bool UseE { get; set; }
+
+        [Parameter("F Marcy Measured Move", Group = "Systems", DefaultValue = true)]
+        public bool UseF { get; set; }
+
+        [Parameter("Notional Per Position ($)", Group = "Risk", DefaultValue = 20000, MinValue = 100)]
+        public double Notional { get; set; }
+
+        [Parameter("Max Total Notional x Balance", Group = "Risk", DefaultValue = 1.5, MinValue = 0.1)]
+        public double MaxNotionalMult { get; set; }
+
+        [Parameter("Catastrophe Stop x ATR(20)", Group = "Risk", DefaultValue = 3.0, MinValue = 0.5)]
+        public double CatAtr { get; set; }
+
+        [Parameter("Daily Guard ($ loss)", Group = "Risk", DefaultValue = 2000, MinValue = 100)]
+        public double DailyGuard { get; set; }
+
+        [Parameter("Order Delay (minutes)", Group = "Other", DefaultValue = 60, MinValue = 1)]
+        public int DelayMinutes { get; set; }
+
+        [Parameter("Label", Group = "Other", DefaultValue = "DSY")]
+        public string Label { get; set; }
+
+        private class Book
+        {
+            public Symbol Sym;
+            public Bars D;
+            public SimpleMovingAverage Sma5, Sma10, Sma20, Sma200;
+            public RelativeStrengthIndex Rsi2;
+            public AverageTrueRange Atr20;
+        }
+
+        private class Action
+        {
+            public DateTime Due;
+            public Book B;
+            public int T;                  // index of the signal bar
+            public char Sys;
+            public bool Close;             // true = close the system's position, false = open one
+            public TradeType Side = TradeType.Buy;
+            public double Stop, Target;    // absolute prices for F; 0 = use the catastrophe stop / no target
+        }
+
+        private readonly List<Book> _books = new List<Book>();
+        private readonly List<Action> _queue = new List<Action>();
+        private readonly Dictionary<string, int> _count = new Dictionary<string, int>();
+        private double _closedCum, _dayStartEq;
+        private DateTime _day = DateTime.MinValue, _haltedDay = DateTime.MinValue;
+
+        protected override void OnStart()
+        {
+            foreach (var raw in SymbolList.Split(','))
+            {
+                var name = raw.Trim();
+                if (name.Length == 0) continue;
+                Symbol sym;
+                try { sym = Symbols.GetSymbol(name); } catch { sym = null; }
+                if (sym == null) { Print("Symbol not found, skipped: {0}", name); continue; }
+                var bars = MarketData.GetBars(TimeFrame.Daily, name);
+                int guard = 0;
+                while (bars.Count < 320 && guard++ < 20)
+                {
+                    int before = bars.Count;
+                    bars.LoadMoreHistory();
+                    if (bars.Count == before) break;
+                }
+                Print("S|{0}|{1} daily bars|first {2:yyyy-MM-dd}|$ per 1.0 price move per unit {3}|min units {4}", name, bars.Count,
+                    bars.Count > 0 ? bars.OpenTimes[0] : DateTime.MinValue, sym.TickValue / sym.TickSize, sym.VolumeInUnitsMin);
+                var b = new Book
+                {
+                    Sym = sym, D = bars,
+                    Sma5 = Indicators.SimpleMovingAverage(bars.ClosePrices, 5),
+                    Sma10 = Indicators.SimpleMovingAverage(bars.ClosePrices, 10),
+                    Sma20 = Indicators.SimpleMovingAverage(bars.ClosePrices, 20),
+                    Sma200 = Indicators.SimpleMovingAverage(bars.ClosePrices, 200),
+                    Rsi2 = Indicators.RelativeStrengthIndex(bars.ClosePrices, 2),
+                    Atr20 = Indicators.AverageTrueRange(bars, 20, MovingAverageType.Simple)
+                };
+                _books.Add(b);
+                bars.BarOpened += args => OnDailyBar(b);
+            }
+            Positions.Closed += args =>
+            {
+                if (args.Position.Label != null && args.Position.Label.StartsWith(Label + "-")) _closedCum += args.Position.NetProfit;
+            };
+            Timer.Start(TimeSpan.FromMinutes(1));
+            Print("Daily Systems started: {0} symbols, notional ${1} per position.", _books.Count, Notional);
+        }
+
+        private IEnumerable<Position> Mine => Positions.Where(p => p.Label != null && p.Label.StartsWith(Label + "-"));
+        private Position PosOf(Book b, char sys) => Positions.FirstOrDefault(p => p.Label == Label + "-" + sys && p.SymbolName == b.Sym.Name);
+
+        private void Count(char sys, Book b) { string k = sys + "|" + b.Sym.Name; int n; _count.TryGetValue(k, out n); _count[k] = n + 1; }
+
+        // FTMO's trading day: midnight Prague time (UTC+1, UTC+2 from the last Sunday of March to the last Sunday of October).
+        private static DateTime PragueDay(DateTime utc)
+        {
+            var mar = new DateTime(utc.Year, 3, 31); mar = mar.AddDays(-(int)mar.DayOfWeek).AddHours(1);
+            var oct = new DateTime(utc.Year, 10, 31); oct = oct.AddDays(-(int)oct.DayOfWeek).AddHours(1);
+            return utc.AddHours(utc >= mar && utc < oct ? 2 : 1).Date;
+        }
+
+        // The trading session a daily bar belongs to (FTMO D1 bars open the evening before).
+        private static DayOfWeek Session(Bars d, int i) => d.OpenTimes[i].AddHours(5).DayOfWeek;
+
+        // ---------------- daily decisions ----------------
+        private void OnDailyBar(Book b)
+        {
+            int t = b.D.Count - 2;
+            if (t < 210) return;
+            var due = b.D.OpenTimes[t + 1].AddMinutes(DelayMinutes);
+            var d = b.D; var C = d.ClosePrices; var H = d.HighPrices; var L = d.LowPrices; var O = d.OpenPrices;
+
+            // exits first (a system that exits today re-enters at the earliest on the next bar)
+            foreach (char sys in "ABCDEF")
+            {
+                var p = PosOf(b, sys);
+                if (p == null) continue;
+                int sig = d.OpenTimes.GetIndexByTime(p.EntryTime) - 1;
+                int held = t - sig;
+                bool exit = false;
+                switch (sys)
+                {
+                    case 'A': exit = C[t] > b.Sma5.Result[t] || held >= 4; break;
+                    case 'B': exit = held >= 5; break;
+                    case 'C': exit = C[t] < b.Sma10.Result[t]; break;
+                    case 'D': exit = b.Rsi2.Result[t] > 70; break;
+                    case 'E': exit = held >= 1; break;
+                    case 'F': exit = held >= 20; break;
+                }
+                if (exit) _queue.Add(new Action { Due = due, B = b, T = t, Sys = sys, Close = true });
+            }
+
+            // entries
+            if (UseA && PosOf(b, 'A') == null)
+            {
+                double dev = Math.Abs(C[t] - b.Sma5.Result[t]), avg = 0;
+                for (int k = t - 20; k < t; k++) avg += Math.Abs(C[k] - b.Sma5.Result[k]);
+                avg /= 20;
+                if (C[t] < b.Sma5.Result[t] && dev > 2.5 * avg && C[t] > b.Sma200.Result[t]) Enter(b, t, 'A', due);
+            }
+            if (UseB && PosOf(b, 'B') == null)
+            {
+                double avg = 0;
+                for (int k = t - 5; k < t; k++) avg += H[k] - L[k];
+                avg /= 5;
+                if (H[t] - L[t] > 2 * avg && C[t] > O[t]) Enter(b, t, 'B', due);
+            }
+            if (UseC && PosOf(b, 'C') == null)
+            {
+                double mx = double.MinValue;
+                for (int k = t - 100; k < t; k++) mx = Math.Max(mx, C[k]);
+                if (C[t] > mx) Enter(b, t, 'C', due);
+            }
+            if (UseD && PosOf(b, 'D') == null && C[t] > b.Sma200.Result[t] && b.Rsi2.Result[t] < 20) Enter(b, t, 'D', due);
+            if (UseE && PosOf(b, 'E') == null && Session(d, t) == DayOfWeek.Monday && Session(d, t - 1) == DayOfWeek.Friday && C[t] < C[t - 1])
+                Enter(b, t, 'E', due);
+            if (UseF && PosOf(b, 'F') == null) MarcyF(b, t, due);
+        }
+
+        private void Enter(Book b, int t, char sys, DateTime due)
+        {
+            Count(sys, b);
+            _queue.Add(new Action { Due = due, B = b, T = t, Sys = sys });
+        }
+
+        // F: Marcy measured move (rizzy.py daily version: swings with k = 2, Bollinger-middle filter, reward >= 1x risk).
+        private void MarcyF(Book b, int t, DateTime due)
+        {
+            const int k = 2;
+            var d = b.D; var C = d.ClosePrices;
+            int j = t - k;                 // the bar confirmed as a swing point today
+            foreach (int side in new[] { -1, 1 })   // -1: lower highs -> short; +1: higher lows -> long
+            {
+                Func<int, double> hi = i => side == -1 ? d.HighPrices[i] : -d.LowPrices[i];   // 'high' in the inverted frame
+                Func<int, double> lo = i => side == -1 ? d.LowPrices[i] : -d.HighPrices[i];
+                Func<int, bool> isHigh = i => { for (int m = i - k; m <= i + k; m++) if (hi(m) > hi(i)) return false; return true; };
+                Func<int, bool> isLow = i => { for (int m = i - k; m <= i + k; m++) if (lo(m) < lo(i)) return false; return true; };
+                if (!isHigh(j)) continue;
+                int h1 = -1;
+                for (int i = j - 1; i >= Math.Max(25, t - 250); i--) if (isHigh(i)) { h1 = i; break; }
+                if (h1 < 0) continue;
+                int l1 = -1;
+                for (int i = h1 + 1; i < j; i++) if (isLow(i) && (l1 < 0 || lo(i) < lo(l1))) l1 = i;
+                if (l1 < 0) continue;
+                double H1 = hi(h1), H2 = hi(j), L1 = lo(l1);
+                if (!(H2 < H1)) continue;
+                double mid = 0;
+                for (int i = h1 - 19; i <= h1; i++) mid += side == -1 ? C[i] : -C[i];
+                if (H1 < mid / 20) continue;
+                double line = H1 + (H2 - H1) * (l1 - h1) / (double)(j - h1);
+                double D = line - L1;
+                if (D <= 0) continue;
+                double e = side == -1 ? C[t] : -C[t];
+                double tgt = L1 - D, stop = H2, risk = stop - e;
+                if (risk <= 0 || e - tgt < risk) continue;
+                Count('F', b);
+                _queue.Add(new Action { Due = due, B = b, T = t, Sys = 'F', Side = side == -1 ? TradeType.Sell : TradeType.Buy,
+                    Stop = side == -1 ? stop : -stop, Target = side == -1 ? tgt : -tgt });
+                return;
+            }
+        }
+
+        // ---------------- execution, guard ----------------
+        protected override void OnTimer()
+        {
+            var day = PragueDay(Server.Time);
+            double botEq = _closedCum + Mine.Sum(p => p.NetProfit);
+            if (day != _day) { _day = day; _dayStartEq = botEq; }
+            if (_haltedDay != day && botEq - _dayStartEq <= -DailyGuard)
+            {
+                _haltedDay = day;
+                Print("G|{0:yyyy-MM-dd HH:mm}|daily guard hit {1:F0}, closing all", Server.Time, botEq - _dayStartEq);
+                foreach (var p in Mine.ToList()) ClosePosition(p);
+            }
+
+            foreach (var a in _queue.Where(x => x.Due <= Server.Time).ToList())
+            {
+                _queue.Remove(a);
+                if (a.Close)
+                {
+                    var p = PosOf(a.B, a.Sys);
+                    if (p != null) ClosePosition(p);
+                    continue;
+                }
+                Open(a, day);
+            }
+        }
+
+        private double MoneyPerUnit(Symbol s, double price) => price * s.TickValue / s.TickSize;
+
+        private void Open(Action a, DateTime day)
+        {
+            var b = a.B; var s = b.Sym; string name = s.Name, tag = Label + "-" + a.Sys;
+            if (_haltedDay == day) { Print("X|{0}|{1}|{2:yyyy-MM-dd}|daily guard", tag, name, b.D.OpenTimes[a.T]); return; }
+            if (PosOf(b, a.Sys) != null) return;
+            double price = a.Side == TradeType.Buy ? s.Ask : s.Bid;
+            double open = Mine.Sum(p => MoneyPerUnit(Symbols.GetSymbol(p.SymbolName), p.EntryPrice) * p.VolumeInUnits);
+            if (open + Notional > MaxNotionalMult * Account.Balance)
+            {
+                Print("X|{0}|{1}|{2:yyyy-MM-dd}|notional cap", tag, name, b.D.OpenTimes[a.T]);
+                return;
+            }
+            double units = s.NormalizeVolumeInUnits(Notional / MoneyPerUnit(s, price), RoundingMode.Down);
+            if (units < s.VolumeInUnitsMin) { Print("X|{0}|{1}|{2:yyyy-MM-dd}|size below minimum", tag, name, b.D.OpenTimes[a.T]); return; }
+
+            double? sl, tp = null;
+            if (a.Sys == 'F')
+            {
+                bool bad = a.Side == TradeType.Sell ? (price >= a.Stop || price <= a.Target) : (price <= a.Stop || price >= a.Target);
+                if (bad) { Print("X|{0}|{1}|{2:yyyy-MM-dd}|price already beyond stop/target", tag, name, b.D.OpenTimes[a.T]); return; }
+                sl = a.Stop; tp = a.Target;
+            }
+            else sl = price - CatAtr * b.Atr20.Result[a.T];
+
+            var res = ExecuteMarketOrder(a.Side, name, units, tag);
+            if (!res.IsSuccessful) { Print("X|{0}|{1}|{2:yyyy-MM-dd}|order rejected: {3}", tag, name, b.D.OpenTimes[a.T], res.Error); return; }
+            var p = res.Position;
+            var m1 = p.ModifyStopLossPrice(sl);
+            var m2 = tp.HasValue ? p.ModifyTakeProfitPrice(tp) : m1;
+            if (!m1.IsSuccessful || !m2.IsSuccessful)
+            {
+                Print("X|{0}|{1}|{2:yyyy-MM-dd}|could not set stop/target, closed", tag, name, b.D.OpenTimes[a.T]);
+                ClosePosition(p);
+                return;
+            }
+            Print("O|{0}|{1}|{2}|{3:yyyy-MM-dd HH:mm}|{4}|{5}|{6:F2}|{7}|{8}", p.Id, tag, name, p.EntryTime, p.TradeType,
+                p.VolumeInUnits, p.EntryPrice, p.StopLoss, p.TakeProfit);
+        }
+
+        protected override void OnStop()
+        {
+            foreach (var kv in _count.OrderBy(k => k.Key)) Print("D|{0}|{1}", kv.Key, kv.Value);
+            foreach (var h in History.Where(h => h.Label != null && h.Label.StartsWith(Label + "-")).OrderBy(h => h.ClosingTime))
+                Print("H|{0}|{1}|{2}|{3:yyyy-MM-dd}|{4:yyyy-MM-dd}|{5}|{6:F2}|{7:F2}|{8:F2}|{9:F2}|{10:F2}|{11:F2}",
+                    h.PositionId, h.Label, h.SymbolName, h.EntryTime, h.ClosingTime, h.VolumeInUnits, h.EntryPrice, h.ClosingPrice,
+                    h.GrossProfit, h.Swap, h.Commissions, h.NetProfit);
+        }
+    }
+}
