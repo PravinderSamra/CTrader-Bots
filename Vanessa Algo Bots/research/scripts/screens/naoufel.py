@@ -1,4 +1,4 @@
-"""Noel T (Chart Fanatics, StrategyQuant X algo trader): the three example systems from the episode. Screening only.
+"""Naoufel T (Chart Fanatics, StrategyQuant X algo trader): the three example systems from the episode. Screening only.
  1) S&P RSI(2): long when close > SMA200 and RSI(2) < 20, exit when RSI(2) > 70 (all at the close). SPX closes 1990-2026
     (CBOE, closes only) and NAS100 NY-session daily 2021-26. Variants of the 20/70 levels as a robustness map.
  2) Turnaround Tuesday (his AI example, classic rule): buy Monday's close if Monday closed down, sell Tuesday's close.
