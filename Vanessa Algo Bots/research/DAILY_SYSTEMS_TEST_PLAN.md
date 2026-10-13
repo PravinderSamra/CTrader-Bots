@@ -172,3 +172,16 @@ VERDICT: ready to run on the FTMO account next to the NAS bot with these setting
 the last 50 trades (weekend splits counted as one) win under 62%, or the drawdown passes 7%.
 Still open: the NAS bot's worst day, to confirm the two bots' combined worst day stays well inside the $5k daily limit.
 Next tests (2020-23 only, as agreed): profit-lock switches, then the size ladder.
+
+## Combined risk with the NAS bot (13 Oct 2026; NAS Add to Winner with Ladder backtest 2021-01-01 .. 2026-10-13, tick)
+NAS backtest: +$282k on $100k, PF 1.41, 972 trades, 43% win, max equity DD 18% (risk ladder $650 -> $1,350 per trade).
+Daily P/L in R saved to data/nas_bot_daily_R_2021_2026.json. Live risk now ~$550 per trade (9.16 lots x 60-pt stop,
+balance $97,421).
+- NAS worst day: -2.6R (-$1.4k at $550). Worst combined day with Daily Systems: -$2.5k at the close, -$2.6k counting
+  Daily Systems' lowest point. Well inside the $5k daily limit. Correlation of daily P/L: +0.02 (640 days).
+- The binding limit is the $90k floor, not the daily limit: NAS drawdowns at $550 risk reached -27R (-$14.9k,
+  Sep-Nov 2022) and -22R (-$12.3k, Dec 2024-Mar 2025); worst 10 trading days -15R (-$8.3k). Room today: $7.4k.
+- Pass-first odds from $97,421 (+$12,579 to $110k before -$7,421 to $90k), every 5th historical start day, NAS
+  backtest is in-sample so treat as optimistic:
+  NAS $550 + DS: 85%, median 125 trading days | NAS $550 alone: 88%, 162 days
+  NAS $450 + DS: 89%, 165 days | NAS $350 + DS: 95%, 228 days | NAS $250 + DS: 100%, 369 days
