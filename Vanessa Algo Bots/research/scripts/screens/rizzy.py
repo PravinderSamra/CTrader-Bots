@@ -58,7 +58,7 @@ def gold_daily():
     return daily(rows)
 
 
-def run(bars, side, k, buf, minrr, bb, cost, intraday, maxhold, swap_per_bar):
+def run(bars, side, k, buf, minrr, bb, cost, intraday, maxhold, swap_per_bar, maxseq=99):
     if side == -1:
         bars = [(t, -o, -l, -h, -c) for t, o, h, l, c in bars]  # inverted: 'down' logic finds up patterns
     n = len(bars); closes = [b[4] for b in bars]
@@ -89,6 +89,10 @@ def run(bars, side, k, buf, minrr, bb, cost, intraday, maxhold, swap_per_bar):
         l1 = min(lows, key=lambda x: bars[x][3])
         H1, H2, L1 = bars[h1][2], bars[h2][2], bars[l1][3]
         if not H2 < H1: continue
+        # TradeZella playbook: only the 1st/2nd structure of a fresh trend (count of consecutive lower highs ending at H2)
+        seq = 1
+        while len(sh) > seq + 1 and bars[sh[-seq - 1]][2] < bars[sh[-seq - 2]][2]: seq += 1
+        if seq > maxseq: continue
         if intraday:
             m = t.hour * 60 + t.minute
             if not (180 <= m < 900) or 570 <= m < 585: continue
@@ -122,6 +126,7 @@ def report(name, t, bot=None):
           f"tot={sum(rs):+6.1f}R dd={dd:5.1f}R {corr} | " + " ".join(f"{y}:{v:+.0f}" for y, v in sorted(yr.items())))
 
 
+if __name__ != "__main__": raise SystemExit
 bot = dict(zip(*json.load(open(sys.argv[1])).values()))
 m5 = nas_m5()
 for bb in (False, True):
