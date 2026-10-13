@@ -71,3 +71,13 @@ working as designed; the size will shrink them.
 Next (sizing step, per the rule above): v1.1 logs each day's P/L (P| lines). Run A + D only, daily guard off
 (set to 1,000,000), $20k per position, same period. Choose the notional so the worst day (lowest intraday point) would
 have been <= $2,000, round down to the nearest $1,000. Then the single test run 2024-01-01 .. latest with the guard on.
+
+## Sizing run (v1.1, A + D only, guard off, $20k per position, 2020-11-08 .. 2023-12-31)
+cTrader summary: net +$20,728, profit factor 1.71, 263 trades, 188 winners (71%), swap -$1,837, max equity drawdown
+6.97%, largest loss -$1,288. A: 62 trades, 69% win, +$8,288, positive on all 5 instruments. D: 201 trades, 72% win,
++$12,441 (gold -$2,837). By year (A + D): 2020 +$3.5k, 2021 +$20.3k, 2022 -$5.8k, 2023 +$2.8k (2021 carries it).
+Worst day (lowest intraday point): -$2,959 (29 Jan 2021); next -$2,683, -$2,061.
+Sizing rule: $20,000 x 2,000 / 2,959 = $13,517 -> round down -> **$13,000 per position**.
+Expected at that size (scaled): about +$13.5k over 3.1 years (~4%/yr), max drawdown ~4.5%.
+FINAL TEST (run once): v1.1, A + D on (B, C, E, F off), Notional 13,000, Daily Guard 2,000, cap 1.5,
+2024-01-01 .. latest date, m1 bars, commission 0, $100k. Pass rules as above.
