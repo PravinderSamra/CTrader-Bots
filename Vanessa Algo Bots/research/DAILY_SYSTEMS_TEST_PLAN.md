@@ -112,3 +112,10 @@ it must still meet the pass rules.
 Gold flips between periods (A: +$927 dev / -$261 test; D: -$2,837 dev / +$1,548 test; both near break-even combined at
 $13k). Kept on in both systems. Review after 12 months of demo + live: switch gold off only if it lost in BOTH systems
 while the indices were net positive.
+
+## Queued after the weekend decision: profit-lock test (agreed 14 Oct 2026, rules written now)
+Two switches, tested separately on 2020-11-08 .. 2023-12-31 only, against the chosen weekend setting:
+(a) breakeven: move the stop to entry once the trade is up 1 x ATR(20);
+(b) trailing: stop 2 x ATR(20) below the highest close since entry (never lowered).
+Keep a switch only if it raises net profit OR lowers the max equity drawdown, AND the win rate stays >= 65%.
+Expectation (Connors' RSI(2) research): neither helps a 2-5 day mean-reversion exit.
