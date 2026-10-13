@@ -11,7 +11,7 @@ Build every idea that clears the bar (no fixed number), best first; rules pre-re
 Stage 2: TradeZella strategy PDFs, same screen and same ranked list.
 Stage 3: Market Wizards (Schwager) - short excerpts of specific trading rules (e.g. Kullamagi's breakouts, episodic pivots,
 parabolic shorts) photographed by Vanessa, screened the same way.
-Future candidate: episodic pivot on FTMO stocks (price-only proxy: gap >= 10% on several times normal volume near highs).
+Episodic pivot (Pradeep Bonde / Stockbee, Chart Fanatics transcript 13 Oct): screened on FTMO's 45 US stocks, Yahoo daily 2017-26 (screens/pradeep_ep.py). Day-1 EP (buy the open after a gap up >= 8%, stop at the prior close, exit on a close below EMA 10): 117-263 trades, +0.2 to +0.36R, +3%/trade, but the median trade loses and the edge mostly comes from 7 names (NVDA, PLTR, MSTR, GME, TSLA, AMD, ARM); without them +0.06 to +0.12R. A no-gap control gives +0.02R, so there is a small real effect, inflated by hindsight (FTMO lists today's winners). Delayed-reaction EP (first close above the EP day's high): +0.07 to +0.25R. Short side (delayed short after a gap down): loses in every version (-0.16 to -0.30R). Verdict: maybe-low. Cheapest test: add a day-1 'gap >= 8% buy the open' option to the stock capitulation bot and let Vanessa backtest it on FTMO data 2022-26; no separate bot.
 
 ## Ready for Vanessa to backtest (queue)
 | Bot | File | First run |
