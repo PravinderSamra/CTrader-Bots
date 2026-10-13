@@ -127,3 +127,17 @@ runs used prices from before the market reopened. v1.3 sends orders, exits, week
 that market is trading (a tick in the last 2 minutes and >= 15 minutes since it reopened); otherwise they retry every
 minute. All further runs (weekend pair, tick confirmation) use v1.3. The 2024+ tick confirmation run in the plan above
 now also checks that the GER40 timing change does not alter the pass verdict.
+
+## Weekend check result (v1.3, A + D, $13k, guard $2k, m1, 2020-11-08 .. 2023-12-31)
+| | Hold over weekend | Flat over weekend |
+|---|---|---|
+| Net | +$13,969 | +$13,934 (99.7%) |
+| Trades / win rate | 265 / 71% | 426 / 62% (each weekend splits a trade in two) |
+| Swap | -$1,191 | -$679 |
+| Max drawdown (daily closes / intraday) | $5,334 / $5,856 | $5,499 / $5,899 |
+| Worst day, lowest point | -$1,926 | -$1,926 |
+| Worst day, close | -$1,756 | -$1,355 |
+Rule: adopt only if >= 85% of net AND lower max equity drawdown or worst day (lowest point, as used for sizing).
+Net passes, but the drawdown is slightly higher and the worst day identical -> NOT adopted. Setting: hold over weekends.
+(No large weekend gap hit the positions in 2020-23, so the test can't show the insurance value; profit was the same.)
+Next: the plan's tick-data confirmation on 2024-01-01 .. latest with v1.3, Flat Over Weekend = No.
