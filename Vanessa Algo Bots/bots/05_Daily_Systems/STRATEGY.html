@@ -336,12 +336,13 @@ details { margin-top: 8px; }
 <li>Decisions use the daily close; orders go in about <strong>11 pm UK time</strong> (one hour after FTMO's new daily bar opens).</li>
 <li><strong>Daily guard:</strong> down $2,000 on the day = close everything, stop until tomorrow.</li>
 <li><strong>Size cap:</strong> all open positions together at most 1.5 x the balance.</li>
-<li><strong>Optional "Flat Over Weekend":</strong> close all Friday 15:30 New York time, reopen Monday with the same size and stop (being tested).</li>
+<li><strong>Flat over the weekend:</strong> close all Friday 15:30 New York time, reopen Monday with the same size and stop (unless the exit rule fired on Friday). Removes the risk of a big Monday gap the daily guard can't stop.</li>
 </ul>
 
 <h2>Backtest results ($100k account, $13k per position)</h2>
 <ul>
-<li><strong>Jan 2024 - Oct 2026 (final test):</strong> +$15,924, 73% of trades won, worst drawdown 4.76%, every year positive.</li>
+<li><strong>Jan 2024 - Oct 2026, final settings on real tick data:</strong> +$15,003, 73% of trades won, worst drawdown 5.25%, worst day -$2,009 (daily guard), every year positive (2024 +$3.5k, 2025 +$5.5k, 2026 to Oct +$6.0k).</li>
+<li><strong>Settings:</strong> A and D on, Notional 13,000, Daily Guard 2,000, Flat Over Weekend = Yes.</li>
 <li><strong>Off-switch if live:</strong> back to demo if the win rate over the last 50 trades drops below 62%, or drawdown passes ~7%.</li>
 </ul>
 <p class="sub">Charts are an illustration from NAS100 daily data; the bot uses FTMO's own daily bars. Full rules: research/DAILY_SYSTEMS_TEST_PLAN.md.</p>

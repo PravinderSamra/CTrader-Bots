@@ -37,11 +37,19 @@ avoid the wide spreads around the daily rollover).
 ## Safety rules
 - Daily guard: if the bot is down $2,000 on the day, it closes everything and stops until the next day.
 - Total size cap: all open positions together at most 1.5 x the account balance.
-- Optional "Flat Over Weekend": close everything Friday 15:30 New York time, reopen Monday at the normal order time
-  with the same size and stop (being tested).
+- Flat over the weekend (setting "Flat Over Weekend" = Yes): close everything Friday 15:30 New York time, reopen
+  Monday at the normal order time with the same size and stop, unless the exit rule fired on Friday's close.
+  This removes the risk of a big Monday gap (e.g. -7% to -10%) that the daily guard can't stop.
 
 ## Results (backtests, $100k account, $13k per position)
-- Jan 2024 - Oct 2026 (final test): +$15,924, 73% of trades won, worst drawdown 4.76%, every year positive.
+- Jan 2024 - Oct 2026, final settings on real tick data (real spreads, flat over weekends): +$15,003 closed,
+  73% of trades won (counting a weekend split as one trade), worst drawdown 5.25%, worst day -$2,009 (daily guard),
+  every year positive (2024 +$3.5k, 2025 +$5.5k, 2026 to Oct +$6.0k).
+- Same period on m1 bars, holding over weekends: +$15,924, 73% won, worst drawdown 4.76%.
+
+## Settings to use on the FTMO account
+Systems A and D on (B, C, E, F off), Notional 13000, Max Notional Mult 1.5, Cat ATR 3.0, Daily Guard 2000,
+Flat Over Weekend = Yes, Delay Minutes 60. Attach to any chart (e.g. US500.cash D1); it trades all five markets itself.
 - Live off-switch: back to demo if the win rate over the last 50 trades drops below 62%, or drawdown passes ~7%.
 
 Full rules and every test: research/DAILY_SYSTEMS_TEST_PLAN.md.

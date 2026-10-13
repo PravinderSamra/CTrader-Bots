@@ -155,3 +155,20 @@ DECISION (overrides the 'drawdown or worst day' test above, which could not see 
 gap while positions were held): Flat Over Weekend = YES. Live off-switch counts a Friday-closed + Monday-reopened trade as
 one trade for the win-rate rule.
 Tick confirmation run on 2024-01-01 .. latest uses v1.3 with Flat Over Weekend = YES.
+
+## TICK CONFIRMATION RESULT (v1.3, A + D, $13k, guard $2k, Flat Over Weekend = YES, TICK data, 2024-01-01 .. 2026-10-13): PASS
+cTrader: net +$15,003 closed (+$14,793 equity, one position open), profit factor 1.46, 516 trade pieces (each weekend
+splits a trade; merged = 317 trades, 73.5% win), swap -$633, commission 0, max equity drawdown 5.25% (balance 4.25%),
+largest win +$1,255, largest loss -$673, daily guard fired once (5 Aug 2024, -$2,009). Avg win +$161 / avg loss -$268
+(merged trades).
+- A: 72 trades, 68% win, +$3,566; positive on GER40 (+$1,704), US100 (+$959), US500 (+$897), US30 (+$16); gold -$10. PASS.
+- D: 245 trades, 75% win, +$11,437; positive on all 5 (US100 +$3,748, US500 +$2,691, GER40 +$1,948, gold +$1,549,
+  US30 +$1,502). PASS.
+- Every year positive (2024 +$3.5k, 2025 +$5.5k, 2026 to Oct +$6.0k). Worst day -$2,009 (the guard).
+- Correlation of daily P/L with the NAS bot: -0.01 (285 overlapping days). Drawdown 5.25% < 6%. PASS.
+- Versus the m1 final test (hold over weekends): 94% of the profit (+$15,003 vs +$15,924); the difference is real
+  spreads plus the weekend closes. Swap fell from -$990 to -$633. GER40 timing (v1.3) did not change the verdict.
+VERDICT: ready to run on the FTMO account next to the NAS bot with these settings. Live off-switch unchanged: back off if
+the last 50 trades (weekend splits counted as one) win under 62%, or the drawdown passes 7%.
+Still open: the NAS bot's worst day, to confirm the two bots' combined worst day stays well inside the $5k daily limit.
+Next tests (2020-23 only, as agreed): profit-lock switches, then the size ladder.
