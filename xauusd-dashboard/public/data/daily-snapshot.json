@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T21:56:42.844Z",
+  "generatedAt": "2026-10-13T13:12:57.111Z",
   "yields": {
     "US10Y": 5.22,
     "US2Y": 4.75,
@@ -34,26 +34,26 @@
     "openInterestChange": -14341
   },
   "etfFlows": {
-    "gldTonnes": 1056.5,
-    "gldWoWChange": -2.4,
+    "gldTonnes": 1055,
+    "gldWoWChange": -1.5,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4171.565,
-    "XAGUSD": 60.317,
-    "EURUSD": 1.11557,
-    "USDJPY": 158.6135,
-    "USDCHF": 0.83455,
-    "USDCNH": 6.69458,
-    "GBPUSD": 1.32106,
-    "USDCAD": 1.42799,
-    "USDSEK": 10.04176,
-    "US500": 7809.5,
-    "GER40": 25270.95,
-    "UK100": 10648.95,
-    "ADR_14day": 81.4,
-    "ADR_usedToday": 62.7,
-    "goldSilverRatio": 69.2
+    "XAUUSD": 4177.475,
+    "XAGUSD": 59.942,
+    "EURUSD": 1.11922,
+    "USDJPY": 158.2645,
+    "USDCHF": 0.83196,
+    "USDCNH": 6.69224,
+    "GBPUSD": 1.32457,
+    "USDCAD": 1.42318,
+    "USDSEK": 9.97583,
+    "US500": 7803.7,
+    "GER40": 25306.95,
+    "UK100": 10706.75,
+    "ADR_14day": 79.7,
+    "ADR_usedToday": 49.8,
+    "goldSilverRatio": 69.7
   },
   "dollarLiquidity": {
     "stlfsi": -0.4681,
@@ -66,34 +66,22 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Indian shares flat at open as inflation strengthens rate-hike concerns - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-13T02:29:00.000Z",
+      "hoursAgo": 10.7
+    },
+    {
       "headline": "Bear to bull: A double upgrade of Salesforce illustrates the folly of the 'SaaSpocalypse'",
       "source": "CNBC",
       "publishedAt": "2026-10-12T19:50:19.000Z",
-      "hoursAgo": 2.1
+      "hoursAgo": 17.4
     },
     {
       "headline": "Europe set for another year of high gas prices as reserves hit lows - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-12T14:03:01.000Z",
-      "hoursAgo": 7.9
-    },
-    {
-      "headline": "India Sept inflation nears RBI tolerance ceiling, boosting case for further rate hikes - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-12T12:21:58.000Z",
-      "hoursAgo": 9.6
-    },
-    {
-      "headline": "India inflation jumps to 5.54% in September, strengthening case for further rate hikes - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-12T12:13:42.000Z",
-      "hoursAgo": 9.7
-    },
-    {
-      "headline": "Dollar holds 18-month high as Gulf tension, US inflation keep investors on edge - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-12T01:51:00.000Z",
-      "hoursAgo": 20.1
+      "hoursAgo": 23.2
     }
   ],
   "briefing": null
