@@ -34,7 +34,7 @@ def sim(days, runs=20000, block=20, seed=1):
     return p, f, (st.median(t_pass) if t_pass else None)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__" and len(sys.argv) == 1:
     # common calendar: every weekday that appears in either series inside 2021-01..2026-10
     allk = sorted(k for k in set(ds) | set(nas) if "2021-01-01" <= k <= "2026-10-31")
     print(f"combined calendar {len(allk)} days")
@@ -45,3 +45,23 @@ if __name__ == "__main__":
         p, f, md = sim(days); print(f"NAS ${risk} + Daily Systems:                   pass {p:5.1%}  fail {f:5.1%}  median {md} trading days")
         days = [nas.get(k, 0.0) * risk for k in allk]
         p, f, md = sim(days); print(f"NAS ${risk} alone:                              pass {p:5.1%}  fail {f:5.1%}  median {md} trading days")
+
+
+def with_fib():
+    """add Deni Fib (gold + GBPUSD, H1, frozen rules) daily R x risk; calendar 2021-07..2026-10"""
+    from collections import defaultdict
+    fib = json.load(open("/home/user/CTrader-Bots/Vanessa Algo Bots/research/data/deni_fib_trades.json"))
+    fd = defaultdict(float)
+    for m in ("XAUUSD", "GBPUSD"):
+        for d, r in fib[m]: fd[d] += r
+    keys = sorted(k for k in set(ds) | set(nas) | set(fd) if "2021-07-01" <= k <= "2026-10-31")
+    print(f"calendar {len(keys)} days from {keys[0]}")
+    for nr in (550, 450):
+        for fr in (0, 50, 100, 150):
+            days = [ds.get(k, 0.0) + nas.get(k, 0.0) * nr + fd.get(k, 0.0) * fr for k in keys]
+            p, f, md = sim(days)
+            print(f"NAS ${nr} + DS + Fib ${fr:>3}:  pass {p:5.1%}  fail {f:5.1%}  median {md} trading days")
+
+
+if __name__ == "__main__" and len(sys.argv) > 1 and sys.argv[1] == "fib":
+    with_fib()
