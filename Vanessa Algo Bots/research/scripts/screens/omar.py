@@ -52,7 +52,7 @@ def dkey(t):
     return (t + timedelta(hours=2)).date()
 
 
-def run(bars, cost, bias, f):
+def run(bars, cost, bias, f, sl=0.9):
     days = defaultdict(lambda: [None, -1e18, 1e18, None])   # o h l c
     order = []
     for t, o, h, l, c in bars:
@@ -92,6 +92,12 @@ def run(bars, cost, bias, f):
                     wk = [days[order[x]] for x in range(max(0, j - 10), j)
                           if order[x].isocalendar()[1] == (k - timedelta(days=7)).isocalendar()[1]]
                     ok = bool(wk) and wk[-1][3] < wk[0][0]
+                if ok and bias == "both" and j >= 21:
+                    wk = [days[order[x]] for x in range(max(0, j - 10), j)
+                          if order[x].isocalendar()[1] == (k - timedelta(days=7)).isocalendar()[1]]
+                    ok = bool(wk) and wk[-1][3] < wk[0][0] and p[3] < st.mean(days[order[x]][3] for x in range(j - 20, j))
+                elif ok and bias == "both":
+                    ok = False
                 if ok and bias == "sma" and j >= 21:
                     ok = p[3] < st.mean(days[order[x]][3] for x in range(j - 20, j))
                 elif ok and bias == "sma":
@@ -113,7 +119,7 @@ def run(bars, cost, bias, f):
                 s["brk"] = False; s["LL"] = None; s["H"] = h
             elif h >= ent and in_win:
                 e = max(ent, o)
-                stop = s["LL"] + 0.9 * rng
+                stop = s["LL"] + sl * rng
                 if e < stop:
                     pos = {"e": e, "stop": stop, "tp": s["LL"], "r": stop - e, "be_lvl": s["LL"] + 0.2 * rng}
                     s["done"] = True
