@@ -141,3 +141,17 @@ Rule: adopt only if >= 85% of net AND lower max equity drawdown or worst day (lo
 Net passes, but the drawdown is slightly higher and the worst day identical -> NOT adopted. Setting: hold over weekends.
 (No large weekend gap hit the positions in 2020-23, so the test can't show the insurance value; profit was the same.)
 Next: the plan's tick-data confirmation on 2024-01-01 .. latest with v1.3, Flat Over Weekend = No.
+
+## Weekend gap risk study (14 Oct 2026, screens/weekend_gaps.py) -> decision changed to FLAT OVER WEEKEND = YES
+History, Friday close -> Monday open, 1990-2026 (Yahoo cash opens; US500/US100 opens are unreliable in old data, so
+GER40/US30 are the better guides): gaps of -5% or worse happened 1-4 times per index in 35 years, -7% or worse 1-3 times
+(Mar 2020, Aug 2015 US100, Apr 2025 GER40 -9.2%, Aug 1991). Gold never gapped more than -3.4%.
+Bot exposure held over weekends: median ~$25k notional, 90th percentile $64-75k, max ~$90k (both periods). Actual worst
+Monday-gap result in the backtests: -$561 (the 200-day filter keeps it out of most crashes).
+Stress: $90k held x -7% = -$6.3k; x -10% = -$9.0k. Either breaches FTMO's $5k daily limit, and with ~$8k of room to the
+$90k floor today a -10% weekend would end the account. Rough odds: ~1% a year (rare gap x high exposure), but the cost of
+avoiding it was ~zero in the weekend test (+$13,934 vs +$13,969).
+DECISION (overrides the 'drawdown or worst day' test above, which could not see this tail because 2020-23 had no such
+gap while positions were held): Flat Over Weekend = YES. Live off-switch counts a Friday-closed + Monday-reopened trade as
+one trade for the win-rate rule.
+Tick confirmation run on 2024-01-01 .. latest uses v1.3 with Flat Over Weekend = YES.
