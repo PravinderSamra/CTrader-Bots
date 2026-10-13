@@ -1,4 +1,7 @@
-// Daily Systems cBot v1.2 (Vanessa Algo Bots)
+// Daily Systems cBot v1.3 (Vanessa Algo Bots)
+// v1.3: orders and closes are only sent when that market is trading: a tick in the last 2 minutes and at least
+// 15 minutes since it reopened. Otherwise they wait and retry every minute (GER40 is still closed at the 23:00 UTC
+// order time; on tick data a market order there hung the backtest).
 // Six simple daily-bar systems on several FTMO instruments, each with its own on/off switch. Rules are pre-registered in
 // research/DAILY_SYSTEMS_TEST_PLAN.md (14 Oct 2026):
 //   A Pavel mean reversion, B Pavel short-term momentum, C Pavel trend following, D Naoufel RSI(2),
@@ -72,6 +75,7 @@ namespace cAlgo.Robots
             public SimpleMovingAverage Sma5, Sma10, Sma20, Sma200;
             public RelativeStrengthIndex Rsi2;
             public AverageTrueRange Atr20;
+            public DateTime LastTick = DateTime.MinValue, OpenSince = DateTime.MinValue;
         }
 
         private class Action
@@ -93,7 +97,6 @@ namespace cAlgo.Robots
         private readonly Dictionary<string, int> _count = new Dictionary<string, int>();
         private readonly Dictionary<int, DateTime> _sig = new Dictionary<int, DateTime>();   // position id -> signal bar open time
         private readonly List<Action> _parked = new List<Action>();                          // positions closed for the weekend
-        private DateTime _flatDone = DateTime.MinValue;
         private double _closedCum, _dayStartEq, _dayMin;
         private DateTime _day = DateTime.MinValue, _haltedDay = DateTime.MinValue;
 
@@ -127,6 +130,12 @@ namespace cAlgo.Robots
                     Atr20 = Indicators.AverageTrueRange(bars, 20, MovingAverageType.Simple)
                 };
                 _books.Add(b);
+                sym.Tick += args =>
+                {
+                    var now = Server.Time;
+                    if (now - b.LastTick > TimeSpan.FromMinutes(30)) b.OpenSince = now;   // first tick after a closed spell
+                    b.LastTick = now;
+                };
                 bars.BarOpened += args => OnDailyBar(b);
             }
             Positions.Closed += args =>
@@ -277,6 +286,12 @@ namespace cAlgo.Robots
         }
 
         // ---------------- execution, guard ----------------
+        // True when the market has ticked in the last 2 minutes and has been open for at least 15 minutes.
+        private bool Tradable(Book b) =>
+            Server.Time - b.LastTick <= TimeSpan.FromMinutes(2) && Server.Time - b.OpenSince >= TimeSpan.FromMinutes(15);
+
+        private Book BookOf(Position p) => _books.FirstOrDefault(x => x.Sym.Name == p.SymbolName);
+
         protected override void OnTimer()
         {
             var day = PragueDay(Server.Time);
@@ -292,17 +307,17 @@ namespace cAlgo.Robots
             {
                 _haltedDay = day;
                 Print("G|{0:yyyy-MM-dd HH:mm}|daily guard hit {1:F0}, closing all", Server.Time, botEq - _dayStartEq);
-                foreach (var p in Mine.ToList()) ClosePosition(p);
             }
+            if (_haltedDay == day)
+                foreach (var p in Mine.ToList()) { var bk = BookOf(p); if (bk != null && Tradable(bk)) ClosePosition(p); }
 
             var ny = NewYork(Server.Time);
-            if (WeekendFlat && ny.DayOfWeek == DayOfWeek.Friday && ny.Hour * 60 + ny.Minute >= 15 * 60 + 30 && _flatDone != ny.Date)
+            if (WeekendFlat && ny.DayOfWeek == DayOfWeek.Friday && ny.Hour * 60 + ny.Minute >= 15 * 60 + 30)
             {
-                _flatDone = ny.Date;
-                foreach (var p in Mine.ToList())
+                foreach (var p in Mine.ToList())       // retried every minute until each market can be closed
                 {
-                    var b = _books.FirstOrDefault(x => x.Sym.Name == p.SymbolName);
-                    if (b == null) continue;
+                    var b = BookOf(p);
+                    if (b == null || !Tradable(b)) continue;
                     DateTime st;
                     var sig = _sig.TryGetValue(p.Id, out st) ? st : b.D.OpenTimes[Math.Max(0, b.D.OpenTimes.GetIndexByTime(p.EntryTime) - 1)];
                     _parked.Add(new Action { B = b, Sys = p.Label[p.Label.Length - 1], Side = p.TradeType, Reopen = true, Units = p.VolumeInUnits,
@@ -312,7 +327,7 @@ namespace cAlgo.Robots
                 }
             }
 
-            foreach (var a in _queue.Where(x => x.Due <= Server.Time).ToList())
+            foreach (var a in _queue.Where(x => x.Due <= Server.Time && Tradable(x.B)).ToList())
             {
                 _queue.Remove(a);
                 if (a.Close)

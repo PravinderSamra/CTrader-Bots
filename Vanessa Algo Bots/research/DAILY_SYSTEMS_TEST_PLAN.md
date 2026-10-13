@@ -119,3 +119,11 @@ Two switches, tested separately on 2020-11-08 .. 2023-12-31 only, against the ch
 (b) trailing: stop 2 x ATR(20) below the highest close since entry (never lowered).
 Keep a switch only if it raises net profit OR lowers the max equity drawdown, AND the win rate stays >= 65%.
 Expectation (Connors' RSI(2) research): neither helps a 2-5 day mean-reversion exit.
+
+## Implementation fix v1.3 (14 Oct 2026, no rule change)
+The first tick-data run (2020-23) aborted on 3 Dec 2020: a GER40 market order sent at 23:00 UTC, when FTMO's GER40 is
+still closed, hung the tick backtest. On m1 bars cTrader had filled such orders anyway, so GER40 entries in earlier m1
+runs used prices from before the market reopened. v1.3 sends orders, exits, weekend closes and guard closes only when
+that market is trading (a tick in the last 2 minutes and >= 15 minutes since it reopened); otherwise they retry every
+minute. All further runs (weekend pair, tick confirmation) use v1.3. The 2024+ tick confirmation run in the plan above
+now also checks that the GER40 timing change does not alter the pass verdict.
