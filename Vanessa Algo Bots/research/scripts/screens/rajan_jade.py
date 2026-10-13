@@ -206,6 +206,60 @@ def kane(bars, cost, be):
     return tr
 
 
+def kane_tz(bars, cost, flat_h=12):
+    """TRADER KANE, TradeZella playbook rules on top of kane(): same 10am sweep of the 09:00 hourly extreme and 5m
+    close back through the 10:00 open, but target = 50% of the H1 dealing range (09:00 hour + 10:00 so far; need
+    >= 0.5R), break-even once an 11:00-hour 5m close is past the 11:00 open in the trade's favour (his '11:00 candle
+    flips'), flat at flat_h NY. No NQ/ES SMT filter (no ES intraday data)."""
+    by = defaultdict(list)
+    for i, (t, *_ ) in enumerate(bars):
+        by[t.astimezone(NY).date()].append(i)
+    days = sorted(by); dc = {}
+    for d in days:
+        c = [i for i in by[d] if bars[i][0].astimezone(NY).hour < 16]
+        if c: dc[d] = bars[c[-1]][4]
+    dl = [d for d in days if d in dc]; e21 = dict(zip(dl, ema([dc[d] for d in dl], 21)))
+    tr = []
+    for k in range(25, len(days)):
+        d, p = days[k], days[k - 1]
+        if p not in e21: continue
+        side = -1 if dc[p] < e21[p] else 1
+        h9 = [i for i in by[d] if bars[i][0].astimezone(NY).hour == 9]
+        h10 = [i for i in by[d] if bars[i][0].astimezone(NY).hour == 10]
+        if len(h9) < 10 or len(h10) < 10: continue
+        x9 = max(bars[i][2] for i in h9) if side == -1 else min(bars[i][3] for i in h9)
+        op10 = bars[h10[0]][1]; swept = False; ext = None
+        for i in h10:
+            t, o, h, l, c = bars[i]
+            if side == -1:
+                swept |= h > x9; ext = h if ext is None else max(ext, h); trig = swept and c < op10
+            else:
+                swept |= l < x9; ext = l if ext is None else min(ext, l); trig = swept and c > op10
+            if not trig: continue
+            seg = h9 + [j for j in h10 if j <= i]
+            tgt = (max(bars[j][2] for j in seg) + min(bars[j][3] for j in seg)) / 2
+            e = c; stp = ext + 0.5 * cost if side == -1 else ext - 0.5 * cost; r = abs(stp - e)
+            if r <= 0 or side * (tgt - e) < 0.5 * r: break
+            x = None; s_ = stp; op11 = None
+            for m in range(i + 1, len(bars)):
+                mt = bars[m][0].astimezone(NY)
+                if mt.date() != d or mt.hour >= flat_h: x = bars[m - 1][4]; break
+                H, L, C = bars[m][2], bars[m][3], bars[m][4]
+                if side == -1:
+                    if H >= s_: x = s_; break
+                    if L <= tgt: x = tgt; break
+                else:
+                    if L <= s_: x = s_; break
+                    if H >= tgt: x = tgt; break
+                if mt.hour == 11:
+                    if op11 is None: op11 = bars[m][1]
+                    if side * (C - op11) > 0: s_ = min(s_, e) if side == -1 else max(s_, e)
+            if x is None: x = bars[-1][4]
+            tr.append((t, side * (x - e) / r - cost / r))
+            break
+    return tr
+
+
 def summ(name, tr):
     if not tr: print(f"  {name:34s} no trades"); return
     rs = [r for _, r in tr]; yr = defaultdict(float)
@@ -225,3 +279,4 @@ if __name__ == "__main__":
             summ("Jade Asian sweep, EMA21 bias", jade(b, cost, True))
             summ("Kane 10am PO3 with trend", kane(b, cost, False))
             summ("Kane 10am PO3 with trend, BE at 1R", kane(b, cost, True))
+            summ("Kane TZ: 50% H1 range, 11h-flip BE", kane_tz(b, cost))
