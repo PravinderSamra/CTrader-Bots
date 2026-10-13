@@ -1,0 +1,12 @@
+{
+  "instrument": "US500",
+  "symbol_id": 220,
+  "period_primary": "M_5",
+  "price_divisor": 100000,
+  "m5_bars": 232039,
+  "coverage_first_utc": "2023-07-02 22:00:00",
+  "coverage_last_utc": "2026-10-13 14:30:00",
+  "source": "cTrader MCP (Pepperstone UK GBP spread-bet demo)",
+  "volume_note": "tick volume (price-update count), not real contract volume",
+  "downloaded_at": "2026-10-13T14:48:52.214915+00:00"
+}

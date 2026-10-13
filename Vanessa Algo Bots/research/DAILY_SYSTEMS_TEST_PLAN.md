@@ -185,3 +185,15 @@ balance $97,421).
   backtest is in-sample so treat as optimistic:
   NAS $550 + DS: 85%, median 125 trading days | NAS $550 alone: 88%, 162 days
   NAS $450 + DS: 89%, 165 days | NAS $350 + DS: 95%, 228 days | NAS $250 + DS: 100%, 369 days
+
+## Monte Carlo (13 Oct 2026, scripts/monte_carlo.py)
+Block bootstrap of real daily P/L (random 20-day blocks of consecutive days, so losing streaks and same-day pairing of
+the two bots are kept), 20,000 runs from $97,421: pass at $110k, fail at the $90k floor or a day worse than -$5k.
+Daily Systems = tick backtest daily P/L 2020-11..2026-10 ($13k per position); NAS = daily R 2021-26 x risk.
+- Daily Systems alone: pass 93%, fail 3%, but median 809 trading days to pass (too slow on its own).
+- NAS $550 + DS: pass 83%, fail 17%, median 124 days | NAS $550 alone: 83% / 17%, 148 days
+- NAS $450 + DS: pass 88%, fail 12%, median 157 days | NAS $450 alone: 88% / 12%, 196 days
+- NAS $350 + DS: pass 92%, fail 8%, median 204 days | NAS $350 alone: 93% / 7%, 275 days
+Reading: Daily Systems barely changes the fail odds (it is uncorrelated and small) but cuts the time to pass by ~15-25%.
+The fail risk comes from NAS drawdowns against the $7.4k of room. Same answer as the historical-start test (85%).
+NAS backtest is in-sample, so real fail odds are likely higher (20-30%).
