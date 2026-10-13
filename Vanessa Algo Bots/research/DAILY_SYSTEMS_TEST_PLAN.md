@@ -81,3 +81,10 @@ Sizing rule: $20,000 x 2,000 / 2,959 = $13,517 -> round down -> **$13,000 per po
 Expected at that size (scaled): about +$13.5k over 3.1 years (~4%/yr), max drawdown ~4.5%.
 FINAL TEST (run once): v1.1, A + D on (B, C, E, F off), Notional 13,000, Daily Guard 2,000, cap 1.5,
 2024-01-01 .. latest date, m1 bars, commission 0, $100k. Pass rules as above.
+
+## Win/loss shape and live monitoring rule (added 14 Oct 2026, before the final test)
+Sizing run: average win $265, average loss $389 (median $227 / $275). Break-even win rate = 389 / (265 + 389) = 59%;
+actual 71%, a 12-point cushion. Typical of mean reversion: many small wins, fewer larger losses (29 losses beyond -$500
+make up most of the total loss). The risk is a regime where the win rate falls under ~60% (2022 was that year).
+If the bot goes live: switch it off (back to demo) if, over its last 50 trades, the win rate is below 62%, or if its
+drawdown exceeds 1.5 x the backtest maximum at the chosen size (~7%).
