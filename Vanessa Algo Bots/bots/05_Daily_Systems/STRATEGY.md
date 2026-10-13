@@ -1,0 +1,47 @@
+# Daily Systems bot: what it does, in plain words
+
+Two "buy the dip in an uptrend" strategies, run separately on five markets:
+US500, US100, US30, GER40 and gold. Long (buy) trades only.
+
+## The two strategies
+
+**A. Pavel's mean reversion**
+- Buy when all three are true at the daily close:
+  1. The close is below its 5-day average.
+  2. The drop below the 5-day average is unusually large: more than 2.5 times the average gap of the last 20 days.
+  3. The close is above its 200-day average (the market is in a long-term uptrend).
+- Sell at the first daily close back above the 5-day average, or after 4 days, whichever comes first.
+
+**D. Naoufel's RSI(2)**
+- RSI(2) measures the last two days' moves on a 0-100 scale. Below 20 means a sharp two-day drop.
+- Buy when RSI(2) is below 20 and the close is above its 200-day average.
+- Sell when RSI(2) rises above 70 (the bounce has happened). Usually 2-5 days later.
+
+Both can hold the same market at the same time; they are separate trades.
+
+## Stop loss and take profit
+- No fixed take profit. The exits above do that job: the trade is closed once the bounce has happened.
+- Every trade has an emergency stop loss at 3 x ATR(20) below the entry (ATR = the average daily range of the last
+  20 days). That is usually 4-6% below the entry price. It is a safety net, not the normal way out.
+
+## Size: "Notional per position" = $13,000
+Notional is the value of the position, not the amount at risk. $13,000 notional means the position moves about $130
+for every 1% the market moves. For example US500 at 6,500 = 2 units (US500 moves $1 per point per unit).
+At that size: average winning trade about +$160 to +$220, average losing trade about -$270 to -$300,
+emergency stop about -$500 to -$800.
+
+## Timing
+Decisions use the daily close. Orders are sent about 11 pm UK time (one hour after FTMO's new daily bar opens, to
+avoid the wide spreads around the daily rollover).
+
+## Safety rules
+- Daily guard: if the bot is down $2,000 on the day, it closes everything and stops until the next day.
+- Total size cap: all open positions together at most 1.5 x the account balance.
+- Optional "Flat Over Weekend": close everything Friday 15:30 New York time, reopen Monday at the normal order time
+  with the same size and stop (being tested).
+
+## Results (backtests, $100k account, $13k per position)
+- Jan 2024 - Oct 2026 (final test): +$15,924, 73% of trades won, worst drawdown 4.76%, every year positive.
+- Live off-switch: back to demo if the win rate over the last 50 trades drops below 62%, or drawdown passes ~7%.
+
+Full rules and every test: research/DAILY_SYSTEMS_TEST_PLAN.md.
