@@ -107,3 +107,8 @@ Runs (A + D, $13k, guard $2,000, m1 bars, commission 0): development period 2020
 off and with it on. Adopt weekend-flat only if it keeps >= 85% of the net profit AND lowers the max equity drawdown or
 the worst day. Then one confirmation run of the chosen setting on 2024-01-01 .. latest using TICK data (real spreads);
 it must still meet the pass rules.
+
+## Gold review rule (14 Oct 2026)
+Gold flips between periods (A: +$927 dev / -$261 test; D: -$2,837 dev / +$1,548 test; both near break-even combined at
+$13k). Kept on in both systems. Review after 12 months of demo + live: switch gold off only if it lost in BOTH systems
+while the indices were net positive.
