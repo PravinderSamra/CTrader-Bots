@@ -58,3 +58,11 @@ Changes:
 4. Test periods: in-sample 2022-23 (FTMO data starts 2022), out-of-sample 2024-26 run once. m1 bars with commission 0;
    one tick-data run of the final version to confirm.
 All other rules unchanged.
+
+## Amendment 2 (14 Oct 2026, implementation fix, no rule change)
+Run 3 (v1.2, 2022-23, m1): 9 valid setups, but 7 were skipped as 'gapped above trigger' and none traded. Checked against
+Yahoo daily data: 4 of those 7 did NOT gap (real open below the trigger, 3 of them traded through it). Cause: the bot judged
+the setup on the first tick of the new daily bar, which in winter is pre-market (13:35 UTC = 08:35 New York) with a wide
+spread. v1.3: entries and daily-close exits are executed at 09:31 New York time; if price is already above the trigger the
+bot buys at market (the plan's buy-stop would have filled at the open), still subject to the max-stop (1 x ADR) rule.
+Expect few trades: about 4-5 setups a year on FTMO's mega-cap list.

@@ -1,4 +1,4 @@
-// Stock Swing Scanner cBot v1.2 (Vanessa Algo Bots)
+// Stock Swing Scanner cBot v1.3 (Vanessa Algo Bots)
 // Long-only daily swing bot after Clement Ang / Oliver Kell's price cycle: wedge pop, tight base, breakout.
 // Rules are pre-registered in research/STOCK_SWING_TEST_PLAN.md. Attach to a chart that is NOT in the Symbols list
 // (e.g. US100.cash, Daily): in backtests the chart's own symbol gets no history before the start date. The bot reads the daily bars of
@@ -164,23 +164,77 @@ namespace cAlgo.Robots
             Tally(why ?? "setup valid");
             if (why != null) return;
 
-            double high = b.Daily.HighPrices[t], low = b.Daily.LowPrices[t], close = b.Daily.ClosePrices[t];
-            double entry = b.Sym.Ask > high * 1.001 ? 0 : Math.Round(high * 1.001, b.Sym.Digits);
-            if (entry <= 0) { Print("X|{0}|{1:yyyy-MM-dd}|gapped above trigger", name, b.Daily.OpenTimes[t]); return; }
-            double stop = Math.Round(low * 0.999, b.Sym.Digits);
-            double dist = entry - stop;
-            if (dist <= 0 || dist > MaxStopAdr * adr * close)
+            // Queue the entry: it is placed at 09:31 New York time, once the cash session has opened (the first tick of a
+            // new daily bar can be pre-market with a wide spread, which made v1.0-1.2 wrongly skip setups as 'gapped').
+            _queue[name] = new Signal { B = b, T = t, Adr = adr };
+        }
+
+        private class Signal
+        {
+            public Book B;
+            public int T;
+            public double Adr;
+        }
+
+        private readonly Dictionary<string, Signal> _queue = new Dictionary<string, Signal>();
+        private readonly Dictionary<int, string> _exits = new Dictionary<int, string>();
+
+        // UTC -> New York time with the US daylight-saving rule (2nd Sunday of March to 1st Sunday of November).
+        private static DateTime NewYork(DateTime utc)
+        {
+            var mar = new DateTime(utc.Year, 3, 1);
+            var dstStart = mar.AddDays((7 - (int)mar.DayOfWeek) % 7 + 7).AddHours(7);
+            var nov = new DateTime(utc.Year, 11, 1);
+            var dstEnd = nov.AddDays((7 - (int)nov.DayOfWeek) % 7).AddHours(6);
+            return utc.AddHours(utc >= dstStart && utc < dstEnd ? -4 : -5);
+        }
+
+        private void PlaceQueued()
+        {
+            var ny = NewYork(Server.Time);
+            int m = ny.Hour * 60 + ny.Minute;
+            if (m < 9 * 60 + 31 || m >= 15 * 60 + 55) return;
+            foreach (var kv in _exits.ToList())
             {
-                Print("X|{0}|{1:yyyy-MM-dd}|stop too wide {2:F2} vs ADR {3:F2}", name, b.Daily.OpenTimes[t], dist, adr * close);
-                return;
+                _exits.Remove(kv.Key);
+                var p = Positions.FirstOrDefault(x => x.Id == kv.Key);
+                PosState s;
+                if (p == null || !_state.TryGetValue(p.Id, out s)) continue;
+                if (kv.Value == "close") ClosePosition(p);
+                else { PartialClose(p, s, "extended"); s.Part2 = true; }
             }
-            double units = b.Sym.NormalizeVolumeInUnits(RiskAmount / dist, RoundingMode.Down);
-            if (units < b.Sym.VolumeInUnitsMin) { Tally("size below minimum"); return; }
-            double slPips = dist / b.Sym.PipSize;
-            var res = PlaceStopOrder(TradeType.Buy, name, units, entry, Label, slPips, null, Server.Time.Date.AddHours(23));
-            if (!res.IsSuccessful) Print("X|{0}|{1:yyyy-MM-dd}|order rejected: {2}", name, b.Daily.OpenTimes[t], res.Error);
-            if (res.IsSuccessful)
+            foreach (var kv in _queue.ToList())
+            {
+                _queue.Remove(kv.Key);
+                var b = kv.Value.B; int t = kv.Value.T; double adr = kv.Value.Adr; var name = b.Sym.Name;
+                if (b.Daily.Count - 2 != t) continue;          // a newer daily bar has arrived; stale signal
+                if (MyPositions.Any(p => p.SymbolName == name)) continue;
+                if (MyPositions.Count() + MyOrders.Count() >= MaxPositions) { Tally("max positions"); continue; }
+
+                double high = b.Daily.HighPrices[t], low = b.Daily.LowPrices[t], close = b.Daily.ClosePrices[t];
+                double trigger = Math.Round(high * 1.001, b.Sym.Digits);
+                double stop = Math.Round(low * 0.999, b.Sym.Digits);
+                bool gapped = b.Sym.Ask >= trigger;            // a buy-stop would already have filled: buy now (plan: stop order for day t+1)
+                double entry = gapped ? b.Sym.Ask : trigger;
+                double dist = entry - stop;
+                if (dist <= 0 || dist > MaxStopAdr * adr * close)
+                {
+                    Print("X|{0}|{1:yyyy-MM-dd}|stop too wide {2:F2} vs ADR {3:F2}{4}", name, b.Daily.OpenTimes[t], dist, adr * close, gapped ? " (gapped)" : "");
+                    continue;
+                }
+                double units = b.Sym.NormalizeVolumeInUnits(RiskAmount / dist, RoundingMode.Down);
+                if (units < b.Sym.VolumeInUnitsMin) { Tally("size below minimum"); continue; }
+                double slPips = dist / b.Sym.PipSize;
                 _pendingInfo[name] = new PosState { OrigVolume = units, Risk = units * dist, AdrPrice = adr * close, Entry = entry };
+                TradeResult res = gapped
+                    ? ExecuteMarketOrder(TradeType.Buy, name, units, Label, slPips, null)
+                    : PlaceStopOrder(TradeType.Buy, name, units, entry, Label, slPips, null, Server.Time.AddMinutes(15 * 60 + 55 - m));
+                if (!res.IsSuccessful)
+                {
+                    _pendingInfo.Remove(name);
+                    Print("X|{0}|{1:yyyy-MM-dd}|order rejected: {2}", name, b.Daily.OpenTimes[t], res.Error);
+                }
+            }
         }
 
         // Returns null when the setup is valid; otherwise the reason it is not.
@@ -249,22 +303,18 @@ namespace cAlgo.Robots
                 PosState s;
                 if (!_state.TryGetValue(p.Id, out s)) continue;
                 double close = b.Daily.ClosePrices[t];
+                // decided on the daily close, executed at 09:31 New York time (see PlaceQueued)
                 if (close < b.Ema10.Result[t])
-                {
-                    ClosePosition(p);
-                    continue;
-                }
-                if (!s.Part2 && close > b.Sma50.Result[t] + ExtendedAtr * b.Atr14.Result[t])
-                {
-                    PartialClose(p, s, "extended");
-                    s.Part2 = true;
-                }
+                    _exits[p.Id] = "close";
+                else if (!s.Part2 && close > b.Sma50.Result[t] + ExtendedAtr * b.Atr14.Result[t])
+                    _exits[p.Id] = "extended";
             }
         }
 
         // ---------- first partial at +2x ADR, checked every minute ----------
         protected override void OnTimer()
         {
+            PlaceQueued();
             foreach (var p in MyPositions.ToList())
             {
                 PosState s;
