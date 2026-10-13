@@ -1,4 +1,4 @@
-// Deni Fib Visual v1.1 - chart indicator, draws only.
+// Deni Fib Visual v1.2 - chart indicator, draws only.
 // Same rules as the Deni Fib cBot (see STRATEGY.md).
 // Blue line: trend wave line, with the wave count.
 // Grey dashed: swing level that breaks. Arrow: break.
@@ -169,8 +169,9 @@ namespace cAlgo
                     int a = wave[Math.Max(0, wave.Count - 3)], b = wave[wave.Count - 1];
                     double ya = Real(dir, Lo(dir, a)), yb = Real(dir, Lo(dir, b));
                     double slope = (yb - ya) / (b - a);
-                    Add(Chart.DrawTrendLine(id + "wave", T(a), ya, T(brk),
-                        ya + slope * (brk - a), Color.FromHex("#4A90D9"), 2,
+                    int e2 = Math.Min(brk, h + 2);
+                    Add(Chart.DrawTrendLine(id + "wave", T(a), ya, T(e2),
+                        ya + slope * (e2 - a), Color.FromHex("#4A90D9"), 2,
                             LineStyle.Solid));
                     Add(Chart.DrawText(id + "wavetxt", wave.Count + " waves", T(a), ya,
                         Color.FromHex("#4A90D9")));
