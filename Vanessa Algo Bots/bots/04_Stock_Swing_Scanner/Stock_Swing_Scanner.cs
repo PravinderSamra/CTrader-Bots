@@ -1,10 +1,11 @@
-// Stock Swing Scanner cBot v1.0 (Vanessa Algo Bots)
+// Stock Swing Scanner cBot v1.1 (Vanessa Algo Bots)
 // Long-only daily swing bot after Clement Ang / Oliver Kell's price cycle: wedge pop, tight base, breakout.
 // Rules are pre-registered in research/STOCK_SWING_TEST_PLAN.md. Attach to ANY chart: the bot reads the daily bars of
 // every symbol in "Symbols" itself. Each time a stock's new daily bar opens, it judges the bar that just closed,
 // cancels that stock's unfilled order from the day before, manages open positions and, if the setup is there,
 // places a buy-stop just above the base day's high with the stop just below its low.
-// Log lines for analysis: O| (position opened), P| (partial close), X| (signal skipped), H| (history at the end).
+// Log lines for analysis: O| (position opened), P| (partial close), X| (signal skipped), H| (history at the end),
+// S| (each symbol's daily bars at start), D| (count of why setups failed, printed at the end). v1.1 adds S| and D| only.
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,6 +80,14 @@ namespace cAlgo.Robots
         private readonly Dictionary<int, PosState> _state = new Dictionary<int, PosState>();
         private readonly Dictionary<string, PosState> _pendingInfo = new Dictionary<string, PosState>();
         private Bars _bench;
+        private readonly Dictionary<string, int> _why = new Dictionary<string, int>();
+
+        private void Tally(string why)
+        {
+            int n;
+            _why.TryGetValue(why, out n);
+            _why[why] = n + 1;
+        }
 
         protected override void OnStart()
         {
@@ -93,6 +102,7 @@ namespace cAlgo.Robots
                 if (sym == null) { Print("Symbol not found, skipped: {0}", name); continue; }
                 var bars = MarketData.GetBars(TimeFrame.Daily, name);
                 LoadHistory(bars, 260);
+                Print("S|{0}|{1} daily bars|first {2:yyyy-MM-dd}", name, bars.Count, bars.Count > 0 ? bars.OpenTimes[0] : DateTime.MinValue);
                 var b = new Book
                 {
                     Sym = sym, Daily = bars,
@@ -141,13 +151,14 @@ namespace cAlgo.Robots
                 CancelPendingOrder(o);
 
             int t = b.Daily.Count - 2;
-            if (t < 210) return;
+            if (t < 210) { Tally("warm-up (under 210 daily bars)"); return; }
             ManageOnClose(b, t);
 
             if (MyPositions.Any(p => p.SymbolName == name)) return;
-            if (MyPositions.Count() + MyOrders.Count() >= MaxPositions) return;
+            if (MyPositions.Count() + MyOrders.Count() >= MaxPositions) { Tally("max positions"); return; }
             double adr;
             string why = Setup(b, t, out adr);
+            Tally(why ?? "setup valid");
             if (why != null) return;
 
             double high = b.Daily.HighPrices[t], low = b.Daily.LowPrices[t], close = b.Daily.ClosePrices[t];
@@ -161,9 +172,10 @@ namespace cAlgo.Robots
                 return;
             }
             double units = b.Sym.NormalizeVolumeInUnits(RiskAmount / dist, RoundingMode.Down);
-            if (units < b.Sym.VolumeInUnitsMin) return;
+            if (units < b.Sym.VolumeInUnitsMin) { Tally("size below minimum"); return; }
             double slPips = dist / b.Sym.PipSize;
             var res = PlaceStopOrder(TradeType.Buy, name, units, entry, Label, slPips, null, Server.Time.Date.AddHours(23));
+            if (!res.IsSuccessful) Print("X|{0}|{1:yyyy-MM-dd}|order rejected: {2}", name, b.Daily.OpenTimes[t], res.Error);
             if (res.IsSuccessful)
                 _pendingInfo[name] = new PosState { OrigVolume = units, Risk = units * dist, AdrPrice = adr * close, Entry = entry };
         }
@@ -292,6 +304,8 @@ namespace cAlgo.Robots
 
         protected override void OnStop()
         {
+            foreach (var kv in _why.OrderByDescending(k => k.Value))
+                Print("D|{0}|{1}", kv.Key, kv.Value);
             // H|positionId|symbol|entry time|close time|volume|entry|close|gross|swap|commission|net
             foreach (var h in History.Where(h => h.Label == Label).OrderBy(h => h.ClosingTime))
                 Print("H|{0}|{1}|{2:yyyy-MM-dd}|{3:yyyy-MM-dd}|{4}|{5:F2}|{6:F2}|{7:F2}|{8:F2}|{9:F2}|{10:F2}",
