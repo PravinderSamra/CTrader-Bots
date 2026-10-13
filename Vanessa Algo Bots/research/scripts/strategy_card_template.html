@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daily Systems Bot</title>
+<style>
+:root {
+  color-scheme: light;
+  --surface-1: #fcfcfb; --surface-2: #f3f2ef; --text-primary: #0b0b0b; --text-secondary: #52514e; --text-muted: #7a7974;
+  --grid: #e4e3df; --series-1: #2a78d6; --series-2: #eb6834; --series-3: #1baf7a; --series-7: #6250d6; --ink-line: #52514e;
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+    --surface-1: #1a1a19; --surface-2: #232321; --text-primary: #f0efec; --text-secondary: #c3c2b7; --text-muted: #9a998f;
+    --grid: #33322f; --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70; --series-7: #9085e9; --ink-line: #c3c2b7;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --surface-1: #1a1a19; --surface-2: #232321; --text-primary: #f0efec; --text-secondary: #c3c2b7; --text-muted: #9a998f;
+  --grid: #33322f; --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70; --series-7: #9085e9; --ink-line: #c3c2b7;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--surface-1); color: var(--text-primary); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 860px; margin: 0 auto; padding: 24px 16px 48px; }
+h1 { font-size: 1.6rem; margin: 0 0 4px; }
+h2 { font-size: 1.2rem; margin: 32px 0 8px; }
+p, li { color: var(--text-secondary); }
+strong { color: var(--text-primary); }
+.sub { color: var(--text-muted); margin: 0 0 16px; }
+.card { background: var(--surface-2); border-radius: 10px; padding: 14px 16px; margin: 12px 0; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: .85rem; color: var(--text-secondary); margin: 6px 0 2px; }
+.sw { display: inline-block; width: 18px; height: 3px; vertical-align: middle; margin-right: 6px; border-radius: 2px; }
+svg { width: 100%; height: auto; display: block; }
+.grid { stroke: var(--grid); stroke-width: 1; }
+.ref { stroke: var(--text-muted); stroke-width: 1; stroke-dasharray: 4 4; }
+.ax { fill: var(--text-muted); font-size: 11px; }
+.lab { fill: var(--text-secondary); font-size: 11px; }
+.tag { fill: var(--text-primary); font-size: 10px; font-weight: 600; }
+.price { fill: none; stroke: var(--ink-line); stroke-width: 2; stroke-linejoin: round; }
+.ma5 { fill: none; stroke: var(--series-1); stroke-width: 2; stroke-linejoin: round; }
+.ma200 { fill: none; stroke: var(--series-2); stroke-width: 2; stroke-dasharray: 6 4; }
+.buy { fill: var(--series-3); stroke: var(--surface-1); stroke-width: 2; }
+.sell { fill: var(--series-7); stroke: var(--surface-1); stroke-width: 2; }
+.hit { fill: transparent; }
+.hit:hover { fill: var(--grid); }
+table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+th, td { text-align: left; padding: 4px 8px; border-bottom: 1px solid var(--grid); color: var(--text-secondary); }
+th { color: var(--text-primary); }
+details { margin-top: 8px; }
+</style>
+</head>
+<body>
+<main>
+<h1>Daily Systems bot</h1>
+<p class="sub">Two "buy the dip in an uptrend" strategies, run separately on US500, US100, US30, GER40 and gold. Buy trades only.</p>
+
+<h2>A. Pavel's mean reversion</h2>
+<div class="card">
+<p><strong>Buy</strong> at the daily close when all three are true:</p>
+<ol>
+<li>The close is below its <strong>5-day average</strong>.</li>
+<li>The drop below that average is unusually large: more than <strong>2.5 times</strong> the average gap of the last 20 days.</li>
+<li>The close is above its <strong>200-day average</strong> (long-term uptrend).</li>
+</ol>
+<p><strong>Sell</strong> at the first daily close back above the 5-day average, or after 4 days, whichever comes first.</p>
+</div>
+<div class="legend"><span><span class="sw" style="background:var(--ink-line)"></span>Daily close</span><span><span class="sw" style="background:var(--series-1)"></span>5-day average</span><span><span class="sw" style="background:var(--series-2)"></span>200-day average (dashed)</span><span><span style="color:var(--series-3)">▲</span> Buy &nbsp; <span style="color:var(--series-7)">▼</span> Sell</span></div>
+{{A}}
+<p class="sub">Example: NAS100, July - September 2024 (from our price data; hover a point for the date and price). The early-August sell-off: sharp drops below the blue line trigger buys; the first close back above it is the sell.</p>
+
+<h2>D. Naoufel's RSI(2)</h2>
+<div class="card">
+<p>RSI(2) scores the last two days' moves from 0 to 100. Below 20 means a sharp two-day drop.</p>
+<p><strong>Buy</strong> when RSI(2) is below 20 and the close is above its 200-day average.</p>
+<p><strong>Sell</strong> when RSI(2) rises above 70 (the bounce has happened), usually 2-5 days later.</p>
+</div>
+<div class="legend"><span><span class="sw" style="background:var(--ink-line)"></span>Daily close</span><span><span class="sw" style="background:var(--series-2)"></span>200-day average (dashed)</span><span><span style="color:var(--series-3)">▲</span> Buy &nbsp; <span style="color:var(--series-7)">▼</span> Sell</span></div>
+{{D}}
+<div class="legend"><span><span class="sw" style="background:var(--series-1)"></span>RSI(2)</span><span>dashed lines: 20 (buy) and 70 (sell)</span></div>
+{{RSI}}
+<p class="sub">Same period. Each dip of the RSI line under 20 is a buy; the next rise above 70 is the sell.</p>
+
+<details><summary>All trades in the example, as a table</summary>
+<table><thead><tr><th>Date</th><th>Strategy</th><th>Action</th><th>Close</th></tr></thead><tbody>{{ROWS}}</tbody></table>
+</details>
+
+<h2>Stop loss and take profit</h2>
+<ul>
+<li><strong>No fixed take profit.</strong> The sell rules do that job: each trade closes once the bounce has happened.</li>
+<li><strong>Emergency stop loss</strong> on every trade: 3 x the average daily range of the last 20 days below the entry, usually 4-6% away. A safety net, not the normal way out.</li>
+</ul>
+
+<h2>Size: "Notional per position" = $13,000</h2>
+<p>Notional is the <strong>value</strong> of the position, not the amount at risk. $13,000 moves about <strong>$130 for every 1%</strong> the market moves (US500 at 6,500 = 2 units). At this size: average win about +$160 to +$220, average loss about -$270 to -$300, emergency stop about -$500 to -$800.</p>
+
+<h2>Timing and safety</h2>
+<ul>
+<li>Decisions use the daily close; orders go in about <strong>11 pm UK time</strong> (one hour after FTMO's new daily bar opens).</li>
+<li><strong>Daily guard:</strong> down $2,000 on the day = close everything, stop until tomorrow.</li>
+<li><strong>Size cap:</strong> all open positions together at most 1.5 x the balance.</li>
+<li><strong>Optional "Flat Over Weekend":</strong> close all Friday 15:30 New York time, reopen Monday with the same size and stop (being tested).</li>
+</ul>
+
+<h2>Backtest results ($100k account, $13k per position)</h2>
+<ul>
+<li><strong>Jan 2024 - Oct 2026 (final test):</strong> +$15,924, 73% of trades won, worst drawdown 4.76%, every year positive.</li>
+<li><strong>Off-switch if live:</strong> back to demo if the win rate over the last 50 trades drops below 62%, or drawdown passes ~7%.</li>
+</ul>
+<p class="sub">Charts are an illustration from NAS100 daily data; the bot uses FTMO's own daily bars. Full rules: research/DAILY_SYSTEMS_TEST_PLAN.md.</p>
+</main>
+</body>
+</html>

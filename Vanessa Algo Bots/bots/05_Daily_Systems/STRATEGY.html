@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daily Systems Bot</title>
+<style>
+:root {
+  color-scheme: light;
+  --surface-1: #fcfcfb; --surface-2: #f3f2ef; --text-primary: #0b0b0b; --text-secondary: #52514e; --text-muted: #7a7974;
+  --grid: #e4e3df; --series-1: #2a78d6; --series-2: #eb6834; --series-3: #1baf7a; --series-7: #6250d6; --ink-line: #52514e;
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+    --surface-1: #1a1a19; --surface-2: #232321; --text-primary: #f0efec; --text-secondary: #c3c2b7; --text-muted: #9a998f;
+    --grid: #33322f; --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70; --series-7: #9085e9; --ink-line: #c3c2b7;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --surface-1: #1a1a19; --surface-2: #232321; --text-primary: #f0efec; --text-secondary: #c3c2b7; --text-muted: #9a998f;
+  --grid: #33322f; --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70; --series-7: #9085e9; --ink-line: #c3c2b7;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--surface-1); color: var(--text-primary); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 860px; margin: 0 auto; padding: 24px 16px 48px; }
+h1 { font-size: 1.6rem; margin: 0 0 4px; }
+h2 { font-size: 1.2rem; margin: 32px 0 8px; }
+p, li { color: var(--text-secondary); }
+strong { color: var(--text-primary); }
+.sub { color: var(--text-muted); margin: 0 0 16px; }
+.card { background: var(--surface-2); border-radius: 10px; padding: 14px 16px; margin: 12px 0; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: .85rem; color: var(--text-secondary); margin: 6px 0 2px; }
+.sw { display: inline-block; width: 18px; height: 3px; vertical-align: middle; margin-right: 6px; border-radius: 2px; }
+svg { width: 100%; height: auto; display: block; }
+.grid { stroke: var(--grid); stroke-width: 1; }
+.ref { stroke: var(--text-muted); stroke-width: 1; stroke-dasharray: 4 4; }
+.ax { fill: var(--text-muted); font-size: 11px; }
+.lab { fill: var(--text-secondary); font-size: 11px; }
+.tag { fill: var(--text-primary); font-size: 10px; font-weight: 600; }
+.price { fill: none; stroke: var(--ink-line); stroke-width: 2; stroke-linejoin: round; }
+.ma5 { fill: none; stroke: var(--series-1); stroke-width: 2; stroke-linejoin: round; }
+.ma200 { fill: none; stroke: var(--series-2); stroke-width: 2; stroke-dasharray: 6 4; }
+.buy { fill: var(--series-3); stroke: var(--surface-1); stroke-width: 2; }
+.sell { fill: var(--series-7); stroke: var(--surface-1); stroke-width: 2; }
+.hit { fill: transparent; }
+.hit:hover { fill: var(--grid); }
+table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+th, td { text-align: left; padding: 4px 8px; border-bottom: 1px solid var(--grid); color: var(--text-secondary); }
+th { color: var(--text-primary); }
+details { margin-top: 8px; }
+</style>
+</head>
+<body>
+<main>
+<h1>Daily Systems bot</h1>
+<p class="sub">Two "buy the dip in an uptrend" strategies, run separately on US500, US100, US30, GER40 and gold. Buy trades only.</p>
+
+<h2>A. Pavel's mean reversion</h2>
+<div class="card">
+<p><strong>Buy</strong> at the daily close when all three are true:</p>
+<ol>
+<li>The close is below its <strong>5-day average</strong>.</li>
+<li>The drop below that average is unusually large: more than <strong>2.5 times</strong> the average gap of the last 20 days.</li>
+<li>The close is above its <strong>200-day average</strong> (long-term uptrend).</li>
+</ol>
+<p><strong>Sell</strong> at the first daily close back above the 5-day average, or after 4 days, whichever comes first.</p>
+</div>
+<div class="legend"><span><span class="sw" style="background:var(--ink-line)"></span>Daily close</span><span><span class="sw" style="background:var(--series-1)"></span>5-day average</span><span><span class="sw" style="background:var(--series-2)"></span>200-day average (dashed)</span><span><span style="color:var(--series-3)">▲</span> Buy &nbsp; <span style="color:var(--series-7)">▼</span> Sell</span></div>
+<svg viewBox="0 0 760 300" role="img" aria-label="NAS100 daily closes with strategy A trades">
+<line class="grid" x1="64" x2="668" y1="235.9" y2="235.9"/><text class="ax" x="58" y="239.9" text-anchor="end">17,500</text>
+<line class="grid" x1="64" x2="668" y1="203.9" y2="203.9"/><text class="ax" x="58" y="207.9" text-anchor="end">18,000</text>
+<line class="grid" x1="64" x2="668" y1="171.9" y2="171.9"/><text class="ax" x="58" y="175.9" text-anchor="end">18,500</text>
+<line class="grid" x1="64" x2="668" y1="139.9" y2="139.9"/><text class="ax" x="58" y="143.9" text-anchor="end">19,000</text>
+<line class="grid" x1="64" x2="668" y1="107.9" y2="107.9"/><text class="ax" x="58" y="111.9" text-anchor="end">19,500</text>
+<line class="grid" x1="64" x2="668" y1="75.9" y2="75.9"/><text class="ax" x="58" y="79.9" text-anchor="end">20,000</text>
+<line class="grid" x1="64" x2="668" y1="43.9" y2="43.9"/><text class="ax" x="58" y="47.9" text-anchor="end">20,500</text>
+<text class="ax" x="64.0" y="288" text-anchor="middle">08 Jul</text>
+<text class="ax" x="287.7" y="288" text-anchor="middle">05 Aug</text>
+<text class="ax" x="511.4" y="288" text-anchor="middle">02 Sep</text>
+<polyline class="price" points="64.0,47.9 75.2,46.9 86.4,33.2 97.6,62.5 108.7,55.1 119.9,51.0 131.1,50.1 142.3,88.7 153.5,94.9 164.7,106.1 175.9,87.4 187.0,91.8 198.2,137.3 209.4,150.9 220.6,138.9 231.8,136.2 243.0,153.3 254.1,117.5 265.3,147.2 276.5,176.8 287.7,210.3 298.9,201.1 310.1,213.4 321.3,178.6 332.4,172.3 343.6,169.8 354.8,140.1 366.0,139.5 377.2,108.9 388.4,107.9 399.6,90.9 410.7,93.7 421.9,87.5 433.1,107.8 444.3,94.5 455.5,106.4 466.7,102.5 477.9,117.3 489.0,118.7 500.2,104.4 511.4,101.6 522.6,142.1 533.8,145.5 545.0,144.2 556.1,177.0 567.3,161.7 578.5,150.9 589.7,125.3 600.9,112.3 612.1,107.4 623.3,112.4 634.4,111.8 645.6,117.7 656.8,86.2 668.0,89.1"/>
+<polyline class="ma5" points="64.0,61.0 75.2,55.3 86.4,49.1 97.6,48.3 108.7,49.1 119.9,49.7 131.1,50.4 142.3,61.5 153.5,68.0 164.7,78.2 175.9,85.4 187.0,93.8 198.2,103.5 209.4,114.7 220.6,121.2 231.8,131.0 243.0,143.3 254.1,139.3 265.3,138.6 276.5,146.2 287.7,161.0 298.9,170.6 310.1,189.8 321.3,196.0 332.4,195.1 343.6,187.0 354.8,174.8 366.0,160.1 377.2,146.1 388.4,133.2 399.6,117.5 410.7,108.2 421.9,97.8 433.1,97.6 444.3,94.9 455.5,98.0 466.7,99.7 477.9,105.7 489.0,107.9 500.2,109.8 511.4,108.9 522.6,116.8 533.8,122.5 545.0,127.6 556.1,142.1 567.3,154.1 578.5,155.8 589.7,151.8 600.9,145.4 612.1,131.5 623.3,121.6 634.4,113.8 645.6,112.3 656.8,107.1 668.0,103.4"/>
+<text class="lab ma5-t" x="674" y="107.4">5-day avg</text>
+<polyline class="ma200" points="64.0,248.8 75.2,246.9 86.4,245.0 97.6,243.3 108.7,241.5 119.9,239.7 131.1,237.8 142.3,236.3 153.5,234.8 164.7,233.4 175.9,231.9 187.0,230.5 198.2,229.2 209.4,228.0 220.6,226.8 231.8,225.4 243.0,224.2 254.1,222.6 265.3,221.3 276.5,220.1 287.7,219.0 298.9,217.7 310.1,216.5 321.3,215.2 332.4,213.9 343.6,212.7 354.8,211.4 366.0,210.1 377.2,208.7 388.4,207.4 399.6,206.0 410.7,204.5 421.9,203.1 433.1,201.9 444.3,200.6 455.5,199.4 466.7,198.2 477.9,197.1 489.0,196.0 500.2,194.9 511.4,193.7 522.6,192.8 533.8,191.9 545.0,190.9 556.1,190.1 567.3,189.3 578.5,188.4 589.7,187.3 600.9,186.2 612.1,185.0 623.3,183.8 634.4,182.7 645.6,181.7 656.8,180.5 668.0,179.4"/>
+<text class="lab ma200-t" x="674" y="183.4">200-day avg</text>
+<text class="lab" x="674" y="93.1">Close</text>
+<circle class="hit" cx="64.0" cy="47.9" r="7"><title>Mon 08 Jul 2024  close 20,438</title></circle>
+<circle class="hit" cx="75.2" cy="46.9" r="7"><title>Tue 09 Jul 2024  close 20,454</title></circle>
+<circle class="hit" cx="86.4" cy="33.2" r="7"><title>Wed 10 Jul 2024  close 20,666</title></circle>
+<circle class="hit" cx="97.6" cy="62.5" r="7"><title>Thu 11 Jul 2024  close 20,210</title></circle>
+<circle class="hit" cx="108.7" cy="55.1" r="7"><title>Fri 12 Jul 2024  close 20,324</title></circle>
+<circle class="hit" cx="119.9" cy="51.0" r="7"><title>Mon 15 Jul 2024  close 20,389</title></circle>
+<circle class="hit" cx="131.1" cy="50.1" r="7"><title>Tue 16 Jul 2024  close 20,404</title></circle>
+<circle class="hit" cx="142.3" cy="88.7" r="7"><title>Wed 17 Jul 2024  close 19,800</title></circle>
+<circle class="hit" cx="153.5" cy="94.9" r="7"><title>Thu 18 Jul 2024  close 19,704</title></circle>
+<circle class="hit" cx="164.7" cy="106.1" r="7"><title>Fri 19 Jul 2024  close 19,527</title></circle>
+<circle class="hit" cx="175.9" cy="87.4" r="7"><title>Mon 22 Jul 2024  close 19,820</title></circle>
+<circle class="hit" cx="187.0" cy="91.8" r="7"><title>Tue 23 Jul 2024  close 19,752</title></circle>
+<circle class="hit" cx="198.2" cy="137.3" r="7"><title>Wed 24 Jul 2024  close 19,041</title></circle>
+<circle class="hit" cx="209.4" cy="150.9" r="7"><title>Thu 25 Jul 2024  close 18,828</title></circle>
+<circle class="hit" cx="220.6" cy="138.9" r="7"><title>Fri 26 Jul 2024  close 19,016</title></circle>
+<circle class="hit" cx="231.8" cy="136.2" r="7"><title>Mon 29 Jul 2024  close 19,058</title></circle>
+<circle class="hit" cx="243.0" cy="153.3" r="7"><title>Tue 30 Jul 2024  close 18,791</title></circle>
+<circle class="hit" cx="254.1" cy="117.5" r="7"><title>Wed 31 Jul 2024  close 19,350</title></circle>
+<circle class="hit" cx="265.3" cy="147.2" r="7"><title>Thu 01 Aug 2024  close 18,885</title></circle>
+<circle class="hit" cx="276.5" cy="176.8" r="7"><title>Fri 02 Aug 2024  close 18,423</title></circle>
+<circle class="hit" cx="287.7" cy="210.3" r="7"><title>Mon 05 Aug 2024  close 17,899</title></circle>
+<circle class="hit" cx="298.9" cy="201.1" r="7"><title>Tue 06 Aug 2024  close 18,043</title></circle>
+<circle class="hit" cx="310.1" cy="213.4" r="7"><title>Wed 07 Aug 2024  close 17,851</title></circle>
+<circle class="hit" cx="321.3" cy="178.6" r="7"><title>Thu 08 Aug 2024  close 18,395</title></circle>
+<circle class="hit" cx="332.4" cy="172.3" r="7"><title>Fri 09 Aug 2024  close 18,493</title></circle>
+<circle class="hit" cx="343.6" cy="169.8" r="7"><title>Mon 12 Aug 2024  close 18,532</title></circle>
+<circle class="hit" cx="354.8" cy="140.1" r="7"><title>Tue 13 Aug 2024  close 18,996</title></circle>
+<circle class="hit" cx="366.0" cy="139.5" r="7"><title>Wed 14 Aug 2024  close 19,006</title></circle>
+<circle class="hit" cx="377.2" cy="108.9" r="7"><title>Thu 15 Aug 2024  close 19,484</title></circle>
+<circle class="hit" cx="388.4" cy="107.9" r="7"><title>Fri 16 Aug 2024  close 19,500</title></circle>
+<circle class="hit" cx="399.6" cy="90.9" r="7"><title>Mon 19 Aug 2024  close 19,765</title></circle>
+<circle class="hit" cx="410.7" cy="93.7" r="7"><title>Tue 20 Aug 2024  close 19,721</title></circle>
+<circle class="hit" cx="421.9" cy="87.5" r="7"><title>Wed 21 Aug 2024  close 19,819</title></circle>
+<circle class="hit" cx="433.1" cy="107.8" r="7"><title>Thu 22 Aug 2024  close 19,501</title></circle>
+<circle class="hit" cx="444.3" cy="94.5" r="7"><title>Fri 23 Aug 2024  close 19,710</title></circle>
+<circle class="hit" cx="455.5" cy="106.4" r="7"><title>Mon 26 Aug 2024  close 19,524</title></circle>
+<circle class="hit" cx="466.7" cy="102.5" r="7"><title>Tue 27 Aug 2024  close 19,585</title></circle>
+<circle class="hit" cx="477.9" cy="117.3" r="7"><title>Wed 28 Aug 2024  close 19,354</title></circle>
+<circle class="hit" cx="489.0" cy="118.7" r="7"><title>Thu 29 Aug 2024  close 19,330</title></circle>
+<circle class="hit" cx="500.2" cy="104.4" r="7"><title>Fri 30 Aug 2024  close 19,554</title></circle>
+<circle class="hit" cx="511.4" cy="101.6" r="7"><title>Mon 02 Sep 2024  close 19,597</title></circle>
+<circle class="hit" cx="522.6" cy="142.1" r="7"><title>Tue 03 Sep 2024  close 18,966</title></circle>
+<circle class="hit" cx="533.8" cy="145.5" r="7"><title>Wed 04 Sep 2024  close 18,913</title></circle>
+<circle class="hit" cx="545.0" cy="144.2" r="7"><title>Thu 05 Sep 2024  close 18,933</title></circle>
+<circle class="hit" cx="556.1" cy="177.0" r="7"><title>Fri 06 Sep 2024  close 18,420</title></circle>
+<circle class="hit" cx="567.3" cy="161.7" r="7"><title>Mon 09 Sep 2024  close 18,660</title></circle>
+<circle class="hit" cx="578.5" cy="150.9" r="7"><title>Tue 10 Sep 2024  close 18,828</title></circle>
+<circle class="hit" cx="589.7" cy="125.3" r="7"><title>Wed 11 Sep 2024  close 19,228</title></circle>
+<circle class="hit" cx="600.9" cy="112.3" r="7"><title>Thu 12 Sep 2024  close 19,432</title></circle>
+<circle class="hit" cx="612.1" cy="107.4" r="7"><title>Fri 13 Sep 2024  close 19,508</title></circle>
+<circle class="hit" cx="623.3" cy="112.4" r="7"><title>Mon 16 Sep 2024  close 19,429</title></circle>
+<circle class="hit" cx="634.4" cy="111.8" r="7"><title>Tue 17 Sep 2024  close 19,439</title></circle>
+<circle class="hit" cx="645.6" cy="117.7" r="7"><title>Wed 18 Sep 2024  close 19,346</title></circle>
+<circle class="hit" cx="656.8" cy="86.2" r="7"><title>Thu 19 Sep 2024  close 19,839</title></circle>
+<circle class="hit" cx="668.0" cy="89.1" r="7"><title>Fri 20 Sep 2024  close 19,794</title></circle>
+<path class="buy" d="M142.3,96.7 l7,12 h-14 z"><title>Buy (A) 17 Jul at the close 19,800</title></path>
+<text class="tag" x="142.3" y="120.7" text-anchor="middle">Buy</text>
+<path class="sell" d="M187.0,83.8 l7,-12 h-14 z"><title>Sell (A) 23 Jul at the close 19,752</title></path>
+<text class="tag" x="187.0" y="67.8" text-anchor="middle">Sell</text>
+<path class="buy" d="M198.2,145.3 l7,12 h-14 z"><title>Buy (A) 24 Jul at the close 19,041</title></path>
+<text class="tag" x="198.2" y="169.3" text-anchor="middle">Buy</text>
+<path class="sell" d="M243.0,145.3 l7,-12 h-14 z"><title>Sell (A) 30 Jul at the close 18,791</title></path>
+<text class="tag" x="243.0" y="129.3" text-anchor="middle">Sell</text>
+<path class="buy" d="M287.7,218.3 l7,12 h-14 z"><title>Buy (A) 05 Aug at the close 17,899</title></path>
+<text class="tag" x="287.7" y="242.3" text-anchor="middle">Buy</text>
+<path class="sell" d="M321.3,170.6 l7,-12 h-14 z"><title>Sell (A) 08 Aug at the close 18,395</title></path>
+<text class="tag" x="321.3" y="154.6" text-anchor="middle">Sell</text>
+</svg>
+<p class="sub">Example: NAS100, July - September 2024 (from our price data; hover a point for the date and price). The early-August sell-off: sharp drops below the blue line trigger buys; the first close back above it is the sell.</p>
+
+<h2>D. Naoufel's RSI(2)</h2>
+<div class="card">
+<p>RSI(2) scores the last two days' moves from 0 to 100. Below 20 means a sharp two-day drop.</p>
+<p><strong>Buy</strong> when RSI(2) is below 20 and the close is above its 200-day average.</p>
+<p><strong>Sell</strong> when RSI(2) rises above 70 (the bounce has happened), usually 2-5 days later.</p>
+</div>
+<div class="legend"><span><span class="sw" style="background:var(--ink-line)"></span>Daily close</span><span><span class="sw" style="background:var(--series-2)"></span>200-day average (dashed)</span><span><span style="color:var(--series-3)">▲</span> Buy &nbsp; <span style="color:var(--series-7)">▼</span> Sell</span></div>
+<svg viewBox="0 0 760 300" role="img" aria-label="NAS100 daily closes with strategy D trades">
+<line class="grid" x1="64" x2="668" y1="235.9" y2="235.9"/><text class="ax" x="58" y="239.9" text-anchor="end">17,500</text>
+<line class="grid" x1="64" x2="668" y1="203.9" y2="203.9"/><text class="ax" x="58" y="207.9" text-anchor="end">18,000</text>
+<line class="grid" x1="64" x2="668" y1="171.9" y2="171.9"/><text class="ax" x="58" y="175.9" text-anchor="end">18,500</text>
+<line class="grid" x1="64" x2="668" y1="139.9" y2="139.9"/><text class="ax" x="58" y="143.9" text-anchor="end">19,000</text>
+<line class="grid" x1="64" x2="668" y1="107.9" y2="107.9"/><text class="ax" x="58" y="111.9" text-anchor="end">19,500</text>
+<line class="grid" x1="64" x2="668" y1="75.9" y2="75.9"/><text class="ax" x="58" y="79.9" text-anchor="end">20,000</text>
+<line class="grid" x1="64" x2="668" y1="43.9" y2="43.9"/><text class="ax" x="58" y="47.9" text-anchor="end">20,500</text>
+<text class="ax" x="64.0" y="288" text-anchor="middle">08 Jul</text>
+<text class="ax" x="287.7" y="288" text-anchor="middle">05 Aug</text>
+<text class="ax" x="511.4" y="288" text-anchor="middle">02 Sep</text>
+<polyline class="price" points="64.0,47.9 75.2,46.9 86.4,33.2 97.6,62.5 108.7,55.1 119.9,51.0 131.1,50.1 142.3,88.7 153.5,94.9 164.7,106.1 175.9,87.4 187.0,91.8 198.2,137.3 209.4,150.9 220.6,138.9 231.8,136.2 243.0,153.3 254.1,117.5 265.3,147.2 276.5,176.8 287.7,210.3 298.9,201.1 310.1,213.4 321.3,178.6 332.4,172.3 343.6,169.8 354.8,140.1 366.0,139.5 377.2,108.9 388.4,107.9 399.6,90.9 410.7,93.7 421.9,87.5 433.1,107.8 444.3,94.5 455.5,106.4 466.7,102.5 477.9,117.3 489.0,118.7 500.2,104.4 511.4,101.6 522.6,142.1 533.8,145.5 545.0,144.2 556.1,177.0 567.3,161.7 578.5,150.9 589.7,125.3 600.9,112.3 612.1,107.4 623.3,112.4 634.4,111.8 645.6,117.7 656.8,86.2 668.0,89.1"/>
+<polyline class="ma200" points="64.0,248.8 75.2,246.9 86.4,245.0 97.6,243.3 108.7,241.5 119.9,239.7 131.1,237.8 142.3,236.3 153.5,234.8 164.7,233.4 175.9,231.9 187.0,230.5 198.2,229.2 209.4,228.0 220.6,226.8 231.8,225.4 243.0,224.2 254.1,222.6 265.3,221.3 276.5,220.1 287.7,219.0 298.9,217.7 310.1,216.5 321.3,215.2 332.4,213.9 343.6,212.7 354.8,211.4 366.0,210.1 377.2,208.7 388.4,207.4 399.6,206.0 410.7,204.5 421.9,203.1 433.1,201.9 444.3,200.6 455.5,199.4 466.7,198.2 477.9,197.1 489.0,196.0 500.2,194.9 511.4,193.7 522.6,192.8 533.8,191.9 545.0,190.9 556.1,190.1 567.3,189.3 578.5,188.4 589.7,187.3 600.9,186.2 612.1,185.0 623.3,183.8 634.4,182.7 645.6,181.7 656.8,180.5 668.0,179.4"/>
+<text class="lab ma200-t" x="674" y="183.4">200-day avg</text>
+<text class="lab" x="674" y="93.1">Close</text>
+<circle class="hit" cx="64.0" cy="47.9" r="7"><title>Mon 08 Jul 2024  close 20,438</title></circle>
+<circle class="hit" cx="75.2" cy="46.9" r="7"><title>Tue 09 Jul 2024  close 20,454</title></circle>
+<circle class="hit" cx="86.4" cy="33.2" r="7"><title>Wed 10 Jul 2024  close 20,666</title></circle>
+<circle class="hit" cx="97.6" cy="62.5" r="7"><title>Thu 11 Jul 2024  close 20,210</title></circle>
+<circle class="hit" cx="108.7" cy="55.1" r="7"><title>Fri 12 Jul 2024  close 20,324</title></circle>
+<circle class="hit" cx="119.9" cy="51.0" r="7"><title>Mon 15 Jul 2024  close 20,389</title></circle>
+<circle class="hit" cx="131.1" cy="50.1" r="7"><title>Tue 16 Jul 2024  close 20,404</title></circle>
+<circle class="hit" cx="142.3" cy="88.7" r="7"><title>Wed 17 Jul 2024  close 19,800</title></circle>
+<circle class="hit" cx="153.5" cy="94.9" r="7"><title>Thu 18 Jul 2024  close 19,704</title></circle>
+<circle class="hit" cx="164.7" cy="106.1" r="7"><title>Fri 19 Jul 2024  close 19,527</title></circle>
+<circle class="hit" cx="175.9" cy="87.4" r="7"><title>Mon 22 Jul 2024  close 19,820</title></circle>
+<circle class="hit" cx="187.0" cy="91.8" r="7"><title>Tue 23 Jul 2024  close 19,752</title></circle>
+<circle class="hit" cx="198.2" cy="137.3" r="7"><title>Wed 24 Jul 2024  close 19,041</title></circle>
+<circle class="hit" cx="209.4" cy="150.9" r="7"><title>Thu 25 Jul 2024  close 18,828</title></circle>
+<circle class="hit" cx="220.6" cy="138.9" r="7"><title>Fri 26 Jul 2024  close 19,016</title></circle>
+<circle class="hit" cx="231.8" cy="136.2" r="7"><title>Mon 29 Jul 2024  close 19,058</title></circle>
+<circle class="hit" cx="243.0" cy="153.3" r="7"><title>Tue 30 Jul 2024  close 18,791</title></circle>
+<circle class="hit" cx="254.1" cy="117.5" r="7"><title>Wed 31 Jul 2024  close 19,350</title></circle>
+<circle class="hit" cx="265.3" cy="147.2" r="7"><title>Thu 01 Aug 2024  close 18,885</title></circle>
+<circle class="hit" cx="276.5" cy="176.8" r="7"><title>Fri 02 Aug 2024  close 18,423</title></circle>
+<circle class="hit" cx="287.7" cy="210.3" r="7"><title>Mon 05 Aug 2024  close 17,899</title></circle>
+<circle class="hit" cx="298.9" cy="201.1" r="7"><title>Tue 06 Aug 2024  close 18,043</title></circle>
+<circle class="hit" cx="310.1" cy="213.4" r="7"><title>Wed 07 Aug 2024  close 17,851</title></circle>
+<circle class="hit" cx="321.3" cy="178.6" r="7"><title>Thu 08 Aug 2024  close 18,395</title></circle>
+<circle class="hit" cx="332.4" cy="172.3" r="7"><title>Fri 09 Aug 2024  close 18,493</title></circle>
+<circle class="hit" cx="343.6" cy="169.8" r="7"><title>Mon 12 Aug 2024  close 18,532</title></circle>
+<circle class="hit" cx="354.8" cy="140.1" r="7"><title>Tue 13 Aug 2024  close 18,996</title></circle>
+<circle class="hit" cx="366.0" cy="139.5" r="7"><title>Wed 14 Aug 2024  close 19,006</title></circle>
+<circle class="hit" cx="377.2" cy="108.9" r="7"><title>Thu 15 Aug 2024  close 19,484</title></circle>
+<circle class="hit" cx="388.4" cy="107.9" r="7"><title>Fri 16 Aug 2024  close 19,500</title></circle>
+<circle class="hit" cx="399.6" cy="90.9" r="7"><title>Mon 19 Aug 2024  close 19,765</title></circle>
+<circle class="hit" cx="410.7" cy="93.7" r="7"><title>Tue 20 Aug 2024  close 19,721</title></circle>
+<circle class="hit" cx="421.9" cy="87.5" r="7"><title>Wed 21 Aug 2024  close 19,819</title></circle>
+<circle class="hit" cx="433.1" cy="107.8" r="7"><title>Thu 22 Aug 2024  close 19,501</title></circle>
+<circle class="hit" cx="444.3" cy="94.5" r="7"><title>Fri 23 Aug 2024  close 19,710</title></circle>
+<circle class="hit" cx="455.5" cy="106.4" r="7"><title>Mon 26 Aug 2024  close 19,524</title></circle>
+<circle class="hit" cx="466.7" cy="102.5" r="7"><title>Tue 27 Aug 2024  close 19,585</title></circle>
+<circle class="hit" cx="477.9" cy="117.3" r="7"><title>Wed 28 Aug 2024  close 19,354</title></circle>
+<circle class="hit" cx="489.0" cy="118.7" r="7"><title>Thu 29 Aug 2024  close 19,330</title></circle>
+<circle class="hit" cx="500.2" cy="104.4" r="7"><title>Fri 30 Aug 2024  close 19,554</title></circle>
+<circle class="hit" cx="511.4" cy="101.6" r="7"><title>Mon 02 Sep 2024  close 19,597</title></circle>
+<circle class="hit" cx="522.6" cy="142.1" r="7"><title>Tue 03 Sep 2024  close 18,966</title></circle>
+<circle class="hit" cx="533.8" cy="145.5" r="7"><title>Wed 04 Sep 2024  close 18,913</title></circle>
+<circle class="hit" cx="545.0" cy="144.2" r="7"><title>Thu 05 Sep 2024  close 18,933</title></circle>
+<circle class="hit" cx="556.1" cy="177.0" r="7"><title>Fri 06 Sep 2024  close 18,420</title></circle>
+<circle class="hit" cx="567.3" cy="161.7" r="7"><title>Mon 09 Sep 2024  close 18,660</title></circle>
+<circle class="hit" cx="578.5" cy="150.9" r="7"><title>Tue 10 Sep 2024  close 18,828</title></circle>
+<circle class="hit" cx="589.7" cy="125.3" r="7"><title>Wed 11 Sep 2024  close 19,228</title></circle>
+<circle class="hit" cx="600.9" cy="112.3" r="7"><title>Thu 12 Sep 2024  close 19,432</title></circle>
+<circle class="hit" cx="612.1" cy="107.4" r="7"><title>Fri 13 Sep 2024  close 19,508</title></circle>
+<circle class="hit" cx="623.3" cy="112.4" r="7"><title>Mon 16 Sep 2024  close 19,429</title></circle>
+<circle class="hit" cx="634.4" cy="111.8" r="7"><title>Tue 17 Sep 2024  close 19,439</title></circle>
+<circle class="hit" cx="645.6" cy="117.7" r="7"><title>Wed 18 Sep 2024  close 19,346</title></circle>
+<circle class="hit" cx="656.8" cy="86.2" r="7"><title>Thu 19 Sep 2024  close 19,839</title></circle>
+<circle class="hit" cx="668.0" cy="89.1" r="7"><title>Fri 20 Sep 2024  close 19,794</title></circle>
+<path class="buy" d="M142.3,96.7 l7,12 h-14 z"><title>Buy (D) 17 Jul at the close 19,800</title></path>
+<text class="tag" x="142.3" y="120.7" text-anchor="middle">Buy</text>
+<path class="sell" d="M254.1,109.5 l7,-12 h-14 z"><title>Sell (D) 31 Jul at the close 19,350</title></path>
+<text class="tag" x="254.1" y="93.5" text-anchor="middle">Sell</text>
+<path class="buy" d="M276.5,184.8 l7,12 h-14 z"><title>Buy (D) 02 Aug at the close 18,423</title></path>
+<text class="tag" x="276.5" y="208.8" text-anchor="middle">Buy</text>
+<path class="sell" d="M321.3,170.6 l7,-12 h-14 z"><title>Sell (D) 08 Aug at the close 18,395</title></path>
+<text class="tag" x="321.3" y="154.6" text-anchor="middle">Sell</text>
+<path class="buy" d="M477.9,125.3 l7,12 h-14 z"><title>Buy (D) 28 Aug at the close 19,354</title></path>
+<text class="tag" x="477.9" y="149.3" text-anchor="middle">Buy</text>
+<path class="sell" d="M500.2,96.4 l7,-12 h-14 z"><title>Sell (D) 30 Aug at the close 19,554</title></path>
+<text class="tag" x="500.2" y="80.4" text-anchor="middle">Sell</text>
+<path class="buy" d="M522.6,150.1 l7,12 h-14 z"><title>Buy (D) 03 Sep at the close 18,966</title></path>
+<text class="tag" x="522.6" y="174.1" text-anchor="middle">Buy</text>
+<path class="sell" d="M589.7,117.3 l7,-12 h-14 z"><title>Sell (D) 11 Sep at the close 19,228</title></path>
+<text class="tag" x="589.7" y="101.3" text-anchor="middle">Sell</text>
+</svg>
+<div class="legend"><span><span class="sw" style="background:var(--series-1)"></span>RSI(2)</span><span>dashed lines: 20 (buy) and 70 (sell)</span></div>
+<svg viewBox="0 0 760 170" role="img" aria-label="RSI(2) with the 20 buy and 70 sell lines">
+<line class="grid" x1="64" x2="668" y1="136.0" y2="136.0"/><text class="ax" x="58" y="140.0" text-anchor="end">0</text>
+<line class="ref" x1="64" x2="668" y1="112.0" y2="112.0"/><text class="ax" x="58" y="116.0" text-anchor="end">20</text>
+<line class="ref" x1="64" x2="668" y1="52.0" y2="52.0"/><text class="ax" x="58" y="56.0" text-anchor="end">70</text>
+<line class="grid" x1="64" x2="668" y1="16.0" y2="16.0"/><text class="ax" x="58" y="20.0" text-anchor="end">100</text>
+<text class="lab" x="674" y="56.0">70 = sell</text><text class="lab" x="674" y="116.0">20 = buy</text>
+<text class="ax" x="64.0" y="158" text-anchor="middle">08 Jul</text>
+<text class="ax" x="287.7" y="158" text-anchor="middle">05 Aug</text>
+<text class="ax" x="511.4" y="158" text-anchor="middle">02 Sep</text>
+<polyline class="ma5" points="64.0,22.3 75.2,21.5 86.4,17.3 97.6,108.4 108.7,82.7 119.9,66.8 131.1,61.8 142.3,127.8 153.5,129.6 164.7,132.5 175.9,62.8 187.0,78.7 198.2,125.7 209.4,129.1 220.6,87.5 231.8,77.4 243.0,115.0 254.1,42.9 265.3,93.9 276.5,115.8 287.7,126.8 298.9,101.3 310.1,114.5 321.3,47.3 332.4,41.1 343.6,37.7 354.8,21.1 366.0,21.0 377.2,17.2 388.4,17.2 399.6,16.5 410.7,36.7 421.9,27.8 433.1,107.5 444.3,62.5 455.5,96.9 466.7,77.9 477.9,115.1 489.0,117.5 500.2,47.7 511.4,41.1 522.6,122.7 533.8,124.4 545.0,114.9 556.1,132.1 567.3,81.9 578.5,57.0 589.7,30.6 600.9,24.9 612.1,22.8 623.3,59.0 634.4,56.0 645.6,102.8 656.8,28.0 668.0,42.8"/>
+<circle class="hit" cx="64.0" cy="22.3" r="7"><title>Mon 08 Jul  RSI(2) 95</title></circle>
+<circle class="hit" cx="75.2" cy="21.5" r="7"><title>Tue 09 Jul  RSI(2) 95</title></circle>
+<circle class="hit" cx="86.4" cy="17.3" r="7"><title>Wed 10 Jul  RSI(2) 99</title></circle>
+<circle class="hit" cx="97.6" cy="108.4" r="7"><title>Thu 11 Jul  RSI(2) 23</title></circle>
+<circle class="hit" cx="108.7" cy="82.7" r="7"><title>Fri 12 Jul  RSI(2) 44</title></circle>
+<circle class="hit" cx="119.9" cy="66.8" r="7"><title>Mon 15 Jul  RSI(2) 58</title></circle>
+<circle class="hit" cx="131.1" cy="61.8" r="7"><title>Tue 16 Jul  RSI(2) 62</title></circle>
+<circle class="hit" cx="142.3" cy="127.8" r="7"><title>Wed 17 Jul  RSI(2) 7</title></circle>
+<circle class="hit" cx="153.5" cy="129.6" r="7"><title>Thu 18 Jul  RSI(2) 5</title></circle>
+<circle class="hit" cx="164.7" cy="132.5" r="7"><title>Fri 19 Jul  RSI(2) 3</title></circle>
+<circle class="hit" cx="175.9" cy="62.8" r="7"><title>Mon 22 Jul  RSI(2) 61</title></circle>
+<circle class="hit" cx="187.0" cy="78.7" r="7"><title>Tue 23 Jul  RSI(2) 48</title></circle>
+<circle class="hit" cx="198.2" cy="125.7" r="7"><title>Wed 24 Jul  RSI(2) 9</title></circle>
+<circle class="hit" cx="209.4" cy="129.1" r="7"><title>Thu 25 Jul  RSI(2) 6</title></circle>
+<circle class="hit" cx="220.6" cy="87.5" r="7"><title>Fri 26 Jul  RSI(2) 40</title></circle>
+<circle class="hit" cx="231.8" cy="77.4" r="7"><title>Mon 29 Jul  RSI(2) 49</title></circle>
+<circle class="hit" cx="243.0" cy="115.0" r="7"><title>Tue 30 Jul  RSI(2) 17</title></circle>
+<circle class="hit" cx="254.1" cy="42.9" r="7"><title>Wed 31 Jul  RSI(2) 78</title></circle>
+<circle class="hit" cx="265.3" cy="93.9" r="7"><title>Thu 01 Aug  RSI(2) 35</title></circle>
+<circle class="hit" cx="276.5" cy="115.8" r="7"><title>Fri 02 Aug  RSI(2) 17</title></circle>
+<circle class="hit" cx="287.7" cy="126.8" r="7"><title>Mon 05 Aug  RSI(2) 8</title></circle>
+<circle class="hit" cx="298.9" cy="101.3" r="7"><title>Tue 06 Aug  RSI(2) 29</title></circle>
+<circle class="hit" cx="310.1" cy="114.5" r="7"><title>Wed 07 Aug  RSI(2) 18</title></circle>
+<circle class="hit" cx="321.3" cy="47.3" r="7"><title>Thu 08 Aug  RSI(2) 74</title></circle>
+<circle class="hit" cx="332.4" cy="41.1" r="7"><title>Fri 09 Aug  RSI(2) 79</title></circle>
+<circle class="hit" cx="343.6" cy="37.7" r="7"><title>Mon 12 Aug  RSI(2) 82</title></circle>
+<circle class="hit" cx="354.8" cy="21.1" r="7"><title>Tue 13 Aug  RSI(2) 96</title></circle>
+<circle class="hit" cx="366.0" cy="21.0" r="7"><title>Wed 14 Aug  RSI(2) 96</title></circle>
+<circle class="hit" cx="377.2" cy="17.2" r="7"><title>Thu 15 Aug  RSI(2) 99</title></circle>
+<circle class="hit" cx="388.4" cy="17.2" r="7"><title>Fri 16 Aug  RSI(2) 99</title></circle>
+<circle class="hit" cx="399.6" cy="16.5" r="7"><title>Mon 19 Aug  RSI(2) 100</title></circle>
+<circle class="hit" cx="410.7" cy="36.7" r="7"><title>Tue 20 Aug  RSI(2) 83</title></circle>
+<circle class="hit" cx="421.9" cy="27.8" r="7"><title>Wed 21 Aug  RSI(2) 90</title></circle>
+<circle class="hit" cx="433.1" cy="107.5" r="7"><title>Thu 22 Aug  RSI(2) 24</title></circle>
+<circle class="hit" cx="444.3" cy="62.5" r="7"><title>Fri 23 Aug  RSI(2) 61</title></circle>
+<circle class="hit" cx="455.5" cy="96.9" r="7"><title>Mon 26 Aug  RSI(2) 33</title></circle>
+<circle class="hit" cx="466.7" cy="77.9" r="7"><title>Tue 27 Aug  RSI(2) 48</title></circle>
+<circle class="hit" cx="477.9" cy="115.1" r="7"><title>Wed 28 Aug  RSI(2) 17</title></circle>
+<circle class="hit" cx="489.0" cy="117.5" r="7"><title>Thu 29 Aug  RSI(2) 15</title></circle>
+<circle class="hit" cx="500.2" cy="47.7" r="7"><title>Fri 30 Aug  RSI(2) 74</title></circle>
+<circle class="hit" cx="511.4" cy="41.1" r="7"><title>Mon 02 Sep  RSI(2) 79</title></circle>
+<circle class="hit" cx="522.6" cy="122.7" r="7"><title>Tue 03 Sep  RSI(2) 11</title></circle>
+<circle class="hit" cx="533.8" cy="124.4" r="7"><title>Wed 04 Sep  RSI(2) 10</title></circle>
+<circle class="hit" cx="545.0" cy="114.9" r="7"><title>Thu 05 Sep  RSI(2) 18</title></circle>
+<circle class="hit" cx="556.1" cy="132.1" r="7"><title>Fri 06 Sep  RSI(2) 3</title></circle>
+<circle class="hit" cx="567.3" cy="81.9" r="7"><title>Mon 09 Sep  RSI(2) 45</title></circle>
+<circle class="hit" cx="578.5" cy="57.0" r="7"><title>Tue 10 Sep  RSI(2) 66</title></circle>
+<circle class="hit" cx="589.7" cy="30.6" r="7"><title>Wed 11 Sep  RSI(2) 88</title></circle>
+<circle class="hit" cx="600.9" cy="24.9" r="7"><title>Thu 12 Sep  RSI(2) 93</title></circle>
+<circle class="hit" cx="612.1" cy="22.8" r="7"><title>Fri 13 Sep  RSI(2) 94</title></circle>
+<circle class="hit" cx="623.3" cy="59.0" r="7"><title>Mon 16 Sep  RSI(2) 64</title></circle>
+<circle class="hit" cx="634.4" cy="56.0" r="7"><title>Tue 17 Sep  RSI(2) 67</title></circle>
+<circle class="hit" cx="645.6" cy="102.8" r="7"><title>Wed 18 Sep  RSI(2) 28</title></circle>
+<circle class="hit" cx="656.8" cy="28.0" r="7"><title>Thu 19 Sep  RSI(2) 90</title></circle>
+<circle class="hit" cx="668.0" cy="42.8" r="7"><title>Fri 20 Sep  RSI(2) 78</title></circle>
+</svg>
+<p class="sub">Same period. Each dip of the RSI line under 20 is a buy; the next rise above 70 is the sell.</p>
+
+<details><summary>All trades in the example, as a table</summary>
+<table><thead><tr><th>Date</th><th>Strategy</th><th>Action</th><th>Close</th></tr></thead><tbody><tr><td>17 Jul 2024</td><td>A</td><td>Buy</td><td>19,800</td></tr><tr><td>17 Jul 2024</td><td>D</td><td>Buy</td><td>19,800</td></tr><tr><td>23 Jul 2024</td><td>A</td><td>Sell</td><td>19,752</td></tr><tr><td>24 Jul 2024</td><td>A</td><td>Buy</td><td>19,041</td></tr><tr><td>30 Jul 2024</td><td>A</td><td>Sell</td><td>18,791</td></tr><tr><td>31 Jul 2024</td><td>D</td><td>Sell</td><td>19,350</td></tr><tr><td>02 Aug 2024</td><td>D</td><td>Buy</td><td>18,423</td></tr><tr><td>05 Aug 2024</td><td>A</td><td>Buy</td><td>17,899</td></tr><tr><td>08 Aug 2024</td><td>A</td><td>Sell</td><td>18,395</td></tr><tr><td>08 Aug 2024</td><td>D</td><td>Sell</td><td>18,395</td></tr><tr><td>28 Aug 2024</td><td>D</td><td>Buy</td><td>19,354</td></tr><tr><td>30 Aug 2024</td><td>D</td><td>Sell</td><td>19,554</td></tr><tr><td>03 Sep 2024</td><td>D</td><td>Buy</td><td>18,966</td></tr><tr><td>11 Sep 2024</td><td>D</td><td>Sell</td><td>19,228</td></tr></tbody></table>
+</details>
+
+<h2>Stop loss and take profit</h2>
+<ul>
+<li><strong>No fixed take profit.</strong> The sell rules do that job: each trade closes once the bounce has happened.</li>
+<li><strong>Emergency stop loss</strong> on every trade: 3 x the average daily range of the last 20 days below the entry, usually 4-6% away. A safety net, not the normal way out.</li>
+</ul>
+
+<h2>Size: "Notional per position" = $13,000</h2>
+<p>Notional is the <strong>value</strong> of the position, not the amount at risk. $13,000 moves about <strong>$130 for every 1%</strong> the market moves (US500 at 6,500 = 2 units). At this size: average win about +$160 to +$220, average loss about -$270 to -$300, emergency stop about -$500 to -$800.</p>
+
+<h2>Timing and safety</h2>
+<ul>
+<li>Decisions use the daily close; orders go in about <strong>11 pm UK time</strong> (one hour after FTMO's new daily bar opens).</li>
+<li><strong>Daily guard:</strong> down $2,000 on the day = close everything, stop until tomorrow.</li>
+<li><strong>Size cap:</strong> all open positions together at most 1.5 x the balance.</li>
+<li><strong>Optional "Flat Over Weekend":</strong> close all Friday 15:30 New York time, reopen Monday with the same size and stop (being tested).</li>
+</ul>
+
+<h2>Backtest results ($100k account, $13k per position)</h2>
+<ul>
+<li><strong>Jan 2024 - Oct 2026 (final test):</strong> +$15,924, 73% of trades won, worst drawdown 4.76%, every year positive.</li>
+<li><strong>Off-switch if live:</strong> back to demo if the win rate over the last 50 trades drops below 62%, or drawdown passes ~7%.</li>
+</ul>
+<p class="sub">Charts are an illustration from NAS100 daily data; the bot uses FTMO's own daily bars. Full rules: research/DAILY_SYSTEMS_TEST_PLAN.md.</p>
+</main>
+</body>
+</html>
