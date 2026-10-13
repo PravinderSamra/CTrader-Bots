@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-13T15:04:32.257Z",
+  "generatedAt": "2026-10-13T19:59:54.777Z",
   "yields": {
     "US10Y": 5.22,
     "US2Y": 4.75,
@@ -34,26 +34,26 @@
     "openInterestChange": -14341
   },
   "etfFlows": {
-    "gldTonnes": 1057.7,
-    "gldWoWChange": 2.7,
+    "gldTonnes": 1058.5,
+    "gldWoWChange": 0.8,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4166.745,
-    "XAGUSD": 59.505,
-    "EURUSD": 1.1193,
-    "USDJPY": 158.431,
-    "USDCHF": 0.83277,
-    "USDCNH": 6.69296,
-    "GBPUSD": 1.32467,
-    "USDCAD": 1.42111,
-    "USDSEK": 9.97641,
-    "US500": 7799.6,
-    "GER40": 25249.95,
-    "UK100": 10646.75,
+    "XAUUSD": 4163.65,
+    "XAGUSD": 59.25,
+    "EURUSD": 1.1197,
+    "USDJPY": 158.3605,
+    "USDCHF": 0.83279,
+    "USDCNH": 6.6934,
+    "GBPUSD": 1.32517,
+    "USDCAD": 1.42182,
+    "USDSEK": 9.96531,
+    "US500": 7808.6,
+    "GER40": 25315.95,
+    "UK100": 10651.65,
     "ADR_14day": 79.7,
-    "ADR_usedToday": 49.8,
-    "goldSilverRatio": 70
+    "ADR_usedToday": 53.6,
+    "goldSilverRatio": 70.3
   },
   "dollarLiquidity": {
     "stlfsi": -0.4681,
@@ -66,22 +66,28 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Airport attacks put aviation in crosshairs of geopolitical conflicts",
+      "source": "CNBC",
+      "publishedAt": "2026-10-13T18:33:42.000Z",
+      "hoursAgo": 1.4
+    },
+    {
       "headline": "More homebuyers are taking a chance on adjustable-rate mortgages, hoping rates will fall—here’s how to think about that bet",
       "source": "CNBC",
       "publishedAt": "2026-10-13T14:00:02.000Z",
-      "hoursAgo": 1.1
+      "hoursAgo": 6
+    },
+    {
+      "headline": "South Korea's Lee says country cannot avoid raising interest rates - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-13T02:49:00.000Z",
+      "hoursAgo": 17.2
     },
     {
       "headline": "Indian shares flat at open as inflation strengthens rate-hike concerns - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-13T02:29:00.000Z",
-      "hoursAgo": 12.6
-    },
-    {
-      "headline": "Bear to bull: A double upgrade of Salesforce illustrates the folly of the 'SaaSpocalypse'",
-      "source": "CNBC",
-      "publishedAt": "2026-10-12T19:50:19.000Z",
-      "hoursAgo": 19.2
+      "hoursAgo": 17.5
     }
   ],
   "briefing": null
