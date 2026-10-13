@@ -55,3 +55,19 @@ A system that fails is switched off. If no system passes, the bot is parked.
 ## Logs
 Same style as the Stock Swing Scanner: S| (bars loaded per instrument), O| (open), X| (skipped, with reason),
 H| (history at the end, with swap), D| (signal counts per system and instrument).
+
+## Development run 1 (v1.0, 14 Oct 2026): FTMO data starts Nov 2020, so 2020-11-08 .. 2023-12-31, $20k per position
+863 trades, net -$1,288 overall; per system (net, trades, win rate, per-instrument):
+- A Pavel mean reversion: +$8,068, 58, 66%, positive on all 5 instruments. KEEP.
+- D Naoufel RSI(2): +$8,195, 206, 66%, positive on the 4 indices, gold -$3,284. KEEP (instruments are not picked
+  per system; gold stays in).
+- B momentum: +$211, 49, 49%. OFF (no edge).
+- C trend following: -$6,279, 108, 37% (swap -$1,493). OFF.
+- E Turnaround Tuesday: -$1,573, 277, 45%. OFF.
+- F Marcy measured move: -$9,910, 165, 25%. OFF.
+The daily guard fired on 16 days and the notional cap blocked 156 entries: too many correlated longs at $20k each.
+Largest losses (~$1,000-1,200) were the 3 x ATR catastrophe stops on US100 (RSI(2) entries before a further fall):
+working as designed; the size will shrink them.
+Next (sizing step, per the rule above): v1.1 logs each day's P/L (P| lines). Run A + D only, daily guard off
+(set to 1,000,000), $20k per position, same period. Choose the notional so the worst day (lowest intraday point) would
+have been <= $2,000, round down to the nearest $1,000. Then the single test run 2024-01-01 .. latest with the guard on.

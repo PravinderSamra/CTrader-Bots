@@ -1,4 +1,4 @@
-// Daily Systems cBot v1.0 (Vanessa Algo Bots)
+// Daily Systems cBot v1.1 (Vanessa Algo Bots)
 // Six simple daily-bar systems on several FTMO instruments, each with its own on/off switch. Rules are pre-registered in
 // research/DAILY_SYSTEMS_TEST_PLAN.md (14 Oct 2026):
 //   A Pavel mean reversion, B Pavel short-term momentum, C Pavel trend following, D Naoufel RSI(2),
@@ -6,7 +6,8 @@
 // Attach to any chart (e.g. US500.cash, Daily). Signals use the daily bar that has just closed; orders are sent
 // "Order Delay" minutes after the new daily bar opens, to avoid the wide spreads around the daily rollover.
 // Each position's label is "<Label>-<system>", e.g. DSY-D.
-// Log lines: S| (bars loaded), D| (signal counts at the end), O| (opened), X| (skipped), G| (daily guard),
+// v1.1 adds P| lines (logging only): the bot's P/L for each FTMO day, and the lowest point it reached during that day.
+// Log lines: S| (bars loaded), D| (signal counts at the end), O| (opened), X| (skipped), G| (daily guard), P| (daily P/L),
 // H| (history at the end: id|label|symbol|entry time|close time|volume|entry|close|gross|swap|commission|net).
 using System;
 using System.Collections.Generic;
@@ -82,7 +83,7 @@ namespace cAlgo.Robots
         private readonly List<Book> _books = new List<Book>();
         private readonly List<Action> _queue = new List<Action>();
         private readonly Dictionary<string, int> _count = new Dictionary<string, int>();
-        private double _closedCum, _dayStartEq;
+        private double _closedCum, _dayStartEq, _dayMin;
         private DateTime _day = DateTime.MinValue, _haltedDay = DateTime.MinValue;
 
         protected override void OnStart()
@@ -244,7 +245,13 @@ namespace cAlgo.Robots
         {
             var day = PragueDay(Server.Time);
             double botEq = _closedCum + Mine.Sum(p => p.NetProfit);
-            if (day != _day) { _day = day; _dayStartEq = botEq; }
+            if (day != _day)
+            {
+                if (_day != DateTime.MinValue)
+                    Print("P|{0:yyyy-MM-dd}|{1:F0}|low {2:F0}", _day, botEq - _dayStartEq, _dayMin);
+                _day = day; _dayStartEq = botEq; _dayMin = 0;
+            }
+            _dayMin = Math.Min(_dayMin, botEq - _dayStartEq);
             if (_haltedDay != day && botEq - _dayStartEq <= -DailyGuard)
             {
                 _haltedDay = day;
