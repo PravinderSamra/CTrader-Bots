@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-13T13:12:57.111Z",
+  "generatedAt": "2026-10-13T15:04:32.257Z",
   "yields": {
     "US10Y": 5.22,
     "US2Y": 4.75,
@@ -22,8 +22,8 @@
     "probHike": 56
   },
   "marketVolatility": {
-    "GVZ": 22.79,
-    "VIX": 14.84
+    "GVZ": 22.48,
+    "VIX": 15.21
   },
   "positioning": {
     "cotNetLong": 201579,
@@ -34,26 +34,26 @@
     "openInterestChange": -14341
   },
   "etfFlows": {
-    "gldTonnes": 1055,
-    "gldWoWChange": -1.5,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1057.7,
+    "gldWoWChange": 2.7,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4177.475,
-    "XAGUSD": 59.942,
-    "EURUSD": 1.11922,
-    "USDJPY": 158.2645,
-    "USDCHF": 0.83196,
-    "USDCNH": 6.69224,
-    "GBPUSD": 1.32457,
-    "USDCAD": 1.42318,
-    "USDSEK": 9.97583,
-    "US500": 7803.7,
-    "GER40": 25306.95,
-    "UK100": 10706.75,
+    "XAUUSD": 4166.745,
+    "XAGUSD": 59.505,
+    "EURUSD": 1.1193,
+    "USDJPY": 158.431,
+    "USDCHF": 0.83277,
+    "USDCNH": 6.69296,
+    "GBPUSD": 1.32467,
+    "USDCAD": 1.42111,
+    "USDSEK": 9.97641,
+    "US500": 7799.6,
+    "GER40": 25249.95,
+    "UK100": 10646.75,
     "ADR_14day": 79.7,
     "ADR_usedToday": 49.8,
-    "goldSilverRatio": 69.7
+    "goldSilverRatio": 70
   },
   "dollarLiquidity": {
     "stlfsi": -0.4681,
@@ -66,22 +66,22 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "More homebuyers are taking a chance on adjustable-rate mortgages, hoping rates will fall—here’s how to think about that bet",
+      "source": "CNBC",
+      "publishedAt": "2026-10-13T14:00:02.000Z",
+      "hoursAgo": 1.1
+    },
+    {
       "headline": "Indian shares flat at open as inflation strengthens rate-hike concerns - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-13T02:29:00.000Z",
-      "hoursAgo": 10.7
+      "hoursAgo": 12.6
     },
     {
       "headline": "Bear to bull: A double upgrade of Salesforce illustrates the folly of the 'SaaSpocalypse'",
       "source": "CNBC",
       "publishedAt": "2026-10-12T19:50:19.000Z",
-      "hoursAgo": 17.4
-    },
-    {
-      "headline": "Europe set for another year of high gas prices as reserves hit lows - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-12T14:03:01.000Z",
-      "hoursAgo": 23.2
+      "hoursAgo": 19.2
     }
   ],
   "briefing": null

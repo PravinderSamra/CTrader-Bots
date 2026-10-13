@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-10-13T13:13:02.438Z",
+  "generatedAt": "2026-10-13T15:04:36.857Z",
   "prices": {
-    "UK100": 10707.25,
-    "GBPUSD": 1.32454,
+    "UK100": 10647.25,
+    "GBPUSD": 1.32465,
     "GBPEUR": 1.18343,
-    "US500": 7803.6,
-    "NAS100": 30448.85,
-    "BRENT": 108.268,
-    "COPPER": 6.7949,
-    "VIX": 16.355,
-    "USDX": 102.263,
-    "XAUUSD": 4177.2,
-    "UK100_dayPct": 0.56
+    "US500": 7799.8,
+    "NAS100": 30505.25,
+    "BRENT": 108.513,
+    "COPPER": 6.7885,
+    "VIX": 16.31,
+    "USDX": 102.26,
+    "XAUUSD": 4166.815,
+    "UK100_dayPct": -0.01
   },
   "fx": {
-    "gbpUsdDayPct": 0.29,
+    "gbpUsdDayPct": 0.3,
     "gbpUsd20dPercentile": 21,
     "sterlingEri": 85.3482,
     "sterlingEriDayChange": 0.03,
@@ -36,25 +36,25 @@
     "daysToMpc": 23
   },
   "usLinkage": {
-    "us500DayPct": -0.07,
-    "nas100DayPct": -0.72,
-    "vix": 16.355,
+    "us500DayPct": -0.12,
+    "nas100DayPct": -0.54,
+    "vix": 16.31,
     "vixRegime": "NORMAL",
     "us10y": 5.22,
-    "usdx": 102.263
+    "usdx": 102.26
   },
   "commodities": {
-    "brentDayPct": -0.42,
-    "copperDayPct": -0.26,
-    "goldDayPct": 0.14,
+    "brentDayPct": -0.2,
+    "copperDayPct": -0.36,
+    "goldDayPct": -0.11,
     "brent20dTrend": "UP"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": -0.15,
-    "dax40DayPct": 0.15,
+    "eurostoxx50DayPct": -0.36,
+    "dax40DayPct": -0.08,
     "eurUsdDayPct": 0.34,
     "ftseDaxCorr20d": 0.8,
-    "ftseSx5eCorr20d": 0.8,
+    "ftseSx5eCorr20d": 0.82,
     "tapeAgreement": "ALIGNED",
     "preOpenLead": "NONE"
   },
@@ -69,14 +69,14 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent -0.42%",
+      "driver": "Brent -0.2%",
       "read": "NEUTRAL",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper -0.26%",
+      "driver": "Copper -0.36%",
       "read": "NEUTRAL",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
@@ -112,42 +112,61 @@
       "daysFromToday": 1
     }
   ],
-  "newsItems": [],
+  "newsItems": [
+    {
+      "headline": "More homebuyers are taking a chance on adjustable-rate mortgages, hoping rates will fall—here’s how to think about that bet",
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/make-it/2026/10/13/adjustable-rate-mortgage-arm-risks.html",
+      "hoursAgo": 1.1
+    },
+    {
+      "headline": "Indian shares flat at open as inflation strengthens rate-hike concerns - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNRUVTdlJpcHF3dEZTQlg5WWlESlo0dXpTRWJQR1lwWHl2aHR2QVlEUzI4Vkx3OTZVNFdvdnhNMm5BSC04bnNJdzZyLU9BVTVhbFFsUHhzNXlWc0VlLW5KU2k0NWFHZUlicF9zQTVMYjJTTGZoNDRMREJBQk5YU3k0OFdCX2pROWxtYWhlM0ZrREQxVTQweWJMaFdoVW1XX1FrOXpGQnBjZy01eVktY3VQSktkb1YxVEJIbmMw?oc=5",
+      "hoursAgo": 12.6
+    },
+    {
+      "headline": "Bear to bull: A double upgrade of Salesforce illustrates the folly of the 'SaaSpocalypse'",
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/investingclub/2026/10/12/bear-to-bull-a-double-upgrade-of-salesforce-illustrates-the-folly-of-the-saaspocalypse-.html",
+      "hoursAgo": 19.2
+    }
+  ],
   "riskTone": null,
   "bias": {
-    "score": -5,
+    "score": -6,
     "label": "BEARISH",
-    "conviction": "MEDIUM",
+    "conviction": "HIGH",
     "drivers": [
       {
         "name": "GBP",
         "weight": 3,
         "impact": "BEARISH",
-        "detail": "GBP/USD +0.29% → FTSE headwind (sign-flipped)"
+        "detail": "GBP/USD +0.3% → FTSE headwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
-        "impact": "NEUTRAL",
-        "detail": "US500 -0.07% today"
+        "impact": "BEARISH",
+        "detail": "US500 -0.12% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 16.355 — NORMAL regime"
+        "detail": "VIX 16.31 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "Brent -0.42% (energy majors)"
+        "detail": "Brent -0.2% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "Copper -0.26% (miners/China)"
+        "detail": "Copper -0.36% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -169,15 +188,15 @@
       },
       {
         "name": "European tape (SX5E/DAX)",
-        "weight": 2.5,
+        "weight": 1,
         "impact": "NEUTRAL",
-        "detail": "SX5E -0.15% / DAX +0.15%"
+        "detail": "SX5E -0.36% / DAX -0.08%"
       }
     ],
     "eventSuppressed": false
   },
   "orbContext": {
-    "computedAt": "2026-10-13T13:13:02.437Z",
+    "computedAt": "2026-10-13T15:04:36.856Z",
     "mode": "POST_ORB",
     "cashOpenLondon": "08:00 BST",
     "overnightHigh": 10766.5,
@@ -187,8 +206,8 @@
     "priorClose": 10648,
     "prevWeekHigh": 10605.4,
     "prevWeekLow": 10359.2,
-    "gapPts": 59.3,
-    "gapPct": 0.56,
+    "gapPts": -0.7,
+    "gapPct": -0.01,
     "orbHigh": 10766.5,
     "orbLow": 10717.6,
     "orbBrokenDirection": "DOWN",
@@ -198,11 +217,11 @@
     "expansionState": {
       "label": "NORMAL",
       "rangeSoFarPct": 118,
-      "expectedRangePctByNow": 92,
-      "rangeVsTypical": 1.28,
-      "expectedVolPctByNow": 78,
+      "expectedRangePctByNow": 100,
+      "rangeVsTypical": 1.18,
+      "expectedVolPctByNow": 100,
       "moveMostlyDone": true,
-      "note": "Range 118% of ADR vs ~92% typical by 14:00 BST (about the typical pace). ~78% of a typical day's volume already done — expect a rangebound remainder, tighten targets."
+      "note": "Range 118% of ADR vs ~100% typical by 16:00 BST (about the typical pace). ~100% of a typical day's volume already done — expect a rangebound remainder, tighten targets."
     }
   },
   "orbIntel": {
@@ -228,7 +247,14 @@
         "severity": "INFO",
         "source": "STRUCTURE",
         "rule": "R3",
-        "text": "ORB break DOWN is aligned with the BEARISH macro bias (-5) — continuation has the backdrop behind it."
+        "text": "ORB break DOWN is aligned with the BEARISH macro bias (-6) — continuation has the backdrop behind it."
+      },
+      {
+        "direction": "FAVOURS_SHORT",
+        "severity": "INFO",
+        "source": "TAPE",
+        "rule": "R8",
+        "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.36%) — the cross-market lean is down."
       },
       {
         "direction": "NEUTRAL",
