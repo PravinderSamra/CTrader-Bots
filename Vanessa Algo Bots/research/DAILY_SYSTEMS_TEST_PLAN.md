@@ -98,3 +98,12 @@ largest win +$1,323, largest loss -$887, daily guard fired twice (-$2,004, -$2,1
 - Correlation of daily P/L with the live NAS bot: -0.01 (285 overlapping days). PASS. Drawdown 4.76% < 6%. PASS.
 Next: demo ('incubation') before real money; check FTMO weekend-holding rule for the account type; confirm combined
 worst day with the NAS bot stays inside the $5k daily limit.
+
+## Weekend check (decided 14 Oct 2026, before any run)
+Vanessa's account is an FTMO Swing account, so holding over weekends is allowed; the question is weekend gap risk
+(a Monday gap can't be stopped by the daily guard). v1.2 adds 'Flat Over Weekend': close all at Friday 15:30 New York,
+reopen at the Monday order time with the same size and stop unless the system's exit rule fired on Friday's close.
+Runs (A + D, $13k, guard $2,000, m1 bars, commission 0): development period 2020-11-08 .. 2023-12-31 with the switch
+off and with it on. Adopt weekend-flat only if it keeps >= 85% of the net profit AND lowers the max equity drawdown or
+the worst day. Then one confirmation run of the chosen setting on 2024-01-01 .. latest using TICK data (real spreads);
+it must still meet the pass rules.

@@ -1,4 +1,4 @@
-// Daily Systems cBot v1.1 (Vanessa Algo Bots)
+// Daily Systems cBot v1.2 (Vanessa Algo Bots)
 // Six simple daily-bar systems on several FTMO instruments, each with its own on/off switch. Rules are pre-registered in
 // research/DAILY_SYSTEMS_TEST_PLAN.md (14 Oct 2026):
 //   A Pavel mean reversion, B Pavel short-term momentum, C Pavel trend following, D Naoufel RSI(2),
@@ -6,6 +6,8 @@
 // Attach to any chart (e.g. US500.cash, Daily). Signals use the daily bar that has just closed; orders are sent
 // "Order Delay" minutes after the new daily bar opens, to avoid the wide spreads around the daily rollover.
 // Each position's label is "<Label>-<system>", e.g. DSY-D.
+// v1.2 adds an optional 'Flat Over Weekend' switch: close everything Friday 15:30 New York, reopen at the Monday
+// order time (same size and stop) unless the system's exit rule fired on Friday's close. W| lines log it.
 // v1.1 adds P| lines (logging only): the bot's P/L for each FTMO day, and the lowest point it reached during that day.
 // Log lines: S| (bars loaded), D| (signal counts at the end), O| (opened), X| (skipped), G| (daily guard), P| (daily P/L),
 // H| (history at the end: id|label|symbol|entry time|close time|volume|entry|close|gross|swap|commission|net).
@@ -54,6 +56,9 @@ namespace cAlgo.Robots
         [Parameter("Daily Guard ($ loss)", Group = "Risk", DefaultValue = 2000, MinValue = 100)]
         public double DailyGuard { get; set; }
 
+        [Parameter("Flat Over Weekend", Group = "Risk", DefaultValue = false)]
+        public bool WeekendFlat { get; set; }
+
         [Parameter("Order Delay (minutes)", Group = "Other", DefaultValue = 60, MinValue = 1)]
         public int DelayMinutes { get; set; }
 
@@ -78,11 +83,17 @@ namespace cAlgo.Robots
             public bool Close;             // true = close the system's position, false = open one
             public TradeType Side = TradeType.Buy;
             public double Stop, Target;    // absolute prices for F; 0 = use the catastrophe stop / no target
+            public bool Reopen;            // weekend re-entry: fixed size and stop
+            public double Units, Sl, Tp;
+            public DateTime Sig;
         }
 
         private readonly List<Book> _books = new List<Book>();
         private readonly List<Action> _queue = new List<Action>();
         private readonly Dictionary<string, int> _count = new Dictionary<string, int>();
+        private readonly Dictionary<int, DateTime> _sig = new Dictionary<int, DateTime>();   // position id -> signal bar open time
+        private readonly List<Action> _parked = new List<Action>();                          // positions closed for the weekend
+        private DateTime _flatDone = DateTime.MinValue;
         private double _closedCum, _dayStartEq, _dayMin;
         private DateTime _day = DateTime.MinValue, _haltedDay = DateTime.MinValue;
 
@@ -155,19 +166,19 @@ namespace cAlgo.Robots
             {
                 var p = PosOf(b, sys);
                 if (p == null) continue;
-                int sig = d.OpenTimes.GetIndexByTime(p.EntryTime) - 1;
-                int held = t - sig;
-                bool exit = false;
-                switch (sys)
-                {
-                    case 'A': exit = C[t] > b.Sma5.Result[t] || held >= 4; break;
-                    case 'B': exit = held >= 5; break;
-                    case 'C': exit = C[t] < b.Sma10.Result[t]; break;
-                    case 'D': exit = b.Rsi2.Result[t] > 70; break;
-                    case 'E': exit = held >= 1; break;
-                    case 'F': exit = held >= 20; break;
-                }
-                if (exit) _queue.Add(new Action { Due = due, B = b, T = t, Sys = sys, Close = true });
+                DateTime st;
+                int sig = _sig.TryGetValue(p.Id, out st) ? d.OpenTimes.GetIndexByTime(st) : d.OpenTimes.GetIndexByTime(p.EntryTime) - 1;
+                if (ShouldExit(b, sys, sig, t)) _queue.Add(new Action { Due = due, B = b, T = t, Sys = sys, Close = true });
+            }
+
+            // positions closed for the weekend: reopen unless the exit rule fired on Friday's close
+            foreach (var w in _parked.Where(x => x.B == b).ToList())
+            {
+                _parked.Remove(w);
+                int sig = d.OpenTimes.GetIndexByTime(w.Sig);
+                if (ShouldExit(b, w.Sys, sig, t)) { Print("W|{0}-{1}|{2}|{3:yyyy-MM-dd}|exit rule fired while flat, not reopened", Label, w.Sys, b.Sym.Name, d.OpenTimes[t]); continue; }
+                w.Due = due; w.T = t;
+                _queue.Add(w);
             }
 
             // entries
@@ -195,6 +206,31 @@ namespace cAlgo.Robots
             if (UseE && PosOf(b, 'E') == null && Session(d, t) == DayOfWeek.Monday && Session(d, t - 1) == DayOfWeek.Friday && C[t] < C[t - 1])
                 Enter(b, t, 'E', due);
             if (UseF && PosOf(b, 'F') == null) MarcyF(b, t, due);
+        }
+
+        private bool ShouldExit(Book b, char sys, int sig, int t)
+        {
+            var C = b.D.ClosePrices; int held = t - sig;
+            switch (sys)
+            {
+                case 'A': return C[t] > b.Sma5.Result[t] || held >= 4;
+                case 'B': return held >= 5;
+                case 'C': return C[t] < b.Sma10.Result[t];
+                case 'D': return b.Rsi2.Result[t] > 70;
+                case 'E': return held >= 1;
+                case 'F': return held >= 20;
+            }
+            return false;
+        }
+
+        // UTC -> New York time with the US daylight-saving rule (2nd Sunday of March to 1st Sunday of November).
+        private static DateTime NewYork(DateTime utc)
+        {
+            var mar = new DateTime(utc.Year, 3, 1);
+            var dstStart = mar.AddDays((7 - (int)mar.DayOfWeek) % 7 + 7).AddHours(7);
+            var nov = new DateTime(utc.Year, 11, 1);
+            var dstEnd = nov.AddDays((7 - (int)nov.DayOfWeek) % 7).AddHours(6);
+            return utc.AddHours(utc >= dstStart && utc < dstEnd ? -4 : -5);
         }
 
         private void Enter(Book b, int t, char sys, DateTime due)
@@ -259,6 +295,23 @@ namespace cAlgo.Robots
                 foreach (var p in Mine.ToList()) ClosePosition(p);
             }
 
+            var ny = NewYork(Server.Time);
+            if (WeekendFlat && ny.DayOfWeek == DayOfWeek.Friday && ny.Hour * 60 + ny.Minute >= 15 * 60 + 30 && _flatDone != ny.Date)
+            {
+                _flatDone = ny.Date;
+                foreach (var p in Mine.ToList())
+                {
+                    var b = _books.FirstOrDefault(x => x.Sym.Name == p.SymbolName);
+                    if (b == null) continue;
+                    DateTime st;
+                    var sig = _sig.TryGetValue(p.Id, out st) ? st : b.D.OpenTimes[Math.Max(0, b.D.OpenTimes.GetIndexByTime(p.EntryTime) - 1)];
+                    _parked.Add(new Action { B = b, Sys = p.Label[p.Label.Length - 1], Side = p.TradeType, Reopen = true, Units = p.VolumeInUnits,
+                        Sl = p.StopLoss ?? 0, Tp = p.TakeProfit ?? 0, Sig = sig });
+                    Print("W|{0}|{1}|{2:yyyy-MM-dd HH:mm}|closed for the weekend", p.Label, p.SymbolName, Server.Time);
+                    ClosePosition(p);
+                }
+            }
+
             foreach (var a in _queue.Where(x => x.Due <= Server.Time).ToList())
             {
                 _queue.Remove(a);
@@ -286,11 +339,18 @@ namespace cAlgo.Robots
                 Print("X|{0}|{1}|{2:yyyy-MM-dd}|notional cap", tag, name, b.D.OpenTimes[a.T]);
                 return;
             }
-            double units = s.NormalizeVolumeInUnits(Notional / MoneyPerUnit(s, price), RoundingMode.Down);
+            double units = a.Reopen ? a.Units : s.NormalizeVolumeInUnits(Notional / MoneyPerUnit(s, price), RoundingMode.Down);
             if (units < s.VolumeInUnitsMin) { Print("X|{0}|{1}|{2:yyyy-MM-dd}|size below minimum", tag, name, b.D.OpenTimes[a.T]); return; }
 
             double? sl, tp = null;
-            if (a.Sys == 'F')
+            if (a.Reopen)
+            {
+                bool bad = a.Side == TradeType.Buy ? (a.Sl > 0 && price <= a.Sl) || (a.Tp > 0 && price >= a.Tp)
+                                                   : (a.Sl > 0 && price >= a.Sl) || (a.Tp > 0 && price <= a.Tp);
+                if (bad) { Print("W|{0}|{1}|{2:yyyy-MM-dd}|Monday price beyond stop/target, not reopened", tag, name, b.D.OpenTimes[a.T]); return; }
+                sl = a.Sl > 0 ? a.Sl : (double?)null; tp = a.Tp > 0 ? a.Tp : (double?)null;
+            }
+            else if (a.Sys == 'F')
             {
                 bool bad = a.Side == TradeType.Sell ? (price >= a.Stop || price <= a.Target) : (price <= a.Stop || price >= a.Target);
                 if (bad) { Print("X|{0}|{1}|{2:yyyy-MM-dd}|price already beyond stop/target", tag, name, b.D.OpenTimes[a.T]); return; }
@@ -301,7 +361,9 @@ namespace cAlgo.Robots
             var res = ExecuteMarketOrder(a.Side, name, units, tag);
             if (!res.IsSuccessful) { Print("X|{0}|{1}|{2:yyyy-MM-dd}|order rejected: {3}", tag, name, b.D.OpenTimes[a.T], res.Error); return; }
             var p = res.Position;
-            var m1 = p.ModifyStopLossPrice(sl);
+            _sig[p.Id] = a.Reopen ? a.Sig : b.D.OpenTimes[a.T];
+            var m1 = sl.HasValue ? p.ModifyStopLossPrice(sl) : null;
+            if (m1 == null) { Print("X|{0}|{1}|{2:yyyy-MM-dd}|no stop, closed", tag, name, b.D.OpenTimes[a.T]); ClosePosition(p); return; }
             var m2 = tp.HasValue ? p.ModifyTakeProfitPrice(tp) : m1;
             if (!m1.IsSuccessful || !m2.IsSuccessful)
             {
