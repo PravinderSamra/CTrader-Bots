@@ -16,7 +16,7 @@ Episodic pivot (Pradeep Bonde / Stockbee, Chart Fanatics transcript 13 Oct): scr
 ## Ready for Vanessa to backtest (queue)
 | Bot | File | First run |
 |---|---|---|
-| Daily Systems v1.0 (Pavel A-C, Naoufel RSI(2), Turnaround Tuesday, Marcy) | bots/05_Daily_Systems/Daily_Systems.cs | US500.cash Daily chart; m1 bars from server; commission 0; $100k; from the first date FTMO has to 31 Dec 2023; defaults; send the Log. Plan: DAILY_SYSTEMS_TEST_PLAN.md |
+| Daily Systems v1.1: PASSED final test (A Pavel mean reversion + D Naoufel RSI(2), $13k per position) | bots/05_Daily_Systems/Daily_Systems.cs | 2024 - Oct 2026: +$15,924, PF 1.63, 73% win, max DD 4.76%, correlation with NAS bot -0.01. Next: demo run, FTMO weekend rule check. Plan: DAILY_SYSTEMS_TEST_PLAN.md |
 
 ## Maybes (only if nothing better turns up), in order
 | Idea | Source | Status | Next step if revived |

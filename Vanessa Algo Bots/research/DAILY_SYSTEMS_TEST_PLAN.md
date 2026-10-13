@@ -88,3 +88,13 @@ actual 71%, a 12-point cushion. Typical of mean reversion: many small wins, fewe
 make up most of the total loss). The risk is a regime where the win rate falls under ~60% (2022 was that year).
 If the bot goes live: switch it off (back to demo) if, over its last 50 trades, the win rate is below 62%, or if its
 drawdown exceeds 1.5 x the backtest maximum at the chosen size (~7%).
+
+## FINAL TEST RESULT (v1.1, A + D, $13k per position, guard $2k, 2024-01-01 .. 2026-10-13): PASS
+cTrader: net +$15,924, profit factor 1.63, 324 trades, 238 winners (73%), swap -$990, max equity drawdown 4.76%,
+largest win +$1,323, largest loss -$887, daily guard fired twice (-$2,004, -$2,103).
+- A: 72 trades, 65% win, +$3,525; positive on GER40, US500, US100, US30 (gold -$261): 4 of 5. PASS.
+- D: 252 trades, 76% win, +$12,399; positive on all 5. PASS.
+- Every calendar year positive (2024 +$5.0k, 2025 +$6.4k, 2026 to Oct +$4.5k).
+- Correlation of daily P/L with the live NAS bot: -0.01 (285 overlapping days). PASS. Drawdown 4.76% < 6%. PASS.
+Next: demo ('incubation') before real money; check FTMO weekend-holding rule for the account type; confirm combined
+worst day with the NAS bot stays inside the $5k daily limit.
