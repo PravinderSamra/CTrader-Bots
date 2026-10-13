@@ -197,3 +197,18 @@ Daily Systems = tick backtest daily P/L 2020-11..2026-10 ($13k per position); NA
 Reading: Daily Systems barely changes the fail odds (it is uncorrelated and small) but cuts the time to pass by ~15-25%.
 The fail risk comes from NAS drawdowns against the $7.4k of room. Same answer as the historical-start test (85%).
 NAS backtest is in-sample, so real fail odds are likely higher (20-30%).
+
+## Profit-lock test (13 Oct 2026, 2020-23 only, scripts/ds_profit_lock_tick.py) - RESULT: NO CHANGE
+Method: the bot's own 2020-23 tick-backtest trades (266 trades, weekend legs joined, exact baseline +$14,479) replayed
+day by day on D1 bars (Pepperstone D1 2019-23 saved in data/d1_2019_2023); a switch can only close a trade earlier.
+Rule agreed in advance: keep a switch only if profit rises or max drawdown falls, AND the win rate stays >= 65%.
+- Baseline: 72% win, +$14,479, max DD $4,892.
+- BE at 1 ATR: 45% win, +$4,598 (-68%), DD $3,699 -> FAIL (win rate collapses).
+- TRAIL 2 ATR: 64% win, +$6,580 (-55%), DD $4,673 -> FAIL.
+- Sensitivity: every BE level (0.5/1.5/2 ATR) and trail (1.5/3 ATR) earns less than the baseline; a 3 ATR trail is
+  closest (+$13,020) because it almost never fires.
+Why: these are mean-reversion trades. Price often dips back below the entry after being up, then completes the bounce;
+a tight lock sells those trades at breakeven or a small win. The bot's own exits already do the job.
+(A Python re-creation of the rules on Pepperstone D1 bars, scripts/ds_profit_lock.py, gave a different baseline
+(+$1.7k) because of data/bar timing, so it was not used for the decision.)
+Next: size ladder (20-30% steps as the balance grows, never in drawdown).
