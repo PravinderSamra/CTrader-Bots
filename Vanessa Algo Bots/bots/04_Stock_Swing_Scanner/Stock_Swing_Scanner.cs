@@ -1,4 +1,4 @@
-// Stock Swing Scanner cBot v1.3 (Vanessa Algo Bots)
+// Stock Swing Scanner cBot v1.4 (Vanessa Algo Bots)
 // Long-only daily swing bot after Clement Ang / Oliver Kell's price cycle: wedge pop, tight base, breakout.
 // Rules are pre-registered in research/STOCK_SWING_TEST_PLAN.md. Attach to a chart that is NOT in the Symbols list
 // (e.g. US100.cash, Daily): in backtests the chart's own symbol gets no history before the start date. The bot reads the daily bars of
@@ -9,6 +9,9 @@
 // S| (each symbol's daily bars at start), D| (count of why setups failed, printed at the end). v1.1 adds S| and D| only.
 // v1.2 fixes the relative-strength date match (FTMO daily bars open the evening before, so the old lookup compared a
 // stock's close with the benchmark's previous-day close). Default Min ADR 2% (plan amendment 14 Oct 2026).
+// v1.3-1.4: entries and daily-close exits are executed at 09:35 New York time (the first tick of a daily bar can be
+// pre-market with a wide spread). If Bid is already above the trigger (the buy-stop would have filled) it buys at market,
+// still subject to the max-stop rule. X| lines show bid/ask/trigger.
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -164,7 +167,7 @@ namespace cAlgo.Robots
             Tally(why ?? "setup valid");
             if (why != null) return;
 
-            // Queue the entry: it is placed at 09:31 New York time, once the cash session has opened (the first tick of a
+            // Queue the entry: it is placed at 09:35 New York time, once the cash session has opened (the first tick of a
             // new daily bar can be pre-market with a wide spread, which made v1.0-1.2 wrongly skip setups as 'gapped').
             _queue[name] = new Signal { B = b, T = t, Adr = adr };
         }
@@ -193,7 +196,7 @@ namespace cAlgo.Robots
         {
             var ny = NewYork(Server.Time);
             int m = ny.Hour * 60 + ny.Minute;
-            if (m < 9 * 60 + 31 || m >= 15 * 60 + 55) return;
+            if (m < 9 * 60 + 35 || m >= 15 * 60 + 55) return;
             foreach (var kv in _exits.ToList())
             {
                 _exits.Remove(kv.Key);
@@ -214,12 +217,12 @@ namespace cAlgo.Robots
                 double high = b.Daily.HighPrices[t], low = b.Daily.LowPrices[t], close = b.Daily.ClosePrices[t];
                 double trigger = Math.Round(high * 1.001, b.Sym.Digits);
                 double stop = Math.Round(low * 0.999, b.Sym.Digits);
-                bool gapped = b.Sym.Ask >= trigger;            // a buy-stop would already have filled: buy now (plan: stop order for day t+1)
+                bool gapped = b.Sym.Bid >= trigger;            // price really traded above the trigger (Bid, so a wide spread can't fake it): buy now
                 double entry = gapped ? b.Sym.Ask : trigger;
                 double dist = entry - stop;
                 if (dist <= 0 || dist > MaxStopAdr * adr * close)
                 {
-                    Print("X|{0}|{1:yyyy-MM-dd}|stop too wide {2:F2} vs ADR {3:F2}{4}", name, b.Daily.OpenTimes[t], dist, adr * close, gapped ? " (gapped)" : "");
+                    Print("X|{0}|{1:yyyy-MM-dd}|stop too wide {2:F2} vs ADR {3:F2}{4}|bid {5} ask {6} trigger {7}", name, b.Daily.OpenTimes[t], dist, adr * close, gapped ? " (gapped)" : "", b.Sym.Bid, b.Sym.Ask, trigger);
                     continue;
                 }
                 double units = b.Sym.NormalizeVolumeInUnits(RiskAmount / dist, RoundingMode.Down);
@@ -303,7 +306,7 @@ namespace cAlgo.Robots
                 PosState s;
                 if (!_state.TryGetValue(p.Id, out s)) continue;
                 double close = b.Daily.ClosePrices[t];
-                // decided on the daily close, executed at 09:31 New York time (see PlaceQueued)
+                // decided on the daily close, executed at 09:35 New York time (see PlaceQueued)
                 if (close < b.Ema10.Result[t])
                     _exits[p.Id] = "close";
                 else if (!s.Part2 && close > b.Sma50.Result[t] + ExtendedAtr * b.Atr14.Result[t])

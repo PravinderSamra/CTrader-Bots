@@ -66,3 +66,11 @@ the setup on the first tick of the new daily bar, which in winter is pre-market 
 spread. v1.3: entries and daily-close exits are executed at 09:31 New York time; if price is already above the trigger the
 bot buys at market (the plan's buy-stop would have filled at the open), still subject to the max-stop (1 x ADR) rule.
 Expect few trades: about 4-5 setups a year on FTMO's mega-cap list.
+
+## Amendment 3 (14 Oct 2026) - rules frozen
+Run 4 (v1.3, 2022-23): 8 valid setups; 2 trades (AVGO, both stopped, -1R each); 6 skipped by the max-stop rule, 4 of them
+marked 'gapped'. INTC was marked gapped on days its real open was below the trigger, so the 09:31 Ask was still inflated by
+the opening spread. v1.4: decision at 09:35 New York, 'gapped' judged on Bid, X| lines log bid/ask/trigger.
+With ~4 setups a year a 2022-23 in-sample run cannot guide any choice, so the rules are now frozen and the single
+evaluation is one run over all FTMO data, 2022-01-01 to the latest date (m1 bars, commission 0). Verdict rule: keep the bot
+only if it is net positive after swaps with at least 15 trades; otherwise park it.
