@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-13T23:38:50.920Z",
+  "generatedAt": "2026-10-14T10:52:45.533Z",
   "yields": {
     "US10Y": 5.24,
     "US2Y": 4.8,
@@ -34,26 +34,26 @@
     "openInterestChange": -14341
   },
   "etfFlows": {
-    "gldTonnes": 1060.3,
-    "gldWoWChange": 1.8,
+    "gldTonnes": 1063.8,
+    "gldWoWChange": 3.5,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4156.73,
-    "XAGUSD": 58.993,
-    "EURUSD": 1.12001,
-    "USDJPY": 158.3555,
-    "USDCHF": 0.83281,
-    "USDCNH": 6.69306,
-    "GBPUSD": 1.32557,
-    "USDCAD": 1.42185,
-    "USDSEK": 9.96406,
-    "US500": 7808.5,
-    "GER40": 25315.95,
-    "UK100": 10651.65,
+    "XAUUSD": 4143.22,
+    "XAGUSD": 58.557,
+    "EURUSD": 1.11912,
+    "USDJPY": 158.4435,
+    "USDCHF": 0.83359,
+    "USDCNH": 6.69333,
+    "GBPUSD": 1.32652,
+    "USDCAD": 1.42136,
+    "USDSEK": 9.96578,
+    "US500": 7822.2,
+    "GER40": 25425.05,
+    "UK100": 10683.55,
     "ADR_14day": 77.5,
-    "ADR_usedToday": 8.2,
-    "goldSilverRatio": 70.5
+    "ADR_usedToday": 31.1,
+    "goldSilverRatio": 70.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.4681,
@@ -69,25 +69,13 @@
       "headline": "Airport attacks put aviation in crosshairs of geopolitical conflicts",
       "source": "CNBC",
       "publishedAt": "2026-10-13T18:33:42.000Z",
-      "hoursAgo": 5.1
+      "hoursAgo": 16.3
     },
     {
       "headline": "More homebuyers are taking a chance on adjustable-rate mortgages, hoping rates will fall—here’s how to think about that bet",
       "source": "CNBC",
       "publishedAt": "2026-10-13T14:00:02.000Z",
-      "hoursAgo": 9.6
-    },
-    {
-      "headline": "South Korea's Lee says country cannot avoid raising interest rates - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-13T02:49:00.000Z",
-      "hoursAgo": 20.8
-    },
-    {
-      "headline": "Indian shares flat at open as inflation strengthens rate-hike concerns - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-13T02:29:00.000Z",
-      "hoursAgo": 21.2
+      "hoursAgo": 20.9
     }
   ],
   "briefing": null
