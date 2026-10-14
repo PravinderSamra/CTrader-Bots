@@ -21,7 +21,7 @@ th{background:var(--soft)}
 .small{color:var(--muted);font-size:9.5pt}
 </style></head><body><main>
 <h1>Index Bollinger Dip</h1>
-<p class="sub">Factory Bot, candidate A &middot; the first strategy found by our Strategy Factory &middot; 14 October 2026</p>
+<p class="sub">Factory Bot v1.1, candidate A &middot; the first strategy found by our Strategy Factory &middot; 14 October 2026</p>
 
 <div class="tiles">
 <div class="tile"><b>+0.20R</b><span>average per trade, 2010&ndash;2026 (2021&ndash;26: +0.31R)</span></div>
@@ -44,6 +44,9 @@ and the price usually recovers part of the drop within about a week. Large funds
 <li><b>No normal stop.</b> Testing showed a normal stop sells just before the bounce and wipes out the edge.</li>
 <li><b>Disaster stop</b> 10 times the average daily range below the entry, purely for a true crash. It has almost never been hit.</li>
 <li>One position per index; several indices can be held at once, because sharp falls often hit several together.</li>
+<li><b>Risk budget (v1.1):</b> all open positions together never add up to more than 6 full-size positions. If 6 are
+already open, new ones get a smaller size. So even if every disaster stop hit on the same day, the most it could lose is
+30R ($3,000 at half size) &mdash; the worst real day in 16 years was 5R.</li>
 </ul></div>
 
 <h2>Size</h2>

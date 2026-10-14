@@ -1,4 +1,7 @@
-// Factory Bot v1.0 (Vanessa Algo Bots)
+// Factory Bot v1.1 (Vanessa Algo Bots)
+// v1.1: risk budget. Open positions together never
+// exceed Max Full Positions x one full-size risk: when
+// that many are open, new ones get a smaller size.
 // Runs any daily Strategy Factory strategy from its settings.
 // Same rules on every market in the Symbols list.
 // Signals: the daily bar that has just closed.
@@ -73,6 +76,10 @@ namespace cAlgo.Robots
         [Parameter("Disaster Stop x ATR(20)", Group = "Risk", DefaultValue = 10,
             MinValue = 1)]
         public double DisasterAtr { get; set; }
+
+        [Parameter("Max Full Positions (risk budget)", Group = "Risk",
+            DefaultValue = 6, MinValue = 1)]
+        public double MaxFull { get; set; }
 
         [Parameter("Order Delay (minutes)", Group = "Other", DefaultValue = 60,
             MinValue = 1)]
@@ -290,6 +297,18 @@ namespace cAlgo.Robots
 
         private double MoneyPerUnit(Symbol s) => s.TickValue / s.TickSize;
 
+        // Share of one full-size position, stored in the trade comment.
+        private static double Weight(Position q)
+        {
+            double w;
+            var c = q.Comment ?? "";
+            if (c.StartsWith("w=") && double.TryParse(c.Substring(2),
+                System.Globalization.NumberStyles.Float,
+                System.Globalization.CultureInfo.InvariantCulture, out w))
+                return w;
+            return 1.0;
+        }
+
         private void Open(Order o)
         {
             var b = o.B; var s = b.Sym;
@@ -298,7 +317,16 @@ namespace cAlgo.Robots
             if (!(atr > 0)) return;
             var tt = Side > 0 ? TradeType.Buy : TradeType.Sell;
             double price = Side > 0 ? s.Ask : s.Bid;
-            double raw = RiskPerR / (2 * atr * MoneyPerUnit(s));
+            double used = 0;
+            foreach (var q in Positions.Where(q => q.Label == Label))
+                used += Weight(q);
+            double w = Math.Min(1.0, MaxFull - used);
+            if (w < 0.05)
+            {
+                Print("X|{0}|{1}|risk_budget_full", Label, s.Name);
+                return;
+            }
+            double raw = w * RiskPerR / (2 * atr * MoneyPerUnit(s));
             double units = s.NormalizeVolumeInUnits(raw, RoundingMode.Down);
             if (units < s.VolumeInUnitsMin)
             {
@@ -312,7 +340,10 @@ namespace cAlgo.Robots
                 || Exit == FacExit.MAEXIT) stopDist = Math.Min(stopDist, 2 * atr);
             else if (Exit == FacExit.MR) stopDist = Math.Min(stopDist, 3 * atr);
             double sl = price - Side * stopDist;
-            var r = ExecuteMarketOrder(tt, s.Name, units, Label);
+            string tag = "w=" + w.ToString("0.00",
+                System.Globalization.CultureInfo.InvariantCulture);
+            var r = ExecuteMarketOrder(tt, s.Name, units, Label,
+                (double?)null, (double?)null, tag);
             if (!r.IsSuccessful) { Print("X|{0}|{1}|order rejected: {2}", Label,
                 s.Name, r.Error); return; }
             var p = r.Position;

@@ -58,3 +58,10 @@ Pause if the last 50 trades average below -0.05R, or the drawdown passes $3,500 
   several indices at the low on the same day. KEEP 10 x ATR (8 x is an acceptable alternative).
 - Add to winner (add the same size after day 1 or 2 if up 0.5R): day 1 +65.1R, DD 17.3R, worst day -11.4R;
   day 2 +67.0R, DD 10.0R. Neither improves anything. REJECTED.
+
+## v1.1 risk budget (14 Oct 2026)
+Up to 9 indices can be open at once (12 days in 16 years). If every disaster stop hit on one day that would be
+9 x 5R = 45R ($4,500 at $100/R, $9,000 at $200/R). v1.1 caps the total at "Max Full Positions" = 6: once open
+positions add up to 6 full-size risks, new ones get the leftover share (or are skipped). 2010-2026: +58.3R (vs +67.9R),
+max DD 9.1R (vs 9.8R), worst real day unchanged (-5.1R), absolute worst case 30R = $3,000 at $100/R.
+Caps of 4 or 3 cost too much profit (+39.7R / +26.8R): the days many indices dip together are the best days.
