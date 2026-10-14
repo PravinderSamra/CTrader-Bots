@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Our Quant Process</title>
+<style>
+:root{--ink:#1d2433;--muted:#5b6475;--accent:#2f6fdb;--soft:#eef3fc;--line:#d9dee8;--good:#1f8a4c;--warn:#b25b00}
+body{font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;color:var(--ink);background:#fff;margin:0;font-size:11pt;line-height:1.5}
+main{max-width:760px;margin:0 auto;padding:8px 4px}
+h1{font-size:22pt;margin:0 0 2px}
+.sub{color:var(--muted);margin:0 0 18px}
+h2{font-size:13.5pt;margin:22px 0 6px;color:var(--accent)}
+.card{border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0;break-inside:avoid}
+.num{display:inline-block;background:var(--accent);color:#fff;border-radius:50%;width:22px;height:22px;text-align:center;line-height:22px;font-size:10pt;font-weight:600;margin-right:6px}
+.card h3{display:inline;font-size:11.5pt}
+.card p,.card ul{margin:6px 0 0}
+ul{padding-left:20px}
+li{margin:2px 0}
+.box{background:var(--soft);border-radius:10px;padding:10px 14px;margin:10px 0;break-inside:avoid}
+table{border-collapse:collapse;width:100%;margin:6px 0;font-size:10pt}
+th,td{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
+th{background:var(--soft)}
+.small{color:var(--muted);font-size:9.5pt}
+</style></head><body><main>
+<h1>Our Quant Process</h1>
+<p class="sub">How a trading idea becomes a live bot, in plain English. Vanessa &amp; Claude, agreed 14 October 2026.</p>
+
+<div class="box"><b>The goal:</b> a portfolio of trading bots that pays an income through prop firms, built the way a
+professional quant desk works, but sized for one person's time. Every new idea (traders' playbooks, Market Wizards,
+research papers, or the strategy factory) goes through the same steps. A live bot is never edited; changes go back
+through the steps as a new version.</div>
+
+<h2>The 8 steps</h2>
+
+<div class="card"><span class="num">1</span><h3>Write the idea down first</h3>
+<ul><li><b>Why should it make money?</b> One sentence. For example: big funds rebalance at month end, or traders panic
+after a sharp fall. If there is no sensible reason, we don't build it.</li>
+<li>Write the exact rules and what counts as a pass <b>before</b> seeing any results, so we can't bend them afterwards.</li></ul></div>
+
+<div class="card"><span class="num">2</span><h3>Test it on past prices, honestly</h3>
+<ul><li>Include every cost: spread, commission and overnight fees.</li>
+<li>No flattering assumptions about fills. If a limit order would have been filled and stopped out in the same
+candle, it counts as a loss (this is what exposed the Deni and Omar strategies).</li>
+<li>Build it on older data, and keep the most recent 2&ndash;3 years hidden for one final check.</li>
+<li>Results always show a <b>likely range</b>, not just an average. "+0.15R, but anywhere from &minus;0.05R to
++0.35R" tells us whether it could just be luck.</li></ul></div>
+
+<div class="card"><span class="num">3</span><h3>Clear the pass bar (it gets stricter the more we try)</h3>
+<ul><li>Basic bar: at least +0.10R per trade after costs, profitable in both halves of the data, and enough trades
+(100+, or 50+ for daily strategies).</li>
+<li>The more versions we try, the more likely one looks good by luck. So: up to 4 versions, the basic bar; 5&ndash;20 versions,
+the whole likely range must be above zero; more than 20, it needs a second batch of unseen data.</li>
+<li>It must still work if the settings are nudged by 20%, if costs double, and on at least one similar market.</li></ul></div>
+
+<div class="card"><span class="num">4</span><h3>Check it fits the portfolio</h3>
+<ul><li>It should not win and lose on the same days as the bots already running.</li>
+<li>We simulate thousands of possible futures for the whole account to check the prop firm's daily loss and
+drawdown limits stay safe.</li>
+<li>Each bot gets a fixed share of the account's risk.</li></ul></div>
+
+<div class="card"><span class="num">5</span><h3>Confirm it in cTrader</h3>
+<ul><li>Claude builds the bot from the frozen rules. Vanessa runs a tick backtest on the prop firm's own data.</li>
+<li>Claude compares it trade by trade with the earlier test. Any difference is explained before it goes live.</li></ul></div>
+
+<div class="card"><span class="num">6</span><h3>Go live at half size</h3>
+<ul><li>The first 30 trades run at half the planned risk. If they behave as the backtest expected, the bot moves up to
+full risk. (This replaces a separate paper-trading period, so it costs no extra time.)</li></ul></div>
+
+<div class="card"><span class="num">7</span><h3>Monthly review together</h3>
+<ul><li>At each month end, Vanessa sends the cTrader History for each bot; Claude compares it with the backtest:
+trades, win rate, average result, slippage, drawdown, worst day.</li>
+<li><b>Switch-off rules</b> (written into each bot's strategy file): pause a bot if its last 50 trades are worse than
+the backtest's likely range, or if its drawdown is 1.5 times bigger than the worst the backtest showed. A paused bot
+is re-tested before it restarts.</li></ul></div>
+
+<div class="card"><span class="num">8</span><h3>Scale up when income allows</h3>
+<ul><li>A VPS (a small always-on computer in the cloud, about &pound;15&ndash;30 a month) so bots never depend on a laptop.</li>
+<li>More prop firm accounts running the same proven bots, after checking each firm's rules on copy trading and the
+maximum total account size allowed.</li></ul></div>
+
+<h2>Claude's checklist before reporting any result</h2>
+<table>
+<tr><th>Question</th><th>Why it matters</th></tr>
+<tr><td>Could the result come from an unrealistic fill?</td><td>Same-candle fills made two strategies look far better than they were.</td></tr>
+<tr><td>Were real costs and the firm's spreads used?</td><td>Small edges disappear after costs.</td></tr>
+<tr><td>Was the hidden data really kept hidden?</td><td>Choosing settings after seeing it turns a test into wishful thinking.</td></tr>
+<tr><td>How many versions were tried?</td><td>Try enough versions and one always looks good by chance.</td></tr>
+<tr><td>Is the profit spread across years and markets?</td><td>Profit from one year or one trend (like gold 2021&ndash;26) is not an edge.</td></tr>
+<tr><td>Does it overlap a live bot?</td><td>Two bots doing the same thing double the risk, not the income.</td></tr>
+</table>
+
+<h2>The bigger plan</h2>
+<table>
+<tr><th>Stage</th><th>What</th></tr>
+<tr><td>1. Now</td><td>A portfolio of prop firm bots giving an income.</td></tr>
+<tr><td>2. Next</td><td>Learn to scalp futures, about 2 hours a day around the 14:30 UK US market open.</td></tr>
+<tr><td>3. Then</td><td>A property portfolio with rental and holiday-let income.</td></tr>
+<tr><td>4. Alongside</td><td>More swing trading strategies.</td></tr>
+</table>
+
+<p class="small">Live bots on 14 October 2026: NAS100 "Add to Winner with Ladder" and Daily Systems (US500, US100, US30,
+GER40, gold). The detailed technical version of this process is research/QUANT_PROCESS.md.</p>
+</main></body></html>
