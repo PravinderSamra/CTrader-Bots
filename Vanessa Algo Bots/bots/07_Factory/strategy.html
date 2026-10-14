@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Index Bollinger Dip</title>
+<style>
+:root{--ink:#1d2433;--muted:#5b6475;--accent:#2f6fdb;--soft:#eef3fc;--line:#d9dee8;--good:#1f8a4c;--warn:#b25b00}
+body{font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;color:var(--ink);background:#fff;margin:0;font-size:11pt;line-height:1.5}
+main{max-width:760px;margin:0 auto;padding:8px 4px}
+h1{font-size:22pt;margin:0 0 2px}
+.sub{color:var(--muted);margin:0 0 16px}
+h2{font-size:13.5pt;margin:20px 0 6px;color:var(--accent)}
+.box{background:var(--soft);border-radius:10px;padding:10px 14px;margin:10px 0;break-inside:avoid}
+.card{border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0;break-inside:avoid}
+ul{padding-left:20px;margin:6px 0}
+li{margin:3px 0}
+table{border-collapse:collapse;width:100%;margin:6px 0;font-size:10pt;break-inside:avoid}
+th,td{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
+th{background:var(--soft)}
+.tiles{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.tile{flex:1 1 150px;border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.tile b{display:block;font-size:15pt}
+.tile span{color:var(--muted);font-size:9.5pt}
+.small{color:var(--muted);font-size:9.5pt}
+</style></head><body><main>
+<h1>Index Bollinger Dip</h1>
+<p class="sub">Factory Bot, candidate A &middot; the first strategy found by our Strategy Factory &middot; 14 October 2026</p>
+
+<div class="tiles">
+<div class="tile"><b>+0.20R</b><span>average per trade, 2010&ndash;2026 (2021&ndash;26: +0.31R)</span></div>
+<div class="tile"><b>59%</b><span>of trades win (328 trades)</span></div>
+<div class="tile"><b>~24</b><span>trades a year, across 10 indices</span></div>
+<div class="tile"><b>0.05</b><span>correlation with Daily Systems (NAS bot: about 0)</span></div>
+</div>
+
+<h2>Why it should work</h2>
+<div class="box">When a stock index has an unusually sharp fall, forced and emotional selling tends to overshoot,
+and the price usually recovers part of the drop within about a week. Large funds can't easily trade this across
+10 smaller index CFDs at once &mdash; at our size we can.</div>
+
+<h2>The rules</h2>
+<div class="card"><ul>
+<li><b>Markets:</b> 10 stock indices &mdash; US500, US100, US30, US2000, GER40, UK100, FRA40, EU50, AUS200, HK50.</li>
+<li><b>Buy</b> when an index closes <b>below its lower Bollinger band</b> (the 20-day average minus 2.5 times the
+20-day standard deviation). The order is sent 60 minutes after the next daily open, once that market is trading.</li>
+<li><b>Sell 5 trading days later.</b> No take profit.</li>
+<li><b>No normal stop.</b> Testing showed a normal stop sells just before the bounce and wipes out the edge.</li>
+<li><b>Disaster stop</b> 10 times the average daily range below the entry, purely for a true crash. It has almost never been hit.</li>
+<li>One position per index; several indices can be held at once, because sharp falls often hit several together.</li>
+</ul></div>
+
+<h2>Size</h2>
+<div class="card"><ul>
+<li><b>Risk Per R = $200</b>, where R = twice the index's average daily range. The bot works out the position size itself.</li>
+<li>A normal losing trade costs about $200&ndash;400. The worst single trade in 16 years lost about $1,000 (5R);
+the worst single day was about &minus;$1,100 (5.6R).</li>
+<li><b>First 30 live trades at half size ($100 per R)</b>, as our Quant Process says.</li>
+</ul></div>
+
+<h2>How it was tested</h2>
+<table>
+<tr><th>Stage</th><th>Result</th></tr>
+<tr><td>Strategy Factory: 8,832 strategies tested on 28 markets</td><td>34 survived the build and confirm periods; 29 passed the final check</td></tr>
+<tr><td>Build period (to 2020)</td><td>+0.13R per trade</td></tr>
+<tr><td>Confirm period 2021&ndash;23 (unseen)</td><td>+0.32R per trade</td></tr>
+<tr><td>Final check 2024&ndash;26 (opened once)</td><td>+0.30R per trade, likely range above zero</td></tr>
+<tr><td>Edge over simply being in the market</td><td>About +0.20R per trade better than buying every day with the same exit</td></tr>
+<tr><td>Worst drawdown (2010&ndash;26)</td><td>11.5R (about $2,300 at $200 per R)</td></tr>
+<tr><td>Account simulation with the NAS bot ($550) and Daily Systems</td><td>Fail odds 16.8% &rarr; 16.2%; passes about 6 days sooner</td></tr>
+</table>
+<p class="small">All tests include spread, commission and overnight fees; signals use the daily close and fill at the next open.</p>
+
+<h2>Your cTrader tick backtest</h2>
+<div class="card"><ul>
+<li>Create a new cBot called <b>Factory Bot</b>, paste in Factory_Bot.cs, and click Build.</li>
+<li>Attach it to a <b>US500.cash, Daily</b> chart and leave every setting at its default.</li>
+<li>Run <b>tick data from server</b>, <b>1 January 2021 to today</b>, balance 100,000, commission 30.</li>
+<li>If any market prints "Symbol not found" at the start, send the FTMO name for it.</li>
+<li>Send the log (it ends with H| lines) and a screenshot of the results.</li>
+</ul>
+<b>It passes if:</b> profitable in both 2021&ndash;23 and 2024&ndash;26, at least 6 of the 10 indices positive, and the
+worst drawdown under about $3,500.</div>
+
+<h2>Switch-off rule (monthly review)</h2>
+<div class="box">Pause the bot if its last 50 trades average below &minus;0.05R, or if its drawdown passes $3,500
+(1.5 times the worst the backtest showed). A paused bot is re-tested before it restarts.</div>
+
+<p class="small">Files: bots/07_Factory/Factory_Bot.cs (the bot), STRATEGY.md, research/factory (the Strategy Factory and test scripts).</p>
+</main></body></html>
