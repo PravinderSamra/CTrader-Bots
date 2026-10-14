@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-14T10:52:45.533Z",
+  "generatedAt": "2026-10-14T12:53:37.500Z",
   "yields": {
     "US10Y": 5.24,
     "US2Y": 4.8,
@@ -34,26 +34,26 @@
     "openInterestChange": -14341
   },
   "etfFlows": {
-    "gldTonnes": 1063.8,
-    "gldWoWChange": 3.5,
+    "gldTonnes": 1075.3,
+    "gldWoWChange": 11.5,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4143.22,
-    "XAGUSD": 58.557,
-    "EURUSD": 1.11912,
-    "USDJPY": 158.4435,
-    "USDCHF": 0.83359,
-    "USDCNH": 6.69333,
-    "GBPUSD": 1.32652,
-    "USDCAD": 1.42136,
-    "USDSEK": 9.96578,
-    "US500": 7822.2,
-    "GER40": 25425.05,
-    "UK100": 10683.55,
+    "XAUUSD": 4098.765,
+    "XAGUSD": 57.647,
+    "EURUSD": 1.11378,
+    "USDJPY": 158.7535,
+    "USDCHF": 0.83706,
+    "USDCNH": 6.69813,
+    "GBPUSD": 1.32103,
+    "USDCAD": 1.42576,
+    "USDSEK": 10.03154,
+    "US500": 7785.5,
+    "GER40": 25344.15,
+    "UK100": 10668.55,
     "ADR_14day": 77.5,
-    "ADR_usedToday": 31.1,
-    "goldSilverRatio": 70.8
+    "ADR_usedToday": 85.2,
+    "goldSilverRatio": 71.1
   },
   "dollarLiquidity": {
     "stlfsi": -0.4681,
@@ -69,13 +69,13 @@
       "headline": "Airport attacks put aviation in crosshairs of geopolitical conflicts",
       "source": "CNBC",
       "publishedAt": "2026-10-13T18:33:42.000Z",
-      "hoursAgo": 16.3
+      "hoursAgo": 18.3
     },
     {
       "headline": "More homebuyers are taking a chance on adjustable-rate mortgages, hoping rates will fall—here’s how to think about that bet",
       "source": "CNBC",
       "publishedAt": "2026-10-13T14:00:02.000Z",
-      "hoursAgo": 20.9
+      "hoursAgo": 22.9
     }
   ],
   "briefing": null

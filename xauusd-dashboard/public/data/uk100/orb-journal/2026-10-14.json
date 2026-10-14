@@ -125,6 +125,56 @@
         "adrUsedPct": 64
       },
       "outcome": null
+    },
+    {
+      "at": "2026-10-14T12:53:42.193Z",
+      "londonTime": "13:53 BST",
+      "mode": "POST_ORB",
+      "price": 10668.15,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — US CPI @ 13:30 BST today — pre-release breaks are positioning, not conviction.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "US CPI @ 13:30 BST today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -0.3% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10669,
+        "orbLow": 10638.4,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10685.7,
+        "overnightLow": 10630.9,
+        "priorDayHigh": 10766.5,
+        "priorDayLow": 10629.3,
+        "gapPct": 0.16,
+        "adr14": 116.4,
+        "adrUsedPct": 64
+      },
+      "outcome": null
     }
   ]
 }
