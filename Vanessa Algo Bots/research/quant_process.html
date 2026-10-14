@@ -27,6 +27,10 @@ professional quant desk works, but sized for one person's time. Every new idea (
 research papers, or the strategy factory) goes through the same steps. A live bot is never edited; changes go back
 through the steps as a new version.</div>
 
+<div class="box"><b>Our current bots are "grandfathered".</b> The NAS100 bot and Daily Systems went live before this
+process was written. They are not re-tested; they are judged on their live results in the monthly review, which is
+the truest test there is.</div>
+
 <h2>The 8 steps</h2>
 
 <div class="card"><span class="num">1</span><h3>Write the idea down first</h3>
@@ -45,9 +49,12 @@ candle, it counts as a loss (this is what exposed the Deni and Omar strategies).
 <div class="card"><span class="num">3</span><h3>Clear the pass bar (it gets stricter the more we try)</h3>
 <ul><li>Basic bar: at least +0.10R per trade after costs, profitable in both halves of the data, and enough trades
 (100+, or 50+ for daily strategies).</li>
+<li>Strategies that win often with a far-away emergency stop (like Daily Systems) are judged differently: the likely range
+must be above zero in both halves, and they must make at least &pound;1.20 for every &pound;1 lost (profit factor 1.2).</li>
 <li>The more versions we try, the more likely one looks good by luck. So: up to 4 versions, the basic bar; 5&ndash;20 versions,
 the whole likely range must be above zero; more than 20, it needs a second batch of unseen data.</li>
-<li>It must still work if the settings are nudged by 20%, if costs double, and on at least one similar market.</li></ul></div>
+<li>It must still work if the settings are nudged by 20% and if costs double. Working on a similar market is a bonus;
+if it doesn't, that's a warning that needs a good reason, not an automatic no.</li></ul></div>
 
 <div class="card"><span class="num">4</span><h3>Check it fits the portfolio</h3>
 <ul><li>It should not win and lose on the same days as the bots already running.</li>

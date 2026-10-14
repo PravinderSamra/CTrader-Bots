@@ -4,6 +4,10 @@ Goal: a portfolio of bots that pays an income through prop firms, built the way 
 sized for one person's time. Every new strategy (playbooks, Market Wizards, SSRN papers, strategy factory output)
 goes through these stages. Nothing touches a live bot except through stage 7.
 
+## Current live bots (grandfathered)
+The NAS100 bot and Daily Systems went live before this process was written. They are not re-tested; they are
+judged on their live results in the monthly review (stage 7), which is the truest unseen-data test there is.
+
 ## 1. Idea card (before any testing)
 - **Why should it work?** One line: a risk premium, a behavioural bias, or a structural flow. No reason, no bot.
 - Exact rules written down **before** looking at results (pre-registration), plus the pass bar.
@@ -16,10 +20,14 @@ goes through these stages. Nothing touches a live bot except through stage 7.
 - Report: trades, win rate, average R **with a 95% confidence range (bootstrap)**, total R, max drawdown, every year.
 
 ## 3. Pass bar (stricter the more we try)
-- Minimum: average >= +0.10R after costs, positive in both halves, >= 100 trades (>= 50 for daily systems).
+- Minimum (stop-and-target strategies): average >= +0.10R after costs, positive in both halves, >= 100 trades
+  (>= 50 for daily systems).
+- High-win-rate strategies with a far emergency stop (like Daily Systems): the 95% range of the average trade is
+  above zero in both halves and profit factor >= 1.2 (the R bar does not suit them).
 - **Trial counter**: log how many variants were tried for the idea. Up to 4 variants: the bar above. 5-20 variants:
   the lower end of the 95% range must be above 0. More than 20: treat as data-mined, needs a second unseen dataset.
-- Must survive: +/-20% changes to every parameter, doubled costs, and at least one related market.
+- Must survive: +/-20% changes to every parameter and doubled costs. Working on a related market is a plus;
+  failing there is a WARNING that needs a good reason (some real edges are market-specific), not a fail.
 
 ## 4. Fit with the portfolio
 - Correlation of daily P/L with every live bot (want under 0.3).
