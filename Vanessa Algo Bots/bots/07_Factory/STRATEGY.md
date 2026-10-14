@@ -50,3 +50,11 @@ Pause if the last 50 trades average below -0.05R, or the drawdown passes $3,500 
 - Versus the factory screen (2021-26: +0.31R): weaker (+0.21R), mainly 2022-23 (FTMO daily bars differ from the
   research feed). Still clearly positive in both halves.
 - Decision: go live at HALF size, Risk Per R = $100, for the first 30 trades (QUANT_PROCESS stage 6).
+
+## Disaster stop width and add-to-winner (14 Oct 2026, research/factory/stop_and_add.py, 2010-2026, 9 indices)
+- 10 x ATR: +67.9R, max DD 9.8R, worst day -5.1R, hit once (Feb 2020). 8 x: +65.6R, DD 11.3R, worst day -4.7R.
+  7 x: +59.5R, DD 15.9R, worst day -10.6R (5 hits). 6 x: DD 17.2R, worst day -12.1R. 5 x: DD 21.5R, worst day -17.7R.
+  7 and 10 look the same in 2021-26 only because there was no crash; in a 2020-style crash a tighter stop sells
+  several indices at the low on the same day. KEEP 10 x ATR (8 x is an acceptable alternative).
+- Add to winner (add the same size after day 1 or 2 if up 0.5R): day 1 +65.1R, DD 17.3R, worst day -11.4R;
+  day 2 +67.0R, DD 10.0R. Neither improves anything. REJECTED.
