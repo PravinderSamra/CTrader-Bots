@@ -36,3 +36,9 @@ year's meeting day-1 dates in "Extra Dates". The 2027 dates are already included
 
 ## Switch-off rule (monthly review)
 Pause if the last 16 trades (one year) are net negative, or if a single event loses more than 3%.
+
+## cTrader backtest (15 Oct 2026, M1, 1 Jan 2021 - 14 Oct 2026, $20k per index, commission 30): PASS
+Net +$4,325, PF 2.07, 92 trades, 62% win, max balance DD 1.33%, equity DD 1.52%, largest loss -$359.
+US100: 2021-23 +$2,260 (24), 2024-26 +$682 (22). US500: 2021-23 +$1,339 (24), 2024-26 +$44 (22).
+Timing checked: every trade held 23h58m (14:00 New York day 1 -> 13:58 announcement day). Matches the research
+(+0.22% / +0.14% a trade, US500 weak lately). About +$750 a year. GO LIVE at $20k per index.
