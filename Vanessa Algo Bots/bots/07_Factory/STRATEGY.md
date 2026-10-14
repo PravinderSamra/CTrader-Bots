@@ -65,3 +65,8 @@ Up to 9 indices can be open at once (12 days in 16 years). If every disaster sto
 positions add up to 6 full-size risks, new ones get the leftover share (or are skipped). 2010-2026: +58.3R (vs +67.9R),
 max DD 9.1R (vs 9.8R), worst real day unchanged (-5.1R), absolute worst case 30R = $3,000 at $100/R.
 Caps of 4 or 3 cost too much profit (+39.7R / +26.8R): the days many indices dip together are the best days.
+
+## v1.1 cTrader backtest (14 Oct 2026, M1, 1 Jan 2021 - 14 Oct 2026, $200/R, commission 30): PASS
+Net +$5,954 (v1.0: +$7,465), PF 1.74, 168 trades, 57% win, average +$35, largest loss -$472, max balance DD 2.90%,
+max equity DD 4.09%. The cap cost ~20% of profit in a period with no crash (about $130 a year at the live $100/R);
+it only pays off on a crash day. Accepted as insurance. GO LIVE at Risk Per R = $100 for the first 30 trades.
