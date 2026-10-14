@@ -17,6 +17,7 @@ from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 
 UK = ZoneInfo("Europe/London")
+HONEST = False   # True: same-bar fill + run above the high counts as a loss (live behaviour)
 ROOT = "/home/user/CTrader-Bots"
 COST = {"EURUSD": 0.00007, "NAS100": 1.5, "XAUUSD": 0.35}
 
@@ -115,6 +116,12 @@ def run(bars, cost, bias, f, sl=0.9):
             # pending sell limit from the leg so far
             rng = s["H"] - s["LL"]
             ent = s["LL"] + f * rng
+            if h > s["H"] and h >= ent and in_win and HONEST:
+                # price ran through the entry and above the high inside one bar: the limit fills, then the stop is hit
+                e = max(ent, o); stop = s["LL"] + sl * rng
+                if e < stop:
+                    trades.append((t, (e - stop - cost) / (stop - e))); s["done"] = True
+                continue
             if h > s["H"]:
                 s["brk"] = False; s["LL"] = None; s["H"] = h
             elif h >= ent and in_win:
