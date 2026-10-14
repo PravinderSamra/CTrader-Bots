@@ -39,3 +39,14 @@ under about $3,500. Then it can go live at HALF size ($100 per R) for its first 
 
 ## Switch-off rule (monthly review)
 Pause if the last 50 trades average below -0.05R, or the drawdown passes $3,500 (1.5 x the backtest's worst).
+
+## cTrader backtest result (14 Oct 2026, M1 bars, 1 Jan 2021 - 14 Oct 2026, $200/R, commission 30): PASS
+- Net +$7,465, profit factor 1.92, 176 trades, 58% win, average +$42 a trade (about +0.21R).
+- 2021-23: +$2,505 (104 trades); 2024-26: +$4,960 (72 trades). By year: 2021 +4,750, 2022 -1,444, 2023 -801,
+  2024 +1,827, 2025 +1,182, 2026 +1,951.
+- 8 of the 9 indices traded were positive (AUS200 -$230). US2000.cash does not exist at FTMO (skipped).
+- Max balance drawdown 2.69% (~$2.8k), max equity drawdown 3.97% (~$4.2k, floating loss in the April 2025 sell-off);
+  worst trade -$472, worst exit day -$508. Swap -$273, commission -$105.
+- Versus the factory screen (2021-26: +0.31R): weaker (+0.21R), mainly 2022-23 (FTMO daily bars differ from the
+  research feed). Still clearly positive in both halves.
+- Decision: go live at HALF size, Risk Per R = $100, for the first 30 trades (QUANT_PROCESS stage 6).
