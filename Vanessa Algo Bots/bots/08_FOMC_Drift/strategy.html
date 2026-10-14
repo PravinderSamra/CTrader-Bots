@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Pre-FOMC Drift</title>
+<style>
+:root{--ink:#1d2433;--muted:#5b6475;--accent:#2f6fdb;--soft:#eef3fc;--line:#d9dee8;--good:#1f8a4c;--warn:#b25b00}
+body{font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;color:var(--ink);background:#fff;margin:0;font-size:11pt;line-height:1.5}
+main{max-width:760px;margin:0 auto;padding:8px 4px}
+h1{font-size:22pt;margin:0 0 2px}
+.sub{color:var(--muted);margin:0 0 16px}
+h2{font-size:13.5pt;margin:20px 0 6px;color:var(--accent)}
+.box{background:var(--soft);border-radius:10px;padding:10px 14px;margin:10px 0;break-inside:avoid}
+.card{border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0;break-inside:avoid}
+ul{padding-left:20px;margin:6px 0}
+li{margin:3px 0}
+table{border-collapse:collapse;width:100%;margin:6px 0;font-size:10pt;break-inside:avoid}
+th,td{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
+th{background:var(--soft)}
+.tiles{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.tile{flex:1 1 150px;border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.tile b{display:block;font-size:15pt}
+.tile span{color:var(--muted);font-size:9.5pt}
+.small{color:var(--muted);font-size:9.5pt}
+</style></head><body><main>
+<h1>Pre-FOMC Drift</h1>
+<p class="sub">Fed-meeting bot &middot; from our SSRN research review &middot; 15 October 2026</p>
+<div class="tiles">
+<div class="tile"><b>+$4,325</b><span>cTrader backtest 2021&ndash;2026 (about $750 a year)</span></div>
+<div class="tile"><b>2.07</b><span>profit factor; 62% of trades win</span></div>
+<div class="tile"><b>~16</b><span>trades a year (8 Fed meetings &times; 2 indices)</span></div>
+<div class="tile"><b>0.02</b><span>correlation with the NAS bot</span></div>
+</div>
+<h2>Why it should work</h2>
+<div class="box">US stock indices have tended to rise in the 24 hours before a scheduled Federal Reserve (FOMC) announcement
+(Lucca &amp; Moench, <i>Journal of Finance</i> 2015). The usual explanation is a reward for holding stocks into a big,
+uncertain event. Of all the academic calendar effects we tested, it is the only one still profitable after FTMO's costs.</div>
+<h2>The rules</h2>
+<div class="card"><ul>
+<li><b>Markets:</b> US100.cash and US500.cash.</li>
+<li><b>Buy at 2:00pm New York time on the first day of each scheduled Fed meeting</b> (the day before the statement).</li>
+<li><b>Sell at 1:58pm New York time on announcement day</b>, just before the 2:00pm statement &mdash; it never holds through the announcement.</li>
+<li><b>Safety stop</b> 3% below the entry. The worst event since 2014 was &minus;1.9%.</li>
+<li>Scheduled meetings only. The dates for 2021&ndash;2027 are built into the bot's settings.</li>
+</ul></div>
+<h2>Size</h2>
+<div class="card"><ul>
+<li><b>$20,000 notional per index.</b> A typical event moves each position by about &plusmn;$150.</li>
+<li>The worst event since 2014 would have cost about &minus;$380 per index (about &minus;$760 for both).</li>
+</ul></div>
+<h2>How it was tested</h2>
+<table>
+<tr><th>Test</th><th>Result</th></tr>
+<tr><td>Research, 2014&ndash;2026, 1-hour bars, after costs and one night of swap</td><td>NAS100 +0.22% a trade, US500 +0.14%; positive in 2014&ndash;20, 2021&ndash;23 and 2024&ndash;26</td></tr>
+<tr><td>cTrader backtest, M1 bars, Jan 2021 &ndash; Oct 2026, $20k per index</td><td>+$4,325, profit factor 2.07, 92 trades, max drawdown 1.5%, largest loss &minus;$359</td></tr>
+<tr><td>US100 by period</td><td>2021&ndash;23 +$2,260 &middot; 2024&ndash;26 +$682</td></tr>
+<tr><td>US500 by period</td><td>2021&ndash;23 +$1,339 &middot; 2024&ndash;26 +$44 (about flat lately)</td></tr>
+<tr><td>Timing check</td><td>Every trade held 23 h 58 min, exactly as designed</td></tr>
+</table>
+<h2>Running it</h2>
+<div class="card"><ul>
+<li>Attach <b>FOMC_Drift.cs</b> to a <b>US100.cash, 1-hour</b> chart on the FTMO account. Leave the defaults.</li>
+<li>First live trade: <b>27 October 2026</b> (sold on 28 October before the statement).</li>
+<li><b>Once a year</b>, add the next year's meeting day-1 dates from the Fed's calendar
+(federalreserve.gov &rarr; Monetary Policy &rarr; FOMC calendars) into the "Extra Dates" setting.</li>
+</ul></div>
+<h2>Switch-off rule (monthly review)</h2>
+<div class="box">Pause the bot if its last 16 trades (about one year) are net negative, or if a single event loses more than 3%.
+It is small and has been weakening on US500, so it is an add-on, not an income engine.</div>
+<p class="small">Files: bots/08_FOMC_Drift/FOMC_Drift.cs (the bot), STRATEGY.md, research/ssrn (the research and test scripts).</p>
+</main></body></html>
