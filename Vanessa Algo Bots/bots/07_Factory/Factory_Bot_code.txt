@@ -1,4 +1,6 @@
 // Factory Bot v1.1 (Vanessa Algo Bots)
+// Default markets: 9 indices (US2000 and JP225 tested
+// and left out: they lower profit and raise drawdown).
 // v1.1: risk budget. Open positions together never
 // exceed Max Full Positions x one full-size risk: when
 // that many are open, new ones get a smaller size.
@@ -37,7 +39,7 @@ namespace cAlgo.Robots
     public class FactoryBot : Robot
     {
         private const string DefaultSymbols =
-            "US500.cash,US100.cash,US30.cash,US2000.cash,"
+            "US500.cash,US100.cash,US30.cash,"
             + "GER40.cash,UK100.cash,FRA40.cash,EU50.cash,"
             + "AUS200.cash,HK50.cash";
 

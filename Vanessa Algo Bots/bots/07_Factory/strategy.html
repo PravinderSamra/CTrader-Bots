@@ -26,18 +26,18 @@ th{background:var(--soft)}
 <div class="tiles">
 <div class="tile"><b>+0.20R</b><span>average per trade, 2010&ndash;2026 (2021&ndash;26: +0.31R)</span></div>
 <div class="tile"><b>59%</b><span>of trades win (328 trades)</span></div>
-<div class="tile"><b>~24</b><span>trades a year, across 10 indices</span></div>
+<div class="tile"><b>~24</b><span>trades a year, across 9 indices</span></div>
 <div class="tile"><b>0.05</b><span>correlation with Daily Systems (NAS bot: about 0)</span></div>
 </div>
 
 <h2>Why it should work</h2>
 <div class="box">When a stock index has an unusually sharp fall, forced and emotional selling tends to overshoot,
 and the price usually recovers part of the drop within about a week. Large funds can't easily trade this across
-10 smaller index CFDs at once &mdash; at our size we can.</div>
+9 smaller index CFDs at once &mdash; at our size we can.</div>
 
 <h2>The rules</h2>
 <div class="card"><ul>
-<li><b>Markets:</b> 10 stock indices &mdash; US500, US100, US30, US2000, GER40, UK100, FRA40, EU50, AUS200, HK50.</li>
+<li><b>Markets:</b> 9 stock indices &mdash; US500, US100, US30, GER40, UK100, FRA40, EU50, AUS200, HK50.</li>
 <li><b>Buy</b> when an index closes <b>below its lower Bollinger band</b> (the 20-day average minus 2.5 times the
 20-day standard deviation). The order is sent 60 minutes after the next daily open, once that market is trading.</li>
 <li><b>Sell 5 trading days later.</b> No take profit.</li>

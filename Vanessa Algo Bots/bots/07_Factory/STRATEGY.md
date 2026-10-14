@@ -73,3 +73,8 @@ it only pays off on a crash day. Accepted as insurance. GO LIVE at Risk Per R = 
 Log check: 2021-23 +$1,926 (99 trades), 2024-26 +$4,027 (69). By index: UK100 +1,527, GER40 +1,444, US500 +1,396,
 HK50 +686, EU50 +666, US100 +536, FRA40 +324, US30 -31, AUS200 -596 (7 of 9 positive). 12 signals skipped because
 the risk budget was full. AUS200 stays in (removing the one weak market after seeing results would be curve-fitting).
+
+## Market list (14 Oct 2026)
+FTMO also has US2000.cash and JP225.cash. Same rule, risk budget 6, 2010-2026: 9 indices +58.3R / DD 9.1R;
++US2000 +53.5R / DD 10.1R (US2000 alone -0.05R, 29 trades); +JP225 +55.3R / DD 12.0R (JP225 alone 28 trades,
+negative to 2020). Both left out. Default Symbols = the 9 indices that passed the cTrader test.
