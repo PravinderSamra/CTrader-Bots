@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-14T15:38:48.469Z",
+  "generatedAt": "2026-10-14T19:51:46.602Z",
   "yields": {
     "US10Y": 5.24,
     "US2Y": 4.8,
@@ -34,29 +34,29 @@
     "openInterestChange": -14341
   },
   "etfFlows": {
-    "gldTonnes": 1079.1,
-    "gldWoWChange": 3.8,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1074.2,
+    "gldWoWChange": -4.9,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4084.29,
-    "XAGUSD": 55.92,
-    "EURUSD": 1.11173,
-    "USDJPY": 158.8815,
-    "USDCHF": 0.83908,
-    "USDCNH": 6.69951,
-    "GBPUSD": 1.31464,
-    "USDCAD": 1.4281,
-    "USDSEK": 10.0749,
-    "US500": 7736.9,
-    "GER40": 25320.95,
-    "UK100": 10726.15,
+    "XAUUSD": 4102.935,
+    "XAGUSD": 55.629,
+    "EURUSD": 1.11557,
+    "USDJPY": 158.286,
+    "USDCHF": 0.8349,
+    "USDCNH": 6.69538,
+    "GBPUSD": 1.31898,
+    "USDCAD": 1.42422,
+    "USDSEK": 10.0259,
+    "US500": 7721,
+    "GER40": 25279.95,
+    "UK100": 10714.55,
     "ADR_14day": 77.5,
-    "ADR_usedToday": 90.7,
-    "goldSilverRatio": 73
+    "ADR_usedToday": 97.1,
+    "goldSilverRatio": 73.8
   },
   "dollarLiquidity": {
-    "stlfsi": -0.4681,
+    "stlfsi": -0.7206,
     "nfci": -0.494
   },
   "geopoliticalRisk": {
@@ -66,28 +66,22 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "US consumer prices accelerate in September on costlier gasoline; core CPI firmer - Reuters",
+      "headline": "US inflation heats up in September; Fed rate hike this month back on table - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-10-14T13:12:42.000Z",
+      "publishedAt": "2026-10-14T17:25:53.000Z",
       "hoursAgo": 2.4
     },
     {
       "headline": "Iran's central bank governor dismisses claims of economic collapse amid US blockade - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-14T11:26:01.000Z",
-      "hoursAgo": 4.2
+      "hoursAgo": 8.4
     },
     {
       "headline": "India's wholesale inflation rises faster than expected at 11.4% in September - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-14T06:35:00.000Z",
-      "hoursAgo": 9.1
-    },
-    {
-      "headline": "Airport attacks put aviation in crosshairs of geopolitical conflicts",
-      "source": "CNBC",
-      "publishedAt": "2026-10-13T18:33:42.000Z",
-      "hoursAgo": 21.1
+      "hoursAgo": 13.3
     }
   ],
   "briefing": null
