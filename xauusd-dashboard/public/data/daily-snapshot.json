@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-10-14T19:51:46.602Z",
+  "generatedAt": "2026-10-14T22:52:21.360Z",
   "yields": {
-    "US10Y": 5.24,
-    "US2Y": 4.8,
-    "realYield10Y": 2.91,
-    "realYield5Y": 2.68,
-    "curve2s10s": 44,
-    "breakeven10Y": 2.33,
-    "breakeven5Y": 2.33,
-    "forward5y5y": 2.33,
+    "US10Y": 5.21,
+    "US2Y": 4.79,
+    "realYield10Y": 2.88,
+    "realYield5Y": 2.67,
+    "curve2s10s": 42,
+    "breakeven10Y": 2.35,
+    "breakeven5Y": 2.36,
+    "forward5y5y": 2.34,
     "dayOverDay": {
-      "US10Y": 0.02,
-      "US2Y": 0.05,
-      "realYield10Y": 0.04
+      "US10Y": -0.03,
+      "US2Y": -0.01,
+      "realYield10Y": -0.03
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-10-28",
     "probCut": 0,
-    "probHold": 48,
-    "probHike": 52
+    "probHold": 60,
+    "probHike": 40
   },
   "marketVolatility": {
     "GVZ": 22.09,
@@ -34,25 +34,25 @@
     "openInterestChange": -14341
   },
   "etfFlows": {
-    "gldTonnes": 1074.2,
-    "gldWoWChange": -4.9,
+    "gldTonnes": 1072.8,
+    "gldWoWChange": -1.4,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4102.935,
-    "XAGUSD": 55.629,
-    "EURUSD": 1.11557,
-    "USDJPY": 158.286,
-    "USDCHF": 0.8349,
-    "USDCNH": 6.69538,
-    "GBPUSD": 1.31898,
-    "USDCAD": 1.42422,
-    "USDSEK": 10.0259,
-    "US500": 7721,
-    "GER40": 25279.95,
-    "UK100": 10714.55,
-    "ADR_14day": 77.5,
-    "ADR_usedToday": 97.1,
+    "XAUUSD": 4108.275,
+    "XAGUSD": 55.7,
+    "EURUSD": 1.11707,
+    "USDJPY": 158.064,
+    "USDCHF": 0.83401,
+    "USDCNH": 6.69374,
+    "GBPUSD": 1.32045,
+    "USDCAD": 1.42254,
+    "USDSEK": 10.00853,
+    "US500": 7706.1,
+    "GER40": 25275.95,
+    "UK100": 10713.05,
+    "ADR_14day": 71.9,
+    "ADR_usedToday": 9.4,
     "goldSilverRatio": 73.8
   },
   "dollarLiquidity": {
@@ -68,20 +68,26 @@
     {
       "headline": "US inflation heats up in September; Fed rate hike this month back on table - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-10-14T17:25:53.000Z",
-      "hoursAgo": 2.4
+      "publishedAt": "2026-10-14T21:45:35.000Z",
+      "hoursAgo": 1.1
     },
     {
       "headline": "Iran's central bank governor dismisses claims of economic collapse amid US blockade - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-14T11:26:01.000Z",
-      "hoursAgo": 8.4
+      "hoursAgo": 11.4
     },
     {
       "headline": "India's wholesale inflation rises faster than expected at 11.4% in September - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-14T06:35:00.000Z",
-      "hoursAgo": 13.3
+      "hoursAgo": 16.3
+    },
+    {
+      "headline": "Bank of England's Pill says he's sceptical about market pricing four rate hikes - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-14T06:32:00.000Z",
+      "hoursAgo": 16.3
     }
   ],
   "briefing": null
