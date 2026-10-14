@@ -212,3 +212,14 @@ a tight lock sells those trades at breakeven or a small win. The bot's own exits
 (A Python re-creation of the rules on Pepperstone D1 bars, scripts/ds_profit_lock.py, gave a different baseline
 (+$1.7k) because of data/bar timing, so it was not used for the decision.)
 Next: size ladder (20-30% steps as the balance grows, never in drawdown).
+
+## Size ladder test (14 Oct 2026, scripts/ds_size_ladder.py) - RESULT: KEEP FLAT $13k
+The bot's own tick trades re-sized by each rule (2020-23 first, 2024-26 once). Keep only if profit per $ of max
+drawdown does not fall and the worst day stays inside the $2,000 guard.
+- Flat $13k: 2020-23 +$14,479, DD $5,069 (ratio 2.86); 2024-26 +$15,003, DD $4,495 (3.34).
+- Ladder A (Umar: +25% per +$3k, step down after a $2k drawdown): 2020-23 size ran to 9x in the 2021 rally, then
+  2022 losses at that size: DD $26,218, worst day -$8,672. 2024-26 DD $7,871. REJECT (far too aggressive).
+- Ladder B (size in proportion to balance): +$15,203 / DD $5,927 (2.56) and +$15,864 / DD $4,677 (3.39), worst day
+  -$2,139 / -$2,058. About the same as flat. REJECT (no real gain, slightly more risk).
+Reading: on a 10% challenge account the account never grows enough for a ladder to matter, and a fast ladder adds
+size just before losing spells. Re-size by hand only after a big balance change (e.g. funded account or payout).
