@@ -70,3 +70,6 @@ Caps of 4 or 3 cost too much profit (+39.7R / +26.8R): the days many indices dip
 Net +$5,954 (v1.0: +$7,465), PF 1.74, 168 trades, 57% win, average +$35, largest loss -$472, max balance DD 2.90%,
 max equity DD 4.09%. The cap cost ~20% of profit in a period with no crash (about $130 a year at the live $100/R);
 it only pays off on a crash day. Accepted as insurance. GO LIVE at Risk Per R = $100 for the first 30 trades.
+Log check: 2021-23 +$1,926 (99 trades), 2024-26 +$4,027 (69). By index: UK100 +1,527, GER40 +1,444, US500 +1,396,
+HK50 +686, EU50 +666, US100 +536, FRA40 +324, US30 -31, AUS200 -596 (7 of 9 positive). 12 signals skipped because
+the risk budget was full. AUS200 stays in (removing the one weak market after seeing results would be curve-fitting).
