@@ -19,3 +19,14 @@ Our own SQX-style generator, run through research/QUANT_PROCESS.md.
   BB2.5|none|TIME5|L: 328 trades 2010-26, +0.21R, max DD 11.5R, worst trade -3.4R; holdout +0.30R (95% low +0.09).
   BB2.0|trend|TIME5|L: 338 trades, +0.21R, max DD 11.0R, worst trade -3.1R; holdout +0.16R (95% low +0.02).
 Next: portfolio Monte Carlo with the live bots, then one generic factory cBot for a cTrader tick test.
+
+## v2 results (15 Oct 2026, 4-hour and 1-hour bars, 20 markets 2014-2026, 9,504 strategies)
+- Pre-registered pipeline (run_factory_h.py). Survivors: H4 indices 0, H4 FX 0, H4 commodities 1, H1 all groups 0.
+- The one survivor (H4 BRK100 London-hours short on gold/silver/oil, 3-bar hold: build +0.16R, confirm +0.13R,
+  ~57 trades a year, NAS corr 0.00) FAILED the 2024-26 holdout: -0.09R on 146 trades.
+- Across all 9,504: only ~75 were positive in both build and confirm, about what chance alone produces from that
+  many tries. Best near-misses (H4 index Bollinger dip in London hours, H4 FX false breakouts) are not adopted:
+  loosening the bar after seeing them would be data-mining.
+- Reading: simple technical building blocks have no robust edge after costs on 1-hour / 4-hour CFD bars. Higher
+  frequency needs structural ingredients (session/auction structure like the NAS opening range, documented
+  calendar/flow effects, order flow), not more indicator combinations.

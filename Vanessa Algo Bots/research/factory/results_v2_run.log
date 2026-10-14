@@ -1,0 +1,9 @@
+[H4 IDX] 1584 strategies x 10 markets (16s): stage1 1  stage2 0  confirm 0  NAS-corr<0.3 0
+[H4 FX] 1584 strategies x 6 markets (13s): stage1 0  stage2 0  confirm 0  NAS-corr<0.3 0
+[H4 COM] 1584 strategies x 4 markets (9s): stage1 30  stage2 28  confirm 1  NAS-corr<0.3 1
+[H1 IDX] 1584 strategies x 10 markets (55s): stage1 0  stage2 0  confirm 0  NAS-corr<0.3 0
+[H1 FX] 1584 strategies x 6 markets (41s): stage1 0  stage2 0  confirm 0  NAS-corr<0.3 0
+[H1 COM] 1584 strategies x 4 markets (29s): stage1 1  stage2 1  confirm 0  NAS-corr<0.3 0
+
+SHORTLIST after de-duplication: 1
+  COM H4|BRK100|london|TIME3|S                 build n=  405 avg=+0.160R pf=1.65 | confirm n= 175 avg=+0.128R | ~59/yr | NAS corr -0.01
