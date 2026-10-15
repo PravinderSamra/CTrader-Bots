@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-15T10:35:29.010Z",
+  "generatedAt": "2026-10-15T12:40:19.873Z",
   "yields": {
     "US10Y": 5.21,
     "US2Y": 4.79,
@@ -34,30 +34,30 @@
     "openInterestChange": -14341
   },
   "etfFlows": {
-    "gldTonnes": 1060.9,
-    "gldWoWChange": -11.9,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1061,
+    "gldWoWChange": 0.1,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4154.295,
-    "XAGUSD": 56.67,
-    "EURUSD": 1.12075,
-    "USDJPY": 157.855,
-    "USDCHF": 0.83029,
-    "USDCNH": 6.69154,
-    "GBPUSD": 1.32511,
-    "USDCAD": 1.42059,
-    "USDSEK": 9.98397,
-    "US500": 7697.8,
-    "GER40": 25198.05,
-    "UK100": 10778.75,
+    "XAUUSD": 4154.055,
+    "XAGUSD": 56.754,
+    "EURUSD": 1.12102,
+    "USDJPY": 157.862,
+    "USDCHF": 0.82982,
+    "USDCNH": 6.69038,
+    "GBPUSD": 1.3254,
+    "USDCAD": 1.42011,
+    "USDSEK": 9.96123,
+    "US500": 7706.8,
+    "GER40": 25256.75,
+    "UK100": 10815.75,
     "ADR_14day": 71.9,
     "ADR_usedToday": 62.1,
-    "goldSilverRatio": 73.3
+    "goldSilverRatio": 73.2
   },
   "dollarLiquidity": {
     "stlfsi": -0.7206,
-    "nfci": -0.494
+    "nfci": -0.499
   },
   "geopoliticalRisk": {
     "gpr": 146.2,
@@ -66,28 +66,28 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Bank of England's Breeden says cost-cutting by firms helping central bank - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-15T08:47:37.000Z",
+      "hoursAgo": 3.9
+    },
+    {
       "headline": "BoE's Pill says a rate hike need not be start of long series - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-15T04:45:00.000Z",
-      "hoursAgo": 5.8
+      "hoursAgo": 7.9
     },
     {
       "headline": "US considers easing sanctions on shadow fleet vessels to cut freight rates, official says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-15T00:06:00.000Z",
-      "hoursAgo": 10.5
+      "hoursAgo": 12.6
     },
     {
       "headline": "US inflation heats up in September; Fed rate hike this month back on table - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-14T21:45:35.000Z",
-      "hoursAgo": 12.8
-    },
-    {
-      "headline": "Iran's central bank governor dismisses claims of economic collapse amid US blockade - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-14T11:26:01.000Z",
-      "hoursAgo": 23.2
+      "hoursAgo": 14.9
     }
   ],
   "briefing": null

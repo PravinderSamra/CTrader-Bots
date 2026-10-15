@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-10-15T10:35:33.519Z",
+  "generatedAt": "2026-10-15T12:40:24.792Z",
   "prices": {
-    "UK100": 10779.25,
-    "GBPUSD": 1.32519,
-    "GBPEUR": 1.1824,
-    "US500": 7698.9,
-    "NAS100": 29626.05,
-    "BRENT": 106.69,
+    "UK100": 10815.25,
+    "GBPUSD": 1.3255,
+    "GBPEUR": 1.1823,
+    "US500": 7706.6,
+    "NAS100": 29634.85,
+    "BRENT": 106.645,
     "COPPER": 6.6162,
-    "VIX": 17.205,
-    "USDX": 102.117,
-    "XAUUSD": 4154.395,
-    "UK100_dayPct": 0.63
+    "VIX": 17.105,
+    "USDX": 102.087,
+    "XAUUSD": 4155.34,
+    "UK100_dayPct": 0.96
   },
   "fx": {
-    "gbpUsdDayPct": 0.44,
+    "gbpUsdDayPct": 0.46,
     "gbpUsd20dPercentile": 35,
     "sterlingEri": 85.158,
     "sterlingEriDayChange": -0.26,
@@ -36,25 +36,25 @@
     "daysToMpc": 21
   },
   "usLinkage": {
-    "us500DayPct": -0.26,
-    "nas100DayPct": -1.02,
-    "vix": 17.205,
+    "us500DayPct": -0.16,
+    "nas100DayPct": -0.99,
+    "vix": 17.105,
     "vixRegime": "NORMAL",
     "us10y": 5.21,
-    "usdx": 102.117
+    "usdx": 102.087
   },
   "commodities": {
-    "brentDayPct": -1.71,
+    "brentDayPct": -1.75,
     "copperDayPct": -0.82,
-    "goldDayPct": 1.21,
+    "goldDayPct": 1.23,
     "brent20dTrend": "UP"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": -0.41,
-    "dax40DayPct": -0.29,
-    "eurUsdDayPct": 0.46,
-    "ftseDaxCorr20d": 0.76,
-    "ftseSx5eCorr20d": 0.75,
+    "eurostoxx50DayPct": -0.22,
+    "dax40DayPct": -0.08,
+    "eurUsdDayPct": 0.5,
+    "ftseDaxCorr20d": 0.75,
+    "ftseSx5eCorr20d": 0.74,
     "tapeAgreement": "DIVERGING",
     "preOpenLead": "NONE"
   },
@@ -69,7 +69,7 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent -1.71%",
+      "driver": "Brent -1.75%",
       "read": "BEARISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
@@ -105,27 +105,39 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Cboe to expand options trading hours for major stocks and ETFs",
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/15/cboe-stock-etf-options-extended-hours.html",
+      "hoursAgo": 0.6
+    },
+    {
+      "headline": "Bank of England's Breeden says cost-cutting by firms helping central bank - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQTlRqOEp1TktZM3ZxOUZ4ZU9jUHJCX1JkRjJFS2Z6T0NwT00zSk8weGswQ3ZJWmVIdGxveko1ZUg0SU9kQ1Z6RXlMYUltaDZMSlRiRE9YeFlBbDVxRXlxOThrYTFsejg3ZEJjWkNLM3ZqaXpuMmZqTlo2aW4wUEdjS1pibTNEb0RQc09SNzNNQTRfUUVsUWFYMTNZRHN4T29EZFExX0RRUVgzcUhLeTl1T2xWWTA?oc=5",
+      "hoursAgo": 3.9
+    },
+    {
       "headline": "BoE's Pill says a rate hike need not be start of long series - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxONEUxTUdrNGxTY0Y0LWE3YWNjUk1Nc3FmX1RWRUhDeXVSWTYxcmM5a3czc0g2QkJZcUgtTENRNTVRc2p4d1RXQnRrLU1fTUdhN1JBbF9uWGc4UVVVWFlnLXpUdkRLX050M1RGTk5TUXl3T203VElqeF9IU0J0b3RoWlJHcDNHU2hoeGI4RHE2azhzVlNlYWxVcTZUbDlkcmVL?oc=5",
-      "hoursAgo": 5.8
+      "hoursAgo": 7.9
     },
     {
       "headline": "US considers easing sanctions on shadow fleet vessels to cut freight rates, official says - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxOdC1hR0pwcGJWU2NSX0szSlhYNlBMYUc2Y1ktS0NseE5MeEVKdE9jUVVqUHlva3dxeDg4NXRTQXM0UlpyMWJlTHNSN1ZiOWFqcWdIX1NNcGRhYzBsak5iVnZrYnJaX2xGbkRLcjNrQmFkUUd2ejVHWm0ydVJ2RVJhS1VFbkRhTHg5MVJXbnJDQ3YtRmVLWWpKU2xwUXNZSzMtUWI4cjJfaXp4djM0V2lQQmc4X2VsaVkxMHFpVUZ2bWNLaldpQnBNZmNn?oc=5",
-      "hoursAgo": 10.5
+      "hoursAgo": 12.6
     },
     {
       "headline": "US inflation heats up in September; Fed rate hike this month back on table - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNX3hkV3J5em1xWWY4V0hQODFTamFtU3NvdkpPRUUzMGY0TnlKaVlneXZPc0J6bFpWdDZWb2hLRkZZaHhZVElDSXNFbGNYMVVBRGR6c1RlNDA4cEhkMEcwck5VMFRtZ1QxOFJqNTkyaGJzWWFLSXp2Z0l1Z19vMDh5bGd6N1FJSkJFR2tZUXd1UWUzeVlvZi1xNTVONk00ejJ5cE0xSGY4THFsaUo0RGxPV3dpaW4tbEZseUE?oc=5",
-      "hoursAgo": 12.8
+      "hoursAgo": 14.9
     }
   ],
   "riskTone": null,
   "bias": {
-    "score": -8,
+    "score": -7,
     "label": "BEARISH",
     "conviction": "HIGH",
     "drivers": [
@@ -133,25 +145,25 @@
         "name": "GBP",
         "weight": 3,
         "impact": "BEARISH",
-        "detail": "GBP/USD +0.44% → FTSE headwind (sign-flipped)"
+        "detail": "GBP/USD +0.46% → FTSE headwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
         "impact": "BEARISH",
-        "detail": "US500 -0.26% today"
+        "detail": "US500 -0.16% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 17.205 — NORMAL regime"
+        "detail": "VIX 17.105 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
         "impact": "BEARISH",
-        "detail": "Brent -1.71% (energy majors)"
+        "detail": "Brent -1.75% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
@@ -180,14 +192,14 @@
       {
         "name": "European tape (SX5E/DAX)",
         "weight": 2.5,
-        "impact": "BEARISH",
-        "detail": "SX5E -0.41% / DAX -0.29%"
+        "impact": "NEUTRAL",
+        "detail": "SX5E -0.22% / DAX -0.08%"
       }
     ],
     "eventSuppressed": false
   },
   "orbContext": {
-    "computedAt": "2026-10-15T10:35:33.518Z",
+    "computedAt": "2026-10-15T12:40:24.791Z",
     "mode": "POST_ORB",
     "cashOpenLondon": "08:00 BST",
     "overnightHigh": 10781.1,
@@ -197,41 +209,41 @@
     "priorClose": 10712.1,
     "prevWeekHigh": 10605.4,
     "prevWeekLow": 10359.2,
-    "gapPts": 67.1,
-    "gapPct": 0.63,
+    "gapPts": 103.1,
+    "gapPct": 0.96,
     "orbHigh": 10770,
     "orbLow": 10709.6,
     "orbBrokenDirection": "UP",
     "eventWindows": [],
     "adr14": 117.7,
-    "adrUsedPct": 97,
+    "adrUsedPct": 118,
     "expansionState": {
       "label": "EXPANSION",
-      "rangeSoFarPct": 97,
-      "expectedRangePctByNow": 72,
-      "rangeVsTypical": 1.35,
-      "expectedVolPctByNow": 45,
-      "moveMostlyDone": false,
-      "note": "Range 97% of ADR vs ~72% typical by 11:00 BST (ahead of the typical pace (expansion)). only ~45% of volume typically done by now — an afternoon expansion is still possible."
+      "rangeSoFarPct": 118,
+      "expectedRangePctByNow": 84,
+      "rangeVsTypical": 1.4,
+      "expectedVolPctByNow": 65,
+      "moveMostlyDone": true,
+      "note": "Range 118% of ADR vs ~84% typical by 13:00 BST (ahead of the typical pace (expansion)). ~65% of a typical day's volume already done — expect a rangebound remainder, tighten targets."
     }
   },
   "orbIntel": {
     "stance": "BREAKOUTS_SUSPECT",
-    "stanceLine": "Breakouts suspect in both directions today — 97% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+    "stanceLine": "Breakouts suspect in both directions today — 118% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
     "signals": [
       {
         "direction": "BREAKOUT_SUSPECT",
         "severity": "STRONG",
         "source": "RANGE",
         "rule": "R4",
-        "text": "97% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        "text": "118% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
       },
       {
         "direction": "BREAKOUT_SUSPECT",
         "severity": "CAUTION",
         "source": "STRUCTURE",
         "rule": "R2",
-        "text": "ORB broke UP against a BEARISH macro bias (-8) — counter-bias breaks fail more often; treat continuation as suspect."
+        "text": "ORB broke UP against a BEARISH macro bias (-7) — counter-bias breaks fail more often; treat continuation as suspect."
       },
       {
         "direction": "NEUTRAL",
