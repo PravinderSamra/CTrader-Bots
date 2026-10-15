@@ -78,3 +78,17 @@ the risk budget was full. AUS200 stays in (removing the one weak market after se
 FTMO also has US2000.cash and JP225.cash. Same rule, risk budget 6, 2010-2026: 9 indices +58.3R / DD 9.1R;
 +US2000 +53.5R / DD 10.1R (US2000 alone -0.05R, 29 trades); +JP225 +55.3R / DD 12.0R (JP225 alone 28 trades,
 negative to 2020). Both left out. Default Symbols = the 9 indices that passed the cTrader test.
+
+## Weekend gap check and v1.2 (15 Oct 2026)
+research/factory/weekend_gaps_fac.py, 9 indices 2014-2026: 99% of trades hold over a weekend (300 weekends).
+Monday gaps averaged -0.033R each (-9.8R in total, t = -2.5); closing Friday and reopening Monday would have cost
+about 2.5R in extra spread. Worst real weekends: Mar 2020 -4.3R (all positions), Apr 2025 -1.8R. Positions are
+small when markets are wild, so a -7% to -9% gap cost only about 1R per position. Stress: -10% gap in a calm market
+with 6 full positions is about -25R ($2,500 at $100/R, $5,000 at $200/R).
+v1.2 adds "Flat Over Weekend" (default OFF, so live behaviour is unchanged): close at Friday 15:30 New York (a
+market that shuts earlier closes in its last 45 minutes), reopen at the Monday order time with the same size and
+stop, unless the exit rule fired on Friday's close.
+PRE-REGISTERED TEST (written before any cTrader run; the Python result above was seen first, so cTrader decides):
+v1.2, US500.cash D1, defaults ($200/R), M1 bars, 1 Jan 2021 - 14 Oct 2026, balance 100,000, commission 30; once with Flat Over
+Weekend = No and once with Yes. Adopt Yes only if net profit is at least 95% of the No run AND the max equity
+drawdown is no higher. Otherwise keep No. The No run must match the v1.1 result, +$5,954 (sanity check).

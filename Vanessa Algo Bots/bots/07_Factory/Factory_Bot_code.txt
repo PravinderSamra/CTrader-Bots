@@ -1,4 +1,12 @@
-// Factory Bot v1.1 (Vanessa Algo Bots)
+// Factory Bot v1.2 (Vanessa Algo Bots)
+// v1.2: optional Flat Over Weekend (default off). Closes
+// every position on Friday at 15:30 New York (a market
+// that shuts earlier for the weekend, e.g. HK50, closes
+// in its last 45 minutes) and reopens it at the Monday order time with
+// the same size and stop, unless the exit rule fired on
+// Friday's close. Don't restart the bot over a weekend
+// while it is flat: it would forget what to reopen.
+// W| lines log weekend closes and reopens.
 // Default markets: 9 indices (US2000 and JP225 tested
 // and left out: they lower profit and raise drawdown).
 // v1.1: risk budget. Open positions together never
@@ -83,6 +91,9 @@ namespace cAlgo.Robots
             DefaultValue = 6, MinValue = 1)]
         public double MaxFull { get; set; }
 
+        [Parameter("Flat Over Weekend", Group = "Risk", DefaultValue = false)]
+        public bool WeekendFlat { get; set; }
+
         [Parameter("Order Delay (minutes)", Group = "Other", DefaultValue = 60,
             MinValue = 1)]
         public int DelayMinutes { get; set; }
@@ -108,10 +119,14 @@ namespace cAlgo.Robots
             public Book B;
             public int T;
             public bool Close;
+            public bool Reopen;
+            public double Units, Sl, Tp, W;
+            public int EntryBar;
         }
 
         private readonly List<Book> _books = new List<Book>();
         private readonly List<Order> _queue = new List<Order>();
+        private readonly List<Order> _parked = new List<Order>();
         private int Side => Direction == FacSide.Long ? 1 : -1;
 
         protected override void OnStart()
@@ -162,8 +177,9 @@ namespace cAlgo.Robots
                 bars.BarOpened += args => OnDailyBar(b);
             }
             Timer.Start(TimeSpan.FromMinutes(1));
-            Print("Factory Bot started: {0} {1} {2} {3} {4} {5} {6}",
-                Label, Entry, EntryP, Filter, Exit, ExitP, _books.Count);
+            Print("Factory Bot v1.2 started: {0} {1} {2} {3} {4} {5} {6}"
+                + " weekend flat {7}", Label, Entry, EntryP, Filter, Exit,
+                ExitP, _books.Count, WeekendFlat);
         }
 
         private Position PosOf(Book b) => Positions.FirstOrDefault(
@@ -278,6 +294,24 @@ namespace cAlgo.Robots
             int t = b.D.Count - 2;
             if (t < 210) return;
             var due = b.D.OpenTimes[t + 1].AddMinutes(DelayMinutes);
+            var park = _parked.FirstOrDefault(x => x.B == b);
+            if (park != null)
+            {
+                _parked.Remove(park);
+                b.EntryBar = park.EntryBar;
+                if (ExitSignal(b, t))
+                {
+                    Print("W|{0}|{1}|{2:yyyy-MM-dd}|exit rule fired while flat,"
+                        + " not reopened", Label, b.Sym.Name, b.D.OpenTimes[t]);
+                    b.EntryBar = -1;
+                }
+                else
+                {
+                    park.Due = due; park.T = t;
+                    _queue.Insert(0, park);
+                }
+                return;
+            }
             var pos = PosOf(b);
             if (pos != null)
             {
@@ -322,6 +356,8 @@ namespace cAlgo.Robots
             double used = 0;
             foreach (var q in Positions.Where(q => q.Label == Label))
                 used += Weight(q);
+            foreach (var q in _parked.Concat(_queue.Where(x => x.Reopen)))
+                used += q.W;
             double w = Math.Min(1.0, MaxFull - used);
             if (w < 0.05)
             {
@@ -363,12 +399,105 @@ namespace cAlgo.Robots
                 p.VolumeInUnits, p.EntryPrice, p.StopLoss, p.TakeProfit);
         }
 
+        // UTC -> New York time (2nd Sunday of March to 1st Sunday of November).
+        private static DateTime NewYork(DateTime utc)
+        {
+            var mar = new DateTime(utc.Year, 3, 1);
+            var dstStart = mar.AddDays((7 - (int)mar.DayOfWeek) % 7 + 7).AddHours(7);
+            var nov = new DateTime(utc.Year, 11, 1);
+            var dstEnd = nov.AddDays((7 - (int)nov.DayOfWeek) % 7).AddHours(6);
+            return utc.AddHours(utc >= dstStart && utc < dstEnd ? -4 : -5);
+        }
+
+        private bool FridayClose(Book b)
+        {
+            var now = Server.Time;
+            var ny = NewYork(now);
+            if (ny.DayOfWeek != DayOfWeek.Friday) return false;
+            if (ny.Hour * 60 + ny.Minute >= 15 * 60 + 30) return true;
+            try
+            {
+                var mh = b.Sym.MarketHours;
+                var left = mh.TimeTillClose();
+                if (left > TimeSpan.FromMinutes(45)) return false;
+                return !mh.IsOpened(now + left + TimeSpan.FromHours(12));
+            }
+            catch { return false; }
+        }
+
+        private void Reopen(Order o)
+        {
+            var b = o.B; var s = b.Sym;
+            if (PosOf(b) != null) return;
+            var tt = Side > 0 ? TradeType.Buy : TradeType.Sell;
+            double price = Side > 0 ? s.Ask : s.Bid;
+            if (o.Sl > 0 && (Side > 0 ? price <= o.Sl : price >= o.Sl))
+            {
+                Print("W|{0}|{1}|{2:yyyy-MM-dd HH:mm}|price beyond the stop,"
+                    + " not reopened", Label, s.Name, Server.Time);
+                b.EntryBar = -1;
+                return;
+            }
+            string tag = "w=" + o.W.ToString("0.00",
+                System.Globalization.CultureInfo.InvariantCulture);
+            var r = ExecuteMarketOrder(tt, s.Name, o.Units, Label,
+                (double?)null, (double?)null, tag);
+            if (!r.IsSuccessful) { Print("X|{0}|{1}|reopen rejected: {2}", Label,
+                s.Name, r.Error); b.EntryBar = -1; return; }
+            var p = r.Position;
+            var m1 = o.Sl > 0 ? p.ModifyStopLossPrice(o.Sl) : null;
+            var m2 = o.Tp > 0 ? p.ModifyTakeProfitPrice(o.Tp) : m1;
+            bool ok = (o.Sl <= 0 || (m1 != null && m1.IsSuccessful))
+                && (o.Tp <= 0 || (m2 != null && m2.IsSuccessful));
+            if (!ok)
+            {
+                Print("X|{0}|{1}|could not set stop/target, closed", Label, s.Name);
+                ClosePosition(p);
+                b.EntryBar = -1;
+                return;
+            }
+            b.EntryBar = o.EntryBar;
+            Print("W|{0}|{1}|{2}|{3:yyyy-MM-dd HH:mm}|reopened|{4}|{5}|SL {6}",
+                p.Id, Label, s.Name, p.EntryTime, p.VolumeInUnits,
+                p.EntryPrice, p.StopLoss);
+        }
+
+        private void WeekendCheck()
+        {
+            foreach (var p in Positions.Where(q => q.Label == Label).ToList())
+            {
+                var b = _books.FirstOrDefault(x => x.Sym.Name == p.SymbolName);
+                if (b == null || !Tradable(b) || !FridayClose(b)) continue;
+                if (b.EntryBar < 0) b.EntryBar = Math.Max(0,
+                    b.D.OpenTimes.GetIndexByTime(p.EntryTime) - 1);
+                bool exiting = _queue.Any(x => x.B == b && x.Close);
+                _queue.RemoveAll(x => x.B == b);
+                if (exiting)
+                {
+                    Print("C|{0}|{1}|{2:yyyy-MM-dd HH:mm}|exit rule",
+                        Label, p.SymbolName, Server.Time);
+                    ClosePosition(p);
+                    b.EntryBar = -1;
+                    continue;
+                }
+                _parked.Add(new Order { B = b, Reopen = true,
+                    Units = p.VolumeInUnits, Sl = p.StopLoss ?? 0,
+                    Tp = p.TakeProfit ?? 0, W = Weight(p), EntryBar = b.EntryBar });
+                Print("W|{0}|{1}|{2:yyyy-MM-dd HH:mm}|closed for the weekend",
+                    Label, p.SymbolName, Server.Time);
+                ClosePosition(p);
+                b.EntryBar = -1;
+            }
+        }
+
         protected override void OnTimer()
         {
+            if (WeekendFlat) WeekendCheck();
             foreach (var o in _queue.Where(x => x.Due <= Server.Time
-                && Tradable(x.B)).ToList())
+                && Tradable(x.B) && !(WeekendFlat && FridayClose(x.B))).ToList())
             {
                 _queue.Remove(o);
+                if (o.Reopen) { Reopen(o); continue; }
                 if (o.Close)
                 {
                     var p = PosOf(o.B);
