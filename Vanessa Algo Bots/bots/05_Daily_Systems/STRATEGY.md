@@ -53,3 +53,9 @@ Flat Over Weekend = Yes, Delay Minutes 60. Attach to any chart (e.g. US500.cash 
 - Live off-switch: back to demo if the win rate over the last 50 trades drops below 62%, or drawdown passes ~7%.
 
 Full rules and every test: research/DAILY_SYSTEMS_TEST_PLAN.md.
+
+## v1.4 crash-safe (15 Oct 2026)
+Live only: saves waiting orders, weekend positions, each trade's signal day and the daily guard total every minute
+(cTrader LocalStorage, this computer), reloads them after a restart, makes a missed day's decisions straight away, and
+never trades the same signal twice (checks History). Switched off in backtests, so backtest results are identical to v1.3.
+Restart with v1.4 any time except the order window (about 23:00-00:30 UK).

@@ -1,6 +1,6 @@
 ========================================================================
-DAILY SYSTEMS cBot v1.3
-Backup saved 14 October 2026 - Vanessa Algo Bots
+DAILY SYSTEMS cBot v1.4
+Backup saved 15 October 2026 - Vanessa Algo Bots
 ========================================================================
 
 cBot name in cTrader: Daily Systems
@@ -21,6 +21,10 @@ SWITCH-OFF RULE (monthly review)
 Back to demo if the win rate over the last 50 trades drops below 62%,
 or the drawdown passes about 7%.
 
+CRASH-SAFE
+Saves its to-do list every minute on this computer and reloads it after a
+restart. Look for the R| line in the log after restarting.
+
 HOW TO RESTORE
 In cTrader Algo: New cBot, delete the template code, paste everything
 below the CODE line, then Build.
@@ -28,7 +32,13 @@ below the CODE line, then Build.
 ========================================================================
 CODE (copy from the next line to the end)
 ========================================================================
-// Daily Systems cBot v1.3 (Vanessa Algo Bots)
+// Daily Systems cBot v1.4 (Vanessa Algo Bots)
+// v1.4: crash-safe. Live only (not in backtests), the bot saves its
+// to-do list every minute: orders waiting to be sent, positions closed
+// for the weekend, each trade's signal day and the daily guard total.
+// After a restart it reloads them, and if a new daily bar opened while
+// it was off, it makes that day's decisions straight away. It never
+// opens a trade twice for the same signal. R| lines log what it reloaded.
 // v1.3: orders and closes are only sent when that market is trading: a tick in the last 2 minutes and at least
 // 15 minutes since it reopened. Otherwise they wait and retry every minute (GER40 is still closed at the 23:00 UTC
 // order time; on tick data a market order there hung the backtest).
@@ -129,6 +139,9 @@ namespace cAlgo.Robots
         private readonly List<Action> _parked = new List<Action>();                          // positions closed for the weekend
         private double _closedCum, _dayStartEq, _dayMin;
         private DateTime _day = DateTime.MinValue, _haltedDay = DateTime.MinValue;
+        private readonly Dictionary<Book, DateTime> _done = new Dictionary<Book, DateTime>();
+        private string _saved = "";
+        private bool Live => RunningMode == RunningMode.RealTime;
 
         protected override void OnStart()
         {
@@ -173,7 +186,122 @@ namespace cAlgo.Robots
                 if (args.Position.Label != null && args.Position.Label.StartsWith(Label + "-")) _closedCum += args.Position.NetProfit;
             };
             Timer.Start(TimeSpan.FromMinutes(1));
-            Print("Daily Systems started: {0} symbols, notional ${1} per position.", _books.Count, Notional);
+            Print("Daily Systems v1.4 started: {0} symbols, notional ${1} per position.", _books.Count, Notional);
+            if (Live) Restore();
+        }
+
+        // ---------------- crash recovery (live only) ----------------
+        private string Key => "DSY_" + Account.Number + "_"
+            + new string(Label.Select(ch => char.IsLetterOrDigit(ch) ? ch : '_').ToArray());
+
+        private static string Num(double x) =>
+            x.ToString("R", System.Globalization.CultureInfo.InvariantCulture);
+
+        private static double Dbl(string x) =>
+            double.Parse(x, System.Globalization.CultureInfo.InvariantCulture);
+
+        private string Row(string kind, Action a) => string.Join(";", kind,
+            a.Due.Ticks, a.B.Sym.Name, a.B.D.OpenTimes[a.T].Ticks, a.Sys,
+            a.Close ? 1 : 0, a.Side == TradeType.Buy ? "B" : "S", Num(a.Stop),
+            Num(a.Target), a.Reopen ? 1 : 0, Num(a.Units), Num(a.Sl), Num(a.Tp),
+            a.Sig.Ticks);
+
+        private Action Parse(string[] f)
+        {
+            var b = _books.FirstOrDefault(x => x.Sym.Name == f[2]);
+            if (b == null) return null;
+            int t = b.D.OpenTimes.GetIndexByTime(new DateTime(long.Parse(f[3])));
+            if (t < 0 && f[0] == "K") t = 0;
+            if (t < 0) return null;
+            return new Action { Due = new DateTime(long.Parse(f[1])), B = b, T = t,
+                Sys = f[4][0], Close = f[5] == "1",
+                Side = f[6] == "B" ? TradeType.Buy : TradeType.Sell,
+                Stop = Dbl(f[7]), Target = Dbl(f[8]), Reopen = f[9] == "1",
+                Units = Dbl(f[10]), Sl = Dbl(f[11]), Tp = Dbl(f[12]),
+                Sig = new DateTime(long.Parse(f[13])) };
+        }
+
+        private void Save()
+        {
+            if (!Live) return;
+            var rows = new List<string>();
+            rows.Add(string.Join(";", "Y", _day.Ticks, Num(_dayStartEq),
+                Num(_dayMin), _haltedDay.Ticks));
+            foreach (var kv in _done) rows.Add(string.Join(";", "L",
+                kv.Key.Sym.Name, kv.Value.Ticks));
+            foreach (var kv in _sig) rows.Add(string.Join(";", "S", kv.Key,
+                kv.Value.Ticks));
+            foreach (var a in _queue) rows.Add(Row("Q", a));
+            foreach (var a in _parked) rows.Add(Row("K", a));
+            var text = string.Join("\n", rows);
+            if (text == _saved) return;
+            try
+            {
+                LocalStorage.SetString(Key, text, LocalStorageScope.Device);
+                LocalStorage.Flush(LocalStorageScope.Device);
+                _saved = text;
+            }
+            catch (Exception e) { Print("R|save failed: {0}", e.Message); }
+        }
+
+        private void Restore()
+        {
+            _closedCum = History.Where(h => h.Label != null
+                && h.Label.StartsWith(Label + "-")).Sum(h => h.NetProfit);
+            string text = null;
+            try { text = LocalStorage.GetString(Key, LocalStorageScope.Device); }
+            catch (Exception e) { Print("R|load failed: {0}", e.Message); }
+            var open = new HashSet<int>(Mine.Select(p => p.Id));
+            int q = 0, k = 0;
+            foreach (var line in (text ?? "").Split('\n'))
+            {
+                var f = line.Split(';');
+                try
+                {
+                    if (f[0] == "Y")
+                    {
+                        _day = new DateTime(long.Parse(f[1]));
+                        _dayStartEq = Dbl(f[2]); _dayMin = Dbl(f[3]);
+                        _haltedDay = new DateTime(long.Parse(f[4]));
+                    }
+                    else if (f[0] == "L")
+                    {
+                        var b = _books.FirstOrDefault(x => x.Sym.Name == f[1]);
+                        if (b != null) _done[b] = new DateTime(long.Parse(f[2]));
+                    }
+                    else if (f[0] == "S" && open.Contains(int.Parse(f[1])))
+                        _sig[int.Parse(f[1])] = new DateTime(long.Parse(f[2]));
+                    else if (f[0] == "Q" || f[0] == "K")
+                    {
+                        var a = Parse(f);
+                        if (a == null) continue;
+                        if (f[0] == "Q") { _queue.Add(a); q++; }
+                        else { _parked.Add(a); k++; }
+                    }
+                }
+                catch { Print("R|bad saved line skipped: {0}", line); }
+            }
+            Print("R|reloaded {0} waiting orders, {1} weekend positions, {2} trade dates",
+                q, k, _sig.Count);
+            foreach (var b in _books)
+            {
+                var last = b.D.OpenTimes[b.D.Count - 1];
+                DateTime seen;
+                if (!_done.TryGetValue(b, out seen)) { _done[b] = last; continue; }
+                if (seen >= last) continue;
+                Print("R|{0}|new daily bar opened while off, deciding now", b.Sym.Name);
+                OnDailyBar(b);
+            }
+            Save();
+        }
+
+        // True if this signal was already traded before a restart.
+        private bool AlreadyTraded(Action a, string tag, string name)
+        {
+            if (!Live) return false;
+            var barOpen = a.B.D.OpenTimes[Math.Min(a.T + 1, a.B.D.Count - 1)];
+            return History.Any(h => h.Label == tag && h.SymbolName == name
+                && (h.EntryTime >= a.Due || (!a.Reopen && h.ClosingTime >= barOpen)));
         }
 
         private IEnumerable<Position> Mine => Positions.Where(p => p.Label != null && p.Label.StartsWith(Label + "-"));
@@ -196,6 +324,7 @@ namespace cAlgo.Robots
         private void OnDailyBar(Book b)
         {
             int t = b.D.Count - 2;
+            _done[b] = b.D.OpenTimes[b.D.Count - 1];
             if (t < 210) return;
             var due = b.D.OpenTimes[t + 1].AddMinutes(DelayMinutes);
             var d = b.D; var C = d.ClosePrices; var H = d.HighPrices; var L = d.LowPrices; var O = d.OpenPrices;
@@ -245,6 +374,7 @@ namespace cAlgo.Robots
             if (UseE && PosOf(b, 'E') == null && Session(d, t) == DayOfWeek.Monday && Session(d, t - 1) == DayOfWeek.Friday && C[t] < C[t - 1])
                 Enter(b, t, 'E', due);
             if (UseF && PosOf(b, 'F') == null) MarcyF(b, t, due);
+            Save();
         }
 
         private bool ShouldExit(Book b, char sys, int sig, int t)
@@ -354,6 +484,7 @@ namespace cAlgo.Robots
                         Sl = p.StopLoss ?? 0, Tp = p.TakeProfit ?? 0, Sig = sig });
                     Print("W|{0}|{1}|{2:yyyy-MM-dd HH:mm}|closed for the weekend", p.Label, p.SymbolName, Server.Time);
                     ClosePosition(p);
+                    Save();
                 }
             }
 
@@ -368,6 +499,9 @@ namespace cAlgo.Robots
                 }
                 Open(a, day);
             }
+            foreach (var id in _sig.Keys.Where(i => !Mine.Any(p => p.Id == i)).ToList())
+                _sig.Remove(id);
+            Save();
         }
 
         private double MoneyPerUnit(Symbol s, double price) => price * s.TickValue / s.TickSize;
@@ -377,6 +511,11 @@ namespace cAlgo.Robots
             var b = a.B; var s = b.Sym; string name = s.Name, tag = Label + "-" + a.Sys;
             if (_haltedDay == day) { Print("X|{0}|{1}|{2:yyyy-MM-dd}|daily guard", tag, name, b.D.OpenTimes[a.T]); return; }
             if (PosOf(b, a.Sys) != null) return;
+            if (AlreadyTraded(a, tag, name))
+            {
+                Print("R|{0}|{1}|already traded before the restart, skipped", tag, name);
+                return;
+            }
             double price = a.Side == TradeType.Buy ? s.Ask : s.Bid;
             double open = Mine.Sum(p => MoneyPerUnit(Symbols.GetSymbol(p.SymbolName), p.EntryPrice) * p.VolumeInUnits);
             if (open + Notional > MaxNotionalMult * Account.Balance)
@@ -422,6 +561,7 @@ namespace cAlgo.Robots
 
         protected override void OnStop()
         {
+            Save();
             foreach (var kv in _count.OrderBy(k => k.Key)) Print("D|{0}|{1}", kv.Key, kv.Value);
             foreach (var h in History.Where(h => h.Label != null && h.Label.StartsWith(Label + "-")).OrderBy(h => h.ClosingTime))
                 Print("H|{0}|{1}|{2}|{3:yyyy-MM-dd}|{4:yyyy-MM-dd}|{5}|{6:F2}|{7:F2}|{8:F2}|{9:F2}|{10:F2}|{11:F2}",

@@ -1,5 +1,5 @@
 ========================================================================
-FACTORY BOT v1.2 - BOLLINGER BAND STRATEGY (candidate A)
+FACTORY BOT v1.3 - BOLLINGER BAND STRATEGY (candidate A)
 Backup saved 15 October 2026 - Vanessa Algo Bots
 ========================================================================
 
@@ -21,6 +21,10 @@ SWITCH-OFF RULE (monthly review)
 Pause if the last 50 trades average below -0.05R, or the drawdown passes $3,500.
 After 30 live trades that pass the review, Risk Per R can go up to 200.
 
+CRASH-SAFE
+Saves its to-do list every minute on this computer and reloads it after a
+restart. Look for the R| line in the log after restarting.
+
 HOW TO RESTORE
 In cTrader Algo: New cBot, delete the template code, paste everything
 below the CODE line, then Build.
@@ -28,14 +32,20 @@ below the CODE line, then Build.
 ========================================================================
 CODE (copy from the next line to the end)
 ========================================================================
-// Factory Bot v1.2 (Vanessa Algo Bots)
+// Factory Bot v1.3 (Vanessa Algo Bots)
+// v1.3: crash-safe. Live only (not in backtests), the bot
+// saves its to-do list every minute: orders waiting to be
+// sent, positions closed for the weekend and each trade's
+// signal day. After a restart it reloads them, and if a
+// new daily bar opened while it was off, it makes that
+// day's decisions straight away. It never opens a trade
+// twice for the same signal. R| lines log the reload.
 // v1.2: optional Flat Over Weekend (default off). Closes
 // every position on Friday at 15:30 New York (a market
 // that shuts earlier for the weekend, e.g. HK50, closes
 // in its last 45 minutes) and reopens it at the Monday order time with
 // the same size and stop, unless the exit rule fired on
-// Friday's close. Don't restart the bot over a weekend
-// while it is flat: it would forget what to reopen.
+// Friday's close.
 // W| lines log weekend closes and reopens.
 // Default markets: 9 indices (US2000 and JP225 tested
 // and left out: they lower profit and raise drawdown).
@@ -157,6 +167,10 @@ namespace cAlgo.Robots
         private readonly List<Book> _books = new List<Book>();
         private readonly List<Order> _queue = new List<Order>();
         private readonly List<Order> _parked = new List<Order>();
+        private readonly Dictionary<Book, DateTime> _done =
+            new Dictionary<Book, DateTime>();
+        private string _saved = "";
+        private bool Live => RunningMode == RunningMode.RealTime;
         private int Side => Direction == FacSide.Long ? 1 : -1;
 
         protected override void OnStart()
@@ -207,9 +221,121 @@ namespace cAlgo.Robots
                 bars.BarOpened += args => OnDailyBar(b);
             }
             Timer.Start(TimeSpan.FromMinutes(1));
-            Print("Factory Bot v1.2 started: {0} {1} {2} {3} {4} {5} {6}"
+            Print("Factory Bot v1.3 started: {0} {1} {2} {3} {4} {5} {6}"
                 + " weekend flat {7}", Label, Entry, EntryP, Filter, Exit,
                 ExitP, _books.Count, WeekendFlat);
+            if (Live) Restore();
+        }
+
+        // ---------------- crash recovery (live only) ----------------
+        private string Key => "FAC_" + Account.Number + "_" + new string(
+            Label.Select(ch => char.IsLetterOrDigit(ch) ? ch : '_').ToArray());
+
+        private static string Num(double x) =>
+            x.ToString("R", System.Globalization.CultureInfo.InvariantCulture);
+
+        private static double Dbl(string x) =>
+            double.Parse(x, System.Globalization.CultureInfo.InvariantCulture);
+
+        private static long BarTicks(Book b, int i) =>
+            i >= 0 && i < b.D.Count ? b.D.OpenTimes[i].Ticks : 0;
+
+        private static int BarIndex(Book b, string ticks)
+        {
+            long x = long.Parse(ticks);
+            return x == 0 ? -1 : b.D.OpenTimes.GetIndexByTime(new DateTime(x));
+        }
+
+        private string Row(string kind, Order o) => string.Join(";", kind,
+            o.Due.Ticks, o.B.Sym.Name, BarTicks(o.B, o.T), o.Close ? 1 : 0,
+            o.Reopen ? 1 : 0, Num(o.Units), Num(o.Sl), Num(o.Tp), Num(o.W),
+            BarTicks(o.B, o.EntryBar));
+
+        private Order Parse(string[] f)
+        {
+            var b = _books.FirstOrDefault(x => x.Sym.Name == f[2]);
+            if (b == null) return null;
+            int t = BarIndex(b, f[3]);
+            if (t < 0 && f[0] == "K") t = 0;
+            if (t < 0) return null;
+            return new Order { Due = new DateTime(long.Parse(f[1])), B = b, T = t,
+                Close = f[4] == "1", Reopen = f[5] == "1", Units = Dbl(f[6]),
+                Sl = Dbl(f[7]), Tp = Dbl(f[8]), W = Dbl(f[9]),
+                EntryBar = BarIndex(b, f[10]) };
+        }
+
+        private void Save()
+        {
+            if (!Live) return;
+            var rows = new List<string>();
+            foreach (var kv in _done) rows.Add(string.Join(";", "L",
+                kv.Key.Sym.Name, kv.Value.Ticks));
+            foreach (var b in _books.Where(x => x.EntryBar >= 0))
+                rows.Add(string.Join(";", "E", b.Sym.Name,
+                    BarTicks(b, b.EntryBar)));
+            foreach (var o in _queue) rows.Add(Row("Q", o));
+            foreach (var o in _parked) rows.Add(Row("K", o));
+            var text = string.Join("\n", rows);
+            if (text == _saved) return;
+            try
+            {
+                LocalStorage.SetString(Key, text, LocalStorageScope.Device);
+                LocalStorage.Flush(LocalStorageScope.Device);
+                _saved = text;
+            }
+            catch (Exception e) { Print("R|save failed: {0}", e.Message); }
+        }
+
+        private void Restore()
+        {
+            string text = null;
+            try { text = LocalStorage.GetString(Key, LocalStorageScope.Device); }
+            catch (Exception e) { Print("R|load failed: {0}", e.Message); }
+            int q = 0, k = 0;
+            foreach (var line in (text ?? "").Split('\n'))
+            {
+                var f = line.Split(';');
+                try
+                {
+                    if (f[0] == "L" || f[0] == "E")
+                    {
+                        var bk = _books.FirstOrDefault(x => x.Sym.Name == f[1]);
+                        if (bk == null) continue;
+                        if (f[0] == "L") _done[bk] = new DateTime(long.Parse(f[2]));
+                        else if (PosOf(bk) != null) bk.EntryBar = BarIndex(bk, f[2]);
+                    }
+                    else if (f[0] == "Q" || f[0] == "K")
+                    {
+                        var o = Parse(f);
+                        if (o == null) continue;
+                        if (f[0] == "Q") { _queue.Add(o); q++; }
+                        else { _parked.Add(o); k++; }
+                    }
+                }
+                catch { Print("R|bad saved line skipped: {0}", line); }
+            }
+            Print("R|reloaded {0} waiting orders, {1} weekend positions", q, k);
+            foreach (var b in _books)
+            {
+                var last = b.D.OpenTimes[b.D.Count - 1];
+                DateTime seen;
+                if (!_done.TryGetValue(b, out seen)) { _done[b] = last; continue; }
+                if (seen >= last) continue;
+                Print("R|{0}|new daily bar opened while off, deciding now",
+                    b.Sym.Name);
+                OnDailyBar(b);
+            }
+            Save();
+        }
+
+        // True if this signal was already traded before a restart.
+        private bool AlreadyTraded(Order o)
+        {
+            if (!Live) return false;
+            var b = o.B;
+            var barOpen = b.D.OpenTimes[Math.Min(o.T + 1, b.D.Count - 1)];
+            return History.Any(h => h.Label == Label && h.SymbolName == b.Sym.Name
+                && (h.EntryTime >= o.Due || (!o.Reopen && h.ClosingTime >= barOpen)));
         }
 
         private Position PosOf(Book b) => Positions.FirstOrDefault(
@@ -322,6 +448,7 @@ namespace cAlgo.Robots
         private void OnDailyBar(Book b)
         {
             int t = b.D.Count - 2;
+            _done[b] = b.D.OpenTimes[b.D.Count - 1];
             if (t < 210) return;
             var due = b.D.OpenTimes[t + 1].AddMinutes(DelayMinutes);
             var park = _parked.FirstOrDefault(x => x.B == b);
@@ -340,6 +467,7 @@ namespace cAlgo.Robots
                     park.Due = due; park.T = t;
                     _queue.Insert(0, park);
                 }
+                Save();
                 return;
             }
             var pos = PosOf(b);
@@ -349,11 +477,13 @@ namespace cAlgo.Robots
                     b.D.OpenTimes.GetIndexByTime(pos.EntryTime) - 1);
                 if (ExitSignal(b, t)) _queue.Add(new Order { Due = due, B = b, T = t,
                     Close = true });
+                Save();
                 return;
             }
             if (_queue.Any(q => q.B == b && !q.Close)) return;
             if (EntrySignal(b, t) && FilterOk(b, t)) _queue.Add(new Order { Due = due,
                 B = b, T = t });
+            Save();
         }
 
         // ---------------- execution ----------------
@@ -379,6 +509,12 @@ namespace cAlgo.Robots
         {
             var b = o.B; var s = b.Sym;
             if (PosOf(b) != null) return;
+            if (AlreadyTraded(o))
+            {
+                Print("R|{0}|{1}|already traded before the restart, skipped",
+                    Label, s.Name);
+                return;
+            }
             double atr = b.Atr.Result[o.T];
             if (!(atr > 0)) return;
             var tt = Side > 0 ? TradeType.Buy : TradeType.Sell;
@@ -459,6 +595,12 @@ namespace cAlgo.Robots
         {
             var b = o.B; var s = b.Sym;
             if (PosOf(b) != null) return;
+            if (AlreadyTraded(o))
+            {
+                Print("R|{0}|{1}|already reopened before the restart, skipped",
+                    Label, s.Name);
+                return;
+            }
             var tt = Side > 0 ? TradeType.Buy : TradeType.Sell;
             double price = Side > 0 ? s.Ask : s.Bid;
             if (o.Sl > 0 && (Side > 0 ? price <= o.Sl : price >= o.Sl))
@@ -517,6 +659,7 @@ namespace cAlgo.Robots
                     Label, p.SymbolName, Server.Time);
                 ClosePosition(p);
                 b.EntryBar = -1;
+                Save();
             }
         }
 
@@ -538,10 +681,12 @@ namespace cAlgo.Robots
                 }
                 Open(o);
             }
+            Save();
         }
 
         protected override void OnStop()
         {
+            Save();
             var hist = History.Where(h => h.Label == Label)
                 .OrderBy(h => h.ClosingTime);
             foreach (var h in hist)

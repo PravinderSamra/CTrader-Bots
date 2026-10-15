@@ -89,6 +89,11 @@ v1.2 adds "Flat Over Weekend" (default OFF, so live behaviour is unchanged): clo
 market that shuts earlier closes in its last 45 minutes), reopen at the Monday order time with the same size and
 stop, unless the exit rule fired on Friday's close.
 PRE-REGISTERED TEST (written before any cTrader run; the Python result above was seen first, so cTrader decides):
-v1.2, US500.cash D1, defaults ($200/R), M1 bars, 1 Jan 2021 - 14 Oct 2026, balance 100,000, commission 30; once with Flat Over
+v1.2 or later, US500.cash D1, defaults ($200/R), M1 bars, 1 Jan 2021 - 14 Oct 2026, balance 100,000, commission 30; once with Flat Over
 Weekend = No and once with Yes. Adopt Yes only if net profit is at least 95% of the No run AND the max equity
 drawdown is no higher. Otherwise keep No. The No run must match the v1.1 result, +$5,954 (sanity check).
+
+## v1.3 crash-safe (15 Oct 2026)
+Live only: saves waiting orders, weekend positions and each trade's signal day every minute (cTrader LocalStorage,
+this computer), reloads them after a restart, makes a missed day's decisions straight away, and never trades the same
+signal twice (checks History). Switched off in backtests, so backtest results are identical to v1.2.
