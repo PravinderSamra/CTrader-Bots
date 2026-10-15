@@ -6,7 +6,7 @@
 // new daily bar opened while it was off, it makes that
 // day's decisions straight away. It never opens a trade
 // twice for the same signal. R| lines log the reload.
-// v1.2: optional Flat Over Weekend (default off). Closes
+// v1.2: Flat Over Weekend (default on since 15 Oct 2026). Closes
 // every position on Friday at 15:30 New York (a market
 // that shuts earlier for the weekend, e.g. HK50, closes
 // in its last 45 minutes) and reopens it at the Monday order time with
@@ -97,7 +97,7 @@ namespace cAlgo.Robots
             DefaultValue = 6, MinValue = 1)]
         public double MaxFull { get; set; }
 
-        [Parameter("Flat Over Weekend", Group = "Risk", DefaultValue = false)]
+        [Parameter("Flat Over Weekend", Group = "Risk", DefaultValue = true)]
         public bool WeekendFlat { get; set; }
 
         [Parameter("Order Delay (minutes)", Group = "Other", DefaultValue = 60,

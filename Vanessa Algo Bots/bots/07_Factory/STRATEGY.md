@@ -98,3 +98,19 @@ Live only: saves waiting orders, weekend positions and each trade's signal day e
 this computer), reloads them after a restart, makes a missed day's decisions straight away, and never trades the same
 signal twice (checks History). Switched off in backtests, so backtest results are identical to v1.2.
 Label default changed to BOLL (15 Oct 2026) so the trades are easy to recognise; older trades carry FAC-A.
+
+## Weekend test RESULT (15 Oct 2026, v1.3, M1, 1 Jan 2021 - 14 Oct 2026, $200/R, commission 30): ADOPT FLAT OVER WEEKEND
+| | Weekend = No | Weekend = Yes |
+|---|---|---|
+| Net profit | +$5,954 (matches v1.1 exactly) | +$7,291 (+22%) |
+| Profit factor | 1.74 | 1.61 (more, smaller trade pieces) |
+| Max balance / equity DD | 2.90% / 4.09% | 2.95% / 3.79% |
+| Largest loss | -$472 | -$400 |
+| 2021-23 / 2024-26 | +$1,926 / +$4,027 | +$2,010 / +$5,282 |
+| Indices positive | 7 of 9 | 7 of 9 |
+Pre-registered rule (>= 95% of profit and equity DD no higher): PASSED. Gains mostly in the European indices.
+Log check: 167 weekend closes, 121 reopened, 46 not reopened (5-day exit fell on Friday's close), 289 pieces =
+168 trades + 121 reopens; 12 risk-budget skips as before. HK50 closes Friday ~07:45 UTC, GER40/UK100 ~19:05,
+AUS200 ~19:10, others 15:30 New York. 3 trades stayed open over a holiday weekend (market shut on the Friday:
+Christmas 2022 UK100, 26 May 2023 HK50, Good Friday 2026 US100) - can't be avoided by a Friday rule; accepted.
+Live setting: Flat Over Weekend = Yes (code default changed to true).
