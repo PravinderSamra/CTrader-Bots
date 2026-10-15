@@ -1,0 +1,266 @@
+{
+  "schema": 1,
+  "scan_utc": "2026-10-15T12:47:20+00:00",
+  "scan_et": "2026-10-15 08:47 ET (Thu)",
+  "trading_day": "2026-10-15",
+  "session_window": "PRE_NY",
+  "is_trading_day": true,
+  "prediction": {
+    "price_at_scan": 29638.7,
+    "bias_score": -7,
+    "bias_label": "BEARISH",
+    "strategy": "STRATEGY 2 \u2014 CISD -> HH/HL -> fib OTE continuation. Below the flip in negative gamma: dealers amplify, sweeps run rather than fail. Strategy-1 fades have a materially lower hit rate here \u2014 only take them at the far walls.",
+    "event_gate": null,
+    "expected_direction": -1,
+    "gamma_flip": 30626.0,
+    "expiry_shape": "COHERENT_SHORT",
+    "fuel_state": "EXHAUSTED",
+    "remaining_budget": 11.5,
+    "adr14": 457.0,
+    "adr_used_pct": 97.5,
+    "levels": [
+      {
+        "price": 31377.6,
+        "name": "STRUCTURAL CALL WALL \u25cf\u25cb\u25cb\u25cb\u25cb 0.22bn",
+        "kind": "structural",
+        "dist": 1738.9,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 30626.0,
+        "name": "GAMMA FLIP",
+        "kind": "gamma",
+        "dist": 987.3,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 30077.6,
+        "name": "CALL WALL \u25cf\u25cf\u25cb\u25cb\u25cb 0.38bn",
+        "kind": "gamma",
+        "dist": 438.9,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 29977.6,
+        "name": "MAX PAIN",
+        "kind": "gamma",
+        "dist": 338.9,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 29627.6,
+        "name": "STRUCTURAL PUT WALL \u25cf\u25cf\u25cf\u25cf\u25cf 1.87bn",
+        "kind": "structural",
+        "dist": -11.1,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 29377.6,
+        "name": "PUT WALL \u25cf\u25cf\u25cf\u25cf\u25cf 1.06bn",
+        "kind": "gamma",
+        "dist": -261.1,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      }
+    ]
+  },
+  "inputs": {
+    "bias_components": [
+      {
+        "component": "gamma",
+        "points": -3,
+        "why": "below flip 30626.0 by 987.3pts \u2014 SHORT gamma, dealers amplify: downside accelerates, rallies unstable"
+      },
+      {
+        "component": "gamma",
+        "points": -2,
+        "why": "week net GEX -7.466 $bn/1% -> expansion likely"
+      },
+      {
+        "component": "gamma",
+        "points": 0,
+        "why": "price mid-band (29377.6-30077.6), 37% up the range"
+      },
+      {
+        "component": "vol",
+        "points": -2,
+        "why": "VXN 22.7 (+7.4%) \u2014 fear rising, bearish"
+      },
+      {
+        "component": "vol",
+        "points": 1,
+        "why": "VIX9D/VIX 0.826 contango \u2014 calm, mean-reversion favoured, mild upward drift"
+      },
+      {
+        "component": "vol",
+        "points": 0,
+        "why": "VXN/VIX 1.29 \u2014 normal tech premium"
+      },
+      {
+        "component": "vol",
+        "points": 0,
+        "why": "VVIX 94.45 \u2014 no tail-hedge bid"
+      },
+      {
+        "component": "rates",
+        "points": 3,
+        "why": "US10y 5.093 (-1.87%) \u2014 yields down, BULLISH tech"
+      },
+      {
+        "component": "rates",
+        "points": 0,
+        "why": "DXY 102.17 (-0.37%) \u2014 dollar flat"
+      },
+      {
+        "component": "macro",
+        "points": 3,
+        "why": "**Real yield, 10y (DFII10)** \u2014 what lenders earn after inflation \u2014 is 2.88%, down 3bp as of 2026-10-13 and 7bp over 5 days. \u26a0\ufe0f FRED has not published since 2026-10-13 (2 business days ago) \u2014 this is last week's reading, not today's. Falling = a direct tailwind for tech, for the same reason in reverse."
+      },
+      {
+        "component": "macro",
+        "points": 1,
+        "why": "**10y nominal yield (DGS10)** moved 3bp down (2026-10-09 to 2026-10-13). Falling yields are a tailwind for tech."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**High-yield credit spread (HY OAS)** \u2014 the extra interest demanded to lend to riskier companies is 3.16% (+13bp over 5 days). Middling \u2014 no strong signal either way."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Financial conditions (NFCI)** \u2014 how easy it is to borrow money across the economy \u2014 is EASIER than normal (-0.499). Cheap, available money is a background tailwind for stocks."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Fed balance sheet (WALCL) / reverse repo (RRP)** \u2014 cash in the financial system. The Fed is holding $6.75tn of assets, growing by $4.5bn this week, and the spare-cash buffer is down to $0.201bn."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Yield curve (10y\u20132y)** \u2014 long vs short bond yields. The 10-year pays +0.37% more than the 2-year. Barely moved."
+      },
+      {
+        "component": "breadth",
+        "points": -2,
+        "why": "mega-cap avg -1.89% (1/4 up): NVDA -3.16%, MSFT -1.80%, AAPL +0.49%, AVGO -3.10%"
+      },
+      {
+        "component": "breadth",
+        "points": -1,
+        "why": "NDX -2.02% vs ES -0.37% \u2014 tech lagging, rotation out of tech"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "ADR14 457.0, 97.5% used vs ~45% normal by 08:47 ET -> fuel_ratio 2.17 (burning hot) [EXHAUSTED]"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "fuel is short \u2014 this dampens CONVICTION in any continuation call, it does not change direction"
+      },
+      {
+        "component": "structure",
+        "points": -1,
+        "why": "price below PD mid 30283.1 (PDH 30688.3 / PDL 29877.9)"
+      },
+      {
+        "component": "structure",
+        "points": -3,
+        "why": "price is BELOW the entire prior-week range (30568.7-31385.1) \u2014 weekly draw has flipped bearish; PWL 30568.7 is now resistance, not support"
+      },
+      {
+        "component": "structure",
+        "points": 0,
+        "why": "in-reach unmitigated pools: 0 above / 0 below \u2014 draw balanced"
+      },
+      {
+        "component": "news",
+        "points": -1,
+        "why": "6 auto-scored headline(s) (2 bull / 4 bear) -> MILDLY BEARISH; 53 more need reading in context (not counted here)"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [hawkish] Warsh Takes IMF Stage as Hot Inflation Spurs Rate Hike Bets - Bloomberg.com"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [cpi_hot] CPI comes in hot, AI goes cold"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [earnings_beat] TSMC\u2019s CEO sees no sign of a slowdown as chip foundry reports record profit"
+      },
+      {
+        "component": "events",
+        "points": 0,
+        "why": "TSM earnings 2026-10-15 time-pre-market (cons $4.45) \u2014 sector-relevant"
+      },
+      {
+        "component": "events",
+        "points": 0,
+        "why": "NFLX earnings 2026-10-20 time-after-hours (cons $0.82) \u2014 sector-relevant"
+      }
+    ],
+    "fuel": {
+      "adr14": 457.0,
+      "today_range": 445.5,
+      "adr_used_pct": 97.5,
+      "remaining_budget": 11.5,
+      "expansion_state": "EXHAUSTED",
+      "volume_relative": 0.96,
+      "volume_state": "normal"
+    },
+    "gamma": {
+      "near_expiry_0_2dte": -6.17,
+      "this_week": -7.466,
+      "full_45dte": -13.389
+    },
+    "call_wall": 30077.6,
+    "put_wall": 29377.6,
+    "max_pain": 29977.6,
+    "vol": {
+      "vxn": 22.7,
+      "vix": 17.66,
+      "vix9d_over_vix": 0.826
+    },
+    "rates": {
+      "us10y": 5.093,
+      "dxy": 102.17
+    },
+    "news": {
+      "raw_score": -2.55,
+      "bias_points": -1,
+      "label": "MILDLY BEARISH",
+      "scored_high_confidence": 6,
+      "needs_model_judgement": 53
+    },
+    "events_24h": [
+      {
+        "utc": "2026-10-16T03:30:00+00:00",
+        "impact": "High",
+        "title": "Fed Chairman Warsh Speaks",
+        "forecast": "",
+        "previous": "",
+        "hours_away": 14.7
+      }
+    ]
+  },
+  "outcome": null
+}
