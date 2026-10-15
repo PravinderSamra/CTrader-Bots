@@ -104,7 +104,7 @@ namespace cAlgo.Robots
             MinValue = 1)]
         public int DelayMinutes { get; set; }
 
-        [Parameter("Label", Group = "Other", DefaultValue = "FAC-A")]
+        [Parameter("Label", Group = "Other", DefaultValue = "BOLL")]
         public string Label { get; set; }
 
         private class Book

@@ -97,3 +97,4 @@ drawdown is no higher. Otherwise keep No. The No run must match the v1.1 result,
 Live only: saves waiting orders, weekend positions and each trade's signal day every minute (cTrader LocalStorage,
 this computer), reloads them after a restart, makes a missed day's decisions straight away, and never trades the same
 signal twice (checks History). Switched off in backtests, so backtest results are identical to v1.2.
+Label default changed to BOLL (15 Oct 2026) so the trades are easy to recognise; older trades carry FAC-A.

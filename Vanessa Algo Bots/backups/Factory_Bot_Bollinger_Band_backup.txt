@@ -15,7 +15,7 @@ Everything else at its default:
 - Max Full Positions: 6
 - Flat Over Weekend: No  (until the weekend backtest decides)
 - Order Delay: 60 minutes
-- Label: FAC-A
+- Label: BOLL  (was FAC-A until 15 Oct 2026)
 
 SWITCH-OFF RULE (monthly review)
 Pause if the last 50 trades average below -0.05R, or the drawdown passes $3,500.
@@ -138,7 +138,7 @@ namespace cAlgo.Robots
             MinValue = 1)]
         public int DelayMinutes { get; set; }
 
-        [Parameter("Label", Group = "Other", DefaultValue = "FAC-A")]
+        [Parameter("Label", Group = "Other", DefaultValue = "BOLL")]
         public string Label { get; set; }
 
         private class Book
