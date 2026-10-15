@@ -173,6 +173,13 @@ the last 50 trades (weekend splits counted as one) win under 62%, or the drawdow
 Still open: the NAS bot's worst day, to confirm the two bots' combined worst day stays well inside the $5k daily limit.
 Next tests (2020-23 only, as agreed): profit-lock switches, then the size ladder.
 
+## v1.4 sanity re-run (15 Oct 2026, tick, 2024-01-01 .. 2026-10-13, Flat Over Weekend = YES, commission 30)
+Net +$15,346 closed, PF 1.47, 516 pieces, max equity DD 5.18%, largest loss -$681. Trade-by-trade against the v1.3 run:
+all 516 trades identical (same system, market, entry and exit days); 29 GER40 sizes differ by 0.01 lot (EUR rate).
+Dollar differences come from the run settings and data, not the code: commission $30 (-$495; the v1.3 run had 0),
+swap rates updated by FTMO since (-$452 vs -$633), and slightly different tick fills (US100/US30/GER40 entries 2-5
+points better). Crash-safe code confirmed to leave backtest decisions unchanged.
+
 ## Combined risk with the NAS bot (13 Oct 2026; NAS Add to Winner with Ladder backtest 2021-01-01 .. 2026-10-13, tick)
 NAS backtest: +$282k on $100k, PF 1.41, 972 trades, 43% win, max equity DD 18% (risk ladder $650 -> $1,350 per trade).
 Daily P/L in R saved to data/nas_bot_daily_R_2021_2026.json. Live risk now ~$550 per trade (9.16 lots x 60-pt stop,
