@@ -128,6 +128,65 @@
         "adrUsedPct": 118
       },
       "outcome": null
+    },
+    {
+      "at": "2026-10-15T15:24:53.770Z",
+      "londonTime": "16:24 BST",
+      "mode": "POST_ORB",
+      "price": 10840.75,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 164% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "164% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10630.9) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10770,
+        "orbLow": 10709.6,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10781.1,
+        "overnightLow": 10677.8,
+        "priorDayHigh": 10734.9,
+        "priorDayLow": 10630.9,
+        "gapPct": 1.2,
+        "adr14": 117.7,
+        "adrUsedPct": 164
+      },
+      "outcome": {
+        "resolvedAt": "2026-10-15T15:24:55.742Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }

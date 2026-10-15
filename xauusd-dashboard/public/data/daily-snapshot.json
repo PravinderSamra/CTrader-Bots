@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-15T12:40:19.873Z",
+  "generatedAt": "2026-10-15T15:24:47.119Z",
   "yields": {
     "US10Y": 5.21,
     "US2Y": 4.79,
@@ -22,8 +22,8 @@
     "probHike": 40
   },
   "marketVolatility": {
-    "GVZ": 22.09,
-    "VIX": 15.27
+    "GVZ": 22.78,
+    "VIX": 16.87
   },
   "positioning": {
     "cotNetLong": 201579,
@@ -34,26 +34,26 @@
     "openInterestChange": -14341
   },
   "etfFlows": {
-    "gldTonnes": 1061,
-    "gldWoWChange": 0.1,
-    "trend3W": "FLAT"
+    "gldTonnes": 1060,
+    "gldWoWChange": -1,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4154.055,
-    "XAGUSD": 56.754,
-    "EURUSD": 1.12102,
-    "USDJPY": 157.862,
-    "USDCHF": 0.82982,
-    "USDCNH": 6.69038,
-    "GBPUSD": 1.3254,
-    "USDCAD": 1.42011,
-    "USDSEK": 9.96123,
-    "US500": 7706.8,
-    "GER40": 25256.75,
-    "UK100": 10815.75,
+    "XAUUSD": 4157.71,
+    "XAGUSD": 57.171,
+    "EURUSD": 1.12032,
+    "USDJPY": 158.1455,
+    "USDCHF": 0.82964,
+    "USDCNH": 6.68973,
+    "GBPUSD": 1.32522,
+    "USDCAD": 1.41953,
+    "USDSEK": 9.96451,
+    "US500": 7731.3,
+    "GER40": 25384.25,
+    "UK100": 10841.25,
     "ADR_14day": 71.9,
-    "ADR_usedToday": 62.1,
-    "goldSilverRatio": 73.2
+    "ADR_usedToday": 68.9,
+    "goldSilverRatio": 72.7
   },
   "dollarLiquidity": {
     "stlfsi": -0.7206,
@@ -66,28 +66,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Treasury yields slide as investors flee to safety of bonds amid tech rout",
+      "source": "CNBC",
+      "publishedAt": "2026-10-15T12:56:38.000Z",
+      "hoursAgo": 2.5
+    },
+    {
+      "headline": "US Treasury pushes global partners to rename AI as 'super intelligence' - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-15T12:35:43.000Z",
+      "hoursAgo": 2.8
+    },
+    {
+      "headline": "US toy prices surge ahead of holiday shopping season as tariffs, Iran war bite - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-15T10:18:56.000Z",
+      "hoursAgo": 5.1
+    },
+    {
       "headline": "Bank of England's Breeden says cost-cutting by firms helping central bank - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-15T08:47:37.000Z",
-      "hoursAgo": 3.9
+      "hoursAgo": 6.6
     },
     {
       "headline": "BoE's Pill says a rate hike need not be start of long series - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-15T04:45:00.000Z",
-      "hoursAgo": 7.9
+      "hoursAgo": 10.7
+    },
+    {
+      "headline": "IMF warns of slowing Asian growth, spillover from rising yields - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-15T02:04:00.000Z",
+      "hoursAgo": 13.3
     },
     {
       "headline": "US considers easing sanctions on shadow fleet vessels to cut freight rates, official says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-15T00:06:00.000Z",
-      "hoursAgo": 12.6
+      "hoursAgo": 15.3
     },
     {
       "headline": "US inflation heats up in September; Fed rate hike this month back on table - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-14T21:45:35.000Z",
-      "hoursAgo": 14.9
+      "hoursAgo": 17.7
     }
   ],
   "briefing": null
