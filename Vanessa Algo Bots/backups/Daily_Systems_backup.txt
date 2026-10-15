@@ -1,7 +1,7 @@
-========================================================================
+------------------------------------------------------------------------
 DAILY SYSTEMS cBot v1.4
 Backup saved 15 October 2026 - Vanessa Algo Bots
-========================================================================
+------------------------------------------------------------------------
 
 cBot name in cTrader: Daily Systems
 Attach to: US500.cash, Daily (D1) chart. It trades all five markets itself
@@ -29,9 +29,9 @@ HOW TO RESTORE
 In cTrader Algo: New cBot, delete the template code, paste everything
 below the CODE line, then Build.
 
-========================================================================
+------------------------------------------------------------------------
 CODE (copy from the next line to the end)
-========================================================================
+------------------------------------------------------------------------
 // Daily Systems cBot v1.4 (Vanessa Algo Bots)
 // v1.4: crash-safe. Live only (not in backtests), the bot saves its
 // to-do list every minute: orders waiting to be sent, positions closed

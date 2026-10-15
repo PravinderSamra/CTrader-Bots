@@ -1,7 +1,7 @@
-========================================================================
+------------------------------------------------------------------------
 PRE-FOMC DRIFT cBot v1.0
 Backup saved 14 October 2026 - Vanessa Algo Bots
-========================================================================
+------------------------------------------------------------------------
 
 cBot name in cTrader: FOMC Drift
 Attach to: US100.cash, 1 hour (H1) chart. It trades US100.cash and US500.cash itself.
@@ -28,9 +28,9 @@ HOW TO RESTORE
 In cTrader Algo: New cBot, delete the template code, paste everything
 below the CODE line, then Build.
 
-========================================================================
+------------------------------------------------------------------------
 CODE (copy from the next line to the end)
-========================================================================
+------------------------------------------------------------------------
 // Pre-FOMC Drift v1.0 (Vanessa Algo Bots)
 // Lucca & Moench (2015): US stock indices tend to rise in
 // the 24 hours before a scheduled Fed (FOMC) announcement.

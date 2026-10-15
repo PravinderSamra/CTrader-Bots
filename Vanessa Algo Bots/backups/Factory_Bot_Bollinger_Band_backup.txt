@@ -1,7 +1,7 @@
-========================================================================
+------------------------------------------------------------------------
 FACTORY BOT v1.3 - BOLLINGER BAND STRATEGY (candidate A)
 Backup saved 15 October 2026 - Vanessa Algo Bots
-========================================================================
+------------------------------------------------------------------------
 
 cBot name in cTrader: Factory Bot
 Attach to: US500.cash, Daily (D1) chart. It trades all 9 indices itself
@@ -29,9 +29,9 @@ HOW TO RESTORE
 In cTrader Algo: New cBot, delete the template code, paste everything
 below the CODE line, then Build.
 
-========================================================================
+------------------------------------------------------------------------
 CODE (copy from the next line to the end)
-========================================================================
+------------------------------------------------------------------------
 // Factory Bot v1.3 (Vanessa Algo Bots)
 // v1.3: crash-safe. Live only (not in backtests), the bot
 // saves its to-do list every minute: orders waiting to be
