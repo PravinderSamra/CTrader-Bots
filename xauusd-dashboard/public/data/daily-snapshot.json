@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-10-15T19:34:45.494Z",
+  "generatedAt": "2026-10-15T22:47:43.697Z",
   "yields": {
-    "US10Y": 5.21,
-    "US2Y": 4.79,
-    "realYield10Y": 2.88,
-    "realYield5Y": 2.67,
-    "curve2s10s": 42,
-    "breakeven10Y": 2.35,
-    "breakeven5Y": 2.36,
-    "forward5y5y": 2.34,
+    "US10Y": 5.19,
+    "US2Y": 4.82,
+    "realYield10Y": 2.84,
+    "realYield5Y": 2.64,
+    "curve2s10s": 37,
+    "breakeven10Y": 2.32,
+    "breakeven5Y": 2.33,
+    "forward5y5y": 2.31,
     "dayOverDay": {
-      "US10Y": -0.03,
-      "US2Y": -0.01,
-      "realYield10Y": -0.03
+      "US10Y": -0.02,
+      "US2Y": 0.03,
+      "realYield10Y": -0.04
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-10-28",
     "probCut": 0,
-    "probHold": 60,
-    "probHike": 40
+    "probHold": 56,
+    "probHike": 44
   },
   "marketVolatility": {
     "GVZ": 22.78,
@@ -34,25 +34,25 @@
     "openInterestChange": -14341
   },
   "etfFlows": {
-    "gldTonnes": 1059.4,
-    "gldWoWChange": -0.6,
+    "gldTonnes": 1057.9,
+    "gldWoWChange": -1.5,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4160.265,
-    "XAGUSD": 57.195,
-    "EURUSD": 1.12082,
-    "USDJPY": 158.134,
-    "USDCHF": 0.82754,
-    "USDCNH": 6.69071,
-    "GBPUSD": 1.3269,
-    "USDCAD": 1.41932,
-    "USDSEK": 9.96206,
-    "US500": 7749.6,
-    "GER40": 25460.85,
-    "UK100": 10820.65,
-    "ADR_14day": 71.9,
-    "ADR_usedToday": 68.9,
+    "XAUUSD": 4166.165,
+    "XAGUSD": 57.309,
+    "EURUSD": 1.12131,
+    "USDJPY": 158.125,
+    "USDCHF": 0.82739,
+    "USDCNH": 6.68926,
+    "GBPUSD": 1.32719,
+    "USDCAD": 1.41913,
+    "USDSEK": 9.95166,
+    "US500": 7744.5,
+    "GER40": 25488.05,
+    "UK100": 10826.75,
+    "ADR_14day": 72.4,
+    "ADR_usedToday": 6.7,
     "goldSilverRatio": 72.7
   },
   "dollarLiquidity": {
@@ -66,52 +66,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Nvidia and Cisco confirm multimillion-dollar donations to Trump's White House ballroom",
+      "source": "CNBC",
+      "publishedAt": "2026-10-15T19:43:40.000Z",
+      "hoursAgo": 3.1
+    },
+    {
       "headline": "US issues fresh Iran-related sanctions, Treasury website shows - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-15T16:45:20.000Z",
-      "hoursAgo": 2.8
+      "hoursAgo": 6
     },
     {
       "headline": "Treasury yields slide as investors flee to safety of bonds amid tech rout",
       "source": "CNBC",
       "publishedAt": "2026-10-15T12:56:38.000Z",
-      "hoursAgo": 6.6
+      "hoursAgo": 9.9
     },
     {
       "headline": "US Treasury pushes global partners to rename AI as 'super intelligence' - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-15T12:35:43.000Z",
-      "hoursAgo": 7
+      "hoursAgo": 10.2
     },
     {
       "headline": "US toy prices surge ahead of holiday shopping season as tariffs, Iran war bite - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-15T10:18:56.000Z",
-      "hoursAgo": 9.3
+      "hoursAgo": 12.5
     },
     {
       "headline": "Bank of England's Breeden says cost-cutting by firms helping central bank - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-15T08:47:37.000Z",
-      "hoursAgo": 10.8
+      "hoursAgo": 14
     },
     {
       "headline": "BoE's Pill says a rate hike need not be start of long series - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-15T04:45:00.000Z",
-      "hoursAgo": 14.8
+      "hoursAgo": 18
     },
     {
       "headline": "IMF warns of slowing Asian growth, spillover from rising yields - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-15T02:04:00.000Z",
-      "hoursAgo": 17.5
-    },
-    {
-      "headline": "US considers easing sanctions on shadow fleet vessels to cut freight rates, official says - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-15T00:06:00.000Z",
-      "hoursAgo": 19.5
+      "hoursAgo": 20.7
     }
   ],
   "briefing": null
