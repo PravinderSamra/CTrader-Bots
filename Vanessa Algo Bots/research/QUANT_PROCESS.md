@@ -67,3 +67,10 @@ judged on their live results in the monthly review (stage 7), which is the trues
 2. Futures scalping, about 2 hours a day around the 14:30 UK US open (research/futures_lane).
 3. Property: rental / holiday income.
 4. More swing-trading strategies.
+
+## FTMO account rules for our bots (15 Oct 2026)
+- New FTMO accounts: always the **Swing** type (no news or weekend restrictions; Standard has both, and the FOMC bot's
+  13:58 exit would sit on the edge of Standard's 2-minute news window).
+- Server requests: FTMO forbids bots sending more than 2,000 requests a day (opens, modifications, closes). All four
+  bots together use about 5% of that on a busy day; check this again before adding any bot that modifies orders often.
+- Gap trading: no bot may open trades within 2 hours of a market closing for 2+ hours (e.g. late Friday).
