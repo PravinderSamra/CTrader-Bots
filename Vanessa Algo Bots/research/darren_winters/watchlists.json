@@ -1,5 +1,59 @@
 [
  {
+  "date": "2026-01-02 10:53",
+  "us_up": "FDX FOX FOXA JPM LIN MRK XOM",
+  "us_down": "C CMCSA GE GM GOOG GS MS",
+  "uk_up": "ANTO BARC FRES GLEN HMSO STAN",
+  "uk_down": "AV BATS III JMAT LLOY PSN",
+  "fx_up": "AUDJPY",
+  "fx_down": "EURUSD"
+ },
+ {
+  "date": "2026-01-07 13:43",
+  "us_up": "BAC BK C COF DHR FDX FOX GD MRK",
+  "us_down": "AXP BKNG CAT DIS GM GOOG MDLZ",
+  "uk_up": "ANTO AV BAB BARC FRES GLEN HSBA PRU RIO",
+  "uk_down": "ADM BATS BNZL CCH CPG III",
+  "fx_up": "USDTRY",
+  "fx_down": "EURGBP"
+ },
+ {
+  "date": "2026-01-14 16:49",
+  "us_up": "ACN BA BK BMY CAT GOOGL HAL INTC TGT",
+  "us_down": "AIG AXP BAC BKNG C NOW PYPL",
+  "uk_up": "ALL ANTO BA BAB FRES JMAT STJ",
+  "uk_down": "ADM BNZL BP MNDI RIO STAN",
+  "fx_up": "USDJPY",
+  "fx_down": "EURUSD"
+ },
+ {
+  "date": "2026-01-29 11:55",
+  "us_up": "CVX GILD GM JNJ LMT NEE",
+  "us_down": "ABT AMD CHTR FOX KHC MA",
+  "uk_up": "ANTO CNA FRES GLEN HSBA LLOY NG WEIR",
+  "uk_down": "ADM CCL CPG EXPN LGEN REL",
+  "fx_up": "EURUSD",
+  "fx_down": "USDJPY"
+ },
+ {
+  "date": "2026-02-05 06:38",
+  "us_up": "CAT CSCO CVX DE EMR FDX GILD JNJ TXN",
+  "us_down": "CRM DIS FOX FOXA INTU MSFT NOW",
+  "uk_up": "AAL BATS CCH CNA DLG GLEN HSBA PRU RIO",
+  "uk_down": "BAB BRBY CPG EXPN NXT PSON REL",
+  "fx_up": "USDTRY",
+  "fx_down": "EURGBP"
+ },
+ {
+  "date": "2026-02-12 06:53",
+  "us_up": "BK CAT COP CSCO CVX EMR NEE XOM",
+  "us_down": "AMZN BAC FOX GM INTU NOW",
+  "uk_up": "CCH HSBA IAG KGF LAND NG RIO",
+  "uk_down": "CPG EXPN LLOY NXT REL SGE",
+  "fx_up": "USDTRY USDCHF",
+  "fx_down": "EURJPY"
+ },
+ {
   "date": "2026-02-26 17:28",
   "us_up": "AMGN GE HAL JNJ KO LIN NEE",
   "us_down": "ACN BAC BKNG CAT COF GILD INTU MSFT",

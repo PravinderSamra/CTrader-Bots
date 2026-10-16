@@ -1,0 +1,13 @@
+unseen lists: 19 (2026-01-02 .. 2026-06-24)
+   5d us as intended  mean  +0.32%  pos  9/19  Jan-Mar  +0.13%  Apr-Jun  +0.53%  95% [-2.34, +3.02]  fail
+   5d us reversed     mean  -0.72%  pos 10/19  Jan-Mar  -0.53%  Apr-Jun  -0.93%  95% [-3.42, +1.94]  fail
+   5d uk as intended  mean  +0.78%  pos 11/19  Jan-Mar  +2.64%  Apr-Jun  -1.29%  95% [-1.14, +2.64]  fail
+   5d uk reversed     mean  -1.18%  pos  7/19  Jan-Mar  -3.04%  Apr-Jun  +0.89%  95% [-3.04, +0.68]  fail
+   5d fx as intended  mean  -0.12%  pos  9/19  Jan-Mar  -0.21%  Apr-Jun  -0.01%  95% [-0.40, +0.23]  fail
+   5d fx reversed     mean  +0.02%  pos  8/19  Jan-Mar  +0.11%  Apr-Jun  -0.09%  95% [-0.34, +0.31]  fail
+  21d us as intended  mean  +2.54%  pos 12/19  Jan-Mar  +1.44%  Apr-Jun  +3.76%  95% [-2.00, +8.09]  fail
+  21d us reversed     mean  -2.94%  pos  7/19  Jan-Mar  -1.84%  Apr-Jun  -4.16%  95% [-8.49, +1.60]  fail
+  21d uk as intended  mean  -1.30%  pos 10/19  Jan-Mar  -2.57%  Apr-Jun  +0.11%  95% [-4.99, +1.21]  fail
+  21d uk reversed     mean  +0.90%  pos  9/19  Jan-Mar  +2.17%  Apr-Jun  -0.51%  95% [-1.58, +4.59]  fail
+  21d fx as intended  mean  +0.07%  pos 12/19  Jan-Mar  -0.94%  Apr-Jun  +1.19%  95% [-0.94, +1.14]  fail
+  21d fx reversed     mean  -0.17%  pos  7/19  Jan-Mar  +0.84%  Apr-Jun  -1.29%  95% [-1.31, +0.83]  fail
