@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-16T15:04:46.002Z",
+  "generatedAt": "2026-10-16T19:08:53.997Z",
   "yields": {
     "US10Y": 5.19,
     "US2Y": 4.82,
@@ -34,26 +34,26 @@
     "openInterestChange": -14341
   },
   "etfFlows": {
-    "gldTonnes": 1053.5,
-    "gldWoWChange": -1.6,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1059.2,
+    "gldWoWChange": 5.7,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4183.56,
-    "XAGUSD": 57.675,
-    "EURUSD": 1.12533,
-    "USDJPY": 157.898,
-    "USDCHF": 0.82286,
-    "USDCNH": 6.68372,
-    "GBPUSD": 1.33533,
-    "USDCAD": 1.41396,
-    "USDSEK": 9.8941,
-    "US500": 7735.8,
-    "GER40": 25695.15,
-    "UK100": 10884.55,
+    "XAUUSD": 4161.005,
+    "XAGUSD": 56.913,
+    "EURUSD": 1.12357,
+    "USDJPY": 158.0015,
+    "USDCHF": 0.82407,
+    "USDCNH": 6.68617,
+    "GBPUSD": 1.3323,
+    "USDCAD": 1.41508,
+    "USDSEK": 9.91716,
+    "US500": 7634.2,
+    "GER40": 25432.05,
+    "UK100": 10821.55,
     "ADR_14day": 72.4,
     "ADR_usedToday": 51.5,
-    "goldSilverRatio": 72.5
+    "goldSilverRatio": 73.1
   },
   "dollarLiquidity": {
     "stlfsi": -0.7206,
@@ -66,34 +66,34 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Schwab to create 'tax-aware' strategy that's been attracting billions from wealthy investors",
+      "source": "CNBC",
+      "publishedAt": "2026-10-16T16:21:14.000Z",
+      "hoursAgo": 2.8
+    },
+    {
+      "headline": "US solicits exchange of up to 17 million barrels of oil from strategic reserve - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-16T16:02:12.000Z",
+      "hoursAgo": 3.1
+    },
+    {
       "headline": "US Treasury says Japan no longer faces deflationary environment, yen level must change - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-16T04:11:00.000Z",
-      "hoursAgo": 10.9
+      "hoursAgo": 15
     },
     {
       "headline": "Fed's Warsh says AI path will be 'very bumpy' but ultimately 'very good' for wealth",
       "source": "CNBC",
       "publishedAt": "2026-10-16T04:08:27.000Z",
-      "hoursAgo": 10.9
+      "hoursAgo": 15
     },
     {
       "headline": "Nvidia and Cisco confirm multimillion-dollar donations to Trump's White House ballroom",
       "source": "CNBC",
       "publishedAt": "2026-10-15T19:43:40.000Z",
-      "hoursAgo": 19.4
-    },
-    {
-      "headline": "US plan to ease shadow fleet sanctions unlikely to free up many tankers, analysts say - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-15T18:25:28.000Z",
-      "hoursAgo": 20.7
-    },
-    {
-      "headline": "US issues fresh Iran-related sanctions, Treasury website shows - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-15T16:45:20.000Z",
-      "hoursAgo": 22.3
+      "hoursAgo": 23.4
     }
   ],
   "briefing": null
