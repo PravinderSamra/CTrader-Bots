@@ -1,56 +1,56 @@
 {
-  "generatedAt": "2026-10-16T19:08:53.997Z",
+  "generatedAt": "2026-10-16T22:20:47.653Z",
   "yields": {
-    "US10Y": 5.19,
-    "US2Y": 4.82,
-    "realYield10Y": 2.84,
-    "realYield5Y": 2.64,
-    "curve2s10s": 37,
-    "breakeven10Y": 2.32,
-    "breakeven5Y": 2.33,
-    "forward5y5y": 2.31,
+    "US10Y": null,
+    "US2Y": 4.77,
+    "realYield10Y": 2.78,
+    "realYield5Y": 2.58,
+    "curve2s10s": null,
+    "breakeven10Y": 2.35,
+    "breakeven5Y": 2.37,
+    "forward5y5y": 2.33,
     "dayOverDay": {
-      "US10Y": -0.02,
-      "US2Y": 0.03,
-      "realYield10Y": -0.04
+      "US10Y": null,
+      "US2Y": -0.05,
+      "realYield10Y": -0.06
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-10-28",
     "probCut": 0,
-    "probHold": 56,
-    "probHike": 44
+    "probHold": 32,
+    "probHike": 68
   },
   "marketVolatility": {
     "GVZ": 22.34,
     "VIX": 16.46
   },
   "positioning": {
-    "cotNetLong": 201579,
-    "cotWoWChange": -8602,
-    "crowding": "CROWDED_LONG",
-    "reportDate": "2026-10-06T00:00:00.000",
-    "openInterest": 527641,
-    "openInterestChange": -14341
+    "cotNetLong": 199733,
+    "cotWoWChange": -1846,
+    "crowding": "NEUTRAL",
+    "reportDate": "2026-10-13T00:00:00.000",
+    "openInterest": 526276,
+    "openInterestChange": -1365
   },
   "etfFlows": {
-    "gldTonnes": 1059.2,
-    "gldWoWChange": 5.7,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1058.3,
+    "gldWoWChange": -0.9,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4161.005,
-    "XAGUSD": 56.913,
-    "EURUSD": 1.12357,
-    "USDJPY": 158.0015,
-    "USDCHF": 0.82407,
-    "USDCNH": 6.68617,
-    "GBPUSD": 1.3323,
-    "USDCAD": 1.41508,
-    "USDSEK": 9.91716,
-    "US500": 7634.2,
-    "GER40": 25432.05,
-    "UK100": 10821.55,
+    "XAUUSD": 4164.575,
+    "XAGUSD": 56.965,
+    "EURUSD": 1.12387,
+    "USDJPY": 157.9865,
+    "USDCHF": 0.824,
+    "USDCNH": 6.68633,
+    "GBPUSD": 1.33273,
+    "USDCAD": 1.41378,
+    "USDSEK": 9.91446,
+    "US500": 7658.5,
+    "GER40": 25475.05,
+    "UK100": 10839.05,
     "ADR_14day": 72.4,
     "ADR_usedToday": 51.5,
     "goldSilverRatio": 73.1
@@ -66,34 +66,28 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "US solicits exchange of up to 17 million barrels of oil from strategic reserve - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-16T20:25:25.000Z",
+      "hoursAgo": 1.9
+    },
+    {
       "headline": "Schwab to create 'tax-aware' strategy that's been attracting billions from wealthy investors",
       "source": "CNBC",
       "publishedAt": "2026-10-16T16:21:14.000Z",
-      "hoursAgo": 2.8
-    },
-    {
-      "headline": "US solicits exchange of up to 17 million barrels of oil from strategic reserve - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-16T16:02:12.000Z",
-      "hoursAgo": 3.1
+      "hoursAgo": 6
     },
     {
       "headline": "US Treasury says Japan no longer faces deflationary environment, yen level must change - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-16T04:11:00.000Z",
-      "hoursAgo": 15
+      "hoursAgo": 18.2
     },
     {
       "headline": "Fed's Warsh says AI path will be 'very bumpy' but ultimately 'very good' for wealth",
       "source": "CNBC",
       "publishedAt": "2026-10-16T04:08:27.000Z",
-      "hoursAgo": 15
-    },
-    {
-      "headline": "Nvidia and Cisco confirm multimillion-dollar donations to Trump's White House ballroom",
-      "source": "CNBC",
-      "publishedAt": "2026-10-15T19:43:40.000Z",
-      "hoursAgo": 23.4
+      "hoursAgo": 18.2
     }
   ],
   "briefing": null
