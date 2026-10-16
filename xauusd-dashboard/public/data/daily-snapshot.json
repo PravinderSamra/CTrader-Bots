@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-16T12:26:37.580Z",
+  "generatedAt": "2026-10-16T15:04:46.002Z",
   "yields": {
     "US10Y": 5.19,
     "US2Y": 4.82,
@@ -22,8 +22,8 @@
     "probHike": 44
   },
   "marketVolatility": {
-    "GVZ": 22.78,
-    "VIX": 16.87
+    "GVZ": 22.34,
+    "VIX": 16.46
   },
   "positioning": {
     "cotNetLong": 201579,
@@ -34,26 +34,26 @@
     "openInterestChange": -14341
   },
   "etfFlows": {
-    "gldTonnes": 1055.1,
-    "gldWoWChange": 1.8,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1053.5,
+    "gldWoWChange": -1.6,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4177.2,
-    "XAGUSD": 57.874,
-    "EURUSD": 1.12506,
-    "USDJPY": 157.958,
-    "USDCHF": 0.82374,
-    "USDCNH": 6.68457,
-    "GBPUSD": 1.33402,
-    "USDCAD": 1.41603,
-    "USDSEK": 9.90152,
-    "US500": 7757.5,
-    "GER40": 25621.05,
-    "UK100": 10834.05,
+    "XAUUSD": 4183.56,
+    "XAGUSD": 57.675,
+    "EURUSD": 1.12533,
+    "USDJPY": 157.898,
+    "USDCHF": 0.82286,
+    "USDCNH": 6.68372,
+    "GBPUSD": 1.33533,
+    "USDCAD": 1.41396,
+    "USDSEK": 9.8941,
+    "US500": 7735.8,
+    "GER40": 25695.15,
+    "UK100": 10884.55,
     "ADR_14day": 72.4,
-    "ADR_usedToday": 44.8,
-    "goldSilverRatio": 72.2
+    "ADR_usedToday": 51.5,
+    "goldSilverRatio": 72.5
   },
   "dollarLiquidity": {
     "stlfsi": -0.7206,
@@ -69,43 +69,31 @@
       "headline": "US Treasury says Japan no longer faces deflationary environment, yen level must change - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-16T04:11:00.000Z",
-      "hoursAgo": 8.3
+      "hoursAgo": 10.9
     },
     {
       "headline": "Fed's Warsh says AI path will be 'very bumpy' but ultimately 'very good' for wealth",
       "source": "CNBC",
       "publishedAt": "2026-10-16T04:08:27.000Z",
-      "hoursAgo": 8.3
+      "hoursAgo": 10.9
     },
     {
       "headline": "Nvidia and Cisco confirm multimillion-dollar donations to Trump's White House ballroom",
       "source": "CNBC",
       "publishedAt": "2026-10-15T19:43:40.000Z",
-      "hoursAgo": 16.7
+      "hoursAgo": 19.4
     },
     {
       "headline": "US plan to ease shadow fleet sanctions unlikely to free up many tankers, analysts say - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-15T18:25:28.000Z",
-      "hoursAgo": 18
+      "hoursAgo": 20.7
     },
     {
       "headline": "US issues fresh Iran-related sanctions, Treasury website shows - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-15T16:45:20.000Z",
-      "hoursAgo": 19.7
-    },
-    {
-      "headline": "Treasury yields slide as investors flee to safety of bonds amid tech rout",
-      "source": "CNBC",
-      "publishedAt": "2026-10-15T12:56:38.000Z",
-      "hoursAgo": 23.5
-    },
-    {
-      "headline": "US Treasury pushes global partners to rename AI as 'super intelligence' - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-15T12:35:43.000Z",
-      "hoursAgo": 23.8
+      "hoursAgo": 22.3
     }
   ],
   "briefing": null

@@ -86,6 +86,79 @@
         "adrUsedPct": 47
       },
       "outcome": null
+    },
+    {
+      "at": "2026-10-16T15:04:50.719Z",
+      "londonTime": "16:04 BST",
+      "mode": "POST_ORB",
+      "price": 10884.65,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — ORB broke UP against a BEARISH macro bias (-3) — counter-bias breaks fail more often; treat continuation as suspect.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "STRUCTURE",
+          "rule": "R2",
+          "text": "ORB broke UP against a BEARISH macro bias (-3) — counter-bias breaks fail more often; treat continuation as suspect."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "76% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10677.8) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.39%) — the cross-market lean is up."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -3,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10830.2,
+        "orbLow": 10798.4,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10846.7,
+        "overnightLow": 10798.4,
+        "priorDayHigh": 10870.6,
+        "priorDayLow": 10677.8,
+        "gapPct": 0.54,
+        "adr14": 125.2,
+        "adrUsedPct": 76
+      },
+      "outcome": {
+        "resolvedAt": "2026-10-16T15:04:52.664Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
