@@ -1,4 +1,5 @@
-// Daily Systems cBot v1.4 (Vanessa Algo Bots)
+// Daily Systems cBot v1.4.1 (Vanessa Algo Bots)
+// v1.4.1: fixed the save key (cTrader allows letters, digits and spaces only).
 // v1.4: crash-safe. Live only (not in backtests), the bot saves its
 // to-do list every minute: orders waiting to be sent, positions closed
 // for the weekend, each trade's signal day and the daily guard total.
@@ -107,6 +108,7 @@ namespace cAlgo.Robots
         private DateTime _day = DateTime.MinValue, _haltedDay = DateTime.MinValue;
         private readonly Dictionary<Book, DateTime> _done = new Dictionary<Book, DateTime>();
         private string _saved = "";
+        private bool _saveFailed;
         private bool Live => RunningMode == RunningMode.RealTime;
 
         protected override void OnStart()
@@ -152,13 +154,14 @@ namespace cAlgo.Robots
                 if (args.Position.Label != null && args.Position.Label.StartsWith(Label + "-")) _closedCum += args.Position.NetProfit;
             };
             Timer.Start(TimeSpan.FromMinutes(1));
-            Print("Daily Systems v1.4 started: {0} symbols, notional ${1} per position.", _books.Count, Notional);
+            Print("Daily Systems v1.4.1 started: {0} symbols, notional ${1} per position.", _books.Count, Notional);
             if (Live) Restore();
         }
 
         // ---------------- crash recovery (live only) ----------------
-        private string Key => "DSY_" + Account.Number + "_"
-            + new string(Label.Select(ch => char.IsLetterOrDigit(ch) ? ch : '_').ToArray());
+        // LocalStorage keys may only hold Latin letters, digits and spaces.
+        private string Key => "DSY" + Account.Number + new string(Label
+            .Where(ch => ch < 128 && char.IsLetterOrDigit(ch)).ToArray());
 
         private static string Num(double x) =>
             x.ToString("R", System.Globalization.CultureInfo.InvariantCulture);
@@ -207,7 +210,11 @@ namespace cAlgo.Robots
                 LocalStorage.Flush(LocalStorageScope.Device);
                 _saved = text;
             }
-            catch (Exception e) { Print("R|save failed: {0}", e.Message); }
+            catch (Exception e)
+            {
+                if (!_saveFailed) Print("R|save failed: {0}", e.Message);
+                _saveFailed = true;
+            }
         }
 
         private void Restore()
