@@ -1,5 +1,71 @@
 [
  {
+  "date": "2026-02-26 17:28",
+  "us_up": "AMGN GE HAL JNJ KO LIN NEE",
+  "us_down": "ACN BAC BKNG CAT COF GILD INTU MSFT",
+  "uk_up": "ANTO CPG EXPN GLEN HMSO HSBA RIO",
+  "uk_down": "FRES MKS NG SBRY SGE UU WTB",
+  "fx_up": "USDTRY",
+  "fx_down": "USDCHF"
+ },
+ {
+  "date": "2026-03-04 20:04",
+  "us_up": "ACN COP CVX DUK INTU NOW RTX",
+  "us_down": "ABT AMZN BA CAT COF FDX MS",
+  "uk_up": "BA BP GLEN NG REL SGE",
+  "uk_down": "CCH DGE EZJ FRES HIK SMIN SSE",
+  "fx_up": "USDTRY",
+  "fx_down": "EURUSD",
+  "note": "GELN read as GLEN"
+ },
+ {
+  "date": "2026-03-11 11:59",
+  "us_up": "ABT ACN FOX MSFT ORCL RTX SBUX",
+  "us_down": "AAPL BAC CHTR COF DE DIS MET",
+  "uk_up": "ADM BA BP CNA WPP WTB",
+  "uk_down": "ANTO BLND CCH EZJ RIO SMIN",
+  "fx_up": "USDTRY",
+  "fx_down": "EURCAD"
+ },
+ {
+  "date": "2026-03-26 12:07",
+  "us_up": "A AAON ADI COP KEX PSX PTEN",
+  "us_down": "ABBV ABT ACM ACN ADBE BRBR POOL PPC PRGS",
+  "uk_up": "BATS BLND CCH MNDI PRU WTB",
+  "uk_down": "ADM ANTO AV BLND DGE TW",
+  "fx_up": "USDCAD USDTRY",
+  "fx_down": "AUDUSD",
+  "note": "US list has S&P 400 names; BLND on both UK lists"
+ },
+ {
+  "date": "2026-04-06 20:43",
+  "us_up": "CRM DE GS MS PFE PYPL",
+  "us_down": "AAPL ABT ACN CVX HAL LMT MDT",
+  "uk_up": "AAL ANTO BP CNA CPG GLEN LLOY",
+  "uk_down": "AV HMSO III PRU SBRY ULVR",
+  "fx_up": "USDTRY",
+  "fx_down": "EURJPY"
+ },
+ {
+  "date": "2026-04-09 11:33",
+  "us_up": "AMD BAC DHR INTC NOW PYPL",
+  "us_down": "BK CL COP COST CVX INTU MRK",
+  "uk_up": "BLND BP CNA GLEN HSBA PSN WTB",
+  "uk_down": "ADM AV BNZL HMSO PRU SSE",
+  "fx_up": "AUDCAD USDTRY",
+  "fx_down": "USDCHF"
+ },
+ {
+  "date": "2026-04-18 19:38",
+  "us_up": "AXP BK C DHR INTC INTU TSLA",
+  "us_down": "ABT ACN CAT COP CVX MRK",
+  "uk_up": "ANTO CPG GLEN HIK HMSO LAND SN",
+  "uk_down": "ADM AZN BA BP RIO SVT",
+  "fx_up": "AUDJPY USDTRY",
+  "fx_down": "USDCHF",
+  "note": "subject: Monthly Watch List"
+ },
+ {
   "date": "2026-05-07 16:16",
   "us_up": "AAPL AMZN AVGO BKNG CAT CSCO CVS GOOG SBUX",
   "us_down": "ABT CHTR DHR FOX MCD MDT",
