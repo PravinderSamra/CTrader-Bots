@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-15T22:47:43.697Z",
+  "generatedAt": "2026-10-16T10:22:06.566Z",
   "yields": {
     "US10Y": 5.19,
     "US2Y": 4.82,
@@ -34,26 +34,26 @@
     "openInterestChange": -14341
   },
   "etfFlows": {
-    "gldTonnes": 1057.9,
-    "gldWoWChange": -1.5,
+    "gldTonnes": 1053.3,
+    "gldWoWChange": -4.6,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4166.165,
-    "XAGUSD": 57.309,
-    "EURUSD": 1.12131,
-    "USDJPY": 158.125,
-    "USDCHF": 0.82739,
-    "USDCNH": 6.68926,
-    "GBPUSD": 1.32719,
-    "USDCAD": 1.41913,
-    "USDSEK": 9.95166,
-    "US500": 7744.5,
-    "GER40": 25488.05,
-    "UK100": 10826.75,
+    "XAUUSD": 4184.4,
+    "XAGUSD": 57.798,
+    "EURUSD": 1.12627,
+    "USDJPY": 157.861,
+    "USDCHF": 0.82286,
+    "USDCNH": 6.68485,
+    "GBPUSD": 1.33409,
+    "USDCAD": 1.41531,
+    "USDSEK": 9.88577,
+    "US500": 7759,
+    "GER40": 25670.05,
+    "UK100": 10846.05,
     "ADR_14day": 72.4,
-    "ADR_usedToday": 6.7,
-    "goldSilverRatio": 72.7
+    "ADR_usedToday": 44.8,
+    "goldSilverRatio": 72.4
   },
   "dollarLiquidity": {
     "stlfsi": -0.7206,
@@ -66,52 +66,40 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Fed's Warsh says AI path will be 'very bumpy' but ultimately 'very good' for wealth",
+      "source": "CNBC",
+      "publishedAt": "2026-10-16T04:08:27.000Z",
+      "hoursAgo": 6.2
+    },
+    {
       "headline": "Nvidia and Cisco confirm multimillion-dollar donations to Trump's White House ballroom",
       "source": "CNBC",
       "publishedAt": "2026-10-15T19:43:40.000Z",
-      "hoursAgo": 3.1
+      "hoursAgo": 14.6
+    },
+    {
+      "headline": "US plan to ease shadow fleet sanctions unlikely to free up many tankers, analysts say - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-15T18:25:28.000Z",
+      "hoursAgo": 15.9
     },
     {
       "headline": "US issues fresh Iran-related sanctions, Treasury website shows - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-15T16:45:20.000Z",
-      "hoursAgo": 6
+      "hoursAgo": 17.6
     },
     {
       "headline": "Treasury yields slide as investors flee to safety of bonds amid tech rout",
       "source": "CNBC",
       "publishedAt": "2026-10-15T12:56:38.000Z",
-      "hoursAgo": 9.9
+      "hoursAgo": 21.4
     },
     {
       "headline": "US Treasury pushes global partners to rename AI as 'super intelligence' - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-15T12:35:43.000Z",
-      "hoursAgo": 10.2
-    },
-    {
-      "headline": "US toy prices surge ahead of holiday shopping season as tariffs, Iran war bite - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-15T10:18:56.000Z",
-      "hoursAgo": 12.5
-    },
-    {
-      "headline": "Bank of England's Breeden says cost-cutting by firms helping central bank - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-15T08:47:37.000Z",
-      "hoursAgo": 14
-    },
-    {
-      "headline": "BoE's Pill says a rate hike need not be start of long series - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-15T04:45:00.000Z",
-      "hoursAgo": 18
-    },
-    {
-      "headline": "IMF warns of slowing Asian growth, spillover from rising yields - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-15T02:04:00.000Z",
-      "hoursAgo": 20.7
+      "hoursAgo": 21.8
     }
   ],
   "briefing": null

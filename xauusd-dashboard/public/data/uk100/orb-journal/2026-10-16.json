@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-16",
+  "entries": [
+    {
+      "at": "2026-10-16T10:22:11.433Z",
+      "londonTime": "11:22 BST",
+      "mode": "POST_ORB",
+      "price": 10845.95,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — FTSE is tracking a firmer European tape (Euro Stoxx +0.4%) — the cross-market lean is up.",
+      "signals": [
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.4%) — the cross-market lean is up."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 1,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10830.2,
+        "orbLow": 10798.4,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10846.7,
+        "overnightLow": 10798.4,
+        "priorDayHigh": 10870.6,
+        "priorDayLow": 10677.8,
+        "gapPct": 0.19,
+        "adr14": 125.2,
+        "adrUsedPct": 42
+      },
+      "outcome": null
+    }
+  ]
+}
