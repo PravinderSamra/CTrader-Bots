@@ -1,0 +1,65 @@
+[
+ {
+  "date": "2026-07-01 11:33",
+  "us_up": "ABBV AIG AMD CAT CVS GE JNJ MRK",
+  "us_down": "BMY C COP COST FDX MCD PEP",
+  "uk_up": "ADM BARC BNZL CCH EZJ PSON",
+  "uk_down": "BAB BP CPI EXPN MNDI WPP",
+  "fx_up": "USDJPY",
+  "fx_down": "EURUSD"
+ },
+ {
+  "date": "2026-07-08 16:32",
+  "us_up": "ABBV AMZN AXP BAC GD JNJ SPG UNH",
+  "us_down": "AAPL BLK BMY C CAT CSCO FDX T",
+  "uk_up": "ADM BARC BNZL CCH LLOY RR",
+  "uk_down": "BP CNA CPI FRES KGF MNDI",
+  "fx_up": "USDTRY",
+  "fx_down": "EURUSD"
+ },
+ {
+  "date": "2026-07-15 15:18",
+  "us_up": "BAC CVS DHR GS KO MET",
+  "us_down": "ABT AMGN BLK CHTR COST ORCL",
+  "uk_up": "ADM BARC BNZL HSBA III PSON",
+  "uk_down": "AAL FRES ITV MNDI SDR TPK",
+  "fx_up": "GBPJPY USDTRY",
+  "fx_down": "EURGBP"
+ },
+ {
+  "date": "2026-08-07 07:43",
+  "us_up": "ACN AMGN BAC CHTR GM JPM MET",
+  "us_down": "AMD FDX GE HAL MCD NKE",
+  "uk_up": "ADM BLND BNZL BP HSBA LAND NXT",
+  "uk_down": "ANTO AV BARC CCH CNA STJ",
+  "fx_up": "USDTRY",
+  "fx_down": "AUDJPY"
+ },
+ {
+  "date": "2026-08-12 19:33",
+  "us_up": "ACN AMGN BAC GD JPM MMM RTX SCHW",
+  "us_down": "HD INTC KHC MA MCD NKE",
+  "uk_up": "ADM AV BAB BLND BNZL EXPN LGEN NXT",
+  "uk_down": "AZN BP BTA CNA SBRY ULVR",
+  "fx_up": "USDTRY",
+  "fx_down": "USDCAD"
+ },
+ {
+  "date": "2026-08-28 11:14",
+  "us_up": "AMGN BMY CMCSA FOX JNJ KO MRK V",
+  "us_down": "ABBV AMD AVGO AXP COP HON INTU MCD",
+  "uk_up": "ADN AV FRES GLEN HIK NG",
+  "uk_down": "AZN BAB BARC RR SBRY SN STAN",
+  "fx_up": "AUDUSD USDTRY",
+  "fx_down": "EURUSD"
+ },
+ {
+  "date": "2026-10-16 10:34",
+  "us_up": "AAPL ABBV HAL HD LOW MA MCD MET",
+  "us_down": "AMD CHTR CMCSA CVX DE GE INTC MRK",
+  "uk_up": "ANTO EZJ FRES JMAT SDR SSE",
+  "uk_down": "BAB CNA HMSO HSBA MNDI PRU RIO STJ",
+  "fx_up": "GBPUSD",
+  "fx_down": "EURUSD"
+ }
+]
