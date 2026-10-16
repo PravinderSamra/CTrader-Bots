@@ -1,5 +1,59 @@
 [
  {
+  "date": "2026-05-07 16:16",
+  "us_up": "AAPL AMZN AVGO BKNG CAT CSCO CVS GOOG SBUX",
+  "us_down": "ABT CHTR DHR FOX MCD MDT",
+  "uk_up": "AZN EZJ FRES KGF PSN SVT UU",
+  "uk_down": "ANTO BAB BLND HMSO IAG III TPK TW",
+  "fx_up": "USDCAD",
+  "fx_down": "EURCHF"
+ },
+ {
+  "date": "2026-05-16 08:31",
+  "us_up": "AAPL AMD CAT CSCO CVS NKE TXN",
+  "us_down": "ABT ACN CHTR CMCSA DHR GOOG MCD",
+  "uk_up": "AAL CCH GLEN ITRK RIO RMG",
+  "uk_down": "BLND HMSO MKS NG SGE SN",
+  "fx_up": "AUDJPY",
+  "fx_down": "EURUSD"
+ },
+ {
+  "date": "2026-06-01 07:15",
+  "us_up": "AAPL ABT AMD FDX GS MDT",
+  "us_down": "CAT HAL INTC LOW PM PYPL",
+  "uk_up": "AAL BARC DGE HSBA STAN TW",
+  "uk_down": "BNZL CCH CPI GLEN NG STJ",
+  "fx_up": "USDTRY",
+  "fx_down": "AUDJPY"
+ },
+ {
+  "date": "2026-06-03 19:36",
+  "us_up": "AAPL ABT AMD AVGO CSCO MS",
+  "us_down": "CHTR CMCSA LOW MA SBUX TXN",
+  "uk_up": "AAL CCH GLEN HSBA STAN WPP",
+  "uk_down": "BP HIK III MNDI SBRY TW WEIR",
+  "fx_up": "AUDJPY",
+  "fx_down": "AUDNZD"
+ },
+ {
+  "date": "2026-06-10 15:16",
+  "us_up": "ABT CVS FOXA LLY MET SPG UNH",
+  "us_down": "COP INTC INTU MSFT T TMUS TXN",
+  "uk_up": "AAL CCH CPI HIK HMSO PSON",
+  "uk_down": "BP MNDI MRW PRU TW WEIR",
+  "fx_up": "GBPAUD",
+  "fx_down": "USDCAD"
+ },
+ {
+  "date": "2026-06-24 12:54",
+  "us_up": "AIG BAC CAT GE MS NKE",
+  "us_down": "BMY CMCSA COF COP CVX FOX PFE",
+  "uk_up": "AAL BAB BARC EZJ HSBA IAG PSON",
+  "uk_down": "GLEN III KGF MNDI PSN SSE",
+  "fx_up": "USDJPY",
+  "fx_down": "EURUSD"
+ },
+ {
   "date": "2026-07-01 11:33",
   "us_up": "ABBV AIG AMD CAT CVS GE JNJ MRK",
   "us_down": "BMY C COP COST FDX MCD PEP",

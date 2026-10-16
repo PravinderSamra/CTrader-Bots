@@ -5,7 +5,7 @@ import json, sys, os, statistics as st
 from datetime import datetime, timezone
 P = os.path.join(os.path.dirname(os.path.abspath(__file__)), "watchlists.json")
 D = sys.argv[1]
-MAP = {"BTA": "BT-A", "ADN": "ABDN"}
+MAP = {"BTA": "BT-A", "ADN": "ABDN", "RMG": "IDS"}
 def yt(k, t):
     if k.startswith("us"): return t.replace(".", "-")
     if k.startswith("uk"): return MAP.get(t, t) + ".L"
@@ -18,7 +18,9 @@ def series(y):
         cache[y] = [(datetime.fromtimestamp(a, timezone.utc).date(), b) for a, b in zip(ts, c) if b is not None]
     return cache[y]
 def fwd(y, d0, h):
-    s = series(y)
+    if not os.path.exists(os.path.join(D, y + ".json")): return None
+    try: s = series(y)
+    except Exception: return None
     i = next((k for k, (d, _) in enumerate(s) if d > d0), None)
     if i is None or i + h >= len(s): return None
     v = s[i + h][1] / s[i][1] - 1
