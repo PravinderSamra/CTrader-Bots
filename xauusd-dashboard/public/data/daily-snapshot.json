@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-10-19T17:59:37.076Z",
+  "generatedAt": "2026-10-19T22:05:07.451Z",
   "yields": {
-    "US10Y": 5.1,
-    "US2Y": 4.77,
-    "realYield10Y": 2.78,
-    "realYield5Y": 2.58,
-    "curve2s10s": 33,
+    "US10Y": 5.09,
+    "US2Y": 4.74,
+    "realYield10Y": 2.74,
+    "realYield5Y": 2.52,
+    "curve2s10s": 35,
     "breakeven10Y": 2.35,
-    "breakeven5Y": 2.37,
-    "forward5y5y": 2.33,
+    "breakeven5Y": 2.38,
+    "forward5y5y": 2.32,
     "dayOverDay": {
-      "US10Y": -0.09,
-      "US2Y": -0.05,
-      "realYield10Y": -0.06
+      "US10Y": -0.01,
+      "US2Y": -0.03,
+      "realYield10Y": -0.04
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-10-28",
     "probCut": 0,
-    "probHold": 32,
-    "probHike": 68
+    "probHold": 52,
+    "probHike": 48
   },
   "marketVolatility": {
     "GVZ": 22.58,
@@ -34,26 +34,26 @@
     "openInterestChange": -1365
   },
   "etfFlows": {
-    "gldTonnes": 1063.3,
-    "gldWoWChange": 0,
-    "trend3W": "FLAT"
+    "gldTonnes": 1064,
+    "gldWoWChange": 0.7,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4145.085,
-    "XAGUSD": 57.265,
-    "EURUSD": 1.12159,
-    "USDJPY": 158.4785,
-    "USDCHF": 0.82591,
-    "USDCNH": 6.6825,
-    "GBPUSD": 1.33091,
-    "USDCAD": 1.40987,
-    "USDSEK": 9.91334,
-    "US500": 7703.7,
-    "GER40": 25227.65,
-    "UK100": 10725.95,
-    "ADR_14day": 69.3,
-    "ADR_usedToday": 54.1,
-    "goldSilverRatio": 72.4
+    "XAUUSD": 4142.345,
+    "XAGUSD": 57.095,
+    "EURUSD": 1.1213,
+    "USDJPY": 158.536,
+    "USDCHF": 0.82661,
+    "USDCNH": 6.68246,
+    "GBPUSD": 1.33066,
+    "USDCAD": 1.41068,
+    "USDSEK": 9.91483,
+    "US500": 7700.5,
+    "GER40": 25200.65,
+    "UK100": 10705.85,
+    "ADR_14day": 68,
+    "ADR_usedToday": 1.9,
+    "goldSilverRatio": 72.6
   },
   "dollarLiquidity": {
     "stlfsi": -0.7206,
@@ -69,37 +69,31 @@
       "headline": "Trump's Russia sanctions waiver eases India's energy woes, lifts trade deal chances - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-19T11:36:11.000Z",
-      "hoursAgo": 6.4
+      "hoursAgo": 10.5
     },
     {
       "headline": "UK urges firms not to take part in E1 settlement tender or risk sanctions - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-19T09:54:50.000Z",
-      "hoursAgo": 8.1
+      "hoursAgo": 12.2
     },
     {
       "headline": "Morning Bid: Markets left to figure out sanctions - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-19T04:31:00.000Z",
-      "hoursAgo": 13.5
+      "hoursAgo": 17.6
     },
     {
       "headline": "Global food inflation is expected to intensify as supply shocks pile up - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-19T04:04:00.000Z",
-      "hoursAgo": 13.9
+      "hoursAgo": 18
     },
     {
       "headline": "UK housing market showing signs of mortgage rates impact, Rightmove says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-18T23:06:08.000Z",
-      "hoursAgo": 18.9
-    },
-    {
-      "headline": "Oil slips from five-month highs with Hormuz crossings, Russian sanctions waiver in focus - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-18T22:23:00.000Z",
-      "hoursAgo": 19.6
+      "hoursAgo": 23
     }
   ],
   "briefing": null
