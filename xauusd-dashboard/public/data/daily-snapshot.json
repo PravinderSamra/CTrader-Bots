@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-10-16T22:20:47.653Z",
+  "generatedAt": "2026-10-19T11:37:01.359Z",
   "yields": {
-    "US10Y": null,
+    "US10Y": 5.1,
     "US2Y": 4.77,
     "realYield10Y": 2.78,
     "realYield5Y": 2.58,
-    "curve2s10s": null,
+    "curve2s10s": 33,
     "breakeven10Y": 2.35,
     "breakeven5Y": 2.37,
     "forward5y5y": 2.33,
     "dayOverDay": {
-      "US10Y": null,
+      "US10Y": -0.09,
       "US2Y": -0.05,
       "realYield10Y": -0.06
     }
@@ -34,26 +34,26 @@
     "openInterestChange": -1365
   },
   "etfFlows": {
-    "gldTonnes": 1058.3,
-    "gldWoWChange": -0.9,
+    "gldTonnes": 1057.1,
+    "gldWoWChange": -1.2,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4164.575,
-    "XAGUSD": 56.965,
-    "EURUSD": 1.12387,
-    "USDJPY": 157.9865,
-    "USDCHF": 0.824,
-    "USDCNH": 6.68633,
-    "GBPUSD": 1.33273,
-    "USDCAD": 1.41378,
-    "USDSEK": 9.91446,
-    "US500": 7658.5,
-    "GER40": 25475.05,
-    "UK100": 10839.05,
-    "ADR_14day": 72.4,
-    "ADR_usedToday": 51.5,
-    "goldSilverRatio": 73.1
+    "XAUUSD": 4169.265,
+    "XAGUSD": 57.6165,
+    "EURUSD": 1.12247,
+    "USDJPY": 158.1425,
+    "USDCHF": 0.82463,
+    "USDCNH": 6.67961,
+    "GBPUSD": 1.33368,
+    "USDCAD": 1.40776,
+    "USDSEK": 9.89645,
+    "US500": 7694.3,
+    "GER40": 25300.85,
+    "UK100": 10766.15,
+    "ADR_14day": 69.3,
+    "ADR_usedToday": 28.3,
+    "goldSilverRatio": 72.4
   },
   "dollarLiquidity": {
     "stlfsi": -0.7206,
@@ -66,28 +66,22 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "US solicits exchange of up to 17 million barrels of oil from strategic reserve - Reuters",
+      "headline": "UK urges firms not to take part in E1 settlement tender or risk sanctions - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-10-16T20:25:25.000Z",
-      "hoursAgo": 1.9
+      "publishedAt": "2026-10-19T09:54:50.000Z",
+      "hoursAgo": 1.7
     },
     {
-      "headline": "Schwab to create 'tax-aware' strategy that's been attracting billions from wealthy investors",
-      "source": "CNBC",
-      "publishedAt": "2026-10-16T16:21:14.000Z",
-      "hoursAgo": 6
-    },
-    {
-      "headline": "US Treasury says Japan no longer faces deflationary environment, yen level must change - Reuters",
+      "headline": "UK housing market showing signs of mortgage rates impact, Rightmove says - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-10-16T04:11:00.000Z",
-      "hoursAgo": 18.2
+      "publishedAt": "2026-10-18T23:06:08.000Z",
+      "hoursAgo": 12.5
     },
     {
-      "headline": "Fed's Warsh says AI path will be 'very bumpy' but ultimately 'very good' for wealth",
-      "source": "CNBC",
-      "publishedAt": "2026-10-16T04:08:27.000Z",
-      "hoursAgo": 18.2
+      "headline": "Oil slips from 5-month high as Trump's Russia sanctions waiver may bring more supplies - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-18T22:23:00.000Z",
+      "hoursAgo": 13.2
     }
   ],
   "briefing": null
