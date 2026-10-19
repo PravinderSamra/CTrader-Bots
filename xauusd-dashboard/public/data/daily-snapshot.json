@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-19T11:37:01.359Z",
+  "generatedAt": "2026-10-19T14:41:36.293Z",
   "yields": {
     "US10Y": 5.1,
     "US2Y": 4.77,
@@ -22,8 +22,8 @@
     "probHike": 68
   },
   "marketVolatility": {
-    "GVZ": 22.34,
-    "VIX": 16.46
+    "GVZ": 22.58,
+    "VIX": 19.99
   },
   "positioning": {
     "cotNetLong": 199733,
@@ -34,26 +34,26 @@
     "openInterestChange": -1365
   },
   "etfFlows": {
-    "gldTonnes": 1057.1,
-    "gldWoWChange": -1.2,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1063.3,
+    "gldWoWChange": 6.2,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4169.265,
-    "XAGUSD": 57.6165,
-    "EURUSD": 1.12247,
-    "USDJPY": 158.1425,
-    "USDCHF": 0.82463,
-    "USDCNH": 6.67961,
-    "GBPUSD": 1.33368,
-    "USDCAD": 1.40776,
-    "USDSEK": 9.89645,
-    "US500": 7694.3,
-    "GER40": 25300.85,
-    "UK100": 10766.15,
+    "XAUUSD": 4145.08,
+    "XAGUSD": 57.144,
+    "EURUSD": 1.12109,
+    "USDJPY": 158.437,
+    "USDCHF": 0.82578,
+    "USDCNH": 6.68232,
+    "GBPUSD": 1.33143,
+    "USDCAD": 1.40992,
+    "USDSEK": 9.90871,
+    "US500": 7704.9,
+    "GER40": 25234.45,
+    "UK100": 10742.55,
     "ADR_14day": 69.3,
-    "ADR_usedToday": 28.3,
-    "goldSilverRatio": 72.4
+    "ADR_usedToday": 47.8,
+    "goldSilverRatio": 72.5
   },
   "dollarLiquidity": {
     "stlfsi": -0.7206,
@@ -69,19 +69,13 @@
       "headline": "UK urges firms not to take part in E1 settlement tender or risk sanctions - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-19T09:54:50.000Z",
-      "hoursAgo": 1.7
+      "hoursAgo": 4.8
     },
     {
       "headline": "UK housing market showing signs of mortgage rates impact, Rightmove says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-18T23:06:08.000Z",
-      "hoursAgo": 12.5
-    },
-    {
-      "headline": "Oil slips from 5-month high as Trump's Russia sanctions waiver may bring more supplies - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-18T22:23:00.000Z",
-      "hoursAgo": 13.2
+      "hoursAgo": 15.6
     }
   ],
   "briefing": null

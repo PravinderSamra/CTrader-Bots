@@ -50,6 +50,63 @@
         "adrUsedPct": 96
       },
       "outcome": null
+    },
+    {
+      "at": "2026-10-19T14:41:43.512Z",
+      "londonTime": "15:41 BST",
+      "mode": "POST_ORB",
+      "price": 10742.95,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 118% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "118% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.53%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures +0.61% — the 14:30 US handoff argues for holding longs into the US open."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -1,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10859.7,
+        "orbLow": 10822.2,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10883,
+        "overnightLow": 10781.4,
+        "priorDayHigh": 10893.2,
+        "priorDayLow": 10798.4,
+        "gapPct": -0.88,
+        "adr14": 126.2,
+        "adrUsedPct": 118
+      },
+      "outcome": null
     }
   ]
 }
