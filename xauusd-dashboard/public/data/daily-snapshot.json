@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-20T15:29:24.496Z",
+  "generatedAt": "2026-10-20T19:45:35.445Z",
   "yields": {
     "US10Y": 5.09,
     "US2Y": 4.74,
@@ -34,26 +34,26 @@
     "openInterestChange": -1365
   },
   "etfFlows": {
-    "gldTonnes": 1065.8,
-    "gldWoWChange": -2.9,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1069.4,
+    "gldWoWChange": 3.6,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4135.245,
-    "XAGUSD": 57.814,
-    "EURUSD": 1.12343,
-    "USDJPY": 158.151,
-    "USDCHF": 0.82499,
-    "USDCNH": 6.67526,
-    "GBPUSD": 1.33769,
-    "USDCAD": 1.40482,
-    "USDSEK": 9.89842,
-    "US500": 7718.7,
-    "GER40": 25332.45,
-    "UK100": 10732.75,
+    "XAUUSD": 4121.27,
+    "XAGUSD": 57.775,
+    "EURUSD": 1.12361,
+    "USDJPY": 158.2245,
+    "USDCHF": 0.8247,
+    "USDCNH": 6.67482,
+    "GBPUSD": 1.33817,
+    "USDCAD": 1.40616,
+    "USDSEK": 9.90043,
+    "US500": 7712.7,
+    "GER40": 25417.35,
+    "UK100": 10744.35,
     "ADR_14day": 68,
     "ADR_usedToday": 44,
-    "goldSilverRatio": 71.5
+    "goldSilverRatio": 71.3
   },
   "dollarLiquidity": {
     "stlfsi": -0.7206,
@@ -69,31 +69,37 @@
       "headline": "Anthropic in talks with neocloud Nscale over second multibillion-dollar deal, source tells CNBC",
       "source": "CNBC",
       "publishedAt": "2026-10-20T14:12:38.000Z",
-      "hoursAgo": 1.3
+      "hoursAgo": 5.5
     },
     {
       "headline": "Draymond Green says he's 'not Steph Curry,' wants to play another year even if he leaves Golden State Warriors",
       "source": "CNBC",
       "publishedAt": "2026-10-20T12:00:02.000Z",
-      "hoursAgo": 3.5
+      "hoursAgo": 7.8
     },
     {
       "headline": "How safe havens stack up as tech, energy and France fears grip markets - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-20T04:06:00.000Z",
-      "hoursAgo": 11.4
+      "hoursAgo": 15.7
+    },
+    {
+      "headline": "Gold steady as investors await fed rate signals - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-20T01:33:00.000Z",
+      "hoursAgo": 18.2
+    },
+    {
+      "headline": "Cuba accuses US of letting terrorists operate with impunity after speedboat raid - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-20T00:50:00.000Z",
+      "hoursAgo": 18.9
     },
     {
       "headline": "Oil stocks in US strategic petroleum reserve fall to lowest level since 1982 - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-19T20:49:44.000Z",
-      "hoursAgo": 18.7
-    },
-    {
-      "headline": "Canadian dollar notches nearly four-week high on BoC rate hike bets - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-19T17:41:13.000Z",
-      "hoursAgo": 21.8
+      "hoursAgo": 22.9
     }
   ],
   "briefing": null

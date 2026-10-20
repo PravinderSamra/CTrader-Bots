@@ -49,7 +49,29 @@
         "adr14": 128.4,
         "adrUsedPct": 55
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-10-20T19:45:42.968Z",
+        "fwd1hPct": -0.2,
+        "fwd3hPct": 0.48,
+        "toClosePct": 0.46,
+        "maxUpPct": 0.56,
+        "maxDownPct": -0.24,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R10",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-10-20T12:44:21.338Z",
@@ -106,7 +128,33 @@
         "adr14": 128.4,
         "adrUsedPct": 57
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-10-20T19:45:43.085Z",
+        "fwd1hPct": 0.5,
+        "fwd3hPct": 0.47,
+        "toClosePct": 0.47,
+        "maxUpPct": 0.58,
+        "maxDownPct": -0.23,
+        "verdict": "WRONG",
+        "signalVerdicts": [
+          {
+            "rule": "R10",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R3",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R8",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-10-20T15:29:29.507Z",
@@ -158,6 +206,72 @@
       },
       "outcome": {
         "resolvedAt": "2026-10-20T15:29:31.855Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
+    },
+    {
+      "at": "2026-10-20T19:45:40.140Z",
+      "londonTime": "20:45 BST",
+      "mode": "CLOSED",
+      "price": 10744.35,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — The obvious draw (PDH 10883) sits beyond what's left of a typical day's range — targets past it are stretch-only today.",
+      "signals": [
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDH 10883) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 95th percentile of its 20-day range and still rising — a persistent FX headwind capping upside breaks (weak GBP is what lifts FTSE)."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.72%) — the cross-market lean is up."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 0,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10747.9,
+        "orbLow": 10724.1,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10747.9,
+        "overnightLow": 10691.3,
+        "priorDayHigh": 10883,
+        "priorDayLow": 10700.5,
+        "gapPct": 0.37,
+        "adr14": 128.4,
+        "adrUsedPct": 67
+      },
+      "outcome": {
+        "resolvedAt": "2026-10-20T19:45:43.085Z",
         "fwd1hPct": null,
         "fwd3hPct": null,
         "toClosePct": 0,
