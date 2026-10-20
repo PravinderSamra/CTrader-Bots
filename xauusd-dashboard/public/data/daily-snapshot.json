@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-10-20T19:45:35.445Z",
+  "generatedAt": "2026-10-20T22:50:35.033Z",
   "yields": {
-    "US10Y": 5.09,
-    "US2Y": 4.74,
-    "realYield10Y": 2.74,
-    "realYield5Y": 2.52,
-    "curve2s10s": 35,
+    "US10Y": 5.15,
+    "US2Y": 4.77,
+    "realYield10Y": 2.8,
+    "realYield5Y": 2.56,
+    "curve2s10s": 38,
     "breakeven10Y": 2.35,
-    "breakeven5Y": 2.38,
-    "forward5y5y": 2.32,
+    "breakeven5Y": 2.39,
+    "forward5y5y": 2.31,
     "dayOverDay": {
-      "US10Y": -0.01,
-      "US2Y": -0.03,
-      "realYield10Y": -0.04
+      "US10Y": 0.06,
+      "US2Y": 0.03,
+      "realYield10Y": 0.06
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-10-28",
     "probCut": 0,
-    "probHold": 52,
-    "probHike": 48
+    "probHold": 56,
+    "probHike": 44
   },
   "marketVolatility": {
     "GVZ": 22.23,
@@ -34,26 +34,26 @@
     "openInterestChange": -1365
   },
   "etfFlows": {
-    "gldTonnes": 1069.4,
-    "gldWoWChange": 3.6,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1069.1,
+    "gldWoWChange": -0.3,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4121.27,
-    "XAGUSD": 57.775,
-    "EURUSD": 1.12361,
-    "USDJPY": 158.2245,
-    "USDCHF": 0.8247,
-    "USDCNH": 6.67482,
-    "GBPUSD": 1.33817,
-    "USDCAD": 1.40616,
-    "USDSEK": 9.90043,
-    "US500": 7712.7,
-    "GER40": 25417.35,
-    "UK100": 10744.35,
-    "ADR_14day": 68,
-    "ADR_usedToday": 44,
-    "goldSilverRatio": 71.3
+    "XAUUSD": 4122.365,
+    "XAGUSD": 57.944,
+    "EURUSD": 1.12278,
+    "USDJPY": 158.2795,
+    "USDCHF": 0.82579,
+    "USDCNH": 6.67478,
+    "GBPUSD": 1.33723,
+    "USDCAD": 1.40638,
+    "USDSEK": 9.90971,
+    "US500": 7737.8,
+    "GER40": 25416.35,
+    "UK100": 10742.35,
+    "ADR_14day": 66,
+    "ADR_usedToday": 10.2,
+    "goldSilverRatio": 71.1
   },
   "dollarLiquidity": {
     "stlfsi": -0.7206,
@@ -69,37 +69,37 @@
       "headline": "Anthropic in talks with neocloud Nscale over second multibillion-dollar deal, source tells CNBC",
       "source": "CNBC",
       "publishedAt": "2026-10-20T14:12:38.000Z",
-      "hoursAgo": 5.5
+      "hoursAgo": 8.6
     },
     {
       "headline": "Draymond Green says he's 'not Steph Curry,' wants to play another year even if he leaves Golden State Warriors",
       "source": "CNBC",
       "publishedAt": "2026-10-20T12:00:02.000Z",
-      "hoursAgo": 7.8
+      "hoursAgo": 10.8
     },
     {
       "headline": "How safe havens stack up as tech, energy and France fears grip markets - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-20T04:06:00.000Z",
-      "hoursAgo": 15.7
+      "hoursAgo": 18.7
     },
     {
-      "headline": "Gold steady as investors await fed rate signals - Reuters",
+      "headline": "Gold edges lower as investors weigh Fed rate signals - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-20T01:33:00.000Z",
-      "hoursAgo": 18.2
+      "hoursAgo": 21.3
+    },
+    {
+      "headline": "Dollar dips as traders weigh Iran, AI risks - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-20T01:14:00.000Z",
+      "hoursAgo": 21.6
     },
     {
       "headline": "Cuba accuses US of letting terrorists operate with impunity after speedboat raid - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-20T00:50:00.000Z",
-      "hoursAgo": 18.9
-    },
-    {
-      "headline": "Oil stocks in US strategic petroleum reserve fall to lowest level since 1982 - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-19T20:49:44.000Z",
-      "hoursAgo": 22.9
+      "hoursAgo": 22
     }
   ],
   "briefing": null
