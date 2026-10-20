@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-20T10:41:03.473Z",
+  "generatedAt": "2026-10-20T12:44:16.953Z",
   "yields": {
     "US10Y": 5.09,
     "US2Y": 4.74,
@@ -34,26 +34,26 @@
     "openInterestChange": -1365
   },
   "etfFlows": {
-    "gldTonnes": 1069.6,
-    "gldWoWChange": 5.6,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1068.7,
+    "gldWoWChange": -0.9,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4120.62,
-    "XAGUSD": 57.133,
-    "EURUSD": 1.12128,
-    "USDJPY": 158.11,
-    "USDCHF": 0.82459,
-    "USDCNH": 6.677,
-    "GBPUSD": 1.3341,
-    "USDCAD": 1.40504,
-    "USDSEK": 9.92042,
-    "US500": 7686.9,
-    "GER40": 25124.15,
-    "UK100": 10696.25,
+    "XAUUSD": 4123.91,
+    "XAGUSD": 57.09,
+    "EURUSD": 1.12258,
+    "USDJPY": 157.9725,
+    "USDCHF": 0.82288,
+    "USDCNH": 6.6769,
+    "GBPUSD": 1.33725,
+    "USDCAD": 1.40465,
+    "USDSEK": 9.90352,
+    "US500": 7682,
+    "GER40": 25139.45,
+    "UK100": 10694.15,
     "ADR_14day": 68,
     "ADR_usedToday": 35.6,
-    "goldSilverRatio": 72.1
+    "goldSilverRatio": 72.2
   },
   "dollarLiquidity": {
     "stlfsi": -0.7206,
@@ -66,28 +66,28 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Draymond Green says he's 'not Steph Curry,' wants to play another year even if he leaves Golden State Warriors",
+      "source": "CNBC",
+      "publishedAt": "2026-10-20T12:00:02.000Z",
+      "hoursAgo": 0.7
+    },
+    {
       "headline": "How safe havens stack up as tech, energy and France fears grip markets - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-20T04:06:00.000Z",
-      "hoursAgo": 6.6
+      "hoursAgo": 8.6
     },
     {
       "headline": "Oil stocks in US strategic petroleum reserve fall to lowest level since 1982 - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-19T20:49:44.000Z",
-      "hoursAgo": 13.9
+      "hoursAgo": 15.9
     },
     {
       "headline": "Canadian dollar notches nearly four-week high on BoC rate hike bets - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-19T17:41:13.000Z",
-      "hoursAgo": 17
-    },
-    {
-      "headline": "Trump's Russia sanctions waiver eases India's energy woes, lifts trade deal chances - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-19T11:36:11.000Z",
-      "hoursAgo": 23.1
+      "hoursAgo": 19.1
     }
   ],
   "briefing": null
