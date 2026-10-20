@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-19T22:05:07.451Z",
+  "generatedAt": "2026-10-20T10:41:03.473Z",
   "yields": {
     "US10Y": 5.09,
     "US2Y": 4.74,
@@ -34,26 +34,26 @@
     "openInterestChange": -1365
   },
   "etfFlows": {
-    "gldTonnes": 1064,
-    "gldWoWChange": 0.7,
+    "gldTonnes": 1069.6,
+    "gldWoWChange": 5.6,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4142.345,
-    "XAGUSD": 57.095,
-    "EURUSD": 1.1213,
-    "USDJPY": 158.536,
-    "USDCHF": 0.82661,
-    "USDCNH": 6.68246,
-    "GBPUSD": 1.33066,
-    "USDCAD": 1.41068,
-    "USDSEK": 9.91483,
-    "US500": 7700.5,
-    "GER40": 25200.65,
-    "UK100": 10705.85,
+    "XAUUSD": 4120.62,
+    "XAGUSD": 57.133,
+    "EURUSD": 1.12128,
+    "USDJPY": 158.11,
+    "USDCHF": 0.82459,
+    "USDCNH": 6.677,
+    "GBPUSD": 1.3341,
+    "USDCAD": 1.40504,
+    "USDSEK": 9.92042,
+    "US500": 7686.9,
+    "GER40": 25124.15,
+    "UK100": 10696.25,
     "ADR_14day": 68,
-    "ADR_usedToday": 1.9,
-    "goldSilverRatio": 72.6
+    "ADR_usedToday": 35.6,
+    "goldSilverRatio": 72.1
   },
   "dollarLiquidity": {
     "stlfsi": -0.7206,
@@ -66,34 +66,28 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "How safe havens stack up as tech, energy and France fears grip markets - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-20T04:06:00.000Z",
+      "hoursAgo": 6.6
+    },
+    {
+      "headline": "Oil stocks in US strategic petroleum reserve fall to lowest level since 1982 - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-19T20:49:44.000Z",
+      "hoursAgo": 13.9
+    },
+    {
+      "headline": "Canadian dollar notches nearly four-week high on BoC rate hike bets - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-19T17:41:13.000Z",
+      "hoursAgo": 17
+    },
+    {
       "headline": "Trump's Russia sanctions waiver eases India's energy woes, lifts trade deal chances - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-19T11:36:11.000Z",
-      "hoursAgo": 10.5
-    },
-    {
-      "headline": "UK urges firms not to take part in E1 settlement tender or risk sanctions - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-19T09:54:50.000Z",
-      "hoursAgo": 12.2
-    },
-    {
-      "headline": "Morning Bid: Markets left to figure out sanctions - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-19T04:31:00.000Z",
-      "hoursAgo": 17.6
-    },
-    {
-      "headline": "Global food inflation is expected to intensify as supply shocks pile up - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-19T04:04:00.000Z",
-      "hoursAgo": 18
-    },
-    {
-      "headline": "UK housing market showing signs of mortgage rates impact, Rightmove says - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-18T23:06:08.000Z",
-      "hoursAgo": 23
+      "hoursAgo": 23.1
     }
   ],
   "briefing": null

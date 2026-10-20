@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-20",
+  "entries": [
+    {
+      "at": "2026-10-20T10:41:09.555Z",
+      "londonTime": "11:41 BST",
+      "mode": "POST_ORB",
+      "price": 10696.25,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — Sterling is at the 95th percentile of its 20-day range and still rising — a persistent FX headwind capping upside breaks (weak GBP is what lifts FTSE).",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 95th percentile of its 20-day range and still rising — a persistent FX headwind capping upside breaks (weak GBP is what lifts FTSE)."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.19%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10747.9,
+        "orbLow": 10724.1,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10747.9,
+        "overnightLow": 10691.3,
+        "priorDayHigh": 10883,
+        "priorDayLow": 10700.5,
+        "gapPct": -0.08,
+        "adr14": 128.4,
+        "adrUsedPct": 55
+      },
+      "outcome": null
+    }
+  ]
+}
