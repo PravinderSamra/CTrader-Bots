@@ -50,6 +50,63 @@
         "adrUsedPct": 46
       },
       "outcome": null
+    },
+    {
+      "at": "2026-10-21T12:56:59.712Z",
+      "londonTime": "13:56 BST",
+      "mode": "POST_ORB",
+      "price": 10758.15,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — The obvious draw (PDL 10670.6) sits beyond what's left of a typical day's range — targets past it are stretch-only today.",
+      "signals": [
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10670.6) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 95th percentile of its 20-day range and still rising — a persistent FX headwind capping upside breaks (weak GBP is what lifts FTSE)."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.92%) — the cross-market lean is up."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -1,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10740.7,
+        "orbLow": 10702.6,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10752.1,
+        "overnightLow": 10702.1,
+        "priorDayHigh": 10756.6,
+        "priorDayLow": 10670.6,
+        "gapPct": 0.16,
+        "adr14": 123,
+        "adrUsedPct": 47
+      },
+      "outcome": null
     }
   ]
 }
