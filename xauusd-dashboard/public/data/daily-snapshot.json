@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-21T19:47:53.071Z",
+  "generatedAt": "2026-10-21T22:54:38.996Z",
   "yields": {
     "US10Y": null,
     "US2Y": null,
@@ -34,26 +34,26 @@
     "openInterestChange": -1365
   },
   "etfFlows": {
-    "gldTonnes": 1066.3,
-    "gldWoWChange": -0.4,
+    "gldTonnes": 1066.8,
+    "gldWoWChange": 0.5,
     "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4133.195,
-    "XAGUSD": 57.87,
-    "EURUSD": 1.12341,
-    "USDJPY": 158.195,
-    "USDCHF": 0.82434,
-    "USDCNH": 6.67401,
-    "GBPUSD": 1.33949,
-    "USDCAD": 1.40444,
-    "USDSEK": 9.88344,
-    "US500": 7760.9,
-    "GER40": 25631.35,
-    "UK100": 10736.15,
-    "ADR_14day": 66,
-    "ADR_usedToday": 36.9,
-    "goldSilverRatio": 71.4
+    "XAUUSD": 4131.375,
+    "XAGUSD": 57.717,
+    "EURUSD": 1.12306,
+    "USDJPY": 158.1575,
+    "USDCHF": 0.82453,
+    "USDCNH": 6.67317,
+    "GBPUSD": 1.33906,
+    "USDCAD": 1.40481,
+    "USDSEK": 9.89361,
+    "US500": 7737.8,
+    "GER40": 25630.35,
+    "UK100": 10726.65,
+    "ADR_14day": 65.1,
+    "ADR_usedToday": 11.2,
+    "goldSilverRatio": 71.6
   },
   "dollarLiquidity": {
     "stlfsi": null,
@@ -66,52 +66,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "US sanctions Greece-, Panama-based law firm over aid to Iranian shipping - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-21T18:37:59.000Z",
+      "hoursAgo": 4.3
+    },
+    {
       "headline": "UK's FTSE 100 ticks higher on energy boost; hot inflation report limits gains - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-21T16:28:42.000Z",
-      "hoursAgo": 3.3
+      "hoursAgo": 6.4
     },
     {
       "headline": "OpenAI expands ChatGPT Ads to 26 new countries as diversification push accelerates",
       "source": "CNBC",
       "publishedAt": "2026-10-21T13:00:01.000Z",
-      "hoursAgo": 6.8
+      "hoursAgo": 9.9
     },
     {
       "headline": "South African inflation rises modestly but bigger fuel-driven jump seen in October - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-21T10:21:00.000Z",
-      "hoursAgo": 9.4
+      "hoursAgo": 12.6
     },
     {
       "headline": "EXCLUSIVE: US aims to loan about a third of heating oil reserve in bid to tame prices - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-21T10:09:08.000Z",
-      "hoursAgo": 9.6
+      "hoursAgo": 12.8
     },
     {
       "headline": "Pound gains against dollar, euro as inflation data cements future rate hike bets - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-21T09:54:38.000Z",
-      "hoursAgo": 9.9
+      "hoursAgo": 13
     },
     {
       "headline": "UK inflation jumps to highest in nearly a year at 3.5% - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-21T06:04:00.000Z",
-      "hoursAgo": 13.7
+      "hoursAgo": 16.8
     },
     {
-      "headline": "Dollar mixed as traders wait on Fed, Aussie gains - Reuters",
+      "headline": "Dollar dips as traders wait on Fed; Aussie gains - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-21T01:20:00.000Z",
-      "hoursAgo": 18.5
-    },
-    {
-      "headline": "Japan shifting to wage-driven inflation phase, finance minister says - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-21T00:54:00.000Z",
-      "hoursAgo": 18.9
+      "hoursAgo": 21.6
     }
   ],
   "briefing": null
