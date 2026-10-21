@@ -42,3 +42,4 @@ Net +$4,325, PF 2.07, 92 trades, 62% win, max balance DD 1.33%, equity DD 1.52%,
 US100: 2021-23 +$2,260 (24), 2024-26 +$682 (22). US500: 2021-23 +$1,339 (24), 2024-26 +$44 (22).
 Timing checked: every trade held 23h58m (14:00 New York day 1 -> 13:58 announcement day). Matches the research
 (+0.22% / +0.14% a trade, US500 weak lately). About +$750 a year. GO LIVE at $20k per index.
+v-next (21 Oct 2026): logs R|gap when the timer stops for more than 5 minutes (laptop asleep/offline). Found after Daily Systems/Bollinger orders due 19 Oct ~23:00 UK went in at 16:24 UK on 20 Oct.

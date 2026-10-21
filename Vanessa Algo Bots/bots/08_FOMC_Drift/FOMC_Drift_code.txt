@@ -1,4 +1,6 @@
-// Pre-FOMC Drift v1.0 (Vanessa Algo Bots)
+// Pre-FOMC Drift v1.0.1 (Vanessa Algo Bots)
+// v1.0.1: logs R|gap when the laptop slept or went
+// offline for more than 5 minutes.
 // Lucca & Moench (2015): US stock indices tend to rise in
 // the 24 hours before a scheduled Fed (FOMC) announcement.
 // Tested 15 Oct 2026 on FTMO costs, 2014-2026
@@ -97,7 +99,7 @@ namespace cAlgo.Robots
                 _syms.Add(s);
             }
             Timer.Start(TimeSpan.FromSeconds(30));
-            Print("Pre-FOMC Drift started: {0} meetings, {1} symbols, ${2} each.",
+            Print("Pre-FOMC Drift v1.0.1 started: {0} meetings, {1} symbols, ${2} each.",
                 _day1.Count, _syms.Count, Notional);
         }
 
@@ -114,8 +116,23 @@ namespace cAlgo.Robots
         private IEnumerable<Position> Mine =>
             Positions.Where(p => p.Label == Label);
 
+        // Live only: log any gap in the timer (laptop asleep or offline).
+        private DateTime _lastBeat = DateTime.MinValue;
+        private void Heartbeat()
+        {
+            if (RunningMode != RunningMode.RealTime) return;
+            var now = Server.Time;
+            var gap = now - _lastBeat;
+            if (_lastBeat != DateTime.MinValue && gap > TimeSpan.FromMinutes(5))
+                Print("R|gap: no activity from {0:yyyy-MM-dd HH:mm} to "
+                    + "{1:yyyy-MM-dd HH:mm} UTC ({2:F1} h) - laptop asleep or offline?",
+                    _lastBeat, now, gap.TotalHours);
+            _lastBeat = now;
+        }
+
         protected override void OnTimer()
         {
+            Heartbeat();
             var ny = NewYork(Server.Time);
             int mins = ny.Hour * 60 + ny.Minute;
 

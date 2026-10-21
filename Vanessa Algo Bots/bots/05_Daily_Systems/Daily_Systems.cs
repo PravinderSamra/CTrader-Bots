@@ -1,4 +1,5 @@
-// Daily Systems cBot v1.4.1 (Vanessa Algo Bots)
+// Daily Systems cBot v1.4.2 (Vanessa Algo Bots)
+// v1.4.2: logs R|gap when the laptop slept or went offline for more than 5 minutes.
 // v1.4.1: fixed the save key (cTrader allows letters, digits and spaces only).
 // v1.4: crash-safe. Live only (not in backtests), the bot saves its
 // to-do list every minute: orders waiting to be sent, positions closed
@@ -154,7 +155,7 @@ namespace cAlgo.Robots
                 if (args.Position.Label != null && args.Position.Label.StartsWith(Label + "-")) _closedCum += args.Position.NetProfit;
             };
             Timer.Start(TimeSpan.FromMinutes(1));
-            Print("Daily Systems v1.4.1 started: {0} symbols, notional ${1} per position.", _books.Count, Notional);
+            Print("Daily Systems v1.4.2 started: {0} symbols, notional ${1} per position.", _books.Count, Notional);
             if (Live) Restore();
         }
 
@@ -425,8 +426,23 @@ namespace cAlgo.Robots
 
         private Book BookOf(Position p) => _books.FirstOrDefault(x => x.Sym.Name == p.SymbolName);
 
+        // Live only: log any gap in the timer (laptop asleep or offline).
+        private DateTime _lastBeat = DateTime.MinValue;
+        private void Heartbeat()
+        {
+            if (RunningMode != RunningMode.RealTime) return;
+            var now = Server.Time;
+            var gap = now - _lastBeat;
+            if (_lastBeat != DateTime.MinValue && gap > TimeSpan.FromMinutes(5))
+                Print("R|gap: no activity from {0:yyyy-MM-dd HH:mm} to "
+                    + "{1:yyyy-MM-dd HH:mm} UTC ({2:F1} h) - laptop asleep or offline?",
+                    _lastBeat, now, gap.TotalHours);
+            _lastBeat = now;
+        }
+
         protected override void OnTimer()
         {
+            Heartbeat();
             var day = PragueDay(Server.Time);
             double botEq = _closedCum + Mine.Sum(p => p.NetProfit);
             if (day != _day)

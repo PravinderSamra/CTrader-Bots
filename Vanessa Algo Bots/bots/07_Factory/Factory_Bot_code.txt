@@ -1,4 +1,6 @@
-// Factory Bot v1.3.1 (Vanessa Algo Bots)
+// Factory Bot v1.3.2 (Vanessa Algo Bots)
+// v1.3.2: logs R|gap when the laptop slept or went
+// offline for more than 5 minutes.
 // v1.3.1: fixed the save key (letters, digits, spaces only).
 // v1.3: crash-safe. Live only (not in backtests), the bot
 // saves its to-do list every minute: orders waiting to be
@@ -189,7 +191,7 @@ namespace cAlgo.Robots
                 bars.BarOpened += args => OnDailyBar(b);
             }
             Timer.Start(TimeSpan.FromMinutes(1));
-            Print("Factory Bot v1.3.1 started: {0} {1} {2} {3} {4} {5} {6}"
+            Print("Factory Bot v1.3.2 started: {0} {1} {2} {3} {4} {5} {6}"
                 + " weekend flat {7}", Label, Entry, EntryP, Filter, Exit,
                 ExitP, _books.Count, WeekendFlat);
             if (Live) Restore();
@@ -636,8 +638,23 @@ namespace cAlgo.Robots
             }
         }
 
+        // Live only: log any gap in the timer (laptop asleep or offline).
+        private DateTime _lastBeat = DateTime.MinValue;
+        private void Heartbeat()
+        {
+            if (RunningMode != RunningMode.RealTime) return;
+            var now = Server.Time;
+            var gap = now - _lastBeat;
+            if (_lastBeat != DateTime.MinValue && gap > TimeSpan.FromMinutes(5))
+                Print("R|gap: no activity from {0:yyyy-MM-dd HH:mm} to "
+                    + "{1:yyyy-MM-dd HH:mm} UTC ({2:F1} h) - laptop asleep or offline?",
+                    _lastBeat, now, gap.TotalHours);
+            _lastBeat = now;
+        }
+
         protected override void OnTimer()
         {
+            Heartbeat();
             if (WeekendFlat) WeekendCheck();
             foreach (var o in _queue.Where(x => x.Due <= Server.Time
                 && Tradable(x.B) && !(WeekendFlat && FridayClose(x.B))).ToList())
