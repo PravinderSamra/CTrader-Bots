@@ -65,4 +65,4 @@ Live log showed "R|save failed: keys can only contain Latin letters, numbers and
 underscores, so nothing was saved (trading itself unaffected). Key is now letters and digits only; a failure prints once.
 Also found: after the 15 Oct rebuild the live instance stayed stopped (cTrader stops instances on Build), so the
 Friday 16 Oct weekend close did not run; Vanessa closed the US500 DSY-D trade by hand at 20:50 UK.
-v-next (21 Oct 2026): logs R|gap when the timer stops for more than 5 minutes (laptop asleep/offline). Found after Daily Systems/Bollinger orders due 19 Oct ~23:00 UK went in at 16:24 UK on 20 Oct.
+v1.4.2 (21 Oct 2026): logs R|gap when the timer stops for more than 5 minutes (laptop asleep/offline). Found after Daily Systems/Bollinger orders due 19 Oct ~23:00 UK went in at 16:24 UK on 20 Oct.

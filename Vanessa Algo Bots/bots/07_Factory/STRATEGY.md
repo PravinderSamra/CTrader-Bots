@@ -115,4 +115,4 @@ AUS200 ~19:10, others 15:30 New York. 3 trades stayed open over a holiday weeken
 Christmas 2022 UK100, 26 May 2023 HK50, Good Friday 2026 US100) - can't be avoided by a Friday rule; accepted.
 Live setting: Flat Over Weekend = Yes (code default changed to true).
 v1.3.1 (16 Oct 2026): save key fixed (letters/digits only; v1.3 keys with underscores were rejected by cTrader).
-v-next (21 Oct 2026): logs R|gap when the timer stops for more than 5 minutes (laptop asleep/offline). Found after Daily Systems/Bollinger orders due 19 Oct ~23:00 UK went in at 16:24 UK on 20 Oct.
+v1.3.2 (21 Oct 2026): logs R|gap when the timer stops for more than 5 minutes (laptop asleep/offline). Found after Daily Systems/Bollinger orders due 19 Oct ~23:00 UK went in at 16:24 UK on 20 Oct.
