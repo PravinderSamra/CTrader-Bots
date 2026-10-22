@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-22T10:53:15.371Z",
+  "generatedAt": "2026-10-22T12:59:13.825Z",
   "yields": {
     "US10Y": 5.12,
     "US2Y": 4.79,
@@ -34,26 +34,26 @@
     "openInterestChange": -1365
   },
   "etfFlows": {
-    "gldTonnes": 1079.5,
-    "gldWoWChange": 12.7,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1078.2,
+    "gldWoWChange": -1.3,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4082.65,
-    "XAGUSD": 55.947,
-    "EURUSD": 1.12166,
-    "USDJPY": 156.8845,
-    "USDCHF": 0.82134,
-    "USDCNH": 6.67307,
-    "GBPUSD": 1.33824,
-    "USDCAD": 1.40316,
-    "USDSEK": 9.91534,
-    "US500": 7683.7,
-    "GER40": 25430.15,
-    "UK100": 10702.85,
+    "XAUUSD": 4087.635,
+    "XAGUSD": 55.922,
+    "EURUSD": 1.12037,
+    "USDJPY": 157.0785,
+    "USDCHF": 0.82341,
+    "USDCNH": 6.67357,
+    "GBPUSD": 1.33717,
+    "USDCAD": 1.40374,
+    "USDSEK": 9.92568,
+    "US500": 7686.5,
+    "GER40": 25520.85,
+    "UK100": 10740.45,
     "ADR_14day": 65.1,
-    "ADR_usedToday": 74.8,
-    "goldSilverRatio": 73
+    "ADR_usedToday": 84,
+    "goldSilverRatio": 73.1
   },
   "dollarLiquidity": {
     "stlfsi": -0.7206,
@@ -66,34 +66,40 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Greece says it is implementing sanctions linked to Iran - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-22T09:14:18.000Z",
+      "hoursAgo": 3.7
+    },
+    {
       "headline": "Dip in the dollar takes a breather with Fed in focus - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-22T02:10:00.000Z",
-      "hoursAgo": 8.7
+      "hoursAgo": 10.8
     },
     {
       "headline": "Bank of Korea holds rates as expected after back-to-back hikes - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-22T00:54:00.000Z",
-      "hoursAgo": 10
+      "hoursAgo": 12.1
     },
     {
       "headline": "US sanctions Greece-, Panama-based law firm over aid to Iranian shipping - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-21T18:37:59.000Z",
-      "hoursAgo": 16.3
+      "hoursAgo": 18.4
     },
     {
       "headline": "UK's FTSE 100 ticks higher on energy boost; hot inflation report limits gains - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-21T16:28:42.000Z",
-      "hoursAgo": 18.4
+      "hoursAgo": 20.5
     },
     {
       "headline": "OpenAI expands ChatGPT Ads to 26 new countries as diversification push accelerates",
       "source": "CNBC",
       "publishedAt": "2026-10-21T13:00:01.000Z",
-      "hoursAgo": 21.9
+      "hoursAgo": 24
     }
   ],
   "briefing": null
