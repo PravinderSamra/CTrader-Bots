@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-10-22T19:39:08.701Z",
+  "generatedAt": "2026-10-22T22:53:14.488Z",
   "yields": {
-    "US10Y": 5.12,
-    "US2Y": 4.79,
-    "realYield10Y": 2.77,
+    "US10Y": 5.13,
+    "US2Y": 4.81,
+    "realYield10Y": 2.76,
     "realYield5Y": 2.55,
-    "curve2s10s": 33,
-    "breakeven10Y": 2.37,
-    "breakeven5Y": 2.4,
-    "forward5y5y": 2.34,
+    "curve2s10s": 32,
+    "breakeven10Y": 2.32,
+    "breakeven5Y": 2.45,
+    "forward5y5y": 2.19,
     "dayOverDay": {
-      "US10Y": -0.03,
+      "US10Y": 0.01,
       "US2Y": 0.02,
-      "realYield10Y": -0.03
+      "realYield10Y": -0.01
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-10-28",
     "probCut": 0,
-    "probHold": 60,
-    "probHike": 40
+    "probHold": 64,
+    "probHike": 36
   },
   "marketVolatility": {
     "GVZ": 21.36,
@@ -34,26 +34,26 @@
     "openInterestChange": -1365
   },
   "etfFlows": {
-    "gldTonnes": 1095.9,
-    "gldWoWChange": 8,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1094.1,
+    "gldWoWChange": -1.8,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4021.625,
-    "XAGUSD": 54.54,
-    "EURUSD": 1.12194,
-    "USDJPY": 156.797,
-    "USDCHF": 0.82034,
-    "USDCNH": 6.673,
-    "GBPUSD": 1.34,
-    "USDCAD": 1.40058,
-    "USDSEK": 9.90879,
-    "US500": 7647.3,
-    "GER40": 25374.55,
-    "UK100": 10731.95,
-    "ADR_14day": 65.1,
-    "ADR_usedToday": 120,
-    "goldSilverRatio": 73.7
+    "XAUUSD": 4028.375,
+    "XAGUSD": 54.616,
+    "EURUSD": 1.12209,
+    "USDJPY": 156.6575,
+    "USDCHF": 0.81988,
+    "USDCNH": 6.67288,
+    "GBPUSD": 1.34021,
+    "USDCAD": 1.40044,
+    "USDSEK": 9.90691,
+    "US500": 7671,
+    "GER40": 25383.55,
+    "UK100": 10737.05,
+    "ADR_14day": 68.5,
+    "ADR_usedToday": 8.8,
+    "goldSilverRatio": 73.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.6328,
@@ -69,19 +69,19 @@
       "headline": "Greece says it is implementing sanctions linked to Iran - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-22T09:14:18.000Z",
-      "hoursAgo": 10.4
+      "hoursAgo": 13.6
     },
     {
       "headline": "Dip in the dollar takes a breather with Fed in focus - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-22T02:10:00.000Z",
-      "hoursAgo": 17.5
+      "hoursAgo": 20.7
     },
     {
       "headline": "Bank of Korea holds rates as expected after back-to-back hikes - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-22T00:54:00.000Z",
-      "hoursAgo": 18.8
+      "hoursAgo": 22
     }
   ],
   "briefing": null
