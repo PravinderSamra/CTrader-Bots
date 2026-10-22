@@ -230,3 +230,19 @@ drawdown does not fall and the worst day stays inside the $2,000 guard.
   -$2,139 / -$2,058. About the same as flat. REJECT (no real gain, slightly more risk).
 Reading: on a 10% challenge account the account never grows enough for a ladder to matter, and a fast ladder adds
 size just before losing spells. Re-size by hand only after a big balance change (e.g. funded account or payout).
+
+## Exit-at-the-close test (pre-registered 22 Oct 2026, before any run)
+Trigger: live trades 20-21 Oct showed +$299 on paper at the 23:00 UK daily close, +$110 banked at the 23:20 reopen exit.
+Variant: when the exit rule (A: close > SMA5 or 4 days held; D: RSI(2) > 70) is met on the daily close, sell AT that close
+(in practice ~5 minutes before the daily close) instead of at the next order time after the daily break. Entries unchanged.
+Data: FTMO H1 bars rebuilt into daily bars (17:00 New York rollover), US500, US100, US30, GER40, XAUUSD, A + D, $13k,
+3xATR catastrophe stop, 0.025% cost per round trip, 5%/yr swap per night. Build period 2020-11-08 .. 2023-12-31 only.
+Adopt only if net profit >= baseline + 5% AND max drawdown no higher; then confirm in cTrader on 2024-26. 1 trial.
+RESULT (screens/ds_exit_at_close.py; a second variant, 8:55pm UK = 15:55 New York, added at Vanessa's request = 2 trials):
+| A + D, $13k | 2020-11..2023 net | max DD | 2014-2026 net | max DD |
+|---|---|---|---|---|
+| Baseline: exit after the reopen (live) | +$11,398 | $4,649 | +$27,853 | $7,633 |
+| Exit at the 17:00 New York daily close | +$11,630 (+2.0%) | $4,600 | +$27,471 (-1.4%) | $6,940 |
+| Exit at 15:55 New York (8:55pm UK) | +$11,290 (-0.9%) | $4,645 | +$25,668 (-7.8%) | $7,604 |
+Neither clears +5%: FAIL, NO CHANGE. Overnight moves after an exit signal are as often up as down (the 21 Oct
+giveback was one bad night); exiting at 8:55pm also gives up the last hour and the overnight drift.
