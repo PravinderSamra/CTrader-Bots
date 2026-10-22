@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-22T12:59:13.825Z",
+  "generatedAt": "2026-10-22T15:44:51.263Z",
   "yields": {
     "US10Y": 5.12,
     "US2Y": 4.79,
@@ -22,8 +22,8 @@
     "probHike": 40
   },
   "marketVolatility": {
-    "GVZ": 21.83,
-    "VIX": 17.31
+    "GVZ": 21.36,
+    "VIX": 16.68
   },
   "positioning": {
     "cotNetLong": 199733,
@@ -34,29 +34,29 @@
     "openInterestChange": -1365
   },
   "etfFlows": {
-    "gldTonnes": 1078.2,
-    "gldWoWChange": -1.3,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1087.9,
+    "gldWoWChange": 9.7,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4087.635,
-    "XAGUSD": 55.922,
-    "EURUSD": 1.12037,
-    "USDJPY": 157.0785,
-    "USDCHF": 0.82341,
-    "USDCNH": 6.67357,
-    "GBPUSD": 1.33717,
-    "USDCAD": 1.40374,
-    "USDSEK": 9.92568,
-    "US500": 7686.5,
-    "GER40": 25520.85,
-    "UK100": 10740.45,
+    "XAUUSD": 4051.34,
+    "XAGUSD": 55.176,
+    "EURUSD": 1.1207,
+    "USDJPY": 157.107,
+    "USDCHF": 0.82256,
+    "USDCNH": 6.67387,
+    "GBPUSD": 1.33723,
+    "USDCAD": 1.40242,
+    "USDSEK": 9.91114,
+    "US500": 7657.7,
+    "GER40": 25379.25,
+    "UK100": 10721.55,
     "ADR_14day": 65.1,
-    "ADR_usedToday": 84,
-    "goldSilverRatio": 73.1
+    "ADR_usedToday": 96.8,
+    "goldSilverRatio": 73.4
   },
   "dollarLiquidity": {
-    "stlfsi": -0.7206,
+    "stlfsi": -0.6328,
     "nfci": -0.496
   },
   "geopoliticalRisk": {
@@ -69,37 +69,31 @@
       "headline": "Greece says it is implementing sanctions linked to Iran - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-22T09:14:18.000Z",
-      "hoursAgo": 3.7
+      "hoursAgo": 6.5
     },
     {
       "headline": "Dip in the dollar takes a breather with Fed in focus - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-22T02:10:00.000Z",
-      "hoursAgo": 10.8
+      "hoursAgo": 13.6
     },
     {
       "headline": "Bank of Korea holds rates as expected after back-to-back hikes - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-22T00:54:00.000Z",
-      "hoursAgo": 12.1
+      "hoursAgo": 14.8
     },
     {
       "headline": "US sanctions Greece-, Panama-based law firm over aid to Iranian shipping - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-21T18:37:59.000Z",
-      "hoursAgo": 18.4
+      "hoursAgo": 21.1
     },
     {
       "headline": "UK's FTSE 100 ticks higher on energy boost; hot inflation report limits gains - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-21T16:28:42.000Z",
-      "hoursAgo": 20.5
-    },
-    {
-      "headline": "OpenAI expands ChatGPT Ads to 26 new countries as diversification push accelerates",
-      "source": "CNBC",
-      "publishedAt": "2026-10-21T13:00:01.000Z",
-      "hoursAgo": 24
+      "hoursAgo": 23.3
     }
   ],
   "briefing": null
