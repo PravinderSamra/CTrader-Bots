@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-22T15:44:51.263Z",
+  "generatedAt": "2026-10-22T19:39:08.701Z",
   "yields": {
     "US10Y": 5.12,
     "US2Y": 4.79,
@@ -34,26 +34,26 @@
     "openInterestChange": -1365
   },
   "etfFlows": {
-    "gldTonnes": 1087.9,
-    "gldWoWChange": 9.7,
+    "gldTonnes": 1095.9,
+    "gldWoWChange": 8,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4051.34,
-    "XAGUSD": 55.176,
-    "EURUSD": 1.1207,
-    "USDJPY": 157.107,
-    "USDCHF": 0.82256,
-    "USDCNH": 6.67387,
-    "GBPUSD": 1.33723,
-    "USDCAD": 1.40242,
-    "USDSEK": 9.91114,
-    "US500": 7657.7,
-    "GER40": 25379.25,
-    "UK100": 10721.55,
+    "XAUUSD": 4021.625,
+    "XAGUSD": 54.54,
+    "EURUSD": 1.12194,
+    "USDJPY": 156.797,
+    "USDCHF": 0.82034,
+    "USDCNH": 6.673,
+    "GBPUSD": 1.34,
+    "USDCAD": 1.40058,
+    "USDSEK": 9.90879,
+    "US500": 7647.3,
+    "GER40": 25374.55,
+    "UK100": 10731.95,
     "ADR_14day": 65.1,
-    "ADR_usedToday": 96.8,
-    "goldSilverRatio": 73.4
+    "ADR_usedToday": 120,
+    "goldSilverRatio": 73.7
   },
   "dollarLiquidity": {
     "stlfsi": -0.6328,
@@ -69,31 +69,19 @@
       "headline": "Greece says it is implementing sanctions linked to Iran - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-22T09:14:18.000Z",
-      "hoursAgo": 6.5
+      "hoursAgo": 10.4
     },
     {
       "headline": "Dip in the dollar takes a breather with Fed in focus - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-22T02:10:00.000Z",
-      "hoursAgo": 13.6
+      "hoursAgo": 17.5
     },
     {
       "headline": "Bank of Korea holds rates as expected after back-to-back hikes - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-22T00:54:00.000Z",
-      "hoursAgo": 14.8
-    },
-    {
-      "headline": "US sanctions Greece-, Panama-based law firm over aid to Iranian shipping - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-21T18:37:59.000Z",
-      "hoursAgo": 21.1
-    },
-    {
-      "headline": "UK's FTSE 100 ticks higher on energy boost; hot inflation report limits gains - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-21T16:28:42.000Z",
-      "hoursAgo": 23.3
+      "hoursAgo": 18.8
     }
   ],
   "briefing": null
