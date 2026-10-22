@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-10-21T22:54:38.996Z",
+  "generatedAt": "2026-10-22T10:53:15.371Z",
   "yields": {
-    "US10Y": null,
-    "US2Y": null,
-    "realYield10Y": null,
-    "realYield5Y": null,
-    "curve2s10s": null,
-    "breakeven10Y": null,
-    "breakeven5Y": null,
-    "forward5y5y": null,
+    "US10Y": 5.12,
+    "US2Y": 4.79,
+    "realYield10Y": 2.77,
+    "realYield5Y": 2.55,
+    "curve2s10s": 33,
+    "breakeven10Y": 2.37,
+    "breakeven5Y": 2.4,
+    "forward5y5y": 2.34,
     "dayOverDay": {
-      "US10Y": null,
-      "US2Y": null,
-      "realYield10Y": null
+      "US10Y": -0.03,
+      "US2Y": 0.02,
+      "realYield10Y": -0.03
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-10-28",
-    "probCut": null,
-    "probHold": null,
-    "probHike": null
+    "probCut": 0,
+    "probHold": 60,
+    "probHike": 40
   },
   "marketVolatility": {
-    "GVZ": null,
-    "VIX": null
+    "GVZ": 21.83,
+    "VIX": 17.31
   },
   "positioning": {
     "cotNetLong": 199733,
@@ -34,30 +34,30 @@
     "openInterestChange": -1365
   },
   "etfFlows": {
-    "gldTonnes": 1066.8,
-    "gldWoWChange": 0.5,
-    "trend3W": "FLAT"
+    "gldTonnes": 1079.5,
+    "gldWoWChange": 12.7,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4131.375,
-    "XAGUSD": 57.717,
-    "EURUSD": 1.12306,
-    "USDJPY": 158.1575,
-    "USDCHF": 0.82453,
-    "USDCNH": 6.67317,
-    "GBPUSD": 1.33906,
-    "USDCAD": 1.40481,
-    "USDSEK": 9.89361,
-    "US500": 7737.8,
-    "GER40": 25630.35,
-    "UK100": 10726.65,
+    "XAUUSD": 4082.65,
+    "XAGUSD": 55.947,
+    "EURUSD": 1.12166,
+    "USDJPY": 156.8845,
+    "USDCHF": 0.82134,
+    "USDCNH": 6.67307,
+    "GBPUSD": 1.33824,
+    "USDCAD": 1.40316,
+    "USDSEK": 9.91534,
+    "US500": 7683.7,
+    "GER40": 25430.15,
+    "UK100": 10702.85,
     "ADR_14day": 65.1,
-    "ADR_usedToday": 11.2,
-    "goldSilverRatio": 71.6
+    "ADR_usedToday": 74.8,
+    "goldSilverRatio": 73
   },
   "dollarLiquidity": {
-    "stlfsi": null,
-    "nfci": null
+    "stlfsi": -0.7206,
+    "nfci": -0.496
   },
   "geopoliticalRisk": {
     "gpr": 146.2,
@@ -66,52 +66,34 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Dip in the dollar takes a breather with Fed in focus - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-22T02:10:00.000Z",
+      "hoursAgo": 8.7
+    },
+    {
+      "headline": "Bank of Korea holds rates as expected after back-to-back hikes - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-22T00:54:00.000Z",
+      "hoursAgo": 10
+    },
+    {
       "headline": "US sanctions Greece-, Panama-based law firm over aid to Iranian shipping - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-21T18:37:59.000Z",
-      "hoursAgo": 4.3
+      "hoursAgo": 16.3
     },
     {
       "headline": "UK's FTSE 100 ticks higher on energy boost; hot inflation report limits gains - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-21T16:28:42.000Z",
-      "hoursAgo": 6.4
+      "hoursAgo": 18.4
     },
     {
       "headline": "OpenAI expands ChatGPT Ads to 26 new countries as diversification push accelerates",
       "source": "CNBC",
       "publishedAt": "2026-10-21T13:00:01.000Z",
-      "hoursAgo": 9.9
-    },
-    {
-      "headline": "South African inflation rises modestly but bigger fuel-driven jump seen in October - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-21T10:21:00.000Z",
-      "hoursAgo": 12.6
-    },
-    {
-      "headline": "EXCLUSIVE: US aims to loan about a third of heating oil reserve in bid to tame prices - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-21T10:09:08.000Z",
-      "hoursAgo": 12.8
-    },
-    {
-      "headline": "Pound gains against dollar, euro as inflation data cements future rate hike bets - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-21T09:54:38.000Z",
-      "hoursAgo": 13
-    },
-    {
-      "headline": "UK inflation jumps to highest in nearly a year at 3.5% - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-21T06:04:00.000Z",
-      "hoursAgo": 16.8
-    },
-    {
-      "headline": "Dollar dips as traders wait on Fed; Aussie gains - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-21T01:20:00.000Z",
-      "hoursAgo": 21.6
+      "hoursAgo": 21.9
     }
   ],
   "briefing": null
