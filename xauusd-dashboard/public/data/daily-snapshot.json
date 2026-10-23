@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-10-23T19:39:19.134Z",
+  "generatedAt": "2026-10-23T22:45:38.473Z",
   "yields": {
-    "US10Y": 5.13,
-    "US2Y": 4.81,
-    "realYield10Y": 2.76,
-    "realYield5Y": 2.55,
-    "curve2s10s": 32,
-    "breakeven10Y": 2.32,
-    "breakeven5Y": 2.45,
-    "forward5y5y": 2.19,
+    "US10Y": 4.96,
+    "US2Y": 4.65,
+    "realYield10Y": 2.64,
+    "realYield5Y": 2.33,
+    "curve2s10s": 31,
+    "breakeven10Y": 2.34,
+    "breakeven5Y": 2.48,
+    "forward5y5y": 2.2,
     "dayOverDay": {
-      "US10Y": 0.01,
-      "US2Y": 0.02,
-      "realYield10Y": -0.01
+      "US10Y": -0.17,
+      "US2Y": -0.16,
+      "realYield10Y": -0.12
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-10-28",
     "probCut": 0,
-    "probHold": 64,
-    "probHike": 36
+    "probHold": 56,
+    "probHike": 44
   },
   "marketVolatility": {
     "GVZ": 24.15,
@@ -34,24 +34,24 @@
     "openInterestChange": 6166
   },
   "etfFlows": {
-    "gldTonnes": 1101.9,
-    "gldWoWChange": -0.7,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1102.3,
+    "gldWoWChange": 0.4,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 3999.875,
-    "XAGUSD": 54.004,
-    "EURUSD": 1.11946,
-    "USDJPY": 156.8665,
-    "USDCHF": 0.82517,
-    "USDCNH": 6.66974,
-    "GBPUSD": 1.33737,
-    "USDCAD": 1.39999,
-    "USDSEK": 9.9403,
-    "US500": 7626.9,
-    "GER40": 25147.25,
-    "UK100": 10683.75,
-    "ADR_14day": 68.5,
+    "XAUUSD": 3998.17,
+    "XAGUSD": 53.9555,
+    "EURUSD": 1.12011,
+    "USDJPY": 156.8335,
+    "USDCHF": 0.82514,
+    "USDCNH": 6.66941,
+    "GBPUSD": 1.33705,
+    "USDCAD": 1.40102,
+    "USDSEK": 9.93301,
+    "US500": 7634.5,
+    "GER40": 25146.25,
+    "UK100": 10686.25,
+    "ADR_14day": 65.3,
     "ADR_usedToday": 58.6,
     "goldSilverRatio": 74.1
   },
@@ -66,28 +66,40 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Moody's holds steady on France's credit rating as country grapples with turmoil and higher yields",
+      "source": "CNBC",
+      "publishedAt": "2026-10-23T22:29:34.000Z",
+      "hoursAgo": 0.3
+    },
+    {
+      "headline": "POLL Bank of Canada to raise rates to 2.50% on October 28 and once again by end-March - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-23T18:54:28.000Z",
+      "hoursAgo": 3.9
+    },
+    {
       "headline": "10-year Treasury yield drops back to 5% this week as investors seek cover from AI worries",
       "source": "CNBC",
       "publishedAt": "2026-10-23T12:12:18.000Z",
-      "hoursAgo": 7.4
+      "hoursAgo": 10.6
     },
     {
       "headline": "Higher interest rates have made family offices pickier about investing in real estate",
       "source": "CNBC",
       "publishedAt": "2026-10-23T12:01:05.000Z",
-      "hoursAgo": 7.6
+      "hoursAgo": 10.7
+    },
+    {
+      "headline": "US military bans BYD vehicles from strategic air base in Japan - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-23T07:15:35.000Z",
+      "hoursAgo": 15.5
     },
     {
       "headline": "Ready for a French test?: Five questions for the ECB - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-23T04:06:00.000Z",
-      "hoursAgo": 15.6
-    },
-    {
-      "headline": "US Treasury drops Venezuela from countries facing outbound US investment restrictions - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-22T21:05:43.000Z",
-      "hoursAgo": 22.6
+      "hoursAgo": 18.7
     }
   ],
   "briefing": null
