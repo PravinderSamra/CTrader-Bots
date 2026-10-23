@@ -50,6 +50,63 @@
         "adrUsedPct": 90
       },
       "outcome": null
+    },
+    {
+      "at": "2026-10-23T12:38:32.019Z",
+      "londonTime": "13:38 BST",
+      "mode": "POST_ORB",
+      "price": 10660.25,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 90% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "90% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.87%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -0.4% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -1,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10743.9,
+        "orbLow": 10701.3,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10755.9,
+        "overnightLow": 10680.6,
+        "priorDayHigh": 10757.2,
+        "priorDayLow": 10666.3,
+        "gapPct": -0.71,
+        "adr14": 114.5,
+        "adrUsedPct": 90
+      },
+      "outcome": null
     }
   ]
 }
