@@ -49,7 +49,29 @@
         "adr14": 114.5,
         "adrUsedPct": 90
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-10-23T15:33:02.150Z",
+        "fwd1hPct": -0.05,
+        "fwd3hPct": -0.09,
+        "toClosePct": 0.05,
+        "maxUpPct": 0.13,
+        "maxDownPct": -0.36,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-10-23T12:38:32.019Z",
@@ -106,7 +128,99 @@
         "adr14": 114.5,
         "adrUsedPct": 90
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-10-23T15:33:02.285Z",
+        "fwd1hPct": -0.05,
+        "fwd3hPct": 0.08,
+        "toClosePct": 0.08,
+        "maxUpPct": 0.12,
+        "maxDownPct": -0.32,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R9",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-10-23T15:32:59.151Z",
+      "londonTime": "16:32 BST",
+      "mode": "CLOSED",
+      "price": 10672.35,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 114% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "114% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDH 10757.2) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.44%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 3,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": 10743.9,
+        "orbLow": 10701.3,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10755.9,
+        "overnightLow": 10680.6,
+        "priorDayHigh": 10757.2,
+        "priorDayLow": 10666.3,
+        "gapPct": -0.59,
+        "adr14": 114.5,
+        "adrUsedPct": 114
+      },
+      "outcome": {
+        "resolvedAt": "2026-10-23T15:33:02.285Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }

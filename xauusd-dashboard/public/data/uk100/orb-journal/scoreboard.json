@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-10-22T15:44:59.485Z",
-  "entriesScored": 148,
+  "updatedAt": "2026-10-23T15:33:02.291Z",
+  "entriesScored": 150,
   "byStance": {
     "SHORT_FAVOURED": {
       "n": 23,
@@ -32,8 +32,8 @@
       "flat": 24
     },
     "R11b": {
-      "n": 141,
-      "right": 54,
+      "n": 143,
+      "right": 56,
       "wrong": 9,
       "flat": 78
     },
@@ -44,10 +44,10 @@
       "flat": 0
     },
     "R8": {
-      "n": 110,
+      "n": 112,
       "right": 43,
       "wrong": 27,
-      "flat": 40
+      "flat": 42
     },
     "R12": {
       "n": 9,
@@ -62,16 +62,16 @@
       "flat": 14
     },
     "R4": {
-      "n": 81,
-      "right": 43,
+      "n": 83,
+      "right": 45,
       "wrong": 3,
       "flat": 35
     },
     "R9": {
-      "n": 23,
+      "n": 24,
       "right": 7,
       "wrong": 6,
-      "flat": 10
+      "flat": 11
     },
     "R10": {
       "n": 29,
