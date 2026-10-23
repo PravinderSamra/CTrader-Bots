@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-22T22:53:14.488Z",
+  "generatedAt": "2026-10-23T10:44:02.075Z",
   "yields": {
     "US10Y": 5.13,
     "US2Y": 4.81,
@@ -34,26 +34,26 @@
     "openInterestChange": -1365
   },
   "etfFlows": {
-    "gldTonnes": 1094.1,
-    "gldWoWChange": -1.8,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1095.2,
+    "gldWoWChange": 1.1,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4028.375,
-    "XAGUSD": 54.616,
-    "EURUSD": 1.12209,
-    "USDJPY": 156.6575,
-    "USDCHF": 0.81988,
-    "USDCNH": 6.67288,
-    "GBPUSD": 1.34021,
-    "USDCAD": 1.40044,
-    "USDSEK": 9.90691,
-    "US500": 7671,
-    "GER40": 25383.55,
-    "UK100": 10737.05,
+    "XAUUSD": 4024.41,
+    "XAGUSD": 53.905,
+    "EURUSD": 1.11985,
+    "USDJPY": 156.7585,
+    "USDCHF": 0.82311,
+    "USDCNH": 6.66894,
+    "GBPUSD": 1.3378,
+    "USDCAD": 1.40058,
+    "USDSEK": 9.93991,
+    "US500": 7647.7,
+    "GER40": 25153.75,
+    "UK100": 10663.25,
     "ADR_14day": 68.5,
-    "ADR_usedToday": 8.8,
-    "goldSilverRatio": 73.8
+    "ADR_usedToday": 46,
+    "goldSilverRatio": 74.7
   },
   "dollarLiquidity": {
     "stlfsi": -0.6328,
@@ -66,22 +66,10 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Greece says it is implementing sanctions linked to Iran - Reuters",
+      "headline": "US Treasury drops Venezuela from countries facing outbound US investment restrictions - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-10-22T09:14:18.000Z",
+      "publishedAt": "2026-10-22T21:05:43.000Z",
       "hoursAgo": 13.6
-    },
-    {
-      "headline": "Dip in the dollar takes a breather with Fed in focus - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-22T02:10:00.000Z",
-      "hoursAgo": 20.7
-    },
-    {
-      "headline": "Bank of Korea holds rates as expected after back-to-back hikes - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-22T00:54:00.000Z",
-      "hoursAgo": 22
     }
   ],
   "briefing": null
