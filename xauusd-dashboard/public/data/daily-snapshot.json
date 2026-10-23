@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-23T15:32:54.233Z",
+  "generatedAt": "2026-10-23T19:39:19.134Z",
   "yields": {
     "US10Y": 5.13,
     "US2Y": 4.81,
@@ -26,34 +26,34 @@
     "VIX": 19.03
   },
   "positioning": {
-    "cotNetLong": 199733,
-    "cotWoWChange": -1846,
+    "cotNetLong": 191791,
+    "cotWoWChange": -7942,
     "crowding": "NEUTRAL",
-    "reportDate": "2026-10-13T00:00:00.000",
-    "openInterest": 526276,
-    "openInterestChange": -1365
+    "reportDate": "2026-10-20T00:00:00.000",
+    "openInterest": 532443,
+    "openInterestChange": 6166
   },
   "etfFlows": {
-    "gldTonnes": 1102.6,
-    "gldWoWChange": 8.3,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1101.9,
+    "gldWoWChange": -0.7,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3997.285,
-    "XAGUSD": 54.178,
-    "EURUSD": 1.11969,
-    "USDJPY": 156.8945,
-    "USDCHF": 0.825,
-    "USDCNH": 6.6699,
-    "GBPUSD": 1.33752,
-    "USDCAD": 1.39873,
-    "USDSEK": 9.92821,
-    "US500": 7655.3,
-    "GER40": 25182.75,
-    "UK100": 10670.85,
+    "XAUUSD": 3999.875,
+    "XAGUSD": 54.004,
+    "EURUSD": 1.11946,
+    "USDJPY": 156.8665,
+    "USDCHF": 0.82517,
+    "USDCNH": 6.66974,
+    "GBPUSD": 1.33737,
+    "USDCAD": 1.39999,
+    "USDSEK": 9.9403,
+    "US500": 7626.9,
+    "GER40": 25147.25,
+    "UK100": 10683.75,
     "ADR_14day": 68.5,
     "ADR_usedToday": 58.6,
-    "goldSilverRatio": 73.8
+    "goldSilverRatio": 74.1
   },
   "dollarLiquidity": {
     "stlfsi": -0.6328,
@@ -69,19 +69,25 @@
       "headline": "10-year Treasury yield drops back to 5% this week as investors seek cover from AI worries",
       "source": "CNBC",
       "publishedAt": "2026-10-23T12:12:18.000Z",
-      "hoursAgo": 3.3
+      "hoursAgo": 7.4
     },
     {
       "headline": "Higher interest rates have made family offices pickier about investing in real estate",
       "source": "CNBC",
       "publishedAt": "2026-10-23T12:01:05.000Z",
-      "hoursAgo": 3.5
+      "hoursAgo": 7.6
+    },
+    {
+      "headline": "Ready for a French test?: Five questions for the ECB - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-23T04:06:00.000Z",
+      "hoursAgo": 15.6
     },
     {
       "headline": "US Treasury drops Venezuela from countries facing outbound US investment restrictions - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-22T21:05:43.000Z",
-      "hoursAgo": 18.5
+      "hoursAgo": 22.6
     }
   ],
   "briefing": null
