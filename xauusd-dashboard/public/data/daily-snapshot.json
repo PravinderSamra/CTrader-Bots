@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-26T14:16:46.144Z",
+  "generatedAt": "2026-10-26T17:57:32.130Z",
   "yields": {
     "US10Y": 4.96,
     "US2Y": 4.65,
@@ -34,26 +34,26 @@
     "openInterestChange": 6166
   },
   "etfFlows": {
-    "gldTonnes": 1100.3,
-    "gldWoWChange": 3.2,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1096,
+    "gldWoWChange": -4.3,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4005.62,
-    "XAGUSD": 53.563,
-    "EURUSD": 1.11822,
-    "USDJPY": 157.411,
-    "USDCHF": 0.82678,
-    "USDCNH": 6.6685,
-    "GBPUSD": 1.33401,
-    "USDCAD": 1.40528,
-    "USDSEK": 9.9634,
-    "US500": 7675.3,
-    "GER40": 25505.95,
-    "UK100": 10768.85,
+    "XAUUSD": 4021.155,
+    "XAGUSD": 54.149,
+    "EURUSD": 1.1191,
+    "USDJPY": 157.394,
+    "USDCHF": 0.82676,
+    "USDCNH": 6.66761,
+    "GBPUSD": 1.3355,
+    "USDCAD": 1.40142,
+    "USDSEK": 9.93886,
+    "US500": 7685,
+    "GER40": 25415.55,
+    "UK100": 10753.85,
     "ADR_14day": 65.7,
-    "ADR_usedToday": 47.2,
-    "goldSilverRatio": 74.8
+    "ADR_usedToday": 51.5,
+    "goldSilverRatio": 74.3
   },
   "dollarLiquidity": {
     "stlfsi": -0.6328,
@@ -66,34 +66,46 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Mortgage rates above 7% are the 'new normal'—here's why",
+      "source": "CNBC",
+      "publishedAt": "2026-10-26T14:00:01.000Z",
+      "hoursAgo": 4
+    },
+    {
       "headline": "UK sanctions 15 commanders from rival Sudan factions over wartime rape - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-26T10:31:19.000Z",
-      "hoursAgo": 3.8
+      "hoursAgo": 7.4
     },
     {
       "headline": "Egypt's pound hits record low against dollar - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-26T09:52:09.000Z",
-      "hoursAgo": 4.4
+      "hoursAgo": 8.1
+    },
+    {
+      "headline": "Gold rises as lower oil prices ease inflation fears ahead of Fed meeting - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-26T05:56:00.000Z",
+      "hoursAgo": 12
     },
     {
       "headline": "Morning Bid: Elections, central banks and earnings on the menu - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-26T04:46:00.000Z",
-      "hoursAgo": 9.5
+      "hoursAgo": 13.2
     },
     {
       "headline": "EXCLUSIVE: How purchases of sanctioned Iranian jet fuel were disguised by Myanmar - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-26T04:02:00.000Z",
-      "hoursAgo": 10.2
+      "hoursAgo": 13.9
     },
     {
       "headline": "Trump says Canada tariff deal coming 'soon' at Michigan border rally - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-25T23:51:00.000Z",
-      "hoursAgo": 14.4
+      "hoursAgo": 18.1
     }
   ],
   "briefing": null
