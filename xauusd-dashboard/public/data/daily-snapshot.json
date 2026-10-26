@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-26T11:54:43.320Z",
+  "generatedAt": "2026-10-26T14:16:46.144Z",
   "yields": {
     "US10Y": 4.96,
     "US2Y": 4.65,
@@ -22,8 +22,8 @@
     "probHike": 44
   },
   "marketVolatility": {
-    "GVZ": 24.15,
-    "VIX": 19.03
+    "GVZ": 24.34,
+    "VIX": 19.45
   },
   "positioning": {
     "cotNetLong": 191791,
@@ -34,26 +34,26 @@
     "openInterestChange": 6166
   },
   "etfFlows": {
-    "gldTonnes": 1097.1,
-    "gldWoWChange": -5.2,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1100.3,
+    "gldWoWChange": 3.2,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4017.14,
-    "XAGUSD": 54.0745,
-    "EURUSD": 1.11952,
-    "USDJPY": 157.3695,
-    "USDCHF": 0.82646,
-    "USDCNH": 6.66812,
-    "GBPUSD": 1.33504,
-    "USDCAD": 1.40166,
-    "USDSEK": 9.94834,
-    "US500": 7650.6,
-    "GER40": 25462.45,
-    "UK100": 10744.25,
+    "XAUUSD": 4005.62,
+    "XAGUSD": 53.563,
+    "EURUSD": 1.11822,
+    "USDJPY": 157.411,
+    "USDCHF": 0.82678,
+    "USDCNH": 6.6685,
+    "GBPUSD": 1.33401,
+    "USDCAD": 1.40528,
+    "USDSEK": 9.9634,
+    "US500": 7675.3,
+    "GER40": 25505.95,
+    "UK100": 10768.85,
     "ADR_14day": 65.7,
-    "ADR_usedToday": 44.2,
-    "goldSilverRatio": 74.3
+    "ADR_usedToday": 47.2,
+    "goldSilverRatio": 74.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.6328,
@@ -66,22 +66,34 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "UK sanctions 15 commanders from rival Sudan factions over wartime rape - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-26T10:31:19.000Z",
+      "hoursAgo": 3.8
+    },
+    {
+      "headline": "Egypt's pound hits record low against dollar - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-26T09:52:09.000Z",
+      "hoursAgo": 4.4
+    },
+    {
       "headline": "Morning Bid: Elections, central banks and earnings on the menu - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-26T04:46:00.000Z",
-      "hoursAgo": 7.1
+      "hoursAgo": 9.5
     },
     {
       "headline": "EXCLUSIVE: How purchases of sanctioned Iranian jet fuel were disguised by Myanmar - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-26T04:02:00.000Z",
-      "hoursAgo": 7.9
+      "hoursAgo": 10.2
     },
     {
       "headline": "Trump says Canada tariff deal coming 'soon' at Michigan border rally - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-25T23:51:00.000Z",
-      "hoursAgo": 12.1
+      "hoursAgo": 14.4
     }
   ],
   "briefing": null
