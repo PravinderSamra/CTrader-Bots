@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-10-26T17:57:36.392Z",
+  "generatedAt": "2026-10-26T22:15:20.229Z",
   "prices": {
-    "UK100": 10752.85,
-    "GBPUSD": 1.33553,
-    "GBPEUR": 1.19337,
-    "US500": 7684.7,
-    "NAS100": 29358.15,
-    "BRENT": 115.896,
-    "COPPER": 6.6214,
-    "VIX": 18.445,
-    "USDX": 101.92,
-    "XAUUSD": 4020.725,
-    "UK100_dayPct": 0.63
+    "UK100": 10739.35,
+    "GBPUSD": 1.33412,
+    "GBPEUR": 1.19397,
+    "US500": 7683.3,
+    "NAS100": 29336.65,
+    "BRENT": 115.31,
+    "COPPER": 6.6206,
+    "VIX": 18.525,
+    "USDX": 102.032,
+    "XAUUSD": 4015.715,
+    "UK100_dayPct": 0.51
   },
   "fx": {
-    "gbpUsdDayPct": -0.11,
-    "gbpUsd20dPercentile": 95,
+    "gbpUsdDayPct": 0,
+    "gbpUsd20dPercentile": 84,
     "sterlingEri": 86.1213,
     "sterlingEriDayChange": 0.14,
     "ftseImpactFromGbp": "NEUTRAL"
@@ -30,31 +30,31 @@
     "gilt10yDayBp": -6,
     "gilt20yDayBp": -8,
     "slope5s20s": 0.83,
-    "giltUst10ySpread": 0.35,
+    "giltUst10ySpread": 0.31,
     "longEndStress": false,
     "nextMpcDate": "2026-11-05",
     "daysToMpc": 10
   },
   "usLinkage": {
-    "us500DayPct": 0.66,
-    "nas100DayPct": 1.24,
-    "vix": 18.445,
+    "us500DayPct": 0.07,
+    "nas100DayPct": 0.12,
+    "vix": 18.525,
     "vixRegime": "NORMAL",
-    "us10y": 4.96,
-    "usdx": 101.92
+    "us10y": 5,
+    "usdx": 102.032
   },
   "commodities": {
-    "brentDayPct": -0.93,
-    "copperDayPct": 0.89,
-    "goldDayPct": 0.57,
+    "brentDayPct": -1.43,
+    "copperDayPct": 0.17,
+    "goldDayPct": -0.03,
     "brent20dTrend": "DOWN"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": 0.81,
-    "dax40DayPct": 1.07,
-    "eurUsdDayPct": -0.08,
-    "ftseDaxCorr20d": 0.69,
-    "ftseSx5eCorr20d": 0.58,
+    "eurostoxx50DayPct": 0.66,
+    "dax40DayPct": 0.99,
+    "eurUsdDayPct": 0,
+    "ftseDaxCorr20d": 0.68,
+    "ftseSx5eCorr20d": 0.57,
     "tapeAgreement": "ALIGNED",
     "preOpenLead": "NONE"
   },
@@ -69,15 +69,15 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent -0.93%",
+      "driver": "Brent -1.43%",
       "read": "BEARISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper +0.89%",
-      "read": "BULLISH",
+      "driver": "Copper +0.17%",
+      "read": "NEUTRAL",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
     {
@@ -122,65 +122,65 @@
   ],
   "newsItems": [
     {
-      "headline": "Mortgage rates above 7% are the 'new normal'—here's why",
-      "source": "CNBC",
-      "url": "https://www.cnbc.com/make-it/2026/10/26/mortgage-rates-above-7percent-are-the-new-normalheres-why.html",
-      "hoursAgo": 4
-    },
-    {
       "headline": "Mindful of the markets, UK's Healey is set to deliver a careful budget - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOd1FFNVNXLU1fbUd1NzRQT2wxeWUwRWlQU1M2X21RSGhMMzB1dzl2NmpZVG1HQ0I4RzZHRHA5elBfSHRvUmFDdWZLb1AyTERDVkxmdXJsR1ZORkQyZ29LVjZrWVl1TzcxNXFqNTRXOGp4cDZiSllBY1UzRnFsNWM2bkJwd1FUSlZDUzFoS2RRWE9XZHExUUUtSzBrcWNIUDVpZjRZ?oc=5",
-      "hoursAgo": 10.6
+      "hoursAgo": 3.3
+    },
+    {
+      "headline": "Mortgage rates above 7% are the 'new normal'—here's why",
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/make-it/2026/10/26/mortgage-rates-above-7percent-are-the-new-normalheres-why.html",
+      "hoursAgo": 8.3
     },
     {
       "headline": "Gold rises as lower oil prices ease inflation fears ahead of Fed meeting - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPZml1aC0yS2NrLUloeEFPZnYyeExpazhPVExTT1BLcV9HZGxEZWFzcHFUMTJFbDhUTjgyaE5EbGRja1BRX0p2UzlDSmEzUUpzTG9ZT2xKZEZMczFvb1pzU2xrdXlNT0dDUXYtQnhoLUFpT09xQmF5Q25FQXdKNGpjOERVdTB1UTk4NkhSd2k3cUNBSTJRMVVsUlpSWQ?oc=5",
-      "hoursAgo": 12
+      "hoursAgo": 16.3
     },
     {
       "headline": "Trump says Canada tariff deal coming 'soon' at Michigan border rally - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQdEJMMGdRVDJoVkVSSGFSV1FvRmJMTy1LWnZhMWRzeUFjNlN4QUFKQ2tZc285cEs4akdIZ0dvZzJtSTBWU3ZwX1VGX2l3TllKVGxfNnh0Vm5rOTVtX2JpLXhwOXdJTEJURVBjYjRLS3hWSHk4bXBCT3lIWmZGMS1YTE5WQmpYVTVWcEk3YnE3WWV6anVTdElYUlV0Q3o4cnF2N0Z1NXJlazBvcG9L?oc=5",
-      "hoursAgo": 18.1
+      "hoursAgo": 22.4
     }
   ],
   "riskTone": null,
   "bias": {
-    "score": 5,
-    "label": "BULLISH",
-    "conviction": "MEDIUM",
+    "score": 0,
+    "label": "NEUTRAL",
+    "conviction": "LOW",
     "drivers": [
       {
         "name": "GBP",
         "weight": 3,
         "impact": "NEUTRAL",
-        "detail": "GBP/USD -0.11% → FTSE tailwind (sign-flipped)"
+        "detail": "GBP/USD +0% → FTSE tailwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
-        "impact": "BULLISH",
-        "detail": "US500 +0.66% today"
+        "impact": "NEUTRAL",
+        "detail": "US500 +0.07% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 18.445 — NORMAL regime"
+        "detail": "VIX 18.525 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
         "impact": "BEARISH",
-        "detail": "Brent -0.93% (energy majors)"
+        "detail": "Brent -1.43% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
-        "impact": "BULLISH",
-        "detail": "Copper +0.89% (miners/China)"
+        "impact": "NEUTRAL",
+        "detail": "Copper +0.17% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -204,13 +204,13 @@
         "name": "European tape (SX5E/DAX)",
         "weight": 1,
         "impact": "BULLISH",
-        "detail": "SX5E +0.81% / DAX +1.07%"
+        "detail": "SX5E +0.66% / DAX +0.99%"
       }
     ],
     "eventSuppressed": false
   },
   "orbContext": {
-    "computedAt": "2026-10-26T17:57:36.391Z",
+    "computedAt": "2026-10-26T22:15:20.228Z",
     "mode": "CLOSED",
     "cashOpenLondon": "08:00 GMT",
     "overnightHigh": 10746.7,
@@ -220,8 +220,8 @@
     "priorClose": 10685.3,
     "prevWeekHigh": 10883,
     "prevWeekLow": 10625.7,
-    "gapPts": 67.6,
-    "gapPct": 0.63,
+    "gapPts": 54.1,
+    "gapPct": 0.51,
     "orbHigh": 10740.8,
     "orbLow": 10694.3,
     "orbBrokenDirection": "UP",
@@ -239,8 +239,8 @@
     }
   },
   "orbIntel": {
-    "stance": "LONG_FAVOURED",
-    "stanceLine": "Backdrop favours upside breaks — 74% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+    "stance": "MIXED",
+    "stanceLine": "No clean edge — mixed signals — 74% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
     "signals": [
       {
         "direction": "BREAKOUT_SUSPECT",
@@ -254,14 +254,7 @@
         "severity": "INFO",
         "source": "TAPE",
         "rule": "R8",
-        "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.81%) — the cross-market lean is up."
-      },
-      {
-        "direction": "FAVOURS_LONG",
-        "severity": "INFO",
-        "source": "TAPE",
-        "rule": "R9",
-        "text": "Past 13:30 with US futures +0.66% — the 14:30 US handoff argues for holding longs into the US open."
+        "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.66%) — the cross-market lean is up."
       },
       {
         "direction": "BREAKOUT_SUSPECT",

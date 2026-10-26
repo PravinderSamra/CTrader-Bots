@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-10-26T17:57:32.130Z",
+  "generatedAt": "2026-10-26T22:15:05.980Z",
   "yields": {
-    "US10Y": 4.96,
-    "US2Y": 4.65,
-    "realYield10Y": 2.64,
-    "realYield5Y": 2.33,
+    "US10Y": 5,
+    "US2Y": 4.69,
+    "realYield10Y": 2.66,
+    "realYield5Y": 2.34,
     "curve2s10s": 31,
     "breakeven10Y": 2.34,
-    "breakeven5Y": 2.48,
-    "forward5y5y": 2.2,
+    "breakeven5Y": 2.47,
+    "forward5y5y": 2.21,
     "dayOverDay": {
-      "US10Y": -0.17,
-      "US2Y": -0.16,
-      "realYield10Y": -0.12
+      "US10Y": 0.04,
+      "US2Y": 0.04,
+      "realYield10Y": 0.02
     }
   },
   "fedExpectations": {
@@ -34,26 +34,26 @@
     "openInterestChange": 6166
   },
   "etfFlows": {
-    "gldTonnes": 1096,
-    "gldWoWChange": -4.3,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1097.4,
+    "gldWoWChange": 1.4,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4021.155,
-    "XAGUSD": 54.149,
-    "EURUSD": 1.1191,
-    "USDJPY": 157.394,
-    "USDCHF": 0.82676,
-    "USDCNH": 6.66761,
-    "GBPUSD": 1.3355,
-    "USDCAD": 1.40142,
-    "USDSEK": 9.93886,
-    "US500": 7685,
-    "GER40": 25415.55,
-    "UK100": 10753.85,
-    "ADR_14day": 65.7,
-    "ADR_usedToday": 51.5,
-    "goldSilverRatio": 74.3
+    "XAUUSD": 4016.285,
+    "XAGUSD": 53.933,
+    "EURUSD": 1.11739,
+    "USDJPY": 157.538,
+    "USDCHF": 0.82746,
+    "USDCNH": 6.66812,
+    "GBPUSD": 1.33411,
+    "USDCAD": 1.40191,
+    "USDSEK": 9.95401,
+    "US500": 7683.3,
+    "GER40": 25393.85,
+    "UK100": 10739.35,
+    "ADR_14day": 64.4,
+    "ADR_usedToday": 2.4,
+    "goldSilverRatio": 74.5
   },
   "dollarLiquidity": {
     "stlfsi": -0.6328,
@@ -69,43 +69,43 @@
       "headline": "Mortgage rates above 7% are the 'new normal'—here's why",
       "source": "CNBC",
       "publishedAt": "2026-10-26T14:00:01.000Z",
-      "hoursAgo": 4
+      "hoursAgo": 8.3
     },
     {
       "headline": "UK sanctions 15 commanders from rival Sudan factions over wartime rape - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-26T10:31:19.000Z",
-      "hoursAgo": 7.4
+      "hoursAgo": 11.7
     },
     {
       "headline": "Egypt's pound hits record low against dollar - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-26T09:52:09.000Z",
-      "hoursAgo": 8.1
+      "hoursAgo": 12.4
     },
     {
       "headline": "Gold rises as lower oil prices ease inflation fears ahead of Fed meeting - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-26T05:56:00.000Z",
-      "hoursAgo": 12
+      "hoursAgo": 16.3
     },
     {
       "headline": "Morning Bid: Elections, central banks and earnings on the menu - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-26T04:46:00.000Z",
-      "hoursAgo": 13.2
+      "hoursAgo": 17.5
     },
     {
       "headline": "EXCLUSIVE: How purchases of sanctioned Iranian jet fuel were disguised by Myanmar - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-26T04:02:00.000Z",
-      "hoursAgo": 13.9
+      "hoursAgo": 18.2
     },
     {
       "headline": "Trump says Canada tariff deal coming 'soon' at Michigan border rally - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-25T23:51:00.000Z",
-      "hoursAgo": 18.1
+      "hoursAgo": 22.4
     }
   ],
   "briefing": null
