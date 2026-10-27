@@ -4,3 +4,5 @@ xagusd_m5.csv  ldn 08:00-16:00: days 970 trades 1271 net -49.8% (-12.9%/yr) Shar
 xagusd_m5.csv  ny 08:30-13:30: days 970 trades 806 net -42.0% (-10.9%/yr) Sharpe -0.73 maxDD 44.1% | 2023 -7.7% 2024 -10.3% 2025 +1.2% 2026 -25.2% | post-paper -28.4%
 ger40_m5.csv   cet 09:00-17:30: days 955 trades 1221 net -2.4% (-0.6%/yr) Sharpe -0.10 maxDD 12.7% | 2023 -10.3% 2024 +2.6% 2025 +6.3% 2026 -1.0% | post-paper +9.3%
 xagusd_m5.csv  ldn 08:00-16:00: days 970 trades 1271 net +1.0% (+0.3%/yr) Sharpe 0.02 maxDD 29.0% | 2023 -8.1% 2024 -3.7% 2025 -3.4% 2026 +16.3% | post-paper +6.3%
+eurusd_m5_flat.csv ldn 08:00-16:00: days 1360 trades 1749 net -22.7% (-4.2%/yr) Sharpe -1.39 maxDD 23.1% | 2021 -2.1% 2022 -8.5% 2023 +0.0% 2024 -3.0% 2025 -6.2% 2026 -2.9% | post-paper -12.1%
+eurusd_m5_flat.csv ny 08:00-16:00: days 1354 trades 1550 net -14.6% (-2.7%/yr) Sharpe -0.92 maxDD 15.1% | 2021 -3.3% 2022 -3.9% 2023 +4.4% 2024 -8.2% 2025 -3.4% 2026 -0.1% | post-paper -9.8%
