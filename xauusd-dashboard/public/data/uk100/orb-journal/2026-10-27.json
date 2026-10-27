@@ -63,7 +63,33 @@
         "adr14": 116.4,
         "adrUsedPct": 102
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-10-27T17:04:18.864Z",
+        "fwd1hPct": -0.26,
+        "fwd3hPct": -0.11,
+        "toClosePct": -0.2,
+        "maxUpPct": 0.04,
+        "maxDownPct": -0.37,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R3",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-10-27T13:13:23.843Z",
@@ -127,7 +153,113 @@
         "adr14": 116.4,
         "adrUsedPct": 102
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-10-27T17:04:19.038Z",
+        "fwd1hPct": 0.1,
+        "fwd3hPct": 0.01,
+        "toClosePct": 0.01,
+        "maxUpPct": 0.25,
+        "maxDownPct": -0.17,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R3",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-10-27T17:04:15.612Z",
+      "londonTime": "17:04 GMT",
+      "mode": "CLOSED",
+      "price": 10671.55,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 102% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "102% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDH 10775.3) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is diverging from a united European tape — it's trading its own story today; tape-based confirmation is unreliable."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures +0.53% — the 14:30 US handoff argues for holding longs into the US open."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "INFO",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "FOMC Rate Decision prints tomorrow 19:00 GMT — late-session moves today are as likely pre-event de-risking as conviction."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 7,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": 10695.5,
+        "orbLow": 10647.4,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10765.1,
+        "overnightLow": 10646.9,
+        "priorDayHigh": 10775.3,
+        "priorDayLow": 10688.8,
+        "gapPct": -0.62,
+        "adr14": 116.4,
+        "adrUsedPct": 102
+      },
+      "outcome": {
+        "resolvedAt": "2026-10-27T17:04:19.039Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }

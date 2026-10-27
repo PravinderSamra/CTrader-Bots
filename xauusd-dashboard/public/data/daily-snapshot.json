@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-27T13:13:19.134Z",
+  "generatedAt": "2026-10-27T17:04:07.898Z",
   "yields": {
     "US10Y": 5,
     "US2Y": 4.69,
@@ -22,8 +22,8 @@
     "probHike": 44
   },
   "marketVolatility": {
-    "GVZ": 24.34,
-    "VIX": 19.45
+    "GVZ": 23.55,
+    "VIX": 18.39
   },
   "positioning": {
     "cotNetLong": 191791,
@@ -34,26 +34,26 @@
     "openInterestChange": 6166
   },
   "etfFlows": {
-    "gldTonnes": 1095.7,
-    "gldWoWChange": -2.7,
+    "gldTonnes": 1085.6,
+    "gldWoWChange": -10.1,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4022.57,
-    "XAGUSD": 53.718,
-    "EURUSD": 1.11502,
-    "USDJPY": 157.801,
-    "USDCHF": 0.82844,
-    "USDCNH": 6.665,
-    "GBPUSD": 1.33286,
-    "USDCAD": 1.40247,
-    "USDSEK": 9.93509,
-    "US500": 7701.1,
-    "GER40": 25508.75,
-    "UK100": 10668.65,
+    "XAUUSD": 4059.785,
+    "XAGUSD": 54.416,
+    "EURUSD": 1.11391,
+    "USDJPY": 157.903,
+    "USDCHF": 0.82858,
+    "USDCNH": 6.66385,
+    "GBPUSD": 1.33158,
+    "USDCAD": 1.4045,
+    "USDSEK": 9.94216,
+    "US500": 7717.7,
+    "GER40": 25606.55,
+    "UK100": 10672.05,
     "ADR_14day": 64.4,
-    "ADR_usedToday": 42.3,
-    "goldSilverRatio": 74.9
+    "ADR_usedToday": 75.5,
+    "goldSilverRatio": 74.6
   },
   "dollarLiquidity": {
     "stlfsi": -0.6328,
@@ -66,16 +66,22 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "High inflation to persist globally into next year, Reuters poll shows - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-27T13:41:44.000Z",
+      "hoursAgo": 3.4
+    },
+    {
+      "headline": "France to exempt retailers from replacing diesel released from reserves - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-27T11:39:43.000Z",
+      "hoursAgo": 5.4
+    },
+    {
       "headline": "US stock futures gain as oil pulls back ahead of Fed decision - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-27T11:27:48.000Z",
-      "hoursAgo": 1.8
-    },
-    {
-      "headline": "Mortgage rates above 7% are the 'new normal'—here's why",
-      "source": "CNBC",
-      "publishedAt": "2026-10-26T14:00:01.000Z",
-      "hoursAgo": 23.2
+      "hoursAgo": 5.6
     }
   ],
   "briefing": null
