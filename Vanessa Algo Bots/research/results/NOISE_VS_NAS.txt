@@ -1,0 +1,10 @@
+noise band notional for equal risk: $163,145 (live NAS risk $500/R)
+
+NAS bot (live rules, $500/R) total $  103,939  $ 18,898/yr  Sharpe 1.30  max DD $ 13,519  worst day $ -1,309  worst week $ -3,326  months up 60%
+   2021 $  17,621  2022 $  20,826  2023 $  15,080  2024 $  15,452  2025 $  16,852  2026 $  18,109
+Noise band US100 (equal risk) total $   90,492  $ 16,453/yr  Sharpe 1.13  max DD $ 13,196  worst day $ -3,978  worst week $ -7,488  months up 61%
+   2021 $  11,714  2022 $  25,441  2023 $  21,439  2024 $  11,843  2025 $  16,741  2026 $   3,313
+50/50 mix (each half size)   total $   97,215  $ 17,675/yr  Sharpe 1.49  max DD $  8,452  worst day $ -2,054  worst week $ -3,243  months up 69%
+   2021 $  14,667  2022 $  23,133  2023 $  18,260  2024 $  13,648  2025 $  16,796  2026 $  10,711
+
+correlation +0.34
