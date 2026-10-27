@@ -11,7 +11,7 @@ from datetime import datetime, timezone, timedelta, date
 from collections import defaultdict
 import os
 files, COST = sys.argv[1:-1], float(sys.argv[-1])
-LB = int(os.environ.get("NB_LB", 14)); STEP = int(os.environ.get("NB_STEP", 30)); OUT = os.environ.get("NB_OUT")
+LB = int(os.environ.get("NB_LB", 14)); K = float(os.environ.get("NB_K", 1.0)); STEP = int(os.environ.get("NB_STEP", 30)); OUT = os.environ.get("NB_OUT")
 
 def nyoff(d):
     mar = date(d.year, 3, 1); s = mar + timedelta(days=(6 - mar.weekday()) % 7 + 7)
@@ -45,7 +45,7 @@ for n, d in enumerate(D):
         tp = (hi + lo + c) / 3; pv += tp * v; vv += v
         end = m + 5
         if end not in checks or i + 1 >= len(B): continue
-        sig = st.mean(moves[h].get(end, 0) for h in hist)
+        sig = K * st.mean(moves[h].get(end, 0) for h in hist)
         U, L, vw = up0 * (1 + sig), lo0 * (1 - sig), pv / vv
         fill = B[i + 1][1]
         if pos > 0 and c < max(U, vw): pnl += (fill - e) / e - COST; pos = 0; ntr += 1
