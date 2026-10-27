@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-27T11:17:43.238Z",
+  "generatedAt": "2026-10-27T13:13:19.134Z",
   "yields": {
     "US10Y": 5,
     "US2Y": 4.69,
@@ -34,26 +34,26 @@
     "openInterestChange": 6166
   },
   "etfFlows": {
-    "gldTonnes": 1098.4,
-    "gldWoWChange": 1,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1095.7,
+    "gldWoWChange": -2.7,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4012.39,
-    "XAGUSD": 53.472,
-    "EURUSD": 1.11509,
-    "USDJPY": 157.6455,
-    "USDCHF": 0.82854,
-    "USDCNH": 6.66568,
-    "GBPUSD": 1.33235,
-    "USDCAD": 1.40183,
-    "USDSEK": 9.94833,
-    "US500": 7702.6,
-    "GER40": 25493.35,
-    "UK100": 10691.05,
+    "XAUUSD": 4022.57,
+    "XAGUSD": 53.718,
+    "EURUSD": 1.11502,
+    "USDJPY": 157.801,
+    "USDCHF": 0.82844,
+    "USDCNH": 6.665,
+    "GBPUSD": 1.33286,
+    "USDCAD": 1.40247,
+    "USDSEK": 9.93509,
+    "US500": 7701.1,
+    "GER40": 25508.75,
+    "UK100": 10668.65,
     "ADR_14day": 64.4,
-    "ADR_usedToday": 36.3,
-    "goldSilverRatio": 75
+    "ADR_usedToday": 42.3,
+    "goldSilverRatio": 74.9
   },
   "dollarLiquidity": {
     "stlfsi": -0.6328,
@@ -66,10 +66,16 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "US stock futures gain as oil pulls back ahead of Fed decision - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-27T11:27:48.000Z",
+      "hoursAgo": 1.8
+    },
+    {
       "headline": "Mortgage rates above 7% are the 'new normal'—here's why",
       "source": "CNBC",
       "publishedAt": "2026-10-26T14:00:01.000Z",
-      "hoursAgo": 21.3
+      "hoursAgo": 23.2
     }
   ],
   "briefing": null
