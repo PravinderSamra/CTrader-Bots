@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-10-27T17:04:07.898Z",
+  "generatedAt": "2026-10-27T21:37:34.942Z",
   "yields": {
     "US10Y": 5,
-    "US2Y": 4.69,
+    "US2Y": 4.68,
     "realYield10Y": 2.66,
-    "realYield5Y": 2.34,
-    "curve2s10s": 31,
-    "breakeven10Y": 2.34,
-    "breakeven5Y": 2.47,
-    "forward5y5y": 2.21,
+    "realYield5Y": 2.37,
+    "curve2s10s": 32,
+    "breakeven10Y": 2.35,
+    "breakeven5Y": 2.45,
+    "forward5y5y": 2.25,
     "dayOverDay": {
-      "US10Y": 0.04,
-      "US2Y": 0.04,
-      "realYield10Y": 0.02
+      "US10Y": 0,
+      "US2Y": -0.01,
+      "realYield10Y": 0
     }
   },
   "fedExpectations": {
@@ -35,24 +35,24 @@
   },
   "etfFlows": {
     "gldTonnes": 1085.6,
-    "gldWoWChange": -10.1,
-    "trend3W": "OUTFLOW"
+    "gldWoWChange": 0,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4059.785,
-    "XAGUSD": 54.416,
-    "EURUSD": 1.11391,
-    "USDJPY": 157.903,
-    "USDCHF": 0.82858,
-    "USDCNH": 6.66385,
-    "GBPUSD": 1.33158,
-    "USDCAD": 1.4045,
-    "USDSEK": 9.94216,
-    "US500": 7717.7,
-    "GER40": 25606.55,
-    "UK100": 10672.05,
+    "XAUUSD": 4060.025,
+    "XAGUSD": 54.417,
+    "EURUSD": 1.11266,
+    "USDJPY": 157.9485,
+    "USDCHF": 0.82873,
+    "USDCNH": 6.66474,
+    "GBPUSD": 1.3303,
+    "USDCAD": 1.40477,
+    "USDSEK": 9.95902,
+    "US500": 7721.8,
+    "GER40": 25632.55,
+    "UK100": 10675.55,
     "ADR_14day": 64.4,
-    "ADR_usedToday": 75.5,
+    "ADR_usedToday": 76.5,
     "goldSilverRatio": 74.6
   },
   "dollarLiquidity": {
@@ -69,19 +69,31 @@
       "headline": "High inflation to persist globally into next year, Reuters poll shows - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-27T13:41:44.000Z",
-      "hoursAgo": 3.4
+      "hoursAgo": 7.9
     },
     {
       "headline": "France to exempt retailers from replacing diesel released from reserves - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-27T11:39:43.000Z",
-      "hoursAgo": 5.4
+      "hoursAgo": 10
     },
     {
       "headline": "US stock futures gain as oil pulls back ahead of Fed decision - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-27T11:27:48.000Z",
-      "hoursAgo": 5.6
+      "hoursAgo": 10.2
+    },
+    {
+      "headline": "Dollar firms ahead of central bank meetings, steadier stocks stall safe haven play - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-27T02:12:00.000Z",
+      "hoursAgo": 19.4
+    },
+    {
+      "headline": "Stocks rise as oil slips with tech earnings, Fed ahead - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-27T01:46:00.000Z",
+      "hoursAgo": 19.9
     }
   ],
   "briefing": null
