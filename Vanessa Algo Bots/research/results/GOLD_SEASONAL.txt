@@ -9,3 +9,7 @@ S2 January: 15 months, avg after costs +3.75%  (raw +4.17% vs other months +0.37
   2nd half of January                n=15 avg +1.44% t=2.6 up 11/15  worst year -1.3%  deepest dip inside -2.5%
   January + February                 n=15 avg +4.14% t=2.1 up 11/15  worst year -9.4%  deepest dip inside -9.8%
   December (control)                 n=15 avg +0.24% t=0.2 up 9/15  worst year -11.0%  deepest dip inside -13.0%
+xagusd: 17 Januaries, avg after costs +3.07% (raw +3.48% vs other months +0.83%) t=1.7 up 11/17  halves +3.46% / +2.73%  PASS
+   2010:-4.5% 2011:-9.9% 2012:+18.0% 2013:+4.2% 2014:-2.2% 2015:+9.5% 2016:+2.5% 2017:+10.0% 2018:+1.7% 2019:+4.0% 2020:+0.6% 2021:+1.1% 2022:-4.1% 2023:-1.6% 2024:-4.0% 2025:+7.9% 2026:+18.9%
+copper: 13 Januaries, avg after costs +0.40% (raw +0.80% vs other months +0.44%) t=0.2 up 6/13  halves -0.03% / +0.77%  fail
+   2012:+7.9% 2013:+2.5% 2014:-5.2% 2015:-11.8% 2016:-1.2% 2017:+7.6% 2020:-10.5% 2021:-0.3% 2022:-3.2% 2023:+9.8% 2024:-0.1% 2025:+6.0% 2026:+3.8%
