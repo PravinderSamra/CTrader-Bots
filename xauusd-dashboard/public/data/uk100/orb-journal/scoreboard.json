@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-10-27T17:04:19.044Z",
-  "entriesScored": 154,
+  "updatedAt": "2026-10-28T17:41:27.667Z",
+  "entriesScored": 156,
   "byStance": {
     "SHORT_FAVOURED": {
       "n": 23,
@@ -10,32 +10,32 @@
       "avgToClosePct": 0.18
     },
     "LONG_FAVOURED": {
-      "n": 17,
-      "right": 6,
+      "n": 18,
+      "right": 7,
       "wrong": 4,
       "flat": 7,
-      "avgToClosePct": 0.05
+      "avgToClosePct": 0.07
     },
     "FADE_FAVOURED": {
-      "n": 16,
+      "n": 17,
       "right": 4,
       "wrong": 8,
-      "flat": 4,
+      "flat": 5,
       "avgToClosePct": -0.07
     }
   },
   "byRule": {
     "R13": {
-      "n": 43,
-      "right": 13,
+      "n": 45,
+      "right": 14,
       "wrong": 6,
-      "flat": 24
+      "flat": 25
     },
     "R11b": {
-      "n": 147,
-      "right": 60,
+      "n": 149,
+      "right": 61,
       "wrong": 9,
-      "flat": 78
+      "flat": 79
     },
     "R6": {
       "n": 1,
@@ -44,9 +44,9 @@
       "flat": 0
     },
     "R8": {
-      "n": 116,
+      "n": 117,
       "right": 46,
-      "wrong": 27,
+      "wrong": 28,
       "flat": 43
     },
     "R12": {
@@ -56,10 +56,10 @@
       "flat": 3
     },
     "R2": {
-      "n": 26,
+      "n": 27,
       "right": 9,
       "wrong": 3,
-      "flat": 14
+      "flat": 15
     },
     "R4": {
       "n": 85,
@@ -92,10 +92,10 @@
       "flat": 7
     },
     "R1": {
-      "n": 16,
+      "n": 17,
       "right": 4,
       "wrong": 8,
-      "flat": 4
+      "flat": 5
     },
     "R8b": {
       "n": 1,

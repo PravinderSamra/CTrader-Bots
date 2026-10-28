@@ -63,7 +63,33 @@
         "adr14": 117.5,
         "adrUsedPct": 37
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-10-28T17:41:27.523Z",
+        "fwd1hPct": 0.5,
+        "fwd3hPct": 0.34,
+        "toClosePct": 0.46,
+        "maxUpPct": 0.65,
+        "maxDownPct": -0.04,
+        "verdict": "RIGHT",
+        "signalVerdicts": [
+          {
+            "rule": "R2",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R13",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-10-28T14:02:27.505Z",
@@ -120,7 +146,102 @@
         "adr14": 117.5,
         "adrUsedPct": 64
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-10-28T17:41:27.662Z",
+        "fwd1hPct": -0.17,
+        "fwd3hPct": null,
+        "toClosePct": -0.05,
+        "maxUpPct": 0.05,
+        "maxDownPct": -0.27,
+        "verdict": "FLAT",
+        "signalVerdicts": [
+          {
+            "rule": "R1",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R13",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-10-28T17:41:24.519Z",
+      "londonTime": "17:41 GMT",
+      "mode": "CLOSED",
+      "price": 10701.25,
+      "stance": "FADE_FAVOURED",
+      "stanceLine": "Fade day — the ORB break was a trap — ORB broke DOWN but price has fully reclaimed the range (back above 10682.7) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.",
+      "signals": [
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "STRONG",
+          "source": "STRUCTURE",
+          "rule": "R1",
+          "text": "ORB broke DOWN but price has fully reclaimed the range (back above 10682.7) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "70% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDH 10765.1) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "FOMC Rate Decision @ 19:00 GMT today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 4,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": 10682.7,
+        "orbLow": 10646.8,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10684.1,
+        "overnightLow": 10640.7,
+        "priorDayHigh": 10765.1,
+        "priorDayLow": 10646.9,
+        "gapPct": 0.26,
+        "adr14": 117.5,
+        "adrUsedPct": 70
+      },
+      "outcome": {
+        "resolvedAt": "2026-10-28T17:41:27.662Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-28T14:02:21.750Z",
+  "generatedAt": "2026-10-28T17:41:07.098Z",
   "yields": {
     "US10Y": 5,
     "US2Y": 4.68,
@@ -34,26 +34,26 @@
     "openInterestChange": 6166
   },
   "etfFlows": {
-    "gldTonnes": 1088.6,
-    "gldWoWChange": -0.4,
-    "trend3W": "FLAT"
+    "gldTonnes": 1091.3,
+    "gldWoWChange": 2.7,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4048.565,
-    "XAGUSD": 53.852,
-    "EURUSD": 1.11328,
-    "USDJPY": 158.1625,
-    "USDCHF": 0.83032,
-    "USDCNH": 6.66312,
-    "GBPUSD": 1.32916,
-    "USDCAD": 1.4043,
-    "USDSEK": 9.93205,
-    "US500": 7728.8,
-    "GER40": 25667.85,
-    "UK100": 10705.85,
+    "XAUUSD": 4038.795,
+    "XAGUSD": 53.57,
+    "EURUSD": 1.11404,
+    "USDJPY": 158.243,
+    "USDCHF": 0.82949,
+    "USDCNH": 6.6646,
+    "GBPUSD": 1.33072,
+    "USDCAD": 1.40393,
+    "USDSEK": 9.92766,
+    "US500": 7737.6,
+    "GER40": 25757.55,
+    "UK100": 10700.75,
     "ADR_14day": 65.4,
     "ADR_usedToday": 42.6,
-    "goldSilverRatio": 75.2
+    "goldSilverRatio": 75.4
   },
   "dollarLiquidity": {
     "stlfsi": -0.6328,
@@ -64,13 +64,6 @@
     "gprDate": "2026-09"
   },
   "economicCalendar": [],
-  "newsItems": [
-    {
-      "headline": "High inflation to persist globally into next year, Reuters poll shows - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-27T15:47:16.000Z",
-      "hoursAgo": 22.3
-    }
-  ],
+  "newsItems": [],
   "briefing": null
 }
