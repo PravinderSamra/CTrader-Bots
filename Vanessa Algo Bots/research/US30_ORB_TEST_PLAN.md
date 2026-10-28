@@ -8,3 +8,9 @@ Exactly two versions:
  B: stop = 75 points scaled to price (75 x price / 34,000), target 3.0R.
 Each passes if: profit factor >= 1.15, at least 6 of the 10 full years (2013-2022) positive, max drawdown <= 25R, and
 daily correlation with the NAS bot replica (screens/nas_bot_replica.py, same years) below 0.4.
+
+## Engine note and calibration (28 Oct 2026, before the unseen data arrived)
+Uses the study's own engine (screens/orb_engine.py = copy of scripts/backtest.py + a price-scaled stop), which
+reproduces the study exactly (fixed 75/3R +116.7R PF 1.31; ATR2/2R +81.5R PF 1.23, no costs). With 0.01% costs on the
+SAME 2023-26 data: A +49.9R PF 1.13 (DD 23.6R), B (scaled stop) +50.2R PF 1.14 (DD 21.7R); 2024 negative in both.
+So even in-sample, after costs, both sit just under the 1.15 pass bar. Runner: screens/us30_orb_unseen.py.
