@@ -14,3 +14,11 @@ Caveats: the scaled stop matters (on 2023-26 the scaled version gave 2023 -7.8R 
 Dukascopy volume differs from FTMO tick volume; adds amplify both directions.
 Reading: the bot's edge also existed before 2020 but was about half as strong and lumpier (profit concentrated in
 2017-18; year-long flat/losing spells). The monthly switch-off rule matters; no change to the live bot (Vanessa's call).
+
+## With adds to winners (ADDS=1: at +0.7R one add with 1.5R of risk, shared stop and target; matches the live log)
+Calibration 2021-26: correlation +0.90 with the live ladder log; replica +186.7R vs live +216.8R on 576 shared days (86%).
+Replica by year 2021-26: 27.8 / 46.2 / 30.3 / 29.1 / 17.7 / 10.5R (live log 35.2 / 41.7 / 30.2 / 30.9 / 33.7 / 57.3R).
+FTMO 2020-06 .. 2026-07: +198.2R, +0.154R a trade, every year positive, max DD 38.9R.
+Unseen 2013-2020 (Dukascopy, scaled stop): +130.2R, +0.086R a trade, max DD 45.8R. By year: 2013 -6.9, 2014 +35.9,
+2015 -7.1, 2016 -0.4, 2017 +35.1, 2018 +37.0, 2019 +11.3, 2020 (to June) +25.3. Losing years 3 of 7, all small.
+Reading: with the adds the bot holds up well before 2020: about 55% of its recent strength, losing years small.

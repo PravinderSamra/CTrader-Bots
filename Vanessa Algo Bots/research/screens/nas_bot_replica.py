@@ -3,13 +3,14 @@ Live code untouched. Rules as read from the live log/settings:
  range = high/low of M5 bars 08:00 London .. 09:30 New York; breakout = M5 close beyond range +/- offset (10 pts) with
  volume >= 1.2 x average of the previous 20 M5 bars; first entry 10:00 NY (a breakout confirmed 09:30-10:00 is taken at
  10:00); one trade a day; stop 60 pts; TP 4.5R; early risk reduction at +0.7R (stop to -0.7R); trailing from +2.5R in
- 0.1R steps; flat at 15:50 NY. Adds to winners are NOT modelled (main trade only).
+ 0.1R steps; flat at 15:50 NY. ADDS=1 (env): at +0.7R one add with 1.5R of risk (Add Size 5 x 0.3R removed), sharing the stop
+ and target, filled at the +0.7R level (as in the live log: ADD1 ~1.06x the main size).
  SCALE=fixed -> 60/10 pts as live; SCALE=pct -> 60 and 10 pts scaled by price/20,000 (for 2012-19 prices).
  Usage: nas_bot_replica.py fixed|pct out.json file.csv [...]"""
-import csv, sys, json, statistics as st
+import csv, sys, json, os, statistics as st
 from datetime import datetime, timezone, timedelta, date
 from collections import defaultdict
-SCALE, OUT, files = sys.argv[1], sys.argv[2], sys.argv[3:]
+SCALE, OUT, files = sys.argv[1], sys.argv[2], sys.argv[3:]; ADDS = os.environ.get("ADDS") == "1"
 def us_dst(d):
     mar = date(d.year, 3, 1); s = mar + timedelta(days=(6 - mar.weekday()) % 7 + 7)
     nov = date(d.year, 11, 1); e = nov + timedelta(days=(6 - nov.weekday()) % 7); return s <= d < e
@@ -56,7 +57,7 @@ for d in sorted(byday):
             if j is None or bars[j][0] >= end: break
             entry = (j, side); break
     if not entry: continue
-    j, side = entry; ep = bars[j][1]; stop = ep - side * sd; tp = ep + side * 4.5 * sd; best = 0; x = None
+    j, side = entry; ep = bars[j][1]; stop = ep - side * sd; tp = ep + side * 4.5 * sd; best = 0; x = None; add = None
     for q in I:
         if bars[q][0] < bars[j][0]: continue
         t, o, h, l, c, v = bars[q]
@@ -65,13 +66,18 @@ for d in sorted(byday):
         if (side > 0 and adv <= stop) or (side < 0 and adv >= stop): x = stop; break
         if (side > 0 and fav >= tp) or (side < 0 and fav <= tp): x = tp; break
         best = max(best, (fav - ep) * side / sd)
-        if best >= 0.7: stop = max(stop, ep - side * 0.7 * sd) if side > 0 else min(stop, ep - side * 0.7 * sd)
+        if best >= 0.7:
+            stop = max(stop, ep - side * 0.7 * sd) if side > 0 else min(stop, ep - side * 0.7 * sd)
+            if ADDS and add is None:
+                ap = ep + side * 0.7 * sd; add = (ap, 1.5 / ((ap - stop) * side / sd))   # (entry, size vs main)
         if best >= 2.5:
             lock = (int((best - 2.5) / 0.1) * 0.1 + 1.5)            # trail: lock 1R less than the best, in 0.1R steps
             ns = ep + side * lock * sd
             stop = max(stop, ns) if side > 0 else min(stop, ns)
     if x is None: x = bars[I[-1]][4]
-    res[str(d)] = (x - ep) * side / sd - 0.0001 * ep / sd
+    r = (x - ep) * side / sd - 0.0001 * ep / sd
+    if add: r += add[1] * ((x - add[0]) * side / sd - 0.0001 * add[0] / sd)
+    res[str(d)] = r
 json.dump(res, open(OUT, "w"))
 R = list(res.values()); yr = defaultdict(float)
 for d, r in res.items(): yr[d[:4]] += r
