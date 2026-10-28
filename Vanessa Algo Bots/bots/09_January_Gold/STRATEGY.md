@@ -25,3 +25,9 @@ January about -$1,080, the stop about -$1,400. Swap for the month is included in
 
 ## Switch-off rule
 Pause if three Januaries in a row lose, or a single January loses more than 7% (the stop).
+
+## cTrader backtest (28 Oct 2026, M1, attached to US500.cash D1, Jan 2021 - Oct 2026, $20k): FAIL -> PARKED
+Six Januaries: gross +$2,500, swap -$1,065 (FTMO gold long swap ~13-14%/yr at current rates, vs 5%/yr assumed in the
+research), net +$1,424 (+1.2% a January), 3 up / 3 down (2021 -847, 2022 -546, 2023 +806, 2024 -448, 2025 +1,065,
+2026 +1,395). The effect was strong 2012-2020 (8 of 9 Januaries up) and mixed since. Mechanics all correct.
+Not deployed; watch January 2027 on paper. Lesson: FTMO gold swap rules out multi-day gold holds.
