@@ -23,3 +23,10 @@ FOMC bot). F2 full day: buy EURUSD 16:00 NY on day 1 -> 16:00 NY on announcement
 Average >= +2 bp a trade after the 1 bp cost (and swap), t >= 2.0, positive after costs in both 2014-2019 and
 2020-2026, at least 60% of calendar years positive, still positive at the 2 bp stress cost. F1/F2 must also show
 daily correlation below 0.5 with the live FOMC bot's index trade (US100 long, same window) to add anything.
+
+## Result (28 Oct 2026, screens/eurusd_flows.py, results/EURUSD_FLOWS.txt): all three FAIL
+- M1 month-end: 145 trades, -0.2 bp after costs (gross +0.8), t -0.07, 6/13 years up; +2.0 bp 2014-19, -2.0 bp 2020-26.
+- F1 pre-FOMC: 101 trades, +3.8 bp (gross +5.7), t 1.03, 7/13 years up. Right sign in both halves but far too noisy
+  to tell from luck; correlation +0.19 with the US100 FOMC trade.
+- F2 FOMC day: +2.3 bp, t 0.62, 8/13 years up; correlation +0.30.
+No changes will be tried on these data. EURUSD closed as a bot market for now.
