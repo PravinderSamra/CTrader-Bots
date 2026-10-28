@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-10-28T17:41:07.098Z",
+  "generatedAt": "2026-10-28T22:01:31.993Z",
   "yields": {
-    "US10Y": 5,
-    "US2Y": 4.68,
-    "realYield10Y": 2.66,
+    "US10Y": 4.99,
+    "US2Y": 4.7,
+    "realYield10Y": 2.64,
     "realYield5Y": 2.37,
-    "curve2s10s": 32,
-    "breakeven10Y": 2.35,
-    "breakeven5Y": 2.45,
-    "forward5y5y": 2.25,
+    "curve2s10s": 29,
+    "breakeven10Y": 2.38,
+    "breakeven5Y": 2.49,
+    "forward5y5y": 2.27,
     "dayOverDay": {
-      "US10Y": 0,
-      "US2Y": -0.01,
-      "realYield10Y": 0
+      "US10Y": -0.01,
+      "US2Y": 0.02,
+      "realYield10Y": -0.02
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-10-28",
     "probCut": 0,
-    "probHold": 56,
-    "probHike": 44
+    "probHold": 60,
+    "probHike": 40
   },
   "marketVolatility": {
     "GVZ": 22.58,
@@ -34,29 +34,29 @@
     "openInterestChange": 6166
   },
   "etfFlows": {
-    "gldTonnes": 1091.3,
-    "gldWoWChange": 2.7,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1083.4,
+    "gldWoWChange": -7.9,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4038.795,
-    "XAGUSD": 53.57,
-    "EURUSD": 1.11404,
-    "USDJPY": 158.243,
-    "USDCHF": 0.82949,
-    "USDCNH": 6.6646,
-    "GBPUSD": 1.33072,
-    "USDCAD": 1.40393,
-    "USDSEK": 9.92766,
-    "US500": 7737.6,
-    "GER40": 25757.55,
-    "UK100": 10700.75,
-    "ADR_14day": 65.4,
-    "ADR_usedToday": 42.6,
-    "goldSilverRatio": 75.4
+    "XAUUSD": 4068.165,
+    "XAGUSD": 54.0805,
+    "EURUSD": 1.11536,
+    "USDJPY": 157.832,
+    "USDCHF": 0.82796,
+    "USDCNH": 6.66074,
+    "GBPUSD": 1.33264,
+    "USDCAD": 1.39935,
+    "USDSEK": 9.90573,
+    "US500": 7734.5,
+    "GER40": 25748.85,
+    "UK100": 10695.75,
+    "ADR_14day": 65.6,
+    "ADR_usedToday": 57.7,
+    "goldSilverRatio": 75.2
   },
   "dollarLiquidity": {
-    "stlfsi": -0.6328,
+    "stlfsi": -0.5837,
     "nfci": -0.487
   },
   "geopoliticalRisk": {
@@ -64,6 +64,31 @@
     "gprDate": "2026-09"
   },
   "economicCalendar": [],
-  "newsItems": [],
+  "newsItems": [
+    {
+      "headline": "Fed chairman talks tough on inflation — plus, what's behind Micron's big rally",
+      "source": "CNBC",
+      "publishedAt": "2026-10-28T19:17:35.000Z",
+      "hoursAgo": 2.7
+    },
+    {
+      "headline": "Bond investor Jeff Gundlach talks to CNBC about Fed's rate pause, Warsh reducing vote-setting meetings",
+      "source": "CNBC",
+      "publishedAt": "2026-10-28T19:05:30.000Z",
+      "hoursAgo": 2.9
+    },
+    {
+      "headline": "Namibia raises key interest rate to cushion second-round effects from high fuel prices - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-28T11:09:07.000Z",
+      "hoursAgo": 10.9
+    },
+    {
+      "headline": "Indian central bank likely intervenes to support rupee as oil prices weigh, traders say - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-28T03:43:00.000Z",
+      "hoursAgo": 18.3
+    }
+  ],
   "briefing": null
 }

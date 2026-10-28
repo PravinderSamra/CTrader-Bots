@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-10-28T17:41:24.384Z",
+  "generatedAt": "2026-10-28T22:01:38.538Z",
   "prices": {
-    "UK100": 10701.25,
-    "GBPUSD": 1.33079,
-    "GBPEUR": 1.19446,
-    "US500": 7737.8,
-    "NAS100": 29693.15,
-    "BRENT": 116.458,
-    "COPPER": 6.7397,
-    "VIX": 17.955,
-    "USDX": 102.314,
-    "XAUUSD": 4038.84,
-    "UK100_dayPct": 0.26
+    "UK100": 10695.75,
+    "GBPUSD": 1.33262,
+    "GBPEUR": 1.19481,
+    "US500": 7732.9,
+    "NAS100": 29622.85,
+    "BRENT": 115.263,
+    "COPPER": 6.7485,
+    "VIX": 18.285,
+    "USDX": 102.161,
+    "XAUUSD": 4067.885,
+    "UK100_dayPct": 0.2
   },
   "fx": {
-    "gbpUsdDayPct": 0.02,
+    "gbpUsdDayPct": 0.01,
     "gbpUsd20dPercentile": 84,
     "sterlingEri": 85.8916,
     "sterlingEriDayChange": -0.11,
@@ -30,30 +30,30 @@
     "gilt10yDayBp": -2,
     "gilt20yDayBp": -2,
     "slope5s20s": 0.83,
-    "giltUst10ySpread": 0.33,
+    "giltUst10ySpread": 0.34,
     "longEndStress": false,
     "nextMpcDate": "2026-11-05",
     "daysToMpc": 8
   },
   "usLinkage": {
-    "us500DayPct": 0.21,
-    "nas100DayPct": 0.17,
-    "vix": 17.955,
+    "us500DayPct": 0.1,
+    "nas100DayPct": 0.11,
+    "vix": 18.285,
     "vixRegime": "NORMAL",
-    "us10y": 5,
-    "usdx": 102.314
+    "us10y": 4.99,
+    "usdx": 102.161
   },
   "commodities": {
-    "brentDayPct": 1.6,
-    "copperDayPct": 0.2,
-    "goldDayPct": -0.52,
+    "brentDayPct": 0.56,
+    "copperDayPct": 0.33,
+    "goldDayPct": 0.2,
     "brent20dTrend": "UP"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": 0.13,
-    "dax40DayPct": 0.49,
-    "eurUsdDayPct": 0.15,
-    "ftseDaxCorr20d": 0.55,
+    "eurostoxx50DayPct": 0.12,
+    "dax40DayPct": 0.46,
+    "eurUsdDayPct": 0,
+    "ftseDaxCorr20d": 0.54,
     "ftseSx5eCorr20d": 0.41,
     "tapeAgreement": "ALIGNED",
     "preOpenLead": "NONE"
@@ -69,14 +69,14 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent +1.6%",
+      "driver": "Brent +0.56%",
       "read": "BULLISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper +0.2%",
+      "driver": "Copper +0.33%",
       "read": "NEUTRAL",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
@@ -120,42 +120,73 @@
       "daysFromToday": 1
     }
   ],
-  "newsItems": [],
+  "newsItems": [
+    {
+      "headline": "Fed chairman talks tough on inflation — plus, what's behind Micron's big rally",
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/investingclub/2026/10/28/fed-chairman-talks-tough-on-inflation-plus-whats-behind-microns-big-rally.html",
+      "hoursAgo": 2.7
+    },
+    {
+      "headline": "Bond investor Jeff Gundlach talks to CNBC about Fed's rate pause, Warsh reducing vote-setting meetings",
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/28/bond-investor-jeff-gundlach-talks-feds-rate-pause-with-cnbc.html",
+      "hoursAgo": 2.9
+    },
+    {
+      "headline": "America's largest budget airline reports 71% jump in airfare",
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/28/frontier-airlines-airfare-plane-tickets.html",
+      "hoursAgo": 8.2
+    },
+    {
+      "headline": "Namibia raises key interest rate to cushion second-round effects from high fuel prices - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxPV1lSSDlQdktQX2k1RzRVVE9WYlFVdWhsYVhLSlpwOFRyc2JNbmJpRGllU2ltM2RyVjdfOGlaclh1WnBweVY4VDE4TGdiMkh2cFJCbGU1RHFub3lZc0R6bUhGYTFrU2ZQZmFxYlI4TlVFNlRxRW5qeE9raTBicEV6TTFiSTloelZMUUdiYlY4emZGQjBCV3dSYXQzVGgyaUtzOEZWeTBCZnB0OHk5YVpvNnpkdmZwa0ZfN01OTVZrdEZ5bWp4VGc?oc=5",
+      "hoursAgo": 10.9
+    },
+    {
+      "headline": "UK economy set to grow 1.2% this year, slow in 2027, Healey says in budget speech - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQTWt5eEVYVG40UkFvRGh3TmhBeFAzMDdOdVp1aW5kekhwRFUzRWxJdTVPRl8xZUt5QVl5bm9xbXczdE5DMHlpdE5JSWR6eEZGREI5VnU0TVFreVdyZ3lJQ2lRQnJqTjQydFphUmZaOFg3YlNRdlBsZ0s3TGVaQndkby16NkZMU3I1Q0FucHgyekp0MjFsWmI1YXBkMlpNRjVFNFlSVTJDeFhQQlowaHVzeQ?oc=5",
+      "hoursAgo": 22
+    }
+  ],
   "riskTone": null,
   "bias": {
-    "score": 4,
-    "label": "BULLISH",
-    "conviction": "MEDIUM",
+    "score": 2,
+    "label": "NEUTRAL",
+    "conviction": "LOW",
     "drivers": [
       {
         "name": "GBP",
         "weight": 3,
         "impact": "NEUTRAL",
-        "detail": "GBP/USD +0.02% → FTSE headwind (sign-flipped)"
+        "detail": "GBP/USD +0.01% → FTSE headwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
-        "impact": "BULLISH",
-        "detail": "US500 +0.21% today"
+        "impact": "NEUTRAL",
+        "detail": "US500 +0.1% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 17.955 — NORMAL regime"
+        "detail": "VIX 18.285 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
-        "impact": "BULLISH",
-        "detail": "Brent +1.6% (energy majors)"
+        "impact": "NEUTRAL",
+        "detail": "Brent +0.56% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "Copper +0.2% (miners/China)"
+        "detail": "Copper +0.33% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -178,14 +209,14 @@
       {
         "name": "European tape (SX5E/DAX)",
         "weight": 1,
-        "impact": "BULLISH",
-        "detail": "SX5E +0.13% / DAX +0.49%"
+        "impact": "NEUTRAL",
+        "detail": "SX5E +0.12% / DAX +0.46%"
       }
     ],
     "eventSuppressed": true
   },
   "orbContext": {
-    "computedAt": "2026-10-28T17:41:24.383Z",
+    "computedAt": "2026-10-28T22:01:38.537Z",
     "mode": "CLOSED",
     "cashOpenLondon": "08:00 GMT",
     "overnightHigh": 10684.1,
@@ -195,8 +226,8 @@
     "priorClose": 10674,
     "prevWeekHigh": 10883,
     "prevWeekLow": 10625.7,
-    "gapPts": 27.3,
-    "gapPct": 0.26,
+    "gapPts": 21.8,
+    "gapPct": 0.2,
     "orbHigh": 10682.7,
     "orbLow": 10646.8,
     "orbBrokenDirection": "DOWN",
