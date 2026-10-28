@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-27T21:37:34.942Z",
+  "generatedAt": "2026-10-28T11:52:16.460Z",
   "yields": {
     "US10Y": 5,
     "US2Y": 4.68,
@@ -34,26 +34,26 @@
     "openInterestChange": 6166
   },
   "etfFlows": {
-    "gldTonnes": 1085.6,
-    "gldWoWChange": 0,
-    "trend3W": "FLAT"
+    "gldTonnes": 1089,
+    "gldWoWChange": 3.4,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4060.025,
-    "XAGUSD": 54.417,
-    "EURUSD": 1.11266,
-    "USDJPY": 157.9485,
-    "USDCHF": 0.82873,
-    "USDCNH": 6.66474,
-    "GBPUSD": 1.3303,
-    "USDCAD": 1.40477,
-    "USDSEK": 9.95902,
-    "US500": 7721.8,
-    "GER40": 25632.55,
-    "UK100": 10675.55,
-    "ADR_14day": 64.4,
-    "ADR_usedToday": 76.5,
-    "goldSilverRatio": 74.6
+    "XAUUSD": 4047.06,
+    "XAGUSD": 53.846,
+    "EURUSD": 1.11298,
+    "USDJPY": 157.884,
+    "USDCHF": 0.82971,
+    "USDCNH": 6.66438,
+    "GBPUSD": 1.32892,
+    "USDCAD": 1.40369,
+    "USDSEK": 9.93235,
+    "US500": 7737.1,
+    "GER40": 25619.95,
+    "UK100": 10652.75,
+    "ADR_14day": 65.4,
+    "ADR_usedToday": 42.6,
+    "goldSilverRatio": 75.2
   },
   "dollarLiquidity": {
     "stlfsi": -0.6328,
@@ -68,32 +68,14 @@
     {
       "headline": "High inflation to persist globally into next year, Reuters poll shows - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-10-27T13:41:44.000Z",
-      "hoursAgo": 7.9
+      "publishedAt": "2026-10-27T15:47:16.000Z",
+      "hoursAgo": 20.1
     },
     {
-      "headline": "France to exempt retailers from replacing diesel released from reserves - Reuters",
+      "headline": "POLL Strong dollar, high yields drag on gold outlook, but central-bank demand lends support - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-10-27T11:39:43.000Z",
-      "hoursAgo": 10
-    },
-    {
-      "headline": "US stock futures gain as oil pulls back ahead of Fed decision - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-27T11:27:48.000Z",
-      "hoursAgo": 10.2
-    },
-    {
-      "headline": "Dollar firms ahead of central bank meetings, steadier stocks stall safe haven play - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-27T02:12:00.000Z",
-      "hoursAgo": 19.4
-    },
-    {
-      "headline": "Stocks rise as oil slips with tech earnings, Fed ahead - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-27T01:46:00.000Z",
-      "hoursAgo": 19.9
+      "publishedAt": "2026-10-27T13:30:00.000Z",
+      "hoursAgo": 22.4
     }
   ],
   "briefing": null
