@@ -1,0 +1,11 @@
+Average raw month (2011-07..2026-09): 1:+4.17%  2:+0.87%  3:+0.30%  4:+0.84%  5:-0.91%  6:-1.00%  7:+1.80%  8:+2.88%  9:-1.92%  10:+1.47%  11:-0.95%  12:+0.68%
+S1 Sep + Nov: 31 months, avg after costs -1.85%  (raw -1.45% vs other months +1.12%)  years up 4/16  2011-18 -3.04%  2019-26 -0.57%  fail
+   by year: 2011:-10.1% 2012:+3.2% 2013:-11.0% 2014:-8.3% 2015:-9.3% 2016:-8.5% 2017:-3.6% 2018:-1.1% 2019:-7.4% 2020:-10.1% 2021:-4.6% 2022:+5.0% 2023:-2.6% 2024:+1.0% 2025:+17.2% 2026:-7.1%
+S2 January: 15 months, avg after costs +3.75%  (raw +4.17% vs other months +0.37%)  years up 11/15  2011-18 +4.61%  2019-26 +3.00%  PASS
+   by year: 2012:+10.2% 2013:-1.1% 2014:+2.9% 2015:+7.9% 2016:+4.5% 2017:+5.0% 2018:+2.8% 2019:+2.6% 2020:+4.2% 2021:-2.9% 2022:-2.1% 2023:+5.1% 2024:-1.6% 2025:+6.3% 2026:+12.4%
+  January (1 Jan -> 1 Feb)           n=15 avg +3.73% t=3.4 up 11/15  worst year -2.9%  deepest dip inside -5.4%
+  15 Dec -> 31 Jan                   n=15 avg +4.35% t=4.3 up 12/15  worst year -2.7%  deepest dip inside -4.5%
+  1st half of January                n=15 avg +2.20% t=3.1 up 12/15  worst year -4.2%  deepest dip inside -4.5%
+  2nd half of January                n=15 avg +1.44% t=2.6 up 11/15  worst year -1.3%  deepest dip inside -2.5%
+  January + February                 n=15 avg +4.14% t=2.1 up 11/15  worst year -9.4%  deepest dip inside -9.8%
+  December (control)                 n=15 avg +0.24% t=0.2 up 9/15  worst year -11.0%  deepest dip inside -13.0%
