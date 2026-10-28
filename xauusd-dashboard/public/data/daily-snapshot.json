@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-28T11:52:16.460Z",
+  "generatedAt": "2026-10-28T14:02:21.750Z",
   "yields": {
     "US10Y": 5,
     "US2Y": 4.68,
@@ -22,8 +22,8 @@
     "probHike": 44
   },
   "marketVolatility": {
-    "GVZ": 23.55,
-    "VIX": 18.39
+    "GVZ": 22.58,
+    "VIX": 17.52
   },
   "positioning": {
     "cotNetLong": 191791,
@@ -34,30 +34,30 @@
     "openInterestChange": 6166
   },
   "etfFlows": {
-    "gldTonnes": 1089,
-    "gldWoWChange": 3.4,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1088.6,
+    "gldWoWChange": -0.4,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 4047.06,
-    "XAGUSD": 53.846,
-    "EURUSD": 1.11298,
-    "USDJPY": 157.884,
-    "USDCHF": 0.82971,
-    "USDCNH": 6.66438,
-    "GBPUSD": 1.32892,
-    "USDCAD": 1.40369,
-    "USDSEK": 9.93235,
-    "US500": 7737.1,
-    "GER40": 25619.95,
-    "UK100": 10652.75,
+    "XAUUSD": 4048.565,
+    "XAGUSD": 53.852,
+    "EURUSD": 1.11328,
+    "USDJPY": 158.1625,
+    "USDCHF": 0.83032,
+    "USDCNH": 6.66312,
+    "GBPUSD": 1.32916,
+    "USDCAD": 1.4043,
+    "USDSEK": 9.93205,
+    "US500": 7728.8,
+    "GER40": 25667.85,
+    "UK100": 10705.85,
     "ADR_14day": 65.4,
     "ADR_usedToday": 42.6,
     "goldSilverRatio": 75.2
   },
   "dollarLiquidity": {
     "stlfsi": -0.6328,
-    "nfci": -0.496
+    "nfci": -0.487
   },
   "geopoliticalRisk": {
     "gpr": 146.2,
@@ -69,13 +69,7 @@
       "headline": "High inflation to persist globally into next year, Reuters poll shows - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-27T15:47:16.000Z",
-      "hoursAgo": 20.1
-    },
-    {
-      "headline": "POLL Strong dollar, high yields drag on gold outlook, but central-bank demand lends support - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-27T13:30:00.000Z",
-      "hoursAgo": 22.4
+      "hoursAgo": 22.3
     }
   ],
   "briefing": null
