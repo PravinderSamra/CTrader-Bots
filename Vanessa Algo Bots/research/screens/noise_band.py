@@ -25,6 +25,7 @@ for f in files:
         t = datetime.fromtimestamp(int(r[0]) / 1000, timezone.utc).replace(tzinfo=None)
         ny = t - timedelta(hours=nyoff(t.date()))
         v = float(r[6]) if len(r) > 6 and r[6] else 1.0
+        v = v if v > 0 else 1.0
         bars[ny] = (float(r[2]), float(r[3]), float(r[4]), float(r[5]), v)
 days = defaultdict(list)
 for k in sorted(bars):

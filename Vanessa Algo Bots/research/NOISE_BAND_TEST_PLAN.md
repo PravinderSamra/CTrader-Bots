@@ -16,3 +16,15 @@ A little wider (1.25) is slightly smoother; much wider is clearly worse. Not a "
 Dukascopy USATECHIDXUSD minute data 2012-01 .. 2020-06, rebuilt into 5-minute bars, same rules, 0.01% cost.
 Run exactly two versions: K = 1.0 and K = 1.25. Each passes if Sharpe >= 0.8 and at least 6 of the 8 full years
 (2012-2019) are positive. K = 1.25 is preferred only if it passes AND its Sharpe is not lower than K = 1.0's.
+
+## RESULT of the unseen test (28 Oct 2026; Dukascopy USATECHIDXUSD, 2,194 of 2,217 days, 2012-02 .. 2020-06)
+| | K = 1.0 (published) | K = 1.25 (wider) |
+|---|---|---|
+| Net at 1x | +32.6% | +38.3% |
+| Sharpe | 0.55 | 0.74 |
+| Max drawdown | 17.5% | 12.4% |
+| Positive years 2012-2019 | 6 of 8 | 7 of 8 |
+| By year | 2012 +8.1, 2013 -2.6, 2014 +5.8, 2015 +1.9, 2016 -0.7, 2017 +2.0, 2018 +26.1, 2019 +0.5, 2020H1 -8.6 | 2012 +8.1, 2013 +0.8, 2014 +4.8, 2015 +4.4, 2016 -1.8, 2017 +1.2, 2018 +23.6, 2019 +0.8, 2020H1 -3.6 |
+BOTH FAIL the pre-registered Sharpe >= 0.8. Most of the profit is 2018; without it ~1-2% a year. The wider band is better
+on both periods (supports the quant_labde claim in direction, not size). Verdict: the edge is strong only in 2020-2026;
+not robust enough to trade on its own. Demoted from 'parked for a future account' to 'watch list' (re-test with live data).
