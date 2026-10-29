@@ -220,6 +220,65 @@
         "verdict": "UNSCORABLE",
         "signalVerdicts": []
       }
+    },
+    {
+      "at": "2026-10-29T23:03:17.521Z",
+      "londonTime": "23:03 GMT",
+      "mode": "CLOSED",
+      "price": 10735.75,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — US PCE Price Index @ 13:30 GMT today — pre-release breaks are positioning, not conviction.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "US PCE Price Index @ 13:30 GMT today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.44%) — the cross-market lean is up."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 0,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10750,
+        "orbLow": 10698.8,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10757.6,
+        "overnightLow": 10697.4,
+        "priorDayHigh": 10723.4,
+        "priorDayLow": 10640.7,
+        "gapPct": 0.39,
+        "adr14": 111.4,
+        "adrUsedPct": 69
+      },
+      "outcome": {
+        "resolvedAt": "2026-10-29T23:03:19.285Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }

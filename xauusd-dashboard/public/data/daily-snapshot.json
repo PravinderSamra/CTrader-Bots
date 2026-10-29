@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-10-29T18:09:13.079Z",
+  "generatedAt": "2026-10-29T23:03:12.993Z",
   "yields": {
-    "US10Y": 4.99,
-    "US2Y": 4.7,
-    "realYield10Y": 2.64,
-    "realYield5Y": 2.37,
-    "curve2s10s": 29,
-    "breakeven10Y": 2.38,
-    "breakeven5Y": 2.49,
-    "forward5y5y": 2.27,
+    "US10Y": 5.05,
+    "US2Y": 4.67,
+    "realYield10Y": 2.67,
+    "realYield5Y": 2.36,
+    "curve2s10s": 38,
+    "breakeven10Y": 2.35,
+    "breakeven5Y": 2.47,
+    "forward5y5y": 2.23,
     "dayOverDay": {
-      "US10Y": -0.01,
-      "US2Y": 0.02,
-      "realYield10Y": -0.02
+      "US10Y": 0.06,
+      "US2Y": -0.03,
+      "realYield10Y": 0.03
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-12-09",
     "probCut": 0,
-    "probHold": 60,
-    "probHike": 40
+    "probHold": 72,
+    "probHike": 28
   },
   "marketVolatility": {
     "GVZ": 22.9,
@@ -34,26 +34,26 @@
     "openInterestChange": 6166
   },
   "etfFlows": {
-    "gldTonnes": 1099.4,
-    "gldWoWChange": 4.7,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1096.8,
+    "gldWoWChange": -2.6,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4008.96,
-    "XAGUSD": 52.104,
-    "EURUSD": 1.11657,
-    "USDJPY": 157.8895,
-    "USDCHF": 0.82615,
-    "USDCNH": 6.65661,
-    "GBPUSD": 1.33655,
-    "USDCAD": 1.39783,
-    "USDSEK": 9.85719,
-    "US500": 7700.2,
-    "GER40": 26108.15,
-    "UK100": 10720.25,
-    "ADR_14day": 65,
-    "ADR_usedToday": 62.1,
-    "goldSilverRatio": 76.9
+    "XAUUSD": 4018.33,
+    "XAGUSD": 51.982,
+    "EURUSD": 1.1191,
+    "USDJPY": 157.7115,
+    "USDCHF": 0.82281,
+    "USDCNH": 6.65702,
+    "GBPUSD": 1.33864,
+    "USDCAD": 1.39827,
+    "USDSEK": 9.83973,
+    "US500": 7666.1,
+    "GER40": 26104.85,
+    "UK100": 10735.75,
+    "ADR_14day": 65.8,
+    "ADR_usedToday": 9.2,
+    "goldSilverRatio": 77.3
   },
   "dollarLiquidity": {
     "stlfsi": -0.5837,
@@ -69,19 +69,7 @@
       "headline": "Family offices can save millions with this tax strategy but it can strain family ties",
       "source": "CNBC",
       "publishedAt": "2026-10-29T12:00:01.000Z",
-      "hoursAgo": 6.2
-    },
-    {
-      "headline": "Fed chairman talks tough on inflation — plus, what's behind Micron's big rally",
-      "source": "CNBC",
-      "publishedAt": "2026-10-28T19:17:35.000Z",
-      "hoursAgo": 22.9
-    },
-    {
-      "headline": "Bond investor Jeff Gundlach talks to CNBC about Fed's rate pause, Warsh reducing vote-setting meetings",
-      "source": "CNBC",
-      "publishedAt": "2026-10-28T19:05:30.000Z",
-      "hoursAgo": 23.1
+      "hoursAgo": 11.1
     }
   ],
   "briefing": null
