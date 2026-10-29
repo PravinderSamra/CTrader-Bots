@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-29T14:21:49.841Z",
+  "generatedAt": "2026-10-29T18:09:13.079Z",
   "yields": {
     "US10Y": 4.99,
     "US2Y": 4.7,
@@ -34,26 +34,26 @@
     "openInterestChange": 6166
   },
   "etfFlows": {
-    "gldTonnes": 1094.7,
-    "gldWoWChange": -1.8,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1099.4,
+    "gldWoWChange": 4.7,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4026.06,
-    "XAGUSD": 52.426,
-    "EURUSD": 1.115,
-    "USDJPY": 157.901,
-    "USDCHF": 0.82781,
-    "USDCNH": 6.65827,
-    "GBPUSD": 1.33402,
-    "USDCAD": 1.39935,
-    "USDSEK": 9.86092,
-    "US500": 7721.3,
-    "GER40": 26050.45,
-    "UK100": 10736.7,
+    "XAUUSD": 4008.96,
+    "XAGUSD": 52.104,
+    "EURUSD": 1.11657,
+    "USDJPY": 157.8895,
+    "USDCHF": 0.82615,
+    "USDCNH": 6.65661,
+    "GBPUSD": 1.33655,
+    "USDCAD": 1.39783,
+    "USDSEK": 9.85719,
+    "US500": 7700.2,
+    "GER40": 26108.15,
+    "UK100": 10720.25,
     "ADR_14day": 65,
-    "ADR_usedToday": 53.1,
-    "goldSilverRatio": 76.8
+    "ADR_usedToday": 62.1,
+    "goldSilverRatio": 76.9
   },
   "dollarLiquidity": {
     "stlfsi": -0.5837,
@@ -69,25 +69,19 @@
       "headline": "Family offices can save millions with this tax strategy but it can strain family ties",
       "source": "CNBC",
       "publishedAt": "2026-10-29T12:00:01.000Z",
-      "hoursAgo": 2.4
+      "hoursAgo": 6.2
     },
     {
       "headline": "Fed chairman talks tough on inflation — plus, what's behind Micron's big rally",
       "source": "CNBC",
       "publishedAt": "2026-10-28T19:17:35.000Z",
-      "hoursAgo": 19.1
+      "hoursAgo": 22.9
     },
     {
       "headline": "Bond investor Jeff Gundlach talks to CNBC about Fed's rate pause, Warsh reducing vote-setting meetings",
       "source": "CNBC",
       "publishedAt": "2026-10-28T19:05:30.000Z",
-      "hoursAgo": 19.3
-    },
-    {
-      "headline": "UK inflation forecast to average 3.4% in 2027, OBR says - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-28T14:23:31.000Z",
-      "hoursAgo": 24
+      "hoursAgo": 23.1
     }
   ],
   "briefing": null
