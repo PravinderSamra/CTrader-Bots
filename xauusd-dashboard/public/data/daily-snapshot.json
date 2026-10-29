@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-28T22:01:31.993Z",
+  "generatedAt": "2026-10-29T11:59:31.981Z",
   "yields": {
     "US10Y": 4.99,
     "US2Y": 4.7,
@@ -16,7 +16,7 @@
     }
   },
   "fedExpectations": {
-    "nextMeeting": "2026-10-28",
+    "nextMeeting": "2026-12-09",
     "probCut": 0,
     "probHold": 60,
     "probHike": 40
@@ -34,26 +34,26 @@
     "openInterestChange": 6166
   },
   "etfFlows": {
-    "gldTonnes": 1083.4,
-    "gldWoWChange": -7.9,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1096.5,
+    "gldWoWChange": 13.1,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4068.165,
-    "XAGUSD": 54.0805,
-    "EURUSD": 1.11536,
-    "USDJPY": 157.832,
-    "USDCHF": 0.82796,
-    "USDCNH": 6.66074,
-    "GBPUSD": 1.33264,
-    "USDCAD": 1.39935,
-    "USDSEK": 9.90573,
-    "US500": 7734.5,
-    "GER40": 25748.85,
-    "UK100": 10695.75,
-    "ADR_14day": 65.6,
-    "ADR_usedToday": 57.7,
-    "goldSilverRatio": 75.2
+    "XAUUSD": 4019.36,
+    "XAGUSD": 52.38,
+    "EURUSD": 1.11421,
+    "USDJPY": 158.0195,
+    "USDCHF": 0.82837,
+    "USDCNH": 6.65897,
+    "GBPUSD": 1.33224,
+    "USDCAD": 1.39749,
+    "USDSEK": 9.88648,
+    "US500": 7719.2,
+    "GER40": 25904.25,
+    "UK100": 10722.25,
+    "ADR_14day": 65,
+    "ADR_usedToday": 53.1,
+    "goldSilverRatio": 76.7
   },
   "dollarLiquidity": {
     "stlfsi": -0.5837,
@@ -69,25 +69,19 @@
       "headline": "Fed chairman talks tough on inflation — plus, what's behind Micron's big rally",
       "source": "CNBC",
       "publishedAt": "2026-10-28T19:17:35.000Z",
-      "hoursAgo": 2.7
+      "hoursAgo": 16.7
     },
     {
       "headline": "Bond investor Jeff Gundlach talks to CNBC about Fed's rate pause, Warsh reducing vote-setting meetings",
       "source": "CNBC",
       "publishedAt": "2026-10-28T19:05:30.000Z",
-      "hoursAgo": 2.9
+      "hoursAgo": 16.9
     },
     {
-      "headline": "Namibia raises key interest rate to cushion second-round effects from high fuel prices - Reuters",
+      "headline": "UK inflation forecast to average 3.4% in 2027, OBR says - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-10-28T11:09:07.000Z",
-      "hoursAgo": 10.9
-    },
-    {
-      "headline": "Indian central bank likely intervenes to support rupee as oil prices weigh, traders say - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-28T03:43:00.000Z",
-      "hoursAgo": 18.3
+      "publishedAt": "2026-10-28T14:23:31.000Z",
+      "hoursAgo": 21.6
     }
   ],
   "briefing": null
