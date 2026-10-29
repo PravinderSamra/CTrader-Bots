@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-29T11:59:31.981Z",
+  "generatedAt": "2026-10-29T14:21:49.841Z",
   "yields": {
     "US10Y": 4.99,
     "US2Y": 4.7,
@@ -22,8 +22,8 @@
     "probHike": 40
   },
   "marketVolatility": {
-    "GVZ": 22.58,
-    "VIX": 17.52
+    "GVZ": 22.9,
+    "VIX": 16.91
   },
   "positioning": {
     "cotNetLong": 191791,
@@ -34,26 +34,26 @@
     "openInterestChange": 6166
   },
   "etfFlows": {
-    "gldTonnes": 1096.5,
-    "gldWoWChange": 13.1,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1094.7,
+    "gldWoWChange": -1.8,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4019.36,
-    "XAGUSD": 52.38,
-    "EURUSD": 1.11421,
-    "USDJPY": 158.0195,
-    "USDCHF": 0.82837,
-    "USDCNH": 6.65897,
-    "GBPUSD": 1.33224,
-    "USDCAD": 1.39749,
-    "USDSEK": 9.88648,
-    "US500": 7719.2,
-    "GER40": 25904.25,
-    "UK100": 10722.25,
+    "XAUUSD": 4026.06,
+    "XAGUSD": 52.426,
+    "EURUSD": 1.115,
+    "USDJPY": 157.901,
+    "USDCHF": 0.82781,
+    "USDCNH": 6.65827,
+    "GBPUSD": 1.33402,
+    "USDCAD": 1.39935,
+    "USDSEK": 9.86092,
+    "US500": 7721.3,
+    "GER40": 26050.45,
+    "UK100": 10736.7,
     "ADR_14day": 65,
     "ADR_usedToday": 53.1,
-    "goldSilverRatio": 76.7
+    "goldSilverRatio": 76.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.5837,
@@ -66,22 +66,28 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Family offices can save millions with this tax strategy but it can strain family ties",
+      "source": "CNBC",
+      "publishedAt": "2026-10-29T12:00:01.000Z",
+      "hoursAgo": 2.4
+    },
+    {
       "headline": "Fed chairman talks tough on inflation — plus, what's behind Micron's big rally",
       "source": "CNBC",
       "publishedAt": "2026-10-28T19:17:35.000Z",
-      "hoursAgo": 16.7
+      "hoursAgo": 19.1
     },
     {
       "headline": "Bond investor Jeff Gundlach talks to CNBC about Fed's rate pause, Warsh reducing vote-setting meetings",
       "source": "CNBC",
       "publishedAt": "2026-10-28T19:05:30.000Z",
-      "hoursAgo": 16.9
+      "hoursAgo": 19.3
     },
     {
       "headline": "UK inflation forecast to average 3.4% in 2027, OBR says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-28T14:23:31.000Z",
-      "hoursAgo": 21.6
+      "hoursAgo": 24
     }
   ],
   "briefing": null
