@@ -1,59 +1,59 @@
 {
-  "generatedAt": "2026-10-30T17:29:10.849Z",
+  "generatedAt": "2026-10-30T21:48:31.750Z",
   "yields": {
-    "US10Y": 5.05,
-    "US2Y": 4.67,
-    "realYield10Y": 2.67,
-    "realYield5Y": 2.36,
-    "curve2s10s": 38,
-    "breakeven10Y": 2.35,
-    "breakeven5Y": 2.47,
-    "forward5y5y": 2.23,
+    "US10Y": 4.98,
+    "US2Y": 4.61,
+    "realYield10Y": 2.63,
+    "realYield5Y": 2.31,
+    "curve2s10s": 37,
+    "breakeven10Y": 2.34,
+    "breakeven5Y": 2.46,
+    "forward5y5y": 2.22,
     "dayOverDay": {
-      "US10Y": 0.06,
-      "US2Y": -0.03,
-      "realYield10Y": 0.03
+      "US10Y": -0.07,
+      "US2Y": -0.06,
+      "realYield10Y": -0.04
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-12-09",
     "probCut": 0,
-    "probHold": 72,
-    "probHike": 28
+    "probHold": 76,
+    "probHike": 24
   },
   "marketVolatility": {
     "GVZ": 22.73,
     "VIX": 17.2
   },
   "positioning": {
-    "cotNetLong": 191791,
-    "cotWoWChange": -7942,
+    "cotNetLong": 179906,
+    "cotWoWChange": -11885,
     "crowding": "NEUTRAL",
-    "reportDate": "2026-10-20T00:00:00.000",
-    "openInterest": 532443,
-    "openInterestChange": 6166
+    "reportDate": "2026-10-27T00:00:00.000",
+    "openInterest": 518784,
+    "openInterestChange": -13658
   },
   "etfFlows": {
-    "gldTonnes": 1133.2,
-    "gldWoWChange": 4.8,
+    "gldTonnes": 1136.8,
+    "gldWoWChange": 3.6,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3889.3,
-    "XAGUSD": 49.216,
-    "EURUSD": 1.11516,
-    "USDJPY": 157.499,
-    "USDCHF": 0.82412,
-    "USDCNH": 6.65433,
-    "GBPUSD": 1.33897,
-    "USDCAD": 1.39549,
-    "USDSEK": 9.82771,
-    "US500": 7577.6,
-    "GER40": 25781.05,
-    "UK100": 10715.75,
-    "ADR_14day": 65.8,
-    "ADR_usedToday": 140.4,
-    "goldSilverRatio": 79
+    "XAUUSD": 3876.935,
+    "XAGUSD": 49.129,
+    "EURUSD": 1.11667,
+    "USDJPY": 157.538,
+    "USDCHF": 0.82458,
+    "USDCNH": 6.65318,
+    "GBPUSD": 1.33935,
+    "USDCAD": 1.39773,
+    "USDSEK": 9.8184,
+    "US500": 7581.1,
+    "GER40": 25803.15,
+    "UK100": 10720.75,
+    "ADR_14day": 63,
+    "ADR_usedToday": 156.3,
+    "goldSilverRatio": 78.9
   },
   "dollarLiquidity": {
     "stlfsi": -0.5837,
@@ -69,13 +69,13 @@
       "headline": "St. Louis Fed's Musalem: Tighter monetary policy is needed 'soon'",
       "source": "CNBC",
       "publishedAt": "2026-10-30T16:30:16.000Z",
-      "hoursAgo": 1
+      "hoursAgo": 5.3
     },
     {
       "headline": "Swiss central bank posts bumper $23bn profit as gold, foreign assets soar",
       "source": "CNBC",
       "publishedAt": "2026-10-30T12:31:40.000Z",
-      "hoursAgo": 5
+      "hoursAgo": 9.3
     }
   ],
   "briefing": null
