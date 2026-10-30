@@ -49,7 +49,29 @@
         "adr14": 111.5,
         "adrUsedPct": 54
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-10-30T17:29:18.178Z",
+        "fwd1hPct": 0.13,
+        "fwd3hPct": -0.1,
+        "toClosePct": -0.19,
+        "maxUpPct": 0.23,
+        "maxDownPct": -0.22,
+        "verdict": "RIGHT",
+        "signalVerdicts": [
+          {
+            "rule": "R3",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-10-30T14:10:47.893Z",
@@ -106,7 +128,92 @@
         "adr14": 111.5,
         "adrUsedPct": 59
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-10-30T17:29:18.316Z",
+        "fwd1hPct": -0.13,
+        "fwd3hPct": null,
+        "toClosePct": -0.22,
+        "maxUpPct": 0.01,
+        "maxDownPct": -0.25,
+        "verdict": "RIGHT",
+        "signalVerdicts": [
+          {
+            "rule": "R3",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R9",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-10-30T17:29:15.753Z",
+      "londonTime": "17:29 GMT",
+      "mode": "CLOSED",
+      "price": 10716.25,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — FTSE is tracking a softer European tape (Euro Stoxx -1.35%) — the cross-market lean is down.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.35%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -1.31% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -6,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10784,
+        "orbLow": 10741.9,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10784,
+        "overnightLow": 10725.7,
+        "priorDayHigh": 10774.2,
+        "priorDayLow": 10697.4,
+        "gapPct": -0.17,
+        "adr14": 111.5,
+        "adrUsedPct": 68
+      },
+      "outcome": {
+        "resolvedAt": "2026-10-30T17:29:18.316Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }

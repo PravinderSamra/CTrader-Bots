@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-30T14:10:42.781Z",
+  "generatedAt": "2026-10-30T17:29:10.849Z",
   "yields": {
     "US10Y": 5.05,
     "US2Y": 4.67,
@@ -34,26 +34,26 @@
     "openInterestChange": 6166
   },
   "etfFlows": {
-    "gldTonnes": 1128.4,
-    "gldWoWChange": 17.6,
+    "gldTonnes": 1133.2,
+    "gldWoWChange": 4.8,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3905.9,
-    "XAGUSD": 49.264,
-    "EURUSD": 1.11396,
-    "USDJPY": 157.233,
-    "USDCHF": 0.8249,
-    "USDCNH": 6.65228,
-    "GBPUSD": 1.33781,
-    "USDCAD": 1.39747,
-    "USDSEK": 9.85743,
-    "US500": 7616.8,
-    "GER40": 25887.85,
-    "UK100": 10735.75,
+    "XAUUSD": 3889.3,
+    "XAGUSD": 49.216,
+    "EURUSD": 1.11516,
+    "USDJPY": 157.499,
+    "USDCHF": 0.82412,
+    "USDCNH": 6.65433,
+    "GBPUSD": 1.33897,
+    "USDCAD": 1.39549,
+    "USDSEK": 9.82771,
+    "US500": 7577.6,
+    "GER40": 25781.05,
+    "UK100": 10715.75,
     "ADR_14day": 65.8,
-    "ADR_usedToday": 119.4,
-    "goldSilverRatio": 79.3
+    "ADR_usedToday": 140.4,
+    "goldSilverRatio": 79
   },
   "dollarLiquidity": {
     "stlfsi": -0.5837,
@@ -66,16 +66,16 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "St. Louis Fed's Musalem: Tighter monetary policy is needed 'soon'",
+      "source": "CNBC",
+      "publishedAt": "2026-10-30T16:30:16.000Z",
+      "hoursAgo": 1
+    },
+    {
       "headline": "Swiss central bank posts bumper $23bn profit as gold, foreign assets soar",
       "source": "CNBC",
       "publishedAt": "2026-10-30T12:31:40.000Z",
-      "hoursAgo": 1.6
-    },
-    {
-      "headline": "UK inflation expectations fall in October, Citi/YouGov survey shows - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-10-29T17:06:20.000Z",
-      "hoursAgo": 21.1
+      "hoursAgo": 5
     }
   ],
   "briefing": null
