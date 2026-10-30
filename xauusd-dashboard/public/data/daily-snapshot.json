@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-30T11:53:22.506Z",
+  "generatedAt": "2026-10-30T14:10:42.781Z",
   "yields": {
     "US10Y": 5.05,
     "US2Y": 4.67,
@@ -22,8 +22,8 @@
     "probHike": 28
   },
   "marketVolatility": {
-    "GVZ": 22.9,
-    "VIX": 16.91
+    "GVZ": 22.73,
+    "VIX": 17.2
   },
   "positioning": {
     "cotNetLong": 191791,
@@ -34,26 +34,26 @@
     "openInterestChange": 6166
   },
   "etfFlows": {
-    "gldTonnes": 1110.8,
-    "gldWoWChange": 14,
+    "gldTonnes": 1128.4,
+    "gldWoWChange": 17.6,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3967.745,
-    "XAGUSD": 50.213,
-    "EURUSD": 1.11919,
-    "USDJPY": 157.073,
-    "USDCHF": 0.82074,
-    "USDCNH": 6.65089,
-    "GBPUSD": 1.34259,
-    "USDCAD": 1.3963,
-    "USDSEK": 9.8061,
-    "US500": 7634.3,
-    "GER40": 25859.65,
-    "UK100": 10732.25,
+    "XAUUSD": 3905.9,
+    "XAGUSD": 49.264,
+    "EURUSD": 1.11396,
+    "USDJPY": 157.233,
+    "USDCHF": 0.8249,
+    "USDCNH": 6.65228,
+    "GBPUSD": 1.33781,
+    "USDCAD": 1.39747,
+    "USDSEK": 9.85743,
+    "US500": 7616.8,
+    "GER40": 25887.85,
+    "UK100": 10735.75,
     "ADR_14day": 65.8,
-    "ADR_usedToday": 61.4,
-    "goldSilverRatio": 79
+    "ADR_usedToday": 119.4,
+    "goldSilverRatio": 79.3
   },
   "dollarLiquidity": {
     "stlfsi": -0.5837,
@@ -66,16 +66,16 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Swiss central bank posts bumper $23bn profit as gold, foreign assets soar",
+      "source": "CNBC",
+      "publishedAt": "2026-10-30T12:31:40.000Z",
+      "hoursAgo": 1.6
+    },
+    {
       "headline": "UK inflation expectations fall in October, Citi/YouGov survey shows - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-10-29T17:06:20.000Z",
-      "hoursAgo": 18.8
-    },
-    {
-      "headline": "Family offices can save millions with this tax strategy but it can strain family ties",
-      "source": "CNBC",
-      "publishedAt": "2026-10-29T12:00:01.000Z",
-      "hoursAgo": 23.9
+      "hoursAgo": 21.1
     }
   ],
   "briefing": null

@@ -50,6 +50,63 @@
         "adrUsedPct": 54
       },
       "outcome": null
+    },
+    {
+      "at": "2026-10-30T14:10:47.893Z",
+      "londonTime": "14:10 GMT",
+      "mode": "POST_ORB",
+      "price": 10736.55,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — ORB break DOWN is aligned with the BEARISH macro bias (-6) — continuation has the backdrop behind it.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "STRUCTURE",
+          "rule": "R3",
+          "text": "ORB break DOWN is aligned with the BEARISH macro bias (-6) — continuation has the backdrop behind it."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.78%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -0.8% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -6,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10784,
+        "orbLow": 10741.9,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10784,
+        "overnightLow": 10725.7,
+        "priorDayHigh": 10774.2,
+        "priorDayLow": 10697.4,
+        "gapPct": 0.02,
+        "adr14": 111.5,
+        "adrUsedPct": 59
+      },
+      "outcome": null
     }
   ]
 }
