@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-29T23:03:12.993Z",
+  "generatedAt": "2026-10-30T11:53:22.506Z",
   "yields": {
     "US10Y": 5.05,
     "US2Y": 4.67,
@@ -34,26 +34,26 @@
     "openInterestChange": 6166
   },
   "etfFlows": {
-    "gldTonnes": 1096.8,
-    "gldWoWChange": -2.6,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1110.8,
+    "gldWoWChange": 14,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4018.33,
-    "XAGUSD": 51.982,
-    "EURUSD": 1.1191,
-    "USDJPY": 157.7115,
-    "USDCHF": 0.82281,
-    "USDCNH": 6.65702,
-    "GBPUSD": 1.33864,
-    "USDCAD": 1.39827,
-    "USDSEK": 9.83973,
-    "US500": 7666.1,
-    "GER40": 26104.85,
-    "UK100": 10735.75,
+    "XAUUSD": 3967.745,
+    "XAGUSD": 50.213,
+    "EURUSD": 1.11919,
+    "USDJPY": 157.073,
+    "USDCHF": 0.82074,
+    "USDCNH": 6.65089,
+    "GBPUSD": 1.34259,
+    "USDCAD": 1.3963,
+    "USDSEK": 9.8061,
+    "US500": 7634.3,
+    "GER40": 25859.65,
+    "UK100": 10732.25,
     "ADR_14day": 65.8,
-    "ADR_usedToday": 9.2,
-    "goldSilverRatio": 77.3
+    "ADR_usedToday": 61.4,
+    "goldSilverRatio": 79
   },
   "dollarLiquidity": {
     "stlfsi": -0.5837,
@@ -66,10 +66,16 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "UK inflation expectations fall in October, Citi/YouGov survey shows - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-10-29T17:06:20.000Z",
+      "hoursAgo": 18.8
+    },
+    {
       "headline": "Family offices can save millions with this tax strategy but it can strain family ties",
       "source": "CNBC",
       "publishedAt": "2026-10-29T12:00:01.000Z",
-      "hoursAgo": 11.1
+      "hoursAgo": 23.9
     }
   ],
   "briefing": null
