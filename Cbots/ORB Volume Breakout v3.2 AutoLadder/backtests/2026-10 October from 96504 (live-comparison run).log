@@ -1,0 +1,458 @@
+01/10/2026 00:00:00.000 | Info | CBot instance [NAS Add to Winner with Ladder, US100.cash, m1] started.
+01/10/2026 00:00:00.027 | Info | SESSION_TIMEZONE resolved='(UTC-05:00) Eastern Time (New York)' id='Eastern Standard Time'
+01/10/2026 00:00:00.027 | Info | SESSION_TIMEZONE resolved='(UTC-05:00) Eastern Time (New York)' id='Eastern Standard Time'
+01/10/2026 00:00:00.027 | Info | [ORBVL] 2026-10-01 00:00:00 === New day reset: 2026-09-30 ===
+01/10/2026 00:00:00.027 | Info | L|2026-09-30|96504.00|400|0|-
+01/10/2026 00:00:00.027 | Info | [ORBVL] 2026-10-01 00:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+01/10/2026 00:00:00.027 | Info | [ORBVL] 2026-10-01 00:00:00 ORB HISTORY: Loaded 1000 older bar(s) for ORB rebuild [source=RESET]
+01/10/2026 00:00:00.027 | Info | [ORBVL] 2026-10-01 00:00:00 ORB BACKFILL: Rebuilt from 450 closed bar(s). High=30504.43 Low=30238.13 finalClosed=True [source=RESET]
+01/10/2026 00:00:00.027 | Info | [ORBVL] 2026-10-01 00:00:00 ORB LOCKED: High=30504.43 Low=30238.13 Range=266.3 pips (price=266.2999999999993) [source=BACKFILL/RESET]
+01/10/2026 00:00:00.027 | Info | [ORBVL] 2026-10-01 00:00:00 ORB Bot started. Symbol=US100.cash PointSize=1 OrbTF=Minute ConfirmTF=Minute TZ=range=AmericaNewYork exec=AmericaNewYork
+01/10/2026 00:00:00.027 | Info | [ORBVL] 2026-10-01 00:00:00 VOLUME_DIAG symbol=US100.cash min=0.01 step=0.01 max=1000
+01/10/2026 00:00:00.027 | Info | WARNING: Min Risk Pips is 2. On an index this is low enough to let a near-zero stop through, which sizes the position enormously. Around 20 is a safer floor.
+01/10/2026 00:00:00.198 | Info | [ORBVL] 2026-10-01 00:00:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+01/10/2026 00:00:00.198 | Info | [ORBVL] 2026-10-01 00:00:00 Kill switch active. Blocking new entries.
+01/10/2026 00:00:00.198 | Info | [ORBVL] 2026-10-01 00:00:00 VWAP BACKFILL: Rebuilt VWAP from 76 closed trend bar(s) for session 2026-09-30.
+01/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-01 04:00:00 === New day reset: 2026-10-01 ===
+01/10/2026 04:00:00.027 | Info | L|2026-10-01|96504.00|400|0|-
+01/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-01 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+01/10/2026 13:30:00.005 | Info | [ORBVL] 2026-10-01 13:30:00 ORB LOCKED: High=30878.93 Low=30486.33 Range=392.6 pips (price=392.59999999999854) [source=LIVE]
+01/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-01 14:00:00 CATCHUP SIGNAL: Sell | LongThreshold=30878.93 ShortThreshold=30486.33
+01/10/2026 14:00:00.027 | Trade | Executing Market Order to Sell 6.66 US100.cash (SL: 62, TP: 272)
+01/10/2026 14:00:00.027 | Trade | → Executing Market Order to Sell 6.66 US100.cash (SL: 62, TP: 272) SUCCEEDED, Position PID1
+01/10/2026 14:00:00.027 | Trade | Modifying position PID1 (SL: 30537.23, TP: 30207.23)
+01/10/2026 14:00:00.027 | Trade | → Modifying position PID1 (SL: 30537.23, TP: 30207.23) SUCCEEDED, Position PID1
+01/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-01 14:00:00 TRADE ENTERED: Sell US100.cash vol=6.66 entry=30477.23 SL=30537.23 TP=30207.23 riskPips=60.0 label=ORBVL_US100.cash_20261001 stopMode=FixedPoints(60pt)
+01/10/2026 14:00:32.101 | Trade | Modifying position PID1 (SL: 30519.23, TP: 30207.23)
+01/10/2026 14:00:32.101 | Trade | → Modifying position PID1 (SL: 30519.23, TP: 30207.23) SUCCEEDED, Position PID1
+01/10/2026 14:00:32.101 | Info | [ORBVL] 2026-10-01 14:00:32 EARLY RISK REDUCTION: SL moved to 30519.23 (remaining risk 70.0% at 0.73R)
+01/10/2026 14:00:32.101 | Trade | Executing Market Order to Sell 6.87 US100.cash (SL: 87.2, TP: 224.8)
+01/10/2026 14:00:32.101 | Trade | → Executing Market Order to Sell 6.87 US100.cash (SL: 87.2, TP: 224.8) SUCCEEDED, Position PID2
+01/10/2026 14:00:32.101 | Trade | Modifying position PID2 (SL: 30519.23, TP: 30207.23)
+01/10/2026 14:00:32.101 | Trade | → Modifying position PID2 (SL: 30519.23, TP: 30207.23) SUCCEEDED, Position PID2
+01/10/2026 14:00:32.101 | Info | [ORBVL] 2026-10-01 14:00:32 ADD TO WINNER: ORBVL_US100.cash_20261001_ADD1 Sell vol=6.87 entry=30432.03 SL=30519.23 TP=30207.23 addRisk=599.40 removed=119.88 x5 at 0.73R (total risk now 878.78 vs original 399.60)
+01/10/2026 14:05:49.294 | Trade | Modifying position PID1 (SL: 30475.23, TP: 30207.23)
+01/10/2026 14:05:49.294 | Trade | → Modifying position PID1 (SL: 30475.23, TP: 30207.23) SUCCEEDED, Position PID1
+01/10/2026 14:05:49.294 | Info | [ORBVL] 2026-10-01 14:05:49 BREAK EVEN: SL moved to 30475.23 (entry + 2 extra pips)
+01/10/2026 14:05:49.294 | Trade | Modifying position PID2 (SL: 30475.23, TP: 30207.23)
+01/10/2026 14:05:49.294 | Trade | → Modifying position PID2 (SL: 30475.23, TP: 30207.23) SUCCEEDED, Position PID2
+01/10/2026 14:05:49.294 | Info | [ORBVL] 2026-10-01 14:05:49 ADD TO WINNER: ORBVL_US100.cash_20261001_ADD1 stop moved to 30475.23 with its main trade
+01/10/2026 14:22:55.297 | Trade | Modifying position PID1 (SL: 30469.23, TP: 30207.23)
+01/10/2026 14:22:55.297 | Trade | → Modifying position PID1 (SL: 30469.23, TP: 30207.23) SUCCEEDED, Position PID1
+01/10/2026 14:22:55.297 | Info | [ORBVL] 2026-10-01 14:22:55 TRAIL: SL -> 30469.23 (locked 0.10R, steps=1, profitR=2.65)
+01/10/2026 14:22:55.297 | Trade | Modifying position PID2 (SL: 30469.23, TP: 30207.23)
+01/10/2026 14:22:55.297 | Trade | → Modifying position PID2 (SL: 30469.23, TP: 30207.23) SUCCEEDED, Position PID2
+01/10/2026 14:22:55.297 | Info | [ORBVL] 2026-10-01 14:22:55 ADD TO WINNER: ORBVL_US100.cash_20261001_ADD1 stop moved to 30469.23 with its main trade
+01/10/2026 14:22:55.596 | Trade | Modifying position PID1 (SL: 30463.23, TP: 30207.23)
+01/10/2026 14:22:55.596 | Trade | → Modifying position PID1 (SL: 30463.23, TP: 30207.23) SUCCEEDED, Position PID1
+01/10/2026 14:22:55.596 | Info | [ORBVL] 2026-10-01 14:22:55 TRAIL: SL -> 30463.23 (locked 0.20R, steps=2, profitR=2.71)
+01/10/2026 14:22:55.596 | Trade | Modifying position PID2 (SL: 30463.23, TP: 30207.23)
+01/10/2026 14:22:55.596 | Trade | → Modifying position PID2 (SL: 30463.23, TP: 30207.23) SUCCEEDED, Position PID2
+01/10/2026 14:22:55.596 | Info | [ORBVL] 2026-10-01 14:22:55 ADD TO WINNER: ORBVL_US100.cash_20261001_ADD1 stop moved to 30463.23 with its main trade
+01/10/2026 14:22:56.402 | Trade | Modifying position PID1 (SL: 30457.23, TP: 30207.23)
+01/10/2026 14:22:56.402 | Trade | → Modifying position PID1 (SL: 30457.23, TP: 30207.23) SUCCEEDED, Position PID1
+01/10/2026 14:22:56.402 | Info | [ORBVL] 2026-10-01 14:22:56 TRAIL: SL -> 30457.23 (locked 0.30R, steps=3, profitR=2.84)
+01/10/2026 14:22:56.402 | Trade | Modifying position PID2 (SL: 30457.23, TP: 30207.23)
+01/10/2026 14:22:56.402 | Trade | → Modifying position PID2 (SL: 30457.23, TP: 30207.23) SUCCEEDED, Position PID2
+01/10/2026 14:22:56.402 | Info | [ORBVL] 2026-10-01 14:22:56 ADD TO WINNER: ORBVL_US100.cash_20261001_ADD1 stop moved to 30457.23 with its main trade
+01/10/2026 14:23:01.296 | Trade | Modifying position PID1 (SL: 30451.23, TP: 30207.23)
+01/10/2026 14:23:01.296 | Trade | → Modifying position PID1 (SL: 30451.23, TP: 30207.23) SUCCEEDED, Position PID1
+01/10/2026 14:23:01.296 | Info | [ORBVL] 2026-10-01 14:23:01 TRAIL: SL -> 30451.23 (locked 0.40R, steps=4, profitR=2.90)
+01/10/2026 14:23:01.296 | Trade | Modifying position PID2 (SL: 30451.23, TP: 30207.23)
+01/10/2026 14:23:01.296 | Trade | → Modifying position PID2 (SL: 30451.23, TP: 30207.23) SUCCEEDED, Position PID2
+01/10/2026 14:23:01.296 | Info | [ORBVL] 2026-10-01 14:23:01 ADD TO WINNER: ORBVL_US100.cash_20261001_ADD1 stop moved to 30451.23 with its main trade
+01/10/2026 14:23:07.203 | Trade | Modifying position PID1 (SL: 30445.23, TP: 30207.23)
+01/10/2026 14:23:07.203 | Trade | → Modifying position PID1 (SL: 30445.23, TP: 30207.23) SUCCEEDED, Position PID1
+01/10/2026 14:23:07.203 | Info | [ORBVL] 2026-10-01 14:23:07 TRAIL: SL -> 30445.23 (locked 0.50R, steps=5, profitR=3.01)
+01/10/2026 14:23:07.203 | Trade | Modifying position PID2 (SL: 30445.23, TP: 30207.23)
+01/10/2026 14:23:07.203 | Trade | → Modifying position PID2 (SL: 30445.23, TP: 30207.23) SUCCEEDED, Position PID2
+01/10/2026 14:23:07.203 | Info | [ORBVL] 2026-10-01 14:23:07 ADD TO WINNER: ORBVL_US100.cash_20261001_ADD1 stop moved to 30445.23 with its main trade
+01/10/2026 14:39:47.106 | Info | [ORBVL] 2026-10-01 14:39:47 POSITION CLOSED: ORBVL_US100.cash_20261001 reason=StopLoss P/L=210.12 pips=31.6
+01/10/2026 14:39:47.106 | Trade | Closing position PID2 (Volume: 6.87)
+01/10/2026 14:39:47.106 | Trade | → Closing position PID2 (Volume: 6.87) SUCCEEDED
+01/10/2026 14:39:47.106 | Info | [ORBVL] 2026-10-01 14:39:47 ADD TO WINNER: main trade closed, closing orphan add: CLOSE OK ORBVL_US100.cash_20261001_ADD1 closeVol=6.87 (posVol6.87) P/L=-93.78
+01/10/2026 14:39:47.106 | Info | [ORBVL] 2026-10-01 14:39:47 POSITION CLOSED: ORBVL_US100.cash_20261001_ADD1 reason=Closed P/L=-93.78 pips=-13.7
+01/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-01 15:00:00 Kill switch active. Blocking new entries.
+01/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-01 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+02/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-02 04:00:00 === New day reset: 2026-10-02 ===
+02/10/2026 04:00:00.027 | Info | L|2026-10-02|96620.34|400|0|-
+02/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-02 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+02/10/2026 13:30:00.001 | Info | [ORBVL] 2026-10-02 13:30:00 ORB LOCKED: High=30952.23 Low=30570.73 Range=381.5 pips (price=381.5) [source=LIVE]
+02/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-02 14:00:00 CATCHUP: No catch-up entry. Price is inside ORB thresholds at/after TradingStart.
+02/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-02 15:00:00 Kill switch active. Blocking new entries.
+02/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-02 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+03/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-03 04:00:00 NO TRADE TODAY: Trading disabled for Saturday.
+03/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-03 04:00:00 === New day reset: 2026-10-03 ===
+03/10/2026 04:00:00.027 | Info | L|2026-10-03|96620.34|400|0|-
+03/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-03 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+03/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-03 15:00:00 Kill switch active. Blocking new entries.
+03/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-03 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+04/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-04 04:00:00 NO TRADE TODAY: Trading disabled for Sunday.
+04/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-04 04:00:00 === New day reset: 2026-10-04 ===
+04/10/2026 04:00:00.027 | Info | L|2026-10-04|96620.34|400|0|-
+04/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-04 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+04/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-04 15:00:00 Kill switch active. Blocking new entries.
+04/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-04 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+05/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-05 04:00:00 === New day reset: 2026-10-05 ===
+05/10/2026 04:00:00.027 | Info | L|2026-10-05|96620.34|400|0|-
+05/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-05 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+05/10/2026 13:30:00.020 | Info | [ORBVL] 2026-10-05 13:30:00 ORB LOCKED: High=30845.63 Low=30706.53 Range=139.1 pips (price=139.10000000000218) [source=LIVE]
+05/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-05 14:00:00 CATCHUP SIGNAL: Buy | LongThreshold=30845.63 ShortThreshold=30706.53
+05/10/2026 14:00:00.027 | Trade | Executing Market Order to Buy 6.66 US100.cash (SL: 62, TP: 272)
+05/10/2026 14:00:00.027 | Trade | → Executing Market Order to Buy 6.66 US100.cash (SL: 62, TP: 272) SUCCEEDED, Position PID3
+05/10/2026 14:00:00.027 | Trade | Modifying position PID3 (SL: 30844.08, TP: 31174.08)
+05/10/2026 14:00:00.027 | Trade | → Modifying position PID3 (SL: 30844.08, TP: 31174.08) SUCCEEDED, Position PID3
+05/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-05 14:00:00 TRADE ENTERED: Buy US100.cash vol=6.66 entry=30904.08 SL=30844.08 TP=31174.08 riskPips=60.0 label=ORBVL_US100.cash_20261005 stopMode=FixedPoints(60pt)
+05/10/2026 14:16:04.423 | Trade | Modifying position PID3 (SL: 30862.08, TP: 31174.08)
+05/10/2026 14:16:04.423 | Trade | → Modifying position PID3 (SL: 30862.08, TP: 31174.08) SUCCEEDED, Position PID3
+05/10/2026 14:16:04.423 | Info | [ORBVL] 2026-10-05 14:16:04 EARLY RISK REDUCTION: SL moved to 30862.08 (remaining risk 70.0% at 0.70R)
+05/10/2026 14:16:04.423 | Trade | Executing Market Order to Buy 7.01 US100.cash (SL: 85.45, TP: 226.55)
+05/10/2026 14:16:04.423 | Trade | → Executing Market Order to Buy 7.01 US100.cash (SL: 85.45, TP: 226.55) SUCCEEDED, Position PID4
+05/10/2026 14:16:04.423 | Trade | Modifying position PID4 (SL: 30862.08, TP: 31174.08)
+05/10/2026 14:16:04.423 | Trade | → Modifying position PID4 (SL: 30862.08, TP: 31174.08) SUCCEEDED, Position PID4
+05/10/2026 14:16:04.423 | Info | [ORBVL] 2026-10-05 14:16:04 ADD TO WINNER: ORBVL_US100.cash_20261005_ADD1 Buy vol=7.01 entry=30947.53 SL=30862.08 TP=31174.08 addRisk=599.40 removed=119.88 x5 at 0.70R (total risk now 878.72 vs original 399.60)
+05/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-05 15:00:00 Kill switch active. Blocking new entries.
+05/10/2026 17:44:50.607 | Trade | Modifying position PID3 (SL: 30906.08, TP: 31174.08)
+05/10/2026 17:44:50.607 | Trade | → Modifying position PID3 (SL: 30906.08, TP: 31174.08) SUCCEEDED, Position PID3
+05/10/2026 17:44:50.607 | Info | [ORBVL] 2026-10-05 17:44:50 BREAK EVEN: SL moved to 30906.08 (entry + 2 extra pips)
+05/10/2026 17:44:50.607 | Trade | Modifying position PID4 (SL: 30906.08, TP: 31174.08)
+05/10/2026 17:44:50.607 | Trade | → Modifying position PID4 (SL: 30906.08, TP: 31174.08) SUCCEEDED, Position PID4
+05/10/2026 17:44:50.607 | Info | [ORBVL] 2026-10-05 17:44:50 ADD TO WINNER: ORBVL_US100.cash_20261005_ADD1 stop moved to 30906.08 with its main trade
+05/10/2026 17:45:03.207 | Trade | Modifying position PID3 (SL: 30912.08, TP: 31174.08)
+05/10/2026 17:45:03.207 | Trade | → Modifying position PID3 (SL: 30912.08, TP: 31174.08) SUCCEEDED, Position PID3
+05/10/2026 17:45:03.207 | Info | [ORBVL] 2026-10-05 17:45:03 TRAIL: SL -> 30912.08 (locked 0.10R, steps=1, profitR=2.60)
+05/10/2026 17:45:03.207 | Trade | Modifying position PID4 (SL: 30912.08, TP: 31174.08)
+05/10/2026 17:45:03.207 | Trade | → Modifying position PID4 (SL: 30912.08, TP: 31174.08) SUCCEEDED, Position PID4
+05/10/2026 17:45:03.207 | Info | [ORBVL] 2026-10-05 17:45:03 ADD TO WINNER: ORBVL_US100.cash_20261005_ADD1 stop moved to 30912.08 with its main trade
+05/10/2026 18:28:43.709 | Trade | Modifying position PID3 (SL: 30918.08, TP: 31174.08)
+05/10/2026 18:28:43.709 | Trade | → Modifying position PID3 (SL: 30918.08, TP: 31174.08) SUCCEEDED, Position PID3
+05/10/2026 18:28:43.709 | Info | [ORBVL] 2026-10-05 18:28:43 TRAIL: SL -> 30918.08 (locked 0.20R, steps=2, profitR=2.71)
+05/10/2026 18:28:43.709 | Trade | Modifying position PID4 (SL: 30918.08, TP: 31174.08)
+05/10/2026 18:28:43.709 | Trade | → Modifying position PID4 (SL: 30918.08, TP: 31174.08) SUCCEEDED, Position PID4
+05/10/2026 18:28:43.709 | Info | [ORBVL] 2026-10-05 18:28:43 ADD TO WINNER: ORBVL_US100.cash_20261005_ADD1 stop moved to 30918.08 with its main trade
+05/10/2026 19:00:32.613 | Trade | Modifying position PID3 (SL: 30924.08, TP: 31174.08)
+05/10/2026 19:00:32.613 | Trade | → Modifying position PID3 (SL: 30924.08, TP: 31174.08) SUCCEEDED, Position PID3
+05/10/2026 19:00:32.613 | Info | [ORBVL] 2026-10-05 19:00:32 TRAIL: SL -> 30924.08 (locked 0.30R, steps=3, profitR=2.80)
+05/10/2026 19:00:32.613 | Trade | Modifying position PID4 (SL: 30924.08, TP: 31174.08)
+05/10/2026 19:00:32.613 | Trade | → Modifying position PID4 (SL: 30924.08, TP: 31174.08) SUCCEEDED, Position PID4
+05/10/2026 19:00:32.613 | Info | [ORBVL] 2026-10-05 19:00:32 ADD TO WINNER: ORBVL_US100.cash_20261005_ADD1 stop moved to 30924.08 with its main trade
+05/10/2026 19:01:37.113 | Trade | Modifying position PID3 (SL: 30930.08, TP: 31174.08)
+05/10/2026 19:01:37.113 | Trade | → Modifying position PID3 (SL: 30930.08, TP: 31174.08) SUCCEEDED, Position PID3
+05/10/2026 19:01:37.113 | Info | [ORBVL] 2026-10-05 19:01:37 TRAIL: SL -> 30930.08 (locked 0.40R, steps=4, profitR=2.90)
+05/10/2026 19:01:37.113 | Trade | Modifying position PID4 (SL: 30930.08, TP: 31174.08)
+05/10/2026 19:01:37.113 | Trade | → Modifying position PID4 (SL: 30930.08, TP: 31174.08) SUCCEEDED, Position PID4
+05/10/2026 19:01:37.113 | Info | [ORBVL] 2026-10-05 19:01:37 ADD TO WINNER: ORBVL_US100.cash_20261005_ADD1 stop moved to 30930.08 with its main trade
+05/10/2026 19:02:18.316 | Trade | Modifying position PID3 (SL: 30936.08, TP: 31174.08)
+05/10/2026 19:02:18.316 | Trade | → Modifying position PID3 (SL: 30936.08, TP: 31174.08) SUCCEEDED, Position PID3
+05/10/2026 19:02:18.316 | Info | [ORBVL] 2026-10-05 19:02:18 TRAIL: SL -> 30936.08 (locked 0.50R, steps=5, profitR=3.01)
+05/10/2026 19:02:18.316 | Trade | Modifying position PID4 (SL: 30936.08, TP: 31174.08)
+05/10/2026 19:02:18.316 | Trade | → Modifying position PID4 (SL: 30936.08, TP: 31174.08) SUCCEEDED, Position PID4
+05/10/2026 19:02:18.316 | Info | [ORBVL] 2026-10-05 19:02:18 ADD TO WINNER: ORBVL_US100.cash_20261005_ADD1 stop moved to 30936.08 with its main trade
+05/10/2026 19:02:37.214 | Trade | Modifying position PID3 (SL: 30942.08, TP: 31174.08)
+05/10/2026 19:02:37.214 | Trade | → Modifying position PID3 (SL: 30942.08, TP: 31174.08) SUCCEEDED, Position PID3
+05/10/2026 19:02:37.214 | Info | [ORBVL] 2026-10-05 19:02:37 TRAIL: SL -> 30942.08 (locked 0.60R, steps=6, profitR=3.10)
+05/10/2026 19:02:37.214 | Trade | Modifying position PID4 (SL: 30942.08, TP: 31174.08)
+05/10/2026 19:02:37.214 | Trade | → Modifying position PID4 (SL: 30942.08, TP: 31174.08) SUCCEEDED, Position PID4
+05/10/2026 19:02:37.214 | Info | [ORBVL] 2026-10-05 19:02:37 ADD TO WINNER: ORBVL_US100.cash_20261005_ADD1 stop moved to 30942.08 with its main trade
+05/10/2026 19:13:20.415 | Trade | Modifying position PID3 (SL: 30948.08, TP: 31174.08)
+05/10/2026 19:13:20.415 | Trade | → Modifying position PID3 (SL: 30948.08, TP: 31174.08) SUCCEEDED, Position PID3
+05/10/2026 19:13:20.415 | Info | [ORBVL] 2026-10-05 19:13:20 TRAIL: SL -> 30948.08 (locked 0.70R, steps=7, profitR=3.20)
+05/10/2026 19:13:20.415 | Trade | Modifying position PID4 (SL: 30948.08, TP: 31174.08)
+05/10/2026 19:13:20.415 | Trade | → Modifying position PID4 (SL: 30948.08, TP: 31174.08) SUCCEEDED, Position PID4
+05/10/2026 19:13:20.415 | Info | [ORBVL] 2026-10-05 19:13:20 ADD TO WINNER: ORBVL_US100.cash_20261005_ADD1 stop moved to 30948.08 with its main trade
+05/10/2026 19:14:04.215 | Trade | Modifying position PID3 (SL: 30954.08, TP: 31174.08)
+05/10/2026 19:14:04.215 | Trade | → Modifying position PID3 (SL: 30954.08, TP: 31174.08) SUCCEEDED, Position PID3
+05/10/2026 19:14:04.215 | Info | [ORBVL] 2026-10-05 19:14:04 TRAIL: SL -> 30954.08 (locked 0.80R, steps=8, profitR=3.31)
+05/10/2026 19:14:04.215 | Trade | Modifying position PID4 (SL: 30954.08, TP: 31174.08)
+05/10/2026 19:14:04.215 | Trade | → Modifying position PID4 (SL: 30954.08, TP: 31174.08) SUCCEEDED, Position PID4
+05/10/2026 19:14:04.215 | Info | [ORBVL] 2026-10-05 19:14:04 ADD TO WINNER: ORBVL_US100.cash_20261005_ADD1 stop moved to 30954.08 with its main trade
+05/10/2026 19:14:21.162 | Trade | Modifying position PID3 (SL: 30960.08, TP: 31174.08)
+05/10/2026 19:14:21.162 | Trade | → Modifying position PID3 (SL: 30960.08, TP: 31174.08) SUCCEEDED, Position PID3
+05/10/2026 19:14:21.162 | Info | [ORBVL] 2026-10-05 19:14:21 TRAIL: SL -> 30960.08 (locked 0.90R, steps=9, profitR=3.40)
+05/10/2026 19:14:21.162 | Trade | Modifying position PID4 (SL: 30960.08, TP: 31174.08)
+05/10/2026 19:14:21.162 | Trade | → Modifying position PID4 (SL: 30960.08, TP: 31174.08) SUCCEEDED, Position PID4
+05/10/2026 19:14:21.162 | Info | [ORBVL] 2026-10-05 19:14:21 ADD TO WINNER: ORBVL_US100.cash_20261005_ADD1 stop moved to 30960.08 with its main trade
+05/10/2026 19:19:02.717 | Trade | Modifying position PID3 (SL: 30966.08, TP: 31174.08)
+05/10/2026 19:19:02.717 | Trade | → Modifying position PID3 (SL: 30966.08, TP: 31174.08) SUCCEEDED, Position PID3
+05/10/2026 19:19:02.717 | Info | [ORBVL] 2026-10-05 19:19:02 TRAIL: SL -> 30966.08 (locked 1.00R, steps=10, profitR=3.50)
+05/10/2026 19:19:02.717 | Trade | Modifying position PID4 (SL: 30966.08, TP: 31174.08)
+05/10/2026 19:19:02.717 | Trade | → Modifying position PID4 (SL: 30966.08, TP: 31174.08) SUCCEEDED, Position PID4
+05/10/2026 19:19:02.717 | Info | [ORBVL] 2026-10-05 19:19:02 ADD TO WINNER: ORBVL_US100.cash_20261005_ADD1 stop moved to 30966.08 with its main trade
+05/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-05 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+05/10/2026 19:50:00.027 | Trade | Closing position PID3 (Volume: 6.66)
+05/10/2026 19:50:00.027 | Trade | → Closing position PID3 (Volume: 6.66) SUCCEEDED
+05/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-05 19:50:00 CLOSE TIME FORCE CLOSE: CLOSE OK ORBVL_US100.cash_20261005 closeVol=6.66 (posVol6.66) P/L=1133.20
+05/10/2026 19:50:00.027 | Trade | Closing position PID4 (Volume: 7.01)
+05/10/2026 19:50:00.027 | Trade | → Closing position PID4 (Volume: 7.01) SUCCEEDED
+05/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-05 19:50:00 CLOSE TIME FORCE CLOSE: CLOSE OK ORBVL_US100.cash_20261005_ADD1 closeVol=7.01 (posVol7.01) P/L=888.17
+05/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-05 19:50:00 POSITION CLOSED: ORBVL_US100.cash_20261005 reason=Closed P/L=1133.20 pips=170.2
+05/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-05 19:50:00 POSITION CLOSED: ORBVL_US100.cash_20261005_ADD1 reason=Closed P/L=888.17 pips=126.7
+06/10/2026 04:00:00.011 | Info | [ORBVL] 2026-10-06 04:00:00 === New day reset: 2026-10-06 ===
+06/10/2026 04:00:00.011 | Info | L|2026-10-06|98641.71|550|0|-
+06/10/2026 04:00:00.011 | Info | [ORBVL] 2026-10-06 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+06/10/2026 13:30:00.027 | Info | [ORBVL] 2026-10-06 13:30:00 ORB BACKFILL: Rebuilt from 449 closed bar(s). High=31288.23 Low=31090.13 finalClosed=False [source=SELF_HEAL]
+06/10/2026 13:30:00.153 | Info | [ORBVL] 2026-10-06 13:30:00 ORB LOCKED: High=31288.23 Low=31090.13 Range=198.1 pips (price=198.09999999999854) [source=LIVE]
+06/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-06 14:00:00 CATCHUP SIGNAL: Buy | LongThreshold=31288.23 ShortThreshold=31090.13
+06/10/2026 14:00:00.027 | Trade | Executing Market Order to Buy 9.16 US100.cash (SL: 62, TP: 272)
+06/10/2026 14:00:00.027 | Trade | → Executing Market Order to Buy 9.16 US100.cash (SL: 62, TP: 272) SUCCEEDED, Position PID5
+06/10/2026 14:00:00.027 | Trade | Modifying position PID5 (SL: 31240.23, TP: 31570.23)
+06/10/2026 14:00:00.027 | Trade | → Modifying position PID5 (SL: 31240.23, TP: 31570.23) SUCCEEDED, Position PID5
+06/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-06 14:00:00 TRADE ENTERED: Buy US100.cash vol=9.16 entry=31300.23 SL=31240.23 TP=31570.23 riskPips=60.0 label=ORBVL_US100.cash_20261006 stopMode=FixedPoints(60pt)
+06/10/2026 14:30:18.752 | Info | [ORBVL] 2026-10-06 14:30:18 POSITION CLOSED: ORBVL_US100.cash_20261006 reason=StopLoss P/L=-551.89 pips=-60.2
+06/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-06 15:00:00 Kill switch active. Blocking new entries.
+06/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-06 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+07/10/2026 04:00:00.013 | Info | [ORBVL] 2026-10-07 04:00:00 === New day reset: 2026-10-07 ===
+07/10/2026 04:00:00.013 | Info | L|2026-10-07|98089.82|550|1|-
+07/10/2026 04:00:00.013 | Info | [ORBVL] 2026-10-07 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+07/10/2026 13:30:00.011 | Info | [ORBVL] 2026-10-07 13:30:00 ORB LOCKED: High=31235.18 Low=30960.23 Range=275.0 pips (price=274.9500000000007) [source=LIVE]
+07/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-07 14:00:00 CATCHUP: No catch-up entry. Price is inside ORB thresholds at/after TradingStart.
+07/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-07 15:00:00 Kill switch active. Blocking new entries.
+07/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-07 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+08/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-08 04:00:00 === New day reset: 2026-10-08 ===
+08/10/2026 04:00:00.027 | Info | L|2026-10-08|98089.82|550|1|-
+08/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-08 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+08/10/2026 13:30:00.007 | Info | [ORBVL] 2026-10-08 13:30:00 ORB LOCKED: High=31105.73 Low=30875.93 Range=229.8 pips (price=229.79999999999927) [source=LIVE]
+08/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-08 14:00:00 CATCHUP: No catch-up entry. Price is inside ORB thresholds at/after TradingStart.
+08/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-08 15:00:00 Kill switch active. Blocking new entries.
+08/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-08 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+09/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-09 04:00:00 === New day reset: 2026-10-09 ===
+09/10/2026 04:00:00.027 | Info | L|2026-10-09|98089.82|550|1|-
+09/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-09 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+09/10/2026 13:30:00.011 | Info | [ORBVL] 2026-10-09 13:30:00 ORB LOCKED: High=31028.78 Low=30895.73 Range=133.0 pips (price=133.04999999999927) [source=LIVE]
+09/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-09 14:00:00 CATCHUP SIGNAL: Sell | LongThreshold=31028.78 ShortThreshold=30895.73
+09/10/2026 14:00:00.027 | Trade | Executing Market Order to Sell 9.16 US100.cash (SL: 62, TP: 272)
+09/10/2026 14:00:00.027 | Trade | → Executing Market Order to Sell 9.16 US100.cash (SL: 62, TP: 272) SUCCEEDED, Position PID6
+09/10/2026 14:00:00.027 | Trade | Modifying position PID6 (SL: 30859.53, TP: 30529.53)
+09/10/2026 14:00:00.027 | Trade | → Modifying position PID6 (SL: 30859.53, TP: 30529.53) SUCCEEDED, Position PID6
+09/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-09 14:00:00 TRADE ENTERED: Sell US100.cash vol=9.16 entry=30799.53 SL=30859.53 TP=30529.53 riskPips=60.0 label=ORBVL_US100.cash_20261009 stopMode=FixedPoints(60pt)
+09/10/2026 14:11:27.756 | Trade | Modifying position PID6 (SL: 30841.53, TP: 30529.53)
+09/10/2026 14:11:27.756 | Trade | → Modifying position PID6 (SL: 30841.53, TP: 30529.53) SUCCEEDED, Position PID6
+09/10/2026 14:11:27.756 | Info | [ORBVL] 2026-10-09 14:11:27 EARLY RISK REDUCTION: SL moved to 30841.53 (remaining risk 70.0% at 0.71R)
+09/10/2026 14:11:27.756 | Trade | Executing Market Order to Sell 9.55 US100.cash (SL: 86.3, TP: 225.7)
+09/10/2026 14:11:27.756 | Trade | → Executing Market Order to Sell 9.55 US100.cash (SL: 86.3, TP: 225.7) SUCCEEDED, Position PID7
+09/10/2026 14:11:27.756 | Trade | Modifying position PID7 (SL: 30841.53, TP: 30529.53)
+09/10/2026 14:11:27.756 | Trade | → Modifying position PID7 (SL: 30841.53, TP: 30529.53) SUCCEEDED, Position PID7
+09/10/2026 14:11:27.756 | Info | [ORBVL] 2026-10-09 14:11:27 ADD TO WINNER: ORBVL_US100.cash_20261009_ADD1 Sell vol=9.55 entry=30755.23 SL=30841.53 TP=30529.53 addRisk=824.40 removed=164.88 x5 at 0.71R (total risk now 1208.88 vs original 549.60)
+09/10/2026 14:34:51.211 | Info | [ORBVL] 2026-10-09 14:34:51 POSITION CLOSED: ORBVL_US100.cash_20261009_ADD1 reason=StopLoss P/L=-824.64 pips=-86.3
+09/10/2026 14:34:55.407 | Info | [ORBVL] 2026-10-09 14:34:55 POSITION CLOSED: ORBVL_US100.cash_20261009 reason=StopLoss P/L=-400.75 pips=-43.8
+09/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-09 15:00:00 Kill switch active. Blocking new entries.
+09/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-09 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+10/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-10 04:00:00 NO TRADE TODAY: Trading disabled for Saturday.
+10/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-10 04:00:00 === New day reset: 2026-10-10 ===
+10/10/2026 04:00:00.027 | Info | L|2026-10-10|96864.43|400|2|-
+10/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-10 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+10/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-10 15:00:00 Kill switch active. Blocking new entries.
+10/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-10 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+11/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-11 04:00:00 NO TRADE TODAY: Trading disabled for Sunday.
+11/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-11 04:00:00 === New day reset: 2026-10-11 ===
+11/10/2026 04:00:00.027 | Info | L|2026-10-11|96864.43|400|2|-
+11/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-11 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+11/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-11 15:00:00 Kill switch active. Blocking new entries.
+11/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-11 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+12/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-12 04:00:00 === New day reset: 2026-10-12 ===
+12/10/2026 04:00:00.027 | Info | L|2026-10-12|96864.43|400|2|-
+12/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-12 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+12/10/2026 13:30:00.006 | Info | [ORBVL] 2026-10-12 13:30:00 ORB LOCKED: High=30988.83 Low=30794.33 Range=194.5 pips (price=194.5) [source=LIVE]
+12/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-12 14:00:00 CATCHUP SIGNAL: Sell | LongThreshold=30988.83 ShortThreshold=30794.33
+12/10/2026 14:00:00.027 | Trade | Executing Market Order to Sell 6.66 US100.cash (SL: 62, TP: 272)
+12/10/2026 14:00:00.027 | Trade | → Executing Market Order to Sell 6.66 US100.cash (SL: 62, TP: 272) SUCCEEDED, Position PID8
+12/10/2026 14:00:00.027 | Trade | Modifying position PID8 (SL: 30794.93, TP: 30464.93)
+12/10/2026 14:00:00.027 | Trade | → Modifying position PID8 (SL: 30794.93, TP: 30464.93) SUCCEEDED, Position PID8
+12/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-12 14:00:00 TRADE ENTERED: Sell US100.cash vol=6.66 entry=30734.93 SL=30794.93 TP=30464.93 riskPips=60.0 label=ORBVL_US100.cash_20261012 stopMode=FixedPoints(60pt)
+12/10/2026 14:07:18.305 | Trade | Modifying position PID8 (SL: 30776.93, TP: 30464.93)
+12/10/2026 14:07:18.305 | Trade | → Modifying position PID8 (SL: 30776.93, TP: 30464.93) SUCCEEDED, Position PID8
+12/10/2026 14:07:18.305 | Info | [ORBVL] 2026-10-12 14:07:18 EARLY RISK REDUCTION: SL moved to 30776.93 (remaining risk 70.0% at 0.71R)
+12/10/2026 14:07:18.305 | Trade | Executing Market Order to Sell 6.96 US100.cash (SL: 86, TP: 226)
+12/10/2026 14:07:18.305 | Trade | → Executing Market Order to Sell 6.96 US100.cash (SL: 86, TP: 226) SUCCEEDED, Position PID9
+12/10/2026 14:07:18.305 | Trade | Modifying position PID9 (SL: 30776.93, TP: 30464.93)
+12/10/2026 14:07:18.305 | Trade | → Modifying position PID9 (SL: 30776.93, TP: 30464.93) SUCCEEDED, Position PID9
+12/10/2026 14:07:18.305 | Info | [ORBVL] 2026-10-12 14:07:18 ADD TO WINNER: ORBVL_US100.cash_20261012_ADD1 Sell vol=6.96 entry=30690.93 SL=30776.93 TP=30464.93 addRisk=599.40 removed=119.88 x5 at 0.71R (total risk now 878.28 vs original 399.60)
+12/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-12 15:00:00 Kill switch active. Blocking new entries.
+12/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-12 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+12/10/2026 19:50:00.027 | Trade | Closing position PID8 (Volume: 6.66)
+12/10/2026 19:50:00.027 | Trade | → Closing position PID8 (Volume: 6.66) SUCCEEDED
+12/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-12 19:50:00 CLOSE TIME FORCE CLOSE: CLOSE OK ORBVL_US100.cash_20261012 closeVol=6.66 (posVol6.66) P/L=433.90
+12/10/2026 19:50:00.027 | Trade | Closing position PID9 (Volume: 6.96)
+12/10/2026 19:50:00.027 | Trade | → Closing position PID9 (Volume: 6.96) SUCCEEDED
+12/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-12 19:50:00 CLOSE TIME FORCE CLOSE: CLOSE OK ORBVL_US100.cash_20261012_ADD1 closeVol=6.96 (posVol6.96) P/L=147.20
+12/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-12 19:50:00 POSITION CLOSED: ORBVL_US100.cash_20261012 reason=Closed P/L=433.90 pips=65.2
+12/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-12 19:50:00 POSITION CLOSED: ORBVL_US100.cash_20261012_ADD1 reason=Closed P/L=147.20 pips=21.1
+13/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-13 04:00:00 === New day reset: 2026-10-13 ===
+13/10/2026 04:00:00.027 | Info | L|2026-10-13|97445.53|550|0|-
+13/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-13 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+13/10/2026 13:30:00.005 | Info | [ORBVL] 2026-10-13 13:30:00 ORB LOCKED: High=30549.18 Low=30395.53 Range=153.7 pips (price=153.65000000000146) [source=LIVE]
+13/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-13 14:00:00 CATCHUP SIGNAL: Buy | LongThreshold=30549.18 ShortThreshold=30395.53
+13/10/2026 14:00:00.027 | Trade | Executing Market Order to Buy 9.16 US100.cash (SL: 62, TP: 272)
+13/10/2026 14:00:00.027 | Trade | → Executing Market Order to Buy 9.16 US100.cash (SL: 62, TP: 272) SUCCEEDED, Position PID10
+13/10/2026 14:00:00.027 | Trade | Modifying position PID10 (SL: 30510.48, TP: 30840.48)
+13/10/2026 14:00:00.027 | Trade | → Modifying position PID10 (SL: 30510.48, TP: 30840.48) SUCCEEDED, Position PID10
+13/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-13 14:00:00 TRADE ENTERED: Buy US100.cash vol=9.16 entry=30570.48 SL=30510.48 TP=30840.48 riskPips=60.0 label=ORBVL_US100.cash_20261013 stopMode=FixedPoints(60pt)
+13/10/2026 14:31:56.200 | Info | [ORBVL] 2026-10-13 14:31:56 POSITION CLOSED: ORBVL_US100.cash_20261013 reason=StopLoss P/L=-550.52 pips=-60.1
+13/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-13 15:00:00 Kill switch active. Blocking new entries.
+13/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-13 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+14/10/2026 04:00:00.006 | Info | [ORBVL] 2026-10-14 04:00:00 === New day reset: 2026-10-14 ===
+14/10/2026 04:00:00.006 | Info | L|2026-10-14|96895.01|400|1|-
+14/10/2026 04:00:00.006 | Info | [ORBVL] 2026-10-14 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+14/10/2026 13:30:00.009 | Info | [ORBVL] 2026-10-14 13:30:00 ORB LOCKED: High=30643.43 Low=30319.03 Range=324.4 pips (price=324.40000000000146) [source=LIVE]
+14/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-14 14:00:00 CATCHUP SIGNAL: Sell | LongThreshold=30643.43 ShortThreshold=30319.03
+14/10/2026 14:00:00.027 | Trade | Executing Market Order to Sell 6.66 US100.cash (SL: 62, TP: 272)
+14/10/2026 14:00:00.027 | Trade | → Executing Market Order to Sell 6.66 US100.cash (SL: 62, TP: 272) SUCCEEDED, Position PID11
+14/10/2026 14:00:00.027 | Trade | Modifying position PID11 (SL: 30316.63, TP: 29986.63)
+14/10/2026 14:00:00.027 | Trade | → Modifying position PID11 (SL: 30316.63, TP: 29986.63) SUCCEEDED, Position PID11
+14/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-14 14:00:00 TRADE ENTERED: Sell US100.cash vol=6.66 entry=30256.63 SL=30316.63 TP=29986.63 riskPips=60.0 label=ORBVL_US100.cash_20261014 stopMode=FixedPoints(60pt)
+14/10/2026 14:03:48.203 | Info | [ORBVL] 2026-10-14 14:03:48 POSITION CLOSED: ORBVL_US100.cash_20261014 reason=StopLoss P/L=-401.93 pips=-60.4
+14/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-14 15:00:00 Kill switch active. Blocking new entries.
+14/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-14 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+15/10/2026 04:00:00.006 | Info | [ORBVL] 2026-10-15 04:00:00 === New day reset: 2026-10-15 ===
+15/10/2026 04:00:00.006 | Info | L|2026-10-15|96493.08|400|2|-
+15/10/2026 04:00:00.006 | Info | [ORBVL] 2026-10-15 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+15/10/2026 13:30:00.015 | Info | [ORBVL] 2026-10-15 13:30:00 ORB LOCKED: High=29725.03 Low=29495.94 Range=229.1 pips (price=229.09000000000015) [source=LIVE]
+15/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-15 14:00:00 WARNING: CATCHUP: Trend filter blocked Sell: Neutral trend, policy=BlockAll
+15/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-15 15:00:00 Kill switch active. Blocking new entries.
+15/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-15 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+16/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-16 04:00:00 === New day reset: 2026-10-16 ===
+16/10/2026 04:00:00.027 | Info | L|2026-10-16|96493.08|400|2|-
+16/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-16 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+16/10/2026 13:30:00.027 | Info | [ORBVL] 2026-10-16 13:30:00 ORB BACKFILL: Rebuilt from 449 closed bar(s). High=30006.03 Low=29827.73 finalClosed=False [source=SELF_HEAL]
+16/10/2026 13:30:00.140 | Info | [ORBVL] 2026-10-16 13:30:00 ORB LOCKED: High=30006.03 Low=29821.63 Range=184.4 pips (price=184.39999999999782) [source=LIVE]
+16/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-16 14:00:00 CATCHUP SIGNAL: Sell | LongThreshold=30006.03 ShortThreshold=29821.63
+16/10/2026 14:00:00.027 | Trade | Executing Market Order to Sell 6.66 US100.cash (SL: 62, TP: 272)
+16/10/2026 14:00:00.027 | Trade | → Executing Market Order to Sell 6.66 US100.cash (SL: 62, TP: 272) SUCCEEDED, Position PID12
+16/10/2026 14:00:00.027 | Trade | Modifying position PID12 (SL: 29693.63, TP: 29363.63)
+16/10/2026 14:00:00.027 | Trade | → Modifying position PID12 (SL: 29693.63, TP: 29363.63) SUCCEEDED, Position PID12
+16/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-16 14:00:00 TRADE ENTERED: Sell US100.cash vol=6.66 entry=29633.63 SL=29693.63 TP=29363.63 riskPips=60.0 label=ORBVL_US100.cash_20261016 stopMode=FixedPoints(60pt)
+16/10/2026 14:11:00.780 | Trade | Modifying position PID12 (SL: 29675.63, TP: 29363.63)
+16/10/2026 14:11:00.780 | Trade | → Modifying position PID12 (SL: 29675.63, TP: 29363.63) SUCCEEDED, Position PID12
+16/10/2026 14:11:00.780 | Info | [ORBVL] 2026-10-16 14:11:00 EARLY RISK REDUCTION: SL moved to 29675.63 (remaining risk 70.0% at 0.70R)
+16/10/2026 14:11:00.780 | Trade | Executing Market Order to Sell 7 US100.cash (SL: 85.6, TP: 226.4)
+16/10/2026 14:11:00.780 | Trade | → Executing Market Order to Sell 7 US100.cash (SL: 85.6, TP: 226.4) SUCCEEDED, Position PID13
+16/10/2026 14:11:00.780 | Trade | Modifying position PID13 (SL: 29675.63, TP: 29363.63)
+16/10/2026 14:11:00.780 | Trade | → Modifying position PID13 (SL: 29675.63, TP: 29363.63) SUCCEEDED, Position PID13
+16/10/2026 14:11:00.780 | Info | [ORBVL] 2026-10-16 14:11:00 ADD TO WINNER: ORBVL_US100.cash_20261016_ADD1 Sell vol=7 entry=29590.03 SL=29675.63 TP=29363.63 addRisk=599.40 removed=119.88 x5 at 0.70R (total risk now 878.92 vs original 399.60)
+16/10/2026 14:14:30.684 | Info | [ORBVL] 2026-10-16 14:14:30 POSITION CLOSED: ORBVL_US100.cash_20261016_ADD1 reason=StopLoss P/L=-600.25 pips=-85.8
+16/10/2026 14:14:30.781 | Info | [ORBVL] 2026-10-16 14:14:30 POSITION CLOSED: ORBVL_US100.cash_20261016 reason=StopLoss P/L=-299.37 pips=-45.0
+16/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-16 15:00:00 Kill switch active. Blocking new entries.
+16/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-16 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+17/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-17 04:00:00 NO TRADE TODAY: Trading disabled for Saturday.
+17/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-17 04:00:00 === New day reset: 2026-10-17 ===
+17/10/2026 04:00:00.027 | Info | L|2026-10-17|95593.46|400|3|-
+17/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-17 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+17/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-17 15:00:00 Kill switch active. Blocking new entries.
+17/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-17 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+18/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-18 04:00:00 NO TRADE TODAY: Trading disabled for Sunday.
+18/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-18 04:00:00 === New day reset: 2026-10-18 ===
+18/10/2026 04:00:00.027 | Info | L|2026-10-18|95593.46|400|3|-
+18/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-18 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+18/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-18 15:00:00 Kill switch active. Blocking new entries.
+18/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-18 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+19/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-19 04:00:00 === New day reset: 2026-10-19 ===
+19/10/2026 04:00:00.027 | Info | L|2026-10-19|95593.46|400|3|-
+19/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-19 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+19/10/2026 13:30:00.007 | Info | [ORBVL] 2026-10-19 13:30:00 ORB LOCKED: High=29620.53 Low=29472.93 Range=147.6 pips (price=147.59999999999854) [source=LIVE]
+19/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-19 14:00:00 CATCHUP: No catch-up entry. Price is inside ORB thresholds at/after TradingStart.
+19/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-19 15:00:00 Kill switch active. Blocking new entries.
+19/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-19 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+20/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-20 04:00:00 === New day reset: 2026-10-20 ===
+20/10/2026 04:00:00.027 | Info | L|2026-10-20|95593.46|400|3|-
+20/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-20 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+20/10/2026 13:30:00.008 | Info | [ORBVL] 2026-10-20 13:30:00 ORB LOCKED: High=29546.83 Low=29289.33 Range=257.5 pips (price=257.5) [source=LIVE]
+20/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-20 14:00:00 CATCHUP: No catch-up entry. Price is inside ORB thresholds at/after TradingStart.
+20/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-20 15:00:00 Kill switch active. Blocking new entries.
+20/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-20 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+21/10/2026 04:00:00.007 | Info | [ORBVL] 2026-10-21 04:00:00 === New day reset: 2026-10-21 ===
+21/10/2026 04:00:00.007 | Info | L|2026-10-21|95593.46|400|3|-
+21/10/2026 04:00:00.007 | Info | [ORBVL] 2026-10-21 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+21/10/2026 13:30:00.011 | Info | [ORBVL] 2026-10-21 13:30:00 ORB LOCKED: High=29732.53 Low=29540.73 Range=191.8 pips (price=191.79999999999927) [source=LIVE]
+21/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-21 14:00:00 CATCHUP: No catch-up entry. Price is inside ORB thresholds at/after TradingStart.
+21/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-21 15:00:00 Kill switch active. Blocking new entries.
+21/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-21 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+22/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-22 04:00:00 === New day reset: 2026-10-22 ===
+22/10/2026 04:00:00.027 | Info | L|2026-10-22|95593.46|400|3|-
+22/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-22 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+22/10/2026 13:30:00.000 | Info | [ORBVL] 2026-10-22 13:30:00 ORB LOCKED: High=29384.33 Low=29233.73 Range=150.6 pips (price=150.60000000000218) [source=LIVE]
+22/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-22 14:00:00 CATCHUP: No catch-up entry. Price is inside ORB thresholds at/after TradingStart.
+22/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-22 15:00:00 Kill switch active. Blocking new entries.
+22/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-22 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+23/10/2026 04:00:00.005 | Info | [ORBVL] 2026-10-23 04:00:00 === New day reset: 2026-10-23 ===
+23/10/2026 04:00:00.005 | Info | L|2026-10-23|95593.46|400|3|-
+23/10/2026 04:00:00.005 | Info | [ORBVL] 2026-10-23 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+23/10/2026 13:30:00.027 | Info | [ORBVL] 2026-10-23 13:30:00 ORB BACKFILL: Rebuilt from 449 closed bar(s). High=29105.93 Low=28834.83 finalClosed=False [source=SELF_HEAL]
+23/10/2026 13:30:00.061 | Info | [ORBVL] 2026-10-23 13:30:00 ORB LOCKED: High=29105.93 Low=28834.83 Range=271.1 pips (price=271.09999999999854) [source=LIVE]
+23/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-23 14:00:00 CATCHUP: No catch-up entry. Price is inside ORB thresholds at/after TradingStart.
+23/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-23 15:00:00 Kill switch active. Blocking new entries.
+23/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-23 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+24/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-24 04:00:00 NO TRADE TODAY: Trading disabled for Saturday.
+24/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-24 04:00:00 === New day reset: 2026-10-24 ===
+24/10/2026 04:00:00.027 | Info | L|2026-10-24|95593.46|400|3|-
+24/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-24 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+24/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-24 15:00:00 Kill switch active. Blocking new entries.
+24/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-24 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+25/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-25 04:00:00 NO TRADE TODAY: Trading disabled for Sunday.
+25/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-25 04:00:00 === New day reset: 2026-10-25 ===
+25/10/2026 04:00:00.027 | Info | L|2026-10-25|95593.46|400|3|-
+25/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-25 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+25/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-25 15:00:00 Kill switch active. Blocking new entries.
+25/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-25 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+26/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-26 04:00:00 === New day reset: 2026-10-26 ===
+26/10/2026 04:00:00.027 | Info | L|2026-10-26|95593.46|400|3|-
+26/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-26 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+26/10/2026 13:30:00.027 | Info | [ORBVL] 2026-10-26 13:30:00 ORB BACKFILL: Rebuilt from 449 closed bar(s). High=29190.93 Low=28861.43 finalClosed=False [source=SELF_HEAL]
+26/10/2026 13:30:00.044 | Info | [ORBVL] 2026-10-26 13:30:00 ORB LOCKED: High=29190.93 Low=28861.43 Range=329.5 pips (price=329.5) [source=LIVE]
+26/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-26 14:00:00 CATCHUP: No catch-up entry. Price is inside ORB thresholds at/after TradingStart.
+26/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-26 15:00:00 Kill switch active. Blocking new entries.
+26/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-26 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+27/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-27 04:00:00 === New day reset: 2026-10-27 ===
+27/10/2026 04:00:00.027 | Info | L|2026-10-27|95593.46|400|3|-
+27/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-27 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+27/10/2026 13:30:00.027 | Info | [ORBVL] 2026-10-27 13:30:00 ORB BACKFILL: Rebuilt from 449 closed bar(s). High=29463.63 Low=29129.23 finalClosed=False [source=SELF_HEAL]
+27/10/2026 13:30:00.046 | Info | [ORBVL] 2026-10-27 13:30:00 ORB LOCKED: High=29463.63 Low=29129.23 Range=334.4 pips (price=334.40000000000146) [source=LIVE]
+27/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-27 14:00:00 CATCHUP: No catch-up entry. Price is inside ORB thresholds at/after TradingStart.
+27/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-27 15:00:00 Kill switch active. Blocking new entries.
+27/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-27 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+28/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-28 04:00:00 === New day reset: 2026-10-28 ===
+28/10/2026 04:00:00.027 | Info | L|2026-10-28|95593.46|400|3|-
+28/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-28 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+28/10/2026 13:30:00.027 | Info | [ORBVL] 2026-10-28 13:30:00 ORB BACKFILL: Rebuilt from 449 closed bar(s). High=29831.23 Low=29733.83 finalClosed=False [source=SELF_HEAL]
+28/10/2026 13:30:00.050 | Info | [ORBVL] 2026-10-28 13:30:00 ORB LOCKED: High=29831.23 Low=29733.83 Range=97.4 pips (price=97.39999999999782) [source=LIVE]
+28/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-28 14:00:00 CATCHUP SIGNAL: Sell | LongThreshold=29831.23 ShortThreshold=29733.83
+28/10/2026 14:00:00.027 | Trade | Executing Market Order to Sell 6.66 US100.cash (SL: 62, TP: 272)
+28/10/2026 14:00:00.027 | Trade | → Executing Market Order to Sell 6.66 US100.cash (SL: 62, TP: 272) SUCCEEDED, Position PID14
+28/10/2026 14:00:00.027 | Trade | Modifying position PID14 (SL: 29762.03, TP: 29432.03)
+28/10/2026 14:00:00.027 | Trade | → Modifying position PID14 (SL: 29762.03, TP: 29432.03) SUCCEEDED, Position PID14
+28/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-28 14:00:00 TRADE ENTERED: Sell US100.cash vol=6.66 entry=29702.03 SL=29762.03 TP=29432.03 riskPips=60.0 label=ORBVL_US100.cash_20261028 stopMode=FixedPoints(60pt)
+28/10/2026 14:10:20.254 | Trade | Modifying position PID14 (SL: 29744.03, TP: 29432.03)
+28/10/2026 14:10:20.254 | Trade | → Modifying position PID14 (SL: 29744.03, TP: 29432.03) SUCCEEDED, Position PID14
+28/10/2026 14:10:20.254 | Info | [ORBVL] 2026-10-28 14:10:20 EARLY RISK REDUCTION: SL moved to 29744.03 (remaining risk 70.0% at 0.71R)
+28/10/2026 14:10:20.254 | Trade | Executing Market Order to Sell 6.98 US100.cash (SL: 85.85, TP: 226.15)
+28/10/2026 14:10:20.254 | Trade | → Executing Market Order to Sell 6.98 US100.cash (SL: 85.85, TP: 226.15) SUCCEEDED, Position PID15
+28/10/2026 14:10:20.254 | Trade | Modifying position PID15 (SL: 29744.03, TP: 29432.03)
+28/10/2026 14:10:20.254 | Trade | → Modifying position PID15 (SL: 29744.03, TP: 29432.03) SUCCEEDED, Position PID15
+28/10/2026 14:10:20.254 | Info | [ORBVL] 2026-10-28 14:10:20 ADD TO WINNER: ORBVL_US100.cash_20261028_ADD1 Sell vol=6.98 entry=29658.18 SL=29744.03 TP=29432.03 addRisk=599.40 removed=119.88 x5 at 0.71R (total risk now 878.95 vs original 399.60)
+28/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-28 15:00:00 Kill switch active. Blocking new entries.
+28/10/2026 16:54:29.861 | Info | [ORBVL] 2026-10-28 16:54:29 POSITION CLOSED: ORBVL_US100.cash_20261028_ADD1 reason=StopLoss P/L=-606.56 pips=-86.9
+28/10/2026 16:54:29.955 | Info | [ORBVL] 2026-10-28 16:54:29 POSITION CLOSED: ORBVL_US100.cash_20261028 reason=StopLoss P/L=-285.38 pips=-42.9
+28/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-28 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+29/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-29 04:00:00 === New day reset: 2026-10-29 ===
+29/10/2026 04:00:00.027 | Info | L|2026-10-29|94701.52|250|4|cut
+29/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-29 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+29/10/2026 13:30:00.027 | Info | [ORBVL] 2026-10-29 13:30:00 ORB BACKFILL: Rebuilt from 449 closed bar(s). High=29582.93 Low=29400.33 finalClosed=False [source=SELF_HEAL]
+29/10/2026 13:30:00.046 | Info | [ORBVL] 2026-10-29 13:30:00 ORB LOCKED: High=29582.93 Low=29400.33 Range=182.6 pips (price=182.59999999999854) [source=LIVE]
+29/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-29 14:00:00 CATCHUP SIGNAL: Sell | LongThreshold=29582.93 ShortThreshold=29400.33
+29/10/2026 14:00:00.027 | Trade | Executing Market Order to Sell 4.16 US100.cash (SL: 62, TP: 272)
+29/10/2026 14:00:00.027 | Trade | → Executing Market Order to Sell 4.16 US100.cash (SL: 62, TP: 272) SUCCEEDED, Position PID16
+29/10/2026 14:00:00.027 | Trade | Modifying position PID16 (SL: 29456.63, TP: 29126.63)
+29/10/2026 14:00:00.027 | Trade | → Modifying position PID16 (SL: 29456.63, TP: 29126.63) SUCCEEDED, Position PID16
+29/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-29 14:00:00 TRADE ENTERED: Sell US100.cash vol=4.16 entry=29396.63 SL=29456.63 TP=29126.63 riskPips=60.0 label=ORBVL_US100.cash_20261029 stopMode=FixedPoints(60pt)
+29/10/2026 14:02:45.350 | Info | [ORBVL] 2026-10-29 14:02:45 POSITION CLOSED: ORBVL_US100.cash_20261029 reason=StopLoss P/L=-252.72 pips=-60.8
+29/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-29 15:00:00 Kill switch active. Blocking new entries.
+29/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-29 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+30/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-30 04:00:00 === New day reset: 2026-10-30 ===
+30/10/2026 04:00:00.027 | Info | L|2026-10-30|94448.80|250|5|cut
+30/10/2026 04:00:00.027 | Info | [ORBVL] 2026-10-30 04:00:00 SESSION_TIMEZONE mode=Local rangeTz=AmericaNewYork execTz=AmericaNewYork rangeUtc=06:00-13:30 tradingStartUtc=14:00 killUtc=15:00 closeUtc=19:50
+30/10/2026 13:30:00.027 | Info | [ORBVL] 2026-10-30 13:30:00 ORB BACKFILL: Rebuilt from 449 closed bar(s). High=28909.43 Low=28604.53 finalClosed=False [source=SELF_HEAL]
+30/10/2026 13:30:00.046 | Info | [ORBVL] 2026-10-30 13:30:00 ORB LOCKED: High=28909.43 Low=28604.53 Range=304.9 pips (price=304.90000000000146) [source=LIVE]
+30/10/2026 14:00:00.027 | Info | [ORBVL] 2026-10-30 14:00:00 CATCHUP: No catch-up entry. Price is inside ORB thresholds at/after TradingStart.
+30/10/2026 15:00:00.027 | Info | [ORBVL] 2026-10-30 15:00:00 Kill switch active. Blocking new entries.
+30/10/2026 19:50:00.027 | Info | [ORBVL] 2026-10-30 19:50:00 CLOSE TIME reached (19:50). Closing any open positions and blocking new entries.
+30/10/2026 20:49:59.856 | Info | [ORBVL] 2026-10-30 20:49:59 ORB Bot stopped.
+30/10/2026 20:49:59.856 | Info | CBot instance [NAS Add to Winner with Ladder, US100.cash, m1] stopped.
