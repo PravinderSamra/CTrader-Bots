@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-02T14:16:20.583Z",
+  "generatedAt": "2026-11-02T17:05:48.875Z",
   "yields": {
     "US10Y": 4.98,
     "US2Y": 4.61,
@@ -22,8 +22,8 @@
     "probHike": 24
   },
   "marketVolatility": {
-    "GVZ": 22.73,
-    "VIX": 17.2
+    "GVZ": 26.15,
+    "VIX": 19.42
   },
   "positioning": {
     "cotNetLong": 179906,
@@ -34,60 +34,66 @@
     "openInterestChange": -13658
   },
   "etfFlows": {
-    "gldTonnes": 1118.2,
-    "gldWoWChange": -18.6,
+    "gldTonnes": 1110.5,
+    "gldWoWChange": -7.7,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3941.35,
-    "XAGUSD": 50.784,
-    "EURUSD": 1.12139,
-    "USDJPY": 157.7725,
-    "USDCHF": 0.81978,
-    "USDCNH": 6.64712,
-    "GBPUSD": 1.34114,
-    "USDCAD": 1.39847,
-    "USDSEK": 9.76989,
-    "US500": 7624.6,
-    "GER40": 25874.05,
-    "UK100": 10717.15,
+    "XAUUSD": 3968.78,
+    "XAGUSD": 50.983,
+    "EURUSD": 1.12081,
+    "USDJPY": 157.859,
+    "USDCHF": 0.8182,
+    "USDCNH": 6.64626,
+    "GBPUSD": 1.34217,
+    "USDCAD": 1.39711,
+    "USDSEK": 9.773,
+    "US500": 7623.6,
+    "GER40": 26033.65,
+    "UK100": 10776.15,
     "ADR_14day": 72,
-    "ADR_usedToday": 68.6,
-    "goldSilverRatio": 77.6
+    "ADR_usedToday": 88.6,
+    "goldSilverRatio": 77.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.5837,
     "nfci": -0.487
   },
   "geopoliticalRisk": {
-    "gpr": 146.2,
-    "gprDate": "2026-09"
+    "gpr": 150.5,
+    "gprDate": "2026-10"
   },
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Gold rebounds from one-year low as oil slides ahead of US midterms - Reuters",
+      "headline": "TotalEnergies says Iran war could accelerate energy transition - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-02T14:06:26.000Z",
+      "hoursAgo": 3
+    },
+    {
+      "headline": "Gold rises over 1% from one-year low on softer oil prices; US midterms in focus - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-02T05:04:00.000Z",
-      "hoursAgo": 9.2
+      "hoursAgo": 12
     },
     {
       "headline": "Rupee ends little changed as traders stay cautious despite oil, dollar drop - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-02T02:57:00.000Z",
-      "hoursAgo": 11.3
+      "hoursAgo": 14.1
     },
     {
-      "headline": "Dollar dips ahead of US midterms; bitcoin stabilises after crypto heist - Reuters",
+      "headline": "Dollar declines ahead of US midterms as oil falls; bitcoin steadies after crypto theft - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-02T00:57:00.000Z",
-      "hoursAgo": 13.3
+      "hoursAgo": 16.1
     },
     {
       "headline": "Bank of England poised to raise rates but may push back on bets for more - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-02T00:03:00.000Z",
-      "hoursAgo": 14.2
+      "hoursAgo": 17
     }
   ],
   "briefing": null
