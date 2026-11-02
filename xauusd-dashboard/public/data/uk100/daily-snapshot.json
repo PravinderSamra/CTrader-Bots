@@ -1,60 +1,60 @@
 {
-  "generatedAt": "2026-10-30T21:48:36.457Z",
+  "generatedAt": "2026-11-02T14:16:25.973Z",
   "prices": {
-    "UK100": 10720.75,
-    "GBPUSD": 1.33935,
-    "GBPEUR": 1.19941,
-    "US500": 7581.1,
-    "NAS100": 28380.35,
-    "BRENT": 116.7,
-    "COPPER": 6.5653,
-    "VIX": 19.665,
-    "USDX": 101.953,
-    "XAUUSD": 3876.935,
-    "UK100_dayPct": -0.13
+    "UK100": 10716.85,
+    "GBPUSD": 1.34121,
+    "GBPEUR": 1.19599,
+    "US500": 7624.4,
+    "NAS100": 28624.45,
+    "BRENT": 110.351,
+    "COPPER": 6.6148,
+    "VIX": 19.155,
+    "USDX": 101.659,
+    "XAUUSD": 3941.265,
+    "UK100_dayPct": -0.02
   },
   "fx": {
-    "gbpUsdDayPct": 0.12,
+    "gbpUsdDayPct": 0.15,
     "gbpUsd20dPercentile": 84,
-    "sterlingEri": 86.1903,
-    "sterlingEriDayChange": 0.33,
+    "sterlingEri": 86.2955,
+    "sterlingEriDayChange": 0.11,
     "ftseImpactFromGbp": "NEUTRAL"
   },
   "ukRates": {
     "bankRate": 3.75,
-    "sonia": 3.7338,
-    "soniaMinusBankRate": -0.02,
-    "gilt5y": 4.9788,
-    "gilt10y": 5.3256,
-    "gilt20y": 5.77,
-    "gilt10yDayBp": 0,
-    "gilt20yDayBp": -1,
-    "slope5s20s": 0.79,
-    "giltUst10ySpread": 0.35,
+    "sonia": 3.7352,
+    "soniaMinusBankRate": -0.01,
+    "gilt5y": 4.9126,
+    "gilt10y": 5.2764,
+    "gilt20y": 5.7388,
+    "gilt10yDayBp": -5,
+    "gilt20yDayBp": -3,
+    "slope5s20s": 0.83,
+    "giltUst10ySpread": 0.3,
     "longEndStress": false,
     "nextMpcDate": "2026-11-05",
-    "daysToMpc": 6
+    "daysToMpc": 3
   },
   "usLinkage": {
-    "us500DayPct": -1.27,
-    "nas100DayPct": -2.37,
-    "vix": 19.665,
+    "us500DayPct": 0.57,
+    "nas100DayPct": 0.86,
+    "vix": 19.155,
     "vixRegime": "NORMAL",
     "us10y": 4.98,
-    "usdx": 101.953
+    "usdx": 101.659
   },
   "commodities": {
-    "brentDayPct": 0.52,
-    "copperDayPct": -1.39,
-    "goldDayPct": -3.59,
+    "brentDayPct": -5.43,
+    "copperDayPct": 0.78,
+    "goldDayPct": 1.66,
     "brent20dTrend": "UP"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": -1.23,
-    "dax40DayPct": -1.15,
-    "eurUsdDayPct": -0.12,
+    "eurostoxx50DayPct": 0.41,
+    "dax40DayPct": 0.28,
+    "eurUsdDayPct": 0.43,
     "ftseDaxCorr20d": 0.51,
-    "ftseSx5eCorr20d": 0.32,
+    "ftseSx5eCorr20d": 0.31,
     "tapeAgreement": "ALIGNED",
     "preOpenLead": "NONE"
   },
@@ -69,22 +69,22 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent +0.52%",
-      "read": "BULLISH",
+      "driver": "Brent -5.43%",
+      "read": "BEARISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper -1.39%",
-      "read": "BEARISH",
+      "driver": "Copper +0.78%",
+      "read": "BULLISH",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
     {
       "sector": "BANKS",
       "weightNote": "HSBC, Barclays, NatWest, StanChart",
-      "driver": "10Y gilt +0bp",
-      "read": "NEUTRAL",
+      "driver": "10Y gilt -5bp",
+      "read": "BEARISH",
       "detail": "Yields up helps bank net interest margins."
     },
     {
@@ -102,56 +102,73 @@
       "detail": "USD/EUR earners — takes the GBP sign-flip, softened toward neutral vs the index-level read."
     }
   ],
-  "economicCalendar": [],
+  "economicCalendar": [
+    {
+      "event": "BoE MPC Rate Decision",
+      "region": "UK",
+      "impact": "HIGH",
+      "timeIso": "2026-11-05T12:00:00.000Z",
+      "timeLondon": "12:00 GMT",
+      "daysFromToday": 3
+    },
+    {
+      "event": "US Nonfarm Payrolls",
+      "region": "US",
+      "impact": "HIGH",
+      "timeIso": "2026-11-06T13:30:00.000Z",
+      "timeLondon": "13:30 GMT",
+      "daysFromToday": 4
+    }
+  ],
   "newsItems": [
     {
-      "headline": "BP beats forecasts with record profit, targets early settling of Deepwater Horizon bill - Reuters",
+      "headline": "Bank of England poised to raise rates but may push back on bets for more - Reuters",
       "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPT3h0ZnhqQXNOaC15cXFDMlJfa0kwa0xKeDloU0hKQVducC1rOERkX2R5bG1rQ1JSUFpYMUVaZ0p5RGw1eDZEMVliNTJ6V2s3elFyaks4UDg4UWNMMklreW9iUHBoZWpVZE5mZmxnY2JybHI3bUI3SWxuVV9lZVFvUDRYREYydzN5dDVHMXV6bXp5T3ZHZTlIXw?oc=5",
-      "hoursAgo": 7.3
+      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPOFVxcW9DcnR5S1BVdndGZkhXT1F1SUR0WEZTbkRsSzRLSmtiOXFZdXNneUs4VXVCaV9ldFZQVVdHMnVvWDBrZERDTFo5bHc4NE9GelZKbmloVi1VVTVmN0tiZXFUSW5fMFIzMXZCWE5CWHd5TEdHc2VvRVA3T1VCRV9XampjTDBmd3BpTlkyNjBScTJReVhCanlUX21XX1dhbWc?oc=5",
+      "hoursAgo": 14.2
     }
   ],
   "riskTone": null,
   "bias": {
-    "score": -8,
-    "label": "BEARISH",
-    "conviction": "HIGH",
+    "score": 2,
+    "label": "NEUTRAL",
+    "conviction": "LOW",
     "drivers": [
       {
         "name": "GBP",
         "weight": 3,
         "impact": "NEUTRAL",
-        "detail": "GBP/USD +0.12% → FTSE headwind (sign-flipped)"
+        "detail": "GBP/USD +0.15% → FTSE headwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
-        "impact": "BEARISH",
-        "detail": "US500 -1.27% today"
+        "impact": "BULLISH",
+        "detail": "US500 +0.57% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 19.665 — NORMAL regime"
+        "detail": "VIX 19.155 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
-        "impact": "NEUTRAL",
-        "detail": "Brent +0.52% (energy majors)"
+        "impact": "BEARISH",
+        "detail": "Brent -5.43% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
-        "impact": "BEARISH",
-        "detail": "Copper -1.39% (miners/China)"
+        "impact": "BULLISH",
+        "detail": "Copper +0.78% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
         "weight": 1,
         "impact": "NEUTRAL",
-        "detail": "10Y gilt +0bp"
+        "detail": "10Y gilt -5bp"
       },
       {
         "name": "GBP COT (proxy, contrarian)",
@@ -167,73 +184,66 @@
       },
       {
         "name": "European tape (SX5E/DAX)",
-        "weight": 1,
-        "impact": "BEARISH",
-        "detail": "SX5E -1.23% / DAX -1.15%"
+        "weight": 2.5,
+        "impact": "BULLISH",
+        "detail": "SX5E +0.41% / DAX +0.28%"
       }
     ],
     "eventSuppressed": false
   },
   "orbContext": {
-    "computedAt": "2026-10-30T21:48:36.456Z",
-    "mode": "CLOSED",
+    "computedAt": "2026-11-02T14:16:25.972Z",
+    "mode": "POST_ORB",
     "cashOpenLondon": "08:00 GMT",
-    "overnightHigh": 10784,
-    "overnightLow": 10725.7,
-    "priorDayHigh": 10774.2,
-    "priorDayLow": 10697.4,
-    "priorClose": 10734.2,
-    "prevWeekHigh": 10883,
-    "prevWeekLow": 10625.7,
-    "gapPts": -13.5,
-    "gapPct": -0.13,
-    "orbHigh": 10784,
-    "orbLow": 10741.9,
-    "orbBrokenDirection": "DOWN",
+    "overnightHigh": 10731.8,
+    "overnightLow": 10684.7,
+    "priorDayHigh": 10784,
+    "priorDayLow": 10685.3,
+    "priorClose": 10719.2,
+    "prevWeekHigh": 10784,
+    "prevWeekLow": 10640.7,
+    "gapPts": -2.4,
+    "gapPct": -0.02,
+    "orbHigh": 10707,
+    "orbLow": 10684.7,
+    "orbBrokenDirection": "UP",
     "eventWindows": [],
-    "adr14": 111.5,
-    "adrUsedPct": 89,
+    "adr14": 111.4,
+    "adrUsedPct": 59,
     "expansionState": {
-      "label": "NORMAL",
-      "rangeSoFarPct": 89,
-      "expectedRangePctByNow": 100,
-      "rangeVsTypical": 0.89,
-      "expectedVolPctByNow": 100,
-      "moveMostlyDone": true,
-      "note": "Range 89% of ADR vs ~100% typical by 16:00 BST (about the typical pace). ~100% of a typical day's volume already done — expect a rangebound remainder, tighten targets."
+      "label": "COMPRESSED",
+      "rangeSoFarPct": 59,
+      "expectedRangePctByNow": 93,
+      "rangeVsTypical": 0.63,
+      "expectedVolPctByNow": 79,
+      "moveMostlyDone": false,
+      "note": "Range 59% of ADR vs ~93% typical by 14:00 BST (below the typical pace (compressed/range)). only ~79% of volume typically done by now — an afternoon expansion is still possible."
     }
   },
   "orbIntel": {
-    "stance": "SHORT_FAVOURED",
-    "stanceLine": "Backdrop favours downside breaks — 89% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+    "stance": "MIXED",
+    "stanceLine": "No clean edge — mixed signals — The obvious draw (PDH 10784) sits beyond what's left of a typical day's range — targets past it are stretch-only today.",
     "signals": [
-      {
-        "direction": "BREAKOUT_SUSPECT",
-        "severity": "CAUTION",
-        "source": "RANGE",
-        "rule": "R4",
-        "text": "89% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
-      },
       {
         "direction": "NEUTRAL",
         "severity": "CAUTION",
         "source": "RANGE",
         "rule": "R7",
-        "text": "The obvious draw (PDL 10697.4) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        "text": "The obvious draw (PDH 10784) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
       },
       {
-        "direction": "FAVOURS_SHORT",
+        "direction": "FAVOURS_LONG",
         "severity": "INFO",
         "source": "TAPE",
         "rule": "R8",
-        "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.23%) — the cross-market lean is down."
+        "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.41%) — the cross-market lean is up."
       },
       {
-        "direction": "FAVOURS_SHORT",
+        "direction": "FAVOURS_LONG",
         "severity": "INFO",
         "source": "TAPE",
         "rule": "R9",
-        "text": "Past 13:30 with US futures -1.27% — the 14:30 US handoff argues against holding longs into the US open."
+        "text": "Past 13:30 with US futures +0.57% — the 14:30 US handoff argues for holding longs into the US open."
       },
       {
         "direction": "BREAKOUT_SUSPECT",

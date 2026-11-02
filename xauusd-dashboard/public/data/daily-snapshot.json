@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-30T21:48:31.750Z",
+  "generatedAt": "2026-11-02T14:16:20.583Z",
   "yields": {
     "US10Y": 4.98,
     "US2Y": 4.61,
@@ -34,26 +34,26 @@
     "openInterestChange": -13658
   },
   "etfFlows": {
-    "gldTonnes": 1136.8,
-    "gldWoWChange": 3.6,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1118.2,
+    "gldWoWChange": -18.6,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3876.935,
-    "XAGUSD": 49.129,
-    "EURUSD": 1.11667,
-    "USDJPY": 157.538,
-    "USDCHF": 0.82458,
-    "USDCNH": 6.65318,
-    "GBPUSD": 1.33935,
-    "USDCAD": 1.39773,
-    "USDSEK": 9.8184,
-    "US500": 7581.1,
-    "GER40": 25803.15,
-    "UK100": 10720.75,
-    "ADR_14day": 63,
-    "ADR_usedToday": 156.3,
-    "goldSilverRatio": 78.9
+    "XAUUSD": 3941.35,
+    "XAGUSD": 50.784,
+    "EURUSD": 1.12139,
+    "USDJPY": 157.7725,
+    "USDCHF": 0.81978,
+    "USDCNH": 6.64712,
+    "GBPUSD": 1.34114,
+    "USDCAD": 1.39847,
+    "USDSEK": 9.76989,
+    "US500": 7624.6,
+    "GER40": 25874.05,
+    "UK100": 10717.15,
+    "ADR_14day": 72,
+    "ADR_usedToday": 68.6,
+    "goldSilverRatio": 77.6
   },
   "dollarLiquidity": {
     "stlfsi": -0.5837,
@@ -66,16 +66,28 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "St. Louis Fed's Musalem: Tighter monetary policy is needed 'soon'",
-      "source": "CNBC",
-      "publishedAt": "2026-10-30T16:30:16.000Z",
-      "hoursAgo": 5.3
+      "headline": "Gold rebounds from one-year low as oil slides ahead of US midterms - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-02T05:04:00.000Z",
+      "hoursAgo": 9.2
     },
     {
-      "headline": "Swiss central bank posts bumper $23bn profit as gold, foreign assets soar",
-      "source": "CNBC",
-      "publishedAt": "2026-10-30T12:31:40.000Z",
-      "hoursAgo": 9.3
+      "headline": "Rupee ends little changed as traders stay cautious despite oil, dollar drop - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-02T02:57:00.000Z",
+      "hoursAgo": 11.3
+    },
+    {
+      "headline": "Dollar dips ahead of US midterms; bitcoin stabilises after crypto heist - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-02T00:57:00.000Z",
+      "hoursAgo": 13.3
+    },
+    {
+      "headline": "Bank of England poised to raise rates but may push back on bets for more - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-02T00:03:00.000Z",
+      "hoursAgo": 14.2
     }
   ],
   "briefing": null
