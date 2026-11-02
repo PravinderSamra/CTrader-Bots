@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-11-02T17:05:48.875Z",
+  "generatedAt": "2026-11-02T22:57:04.990Z",
   "yields": {
-    "US10Y": 4.98,
-    "US2Y": 4.61,
-    "realYield10Y": 2.63,
-    "realYield5Y": 2.31,
-    "curve2s10s": 37,
-    "breakeven10Y": 2.34,
-    "breakeven5Y": 2.46,
-    "forward5y5y": 2.22,
+    "US10Y": 4.94,
+    "US2Y": 4.56,
+    "realYield10Y": 2.6,
+    "realYield5Y": 2.25,
+    "curve2s10s": 38,
+    "breakeven10Y": 2.29,
+    "breakeven5Y": 2.39,
+    "forward5y5y": 2.19,
     "dayOverDay": {
-      "US10Y": -0.07,
-      "US2Y": -0.06,
-      "realYield10Y": -0.04
+      "US10Y": -0.04,
+      "US2Y": -0.05,
+      "realYield10Y": -0.03
     }
   },
   "fedExpectations": {
@@ -34,26 +34,26 @@
     "openInterestChange": -13658
   },
   "etfFlows": {
-    "gldTonnes": 1110.5,
-    "gldWoWChange": -7.7,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1116.8,
+    "gldWoWChange": 6.3,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3968.78,
-    "XAGUSD": 50.983,
-    "EURUSD": 1.12081,
-    "USDJPY": 157.859,
-    "USDCHF": 0.8182,
-    "USDCNH": 6.64626,
-    "GBPUSD": 1.34217,
-    "USDCAD": 1.39711,
-    "USDSEK": 9.773,
-    "US500": 7623.6,
-    "GER40": 26033.65,
-    "UK100": 10776.15,
+    "XAUUSD": 3946.295,
+    "XAGUSD": 50.65,
+    "EURUSD": 1.11887,
+    "USDJPY": 157.8905,
+    "USDCHF": 0.8189,
+    "USDCNH": 6.64578,
+    "GBPUSD": 1.34068,
+    "USDCAD": 1.39873,
+    "USDSEK": 9.78154,
+    "US500": 7556.9,
+    "GER40": 25899.05,
+    "UK100": 10765.25,
     "ADR_14day": 72,
     "ADR_usedToday": 88.6,
-    "goldSilverRatio": 77.8
+    "goldSilverRatio": 77.9
   },
   "dollarLiquidity": {
     "stlfsi": -0.5837,
@@ -68,32 +68,32 @@
     {
       "headline": "TotalEnergies says Iran war could accelerate energy transition - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-02T14:06:26.000Z",
-      "hoursAgo": 3
+      "publishedAt": "2026-11-02T17:16:12.000Z",
+      "hoursAgo": 5.7
     },
     {
-      "headline": "Gold rises over 1% from one-year low on softer oil prices; US midterms in focus - Reuters",
+      "headline": "Gold rises over 2% from one-year low on softer oil prices; US midterms in focus - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-02T05:04:00.000Z",
-      "hoursAgo": 12
+      "hoursAgo": 17.9
     },
     {
       "headline": "Rupee ends little changed as traders stay cautious despite oil, dollar drop - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-02T02:57:00.000Z",
-      "hoursAgo": 14.1
+      "hoursAgo": 20
     },
     {
       "headline": "Dollar declines ahead of US midterms as oil falls; bitcoin steadies after crypto theft - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-02T00:57:00.000Z",
-      "hoursAgo": 16.1
+      "hoursAgo": 22
     },
     {
       "headline": "Bank of England poised to raise rates but may push back on bets for more - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-02T00:03:00.000Z",
-      "hoursAgo": 17
+      "hoursAgo": 22.9
     }
   ],
   "briefing": null
