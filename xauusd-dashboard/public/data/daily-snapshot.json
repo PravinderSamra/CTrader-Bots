@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-02T22:57:04.990Z",
+  "generatedAt": "2026-11-03T13:17:31.790Z",
   "yields": {
     "US10Y": 4.94,
     "US2Y": 4.56,
@@ -34,26 +34,26 @@
     "openInterestChange": -13658
   },
   "etfFlows": {
-    "gldTonnes": 1116.8,
-    "gldWoWChange": 6.3,
+    "gldTonnes": 1119.6,
+    "gldWoWChange": 2.8,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3946.295,
-    "XAGUSD": 50.65,
-    "EURUSD": 1.11887,
-    "USDJPY": 157.8905,
-    "USDCHF": 0.8189,
-    "USDCNH": 6.64578,
-    "GBPUSD": 1.34068,
-    "USDCAD": 1.39873,
-    "USDSEK": 9.78154,
-    "US500": 7556.9,
-    "GER40": 25899.05,
-    "UK100": 10765.25,
-    "ADR_14day": 72,
-    "ADR_usedToday": 88.6,
-    "goldSilverRatio": 77.9
+    "XAUUSD": 3936.475,
+    "XAGUSD": 49.721,
+    "EURUSD": 1.11832,
+    "USDJPY": 158.214,
+    "USDCHF": 0.8192,
+    "USDCNH": 6.67216,
+    "GBPUSD": 1.34185,
+    "USDCAD": 1.39748,
+    "USDSEK": 9.79455,
+    "US500": 7535,
+    "GER40": 25868.55,
+    "UK100": 10685.35,
+    "ADR_14day": 73.5,
+    "ADR_usedToday": 69.2,
+    "goldSilverRatio": 79.2
   },
   "dollarLiquidity": {
     "stlfsi": -0.5837,
@@ -66,34 +66,16 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Dollar drifts on Mideast, midterm risks; Aussie dips after expected RBA hike - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-03T01:10:00.000Z",
+      "hoursAgo": 12.1
+    },
+    {
       "headline": "TotalEnergies says Iran war could accelerate energy transition - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-02T17:16:12.000Z",
-      "hoursAgo": 5.7
-    },
-    {
-      "headline": "Gold rises over 2% from one-year low on softer oil prices; US midterms in focus - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-02T05:04:00.000Z",
-      "hoursAgo": 17.9
-    },
-    {
-      "headline": "Rupee ends little changed as traders stay cautious despite oil, dollar drop - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-02T02:57:00.000Z",
       "hoursAgo": 20
-    },
-    {
-      "headline": "Dollar declines ahead of US midterms as oil falls; bitcoin steadies after crypto theft - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-02T00:57:00.000Z",
-      "hoursAgo": 22
-    },
-    {
-      "headline": "Bank of England poised to raise rates but may push back on bets for more - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-02T00:03:00.000Z",
-      "hoursAgo": 22.9
     }
   ],
   "briefing": null
