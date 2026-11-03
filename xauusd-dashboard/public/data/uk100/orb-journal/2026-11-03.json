@@ -63,7 +63,37 @@
         "adr14": 109.2,
         "adrUsedPct": 71
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-11-03T20:21:45.926Z",
+        "fwd1hPct": -0.01,
+        "fwd3hPct": -0.63,
+        "toClosePct": -0.63,
+        "maxUpPct": 0.28,
+        "maxDownPct": -0.63,
+        "verdict": "RIGHT",
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R10",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R3",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "FLAT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-11-03T15:10:07.625Z",
@@ -127,7 +157,96 @@
         "adr14": 109.2,
         "adrUsedPct": 88
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-11-03T20:21:46.063Z",
+        "fwd1hPct": -0.36,
+        "fwd3hPct": null,
+        "toClosePct": -0.36,
+        "maxUpPct": 0.12,
+        "maxDownPct": -0.36,
+        "verdict": "RIGHT",
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R10",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R3",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-11-03T20:21:43.618Z",
+      "londonTime": "20:21 GMT",
+      "mode": "CLOSED",
+      "price": 10602.35,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 147% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "147% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 100th percentile of its 20-day range and still rising — a persistent FX headwind capping upside breaks (weak GBP is what lifts FTSE)."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -2,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10730.6,
+        "orbLow": 10691.1,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10757.2,
+        "overnightLow": 10687.2,
+        "priorDayHigh": 10790.8,
+        "priorDayLow": 10684.7,
+        "gapPct": -1.5,
+        "adr14": 109.2,
+        "adrUsedPct": 147
+      },
+      "outcome": {
+        "resolvedAt": "2026-11-03T20:21:46.063Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }

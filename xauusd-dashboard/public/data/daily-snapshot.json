@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-03T15:10:01.136Z",
+  "generatedAt": "2026-11-03T20:21:38.589Z",
   "yields": {
     "US10Y": 4.94,
     "US2Y": 4.56,
@@ -34,26 +34,26 @@
     "openInterestChange": -13658
   },
   "etfFlows": {
-    "gldTonnes": 1119.6,
-    "gldWoWChange": 0,
-    "trend3W": "FLAT"
+    "gldTonnes": 1123.9,
+    "gldWoWChange": 4.3,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3936.725,
-    "XAGUSD": 49.958,
-    "EURUSD": 1.11905,
-    "USDJPY": 158.454,
-    "USDCHF": 0.82061,
-    "USDCNH": 6.66921,
-    "GBPUSD": 1.34251,
-    "USDCAD": 1.39926,
-    "USDSEK": 9.80179,
-    "US500": 7564.6,
-    "GER40": 25926.05,
-    "UK100": 10658.35,
+    "XAUUSD": 3921.4,
+    "XAGUSD": 49.546,
+    "EURUSD": 1.11909,
+    "USDJPY": 158.722,
+    "USDCHF": 0.82086,
+    "USDCNH": 6.6703,
+    "GBPUSD": 1.34153,
+    "USDCAD": 1.40053,
+    "USDSEK": 9.79506,
+    "US500": 7569.8,
+    "GER40": 25835.95,
+    "UK100": 10602.35,
     "ADR_14day": 73.5,
     "ADR_usedToday": 75.1,
-    "goldSilverRatio": 78.8
+    "goldSilverRatio": 79.1
   },
   "dollarLiquidity": {
     "stlfsi": -0.5837,
@@ -66,16 +66,16 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Ghosted after a job interview? There's a website for that—and thousands of frustrated job seekers have weighed in",
+      "source": "CNBC",
+      "publishedAt": "2026-11-03T18:00:01.000Z",
+      "hoursAgo": 2.4
+    },
+    {
       "headline": "Dollar drifts on Mideast, midterm risks; Aussie dips after expected RBA hike - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-03T01:10:00.000Z",
-      "hoursAgo": 14
-    },
-    {
-      "headline": "TotalEnergies says Iran war could accelerate energy transition - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-02T17:16:12.000Z",
-      "hoursAgo": 21.9
+      "hoursAgo": 19.2
     }
   ],
   "briefing": null
