@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-03T13:17:31.790Z",
+  "generatedAt": "2026-11-03T15:10:01.136Z",
   "yields": {
     "US10Y": 4.94,
     "US2Y": 4.56,
@@ -22,8 +22,8 @@
     "probHike": 24
   },
   "marketVolatility": {
-    "GVZ": 26.15,
-    "VIX": 19.42
+    "GVZ": 25.45,
+    "VIX": 21.15
   },
   "positioning": {
     "cotNetLong": 179906,
@@ -35,25 +35,25 @@
   },
   "etfFlows": {
     "gldTonnes": 1119.6,
-    "gldWoWChange": 2.8,
-    "trend3W": "INFLOW"
+    "gldWoWChange": 0,
+    "trend3W": "FLAT"
   },
   "snapshotPrices": {
-    "XAUUSD": 3936.475,
-    "XAGUSD": 49.721,
-    "EURUSD": 1.11832,
-    "USDJPY": 158.214,
-    "USDCHF": 0.8192,
-    "USDCNH": 6.67216,
-    "GBPUSD": 1.34185,
-    "USDCAD": 1.39748,
-    "USDSEK": 9.79455,
-    "US500": 7535,
-    "GER40": 25868.55,
-    "UK100": 10685.35,
+    "XAUUSD": 3936.725,
+    "XAGUSD": 49.958,
+    "EURUSD": 1.11905,
+    "USDJPY": 158.454,
+    "USDCHF": 0.82061,
+    "USDCNH": 6.66921,
+    "GBPUSD": 1.34251,
+    "USDCAD": 1.39926,
+    "USDSEK": 9.80179,
+    "US500": 7564.6,
+    "GER40": 25926.05,
+    "UK100": 10658.35,
     "ADR_14day": 73.5,
-    "ADR_usedToday": 69.2,
-    "goldSilverRatio": 79.2
+    "ADR_usedToday": 75.1,
+    "goldSilverRatio": 78.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.5837,
@@ -69,13 +69,13 @@
       "headline": "Dollar drifts on Mideast, midterm risks; Aussie dips after expected RBA hike - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-03T01:10:00.000Z",
-      "hoursAgo": 12.1
+      "hoursAgo": 14
     },
     {
       "headline": "TotalEnergies says Iran war could accelerate energy transition - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-02T17:16:12.000Z",
-      "hoursAgo": 20
+      "hoursAgo": 21.9
     }
   ],
   "briefing": null
