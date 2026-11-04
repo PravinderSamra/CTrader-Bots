@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T13:29:49.335Z",
+  "generatedAt": "2026-11-04T15:27:11.617Z",
   "yields": {
     "US10Y": 4.91,
     "US2Y": 4.59,
@@ -22,8 +22,8 @@
     "probHike": 20
   },
   "marketVolatility": {
-    "GVZ": 25.45,
-    "VIX": 21.15
+    "GVZ": 25.82,
+    "VIX": 20.83
   },
   "positioning": {
     "cotNetLong": 179906,
@@ -34,30 +34,30 @@
     "openInterestChange": -13658
   },
   "etfFlows": {
-    "gldTonnes": 1091,
-    "gldWoWChange": -32.9,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1092.5,
+    "gldWoWChange": 1.5,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4039.675,
-    "XAGUSD": 51.848,
-    "EURUSD": 1.12667,
-    "USDJPY": 158.299,
-    "USDCHF": 0.81546,
-    "USDCNH": 6.67032,
-    "GBPUSD": 1.34967,
-    "USDCAD": 1.39344,
-    "USDSEK": 9.74168,
-    "US500": 7642.3,
-    "GER40": 26327.75,
-    "UK100": 10819.75,
+    "XAUUSD": 4034.085,
+    "XAGUSD": 51.89,
+    "EURUSD": 1.12359,
+    "USDJPY": 158.5995,
+    "USDCHF": 0.81783,
+    "USDCNH": 6.67291,
+    "GBPUSD": 1.34667,
+    "USDCAD": 1.39661,
+    "USDSEK": 9.76675,
+    "US500": 7683.8,
+    "GER40": 26495.45,
+    "UK100": 10835.35,
     "ADR_14day": 73.6,
-    "ADR_usedToday": 131.5,
-    "goldSilverRatio": 77.9
+    "ADR_usedToday": 131.9,
+    "goldSilverRatio": 77.7
   },
   "dollarLiquidity": {
     "stlfsi": -0.5837,
-    "nfci": -0.487
+    "nfci": -0.459
   },
   "geopoliticalRisk": {
     "gpr": 150.5,
@@ -69,25 +69,25 @@
       "headline": "COMMENTARY: Asia hopes Democrats can provide relief from Trump's Iran war, tariffs - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-04T04:50:06.000Z",
-      "hoursAgo": 8.7
+      "hoursAgo": 10.6
     },
     {
-      "headline": "Stocks rally, dollar dips after Democrats' midterm sweep - Reuters",
+      "headline": "Stocks rally, dollar dips after Democrats' 'blue sweep' victory - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-04T01:06:00.000Z",
-      "hoursAgo": 12.4
+      "publishedAt": "2026-11-04T01:19:03.000Z",
+      "hoursAgo": 14.1
     },
     {
       "headline": "Gold gains 3% as dollar slides after Democratic midterm gains - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-04T00:58:00.000Z",
-      "hoursAgo": 12.5
+      "hoursAgo": 14.5
     },
     {
       "headline": "Ghosted after a job interview? There's a website for that—and thousands of frustrated job seekers have weighed in",
       "source": "CNBC",
       "publishedAt": "2026-11-03T18:00:01.000Z",
-      "hoursAgo": 19.5
+      "hoursAgo": 21.5
     }
   ],
   "briefing": null
