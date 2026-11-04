@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-11-03T20:21:38.589Z",
+  "generatedAt": "2026-11-04T13:29:49.335Z",
   "yields": {
-    "US10Y": 4.94,
-    "US2Y": 4.56,
-    "realYield10Y": 2.6,
-    "realYield5Y": 2.25,
-    "curve2s10s": 38,
-    "breakeven10Y": 2.29,
+    "US10Y": 4.91,
+    "US2Y": 4.59,
+    "realYield10Y": 2.62,
+    "realYield5Y": 2.31,
+    "curve2s10s": 32,
+    "breakeven10Y": 2.3,
     "breakeven5Y": 2.39,
-    "forward5y5y": 2.19,
+    "forward5y5y": 2.21,
     "dayOverDay": {
-      "US10Y": -0.04,
-      "US2Y": -0.05,
-      "realYield10Y": -0.03
+      "US10Y": -0.03,
+      "US2Y": 0.03,
+      "realYield10Y": 0.02
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-12-09",
     "probCut": 0,
-    "probHold": 76,
-    "probHike": 24
+    "probHold": 80,
+    "probHike": 20
   },
   "marketVolatility": {
     "GVZ": 25.45,
@@ -34,26 +34,26 @@
     "openInterestChange": -13658
   },
   "etfFlows": {
-    "gldTonnes": 1123.9,
-    "gldWoWChange": 4.3,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1091,
+    "gldWoWChange": -32.9,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3921.4,
-    "XAGUSD": 49.546,
-    "EURUSD": 1.11909,
-    "USDJPY": 158.722,
-    "USDCHF": 0.82086,
-    "USDCNH": 6.6703,
-    "GBPUSD": 1.34153,
-    "USDCAD": 1.40053,
-    "USDSEK": 9.79506,
-    "US500": 7569.8,
-    "GER40": 25835.95,
-    "UK100": 10602.35,
-    "ADR_14day": 73.5,
-    "ADR_usedToday": 75.1,
-    "goldSilverRatio": 79.1
+    "XAUUSD": 4039.675,
+    "XAGUSD": 51.848,
+    "EURUSD": 1.12667,
+    "USDJPY": 158.299,
+    "USDCHF": 0.81546,
+    "USDCNH": 6.67032,
+    "GBPUSD": 1.34967,
+    "USDCAD": 1.39344,
+    "USDSEK": 9.74168,
+    "US500": 7642.3,
+    "GER40": 26327.75,
+    "UK100": 10819.75,
+    "ADR_14day": 73.6,
+    "ADR_usedToday": 131.5,
+    "goldSilverRatio": 77.9
   },
   "dollarLiquidity": {
     "stlfsi": -0.5837,
@@ -66,16 +66,28 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "COMMENTARY: Asia hopes Democrats can provide relief from Trump's Iran war, tariffs - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-04T04:50:06.000Z",
+      "hoursAgo": 8.7
+    },
+    {
+      "headline": "Stocks rally, dollar dips after Democrats' midterm sweep - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-04T01:06:00.000Z",
+      "hoursAgo": 12.4
+    },
+    {
+      "headline": "Gold gains 3% as dollar slides after Democratic midterm gains - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-04T00:58:00.000Z",
+      "hoursAgo": 12.5
+    },
+    {
       "headline": "Ghosted after a job interview? There's a website for that—and thousands of frustrated job seekers have weighed in",
       "source": "CNBC",
       "publishedAt": "2026-11-03T18:00:01.000Z",
-      "hoursAgo": 2.4
-    },
-    {
-      "headline": "Dollar drifts on Mideast, midterm risks; Aussie dips after expected RBA hike - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-03T01:10:00.000Z",
-      "hoursAgo": 19.2
+      "hoursAgo": 19.5
     }
   ],
   "briefing": null
