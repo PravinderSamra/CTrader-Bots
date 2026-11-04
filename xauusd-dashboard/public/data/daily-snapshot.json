@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-04T15:27:11.617Z",
+  "generatedAt": "2026-11-04T20:37:03.636Z",
   "yields": {
     "US10Y": 4.91,
     "US2Y": 4.59,
@@ -34,29 +34,29 @@
     "openInterestChange": -13658
   },
   "etfFlows": {
-    "gldTonnes": 1092.5,
-    "gldWoWChange": 1.5,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1083.9,
+    "gldWoWChange": -8.6,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4034.085,
-    "XAGUSD": 51.89,
-    "EURUSD": 1.12359,
-    "USDJPY": 158.5995,
-    "USDCHF": 0.81783,
-    "USDCNH": 6.67291,
-    "GBPUSD": 1.34667,
-    "USDCAD": 1.39661,
-    "USDSEK": 9.76675,
-    "US500": 7683.8,
-    "GER40": 26495.45,
-    "UK100": 10835.35,
+    "XAUUSD": 4066.28,
+    "XAGUSD": 52.396,
+    "EURUSD": 1.12302,
+    "USDJPY": 158.447,
+    "USDCHF": 0.81681,
+    "USDCNH": 6.67514,
+    "GBPUSD": 1.34742,
+    "USDCAD": 1.3964,
+    "USDSEK": 9.73737,
+    "US500": 7707.8,
+    "GER40": 26645.85,
+    "UK100": 10909.45,
     "ADR_14day": 73.6,
-    "ADR_usedToday": 131.9,
-    "goldSilverRatio": 77.7
+    "ADR_usedToday": 150.6,
+    "goldSilverRatio": 77.6
   },
   "dollarLiquidity": {
-    "stlfsi": -0.5837,
+    "stlfsi": -0.5224,
     "nfci": -0.459
   },
   "geopoliticalRisk": {
@@ -66,28 +66,40 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "US slaps sanctions on Indian, Turkish firms and people for aiding Iran - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-04T19:36:33.000Z",
+      "hoursAgo": 1
+    },
+    {
+      "headline": "US slaps sanctions on Indian, Turkish firms and people for aiding Iran - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-04T19:06:12.000Z",
+      "hoursAgo": 1.5
+    },
+    {
       "headline": "COMMENTARY: Asia hopes Democrats can provide relief from Trump's Iran war, tariffs - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-04T04:50:06.000Z",
-      "hoursAgo": 10.6
+      "hoursAgo": 15.8
+    },
+    {
+      "headline": "Dollar falls after Democrats take US Congress in midterm elections - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-04T01:42:00.000Z",
+      "hoursAgo": 18.9
     },
     {
       "headline": "Stocks rally, dollar dips after Democrats' 'blue sweep' victory - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-04T01:19:03.000Z",
-      "hoursAgo": 14.1
+      "hoursAgo": 19.3
     },
     {
-      "headline": "Gold gains 3% as dollar slides after Democratic midterm gains - Reuters",
+      "headline": "Gold heads for biggest daily gain since August as dollar weakens - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-04T00:58:00.000Z",
-      "hoursAgo": 14.5
-    },
-    {
-      "headline": "Ghosted after a job interview? There's a website for that—and thousands of frustrated job seekers have weighed in",
-      "source": "CNBC",
-      "publishedAt": "2026-11-03T18:00:01.000Z",
-      "hoursAgo": 21.5
+      "hoursAgo": 19.7
     }
   ],
   "briefing": null
