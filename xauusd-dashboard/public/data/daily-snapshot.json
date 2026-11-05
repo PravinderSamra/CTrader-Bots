@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-11-04T20:37:03.636Z",
+  "generatedAt": "2026-11-05T13:44:19.412Z",
   "yields": {
-    "US10Y": 4.91,
-    "US2Y": 4.59,
-    "realYield10Y": 2.62,
-    "realYield5Y": 2.31,
-    "curve2s10s": 32,
-    "breakeven10Y": 2.3,
-    "breakeven5Y": 2.39,
-    "forward5y5y": 2.21,
+    "US10Y": 4.95,
+    "US2Y": 4.61,
+    "realYield10Y": 2.65,
+    "realYield5Y": 2.35,
+    "curve2s10s": 34,
+    "breakeven10Y": 2.26,
+    "breakeven5Y": 2.3,
+    "forward5y5y": 2.22,
     "dayOverDay": {
-      "US10Y": -0.03,
-      "US2Y": 0.03,
-      "realYield10Y": 0.02
+      "US10Y": 0.04,
+      "US2Y": 0.02,
+      "realYield10Y": 0.03
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-12-09",
     "probCut": 0,
-    "probHold": 80,
-    "probHike": 20
+    "probHold": 88,
+    "probHike": 12
   },
   "marketVolatility": {
     "GVZ": 25.82,
@@ -34,26 +34,26 @@
     "openInterestChange": -13658
   },
   "etfFlows": {
-    "gldTonnes": 1083.9,
-    "gldWoWChange": -8.6,
+    "gldTonnes": 1069.4,
+    "gldWoWChange": -14.5,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4066.28,
-    "XAGUSD": 52.396,
-    "EURUSD": 1.12302,
-    "USDJPY": 158.447,
-    "USDCHF": 0.81681,
-    "USDCNH": 6.67514,
-    "GBPUSD": 1.34742,
-    "USDCAD": 1.3964,
-    "USDSEK": 9.73737,
-    "US500": 7707.8,
-    "GER40": 26645.85,
-    "UK100": 10909.45,
-    "ADR_14day": 73.6,
-    "ADR_usedToday": 150.6,
-    "goldSilverRatio": 77.6
+    "XAUUSD": 4121.165,
+    "XAGUSD": 52.787,
+    "EURUSD": 1.12148,
+    "USDJPY": 158.4805,
+    "USDCHF": 0.8182,
+    "USDCNH": 6.66604,
+    "GBPUSD": 1.34596,
+    "USDCAD": 1.39775,
+    "USDSEK": 9.78985,
+    "US500": 7706.4,
+    "GER40": 26684.05,
+    "UK100": 10928.95,
+    "ADR_14day": 81.7,
+    "ADR_usedToday": 89.3,
+    "goldSilverRatio": 78.1
   },
   "dollarLiquidity": {
     "stlfsi": -0.5224,
@@ -66,40 +66,40 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "US slaps sanctions on Indian, Turkish firms and people for aiding Iran - Reuters",
+      "headline": "COMMENTARY: Asia hopes Democrats can provide relief from Trump's Iran war, tariffs - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-04T19:36:33.000Z",
-      "hoursAgo": 1
+      "publishedAt": "2026-11-05T07:00:00.000Z",
+      "hoursAgo": 6.7
+    },
+    {
+      "headline": "Emirates airline net profit drops 66% in first half dragged down by Iran war - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-05T06:03:00.000Z",
+      "hoursAgo": 7.7
+    },
+    {
+      "headline": "Bank of England poised to hike rates for first time in 3 years - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-05T00:03:00.000Z",
+      "hoursAgo": 13.7
     },
     {
       "headline": "US slaps sanctions on Indian, Turkish firms and people for aiding Iran - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-04T19:06:12.000Z",
-      "hoursAgo": 1.5
+      "hoursAgo": 18.6
     },
     {
-      "headline": "COMMENTARY: Asia hopes Democrats can provide relief from Trump's Iran war, tariffs - Reuters",
+      "headline": "US slaps sanctions on Indian, Turkish firms and people for aiding Iran - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-04T04:50:06.000Z",
-      "hoursAgo": 15.8
-    },
-    {
-      "headline": "Dollar falls after Democrats take US Congress in midterm elections - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-04T01:42:00.000Z",
+      "publishedAt": "2026-11-04T18:48:00.000Z",
       "hoursAgo": 18.9
     },
     {
-      "headline": "Stocks rally, dollar dips after Democrats' 'blue sweep' victory - Reuters",
+      "headline": "US to loan about a third of heating oil reserve in bid to tame prices - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-04T01:19:03.000Z",
-      "hoursAgo": 19.3
-    },
-    {
-      "headline": "Gold heads for biggest daily gain since August as dollar weakens - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-04T00:58:00.000Z",
-      "hoursAgo": 19.7
+      "publishedAt": "2026-11-04T15:58:09.000Z",
+      "hoursAgo": 21.8
     }
   ],
   "briefing": null
