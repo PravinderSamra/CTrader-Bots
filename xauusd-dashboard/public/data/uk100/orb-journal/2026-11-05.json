@@ -63,7 +63,37 @@
         "adr14": 128.8,
         "adrUsedPct": 82
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-11-05T20:53:35.009Z",
+        "fwd1hPct": -1.15,
+        "fwd3hPct": -1.37,
+        "toClosePct": -1.37,
+        "maxUpPct": 0.02,
+        "maxDownPct": -1.42,
+        "verdict": "WRONG",
+        "signalVerdicts": [
+          {
+            "rule": "R2",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R4",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R13",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R8",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "WRONG"
+          }
+        ]
+      }
     },
     {
       "at": "2026-11-05T15:28:54.057Z",
@@ -134,7 +164,117 @@
         "adr14": 128.8,
         "adrUsedPct": 127
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-11-05T20:53:35.137Z",
+        "fwd1hPct": -0.52,
+        "fwd3hPct": null,
+        "toClosePct": -0.52,
+        "maxUpPct": -0.2,
+        "maxDownPct": -0.57,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R4",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R10",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R13",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R3",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-11-05T20:53:32.193Z",
+      "londonTime": "20:53 GMT",
+      "mode": "CLOSED",
+      "price": 10718.95,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 224% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "224% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10513.5) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "BoE MPC Rate Decision @ 12:00 GMT today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.72%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -4.2% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -4,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10960.7,
+        "orbLow": 10927.9,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10987.5,
+        "overnightLow": 10881.4,
+        "priorDayHigh": 10915,
+        "priorDayLow": 10513.5,
+        "gapPct": -1.79,
+        "adr14": 128.8,
+        "adrUsedPct": 224
+      },
+      "outcome": {
+        "resolvedAt": "2026-11-05T20:53:35.137Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }

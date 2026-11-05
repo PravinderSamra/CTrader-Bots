@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-11-04T20:37:24.658Z",
-  "entriesScored": 165,
+  "updatedAt": "2026-11-05T20:53:35.143Z",
+  "entriesScored": 167,
   "byStance": {
     "SHORT_FAVOURED": {
       "n": 27,
@@ -10,11 +10,11 @@
       "avgToClosePct": 0.1
     },
     "LONG_FAVOURED": {
-      "n": 18,
+      "n": 19,
       "right": 7,
-      "wrong": 4,
+      "wrong": 5,
       "flat": 7,
-      "avgToClosePct": 0.07
+      "avgToClosePct": 0
     },
     "FADE_FAVOURED": {
       "n": 17,
@@ -26,15 +26,15 @@
   },
   "byRule": {
     "R13": {
-      "n": 47,
-      "right": 16,
-      "wrong": 6,
+      "n": 49,
+      "right": 17,
+      "wrong": 7,
       "flat": 25
     },
     "R11b": {
-      "n": 157,
+      "n": 158,
       "right": 67,
-      "wrong": 9,
+      "wrong": 10,
       "flat": 81
     },
     "R6": {
@@ -44,9 +44,9 @@
       "flat": 0
     },
     "R8": {
-      "n": 125,
-      "right": 52,
-      "wrong": 28,
+      "n": 127,
+      "right": 53,
+      "wrong": 29,
       "flat": 45
     },
     "R12": {
@@ -56,15 +56,15 @@
       "flat": 3
     },
     "R2": {
-      "n": 27,
+      "n": 28,
       "right": 9,
-      "wrong": 3,
+      "wrong": 4,
       "flat": 15
     },
     "R4": {
-      "n": 89,
-      "right": 49,
-      "wrong": 3,
+      "n": 91,
+      "right": 50,
+      "wrong": 4,
       "flat": 37
     },
     "R9": {
@@ -74,14 +74,14 @@
       "flat": 12
     },
     "R10": {
-      "n": 33,
-      "right": 7,
+      "n": 34,
+      "right": 8,
       "wrong": 7,
       "flat": 19
     },
     "R3": {
-      "n": 38,
-      "right": 13,
+      "n": 39,
+      "right": 14,
       "wrong": 10,
       "flat": 15
     },
@@ -105,9 +105,9 @@
     }
   },
   "breakoutsSuspect": {
-    "n": 38,
-    "noExtensionRate": 0.11,
-    "avgMaxUpPct": 0.38,
-    "avgMaxDownPct": -0.2
+    "n": 39,
+    "noExtensionRate": 0.1,
+    "avgMaxUpPct": 0.37,
+    "avgMaxDownPct": -0.21
   }
 }

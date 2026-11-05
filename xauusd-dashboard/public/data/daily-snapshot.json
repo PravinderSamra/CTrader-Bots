@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05T15:28:48.293Z",
+  "generatedAt": "2026-11-05T20:53:27.607Z",
   "yields": {
     "US10Y": 4.95,
     "US2Y": 4.61,
@@ -34,26 +34,26 @@
     "openInterestChange": -13658
   },
   "etfFlows": {
-    "gldTonnes": 1074.9,
-    "gldWoWChange": 5.5,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1073.9,
+    "gldWoWChange": -1,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4100.38,
-    "XAGUSD": 52.059,
-    "EURUSD": 1.12252,
-    "USDJPY": 157.9385,
-    "USDCHF": 0.81475,
-    "USDCNH": 6.66428,
-    "GBPUSD": 1.34776,
-    "USDCAD": 1.39841,
-    "USDSEK": 9.79105,
-    "US500": 7494.4,
-    "GER40": 26389.75,
-    "UK100": 10837.95,
+    "XAUUSD": 4104.175,
+    "XAGUSD": 52.157,
+    "EURUSD": 1.12216,
+    "USDJPY": 157.797,
+    "USDCHF": 0.81712,
+    "USDCNH": 6.66469,
+    "GBPUSD": 1.3453,
+    "USDCAD": 1.40075,
+    "USDSEK": 9.80077,
+    "US500": 7382.5,
+    "GER40": 26247.05,
+    "UK100": 10718.95,
     "ADR_14day": 81.7,
     "ADR_usedToday": 89.3,
-    "goldSilverRatio": 78.8
+    "goldSilverRatio": 78.7
   },
   "dollarLiquidity": {
     "stlfsi": -0.5224,
@@ -66,40 +66,46 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "How Wall Street's postelection rally got obliterated — and what's next",
+      "source": "CNBC",
+      "publishedAt": "2026-11-05T20:06:31.000Z",
+      "hoursAgo": 0.8
+    },
+    {
+      "headline": "Bank of England raises rates for first time since 2023, warns more likely - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-05T17:11:41.000Z",
+      "hoursAgo": 3.7
+    },
+    {
+      "headline": "Instant view: Bank of England delivers first rate hike in three years, gilt yields rise - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-05T12:58:29.000Z",
+      "hoursAgo": 7.9
+    },
+    {
       "headline": "COMMENTARY: Asia hopes Democrats can provide relief from Trump's Iran war, tariffs - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-05T07:00:00.000Z",
-      "hoursAgo": 8.5
+      "hoursAgo": 13.9
     },
     {
       "headline": "Emirates profit plunges as Iran war rattles Middle East aviation - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-05T06:03:00.000Z",
-      "hoursAgo": 9.4
+      "hoursAgo": 14.8
+    },
+    {
+      "headline": "Morning Bid: Goldilocks or gridlock? - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-05T05:50:00.000Z",
+      "hoursAgo": 15.1
     },
     {
       "headline": "Bank of England poised to hike rates for first time in 3 years - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-05T00:03:00.000Z",
-      "hoursAgo": 15.4
-    },
-    {
-      "headline": "US slaps sanctions on Indian, Turkish firms and people for aiding Iran - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-04T19:06:12.000Z",
-      "hoursAgo": 20.4
-    },
-    {
-      "headline": "US slaps sanctions on Indian, Turkish firms and people for aiding Iran - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-04T18:48:00.000Z",
-      "hoursAgo": 20.7
-    },
-    {
-      "headline": "US to loan about a third of heating oil reserve in bid to tame prices - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-04T15:58:09.000Z",
-      "hoursAgo": 23.5
+      "hoursAgo": 20.8
     }
   ],
   "briefing": null

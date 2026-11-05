@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-11-05T15:28:53.907Z",
+  "generatedAt": "2026-11-05T20:53:32.082Z",
   "prices": {
-    "UK100": 10835.45,
-    "GBPUSD": 1.3478,
-    "GBPEUR": 1.20061,
-    "US500": 7492.5,
-    "NAS100": 27075.85,
-    "BRENT": 100.502,
-    "COPPER": 6.3794,
-    "VIX": 21.595,
-    "USDX": 101.531,
-    "XAUUSD": 4098.67,
-    "UK100_dayPct": -0.72
+    "UK100": 10718.95,
+    "GBPUSD": 1.3453,
+    "GBPEUR": 1.1989,
+    "US500": 7383.3,
+    "NAS100": 26780.85,
+    "BRENT": 102.172,
+    "COPPER": 6.2935,
+    "VIX": 23.395,
+    "USDX": 101.606,
+    "XAUUSD": 4104.165,
+    "UK100_dayPct": -1.79
   },
   "fx": {
-    "gbpUsdDayPct": 0.05,
+    "gbpUsdDayPct": -0.14,
     "gbpUsd20dPercentile": 100,
     "sterlingEri": 86.5372,
     "sterlingEriDayChange": 0.18,
@@ -36,25 +36,25 @@
     "daysToMpc": 0
   },
   "usLinkage": {
-    "us500DayPct": -2.78,
-    "nas100DayPct": -5.05,
-    "vix": 21.595,
+    "us500DayPct": -4.2,
+    "nas100DayPct": -6.08,
+    "vix": 23.395,
     "vixRegime": "NORMAL",
     "us10y": 4.95,
-    "usdx": 101.531
+    "usdx": 101.606
   },
   "commodities": {
-    "brentDayPct": 2.14,
-    "copperDayPct": -1.6,
-    "goldDayPct": 0.95,
+    "brentDayPct": 3.84,
+    "copperDayPct": -2.92,
+    "goldDayPct": 1.08,
     "brent20dTrend": "DOWN"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": -1.2,
-    "dax40DayPct": -0.96,
-    "eurUsdDayPct": -0.02,
-    "ftseDaxCorr20d": 0.74,
-    "ftseSx5eCorr20d": 0.64,
+    "eurostoxx50DayPct": -1.72,
+    "dax40DayPct": -1.47,
+    "eurUsdDayPct": -0.06,
+    "ftseDaxCorr20d": 0.77,
+    "ftseSx5eCorr20d": 0.68,
     "tapeAgreement": "ALIGNED",
     "preOpenLead": "NONE"
   },
@@ -69,14 +69,14 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent +2.14%",
+      "driver": "Brent +3.84%",
       "read": "BULLISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper -1.6%",
+      "driver": "Copper -2.92%",
       "read": "BEARISH",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
@@ -122,27 +122,45 @@
   ],
   "newsItems": [
     {
+      "headline": "How Wall Street's postelection rally got obliterated — and what's next",
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/investingclub/2026/11/05/how-wall-streets-postelection-rally-got-obliterated-and-whats-next.html",
+      "hoursAgo": 0.8
+    },
+    {
+      "headline": "Bank of England raises rates for first time since 2023, warns more likely - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNcEhfdUpzSlRCb2JiYmFYMjdxaEZySFE1cEJFcVlEWG1qajB4V2VGTXNmcGhRNHdBSF9Wa3FKcFpwMUpVVEc5NnQtaEhnQy0xUHpBc1lpZWp3TlZoUEhMQ1NHcFplMndKcmJJNEJrYlg2VnhoZlVJSkxnUDZzRzh2N0FuSlRHcl9JQTZ0LUhVMmxOaS1NWV9uWE15X19TN3pDMHFUeWNIdkRVQlYtemNsTQ?oc=5",
+      "hoursAgo": 3.7
+    },
+    {
+      "headline": "Instant view: Bank of England delivers first rate hike in three years, gilt yields rise - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNX1NmeDl4ZndpQkllbEZoTmVYQzFUSXpCeFNTRnByV05HcVlaYXl0RkY4b0htT1dYTkhQZG9DNldqcmtna1gyNVhkdTZwWmR3NTBZb0gtUm9kWnlfQzVhMWJCTzVYSGhpLXkxS085ZGpwVUVEbWlTWmItbElUTzFqTEwydEJTSUVheFJsTGNjdnlfRW1RaURzWm5KOGs5Rmx1bUV4SUxpTWNaMlNhWGxPU2lnNkt0cXc?oc=5",
+      "hoursAgo": 7.9
+    },
+    {
       "headline": "COMMENTARY: Asia hopes Democrats can provide relief from Trump's Iran war, tariffs - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOUk1naVB2YlNzNHNsUVA1ZVp4ZU5QaUNocUZjdkt0VVdHZVVmZXdRZzhSdUt5RFROWXlBclNEM0p0NnJTc3dqaWlBWVhoUWRVczliT2JGR3l3RXU0R1N0aGZicXFZSkdiNjd6dmZJWVVoRWp4X21wNUJNd2EzOG5CMnJoR1ExaW1lX1Q4R0o0cHhBM1lZX0lnd0NLMkFVaTJZZ0FvUVNfejFaaFViQU9tX3REV2ZBNjdCOHU3ak1EcUdJX2xsbFdCWE9pVzk?oc=5",
-      "hoursAgo": 8.5
+      "hoursAgo": 13.9
     },
     {
       "headline": "Emirates profit plunges as Iran war rattles Middle East aviation - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQZ0FfNmtkUFFEaTlUdDhvdXZNYko4TUMwOVNTWVpEdHl5ZjMxUE8xdW9PRHNjelJlbFFkaFNEMEN6OHRnZVEzYnFXY09LQUtTa0FMSFZKY0I4amR2dUt3VGRTc3ExUGJ1cGFtQ245eDFuUkhkWUI3ZGNBMVQzN3NBRlZJOXJxZjRCRVN1STlia2lXUHdoRF9EdkhFcWpGZXJqUW9CUkJmUERhTzMxUGx0Wi1XX2ZwV3BEMVBHM1pmLWpYX01XX2xR?oc=5",
-      "hoursAgo": 9.4
+      "hoursAgo": 14.8
     },
     {
       "headline": "Bank of England poised to hike rates for first time in 3 years - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQYXM1eE1qNm05dkg5WWJabktscTRfLXlCdktDcTJYRjYzR2RLUXc1UkdTZHFwSzNCV2NxQTdPT2JrRTVENFNOeTdiYWtFZzZ0dFowUXV1anpnSWZudktCR3FwZm9QMFhJUTJtckJfdlpQM21seG1BVEV0MWpfNXJOZjhhcEwzUG5XZ2FNRk9RS0JrSFU4bElfdTFB?oc=5",
-      "hoursAgo": 15.4
+      "hoursAgo": 20.8
     }
   ],
   "riskTone": null,
   "bias": {
-    "score": -5,
+    "score": -4,
     "label": "BEARISH",
     "conviction": "MEDIUM",
     "drivers": [
@@ -150,31 +168,31 @@
         "name": "GBP",
         "weight": 3,
         "impact": "NEUTRAL",
-        "detail": "GBP/USD +0.05% → FTSE headwind (sign-flipped)"
+        "detail": "GBP/USD -0.14% → FTSE tailwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
         "impact": "BEARISH",
-        "detail": "US500 -2.78% today"
+        "detail": "US500 -4.2% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 21.595 — NORMAL regime"
+        "detail": "VIX 23.395 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
         "impact": "BULLISH",
-        "detail": "Brent +2.14% (energy majors)"
+        "detail": "Brent +3.84% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
         "impact": "BEARISH",
-        "detail": "Copper -1.6% (miners/China)"
+        "detail": "Copper -2.92% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -196,16 +214,16 @@
       },
       {
         "name": "European tape (SX5E/DAX)",
-        "weight": 1.05,
+        "weight": 1,
         "impact": "BEARISH",
-        "detail": "SX5E -1.2% / DAX -0.96%"
+        "detail": "SX5E -1.72% / DAX -1.47%"
       }
     ],
     "eventSuppressed": true
   },
   "orbContext": {
-    "computedAt": "2026-11-05T15:28:53.906Z",
-    "mode": "POST_ORB",
+    "computedAt": "2026-11-05T20:53:32.081Z",
+    "mode": "CLOSED",
     "cashOpenLondon": "08:00 GMT",
     "overnightHigh": 10987.5,
     "overnightLow": 10881.4,
@@ -214,8 +232,8 @@
     "priorClose": 10914.5,
     "prevWeekHigh": 10784,
     "prevWeekLow": 10640.7,
-    "gapPts": -79,
-    "gapPct": -0.72,
+    "gapPts": -195.5,
+    "gapPct": -1.79,
     "orbHigh": 10960.7,
     "orbLow": 10927.9,
     "orbBrokenDirection": "DOWN",
@@ -227,27 +245,27 @@
       }
     ],
     "adr14": 128.8,
-    "adrUsedPct": 127,
+    "adrUsedPct": 224,
     "expansionState": {
-      "label": "NORMAL",
-      "rangeSoFarPct": 127,
-      "expectedRangePctByNow": 96,
-      "rangeVsTypical": 1.32,
-      "expectedVolPctByNow": 93,
+      "label": "EXPANSION",
+      "rangeSoFarPct": 224,
+      "expectedRangePctByNow": 100,
+      "rangeVsTypical": 2.24,
+      "expectedVolPctByNow": 100,
       "moveMostlyDone": true,
-      "note": "Range 127% of ADR vs ~96% typical by 15:00 BST (about the typical pace). ~93% of a typical day's volume already done — expect a rangebound remainder, tighten targets."
+      "note": "Range 224% of ADR vs ~100% typical by 16:00 BST (ahead of the typical pace (expansion)). ~100% of a typical day's volume already done — expect a rangebound remainder, tighten targets."
     }
   },
   "orbIntel": {
     "stance": "BREAKOUTS_SUSPECT",
-    "stanceLine": "Breakouts suspect in both directions today — 127% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+    "stanceLine": "Breakouts suspect in both directions today — 224% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
     "signals": [
       {
         "direction": "BREAKOUT_SUSPECT",
         "severity": "STRONG",
         "source": "RANGE",
         "rule": "R4",
-        "text": "127% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        "text": "224% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
       },
       {
         "direction": "NEUTRAL",
@@ -259,13 +277,6 @@
       {
         "direction": "BREAKOUT_SUSPECT",
         "severity": "CAUTION",
-        "source": "FX",
-        "rule": "R10",
-        "text": "Sterling is at the 100th percentile of its 20-day range and still rising — a persistent FX headwind capping upside breaks (weak GBP is what lifts FTSE)."
-      },
-      {
-        "direction": "BREAKOUT_SUSPECT",
-        "severity": "CAUTION",
         "source": "EVENT",
         "rule": "R13",
         "text": "BoE MPC Rate Decision @ 12:00 GMT today — pre-release breaks are positioning, not conviction."
@@ -273,16 +284,23 @@
       {
         "direction": "FAVOURS_SHORT",
         "severity": "INFO",
-        "source": "STRUCTURE",
-        "rule": "R3",
-        "text": "ORB break DOWN is aligned with the BEARISH macro bias (-5) — continuation has the backdrop behind it."
+        "source": "TAPE",
+        "rule": "R8",
+        "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.72%) — the cross-market lean is down."
       },
       {
         "direction": "FAVOURS_SHORT",
         "severity": "INFO",
         "source": "TAPE",
-        "rule": "R8",
-        "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.2%) — the cross-market lean is down."
+        "rule": "R9",
+        "text": "Past 13:30 with US futures -4.2% — the 14:30 US handoff argues against holding longs into the US open."
+      },
+      {
+        "direction": "BREAKOUT_SUSPECT",
+        "severity": "INFO",
+        "source": "POSITIONING",
+        "rule": "R11b",
+        "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
       }
     ],
     "aiStanceLine": null,
