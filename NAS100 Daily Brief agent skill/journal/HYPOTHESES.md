@@ -17,7 +17,10 @@ added between runs. H12/H13 were each opened twice for unrelated claims
 09-17); D19 was opened for a `freshness` defect hours after D19 had been taken
 by the VIX9D null-guard (renumbered to D20/D21 here, 09-21).
 
-**Highest allocated as of 2026-11-04 (the 11-04 review, grading 11-03, allocated NOTHING): H27 · D30 · P5 and P-I · M7.** Next free: **H28 · D31 · P-J**, confirmed by `grep -n "^## "` on 2026-11-04 (`^## H28`, `^## D31`, `^## P-J` all return 0).
+**Highest allocated as of 2026-11-05 (the 11-05 review, grading 11-04, allocated NOTHING): H27 · D30 · P5 and P-I · M7.** Next free: **H28 · D31 · P-J**, confirmed by `grep -n "^## "` on 2026-11-05 (`^## H28`, `^## D31`, `^## P-J` all return 0; `^## H27` 8, `^## D30` 2, `^## P5` 9, `^## P-I` 1, `^## M7` 1).
+**The 2026-11-05 review (grading 11-04) allocated NO NUMBER and carries ONE proposal, which lands on an existing entry.** The proposal is **P-F's own sentence with a widened trigger** — add `remaining_budget == 0.0` as a disjunct to P-F's *">150pts outside the prior day's range"*, so the `EXHAUSTED` block stops printing *"the day's range is set"* / *"continuation into new highs/lows is the low-probability trade"* / a fade-first strategy in that state. Grepped first to **P-F**, **P4** (whose scope is explicitly budgets *above* zero), **H1** (multiplier branch SETTLED-NEGATIVE), **H5** and **H20** (CLOSED-NEGATIVE); none of them owns the zero-budget cell. Evidence from source at n=30: `budget == 0` is **4 of 4 positive, mean +253.0** (10-01 +153.7, 10-19 +169.8, 10-22 +382.7, 11-04 +305.9, all `EXHAUSTED`, all four printing both prohibited sentences verbatim) against `budget > 0` **mean +17.7, median −8.8** (n=26) — a **14.3×** difference; the union with P-F's existing trigger is **6 of 6 positive at +246.6** while the other 24 days average **−0.4**. **NEVER a multiplier** (the H1 lesson and P-F's own prohibition). 09-17's +40.0 is a fifth instance from P-F's own table and has aged out of the bar window — reported, not counted.
+Everything else that reached a threshold resolves to an existing entry or to no model change, each grepped before it was written: **D7's second limb** takes **condition instance 3** (10-22 PDL +189, 10-30 PDL +330, **11-04 PDH +77 — the closest dropped row in the series and the first PDH, dropped from board AND footnote while PWH at +1785 was kept**) with **harm n=2**, and the `abs(dist)` truncation ranking is **already in D7's proposal**; **D28's condition reaches 3** (10-28, 10-30, 11-04) with **harm not demonstrable** and the entry **already PROPOSED**; **H2 is INSTANCE 10, the fade LOSES cleanly, census 8–2 / 10–0**, and its two-opposite-instructions 2×2 is **extended to a 2×4** — the `EXHAUSTED` ∩ below-flip cell is CONTRADICT, which is a correction to a live specification inside the suspended census (10-19 / 11-02 precedent, no ID); **H18/P1 duplication 37 of 37** with a **second consecutive** de-duplication counter-example (every collapse variant moves −12 further from a realised +230) so the **RENDERING** proposal stands and no weight change is made; the **averaging-over-dispersion** claim raised by the 11-05 `breadth +2` split (MSFT +6.68 / AAPL +5.31 against NVDA −3.17 / AVGO −2.00) is **NOT new** — it is the unnumbered watch item at lines **1714** (08-28) and **15617** (10-30), **n=2**, and 11-05 is its third **condition** instance on an **UNGRADED** scan, so nothing is opened; and the **offset/zero-budget conjunction** is the **n=1** instance its own tabulation predicted, **graded rather than asserted** — across a ±137 sweep of the offset the direction verdict, the 0.75 hit rate and every row's reachability are **INVARIANT** (post-scan traversal 704.9 = 10.2× the offset), while **1 of 4 per-row settled verdicts flips at zero offset and 2 of 4 at the opposite sign**; **NOTHING PROPOSED** and the offset-vs-options-proximity hypothesis stays **NULL**.
+**Two live entries are CORRECTED rather than opened as numbers.** **D30's consequence #1 stays FALSIFIED as a magnitude claim on a THIRD consecutive instance** — the migrated hour (11-03 21:00–21:55Z, 28139.8–28316.4) is again **nested** in 11-04's range, so `today_range`, `adr_used_pct`, `remaining_budget`, extension and the fuel error are identical to 0.1pt on both bases — **but the PRIOR-DAY limb BREAKS for the first time**: on the 22:00Z basis that hour makes 11-03's high **28316.4** against the grader's **28310.3**, so the brief's **PDH disagrees by +6.1** and **ADR14 contamination is non-zero for the first time (633.1 published vs 632.7 clean, +0.4)**. D30's own 11-03 sentence *"a close is an endpoint, not an extremum, which is why it and only it disagreed"* is **superseded**; the mechanism and the reconciliation proposal stand and the magnitude claim stays conditional. **H26's 13-session monotonic magnitude ordering BREAKS (≥10 falls to 0.429, below 6–9's 0.524) and the cause is D26, not 11-04** — **09-21 aged out of the bar window on the same run**, taking the sample's largest `|post|/ADR` (≈1.378) and range/ADR (2.462) with it; reconstructed with 09-21 in, the ordering **holds** at 0.548. ≥10 direction: **carried 4/10 = 40.0%, from source 2/7 = 28.6%** (3/8 = 37.5% with 09-21 retained). **Both reported, neither averaged.** *"Inverted at the top"* **stays SUSPENDED** for exactly this reason. **D26's gap WIDENED from 15 to 16** (30 full bar sets against 46 finished trading-day directories) and has now cost a live statistic. **M6 is reported as expected-by-identity** (session 39, one instance, `review_day.py:159–161`); only `_first_touch`'s 12-bar window is still open. **The D29 grading rule (G1–G4) in `journal/2026-11-02/REVIEW.md` §0 was APPLIED unchanged, not re-decided**, as that entry requires for the ~93 sessions to 2027-03-14; the parallel **`LONDON/EST`** censuses reach **n=3** (P-B(b) `PRE_NY` stays 23, the session-context field stays 22), which licenses *considering* an EST-era proposal and licenses **nothing else** — three **condition** instances are not three **harm** instances, and the session-context field has **1** demonstrable harm case (11-04's put wall, published as an unbroken floor 9h42m after price traded 138.2 points beneath it and bounced 746.5).
 **The 2026-11-04 review (grading 11-03) allocated NO NUMBER and proposed NOTHING.** Every
 item it reports is an existing entry taking a data point, or an existing entry
 reaching a threshold on its *condition* count while its *harm* count stays
@@ -17243,3 +17246,462 @@ documented, not recreated.** **2026-08-23, 09-09, 09-24 and 09-25 still have no
 `REVIEW.md`; none was created and nothing was back-dated.** **2026-11-04 is on
 disk, `is_trading_day: true`, 180 bars, and is NOT graded here.** **No
 `prediction` block was modified. No scoring, wall or grading code was edited.**
+
+---
+
+# Evidence appended by the 2026-11-05 review (grading 2026-11-04)
+
+_Full working in `journal/2026-11-04/REVIEW.md`. One scan graded:
+`1247-london.json`, `LONDON` 12:47:54Z, `is_trading_day: true`, 276 bars, 0 test
+artefacts. `track.py` failed for an **8th** consecutive time (exit 124, 0 bytes),
+so every census below is derived **from source** (46 finished day directories, 30
+gradeable, one 45-day `M_5` fetch of 9092 bars 2026-09-21 → 2026-11-05) and
+reported **alongside** the carried value. **D29's G1–G4 applied unchanged.**
+**No `prediction` block was modified. No scoring, wall or grading code was
+edited.**_
+
+**The day.** `STRONGLY BEARISH −12` at 28239.5 (gamma −5 · vol −4 · macro −3 ·
+rates −1 · breadth +1 · structure +1 · news −1). Session **28176.8 / 28838.9 /
+27493.0 / 28436.1**; range **1345.9 = 2.126× ADR14 633.1**, net **+259.3**
+(D30-clean basis **+224.5**). Post-scan **+230.0 → WRONG**; all three bases agree,
+**no P-H deciding instance**. Levels **3 of 4 touched = 0.75**, and **3 of 3**
+rows inside the realised post-scan range. **Deleting every bearish block gives
++2, a no-call — no component surgery produces a correct call on this day.**
+
+## P-F — PROPOSED: widen the trigger to `remaining_budget == 0`
+
+P-F's existing trigger is *"price_at_scan sits >~150pts outside the prior day's
+high/low"*. **Add `remaining_budget == 0.0` as a disjunct.** Prose and strategy
+selection only; **NEVER a multiplier** (P-F's own prohibition and the H1 lesson).
+From source at n=30:
+
+| trigger | n | mean error | median | sign |
+|---|---|---|---|---|
+| `remaining_budget == 0` | **4** | **+253.0** | +237.9 | **4 of 4 POSITIVE** |
+| `remaining_budget > 0` | 26 | +17.7 | −8.8 | 12 of 26 positive |
+| P-F's *">150 outside PD"* | 3 | +283.5 | +351.6 | 3 of 3 positive |
+| **union of the two** | **6** | **+246.6** | — | **6 of 6 POSITIVE** |
+| all other days | 24 | **−0.4** | — | — |
+
+Zero-budget days: **10-01 +153.7 · 10-19 +169.8 · 10-22 +382.7 · 11-04 +305.9**,
+all `EXHAUSTED`, and **all four printed both prohibited sentences verbatim**
+(*"the day's range is set"*, *"continuation into new highs/lows is the
+low-probability trade"* — checked in the `.md` files). **09-17 +40.0** is a fifth
+from P-F's own table and has aged out of the bar window: reported, not counted.
+**The two triggers are nearly disjoint** (only 10-22 is in both): P-F's misses
+10-01, 10-19 and **11-04**, and **11-04 is a P-F CONTROL day (price inside the
+PD range) whose +305.9 EXCEEDS the treatment mean** — the 3rd largest control
+error in the record. **Ratio 14.3×.** Grepped first to P-F, **P4** (scope is
+budgets *above* zero), **H1** (multiplier branch SETTLED-NEGATIVE), **H5**,
+**H20** (CLOSED-NEGATIVE); none owns the zero-budget cell. **No ID taken.**
+**Expected effect:** no score, level or gate change; one branch of prose stops
+making a claim that is wrong 4 of 4, and the fade-first strategy stops being
+selected in the state where H2 reads 8–2 against the fade.
+
+## H1 / P4 — error +305.9, n=30, and the TWELFTH value under one series name
+
+From source **mean +49.0, median +16.1** (was +57.8 / +16.1 at n=30 — the mean
+fell because **09-21's +569.2 aged out** on the same run +305.9 entered; D26).
+**ANSWERED-NEGATIVE; flagged, not averaged.** Tagged `LONDON/EST` per G2 (pre-scan
+window measured at **178 bars = 14h50m**, the EDT norm to within 5 minutes). The
+zero/non-zero split no longer merely holds, it **widens**: see P-F above.
+
+## H2 — INSTANCE 10, graded under the unaltered 10-20 rule, and the fade LOSES cleanly
+
+Cell: `EXHAUSTED` · price **440.0 below the flip** · fade instruction printed.
+
+| step | value |
+|---|---|
+| pre-scan extremes | **H 28533.0** / L 27493.0 |
+| first post-scan sweep | **up**, 14:40Z (high 28677.1) |
+| engage bar (first close back inside) | **15:45Z**, close 28507.2 |
+| swept extreme re-exceeded | **on the engage bar** (high 28566.9), again 15:55Z |
+| target (nearest published level inside) | **28431.2 CALL WALL** |
+| target first touched | **16:00Z** (low 28426.4) |
+| **result** | **FADE LOSES** — reclaimed before target, **no tie** |
+
+**Census 7–2 → 8–2 to the gamma block; 10–0 if ties go against the fade. Claim
+stays FALSIFIED; existing proposal unchanged and NOT widened beyond its cell.**
+Stated against the entry: a looser rule ignoring the reclaim and marking to the
+close would have scored this a **win (+71.1)**; the rule was fixed before the
+outcome and is not re-cut now.
+
+**The two-opposite-instructions 2×2 becomes a 2×4.** The 10-30 specification has
+no `EXHAUSTED` column. 11-04 is `EXHAUSTED` ∩ below the flip and is the sharpest
+**CONTRADICT** cell in the record: §1 *"Strategy-1 fades have a materially lower
+hit rate here"*, §2 *"Fading is the wrong trade today"*, §4's *"Don't buy the
+break"* — against §3, which **names §2's argument and overrules it in the same
+sentence**. Per the 10-19 / 11-02 precedent this is a **correction to a live
+specification inside the suspended census: no ID, nothing proposed.**
+
+## D30 — fuel figures NESTED a THIRD time; the PRIOR-DAY limb BREAKS for the FIRST time
+
+Migrated hour = 11-03 21:00–21:55Z, O 28176.8 / **H 28316.4** / L 28139.8 /
+C 28282.4, range 176.6, **+105.6**.
+
+- **Limb 1 (today's range): NESTED, 3 of 3.** 28139.8–28316.4 lies strictly inside
+  the pre-scan 27493.0–28533.0 and the full day 27493.0–28838.9. With and without
+  the hour: pre-scan range **1040.0 / 1040.0**, `adr_used_pct` **164.3 / 164.3**,
+  budget **0.0 / 0.0**, session range **1345.9 / 1345.9**, extension and error
+  **305.9 / +305.9** both ways. **Consequence #1 stays FALSIFIED as a magnitude
+  claim; the fuel grade stands unqualified.**
+- **Limb 2 (the prior day): NOT NESTED — first instance.** 11-03 reads
+  28002.7 / **28310.3** / 27906.8 / 28167.6 on the 21:00Z basis and
+  28049.2 / **28316.4** / 27906.8 / 28282.4 on the 22:00Z basis. **The brief's
+  PDH 28316.4 against the grader's 28310.3: +6.1.** D30's own 11-03 sentence
+  (*"a close is an endpoint, not an extremum, which is why it and only it
+  disagreed"*) is **SUPERSEDED — an extremum disagrees too.**
+- **ADR14 contamination is non-zero for the first time.** `d1[-15:-1]` holds two
+  EST bars; 11-02 is identical on both bases (788.9), 11-03 is **409.6 vs 403.5**.
+  Published **633.1** against a clean **632.7 → +0.4** (11-03's instance measured
+  **0.0**).
+- `actual_session.open` **28176.8** vs clean **28290.5** (**113.7**, the largest
+  open shift the defect has produced) and `net_move` **+259.3 vs +224.5**
+  (**34.8**). **No verdict changed.**
+
+**Mechanism confirmed, reconciliation proposal unaffected, magnitude claim stays
+conditional on the hour breaking a range — now done once, on the prior-day limb,
+by 6.1 points. Friday 2026-11-06 is still the day to watch. P-H's
+grading-window limb stays permanently MOOT.**
+
+## H26 — a ≥10 instance, and the MAGNITUDE MONOTONICITY BREAKS because of D26, not because of 11-04
+
+`|post|/ADR` **0.363**, range/ADR **2.126** (largest in the live window; 09-21's
+2.462 was larger and has aged out), direction **WRONG**. ≥10 bucket: **carried
+4/9 = 44.4% → 4/10 = 40.0%**; **from source 3/7 = 42.9% → 2/7 = 28.6%**. **Both
+reported; neither averaged.** The from-source fall is **not 11-04 alone** —
+**09-21, a ≥10 CORRECT day carrying the sample's largest `|post|/ADR` (≈1.378)
+and range/ADR (2.462), aged out on the same run**; with it retained the figure
+reads **3/8 = 37.5%**. From source at **n=30**:
+
+| bucket | n | mean \|post\|/ADR | mean range/ADR | direction (post-scan) |
+|---|---|---|---|---|
+| 0–2 | 6 | 0.207 | 1.042 | — (all no-call) |
+| 3–5 | 8 | 0.452 | 1.144 | 5/8 = 62.5% |
+| 6–9 | 9 | 0.524 | 1.074 | 5/9 = 55.6% |
+| **≥10** | **7** | **0.429** | **1.239** | **2/7 = 28.6%** |
+
+**The 13-session monotonic ordering (0.207 / 0.452 / 0.524 / 0.574) is BROKEN:
+≥10 now sits BELOW 6–9.** Reconstructed with 09-21 in, the ≥10 mean is **0.548**
+and the ordering **HOLDS**. The **range/ADR** form still orders correctly.
+Direction stays **monotonically inverted and steepens** (62.5% / 55.6% / 28.6%).
+***"Inverted at the top"* STAYS SUSPENDED** for exactly this reason. **No
+Spearman quoted**; its derivation is still unwritten.
+
+## D26 — the gap WIDENED from 15 to 16, and it has now cost a live statistic
+
+**30** journal trading days hold a full bar set against **46** finished
+trading-day directories with a live scan — **16 invisible**. **09-22 is now the
+oldest usable day; 09-21 fell out on this run**, taking H26's largest ≥10
+observation and P4's largest error with it. The entry's own warning
+(*"H26's ≥10 cell and P-F's treatment set remain hostage to this"*) is
+**realised, measurably, today**. **Nothing proposed** — the fix is persistence of
+graded outcomes, which `review_day.py:40–55` already says in its own comment.
+
+## D7, second limb — INSTANCE 3, the closest dropped row in the series, and the first PDH
+
+`keep()` at budget **0.0** rejects every non-exempt level, so the board collapsed
+to **4 rows, 100% options-derived**; `rows.sort(key=lambda r: -r["level"])`
+(`brief.py:373`) leaves `far` in descending **price** order and `far_line(cap=6)`
+protects only the four walls, **none of which is in `far`**. The footnote printed
+**6 rows at its cap, all above price, +143 to +1785 away** (30024 PWH · 28984 ·
+28541 · 28533 · 28469 · 28382). **Dropped from board AND footnote: `PDH 28316.4`
+at +77, `PD mid 28111.6` at −128, `PDL 27906.8` at −333 — all three named by the
+brief's own `structure +1` row — plus every session low. The document kept PWH at
++1785 and discarded the PDH at +77.**
+
+**Harm from the tape:** `PDH 28316.4` capped the 13:35Z–14:30Z consolidation to a
+**9.2-point** overshoot (13:40Z high 28325.6), price pulled back to 28230.3, and
+the next two bars ran **28286.8 → 28677.1**. It was the base of the 704.9-point
+rally. **Condition n=3** (10-22 PDL +189, 10-30 PDL +330, 11-04 PDH **+77**);
+**harm n=2** (10-22, 11-04). The condition is **deterministic from the sort**, so
+it is an identity rather than evidence, and harm is below three. **The `abs(dist)`
+truncation ranking is ALREADY in D7's proposal (added 10-22); nothing new.**
+First limb a **clean control** — all four walls reached the board.
+
+## The offset/zero-budget conjunction — the n=1 instance, GRADED rather than asserted
+
+Offset **−68.8** confirmed from source (NDX cash 28180.26 at 2026-11-03T16:14:59,
+933 min stale; NQ roll +128.0 → implied 28308.3; CFD 28239.5). **6th D6 breach,
+first materially negative: 09-28 +45.9 · 10-12 +43.1 · 10-14 +41.8 · 10-15 +77.6 ·
+10-20 +74.5 · 11-04 −68.8.** Board composition is driven by the **budget**
+(a zero budget forces a 100%-options board in 10 of 10 cases), and the
+conjunction has occurred **once in 46 days**. Graded by re-running
+`review_day.grade_level` on shifted level prices (no code edited):
+
+| offset basis | board | touched | per-row settled |
+|---|---|---|---|
+| **published −68.8** | 28679.5 / 28581.2 / 28431.2 / 27631.2 | **3/4** | `lost` · **`held resistance`** · no settled · unreached |
+| **0.0** | 28748.3 / 28650.0 / 28500.0 / 27700.0 | **3/4** | `lost` · **`lost`** · no settled · unreached |
+| **+68.8** | 28817.1 / 28718.8 / 28568.8 / 27768.8 | **3/4** | **`held resistance`** · `lost` · **`held resistance`** · unreached |
+| **−137.6** | 28610.7 / 28512.4 / 28362.4 / 27562.4 | **3/4** | `lost` · `held resistance` · **`lost`** · unreached |
+
+**The direction verdict, the 0.75 hit rate and every row's reachability are
+INVARIANT across the whole ±137 sweep**, because post-scan traversal (**704.9**)
+is **10.2×** the offset. **The per-row settled verdict is NOT: 1 of 4 flips at
+zero offset, 2 of 4 at the opposite sign** — so the *"max pain held as
+resistance"* credit would not survive a 69-point revision. **The ±69 cost nothing
+on the scoreboard and cost the robustness of the level-quality record. n=1.
+NOTHING PROPOSED; the offset-vs-options-proximity hypothesis stays NULL.**
+
+## H27 — observation 9, and the collapse rule is INERT on this configuration
+
+| | 10-26 | 10-27 | 10-28 | 10-29 | 10-30 | 11-02 | 11-03 | **11-04** |
+|---|---|---|---|---|---|---|---|---|
+| vol ↔ breadth | −3 | +1 | +4 | +1 | −2 | −7 | −9 | **−3** |
+| structure ↔ gamma | −3 | 0 | +4 | −7 | −6 | −3 | −6 | **−4** |
+| independent remainder | 0 | −4 | −2 | +1 | −5 | +7 | +3 | **−5** |
+| score | −6 | −3 | +6 | −5 | −13 | −3 | −12 | **−12** |
+
+**The two-session opposite-signed-remainder streak BREAKS**: pairs carried
+**−7 of −12 (58%)** and the *"independent"* remainder was **−5, SAME-signed and
+ALSO WRONG**. **And the pre-registered collapse rule changes NOTHING** — it drops
+the smaller member only on a **strict** shared sign, and `vol −4 / breadth +1`
+and `structure +1 / gamma −5` are both internally **opposite-signed**, so
+published and collapsed bases are **identical at −12, both WRONG**. **First null
+observation in the census. Weight limb stays ANSWERED-NEGATIVE.**
+
+## H18 / P1 — instance 32, duplication 37 of 37, and the live and stale readings of one instrument disagreed in SIGN
+
+`rates −1` = −3 (*"US10y 4.952 **+1.19%** — yields up"*) +2 (DXY). `macro −3` =
+−3 DFII10 (**dated 2026-11-02, own ⚠️**) +1 DGS10 (*"3bp **down**"*) 0 HY OAS
+0 NFCI −1 WALCL/RRP 0 curve. **The live 10-year says yields ROSE 1.19%; the stale
+10-year says they FELL 3bp; both votes counted.** The `macro` pair is
+**opposite-signed internally for the first time.** De-duplication **HURTS again,
+second consecutive session**: keep the larger member → **−13**; drop both FRED
+yield rows → **−10**; drop the stale `+1` and keep the live `−3` → **−13**. Every
+variant moves further from a realised **+230** (11-03's same-signed case went
+−12 → −16). **RENDERING proposal stands; NO weight change.**
+
+## The news block — 3 of 4 scored headlines mis-tagged, and the headline that described the day was uncounted
+
+4 auto-scored of 40 relevant / 125 fetched (**10.0% of relevant**), 36 for
+judgement, `news −1` from raw −2.75.
+
+- *"**Euro zone** inflation hits 4%…"* → `hawkish` → bearish US tech. **D9
+  instance 5** — the matched subject is **ECB** policy; same shape as 10-21's UK
+  CPI (D9 #2). **It scored.**
+- *"Musk Faces Setback as SpaceX and Tesla Stocks Tumble on **Midterm Election
+  Results**"* → `earnings_miss` → *"Mega-cap miss/warning"*. **D18 family, 11th
+  trading day / 18th headline** — no earnings in the headline.
+- *"El Niño Poses 'Meaningful Risk' for Inflation to Rise in **2027**, SF Fed
+  Report"* → `cpi_hot` → *"Hot inflation → yields up"*. **D18 family, 19th
+  headline** — a 2027 forecast scored as a live print, on a scan whose judgement
+  queue correctly flagged a *different* row as *"hypothetical/speculative"*.
+- *"AMD earnings beat the Street"* → the **only** correctly-tagged row and the
+  **only** one whose sign matched the day.
+- **Uncounted:** *"**Dow futures surge 800 points after decisive win by Democrats
+  in U.S. midterms**"* `[risk_on]`.
+
+**Verdict effect ZERO** (−12 → −11, same label, same side, same grade).
+**H19 — clause (i) FAILS: four scored headlines, four distinct events, n stays 2.**
+D9 and D18 own their instances. **Nothing proposed; more regex is the wrong
+answer, which is D9's own stated scope.**
+
+## The averaging-over-dispersion claim is NOT new — checked before it was treated as such
+
+11-04's `breadth +2` (*"mega-cap avg **+1.55%** (3/4 up): NVDA +2.29, MSFT +2.73,
+AAPL −1.90, AVGO +3.07"*) is **NOT an instance** — the mean's sign matches 3 of 4
+members, and the row was **RIGHT**. The defect is owned by an **unnumbered watch
+item** at lines **1714** (08-28, *"avg +3.83%, NVDA +8.74%"*) and **15617**
+(10-30, *"avg +0.15%, 1/4 up"*), **n=2**, whose own rule is *"write it up at a
+third recurrence."* **The 11-05 scan is that third condition instance** —
+*"mega-cap avg **+1.70%**"* over **MSFT +6.68 / AAPL +5.31 against NVDA −3.17 /
+AVGO −2.00**, a **9.85pp** split with 2 of 4 members down — and it is the worst
+of the three. **NOTHING IS OPENED: the instance sits on an UNGRADED scan.** It is
+the item the 11-06 review should expect to reach its own pre-registered
+threshold.
+
+## Everything else, one line each
+
+- **P-H — no 6th deciding instance.** Post-scan +230.0, day-net +259.3,
+  clean-basis +224.5, all **WRONG**, bases agree. Carried **15/30 vs 16/30**;
+  from source **12/24 = 50.0% vs 13/24 = 54.2%**, deciding set **n=3**.
+- **H22 — n=19 → 20, label RIGHT, magnitude anti-correlated three sessions
+  running.** Week net GEX **−1.305bn** → *"expansion likely"* → **2.126× ADR**,
+  while 11-03's **−3.083bn** (2.4× larger) gave **0.610×** and 11-02's −0.579bn
+  gave 1.257×. **Still not discriminating.** The *"use the smaller budget"*
+  instruction takes its **9th counter-instance**: VXN-implied **543.1** against a
+  realised **1345.9**, under by **802.8**.
+- **H23 — instance 23; census 15 → 16 sliced / 3 capped / 4 never-reached.**
+  Named upside brake **28431.2 (+192) sliced by 407.7 = 0.644× ADR**; downside
+  *"clear"*, no brake named, untested (price went 72.1 below the scan open).
+  **Force-ranking branch: a THIRD disagreement favouring neither** — the nearest
+  call-dominant strike **28631.2 (+392) was ALSO sliced, by 207.7**. Branch stays
+  **CLOSED**. **`largest_abs_gex` / `walls_ranked` trap RE-FLAGGED for the 5th
+  time; not a defect.**
+- **P-E instance 21 — SLICED by 407.7**, far outside the 12–103 "middle" band, on
+  the row the board called *"the strongest ceiling on the board"*. **P-E(b) #22 —
+  3 of 5 unreachable, 2 of 2 graded rows wrong** (`28181.2` *"not a floor"* was
+  the post-scan floor; `28631.2` *"expect a stall"* sliced by 207.7, then acted
+  as an afternoon magnet). **P5 — 2 of 5 gradeable, 0 right / 2 wrong, still
+  graded by no tool**; the *"best level is in the secondary table"* sub-claim
+  takes a **FIFTH consecutive counter-session** and is dead.
+- **H4 — close-to-flip distance 243.4.** The flip was reclaimed 14:40–15:40Z, the
+  day high printed 159.4 above it, and it was lost and held below for 330 min.
+  The brief's own conditional (*"reclaim and hold above and fading becomes
+  valid"*) was the right read and nothing in the engine reads it forward.
+  **Entry stays OBSERVING at 1 hit / 4 misses. Do not use the flip as a target.**
+- **M6 — session 39, ONE instance, expected-by-identity.** `GAMMA FLIP` printed
+  *"broke UP through it"* while `settled_side` is **below** and the close finished
+  **243.4 beneath**: `review_day.py:159–161`'s inversion. **Not a finding.** Only
+  `_first_touch`'s 12-bar window is open; two fixes are with the user.
+- **D5 — no defect instance.** All 3 touched rows diverge first-touch vs settled
+  (*"traded both sides"* against `lost` / `held resistance` / `no settled`); every
+  divergence is the known window difference, **none is an inversion**, and the
+  settled read is better on all three.
+- **H6 — the density artefact by a NEW route.** 3 touches off **2** bars
+  (**1.50×**, equal to 11-03's record) from rows **98.3 to 1048.3** apart — the
+  14:40Z bar was 158.8 points tall and first-touched two rows at once. **P-B(b)
+  has ZERO guaranteed windows** on this board (min gap 98.3 = **12.3× TOUCH_TOL**),
+  the first `LONDON`/EST session with none. **Observed and EXCLUDED under G1;
+  `LONDON/EST` census n=3; `PRE_NY` stays 23.**
+- **Session-context field — `LONDON/EST` census n=3, and its FIRST demonstrable
+  HARM case.** 2 of 4 rows sat inside the pre-scan range, and both were
+  **traversed and reversed from**: the put wall by **138.2 beneath** (low 27493.0
+  at 03:05Z, 9h42m pre-scan, then +746.5 recovery) and the call wall by **101.8
+  above** (10:30Z). The put-wall row's *"if it breaks, expect it to speed UP, not
+  bounce"* describes an event that had already happened and resolved the other
+  way. `PRE_NY` stays **22**. **Condition 3 of 3, harm n=1. NOTHING PROPOSED.**
+- **D28 — the condition RECURRED; condition instance 3 since opening** (10-28,
+  10-30, 11-04; **8th** `null` scan overall), **harm NOT demonstrable** from
+  inside the pipeline (§6's midterm coverage is political, not calendared).
+  **Harm stays 2 of 8.** Entry already PROPOSED; **D24 a clean control.**
+- **P-C / `events` — the row was ABSENT ENTIRELY.** `events_24h: null` and
+  `bias_components` carries **no `events` component** (8 components, 26 rows).
+  `events` has still **never scored**. High-event limb **n=2**, Medium-cluster
+  limb **n=2**, both below three. **Already PROPOSED; gains nothing.**
+  **Dead-weight audit: 12 of 26 rows scored 0** (band `gamma`, VXN level, HY OAS,
+  NFCI, curve, both `fuel`, both remaining `structure`, three `news` bullets).
+- **P-G — NO instance, for the right reason.** The zero-budget collapse removed
+  every session-extreme row, and the six footnote rows are **all highs above
+  price**, so no *"stops below it"* string could be mis-sided. **Census stays
+  #40.** **Merge-note limb: a genuine NON-INSTANCE** — no merged row on the board
+  (all four `confluence: 1`) and no `PD close` anywhere in the document, so
+  `brief.py:382–385`'s `rank` could not discard anything. **Condition stays n=3,
+  harm stays n=2.**
+- **D22 — a CLEAN CONTROL, the first in three sessions.** `breadth −1` printed
+  *"NDX +0.68% vs ES +0.93%"*; both legs positive on a day the whole US tape rose,
+  so **neither is implausible and no claim is made.** Candidate count stays
+  **n=2**.
+- **H14 — no post-scan instance** (put wall missed by **502.8**), count
+  unchanged. Recorded **outside** the census: it **was** broken pre-scan by 138.2
+  and price **bounced 746.5**, the behaviour *"expect it to speed UP, not bounce"*
+  forbids. **Pre-scan contamination is why P-E keeps a forward-only convention.**
+- **P3 / H6 — NO structural instance;** no structural row was published. Strict
+  count stays **1 clean / 1 confounded**; the *"stop publishing it"* narrowing
+  stays **blocked**.
+- **H8 — post-closure HIT.** Band **±486** off the 2026-11-04 ATM straddle
+  (572pts, **ATM IV 48.2%**) → 27753..28726; close **28436.1 INSIDE** with 290 of
+  room, day high outside by 112.9 (which the band's own text anticipates). Stays
+  **CLOSED ANSWERED-POSITIVE (8 of 10)**, **not re-opened**; post-closure **2 hits
+  / 1 miss**.
+- **H17 — not a deadband case** (post-scan move **17.1%** of session range).
+  Stays **2 of 3**.
+- **`gamma +2` — a clean NON-INSTANCE, not a miss.** Price *"mid-band, 76% up the
+  range"* → **+0**; under the **10-30 normalised rule** price was **608.3 above
+  the put wall = 0.961× ADR** against 0.15×, so **neither rule fires**. Census
+  stays **4 right / 4 wrong**; pre-registration stays at **1 of 3** firings
+  collected. **D21** — band **800.0 = 1.264× ADR**, no firing.
+- **The `gamma −3` branch — amplitude right, direction wrong, no distance
+  scaling.** **440.0pts = 0.695× ADR** bought the identical −3 that 10-27's
+  **22.6pts (0.040× ADR)** bought: the largest distance yet to earn the same
+  full-strength term. The amplification arrived (traversal 704.9, range 2.126×
+  ADR) and pointed **UP**, satisfying §2's *"sweeps keep running"* on the side the
+  call forbade. **Routes to the unarbitrated two-gamma-rows conflict; no number.**
+  No two-row sign conflict today (0_2dte −1.314, week −1.305, 45d −4.29, all
+  negative) — and `COHERENT_SHORT`'s own *"expect range expansion … today's ADR
+  can be exceeded"* was **the most accurate sentence in the document**, four lines
+  above a fuel block that said the range was finished.
+- **D23 — observation 16, NO residual, none inferred** (§7 did not render); offset
+  **−68.8**, `nq_implied`, `repriced_bs_at_current_spot`, cash 933 min stale.
+  **D6 breach — series goes to SIX.** **D25 — interrupted at 29**, §1–§6 only,
+  **7th** consecutive non-render. **D27 — 11th CONSECUTIVE 401** on
+  `/v2/NDX/classic/gex_full` (11-04 render and the 11-05 scan); **H12/H13
+  untestable**, **D25 SUPPRESSED**. **Nothing proposed.**
+- **`TOUCH_TOL = 8.0` — a tolerance-granted touch that cost nothing.** The 14:30Z
+  first touch of 28431.2 came off a bar whose high was **7.8** short; the tape's
+  own first trade through was 14:35Z. Verdict unaffected (the level was traversed
+  by 407.7). **Not an instance. Stays n=2.**
+- **The *"whole move was over by 10:30 ET"* watch item — a SUPPORTING instance.**
+  Post-scan low **13:00Z = 08:00 ET**, day high **15:15Z = 10:15 ET**: the entire
+  **704.9**-point post-scan traversal completed inside the window, and the
+  remaining 5h40m ranged 28344.7–28782.2 and gave back **402.8** of the move.
+  Watch item with no ID; nothing proposed.
+- **No instance:** **H3** (CLOSED-NEGATIVE, superseded by H26) · **H5** · **H7** ·
+  **H9** (AMD is `sector-relevant`, not index-defining — NVDA only) · **H10**
+  (price inside the prior-week range, `structure +0`; the rule did not fire, so
+  the reclaim condition is untested and the 7th-firing count is unchanged) ·
+  **H11** · **H12/H13** (401) · **H15/HY OAS** (scored 0; still **not** dead
+  weight — it scores −2 on the 11-05 scan) · **H16** · **H19** (clause (i)
+  fails) · **H20** · **H21** · **D8** · **D14** · **D15** ·
+  **`PIN_THEN_EXPAND` / P-I** (shape did not fire; P-I keeps its single 11-02
+  harm case) · **the gamma-outvoted cell** (`gamma` netted −5 and **agreed** with
+  the losing call; stays **n=5**) · **the max-pain Thursday/Friday clause**
+  (Wednesday, and max pain was the only row that held — logged at n=1).
+
+## No new data point is warranted
+
+Everything that decided 11-04 was either on the page or had been deleted from it
+by the page's own renderer: `COHERENT_SHORT` forecast *"range expansion … today's
+ADR can be exceeded"* four lines above a fuel block that said the range was over;
+the `PDH` that based the rally was truncated out of the footnote by a
+**price-ordered** cut; the put wall was described as an unbroken floor **nine
+hours after it broke and bounced 746.5 points**; and §6 put *"Dow futures surge
+800 points"* in the judgement pile while scoring a **2027** El Niño forecast as a
+live inflation print. **No external source is proposed.** The one genuinely
+absent input remains an **event-age** field for `news_scorer.py` — free, local,
+owned code, **n=2 on each limb, NOT proposed** (11-04 adds to neither; its scored
+events were same-day).
+
+## Carried forward from the 2026-11-05 scan — recorded, NOT graded
+
+- **Fourth consecutive `LONDON` scan**, 12:47Z. `MILDLY BEARISH −4`. **G1–G4
+  apply when it is graded**; the parallel `LONDON/EST` censuses go to **n=4**
+  then, not now.
+- **Offset −9.2, CLEAN.** The **D6 breach series stays at six**; D23 takes
+  observation 17 when graded. **D27 — the 401 recurred, an 11th consecutive day.**
+- **`macro −7` — the largest macro contribution in the series** (DFII10 −3,
+  DGS10 −1, HY OAS −2, WALCL −1) against `rates +3` and `breadth +3`.
+- **H18/P1 is OPPOSITE-SIGNED AGAIN, and MIRRORED.** `rates +3` reads a **live**
+  US10y that **fell 1.17%**; `macro −3 / −1` reads DFII10/DGS10 **stale to 11-03
+  and rising**. On 11-04 the live row said UP and the stale row said DOWN; on
+  11-05 it is the exact reverse. **Two consecutive sessions in which the live and
+  stale readings of one instrument disagree in sign, in opposite directions.**
+  Duplication will be **38 of 38**.
+- **HY OAS widening 22bp over five days — the largest widening recorded — and it
+  SCORED −2.** Further evidence against the retired *"HY OAS is dead weight"*
+  claim.
+- **The volatility panic has unwound hard: VXN −17.9% to 25.08**, backwardation
+  **gone (0.898 contango)**, VVIX **90.41**. The four `vol` rows that cast −4 of
+  11-04's −12 have reversed in one session.
+- **Fuel `LOW_FUEL`, ratio 1.73, budget 187.2 — and ADR14 has climbed 633.1 →
+  688.3 in ONE session**: the day the engine declared exhausted at 164.3% raised
+  the 14-day average by **55.2 points**. **Another H2 cell instance**, to be
+  graded under the unaltered 10-20 rule.
+- **`breadth +2`'s +1.70% mega-cap average conceals a 9.85pp split** — see the
+  averaging-over-dispersion section above. **Third condition instance, on an
+  ungraded scan, nothing opened.**
+- **STRUCTURAL PUT WALL at −108, 246k contracts / 1.79bn — the largest force
+  figure in the series — with PWL 6pts beneath it.** At −108 it is by far the
+  closest structural wall ever published (11-03's was −298.6; the 10-21 note
+  recorded it had never been within 200pts). **P3/H6's census is stuck at 1 clean
+  / 1 confounded because the level is never reachable; this is the session that
+  can move it.** Flagged for the next review.
+- **`PIN_THEN_EXPAND` did not fire on 11-04** (`COHERENT_SHORT`), so **P-I keeps
+  its single harm case**.
+- **D25 frozen at 29. D26 gap 16.**
+
+## Journal hygiene
+
+One scan file for 11-04 (`1247-london.json` + `.md`), `is_trading_day: true`,
+**276 bars** (the 21:00Z and 22:00Z buckets both hold 276 on this day — D30's
+symmetry, not data loss), `review_day` reports **0 test artefacts**. **09-24
+quarantined by hand — 28th consecutive review to carry it**; there is still no
+schema `quarantine` field and the 09-29 proposal for one is reaffirmed.
+**2026-10-13 has no journal directory — documented, not recreated.**
+**2026-08-23, 09-09, 09-24 and 09-25 still have no `REVIEW.md`; none was created
+and nothing was back-dated.** **2026-11-05 is on disk, `is_trading_day: true`,
+and is NOT graded here.** **No `prediction` block was modified. No scoring, wall
+or grading code was edited** — §3.6's counterfactual calls
+`review_day.grade_level` on shifted level prices and writes nothing.
