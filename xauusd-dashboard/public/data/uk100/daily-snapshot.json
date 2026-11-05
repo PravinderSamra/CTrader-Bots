@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-11-05T13:44:25.032Z",
+  "generatedAt": "2026-11-05T15:28:53.907Z",
   "prices": {
-    "UK100": 10928.95,
-    "GBPUSD": 1.34596,
-    "GBPEUR": 1.20012,
-    "US500": 7706,
-    "NAS100": 28238.85,
-    "BRENT": 100.341,
-    "COPPER": 6.5076,
-    "VIX": 17.395,
-    "USDX": 101.668,
-    "XAUUSD": 4120.715,
-    "UK100_dayPct": 0.13
+    "UK100": 10835.45,
+    "GBPUSD": 1.3478,
+    "GBPEUR": 1.20061,
+    "US500": 7492.5,
+    "NAS100": 27075.85,
+    "BRENT": 100.502,
+    "COPPER": 6.3794,
+    "VIX": 21.595,
+    "USDX": 101.531,
+    "XAUUSD": 4098.67,
+    "UK100_dayPct": -0.72
   },
   "fx": {
-    "gbpUsdDayPct": -0.09,
+    "gbpUsdDayPct": 0.05,
     "gbpUsd20dPercentile": 100,
     "sterlingEri": 86.5372,
     "sterlingEriDayChange": 0.18,
@@ -36,25 +36,25 @@
     "daysToMpc": 0
   },
   "usLinkage": {
-    "us500DayPct": -0.01,
-    "nas100DayPct": -0.97,
-    "vix": 17.395,
+    "us500DayPct": -2.78,
+    "nas100DayPct": -5.05,
+    "vix": 21.595,
     "vixRegime": "NORMAL",
     "us10y": 4.95,
-    "usdx": 101.668
+    "usdx": 101.531
   },
   "commodities": {
-    "brentDayPct": 1.98,
-    "copperDayPct": 0.38,
-    "goldDayPct": 1.49,
+    "brentDayPct": 2.14,
+    "copperDayPct": -1.6,
+    "goldDayPct": 0.95,
     "brent20dTrend": "DOWN"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": 0.16,
-    "dax40DayPct": 0.17,
-    "eurUsdDayPct": -0.12,
-    "ftseDaxCorr20d": 0.73,
-    "ftseSx5eCorr20d": 0.62,
+    "eurostoxx50DayPct": -1.2,
+    "dax40DayPct": -0.96,
+    "eurUsdDayPct": -0.02,
+    "ftseDaxCorr20d": 0.74,
+    "ftseSx5eCorr20d": 0.64,
     "tapeAgreement": "ALIGNED",
     "preOpenLead": "NONE"
   },
@@ -69,15 +69,15 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent +1.98%",
+      "driver": "Brent +2.14%",
       "read": "BULLISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper +0.38%",
-      "read": "NEUTRAL",
+      "driver": "Copper -1.6%",
+      "read": "BEARISH",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
     {
@@ -125,62 +125,56 @@
       "headline": "COMMENTARY: Asia hopes Democrats can provide relief from Trump's Iran war, tariffs - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOUk1naVB2YlNzNHNsUVA1ZVp4ZU5QaUNocUZjdkt0VVdHZVVmZXdRZzhSdUt5RFROWXlBclNEM0p0NnJTc3dqaWlBWVhoUWRVczliT2JGR3l3RXU0R1N0aGZicXFZSkdiNjd6dmZJWVVoRWp4X21wNUJNd2EzOG5CMnJoR1ExaW1lX1Q4R0o0cHhBM1lZX0lnd0NLMkFVaTJZZ0FvUVNfejFaaFViQU9tX3REV2ZBNjdCOHU3ak1EcUdJX2xsbFdCWE9pVzk?oc=5",
-      "hoursAgo": 6.7
+      "hoursAgo": 8.5
     },
     {
-      "headline": "Emirates airline net profit drops 66% in first half dragged down by Iran war - Reuters",
+      "headline": "Emirates profit plunges as Iran war rattles Middle East aviation - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQZ0FfNmtkUFFEaTlUdDhvdXZNYko4TUMwOVNTWVpEdHl5ZjMxUE8xdW9PRHNjelJlbFFkaFNEMEN6OHRnZVEzYnFXY09LQUtTa0FMSFZKY0I4amR2dUt3VGRTc3ExUGJ1cGFtQ245eDFuUkhkWUI3ZGNBMVQzN3NBRlZJOXJxZjRCRVN1STlia2lXUHdoRF9EdkhFcWpGZXJqUW9CUkJmUERhTzMxUGx0Wi1XX2ZwV3BEMVBHM1pmLWpYX01XX2xR?oc=5",
-      "hoursAgo": 7.7
+      "hoursAgo": 9.4
     },
     {
       "headline": "Bank of England poised to hike rates for first time in 3 years - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQYXM1eE1qNm05dkg5WWJabktscTRfLXlCdktDcTJYRjYzR2RLUXc1UkdTZHFwSzNCV2NxQTdPT2JrRTVENFNOeTdiYWtFZzZ0dFowUXV1anpnSWZudktCR3FwZm9QMFhJUTJtckJfdlpQM21seG1BVEV0MWpfNXJOZjhhcEwzUG5XZ2FNRk9RS0JrSFU4bElfdTFB?oc=5",
-      "hoursAgo": 13.7
-    },
-    {
-      "headline": "JPMorgan, HSBC say oil supplies are recovering from Middle East disruption - Reuters",
-      "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxPdFJUTVpmWVQ2VEN4MEw2NEcwRk9BODBmQ0MzSUdOWEN2ZU5fU0FXOG5QbmdwQkFQU25hX3NBMkg3ZUF3TkRMNkxnZGVTcGdweEJaU1Q5Y241RF9EX0swdmRSRjJybWdzNHFDZlNmWUFTOXFtYnllWFA2ckpLb3dzTXE2XzdQOTYzOEIzRXFuQVdMTngyLVJRQ1QzYS1BalVyRi1lOW0tWTJnT1dLaTJwa0dEQXNPSXE0VnhxRzJvVzdMczE4dVdn?oc=5",
-      "hoursAgo": 22.5
+      "hoursAgo": 15.4
     }
   ],
   "riskTone": null,
   "bias": {
-    "score": 3,
-    "label": "BULLISH",
+    "score": -5,
+    "label": "BEARISH",
     "conviction": "MEDIUM",
     "drivers": [
       {
         "name": "GBP",
         "weight": 3,
         "impact": "NEUTRAL",
-        "detail": "GBP/USD -0.09% → FTSE tailwind (sign-flipped)"
+        "detail": "GBP/USD +0.05% → FTSE headwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
-        "impact": "NEUTRAL",
-        "detail": "US500 -0.01% today"
+        "impact": "BEARISH",
+        "detail": "US500 -2.78% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 17.395 — NORMAL regime"
+        "detail": "VIX 21.595 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
         "impact": "BULLISH",
-        "detail": "Brent +1.98% (energy majors)"
+        "detail": "Brent +2.14% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
-        "impact": "NEUTRAL",
-        "detail": "Copper +0.38% (miners/China)"
+        "impact": "BEARISH",
+        "detail": "Copper -1.6% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -202,15 +196,15 @@
       },
       {
         "name": "European tape (SX5E/DAX)",
-        "weight": 2.5,
-        "impact": "NEUTRAL",
-        "detail": "SX5E +0.16% / DAX +0.17%"
+        "weight": 1.05,
+        "impact": "BEARISH",
+        "detail": "SX5E -1.2% / DAX -0.96%"
       }
     ],
     "eventSuppressed": true
   },
   "orbContext": {
-    "computedAt": "2026-11-05T13:44:25.031Z",
+    "computedAt": "2026-11-05T15:28:53.906Z",
     "mode": "POST_ORB",
     "cashOpenLondon": "08:00 GMT",
     "overnightHigh": 10987.5,
@@ -220,8 +214,8 @@
     "priorClose": 10914.5,
     "prevWeekHigh": 10784,
     "prevWeekLow": 10640.7,
-    "gapPts": 14.5,
-    "gapPct": 0.13,
+    "gapPts": -79,
+    "gapPct": -0.72,
     "orbHigh": 10960.7,
     "orbLow": 10927.9,
     "orbBrokenDirection": "DOWN",
@@ -233,34 +227,41 @@
       }
     ],
     "adr14": 128.8,
-    "adrUsedPct": 82,
+    "adrUsedPct": 127,
     "expansionState": {
       "label": "NORMAL",
-      "rangeSoFarPct": 82,
-      "expectedRangePctByNow": 86,
-      "rangeVsTypical": 0.95,
-      "expectedVolPctByNow": 68,
-      "moveMostlyDone": false,
-      "note": "Range 82% of ADR vs ~86% typical by 13:00 BST (about the typical pace). only ~68% of volume typically done by now — an afternoon expansion is still possible."
+      "rangeSoFarPct": 127,
+      "expectedRangePctByNow": 96,
+      "rangeVsTypical": 1.32,
+      "expectedVolPctByNow": 93,
+      "moveMostlyDone": true,
+      "note": "Range 127% of ADR vs ~96% typical by 15:00 BST (about the typical pace). ~93% of a typical day's volume already done — expect a rangebound remainder, tighten targets."
     }
   },
   "orbIntel": {
-    "stance": "LONG_FAVOURED",
-    "stanceLine": "Backdrop favours upside breaks — ORB broke DOWN against a BULLISH macro bias (+3) — counter-bias breaks fail more often; treat continuation as suspect.",
+    "stance": "BREAKOUTS_SUSPECT",
+    "stanceLine": "Breakouts suspect in both directions today — 127% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
     "signals": [
       {
         "direction": "BREAKOUT_SUSPECT",
+        "severity": "STRONG",
+        "source": "RANGE",
+        "rule": "R4",
+        "text": "127% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+      },
+      {
+        "direction": "NEUTRAL",
         "severity": "CAUTION",
-        "source": "STRUCTURE",
-        "rule": "R2",
-        "text": "ORB broke DOWN against a BULLISH macro bias (+3) — counter-bias breaks fail more often; treat continuation as suspect."
+        "source": "RANGE",
+        "rule": "R7",
+        "text": "The obvious draw (PDL 10513.5) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
       },
       {
         "direction": "BREAKOUT_SUSPECT",
         "severity": "CAUTION",
-        "source": "RANGE",
-        "rule": "R4",
-        "text": "82% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        "source": "FX",
+        "rule": "R10",
+        "text": "Sterling is at the 100th percentile of its 20-day range and still rising — a persistent FX headwind capping upside breaks (weak GBP is what lifts FTSE)."
       },
       {
         "direction": "BREAKOUT_SUSPECT",
@@ -270,18 +271,18 @@
         "text": "BoE MPC Rate Decision @ 12:00 GMT today — pre-release breaks are positioning, not conviction."
       },
       {
-        "direction": "FAVOURS_LONG",
+        "direction": "FAVOURS_SHORT",
+        "severity": "INFO",
+        "source": "STRUCTURE",
+        "rule": "R3",
+        "text": "ORB break DOWN is aligned with the BEARISH macro bias (-5) — continuation has the backdrop behind it."
+      },
+      {
+        "direction": "FAVOURS_SHORT",
         "severity": "INFO",
         "source": "TAPE",
         "rule": "R8",
-        "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.16%) — the cross-market lean is up."
-      },
-      {
-        "direction": "BREAKOUT_SUSPECT",
-        "severity": "INFO",
-        "source": "POSITIONING",
-        "rule": "R11b",
-        "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.2%) — the cross-market lean is down."
       }
     ],
     "aiStanceLine": null,
