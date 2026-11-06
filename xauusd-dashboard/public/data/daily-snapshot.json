@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-06T15:04:37.300Z",
+  "generatedAt": "2026-11-06T20:10:30.957Z",
   "yields": {
     "US10Y": 4.9,
     "US2Y": 4.58,
@@ -34,23 +34,23 @@
     "openInterestChange": -13658
   },
   "etfFlows": {
-    "gldTonnes": 1088.7,
-    "gldWoWChange": 3.6,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1084.2,
+    "gldWoWChange": -4.5,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4048.305,
-    "XAGUSD": 51.789,
-    "EURUSD": 1.11477,
-    "USDJPY": 158.297,
-    "USDCHF": 0.82099,
-    "USDCNH": 6.67047,
-    "GBPUSD": 1.33587,
-    "USDCAD": 1.41073,
-    "USDSEK": 9.88809,
-    "US500": 7414.7,
-    "GER40": 25723.65,
-    "UK100": 10620.65,
+    "XAUUSD": 4064.91,
+    "XAGUSD": 52.0005,
+    "EURUSD": 1.11389,
+    "USDJPY": 158.528,
+    "USDCHF": 0.82088,
+    "USDCNH": 6.67248,
+    "GBPUSD": 1.33516,
+    "USDCAD": 1.41319,
+    "USDSEK": 9.89912,
+    "US500": 7409.2,
+    "GER40": 25716.15,
+    "UK100": 10644.65,
     "ADR_14day": 85.4,
     "ADR_usedToday": 78.6,
     "goldSilverRatio": 78.2
@@ -69,31 +69,19 @@
       "headline": "Outside groups urge congressional Dems to target corporate interests over Trump",
       "source": "CNBC",
       "publishedAt": "2026-11-06T11:30:01.000Z",
-      "hoursAgo": 3.6
+      "hoursAgo": 8.7
     },
     {
       "headline": "Montana votes to ban corporate political money. Next stop? Probably the Supreme Court",
       "source": "CNBC",
       "publishedAt": "2026-11-06T11:00:01.000Z",
-      "hoursAgo": 4.1
+      "hoursAgo": 9.2
     },
     {
       "headline": "Markets fret over growth and inflation, just as tech rout gains speed - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-06T05:09:00.000Z",
-      "hoursAgo": 9.9
-    },
-    {
-      "headline": "How Wall Street's postelection rally got obliterated — and what's next",
-      "source": "CNBC",
-      "publishedAt": "2026-11-05T20:06:31.000Z",
-      "hoursAgo": 19
-    },
-    {
-      "headline": "Bank of England raises rates for first time since 2023, warns more likely - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-05T17:11:41.000Z",
-      "hoursAgo": 21.9
+      "hoursAgo": 15
     }
   ],
   "briefing": null
