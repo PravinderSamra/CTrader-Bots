@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-06T13:28:52.053Z",
+  "generatedAt": "2026-11-06T15:04:37.300Z",
   "yields": {
     "US10Y": 4.9,
     "US2Y": 4.58,
@@ -22,8 +22,8 @@
     "probHike": 4
   },
   "marketVolatility": {
-    "GVZ": 24.11,
-    "VIX": 16.61
+    "GVZ": 25.83,
+    "VIX": 28.18
   },
   "positioning": {
     "cotNetLong": 179906,
@@ -34,26 +34,26 @@
     "openInterestChange": -13658
   },
   "etfFlows": {
-    "gldTonnes": 1085.1,
-    "gldWoWChange": 11.2,
+    "gldTonnes": 1088.7,
+    "gldWoWChange": 3.6,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4061.87,
-    "XAGUSD": 52.231,
-    "EURUSD": 1.11633,
-    "USDJPY": 158.364,
-    "USDCHF": 0.81916,
-    "USDCNH": 6.66995,
-    "GBPUSD": 1.33889,
-    "USDCAD": 1.40629,
-    "USDSEK": 9.87871,
-    "US500": 7375.2,
-    "GER40": 25765.95,
-    "UK100": 10589.15,
+    "XAUUSD": 4048.305,
+    "XAGUSD": 51.789,
+    "EURUSD": 1.11477,
+    "USDJPY": 158.297,
+    "USDCHF": 0.82099,
+    "USDCNH": 6.67047,
+    "GBPUSD": 1.33587,
+    "USDCAD": 1.41073,
+    "USDSEK": 9.88809,
+    "US500": 7414.7,
+    "GER40": 25723.65,
+    "UK100": 10620.65,
     "ADR_14day": 85.4,
-    "ADR_usedToday": 71.3,
-    "goldSilverRatio": 77.8
+    "ADR_usedToday": 78.6,
+    "goldSilverRatio": 78.2
   },
   "dollarLiquidity": {
     "stlfsi": -0.5224,
@@ -69,31 +69,31 @@
       "headline": "Outside groups urge congressional Dems to target corporate interests over Trump",
       "source": "CNBC",
       "publishedAt": "2026-11-06T11:30:01.000Z",
-      "hoursAgo": 2
+      "hoursAgo": 3.6
     },
     {
       "headline": "Montana votes to ban corporate political money. Next stop? Probably the Supreme Court",
       "source": "CNBC",
       "publishedAt": "2026-11-06T11:00:01.000Z",
-      "hoursAgo": 2.5
+      "hoursAgo": 4.1
     },
     {
       "headline": "Markets fret over growth and inflation, just as tech rout gains speed - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-06T05:09:00.000Z",
-      "hoursAgo": 8.3
+      "hoursAgo": 9.9
     },
     {
       "headline": "How Wall Street's postelection rally got obliterated — and what's next",
       "source": "CNBC",
       "publishedAt": "2026-11-05T20:06:31.000Z",
-      "hoursAgo": 17.4
+      "hoursAgo": 19
     },
     {
       "headline": "Bank of England raises rates for first time since 2023, warns more likely - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-05T17:11:41.000Z",
-      "hoursAgo": 20.3
+      "hoursAgo": 21.9
     }
   ],
   "briefing": null
