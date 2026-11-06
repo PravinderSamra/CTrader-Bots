@@ -1,0 +1,274 @@
+{
+  "schema": 1,
+  "scan_utc": "2026-11-06T12:47:49+00:00",
+  "scan_et": "2026-11-06 07:47 ET (Fri)",
+  "trading_day": "2026-11-06",
+  "session_window": "LONDON",
+  "is_trading_day": true,
+  "prediction": {
+    "price_at_scan": 27005.0,
+    "bias_score": -19,
+    "bias_label": "STRONGLY BEARISH",
+    "strategy": "STRATEGY 2 \u2014 CISD -> HH/HL -> fib OTE continuation. Below the flip in negative gamma: dealers amplify, sweeps run rather than fail. Strategy-1 fades have a materially lower hit rate here \u2014 only take them at the far walls.",
+    "event_gate": "STAND ASIDE \u2014 Average Hourly Earnings m/m in 0.7h. No entries until 30min after the print; then use the post-print 30-min range H/L as the day's sweep levels.",
+    "expected_direction": -1,
+    "gamma_flip": 28046.9,
+    "expiry_shape": "COHERENT_SHORT",
+    "fuel_state": "EXHAUSTED",
+    "remaining_budget": 0.0,
+    "adr14": 769.4,
+    "adr_used_pct": 114.4,
+    "levels": [
+      {
+        "price": 28401.2,
+        "name": "MAX PAIN",
+        "kind": "gamma",
+        "dist": 1396.2,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 28376.2,
+        "name": "STRUCTURAL CALL WALL \u25cf\u25cf\u25cf\u25cb\u25cb 0.50bn",
+        "kind": "structural",
+        "dist": 1371.2,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 28046.9,
+        "name": "GAMMA FLIP + Asia Low (prev-day)",
+        "kind": "gamma",
+        "dist": 1041.9,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 2
+      },
+      {
+        "price": 27176.2,
+        "name": "CALL WALL \u25cf\u25cf\u25cf\u25cf\u25cb 0.39bn",
+        "kind": "gamma",
+        "dist": 171.2,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 26326.2,
+        "name": "PUT WALL \u25cf\u25cf\u25cf\u25cf\u25cf 0.44bn",
+        "kind": "gamma",
+        "dist": -678.8,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      }
+    ]
+  },
+  "inputs": {
+    "bias_components": [
+      {
+        "component": "gamma",
+        "points": -3,
+        "why": "below flip 28046.9 by 1041.9pts \u2014 SHORT gamma, dealers amplify: downside accelerates, rallies unstable"
+      },
+      {
+        "component": "gamma",
+        "points": -2,
+        "why": "week net GEX -1.02 $bn/1% -> expansion likely"
+      },
+      {
+        "component": "gamma",
+        "points": 0,
+        "why": "price mid-band (26326.2-27176.2), 80% up the range"
+      },
+      {
+        "component": "vol",
+        "points": -2,
+        "why": "VXN 38.26 (+52.6%) \u2014 fear rising, bearish"
+      },
+      {
+        "component": "vol",
+        "points": -2,
+        "why": "VIX9D/VIX 1.226 BACKWARDATED \u2014 near-term stress, expect range expansion, downside skew"
+      },
+      {
+        "component": "vol",
+        "points": -1,
+        "why": "VXN/VIX 1.44 \u2014 tech-specific stress priced above the broad market"
+      },
+      {
+        "component": "vol",
+        "points": -1,
+        "why": "VVIX 134.99 \u2014 active tail hedging"
+      },
+      {
+        "component": "rates",
+        "points": 3,
+        "why": "US10y 4.837 (-1.17%) \u2014 yields down, BULLISH tech"
+      },
+      {
+        "component": "rates",
+        "points": -2,
+        "why": "DXY 101.981 (+0.42%) \u2014 dollar bid, risk-off"
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Real yield, 10y (DFII10)** \u2014 what lenders earn after inflation \u2014 is 2.64%, down 1bp as of 2026-11-04 and 3bp over 5 days. \u26a0\ufe0f FRED has not published since 2026-11-04 (2 business days ago) \u2014 this is last week's reading, not today's. No change in that reading \u2014 watch the 5-day direction instead."
+      },
+      {
+        "component": "macro",
+        "points": 1,
+        "why": "**10y nominal yield (DGS10)** moved 5bp down (2026-11-03 to 2026-11-04). Falling yields are a tailwind for tech."
+      },
+      {
+        "component": "macro",
+        "points": -2,
+        "why": "**High-yield credit spread (HY OAS)** \u2014 the extra interest demanded to lend to riskier companies is 3.32% (+18bp over 5 days). It's WIDENING: the bond market is getting nervous while stocks aren't. Bonds are usually right first \u2014 this is a warning."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Financial conditions (NFCI)** \u2014 how easy it is to borrow money across the economy \u2014 is EASIER than normal (-0.459). Cheap, available money is a background tailwind for stocks."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Fed balance sheet (WALCL) / reverse repo (RRP)** \u2014 cash in the financial system. The Fed is holding $6.75tn of assets, growing by $2.5bn this week, and the spare-cash buffer is down to $0.125bn."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Yield curve (10y\u20132y)** \u2014 long vs short bond yields. The 10-year pays +0.38% more than the 2-year. The gap widened because SHORT rates fell \u2014 the market is pricing rate cuts. Risk-on."
+      },
+      {
+        "component": "breadth",
+        "points": -2,
+        "why": "mega-cap avg -6.20% (0/4 up): NVDA -9.26%, MSFT -3.58%, AAPL -1.53%, AVGO -10.43%"
+      },
+      {
+        "component": "breadth",
+        "points": -1,
+        "why": "NDX -6.36% vs ES +0.22% \u2014 tech lagging, rotation out of tech"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "ADR14 769.4, 114.4% used vs ~42% normal by 07:47 ET -> fuel_ratio 2.72 (burning hot) [EXHAUSTED]"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "fuel is short \u2014 this dampens CONVICTION in any continuation call, it does not change direction"
+      },
+      {
+        "component": "structure",
+        "points": -1,
+        "why": "price below PD mid 27497.4 (PDH 28542.5 / PDL 26452.3)"
+      },
+      {
+        "component": "structure",
+        "points": -3,
+        "why": "price is BELOW the entire prior-week range (28084.6-30023.6) \u2014 weekly draw has flipped bearish; PWL 28084.6 is now resistance, not support"
+      },
+      {
+        "component": "structure",
+        "points": 0,
+        "why": "in-reach unmitigated pools: 0 above / 0 below \u2014 draw balanced"
+      },
+      {
+        "component": "news",
+        "points": -1,
+        "why": "2 auto-scored headline(s) (0 bull / 2 bear) -> MILDLY BEARISH; 55 more need reading in context (not counted here)"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [tariff_general] After Wall Street\u2019s worst selloff since the 2025 tariff shock, here\u2019s what investors nee"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [earnings_miss] Tesla Shares Tumble Again in Deepening Post-Election Slump - Bloomberg.com"
+      }
+    ],
+    "fuel": {
+      "adr14": 769.4,
+      "today_range": 880.2,
+      "adr_used_pct": 114.4,
+      "remaining_budget": 0.0,
+      "expansion_state": "EXHAUSTED",
+      "volume_relative": 0.93,
+      "volume_state": "normal"
+    },
+    "gamma": {
+      "near_expiry_0_2dte": -0.204,
+      "this_week": -1.02,
+      "full_45dte": -4.202
+    },
+    "call_wall": 27176.2,
+    "put_wall": 26326.2,
+    "max_pain": 28401.2,
+    "vol": {
+      "vxn": 38.26,
+      "vix": 26.65,
+      "vix9d_over_vix": 1.226
+    },
+    "rates": {
+      "us10y": 4.837,
+      "dxy": 101.981
+    },
+    "news": {
+      "raw_score": -1.91,
+      "bias_points": -1,
+      "label": "MILDLY BEARISH",
+      "scored_high_confidence": 2,
+      "needs_model_judgement": 55
+    },
+    "events_24h": [
+      {
+        "utc": "2026-11-06T13:30:00+00:00",
+        "impact": "High",
+        "title": "Average Hourly Earnings m/m",
+        "forecast": "0.3%",
+        "previous": "0.1%",
+        "hours_away": 0.7
+      },
+      {
+        "utc": "2026-11-06T13:30:00+00:00",
+        "impact": "High",
+        "title": "Non-Farm Employment Change",
+        "forecast": "65K",
+        "previous": "29K",
+        "hours_away": 0.7
+      },
+      {
+        "utc": "2026-11-06T13:30:00+00:00",
+        "impact": "High",
+        "title": "Unemployment Rate",
+        "forecast": "4.2%",
+        "previous": "4.2%",
+        "hours_away": 0.7
+      },
+      {
+        "utc": "2026-11-06T15:00:00+00:00",
+        "impact": "Medium",
+        "title": "Prelim UoM Consumer Sentiment",
+        "forecast": "48.1",
+        "previous": "46.3",
+        "hours_away": 2.2
+      },
+      {
+        "utc": "2026-11-06T15:00:00+00:00",
+        "impact": "Medium",
+        "title": "Prelim UoM Inflation Expectations",
+        "forecast": "",
+        "previous": "4.7%",
+        "hours_away": 2.2
+      }
+    ]
+  },
+  "outcome": null
+}
