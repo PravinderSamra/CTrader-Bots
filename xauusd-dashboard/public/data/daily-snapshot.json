@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-11-05T20:53:27.607Z",
+  "generatedAt": "2026-11-06T13:28:52.053Z",
   "yields": {
-    "US10Y": 4.95,
-    "US2Y": 4.61,
-    "realYield10Y": 2.65,
-    "realYield5Y": 2.35,
-    "curve2s10s": 34,
-    "breakeven10Y": 2.26,
-    "breakeven5Y": 2.3,
+    "US10Y": 4.9,
+    "US2Y": 4.58,
+    "realYield10Y": 2.64,
+    "realYield5Y": 2.39,
+    "curve2s10s": 32,
+    "breakeven10Y": 2.24,
+    "breakeven5Y": 2.26,
     "forward5y5y": 2.22,
     "dayOverDay": {
-      "US10Y": 0.04,
-      "US2Y": 0.02,
-      "realYield10Y": 0.03
+      "US10Y": -0.05,
+      "US2Y": -0.03,
+      "realYield10Y": -0.01
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-12-09",
     "probCut": 0,
-    "probHold": 88,
-    "probHike": 12
+    "probHold": 96,
+    "probHike": 4
   },
   "marketVolatility": {
     "GVZ": 24.11,
@@ -34,26 +34,26 @@
     "openInterestChange": -13658
   },
   "etfFlows": {
-    "gldTonnes": 1073.9,
-    "gldWoWChange": -1,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1085.1,
+    "gldWoWChange": 11.2,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4104.175,
-    "XAGUSD": 52.157,
-    "EURUSD": 1.12216,
-    "USDJPY": 157.797,
-    "USDCHF": 0.81712,
-    "USDCNH": 6.66469,
-    "GBPUSD": 1.3453,
-    "USDCAD": 1.40075,
-    "USDSEK": 9.80077,
-    "US500": 7382.5,
-    "GER40": 26247.05,
-    "UK100": 10718.95,
-    "ADR_14day": 81.7,
-    "ADR_usedToday": 89.3,
-    "goldSilverRatio": 78.7
+    "XAUUSD": 4061.87,
+    "XAGUSD": 52.231,
+    "EURUSD": 1.11633,
+    "USDJPY": 158.364,
+    "USDCHF": 0.81916,
+    "USDCNH": 6.66995,
+    "GBPUSD": 1.33889,
+    "USDCAD": 1.40629,
+    "USDSEK": 9.87871,
+    "US500": 7375.2,
+    "GER40": 25765.95,
+    "UK100": 10589.15,
+    "ADR_14day": 85.4,
+    "ADR_usedToday": 71.3,
+    "goldSilverRatio": 77.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.5224,
@@ -66,46 +66,34 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Outside groups urge congressional Dems to target corporate interests over Trump",
+      "source": "CNBC",
+      "publishedAt": "2026-11-06T11:30:01.000Z",
+      "hoursAgo": 2
+    },
+    {
+      "headline": "Montana votes to ban corporate political money. Next stop? Probably the Supreme Court",
+      "source": "CNBC",
+      "publishedAt": "2026-11-06T11:00:01.000Z",
+      "hoursAgo": 2.5
+    },
+    {
+      "headline": "Markets fret over growth and inflation, just as tech rout gains speed - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-06T05:09:00.000Z",
+      "hoursAgo": 8.3
+    },
+    {
       "headline": "How Wall Street's postelection rally got obliterated — and what's next",
       "source": "CNBC",
       "publishedAt": "2026-11-05T20:06:31.000Z",
-      "hoursAgo": 0.8
+      "hoursAgo": 17.4
     },
     {
       "headline": "Bank of England raises rates for first time since 2023, warns more likely - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-05T17:11:41.000Z",
-      "hoursAgo": 3.7
-    },
-    {
-      "headline": "Instant view: Bank of England delivers first rate hike in three years, gilt yields rise - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-05T12:58:29.000Z",
-      "hoursAgo": 7.9
-    },
-    {
-      "headline": "COMMENTARY: Asia hopes Democrats can provide relief from Trump's Iran war, tariffs - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-05T07:00:00.000Z",
-      "hoursAgo": 13.9
-    },
-    {
-      "headline": "Emirates profit plunges as Iran war rattles Middle East aviation - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-05T06:03:00.000Z",
-      "hoursAgo": 14.8
-    },
-    {
-      "headline": "Morning Bid: Goldilocks or gridlock? - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-05T05:50:00.000Z",
-      "hoursAgo": 15.1
-    },
-    {
-      "headline": "Bank of England poised to hike rates for first time in 3 years - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-05T00:03:00.000Z",
-      "hoursAgo": 20.8
+      "hoursAgo": 20.3
     }
   ],
   "briefing": null
