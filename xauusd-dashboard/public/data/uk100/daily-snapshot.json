@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-11-09T14:44:36.656Z",
+  "generatedAt": "2026-11-09T17:30:46.148Z",
   "prices": {
-    "UK100": 10746.35,
-    "GBPUSD": 1.34133,
-    "GBPEUR": 1.19819,
-    "US500": 7486.3,
-    "NAS100": 27538.85,
-    "BRENT": 96.854,
-    "COPPER": 6.4196,
-    "VIX": 21.055,
-    "USDX": 101.896,
-    "XAUUSD": 4119.95,
-    "UK100_dayPct": 1.04
+    "UK100": 10810.85,
+    "GBPUSD": 1.34252,
+    "GBPEUR": 1.19781,
+    "US500": 7546.5,
+    "NAS100": 27850.35,
+    "BRENT": 96.533,
+    "COPPER": 6.4295,
+    "VIX": 20.205,
+    "USDX": 101.814,
+    "XAUUSD": 4104.295,
+    "UK100_dayPct": 1.64
   },
   "fx": {
-    "gbpUsdDayPct": 0.5,
+    "gbpUsdDayPct": 0.58,
     "gbpUsd20dPercentile": 100,
     "sterlingEri": 86.2226,
     "sterlingEriDayChange": -0.37,
@@ -36,25 +36,25 @@
     "daysToMpc": 38
   },
   "usLinkage": {
-    "us500DayPct": 1.48,
-    "nas100DayPct": 2.11,
-    "vix": 21.055,
+    "us500DayPct": 2.29,
+    "nas100DayPct": 3.27,
+    "vix": 20.205,
     "vixRegime": "NORMAL",
     "us10y": 4.84,
-    "usdx": 101.896
+    "usdx": 101.814
   },
   "commodities": {
-    "brentDayPct": -4.29,
-    "copperDayPct": 1.37,
-    "goldDayPct": 1.21,
+    "brentDayPct": -4.61,
+    "copperDayPct": 1.52,
+    "goldDayPct": 0.82,
     "brent20dTrend": "DOWN"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": 2.27,
-    "dax40DayPct": 1.88,
-    "eurUsdDayPct": 0.53,
-    "ftseDaxCorr20d": 0.77,
-    "ftseSx5eCorr20d": 0.71,
+    "eurostoxx50DayPct": 2.89,
+    "dax40DayPct": 2.6,
+    "eurUsdDayPct": 0.65,
+    "ftseDaxCorr20d": 0.79,
+    "ftseSx5eCorr20d": 0.74,
     "tapeAgreement": "ALIGNED",
     "preOpenLead": "NONE"
   },
@@ -69,14 +69,14 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent -4.29%",
+      "driver": "Brent -4.61%",
       "read": "BEARISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper +1.37%",
+      "driver": "Copper +1.52%",
       "read": "BULLISH",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
@@ -117,44 +117,44 @@
       "headline": "Gold gains as lower oil prices ease inflation fears - Reuters",
       "source": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNbEdIVXlJc2RaUEw2RmFrR2FZcXYzYlBKUG9Cdl9WUVFfalVxT0hGcGFCdW1DS3JMT2daanhDYktBeXVGNGt5TGlsOGZJVWVSMFpnT3ZVa2RBUjZYakRlVlQ3SXd1ZkpTQVNXVkpoNUZoemdycWY0MG02dVk0cWRuWG4taG5VMm9kbEluSHctTVZVMXJwWXNWSWdVcmxQeWtRSW1EWDQ2dTJ6QVV2TzhoeQ?oc=5",
-      "hoursAgo": 11.7
+      "hoursAgo": 14.5
     }
   ],
   "riskTone": null,
   "bias": {
-    "score": 3,
-    "label": "BULLISH",
-    "conviction": "MEDIUM",
+    "score": 2,
+    "label": "NEUTRAL",
+    "conviction": "LOW",
     "drivers": [
       {
         "name": "GBP",
         "weight": 3,
         "impact": "BEARISH",
-        "detail": "GBP/USD +0.5% → FTSE headwind (sign-flipped)"
+        "detail": "GBP/USD +0.58% → FTSE headwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
         "impact": "BULLISH",
-        "detail": "US500 +1.48% today"
+        "detail": "US500 +2.29% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 21.055 — NORMAL regime"
+        "detail": "VIX 20.205 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
         "impact": "BEARISH",
-        "detail": "Brent -4.29% (energy majors)"
+        "detail": "Brent -4.61% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
         "impact": "BULLISH",
-        "detail": "Copper +1.37% (miners/China)"
+        "detail": "Copper +1.52% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -176,16 +176,16 @@
       },
       {
         "name": "European tape (SX5E/DAX)",
-        "weight": 2.15,
+        "weight": 1,
         "impact": "BULLISH",
-        "detail": "SX5E +2.27% / DAX +1.88%"
+        "detail": "SX5E +2.89% / DAX +2.6%"
       }
     ],
     "eventSuppressed": false
   },
   "orbContext": {
-    "computedAt": "2026-11-09T14:44:36.655Z",
-    "mode": "POST_ORB",
+    "computedAt": "2026-11-09T17:30:46.147Z",
+    "mode": "CLOSED",
     "cashOpenLondon": "08:00 GMT",
     "overnightHigh": 10737.9,
     "overnightLow": 10632.9,
@@ -194,34 +194,34 @@
     "priorClose": 10636.2,
     "prevWeekHigh": 10987.5,
     "prevWeekLow": 10513.5,
-    "gapPts": 110.1,
-    "gapPct": 1.04,
+    "gapPts": 174.6,
+    "gapPct": 1.64,
     "orbHigh": 10719.6,
     "orbLow": 10658.8,
     "orbBrokenDirection": "UP",
     "eventWindows": [],
     "adr14": 142.9,
-    "adrUsedPct": 104,
+    "adrUsedPct": 125,
     "expansionState": {
       "label": "NORMAL",
-      "rangeSoFarPct": 104,
-      "expectedRangePctByNow": 93,
-      "rangeVsTypical": 1.12,
-      "expectedVolPctByNow": 81,
+      "rangeSoFarPct": 125,
+      "expectedRangePctByNow": 100,
+      "rangeVsTypical": 1.25,
+      "expectedVolPctByNow": 100,
       "moveMostlyDone": true,
-      "note": "Range 104% of ADR vs ~93% typical by 14:00 BST (about the typical pace). ~81% of a typical day's volume already done — expect a rangebound remainder, tighten targets."
+      "note": "Range 125% of ADR vs ~100% typical by 16:00 BST (about the typical pace). ~100% of a typical day's volume already done — expect a rangebound remainder, tighten targets."
     }
   },
   "orbIntel": {
     "stance": "BREAKOUTS_SUSPECT",
-    "stanceLine": "Breakouts suspect in both directions today — 104% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+    "stanceLine": "Breakouts suspect in both directions today — 125% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
     "signals": [
       {
         "direction": "BREAKOUT_SUSPECT",
         "severity": "STRONG",
         "source": "RANGE",
         "rule": "R4",
-        "text": "104% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        "text": "125% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
       },
       {
         "direction": "BREAKOUT_SUSPECT",
@@ -233,23 +233,16 @@
       {
         "direction": "FAVOURS_LONG",
         "severity": "INFO",
-        "source": "STRUCTURE",
-        "rule": "R3",
-        "text": "ORB break UP is aligned with the BULLISH macro bias (+3) — continuation has the backdrop behind it."
-      },
-      {
-        "direction": "FAVOURS_LONG",
-        "severity": "INFO",
         "source": "TAPE",
         "rule": "R8",
-        "text": "FTSE is tracking a firmer European tape (Euro Stoxx +2.27%) — the cross-market lean is up."
+        "text": "FTSE is tracking a firmer European tape (Euro Stoxx +2.89%) — the cross-market lean is up."
       },
       {
         "direction": "FAVOURS_LONG",
         "severity": "INFO",
         "source": "TAPE",
         "rule": "R9",
-        "text": "Past 13:30 with US futures +1.48% — the 14:30 US handoff argues for holding longs into the US open."
+        "text": "Past 13:30 with US futures +2.29% — the 14:30 US handoff argues for holding longs into the US open."
       },
       {
         "direction": "NEUTRAL",
@@ -257,6 +250,13 @@
         "source": "EVENT",
         "rule": "R13",
         "text": "US CPI prints tomorrow 13:30 GMT — late-session moves today are as likely pre-event de-risking as conviction."
+      },
+      {
+        "direction": "BREAKOUT_SUSPECT",
+        "severity": "INFO",
+        "source": "POSITIONING",
+        "rule": "R11b",
+        "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
       }
     ],
     "aiStanceLine": null,

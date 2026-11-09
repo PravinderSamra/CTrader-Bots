@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-09T14:44:31.220Z",
+  "generatedAt": "2026-11-09T17:30:41.259Z",
   "yields": {
     "US10Y": 4.84,
     "US2Y": 4.46,
@@ -34,26 +34,26 @@
     "openInterestChange": 19405
   },
   "etfFlows": {
-    "gldTonnes": 988.7,
-    "gldWoWChange": -95.5,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 992.6,
+    "gldWoWChange": 3.9,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4120.99,
-    "XAGUSD": 52.782,
-    "EURUSD": 1.11951,
-    "USDJPY": 158.082,
-    "USDCHF": 0.82107,
-    "USDCNH": 6.67023,
-    "GBPUSD": 1.34137,
-    "USDCAD": 1.41088,
-    "USDSEK": 9.81828,
-    "US500": 7487.3,
-    "GER40": 26176.05,
-    "UK100": 10746.85,
+    "XAUUSD": 4104.9,
+    "XAGUSD": 52.6875,
+    "EURUSD": 1.12081,
+    "USDJPY": 157.9715,
+    "USDCHF": 0.82081,
+    "USDCNH": 6.67103,
+    "GBPUSD": 1.34252,
+    "USDCAD": 1.41278,
+    "USDSEK": 9.82016,
+    "US500": 7547.4,
+    "GER40": 26363.05,
+    "UK100": 10811.35,
     "ADR_14day": 88.8,
     "ADR_usedToday": 79.7,
-    "goldSilverRatio": 78.1
+    "goldSilverRatio": 77.9
   },
   "dollarLiquidity": {
     "stlfsi": -0.5224,
@@ -69,13 +69,13 @@
       "headline": "Gold gains as lower oil prices ease inflation fears - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-09T03:01:00.000Z",
-      "hoursAgo": 11.7
+      "hoursAgo": 14.5
     },
     {
       "headline": "Asian stocks steady as AI, Mideast jitters recede; dollar firm on Fed bets - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-09T01:46:00.000Z",
-      "hoursAgo": 13
+      "hoursAgo": 15.7
     }
   ],
   "briefing": null
