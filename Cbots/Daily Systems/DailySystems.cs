@@ -1,4 +1,7 @@
-// Daily Systems cBot v1.4.2 (Vanessa Algo Bots)
+// Daily Systems cBot v1.4.3 (Vanessa Algo Bots)
+// v1.4.3: diagnostics only, no change to any trading decision. Logs C| at startup
+// (Server.Time vs Server.TimeInUtc) and F| every minute from 15:00 New York on a
+// Friday, naming every term the weekend close depends on.
 // v1.4.2: logs R|gap when the laptop slept or went offline for more than 5 minutes.
 // v1.4.1: fixed the save key (cTrader allows letters, digits and spaces only).
 // v1.4: crash-safe. Live only (not in backtests), the bot saves its
@@ -155,7 +158,13 @@ namespace cAlgo.Robots
                 if (args.Position.Label != null && args.Position.Label.StartsWith(Label + "-")) _closedCum += args.Position.NetProfit;
             };
             Timer.Start(TimeSpan.FromMinutes(1));
-            Print("Daily Systems v1.4.2 started: {0} symbols, notional ${1} per position.", _books.Count, Notional);
+            Print("Daily Systems v1.4.3 started: {0} symbols, notional ${1} per position.", _books.Count, Notional);
+            // DIAGNOSTIC (2026-11-09): NewYork() assumes its argument is UTC. If Server.Time is not
+            // UTC every session test is wrong by that offset, and nothing else in the bot would say so.
+            Print("C|Server.Time {0:yyyy-MM-dd HH:mm:ss}|TimeInUtc {1:yyyy-MM-dd HH:mm:ss}|diff {2:F2}h"
+                + "|NewYork {3:ddd yyyy-MM-dd HH:mm}|WeekendFlat {4}",
+                Server.Time, Server.TimeInUtc, (Server.Time - Server.TimeInUtc).TotalHours,
+                NewYork(Server.Time), WeekendFlat);
             if (Live) Restore();
         }
 
@@ -461,7 +470,29 @@ namespace cAlgo.Robots
                 foreach (var p in Mine.ToList()) { var bk = BookOf(p); if (bk != null && Tradable(bk)) ClosePosition(p); }
 
             var ny = NewYork(Server.Time);
-            if (WeekendFlat && ny.DayOfWeek == DayOfWeek.Friday && ny.Hour * 60 + ny.Minute >= 15 * 60 + 30)
+            bool fridayWindow = ny.DayOfWeek == DayOfWeek.Friday && ny.Hour * 60 + ny.Minute >= 15 * 60 + 30;
+
+            // DIAGNOSTIC (2026-11-09, logging only - decides nothing). From 15:00 New York each
+            // Friday, print every term the weekend close depends on, so a close that does not
+            // happen says WHY instead of leaving a hole in the log.
+            if (ny.DayOfWeek == DayOfWeek.Friday && ny.Hour >= 15)
+            {
+                var diag = new List<string>();
+                foreach (var p in Mine)
+                {
+                    var bk = BookOf(p);
+                    diag.Add(bk == null ? p.SymbolName + ":no-book"
+                        : string.Format("{0}:tradable={1},lastTick={2:F1}m,open={3:F0}m",
+                            p.SymbolName, Tradable(bk),
+                            (Server.Time - bk.LastTick).TotalMinutes,
+                            (Server.Time - bk.OpenSince).TotalMinutes));
+                }
+                Print("F|{0:yyyy-MM-dd HH:mm}|ny {1:ddd HH:mm}|flat {2}|window {3}|{4}",
+                    Server.Time, ny, WeekendFlat, fridayWindow,
+                    diag.Count == 0 ? "no open positions" : string.Join(" ", diag));
+            }
+
+            if (WeekendFlat && fridayWindow)
             {
                 foreach (var p in Mine.ToList())       // retried every minute until each market can be closed
                 {

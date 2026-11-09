@@ -1,4 +1,7 @@
-// Factory Bot v1.3.2 (Vanessa Algo Bots)
+// Factory Bot v1.3.3 (Vanessa Algo Bots)
+// v1.3.3: diagnostics only, no change to any trading decision. Logs C| at startup
+// (Server.Time vs Server.TimeInUtc) and F| every minute from 15:00 New York on a
+// Friday, naming every term the weekend close depends on.
 // v1.3.2: logs R|gap when the laptop slept or went
 // offline for more than 5 minutes.
 // v1.3.1: fixed the save key (letters, digits, spaces only).
@@ -191,9 +194,15 @@ namespace cAlgo.Robots
                 bars.BarOpened += args => OnDailyBar(b);
             }
             Timer.Start(TimeSpan.FromMinutes(1));
-            Print("Factory Bot v1.3.2 started: {0} {1} {2} {3} {4} {5} {6}"
+            Print("Factory Bot v1.3.3 started: {0} {1} {2} {3} {4} {5} {6}"
                 + " weekend flat {7}", Label, Entry, EntryP, Filter, Exit,
                 ExitP, _books.Count, WeekendFlat);
+            // DIAGNOSTIC (2026-11-09): NewYork() assumes its argument is UTC. If Server.Time is not
+            // UTC every session test is wrong by that offset, and nothing else in the bot would say so.
+            Print("C|Server.Time {0:yyyy-MM-dd HH:mm:ss}|TimeInUtc {1:yyyy-MM-dd HH:mm:ss}|diff {2:F2}h"
+                + "|NewYork {3:ddd yyyy-MM-dd HH:mm}|WeekendFlat {4}",
+                Server.Time, Server.TimeInUtc, (Server.Time - Server.TimeInUtc).TotalHours,
+                NewYork(Server.Time), WeekendFlat);
             if (Live) Restore();
         }
 
@@ -609,6 +618,27 @@ namespace cAlgo.Robots
                 p.EntryPrice, p.StopLoss);
         }
 
+        // DIAGNOSTIC (2026-11-09, logging only - decides nothing, and runs whether or not
+        // WeekendFlat is set so the setting itself is visible). From 15:00 New York each Friday,
+        // print every term WeekendCheck depends on.
+        private void WeekendDiag()
+        {
+            var ny = NewYork(Server.Time);
+            if (ny.DayOfWeek != DayOfWeek.Friday || ny.Hour < 15) return;
+            var diag = new List<string>();
+            foreach (var p in Positions.Where(q => q.Label == Label))
+            {
+                var b = _books.FirstOrDefault(x => x.Sym.Name == p.SymbolName);
+                diag.Add(b == null ? p.SymbolName + ":no-book"
+                    : string.Format("{0}:tradable={1},friday={2},lastTick={3:F1}m",
+                        p.SymbolName, Tradable(b), FridayClose(b),
+                        (Server.Time - b.LastTick).TotalMinutes));
+            }
+            Print("F|{0:yyyy-MM-dd HH:mm}|ny {1:ddd HH:mm}|flat {2}|{3}",
+                Server.Time, ny, WeekendFlat,
+                diag.Count == 0 ? "no open positions" : string.Join(" ", diag));
+        }
+
         private void WeekendCheck()
         {
             foreach (var p in Positions.Where(q => q.Label == Label).ToList())
@@ -655,6 +685,7 @@ namespace cAlgo.Robots
         protected override void OnTimer()
         {
             Heartbeat();
+            WeekendDiag();
             if (WeekendFlat) WeekendCheck();
             foreach (var o in _queue.Where(x => x.Due <= Server.Time
                 && Tradable(x.B) && !(WeekendFlat && FridayClose(x.B))).ToList())
