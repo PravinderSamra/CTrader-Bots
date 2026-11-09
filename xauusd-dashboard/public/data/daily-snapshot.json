@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-11-09T17:30:41.259Z",
+  "generatedAt": "2026-11-09T23:39:10.503Z",
   "yields": {
-    "US10Y": 4.84,
-    "US2Y": 4.46,
-    "realYield10Y": 2.6,
-    "realYield5Y": 2.33,
-    "curve2s10s": 38,
-    "breakeven10Y": 2.23,
-    "breakeven5Y": 2.29,
-    "forward5y5y": 2.17,
+    "US10Y": 4.86,
+    "US2Y": 4.51,
+    "realYield10Y": 2.63,
+    "realYield5Y": 2.35,
+    "curve2s10s": 35,
+    "breakeven10Y": 2.22,
+    "breakeven5Y": 2.25,
+    "forward5y5y": 2.19,
     "dayOverDay": {
-      "US10Y": -0.06,
-      "US2Y": -0.12,
-      "realYield10Y": -0.04
+      "US10Y": 0.02,
+      "US2Y": 0.05,
+      "realYield10Y": 0.03
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-12-09",
     "probCut": 0,
-    "probHold": 88,
-    "probHike": 12
+    "probHold": 92,
+    "probHike": 8
   },
   "marketVolatility": {
-    "GVZ": 25.83,
-    "VIX": 28.18
+    "GVZ": 25.97,
+    "VIX": 25.64
   },
   "positioning": {
     "cotNetLong": 171401,
@@ -34,26 +34,26 @@
     "openInterestChange": 19405
   },
   "etfFlows": {
-    "gldTonnes": 992.6,
-    "gldWoWChange": 3.9,
-    "trend3W": "INFLOW"
+    "gldTonnes": 984.7,
+    "gldWoWChange": -7.9,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4104.9,
-    "XAGUSD": 52.6875,
-    "EURUSD": 1.12081,
-    "USDJPY": 157.9715,
-    "USDCHF": 0.82081,
-    "USDCNH": 6.67103,
-    "GBPUSD": 1.34252,
-    "USDCAD": 1.41278,
-    "USDSEK": 9.82016,
-    "US500": 7547.4,
-    "GER40": 26363.05,
-    "UK100": 10811.35,
-    "ADR_14day": 88.8,
-    "ADR_usedToday": 79.7,
-    "goldSilverRatio": 77.9
+    "XAUUSD": 4138.02,
+    "XAGUSD": 53.399,
+    "EURUSD": 1.12214,
+    "USDJPY": 158.004,
+    "USDCHF": 0.81959,
+    "USDCNH": 6.66971,
+    "GBPUSD": 1.34403,
+    "USDCAD": 1.41193,
+    "USDSEK": 9.8012,
+    "US500": 7554.4,
+    "GER40": 26458.1,
+    "UK100": 10846.05,
+    "ADR_14day": 89.3,
+    "ADR_usedToday": 12.5,
+    "goldSilverRatio": 77.5
   },
   "dollarLiquidity": {
     "stlfsi": -0.5224,
@@ -66,16 +66,28 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "The issues a 'really frustrated' Trump may actually work with Democrats on, according to former Speaker Paul Ryan",
+      "source": "CNBC",
+      "publishedAt": "2026-11-09T17:52:52.000Z",
+      "hoursAgo": 5.8
+    },
+    {
+      "headline": "We're adding a consumer stock to diversify beyond the volatile AI trade",
+      "source": "CNBC",
+      "publishedAt": "2026-11-09T17:31:46.000Z",
+      "hoursAgo": 6.1
+    },
+    {
       "headline": "Gold gains as lower oil prices ease inflation fears - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-09T03:01:00.000Z",
-      "hoursAgo": 14.5
+      "hoursAgo": 20.6
     },
     {
       "headline": "Asian stocks steady as AI, Mideast jitters recede; dollar firm on Fed bets - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-09T01:46:00.000Z",
-      "hoursAgo": 15.7
+      "hoursAgo": 21.9
     }
   ],
   "briefing": null

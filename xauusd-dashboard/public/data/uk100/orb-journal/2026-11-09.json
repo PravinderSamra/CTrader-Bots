@@ -181,6 +181,65 @@
         "verdict": "UNSCORABLE",
         "signalVerdicts": []
       }
+    },
+    {
+      "at": "2026-11-09T23:39:20.890Z",
+      "londonTime": "23:39 GMT",
+      "mode": "CLOSED",
+      "price": 10845.95,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — The obvious draw (PDL 10632.9) sits beyond what's left of a typical day's range — targets past it are stretch-only today.",
+      "signals": [
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10632.9) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "INFO",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "US CPI prints tomorrow 13:30 GMT — late-session moves today are as likely pre-event de-risking as conviction."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -4,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10719.6,
+        "orbLow": 10658.8,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10737.9,
+        "overnightLow": 10632.9,
+        "priorDayHigh": 10850.4,
+        "priorDayLow": 10632.9,
+        "gapPct": 0.03,
+        "adr14": 152.3,
+        "adrUsedPct": 5
+      },
+      "outcome": {
+        "resolvedAt": "2026-11-09T23:39:22.607Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
