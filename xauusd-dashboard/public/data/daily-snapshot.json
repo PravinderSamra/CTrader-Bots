@@ -1,59 +1,59 @@
 {
-  "generatedAt": "2026-11-06T20:10:30.957Z",
+  "generatedAt": "2026-11-09T14:44:31.220Z",
   "yields": {
-    "US10Y": 4.9,
-    "US2Y": 4.58,
-    "realYield10Y": 2.64,
-    "realYield5Y": 2.39,
-    "curve2s10s": 32,
-    "breakeven10Y": 2.24,
-    "breakeven5Y": 2.26,
-    "forward5y5y": 2.22,
+    "US10Y": 4.84,
+    "US2Y": 4.46,
+    "realYield10Y": 2.6,
+    "realYield5Y": 2.33,
+    "curve2s10s": 38,
+    "breakeven10Y": 2.23,
+    "breakeven5Y": 2.29,
+    "forward5y5y": 2.17,
     "dayOverDay": {
-      "US10Y": -0.05,
-      "US2Y": -0.03,
-      "realYield10Y": -0.01
+      "US10Y": -0.06,
+      "US2Y": -0.12,
+      "realYield10Y": -0.04
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-12-09",
     "probCut": 0,
-    "probHold": 96,
-    "probHike": 4
+    "probHold": 88,
+    "probHike": 12
   },
   "marketVolatility": {
     "GVZ": 25.83,
     "VIX": 28.18
   },
   "positioning": {
-    "cotNetLong": 179906,
-    "cotWoWChange": -11885,
+    "cotNetLong": 171401,
+    "cotWoWChange": -8505,
     "crowding": "NEUTRAL",
-    "reportDate": "2026-10-27T00:00:00.000",
-    "openInterest": 518784,
-    "openInterestChange": -13658
+    "reportDate": "2026-11-03T00:00:00.000",
+    "openInterest": 538190,
+    "openInterestChange": 19405
   },
   "etfFlows": {
-    "gldTonnes": 1084.2,
-    "gldWoWChange": -4.5,
+    "gldTonnes": 988.7,
+    "gldWoWChange": -95.5,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4064.91,
-    "XAGUSD": 52.0005,
-    "EURUSD": 1.11389,
-    "USDJPY": 158.528,
-    "USDCHF": 0.82088,
-    "USDCNH": 6.67248,
-    "GBPUSD": 1.33516,
-    "USDCAD": 1.41319,
-    "USDSEK": 9.89912,
-    "US500": 7409.2,
-    "GER40": 25716.15,
-    "UK100": 10644.65,
-    "ADR_14day": 85.4,
-    "ADR_usedToday": 78.6,
-    "goldSilverRatio": 78.2
+    "XAUUSD": 4120.99,
+    "XAGUSD": 52.782,
+    "EURUSD": 1.11951,
+    "USDJPY": 158.082,
+    "USDCHF": 0.82107,
+    "USDCNH": 6.67023,
+    "GBPUSD": 1.34137,
+    "USDCAD": 1.41088,
+    "USDSEK": 9.81828,
+    "US500": 7487.3,
+    "GER40": 26176.05,
+    "UK100": 10746.85,
+    "ADR_14day": 88.8,
+    "ADR_usedToday": 79.7,
+    "goldSilverRatio": 78.1
   },
   "dollarLiquidity": {
     "stlfsi": -0.5224,
@@ -66,22 +66,16 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Outside groups urge congressional Dems to target corporate interests over Trump",
-      "source": "CNBC",
-      "publishedAt": "2026-11-06T11:30:01.000Z",
-      "hoursAgo": 8.7
-    },
-    {
-      "headline": "Montana votes to ban corporate political money. Next stop? Probably the Supreme Court",
-      "source": "CNBC",
-      "publishedAt": "2026-11-06T11:00:01.000Z",
-      "hoursAgo": 9.2
-    },
-    {
-      "headline": "Markets fret over growth and inflation, just as tech rout gains speed - Reuters",
+      "headline": "Gold gains as lower oil prices ease inflation fears - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-06T05:09:00.000Z",
-      "hoursAgo": 15
+      "publishedAt": "2026-11-09T03:01:00.000Z",
+      "hoursAgo": 11.7
+    },
+    {
+      "headline": "Asian stocks steady as AI, Mideast jitters recede; dollar firm on Fed bets - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-09T01:46:00.000Z",
+      "hoursAgo": 13
     }
   ],
   "briefing": null
