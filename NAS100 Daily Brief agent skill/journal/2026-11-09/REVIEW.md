@@ -18,7 +18,8 @@ touched.
 | Range vs ADR14 | 1377.7 vs 795.6 → **1.73× ADR** |
 | VXN-implied range | **582.0** published as *"below ADR — use the smaller budget"* → realised 1377.7, **under by 795.7** |
 | ATM straddle band | ±427 → 26729..27583; close **27892.6 OUTSIDE above by 309.6** |
-| Levels | **12 published / 4 touched = 0.33** |
+| Levels | **12 published / 4 touched = 0.33** (running mean across 30 days: **0.50**) |
+| Model to date (`track.py`, n=30) | direction **13 right / 12 wrong / 5 no-call**; H1 per-day mean **+119.1** |
 
 `+544.7` is the **second-largest budget error in the record** behind 11-05's
 `+1261.2`, and the **fourth consecutive** under-estimate (11-04 +305.9, 11-05
@@ -278,7 +279,14 @@ prior-session move, every scan.**
 - **H17 / P-H** — **no instance either way**: post-scan **+652.7 = 47.4% of the
   session range**, far outside the proposed 5% deadband, and day-net and
   post-scan agree (both +1, both WRONG). **Not** a deciding instance; P-H stays
-  at 6.
+  at 6. **But the refreshed `track.py` headline matters to H17's live proposal:
+  direction is now 13 right / 12 wrong / 5 no-call = 13/25 = 52.0%** (was 13/24
+  = 54.2%). 11-09 is a clean WRONG on both bases and **not** an H17 noise case,
+  so on H17's own restated window the figure goes **11/22 = 50.0% → 11/23 =
+  47.8% — below a coin flip for the first time.** That is arithmetic on
+  `track.py`'s own counts plus the carried H17 exclusion list (09-11 aged out;
+  10-19 and 11-06 in), **not** a re-grade, and it strengthens H17's case that the
+  headline accuracy figure is propped up by bearish calls credited on up days.
 - **H2** — instance **14**, `LOW_FUEL`, bias −3, **WRONG**; the fade at the only
   reachable wall **LOST by 667.9**. **Counter-instance to 11-06's fade win, and
   it cuts the other way on the live gating question:** the 11-05 gamma-gating

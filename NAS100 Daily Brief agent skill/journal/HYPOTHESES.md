@@ -18511,11 +18511,16 @@ stop-run rows. Every row that asserted a brake was sliced.**
 Budget **228.1** · extension **772.8** → **+544.7**, **3.39×**; traversal
 **894.0**, **3.92×**. Session range **1377.7 = 1.73× ADR14 (795.6)**.
 
-- **H1 / P4** — error **+544.7**, second-largest behind 11-05's **+1261.2**;
-  **4th consecutive under-estimate** (11-04 +305.9, 11-05 +1261.2, 11-06 +174.0,
-  11-09 +544.7), five of the last six. n=30 **if nothing ages out of the 45-day
-  bar window**; `track.py` had not completed at write time, so the per-day mean
-  is **carried at +104.4 / n=29, not refreshed**.
+- **H1 / P4 — REFRESHED after `track.py` completed (exit 0, ~35 min).** Error
+  **+544.7**, second-largest behind 11-05's **+1261.2**; **4th consecutive
+  under-estimate** (11-04 +305.9, 11-05 +1261.2, 11-06 +174.0, 11-09 +544.7),
+  five of the last six. **n=30 days / 30 scans, and NOTHING aged out this run**
+  — the sample still starts 09-28, exactly as on 11-06. **Per-day mean
+  +104.4 → +119.1**, and unlike 11-06's move this one **IS a single data
+  point**: one session moved the model's headline statistic by **+14.7**, which
+  is itself an argument about the thinness of the sample rather than about the
+  budget. **H5's `late` n is still 0 at 30 days** — the early/late split
+  stays untestable.
 - **D31 — counter-instance 12, 5th consecutive session, same direction.**
   VXN-implied **582.0** published as *"below ADR — use the smaller budget"*
   against realised **1377.7**: under by **795.7** (11-06 403.3, 11-05 1504.0,
@@ -18620,11 +18625,31 @@ One scan file for 11-09 (`1247-london.json` + `.md`), `is_trading_day: true`,
 back-written, which is correct. **No fabricated or backfilled entry found; the
 `prediction` block was read and NOT modified.**
 
-**`track.py` had NOT completed at write time.** The first attempt was killed by
-a 300s timeout (exit 143) and the second was still running after ~10 minutes
-(the 11-06 run took ~45). **H1's per-day mean is carried, not refreshed**, and
-**D26's gap is stated from directory counts only: 51 journal directories hold a
-scan, 50 hold an `is_trading_day: true` scan, 49 of those are finished trading
-days.** Against the 11-06 run's **29 full bar sets** the gap is **at least 20
-and widening**; the exact figure needs the completed run and is **not asserted
-here**. **Full review in `journal/2026-11-09/REVIEW.md`.**
+**`track.py` COMPLETED (exit 0).** The first attempt was killed by a 300s
+timeout (exit 143); the second finished in ~35 minutes. **30 trading days / 30
+scans, 6 `test_artefact` entries excluded as always**, and **09-25 is held back
+no longer — it has aged out of the window entirely, so no hand-quarantine was
+needed for the SECOND consecutive review.** Only **11-10** is held back (181
+bars, unfinished).
+
+**D26 — the gap is UNCHANGED at 19, and this review's own pre-completion hedge
+was WRONG in direction.** 51 journal directories hold a scan, 50 hold an
+`is_trading_day: true` scan, **49** of those are finished trading days, against
+**30** full bar sets. The 11-06 run was 48 against 29 — also 19. Before
+`track.py` finished, this review guessed *"at least 20 and widening"*; **it is
+19 and flat, and the guess is retracted.** Recorded here rather than quietly
+corrected, because a review that revises its own numbers without saying so is
+the thing this file exists to prevent.
+
+**The refreshed direction headline bears on H17's live proposal:** `track.py`
+now reports **13 right / 12 wrong / 5 no-call = 13/25 = 52.0%** (was 13/24 =
+54.2%). 11-09 is a clean WRONG on both bases and **not** an H17 noise case, so
+on H17's own restated window the figure goes **11/22 = 50.0% → 11/23 = 47.8%
+— below a coin flip for the first time.** This is arithmetic on `track.py`'s
+own counts plus the carried exclusion list (09-11 aged out; 10-19 and 11-06 in),
+**not** a re-grade, and it **strengthens** H17 rather than adding an instance to
+it. `track.py`'s running **levels-touched mean is 0.50** against today's
+**0.33**. **H2's sample list now carries 11-09 as its 14th entry, confirming
+this review's instance count from `track.py`'s own output.**
+
+**Full review in `journal/2026-11-09/REVIEW.md`.**
