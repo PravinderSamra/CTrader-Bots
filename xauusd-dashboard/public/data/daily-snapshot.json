@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-10T15:37:00.703Z",
+  "generatedAt": "2026-11-10T20:42:59.985Z",
   "yields": {
     "US10Y": 4.86,
     "US2Y": 4.51,
@@ -34,26 +34,26 @@
     "openInterestChange": 19405
   },
   "etfFlows": {
-    "gldTonnes": 1006.4,
-    "gldWoWChange": 0.5,
-    "trend3W": "FLAT"
+    "gldTonnes": 1010.8,
+    "gldWoWChange": 4.4,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4048.825,
-    "XAGUSD": 51.782,
-    "EURUSD": 1.11714,
-    "USDJPY": 158.636,
-    "USDCHF": 0.82502,
-    "USDCNH": 6.67715,
-    "GBPUSD": 1.33592,
-    "USDCAD": 1.41894,
-    "USDSEK": 9.86155,
-    "US500": 7516.5,
-    "GER40": 26470.65,
-    "UK100": 10804.45,
+    "XAUUSD": 4030.88,
+    "XAGUSD": 51.506,
+    "EURUSD": 1.11638,
+    "USDJPY": 158.8185,
+    "USDCHF": 0.82535,
+    "USDCNH": 6.67729,
+    "GBPUSD": 1.33442,
+    "USDCAD": 1.41847,
+    "USDSEK": 9.87651,
+    "US500": 7514.5,
+    "GER40": 26531.15,
+    "UK100": 10821.95,
     "ADR_14day": 89.3,
-    "ADR_usedToday": 113.8,
-    "goldSilverRatio": 78.2
+    "ADR_usedToday": 133,
+    "goldSilverRatio": 78.3
   },
   "dollarLiquidity": {
     "stlfsi": -0.5224,
@@ -66,40 +66,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "S&P 500 futures fall sharply after October inflation data - Reuters",
+      "headline": "GE Vernova sellers have it all wrong — plus, why Fed rate hike odds are soaring",
+      "source": "CNBC",
+      "publishedAt": "2026-11-10T20:02:53.000Z",
+      "hoursAgo": 0.7
+    },
+    {
+      "headline": "Iraq bars plane carrying Iran's soccer team from landing in Basra over US sanctions, officials say - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-10T13:47:12.000Z",
-      "hoursAgo": 1.8
+      "publishedAt": "2026-11-10T19:53:34.000Z",
+      "hoursAgo": 0.8
+    },
+    {
+      "headline": "Wall St retreats as hot inflation data, Fed comments fuel rate worries - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-10T19:45:44.000Z",
+      "hoursAgo": 1
+    },
+    {
+      "headline": "Fed officials open door to a half-point hike after inflation beats expectations - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-10T18:14:35.000Z",
+      "hoursAgo": 2.5
+    },
+    {
+      "headline": "Fed's Logan calls for two more rate hikes, possibly rapidly - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-10T15:55:43.000Z",
+      "hoursAgo": 4.8
+    },
+    {
+      "headline": "Instant view: Hot October inflation report rattles markets - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-10T14:51:39.000Z",
+      "hoursAgo": 5.9
     },
     {
       "headline": "Fed to raise rates once more in December as inflation risks stay high: Reuters poll - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-10T13:14:14.000Z",
-      "hoursAgo": 2.4
+      "publishedAt": "2026-11-10T14:35:08.000Z",
+      "hoursAgo": 6.1
     },
     {
-      "headline": "Gold prices ease as focus shifts to US inflation data - Reuters",
+      "headline": "Canada reimposes sanctions on 11 Iranian entities for contributing to nuclear activities - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-10T03:31:00.000Z",
-      "hoursAgo": 12.1
-    },
-    {
-      "headline": "OPEC oil output rises in October to 90% of pre-war rate, Reuters survey shows - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-09T18:28:46.000Z",
-      "hoursAgo": 21.1
-    },
-    {
-      "headline": "The issues a 'really frustrated' Trump may actually work with Democrats on, according to former Speaker Paul Ryan",
-      "source": "CNBC",
-      "publishedAt": "2026-11-09T17:52:52.000Z",
-      "hoursAgo": 21.7
-    },
-    {
-      "headline": "We're adding a consumer stock to diversify beyond the volatile AI trade",
-      "source": "CNBC",
-      "publishedAt": "2026-11-09T17:31:46.000Z",
-      "hoursAgo": 22.1
+      "publishedAt": "2026-11-10T10:46:57.000Z",
+      "hoursAgo": 9.9
     }
   ],
   "briefing": null
