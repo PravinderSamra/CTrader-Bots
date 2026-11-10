@@ -71,6 +71,77 @@
         "adrUsedPct": 44
       },
       "outcome": null
+    },
+    {
+      "at": "2026-11-10T15:37:05.086Z",
+      "londonTime": "15:37 GMT",
+      "mode": "POST_ORB",
+      "price": 10804.85,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — 70% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "70% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10632.9) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is diverging from a united European tape — it's trading its own story today; tape-based confirmation is unreliable."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "US CPI @ 13:30 GMT today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "STRUCTURE",
+          "rule": "R3",
+          "text": "ORB break DOWN is aligned with the BEARISH macro bias (-6) — continuation has the backdrop behind it."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -0.55% — the 14:30 US handoff argues against holding longs into the US open."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -6,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10883.8,
+        "orbLow": 10845.8,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10883.8,
+        "overnightLow": 10824.6,
+        "priorDayHigh": 10850.4,
+        "priorDayLow": 10632.9,
+        "gapPct": -0.35,
+        "adr14": 152.3,
+        "adrUsedPct": 70
+      },
+      "outcome": null
     }
   ]
 }
