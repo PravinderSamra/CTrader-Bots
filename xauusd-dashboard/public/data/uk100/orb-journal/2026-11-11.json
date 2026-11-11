@@ -43,6 +43,63 @@
         "adrUsedPct": 46
       },
       "outcome": null
+    },
+    {
+      "at": "2026-11-11T15:14:15.632Z",
+      "londonTime": "15:14 GMT",
+      "mode": "POST_ORB",
+      "price": 10805.65,
+      "stance": "LONG_FAVOURED",
+      "stanceLine": "Backdrop favours upside breaks — ORB broke DOWN against a BULLISH macro bias (+9) — counter-bias breaks fail more often; treat continuation as suspect.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "STRUCTURE",
+          "rule": "R2",
+          "text": "ORB broke DOWN against a BULLISH macro bias (+9) — counter-bias breaks fail more often; treat continuation as suspect."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is diverging from a united European tape — it's trading its own story today; tape-based confirmation is unreliable."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures +0.59% — the 14:30 US handoff argues for holding longs into the US open."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 9,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": 10857.1,
+        "orbLow": 10832.6,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10857.1,
+        "overnightLow": 10813.6,
+        "priorDayHigh": 10883.8,
+        "priorDayLow": 10757.3,
+        "gapPct": -0.22,
+        "adr14": 155.7,
+        "adrUsedPct": 48
+      },
+      "outcome": null
     }
   ]
 }

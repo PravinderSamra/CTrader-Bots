@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T13:14:57.317Z",
+  "generatedAt": "2026-11-11T15:14:08.955Z",
   "yields": {
     "US10Y": 4.88,
     "US2Y": 4.56,
@@ -22,8 +22,8 @@
     "probHike": 16
   },
   "marketVolatility": {
-    "GVZ": 24.93,
-    "VIX": 19.92
+    "GVZ": 24.43,
+    "VIX": 19.46
   },
   "positioning": {
     "cotNetLong": 171401,
@@ -34,25 +34,25 @@
     "openInterestChange": 19405
   },
   "etfFlows": {
-    "gldTonnes": 1007.6,
-    "gldWoWChange": -3.2,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1014.2,
+    "gldWoWChange": 6.6,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4043.815,
-    "XAGUSD": 52.75,
-    "EURUSD": 1.1127,
-    "USDJPY": 159.248,
-    "USDCHF": 0.82988,
-    "USDCNH": 6.66845,
-    "GBPUSD": 1.33066,
-    "USDCAD": 1.42367,
-    "USDSEK": 9.9319,
-    "US500": 7591.9,
-    "GER40": 26556.15,
-    "UK100": 10804.15,
+    "XAUUSD": 4017.425,
+    "XAGUSD": 52.378,
+    "EURUSD": 1.10936,
+    "USDJPY": 159.6895,
+    "USDCHF": 0.83245,
+    "USDCNH": 6.67148,
+    "GBPUSD": 1.32817,
+    "USDCAD": 1.4239,
+    "USDSEK": 9.97999,
+    "US500": 7577.2,
+    "GER40": 26601.95,
+    "UK100": 10805.95,
     "ADR_14day": 92.9,
-    "ADR_usedToday": 40.6,
+    "ADR_usedToday": 56.6,
     "goldSilverRatio": 76.7
   },
   "dollarLiquidity": {
@@ -69,49 +69,37 @@
       "headline": "Mortgage rates jump sharply higher, after easing for four straight weeks. Here's why",
       "source": "CNBC",
       "publishedAt": "2026-11-11T12:38:32.000Z",
-      "hoursAgo": 0.6
+      "hoursAgo": 2.6
     },
     {
       "headline": "US Treasury chief Bessent moved to military base after Iranian threats, sources say - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-11T01:00:00.000Z",
-      "hoursAgo": 12.2
+      "hoursAgo": 14.2
     },
     {
       "headline": "Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-10T21:27:01.000Z",
-      "hoursAgo": 15.8
+      "hoursAgo": 17.8
     },
     {
       "headline": "Fed officials open door to a half-percentage-point rate hike as inflation worsens - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-10T20:42:14.000Z",
-      "hoursAgo": 16.5
+      "hoursAgo": 18.5
     },
     {
       "headline": "GE Vernova sellers have it all wrong — plus, why Fed rate hike odds are soaring",
       "source": "CNBC",
       "publishedAt": "2026-11-10T20:02:53.000Z",
-      "hoursAgo": 17.2
+      "hoursAgo": 19.2
     },
     {
       "headline": "Fed's Logan calls for two more rate hikes, possibly rapidly - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-10T15:55:43.000Z",
-      "hoursAgo": 21.3
-    },
-    {
-      "headline": "Instant view: Hot October inflation report rattles markets - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-10T14:51:39.000Z",
-      "hoursAgo": 22.4
-    },
-    {
-      "headline": "Fed to raise rates once more in December as inflation risks stay high: Reuters poll - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-10T14:35:08.000Z",
-      "hoursAgo": 22.7
+      "hoursAgo": 23.3
     }
   ],
   "briefing": null
