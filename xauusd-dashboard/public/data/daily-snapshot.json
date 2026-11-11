@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T15:14:08.955Z",
+  "generatedAt": "2026-11-11T21:04:25.546Z",
   "yields": {
     "US10Y": 4.88,
     "US2Y": 4.56,
@@ -34,26 +34,26 @@
     "openInterestChange": 19405
   },
   "etfFlows": {
-    "gldTonnes": 1014.2,
-    "gldWoWChange": 6.6,
+    "gldTonnes": 1022.7,
+    "gldWoWChange": 8.5,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4017.425,
-    "XAGUSD": 52.378,
-    "EURUSD": 1.10936,
-    "USDJPY": 159.6895,
-    "USDCHF": 0.83245,
-    "USDCNH": 6.67148,
-    "GBPUSD": 1.32817,
-    "USDCAD": 1.4239,
-    "USDSEK": 9.97999,
-    "US500": 7577.2,
-    "GER40": 26601.95,
-    "UK100": 10805.95,
-    "ADR_14day": 92.9,
-    "ADR_usedToday": 56.6,
-    "goldSilverRatio": 76.7
+    "XAUUSD": 3984.085,
+    "XAGUSD": 51.711,
+    "EURUSD": 1.10881,
+    "USDJPY": 159.874,
+    "USDCHF": 0.83324,
+    "USDCNH": 6.67389,
+    "GBPUSD": 1.32737,
+    "USDCAD": 1.42502,
+    "USDSEK": 9.9763,
+    "US500": 7621.9,
+    "GER40": 26783.5,
+    "UK100": 10881.65,
+    "ADR_14day": 96.7,
+    "ADR_usedToday": 84.7,
+    "goldSilverRatio": 77
   },
   "dollarLiquidity": {
     "stlfsi": -0.5224,
@@ -66,40 +66,34 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Bouncing Wynn Shares might be primed for the 'wheel strategy'",
+      "source": "CNBC",
+      "publishedAt": "2026-11-11T18:24:53.000Z",
+      "hoursAgo": 2.7
+    },
+    {
+      "headline": "OPEC+ oil output in October nears pre-Iran war rate, led by Saudi Arabia - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-11T14:14:31.000Z",
+      "hoursAgo": 6.8
+    },
+    {
       "headline": "Mortgage rates jump sharply higher, after easing for four straight weeks. Here's why",
       "source": "CNBC",
       "publishedAt": "2026-11-11T12:38:32.000Z",
-      "hoursAgo": 2.6
+      "hoursAgo": 8.4
     },
     {
       "headline": "US Treasury chief Bessent moved to military base after Iranian threats, sources say - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-11T01:00:00.000Z",
-      "hoursAgo": 14.2
+      "hoursAgo": 20.1
     },
     {
       "headline": "Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-10T21:27:01.000Z",
-      "hoursAgo": 17.8
-    },
-    {
-      "headline": "Fed officials open door to a half-percentage-point rate hike as inflation worsens - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-10T20:42:14.000Z",
-      "hoursAgo": 18.5
-    },
-    {
-      "headline": "GE Vernova sellers have it all wrong — plus, why Fed rate hike odds are soaring",
-      "source": "CNBC",
-      "publishedAt": "2026-11-10T20:02:53.000Z",
-      "hoursAgo": 19.2
-    },
-    {
-      "headline": "Fed's Logan calls for two more rate hikes, possibly rapidly - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-10T15:55:43.000Z",
-      "hoursAgo": 23.3
+      "hoursAgo": 23.6
     }
   ],
   "briefing": null
