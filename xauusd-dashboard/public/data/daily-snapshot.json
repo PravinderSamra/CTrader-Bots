@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T21:04:25.546Z",
+  "generatedAt": "2026-11-12T14:18:32.664Z",
   "yields": {
     "US10Y": 4.88,
     "US2Y": 4.56,
@@ -34,30 +34,30 @@
     "openInterestChange": 19405
   },
   "etfFlows": {
-    "gldTonnes": 1022.7,
-    "gldWoWChange": 8.5,
+    "gldTonnes": 1043.7,
+    "gldWoWChange": 21,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3984.085,
-    "XAGUSD": 51.711,
-    "EURUSD": 1.10881,
-    "USDJPY": 159.874,
-    "USDCHF": 0.83324,
-    "USDCNH": 6.67389,
-    "GBPUSD": 1.32737,
-    "USDCAD": 1.42502,
-    "USDSEK": 9.9763,
-    "US500": 7621.9,
-    "GER40": 26783.5,
-    "UK100": 10881.65,
-    "ADR_14day": 96.7,
-    "ADR_usedToday": 84.7,
-    "goldSilverRatio": 77
+    "XAUUSD": 3904,
+    "XAGUSD": 50.458,
+    "EURUSD": 1.10965,
+    "USDJPY": 159.6585,
+    "USDCHF": 0.83252,
+    "USDCNH": 6.66822,
+    "GBPUSD": 1.32713,
+    "USDCAD": 1.42407,
+    "USDSEK": 9.97485,
+    "US500": 7564.9,
+    "GER40": 26795.85,
+    "UK100": 10856.75,
+    "ADR_14day": 95.7,
+    "ADR_usedToday": 117.5,
+    "goldSilverRatio": 77.4
   },
   "dollarLiquidity": {
     "stlfsi": -0.5224,
-    "nfci": -0.459
+    "nfci": -0.462
   },
   "geopoliticalRisk": {
     "gpr": 150.5,
@@ -66,34 +66,22 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Oil prices edge lower as rising crude output offset geopolitical risks - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-12T01:52:00.000Z",
+      "hoursAgo": 12.4
+    },
+    {
+      "headline": "Feds arrest top official of healthcare company, alleging illegal drug importation",
+      "source": "CNBC",
+      "publishedAt": "2026-11-11T21:33:17.000Z",
+      "hoursAgo": 16.8
+    },
+    {
       "headline": "Bouncing Wynn Shares might be primed for the 'wheel strategy'",
       "source": "CNBC",
       "publishedAt": "2026-11-11T18:24:53.000Z",
-      "hoursAgo": 2.7
-    },
-    {
-      "headline": "OPEC+ oil output in October nears pre-Iran war rate, led by Saudi Arabia - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-11T14:14:31.000Z",
-      "hoursAgo": 6.8
-    },
-    {
-      "headline": "Mortgage rates jump sharply higher, after easing for four straight weeks. Here's why",
-      "source": "CNBC",
-      "publishedAt": "2026-11-11T12:38:32.000Z",
-      "hoursAgo": 8.4
-    },
-    {
-      "headline": "US Treasury chief Bessent moved to military base after Iranian threats, sources say - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-11T01:00:00.000Z",
-      "hoursAgo": 20.1
-    },
-    {
-      "headline": "Wall St ends lower as hot inflation data, Fed comments heighten rate worries - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-10T21:27:01.000Z",
-      "hoursAgo": 23.6
+      "hoursAgo": 19.9
     }
   ],
   "briefing": null
