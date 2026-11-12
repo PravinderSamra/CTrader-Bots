@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-12T14:18:32.664Z",
+  "generatedAt": "2026-11-12T15:59:18.261Z",
   "yields": {
     "US10Y": 4.88,
     "US2Y": 4.56,
@@ -22,8 +22,8 @@
     "probHike": 16
   },
   "marketVolatility": {
-    "GVZ": 24.43,
-    "VIX": 19.46
+    "GVZ": 24.21,
+    "VIX": 17.49
   },
   "positioning": {
     "cotNetLong": 171401,
@@ -34,26 +34,26 @@
     "openInterestChange": 19405
   },
   "etfFlows": {
-    "gldTonnes": 1043.7,
-    "gldWoWChange": 21,
+    "gldTonnes": 1053.3,
+    "gldWoWChange": 9.6,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3904,
-    "XAGUSD": 50.458,
-    "EURUSD": 1.10965,
-    "USDJPY": 159.6585,
-    "USDCHF": 0.83252,
-    "USDCNH": 6.66822,
-    "GBPUSD": 1.32713,
-    "USDCAD": 1.42407,
-    "USDSEK": 9.97485,
-    "US500": 7564.9,
-    "GER40": 26795.85,
-    "UK100": 10856.75,
+    "XAUUSD": 3868.405,
+    "XAGUSD": 50.061,
+    "EURUSD": 1.10664,
+    "USDJPY": 159.8965,
+    "USDCHF": 0.83476,
+    "USDCNH": 6.67349,
+    "GBPUSD": 1.32364,
+    "USDCAD": 1.42618,
+    "USDSEK": 10.00981,
+    "US500": 7627.1,
+    "GER40": 26833.75,
+    "UK100": 10867.25,
     "ADR_14day": 95.7,
-    "ADR_usedToday": 117.5,
-    "goldSilverRatio": 77.4
+    "ADR_usedToday": 148.1,
+    "goldSilverRatio": 77.3
   },
   "dollarLiquidity": {
     "stlfsi": -0.5224,
@@ -66,22 +66,22 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Oil prices edge lower as rising crude output offset geopolitical risks - Reuters",
+      "headline": "Oil prices rise as geopolitical risks offset rising crude output - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-12T01:52:00.000Z",
-      "hoursAgo": 12.4
+      "hoursAgo": 14.1
     },
     {
       "headline": "Feds arrest top official of healthcare company, alleging illegal drug importation",
       "source": "CNBC",
       "publishedAt": "2026-11-11T21:33:17.000Z",
-      "hoursAgo": 16.8
+      "hoursAgo": 18.4
     },
     {
       "headline": "Bouncing Wynn Shares might be primed for the 'wheel strategy'",
       "source": "CNBC",
       "publishedAt": "2026-11-11T18:24:53.000Z",
-      "hoursAgo": 19.9
+      "hoursAgo": 21.6
     }
   ],
   "briefing": null
