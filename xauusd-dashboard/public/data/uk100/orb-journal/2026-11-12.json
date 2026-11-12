@@ -56,7 +56,29 @@
         "adr14": 156.7,
         "adrUsedPct": 55
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-11-12T21:39:47.658Z",
+        "fwd1hPct": 0.09,
+        "fwd3hPct": null,
+        "toClosePct": 0.18,
+        "maxUpPct": 0.24,
+        "maxDownPct": -0.29,
+        "verdict": "WRONG",
+        "signalVerdicts": [
+          {
+            "rule": "R3",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R9",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-11-12T15:59:23.768Z",
@@ -99,7 +121,77 @@
         "adr14": 156.7,
         "adrUsedPct": 56
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-11-12T21:39:47.826Z",
+        "fwd1hPct": 0.08,
+        "fwd3hPct": null,
+        "toClosePct": 0.08,
+        "maxUpPct": 0.15,
+        "maxDownPct": -0.05,
+        "verdict": "FLAT",
+        "signalVerdicts": [
+          {
+            "rule": "R2",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-11-12T21:39:45.037Z",
+      "londonTime": "21:39 GMT",
+      "mode": "CLOSED",
+      "price": 10858.85,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — FTSE is tracking a softer European tape (Euro Stoxx -0.29%) — the cross-market lean is down.",
+      "signals": [
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.29%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 1,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10912.6,
+        "orbLow": 10864.4,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10912.6,
+        "overnightLow": 10826.2,
+        "priorDayHigh": 10888.7,
+        "priorDayLow": 10783,
+        "gapPct": -0.16,
+        "adr14": 156.7,
+        "adrUsedPct": 56
+      },
+      "outcome": {
+        "resolvedAt": "2026-11-12T21:39:47.826Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }

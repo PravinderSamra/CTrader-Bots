@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-11-12T15:59:18.261Z",
+  "generatedAt": "2026-11-12T21:39:39.819Z",
   "yields": {
-    "US10Y": 4.88,
-    "US2Y": 4.56,
-    "realYield10Y": 2.66,
-    "realYield5Y": 2.42,
-    "curve2s10s": 32,
+    "US10Y": 4.98,
+    "US2Y": 4.73,
+    "realYield10Y": 2.78,
+    "realYield5Y": 2.56,
+    "curve2s10s": 25,
     "breakeven10Y": 2.2,
     "breakeven5Y": 2.25,
     "forward5y5y": 2.15,
     "dayOverDay": {
-      "US10Y": 0.02,
-      "US2Y": 0.05,
-      "realYield10Y": 0.03
+      "US10Y": 0.1,
+      "US2Y": 0.17,
+      "realYield10Y": 0.12
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-12-09",
     "probCut": 0,
-    "probHold": 84,
-    "probHike": 16
+    "probHold": 80,
+    "probHike": 20
   },
   "marketVolatility": {
     "GVZ": 24.21,
@@ -34,29 +34,29 @@
     "openInterestChange": 19405
   },
   "etfFlows": {
-    "gldTonnes": 1053.3,
-    "gldWoWChange": 9.6,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1051.7,
+    "gldWoWChange": -1.6,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3868.405,
-    "XAGUSD": 50.061,
-    "EURUSD": 1.10664,
-    "USDJPY": 159.8965,
-    "USDCHF": 0.83476,
-    "USDCNH": 6.67349,
-    "GBPUSD": 1.32364,
-    "USDCAD": 1.42618,
-    "USDSEK": 10.00981,
-    "US500": 7627.1,
-    "GER40": 26833.75,
-    "UK100": 10867.25,
-    "ADR_14day": 95.7,
+    "XAUUSD": 3874.175,
+    "XAGUSD": 49.973,
+    "EURUSD": 1.10532,
+    "USDJPY": 159.8615,
+    "USDCHF": 0.83557,
+    "USDCNH": 6.67347,
+    "GBPUSD": 1.32356,
+    "USDCAD": 1.42583,
+    "USDSEK": 10.02371,
+    "US500": 7600.8,
+    "GER40": 26729.7,
+    "UK100": 10858.85,
+    "ADR_14day": 97.4,
     "ADR_usedToday": 148.1,
-    "goldSilverRatio": 77.3
+    "goldSilverRatio": 77.5
   },
   "dollarLiquidity": {
-    "stlfsi": -0.5224,
+    "stlfsi": -0.4918,
     "nfci": -0.462
   },
   "geopoliticalRisk": {
@@ -66,22 +66,22 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Oil prices rise as geopolitical risks offset rising crude output - Reuters",
+      "headline": "In a policy switch, the Fed says its October 2027 meeting will not see a vote on interest rates",
+      "source": "CNBC",
+      "publishedAt": "2026-11-12T18:11:32.000Z",
+      "hoursAgo": 3.5
+    },
+    {
+      "headline": "Mortgage rates were 7% in 1997, too—here’s why buying a home feels more expensive today",
+      "source": "CNBC",
+      "publishedAt": "2026-11-12T15:00:01.000Z",
+      "hoursAgo": 6.7
+    },
+    {
+      "headline": "Gold drops 3% to over one-year low as fading Middle East peace hopes fan inflation fears - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-12T01:52:00.000Z",
-      "hoursAgo": 14.1
-    },
-    {
-      "headline": "Feds arrest top official of healthcare company, alleging illegal drug importation",
-      "source": "CNBC",
-      "publishedAt": "2026-11-11T21:33:17.000Z",
-      "hoursAgo": 18.4
-    },
-    {
-      "headline": "Bouncing Wynn Shares might be primed for the 'wheel strategy'",
-      "source": "CNBC",
-      "publishedAt": "2026-11-11T18:24:53.000Z",
-      "hoursAgo": 21.6
+      "publishedAt": "2026-11-12T03:40:00.000Z",
+      "hoursAgo": 18
     }
   ],
   "briefing": null
