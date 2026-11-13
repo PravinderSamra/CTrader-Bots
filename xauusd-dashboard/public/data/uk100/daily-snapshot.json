@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-11-13T13:40:04.549Z",
+  "generatedAt": "2026-11-13T15:24:42.383Z",
   "prices": {
-    "UK100": 10896.45,
-    "GBPUSD": 1.32447,
-    "GBPEUR": 1.19726,
-    "US500": 7638.3,
-    "NAS100": 28420.95,
-    "BRENT": 98.663,
-    "COPPER": 6.2492,
-    "VIX": 18.785,
-    "USDX": 103.184,
-    "XAUUSD": 3896.93,
-    "UK100_dayPct": 0.38
+    "UK100": 10891.85,
+    "GBPUSD": 1.32366,
+    "GBPEUR": 1.19802,
+    "US500": 7505.9,
+    "NAS100": 27671.15,
+    "BRENT": 99.072,
+    "COPPER": 6.1905,
+    "VIX": 19.935,
+    "USDX": 103.257,
+    "XAUUSD": 3881.565,
+    "UK100_dayPct": 0.34
   },
   "fx": {
-    "gbpUsdDayPct": 0.07,
+    "gbpUsdDayPct": 0.01,
     "gbpUsd20dPercentile": 47,
     "sterlingEri": 85.8415,
     "sterlingEriDayChange": -0.15,
@@ -36,23 +36,23 @@
     "daysToMpc": 34
   },
   "usLinkage": {
-    "us500DayPct": 0.51,
-    "nas100DayPct": 0.42,
-    "vix": 18.785,
+    "us500DayPct": -1.24,
+    "nas100DayPct": -2.23,
+    "vix": 19.935,
     "vixRegime": "NORMAL",
     "us10y": 4.98,
-    "usdx": 103.184
+    "usdx": 103.257
   },
   "commodities": {
-    "brentDayPct": 0.31,
-    "copperDayPct": -0.39,
-    "goldDayPct": 0.5,
+    "brentDayPct": 0.72,
+    "copperDayPct": -1.32,
+    "goldDayPct": 0.11,
     "brent20dTrend": "DOWN"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": 0.3,
-    "dax40DayPct": 0.31,
-    "eurUsdDayPct": 0.06,
+    "eurostoxx50DayPct": 0.06,
+    "dax40DayPct": 0.09,
+    "eurUsdDayPct": -0.06,
     "ftseDaxCorr20d": 0.81,
     "ftseSx5eCorr20d": 0.78,
     "tapeAgreement": "ALIGNED",
@@ -69,15 +69,15 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent +0.31%",
-      "read": "NEUTRAL",
+      "driver": "Brent +0.72%",
+      "read": "BULLISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper -0.39%",
-      "read": "NEUTRAL",
+      "driver": "Copper -1.32%",
+      "read": "BEARISH",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
     {
@@ -108,50 +108,44 @@
       "headline": "In a policy switch, the Fed says its October 2027 meeting will not see a vote on interest rates",
       "source": "CNBC",
       "url": "https://www.cnbc.com/2026/11/12/in-policy-switch-fed-says-its-october-2027-meeting-will-not-see-a-vote-on-interest-rates.html",
-      "hoursAgo": 19.5
-    },
-    {
-      "headline": "Mortgage rates were 7% in 1997, too—here’s why buying a home feels more expensive today",
-      "source": "CNBC",
-      "url": "https://www.cnbc.com/make-it/2026/11/12/mortgage-rates-home-affordability-1997.html",
-      "hoursAgo": 22.7
+      "hoursAgo": 21.2
     }
   ],
   "riskTone": null,
   "bias": {
-    "score": 3,
-    "label": "BULLISH",
+    "score": -5,
+    "label": "BEARISH",
     "conviction": "MEDIUM",
     "drivers": [
       {
         "name": "GBP",
         "weight": 3,
         "impact": "NEUTRAL",
-        "detail": "GBP/USD +0.07% → FTSE headwind (sign-flipped)"
+        "detail": "GBP/USD +0.01% → FTSE headwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
-        "impact": "BULLISH",
-        "detail": "US500 +0.51% today"
+        "impact": "BEARISH",
+        "detail": "US500 -1.24% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 18.785 — NORMAL regime"
+        "detail": "VIX 19.935 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
-        "impact": "NEUTRAL",
-        "detail": "Brent +0.31% (energy majors)"
+        "impact": "BULLISH",
+        "detail": "Brent +0.72% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
-        "impact": "NEUTRAL",
-        "detail": "Copper -0.39% (miners/China)"
+        "impact": "BEARISH",
+        "detail": "Copper -1.32% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
@@ -173,15 +167,15 @@
       },
       {
         "name": "European tape (SX5E/DAX)",
-        "weight": 2.5,
-        "impact": "BULLISH",
-        "detail": "SX5E +0.3% / DAX +0.31%"
+        "weight": 1.15,
+        "impact": "NEUTRAL",
+        "detail": "SX5E +0.06% / DAX +0.09%"
       }
     ],
     "eventSuppressed": false
   },
   "orbContext": {
-    "computedAt": "2026-11-13T13:40:04.548Z",
+    "computedAt": "2026-11-13T15:24:42.382Z",
     "mode": "POST_ORB",
     "cashOpenLondon": "08:00 GMT",
     "overnightHigh": 10878.5,
@@ -191,8 +185,8 @@
     "priorClose": 10854.8,
     "prevWeekHigh": 10987.5,
     "prevWeekLow": 10513.5,
-    "gapPts": 41.7,
-    "gapPct": 0.38,
+    "gapPts": 37.1,
+    "gapPct": 0.34,
     "orbHigh": 10870.3,
     "orbLow": 10845.5,
     "orbBrokenDirection": "UP",
@@ -202,37 +196,30 @@
     "expansionState": {
       "label": "COMPRESSED",
       "rangeSoFarPct": 46,
-      "expectedRangePctByNow": 85,
-      "rangeVsTypical": 0.54,
-      "expectedVolPctByNow": 69,
-      "moveMostlyDone": false,
-      "note": "Range 46% of ADR vs ~85% typical by 13:00 BST (below the typical pace (compressed/range)). only ~69% of volume typically done by now — an afternoon expansion is still possible."
+      "expectedRangePctByNow": 96,
+      "rangeVsTypical": 0.48,
+      "expectedVolPctByNow": 94,
+      "moveMostlyDone": true,
+      "note": "Range 46% of ADR vs ~96% typical by 15:00 BST (below the typical pace (compressed/range)). ~94% of a typical day's volume already done — expect a rangebound remainder, tighten targets."
     }
   },
   "orbIntel": {
-    "stance": "LONG_FAVOURED",
-    "stanceLine": "Backdrop favours upside breaks — ORB break UP is aligned with the BULLISH macro bias (+3) — continuation has the backdrop behind it.",
+    "stance": "SHORT_FAVOURED",
+    "stanceLine": "Backdrop favours downside breaks — ORB broke UP against a BEARISH macro bias (-5) — counter-bias breaks fail more often; treat continuation as suspect.",
     "signals": [
       {
-        "direction": "FAVOURS_LONG",
-        "severity": "INFO",
+        "direction": "BREAKOUT_SUSPECT",
+        "severity": "CAUTION",
         "source": "STRUCTURE",
-        "rule": "R3",
-        "text": "ORB break UP is aligned with the BULLISH macro bias (+3) — continuation has the backdrop behind it."
+        "rule": "R2",
+        "text": "ORB broke UP against a BEARISH macro bias (-5) — counter-bias breaks fail more often; treat continuation as suspect."
       },
       {
-        "direction": "FAVOURS_LONG",
-        "severity": "INFO",
-        "source": "TAPE",
-        "rule": "R8",
-        "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.3%) — the cross-market lean is up."
-      },
-      {
-        "direction": "FAVOURS_LONG",
+        "direction": "FAVOURS_SHORT",
         "severity": "INFO",
         "source": "TAPE",
         "rule": "R9",
-        "text": "Past 13:30 with US futures +0.51% — the 14:30 US handoff argues for holding longs into the US open."
+        "text": "Past 13:30 with US futures -1.24% — the 14:30 US handoff argues against holding longs into the US open."
       },
       {
         "direction": "BREAKOUT_SUSPECT",

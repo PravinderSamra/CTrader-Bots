@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-13T13:39:59.801Z",
+  "generatedAt": "2026-11-13T15:24:37.989Z",
   "yields": {
     "US10Y": 4.98,
     "US2Y": 4.73,
@@ -22,8 +22,8 @@
     "probHike": 20
   },
   "marketVolatility": {
-    "GVZ": 24.21,
-    "VIX": 17.49
+    "GVZ": 25.91,
+    "VIX": 18.7
   },
   "positioning": {
     "cotNetLong": 171401,
@@ -34,26 +34,26 @@
     "openInterestChange": 19405
   },
   "etfFlows": {
-    "gldTonnes": 1045.5,
-    "gldWoWChange": -6.2,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1049.8,
+    "gldWoWChange": 4.3,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3897.325,
-    "XAGUSD": 50.113,
-    "EURUSD": 1.10626,
-    "USDJPY": 159.896,
-    "USDCHF": 0.83731,
-    "USDCNH": 6.67234,
-    "GBPUSD": 1.32452,
-    "USDCAD": 1.42447,
-    "USDSEK": 10.03658,
-    "US500": 7638.8,
-    "GER40": 26814.85,
-    "UK100": 10896.95,
+    "XAUUSD": 3881.285,
+    "XAGUSD": 49.291,
+    "EURUSD": 1.10492,
+    "USDJPY": 159.8,
+    "USDCHF": 0.83676,
+    "USDCNH": 6.67348,
+    "GBPUSD": 1.32371,
+    "USDCAD": 1.42406,
+    "USDSEK": 10.05244,
+    "US500": 7504,
+    "GER40": 26751.55,
+    "UK100": 10890.95,
     "ADR_14day": 101.7,
-    "ADR_usedToday": 48.3,
-    "goldSilverRatio": 77.8
+    "ADR_usedToday": 50.6,
+    "goldSilverRatio": 78.7
   },
   "dollarLiquidity": {
     "stlfsi": -0.4918,
@@ -69,25 +69,19 @@
       "headline": "Rupee slips as higher oil prices and US yields knock stocks, bonds - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-13T03:12:00.000Z",
-      "hoursAgo": 10.5
+      "hoursAgo": 12.2
     },
     {
       "headline": "Dollar near 19-month high on Fed hike bets, yen tests 160 - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-13T01:58:00.000Z",
-      "hoursAgo": 11.7
+      "hoursAgo": 13.4
     },
     {
       "headline": "In a policy switch, the Fed says its October 2027 meeting will not see a vote on interest rates",
       "source": "CNBC",
       "publishedAt": "2026-11-12T18:11:32.000Z",
-      "hoursAgo": 19.5
-    },
-    {
-      "headline": "Mortgage rates were 7% in 1997, too—here’s why buying a home feels more expensive today",
-      "source": "CNBC",
-      "publishedAt": "2026-11-12T15:00:01.000Z",
-      "hoursAgo": 22.7
+      "hoursAgo": 21.2
     }
   ],
   "briefing": null
