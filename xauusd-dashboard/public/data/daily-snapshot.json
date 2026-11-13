@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-13T15:24:37.989Z",
+  "generatedAt": "2026-11-13T20:42:29.373Z",
   "yields": {
     "US10Y": 4.98,
     "US2Y": 4.73,
@@ -34,26 +34,26 @@
     "openInterestChange": 19405
   },
   "etfFlows": {
-    "gldTonnes": 1049.8,
-    "gldWoWChange": 4.3,
+    "gldTonnes": 1051.9,
+    "gldWoWChange": 2.1,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3881.285,
-    "XAGUSD": 49.291,
-    "EURUSD": 1.10492,
-    "USDJPY": 159.8,
-    "USDCHF": 0.83676,
-    "USDCNH": 6.67348,
-    "GBPUSD": 1.32371,
-    "USDCAD": 1.42406,
-    "USDSEK": 10.05244,
-    "US500": 7504,
-    "GER40": 26751.55,
-    "UK100": 10890.95,
+    "XAUUSD": 3873.57,
+    "XAGUSD": 48.76,
+    "EURUSD": 1.10214,
+    "USDJPY": 159.802,
+    "USDCHF": 0.83962,
+    "USDCNH": 6.67368,
+    "GBPUSD": 1.32106,
+    "USDCAD": 1.42674,
+    "USDSEK": 10.0755,
+    "US500": 7545.7,
+    "GER40": 26806.75,
+    "UK100": 10906.95,
     "ADR_14day": 101.7,
-    "ADR_usedToday": 50.6,
-    "goldSilverRatio": 78.7
+    "ADR_usedToday": 55.9,
+    "goldSilverRatio": 79.4
   },
   "dollarLiquidity": {
     "stlfsi": -0.4918,
@@ -66,22 +66,28 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Goldman Sachs looks to cash in on Anthropic's IPO, twice. Here's how and who else wants to",
+      "source": "CNBC",
+      "publishedAt": "2026-11-13T18:44:05.000Z",
+      "hoursAgo": 2
+    },
+    {
+      "headline": "Bessent, Fed's Goolsbee divided on role of energy shock in inflation - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-13T15:40:04.000Z",
+      "hoursAgo": 5
+    },
+    {
       "headline": "Rupee slips as higher oil prices and US yields knock stocks, bonds - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-13T03:12:00.000Z",
-      "hoursAgo": 12.2
+      "hoursAgo": 17.5
     },
     {
       "headline": "Dollar near 19-month high on Fed hike bets, yen tests 160 - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-13T01:58:00.000Z",
-      "hoursAgo": 13.4
-    },
-    {
-      "headline": "In a policy switch, the Fed says its October 2027 meeting will not see a vote on interest rates",
-      "source": "CNBC",
-      "publishedAt": "2026-11-12T18:11:32.000Z",
-      "hoursAgo": 21.2
+      "hoursAgo": 18.7
     }
   ],
   "briefing": null

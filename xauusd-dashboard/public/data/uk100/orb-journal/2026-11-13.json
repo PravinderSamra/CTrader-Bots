@@ -56,7 +56,33 @@
         "adr14": 153.7,
         "adrUsedPct": 46
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-11-13T20:42:36.431Z",
+        "fwd1hPct": 0.08,
+        "fwd3hPct": 0.09,
+        "toClosePct": 0.09,
+        "maxUpPct": 0.21,
+        "maxDownPct": -0.23,
+        "verdict": "FLAT",
+        "signalVerdicts": [
+          {
+            "rule": "R3",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R9",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-11-13T15:24:42.505Z",
@@ -106,7 +132,95 @@
         "adr14": 153.7,
         "adrUsedPct": 46
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-11-13T20:42:36.564Z",
+        "fwd1hPct": 0.13,
+        "fwd3hPct": null,
+        "toClosePct": 0.13,
+        "maxUpPct": 0.25,
+        "maxDownPct": 0.11,
+        "verdict": "FLAT",
+        "signalVerdicts": [
+          {
+            "rule": "R2",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R9",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-11-13T20:42:33.964Z",
+      "londonTime": "20:42 GMT",
+      "mode": "CLOSED",
+      "price": 10906.45,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — The obvious draw (PDL 10824.7) sits beyond what's left of a typical day's range — targets past it are stretch-only today.",
+      "signals": [
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10824.7) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.31%) — the cross-market lean is up."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -0.72% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -4,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10870.3,
+        "orbLow": 10845.5,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10878.5,
+        "overnightLow": 10836.3,
+        "priorDayHigh": 10912.6,
+        "priorDayLow": 10824.7,
+        "gapPct": 0.48,
+        "adr14": 153.7,
+        "adrUsedPct": 58
+      },
+      "outcome": {
+        "resolvedAt": "2026-11-13T20:42:36.565Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
