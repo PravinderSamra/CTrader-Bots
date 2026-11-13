@@ -1,0 +1,254 @@
+{
+ "schema": 1,
+ "generated_utc": "2026-11-13T12:46:41+00:00",
+ "spot": 28279.5,
+ "flip": 28301.3,
+ "bin_pts": 50,
+ "dte_max": 7,
+ "book": "week",
+ "net_total_$bn": 0.504,
+ "call_resistance": 28626.0,
+ "put_support": 27826.0,
+ "ranked_positive": [
+  {
+   "rank": "C1",
+   "price": 28626.0,
+   "net_$bn": 0.472,
+   "oi": 76172
+  },
+  {
+   "rank": "C2",
+   "price": 28576.0,
+   "net_$bn": 0.423,
+   "oi": 24454
+  },
+  {
+   "rank": "C3",
+   "price": 28426.0,
+   "net_$bn": 0.361,
+   "oi": 40820
+  }
+ ],
+ "ranked_negative": [
+  {
+   "rank": "P1",
+   "price": 28026.0,
+   "net_$bn": -0.57,
+   "oi": 62937
+  },
+  {
+   "rank": "P2",
+   "price": 27826.0,
+   "net_$bn": -0.531,
+   "oi": 111252
+  },
+  {
+   "rank": "P3",
+   "price": 28226.0,
+   "net_$bn": -0.197,
+   "oi": 50073
+  }
+ ],
+ "shadow": {
+  "scheme": "reach_window_0.6_adr",
+  "reach_pts": 531.0,
+  "ranked_positive": [
+   {
+    "rank": "C1",
+    "price": 28626.0,
+    "net_$bn": 0.472,
+    "oi": 76172
+   },
+   {
+    "rank": "C2",
+    "price": 28576.0,
+    "net_$bn": 0.423,
+    "oi": 24454
+   },
+   {
+    "rank": "C3",
+    "price": 28426.0,
+    "net_$bn": 0.361,
+    "oi": 40820
+   }
+  ],
+  "ranked_negative": [
+   {
+    "rank": "P1",
+    "price": 28026.0,
+    "net_$bn": -0.57,
+    "oi": 62937
+   },
+   {
+    "rank": "P2",
+    "price": 27826.0,
+    "net_$bn": -0.531,
+    "oi": 111252
+   },
+   {
+    "rank": "P3",
+    "price": 28226.0,
+    "net_$bn": -0.197,
+    "oi": 50073
+   }
+  ]
+ },
+ "ladder": [
+  {
+   "price": 28926.0,
+   "net_$bn": 0.0896,
+   "call_oi": 14890,
+   "put_oi": 1505
+  },
+  {
+   "price": 28876.0,
+   "net_$bn": 0.0362,
+   "call_oi": 7047,
+   "put_oi": 1886
+  },
+  {
+   "price": 28826.0,
+   "net_$bn": 0.136,
+   "call_oi": 42833,
+   "put_oi": 25767
+  },
+  {
+   "price": 28776.0,
+   "net_$bn": 0.1295,
+   "call_oi": 15714,
+   "put_oi": 2240
+  },
+  {
+   "price": 28726.0,
+   "net_$bn": 0.097,
+   "call_oi": 9795,
+   "put_oi": 1615
+  },
+  {
+   "price": 28676.0,
+   "net_$bn": 0.1178,
+   "call_oi": 4790,
+   "put_oi": 2367
+  },
+  {
+   "price": 28626.0,
+   "net_$bn": 0.4716,
+   "call_oi": 76172,
+   "put_oi": 40873
+  },
+  {
+   "price": 28576.0,
+   "net_$bn": 0.423,
+   "call_oi": 24454,
+   "put_oi": 11999
+  },
+  {
+   "price": 28526.0,
+   "net_$bn": 0.1697,
+   "call_oi": 9013,
+   "put_oi": 2834
+  },
+  {
+   "price": 28476.0,
+   "net_$bn": 0.338,
+   "call_oi": 21757,
+   "put_oi": 7546
+  },
+  {
+   "price": 28426.0,
+   "net_$bn": 0.3607,
+   "call_oi": 40820,
+   "put_oi": 17250
+  },
+  {
+   "price": 28376.0,
+   "net_$bn": 0.1899,
+   "call_oi": 12032,
+   "put_oi": 8502
+  },
+  {
+   "price": 28326.0,
+   "net_$bn": 0.0651,
+   "call_oi": 8129,
+   "put_oi": 7539
+  },
+  {
+   "price": 28276.0,
+   "net_$bn": -0.0345,
+   "call_oi": 5970,
+   "put_oi": 9869
+  },
+  {
+   "price": 28226.0,
+   "net_$bn": -0.1969,
+   "call_oi": 31461,
+   "put_oi": 50073
+  },
+  {
+   "price": 28176.0,
+   "net_$bn": -0.0579,
+   "call_oi": 7248,
+   "put_oi": 4211
+  },
+  {
+   "price": 28126.0,
+   "net_$bn": -0.1354,
+   "call_oi": 13022,
+   "put_oi": 20002
+  },
+  {
+   "price": 28076.0,
+   "net_$bn": -0.0816,
+   "call_oi": 4231,
+   "put_oi": 8224
+  },
+  {
+   "price": 28026.0,
+   "net_$bn": -0.5701,
+   "call_oi": 19494,
+   "put_oi": 62937
+  },
+  {
+   "price": 27976.0,
+   "net_$bn": -0.0998,
+   "call_oi": 3602,
+   "put_oi": 7619
+  },
+  {
+   "price": 27926.0,
+   "net_$bn": -0.0789,
+   "call_oi": 8692,
+   "put_oi": 7531
+  },
+  {
+   "price": 27876.0,
+   "net_$bn": -0.0922,
+   "call_oi": 4895,
+   "put_oi": 13515
+  },
+  {
+   "price": 27826.0,
+   "net_$bn": -0.5307,
+   "call_oi": 40834,
+   "put_oi": 111252
+  },
+  {
+   "price": 27776.0,
+   "net_$bn": -0.1039,
+   "call_oi": 2090,
+   "put_oi": 4641
+  },
+  {
+   "price": 27726.0,
+   "net_$bn": -0.0662,
+   "call_oi": 2751,
+   "put_oi": 9542
+  },
+  {
+   "price": 27676.0,
+   "net_$bn": -0.0716,
+   "call_oi": 5484,
+   "put_oi": 13621
+  }
+ ]
+}
