@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-11-13T20:42:29.373Z",
+  "generatedAt": "2026-11-16T14:20:23.103Z",
   "yields": {
-    "US10Y": 4.98,
-    "US2Y": 4.73,
-    "realYield10Y": 2.78,
-    "realYield5Y": 2.56,
-    "curve2s10s": 25,
+    "US10Y": 5.1,
+    "US2Y": 4.86,
+    "realYield10Y": 2.86,
+    "realYield5Y": 2.64,
+    "curve2s10s": 24,
     "breakeven10Y": 2.24,
-    "breakeven5Y": 2.31,
-    "forward5y5y": 2.17,
+    "breakeven5Y": 2.3,
+    "forward5y5y": 2.18,
     "dayOverDay": {
-      "US10Y": 0.1,
-      "US2Y": 0.17,
-      "realYield10Y": 0.12
+      "US10Y": 0.12,
+      "US2Y": 0.13,
+      "realYield10Y": 0.08
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-12-09",
     "probCut": 0,
-    "probHold": 80,
-    "probHike": 20
+    "probHold": 52,
+    "probHike": 48
   },
   "marketVolatility": {
     "GVZ": 25.91,
@@ -34,26 +34,26 @@
     "openInterestChange": 19405
   },
   "etfFlows": {
-    "gldTonnes": 1051.9,
-    "gldWoWChange": 2.1,
+    "gldTonnes": 1053.8,
+    "gldWoWChange": 1.9,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3873.57,
-    "XAGUSD": 48.76,
-    "EURUSD": 1.10214,
-    "USDJPY": 159.802,
-    "USDCHF": 0.83962,
-    "USDCNH": 6.67368,
-    "GBPUSD": 1.32106,
-    "USDCAD": 1.42674,
-    "USDSEK": 10.0755,
-    "US500": 7545.7,
-    "GER40": 26806.75,
-    "UK100": 10906.95,
-    "ADR_14day": 101.7,
-    "ADR_usedToday": 55.9,
-    "goldSilverRatio": 79.4
+    "XAUUSD": 3866.48,
+    "XAGUSD": 47.197,
+    "EURUSD": 1.10116,
+    "USDJPY": 159.6145,
+    "USDCHF": 0.83947,
+    "USDCNH": 6.66506,
+    "GBPUSD": 1.31996,
+    "USDCAD": 1.42951,
+    "USDSEK": 10.07299,
+    "US500": 7520.8,
+    "GER40": 26749.65,
+    "UK100": 10961.95,
+    "ADR_14day": 99.8,
+    "ADR_usedToday": 68.5,
+    "goldSilverRatio": 81.9
   },
   "dollarLiquidity": {
     "stlfsi": -0.4918,
@@ -66,28 +66,22 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Goldman Sachs looks to cash in on Anthropic's IPO, twice. Here's how and who else wants to",
-      "source": "CNBC",
-      "publishedAt": "2026-11-13T18:44:05.000Z",
-      "hoursAgo": 2
+      "headline": "For investors, a truly safe haven is hard to find - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-16T06:03:00.000Z",
+      "hoursAgo": 8.3
     },
     {
-      "headline": "Bessent, Fed's Goolsbee divided on role of energy shock in inflation - Reuters",
+      "headline": "US-Iran deal uncertainty to weigh on rupee and bonds; Fed, RBI rate paths eyed - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-13T15:40:04.000Z",
-      "hoursAgo": 5
+      "publishedAt": "2026-11-16T01:32:00.000Z",
+      "hoursAgo": 12.8
     },
     {
-      "headline": "Rupee slips as higher oil prices and US yields knock stocks, bonds - Reuters",
+      "headline": "Dollar extends rally, yen looks past soft Japan GDP data - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-13T03:12:00.000Z",
-      "hoursAgo": 17.5
-    },
-    {
-      "headline": "Dollar near 19-month high on Fed hike bets, yen tests 160 - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-13T01:58:00.000Z",
-      "hoursAgo": 18.7
+      "publishedAt": "2026-11-16T01:09:00.000Z",
+      "hoursAgo": 13.2
     }
   ],
   "briefing": null
