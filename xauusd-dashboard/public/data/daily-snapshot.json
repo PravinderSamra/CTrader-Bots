@@ -1,59 +1,59 @@
 {
-  "generatedAt": "2026-11-16T17:02:49.262Z",
+  "generatedAt": "2026-11-16T23:35:35.553Z",
   "yields": {
-    "US10Y": 5.1,
-    "US2Y": 4.86,
-    "realYield10Y": 2.86,
-    "realYield5Y": 2.64,
-    "curve2s10s": 24,
-    "breakeven10Y": 2.24,
-    "breakeven5Y": 2.3,
-    "forward5y5y": 2.18,
+    "US10Y": 5.15,
+    "US2Y": 4.88,
+    "realYield10Y": 2.91,
+    "realYield5Y": 2.68,
+    "curve2s10s": 27,
+    "breakeven10Y": 2.2,
+    "breakeven5Y": 2.25,
+    "forward5y5y": 2.15,
     "dayOverDay": {
-      "US10Y": 0.12,
-      "US2Y": 0.13,
-      "realYield10Y": 0.08
+      "US10Y": 0.05,
+      "US2Y": 0.02,
+      "realYield10Y": 0.05
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-12-09",
     "probCut": 0,
-    "probHold": 52,
-    "probHike": 48
+    "probHold": 60,
+    "probHike": 40
   },
   "marketVolatility": {
     "GVZ": 25.35,
     "VIX": 19.3
   },
   "positioning": {
-    "cotNetLong": 171401,
-    "cotWoWChange": -8505,
+    "cotNetLong": 181677,
+    "cotWoWChange": 10276,
     "crowding": "NEUTRAL",
-    "reportDate": "2026-11-03T00:00:00.000",
-    "openInterest": 538190,
-    "openInterestChange": 19405
+    "reportDate": "2026-11-10T00:00:00.000",
+    "openInterest": 546481,
+    "openInterestChange": 8291
   },
   "etfFlows": {
-    "gldTonnes": 1053.2,
-    "gldWoWChange": -0.6,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1057.4,
+    "gldWoWChange": 4.2,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3868.68,
-    "XAGUSD": 47.237,
-    "EURUSD": 1.10051,
-    "USDJPY": 159.6285,
-    "USDCHF": 0.83964,
-    "USDCNH": 6.66474,
-    "GBPUSD": 1.31868,
-    "USDCAD": 1.43023,
-    "USDSEK": 10.09783,
-    "US500": 7470.7,
-    "GER40": 26637.45,
-    "UK100": 10897.65,
-    "ADR_14day": 99.8,
-    "ADR_usedToday": 68.5,
-    "goldSilverRatio": 81.9
+    "XAUUSD": 3853.4,
+    "XAGUSD": 46.94,
+    "EURUSD": 1.09973,
+    "USDJPY": 159.4755,
+    "USDCHF": 0.8401,
+    "USDCNH": 6.66488,
+    "GBPUSD": 1.31844,
+    "USDCAD": 1.42999,
+    "USDSEK": 10.10334,
+    "US500": 7413.5,
+    "GER40": 26514.3,
+    "UK100": 10845.75,
+    "ADR_14day": 97,
+    "ADR_usedToday": 7.7,
+    "goldSilverRatio": 82.1
   },
   "dollarLiquidity": {
     "stlfsi": -0.4918,
@@ -69,31 +69,31 @@
       "headline": "Novo says Wegovy injection lowers BMI and obesity rates in children in trial",
       "source": "CNBC",
       "publishedAt": "2026-11-16T15:00:01.000Z",
-      "hoursAgo": 2
+      "hoursAgo": 8.6
+    },
+    {
+      "headline": "Supertanker rates plunge more than 60% from record highs - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-16T14:53:43.000Z",
+      "hoursAgo": 8.7
     },
     {
       "headline": "For investors, a truly safe haven is hard to find - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-16T06:03:00.000Z",
-      "hoursAgo": 11
+      "hoursAgo": 17.5
     },
     {
       "headline": "US-Iran deal uncertainty to weigh on rupee and bonds; Fed, RBI rate paths eyed - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-16T01:32:00.000Z",
-      "hoursAgo": 15.5
+      "publishedAt": "2026-11-16T01:35:48.000Z",
+      "hoursAgo": 22
     },
     {
       "headline": "Dollar extends rally, yen looks past soft Japan GDP data - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-16T01:09:00.000Z",
-      "hoursAgo": 15.9
-    },
-    {
-      "headline": "Fed 'has some work to do on inflation,' KC Fed chief says - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-15T18:43:43.000Z",
-      "hoursAgo": 22.3
+      "hoursAgo": 22.4
     }
   ],
   "briefing": null

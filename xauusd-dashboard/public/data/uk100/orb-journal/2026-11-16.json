@@ -138,6 +138,51 @@
         "verdict": "UNSCORABLE",
         "signalVerdicts": []
       }
+    },
+    {
+      "at": "2026-11-16T23:35:42.576Z",
+      "londonTime": "23:35 GMT",
+      "mode": "CLOSED",
+      "price": 10845.75,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE).",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -3,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10948.7,
+        "orbLow": 10929.3,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10950,
+        "overnightLow": 10915.5,
+        "priorDayHigh": 10978.9,
+        "priorDayLow": 10845.1,
+        "gapPct": -0.05,
+        "adr14": 155.1,
+        "adrUsedPct": 16
+      },
+      "outcome": {
+        "resolvedAt": "2026-11-16T23:35:44.049Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
