@@ -1,20 +1,20 @@
 {
-  "updatedAt": "2026-11-06T20:10:38.093Z",
-  "entriesScored": 169,
+  "updatedAt": "2026-11-13T20:42:36.570Z",
+  "entriesScored": 178,
   "byStance": {
     "SHORT_FAVOURED": {
-      "n": 27,
-      "right": 10,
-      "wrong": 13,
-      "flat": 4,
-      "avgToClosePct": 0.1
+      "n": 31,
+      "right": 12,
+      "wrong": 14,
+      "flat": 5,
+      "avgToClosePct": 0.08
     },
     "LONG_FAVOURED": {
-      "n": 19,
-      "right": 7,
+      "n": 23,
+      "right": 9,
       "wrong": 5,
-      "flat": 7,
-      "avgToClosePct": 0
+      "flat": 9,
+      "avgToClosePct": 0.04
     },
     "FADE_FAVOURED": {
       "n": 17,
@@ -26,14 +26,14 @@
   },
   "byRule": {
     "R13": {
-      "n": 51,
-      "right": 18,
+      "n": 53,
+      "right": 20,
       "wrong": 7,
       "flat": 26
     },
     "R11b": {
-      "n": 160,
-      "right": 68,
+      "n": 167,
+      "right": 75,
       "wrong": 10,
       "flat": 82
     },
@@ -44,10 +44,10 @@
       "flat": 0
     },
     "R8": {
-      "n": 129,
-      "right": 53,
+      "n": 134,
+      "right": 57,
       "wrong": 31,
-      "flat": 45
+      "flat": 46
     },
     "R12": {
       "n": 9,
@@ -56,34 +56,34 @@
       "flat": 3
     },
     "R2": {
-      "n": 28,
-      "right": 9,
+      "n": 32,
+      "right": 13,
       "wrong": 4,
       "flat": 15
     },
     "R4": {
-      "n": 93,
-      "right": 51,
+      "n": 95,
+      "right": 53,
       "wrong": 4,
       "flat": 38
     },
     "R9": {
-      "n": 29,
-      "right": 11,
-      "wrong": 6,
-      "flat": 12
+      "n": 36,
+      "right": 15,
+      "wrong": 7,
+      "flat": 14
     },
     "R10": {
-      "n": 34,
-      "right": 8,
+      "n": 35,
+      "right": 9,
       "wrong": 7,
       "flat": 19
     },
     "R3": {
-      "n": 39,
-      "right": 14,
-      "wrong": 10,
-      "flat": 15
+      "n": 44,
+      "right": 17,
+      "wrong": 11,
+      "flat": 16
     },
     "R11": {
       "n": 9,
@@ -105,9 +105,9 @@
     }
   },
   "breakoutsSuspect": {
-    "n": 41,
+    "n": 42,
     "noExtensionRate": 0.1,
     "avgMaxUpPct": 0.39,
-    "avgMaxDownPct": -0.2
+    "avgMaxDownPct": -0.19
   }
 }

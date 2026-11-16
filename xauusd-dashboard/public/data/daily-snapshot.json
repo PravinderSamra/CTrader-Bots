@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-11-09T14:44:31.220Z",
+  "generatedAt": "2026-11-13T20:42:29.373Z",
   "yields": {
-    "US10Y": 4.84,
-    "US2Y": 4.46,
-    "realYield10Y": 2.6,
-    "realYield5Y": 2.33,
-    "curve2s10s": 38,
-    "breakeven10Y": 2.23,
-    "breakeven5Y": 2.29,
+    "US10Y": 4.98,
+    "US2Y": 4.73,
+    "realYield10Y": 2.78,
+    "realYield5Y": 2.56,
+    "curve2s10s": 25,
+    "breakeven10Y": 2.24,
+    "breakeven5Y": 2.31,
     "forward5y5y": 2.17,
     "dayOverDay": {
-      "US10Y": -0.06,
-      "US2Y": -0.12,
-      "realYield10Y": -0.04
+      "US10Y": 0.1,
+      "US2Y": 0.17,
+      "realYield10Y": 0.12
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-12-09",
     "probCut": 0,
-    "probHold": 88,
-    "probHike": 12
+    "probHold": 80,
+    "probHike": 20
   },
   "marketVolatility": {
-    "GVZ": 25.83,
-    "VIX": 28.18
+    "GVZ": 25.91,
+    "VIX": 18.7
   },
   "positioning": {
     "cotNetLong": 171401,
@@ -34,30 +34,30 @@
     "openInterestChange": 19405
   },
   "etfFlows": {
-    "gldTonnes": 988.7,
-    "gldWoWChange": -95.5,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1051.9,
+    "gldWoWChange": 2.1,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 4120.99,
-    "XAGUSD": 52.782,
-    "EURUSD": 1.11951,
-    "USDJPY": 158.082,
-    "USDCHF": 0.82107,
-    "USDCNH": 6.67023,
-    "GBPUSD": 1.34137,
-    "USDCAD": 1.41088,
-    "USDSEK": 9.81828,
-    "US500": 7487.3,
-    "GER40": 26176.05,
-    "UK100": 10746.85,
-    "ADR_14day": 88.8,
-    "ADR_usedToday": 79.7,
-    "goldSilverRatio": 78.1
+    "XAUUSD": 3873.57,
+    "XAGUSD": 48.76,
+    "EURUSD": 1.10214,
+    "USDJPY": 159.802,
+    "USDCHF": 0.83962,
+    "USDCNH": 6.67368,
+    "GBPUSD": 1.32106,
+    "USDCAD": 1.42674,
+    "USDSEK": 10.0755,
+    "US500": 7545.7,
+    "GER40": 26806.75,
+    "UK100": 10906.95,
+    "ADR_14day": 101.7,
+    "ADR_usedToday": 55.9,
+    "goldSilverRatio": 79.4
   },
   "dollarLiquidity": {
-    "stlfsi": -0.5224,
-    "nfci": -0.459
+    "stlfsi": -0.4918,
+    "nfci": -0.462
   },
   "geopoliticalRisk": {
     "gpr": 150.5,
@@ -66,16 +66,28 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Gold gains as lower oil prices ease inflation fears - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-09T03:01:00.000Z",
-      "hoursAgo": 11.7
+      "headline": "Goldman Sachs looks to cash in on Anthropic's IPO, twice. Here's how and who else wants to",
+      "source": "CNBC",
+      "publishedAt": "2026-11-13T18:44:05.000Z",
+      "hoursAgo": 2
     },
     {
-      "headline": "Asian stocks steady as AI, Mideast jitters recede; dollar firm on Fed bets - Reuters",
+      "headline": "Bessent, Fed's Goolsbee divided on role of energy shock in inflation - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-09T01:46:00.000Z",
-      "hoursAgo": 13
+      "publishedAt": "2026-11-13T15:40:04.000Z",
+      "hoursAgo": 5
+    },
+    {
+      "headline": "Rupee slips as higher oil prices and US yields knock stocks, bonds - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-13T03:12:00.000Z",
+      "hoursAgo": 17.5
+    },
+    {
+      "headline": "Dollar near 19-month high on Fed hike bets, yen tests 160 - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-13T01:58:00.000Z",
+      "hoursAgo": 18.7
     }
   ],
   "briefing": null
