@@ -1,4 +1,7 @@
-// Factory Bot v1.3.3 (Vanessa Algo Bots)
+// Factory Bot v1.3.4 (Vanessa Algo Bots)
+// v1.3.4: stale-tick alarm. Logging only. Shouts once (log line + red chart banner)
+// when a symbol stops ticking while its market is open, and once when it resumes.
+// Threshold set by "Stale Tick Alarm (minutes)"; 0 turns it off.
 // v1.3.3: diagnostics only, no change to any trading decision. Logs C| at startup
 // (Server.Time vs Server.TimeInUtc) and F| every minute from 15:00 New York on a
 // Friday, naming every term the weekend close depends on.
@@ -110,6 +113,9 @@ namespace cAlgo.Robots
             MinValue = 1)]
         public int DelayMinutes { get; set; }
 
+        [Parameter("Stale Tick Alarm (minutes, 0 = off)", Group = "Other", DefaultValue = 20, MinValue = 0)]
+        public int StaleMinutes { get; set; }
+
         [Parameter("Label", Group = "Other", DefaultValue = "BOLL")]
         public string Label { get; set; }
 
@@ -122,6 +128,8 @@ namespace cAlgo.Robots
             public RelativeStrengthIndex Rsi2;
             public AverageTrueRange Atr;
             public DateTime LastTick = DateTime.MinValue, OpenSince = DateTime.MinValue;
+            public bool Stale;                 // stale-tick alarm: already shouted for this spell
+            public double StalePeak;           // longest quiet spell in minutes, for the all-clear line
             public int EntryBar = -1;
         }
 
@@ -194,7 +202,7 @@ namespace cAlgo.Robots
                 bars.BarOpened += args => OnDailyBar(b);
             }
             Timer.Start(TimeSpan.FromMinutes(1));
-            Print("Factory Bot v1.3.3 started: {0} {1} {2} {3} {4} {5} {6}"
+            Print("Factory Bot v1.3.4 started: {0} {1} {2} {3} {4} {5} {6}"
                 + " weekend flat {7}", Label, Entry, EntryP, Filter, Exit,
                 ExitP, _books.Count, WeekendFlat);
             // DIAGNOSTIC (2026-11-09): NewYork() assumes its argument is UTC. If Server.Time is not
@@ -682,9 +690,57 @@ namespace cAlgo.Robots
             _lastBeat = now;
         }
 
+        // ---------------- stale-tick alarm (live only) ----------------
+        // The bot cannot trade a market it cannot see: Tradable() is false while a symbol's
+        // ticks are stale, so entries, exits and the weekend close all wait. On 12 Nov 2026
+        // the feed died at 17:58 UTC in the middle of the session and nothing said so until
+        // Monday's log was read. This shouts once when a symbol goes quiet while its market
+        // is open, puts a red banner on the chart, and shouts once when ticks come back.
+        // Logging only - it decides nothing and sends no orders.
+        private void TickWatch()
+        {
+            if (!Live || StaleMinutes <= 0) return;
+            var loud = new List<string>();
+            foreach (var b in _books)
+            {
+                if (b.LastTick == DateTime.MinValue) continue;        // never ticked yet
+                bool open;
+                try { open = b.Sym.MarketHours.IsOpened(); } catch { open = true; }
+                double quiet = (Server.Time - b.LastTick).TotalMinutes;
+
+                if (open && quiet >= StaleMinutes)
+                {
+                    b.StalePeak = Math.Max(b.StalePeak, quiet);
+                    loud.Add(string.Format("{0} {1:F0}m", b.Sym.Name, quiet));
+                    if (!b.Stale)
+                    {
+                        b.Stale = true;
+                        Print("ALARM|{0}|{1:yyyy-MM-dd HH:mm}|no ticks for {2:F0} minutes while the"
+                            + " market is open|this bot cannot trade it - restart cTrader",
+                            b.Sym.Name, Server.Time, quiet);
+                    }
+                }
+                else if (b.Stale && quiet < 2)
+                {
+                    Print("ALARM|{0}|{1:yyyy-MM-dd HH:mm}|ticks resumed, quiet for {2:F0} minutes",
+                        b.Sym.Name, Server.Time, b.StalePeak);
+                    b.Stale = false;
+                    b.StalePeak = 0;
+                }
+            }
+            if (Chart == null) return;
+            if (loud.Count > 0)
+                Chart.DrawStaticText("staleTick", "FEED STALE: " + string.Join(", ", loud)
+                    + "\nthis bot cannot trade - restart cTrader",
+                    VerticalAlignment.Top, HorizontalAlignment.Center, Color.Red);
+            else
+                Chart.RemoveObject("staleTick");
+        }
+
         protected override void OnTimer()
         {
             Heartbeat();
+            TickWatch();
             WeekendDiag();
             if (WeekendFlat) WeekendCheck();
             foreach (var o in _queue.Where(x => x.Due <= Server.Time
