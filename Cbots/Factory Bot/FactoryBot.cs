@@ -1,4 +1,9 @@
-// Factory Bot v1.3.4 (Vanessa Algo Bots)
+// Factory Bot v1.3.5 (Vanessa Algo Bots)
+// v1.3.5: every ClosePosition is now checked. A rejected close is logged X| and the
+// position is NOT recorded as dealt with - previously a rejected weekend close still
+// parked the position for Monday's reopen, which would have doubled it, and a rejected
+// queued exit was dropped from the queue so nothing would ever close it. Closes always
+// succeed in a backtest, so before/after backtest results should be identical.
 // v1.3.4: stale-tick alarm. Logging only. Shouts once (log line + red chart banner)
 // when a symbol stops ticking while its market is open, and once when it resumes.
 // Threshold set by "Stale Tick Alarm (minutes)"; 0 turns it off.
@@ -202,7 +207,7 @@ namespace cAlgo.Robots
                 bars.BarOpened += args => OnDailyBar(b);
             }
             Timer.Start(TimeSpan.FromMinutes(1));
-            Print("Factory Bot v1.3.4 started: {0} {1} {2} {3} {4} {5} {6}"
+            Print("Factory Bot v1.3.5 started: {0} {1} {2} {3} {4} {5} {6}"
                 + " weekend flat {7}", Label, Entry, EntryP, Filter, Exit,
                 ExitP, _books.Count, WeekendFlat);
             // DIAGNOSTIC (2026-11-09): NewYork() assumes its argument is UTC. If Server.Time is not
@@ -485,6 +490,21 @@ namespace cAlgo.Robots
 
         private double MoneyPerUnit(Symbol s) => s.TickValue / s.TickSize;
 
+        // ---------------- checked close ----------------
+        // Every close goes through here. A rejected close is logged as X| and returns
+        // false, and the caller must NOT record the position as dealt with. In a
+        // backtest ClosePosition always succeeds, so this changes nothing there - a
+        // before/after backtest should match exactly.
+        private bool Close(Position p, string why)
+        {
+            var r = ClosePosition(p);
+            if (r != null && r.IsSuccessful) return true;
+            Print("X|{0}|{1}|{2:yyyy-MM-dd HH:mm}|close REJECTED ({3}): {4}",
+                p.Label, p.SymbolName, Server.Time, why,
+                r == null ? "null result" : (r.Error.HasValue ? r.Error.Value.ToString() : "unknown"));
+            return false;
+        }
+
         // Share of one full-size position, stored in the trade comment.
         private static double Weight(Position q)
         {
@@ -547,8 +567,8 @@ namespace cAlgo.Robots
             var m2 = tgt.HasValue ? p.ModifyTakeProfitPrice(tgt) : m1;
             if (m1 == null || !m1.IsSuccessful || m2 == null || !m2.IsSuccessful)
             {
-                Print("X|{0}|{1}|could not set stop/target, closed", Label, s.Name);
-                ClosePosition(p);
+                Print("X|{0}|{1}|could not set stop/target, closing", Label, s.Name);
+                Close(p, "no stop/target");
                 return;
             }
             b.EntryBar = o.T;
@@ -615,8 +635,8 @@ namespace cAlgo.Robots
                 && (o.Tp <= 0 || (m2 != null && m2.IsSuccessful));
             if (!ok)
             {
-                Print("X|{0}|{1}|could not set stop/target, closed", Label, s.Name);
-                ClosePosition(p);
+                Print("X|{0}|{1}|could not set stop/target, closing", Label, s.Name);
+                Close(p, "no stop/target");
                 b.EntryBar = -1;
                 return;
             }
@@ -659,18 +679,24 @@ namespace cAlgo.Robots
                 _queue.RemoveAll(x => x.B == b);
                 if (exiting)
                 {
+                    var xSym = p.SymbolName;
+                    if (!Close(p, "exit rule")) continue;        // retried next minute
                     Print("C|{0}|{1}|{2:yyyy-MM-dd HH:mm}|exit rule",
-                        Label, p.SymbolName, Server.Time);
-                    ClosePosition(p);
+                        Label, xSym, Server.Time);
                     b.EntryBar = -1;
                     continue;
                 }
+                // v1.3.5: read the details, CLOSE, and only park it once confirmed. The old
+                // order parked it first, so a rejected close left the position open AND queued
+                // to reopen on Monday - a double position.
+                var wSym = p.SymbolName; var wUnits = p.VolumeInUnits;
+                var wSl = p.StopLoss ?? 0; var wTp = p.TakeProfit ?? 0;
+                var wW = Weight(p); var wBar = b.EntryBar;
+                if (!Close(p, "weekend")) continue;              // retried every minute until it works
                 _parked.Add(new Order { B = b, Reopen = true,
-                    Units = p.VolumeInUnits, Sl = p.StopLoss ?? 0,
-                    Tp = p.TakeProfit ?? 0, W = Weight(p), EntryBar = b.EntryBar });
+                    Units = wUnits, Sl = wSl, Tp = wTp, W = wW, EntryBar = wBar });
                 Print("W|{0}|{1}|{2:yyyy-MM-dd HH:mm}|closed for the weekend",
-                    Label, p.SymbolName, Server.Time);
-                ClosePosition(p);
+                    Label, wSym, Server.Time);
                 b.EntryBar = -1;
                 Save();
             }
@@ -751,8 +777,11 @@ namespace cAlgo.Robots
                 if (o.Close)
                 {
                     var p = PosOf(o.B);
-                    if (p != null) { Print("C|{0}|{1}|{2:yyyy-MM-dd HH:mm}|exit rule",
-                        Label, o.B.Sym.Name, Server.Time); ClosePosition(p); }
+                    // v1.3.5: the order was already removed from the queue, so a rejected close
+                    // would silently drop the exit. Put it back and retry next minute.
+                    if (p != null && !Close(p, "exit rule")) { _queue.Add(o); continue; }
+                    if (p != null) Print("C|{0}|{1}|{2:yyyy-MM-dd HH:mm}|exit rule",
+                        Label, o.B.Sym.Name, Server.Time);
                     o.B.EntryBar = -1;
                     continue;
                 }

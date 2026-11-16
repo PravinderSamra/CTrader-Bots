@@ -1,4 +1,9 @@
-// Daily Systems cBot v1.4.4 (Vanessa Algo Bots)
+// Daily Systems cBot v1.4.5 (Vanessa Algo Bots)
+// v1.4.5: every ClosePosition is now checked. A rejected close is logged X| and the
+// position is NOT recorded as dealt with - previously a rejected weekend close still
+// parked the position for Monday's reopen, which would have doubled it, and a rejected
+// queued exit was dropped from the queue so nothing would ever close it. Closes always
+// succeed in a backtest, so before/after backtest results should be identical.
 // v1.4.4: stale-tick alarm. Logging only. Shouts once (log line + red chart banner)
 // when a symbol stops ticking while its market is open, and once when it resumes.
 // Threshold set by "Stale Tick Alarm (minutes)"; 0 turns it off.
@@ -166,7 +171,7 @@ namespace cAlgo.Robots
                 if (args.Position.Label != null && args.Position.Label.StartsWith(Label + "-")) _closedCum += args.Position.NetProfit;
             };
             Timer.Start(TimeSpan.FromMinutes(1));
-            Print("Daily Systems v1.4.4 started: {0} symbols, notional ${1} per position.", _books.Count, Notional);
+            Print("Daily Systems v1.4.5 started: {0} symbols, notional ${1} per position.", _books.Count, Notional);
             // DIAGNOSTIC (2026-11-09): NewYork() assumes its argument is UTC. If Server.Time is not
             // UTC every session test is wrong by that offset, and nothing else in the bot would say so.
             Print("C|Server.Time {0:yyyy-MM-dd HH:mm:ss}|TimeInUtc {1:yyyy-MM-dd HH:mm:ss}|diff {2:F2}h"
@@ -443,6 +448,21 @@ namespace cAlgo.Robots
 
         private Book BookOf(Position p) => _books.FirstOrDefault(x => x.Sym.Name == p.SymbolName);
 
+        // ---------------- checked close ----------------
+        // Every close goes through here. A rejected close is logged as X| and returns
+        // false, and the caller must NOT record the position as dealt with. In a
+        // backtest ClosePosition always succeeds, so this changes nothing there - a
+        // before/after backtest should match exactly.
+        private bool Close(Position p, string why)
+        {
+            var r = ClosePosition(p);
+            if (r != null && r.IsSuccessful) return true;
+            Print("X|{0}|{1}|{2:yyyy-MM-dd HH:mm}|close REJECTED ({3}): {4}",
+                p.Label, p.SymbolName, Server.Time, why,
+                r == null ? "null result" : (r.Error.HasValue ? r.Error.Value.ToString() : "unknown"));
+            return false;
+        }
+
         // Live only: log any gap in the timer (laptop asleep or offline).
         private DateTime _lastBeat = DateTime.MinValue;
         private void Heartbeat()
@@ -523,7 +543,7 @@ namespace cAlgo.Robots
                 Print("G|{0:yyyy-MM-dd HH:mm}|daily guard hit {1:F0}, closing all", Server.Time, botEq - _dayStartEq);
             }
             if (_haltedDay == day)
-                foreach (var p in Mine.ToList()) { var bk = BookOf(p); if (bk != null && Tradable(bk)) ClosePosition(p); }
+                foreach (var p in Mine.ToList()) { var bk = BookOf(p); if (bk != null && Tradable(bk)) Close(p, "daily guard"); }
 
             var ny = NewYork(Server.Time);
             bool fridayWindow = ny.DayOfWeek == DayOfWeek.Friday && ny.Hour * 60 + ny.Minute >= 15 * 60 + 30;
@@ -556,10 +576,15 @@ namespace cAlgo.Robots
                     if (b == null || !Tradable(b)) continue;
                     DateTime st;
                     var sig = _sig.TryGetValue(p.Id, out st) ? st : b.D.OpenTimes[Math.Max(0, b.D.OpenTimes.GetIndexByTime(p.EntryTime) - 1)];
-                    _parked.Add(new Action { B = b, Sys = p.Label[p.Label.Length - 1], Side = p.TradeType, Reopen = true, Units = p.VolumeInUnits,
-                        Sl = p.StopLoss ?? 0, Tp = p.TakeProfit ?? 0, Sig = sig });
-                    Print("W|{0}|{1}|{2:yyyy-MM-dd HH:mm}|closed for the weekend", p.Label, p.SymbolName, Server.Time);
-                    ClosePosition(p);
+                    // v1.4.5: read the position's details, then CLOSE, and only park it once the
+                    // close is confirmed. The old order parked it first, so a rejected close left
+                    // the position open AND queued to reopen on Monday - a double position.
+                    var wLbl = p.Label; var wSym = p.SymbolName; var wUnits = p.VolumeInUnits;
+                    var wSl = p.StopLoss ?? 0; var wTp = p.TakeProfit ?? 0; var wSide = p.TradeType;
+                    if (!Close(p, "weekend")) continue;          // retried every minute until it works
+                    _parked.Add(new Action { B = b, Sys = wLbl[wLbl.Length - 1], Side = wSide, Reopen = true, Units = wUnits,
+                        Sl = wSl, Tp = wTp, Sig = sig });
+                    Print("W|{0}|{1}|{2:yyyy-MM-dd HH:mm}|closed for the weekend", wLbl, wSym, Server.Time);
                     Save();
                 }
             }
@@ -570,7 +595,9 @@ namespace cAlgo.Robots
                 if (a.Close)
                 {
                     var p = PosOf(a.B, a.Sys);
-                    if (p != null) ClosePosition(p);
+                    // v1.4.5: the action was already removed from the queue above, so a rejected
+                    // close would silently drop the exit. Put it back and retry next minute.
+                    if (p != null && !Close(p, "exit rule")) _queue.Add(a);
                     continue;
                 }
                 Open(a, day);
@@ -623,12 +650,12 @@ namespace cAlgo.Robots
             var p = res.Position;
             _sig[p.Id] = a.Reopen ? a.Sig : b.D.OpenTimes[a.T];
             var m1 = sl.HasValue ? p.ModifyStopLossPrice(sl) : null;
-            if (m1 == null) { Print("X|{0}|{1}|{2:yyyy-MM-dd}|no stop, closed", tag, name, b.D.OpenTimes[a.T]); ClosePosition(p); return; }
+            if (m1 == null) { Print("X|{0}|{1}|{2:yyyy-MM-dd}|no stop, closing", tag, name, b.D.OpenTimes[a.T]); Close(p, "no stop"); return; }
             var m2 = tp.HasValue ? p.ModifyTakeProfitPrice(tp) : m1;
             if (!m1.IsSuccessful || !m2.IsSuccessful)
             {
-                Print("X|{0}|{1}|{2:yyyy-MM-dd}|could not set stop/target, closed", tag, name, b.D.OpenTimes[a.T]);
-                ClosePosition(p);
+                Print("X|{0}|{1}|{2:yyyy-MM-dd}|could not set stop/target, closing", tag, name, b.D.OpenTimes[a.T]);
+                Close(p, "no stop/target");
                 return;
             }
             Print("O|{0}|{1}|{2}|{3:yyyy-MM-dd HH:mm}|{4}|{5}|{6:F2}|{7}|{8}", p.Id, tag, name, p.EntryTime, p.TradeType,
