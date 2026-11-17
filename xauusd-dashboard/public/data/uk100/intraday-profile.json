@@ -1,40 +1,40 @@
 {
-  "generatedAt": "2026-11-09T23:39:17.464Z",
+  "generatedAt": "2026-11-17T15:13:16.897Z",
   "instrument": "UK100",
   "daysSampled": 45,
-  "avgSessionRangePts": 107.7,
+  "avgSessionRangePts": 104.9,
   "byHourLondon": {
     "8": {
       "cumRangePct": 52,
-      "cumVolPct": 15
+      "cumVolPct": 16
     },
     "9": {
-      "cumRangePct": 61,
-      "cumVolPct": 27
+      "cumRangePct": 62,
+      "cumVolPct": 28
     },
     "10": {
-      "cumRangePct": 66,
-      "cumVolPct": 38
+      "cumRangePct": 67,
+      "cumVolPct": 39
     },
     "11": {
       "cumRangePct": 72,
       "cumVolPct": 48
     },
     "12": {
-      "cumRangePct": 79,
+      "cumRangePct": 78,
       "cumVolPct": 58
     },
     "13": {
-      "cumRangePct": 85,
-      "cumVolPct": 69
+      "cumRangePct": 84,
+      "cumVolPct": 70
     },
     "14": {
       "cumRangePct": 92,
-      "cumVolPct": 82
+      "cumVolPct": 83
     },
     "15": {
       "cumRangePct": 96,
-      "cumVolPct": 94
+      "cumVolPct": 95
     },
     "16": {
       "cumRangePct": 100,

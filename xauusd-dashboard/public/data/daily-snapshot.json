@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-16T23:35:35.553Z",
+  "generatedAt": "2026-11-17T15:13:06.129Z",
   "yields": {
     "US10Y": 5.15,
     "US2Y": 4.88,
@@ -22,8 +22,8 @@
     "probHike": 40
   },
   "marketVolatility": {
-    "GVZ": 25.35,
-    "VIX": 19.3
+    "GVZ": 26.42,
+    "VIX": 22.91
   },
   "positioning": {
     "cotNetLong": 181677,
@@ -34,26 +34,26 @@
     "openInterestChange": 8291
   },
   "etfFlows": {
-    "gldTonnes": 1057.4,
-    "gldWoWChange": 4.2,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1056.4,
+    "gldWoWChange": -1,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3853.4,
-    "XAGUSD": 46.94,
-    "EURUSD": 1.09973,
-    "USDJPY": 159.4755,
-    "USDCHF": 0.8401,
-    "USDCNH": 6.66488,
-    "GBPUSD": 1.31844,
-    "USDCAD": 1.42999,
-    "USDSEK": 10.10334,
-    "US500": 7413.5,
-    "GER40": 26514.3,
-    "UK100": 10845.75,
+    "XAUUSD": 3856.915,
+    "XAGUSD": 47.6165,
+    "EURUSD": 1.09933,
+    "USDJPY": 159.412,
+    "USDCHF": 0.84116,
+    "USDCNH": 6.66641,
+    "GBPUSD": 1.31923,
+    "USDCAD": 1.42993,
+    "USDSEK": 10.12716,
+    "US500": 7393.6,
+    "GER40": 26227.85,
+    "UK100": 10755.95,
     "ADR_14day": 97,
-    "ADR_usedToday": 7.7,
-    "goldSilverRatio": 82.1
+    "ADR_usedToday": 49.9,
+    "goldSilverRatio": 81
   },
   "dollarLiquidity": {
     "stlfsi": -0.4918,
@@ -66,34 +66,22 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Novo says Wegovy injection lowers BMI and obesity rates in children in trial",
+      "headline": "Anthropic IPO: For hundreds of billions of dollars flowing into AI startups, a big debut is a must",
       "source": "CNBC",
-      "publishedAt": "2026-11-16T15:00:01.000Z",
-      "hoursAgo": 8.6
+      "publishedAt": "2026-11-17T13:15:44.000Z",
+      "hoursAgo": 2
     },
     {
-      "headline": "Supertanker rates plunge more than 60% from record highs - Reuters",
+      "headline": "Dollar steady after five-day rally, NZ dollar at lowest since 2020 - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-16T14:53:43.000Z",
-      "hoursAgo": 8.7
+      "publishedAt": "2026-11-17T01:42:00.000Z",
+      "hoursAgo": 13.5
     },
     {
-      "headline": "For investors, a truly safe haven is hard to find - Reuters",
+      "headline": "Gold sinks to 1-year low as Treasury yields and dollar bite, set for worst year since 2015 - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-16T06:03:00.000Z",
-      "hoursAgo": 17.5
-    },
-    {
-      "headline": "US-Iran deal uncertainty to weigh on rupee and bonds; Fed, RBI rate paths eyed - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-16T01:35:48.000Z",
-      "hoursAgo": 22
-    },
-    {
-      "headline": "Dollar extends rally, yen looks past soft Japan GDP data - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-16T01:09:00.000Z",
-      "hoursAgo": 22.4
+      "publishedAt": "2026-11-16T18:03:06.000Z",
+      "hoursAgo": 21.2
     }
   ],
   "briefing": null
