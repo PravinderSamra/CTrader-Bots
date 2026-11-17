@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-17T15:13:06.129Z",
+  "generatedAt": "2026-11-17T16:54:33.928Z",
   "yields": {
     "US10Y": 5.15,
     "US2Y": 4.88,
@@ -34,26 +34,26 @@
     "openInterestChange": 8291
   },
   "etfFlows": {
-    "gldTonnes": 1056.4,
-    "gldWoWChange": -1,
+    "gldTonnes": 1054.5,
+    "gldWoWChange": -1.9,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3856.915,
-    "XAGUSD": 47.6165,
-    "EURUSD": 1.09933,
-    "USDJPY": 159.412,
-    "USDCHF": 0.84116,
-    "USDCNH": 6.66641,
-    "GBPUSD": 1.31923,
-    "USDCAD": 1.42993,
-    "USDSEK": 10.12716,
-    "US500": 7393.6,
-    "GER40": 26227.85,
-    "UK100": 10755.95,
+    "XAUUSD": 3864.145,
+    "XAGUSD": 47.494,
+    "EURUSD": 1.10186,
+    "USDJPY": 159.242,
+    "USDCHF": 0.83818,
+    "USDCNH": 6.66564,
+    "GBPUSD": 1.32181,
+    "USDCAD": 1.42864,
+    "USDSEK": 10.10432,
+    "US500": 7305.8,
+    "GER40": 26056.65,
+    "UK100": 10701.35,
     "ADR_14day": 97,
-    "ADR_usedToday": 49.9,
-    "goldSilverRatio": 81
+    "ADR_usedToday": 54.2,
+    "goldSilverRatio": 81.4
   },
   "dollarLiquidity": {
     "stlfsi": -0.4918,
@@ -66,22 +66,46 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "7 smart reasons to sell a stock—and my ‘golden rule’ for offloading shares, says hedge fund CEO",
+      "source": "CNBC",
+      "publishedAt": "2026-11-17T15:05:01.000Z",
+      "hoursAgo": 1.8
+    },
+    {
+      "headline": "US retail sales increase moderately in October - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-17T13:43:23.000Z",
+      "hoursAgo": 3.2
+    },
+    {
       "headline": "Anthropic IPO: For hundreds of billions of dollars flowing into AI startups, a big debut is a must",
       "source": "CNBC",
       "publishedAt": "2026-11-17T13:15:44.000Z",
-      "hoursAgo": 2
+      "hoursAgo": 3.6
     },
     {
       "headline": "Dollar steady after five-day rally, NZ dollar at lowest since 2020 - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-17T01:42:00.000Z",
-      "hoursAgo": 13.5
+      "hoursAgo": 15.2
+    },
+    {
+      "headline": "EU sanctions four Haitian gangs over serious human rights violations - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-16T20:37:43.000Z",
+      "hoursAgo": 20.3
     },
     {
       "headline": "Gold sinks to 1-year low as Treasury yields and dollar bite, set for worst year since 2015 - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-16T18:03:06.000Z",
-      "hoursAgo": 21.2
+      "hoursAgo": 22.9
+    },
+    {
+      "headline": "Fed's Barr warns on AI risks to financial system - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-16T17:23:33.000Z",
+      "hoursAgo": 23.5
     }
   ],
   "briefing": null

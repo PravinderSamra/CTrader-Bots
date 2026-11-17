@@ -70,7 +70,114 @@
         "adr14": 155.1,
         "adrUsedPct": 73
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-11-17T16:54:43.894Z",
+        "fwd1hPct": -0.55,
+        "fwd3hPct": null,
+        "toClosePct": -0.55,
+        "maxUpPct": -0.33,
+        "maxDownPct": -0.61,
+        "verdict": "RIGHT",
+        "signalVerdicts": [
+          {
+            "rule": "R11",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R4",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R3",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R9",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-11-17T16:54:41.422Z",
+      "londonTime": "16:54 GMT",
+      "mode": "CLOSED",
+      "price": 10703.35,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 112% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "112% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "STRONG",
+          "source": "RATES",
+          "rule": "R11",
+          "text": "20Y gilt +8bp — a fiscal-stress selloff; this historically drags the whole index regardless of the banks rotation."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.58%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -1.46% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -6,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10836.3,
+        "orbLow": 10807.9,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10865.9,
+        "overnightLow": 10805.4,
+        "priorDayHigh": 10978.9,
+        "priorDayLow": 10845.1,
+        "gapPct": -1.36,
+        "adr14": 155.1,
+        "adrUsedPct": 112
+      },
+      "outcome": {
+        "resolvedAt": "2026-11-17T16:54:43.894Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
