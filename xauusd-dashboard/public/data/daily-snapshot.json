@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-18T14:50:09.102Z",
+  "generatedAt": "2026-11-18T16:28:12.249Z",
   "yields": {
     "US10Y": 5.12,
     "US2Y": 4.83,
@@ -34,25 +34,25 @@
     "openInterestChange": 8291
   },
   "etfFlows": {
-    "gldTonnes": 1081.8,
-    "gldWoWChange": 24.2,
+    "gldTonnes": 1088.7,
+    "gldWoWChange": 6.9,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3766.595,
-    "XAGUSD": 45.177,
-    "EURUSD": 1.09795,
-    "USDJPY": 159.1955,
-    "USDCHF": 0.84183,
-    "USDCNH": 6.66779,
-    "GBPUSD": 1.31659,
-    "USDCAD": 1.43144,
-    "USDSEK": 10.16073,
-    "US500": 7313.3,
-    "GER40": 25901.75,
-    "UK100": 10606.85,
+    "XAUUSD": 3742.595,
+    "XAGUSD": 44.883,
+    "EURUSD": 1.09636,
+    "USDJPY": 159.271,
+    "USDCHF": 0.8432,
+    "USDCNH": 6.66917,
+    "GBPUSD": 1.31418,
+    "USDCAD": 1.43304,
+    "USDSEK": 10.18497,
+    "US500": 7301.3,
+    "GER40": 25764.45,
+    "UK100": 10562.05,
     "ADR_14day": 93.4,
-    "ADR_usedToday": 114.8,
+    "ADR_usedToday": 119.1,
     "goldSilverRatio": 83.4
   },
   "dollarLiquidity": {
@@ -69,43 +69,37 @@
       "headline": "Worried about the AI bubble popping? How investing pros say to adjust your strategy",
       "source": "CNBC",
       "publishedAt": "2026-11-18T13:19:31.000Z",
-      "hoursAgo": 1.5
+      "hoursAgo": 3.1
     },
     {
       "headline": "Fed officials set to raise rates again in December, but the future still looks murky",
       "source": "CNBC",
       "publishedAt": "2026-11-18T12:37:32.000Z",
-      "hoursAgo": 2.2
+      "hoursAgo": 3.8
     },
     {
       "headline": "Mortgage demand turns lower, as interest rates shoot back up to the highest level in three weeks.",
       "source": "CNBC",
       "publishedAt": "2026-11-18T12:34:10.000Z",
-      "hoursAgo": 2.3
+      "hoursAgo": 3.9
     },
     {
       "headline": "UK inflation rises to one-year high but markets trim rate hike bets - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-18T07:08:00.000Z",
-      "hoursAgo": 7.7
+      "hoursAgo": 9.3
     },
     {
-      "headline": "Xi, Putin blast Western 'protectionism', sanctions as Trump lands in China - Reuters",
+      "headline": "Xi, Putin blast Western 'protectionism' and sanctions as Trump lands in China - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-18T03:21:00.000Z",
-      "hoursAgo": 11.5
+      "hoursAgo": 13.1
     },
     {
       "headline": "Lawyer for Fed's Cook says she may not participate in 'unfair' White House hearing - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-17T18:49:27.000Z",
-      "hoursAgo": 20
-    },
-    {
-      "headline": "7 smart reasons to sell a stock—and my ‘golden rule’ for offloading shares, says hedge fund CEO",
-      "source": "CNBC",
-      "publishedAt": "2026-11-17T15:05:01.000Z",
-      "hoursAgo": 23.8
+      "hoursAgo": 21.6
     }
   ],
   "briefing": null
