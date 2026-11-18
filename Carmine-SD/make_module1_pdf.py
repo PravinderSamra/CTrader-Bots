@@ -203,6 +203,15 @@ A(P("<b>HIS RULE.</b> Supply and demand is a reversal strategy, so it needs the 
     "while supply zones become very reliable. In an uptrend it is the other way round."))
 A(P("The practical consequence is that the weak-side zone becomes a <b>target</b> instead of "
     "an entry. In a downtrend he shorts supply and takes profit at demand."))
+A(P("<b>WHY THAT IS.</b> A trend is <i>defined</i> by which zones keep failing. An uptrend is "
+    "price repeatedly pushing up <i>through</i> supply - if supply held, the uptrend would "
+    "have stopped. The same move keeps bouncing off demand. So in an uptrend the demand "
+    "zones are the reliable ones and the supply zones are the ones that break. A downtrend "
+    "is exactly that mirrored: demand is what keeps getting cut through.", "gap"))
+A(KeepTogether([img("09-trend-on-price.png", 168*mm)]))
+A(P("Read it as: <b>enter on the zone that points the same way as the trend</b> - demand in an "
+    "uptrend, supply in a downtrend. The zone on the other side is still worth drawing, but "
+    "only as the place you take profit.", "gap"))
 A(KeepTogether([img("05-trend.png", 140*mm)]))
 A(P("<b>NOT STATED.</b> He never defines the trend mechanically - no moving average, no "
     "lookback. It is eyeballed from higher-timeframe structure.", "gap"))

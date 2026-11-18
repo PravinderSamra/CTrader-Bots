@@ -258,4 +258,74 @@ finish(ax,"FADING THE OBVIOUS",
        '"if my 80-year-old grandmother could draw it, the reliability of it is slim"')
 fig.tight_layout(); save(fig,"08-trap.png")
 
+# ---------- 9. the trend filter, drawn on price ----------
+# The matrix says WHICH zone works. This shows WHY: in an uptrend price keeps
+# cutting through supply (that is what an uptrend IS) while demand keeps holding.
+fig, axes = plt.subplots(2, 1, figsize=(10.4, 7.6))
+
+UPTREND = [
+ (0,5.00,5.25,5.30,4.95),(1,5.25,5.45,5.52,5.20),(2,5.45,5.58,5.65,5.42),
+ (3,5.58,5.52,5.62,5.48),(4,5.52,5.57,5.63,5.47),(5,5.57,5.50,5.62,5.46),
+ (6,5.50,5.95,6.00,5.48),(7,5.95,6.20,6.28,5.90),(8,6.20,6.32,6.40,6.15),
+ (9,6.32,6.28,6.42,6.24),(10,6.28,6.34,6.43,6.22),(11,6.34,5.95,6.40,5.90),
+ (12,5.95,5.75,6.00,5.70),(13,5.75,5.62,5.80,5.52),(14,5.62,5.85,5.92,5.50),
+ (15,5.85,6.15,6.22,5.80),(16,6.15,6.40,6.48,6.10),(17,6.40,6.70,6.78,6.35),
+ (18,6.70,6.95,7.02,6.65),(19,6.95,7.15,7.22,6.90)]
+ax = axes[0]
+for s in UPTREND: candle(ax, *s)
+ax.add_patch(Rectangle((2.55,5.45),17.1,0.21,facecolor=DEMAND,alpha=0.18,
+                       edgecolor=DEMAND,lw=1.3,zorder=1))
+ax.add_patch(Rectangle((8.55,6.20),11.1,0.25,facecolor=SUPPLY,alpha=0.15,
+                       edgecolor=SUPPLY,lw=1.3,zorder=1))
+ax.text(2.45,5.28,"DEMAND",fontsize=8.6,color=DEMAND,fontweight="bold",
+        ha="left",va="top")
+ax.text(8.45,6.52,"SUPPLY",fontsize=8.6,color=SUPPLY,fontweight="bold",
+        ha="left",va="bottom")
+ax.text(14,5.16,"price comes back,\nbuyers show up,\nit HOLDS",ha="center",
+        va="top",fontsize=8.3,color=DEMAND,fontweight="bold")
+ax.annotate("",xy=(14,5.50),xytext=(14,5.22),
+            arrowprops=dict(arrowstyle="->",color=DEMAND,lw=1.3))
+ax.annotate("price returns and\ncuts straight through it",xy=(16.4,6.52),
+            xytext=(12.3,7.02),ha="center",va="bottom",fontsize=8.3,
+            color=MUTE,fontweight="bold",
+            arrowprops=dict(arrowstyle="->",color=MUTE,lw=1.3))
+ax.text(-0.5,7.54,"so: BUY demand, and use supply only as a TARGET",ha="left",
+        va="top",fontsize=9.4,color=INK,fontweight="bold")
+ax.set_ylim(4.20,7.70); ax.set_xlim(-0.9,20.3)
+finish(ax,"UPTREND - higher highs, higher lows",
+       "an uptrend is price overcoming supply, so supply zones are the ones that fail")
+
+DOWNTREND = [
+ (0,7.15,6.90,7.20,6.85),(1,6.90,6.70,6.95,6.62),(2,6.70,6.56,6.75,6.50),
+ (3,6.56,6.62,6.68,6.52),(4,6.62,6.57,6.67,6.51),(5,6.57,6.64,6.70,6.53),
+ (6,6.64,6.20,6.68,6.15),(7,6.20,5.95,6.25,5.88),(8,5.95,5.83,6.00,5.75),
+ (9,5.83,5.88,5.95,5.78),(10,5.88,5.81,5.93,5.72),(11,5.81,6.20,6.25,5.78),
+ (12,6.20,6.40,6.45,6.15),(13,6.40,6.55,6.68,6.35),(14,6.55,6.30,6.70,6.25),
+ (15,6.30,6.00,6.35,5.95),(16,6.00,5.70,6.05,5.62),(17,5.70,5.45,5.75,5.38),
+ (18,5.45,5.20,5.50,5.15),(19,5.20,5.00,5.25,4.95)]
+ax = axes[1]
+for s in DOWNTREND: candle(ax, *s)
+ax.add_patch(Rectangle((2.55,6.50),17.1,0.22,facecolor=SUPPLY,alpha=0.18,
+                       edgecolor=SUPPLY,lw=1.3,zorder=1))
+ax.add_patch(Rectangle((8.55,5.70),11.1,0.26,facecolor=DEMAND,alpha=0.15,
+                       edgecolor=DEMAND,lw=1.3,zorder=1))
+ax.text(2.45,6.79,"SUPPLY",fontsize=8.6,color=SUPPLY,fontweight="bold",
+        ha="left",va="bottom")
+ax.text(8.45,5.62,"DEMAND",fontsize=8.6,color=DEMAND,fontweight="bold",
+        ha="left",va="top")
+ax.text(14,7.84,"price comes back,\nsellers show up,\nit HOLDS",ha="center",
+        va="top",fontsize=8.3,color=SUPPLY,fontweight="bold")
+ax.annotate("",xy=(14,6.72),xytext=(14,7.00),
+            arrowprops=dict(arrowstyle="->",color=SUPPLY,lw=1.3))
+ax.annotate("price returns and\ncuts straight through it",xy=(16.5,5.66),
+            xytext=(11.4,5.30),ha="center",va="top",fontsize=8.3,
+            color=MUTE,fontweight="bold",
+            arrowprops=dict(arrowstyle="->",color=MUTE,lw=1.3))
+ax.text(-0.5,4.52,"so: SELL supply, and use demand only as a TARGET",ha="left",
+        va="bottom",fontsize=9.4,color=INK,fontweight="bold")
+ax.set_ylim(4.35,8.00); ax.set_xlim(-0.9,20.3)
+finish(ax,"DOWNTREND - lower highs, lower lows",
+       "a downtrend is price overcoming demand, so demand zones are the ones that fail")
+fig.tight_layout(h_pad=2.6); save(fig,"09-trend-on-price.png")
+
 print("done")
