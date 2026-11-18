@@ -146,19 +146,56 @@ A(P("<b>NOT STATED.</b> He never says how many of these he needs, or whether any
     "is sufficient. In his worked example he had four lining up at once. Treat \"more is "
     "better\" as the only safe reading.", "gap"))
 
-A(P("7. Strong levels versus weak levels", "h2"))
-A(P("This is his sharpest idea and it is counter-intuitive. A resistance level does not form "
-    "because sellers are aggressive. It forms because <b>buying dries up</b> - the last buyer "
-    "buys, and passive sellers above outnumber the aggressive buyers still coming in."))
-A(P("\"The market moves up until the last buyer buys. It is our objective to figure out when "
-    "the last buyer will buy, because this is when a reversal will happen.\"", "quote"))
-A(P("So the tell is <b>effort without reward</b>: heavy buying volume printing at the highs "
-    "while price refuses to advance. That is a strong level. The mirror image - a support "
-    "level being held up by heavy aggressive buying - is a <b>weak</b> level, and he expects "
-    "it to break."))
-A(KeepTogether([img("07-effort.png"),
-    P("Left: buyers throwing size at it and getting nowhere - strong. "
-      "Right: only aggression is holding it - weak.", "cap")]))
+A(P("7. Why a level holds - two different mechanisms", "h2"))
+A(P("He describes two, and they are not the same thing even though both end a move. "
+    "Separating them matters, because on a footprint they look like opposites."))
+
+A(P("7a. Absorption - effort with no reward", "h2"))
+A(P("Buyers are aggressive and they keep coming. Passive sellers resting at the level take "
+    "the other side of every one of them. Price cannot advance."))
+A(P("\"All the aggressive buying, a plus 1200 delta, yet the market can't break out - there "
+    "is a <b>passive seller sitting here absorbing</b> and the buyers are becoming "
+    "exhausted.\"", "quote"))
+A(P("At the double top he shows the same thing at a single price: a positive delta of 279, "
+    "then 338, printing <i>above</i> the resistance."))
+A(P("\"There's buyers showing a lot of effort. If they're showing effort the market "
+    "theoretically should start moving up. If there's a lot of <b>effort but no reward</b>, "
+    "the market only has one option - that's to move down.\"", "quote"))
+A(P("<b>Signature: heavy volume, strongly one-sided delta, price flat.</b>"))
+
+A(P("7b. Exhaustion - the last buyer buys", "h2"))
+A(P("Different mechanism. Nobody is absorbing anything; the aggression simply runs out. "
+    "No one is willing to pay those prices any more and the auction finishes."))
+A(P("\"What we're going to see up here is a <b>volume tail</b>, and on this volume tail we "
+    "can see that there is <b>29 total volume</b> ... the market moves up until the last "
+    "buyer buys. This shows that the auction has finished at these prices.\"", "quote"))
+A(P("<b>Signature: thin volume at the extreme.</b> Note the contrast with absorption - "
+    "1200 against 29, at the same kind of turning point."))
+
+A(KeepTogether([img("07-absorption-exhaustion.png"),
+    P("Same outcome, opposite footprint. Heavy one-sided volume going nowhere is "
+      "absorption; almost no volume at all is exhaustion.", "cap")]))
+
+A(P("The two can chain, and he says so in one breath: \"there is a passive seller sitting "
+    "here absorbing <i>and</i> the buyers are becoming exhausted.\" Absorption is often the "
+    "cause and exhaustion the result - the passive side quietly drains the aggressive side "
+    "until it gives up. They are still worth reading separately, because absorption is "
+    "visible while it is happening and exhaustion is mostly visible once it has."))
+
+A(P("<b>NOT STATED.</b> He never uses volume-profile shape vocabulary. In those terms "
+    "absorption tends to print as a bulge of volume at the extreme - a P at a high, a b at "
+    "a low - while exhaustion prints as the thin tail he does name. Useful shorthand, but "
+    "it is not his language and he does not teach it.", "gap"))
+
+A(P("7c. The mirror - what makes a level weak", "h2"))
+A(P("The same logic inverted, and this is the part that reverses how most people read "
+    "volume at a level. A level created by <i>aggression</i> is weak."))
+A(P("\"What makes a <b>weak</b> support level is if there's a lot of aggressive buyers "
+    "trying to bring the market up higher. What makes a <b>strong</b> support level is if "
+    "there's a lot of aggressive sellers that can't bring the market lower.\"", "quote"))
+A(P("So the question at any level is not \"how much buying is there\" but <b>which side is "
+    "passive</b>. Strong means the opposite side was absorbed or exhausted. Weak means "
+    "aggression alone is propping it up - and he expects that one to break."))
 
 A(P("8. The trend filter", "h2"))
 A(P("<b>HIS RULE.</b> Supply and demand is a reversal strategy, so it needs the larger trend "

@@ -183,32 +183,59 @@ finish(ax,"ENTRY, STOP, TARGET",
 fig.tight_layout(); save(fig,"06-entry.png")
 
 
-# ---------- 7. effort vs reward ----------
-fig,axes=plt.subplots(1,2,figsize=(10.4,3.6))
-ax=axes[0]
-for s in [(0,5.4,5.9,5.95,5.35),(1,5.9,6.3,6.4,5.85),(2,6.3,6.45,6.62,6.25),
-          (3,6.45,6.35,6.6,6.3),(4,6.35,5.8,6.58,5.7),(5,5.8,5.2,5.85,5.1)]: candle(ax,*s)
-ax.axhline(6.6,color=SUPPLY,lw=1.4,ls="--")
-ax.text(5.6,6.68,"resistance",ha="right",fontsize=8.5,color=SUPPLY)
-ax.bar([2,3,4],[1.0,1.15,0.9],bottom=4.1,width=0.34,color="#2d6cb3",alpha=0.55)
-ax.text(3,3.75,"heavy BUYING volume",ha="center",fontsize=8.3,color="#2d6cb3",fontweight="bold")
-ax.text(3,3.42,"and price still cannot go up",ha="center",fontsize=8.3,color=INK)
-ax.text(5.6,7.0,"STRONG level",ha="right",fontsize=10,fontweight="bold",color=SUPPLY)
-ax.set_ylim(3.1,7.3); ax.set_xlim(-0.8,6.0)
-finish(ax,"Effort with NO reward")
+# ---------- 7. absorption vs exhaustion ----------
+# Two DIFFERENT mechanisms that both end a move. They look opposite on a
+# footprint: absorption is heavy volume going nowhere, exhaustion is almost no
+# volume at all. Both are in the support/resistance transcript.
+def vbar(ax, price, vol, maxvol, x0, col, label):
+    w = 1.9 * vol / maxvol
+    ax.add_patch(Rectangle((x0, price - 0.055), w, 0.11,
+                           facecolor=col, alpha=0.75, edgecolor="none", zorder=5))
+    ax.text(x0 + w + 0.12, price, label, va="center", fontsize=7.6, color=INK)
 
-ax=axes[1]
-for s in [(0,5.9,5.5,5.95,5.45),(1,5.5,5.15,5.6,5.08),(2,5.15,5.3,5.4,5.05),
-          (3,5.3,5.6,5.7,5.22),(4,5.6,6.0,6.1,5.55),(5,6.0,6.4,6.5,5.95)]: candle(ax,*s)
-ax.axhline(5.05,color=DEMAND,lw=1.4,ls="--")
-ax.text(5.6,4.86,"support",ha="right",fontsize=8.5,color=DEMAND)
-ax.bar([2,3],[1.05,0.95],bottom=3.6,width=0.34,color="#2d6cb3",alpha=0.55)
-ax.text(2.5,3.25,"heavy BUYING volume",ha="center",fontsize=8.3,color="#2d6cb3",fontweight="bold")
-ax.text(2.5,2.93,"is what is holding it up",ha="center",fontsize=8.3,color=INK)
-ax.text(5.6,6.75,"WEAK level",ha="right",fontsize=10,fontweight="bold",color=MUTE)
-ax.set_ylim(2.6,7.0); ax.set_xlim(-0.8,6.0)
-finish(ax,"Propped up by aggression")
-fig.tight_layout(); save(fig,"07-effort.png")
+fig, axes = plt.subplots(1, 2, figsize=(10.6, 4.1))
+
+# ---- ABSORPTION: heavy volume, no progress
+ax = axes[0]
+for s in [(0,5.2,5.7,5.78,5.15),(1,5.7,6.1,6.2,5.65),(2,6.1,6.42,6.55,6.05),
+          (3,6.42,6.38,6.56,6.3),(4,6.38,6.44,6.57,6.32),(5,6.44,6.3,6.55,6.22),
+          (6,6.3,5.8,6.4,5.7),(7,5.8,5.25,5.9,5.15)]:
+    candle(ax, *s)
+ax.axhline(6.58, color=SUPPLY, lw=1.4, ls="--")
+ax.text(-0.75, 6.65, "resistance", fontsize=8.4, color=SUPPLY)
+for pr, v, lab in [(6.50,1200,"+1200"),(6.40,980,"+980"),(6.30,760,"+760")]:
+    vbar(ax, pr, v, 1200, 8.3, "#2d6cb3", lab)
+ax.text(8.3, 6.05, "huge BUY delta\nat the level", fontsize=8.2,
+        color="#2d6cb3", fontweight="bold", va="top")
+ax.text(5.1, 4.72, "buyers are aggressive and keep coming -\n"
+                   "passive sellers eat every one of them", ha="center",
+        fontsize=8.4, color=INK)
+ax.text(10.6, 4.72, "ABSORPTION", ha="right", va="top", fontsize=11,
+        fontweight="bold", color=SUPPLY)
+ax.set_ylim(4.4, 7.15); ax.set_xlim(-0.9, 10.8)
+finish(ax, "Effort with NO reward", "volume is HEAVY and price still cannot advance")
+
+# ---- EXHAUSTION: volume tail, nobody left
+ax = axes[1]
+for s in [(0,5.2,5.7,5.78,5.15),(1,5.7,6.1,6.2,5.65),(2,6.1,6.38,6.48,6.05),
+          (3,6.38,6.46,6.60,6.34),(4,6.46,6.30,6.52,6.24),(5,6.3,5.95,6.38,5.85),
+          (6,5.95,5.5,6.0,5.4),(7,5.5,5.1,5.6,5.0)]:
+    candle(ax, *s)
+ax.axhline(6.58, color=SUPPLY, lw=1.4, ls="--")
+ax.text(-0.75, 6.65, "resistance", fontsize=8.4, color=SUPPLY)
+for pr, v, lab in [(6.52,29,"29"),(6.42,96,"96"),(6.30,740,"+740")]:
+    vbar(ax, pr, v, 1200, 8.3, "#2d6cb3", lab)
+ax.annotate("volume TAIL - almost nothing traded up here", xy=(8.2,6.52),
+            xytext=(4.6,6.98), fontsize=8.2, color=INK, fontweight="bold", ha="center",
+            arrowprops=dict(arrowstyle="->", color=INK, lw=0.9))
+ax.text(5.1, 4.72, "buying simply stops - nobody is willing\n"
+                   "to pay these prices any more", ha="center",
+        fontsize=8.4, color=INK)
+ax.text(10.6, 4.72, "EXHAUSTION", ha="right", va="top", fontsize=11,
+        fontweight="bold", color=MUTE)
+ax.set_ylim(4.4, 7.15); ax.set_xlim(-0.9, 10.8)
+finish(ax, "The last buyer buys", "volume is THIN - the auction has finished at these prices")
+fig.tight_layout(); save(fig, "07-absorption-exhaustion.png")
 
 
 # ---------- 8. the trap ----------
@@ -224,7 +251,7 @@ ax.add_patch(Rectangle((4.55,6.38),2.5,0.42,facecolor=SUPPLY,alpha=0.14,
                        edgecolor=SUPPLY,lw=1.2))
 ax.annotate("breakout buyers get long HERE",(6,7.0),ha="center",fontsize=8.6,
             color=INK,fontweight="bold")
-ax.annotate("they are trapped - their stops\nfuel the move down",(9,5.9),ha="center",
+ax.annotate("they are trapped - their stops\nfuel the move down",(9.4,6.35),ha="center",
             fontsize=8.6,color=DN,fontweight="bold")
 ax.set_ylim(4.1,7.4); ax.set_xlim(-0.9,11)
 finish(ax,"FADING THE OBVIOUS",
