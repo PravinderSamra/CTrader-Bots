@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-17T23:15:19.977Z",
+  "generatedAt": "2026-11-18T14:50:09.102Z",
   "yields": {
     "US10Y": 5.12,
     "US2Y": 4.83,
@@ -22,8 +22,8 @@
     "probHike": 40
   },
   "marketVolatility": {
-    "GVZ": 26.42,
-    "VIX": 22.91
+    "GVZ": 26.46,
+    "VIX": 25.46
   },
   "positioning": {
     "cotNetLong": 181677,
@@ -34,30 +34,30 @@
     "openInterestChange": 8291
   },
   "etfFlows": {
-    "gldTonnes": 1057.6,
-    "gldWoWChange": 3.1,
+    "gldTonnes": 1081.8,
+    "gldWoWChange": 24.2,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3852.52,
-    "XAGUSD": 47.4885,
-    "EURUSD": 1.09946,
-    "USDJPY": 159.4935,
-    "USDCHF": 0.84147,
-    "USDCNH": 6.66662,
-    "GBPUSD": 1.3206,
-    "USDCAD": 1.43006,
-    "USDSEK": 10.12635,
-    "US500": 7408.5,
-    "GER40": 26232.4,
-    "UK100": 10735.65,
+    "XAUUSD": 3766.595,
+    "XAGUSD": 45.177,
+    "EURUSD": 1.09795,
+    "USDJPY": 159.1955,
+    "USDCHF": 0.84183,
+    "USDCNH": 6.66779,
+    "GBPUSD": 1.31659,
+    "USDCAD": 1.43144,
+    "USDSEK": 10.16073,
+    "US500": 7313.3,
+    "GER40": 25901.75,
+    "UK100": 10606.85,
     "ADR_14day": 93.4,
-    "ADR_usedToday": 5.9,
-    "goldSilverRatio": 81.1
+    "ADR_usedToday": 114.8,
+    "goldSilverRatio": 83.4
   },
   "dollarLiquidity": {
     "stlfsi": -0.4918,
-    "nfci": -0.462
+    "nfci": -0.478
   },
   "geopoliticalRisk": {
     "gpr": 150.5,
@@ -66,40 +66,46 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Worried about the AI bubble popping? How investing pros say to adjust your strategy",
+      "source": "CNBC",
+      "publishedAt": "2026-11-18T13:19:31.000Z",
+      "hoursAgo": 1.5
+    },
+    {
+      "headline": "Fed officials set to raise rates again in December, but the future still looks murky",
+      "source": "CNBC",
+      "publishedAt": "2026-11-18T12:37:32.000Z",
+      "hoursAgo": 2.2
+    },
+    {
+      "headline": "Mortgage demand turns lower, as interest rates shoot back up to the highest level in three weeks.",
+      "source": "CNBC",
+      "publishedAt": "2026-11-18T12:34:10.000Z",
+      "hoursAgo": 2.3
+    },
+    {
+      "headline": "UK inflation rises to one-year high but markets trim rate hike bets - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-18T07:08:00.000Z",
+      "hoursAgo": 7.7
+    },
+    {
+      "headline": "Xi, Putin blast Western 'protectionism', sanctions as Trump lands in China - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-18T03:21:00.000Z",
+      "hoursAgo": 11.5
+    },
+    {
       "headline": "Lawyer for Fed's Cook says she may not participate in 'unfair' White House hearing - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-17T18:49:27.000Z",
-      "hoursAgo": 4.4
+      "hoursAgo": 20
     },
     {
       "headline": "7 smart reasons to sell a stock—and my ‘golden rule’ for offloading shares, says hedge fund CEO",
       "source": "CNBC",
       "publishedAt": "2026-11-17T15:05:01.000Z",
-      "hoursAgo": 8.2
-    },
-    {
-      "headline": "Angola central bank eases policy further as inflation keeps falling - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-17T13:19:22.000Z",
-      "hoursAgo": 9.9
-    },
-    {
-      "headline": "Anthropic IPO: For hundreds of billions of dollars flowing into AI startups, a big debut is a must",
-      "source": "CNBC",
-      "publishedAt": "2026-11-17T13:15:44.000Z",
-      "hoursAgo": 10
-    },
-    {
-      "headline": "Sterling edges up against dollar, breaking five-day slump - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-17T11:49:58.000Z",
-      "hoursAgo": 11.4
-    },
-    {
-      "headline": "Dollar steady after five-day rally, NZ dollar at lowest since 2020 - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-17T01:42:00.000Z",
-      "hoursAgo": 21.6
+      "hoursAgo": 23.8
     }
   ],
   "briefing": null
