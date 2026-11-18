@@ -1,0 +1,370 @@
+{
+  "schema": 1,
+  "scan_utc": "2026-11-17T12:47:00+00:00",
+  "scan_et": "2026-11-17 07:47 ET (Tue)",
+  "trading_day": "2026-11-17",
+  "session_window": "LONDON",
+  "is_trading_day": true,
+  "prediction": {
+    "price_at_scan": 27309.7,
+    "bias_score": -17,
+    "bias_label": "STRONGLY BEARISH",
+    "strategy": "STRATEGY 2 \u2014 CISD -> HH/HL -> fib OTE continuation. Below the flip in negative gamma: dealers amplify, sweeps run rather than fail. Strategy-1 fades have a materially lower hit rate here \u2014 only take them at the far walls.",
+    "event_gate": "STAND ASIDE \u2014 Core Retail Sales m/m in 0.7h. No entries until 30min after the print; then use the post-print 30-min range H/L as the day's sweep levels.",
+    "expected_direction": -1,
+    "gamma_flip": 27900.5,
+    "expiry_shape": "FRONT_FLAT_BACK_SHORT",
+    "fuel_state": "MODERATE",
+    "remaining_budget": 532.4,
+    "adr14": 943.8,
+    "adr_used_pct": 43.6,
+    "levels": [
+      {
+        "price": 28656.0,
+        "name": "STRUCTURAL CALL WALL \u25cf\u25cf\u25cb\u25cb\u25cb 0.64bn",
+        "kind": "structural",
+        "dist": 1346.3,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 28188.6,
+        "name": "PDH + Asia High (prev-day)",
+        "kind": "liquidity",
+        "dist": 878.9,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 2
+      },
+      {
+        "price": 28006.0,
+        "name": "MAX PAIN",
+        "kind": "gamma",
+        "dist": 696.3,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 27900.5,
+        "name": "GAMMA FLIP",
+        "kind": "gamma",
+        "dist": 590.8,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 27764.8,
+        "name": "London High (prev-day)",
+        "kind": "liquidity",
+        "dist": 455.1,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 27706.0,
+        "name": "Options shelf 0.14bn",
+        "kind": "gamma-shelf",
+        "dist": 396.3,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 27667.5,
+        "name": "PD mid",
+        "kind": "magnet",
+        "dist": 357.8,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 27625.0,
+        "name": "NY High (prev-day)",
+        "kind": "liquidity",
+        "dist": 315.3,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 27569.0,
+        "name": "Asia Low (prev-day)",
+        "kind": "liquidity",
+        "dist": 259.3,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 27556.0,
+        "name": "Options shelf 0.20bn",
+        "kind": "gamma-shelf",
+        "dist": 246.3,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 27506.0,
+        "name": "CALL WALL \u25cf\u25cf\u25cf\u25cf\u25cb 0.39bn",
+        "kind": "gamma",
+        "dist": 196.3,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 27465.1,
+        "name": "London Low (prev-day)",
+        "kind": "liquidity",
+        "dist": 155.4,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 27413.2,
+        "name": "Asia High (today)",
+        "kind": "liquidity",
+        "dist": 103.5,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 27381.6,
+        "name": "London High (today)",
+        "kind": "liquidity",
+        "dist": 71.9,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 27193.1,
+        "name": "PD close",
+        "kind": "magnet",
+        "dist": -116.6,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 27146.5,
+        "name": "PDL + NY Low (prev-day)",
+        "kind": "liquidity",
+        "dist": -163.2,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 2
+      },
+      {
+        "price": 27096.4,
+        "name": "Asia Low (today)",
+        "kind": "liquidity",
+        "dist": -213.3,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 27076.2,
+        "name": "Equal lows \u00d72",
+        "kind": "liquidity",
+        "dist": -233.5,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 27006.0,
+        "name": "PUT WALL \u25cf\u25cf\u25cf\u25cf\u25cf 0.51bn + London Low (today)",
+        "kind": "gamma",
+        "dist": -303.7,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 2
+      },
+      {
+        "price": 26640.2,
+        "name": "PWL",
+        "kind": "liquidity",
+        "dist": -669.5,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      }
+    ]
+  },
+  "inputs": {
+    "bias_components": [
+      {
+        "component": "gamma",
+        "points": -3,
+        "why": "below flip 27900.5 by 590.8pts \u2014 SHORT gamma, dealers amplify: downside accelerates, rallies unstable"
+      },
+      {
+        "component": "gamma",
+        "points": -2,
+        "why": "week net GEX -1.985 $bn/1% -> expansion likely"
+      },
+      {
+        "component": "gamma",
+        "points": 0,
+        "why": "price mid-band (27006.0-27506.0), 61% up the range"
+      },
+      {
+        "component": "vol",
+        "points": -2,
+        "why": "VXN 32.9 (+12.0%) \u2014 fear rising, bearish"
+      },
+      {
+        "component": "vol",
+        "points": -2,
+        "why": "VIX9D/VIX 1.021 BACKWARDATED \u2014 near-term stress, expect range expansion, downside skew"
+      },
+      {
+        "component": "vol",
+        "points": -1,
+        "why": "VXN/VIX 1.45 \u2014 tech-specific stress priced above the broad market"
+      },
+      {
+        "component": "vol",
+        "points": -1,
+        "why": "VVIX 114.23 \u2014 active tail hedging"
+      },
+      {
+        "component": "rates",
+        "points": 1,
+        "why": "US10y 5.121 (-0.64%) \u2014 yields down, BULLISH tech"
+      },
+      {
+        "component": "rates",
+        "points": 0,
+        "why": "DXY 103.617 (+0.07%) \u2014 dollar flat"
+      },
+      {
+        "component": "macro",
+        "points": -3,
+        "why": "**Real yield, 10y (DFII10)** \u2014 what lenders earn after inflation \u2014 is 2.91%, up 5bp as of 2026-11-13 and 31bp over 5 days. \u26a0\ufe0f FRED has not published since 2026-11-13 (2 business days ago) \u2014 this is last week's reading, not today's. Rising = tech gets hit hardest, because tech is valued on profits years away and those are worth less when rates rise."
+      },
+      {
+        "component": "macro",
+        "points": -1,
+        "why": "**10y nominal yield (DGS10)** moved 5bp up (2026-11-12 to 2026-11-13). That was driven by real rates \u2014 the harsher kind for tech, and an immediate headwind."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**High-yield credit spread (HY OAS)** \u2014 the extra interest demanded to lend to riskier companies is 3.23% (-19bp over 5 days). Middling \u2014 no strong signal either way."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Financial conditions (NFCI)** \u2014 how easy it is to borrow money across the economy \u2014 is EASIER than normal (-0.462). Cheap, available money is a background tailwind for stocks."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Fed balance sheet (WALCL) / reverse repo (RRP)** \u2014 cash in the financial system. The Fed is holding $6.76tn of assets, growing by $10.7bn this week, and the spare-cash buffer is down to $0.182bn."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Yield curve (10y\u20132y)** \u2014 long vs short bond yields. The 10-year pays +0.29% more than the 2-year. Barely moved."
+      },
+      {
+        "component": "breadth",
+        "points": -2,
+        "why": "mega-cap avg -2.54% (0/4 up): NVDA -4.12%, MSFT -1.12%, AAPL -0.98%, AVGO -3.92%"
+      },
+      {
+        "component": "breadth",
+        "points": -1,
+        "why": "NDX -2.67% vs ES -0.03% \u2014 tech lagging, rotation out of tech"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "ADR14 943.8, 43.6% used vs ~42% normal by 07:47 ET -> fuel_ratio 1.04 (normal) [MODERATE]"
+      },
+      {
+        "component": "structure",
+        "points": -1,
+        "why": "price below PD mid 27667.5 (PDH 28188.6 / PDL 27146.5)"
+      },
+      {
+        "component": "structure",
+        "points": 0,
+        "why": "price inside the prior-week range (26640.2-28591.4)"
+      },
+      {
+        "component": "structure",
+        "points": 1,
+        "why": "in-reach unmitigated pools: 6 above / 3 below \u2014 draw higher"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "0 auto-scored headline(s) (0 bull / 0 bear) -> NEUTRAL; 63 more need reading in context (not counted here)"
+      }
+    ],
+    "fuel": {
+      "adr14": 943.8,
+      "today_range": 411.4,
+      "adr_used_pct": 43.6,
+      "remaining_budget": 532.4,
+      "expansion_state": "MODERATE",
+      "volume_relative": 0.96,
+      "volume_state": "normal"
+    },
+    "gamma": {
+      "near_expiry_0_2dte": 0.029,
+      "this_week": -1.985,
+      "full_45dte": -4.794
+    },
+    "call_wall": 27506.0,
+    "put_wall": 27006.0,
+    "max_pain": 28006.0,
+    "vol": {
+      "vxn": 32.9,
+      "vix": 22.68,
+      "vix9d_over_vix": 1.021
+    },
+    "rates": {
+      "us10y": 5.121,
+      "dxy": 103.617
+    },
+    "news": {
+      "raw_score": 0,
+      "bias_points": 0,
+      "label": "NEUTRAL",
+      "scored_high_confidence": 0,
+      "needs_model_judgement": 63
+    },
+    "events_24h": [
+      {
+        "utc": "2026-11-17T13:30:00+00:00",
+        "impact": "High",
+        "title": "Core Retail Sales m/m",
+        "forecast": "0.4%",
+        "previous": "0.9%",
+        "hours_away": 0.7
+      },
+      {
+        "utc": "2026-11-17T13:30:00+00:00",
+        "impact": "High",
+        "title": "Retail Sales m/m",
+        "forecast": "0.1%",
+        "previous": "0.8%",
+        "hours_away": 0.7
+      }
+    ]
+  },
+  "outcome": null
+}

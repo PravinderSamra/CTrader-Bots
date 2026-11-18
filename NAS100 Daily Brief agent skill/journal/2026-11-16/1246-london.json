@@ -1,0 +1,274 @@
+{
+  "schema": 1,
+  "scan_utc": "2026-11-16T12:46:55+00:00",
+  "scan_et": "2026-11-16 07:46 ET (Mon)",
+  "trading_day": "2026-11-16",
+  "session_window": "LONDON",
+  "is_trading_day": true,
+  "prediction": {
+    "price_at_scan": 27602.8,
+    "bias_score": -15,
+    "bias_label": "STRONGLY BEARISH",
+    "strategy": "STRATEGY 2 \u2014 CISD -> HH/HL -> fib OTE continuation. Below the flip in negative gamma: dealers amplify, sweeps run rather than fail. Strategy-1 fades have a materially lower hit rate here \u2014 only take them at the far walls.",
+    "event_gate": null,
+    "expected_direction": -1,
+    "gamma_flip": 28557.5,
+    "expiry_shape": "COHERENT_SHORT",
+    "fuel_state": "LOW_FUEL",
+    "remaining_budget": 188.2,
+    "adr14": 911.7,
+    "adr_used_pct": 79.4,
+    "levels": [
+      {
+        "price": 29216.8,
+        "name": "STRUCTURAL CALL WALL \u25cf\u25cf\u25cb\u25cb\u25cb 0.44bn",
+        "kind": "structural",
+        "dist": 1614.0,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 28557.5,
+        "name": "GAMMA FLIP",
+        "kind": "gamma",
+        "dist": 954.7,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 28491.8,
+        "name": "MAX PAIN",
+        "kind": "gamma",
+        "dist": 889.0,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 28166.8,
+        "name": "CALL WALL \u25cf\u25cb\u25cb\u25cb\u25cb 0.06bn",
+        "kind": "gamma",
+        "dist": 564.0,
+        "reach": "swing",
+        "stretch": true,
+        "confluence": 1
+      },
+      {
+        "price": 27764.8,
+        "name": "London High (today)",
+        "kind": "liquidity",
+        "dist": 162.0,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 27594.4,
+        "name": "PDL",
+        "kind": "liquidity",
+        "dist": -8.4,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      },
+      {
+        "price": 27569.0,
+        "name": "Asia Low (today) + PUT WALL \u25cf\u25cf\u25cf\u25cf\u25cf 0.61bn",
+        "kind": "gamma",
+        "dist": -33.8,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 2
+      },
+      {
+        "price": 27465.1,
+        "name": "London Low (today)",
+        "kind": "liquidity",
+        "dist": -137.7,
+        "reach": "intraday",
+        "stretch": false,
+        "confluence": 1
+      }
+    ]
+  },
+  "inputs": {
+    "bias_components": [
+      {
+        "component": "gamma",
+        "points": -3,
+        "why": "below flip 28557.5 by 954.7pts \u2014 SHORT gamma, dealers amplify: downside accelerates, rallies unstable"
+      },
+      {
+        "component": "gamma",
+        "points": -2,
+        "why": "week net GEX -5.467 $bn/1% -> expansion likely"
+      },
+      {
+        "component": "gamma",
+        "points": 2,
+        "why": "price sits in the bottom 20% of the wall band (27566.8-28166.8) \u2014 poor risk/reward for shorts"
+      },
+      {
+        "component": "vol",
+        "points": 0,
+        "why": "VXN 29.38 (+2.9%) \u2014 stable"
+      },
+      {
+        "component": "vol",
+        "points": 1,
+        "why": "VIX9D/VIX 0.85 contango \u2014 calm, mean-reversion favoured, mild upward drift"
+      },
+      {
+        "component": "vol",
+        "points": -1,
+        "why": "VXN/VIX 1.4 \u2014 tech-specific stress priced above the broad market"
+      },
+      {
+        "component": "vol",
+        "points": -1,
+        "why": "VVIX 101.53 \u2014 active tail hedging"
+      },
+      {
+        "component": "rates",
+        "points": -1,
+        "why": "US10y 5.154 (+1.00%) \u2014 yields up, multiple compression, BEARISH tech"
+      },
+      {
+        "component": "rates",
+        "points": 0,
+        "why": "DXY 103.488 (+0.07%) \u2014 dollar flat"
+      },
+      {
+        "component": "macro",
+        "points": -3,
+        "why": "**Real yield, 10y (DFII10)** \u2014 what lenders earn after inflation \u2014 is 2.86%, up 8bp as of 2026-11-12 and 22bp over 5 days. \u26a0\ufe0f FRED has not published since 2026-11-12 (2 business days ago) \u2014 this is last week's reading, not today's. Rising = tech gets hit hardest, because tech is valued on profits years away and those are worth less when rates rise."
+      },
+      {
+        "component": "macro",
+        "points": -1,
+        "why": "**10y nominal yield (DGS10)** moved 12bp up (2026-11-10 to 2026-11-12). That was driven by real rates \u2014 the harsher kind for tech, and an immediate headwind."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**High-yield credit spread (HY OAS)** \u2014 the extra interest demanded to lend to riskier companies is 3.2% (-12bp over 5 days). Middling \u2014 no strong signal either way."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Financial conditions (NFCI)** \u2014 how easy it is to borrow money across the economy \u2014 is EASIER than normal (-0.462). Cheap, available money is a background tailwind for stocks."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Fed balance sheet (WALCL) / reverse repo (RRP)** \u2014 cash in the financial system. The Fed is holding $6.76tn of assets, growing by $10.7bn this week, and the spare-cash buffer is down to $0.325bn."
+      },
+      {
+        "component": "macro",
+        "points": 0,
+        "why": "**Yield curve (10y\u20132y)** \u2014 long vs short bond yields. The 10-year pays +0.27% more than the 2-year. The gap widened because LONG rates rose \u2014 investors demanding more to hold debt. Risk-off."
+      },
+      {
+        "component": "breadth",
+        "points": -2,
+        "why": "mega-cap avg -1.55% (2/4 up): NVDA -2.01%, MSFT +0.17%, AAPL +0.39%, AVGO -4.76%"
+      },
+      {
+        "component": "breadth",
+        "points": -1,
+        "why": "NDX -1.22% vs ES -0.69% \u2014 tech lagging, rotation out of tech"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "ADR14 911.7, 79.4% used vs ~42% normal by 07:46 ET -> fuel_ratio 1.89 (burning hot) [LOW_FUEL]"
+      },
+      {
+        "component": "fuel",
+        "points": 0,
+        "why": "fuel is short \u2014 this dampens CONVICTION in any continuation call, it does not change direction"
+      },
+      {
+        "component": "structure",
+        "points": -1,
+        "why": "price below PD mid 28049.0 (PDH 28503.5 / PDL 27594.4)"
+      },
+      {
+        "component": "structure",
+        "points": 0,
+        "why": "price inside the prior-week range (26640.2-28591.4)"
+      },
+      {
+        "component": "structure",
+        "points": 1,
+        "why": "in-reach unmitigated pools: 2 above / 0 below \u2014 draw higher"
+      },
+      {
+        "component": "news",
+        "points": -3,
+        "why": "3 auto-scored headline(s) (0 bull / 3 bear) -> BEARISH; 63 more need reading in context (not counted here)"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [cpi_hot] Deutsche Bank Sees Three Straight Fed Hikes as Inflation Runs Hot - finance.biggo.com"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [cpi_hot] Iran War \u2018energy shock\u2019 keeping inflation running hot, economist says - NewsNation"
+      },
+      {
+        "component": "news",
+        "points": 0,
+        "why": "  \u2022 [earnings_miss] Nvidia's Stock Slump Is Putting Asia's AI Boom to the Test - Business Insider"
+      }
+    ],
+    "fuel": {
+      "adr14": 911.7,
+      "today_range": 723.5,
+      "adr_used_pct": 79.4,
+      "remaining_budget": 188.2,
+      "expansion_state": "LOW_FUEL",
+      "volume_relative": 0.95,
+      "volume_state": "normal"
+    },
+    "gamma": {
+      "near_expiry_0_2dte": -2.266,
+      "this_week": -5.467,
+      "full_45dte": -9.081
+    },
+    "call_wall": 28166.8,
+    "put_wall": 27566.8,
+    "max_pain": 28491.8,
+    "vol": {
+      "vxn": 29.38,
+      "vix": 20.96,
+      "vix9d_over_vix": 0.85
+    },
+    "rates": {
+      "us10y": 5.154,
+      "dxy": 103.488
+    },
+    "news": {
+      "raw_score": -5.02,
+      "bias_points": -3,
+      "label": "BEARISH",
+      "scored_high_confidence": 3,
+      "needs_model_judgement": 63
+    },
+    "events_24h": [
+      {
+        "utc": "2026-11-16T17:00:00+00:00",
+        "impact": "High",
+        "title": "Fed Chairman Warsh Speaks",
+        "forecast": "",
+        "previous": "",
+        "hours_away": 4.2
+      }
+    ]
+  },
+  "outcome": null
+}

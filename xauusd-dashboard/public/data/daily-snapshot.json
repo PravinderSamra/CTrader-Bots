@@ -1,59 +1,59 @@
 {
-  "generatedAt": "2026-11-13T20:42:29.373Z",
+  "generatedAt": "2026-11-17T23:15:19.977Z",
   "yields": {
-    "US10Y": 4.98,
-    "US2Y": 4.73,
-    "realYield10Y": 2.78,
-    "realYield5Y": 2.56,
-    "curve2s10s": 25,
-    "breakeven10Y": 2.24,
-    "breakeven5Y": 2.31,
-    "forward5y5y": 2.17,
+    "US10Y": 5.12,
+    "US2Y": 4.83,
+    "realYield10Y": 2.92,
+    "realYield5Y": 2.68,
+    "curve2s10s": 29,
+    "breakeven10Y": 2.21,
+    "breakeven5Y": 2.26,
+    "forward5y5y": 2.16,
     "dayOverDay": {
-      "US10Y": 0.1,
-      "US2Y": 0.17,
-      "realYield10Y": 0.12
+      "US10Y": -0.03,
+      "US2Y": -0.05,
+      "realYield10Y": 0.01
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-12-09",
     "probCut": 0,
-    "probHold": 80,
-    "probHike": 20
+    "probHold": 60,
+    "probHike": 40
   },
   "marketVolatility": {
-    "GVZ": 25.91,
-    "VIX": 18.7
+    "GVZ": 26.42,
+    "VIX": 22.91
   },
   "positioning": {
-    "cotNetLong": 171401,
-    "cotWoWChange": -8505,
+    "cotNetLong": 181677,
+    "cotWoWChange": 10276,
     "crowding": "NEUTRAL",
-    "reportDate": "2026-11-03T00:00:00.000",
-    "openInterest": 538190,
-    "openInterestChange": 19405
+    "reportDate": "2026-11-10T00:00:00.000",
+    "openInterest": 546481,
+    "openInterestChange": 8291
   },
   "etfFlows": {
-    "gldTonnes": 1051.9,
-    "gldWoWChange": 2.1,
+    "gldTonnes": 1057.6,
+    "gldWoWChange": 3.1,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3873.57,
-    "XAGUSD": 48.76,
-    "EURUSD": 1.10214,
-    "USDJPY": 159.802,
-    "USDCHF": 0.83962,
-    "USDCNH": 6.67368,
-    "GBPUSD": 1.32106,
-    "USDCAD": 1.42674,
-    "USDSEK": 10.0755,
-    "US500": 7545.7,
-    "GER40": 26806.75,
-    "UK100": 10906.95,
-    "ADR_14day": 101.7,
-    "ADR_usedToday": 55.9,
-    "goldSilverRatio": 79.4
+    "XAUUSD": 3852.52,
+    "XAGUSD": 47.4885,
+    "EURUSD": 1.09946,
+    "USDJPY": 159.4935,
+    "USDCHF": 0.84147,
+    "USDCNH": 6.66662,
+    "GBPUSD": 1.3206,
+    "USDCAD": 1.43006,
+    "USDSEK": 10.12635,
+    "US500": 7408.5,
+    "GER40": 26232.4,
+    "UK100": 10735.65,
+    "ADR_14day": 93.4,
+    "ADR_usedToday": 5.9,
+    "goldSilverRatio": 81.1
   },
   "dollarLiquidity": {
     "stlfsi": -0.4918,
@@ -66,28 +66,40 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Goldman Sachs looks to cash in on Anthropic's IPO, twice. Here's how and who else wants to",
+      "headline": "Lawyer for Fed's Cook says she may not participate in 'unfair' White House hearing - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-17T18:49:27.000Z",
+      "hoursAgo": 4.4
+    },
+    {
+      "headline": "7 smart reasons to sell a stock—and my ‘golden rule’ for offloading shares, says hedge fund CEO",
       "source": "CNBC",
-      "publishedAt": "2026-11-13T18:44:05.000Z",
-      "hoursAgo": 2
+      "publishedAt": "2026-11-17T15:05:01.000Z",
+      "hoursAgo": 8.2
     },
     {
-      "headline": "Bessent, Fed's Goolsbee divided on role of energy shock in inflation - Reuters",
+      "headline": "Angola central bank eases policy further as inflation keeps falling - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-13T15:40:04.000Z",
-      "hoursAgo": 5
+      "publishedAt": "2026-11-17T13:19:22.000Z",
+      "hoursAgo": 9.9
     },
     {
-      "headline": "Rupee slips as higher oil prices and US yields knock stocks, bonds - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-13T03:12:00.000Z",
-      "hoursAgo": 17.5
+      "headline": "Anthropic IPO: For hundreds of billions of dollars flowing into AI startups, a big debut is a must",
+      "source": "CNBC",
+      "publishedAt": "2026-11-17T13:15:44.000Z",
+      "hoursAgo": 10
     },
     {
-      "headline": "Dollar near 19-month high on Fed hike bets, yen tests 160 - Reuters",
+      "headline": "Sterling edges up against dollar, breaking five-day slump - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-13T01:58:00.000Z",
-      "hoursAgo": 18.7
+      "publishedAt": "2026-11-17T11:49:58.000Z",
+      "hoursAgo": 11.4
+    },
+    {
+      "headline": "Dollar steady after five-day rally, NZ dollar at lowest since 2020 - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-17T01:42:00.000Z",
+      "hoursAgo": 21.6
     }
   ],
   "briefing": null
