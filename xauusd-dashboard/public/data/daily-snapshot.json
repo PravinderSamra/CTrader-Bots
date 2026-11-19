@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-18T22:25:38.814Z",
+  "generatedAt": "2026-11-19T14:56:29.834Z",
   "yields": {
     "US10Y": 5.1,
     "US2Y": 4.8,
@@ -22,8 +22,8 @@
     "probHike": 36
   },
   "marketVolatility": {
-    "GVZ": 26.46,
-    "VIX": 25.46
+    "GVZ": 28.04,
+    "VIX": 24.56
   },
   "positioning": {
     "cotNetLong": 181677,
@@ -34,26 +34,26 @@
     "openInterestChange": 8291
   },
   "etfFlows": {
-    "gldTonnes": 1093.8,
-    "gldWoWChange": 5.1,
+    "gldTonnes": 1099.4,
+    "gldWoWChange": 5.6,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3724.995,
-    "XAGUSD": 45.056,
-    "EURUSD": 1.09753,
-    "USDJPY": 159.341,
-    "USDCHF": 0.84296,
-    "USDCNH": 6.66843,
-    "GBPUSD": 1.31515,
-    "USDCAD": 1.43246,
-    "USDSEK": 10.1644,
-    "US500": 7321.6,
-    "GER40": 25761,
-    "UK100": 10562.15,
-    "ADR_14day": 93.8,
-    "ADR_usedToday": 137.6,
-    "goldSilverRatio": 82.7
+    "XAUUSD": 3706.02,
+    "XAGUSD": 45.343,
+    "EURUSD": 1.09921,
+    "USDJPY": 159.8855,
+    "USDCHF": 0.8434,
+    "USDCNH": 6.67291,
+    "GBPUSD": 1.314,
+    "USDCAD": 1.43047,
+    "USDSEK": 10.16113,
+    "US500": 7379.5,
+    "GER40": 25703.45,
+    "UK100": 10535.55,
+    "ADR_14day": 97.5,
+    "ADR_usedToday": 64.9,
+    "goldSilverRatio": 81.7
   },
   "dollarLiquidity": {
     "stlfsi": -0.8655,
@@ -66,52 +66,40 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Gold's bad year is getting worse. Why its price keeps falling",
+      "source": "CNBC",
+      "publishedAt": "2026-11-19T13:37:52.000Z",
+      "hoursAgo": 1.3
+    },
+    {
+      "headline": "Gold recoups from 14-month low, tighter Fed outlook caps gains - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-19T06:53:00.000Z",
+      "hoursAgo": 8.1
+    },
+    {
       "headline": "Fed officials expect more rate hikes, worry about AI impact on inflation, minutes show",
       "source": "CNBC",
       "publishedAt": "2026-11-18T19:08:44.000Z",
-      "hoursAgo": 3.3
+      "hoursAgo": 19.8
     },
     {
       "headline": "Is Apple the safe haven investors think it is? Here's a way to trade it with less risk",
       "source": "CNBC",
       "publishedAt": "2026-11-18T18:10:21.000Z",
-      "hoursAgo": 4.3
+      "hoursAgo": 20.8
     },
     {
       "headline": "Ford starts U.S. battery cell production using Chinese tech amid geopolitical tensions",
       "source": "CNBC",
       "publishedAt": "2026-11-18T17:02:53.000Z",
-      "hoursAgo": 5.4
+      "hoursAgo": 21.9
     },
     {
       "headline": "UAE top destination for smuggled African gold despite tighter measures, NGO says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-18T16:21:07.000Z",
-      "hoursAgo": 6.1
-    },
-    {
-      "headline": "Indonesia and China agree four strategic partnerships worth $71.8 billion - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-18T13:29:32.000Z",
-      "hoursAgo": 8.9
-    },
-    {
-      "headline": "Worried about the AI bubble popping? How investing pros say to adjust your strategy",
-      "source": "CNBC",
-      "publishedAt": "2026-11-18T13:19:31.000Z",
-      "hoursAgo": 9.1
-    },
-    {
-      "headline": "Fed officials set to raise rates again in December, but the future still looks murky",
-      "source": "CNBC",
-      "publishedAt": "2026-11-18T12:37:32.000Z",
-      "hoursAgo": 9.8
-    },
-    {
-      "headline": "Mortgage demand turns lower, as interest rates shoot back up to the highest level in three weeks.",
-      "source": "CNBC",
-      "publishedAt": "2026-11-18T12:34:10.000Z",
-      "hoursAgo": 9.9
+      "hoursAgo": 22.6
     }
   ],
   "briefing": null
