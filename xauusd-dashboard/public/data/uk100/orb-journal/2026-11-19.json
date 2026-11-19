@@ -63,7 +63,106 @@
         "adr14": 172.5,
         "adrUsedPct": 52
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-11-19T16:35:15.085Z",
+        "fwd1hPct": -0.72,
+        "fwd3hPct": null,
+        "toClosePct": -0.72,
+        "maxUpPct": -0.04,
+        "maxDownPct": -0.74,
+        "verdict": "WRONG",
+        "signalVerdicts": [
+          {
+            "rule": "R2",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R9",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R10",
+            "verdict": "WRONG"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-11-19T16:35:12.442Z",
+      "londonTime": "16:35 GMT",
+      "mode": "CLOSED",
+      "price": 10459.55,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — 81% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "81% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDH 10744.6) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.79%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 5th percentile of its 20-day range and falling — a weak-GBP tailwind for the index's dollar earners."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 1,
+        "label": "NEUTRAL"
+      },
+      "orb": {
+        "orbHigh": 10580.2,
+        "orbLow": 10545,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10598.4,
+        "overnightLow": 10543.9,
+        "priorDayHigh": 10744.6,
+        "priorDayLow": 10546.3,
+        "gapPct": -0.94,
+        "adr14": 172.5,
+        "adrUsedPct": 81
+      },
+      "outcome": {
+        "resolvedAt": "2026-11-19T16:35:15.085Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
