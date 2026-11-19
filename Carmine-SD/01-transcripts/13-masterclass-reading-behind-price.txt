@@ -1,0 +1,556 @@
+Chapter 1: Introduction to order flow
+The main thing that I really want to talk about in this master class is basically reading behind the candles with orderflow. I want to be able to
+explain and show you all examples of how to use orderflow to our advantage. One of the main concepts and components to
+my trading is for me orderflow gives me patterns. Orderflow gives me setups.
+Orderflow gives me an edge and it defines my trading opportunities for me.
+Now the reason why I trade with orderflow is because candlesticks alone do not give me enough conviction and do not give me enough information that I
+can get a high probability trading setup that I have a lot of confidence and conviction in. So being able to read behind the candlesticks with orderflow
+for me gives me a proper edge into more beginner terminology and then I'm going to get more into the actual strategies and I'm going to go into actual trades
+that I've taken so we can kind of put all the concepts together all at once.
+Now, in the month of June, we just ended, today's June 30th. It's a short trading holiday week. I ended the month 68,000.
+I had a 4.17 average win to loss, meaning my losses were around 2500 bucks and my wins were around right above the five figure mark.
+Um, every trade that I'm going to talk about in this master class is an actual trade that I have taken myself that I've put real risk behind. all the examples.
+There's no examples of me just picking random setups for the sake of a good illustration of a of a of a setup. Every trade that I have taken, win or loss, is
+a trade that I've taken so far in this month. And I want to break down some of the good and bad setups that gave me the $68,000 profit in June or a 4.1 average
+win to loss. Now before we begin, the main two tools that I use with orderflow
+Chapter 2: Analyzing market data tools
+can be seen a candlestick chart can be seen with the orderflow tools that I'm going to show you all. So every example
+tonight comes from the same candlestick chart on the same day of the examples that I'm going to show you on the two other orderflow tools. A candlestick
+chart, which I kind of have a lovehate relationship with a candlestick chart.
+candlestick charts. The only thing they show me is where the market is currently trading at and where did the market trade at in the most recent past. It
+doesn't give me enough information to make a buy or sell decision off of it.
+It doesn't give me any other information than that. It doesn't tell me how strong are buyers, how strong are sellers. It
+doesn't tell me who is trapped, who is underwater, and it doesn't tell me, most importantly, who is in control off of a candlestick chart alone. Nothing wrong
+with them if you have a strategy built with it. But for me, it doesn't tell me where and who and why is moving price.
+Right? A lot of traders might see a lower wick on a candlestick chart. But for me, if I look at a lower wick on a candlestick chart alone, it doesn't tell
+me much. What a lower wick might mean for a candlestick chart trader is a potential bounce. But as an order flow trader, a lower wick might indicate a
+lack of strong buying and a lack of passive selling which is causing the market to move up and it would be likely
+for that bounce to fail or that lower wick not to be validated. to validate this order and order flow and to validate all the volume and to validate
+the information that we're getting off the candlestick charts. The tool tool the two tools that I use that I'm going to go over mainly in this master class
+is a footprint chart. And my footprint chart, if you're familiar with my YouTube videos, is based on a delta footprint chart. It shows me the
+difference between buy and sell volume traded at specific price levels. It shows me the difference of buyers and sellers at a specified one price level.
+Similarly, we're going to get the same information, just a different visual from a heat map. However, a heat map also shows resting liquidity, which is
+passive orders that are waiting to be filled. And they also show completed transactions. These are the main tools
+that you're going to show that I'm going to show you all in this master class.
+Tool number one, you guys are all familiar with it. Just a normal basic candlestick chart. Now, the reason why I wanted to show you all this is I want
+you to take to pay close attention to the patterns that form here. So, here this light gray compared to let me go
+over here. The light gray shaded area over here compared to the dark gray shaded area is the New York session open. So, right here when the New York
+session opens, the market has an immediate rally and that immediate rally fails. Then the market puts in essentially this V-shaped reversal and
+then we consolidate and have a strong uptrending rally for the rest of the session. This could be seen on the candlestick chart, right? We don't know.
+Yes, we could see after the fact when the market's trading here that yes, this low did hold, but in that real time moment before all of this data gets
+printed, we don't know how significant the buying volume is down here off of a candlestick chart alone. Footprint chart going to show me the same information.
+And this is exactly at the 9:30 a.m. New York open. Here we have the morning rally. Here we have that rally that fails. The market sells off. Here's our
+V-shaped recovery. Here's the uptrending market. And here's the consolidation into the afternoon. These two charts, I'm going to go back to the candlestick
+chart, are identical. It's showing me the same information. One is showing me the candles and one is showing me a
+picture if I zoom in of the order flow of the chart. Right? Somebody's saying they don't see any charts. Do you guys not see the charts on my screen or or
+what? Do you guys see the charts? It seems a seems like a lot of people see them. All right. It may just be uh you have to click off my face or something
+for those in the live stream. Seems like everybody sees them. All right. So, the point I'm trying to get here is that by using a footprint chart, we're going to
+be able to see all right, if we want to long the market here and play a bullish position, we can go on the footprint chart and see things that we cannot see
+6:016 minutes, 1 seconddown here off of a candlestick chart alone. When I zoom into my footprint chart, it's going to give me key information that you're going to see in the next few slides. Number one, it's
+going to show me total volume, which is in the middle column here. And most importantly, number two, the left column is going to show me the delta. And the
+delta shows me the difference between buy and sell volume on my indicator or on my footprint chart, which is on a 20 tick range. Anything that is classified
+as blue means there's more aggressive buying volume at that specific price than selling volume. And anything that's classified as red means there's more
+aggressive sellers in the market than there are buyers. Tool number three is a heat map. Right? So here's candlestick chart. Remember the Vshape, remember the
+morning rejection. Remember the sell-off heat map. We could see the same information just an X-ray of the market.
+The whole concept of the order flow is to understand who is driving the market, why they are driving the market, and where the market could potentially head
+next by seeing the X-ray vision through behind the candlestick charts. Here's our 9:30 open. Here's the morning rally.
+There's the sell-off. Here's our Vshape.
+Here's the uptrend. And then here's the consolidation. The same thing that we see here, uh, 9:30 open that we see off the candlestick chart. So, three tools
+all showing us the same information, just a different visual. Zooming into the heat map, just a quick little overview of this. When we zoom into the
+orderflow or the heat map specifically, green bubbles, I'm just going to use very simple terms. Green bubbles indicate there's more aggressive buying
+at that level than selling. Red bubbles indicate there's more aggressive selling at that price than there is buying. And
+any orange, red or yellow line that is above the current market trading price is a passive seller. And any red,
+orange, yellow line that is below the current market price is a passive buyer coming into the market. You're going to
+see why this gives me key information relating to potential setups in a few minutes here. Now, just a very brief overview of just the basics of order
+Chapter 3: Passive and aggressive orders
+flow for those who are new starting out at this. In the market, we have two different types of orders. For those who
+trade, when you go to select your entry, you're going to have an option to either put a market order out there or a limit order. Two of the pretty much general or uh hierarchy of of orders out there.
+When I talk about a market order in the market, it is an aggressive order. What a market order does is I don't care what
+price I'm paying right now. I want to get in right now. I don't care the price. That is a very aggressive style
+of an order to be placed. What a market order does is we as buyers or sellers go to the market and we say, "I don't care
+what price we're paying. I just want to buy this stock or or sell this stock right now." And what that does is it takes liquidity away from the order
+book. Us hitting a market order, we buy or sell from somebody who is selling or buying off the order book. When we sell,
+9:019 minutes, 1 secondwhen we use a market order to sell in the market and we're very aggressive, we want to sell and capitalize on the mo market moving down, we hit all the buyers who are buying on the bid side.
+When we want to buy something aggressively, the market's breaking out.
+It's moving up and we don't care what price we pay. We just want to get in and be long the stock or the future or the option. We are lifting the offer because
+we are aggressively hitting the sellers who are selling on the offer. It drives price, but we need supply. whether it's demand or supply to keep the market from
+moving. Now, flip flip the flip side to this is we have a limit order on the market. These are passive participants. They're passive. They're very easygoing.
+They don't have to get in right now.
+They could throw a limit order on the order book at a price that is way far away from being traded at right now. And we don't care if we get filled. We're
+very passive with the market. What this does is it provides liquidity to the book. If the market's trading at $100 right now, we could say, "All right, I
+want to buy at $90. Might not hit today, but I'm adding liquidity because I have an order to buy on the bid." And it sits
+and it waits to be filled. And what this is important here is because in the next few slides I'm going to define aggression and how these passive orders
+or these aggressive orders affect the market and how the relationship between the two is the driving force to my
+trading strategy. The relationship between the passive orders and the aggressive orders is the driving
+mechanics to my trading strategy in terms of my confirmation signals. Now, the reason for this, this is how orders
+affect price. Let's say the market is rallying up, right? We're uptrending to the upside and all of a sudden at this
+price level up here, we see a,000 contract seller or 100 contract seller, I'll call it. This tells me that there
+is a passive seller at this price looking to sell 100 contracts at this level. What's going to happen here and how the orders affect price is if the
+passive orders aka these 100 contracts sitting up here are greater than when the market does rally up. So let's say
+we continue moving up and boom all of a sudden we come to this level and only 90 buyers aggressively buy from the 100
+sellers. What this tells me is that the passive orders are winning the supply and demand equation and there is more of
+a supply up here or there is more passive sellers than there is 90 aggressive buyers. And if the resting
+side or the passive side or the limit orders outlast the attacking side or the aggressive side or the market order
+side, this is when a resistance level forms. So how support and resistance forms is simply through this concept
+here when you dive deeper into the order flow. Support and resistance doesn't form because the market comes up there and we drop. What causes the market to
+Chapter 4: Interpreting order flow dynamics
+12:0112 minutes, 1 seconddrop at those levels is when supply is greater than the demand at that level.
+And if this is the case where more resting orders or passive orders are sitting there and there's not enough buyers to break through these 100
+sellers, the market has only one choice and that's to advertise prices down much lower. And this is where I'm looking to
+capitalize on a bearish position to the downside with a potential support level forming. What this tells me is that the aggressive orders got absorbed. And with
+all of this aggressive buying volume with no follow-through, price holds, rejects, and the level repeats where we can look to capitalize on a downside
+move. Now, flip this. There are plenty of cases where the market is in an uptrend, right? We start moving up and
+we come up to this level. Let's say there's a 100 contracts to sell up here and all of a sudden the market comes up and we hit our level and a thousand
+contracts come in right here. And the market doesn't move up. We just continue to consolidate thousand contracts. Then all of a sudden, let me uh do this over
+here. Then all of a sudden, market pulls back a little bit. Comes back up to this level. We see another 100 contract seller. But there's over a thousand
+aggressive market buy orders that come through here again. Now, that's a a total of 2,000 buy contracts just came through, but there's only a hundred
+passive sellers here. This can be considered absorption where there's a significant amount of volume coming in
+one direction but there is no follow-through in that direction. What is supposed to happen is the market theoretically should break out to the
+upside. But when that doesn't occur, this shows that those aggressive orders get absorbed and all of that aggression
+did not get rewarded. And again the only option in this case is for the market to then start moving down to the downside.
+Price holds it. We get the absorption.
+It rejects and then the level keeps repeating. We come back up to it. We see absorption again. And these are where I am looking to play reversals in the
+market. Now and somebody asked how can a 100 contracts uh how can a 100 order absorb a thousand contracts? There's
+many different order flow or order entry uh mechanisms that algos could use, many other uh order entry tools that
+institutional traders can use. I've seen it firsthand where let me redraw this example. Market's moving up, right? We
+have 100 contracts up here to passively sell. Market goes up, a thousand contracts hit right here, but the market's not budging. So, I'll call it a
+th00and. What happens here is that this passive seller is constantly reloading not in quantities of a 100 but maybe in
+quantities of five 10 and there's an algo or there's a mechanism of an order orderflow entry tool where they basically are reloading and they're
+maybe loading 5 10 15 20 whatever the quantity is um very we'll call it nonchalant or hidden that you really
+15:0015 minutescan't see them selling up here and we're seeing all this buy volume come in but we're not seeing any followthrough and this to is a reversal signal. So the
+whole concept here is if I see a lot of aggressive orders coming into the market that it's not going up where it should go up. This to me is a reversal signal.
+And the same thing to the downside. If I see the market selling off and as we sell off, there's thousands of of of sell orders coming in here and the
+market is just not selling off. To me, I view this as a lot of absorption and it's a good chance the market will want
+to rally to the upside and I'm looking to buy the market here despite all of this aggressive selling volume. Now, flip this. This is when support and
+resistance forms. The market cannot always form support and resistance. We're going to have a trending market.
+We're going to have a continuation market. And you'll see as I get through the slides, any questions most likely will be answered as I go through my
+actual trading examples. So here what we're going to see now is continuation.
+Chapter 5: Practical trading examples
+Continuation occurs when there is more aggressive participants than there are passive participants. So when the
+aggressive side somebody said guys it's a pre-recorded video. Don't ask anything. What uh what is consider? Any
+questions you guys have ask me at the end of the um ask me at the end of this session because I'll I'll leave the Q&A tab open. Just just save your questions
+and I'll do it. Um all right. So continuation happens right? So the market's trending trending continuation
+happens when the attacking side or the aggressive participant overwhelms what is passively resting on the market.
+Price breaks through it and trends in that direction. If there's a 100 sellers here and 300 aggressive buyers come in here, the market's going to keep
+offering up, offering up, offering up, offering up. That's what I said earlier where it lifts the offer when there's more aggressive orders. when the
+market's moving up and they lift the offer, they're lifting it higher, higher, higher when there's more aggressive participants. So, this
+essentially is what I am looking for in layman terms when I get through the examples. Um, this essentially is what I'm looking for. I am looking for one of
+the main components to my system is I am looking for a lot of aggressive volume hitting one side of the market and then the market refuses to follow through.
+So, [snorts] essentially sell off. As we sell off, I want to spot a lot of aggressive selling volume here. And
+despite that aggressive uh selling volume, price does not extend in that direction. Maybe we consolidate, maybe we start moving up despite the selling
+volume. I want to see absorption, I call it, because what this shows me is that there's a passive trader sitting on the other side. For every buyer, there's a
+seller. For every seller, there's a buyer. So, if there's a crap ton of sellers coming into the market, somebody has to be absorbing that on the buy
+side. And this to me again is the reversal signal to the upside. So, I want you all to watch the order flow
+down here at the low of the day. Looking at the candlestick chart here, the market's going to go and we're going to go break this low of the session here.
+Let's observe what happens here when the market forms the low of the day. This day uh was about a three a little under
+a 4 to1 risk-to-reward ratio or a $11,000 profit on this on this day here.
+What we're going to see is here's the low of the day on a heat map. The market goes we break this low of the day, right? The same low of the day that we
+see here. The charts are identical. And what we see here is as the market goes and breaks this low of the day, we see this orange/ red line here and we see a
+larger red bubble. In simple terms, what this shows is this orange yellow line is a passive I'm going to call this P.B.
+it's a passive buyer. So, as the market comes down, there's a passive buyer sitting there. When we come down and
+fill this passive buyer, we can see this red bubble and what that shows is agressive
+19:0019 minutessellers. So in this example, as the market is going to break the low of the day, we see a passive buyer under this
+low of the day getting filled by an aggressive seller. Despite this aggressive seller entering into the market, the passive buyers are willing
+to bid and the passive buyers are higher and stronger than the aggressive sellers. And that gives the market only
+one chance or one option and that is to move up to advertise prices much higher.
+Here just zooming in we could see the same thing here. The market fills this passive buyer. We see the absorption of the sell order. The aggressive seller
+the market comes down by about two points under that. We reclaim it and then we see the aggressive buying come in with follow-through. Aggressive
+buyers come in. the market actually pulls back and this aggressive buyer now becomes a support level where this is a
+valid reversal to the upside at the low of the day. Same thing here. We could see it on the footprint chart. Here
+20:0120 minutes, 1 secondhighlighted is a negative delta or a large aggressive seller followed by a
+very large cumulative delta followed by aggressive buying coming out of this level validating that there was a
+massive amount of absorption happening at the low of the day followed by aggressive buying coming in through this
+range. I use a 20 tick on the S&P 500. A 20 tick footprint chart range. I don't
+use a timebased uh footprint chart. And my heat map is no time at all. It's just static as volume's coming in. I do not
+use a time frame. In my opinion, I think time is irrelevant. Now, I want to ask all of you watching this right now. How
+many of you would long the market right here, right now, as we're selling off, breaking this pre-market low, seeing an
+aggressive two-minute candle sell off for about 20 points on the S&P 500.
+Would you I I mean, I'm I'm explaining a reversal example, so you all know what's going to happen, but truthfully, would you long the market here? It looks It
+looks pretty weak. It looks pretty bearish. We're breaking a pre-market low. Um, we're selling off. We dropped 20 points in two minutes. you obviously
+know it's going to happen, but realistically looking at a candlestick chart, I would not buy the market right now at this moment just off of a
+candlestick chart alone. However, using the order flow, this was a trade that I took, I think, on this was Monday of this week. It was a $20,000 profit. It
+was my biggest profit year to date. It was a 7:1 risk-to-reward ratio. This was last Friday, actually. Um, I risked
+$2700 to make a $20,000 profit. I longed the market at the low and look, I didn't
+even catch the biggest portion of this move. Took some profits above the high of the day and I took some more profits off above this pre-market high here. 7:1
+risk-to-reward ratio. So, let's get into the setup. So, the first thing is let's look at the pre-market plan. And this is going to be very significant because the
+Chapter 6: Developing a trading plan
+22:0122 minutes, 1 secondnext concept or the next framework of the strategy that I'm going to give you all is my CLC rule. And this is a good little introduction to my CLC rule. So,
+right here, going off the pre-market plan, what we're going to see is that there wasn't many levels that I was really super interested in. The market was relatively balanced. It was rel
+relatively flat. And what I was watching for was 7380 to 7360. This was my game
+plan that as long as this level holds, which is this green rectangle right here that formed from about a week prior. As
+long as this 7360 7380 level holds, I want to focus on longs intraday for a quick relief bounce targeting 7416.
+Where 7416 came from was this little pre-market high that I'm highlighting right here. And then next above that is 7454
+where this came from the previous session's little resistance level right around the 7454 level. So, my game plan was as long as
+23:0123 minutes, 1 secondthis 7380 to 7360 level could hold, I want to focus on longs for a quick relief bounce. Now, the market's going
+to sell off here. We're aggressively going to move down. And what we're going to see here is a passive buyer by the
+market at my level of interest. So, I'm going to get long at the 7360s right after or right before this passive
+buyer fills here. This is a typo in the Discord. My stop loss was 7364, not 7367.
+And I got long because I viewed the market of a strong passive buyer at a level of demand. Going back to the
+aggressive or passive orders, the market is selling off into my level of demand.
+And as we sell off into my level of demand, we're seeing this orange line come in, which is a passive buyer. That
+in itself is okay. But the fact was that the market filled this passive buyer and the selling volume that we're seeing
+coming into the market denoted by this red bubble here and this red bubble that I just arrowed right there is being
+absorbed by the passive buying. Let me say that again. The market is selling off at a level of demand. And as we're
+selling off into this level of demand, we're also spotting passive buyers willing to buy at this level of demand.
+To me, that is showing that there's absorption. There's a passive buyer stepping into the market at an existing level where there already were buyers.
+That is a great signal for me to put risk on and enter the market. And my entry was down here at the 7367s.
+My entry is not waiting for the market to break out right here. That in fact was my target. My entry was not waiting for the market to break out right here.
+My entry is as soon as I spot the volume that I am looking to intend the trade with. In this case, I was looking to buy
+a bounce or a relief bounce. As soon as I see that volume come into the market, I get in. I'm not waiting for a five
+minute candlestick chart to close. I'm not waiting for the market to start moving up and getting in an entry 10 20 points higher. I'm getting in when I see
+the volume give me the pattern that I need to see. Every single time that I click the buy or sell button, it is because of a pattern that I am familiar
+with. And this is a very fitting pattern for me where this passive buyer gets filled into the market and even all of
+the aggression coming in prior to this and an area of high volume being supported around the 7367s.
+Multiple different confirmations at my level of interest. Now, a lot of you that will look at the heat map will say, "All right, right. So, here was my entry
+down here at the lows." Again, I'm not waiting for it to come up here. I'm not waiting for all of that. I'm I'm getting in when I see either a passive buyer
+fill, that was the confirmation on the setup, or aggressive buyer stepping in thereafter. This was a passive uh buyer
+filling and absorbing the aggressive selling. That was my confirmation for this at a level of demand. Now, a lot of you that look at heat maps will say,
+"All right, we see that, right? But Carmine, how about right here?" Right?
+There's passive sellers there. I should have taken the market short here, right? Or Carmine, I see passive sellers here.
+I should short the market, right? And a lot of you may ask like, how do I know when what to trade and when to trade and where to look for? Because there's tons
+of uh passive sellers or there's tons of aggressive green bubbles coming in and there's there's tons of aggressive
+larger red bubbles coming in and oh, look, the market's breaking out here with aggressive green bubbles. Sure. All right. And a lot of you probably are
+asking like like how do I know when and where to trade this? There's so many bubbles and lines and and numbers on my charts. What do I do? And I'm going to
+answer this question, but I I'm going to answer it in a few minutes from now. I want you to remember this example because it's going to lead me into my next point. Another setup that I look
+Chapter 7: Continuation and reversal setups
+for is sometimes I do not want to be um a first buyer or a first seller into the market. So, there's plenty of times
+where let's say the market is selling off into a level of support or a level of demand, right? So, here we have our support level. There are plenty of times
+where we come into our support level and the market just simply bounces. I don't see anything here. It just bounces off my level. There's no confirmation. And
+it's okay. It's I should not have traded it because I didn't see a confirmation signal or I didn't have a a a valid opportunity that I could define to put
+risk on. That happens sometimes. Instead of traders complaining that they miss a move, that they should have taken it and they FOMO in and they chase a breakout or chase a bounce because that happens.
+It's an emotional problem. Sometimes the market will step number one come into my level of interest and bounce. On this
+bounce, it most likely will leave clues of significant buying volume in this case where then I could look to long a
+pullback at that level of interest for then here I can look to capitalize on this move or I am not a breakout trader,
+right? I very very rarely 95% of the time do I not play breakouts. Let's say the market has a breakout. All right,
+we're coming up into a uh into a key resistance level. And as we come up into this key resistance level, we go and
+break it. And a lot of traders would buy the breakout. Nothing wrong with it, just not my cup of tea. And I feel like a lot of retail traders because of how
+easy breakouts are are breakout traders and they may struggle because they're buying an extended move. I do not like
+buying or selling an extended move because it does not offer a great risk-to-reward ratio. And extended moves
+means I'm getting in after the move has already happened, giving me a smaller reward and a higher risk. So, what I would prefer to do, and I'm going to
+show you plenty of examples of this, is when the market breaks out, there most likely will be significant signs of buyers that that formed on the breakout.
+So my idea is let those buyers or let those sellers form. Let me mark them as a new key level and then if this new
+buyer comes into the market, I can then long a pull back into wherever he forms for more of a continuation setup. Um and
+that's my signal on step number four of my continuation entry. This is significant for me because even if I am
+playing a continuation setup, I will not buy the market on a continuation. I will buy the market on a reversal. Right?
+What I mean by that is instead of me longing the market here, I will long the market here when it's pulling back going for continuation. So my entry is a
+reversal signal, but I'm going for a continuation setup. If that makes sense.
+Does that make sense? Like very rarely will I ever say, okay, here's my key level. Hey, as soon as $100 breaks here, I'm long in this thing automatically.
+30:0030 minutesVery rarely will I do that. What I will do, like we can see in this example right here, right here, we could see the market breaking out above the high of the day. Here on this breakout, we see a
+significant amount of buying volume and I could get into way more advanced concepts like low volume nodes, like zero prints. I could get into all those.
+But here, what I would then watch for is a pullback into this range to get long, right? Because what that does is now once the market bounces from this, I can
+get long here, put my stop loss under here, and have a target all the way up here instead of just simply buying the
+breakout, getting long maybe at the same price. But now I got to put my my stop loss all the way down here because that would like really invalidate my thesis.
+So, kind of what I like doing is letting the market break out, show a sign of a buyer or a seller, and then get long on the pullback. It doesn't even have to be
+at that old resistance level, right? It could be all the way up here if there's a significant buyer up here. And you'll see a lot of examples of this. So, here
+31:0031 minuteswas a setup that I took in the first week of June. This was a $14,000 profit.
+Chapter 8: Executing tactical trade setups
+It was a 3 12:1 realized risk-to-reward ratio. And this trade lasted about five minutes in duration. So, $14,000 profit
+in about five minutes time. Three and a half to one risk-to-reward ratio. What we're going to see here is my game plan for this day was we had two strong
+supply zones 7464 and 7477.
+What I was watching for was a rally into this level where sellers appear. It may be a good scalping opportunity to short the market targeting the 40s to 35s.
+Took profits down here at like the 37s or 36s. Now what we're going to see here is the market. Here's our 9:30 open right here. Right, here's our 9:30 New
+York uh New York US open. The market rejected the supply zone perfectly. You don't see an entry there because I did not take the market short there. This is
+going back into my point where if the market rejects or bounces off my level of interest, what I can do is is find the sellers or find the buyers off that
+level of interest and play a retest of these guys. So, after the market had a perfect rejection at the supply zone, we begin to sell off and we did hit the
+level in the pre-market plan perfectly and rejected excellently. Now, here's that rejection of the supply zone in the first 5 minutes. Here's the sell-off.
+And what I posted in the Discord was that sellers are taking control. Here we could see that sell-off and what I was watching for was despite me not
+participating because I didn't see a good confirmation at the supply zone, the rejection of the supply zone
+provides context. Key word here, it provides context to me that shows sellers are now in control, right? It's
+providing information to me that sellers are in control. And that's going to bring me into a good point here is that many times you may miss a move. Many
+times you may not participate in a rejection of a resistance level or supply level. Don't look at you missing a move as you missing a move. Look at it
+as all right, it's providing information to me that I could use to my advantage in the near future. So if I ever feel
+like I have FOMO or I I might have not participated in a selloff or a bounce that I had planned for, the market is a mechanism that is constantly giving us
+new information that we could use to our advantage. So, I didn't shrug my shoulders and say, "A I just missed this for supply rejection. I'm calling it a day. My my day is over. I
+missed it. It's ruined because I didn't take it." Instead, I formulated a new plan off of this and used the rejection of supply as context. My new level
+became 7458, which just was a break of this little swing high that formed here to 7465, which is the start of this
+supply zone. So my main objective here was looking for a rally up into this range sellers to reappear to play short
+targeting the downside levels of support at the 7440s to 7435s.
+34:0034 minutesMarket goes here we break this high and the whole concept of this master class is when there is more passive sellers at a specific level than there is
+aggressive participants. The market only has one option and that is to move down because the market is a mechanism that advertises price to other participants.
+The market's main objective is to facilitate trade and to advertise price.
+When the market facilitates trade and the market gets information that the market does not like, the market will
+adjust and advertise different prices whether are higher or lower. What I mean by that is a seller came here, which is denoted by this red line, right?
+Remember, it's a passive sell order. The market came and a seller, I'm just going to use kind of simple terms here.
+Somebody said, "All right, I'm willing to sell 100 contracts at 7460." And we could see this on the heat map by that
+red line. as the market came and we offered to sell 7460. If there was a 100 sellers here, maybe there was only 80
+buyers here and the passive sellers won the battle of the aggressive buyers and that is a very good signal for more
+downside where here I will look to play the market short. See the same information here on the footprint chart.
+Market goes, we break this high and we have an immediate rejection and the market sells off. And this is how I'm able to capitalize on a on a short
+position. Here's that passive seller filling here. We could see all of the aggressive selling volume to follow. And
+here's my 7440 7435 level, which is my target, which was the low of the day as well, hitting filling here. Now, how do you know if this level is spoofing?
+Well, I don't give I don't pay much attention to any resting orders that show zero intention to fill. Let's see if I have a good example of this here.
+Okay, right here, right where I'm putting my cursor at. You see this orange and yellow line right here? Well, guess what? The market never came down
+to fill that order. And that order was pulled to I don't care about spoofing. I don't care if somebody pulls their
+order. I don't care if somebody spoofs, which it is illegal. What I care about is resting orders that show intention.
+It's very easy for you to lose your mind and look at every single line right here, here, here, here, right here. It's
+very easy to lose your mind and look at every order. I only care about orders that show intention. We can see here
+that this order was filled because price transacted at it. If the market goes up and we don't fill this guy, he never got
+filled. It wasn't spoofed. He just never got filled. We could see here this like light blue shaded area right here. The market never filled this order. So
+whether you want to call it spoofing or pulling, I don't give a crap because it doesn't affect my analysis because that order was never filled. Right here, we
+could see the order fill and here we could see the aggressive participants come through after. Now, like I just mentioned, there are tons of other
+orders, offers, bids that fill. How do we know what to look for, how to trade it, where to trade it, and why to trade it? We could say, "All right, I wanted
+to short this right here." Sure, you could have. You could say, "All right, yeah, sure. I wanted to short this right here, 100%." But how do you know what to look for in a market where there's tons
+of numbers, tons of lines, tons of green, red, blue, whatever you want to call it. How to know when to trade it is
+Chapter 9: The CLC framework
+my CLC rule. These are the three pillars to my trading is my CLC rule. Without my CLC rule, I don't have a high quality
+trade in front of me. My CLC rule saves my butt. It makes sure that I'm trading on the right side of the market. It gives me it puts me in the position for
+a high probability setup with very small risk and very high reward. First pillar, context. You've heard me use the word
+context so far in this master class when I refer to the word context. Think of it us in kindergarten or or or elementary
+school. When you're learning how to read, whe whatever English you speak, I remember this. My my teacher in kindergarten said or whatever grade, we
+have to use context clues. If we don't know a word, if we don't understand the meaning of a word, use context clues of
+that sentence. Now, I feel like I'm acting like an English teacher when I'm just a trader. Context basically is us
+reading information the market is is is reading to us or or showing us or teaching us without it explicitly telling us. What I mean by context is
+what is the trend? Are we flat? Are we balanced? Are we trending? Are we making higher highs, higher lows? What is today's volume? Is there a lot of volume coming in? Is there um a lack of volume?
+Is the market moving sideways? A really good indicator for me is the pace of the tape. How fast is the order flow moving?
+I look at the charts as as as a canvas and the market is a is a is the painter.
+Is the market painting the picture quickly or is it taking a while to paint the picture? What are the context clues
+that I can use? And all of these are very good signs. I could go for on for hours about context.
+Is me reading the context, understanding the story the market's telling me in real time. You could use ATR for this.
+Whatever is giving you a clear picture of the market's trend, the volume, the range, who is trapped, who is underwater, who is showing initiative,
+who is aggressive, who is passive. These are all giving us context clues that we as the reader of the market have to read from the storyteller which is the
+market. Location is the second part of the CLC rule. I want to make sure that I am trading at a level of interest. There
+are so many times and I I I've talked about this example the past two academy coaching calls on Sundays where I
+remember one of my first biggest blowups back in 2016 or no 2017 where the market was moving up up like this. It was
+uptrending and what I did was for no reason I I shorted 100 shares 100 shares 100 shares 100 shares 100 shares right and the market just kept going up and up
+and up and I blew my account all in one day. I had no reason to enter the market. It wasn't at a level of interest. It wasn't at a supply or demand zone. It wasn't at a support
+resistance level. And I just entered the market for no reason of me just wanting to get in on the market location. I need
+to take a trade at a either supply or demand level or a support and resistance level. Need to. Now, there's a little
+bit of a caveat to this where like I showed you all earlier. There's plenty of times where the market moves up, we have a supply zone, the market hits the
+supply zone, I don't see an entry, it rejects the supply zone, we move down, and then we come back up. Maybe there's a seller sitting here and I take the
+market short here. That's the caveat to this because the location of it is that it just rejected the supply and it formed context that sellers are at the
+41:0041 minutessupply. And then the third step is my confirmation. I want to make sure are sellers selling, are sellers trapped, are buyers buying, are buyers trapped.
+Who is winning the battle that I explained to you all earlier? Is it the passive orders? Is the aggressive orders? Who is winning the battle? And I
+could use that to my advantage. This is my CLC rule. This is my major framework to my trading. It provides high quality setups and it is the most important
+concept for me to implement on a daily basis. Now, another framework. So, does anybody have any massive questions so
+Chapter 10: Trading balanced markets
+far? Any confusion, any comments about anything so far? I want to get into the next framework, which is what I've noticed recently in the market, and it's
+responsible to a lot of my profits so far in June, is the balanced market rules. I told you all yesterday on my Instagram, that I'm going to talk about
+this in the master class. And I trade the best when the market is like this.
+Okay. When I talk about the market being balanced, and you're going to see a lot of examples in the next few slides here, what this tells me, and a lot of you may
+have asked so far, hey Carmine, what is the best time frame to use? Any concept I ever explain any ever can be related
+to any time frame. So, what I'm going to explain right now is can be seen on a 30- secondond chart. It could be seen on
+a five minute chart. It could be seen on a 4 hour chart. It could be seen on a daily chart. The time frame is irrelevant. The concepts of the market's
+auction is what is important here. So what I'm going to explain is any time frame. When I talk about the market
+being balanced, it is essentially us lacking a trending direction and it is usually followed by a trending move. So
+here, let's just say the market is downtrending and then all of a sudden we come into the lows and down here at the lows, the market tries to sell off.
+Nothing formed yet. The market tries to bounce, nothing formed yet. Next session, the market comes down, come up,
+right? And we're forming this like very tight range. This right here is now forming a balanced market. It's kind of
+a structure where we drop. I'm going to call this a D. And then B where we base or balance. Again, 1 minute, 30 second,
+daily chart, weekly chart time frame is irrelevant. I'm going to show you examples on an intraday time frame and I'm going to show you time frames on a
+higher time frame. The concept here is that when the market is balanced, a lot of traders automatically assume when the
+market is coming up to purchase the market long or buy it in a bullish position when a balanced range develops.
+Similarly, when the market begins to sell off and it looks like we're about to go take out the lows, a lot of traders are automatically selling the
+market. This again is part reason why I do not like playing breakouts or breakdowns and they automatically sell
+the market here for them just to be reversed on and the market to continue to range out and they get trapped and they're they get screwed. So when the
+44:0044 minutesmarket identifies and develops this balance range, my rule of thumb, when the market is balanced, right, doesn't
+have to be perfect. Could break the high, we can break the low. When we lack a clear direction, two rules here.
+Number one, trading in the middle of this range, no good. Very rarely. I mean, I did it last week and I took a loss on it. Truthfully, I literally
+traded and it was so stupid of me and I was so upset at myself that I did it because my rule of thumb is to not um trade in the middle of the range. That
+that's my rule of thumb is I avoided entirely and you're going to see it in my pre-market plans. And uh earlier last or late last week, literally just traded
+nonsense in the middle of the range on one of the days and I I paid the price for it. But when the market is ranging like this, my rule of thumb is to trade
+around the edges. It is to what I call fade the extremes. What this means is if the market goes and begins to rally, I
+am looking to not buy the highs, I am first automatically looking to be a seller up here. Similarly, when the
+market sells off and we go to the lower portion of the range, I am first automatically looking to be a buyer down here and capitalize on a bullish move.
+This is what I call participants being very responsive. they are responding saying, "Hey, the market's trying to
+break out here. No, as a seller, I don't think it should be this high. I am going to sell this market passively." And here is where I could look to capitalize at
+the extreme for a reversal to the downside. So, when the market is balanced, I am first and only looking to
+play reversals. A lot of traders, again, act like this is a a fiveminute chart.
+They see the market just moving like this, and they're like, "Man, I I'm done. I'm calling it a day. I hate trading the market when it's choppy. I love it. I find my best setups come when
+it's like this. Like, how many of you give up because the market's just not going anywhere. I look at that as good.
+I look at that as opportunity because I have a setup that works when the market's balanced by following responsive participants. A lot of you are saying you get chopped. You get
+chopped because most likely you're either a trading in the middle or b longing a breakout or selling a a low
+when it should be the opposite. Should be trading around the extremes or fading the extremes is what I call it. Um, let me see here. Okay, so here's a trade
+that I took. This was a a little under a $14,000 profit. 5 and a half to1 realized risk-to-reward ratio. Again,
+why I love trading order flow is because of the risk-to-reward ratios. I'm getting in essentially be well before
+the move happens and it helps me define my risk. Right? A lot of people would see this like trend line here and they'd say, "All right, as soon as the market breaks the trend line, I'm getting
+short." But look at my entry. It was like eight or nine points higher than that. And that's by using the order flow. So 2500 bucks worth of risk,
+little under 14,000 profit, a five and a half to one risk-to-reward ratio on this trade. I shorted the market up here at
+the 7590s. I put my stop loss above the 7593 and a halfs and uh I took profits
+under these lows right here and under the low of the day. It's kind of a common theme of my targets. So let's go into my pre-market plan. This was last
+Monday. The setup was right here last Monday. My pre-market plan stated balance range structure here. To me,
+this is not a morning where I want to plan or first approach the session expecting a continuation or a breakout,
+but more so a reversal. Very key point here. This is a 30-inut chart right here. We can see this clearly defined
+3-day range right here that I just highlighted. The market is in a range.
+We're balancing out. I do not want to trade in the middle of the range that I'm highlighting here. But the market now in this pre-market session as I'm
+creating my pre-market plan is going towards the high of the range. What a lot of traders will do will say, "Oh, we're breaking above yesterday's high.
+I'm longing this thing." To me, that actually validates my strategy even more and makes it a lot more uh gives me a
+lot more conviction. So, after the market rejected uh the supply zone two days prior, it became key. I was
+watching the same supply zone to reject 7572 7582. I'm looking for sellers to play short targeting downside levels of
+support. Pretty much a straightforward game plan. But the most important point that I want to talk about is that this is not a session that I could expect a
+breakout, but more so a reversal because the market is balanced. This looks bullish, right? Let's ignore what
+happened higher time frame. Let's ignore all that. The market's putting in higher highs. The market's putting in higher lows. If I didn't explain that I'm a reversal trader, a lot of you would say
+that this looks really bullish and it does, right? I mean, this to me looks really bullish. What I'm going to show
+you here on the footprint is that as the market goes and breaks the high of the day, and keep in mind the supply zone was like 7572,
+75.82 was the general start of the supply zone. We're trading into this range here. As the market goes and we break the high of the day, look at the
+footprint here. on this footprint. The lower portion of the range is the cumulative delta. What this shows me is as this bar spikes down here, there's a
+significant amount of buying volume coming into the market. In fact, as the market is breaking above the high of the day, we are seeing the most amount of
+buying volume that we've seen all session. I'll say that again. As the market is breaking above the high of the day, we are seeing the most amount of
+buying volume that we've seen all session. Let's ask ourselves if we're seeing the most amount of buying that we saw all session, shouldn't the market
+break out? It should. Here we could see the same thing on the heat map. We could see the cumive delta expanding. We could see the aggressive buying coming in. We could see the passive seller sitting
+there. Did never get filled. If we're seeing the most amount of buying coming in at a level of supply, but this buying
+is not going anywhere. What did I say to start this master class? When there's a significant amount of volume coming into the market with no follow-through, this
+is a good indication that a passive participant is resisting. This is how a resistance level forms. So then the
+market sells off. Right? Here's the rejection at the high of the day inside the supply. We could see even more passive sellers right here filling and I
+get short down here a little lower. I would have loved my entry to be here at the 94s, but what I had done here was I got short at the 90s and I put my stop
+loss above these 90s 94s, right? A a best entry I I will not lie here. My entry was still great. A a great
+confirmation signal is this rejection of the passive sellers right here. The same concept that I've been explaining all master class so far is a rejection of
+supply. All this buying volume with no follow-through at the high of the day.
+Passive seller reloading on the offer side as the market comes down. Great confirmation here. We could see it on the footprint chart. We can see the
+market break the high of the day. We see the delta outliers which shows a lot of aggressive buying. But why are we seeing
+all this aggressive buying not go anywhere at the high of the day? And here we could see a lot of aggressive selling stepping in. That's my
+confirmation signal to take the market short. I shorted up here at the 7590s.
+My my target was the 7575s which is the zero print. It was four points of risk for a 25point reward. Gave me about a 5
+to1 risk-to-reward ratio and I sold here. I didn't miss majority of the move. My target was here. My plan was
+for this move. And that's how orderflow is enabling me. Look, there's the high of the day rejection. Here's the high volume again. Look at following. So
+following the highest amount of buying volume in the session so far, we are immediately followed by the most amount of selling volume right here on the
+session so far. That shows me that move got absorbed and this is an excellent confirmation to call a delta flip for
+sure. And that is my signal to take the market short. And look like this is the same chart right here. This is a 1 hour candlestick chart. All of you watching
+this would say this is bullish. Like if you say this is not bullish, you got to be lying. Like to me, without going over
+the example of what I just went over and not knowing that we did reject, 100 out of 100 traders would say this is bullish. Am I wrong on that? I mean,
+look at that 1 hour candle. We're closing near the highs. We're breaking out above the previous high here. It looks really bullish. But when you dive
+deeper, it gives you so much more insight that you can't get from this. A candlestick chart trader would would be buying this breakout. Also to mention,
+not only was it the balance range high, not only was it the balance range high here, it was also a supply zone that formed on the FOMC day here. And then
+that was the clean rejection of it, you know, and we could see a lot deeper off of a candle, off of the order flow.
+Another trade, very similar, 3.6 to1R, $7,600 profit, $2,100 worth of risk. I short the market 7470s.
+53:0053 minutesLook, I didn't miss majority of the move. This was my planned trade. Could have been a significant from my entry.
+It could have been a significant sell-off. So, here we see this happened.
+This happened uh yesterday. This was my trade from yesterday. So, here we have a 1 hour level of supply and we have a
+balance range, right? How do I know we have a balance range? Well, the market's ranging right here. We've dropped and we've done nothing but consolidate right
+here. So a balance range has developed and we have formed a level of supply 7475
+74.91 game plan this day let's keep it simple market has now developed a clear balance range and is revisiting the highs for me today will be all about the
+reaction it is not a level where I first will look to long a move up considering it is at the high of a balance range
+very very key point right there so what I was watching for was a rally into 74757 7490 where sellers appear to play
+short targeting levels of of support overnight. Look, higher highs overnight higher lows despite this uptrend. I
+cannot be a buyer here. I cannot be long. I'm convinced and have confidence in the downside move. Now market opens
+up intraday. Not only overnight do we see higher highs and higher lows, but also intraday we're seeing the same thing. Pullbacks are being bought up.
+We're putting in higher highs. We're putting higher lows. Still looks really bullish, right? I had so much conviction in this because the market was
+revisiting, as you could see from what I posted here in the Discord, it was revisiting the balance range high. And this is why I was not interested in a
+long up there on the first test. Market goes, offer fills there at the highs. I was watching for sellers to step in. I
+was interested in a short. There's going to be an offer that fills here at the level of supply, $74.90. It starts turning, very weak. I didn't click the
+sell button just yet, but it starts turning very weak. A little late of an entry for me, too. Again, on my part, I got short at the 7470s.
+Put my stop loss above this high that formed here. Yes, I wish I shorted this high here. I wish I shorted this pop. I was a little late to the party.
+Truthfully, this up here is a great confirmation. Not down here. This right here when the offer fills, right? Going back to my point, I don't know the exact
+size of the passive seller, but up here you can see 112 aggressive buy contracts came in. So, what that tells me is there was probably like 200 contracts here to
+sell. So, 112 aggressive buyers came in, but maybe 200 passive sellers were sitting there. There was more passive sellers at the 7490s than there were
+aggressive buyers. The market rejected giving enough confirmation signal uh to short this move. And again like this is giving us an opportunity to sell up here
+not you know down here not down here we're getting in before the move by spotting buy or sellers at the balance range high and you can see a clear
+rejection of this range 7475 7490 now the market cannot stay in this range forever right we cannot stay in this
+Chapter 11: Initiative and trend trading
+range forever we will eventually have a breakout to the upside or a break down to the downside there will be traders
+initiating new position positions off of a balanced range. The way the market works is it moves from balance to
+imbalance, balance to imbalance. An imbalance is a trending move and a balance is a choppy consolidation range.
+That's how the market moves. So when the market moves out of balance, you will have traders initiating which is where the word initiative comes from outside
+of the range. Similarly, why I do not approach the market first going for a breakout is because we don't know how
+strong the buyers are when they're coming into this range. That's why majority of my plans for the session is first I cannot buy this because maybe we
+reject this. It isn't until the market comes up, breaks out of the level, we see the initiative, and like I was explaining earlier, as we're breaking
+57:0157 minutes, 1 secondout, it'll probably leave clues of strong buyers where then we could long the pull back into it to then get long, showing traders are initiating out of
+balance and starting the new phase of imbalance or a trending move. So, this is actually an example from today,
+Tuesday, 6:30. These are what we call price discovery days. Here's the day before. years. Yesterday on the 29th when I shorted the market at the balance
+range high end and at a level of supply and there was that sell-off. Later in the session, the market rallies up. We close near the balance range high. Not
+only do we close near the balance range high, but we support it, support it, support it. Today is a very good example
+on on June 30th of buyers initiating above balance. And my main pre-market plan for today was looking for longs
+higher time frame above the balance range high and looking to long pullbacks since we are initiating and supporting above the balance range high. Now, here's another way that I play this.
+58:0158 minutes, 1 secondThis was a 3 1:1 realized risk-to-reward ratio. It was a little under a $10,000 profit and this trade lasted about 25
+minutes or so. Now, what we're going to see here is pre-market plan. This was last week, last Tuesday, I believe.
+Yeah, last Tuesday. What we're going to watch here is my game plan was the market was very balanced. So, I look to play the market either way. Scenario
+number one, looking to short a strong breakdown under the 7423 level, which is this balance range low. Right? So, just
+to define our range, the market drops, move up, move down, move up, move down.
+We're balancing here at the lows. So now we have a very well-defined balance range down here at the lows. So my game
+plan was if the market breaks the balance range low and rallies reject under it, I want to play shorts targeting the downside levels. If the
+market breaks out above 7454, I want to play longs targeting the upside levels.
+Can play it either way. It depends on the traders who are initiating out of balance. Now, what we're going to see here is the market actually goes to
+break the balance range low. And as I said earlier, why I do not like playing breakdowns is for the potential of
+fakeouts. A lot of traders get faked out and that is not how I like or want to trade. So, the market goes, we break
+under this low and we have a hard time in doing so. The market actually fails to break down out of this range. And now
+I use this as context. This is a very good signal for a long if the market fails to break out of the balance range low. We could say that it's holding the
+balance range low here. And this is again why I do not initiate a trade on the first test of the high or the low of
+a balance range. So the market broke out under the range. It's a bullish sign here. My eyes were now on the 7454 level
+that if we break above the 7454 level, it becomes really bullish and I will look for longs above it targeting upside
+1:00:021 hour, 2 secondslevels. Lower wick and a failed breakdown and strong buying at the lows.
+1:00:061 hour, 6 secondsAll eyes are now on the balance range high. You could even see here the clear balance range high, right? You see the drop and you see like the consolidation
+1:00:141 hour, 14 secondsright here. That's where the clear defined balance range uh low is. Now, on this failed breakdown and the rally
+1:00:211 hour, 21 secondsabove 7454, I again I don't like playing the breakouts. I'm repetitive on this.
+1:00:271 hour, 27 secondsAs we break out, it leaves a very clear sign of strong aggressive buyers. And this is in the form of low of a low
+1:00:341 hour, 34 secondsvolume node. I'm sure a lot of you have heard me use this term before for those who have followed me. 7455s.
+1:00:411 hour, 41 secondsSo, what this tells me is the market is going to break out above 7454. And as we break out, we see a lot of aggressive
+1:00:491 hour, 49 secondsbuyers coming in coming in here, leaving a level that we mark now as aggressive buyers around the 7455s, 7455s.
+1:00:581 hour, 58 secondsSo where my game plan now formed from was now that we're above the level, I am watching for a pullback into 7455 to
+1:01:071 hour, 1 minute, 7 seconds7450 to get long targeting the upside levels. I get long at the 62s. I have a
+1:01:141 hour, 1 minute, 14 secondsfive point stop loss for about a 10 plus point reward to the upside. All this was was the market breaking out of the
+1:01:201 hour, 1 minute, 20 secondsbalance range high, not longing the market at the balance range high.
+1:01:261 hour, 1 minute, 26 secondsInstead, letting it break out and looking for a pull back into where the aggressive buyers who initiated the market, key word there, initiation above
+1:01:341 hour, 1 minute, 34 secondsthe balance range high. Market pulls back into this level. Can't really see much off of a candlestick chart, but that was my clear confirmation for the
+1:01:411 hour, 1 minute, 41 secondslong. What we see here on the footprint chart is as the market's selling off, we see a lot of aggressive buyers coming in, we see them come in there after as
+1:01:501 hour, 1 minute, 50 secondswell thereafter as well and down here and on the sell off down. And that is my signal to get long. And we even see
+1:01:571 hour, 1 minute, 57 secondspassive bids coming in as the market's moving up and and bidding and supporting as the market bids higher. A lot of aggressive buyers denoted by the green
+1:02:051 hour, 2 minutes, 5 secondsbubbles pull back into the range and that's how I'm able to capitalize on the initiation to the upside. Now, if
+Chapter 12: Q&A and academy information
+1:02:121 hour, 2 minutes, 12 secondsanybody has any questions, I'm going to turn it over to a Q&A. I'm going to turn it over to a Q&A. Let me just do this on the Zoom chat. So, there will be a Q&A
+1:02:201 hour, 2 minutes, 20 secondssection on the Zoom. I'm going to post a link really fast in the chat right here.
+1:02:251 hour, 2 minutes, 25 secondsLet me just post a link right here. Uh this here. Okay. And then in the Q&A section, which is going to be Q&A right
+1:02:341 hour, 2 minutes, 34 secondshere. I will do this live. Okay. So, first question that I see here is Randy Rogers. Randy says he would like to
+1:02:431 hour, 2 minutes, 43 secondslearn more. And that's actually a very good introduction into the Investor Trade Academy. I built the Investor Trade Academy as more of a hands-on
+1:02:511 hour, 2 minutes, 51 secondsprogram. It helps accelerate traders at every single stage, whether you're beginner, intermediate, or more advanced. The process behind it is three
+1:03:001 hour, 3 minutesdifferent phases. It all is a path to help become more self-sufficient. It includes the A Toz course, the starting
+1:03:071 hour, 3 minutes, 7 secondspoint from basics to more advanced strategies. There's an accelerator behind this, deeper concepts, more advanced strategies that I don't put
+1:03:161 hour, 3 minutes, 16 secondsanywhere on the internet to maintain value in this. And then we do live training sessions where we have weekly coaching calls to help sharpen the skills. Phase one is the A Toz course.
+1:03:261 hour, 3 minutes, 26 secondsPhase two is the accelerator program.
+1:03:271 hour, 3 minutes, 27 secondsPhase three is the live trading sessions. The curriculum as is followed, supply, demand, tape reading, order flow, risk management, psychology,
+1:03:361 hour, 3 minutes, 36 secondsfutures. Then the more advanced accelerator topics is over 23 hours. The full program is about 50 hours of
+1:03:441 hour, 3 minutes, 44 secondspre-recorded videos on top of the two coaching calls per week. A good friend of mine who works on Wall Street, Dylan, I know is in this coaching call, hosts
+1:03:521 hour, 3 minutes, 52 secondsone uh on Thursdays or Wednesdays and I host a live session on Sundays. Um if anybody is interested in this, I have
+1:03:591 hour, 3 minutes, 59 secondsposted a link in the chat feature of this. It is a more hands-on, it's a private community. Um, it is application
+1:04:071 hour, 4 minutes, 7 secondsonly. I keep it very tight-knit. I keep it very small group focused. That way, I could cater to a lot of individual traders. Um, the link to apply for this will be in the chat of this Zoom call.
+1:04:191 hour, 4 minutes, 19 secondsBut now to answer a lot of questions, I got asked how important is it to use Orderflow only at key levels versus at
+1:04:261 hour, 4 minutes, 26 secondsrandom locations on the chart. So to answer that question, as you could see from the CLC rule, context, location,
+1:04:331 hour, 4 minutes, 33 secondsconfirmation, I only like using the market or using how everything I explained in this master class at my
+1:04:421 hour, 4 minutes, 42 secondslevels of interest. It's a lot of noise, not at the levels of interest. It's a lot of noise at random points in the market. So I only use orderflow when it
+1:04:511 hour, 4 minutes, 51 secondsis at my key levels and or if the market has rejected off of my key level.
+1:04:551 hour, 4 minutes, 55 secondsAnother question that I got asked was where do I see the number of orders increasing from 100 to a thousand. You could use a footprint chart. You could
+1:05:031 hour, 5 minutes, 3 secondsuse a volume profile. If you want to quantify the number of orders coming in, a volume profile, a depth of market, um
+1:05:121 hour, 5 minutes, 12 secondsyou could see specific quantities of orders. Now, another thing that I get asked is how do you know what is a large size? Some days a 100 is large size,
+1:05:201 hour, 5 minutes, 20 secondssome days a thousand is large size. How do you know what is large size is by looking at just outliers in the data. If every order coming in today is 100
+1:05:281 hour, 5 minutes, 28 secondscontracts, then something that comes in with a thousand contracts is an outlier.
+1:05:331 hour, 5 minutes, 33 secondsIf every order coming in today is a thousand contracts, then a thousand contracts is not an outlier that day.
+1:05:381 hour, 5 minutes, 38 secondsBut maybe 3,000 is. Just look for difference in the data that is an outlier. Um John asks, "Do I watch my
+1:05:451 hour, 5 minutes, 45 secondsfootprint chart, heat map, or candlesticks while trading?" Um I watch them all. I have multiple monitors as you can see behind me. I have footprint
+1:05:531 hour, 5 minutes, 53 secondson there. I have a heat map on there. I have a candlestick chart on there. I watch it all. Uh, do I use any bookmap add-ons? I do not. Market pulse, stop
+1:06:011 hour, 6 minutes, 1 secondlosses, I do not. Uh, do you use footprint and volume profile but not the heat map? 100% you could be successful.
+1:06:071 hour, 6 minutes, 7 seconds20 tick data, same for all brokers. Uh, market order or limit order. Good question. It depends on how aggressive you want to be. It depends on your size.
+1:06:161 hour, 6 minutes, 16 secondsIt depends on your risk tolerance. No right answer whether you want to market or limit order in or out. How do I manage stop losses? Um my stop loss is
+1:06:251 hour, 6 minutes, 25 secondsalways based on where my analysis is incorrect. I learned my risk management through Dylan. I know Dylan's in here right now. Dylan has um a full lesson in
+1:06:341 hour, 6 minutes, 34 secondsthe accelerator on trade management, maximizing trading profits. I learned my risk management. I attribute a lot of my
+1:06:421 hour, 6 minutes, 42 secondssuccess and my consistency towards Dylan and his riskmanagement system that he has taught me with position sizing. It's
+1:06:491 hour, 6 minutes, 49 secondsso key risk management. We could have the best system in the world. I attribute a lot of my success to the lessons that Dylan has given me on risk
+1:06:581 hour, 6 minutes, 58 secondsmanagement and he also has the lessons in the accelerator videos in the academy as well. Um, you've been following me
+1:07:061 hour, 7 minutes, 6 secondsfor several weeks. You've trans I've transformed your trading uh supply and demand zones. Here's my preferred time frame of supply and demand zones. If
+1:07:131 hour, 7 minutes, 13 secondsanybody wants to write this down, this is in lesson uh in the supply demand videos of the A to Z. Here's my time
+1:07:201 hour, 7 minutes, 20 secondsframes is weekly, daily, 4 hour, 3 hour, 2 hour, 1 hour, 90 minute, 1 hour or uh
+1:07:291 hour, 7 minutes, 29 seconds30 minute and 15 minute for all my supply and demand zones. That is the only time that I will use um a time
+1:07:361 hour, 7 minutes, 36 secondsframe chart. How do you invalidate zero prints? I invalidate zero prints when they fill. How do I behave when an iceberg order shows up on bookmap? Um if
+1:07:451 hour, 7 minutes, 45 secondsan iceberg shows up at one specified price and it's not at a level of interest, I do not look at it. I think it's noise in my opinion. Uh can I use
+1:07:541 hour, 7 minutes, 54 secondsthe way I use orderflow on stocks mainly for break and retest? 100%. Orderflow definitely works best on futures, but as
+1:08:011 hour, 8 minutes, 1 secondyou all know that there are single stock futures coming very very soon. Um I think what this week or next week, right? And you could tell it works best
+1:08:081 hour, 8 minutes, 8 secondsfor break and retest like the one setup that I showed you on the initiative participants. My levels come from price action that formed today, last week,
+1:08:161 hour, 8 minutes, 16 secondslast month. Whenever they form, I draw them until whenever they become invalidated, I remove them. Um CLC
+1:08:231 hour, 8 minutes, 23 secondshigher time frame. Yes. Uh, you could use Bookmap's footprint. I've never used it. Will this video be available for replay? Yes. Do I use gamma? I do not.
+1:08:351 hour, 8 minutes, 35 secondsUh, what's my setup on bookmap? I have a full video on my YouTube on my setup.
+1:08:381 hour, 8 minutes, 38 secondsIt's pretty basic. Uh, will I be willing to detail what I include in my footprint delta chart? Uh, yeah. So, actually my template for my footprint chart is in
+1:08:471 hour, 8 minutes, 47 secondsthe academy. uh but middle column is total volume, left column is delta and right column is a volume profile that is
+1:08:561 hour, 8 minutes, 56 secondsshaded for the uh significance of the delta side. Pretty simple. Um volume
+1:09:031 hour, 9 minutes, 3 secondsprofile very powerful. Yes. Uh I'm sorry there's there's over 200 questions.
+1:09:091 hour, 9 minutes, 9 secondsThere's over 200 questions here. Uh if I choose the A Toz program, do I get live commentary and is it every day? So for
+1:09:161 hour, 9 minutes, 16 secondsmembers of the a toz uh throughout the throughout the week you'll see like the live commentary that I post in here. The
+1:09:221 hour, 9 minutes, 22 secondslive commentary is only on the days. So the text commentary is only for the days that I am not on live voice and video in
+1:09:311 hour, 9 minutes, 31 secondsthe academy which is about once or twice a week I am on live voice and video in the academy. The days that I am not on live voice and and video in the a toz
+1:09:391 hour, 9 minutes, 39 secondsyou'll have access to my a toz uh commentary. Uh this is why I'm the best trading mentor. See you in the Discord tomorrow. Awesome. See you there, man.
+1:09:471 hour, 9 minutes, 47 secondsUh, do I skip days cuz I don't see a setup. 100%. 100%. Uh, so many questions here, guys. I don't know if I could get through them all. 167 of them. Uh, when
+1:09:561 hour, 9 minutes, 56 secondslooking at a delta footprint chart, am I looking for big orders or P-shape Bshape? Both. Looking for delta outliers and Pshapes, Bshapes. This live will be
+1:10:051 hour, 10 minutes, 5 secondssaved. Yes. Oh my gosh, there's so many freaking questions. 175 of them. Um, cool. All right. So if anybody is
+1:10:131 hour, 10 minutes, 13 secondsinterested in the invested trade academy, the link is in the chat of the webinar. I also will send out an email.
+1:10:211 hour, 10 minutes, 21 secondsYou have to apply to it. Is it applicationbased only? I do not accept everybody into this platform. It is a um
+1:10:281 hour, 10 minutes, 28 secondstight-knit community. I only take on very serious traders who want to further expand their knowledge that will find value and add value to the community.
+1:10:381 hour, 10 minutes, 38 secondsThe link again is in the Zoom chat. I would definitely recommend applying. I will send out emails as well. If anybody ever has any questions, feel free to
+1:10:451 hour, 10 minutes, 45 secondsreach out. This will be recorded. I know there's about 188 questions right now. I'm sorry I can't get through them all.
+1:10:521 hour, 10 minutes, 52 secondsUm, but that's pretty much it. I hope you all found value in this. I hope you all learned from it. I will see you all later. And for those in the community, I will see you all uh later. Peace out.
+1:11:031 hour, 11 minutes, 3 secondsAll right. Enjoy.

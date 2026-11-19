@@ -1,0 +1,511 @@
+Chapter 1: How to identify supply and demand zones
+0:000 secondsso the supply and demand trading strategy that I trade with is a very effective and efficient way to trade if
+0:066 secondsyou properly understand how the stock market works if you guys properly understand what drives prices higher
+0:1414 secondswhat drives prices lower and why sometimes prices trade sideways or consolidate and then the second thing
+0:2121 secondsyou guys have to understand is how to identify proper supply and demand zones some anybody can just draw zones on their chart think in their valid zones
+0:2929 secondswhen in reality they're not and they could take trades basically blindly off of not really a valid imbalance that
+0:3737 secondswhat we look for so if you guys learn anything from this video all I ask is that you guys like it subscribe to my channel for more drop a comment what you
+0:4646 secondswould like to see next and let's get right into these zones so first we have to understand how the stock market moves
+Chapter 2: How the stock market moves
+0:5454 secondsprice only moves because of two different reasons and it's important for you to understand the auction process
+1:011 minute, 1 secondand how it works so when we say prices are balanced what I mean by this is that market participants are agreeing on
+1:091 minute, 9 secondsprice you have buyers and sellers in any type of market so this is valid to say that supply and demand is in every type of market whether you're talking about
+1:171 minute, 17 secondsreal estate market the car market the stock market as long as they are market participants such as buyers and sellers
+1:241 minute, 24 secondsyou will have supply and demand and you will have demand and supply so when we're in a balanced market you have
+1:321 minute, 32 secondsmarket participants agreeing on price you have an equilibrium between buyers and sellers which creates massive
+1:401 minute, 40 secondsliquidity so let's say we're looking at a used car I don't know let's say $10,000 someone's looking to sell it at
+1:471 minute, 47 secondsand then someone's also looking to buy that car for $10,000 you have a balance price you have an agreement on price and there's an equilibrium and it creates
+1:561 minute, 56 secondsliquidity because that person's gonna be able to easily sell that car and the person looking to buy the car is gonna be easy to get that from that seller so
+2:052 minutes, 5 secondswhen this happens you have a sideways consolidation active action in the stock market because prices are considered equal they will
+2:132 minutes, 13 secondssideways or consolidate same thing with the stock market you have sellers looking to sell at let's say $100 but
+2:202 minutes, 20 secondsyou have buyers looking to buy at maybe $99 so you have an equilibrium basically on price and because of this you have massive liquidity you have a lot of
+2:282 minutes, 28 secondsbuyers a lot of sellers looking to buy and sell at the same price now that's a balanced market now when we talk about imbalances this is important to our
+2:372 minutes, 37 secondsstrategy you have a market participants not agreeing on price so because imbalances occur you have these buyers
+2:452 minutes, 45 secondsand sellers not agreeing on a price now there's two cases with an imbalance you have obviously the mand exceeds supply
+2:512 minutes, 51 secondsor supply exceeds demand and because of this this creates an illiquid area of price since all the stock orders were in
+3:003 minutesfavor of the sellers or they were in favor of the buyers so an imbalance
+3:073 minutes, 7 secondsoccurs because of an illiquid areas you either think the buyers are agreeing on this price or the sellers are agreeing
+3:143 minutes, 14 secondson this price they are both not in equilibrium with each other and you basically have one way on the one side
+3:213 minutes, 21 secondson the same way so you either have the buyers green on it or the sellers agreeing on it so if you have supply that exceeds demand you're
+3:303 minutes, 30 secondsgonna have a massive drop imbalance and they're gonna be unfilled orders sitting at the origin location that did not get filled the first time because price fell
+3:393 minutes, 39 secondstoo fast from that location so you have to understand something you have two different orders in the stock market you have market orders or limit orders for a
+3:483 minutes, 48 secondslimit order to get filled someone has to market that limit order so if we have someone that's on the
+3:553 minutes, 55 secondsoffer or selling on the ask at let's say $100 someone with a market order has to hit that sell limit order on the ask and
+4:044 minutes, 4 secondsvice versa for the bidders the buyers if someone's looking to bid or buy at let's
+4:114 minutes, 11 secondssay $100 someone has to market order or sell their shares at $100 for those
+4:204 minutes, 20 secondsbuyers with the limit order at $100 to get filled so you have basically two sides you have two sellers and you have two
+4:274 minutes, 27 secondstires you have to market orders and you have to limit orders you have a by market you have a buy limit you have a sell limit and you have a sell market so
+4:364 minutes, 36 secondsyou have to understand that these unfilled orders will all be limit orders that are sitting at that origin location so because a massive imbalance has
+4:454 minutes, 45 secondsoccurred they're still going to be unfilled orders sitting at that origin location because obviously supplies once exceeded demand or demand has once
+4:534 minutes, 53 secondsexceeded supply so there's still gonna be unfilled orders and that's that is when we trade we trade with the big banks the big institutions that have
+5:015 minutes, 1 secondthose unfilled orders think about it like this no retail trader that's market ordering or even limiting limit ordering in their mark in their positions are
+5:095 minutes, 9 secondsgoing to move the market in such ways that they create massive imbalances you know any retail trader anybody trading from home with a normal amount of money
+5:185 minutes, 18 secondsisn't going to decide where the stock is gonna go just because they're hit in the ass or you know hitting the offer hit in the bid that isn't going to make the
+5:275 minutes, 27 secondsstock rally or drop you have guys big banks big funds you know institutions like this that are trading in such large
+5:355 minutes, 35 secondsof a size that their orders can influence the direction of the the market or the stock so because of this they're gonna have those unfilled orders
+5:435 minutes, 43 secondsstill sitting at that level so because we know this as a retail trader we can trade basically with those institutions
+5:515 minutes, 51 secondswith the smart money and with the big money and you can use flow with the strategy you can use option flow and you you can really get a good trading
+6:006 minutesstrategy with this you can get a good sense of where the stock or wherever the market is heading based on flow and based on with the strategy in
+6:076 minutes, 7 secondsconjunction with each other but really fast I want to bring over my finger swim and show you exactly how we find these
+6:146 minutes, 14 secondsimbalances and how to identify these zones so like I said a balance pier a balanced market is where market
+Chapter 3: Finding imbalances
+6:216 minutes, 21 secondsparticipants are agreeing on price you have an equilibrium between buyers and sellers and it creates a massive liquidity which then results in sideways
+6:296 minutes, 29 secondschoppy or consolidation action I do not trade in these balance areas this is where majority of retail traders lose is
+6:386 minutes, 38 secondsbecause they're trying to pick a direction and balance market where the big boys are agreeing on price we trade when the market comes back into an imbalanced
+6:476 minutes, 47 secondsperiod where once there was a massive order a favor of either to the sellers or to the buyers so in this example here
+6:566 minutes, 56 secondsyou're gonna have all different time frames with this as well so it's important for you to go down the list you know start at a higher time frame go down all the way to a lower time for him
+7:057 minutes, 5 secondsthe more higher time frames you get the better the trades will be for a little bit of a longer term type of trade but that really doesn't matter because as
+7:137 minutes, 13 secondslong as you find an area where we have a balance period followed by an imbalance you were going to have unfilled orders sitting at that area and the probability
+7:227 minutes, 22 secondsof this trade working out and the probability of the market turning is going to be very high and it sets us up for a low-risk high-reward trading
+7:307 minutes, 30 secondsstrategy so right here we have the e-mini the sp500 future we have a
+7:377 minutes, 37 secondsone-hour imbalance so like I said you could go on different timeframes and find different imbalances so it's really based on the time frame you're looking to try that
+7:457 minutes, 45 secondsare you a scalper are you a day trader are you a long-term trader etc so in this example we have a nice balanced
+7:527 minutes, 52 secondsperiod here so the market in a one to three hour time period basically you know was balanced there was an agreement
+8:008 minuteson price buyers were buying sellers were selling at that agreed price now it's not exactly at one price but it's a
+8:078 minutes, 7 secondsbalance period in a tight consolidated range following this we had a drop so we created an imbalance because obviously
+8:158 minutes, 15 secondsthe orders were all on the sell side so because of this imbalance now this balance period confirmed by the drop we
+8:238 minutes, 23 secondshave an imbalance of sell orders sitting at this pink box so what I do is I don't trade anything that's not in an imbalance
+8:328 minutes, 32 secondsI only trade imbalance periods I do not trade in the the noise in the blank spaces whatever you want to call it where the market is basically balanced
+8:408 minutes, 40 secondsand it's looking for an area that it creates value at or looking for an area where long term buyers long term sellers
+8:478 minutes, 47 secondsshort term buyers short term sellers are agreeing on price so obviously there was agreement on price right where my cursor is and right in
+8:558 minutes, 55 secondsthis pink box so because of that unfilled orders like I said will be in this area so I wait for price to come in this area this is also on a one-hour
+9:049 minutes, 4 secondstime frame so if you go into a smaller time frame you're gonna see different things price came up in here sure if you go on a smaller time frame you'll see a
+9:119 minutes, 11 secondsnice rejection on a different scale price came up into this box was a valid short you could have took the sp500
+9:189 minutes, 18 secondsshort here you could have traded spy SPX options you do not have to tree the futures you could have took a short in this pink box put your stop-loss above
+9:279 minutes, 27 secondsthe box and we had a nice you know drop down and then look where we drop down at so this is in the overnight session
+9:349 minutes, 34 secondsobviously in the light gray area but look where we drop that right this box right here is a balance period we have a
+9:419 minutes, 41 secondsone two three four five six seven hours this is an hour time frame of balanced action followed by a nice imbalance all
+9:509 minutes, 50 secondsthe orders were to the buy side because of this massive rally to the upside so we obviously have buy orders sitting here now I noticed this from a four hour
+9:589 minutes, 58 secondstime frame so we had a you know nice
+10:0710 minutes, 7 secondsbasing period here the market was balanced we had an agreement on price then price all of a sudden favored the buyers the buyer stepped in
+10:1610 minutes, 16 secondsnow all those buyers that were looking to buy down here their orders did not get filled so they're waiting here for price to come back into the zone look what happens right where my cursor is
+10:2410 minutes, 24 secondsthe first time we tested this area was right here go back into a smaller time
+10:3110 minutes, 31 secondsframe such as in one hour time frame and boom we've rejected that supply zone
+10:4010 minutes, 40 secondslook where we balanced that we opened that right at this for our demand zone we've rallied again rallied again look what happens price came back into this
+10:4910 minutes, 49 secondsdemand zone bounced from this area to next day price came back into this demand zone bounced at it again so this
+10:5610 minutes, 56 secondsis a valid demand zone it worked three other times so if you're able to spot them on different time frames in confluence with smaller time frames or
+11:0511 minutes, 5 secondslarger time frames it's a very powerful strategy low-risk high-reward and this is my main trading style this is how
+11:1311 minutes, 13 secondsbasically I put on the trades every day swing trade a trades scalping you know it's there's there's opportunity in
+11:2011 minutes, 20 secondsevery time frame so if you guys enjoyed this video please like it subscribe comment what you would like to see more and comment if you have any questions
+
+Sync to video time
+
+All
+
+For you
+
+Watched
+
+Chapter 1: Introduction and strategy
+0:000 secondsin this video I want to talk about how to trade supply and demand zones while the market is trending up or down so if you look at my charts right now we
+0:077 secondsobviously the day I'm recording this had a very large rally where we kept putting in higher highs kept putting in higher lows and every resistance level and
+0:1616 secondsevery Supply level did not work out very well now if you know supply and demand it tends to be a reversal trading
+0:2323 secondsstrategy but in this video I want to show you how you can play it for a continuation type of strategy and I want to tell you how to avoid taking losses
+0:3131 secondsby shorting Supply or longing demand in a trending Market before we get into it I recommend everybody watching this to
+0:3939 secondsfollow me on my Instagram at investitrade this is my only account I'll never message you first I only respond to messages and I also will
+0:4747 secondsnever follow you the link for it will be in the description below it's just a good resource I post daily trading Recaps some good charts setups and just
+0:5757 secondstrading tips and tricks that I guarantee you're not not going to find anywhere else the link will be in the description below you're missing out if you're not
+1:041 minute, 4 secondsfollowing it but the first thing I want to explain is how Traders are accustomed to supply and demand zones so what usually you want to do is when the
+Chapter 2: Supply and demand mechanics
+1:121 minute, 12 secondsmarket is moving higher we are trending up we're moving higher and we have a supply Zone marked up let's just say in this area right here you wait for the
+1:211 minute, 21 secondsmarket to come into your supply Zone and you wait for valid confirmation inside of this Supply Zone saying okay we're
+1:291 minute, 29 secondsinside of a supply Zone and the valid confirmation will give us the indication that sellers are present at our supply
+1:381 minute, 38 secondsZone when we have both of those components then we could take the mark short anticipating a move lower now there's going to be some days where the
+1:461 minute, 46 secondsmarket is up trending we're putting in higher highs we're putting in higher lows and the market just keeps moving up it looks like we start moving down off
+1:541 minute, 54 secondsof a supply Zone only for the dip to get bought up and then we start moving higher breaking above the supply Zone
+2:012 minutes, 1 secondthis is a trending Market where supplier demand zones for reversals are not going to work out very well however there are
+2:102 minutes, 10 secondssigns with the market that we can look to take the market long at let's just say a supply zone or a resistance level
+2:172 minutes, 17 secondsindicating that sellers are not there in anticipation that the market wants to continue to Trend higher and rally past
+2:252 minutes, 25 secondsour Zone and we can capitalize on a long position there instead of a normal short position at a supply Zone where many
+2:322 minutes, 32 secondswould look to take the market short you always want to make sure you have valid confirmation before you enter any single trade you're looking to put on so now I
+Chapter 3: Pre-market planning
+2:402 minutes, 40 secondswant to get into the pre-market plan so we can understand the setup from today April 27th on Thursday and it's all
+2:472 minutes, 47 secondsgoing to come together so the pre-market plan for today was my key level was 4107 to 4110 on the S P 500 futures you could
+2:582 minutes, 58 secondsalso trade spy or SPX options off of these scenarios I post these every single day in the Discord levels and setups and scenarios that I'm watching
+3:063 minutes, 6 secondsscenario number one was a bullish setup now four one zero seven and four zero ten was a resistance level from
+3:153 minutes, 15 secondsyesterday where we actually took the market short we spotted sellers on the tape the day prior which was Wednesday
+3:223 minutes, 22 secondsthe 26th and at 4107 we are watching for a rejection to play short once the market could sell off targeting the
+3:303 minutes, 30 secondslevels below now the following day after that level formed where this yellow line is the overnight session happens we get
+3:383 minutes, 38 secondsa rally up into our 4107 level that's when I'm in the pre-market plan saying this is still my key level if we can get
+3:473 minutes, 47 secondsabove this or once we're Above This resistance level it's not really Supply because this level was formulated or
+3:543 minutes, 54 secondsspotting sellers uh on the tape so if we can act support once we're above it or new you demand forms at an area that
+4:024 minutes, 2 secondsthere once was sellers then I would focus on playing the market long targeting the next Supply Zone above
+4:094 minutes, 9 secondsthat which was four one one seven now the Market opens up and we get a rally into this yellow line which was 4107 and
+4:174 minutes, 17 secondsthere was a lot of Trades getting facilitated at the offer which is aggressive Market buyers so in the first call at half hour there was very
+4:254 minutes, 25 secondsaggressive Market buying coming into the market I updated the Discord in the intraday commentary tab this is where I update my thoughts throughout the day
+4:334 minutes, 33 secondswhere I said we're at this 4107 level indicators not indicating strength or continuation here just yet to validate
+4:424 minutes, 42 secondsthis short setup I want this level to reject and break below 4 100 and then I'm interested in playing short
+4:504 minutes, 50 secondstargeting 4090 the key thing with this scenario was I want to see a break below
+4:574 minutes, 57 seconds4100 after injecting this 4107 level now the reason for this was the context was
+5:045 minutes, 4 secondsfitting that there was very aggressive Market buyers into the market also if we were to look at the tape when we came
+5:125 minutes, 12 secondsinto 4107 which is where I'm hovering my cursor over right now every time we came into it look at all the aggressive selling that came into the market right
+5:215 minutes, 21 secondsover here even though there was aggressive selling the market was having a hard time selling off so that's why in the Discord with the fitting context I
+5:305 minutes, 30 secondswas explaining that I'm not interested in playing short at the level I would much rather see it reject and then play short once the 4100 whole number where
+5:395 minutes, 39 secondswe opened up at breaks this prevented me from shorting the 4107 level of
+5:465 minutes, 46 secondsresistance this also brings me into my next point now you could see this off of a chart you could see this off of the tape you could see this off bookmap
+Chapter 4: Analyzing market acceptance
+5:545 minutes, 54 secondswhatever you're looking at but when the market finds acceptance at a level what this tells me is the market is accepting
+6:016 minutes, 1 secondthe price that we are currently at so just looking back at this 4107 level from the day prior this was an area the
+6:086 minutes, 8 secondsmarket sold off very aggressively we also spotted sellers if we were to pull up the tape from that day we spotted sellers at 4107 and it was an area that
+6:186 minutes, 18 secondstheir sellers present in the market so the following day when we test 4107 you have to think about it from an auction
+6:256 minutes, 25 secondsstandpoint if this yellow line was once an area that sellers were very very strong there buyers were extremely
+6:326 minutes, 32 secondstrapped there then when we come up into this level you want to see the similar action indicating that sellers are there now the problem with this was we saw
+6:416 minutes, 41 secondsaggressive buyers we saw the market find the acceptance meaning we saw the selling but something was not selling the market off lower and we got a bunch
+6:506 minutes, 50 secondsof consolidation when we have consolidation you must think of this from an auction standpoint when the market consolidates its building volume
+6:586 minutes, 58 secondsat that price if you're building volume at that price you have buyers and sellers trading at that price now if you have buyers and
+7:077 minutes, 7 secondssellers agreeing on price or trading at it or there's a lot of volume then there's a lot of what you call acceptance at that level and the chance
+7:167 minutes, 16 secondsof a high being formed here and a low if we're talking about a demand Zone being formed is Slim and this in fact is a
+7:247 minutes, 24 secondsbullish indication because this consolidation will also formulate a new demand Zone where if you were to look from the pre-market plan was if we get
+7:337 minutes, 33 secondsto this 4107 level and either new demand forms or it acts as support then this is going to indicate continuation and I
+7:417 minutes, 41 secondswould want to play Longs targeting the next Supply Zone and not be so interested in shorting this level of resistance or even supply to the upside
+7:497 minutes, 49 secondsnow what I'm mentioning here is based off of a resistance level where we spotted a seller off the tape you're not really going to see it from a Candlestick chart however the same also
+7:587 minutes, 58 secondswill apply to to a supply Zone let's just say we have a supply Zone here exactly what I just explained is relevant to that as well so now at 10 14
+Chapter 5: Executing trades
+8:078 minutes, 7 secondswhen the market breaks out like this I did not take the market long off of this level in fact I was watching that
+8:158 minutes, 15 secondsdownside scenario however I wanted a break below that 4100 and I want to make this a key point for this video I really don't want to spend so much time on it
+8:238 minutes, 23 secondsor get into so much detail with it because there are videos in the course exactly about this and I will be adding tons of new videos to the course as well
+8:318 minutes, 31 secondshowever if you are shorting a downside reversal for a continuation meaning we reject resistance or reject Supply and
+8:388 minutes, 38 secondsthe market sells off let's say below 4 100 you want to make sure your risk to reward makes sense or else you should
+8:458 minutes, 45 secondsnot enter that trade if you're late or you're chasing it do not enter that at all but now at 10 14 after the market breaks out I said what I'm watching for
+8:548 minutes, 54 secondsis any dip above 4107 to hold to play long targeting four one one seven four
+9:029 minutes, 2 secondsone two one which was a supply Zone from earlier in the week sell-off then at 10 49 I set a valid High a day is still not
+9:109 minutes, 10 secondsin I'm still expecting another push higher into that Supply Zone first however I said we must pull back first
+9:189 minutes, 18 secondsand a quick little gem I'm gonna drop here is I'm gonna pull up the tape and what we're going to see here is the high
+9:249 minutes, 24 secondswhich was at 4115. if we were to zoom in at the high that was done here at 4115 there was massive absorption and there
+9:329 minutes, 32 secondswas a massive passive seller up at this level with a high amount of volume this does not indicate a high probability of
+9:419 minutes, 41 secondsa high a day being in you want to see less liquidity and you want to see a lot of Trapped participants this high volume and this action that we're seeing right
+9:499 minutes, 49 secondshere at 4115 is not reminiscent of a high a day which is why that factored in with a high a day is not in I'm still
+9:589 minutes, 58 secondsexpecting a push higher and I'm still watching any dip above 4107 to hold to play long targeting the four one one
+10:0710 minutes, 7 secondsseven four one two one level above we get that pullback right into 4107 a little bit below it then volume starts
+10:1610 minutes, 16 secondscoming in and we get that push up right into our four one one seven Target to four one two one Target and if you want me to replay this feature this is
+10:2410 minutes, 24 secondsexactly what it looks like uh you can see the price here these are all volume profiles we're gonna get a pullback down
+10:3110 minutes, 31 secondsafter rejecting it for the second time we gotta pull back down uh
+10:3810 minutes, 38 secondsright here into 4107 and immediately gets bought up look at that volume that came in the higher day was broken right
+10:4510 minutes, 45 secondsinto our four one one two uh Target now similar and identical to what I just explained earlier about if we're a have
+Chapter 6: Validating trend continuation
+10:5310 minutes, 53 secondsa resistance level or if we have a supply Zone because this was a supply zone right here at 4117 to 4121 which
+11:0111 minutes, 1 secondformulated on the drop from the 25th which was Tuesday this little consolidation from that drop and the supply Zone above that was formulated
+11:0911 minutes, 9 secondsfrom the high a day on Tuesday the 25th of April now same thing that I mentioned earlier if we come up into a supply zone are we coming to a resistance level and
+11:1811 minutes, 18 secondsit acts as support if we consolidate there we fail to sell off lower we build new demand that is a bullish indication
+11:2511 minutes, 25 secondsand you should avoid taking the market short now hypothetically speaking let's just say you even did take the market short and let's just say it was at four
+11:3411 minutes, 34 secondsone one eight well if you're shorting a reversal like this and let's say you got valid confirmation and it was a valid trade well your risk is only going to
+11:4211 minutes, 42 secondsreally be three or four points so your risk is going to be small you just have to accept the loss and when you do win for example a trade like this your wins
+11:5111 minutes, 51 secondsare going to be 15 20 points where that three-point loss was irrelevant to your One winner but this right here exactly
+11:5811 minutes, 58 secondswhat I said about consolidating finding acceptance acting as demand new support reforming that indicated acceptance at
+12:0612 minutes, 6 secondsthis level for possible continuation and guess what happened here we kept moving higher higher highs higher lows we found acceptance here again for a nice little
+12:1512 minutes, 15 secondsend of day continuation into my 4162 4168 level which if you've been watching my videos and if you've been following
+12:2212 minutes, 22 secondsme on my Instagram this has been a very very important level that I have been mentioning consistently and also to help
+Chapter 7: Trading analysis and summary
+12:2912 minutes, 29 secondswith the trend keep an eye on vix you know vix was breaking below our support level and that's just going to support and fuel a further rally to the upside
+12:3712 minutes, 37 secondsum especially when we broke below a previous little lower balance range that I warned everybody that a scenario number one if it occurs we want to see vix break below this little pink line
+12:4612 minutes, 46 secondsand if you look back at the chart it did very very well keep an eye on other factors sometimes you don't have to fight the trend and sometimes you got to go with it because a day like today it's
+12:5512 minutes, 55 secondsnormal for Supply zones or resistance to get destroyed if the market moved exactly how we wanted it to move where it moved from let's just say resistance
+13:0313 minutes, 3 secondsto support or Supply to demand then there's really not going to ever be a correct market and just to show you the accuracy of this again here's the
+13:1013 minutes, 10 secondspre-market plan on the NASDAQ if you trade QQQ options same goes with this we had a support level at 12980 to 13015 if
+13:2113 minutes, 21 secondsthis level can be supported at the open then I want to play long targeting 1309
+13:2813 minutes, 28 secondsfor Supply here's the picture it was an old previous little balance range uh low bounced off bounced off it's not so much
+13:3613 minutes, 36 secondsSupply it's not so much demand it's just a previous balanced range low yesterday it acted as resistance sold off from it
+13:4413 minutes, 44 secondstoday we opened up above it it now acted as support perfectly at 13015 targeting
+13:5213 minutes, 52 seconds13094 Supply and exactly what I have been explaining in this video happened here there's no reason to fight the trend if you see the market like this
+13:5913 minutes, 59 secondsthere's no reason to play it short on the first downside move I call it a first seller no reason to do it wait for
+14:0614 minutes, 6 secondssellers to come into the market and then you could play a retest and that will help you not fight against the trend especially when the context or conditions are fitting off of it the
+14:1514 minutes, 15 secondscontext is key go with the flows of the market never against it I hope this video could help you if it does drop a like so I know if it does comment if you
+14:2414 minutes, 24 secondshave any questions and definitely check out the links in the description below I will be making changes to the Discord and I also will be adding videos to the
+14:3214 minutes, 32 secondscourse and the prices will be increasing when I do add those videos in the near future but I'm ending it peace out
+
+
+7 Min Workout
+Sponsored
+kd.riseworkouts.com
+Learn more
+
+
+Chapter 1: Introduction to the strategy
+0:000 secondsin this re-upload i'm going to explain why i love trading supply and demand zones why i think it's the best trading strategy and i'm going to show you how
+0:088 secondsthey work why they work and i'm going to give you some good tips led by proper trading examples i'm going to go over on the charts from actual trades that i
+0:1616 secondshave taken to show you how you could add this to your trading strategy it provides another tool which enables us
+0:2424 secondsto take high quality setups that offer proper risk to reward ratios before we get into it if you are new to my channel
+0:3232 secondsi would appreciate it if you could subscribe and also if you haven't followed me on instagram yet at investortrade i'll post a link in the
+0:4040 secondsdescription below to follow me on there i definitely recommend it i post daily trading recaps along with very good trading tips and
+0:4747 secondstricks that i guarantee you're not going to find anywhere else the link will be in the description below you're seriously missing out if you're not following it but now let's
+0:5656 secondsget right into this video so the first point is supply and demand is how the market auctions it's how it facilitates
+Chapter 2: Market mechanics explained
+1:041 minute, 4 secondstrade the market moves because of supply and demand it's economics 101 for us to have a supply zone we have a
+1:121 minute, 12 secondssell order imbalance based on where supply exceeded demand at the origin location in this case we're going to
+1:191 minute, 19 secondslook at the nasdaq supply and demand works on any market any stock any future crypto forex it
+1:271 minute, 27 secondsdoes not matter and it is different than support and resistance this is an area where we had a sell order imbalance
+1:341 minute, 34 secondswhere supply once exceeded demand in this area over here a day later the market came back into it and sold off
+1:431 minute, 43 secondsthe same thing for the demand side demand equals a buy order imbalance based on where demand exceeded supply at
+1:521 minute, 52 secondsthe origin location and this is where we're potentially looking to be bullish on the market in this case we had a demand order and balance down here the
+2:002 minutesmarket sold off from that supply zone hit that demand zone and rallied towards the end of the day this is different
+2:072 minutes, 7 secondsthan a support zone or support an area of support because this is based off of an order imbalance this is an area based
+2:162 minutes, 16 secondson where demand exceeded supply at one origin point so that's point number one it's how the market auctions it's how it facilitates
+2:242 minutes, 24 secondstrade the market usually moves from imbalance to imbalance whether we're talking about higher time frames whether
+2:312 minutes, 31 secondswe're talking about shorter time frames it's essentially how the market moves and transitions even from balanced periods to imbalanced periods it's not a
+2:402 minutes, 40 secondscoincidence that these are areas that the market has a hard time getting above or below and it's very very powerful now with
+Chapter 3: Building trading structure
+2:482 minutes, 48 secondsthis supply and demand gives me structure what i mean by this is obviously demand we look to play the
+2:562 minutes, 56 secondsmarket long and supply we look to play the market short with some exceptions but i see a lot of traders buying or
+3:043 minutes, 4 secondsselling for random reasons now let's just act like let's go to a five minute chart let's just act like we did not have supply up here and we see
+3:133 minutes, 13 secondsthe market moving up and then immediately coming back down right if you're a trader that has no structure you're what i consider to be a gambling
+3:213 minutes, 21 secondstrader where you're buying and selling based off of no reason other than the markets coming down or you're buying because of no other reason that the
+3:293 minutes, 29 secondsmarket's coming up that is gambling there's no solid thesis you have no reason to enter the trade because you can't give a reason why you should be
+3:383 minutes, 38 secondsentering in the first place for example let's just say you know the market's coming down we look to sell the market in this area over here stop above
+3:463 minutes, 46 secondsthe high our risk to reward is really not favorable but we're selling the market just because we see it coming down yes this trade could have worked
+3:543 minutes, 54 secondsout but in the market there's not going to be any longevity in that for you entering or exiting based on random
+4:014 minutes, 1 secondpoints on what you think is going to happen because if you think something's going to happen that's an emotion and that's a thought and that's not a valid
+4:084 minutes, 8 secondsreason for you to enter a trade so supply and demand let me do this supply and demand gives me structure it
+4:174 minutes, 17 secondsgives me areas that i'm looking to be a participant at and it says okay look the market's rallying inside of supply this
+4:244 minutes, 24 secondscould be an important turning point that the market may have a hard time getting above and we're gonna look for some type of selling activity to potentially play
+4:324 minutes, 32 secondsthe market to the short side and as it's coming down yeah now we can look to play the market short because we have a reason to our reason and it's not good
+4:404 minutes, 40 secondsenough just because it's coming down when we add supply when we add demand when we add key levels this just gives
+4:474 minutes, 47 secondsus a thesis and this just makes us a valid reason to enter the trade so it gives me structure if you're watching this and
+4:554 minutes, 55 secondssay you know what is structure it's basically the market's very unstructured but we have to make it to a point that
+5:025 minutes, 2 secondswhen we see something that fits our edge that we know works for us that's our structure and we take trades based off
+5:105 minutes, 10 secondsof that i see many new traders like i just said they don't have a solid reason for entering and there's not going to be any
+5:175 minutes, 17 secondslongevity in that and they eventually blow up and destroy their accounts because i and i hate seeing that because it's something that can be prevented
+Chapter 4: Confirmation with volume
+5:265 minutes, 26 secondsthese zones also provide me with clean and clear levels of interest i want to make it clear that we don't
+5:345 minutes, 34 secondsalways buy when it hits demand or we don't always sell when it hits supply we could use zones as context because not
+5:425 minutes, 42 secondsevery zone will also provide a reaction going back to that nasdaq example let's just say we were in long earlier in the
+5:495 minutes, 49 secondsday we're in long down here we can maybe use supply as our target instead of maybe looking to take a new short position at supply
+5:575 minutes, 57 secondsor if we aren't in long and we get proper confirmation we could take the market short at supply or if we took it short at supply or we
+6:066 minutes, 6 secondsare that gambling trader and let's just say we took it short for no reason down here it wasn't based on our edge maybe we could look to target demand
+6:146 minutes, 14 secondsinstead of looking i'll play long at demand we're using it as an area that we use as a target so these are just levels
+6:216 minutes, 21 secondsof possible interest not every zone provides a reaction i'm going to show you that these are just levels that i'm
+6:286 minutes, 28 secondsinterested in trading around i use price and volume combined with market context to enter a trade at a zone i cannot say
+6:366 minutes, 36 secondshow key that is i don't enter randomly when it hits a demand zone you know for example let's go to today's action
+6:456 minutes, 45 secondstime i'm recording this we'll use the s p 500 actually so we had a demand zone right here this is why we don't buy when it solely hits demand we
+6:546 minutes, 54 secondsmust use price and volume to confirm it the market all day putting in lower lows putting in lower highs we hit a zone and have no reaction from buyers at all safe
+7:037 minutes, 3 secondsto say buyers are not factored in here they're not buying at lower prices they're not accepting lower prices and we only want to trade on the same side
+7:117 minutes, 11 secondsas buyers if we're looking to play it to the long side so i would have avoided taking it long at this demand zone same thing with this one absolutely no sign
+7:187 minutes, 18 secondsof buying completely came right through it and we did not provide a reaction at it and it came until the 4-2-6-3 zone
+7:267 minutes, 26 secondswhere volume started to build we started to see some nice green activity and some nice order flow to confirm this trade to the long side for a potential 70 point
+7:347 minutes, 34 secondsrally after the previous two demand zones did not work so you must use price and volume combined with market context
+7:437 minutes, 43 secondsfor your confirmation to enter a trade at the zone to simplify this i look at it like this supply and demand zones give me my
+Chapter 5: Integration with techniques
+7:517 minutes, 51 secondstheory there my where i'm interested in trading at just because we have supply doesn't mean i'm looking to take the market short
+7:597 minutes, 59 secondsjust because we have demand does not mean i'm looking to take the market long it's a factor that hey we are rallying inside of supply or hey we are selling
+8:088 minutes, 8 secondsoff into demand this is okay i have an alert set i'm watching to see what price does here and it's going to give me or if it does give
+8:168 minutes, 16 secondsme some type of indication or some type of clue then i may take a trading decision off of that
+8:238 minutes, 23 secondsprice and volume is my execution it tells me when and why i want to enter the trade so think of it like that
+8:308 minutes, 30 secondssupply demand zones are my where price and volume tell me when and why without my theory and without my
+8:378 minutes, 37 secondsexecution i do not have a valid trade and i will not put a trade on for no other reason than that fourth point is
+8:458 minutes, 45 secondsvery key because supply and demand is a very powerful trading strategy which could be used as a core for other styles
+8:538 minutes, 53 secondsand techniques don't think of supply and demand as a strict soul i'm only doing this and i'm only going to get that out of it i look
+9:029 minutes, 2 secondsat supply and demand as a core or look at it as like a tree trunk and other techniques or styles could be
+9:099 minutes, 9 secondsthe tree branches stemming off the tree trunk which is the core of supply and demand so think of the trunk as supply
+9:169 minutes, 16 secondsand demand and the other branches are other possible trading strategies that you can bounce off price and balances
+9:249 minutes, 24 secondsand have this confluence for a high quality trading style technique strategy whatever you want to call it
+Chapter 6: Real-world trade examples
+9:329 minutes, 32 secondsso we have an example on the s p 500 this was a trade on february 22nd i posted this in the discord
+9:429 minutes, 42 secondsand i basically said that we had a 4316 area where there were some large sellers trapped at as long as this area gets
+9:519 minutes, 51 secondsdefended and we could hold above it we may balance or rally into supply near the highs however if 4316 does not hold
+9:599 minutes, 59 secondsa move into the 4295 and to eight demand zone is very possible this is where context comes into play
+10:0810 minutes, 8 secondsand this is where using price and volume analysis with supply and demand is very key so we had a supply zone in this area that formed
+10:1610 minutes, 16 secondsintraday from this failed rally to the upside and the sell-off we also had confirmed from order flow
+10:2410 minutes, 24 secondssellers which were trapped earlier at the lows which now coming back down into what we would want them to start seeing
+10:3110 minutes, 31 secondspressure to the downside so at that point i put the update in the discord now that we have the context of sellers factored in at the high from supply that
+10:4010 minutes, 40 secondsformed sellers down here that we want price to get below 4316 if we could get below it with aggressive selling pressure then it's very possible
+10:4810 minutes, 48 secondsthat these demand zones are going to act like magnets again there are many ways you could use supply and demand as a core to come up with quality trading
+10:5710 minutes, 57 secondssetups eventually as we were below 4316 sold off into demand found no buyers continuously put in lower lows
+11:0511 minutes, 5 secondscontinuously put in lower highs and found the bid near end of the day like i said earlier for a 70 point rally offered at demand zone so now since we
+11:1311 minutes, 13 secondsare below these demand zones these are all invalid i will say i draw every zone manually i do not use any indicator to
+11:2211 minutes, 22 secondsdraw them the human eye is the best component to drawing zones because it's very subjective and it's also based off
+11:3011 minutes, 30 secondsof context supply and demand offers extremely low risk and very high reward the risk to reward
+Chapter 7: Risk management and analysis
+11:3811 minutes, 38 secondsratio trading supply and demand is extremely favorable if we time it right ideally you want to shoot for at least a
+11:4511 minutes, 45 secondstwo to one risk to reward ratio three to one is even better so we could afford to lose a lot more times than we win yet
+11:5311 minutes, 53 secondsstill make money with proper confirmation we could get this tight risk and it's a good chance that we could enter a position at at
+12:0112 minutes, 1 secondleast near the best price point with the high probability of working out and that gives us minimal risk you really can't
+12:0912 minutes, 9 secondsbeat the risk to reward ratio if you time it right and leave your emotions off the table so this is the example from the previous day from that seller
+12:1712 minutes, 17 secondswhen the market sold off like i said we created supply near the highs and we also from this sell-off created
+12:2412 minutes, 24 secondssupply to the downside that looks like this fast forward to the next day we could extend it to the highs we rejected it overnight and look what happens when
+12:3212 minutes, 32 secondsthe market opened up i personally did not take this trade to my myself i know a bunch of members in the discord took
+12:4012 minutes, 40 secondsthis and completely destroyed it and made a lot of money but if you look the market opened up and we rallied into the zone three different
+12:4712 minutes, 47 secondstimes and every time we came into we failed if you were watching the tape at this time there were some large aggressive buy
+12:5512 minutes, 55 secondsorders coming through at 43 35 on the s p 500 and price could not move any higher there was a very large passive
+13:0413 minutes, 4 secondsseller absorbing all those aggressive buy orders and it took him three different times and he failed every single time at it indicating a very weak
+13:1213 minutes, 12 secondstape and a very strong seller factored into the market you wait for heavy selling pressure to come into the market then you could play the market short
+13:2013 minutes, 20 secondslet's just say we got short up here when we started selling off i don't know at 43.30 our risk in this case would be about
+13:2813 minutes, 28 secondsfive points we're risking about five which means we need to make at least 15.
+13:3313 minutes, 33 secondslow a day is about 10 points away and the nearest demand zone the market doesn't always work this perfect uh it does not always work this perfect
+13:4213 minutes, 42 secondsbut the nearest demand zone was 60 points away obviously you wouldn't have held to the full target and you would have taken i'm sure some profits off
+13:5013 minutes, 50 secondsmaybe below pre-market lows or maybe below uh the action the close from yesterday but as long as you make your two to one
+13:5813 minutes, 58 secondsthree to one risk to reward look how tight that risk was and it offered three different chances for you to get short broke the wedge
+14:0614 minutes, 6 secondsfailed at it perfectly maybe you could combine higher lows lower highs
+14:1414 minutes, 14 secondssold off aggressive volume coming through and then a boom nice lower low lower high selloff for at least a full another two hours after that so low risk
+14:2314 minutes, 23 secondsvery high reward and another thing that i like and i find it to work out the best is
+Chapter 8: Developing a trading edge
+14:3114 minutes, 31 secondsit supply and demand i've back tested it i forward tested it and it fits my personality it's how i trade every single day it's what works for me the
+14:3914 minutes, 39 secondsbest it's how i consistently make money in the long run it might not work for you it might work for others it works
+14:4614 minutes, 46 secondsfor me the best and i can only explain how i trade and why i trade i prefer buying when others are selling and i
+14:5414 minutes, 54 secondsprefer selling when others are buying think about it like this if ninety percent of retail traders fail do with what other traders don't do a
+15:0215 minutes, 2 secondslot of traders are buying high day breaks selling lower day breaks and they're getting completely trapped when you combine the context of supply and
+15:1015 minutes, 10 secondsdemand for example this is a trade that i actually took a lot of traders were getting long on this rally let's just say we don't know
+15:1615 minutes, 16 secondssupplies here we're long on this rally and we're we're buying basically at the top if we knew supply and demand there is no
+15:2515 minutes, 25 secondsshot i am buying near the highs up here in fact i might be looking to sell it then the market came up broke the high and failed to stay above that high and i
+15:3415 minutes, 34 secondstook the market short stop above the high target at demand broke below view up hit demand and then bounce towards end of day i like selling when others
+15:4315 minutes, 43 secondsare buying if 90 of retail traders are wrong i like doing what they don't do and i like doing what the opposite does
+15:5115 minutes, 51 secondsthat's how you gain an edge in itself so i shorted i played puts at this high day break stop above the high and worked out
+15:5915 minutes, 59 secondsextremely extremely well so it's just how the market moves understand the mechanics behind it i could show you a hundred different
+16:0616 minutes, 6 secondscharts you know go through my old videos on my channel go through them all there's a lot of different explanations i can show you 100 different charts it's
+16:1416 minutes, 14 secondshow the market works and it's my favorite trading strategy i only use this price and volume so i hope this video helped if it did drop a like
+16:2316 minutes, 23 secondscomment if you have any questions i'll go through all the comments and check out the links in the description below peace out
+
+Chapter 1: Introduction to trading
+0:000 secondsi see a lot of traders online saying trading is very simple if you follow my method or you know make consistent profit using this trading strategy and
+0:088 secondsit's usually by those flashy traders showing cars watches lifestyles and to be honest with you it's not as simple as these people make it seem to
+0:1717 secondsbe however it's also not very hard and it's very possible there's no premise of finding these good setups or trading
+0:2424 secondsthis method and you're going to be successful by tomorrow there's a lot more that goes into that and basically in this video i'm going to go over the
+0:3232 secondsbasics for what i look for before entering a trade to make sure the odds are in my favor and i want to be on the right side of
+0:4040 secondsthe market i'm going to show you the charts along with some psychological points that i wrote up to kind of back it up but before we get into it i'm
+0:4848 secondsgoing to link my instagram in the description below at investortrade i definitely recommend following this i post daily training recaps on here along
+0:5757 secondswith very good trading tips and tricks that i guarantee you are not gonna find anywhere else the link is in the description below but now let's get
+1:051 minute, 5 secondsright into the video i got inspiration and the idea to do this video i was talking with my good friend over the weekend
+1:121 minute, 12 secondsand he works at a very big firm in the city and one of the top traders at the firm does certain things i'm going to talk
+1:191 minute, 19 secondsabout in this and i'll actually explain a good example of it but it kind of gave me inspiration to do this because subconsciously these are
+1:291 minute, 29 secondsthe things that i think about throughout the day and even when i'm planning to trade something to come up with quality setups and to make sure that the odds
+1:371 minute, 37 secondsare in my favor so the first thing is kind of like the macro view and i must be familiar with the technicalities of the market so every
+Chapter 2: Market context and analysis
+1:451 minute, 45 secondslarger incident affecting price is going to be given due weight what i mean by this is kind of the overall bigger picture if we are day trading the
+1:541 minute, 54 secondspremise to this video scalping day trading uh sometimes we get too focused on the smaller time frame picture
+2:032 minutes, 3 secondslooking at so much of intraday fluctuations that we forget about everything that's going on on the macro view and kind of like the larger picture
+2:112 minutes, 11 secondsthat will affect the smaller view now what i mean by this and how i do this is number one i'm not sure if the
+2:192 minutes, 19 secondsguy on wall street does this but this is what i do um i look at context i would say context is one of the most important things to me
+2:272 minutes, 27 secondsbecause it's given me the relationship between buyers and sellers and the way i look at it is the market's a storyteller
+2:332 minutes, 33 secondsand we must get context clues of the story that the mark is trying to tell us it's never going to tell us the story
+2:402 minutes, 40 secondsdirectly but it's going to leave us clues and you know think about your kindergarten teacher saying use context clues to understand what this word means
+2:492 minutes, 49 secondsit's the same thing with the market so i kind of use the relationship between buyers and sellers to get a good idea of the context with the market and as i'm
+2:572 minutes, 57 secondsrecording this video um the past two days in uh the third week of april
+3:043 minutes, 4 secondshad very large sell-off days this is talking about the s p 500 and even uh i could pull up nasdaq nasdaq's the same
+3:123 minutes, 12 secondsthing overall very bloody in the market the past two days on a thursday and friday of april 21st and 22nd and the
+3:203 minutes, 20 secondsmarket was selling off very aggressively now prior to this this is where context comes into the picture the market was very balanced
+3:293 minutes, 29 secondsnow the idea in balanced markets usually is to buy the lows uh and sell the highs because the market
+3:363 minutes, 36 secondsis in balance buyers and sellers are agreeing on price where every move up would get sold into and every dip down would get bought into that's when the
+3:443 minutes, 44 secondsmarkets in balance and then when we get an imbalanced market where it's basically moving out of balance or one side either buyers are
+3:523 minutes, 52 secondsshowing aggression to the upside or sellers are showing aggression to the downside that's an imbalanced market imbalance not in balance
+4:024 minutes, 2 secondsum that's when we're going to get continuation and that's when we're going to get the large rallies or the large sell-offs to the downside that the
+4:114 minutes, 11 secondseither sellers are outweighing the buyers or buyers are out wearing the sellers in this case every uh to start the week
+4:194 minutes, 19 secondswe had a strong uptrend three days of dips getting bought some rallies kept showing continuation and supply zones
+4:274 minutes, 27 secondsnot really being very reliable then the market on thursday and friday hit a very key supply zone this is on the s p at
+4:344 minutes, 34 seconds45.03 and even on nasdaq make this little bigger hit a very key supply zone at one four two seven seven
+4:434 minutes, 43 secondsand a half that every time we test it see if i can pull this up here uh every time we test it we fail at it
+4:494 minutes, 49 secondsso you know three four times in the past this zone has rejected and we've sold off from it every single time so we have clear sellers now evident in the market
+4:584 minutes, 58 secondsand as the market's moving lower we had a day on thursday where it was an all-day sell-off where demand zones the day prior
+5:065 minutes, 6 secondseven a few days prior you know i could mark a whole bunch of demand zones they got destroyed and didn't find signs of buyers so when the context is
+5:145 minutes, 14 secondsweighing this heavy to the sell side i use this context of being less inclined to playing the market to the long side
+5:225 minutes, 22 secondsand i rather focus on shorting rallies to the upside that fail if we are talking about demand and not being reliable and supply being extremely
+5:315 minutes, 31 secondsreliable with a very heavy market sell off to the downside now you flip that to the upside act like this is a very strong uptrending market we might have a
+5:405 minutes, 40 secondssupply zone in this area right here uh the market opens up we hit demand perfectly we rally we hit supply act
+5:475 minutes, 47 secondslike this is a pink box and we automatically just slice through it show no signs of selling now we have a strong clean up trend in our picture and maybe
+5:555 minutes, 55 secondsthe next day we might look for some continuation the next day we balanced the day after that we got that move up into that key supply zone and sold off so the market's
+6:046 minutes, 4 secondsdynamic it's constantly changing and if we were to use the context from this day's action on thursday where
+6:116 minutes, 11 secondsthere was very heavy selling no aggressive buying very aggressive selling the following day here's that thursday here's that friday
+6:206 minutes, 20 secondssame thing remember what i mentioned about all those demand zones not being reliable on thursday what makes you think they're going to be reliable with the similar or the same action that we
+6:296 minutes, 29 secondssaw the day prior so that's market context you could look at that as a weekly scale you could look at that as a monthly scale it really depends on the
+6:366 minutes, 36 secondstime frame you're looking at i like to use a good reference of the past week the current week and uh overall you know i could look at
+6:456 minutes, 45 secondsgo to a new drawing set here you know you could look at a daily chart and kind of get a bigger picture of what's going on when the market was strongly uptrending back in you know may
+6:546 minutes, 54 secondsjune all the way to the new year uh dips would get bought up easily you know i could draw a hundred different demand zones some in this area
+7:037 minutes, 3 secondssome in this area that dips would get bought up and supply would not be very reliable but now the market's balancing out where rallies to
+7:127 minutes, 12 secondsthe upside have been getting sold into and dips to the downside have been getting bought and the philosophy that i use in the market is
+7:197 minutes, 19 secondswhen there is a different reaction we're going to get a different result but when there's the same reaction the odds are we're going to get the same result so
+7:287 minutes, 28 secondsthe day prior like i just said all day sell off the following day same thing demand zones not being reliable and you could use this to your advantage because
+7:357 minutes, 35 secondsyou could come up with an intraday plan that uses failing to find buyers at demand to possibly play the market short if we could get selling confirmation so
+7:447 minutes, 44 secondsthat's kind of a lot on market context if you guys want me to do a more in-depth video on all these points i'm going to mention just let me know i have
+Chapter 3: Related markets analysis
+7:527 minutes, 52 secondsno problem doing it uh but really how the guys on how this guy on wall street does it he's big into oil
+8:008 minutesand other commodities i can't get into too much details but his edge is knowing related markets and
+8:078 minutes, 7 secondsi think this is key even for us day traders uh specifically the s p specifically nasdaq
+8:148 minutes, 14 secondsand even other major market leading names i love trading options on names like you know apple microsoft tesla
+8:238 minutes, 23 secondsfacebook and i think this is key for us as well because we must look at different related markets this guy has
+8:308 minutes, 30 secondsan edge in if let's just say he wants to trade crude oil he'll be looking at let's just say heating oil or gasoline he'll look at the two spreads he'll look
+8:398 minutes, 39 secondsat the net differences and without even looking at the charts he'll get a good direction of the market he's looking to trade just by looking at different
+8:478 minutes, 47 secondsrelated markets so that's an edge in itself and i think that's very important in getting a macro view of the setups that we are trying to trade
+8:568 minutes, 56 secondsif i'm looking to play i'll get into this a little more in detail but you know if i'm looking to play microsoft uh long right and i see
+9:059 minutes, 5 secondsmaybe nasdaq selling off aggressively i might hold off on playing microsoft long or if i'm looking too long let's just
+9:149 minutes, 14 secondssay nasdaq right after it hit supply you know maybe we have demand uh
+9:219 minutes, 21 secondsin this area right here let's just say we had demand that's a green box uh i want to look at maybe let's just
+9:289 minutes, 28 secondssay microsoft amazon tesla and i want to make sure if if nasdaq is bouncing off the zone i want to see other equities
+9:369 minutes, 36 secondsalso showing strength i don't want to see weakness in the market because that's going to basically valve validate that this bounce off demand is
+9:449 minutes, 44 secondsgoing to be weaker and we are going to see continued selling to the downside if related markets or related instruments do not agree with our analysis
+9:539 minutes, 53 secondsso i think looking at related markets is very key there's a website called uh slick charts i could actually pull it up here
+10:0210 minutes, 2 secondsum where you could see the weight of each company like i traded boeing the other day and boeing is a major doubt component not so much nasdaq and i was
+10:1110 minutes, 11 secondslooking at the dao future when i was trading boeing as well but you could go into companies and you can see the weights of each
+10:1910 minutes, 19 secondsmajor market leading industry and which companies basically lead or make up the market look at it as like a bread basket
+10:2710 minutes, 27 secondsand the stocks that are bred in the basket that's a good little tip um and then different economic events news
+10:3410 minutes, 34 secondscatalyst i do this before the market opens up i'm aware that maybe pal might be speaking on wednesday or there might be earnings for
+10:4210 minutes, 42 secondstesla tomorrow and this thing has a nice setup and i know the premiums and the options are going to be jacked up so i think these are three major components
+10:5110 minutes, 51 secondsto like the macro view that could affect my analysis intraday and it's important to know the larger time
+10:5810 minutes, 58 secondsframe picture when you even if you are trading in your day and now intraday is much more important because this is where execution and execution is the
+Chapter 4: Execution and intraday
+11:0511 minutes, 5 secondshardest part for any trader beginner advanced and basically how i trade and what i want to see is if i could read the market
+11:1411 minutes, 14 secondsproperly can i read the story properly if i can't i most likely will not trade it uh members in the discord have asked
+11:2111 minutes, 21 secondsme sometimes where there was a clean setup perfect setup it worked out according to our pre-market plan and sometimes i
+11:2811 minutes, 28 secondsdidn't take the trade because i didn't read it properly so even though some things might work out if i can't read it and understand the driving forces
+11:3711 minutes, 37 secondsbacking the move or backing the market then sometimes i might miss a move because i can't properly read it or i can't properly see it and if i can't do
+11:4511 minutes, 45 secondsthat then i know the odds might not be in my favor and i'm okay with sitting on my hands and waiting for a better setup so it's really putting the pieces
+11:5311 minutes, 53 secondstogether intraday context now relationship between buyers and sellers factored in intraday i use this example in one of my uh other
+12:0212 minutes, 2 secondsvideos that i just made but let me pull up the s p here and remember that example i just showed you about we hit supply there were tons
+12:1112 minutes, 11 secondsof demand zones in this area that we invalidated now the following day how that would protect me is on a day like this where i saw demand zones not
+12:2012 minutes, 20 secondsbeing reliable and supply zones being extremely reliable where every single time we would move up we would fail i would use that context the next day
+12:2912 minutes, 29 secondsand that either a might prevent me from getting into another trade at demand because what this tells me now intraday
+12:3612 minutes, 36 secondsis since yesterday we're in a severe downtrend demand zones are not being reliable what makes it seem that yeah we're at demand what
+12:4412 minutes, 44 secondsmakes it valid that we might bounce out of this level it's possible it could work we could rally a hundred points out of it but because of the action yesterday i'd
+12:5312 minutes, 53 secondsrather be a little defensive and let buyers really prove themselves to me for me to play on the same side and be a buyer in the market
+13:0213 minutes, 2 secondsso that's kind of the intraday context or b so it'll a will let me prevent or prevent me from taking a bad trade or b
+13:1013 minutes, 10 secondsit might let me take a really high quality trade because i could recognize this and say hey we're not finding buyers in demand
+13:1913 minutes, 19 secondslet me look for an area that i could find sellers active intraday let me take take the market short respect my risk target the demand zone
+13:2713 minutes, 27 secondslower and we hit every single demand zone lower very similar action to the day prior now how this also will help me is how is
+Chapter 5: Volume and confluence
+13:3613 minutes, 36 secondsvolume volume is very key i got some videos on my channel about about volume and if i don't see volume i probably
+13:4313 minutes, 43 secondswill not take the trade you could ask any trader that is an intraday trader and how important volume is to their analysis
+13:5113 minutes, 51 secondsit's everything volume shows interest and if there is no interest in the market the chances of continuation are very slim
+14:0014 minutesinterest also make sure you are trading on the right side of the market with the same participants that you want to drive
+14:0714 minutes, 7 secondsthe market in that direction you are looking to trade at so volume is very key if i see a lack of volume in my direction i'm either getting out or i'm
+14:1614 minutes, 16 secondsnot taking the trade of related instruments exactly what i just mentioned before do they support my analysis i must
+14:2414 minutes, 24 secondsrecognize inherent weakness or strengthen the market a good example of that was uh let me pull up the microsoft example here again
+14:3314 minutes, 33 secondsso microsoft back on 419 bounced off this very very key demand zone and had a very strong rally
+14:4114 minutes, 41 secondsnow if i was trading microsoft and i wanted to get long microsoft or if i'm even trading the s p right
+14:4814 minutes, 48 secondsi just recognize okay the s p just hit demand microsoft is rallying what looks good to me maybe i'm maybe
+14:5614 minutes, 56 secondsi'm not an s p trader and maybe i trade in equities okay i'm going to get long microsoft i see the s p is bouncing off demand i see
+15:0415 minutes, 4 secondsnasdaq is bouncing off demand with it i see other major market leading names rallying amazon started rallying to the upside that day
+15:1315 minutes, 13 secondsapple started rallying to the upside so we had very strong confluence with other major market leading equities
+15:2115 minutes, 21 secondsand that kind of supported my thesis if i was trading spy or if i was trading the queues or even if i was trading
+15:2815 minutes, 28 secondsmicrosoft itself so always look at the related markets if you're trading um boeing or if you're trading
+15:3615 minutes, 36 secondslows or any major dow jones stock make sure you're looking at the dow to support that analysis if
+15:4515 minutes, 45 secondsuh on so on friday april 22nd the nasdaq was aggressively selling off right
+15:5215 minutes, 52 secondslower lows lower eyes got below our bearish line at one three six four seven and let's just hypothetically speak here
+16:0116 minutes, 1 secondlet's just say tesla had demand right this is a good example so tesla was relatively strong because compared to
+16:0816 minutes, 8 secondsthe nasdaq the nasdaq was selling off all day while tesla was was holding strength relatively strong and we closed you know
+16:1716 minutes, 17 secondsnot very red on the debt so let's just say tesla had demand uh that formed intraday
+16:2416 minutes, 24 secondslet's just call it uh in this area right here picture that being a green box tesla pulls back into this demand zone
+16:3216 minutes, 32 secondsand it looks like it start coming up right yeah you could take it long yeah you can make money on the setup but like i said earlier in the video are the odds
+16:3916 minutes, 39 secondsreally in your favor you could get a quick 30 point rally on this no problem at all right but if i'm looking at nasdaq and i see
+16:4716 minutes, 47 secondsnasdaq you know at the same point tesla's in this demand zone and nasdaq's in demand but nasdaq is failing to rally to the upside
+16:5616 minutes, 56 secondsand i'm looking to trade tesla more than likely i'm not taking this tesla trade because my underlying related market is not really agreeing
+17:0417 minutes, 4 secondswith this analysis however if i am trading tesla and this thing does start looking good off demand and i
+17:1217 minutes, 12 secondssee nasdaq let's just say i don't know let's go to a different day and i see nasdaq maybe bouncing off
+17:2017 minutes, 20 secondsdemand right here and it starts moving up at the same time tesla starts to move it up as well then yeah maybe i'll take tesla because i
+17:2817 minutes, 28 secondsknow the odds are in my favor the market is a probabilities game i'd trade only when the odds are in my favor when my
+17:3517 minutes, 35 secondsedge is present if it's not i'll either a trade smaller size to protect myself for a loss that i could have avoided or
+17:4217 minutes, 42 secondsb which i recommend everyone to do not trade until your setups trigger so looking at related markets is a very key thing
+Chapter 6: Trade management and psychology
+17:5017 minutes, 50 secondsuse that example with a guy on wall street that i said earlier and finding a proper entry point is something that slept on i think entries
+17:5917 minutes, 59 secondsare the most important thing a good way to get better at entries or confirmation is to record your screen
+18:0718 minutes, 7 secondsevery day record your screen uh and then go back after the market closes look at what you could have done what you should have done what you shouldn't have done
+18:1618 minutes, 16 secondsand what you did wrong to kind of correct and fixed and then once i get my entry then i get my stop loss where my analysis will be
+18:2318 minutes, 23 secondsincorrect and where i'll be correct is my target and then i put the trade on and then the result is
+18:3118 minutes, 31 secondseither going to be a win i hit my target or i hit my stop loss my analysis is incorrect and i focus on another setup
+18:3818 minutes, 38 secondsso this is kind of like the checklist of the things that i look for uh you know it's a 19 minute video and i tried to squeeze i
+18:4618 minutes, 46 secondscould make this a freaking you know three hour long video if i wanted to so uh and then after review
+18:5318 minutes, 53 secondsif i lose on this trade it's okay i will have losing trades persistence will keep me at work during adverse
+19:0019 minutesperiods self-belief knowing i trust my plan and i trust my emotions to get me back on track and self-control to avoid
+19:0719 minutes, 7 secondsover-trading a lot of traders do not have self-control they force setups they over trade and they just keep you know stabbing themselves in the leg
+19:1619 minutes, 16 secondsdestroying their account and depleting their money and they don't believe in themselves because they don't have confidence they don't have something that works for them and you can't have
+19:2419 minutes, 24 secondspersistence if you don't have self belief so i hope this video helped kind of tying in emotions to what i look for
+19:3219 minutes, 32 secondsintraday and macro picture if it did drop a like comment if you have any questions definitely check out the links in the description below i offer a
+19:4019 minutes, 40 secondsin-depth and educational course that comes with access to the discord and no extra charge definitely take advantage of the prices on the site
+19:5019 minutes, 50 secondsi'm ending on that note peace out
+
+Sync to video time

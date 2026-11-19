@@ -1,0 +1,110 @@
+Chapter 1: Why order flow levels up any strategy
+Orderflow trading will level up any trading strategy that you use. Now if you use ICT trend lines, break and
+retest, Fibonacci, simple price and volume analysis. If you implement orderflow, it will level up all of these
+strategies tremendously. It'll provide better confirmation signals. It'll provide better risk-to-reward ratios.
+It'll give you a higher probability of that setup working. And most importantly, it will just provide more conviction in your trades and your
+strategy if you implement orderflow to provide you more information that cannot be seen off of a candlestick chart alone. So, without further ado, let's
+get into these examples and I'm going to show you all why orderflow is very powerful. Let's first go over a simple break and retest. Very, very effective
+Chapter 2: Break & Retest Setup
+on its own, but using orderflow can help level up this trading strategy. So here we could see a key level that's developed by a clear level where the
+market had resisted once, had resisted twice, and then had resisted again three times before eventually breaking above
+this level. Now a few sessions later the market had pulled back again into this level and then previous levels of
+resistance have supported the market once and also zooming in a little bit more here it supported the market again
+two different times after it was above this key level. Then a few sessions later the market had eventually broke back under this level. Zooming in, we
+could see another clear rejection of this range and then even another clear rejection of this range where every time this level was tested once under the
+market had sold off from it. Keep in mind the level is sitting around 6935 to about 6940. It's about a 56 point range of this uh yellow box right here.
+So that level being 6934 to about 6940, we could see the market rallying up into
+this which you would see a box here or a level of resistance. And as it's rallying up into this 6934 level, we can
+see this orange, red, yellow line, which indicates a wall of sellers. So, as the market's moving up into a level of
+resistance, we see a wall or what proves resistance to be resistance is strong passive sellers providing a ceiling to
+price, making it very difficult for the market to break above it. Now, if at any moment does any orderflow term or concept confuse you, I have a full
+orderflow trading series that I will link in the description below of this video. But as the market is lifting into an existing level of resistance, we see
+these red, orange, yellow lines here proving more resistance in the market.
+And what's significant here is as the market is lifting and trying to move up and rally, we see buying volume come in
+and we can denote this by these large green bubbles. Now, what this tells me is that the market is trying to lift on
+aggressive buying. But despite all of this aggressive buying volume, the market is not getting rewarded to the
+upside. And these aggressive buyers are not willing to take the market above this existing level of resistance. And
+inside of this existing level of resistance, a wall of passive sellers.
+If the passive sellers have more quantity of sell orders than the aggressive buyers, then the market's
+only option is to start moving down and sell off. And this is a great orderflow confirmation contextually fitting that
+provides sellers are here where we can then follow their footsteps, especially this being at a level of resistance from the break and retest strategy. Zooming
+out, looking now into what the market does. This is around 2:00 Eastern time.
+The market rallies 6934 6936.
+And as it's rallying into this, we see this wall of passive sellers denoted by these orange lines. Now, as the market's
+lifting, the buyers tried to break above this passive seller, but the passive sellers won the battle, indicating that
+the liquidity was picked up. Sellers still are winning this battle. And now once the red bubbles come in or the aggressive selling gives this trade a
+lot of conviction and confidence that this is an ideal entry point and an ideal scenario where sellers have the upper hand where we can then follow
+their footsteps and capitalize on a solid reversal. Digging even deeper looking at the footprint chart we could see the same exact thing occur here. The
+market's rallying and as it rallies we start seeing a lot of red negative delta which indicates a lot more aggressive
+selling is coming into the market as the markets lifting up into this level of resistance right here. This break and
+retest and we could see the selling also tremendously build indicating that sellers are sitting here. Now here's a
+live video replay of this. I'm going to speed this up a little bit and what we're going to see is all this blue buying volume come in at this break and
+retest level of resistance and we're going to see a lot of buyers try to lift the market. But watch this move try to go up and immediately gets whacked what
+we're seeing right now and we're going to start seeing aggressive selling come in. So buyers are trying to come in right now. They're trying to lift this.
+Watch this move get sold into. Market moved up right there and now it's starting to bid down much lower and offer much lower and we're going to
+start seeing aggressive sellers come in and a lot of red start printing right here. A lot of red is printing, more reds building, more selling is coming
+in. This is very good confirmation and more conviction in the setup that we are placing ourselves at this level of
+interest where sellers are agreeing with our overall market analysis. When you combine this order flow with a simple
+Chapter 3: Trade Example
+system like a break and retest, it'll give us that conviction. And here, right, yes, we could see the rejection 6934, right? But let's just say we were
+6:006 minuteswaiting for a 5-minute candlestick chart to start moving down. We saw on the order flow sellers sitting at 6933,
+6934. What that'll enable us to do is get short as soon as we see that activity, giving us about a 1 and a half
+to two point stop loss. Even if we targeted the most recent swing low, that's going to give us about eight points of target. That's an 8:1 5:1
+risk-to-reward ratio using the order flow. Now, let's say we maybe wait for a 5minute candlestick chart to close.
+Still excellent, right? And now maybe our target is still the most recent swing low. It's still a good risk-to-reward ratio, but you see how now much wider our stop loss is going to
+be, and that's going to minimize our target as much as possible. With order flow, it provides better risk-to-reward ratios and higher conviction and
+probability. So, we're following the footsteps of the confirmation that we're seeing from the buyers or sellers on the order flow. Now, this same level 6934
+that rejected on that setup also rejected the following day. And this is going to bring me into not only break and retest, but also maybe even trend
+Chapter 4: Trend Line Setup
+lines. A very simple strategy of just simply using trend lines. So, here we could see that same break and retest level. And now we can draw a downtrend
+line where we have multiple touches. We have the first touch of the first rejection. Market sells off, rejects, rejects, and then the following day we
+get that fourth rejection. I want to show you all the fourth rejection at the break-in retest level around 6935, 6934 all the way up to like the 6940s again.
+So we have that rejection and I'm also going to show you a downtrend line, right? So this is why it's important to validate maybe your trend line breaking.
+Maybe it's a strong break, maybe it's a weak break. But we can see how successful or how unsuccessful a trend line is going to be if it holds or if it
+breaks by confirming this with the order flow cuz this market had bounced off this and it was a perfect fake out. So here we have that same downtrend line
+6934 6935 is where that downtrend line actually lined up with the break-in retest. Here we could see the market rally up, right? And let's ignore we
+know what happens next. Let's say we don't know what happens here. If we were to look at this chart, this market looks very very strong. And traders looking to
+buy the breakout above the trend line expecting upside continuation would just get faked out. And if you use the order flow, you would not get faked out to a
+long and everything here is indicating a potential short as sellers are present.
+The one thing that we notice here is the market basically puts in this double top. Yet the cumulative delta puts in a higher high and is significantly higher
+here than it was above this previous high, indicating that potentially buyers are going to become trapped here.
+Especially when we combine this with this passive seller that was sitting here and the passive seller that didn't get filled but reoffered as the market
+was coming down with some significant selling volume. Now, zooming in even more, here's that double top. Following the double top and the rejection, I
+9:019 minutes, 1 secondhighlighted this red circle here. We could see significant volume by time.
+Over here, 1786 contracts hit the bid at 6932 right here. 1786 contracts of
+aggressive sellers. Massive, large, aggressive, violent sellers stepped into the market as it was rejecting this downtrend line. Looking at the
+candlestick chart alone, cannot see this information without diving deeper into the order flow. And the reaction was
+about a 50point sell-off to the downside following that uh trap buyers slash very large aggressive negative delta sellers that we could spot here at those highs.
+Looking at this trend line right now, we could see the clear rejection. But if we were to just use a candlestick chart to enter this without spotting those large
+sellers sitting at 6932 by the time we enter this trade 6928 6926 and our entry is going to be much lower but following
+10:0010 minutesthe footsteps of the sellers here it'll get us in I don't want to say before the move but it'll get us in when the volume is confirming that the market's not
+agreeing in that direction that it was moving in before the rejection. And here we could see the market aggressively rallying up. We see the sign of trapped
+buyers here at the trend line. The market then revisits it. Put this double top in. We see the aggressive buyers.
+This is where the buyers increased, but the market couldn't even break that high a day aggressively. And then following that, the market had rejected. And here's that really large seller that
+came in around 6932. And here's the selling volume to confirm the weakness to the downside, giving this solid validation that whoever bought this
+breakout above the trend line is going to get faked out. And this could be a very good setup for us to look for shorts and capitalize on a downside
+move. Now, similarly, I'm going to show you all the uptrend. This happens around 6872 to about 6867. Here's the uptrend line
+forming. It forms first around November 21st, bounced about a month later, December 17th, and then on January 2nd,
+the market third time bounces off this trend line. And I want to show you all the third th trend line touch uh which happened around 2:00 Eastern time where
+the market had aggressively rallied up and bounced where we can look to capitalize on this move. Right? If I go here at this moment, the market looks
+very weak. Right? We're putting in lower lows. We're putting in lower highs.
+Everything is indicating the market intraday is downtrending. And now we start breaking this trend. Hey, let's maybe look to get short. No, because if
+we use the order flow, there's going to be some significant signs of buying activity here. And what I mean by the buying activity here is we could see the market breaking this trend line right
+here where I'm highlighting and the selling being the strongest. The way I look at it is if the selling is the strongest that we've seen so far in the
+most recent range and the market cannot continue to sell off. This is a very good indication that a buyer is present.
+Especially when you combine this with a level of a trend line where the market knows a lot of retail traders are expecting the market to have
+continuation down. could provide a good opportunity to pick up liquidity, stop out a bunch of traders, and we can validate this with the selling volume
+that we see here. Now, looking at the heat map, we can see the same exact thing. If you saw the simple fiveminute scalping strategy that I posted on my
+YouTube channel, we can see the same thing occur here. The market starts moving down, we consolidate, we form the market structure, level of demand, and
+then we pull back. And step number three of that simple strategy that I explained in my previous video, we see step number three at hold right here, providing
+great opportunity that buyers are present here, especially of it being at a trend line with new market structure demand forming, providing an excellent
+optimal entry point to get long and follow the footsteps of the large buyers bouncing the market off this trend line.
+Here's that super strong aggressive selling. We can validate this with the selling volume. Here's that market structure demand. And here's this level
+holding the trend line and that market structure demand. And the market aggressively moves up and rallies from that. And that's how we're able to use the order flow to capitalize on a
+potential long down here and capitalize on this move up instead of taking the short chasing an extended move just simply because of a trend lines
+Chapter 5: Summary
+breaking. So I'm very confident order flow will provide more conviction in your trades. Maybe enable you to not get as faked out as much. maybe enables you
+to play a little more defense or even strike on offense when you have great confirmation because the conviction is there off of your existing trading strategy. This is not changing anything.
+This is just adding and implementing something new that gives you more insights about the deep components of the market and what is driving price.
+And what drives price is volume. And we can see this with the order flow. If you got any value out of this, I would appreciate a thumbs up. If you have any questions, comment them on the video. Go
+through all the comments and check out the links in the description of this video. If you're new to my channel, hit that subscribe button. But other than that, I'm ending it.

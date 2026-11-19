@@ -22,9 +22,9 @@ installed there, not under the default `python3` (3.11).
 | # | Topic | Videos | Status |
 |---|---|---|---|
 | 1 | The zone: what it is, how to draw it, when it is tradable | 4 | **done** |
-| 2 | Context and zone selection | 4 | transcripts needed |
-| 3 | The order-flow trigger | 4 | transcripts needed |
-| 4 | The complete method, and risk | 4 | transcripts needed |
+| 2 | Context: reading the day before you trade it | 4 | **done** |
+| 3 | The order-flow trigger | 4 | transcripts in, not yet built |
+| 4 | The complete method, and risk | 4 | transcripts in, not yet built |
 
 ### Carried forward
 
@@ -35,6 +35,39 @@ once the relevant transcripts are in:
   exhaustion from footprint and delta only, because that is all these four
   transcripts use. He does teach profile shapes elsewhere. Best fit: module 3,
   the order-flow trigger.
+
+
+## Source dating - read this before trusting a module
+
+The corpus spans four years, and his tooling changes across it. Each video is
+dated from the trading dates and index levels he quotes on screen; every
+weekday he names matches the calendar for the year given.
+
+| Video | Era | Evidence |
+|---|---|---|
+| 02 complete-sd-guide | Oct 2022 | "Friday October 7th", S&P 3675/3750 |
+| 04 sd-zones-right-way | Jun 2022 | "June 28th", S&P 3828-3950, NDX 12160 |
+| 07 why-i-love-sd-zones | Feb 2022 | "February 22nd", S&P 4295/4316 |
+| 08 what-i-look-for | Apr 2022 | "April 21st/22nd" Thu/Fri, S&P 4503, NDX 14277 |
+| 06 trading-sd-in-a-trend | Apr 2023 | "Thursday April 27th", S&P 4107-4115 |
+| 01, 03, 05 | undated | no dates or index levels quoted |
+| 11 orderflow-confirmation | ~2024 | ES 5046-5048 |
+| 10 better-entries | ~2025 | ES 6595 |
+| 16 january-reset | ~Jan 2025 | "2025" stated, ES 5823 |
+| 09 orderflow-playbook | ~2026 | ES 6837/6838 |
+| 12 orderflow-levels-up | ~2026 | ES 6934/6936 |
+| 15 the-30k-mistake | ~2026 | ES 6967-7027 |
+| 13 masterclass | ~2026 | ES 7360-7593 |
+| 14 day-trading-strategy | ~2022 | ES 3758-3896 |
+
+**Modules 1 and 2 are built entirely on 2022-23 material. Modules 3 and 4 are
+mostly 2024-26.** Tooling tracks the same split: Bookmap is mentioned zero times
+across every 2022 video, once in the April 2023 one, and four times in the
+module-4 batch; footprint charts go from 6 mentions to 27.
+
+So where a later module conflicts with an earlier one, the default reading is
+**the method moved on**, not that he contradicted himself. For live trading,
+prefer the newer statement and say so explicitly in the text.
 
 ## Module 1 sources
 

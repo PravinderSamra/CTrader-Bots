@@ -1,0 +1,249 @@
+Chapter 1: Introduction
+in this episode of the orderflow series I want to talk about how I get great confirmation signals and what makes me exit the trade there are some positions
+where I'll have a 5 to1 risk of reward ratio I'll risk $2,000 to make $10,000 and there's some trades where I'll have
+a 9 to1 10 to1 which means I'll risk $3,000 to make 27 $30,000 and in this video I want to talk about the things
+that I look for that actually makes me click the buy or sell button what is it that I exactly see on my charts that makes me buy that position or sell that
+position and I'm going to walk you through bar by bar so that way you can see in real time in a live trade simulation of exactly how I navigate the
+markets and what I'm completely focused on on an intraday basis that enables me to get great risk of reward ratios and take high quality trading setups with
+proper confirmation if you're new to the series I would recommend checking out the other videos in the series and also if you're new to my channel I would recommend subscribing and dropping a
+thumbs up on this video especially if you learn anything new as we prog ress through this lesson but on that note let's Dive Right into this video so the
+first thing I want to go over are the three pillars to my trading in terms of execution and in terms of buying and selling these three pillars are crucial
+Chapter 2: The CLC Rule
+for me that when all three align I know I'm going to have an A+ highquality setup and I call these three pillars the
+CLC Rule and I cannot stress how important this is in terms of putting all the pieces together for a high
+quality setup in terms of a high quality setup this is a trade that I took that I'm going to go over which was a $21,000 profit and it was about a 9.6
+to1 R multiple which means I risked $2,200 to make a
+$21,000 profit a little under 10 to1 are multiple and I want to break down how the three pillars enabled me to do this
+Chapter 3: Context and Location
+the first point of the CLC rule is context so we're going to go over all three points context location confirmation whenever you hear me say
+context what I really mean is what is the trend are we uptrending are we putting in higher highs and higher lows is the market downtrending is it putting
+in lower lows and lower highs what is the trend and how is today's volume is today's volume significantly higher is
+it significantly lower are there buyers or are their sellers factored in at a high or low just what is the context whenever you hear me use the word
+context I'm essentially explaining like what is the story the market is presenting the way I view the charts and the way I view the market is it's a
+Storyteller and our job is to read the story the market is telling and if we don't know truly what the story is well
+then we have to use context clues to put the pieces together to figure out the story so anything that helps us put the story together in terms of the market
+the trend the volume buyers and sellers what does a 30-minute chart look like what does a daily chart look like this will all provide us context to
+understand the story behind the Market's action in this example of the $21,000 trade we could see in the overnight session the market was putting in higher
+3:003 minuteshighs signified by all these red lines as the market was moving up it continuously was breaking above the previous high on top of this as the
+market pulled back each low was higher than the previous low signifying the Market's putting in higher highs and higher lows and that means we are
+trending upwards where buyers have the momentum to bring the market higher and sellers do not have enough strength to
+break us under the previous low validating this uptrend point number two is of the C C rule is location is it at
+Chapter 4: Confirmation and Tools
+a level of Interest the basis to my trading strategy revolves around trading the market at significant levels of
+Interest where is the location of the market is at a support resistance level is it at a supply or a demand Zone where is the location that the market is
+trading at and is it at a level of interest that I am comfortable knowing that the auction should react to this location of interest in this example not
+only do we have higher highs and higher lows we also are at a level of demand so going back to this example context the
+trend is up location we are at a level of demand these are the first two points of the CLC rule so now we have location
+this is a significant level that I have to be cautiously watching because it's a level of demand and the trend is up where now the market is pulling back and
+trying to break this trend the question mark that we have here is number one location is at a level of demand and two is context if the market bounces off
+this level of demand this could provide us a high quality opportunity to play a bullish position and to Long the market at this location and point number three
+I'm going to go back to this example because confirmation is the basis to this video but Point number three of the CLC rule is confirmation are buyers
+willing to buy at my level are buyers trapped are sellers willing to sell at my level of Interest or are sellers trapped so confirmation is the last
+portion of the CLC rule because this is what makes me click the buy or sell button and this what makes me exit or enter that specific trade now what we've
+talked about in the previous episodes of this orderflow series is the market moves up simply because there is more
+aggressive buying than there is passive selling that's the only way the market could move up so once there are more aggressive buyers in the market than
+there are passive sellers then we're going to see a green candle present in the market I don't want traders to have the misunderstanding that just because
+we have a green candle to the upside means that more buying is coming in more buying comes in which then is printed on
+the Candlestick chart the candles form because of the volume the volume doesn't form because of the candles do not get that twisted and vice versa the market
+selling off and moving lower we have more aggressive selling than there is passive buying we could see this reading the volume and the candles represent
+what's going on behind the candles via the volume and via the order flow so understand that candles form because of the volume volume does not form because
+of candles and because of this a Candlestick chart does not tell me when to enter or exit the tape does the volume does the order flow does I am
+never making a sole trading decision off of a Candlestick chart just because of a 1 minute 5 minute 30- minute chart has a bullish Hammer candle that I'm getting
+long just because the Candlestick chart is telling me to trading in my opinion especially in the short term requires more than just the candles and digging
+deeper of what's going on and why those candles are forming footprint charts a heat map a depth of Market any tool which which enables me to read the
+volume and the order flow properly will let me see what's going on behind the Candlestick charts and then I could spot how strong or how weak the buyers or sellers are and even where there's a
+large buyer or seller present or where there's absorption or where there's even weak buyers and sellers and I can make trading decisions off of this the point
+of getting great entries and exits is to not rely on a Candlestick chart and to rely more on the order flow and the volume data which then makes up the
+Candlestick charts now that's not to say I don't use Candlestick charts or any time-based chart at all if I'm using the
+7:007 minutesCLC rule context and location of the CLC rule most of the time not always comes from a Candlestick chart so the time
+frames that I will use if I am using a Candlestick chart for context and location not confirmation cuz confirmation I use the volume for context and location I'll use these time
+frames if you want to pause the video and save it this is the time frame charts that I'll continuously cycle through and and look for different levels or locations or understand the
+context of the market now in terms of confirmation which I said I'll get back to in terms of confirmation what time frame do you use Carmine do you look at
+Chapter 5: Trading in the Now
+a specific time frame chart how do you confirm the setups like what is it that makes you click the buy or sell button and for me personally I will never click
+the buy or sell button strictly off of a Candlestick chart I need to read the orderflow and the only way we can do this is what I call the now now people
+always hear me refer to the now and be like Kon what are you talking about saying the now and this is the time frame that I use I use the time frame of
+the now when I am reading the orders coming in right now in the present moment this is the time frame that I use because right now in the present moment
+the market provides all the information that I need to click the buy or sell button and if it doesn't provide me enough information then that is
+information in itself for me to avoid a trade and to not take that specific setup so the time frame that I use to confirm my trades how I get great risk
+of reward ratios what makes me buy or sell is the now time frame reading the volume and reading the orderflow the now gives me all the information that I need
+if I see the market breaking below a support level we have a support level here we're selling off it breaks the level of support but as soon as it breaks there's buying activity here well
+guess what I'm getting long as soon as I see the buying activity I'm not waiting for the market to Rally up and getting long all the way up here I'm getting in
+long when I see the buying activity in the now and the only way we can read this in the now is by reading the orders coming through right now instead of
+waiting for a 5-minute Candlestick chart to provide a hammer candle or a dogee chart for me to get long just is because the candle told me to do so why that
+9:019 minutes, 1 secondcandle actually formed is because the buying that we're seeing down here as the level of support was broken or if the market is breaking this level of resistance we're uptrending we're
+uptrending and then boom we break the level of resistance and there's a massive seller sitting right here above resistance well as soon as I see that seller get filled I am going to get
+short when that seller gets filled I'm not going to wait for the market to sell off and get short all the way down here because this is now completely skewing
+everything that I'm going against because I want to get short when the sellers are present not when the market has already sold off this is how I get great entries where the risk of reward
+is very high like that 9 to1 R multiple that I showed you in that first trade example the only way we can do this is by reading the volume in the now time
+frame and no time frame chart will provide this clear information in the now to validate this before I get into the actual Barby bar examples of actual
+trades that I have taken let's say the market is breaking above the high of day and what we talked about in episode number six of the order flow series about support and resistance and reading
+the volume how I never play a breakout on a resistance break well if we were to take the market long Above This resistance level look at the time in
+sales right this is at 544 5048 5046 these prices that's when the market is breaking above the resistance level as
+soon as it's breaking above the resistance level there's a seller here in the market why would we long when a seller is present wouldn't we want a short when the sellers are active and we
+can read this by the volume and guess what if we were to read this a seller present here we would be able to get short up here instead of getting short
+when the market Market is selling off and the 5 minute engulfing candle forms because guess what if we're taking it short when the engulfing candle forms that's Pro uh presenting an opportunity
+where the risk is going to be much higher and the reward is going to be much Slimmer versus getting short up here when the volume had told us to do so not when a Candlestick chart has
+already sold the market off now for this trade that I went over earlier this $21,000 profit this 9 to1 risk of reward ratio let's go over this example bar
+Chapter 6: Bar-by-bar Trade Analysis
+toar that way you can understand how I enter and how I exit all these trades in real time so we could simulate what I
+was watching in that exact moment that made me actually click the buy or sell button on my keyboard so this was a $2,000 risk for a $21,000 reward and I
+get long at 953 eastern time as the market is aggressively selling off I am playing long or a bullish position in
+anticipation of the market rallying up the Green Arrow is my entry and the red arrows are my exits now going back to the CLC rule remember what I said
+earlier the market was at a demand Zone going zooming out we could see the market was uptrending and now we're pulling back into this level of demand so if I'm a buyer I would want to see
+this level of demand hold now zooming in right here obviously you all know the market is going to Rally up and I'm going to play a a really good long
+position but if you didn't know that would you honestly let me know in the comments below would you actually take the market long right here when the
+market looks like this honestly would you because nothing on this chart that I'm looking at by a Candlestick chart tells me to get long and play a bullish
+12:0112 minutes, 1 secondposition at this exact moment right now nothing does on this trade I get long at
+5740 placing my stop loss under 5739 it was about a 1.5 Point risk of
+reward ratio for about a 13o reward or Target to the upside people always ask me Carmine how do you get such tight stop losses or Carman how do you get
+such great entries and this is I'm long all the way down here at 5740 now playing the footprint chart we can see
+it's 952 by this clock up here and I'm long at 953 so in the next minute I'm going to get long now I want you all to keep a very close eye on this green box
+is the level of demand and right now at this exact moment what we're going to see here is the selling as we're selling off into this level of demand is
+significantly higher it's it's relatively stronger than the selling that we've seen earlier in fact this current bar on the Delta bar is the highest amount of selling that we've
+seen so far we could see a negative Delta of-7 35 down here and now on the current bar that's currently trading we can see at the low we see a minus 253
+negative Delta and - 253 total volume now which is 254 so I'm going to speed this up and keep in mind right there the
+market broke the low and as it broke the low at 952 50ish uh by this clock up here now that negative Delta of- 254 has
+just turned into a negative Delta of -1100 which means over 900 more aggressive cell contracts came came in
+at that specific price in a 5-second period yet the market did not move down in fact the market moved up so right now this is really getting my interest to
+take a market long we're into the level of demand context we're uptrending location we're pulling back into this level of demand now I'm really looking
+for confirmation my confirmation here is that there's a lot of aggressive selling at this level of demand when I see this in the now again this is something that
+you see reading the volume I'm not using a time frame chart to get long when I see this seller step in right here the aggressive selling come in yet the
+14:0114 minutes, 1 secondmarket can't sell off I view all of this selling as a potential buyer who is passively buying the market because
+context is uptrending so bulls have control location we're at a level of demand confirmation we're seeing all this selling at a level of demand but the Market's not selling maybe somebody
+is passively buying this when I see this at this exact moment right here at 5740 I'm getting long I am entering this
+trade long right here putting my risk or putting my stop loss under this massive sell order which is technically a buyer cuz the Market's going to Rally I'm
+putting my stop loss directly under this very large volume here this is how I'm able to enter right now I'm not waiting for the market to move up I'm not
+relying so much on a Candlestick chart to tell me when to enter I'm getting in Long when everything is looking weak and when majority of Traders are selling
+because at this exact moment this is what the chart looks like I'm not waiting for the market to Rally right now is telling me that there's potential signs that a buyer is present in the
+market this is how I'm able to enter right now with a a very very small stop loss with a high probability type of setup the CLC rule is in effect and I'm
+comfortable getting long here with a really small 1.5 even at most a two-point risk now I'm in long and guess what now the market rallies we want to
+be in before the rally when the clues of the market tell us to enter instead of waiting for the market to Rally like this right here to get long imagine you
+know how good of a feeling it is to be long down here and seeing the market move in your favor 10 15 points while we're in it instead of waiting for the
+market to move up five or 10 more points for then us to delay our entry to get long only after it has already moved and this is how I was able to get this
+profit with a 9 to1 risk of reward ratio now if I were to show you what happens after look what happens now the market begins to Rally up so wouldn't it make
+sense to get long where I did all the way down here when the buying was present that could not be seen off of a Candlestick chart versus getting in Long
+up here when the market has already made a 6 seven point move wouldn't you want to get long at the lower yellow oval instead of getting long at the upper one
+16:0116 minutes, 1 secondor what a lot of people will do is they'll see this little downtrend line they'll be like hey soon as this downtrend line breaks I'm getting in Long well if you spotted the buyers at
+the low you would have been able to get long at the low instead of waiting for that downtrend line to break and relying so much on a time frame chart because time in the market is irrelevant when
+you're speaking about a time frame Candlestick chart volume is more significant and then this is what it looks like on the heat map so here we could see 5740 is where the market
+bounces our demand zone is around this area area at 5743 all the way down to 5738 so you're going to see it by this
+yellow rectangle and keep in mind there's passive order sitting here you see this really large red or orange line this means there's a passive buyer sitting here watch what happens right
+now I'm going to I'm going to play this and I want you all to watch when that 1100 lot Delta comes in or that really large seller steps into the market so
+let's slow this down a little bit we can see A- 691 down here right watch what happens when the market breaks this low watch how the selling comes in and
+immediately rallies up right there right there you saw that Nega 1100 if you got to rewind that you could a seller stepped in really large volume minus
+1171 and despite the selling the market didn't sell off in fact it started moving up when I see this right now I am comfortable getting long placing my stop
+loss under this large buyer potential here for a one two-point stop loss speculating that if I am correct on this analysis the market will rally to the
+upside and guess what the market never looked back after that large seller stepped in down here you can see that really large red bubble the market rallied significantly up higher off of
+this level of demand and this is how I'm able to capitalize on these setups I am getting in in real time and I'm not waiting for the market to move up I'm
+waiting to get in now when the Market's telling me to get in or when other buyers and sellers are leaving their trail that I could follow their Trail in
+that present moment of the now now in terms of where do I exit majority of my exits come from higher days lower days
+vwap the next supplier demand zone or the next support resistance in this example where I got long down here at
+5740 remember the arrow shows just for that candle bar but I'm long all the way down here I'm not long all the way up here my first Target was the high of day
+which is the first red line up here we could see me exits on there and then the second exit is a pre-market high this is how I'm targeting I'm not going for
+large moves I'm going for 10 15 20 point uh rewards because my risk is 1 2 three four points so I'm always maintaining a
+2 to1 risk of reward or better but when I'm confirming my setups this way this is how I get close to you know 5 to 1's 9 to ones and this enables me to lose a
+lot more and be incorrect a lot more but my winners take care of my losing trades now if you think about this waiting for a Candlestick chart to close does not
+validate if the move is strong or if the move is weak what if a candle closes right at the level but the volume is still rejecting or what if the candle
+closes maybe you see the buying volume at 940 eastern time and you wait for a 5-minute Candlestick jar to close which is at 9:45 eastern time but by the time
+the 5 minutes pass the market has already rall 10 or 20 points just because you waited for a 5 minute candle stick chart to close or a 3 minute
+candle to close you already missed a good portion of the move if you're waiting for the time to validate the thesis what does time have to do with
+invalidating or even validating your trading thesis time does not move the market volume and price does and I'm going to show you this example to kind
+of validate why this is important because if you wait for time to validate it you're going to completely skew your risk of reward ratios so in this example
+we can see that the uh first Target was the high of day up here and then the second target where I got all out of the position was the pre-market high right
+here these two upper green lines so let's just say I got long when the market broke above this downtrend line this white line we wait for the trend to
+break it was at 955 so we waited for the 5minute Candlestick chart to close and we're long up here at 5746 if we're long
+up here at 5746 for us to be incorrect on the analysis where our stop loss is where our thesis is proven completely
+false and incorrect we would have to place our stop loss at the low of day so this pink box now is our risk box this is where we're if we're wrong on the
+setup this is how much we're risking about 5746 to 5739 that's about a 7po risk right here so if we follow the
+guidelines and understand to go for at least two to one or better this means we need a 14o reward or greater now we're
+long up here we're we're we're long at 5746 and we're going I calculate my risk of reward based off my first Target this
+means my target now if it's at the high of day is at 5753 keep in mind we don't know what actually happens next when we're in it this means if I'm long at
+5746 and my target is 5753 that is another seven points so that's about a seveno risk for a seven-point reward and
+what this is going to do now is it's going to give me a one: one risk of reward ratio which is not good versus me getting long all the way down here when
+I spotted the buying activity now my stop loss let's be generous here and let's call my stop loss a two-point stop
+loss now this is minimizing my risk and now I could draw my reward box from my entry all the way down here at 5741 5740
+now my reward is about a 12 pointer from 5740 5741 all the way up to 5753 so now
+I'm risking two points to make 12 points if I got in Long when the market told me to get long instead of or versus getting long when the time frame chart told me
+to close or break above the trend line resistance level now I can get a 6 to1 or better risk of reward ratio and if you hold Runners this is how you're able to get 9 to1 or 10 to1 so you see how
+entry is everything and when you confirm it via the order flow your risk is going to be smaller and if your risk is smaller that just means guaranteed your
+reward is going to be much higher you want to minimize your risk and maximize your reward when you wait for a time-based chart to tell you when to
+enter you are going to maximize your risk and minimize your reward which is not good in trading so for this next trade it's a
+Chapter 7: Execution and Review
+$223,000 profit it's a $3,000 risk for a $23,000 reward my realized risk of reward ratio was about a seven call it 8
+to1 R multiple which means for every dollar that I risk I made $8 in reward for that profit if I was wrong on this
+setup I was going to lose 3,000 and since I was correct I made a $23,000 profit now I'm going to replay this bar to bar but I want you all this
+is a little clearer now the market's at a level of Supply I'm going to take the market short when we rally into this level right here now at this moment I
+mean people will say that there's a double top Etc and yeah off of a chart this kind of does look a little bearish especially if you watched my previous
+video and I talk about the high volume reversal setup um if you're coming from the last video this actually validates exactly what I talk about in the last video right here uh now that I review
+this so this is a trade that I took short $23,000 profit and I get short at 941 eastern time now we're at a level of Supply the market is consolidating we're
+breaking above the resistance level context is overnight we're seeing some selling come in after the Market's making all-time highs the volume on the
+selling is a little significantly higher and now we're coming into this resistance level and there's some key information on the order flow at this
+exact moment now would you cuz I take the market short right here at 941 would you take the market short right here at this exact moment I'm sure some of you
+will cuz you kind of have watched my videos and understand this is a reversal setup that I look for but if you don't know anything about orderflow and volume would you take this thing short and I do
+and this is going to be a very profitable successful trade that lasted 7 minutes that I made a significant profit now I'm short at 9:41 eastern
+time and keep in mind the CLC rule context is we could see the selling coming in prior to the market being open as the Market's making all-time highs
+location is we're coming into the sellers that were present and I want to make a note about this is that a new location formed with new information
+that was developed as the market was open and as the market was trading so I'm going to play this and I want you all to watch this is 9:30 eastern time there's going to be some sign
+significant volume building here at 6044 and 6045 right in this level of Supply so right there just pausing it
+not even a minute in we could see a positive Delta of plus 1,024 at the high of day at a level of Supply at a level of resistance where
+the selling prior to this was significantly higher now this in itself is not giving me validation to take the market short just yet but watch because the volume is going to buildt keep in
+mind I'm getting short at uh 9:41 eastern time now the Delta has built even more we're at positive 1921 so as
+the Market's trying to Rally up into 60 45 we're seeing a lot of aggressive buying hitting the market as we're coming into this level we're going to
+see the market rally back up and the time is 936 now and Watch What Happens here because the same thing is going to occur you're going to see even more volume build and you're going to see the
+Delta get even stronger and stronger as we get closer to my 941 entry point so right here we can see the the volume building and you're going to see it
+increase a lot right here right here right there okay 9:40 eastern time I'm going to slow this down now so you can see it in real time I'm going to go to 1x speed so right now we see the market
+number one had broken above the intraday High the 1921 positive Delta was the high now the market had broken Above
+This 1921 previous high and now on top of this we're seeing a plus 1391 plus 1140 positive Delta as the Market's
+breaking the high there is significant buying volume here at 940 keep in mind the CLC rule context strong aggressive
+sellers prior to this location at a level of sell from the overnight drop now a new location is forming in real time because now this is saying hey this
+is a location that a lot of participants are either getting out of a position there's somebody maybe absorbing this maybe there's a real seller coming in this is developing into a new location
+now what this looks like on a Candlestick chart and why you see the high volume here and I talked about this in uh two episodes ago about understanding volume why you see high
+volume here on a Candlestick chart and why you see a strong green bar is because all of this volume that we're seeing step into the market here and not
+:39 9:40 a.m. eastern time about 10 minutes after the market was open so I'm seeing this and I'm like hey there could be a seller who was passively absorbing
+all of this buying because of the CLC rule so when I see this 941 occurs now I'm like okay let me try this thing
+short I can get in short right here and I want people to understand this and test it out yourself don't blindly go into the market you need to have many
+pieces of the picture together for this really to to to work very well I don't want people getting in blindly and say hey my stop loss is two ticks here hey my stop loss is only a point let me get
+in long or short that is not the point of this video it's when everything is aligning and me going over my trades on how I actually executed live that anybody in the invest trade Community
+can see this happen in real time of me getting short not blindly because I'm seeing this activity it's me getting short because all the pieces are coming
+together and this activity is validating this so I'm short here at 6044 placing my stop loss one point above this High
+the amount of messages that I got after this trade was like Carmine I usually put a one point stop stop loss and I get stopped out so easily well I have a onepoint stop loss because I'm trading
+at an area I'm trading when the context makes sense and I'm trading when I have great confirmation to short this move right here so that's how I'm able to get a onepoint stop loss it's not because I
+have a onepoint stop loss just to make my losses smaller I have a onepoint stop loss because if I'm short right here and I'm viewing this activity as actual sellers in the market for me to be wrong
+on this my stop loss is above this High which because I have such a great entry confirming this with this order flow that's how I'm able to get such a small
+small risk and such a high reward so I'm short up here at 6044 one point stop loss and I'm going to speed this up because the market eventually is going
+to dump significantly lower and again I'm in short before the dump I don't want to get in after the dump I want to be in when the thing is dumping because
+that's when I'm going to exponentially get my profits and they're going to significantly compound and then I sell into this weakness I get about a 11 uh Point reward to the downside and that's
+it I'm not asking for a lot I'm going for a quick scalp capitalizing on this order flow and capitalizing on this activity present in the market and here's the rejection on a 5-minute chart
+28:0128 minutes, 1 secondright let's just say we waited for the market to reject and sell off and we waited for this 5-minute Candlestick chart to close or maybe we waited for the lower day to break well guess what
+that means we are short all the way down here versus me being short all the way up here so you see the difference of my
+entry short versus waiting for a time frame chart to tell you when to enter even if you used a one minute chart and you waited for this thing to sell off
+let's just be generous here and say we got short now here still a great entry and still an opportunity to make money but wouldn't it make sense to get short
+when the opportunity is in the now or the present moment where the risk is much smaller and the reward is much higher this gives us about a fourpoint
+buffer on our risk which means if I got short at the lower oval my stop loss would had to be about six points versus me getting short at the upper oval my
+stop loss only being a one point that just maximizes my reward and minimizes my risk if I get short where I did instead of waiting for the market to
+dump we want to be in before the dump or we want to be in before the rally and the only way to do so is by reading the order flow and understanding the volume
+present in the market now I'm going to go over here and this is what it's going to look like on the heat map for those who use that so you're going to see the market rally up here and you're going to see okay 6045 we could see the plus
+thousand lot Delta there and I'm going to play this again you can see the offer sitting there the offer gets filled so there's a passive seller validating exactly what I'm saying now he's a minus
+or plus 19900 positive Delta there at 6045 so we see the buying come in we see the really large passive seller here which is represented by the red line we
+see the green bubble hit that red line which means an aggressive Market buy hit that passive seller we can validate this by at 645 we can see a plus 1921 Delta
+there I'm going to speed this up even more watch around 940 when the market comes back up into this I try to pause it there slow it down watch the buying
+that comes in here at 940 the Market's going to move up the passive seller is still sitting there you see the red and orange line he's still sitting there passively selling we come into him he's
+selling even more how do I know he's selling even more the posit positive Delta just went from 19900 all the way up to 3,300 which means somebody came in
+with 1,400 more contracts directly above this the market had broken above the high of day what I talk about in episode five or six of the orderflow series
+about a higher day just never long above a high or never short below a low we broke the high of day perfect trap for retail I know it's only a tick but
+there's plus 1140 Delta there plus 1140 contracts which hit the offer at the high zero hit the bid on top of this the
+seller is still sitting there with his red line because that means there's more passive contracts there to be sold than there is it's it's almost like a wall or
+a ceiling to price when I see this I'm short I'm short right here I'm not waiting for the market to dump here provides me enough confirmation at a
+great location with proper context that sellers could be do I know 100% that they're here no but they could be here
+for a high probability setup this enables me with such small risk one point stop loss twoo stop loss Above This High to get short I'm short right
+now now let's fast forward this imagine you wait for this thing to dump right okay we're seeing it move down oh I missed it I'm going to get short right now I'm going to chase it I don't want
+to miss this move good maybe this could work for you but now you're short all the way down here at 6039 you see the difference 6039 is 6044 now our stop
+loss if we're short all the way down here has to be at this high it's maximizing your risk if you do it this way and if you maximize your risk you increase your risk that's just going to
+minimize your reward even more and we want to do the opposite and then the market dumped and keep in mind we're ins short before all this and this is how I'm able to enter and exit get great
+risk of reward ratios and confirm my setups with the CLC Rule and take profits along the way I'm not going for home runs I'm simply targeting lower
+days pre-market lows support demand resistance Supply and I'm I'm I'm getting the confirmation hitting my Target and I'm walking away and that's
+how I'm able to enter an exit like this and get great risk of reward ratios so if you learned anything from this video I would appreciate comment any questions I would really appreciate you to thumbs
+up this video if you want more more bar toar replays like this so you can see exactly what I saw in real time let me know by commenting by liking it and if
+you're new to my channel subscribe the next episode of the series is basically going to go over everything you've learned about trading is completely wrong and just recapping this orderflow
+series and tying it all together I'm going to end it on that note appreciate you all supporting peace out

@@ -1,0 +1,127 @@
+Chapter 1: Intro
+In this video, I want to talk about how to get better entries and better confirmation signals when you implement order flow to your trading. Now, not
+only is this going to enable us to take higher probability setups, but also it's going to take some stress off of us because we're not going to hesitate as
+much, and most importantly, we're going to be able to focus on better risk-to-reward opportunities, which then will just increase our profitability in
+the long run. We're going to call the first playbook a passive buyer or a delta outlier. And you're going to see why in a few seconds. Now, this trade was a 5:1 realized risk-to-reward ratio.
+Chapter 2: Delta Outlier / Passive Buyer
+And what that means is I risked $2500 on this setup. Meaning, if my stop loss hit, this is how much money I was
+willing to lose. And I profited $12,600, giving me a realized risk-to-reward
+ratio of 5 to one. Now on this chart, we can see here we entered long at this level of interest and took profits at
+1:001 minutethis upper resistance level near the high of the session. Now, we're going to call this a passive buyer because
+there's some significant buying activity that I spotted on the orderflow that's going to enable me to get in the market as soon as I spot this order flow. So
+going over the plan that I posted in my community, the main thing that I was watching for on this session was for the market to break under 6575 but not below 6565.
+That if the market sells off, holds this level, which is going to be this green uh demand zone here. I would look to get long targeting 6595, which again was
+just this upper level of resistance. Now Carmine, where is 6575 coming from? This is what I mean with
+watching delta outliers. Now, basically what we're going to see is two significant levels of interest. And how I approach the market is I never really
+know if the market's going to react. I never know how it's going to respond to specific activity. And this is why I favor using orderflow is because
+2:012 minutes, 1 secondorderflow will help me gauge whether buyers or sellers are active or present in the market. So in this specific
+example, we could see here off of this one minute candlestick chart at this 933 candle, the market sells off. And what
+we cannot see on the charts, but we can see on the order flow is at this low of the day, which is 6575
+right here on this red one minute candle. We see 850 contracts hit the bid
+with 850 total contracts, giving us a negative delta of minus 850. Now, if at any point any of these terms or concepts
+confuse you, I have a full orderflow trading series, I'll post a link for this in the description of this video, kind of going over all orderflow basics
+and how I apply it. So basically as the market was selling off in the first three minutes we see 850 contracts hit
+the bid which indicates aggressive selling hitting a passive buyer. Now the reaction after this is the market begins
+to rally. So this to me sounds like a passive buyer sitting at 6575 because of the reaction in the market.
+We call this a delta outlier. Now what's interesting about this is this was on call it a Tuesday right the Monday the
+day before this or the session before this at 6575 looking at the footprint chart here we
+can see essentially the same action previously. So the day before right into the close we see minus 550 negative
+delta and we see minus,50 negative delta and keep in mind this is at 6575
+the same exact level where we're seeing it the following day bring the significant passive buying here ends the
+market trying to lift and and rally up from this. Now even two hours later right before the close minus 551
+negative delta here and again this is all transacted at 6575. So essentially what we're seeing at this point is the
+day prior we're seeing significant passive buying volume and how I indicate this as passive buying is especially on the first two attempts the market
+rallied because of this. Now going into the close obviously the market kept moving lower. We could see that with the negative delta bar and the increase, you
+know, price action much lower. But previously around 1:30 Eastern time and 2:00 Eastern time, the market did rally
+from the significant passive buying that we saw earlier. Now, why this is important is because we see this action the day before and now we're also seeing
+it in the intraday basis on the next session. So, kind of something goes off in my head and says, "All right, there's some significant order flow activity at
+this level. Let me gauge how or if the market reacts to it. So, ideally, this is where the market first got that uh
+negative delta or that passive buying where the market rallied because of it.
+And then here's that second one and the market tried and kept moving down slightly from it. Now, the following session extending the line over we see
+6575 again. And this is where I take the setup and this is where the trade starts developing. In this time frame, the next
+day we were watching 6575 and how the market reacts. I'm watching a break under 6575 but not below the 65s.
+Essentially, I wanted this level to break attract sellers and whoever is transacting here from the session before and whoever is transacting here in the
+current session, let them buy more. For traders who have a large need to facilitate a long position in the market
+and for it to move up, they need others to sell. So, this is kind of why my thesis shifted towards let this level break, let it attract sellers to come
+into the market. As long as it doesn't move too far down, this could be a good indication that a passive buyer is present and someone is loading the boat
+6:006 minutesfor an agenda to bring the market up much higher. Now, the market's going to sell off right here, and I get long on
+this candle right here. Now, obviously, you're going to know the outcome of this setup because I just explained that it was a 5 to1 risk-to-reward ratio, but
+does anything right here, right now, indicate that the market is super bullish at this moment? Right. Honestly, just looking at a candlestick chart, not
+looking at any order flow, the market breaks this low, it kind of looks like it's rejecting it. We're selling off and nothing really right here, right now,
+indicates that the market has a very strong chance of bouncing. But diving into the order flow, I'm going to show you a live replay of this setup. We
+could see is as the market was selling off, we start seeing another passive buyer facilitating more of a buy
+position and buying absorbing all of the aggressive selling. What this means is the market tried to rally here and on
+this rally the market pulls back and as it pulls back at 6570 again five points under where this activity was the day
+prior and even in the intraday session the market pulls back and right here a passive buyer steps into the market and
+the selling volume gets absorbed. We can see this by the cumulative delta. It had a negative effect, but the market
+rallied up. As soon as I see this passive buyer enter the market and the aggressive sellers get absorbed by this
+passive buyer, I get long in this exact moment at 6570. All right. So now we have this replay up. So you could see
+Chapter 3: Live Trade Replay
+this trade unfold in real time. And I want what I want you all to pay attention to is the depth of market on the right and keep an eye on 6575.
+Similarly, looking at the heat map, the market's going to break under this low of day where my cursor is at. And while we break under the low of day, I want
+you all to watch first the significant orderflow activity that is going to appear at 6575.
+So, keep an eye on 6575. I'm going to put this to 2x speed. The market's going to break under the low right here. And this move starts getting absorbed right
+here. You could see 850 contracts hit the bid at 6575.
+Yet the market bounces and to me this is a good sign of a passive buyer coming into the market again with what the
+action that we saw the day before. So at this point the market found the bid off of 6575. Right? You see this large
+selling bubble down here indicating that a passive buyer was active and present.
+And in this moment, this is now when it becomes interesting me to me to wait for a possible low of daybreak right under 6575.
+Let sellers come into the market. And if then the market reclaims back above this large delta outlier, which we're kind of seeing occur right now, this could be a
+very very bullish indication. So watch what's going to happen here. The market's going to pull back. We're going to sell off much lower and keep an eye on the depth of market. Look now at
+6575. We see minus 1217 negative delta.
+This move under the 6575s is really now beginning to get absorbed. The market's going to break aggressively under this
+low of day right about here. And now I'm going to start zooming in because this is when I get very interested into the market. So it's going to break under the
+low. And now it's going to start trying to reclaim back above the previous low where we are spotting this possible
+passive buyer. Now I'm going to zoom in here. It's going to happen very very fast. I want you all to keep a very close eye on 6570. In fact, I'm going to
+go to 1x speed here. 6570. What we're going to see here is a passive buy order step in and you're going to see a lot of
+aggressive selling hit 6570. So, watch this. It's going to happen very fast.
+But spotting this. As soon as I see this, I click the buy button and I get in this trade long. It's not waiting for the market to move, you know, in my
+favor. It's spotting the market buying activity. Watch. It's going to happen right here. We're going to see a large passive buyer step in. So on the COB column, this is the current order book.
+We see 519 contracts. Somebody's looking to buy at 6570. On the depth of market, we could also see 6570. 519 contracts.
+Somebody's looking to buy here. Right?
+with the current context that we're seeing in the overall market with the potential sign of a passive buyer. Now, we're really seeing a large passive
+buyer come into the market. So, now watch what we're going to see here is there's going to be large selling volume and this is kind of what we saw in the footprint. Aggressive selling is going
+to hit this bid. The passive bid absorbed all the selling and the passive buyer won this battle. So, watch. It's going to dip again. The bid fills. we
+see 958 contracts hit and more importantly 580 at this exact moment hit that bid that bid got filled and when I
+see this action I get long right here in this exact moment now again this in itself is not significant but with everything that I've been leading up to
+this confirmation is what gives this trade more seasoning and more spice giving it more confluence and more conviction at this exact moment I enter
+the setup it's not waiting for the market to rally up. It's not waiting for buyers to, you know, aggressively lift it higher. It's at this exact moment
+because this is offering me the best risk-to-reward ratio and directly following it, right? The market rallies and multiple different attempts after
+the market supports 6575 pretty much perfectly and then eventually has all the aggressive buying
+and rallies up into my 6595 target where I get all out of this trade. Now what's important here is I am getting in as
+Chapter 4: Risk / Reward
+soon as I see this confirmation right we could see I got long 6570 down here. Now what I did was is I put my stop loss at
+6565 which is again where that original level from my plan came from. So let's just say going back to this position
+long at 6570 stop loss under 6565 targeting 6595.
+This is how I was able to get a little over a 5 to one risk-to-reward ratio.
+Now, watch how differently this now dynamic comes. If you wait, let's just say for a candlestick chart to close or you hesitate to enter because you're
+fearful of it to work with you or work against you, right? Let's keep the stop loss at the same price at 6565.
+But now, let's adjust our entry point to call it 6575.
+Let's just say we waited a little bit and we waited for the market to move up to 6575. Still an excellent risk-to-reward ratio, right? It's still
+a 2:1 2.06 right where my cursor is at risk-to-reward ratio. Still excellent, right? Let's just say we wait for a
+2-minute candle to close or a 5m minute candle to close. Right now, our entry would be all the way up here. Now, just simply waiting and not getting in when
+the order flow tells us to get in. Now, our risk-to-reward ratio is a 1.4 4 to one are our stop loss is the same, our
+target is the same. Our risk box is about equivalent to our reward box not enabling us to have a better risk-to-reward ratio. But getting in
+when the order flow tells us to get in when we spot that passive buyer at 6570.
+This is when it enables us to get in with a 5:1 risk-to-reward ratio in that exact moment. And this is why
+understanding order flow and how it enables us to get better confirmations with higher probability setups that just
+offer great risk-to-reward ratios if we enter in that moment that we're spotting the specific confirmation pattern. And
+why this is important. Let's just say we have a 3:1 risk-to-reward ratio, which
+means we are going to win $30 for every $10 that we risk, giving us a 3:1
+risk-to-reward ratio. By doing so, we can have a 30% win rate right here, yet still come out profitable. But if we
+were just to simply flip that and say, "All right, we have a one:1 risk-to-reward ratio. We risk $10 to make $10. Theoretically, we need a 60%
+win rate to be profitable. Or let's just say we have a 5:1 risk-to-reward ratio.
+We are rewarded $50 for every $10 that we risk. We can theoretically have a 20% win rate yet still come out profitable.
+So, you see why it's so important that if we focus on our R multiple and our risk management, it takes the position away from us to we don't need to always
+be right. In fact, we can be right 30% of the time, 20% of the time, and still come out profitable versus a system that
+has a negative risk-to-reward ratio, which means, let's just say we are rewarded $10 of profit while risking $70
+of a potential loss, giving us a negative risk-to-reward ratio. If we have a risk-to-reward ratio of negative, right, this means we have to be right
+90% of the time and it's very difficult to attain a strategy that has 100% win rate, 90% win rate, 80% win rate. If you
+do, you know, awesome. But that means your risk-to-reward may slightly be skewed. The way I look at the market is this is that I need to put myself in the
+position to lose as much as possible in terms of quantity of losses but lose the least amount of money as possible in
+those losses. That way my winners when I am actually right can multiply the losses as long as they are small. Now
+not every trade is going to be a 5:1 risk-to-reward ratio. Not every trade is going to be a 4:1. There's going to be some trades that might be 2:1, 3:1,
+right? But this still gives us where we can be wrong more than we are right yet still come out profitable. And this is a
+key aspect in my opinion to trading especially using orderflow and short-term scalping in the market. If
+you learned anything from this lesson, I would appreciate a thumbs up on this video. If you're new to my channel, hit that subscribe button and also check out
+the links in the description of this video. But other than that, I'm ending it. Peace out.

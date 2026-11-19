@@ -1,0 +1,148 @@
+Chapter 1: Intro
+In this video, I want to go over one of my favorite orderflow trading playbooks.
+I'm going to break down this setup step by step. I'm going to talk about my entries, my stop losses, and where I place my targets. I'm also going to talk
+about why this pattern appears, what it looks like on the charts, and how it relates to the market's auction, which just will offer better risk-to-reward
+ratios and higher probability trading setups. But without further ado, let's break down this playbook. Now the first step of this playbook is being able to
+Chapter 2: Step by Step Breakdown
+understand where buyers or where sellers can become trapped at. Ideally I have a saying in the market of where there is
+pain there will be gain for other traders. So the whole concept of this strategy is being able to identify where a lot of volume is coming into the
+market indicating that strong buyers or sellers are present. And if those strong buyers or those strong sellers eventually stop out and they have to
+close that position for a loss, it would be very safe to say that these participants are trapped and the market would like to put them in the most pain
+1:011 minute, 1 secondbecause where there is pain, there will be gain for others looking to take advantage knowing where other participants are entering or exiting a
+trade off of. So step number one is being able to identify strong buying or selling volume. Now in this example, let's just say we see the market
+rallying and we have a level of resistance where the market breaks above. Ideally, I want to gauge the
+volume as the market is breaking above this high. So, usually what we're going to see when the market breaks a high is very aggressive buying volume hitting
+the offer. This is step number one of the process. And we can also flip this to the downside. Let's just say the market had an uptrending line. Right?
+Here's our trend line. And now the market is going to break this downtrending line. And a lot of traders just assume to automatically hop in the
+position short. Now, as it's breaking this downtrend line, we see a lot of selling volume building into the market,
+indicating that strong sellers are trying to step in the market under the low of day or maybe under a uptrending line as the trend is now breaking and it
+attracts a lot of bears to come into the market. So to validate step number one here in this example, we could see the market beginning to rally and we can
+note all of these green bubbles which in simple terms just means that there's a lot of trades hitting the offer or a lot
+of aggressive buying volume just denoted by these large green bubbles indicating a lot of strong trades are hitting the
+offer aggressively buying from sellers as the market is breaking out. Now, this is step number one of this pattern is
+just identifying strong volume in one direction of the market. Step number two is looking for the opposite side of
+participants to take control. So, let's just say we see the market rallying and it's breaking out above this level of resistance. And as it's breaking out, we
+see what we saw in the previous slide of strong aggressive buyers buying above, let's just say, let's call this a high a
+day. So once we validated point number one, we then look for the opposite side opponents or the opposite side participants in this context. It would
+be sellers to then step into the market and start taking control. So ideally now I would like to see a lot of selling
+volume step in after we've identified a strong amount of buying volume coming into the market. So in the same example, we have all of the green buying volume.
+We could see the volume also increase and now we start seeing some selling blocks coming in which just indicates a
+large amount of aggressive selling trying to step in and we can call this kind of putting the brakes on the rally where the market tried to lift up. We
+can validate that with the strong buying volume. Now all of a sudden as the market's making highs we start seeing the opposite side of the equation come
+in and sellers are now trying to take control and put breaks to this rally.
+Now that's going to lead me into step number three is being able to identify pain points of where the market can gravitate towards. So in the same
+4:014 minutes, 1 secondexample, let's just say we see the market break above the high and this was 5 minutes after the open. Now, directly above breaking the high, we start seeing
+the aggressive buying coming in with the example that I've been showing and then all of a sudden the sellers start coming in and maybe some lower highs form or
+maybe some really large trades are hitting the bid denoted by those red bubbles or just large trades hitting the bid side taking liquidity away from the
+market and we start seeing the sellers come into the market. Now, at this point, what I like doing is putting myself in the shoes of other traders. If
+I know a lot of traders got long, let's just say above this high, that says point number one, we've identified strong buying volume. Number two, we
+validated that sellers are now coming in control. And now point number three is identifying pain points of where the market could gravitate towards. If I am
+a buyer, let's just say above this high, where am I going to place my stop loss? This could be where the pain point is.
+Is if everybody's long above this high, where's a good example or where's a good point that I should put my stop loss? or if the market begins to sell off, where
+are those buyers going to become underwater? Where are they going to start turning red on their position knowing that they've transacted and
+we've identified them on point number one? So, just identifying with if I am with those buyers, where am I going to be put in the most pain and where am I
+going to stop out of my position? Where am I going to start sweating? Where am I going to be underwater? And these are points where the market would then
+likely gravitate towards. Essentially going back to when a ton of effort comes into the market, especially above a high
+or especially at a point where it's very obvious on our charts where there's a ton of effort but no reward, this can help amplify a reversal. If a lot of
+buying volume is coming into the market in one direction, but the market is not able to rally, this is a good example of ton of effort but no reward, and most
+likely the market's going to help amplify a reversal, then sell the market down much lower. Similarly, if the market's selling off and as we're
+selling off, we see a lot of selling volume step into the market, that shows there's a lot of selling effort. But if the selling volume is not helping the
+market move lower, then the market will have a very good chance of then rallying and bouncing and reversing to the upside because these traders are showing a ton
+of effort. And participants knowing this where there's a lot of effort but no reward, the market will like putting these traders in pain and validate a
+solid reversal. This was a 4.2:1 realized risk-to-reward ratio. I was risking $1,500
+Chapter 3: Trapped Buyers
+to make a $6,300 profit trading the S&P 500 futures. Now, what we're going to see here is the market's going to break
+this high of day. And as it breaks, I get an entry short over here, placing my stop loss directly above this high of
+day. And as the market sells off, my target was 6837, which represents the low of day. And as
+the market breaks the low of day, I get out of this trade for again a 4.25R ratio. Now, let's get some context with
+this setup. So here we've identified a level of interest where this is a previous level of support, previous support, previous support. The market
+eventually breaks under this level of support and then resists the market, resists it again and then again for the third time. So this is an old level of support which then turned resistance.
+The following session the market tries to break above this. However, it is downtrending over here and this to me
+seems like a potential failed breakout scenario on setups like this. And this is a good tip to implement in structures like this is that when the market acts
+like this, especially where rallies are getting sold into, I go in with a little bit of a bias or direction where rallies
+are getting sold into. So I have to be a bear to short the impulsive pops to the upside. So, as long as the market
+attracts bears and sellers continue to sell on every single pop higher, I then look to become a bear, especially with
+8:008 minutesthis being at a previous level of resistance that the market is now currently trading under. So, step number one to this whole playbook is being able
+to identify strong buying volume above a high or any retail trading pattern. So, here we can see the downtrend line. we
+see clear levels of resistance and I'm not a big fan of using trend lines to initiate a trade off of that trend. I mainly am always being a reversal trader
+or being the opposite side of that position. So let's say if the market breaks the trend, I'm first going in with a thesis of looking to capitalize
+on trapped buyers who are buying the breakout above the trend line. So not only do we have the trend line here, but we also have a clear little double top
+or high of day pattern. Now the market's going to break this high of day. And I want to show you all what the orderflow pattern looks like as it's breaking
+above this intraday high. This is the same example that I started this video off. We see the strong buying volume try
+to lift the mark again as it's breaking above this high of day and as it's breaking above that downtrend line.
+Knowing this and being an orderflow trader, I go in with today with the thesis of rallies are going to get sold into and I have to become a bear. So, as
+the market's breaking out, we've identified the strong buying volume above the high of day. We can just again highlight this by the large green bubbles indicating a lot of trades are
+hitting the offer. And we can validate this with the buying volume down there as well. On the footprint chart, we could also validate this. Here's our
+high of day. I don't have the trend line marked, but here we can see the buying volume increase just denoted by these delta outliers. If any of these terms or
+concepts may confuse you, I would really recommend going through my orderflow trading series which is on my YouTube channel. But as we're breaking out above
+this high, we can see the buying volume increase. We could see the volume distribution at the high indicating a lot of volume is trying to lift the
+market above the high. In fact, the most amount of volume that we're seeing in terms of a delta outliers 249 226 are
+10:0110 minutes, 1 seconddirectly above the high of day. Whereas when the market rallied here, there wasn't as significant buying volume as
+there was above the high. So what I'm reading right now is as the market's breaking out above the high, we're seeing the most amount of buying volume
+that we've seen on this rally. Yet despite all of this buying volume, the market's not able to rally and and lift higher. Step number two of this playbook
+is then once we validated that these buyers are coming into the market, now we're identifying the opposite side of the participants or the opposite side of
+the market to step in. And again, we can highlight this by these red bubbles indicating a large aggressive sellers
+where trades are hitting the bid in a faster more violent approach just indicating sellers are aggressive. Now going back to the footprint as well.
+Here we see the high of daybreak and that example that I showed you earlier with the strong buying volume. Now look at it fail. So as the market tried to
+lift here, it kind of got put the brakes on by those sellers and now we could see selling volume kind of stepping in.
+Right? So now we see sellers the opposite side of the market starting to take control. We can also see the cumulative delta also start decreasing
+indicating there's more selling now than there is buying especially above the high. So now at this point yes this may be a valid entry but I'm going to show
+you why I clicked the sell button on this setup. But to this point it would be very safe to assume that we know buyers are buying above the high of day.
+So, if the market goes against them, the market will put them in pain and those buyers will be trapped above the high of
+day, validating that for them to stop out, they're going to have to sell to exit for a loss, which would then also
+help validate bit more of a downside continuation because buyers have to sell to get out for a loss. validating that
+continuation would be likely if these sellers that we're seeing step in continue to take over and have control over the market's auction. Now,
+following the selling volume coming in, we also see more selling volume coming in, but in a different form of red bubbles. Here we see passive sellers
+coming in. So, here's point number one, all the trap buying. Now, we have point number two where the sellers start taking control. So, not only do we see
+the sellers start taking control in terms of the aggressive red bubbles or aggressive trades hitting the bid, but we also see the sellers selling on pops,
+which just indicates this orange line right here was a wall of passive sellers that the buyers could not overtake this
+wall of passive selling. And if the buyers are not willing to aggressively overcome the passive sellers, then it's very safe to assume that sellers have
+control right here and sellers are resisting the market. loading into a position, defending the market, and absorbing all of this buying volume.
+With this context, with these pops failing, right, with all of these pops failing right here, indicates that not only sellers are aggressively hitting
+the bid, but sellers are also reloading on the offer, indicating their strength.
+And to me, this is a valid confirmation signal to short this pop right here. I shorted the 6848s. I put my stop loss
+above the 51 and a halfs which was right at the high of day. This trade essentially was three points worth of
+risk for about a 10 plus reward depending on how strong the market um hit my target at 6838. So identifying
+basically the vi the selling volume stepping in as you can see this was in real time around 10:02 uh and the pop.
+The candlestick chart looks very bullish here, right? But knowing the order flow, we can see that sellers have complete control and if these buyers are not going to get rewarded, they become
+trapped. Now, why I put my target down here at 6838 was just simply for the fact that that was low a day. I said if these buyers
+are trapped and if the market then moves against them, where can the market gravitate towards? And the next level of interest that I had was low a day. And I
+would say that's a lot of my um uh targets with this setup is either low a day, high a day, or anywhere where the market can reverse and put these buyers
+or put the sellers in the most amount of pain. So my pain point here was the low a day. I knew if the sellers stepped in, the market could gravitate towards that
+low a day. And here you could see the selling volume continue to build denoted by these red bubbles indicating a lot of continuation down. Here's the high of
+day breakout on the footprint. Here's the buyers that became trapped right over here. And then again the sellers then stepped in. We could see this on
+the footprint over here. We could see the cumulative delta also start decreasing. And we want to be in over here before the move because that wouldn't offer the best risk-to-reward.
+And this trade again was a 4.25 to1 or multiple or a $6,000 profit. Before we
+get to the next example, if you're still following along, take a minute, follow me on my Instagram. I'm going to post a link for this in the description below.
+invest a trade because on here I post daily trading recaps along with really good trading tips and tricks that I guarantee you're not going to find anywhere else on the internet. Again,
+the link for this is in the description below. But what can make this strategy better? And this is implementing my CLC
+Chapter 4: Using My CLC Rule
+rule. This is context. What is the structure in the market? Is the market balanced? Is it imbalanced? Are we seeing a rejection of a key level? What
+is the context of the market? Is it at a level of interest? Is it in the middle of the range? Where is the location of the setup? And then what is the
+confirmation? Are buyers or are sellers trapped here? In that example, we saw the context was the market was
+essentially breaking that downtrend line and it was breaking a high a day.
+Combining context and location. We had the market breaking down of that downtrend line, right? The market was breaking out above that. We saw that
+strong buying volume, but on top of that, we had that level of supply, that old resistance level. So, we had two different pieces of context and location. We had an old level of supply.
+We had the downtrend line breaking and we had the context of scenarios like this. I like shorting impulsive moves up where buyers are attracted to buying a
+breakout in a market that is not a breakout market. And then the confirmation of that setup was just simply finding those buyers becoming
+trapped, seeing the selling volume come in and capitalizing on the pain points and bringing the market down much lower.
+Chapter 5: Trapped Sellers
+Here we can see another example. This was a little under a 4:1 risk-to-reward ratio, a $10,000 profit. And what we're going to see here is a balanced range.
+Again, this is where using the CLC rule makes the setup better. The whole concept of the strategy is not just simply buying or selling because we see a lot of volume coming into the market
+and reversing it right away. When you implement context, confirmation, and location, the CLC rule, this is what amplifies the setup and makes it a lot
+better. So, in this example, we can see a balanced market. In a balanced market, what I like doing is playing the outside of the range. Now, I'm considering
+making a video specifically on balanced markets. If you think I should, let me know in the comments. I could record it and post that to my next video. So, essentially here, we see the market
+pretty balanced, and the idea here is we want to fade the extremes. So, here we see the market breaking the pre-market low. And as it's breaking it, I want to
+observe the order flow. Not only are we breaking the pre-market low, we are also breaking the previous intraday low. So we have pre-market low breaking and
+intraday low breaking. Now while this is happening, number one, step number one is identifying strong buying or selling volume. Here we can see the strong
+selling volume building. And again, this is directly under the low of day. Context and location is very important.
+On the footprint chart, we can see over here the strongest amount of negative delta breaking under the low of a day as well, indicating that traders are very
+aggressive under that low of day. Now, following this selling volume, again, the low was somewhere like around here, we start seeing the buying volume come in, right? We start seeing buyers come
+in. And think about it, if sellers are transacting here and here, and they're selling the market, anticipating it to move lower, and then if all of a sudden buying volume comes in, think about it.
+Put yourself in the shoes of other traders. These guys are going to become trapped. When I see this and I see this buying volume then step in here. The market broke under the low a day, broke
+under the pre-market low, reclaimed in the range. The buying volume then stepped in where I was able to get long and I targeted that little high of the
+session. And all this is is just being able to read the volume in the market, knowing where other traders are trading at and knowing if the market goes
+against them with all their effort and they're not getting rewarded, it will most likely put them in pain and we can look to capitalize on this reversal where these traders are put in the most
+amount of pain. Now, if you got any value out of this video, I would appreciate you hitting the thumbs up button. Also, check out the links in the description below of this video. For
+those asking, the Investor Trade Academy is now officially open for applications.
+But other than that, if you have any questions, comment them. If you're new to my channel, hit that subscribe button and I'll see you on the next one. Peace out.

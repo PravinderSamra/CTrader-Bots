@@ -1,0 +1,1037 @@
+Chapter 1: Introduction to order flow
+0:000 secondsThe main thing that I really want to talk about in this master class is basically reading behind the candles with orderflow. I want to be able to
+0:077 secondsexplain and show you all examples of how to use orderflow to our advantage. One of the main concepts and components to
+0:1616 secondsmy trading is for me orderflow gives me patterns. Orderflow gives me setups.
+0:2222 secondsOrderflow gives me an edge and it defines my trading opportunities for me.
+0:2727 secondsNow the reason why I trade with orderflow is because candlesticks alone do not give me enough conviction and do not give me enough information that I
+0:3636 secondscan get a high probability trading setup that I have a lot of confidence and conviction in. So being able to read behind the candlesticks with orderflow
+0:4444 secondsfor me gives me a proper edge into more beginner terminology and then I'm going to get more into the actual strategies and I'm going to go into actual trades
+0:5252 secondsthat I've taken so we can kind of put all the concepts together all at once.
+0:5757 secondsNow, in the month of June, we just ended, today's June 30th. It's a short trading holiday week. I ended the month 68,000.
+1:041 minute, 4 secondsI had a 4.17 average win to loss, meaning my losses were around 2500 bucks and my wins were around right above the five figure mark.
+1:151 minute, 15 secondsUm, every trade that I'm going to talk about in this master class is an actual trade that I have taken myself that I've put real risk behind. all the examples.
+1:251 minute, 25 secondsThere's no examples of me just picking random setups for the sake of a good illustration of a of a of a setup. Every trade that I have taken, win or loss, is
+1:341 minute, 34 secondsa trade that I've taken so far in this month. And I want to break down some of the good and bad setups that gave me the $68,000 profit in June or a 4.1 average
+1:441 minute, 44 secondswin to loss. Now before we begin, the main two tools that I use with orderflow
+Chapter 2: Analyzing market data tools
+1:511 minute, 51 secondscan be seen a candlestick chart can be seen with the orderflow tools that I'm going to show you all. So every example
+1:581 minute, 58 secondstonight comes from the same candlestick chart on the same day of the examples that I'm going to show you on the two other orderflow tools. A candlestick
+2:062 minutes, 6 secondschart, which I kind of have a lovehate relationship with a candlestick chart.
+2:102 minutes, 10 secondscandlestick charts. The only thing they show me is where the market is currently trading at and where did the market trade at in the most recent past. It
+2:192 minutes, 19 secondsdoesn't give me enough information to make a buy or sell decision off of it.
+2:232 minutes, 23 secondsIt doesn't give me any other information than that. It doesn't tell me how strong are buyers, how strong are sellers. It
+2:302 minutes, 30 secondsdoesn't tell me who is trapped, who is underwater, and it doesn't tell me, most importantly, who is in control off of a candlestick chart alone. Nothing wrong
+2:382 minutes, 38 secondswith them if you have a strategy built with it. But for me, it doesn't tell me where and who and why is moving price.
+2:462 minutes, 46 secondsRight? A lot of traders might see a lower wick on a candlestick chart. But for me, if I look at a lower wick on a candlestick chart alone, it doesn't tell
+2:542 minutes, 54 secondsme much. What a lower wick might mean for a candlestick chart trader is a potential bounce. But as an order flow trader, a lower wick might indicate a
+3:023 minutes, 2 secondslack of strong buying and a lack of passive selling which is causing the market to move up and it would be likely
+3:103 minutes, 10 secondsfor that bounce to fail or that lower wick not to be validated. to validate this order and order flow and to validate all the volume and to validate
+3:183 minutes, 18 secondsthe information that we're getting off the candlestick charts. The tool tool the two tools that I use that I'm going to go over mainly in this master class
+3:263 minutes, 26 secondsis a footprint chart. And my footprint chart, if you're familiar with my YouTube videos, is based on a delta footprint chart. It shows me the
+3:353 minutes, 35 secondsdifference between buy and sell volume traded at specific price levels. It shows me the difference of buyers and sellers at a specified one price level.
+3:483 minutes, 48 secondsSimilarly, we're going to get the same information, just a different visual from a heat map. However, a heat map also shows resting liquidity, which is
+3:573 minutes, 57 secondspassive orders that are waiting to be filled. And they also show completed transactions. These are the main tools
+4:044 minutes, 4 secondsthat you're going to show that I'm going to show you all in this master class.
+4:084 minutes, 8 secondsTool number one, you guys are all familiar with it. Just a normal basic candlestick chart. Now, the reason why I wanted to show you all this is I want
+4:154 minutes, 15 secondsyou to take to pay close attention to the patterns that form here. So, here this light gray compared to let me go
+4:244 minutes, 24 secondsover here. The light gray shaded area over here compared to the dark gray shaded area is the New York session open. So, right here when the New York
+4:324 minutes, 32 secondssession opens, the market has an immediate rally and that immediate rally fails. Then the market puts in essentially this V-shaped reversal and
+4:414 minutes, 41 secondsthen we consolidate and have a strong uptrending rally for the rest of the session. This could be seen on the candlestick chart, right? We don't know.
+4:484 minutes, 48 secondsYes, we could see after the fact when the market's trading here that yes, this low did hold, but in that real time moment before all of this data gets
+4:574 minutes, 57 secondsprinted, we don't know how significant the buying volume is down here off of a candlestick chart alone. Footprint chart going to show me the same information.
+5:065 minutes, 6 secondsAnd this is exactly at the 9:30 a.m. New York open. Here we have the morning rally. Here we have that rally that fails. The market sells off. Here's our
+5:155 minutes, 15 secondsV-shaped recovery. Here's the uptrending market. And here's the consolidation into the afternoon. These two charts, I'm going to go back to the candlestick
+5:235 minutes, 23 secondschart, are identical. It's showing me the same information. One is showing me the candles and one is showing me a
+5:305 minutes, 30 secondspicture if I zoom in of the order flow of the chart. Right? Somebody's saying they don't see any charts. Do you guys not see the charts on my screen or or
+5:375 minutes, 37 secondswhat? Do you guys see the charts? It seems a seems like a lot of people see them. All right. It may just be uh you have to click off my face or something
+5:465 minutes, 46 secondsfor those in the live stream. Seems like everybody sees them. All right. So, the point I'm trying to get here is that by using a footprint chart, we're going to
+5:535 minutes, 53 secondsbe able to see all right, if we want to long the market here and play a bullish position, we can go on the footprint chart and see things that we cannot see
+6:016 minutes, 1 seconddown here off of a candlestick chart alone. When I zoom into my footprint chart, it's going to give me key information that you're going to see in the next few slides. Number one, it's
+6:096 minutes, 9 secondsgoing to show me total volume, which is in the middle column here. And most importantly, number two, the left column is going to show me the delta. And the
+6:166 minutes, 16 secondsdelta shows me the difference between buy and sell volume on my indicator or on my footprint chart, which is on a 20 tick range. Anything that is classified
+6:266 minutes, 26 secondsas blue means there's more aggressive buying volume at that specific price than selling volume. And anything that's classified as red means there's more
+6:356 minutes, 35 secondsaggressive sellers in the market than there are buyers. Tool number three is a heat map. Right? So here's candlestick chart. Remember the Vshape, remember the
+6:436 minutes, 43 secondsmorning rejection. Remember the sell-off heat map. We could see the same information just an X-ray of the market.
+6:496 minutes, 49 secondsThe whole concept of the order flow is to understand who is driving the market, why they are driving the market, and where the market could potentially head
+6:576 minutes, 57 secondsnext by seeing the X-ray vision through behind the candlestick charts. Here's our 9:30 open. Here's the morning rally.
+7:057 minutes, 5 secondsThere's the sell-off. Here's our Vshape.
+7:077 minutes, 7 secondsHere's the uptrend. And then here's the consolidation. The same thing that we see here, uh, 9:30 open that we see off the candlestick chart. So, three tools
+7:167 minutes, 16 secondsall showing us the same information, just a different visual. Zooming into the heat map, just a quick little overview of this. When we zoom into the
+7:237 minutes, 23 secondsorderflow or the heat map specifically, green bubbles, I'm just going to use very simple terms. Green bubbles indicate there's more aggressive buying
+7:317 minutes, 31 secondsat that level than selling. Red bubbles indicate there's more aggressive selling at that price than there is buying. And
+7:387 minutes, 38 secondsany orange, red or yellow line that is above the current market trading price is a passive seller. And any red,
+7:467 minutes, 46 secondsorange, yellow line that is below the current market price is a passive buyer coming into the market. You're going to
+7:547 minutes, 54 secondssee why this gives me key information relating to potential setups in a few minutes here. Now, just a very brief overview of just the basics of order
+Chapter 3: Passive and aggressive orders
+8:028 minutes, 2 secondsflow for those who are new starting out at this. In the market, we have two different types of orders. For those who
+8:098 minutes, 9 secondstrade, when you go to select your entry, you're going to have an option to either put a market order out there or a limit order. Two of the pretty much general or uh hierarchy of of orders out there.
+8:228 minutes, 22 secondsWhen I talk about a market order in the market, it is an aggressive order. What a market order does is I don't care what
+8:308 minutes, 30 secondsprice I'm paying right now. I want to get in right now. I don't care the price. That is a very aggressive style
+8:378 minutes, 37 secondsof an order to be placed. What a market order does is we as buyers or sellers go to the market and we say, "I don't care
+8:448 minutes, 44 secondswhat price we're paying. I just want to buy this stock or or sell this stock right now." And what that does is it takes liquidity away from the order
+8:528 minutes, 52 secondsbook. Us hitting a market order, we buy or sell from somebody who is selling or buying off the order book. When we sell,
+9:019 minutes, 1 secondwhen we use a market order to sell in the market and we're very aggressive, we want to sell and capitalize on the mo market moving down, we hit all the buyers who are buying on the bid side.
+9:129 minutes, 12 secondsWhen we want to buy something aggressively, the market's breaking out.
+9:169 minutes, 16 secondsIt's moving up and we don't care what price we pay. We just want to get in and be long the stock or the future or the option. We are lifting the offer because
+9:249 minutes, 24 secondswe are aggressively hitting the sellers who are selling on the offer. It drives price, but we need supply. whether it's demand or supply to keep the market from
+9:329 minutes, 32 secondsmoving. Now, flip flip the flip side to this is we have a limit order on the market. These are passive participants. They're passive. They're very easygoing.
+9:419 minutes, 41 secondsThey don't have to get in right now.
+9:429 minutes, 42 secondsThey could throw a limit order on the order book at a price that is way far away from being traded at right now. And we don't care if we get filled. We're
+9:509 minutes, 50 secondsvery passive with the market. What this does is it provides liquidity to the book. If the market's trading at $100 right now, we could say, "All right, I
+9:589 minutes, 58 secondswant to buy at $90. Might not hit today, but I'm adding liquidity because I have an order to buy on the bid." And it sits
+10:0610 minutes, 6 secondsand it waits to be filled. And what this is important here is because in the next few slides I'm going to define aggression and how these passive orders
+10:1410 minutes, 14 secondsor these aggressive orders affect the market and how the relationship between the two is the driving force to my
+10:2310 minutes, 23 secondstrading strategy. The relationship between the passive orders and the aggressive orders is the driving
+10:3110 minutes, 31 secondsmechanics to my trading strategy in terms of my confirmation signals. Now, the reason for this, this is how orders
+10:3910 minutes, 39 secondsaffect price. Let's say the market is rallying up, right? We're uptrending to the upside and all of a sudden at this
+10:4610 minutes, 46 secondsprice level up here, we see a,000 contract seller or 100 contract seller, I'll call it. This tells me that there
+10:5410 minutes, 54 secondsis a passive seller at this price looking to sell 100 contracts at this level. What's going to happen here and how the orders affect price is if the
+11:0311 minutes, 3 secondspassive orders aka these 100 contracts sitting up here are greater than when the market does rally up. So let's say
+11:1211 minutes, 12 secondswe continue moving up and boom all of a sudden we come to this level and only 90 buyers aggressively buy from the 100
+11:1911 minutes, 19 secondssellers. What this tells me is that the passive orders are winning the supply and demand equation and there is more of
+11:2711 minutes, 27 secondsa supply up here or there is more passive sellers than there is 90 aggressive buyers. And if the resting
+11:3611 minutes, 36 secondsside or the passive side or the limit orders outlast the attacking side or the aggressive side or the market order
+11:4411 minutes, 44 secondsside, this is when a resistance level forms. So how support and resistance forms is simply through this concept
+11:5311 minutes, 53 secondshere when you dive deeper into the order flow. Support and resistance doesn't form because the market comes up there and we drop. What causes the market to
+Chapter 4: Interpreting order flow dynamics
+12:0112 minutes, 1 seconddrop at those levels is when supply is greater than the demand at that level.
+12:0812 minutes, 8 secondsAnd if this is the case where more resting orders or passive orders are sitting there and there's not enough buyers to break through these 100
+12:1512 minutes, 15 secondssellers, the market has only one choice and that's to advertise prices down much lower. And this is where I'm looking to
+12:2312 minutes, 23 secondscapitalize on a bearish position to the downside with a potential support level forming. What this tells me is that the aggressive orders got absorbed. And with
+12:3212 minutes, 32 secondsall of this aggressive buying volume with no follow-through, price holds, rejects, and the level repeats where we can look to capitalize on a downside
+12:4012 minutes, 40 secondsmove. Now, flip this. There are plenty of cases where the market is in an uptrend, right? We start moving up and
+12:4912 minutes, 49 secondswe come up to this level. Let's say there's a 100 contracts to sell up here and all of a sudden the market comes up and we hit our level and a thousand
+12:5812 minutes, 58 secondscontracts come in right here. And the market doesn't move up. We just continue to consolidate thousand contracts. Then all of a sudden, let me uh do this over
+13:0613 minutes, 6 secondshere. Then all of a sudden, market pulls back a little bit. Comes back up to this level. We see another 100 contract seller. But there's over a thousand
+13:1413 minutes, 14 secondsaggressive market buy orders that come through here again. Now, that's a a total of 2,000 buy contracts just came through, but there's only a hundred
+13:2213 minutes, 22 secondspassive sellers here. This can be considered absorption where there's a significant amount of volume coming in
+13:2913 minutes, 29 secondsone direction but there is no follow-through in that direction. What is supposed to happen is the market theoretically should break out to the
+13:3813 minutes, 38 secondsupside. But when that doesn't occur, this shows that those aggressive orders get absorbed and all of that aggression
+13:4513 minutes, 45 secondsdid not get rewarded. And again the only option in this case is for the market to then start moving down to the downside.
+13:5313 minutes, 53 secondsPrice holds it. We get the absorption.
+13:5513 minutes, 55 secondsIt rejects and then the level keeps repeating. We come back up to it. We see absorption again. And these are where I am looking to play reversals in the
+14:0414 minutes, 4 secondsmarket. Now and somebody asked how can a 100 contracts uh how can a 100 order absorb a thousand contracts? There's
+14:1214 minutes, 12 secondsmany different order flow or order entry uh mechanisms that algos could use, many other uh order entry tools that
+14:2014 minutes, 20 secondsinstitutional traders can use. I've seen it firsthand where let me redraw this example. Market's moving up, right? We
+14:2814 minutes, 28 secondshave 100 contracts up here to passively sell. Market goes up, a thousand contracts hit right here, but the market's not budging. So, I'll call it a
+14:3614 minutes, 36 secondsth00and. What happens here is that this passive seller is constantly reloading not in quantities of a 100 but maybe in
+14:4514 minutes, 45 secondsquantities of five 10 and there's an algo or there's a mechanism of an order orderflow entry tool where they basically are reloading and they're
+14:5214 minutes, 52 secondsmaybe loading 5 10 15 20 whatever the quantity is um very we'll call it nonchalant or hidden that you really
+15:0015 minutescan't see them selling up here and we're seeing all this buy volume come in but we're not seeing any followthrough and this to is a reversal signal. So the
+15:0915 minutes, 9 secondswhole concept here is if I see a lot of aggressive orders coming into the market that it's not going up where it should go up. This to me is a reversal signal.
+15:1715 minutes, 17 secondsAnd the same thing to the downside. If I see the market selling off and as we sell off, there's thousands of of of sell orders coming in here and the
+15:2515 minutes, 25 secondsmarket is just not selling off. To me, I view this as a lot of absorption and it's a good chance the market will want
+15:3315 minutes, 33 secondsto rally to the upside and I'm looking to buy the market here despite all of this aggressive selling volume. Now, flip this. This is when support and
+15:4115 minutes, 41 secondsresistance forms. The market cannot always form support and resistance. We're going to have a trending market.
+15:4615 minutes, 46 secondsWe're going to have a continuation market. And you'll see as I get through the slides, any questions most likely will be answered as I go through my
+15:5315 minutes, 53 secondsactual trading examples. So here what we're going to see now is continuation.
+Chapter 5: Practical trading examples
+15:5815 minutes, 58 secondsContinuation occurs when there is more aggressive participants than there are passive participants. So when the
+16:0516 minutes, 5 secondsaggressive side somebody said guys it's a pre-recorded video. Don't ask anything. What uh what is consider? Any
+16:1216 minutes, 12 secondsquestions you guys have ask me at the end of the um ask me at the end of this session because I'll I'll leave the Q&A tab open. Just just save your questions
+16:2116 minutes, 21 secondsand I'll do it. Um all right. So continuation happens right? So the market's trending trending continuation
+16:2816 minutes, 28 secondshappens when the attacking side or the aggressive participant overwhelms what is passively resting on the market.
+16:3516 minutes, 35 secondsPrice breaks through it and trends in that direction. If there's a 100 sellers here and 300 aggressive buyers come in here, the market's going to keep
+16:4316 minutes, 43 secondsoffering up, offering up, offering up, offering up. That's what I said earlier where it lifts the offer when there's more aggressive orders. when the
+16:5216 minutes, 52 secondsmarket's moving up and they lift the offer, they're lifting it higher, higher, higher when there's more aggressive participants. So, this
+16:5916 minutes, 59 secondsessentially is what I am looking for in layman terms when I get through the examples. Um, this essentially is what I'm looking for. I am looking for one of
+17:0717 minutes, 7 secondsthe main components to my system is I am looking for a lot of aggressive volume hitting one side of the market and then the market refuses to follow through.
+17:1717 minutes, 17 secondsSo, [snorts] essentially sell off. As we sell off, I want to spot a lot of aggressive selling volume here. And
+17:2517 minutes, 25 secondsdespite that aggressive uh selling volume, price does not extend in that direction. Maybe we consolidate, maybe we start moving up despite the selling
+17:3317 minutes, 33 secondsvolume. I want to see absorption, I call it, because what this shows me is that there's a passive trader sitting on the other side. For every buyer, there's a
+17:4217 minutes, 42 secondsseller. For every seller, there's a buyer. So, if there's a crap ton of sellers coming into the market, somebody has to be absorbing that on the buy
+17:4917 minutes, 49 secondsside. And this to me again is the reversal signal to the upside. So, I want you all to watch the order flow
+17:5617 minutes, 56 secondsdown here at the low of the day. Looking at the candlestick chart here, the market's going to go and we're going to go break this low of the session here.
+18:0318 minutes, 3 secondsLet's observe what happens here when the market forms the low of the day. This day uh was about a three a little under
+18:1018 minutes, 10 secondsa 4 to1 risk-to-reward ratio or a $11,000 profit on this on this day here.
+18:1618 minutes, 16 secondsWhat we're going to see is here's the low of the day on a heat map. The market goes we break this low of the day, right? The same low of the day that we
+18:2518 minutes, 25 secondssee here. The charts are identical. And what we see here is as the market goes and breaks this low of the day, we see this orange/ red line here and we see a
+18:3418 minutes, 34 secondslarger red bubble. In simple terms, what this shows is this orange yellow line is a passive I'm going to call this P.B.
+18:4318 minutes, 43 secondsit's a passive buyer. So, as the market comes down, there's a passive buyer sitting there. When we come down and
+18:5018 minutes, 50 secondsfill this passive buyer, we can see this red bubble and what that shows is agressive
+19:0019 minutessellers. So in this example, as the market is going to break the low of the day, we see a passive buyer under this
+19:0719 minutes, 7 secondslow of the day getting filled by an aggressive seller. Despite this aggressive seller entering into the market, the passive buyers are willing
+19:1619 minutes, 16 secondsto bid and the passive buyers are higher and stronger than the aggressive sellers. And that gives the market only
+19:2419 minutes, 24 secondsone chance or one option and that is to move up to advertise prices much higher.
+19:3019 minutes, 30 secondsHere just zooming in we could see the same thing here. The market fills this passive buyer. We see the absorption of the sell order. The aggressive seller
+19:3819 minutes, 38 secondsthe market comes down by about two points under that. We reclaim it and then we see the aggressive buying come in with follow-through. Aggressive
+19:4719 minutes, 47 secondsbuyers come in. the market actually pulls back and this aggressive buyer now becomes a support level where this is a
+19:5419 minutes, 54 secondsvalid reversal to the upside at the low of the day. Same thing here. We could see it on the footprint chart. Here
+20:0120 minutes, 1 secondhighlighted is a negative delta or a large aggressive seller followed by a
+20:0720 minutes, 7 secondsvery large cumulative delta followed by aggressive buying coming out of this level validating that there was a
+20:1620 minutes, 16 secondsmassive amount of absorption happening at the low of the day followed by aggressive buying coming in through this
+20:2320 minutes, 23 secondsrange. I use a 20 tick on the S&P 500. A 20 tick footprint chart range. I don't
+20:3120 minutes, 31 secondsuse a timebased uh footprint chart. And my heat map is no time at all. It's just static as volume's coming in. I do not
+20:3920 minutes, 39 secondsuse a time frame. In my opinion, I think time is irrelevant. Now, I want to ask all of you watching this right now. How
+20:4720 minutes, 47 secondsmany of you would long the market right here, right now, as we're selling off, breaking this pre-market low, seeing an
+20:5420 minutes, 54 secondsaggressive two-minute candle sell off for about 20 points on the S&P 500.
+20:5820 minutes, 58 secondsWould you I I mean, I'm I'm explaining a reversal example, so you all know what's going to happen, but truthfully, would you long the market here? It looks It
+21:0621 minutes, 6 secondslooks pretty weak. It looks pretty bearish. We're breaking a pre-market low. Um, we're selling off. We dropped 20 points in two minutes. you obviously
+21:1521 minutes, 15 secondsknow it's going to happen, but realistically looking at a candlestick chart, I would not buy the market right now at this moment just off of a
+21:2221 minutes, 22 secondscandlestick chart alone. However, using the order flow, this was a trade that I took, I think, on this was Monday of this week. It was a $20,000 profit. It
+21:3121 minutes, 31 secondswas my biggest profit year to date. It was a 7:1 risk-to-reward ratio. This was last Friday, actually. Um, I risked
+21:3821 minutes, 38 seconds$2700 to make a $20,000 profit. I longed the market at the low and look, I didn't
+21:4621 minutes, 46 secondseven catch the biggest portion of this move. Took some profits above the high of the day and I took some more profits off above this pre-market high here. 7:1
+21:5421 minutes, 54 secondsrisk-to-reward ratio. So, let's get into the setup. So, the first thing is let's look at the pre-market plan. And this is going to be very significant because the
+Chapter 6: Developing a trading plan
+22:0122 minutes, 1 secondnext concept or the next framework of the strategy that I'm going to give you all is my CLC rule. And this is a good little introduction to my CLC rule. So,
+22:1022 minutes, 10 secondsright here, going off the pre-market plan, what we're going to see is that there wasn't many levels that I was really super interested in. The market was relatively balanced. It was rel
+22:1822 minutes, 18 secondsrelatively flat. And what I was watching for was 7380 to 7360. This was my game
+22:2522 minutes, 25 secondsplan that as long as this level holds, which is this green rectangle right here that formed from about a week prior. As
+22:3422 minutes, 34 secondslong as this 7360 7380 level holds, I want to focus on longs intraday for a quick relief bounce targeting 7416.
+22:4422 minutes, 44 secondsWhere 7416 came from was this little pre-market high that I'm highlighting right here. And then next above that is 7454
+22:5322 minutes, 53 secondswhere this came from the previous session's little resistance level right around the 7454 level. So, my game plan was as long as
+23:0123 minutes, 1 secondthis 7380 to 7360 level could hold, I want to focus on longs for a quick relief bounce. Now, the market's going
+23:0923 minutes, 9 secondsto sell off here. We're aggressively going to move down. And what we're going to see here is a passive buyer by the
+23:1623 minutes, 16 secondsmarket at my level of interest. So, I'm going to get long at the 7360s right after or right before this passive
+23:2523 minutes, 25 secondsbuyer fills here. This is a typo in the Discord. My stop loss was 7364, not 7367.
+23:3323 minutes, 33 secondsAnd I got long because I viewed the market of a strong passive buyer at a level of demand. Going back to the
+23:4123 minutes, 41 secondsaggressive or passive orders, the market is selling off into my level of demand.
+23:4623 minutes, 46 secondsAnd as we sell off into my level of demand, we're seeing this orange line come in, which is a passive buyer. That
+23:5323 minutes, 53 secondsin itself is okay. But the fact was that the market filled this passive buyer and the selling volume that we're seeing
+24:0224 minutes, 2 secondscoming into the market denoted by this red bubble here and this red bubble that I just arrowed right there is being
+24:0924 minutes, 9 secondsabsorbed by the passive buying. Let me say that again. The market is selling off at a level of demand. And as we're
+24:1724 minutes, 17 secondsselling off into this level of demand, we're also spotting passive buyers willing to buy at this level of demand.
+24:2624 minutes, 26 secondsTo me, that is showing that there's absorption. There's a passive buyer stepping into the market at an existing level where there already were buyers.
+24:3524 minutes, 35 secondsThat is a great signal for me to put risk on and enter the market. And my entry was down here at the 7367s.
+24:4324 minutes, 43 secondsMy entry is not waiting for the market to break out right here. That in fact was my target. My entry was not waiting for the market to break out right here.
+24:5124 minutes, 51 secondsMy entry is as soon as I spot the volume that I am looking to intend the trade with. In this case, I was looking to buy
+24:5924 minutes, 59 secondsa bounce or a relief bounce. As soon as I see that volume come into the market, I get in. I'm not waiting for a five
+25:0725 minutes, 7 secondsminute candlestick chart to close. I'm not waiting for the market to start moving up and getting in an entry 10 20 points higher. I'm getting in when I see
+25:1625 minutes, 16 secondsthe volume give me the pattern that I need to see. Every single time that I click the buy or sell button, it is because of a pattern that I am familiar
+25:2525 minutes, 25 secondswith. And this is a very fitting pattern for me where this passive buyer gets filled into the market and even all of
+25:3425 minutes, 34 secondsthe aggression coming in prior to this and an area of high volume being supported around the 7367s.
+25:4125 minutes, 41 secondsMultiple different confirmations at my level of interest. Now, a lot of you that will look at the heat map will say, "All right, right. So, here was my entry
+25:4925 minutes, 49 secondsdown here at the lows." Again, I'm not waiting for it to come up here. I'm not waiting for all of that. I'm I'm getting in when I see either a passive buyer
+25:5725 minutes, 57 secondsfill, that was the confirmation on the setup, or aggressive buyer stepping in thereafter. This was a passive uh buyer
+26:0426 minutes, 4 secondsfilling and absorbing the aggressive selling. That was my confirmation for this at a level of demand. Now, a lot of you that look at heat maps will say,
+26:1126 minutes, 11 seconds"All right, we see that, right? But Carmine, how about right here?" Right?
+26:1526 minutes, 15 secondsThere's passive sellers there. I should have taken the market short here, right? Or Carmine, I see passive sellers here.
+26:2226 minutes, 22 secondsI should short the market, right? And a lot of you may ask like, how do I know when what to trade and when to trade and where to look for? Because there's tons
+26:3126 minutes, 31 secondsof uh passive sellers or there's tons of aggressive green bubbles coming in and there's there's tons of aggressive
+26:3826 minutes, 38 secondslarger red bubbles coming in and oh, look, the market's breaking out here with aggressive green bubbles. Sure. All right. And a lot of you probably are
+26:4626 minutes, 46 secondsasking like like how do I know when and where to trade this? There's so many bubbles and lines and and numbers on my charts. What do I do? And I'm going to
+26:5526 minutes, 55 secondsanswer this question, but I I'm going to answer it in a few minutes from now. I want you to remember this example because it's going to lead me into my next point. Another setup that I look
+Chapter 7: Continuation and reversal setups
+27:0227 minutes, 2 secondsfor is sometimes I do not want to be um a first buyer or a first seller into the market. So, there's plenty of times
+27:1127 minutes, 11 secondswhere let's say the market is selling off into a level of support or a level of demand, right? So, here we have our support level. There are plenty of times
+27:1927 minutes, 19 secondswhere we come into our support level and the market just simply bounces. I don't see anything here. It just bounces off my level. There's no confirmation. And
+27:2827 minutes, 28 secondsit's okay. It's I should not have traded it because I didn't see a confirmation signal or I didn't have a a a valid opportunity that I could define to put
+27:3627 minutes, 36 secondsrisk on. That happens sometimes. Instead of traders complaining that they miss a move, that they should have taken it and they FOMO in and they chase a breakout or chase a bounce because that happens.
+27:4427 minutes, 44 secondsIt's an emotional problem. Sometimes the market will step number one come into my level of interest and bounce. On this
+27:5227 minutes, 52 secondsbounce, it most likely will leave clues of significant buying volume in this case where then I could look to long a
+27:5927 minutes, 59 secondspullback at that level of interest for then here I can look to capitalize on this move or I am not a breakout trader,
+28:0828 minutes, 8 secondsright? I very very rarely 95% of the time do I not play breakouts. Let's say the market has a breakout. All right,
+28:1628 minutes, 16 secondswe're coming up into a uh into a key resistance level. And as we come up into this key resistance level, we go and
+28:2428 minutes, 24 secondsbreak it. And a lot of traders would buy the breakout. Nothing wrong with it, just not my cup of tea. And I feel like a lot of retail traders because of how
+28:3128 minutes, 31 secondseasy breakouts are are breakout traders and they may struggle because they're buying an extended move. I do not like
+28:3928 minutes, 39 secondsbuying or selling an extended move because it does not offer a great risk-to-reward ratio. And extended moves
+28:4628 minutes, 46 secondsmeans I'm getting in after the move has already happened, giving me a smaller reward and a higher risk. So, what I would prefer to do, and I'm going to
+28:5528 minutes, 55 secondsshow you plenty of examples of this, is when the market breaks out, there most likely will be significant signs of buyers that that formed on the breakout.
+29:0629 minutes, 6 secondsSo my idea is let those buyers or let those sellers form. Let me mark them as a new key level and then if this new
+29:1429 minutes, 14 secondsbuyer comes into the market, I can then long a pull back into wherever he forms for more of a continuation setup. Um and
+29:2229 minutes, 22 secondsthat's my signal on step number four of my continuation entry. This is significant for me because even if I am
+29:3029 minutes, 30 secondsplaying a continuation setup, I will not buy the market on a continuation. I will buy the market on a reversal. Right?
+29:3729 minutes, 37 secondsWhat I mean by that is instead of me longing the market here, I will long the market here when it's pulling back going for continuation. So my entry is a
+29:4629 minutes, 46 secondsreversal signal, but I'm going for a continuation setup. If that makes sense.
+29:4929 minutes, 49 secondsDoes that make sense? Like very rarely will I ever say, okay, here's my key level. Hey, as soon as $100 breaks here, I'm long in this thing automatically.
+30:0030 minutesVery rarely will I do that. What I will do, like we can see in this example right here, right here, we could see the market breaking out above the high of the day. Here on this breakout, we see a
+30:0930 minutes, 9 secondssignificant amount of buying volume and I could get into way more advanced concepts like low volume nodes, like zero prints. I could get into all those.
+30:1830 minutes, 18 secondsBut here, what I would then watch for is a pullback into this range to get long, right? Because what that does is now once the market bounces from this, I can
+30:2630 minutes, 26 secondsget long here, put my stop loss under here, and have a target all the way up here instead of just simply buying the
+30:3430 minutes, 34 secondsbreakout, getting long maybe at the same price. But now I got to put my my stop loss all the way down here because that would like really invalidate my thesis.
+30:4230 minutes, 42 secondsSo, kind of what I like doing is letting the market break out, show a sign of a buyer or a seller, and then get long on the pullback. It doesn't even have to be
+30:5130 minutes, 51 secondsat that old resistance level, right? It could be all the way up here if there's a significant buyer up here. And you'll see a lot of examples of this. So, here
+31:0031 minuteswas a setup that I took in the first week of June. This was a $14,000 profit.
+Chapter 8: Executing tactical trade setups
+31:0531 minutes, 5 secondsIt was a 3 12:1 realized risk-to-reward ratio. And this trade lasted about five minutes in duration. So, $14,000 profit
+31:1431 minutes, 14 secondsin about five minutes time. Three and a half to one risk-to-reward ratio. What we're going to see here is my game plan for this day was we had two strong
+31:2331 minutes, 23 secondssupply zones 7464 and 7477.
+31:2831 minutes, 28 secondsWhat I was watching for was a rally into this level where sellers appear. It may be a good scalping opportunity to short the market targeting the 40s to 35s.
+31:3931 minutes, 39 secondsTook profits down here at like the 37s or 36s. Now what we're going to see here is the market. Here's our 9:30 open right here. Right, here's our 9:30 New
+31:4731 minutes, 47 secondsYork uh New York US open. The market rejected the supply zone perfectly. You don't see an entry there because I did not take the market short there. This is
+31:5531 minutes, 55 secondsgoing back into my point where if the market rejects or bounces off my level of interest, what I can do is is find the sellers or find the buyers off that
+32:0432 minutes, 4 secondslevel of interest and play a retest of these guys. So, after the market had a perfect rejection at the supply zone, we begin to sell off and we did hit the
+32:1332 minutes, 13 secondslevel in the pre-market plan perfectly and rejected excellently. Now, here's that rejection of the supply zone in the first 5 minutes. Here's the sell-off.
+32:2332 minutes, 23 secondsAnd what I posted in the Discord was that sellers are taking control. Here we could see that sell-off and what I was watching for was despite me not
+32:3132 minutes, 31 secondsparticipating because I didn't see a good confirmation at the supply zone, the rejection of the supply zone
+32:3832 minutes, 38 secondsprovides context. Key word here, it provides context to me that shows sellers are now in control, right? It's
+32:4732 minutes, 47 secondsproviding information to me that sellers are in control. And that's going to bring me into a good point here is that many times you may miss a move. Many
+32:5532 minutes, 55 secondstimes you may not participate in a rejection of a resistance level or supply level. Don't look at you missing a move as you missing a move. Look at it
+33:0433 minutes, 4 secondsas all right, it's providing information to me that I could use to my advantage in the near future. So if I ever feel
+33:1233 minutes, 12 secondslike I have FOMO or I I might have not participated in a selloff or a bounce that I had planned for, the market is a mechanism that is constantly giving us
+33:2033 minutes, 20 secondsnew information that we could use to our advantage. So, I didn't shrug my shoulders and say, "A I just missed this for supply rejection. I'm calling it a day. My my day is over. I
+33:2933 minutes, 29 secondsmissed it. It's ruined because I didn't take it." Instead, I formulated a new plan off of this and used the rejection of supply as context. My new level
+33:3833 minutes, 38 secondsbecame 7458, which just was a break of this little swing high that formed here to 7465, which is the start of this
+33:4733 minutes, 47 secondssupply zone. So my main objective here was looking for a rally up into this range sellers to reappear to play short
+33:5433 minutes, 54 secondstargeting the downside levels of support at the 7440s to 7435s.
+34:0034 minutesMarket goes here we break this high and the whole concept of this master class is when there is more passive sellers at a specific level than there is
+34:0834 minutes, 8 secondsaggressive participants. The market only has one option and that is to move down because the market is a mechanism that advertises price to other participants.
+34:1834 minutes, 18 secondsThe market's main objective is to facilitate trade and to advertise price.
+34:2434 minutes, 24 secondsWhen the market facilitates trade and the market gets information that the market does not like, the market will
+34:3134 minutes, 31 secondsadjust and advertise different prices whether are higher or lower. What I mean by that is a seller came here, which is denoted by this red line, right?
+34:4134 minutes, 41 secondsRemember, it's a passive sell order. The market came and a seller, I'm just going to use kind of simple terms here.
+34:4934 minutes, 49 secondsSomebody said, "All right, I'm willing to sell 100 contracts at 7460." And we could see this on the heat map by that
+34:5734 minutes, 57 secondsred line. as the market came and we offered to sell 7460. If there was a 100 sellers here, maybe there was only 80
+35:0535 minutes, 5 secondsbuyers here and the passive sellers won the battle of the aggressive buyers and that is a very good signal for more
+35:1435 minutes, 14 secondsdownside where here I will look to play the market short. See the same information here on the footprint chart.
+35:2035 minutes, 20 secondsMarket goes, we break this high and we have an immediate rejection and the market sells off. And this is how I'm able to capitalize on a on a short
+35:2835 minutes, 28 secondsposition. Here's that passive seller filling here. We could see all of the aggressive selling volume to follow. And
+35:3635 minutes, 36 secondshere's my 7440 7435 level, which is my target, which was the low of the day as well, hitting filling here. Now, how do you know if this level is spoofing?
+35:4635 minutes, 46 secondsWell, I don't give I don't pay much attention to any resting orders that show zero intention to fill. Let's see if I have a good example of this here.
+35:5635 minutes, 56 secondsOkay, right here, right where I'm putting my cursor at. You see this orange and yellow line right here? Well, guess what? The market never came down
+36:0436 minutes, 4 secondsto fill that order. And that order was pulled to I don't care about spoofing. I don't care if somebody pulls their
+36:1136 minutes, 11 secondsorder. I don't care if somebody spoofs, which it is illegal. What I care about is resting orders that show intention.
+36:1736 minutes, 17 secondsIt's very easy for you to lose your mind and look at every single line right here, here, here, here, right here. It's
+36:2636 minutes, 26 secondsvery easy to lose your mind and look at every order. I only care about orders that show intention. We can see here
+36:3336 minutes, 33 secondsthat this order was filled because price transacted at it. If the market goes up and we don't fill this guy, he never got
+36:4136 minutes, 41 secondsfilled. It wasn't spoofed. He just never got filled. We could see here this like light blue shaded area right here. The market never filled this order. So
+36:4936 minutes, 49 secondswhether you want to call it spoofing or pulling, I don't give a crap because it doesn't affect my analysis because that order was never filled. Right here, we
+36:5836 minutes, 58 secondscould see the order fill and here we could see the aggressive participants come through after. Now, like I just mentioned, there are tons of other
+37:0637 minutes, 6 secondsorders, offers, bids that fill. How do we know what to look for, how to trade it, where to trade it, and why to trade it? We could say, "All right, I wanted
+37:1437 minutes, 14 secondsto short this right here." Sure, you could have. You could say, "All right, yeah, sure. I wanted to short this right here, 100%." But how do you know what to look for in a market where there's tons
+37:2237 minutes, 22 secondsof numbers, tons of lines, tons of green, red, blue, whatever you want to call it. How to know when to trade it is
+Chapter 9: The CLC framework
+37:3037 minutes, 30 secondsmy CLC rule. These are the three pillars to my trading is my CLC rule. Without my CLC rule, I don't have a high quality
+37:3937 minutes, 39 secondstrade in front of me. My CLC rule saves my butt. It makes sure that I'm trading on the right side of the market. It gives me it puts me in the position for
+37:4837 minutes, 48 secondsa high probability setup with very small risk and very high reward. First pillar, context. You've heard me use the word
+37:5637 minutes, 56 secondscontext so far in this master class when I refer to the word context. Think of it us in kindergarten or or or elementary
+38:0438 minutes, 4 secondsschool. When you're learning how to read, whe whatever English you speak, I remember this. My my teacher in kindergarten said or whatever grade, we
+38:1238 minutes, 12 secondshave to use context clues. If we don't know a word, if we don't understand the meaning of a word, use context clues of
+38:2038 minutes, 20 secondsthat sentence. Now, I feel like I'm acting like an English teacher when I'm just a trader. Context basically is us
+38:2638 minutes, 26 secondsreading information the market is is is reading to us or or showing us or teaching us without it explicitly telling us. What I mean by context is
+38:3538 minutes, 35 secondswhat is the trend? Are we flat? Are we balanced? Are we trending? Are we making higher highs, higher lows? What is today's volume? Is there a lot of volume coming in? Is there um a lack of volume?
+38:4838 minutes, 48 secondsIs the market moving sideways? A really good indicator for me is the pace of the tape. How fast is the order flow moving?
+38:5538 minutes, 55 secondsI look at the charts as as as a canvas and the market is a is a is the painter.
+39:0239 minutes, 2 secondsIs the market painting the picture quickly or is it taking a while to paint the picture? What are the context clues
+39:0939 minutes, 9 secondsthat I can use? And all of these are very good signs. I could go for on for hours about context.
+39:1539 minutes, 15 secondsIs me reading the context, understanding the story the market's telling me in real time. You could use ATR for this.
+39:2339 minutes, 23 secondsWhatever is giving you a clear picture of the market's trend, the volume, the range, who is trapped, who is underwater, who is showing initiative,
+39:3239 minutes, 32 secondswho is aggressive, who is passive. These are all giving us context clues that we as the reader of the market have to read from the storyteller which is the
+39:4139 minutes, 41 secondsmarket. Location is the second part of the CLC rule. I want to make sure that I am trading at a level of interest. There
+39:4839 minutes, 48 secondsare so many times and I I I've talked about this example the past two academy coaching calls on Sundays where I
+39:5639 minutes, 56 secondsremember one of my first biggest blowups back in 2016 or no 2017 where the market was moving up up like this. It was
+40:0440 minutes, 4 secondsuptrending and what I did was for no reason I I shorted 100 shares 100 shares 100 shares 100 shares 100 shares right and the market just kept going up and up
+40:1340 minutes, 13 secondsand up and I blew my account all in one day. I had no reason to enter the market. It wasn't at a level of interest. It wasn't at a supply or demand zone. It wasn't at a support
+40:2140 minutes, 21 secondsresistance level. And I just entered the market for no reason of me just wanting to get in on the market location. I need
+40:2840 minutes, 28 secondsto take a trade at a either supply or demand level or a support and resistance level. Need to. Now, there's a little
+40:3640 minutes, 36 secondsbit of a caveat to this where like I showed you all earlier. There's plenty of times where the market moves up, we have a supply zone, the market hits the
+40:4540 minutes, 45 secondssupply zone, I don't see an entry, it rejects the supply zone, we move down, and then we come back up. Maybe there's a seller sitting here and I take the
+40:5340 minutes, 53 secondsmarket short here. That's the caveat to this because the location of it is that it just rejected the supply and it formed context that sellers are at the
+41:0041 minutessupply. And then the third step is my confirmation. I want to make sure are sellers selling, are sellers trapped, are buyers buying, are buyers trapped.
+41:0941 minutes, 9 secondsWho is winning the battle that I explained to you all earlier? Is it the passive orders? Is the aggressive orders? Who is winning the battle? And I
+41:1641 minutes, 16 secondscould use that to my advantage. This is my CLC rule. This is my major framework to my trading. It provides high quality setups and it is the most important
+41:2541 minutes, 25 secondsconcept for me to implement on a daily basis. Now, another framework. So, does anybody have any massive questions so
+Chapter 10: Trading balanced markets
+41:3241 minutes, 32 secondsfar? Any confusion, any comments about anything so far? I want to get into the next framework, which is what I've noticed recently in the market, and it's
+41:4141 minutes, 41 secondsresponsible to a lot of my profits so far in June, is the balanced market rules. I told you all yesterday on my Instagram, that I'm going to talk about
+41:4941 minutes, 49 secondsthis in the master class. And I trade the best when the market is like this.
+41:5441 minutes, 54 secondsOkay. When I talk about the market being balanced, and you're going to see a lot of examples in the next few slides here, what this tells me, and a lot of you may
+42:0242 minutes, 2 secondshave asked so far, hey Carmine, what is the best time frame to use? Any concept I ever explain any ever can be related
+42:1042 minutes, 10 secondsto any time frame. So, what I'm going to explain right now is can be seen on a 30- secondond chart. It could be seen on
+42:1742 minutes, 17 secondsa five minute chart. It could be seen on a 4 hour chart. It could be seen on a daily chart. The time frame is irrelevant. The concepts of the market's
+42:2642 minutes, 26 secondsauction is what is important here. So what I'm going to explain is any time frame. When I talk about the market
+42:3242 minutes, 32 secondsbeing balanced, it is essentially us lacking a trending direction and it is usually followed by a trending move. So
+42:4142 minutes, 41 secondshere, let's just say the market is downtrending and then all of a sudden we come into the lows and down here at the lows, the market tries to sell off.
+42:4842 minutes, 48 secondsNothing formed yet. The market tries to bounce, nothing formed yet. Next session, the market comes down, come up,
+42:5542 minutes, 55 secondsright? And we're forming this like very tight range. This right here is now forming a balanced market. It's kind of
+43:0443 minutes, 4 secondsa structure where we drop. I'm going to call this a D. And then B where we base or balance. Again, 1 minute, 30 second,
+43:1343 minutes, 13 secondsdaily chart, weekly chart time frame is irrelevant. I'm going to show you examples on an intraday time frame and I'm going to show you time frames on a
+43:2043 minutes, 20 secondshigher time frame. The concept here is that when the market is balanced, a lot of traders automatically assume when the
+43:2943 minutes, 29 secondsmarket is coming up to purchase the market long or buy it in a bullish position when a balanced range develops.
+43:3843 minutes, 38 secondsSimilarly, when the market begins to sell off and it looks like we're about to go take out the lows, a lot of traders are automatically selling the
+43:4643 minutes, 46 secondsmarket. This again is part reason why I do not like playing breakouts or breakdowns and they automatically sell
+43:5343 minutes, 53 secondsthe market here for them just to be reversed on and the market to continue to range out and they get trapped and they're they get screwed. So when the
+44:0044 minutesmarket identifies and develops this balance range, my rule of thumb, when the market is balanced, right, doesn't
+44:0844 minutes, 8 secondshave to be perfect. Could break the high, we can break the low. When we lack a clear direction, two rules here.
+44:1444 minutes, 14 secondsNumber one, trading in the middle of this range, no good. Very rarely. I mean, I did it last week and I took a loss on it. Truthfully, I literally
+44:2344 minutes, 23 secondstraded and it was so stupid of me and I was so upset at myself that I did it because my rule of thumb is to not um trade in the middle of the range. That
+44:3144 minutes, 31 secondsthat's my rule of thumb is I avoided entirely and you're going to see it in my pre-market plans. And uh earlier last or late last week, literally just traded
+44:4044 minutes, 40 secondsnonsense in the middle of the range on one of the days and I I paid the price for it. But when the market is ranging like this, my rule of thumb is to trade
+44:4744 minutes, 47 secondsaround the edges. It is to what I call fade the extremes. What this means is if the market goes and begins to rally, I
+44:5644 minutes, 56 secondsam looking to not buy the highs, I am first automatically looking to be a seller up here. Similarly, when the
+45:0445 minutes, 4 secondsmarket sells off and we go to the lower portion of the range, I am first automatically looking to be a buyer down here and capitalize on a bullish move.
+45:1445 minutes, 14 secondsThis is what I call participants being very responsive. they are responding saying, "Hey, the market's trying to
+45:2145 minutes, 21 secondsbreak out here. No, as a seller, I don't think it should be this high. I am going to sell this market passively." And here is where I could look to capitalize at
+45:2945 minutes, 29 secondsthe extreme for a reversal to the downside. So, when the market is balanced, I am first and only looking to
+45:3645 minutes, 36 secondsplay reversals. A lot of traders, again, act like this is a a fiveminute chart.
+45:4145 minutes, 41 secondsThey see the market just moving like this, and they're like, "Man, I I'm done. I'm calling it a day. I hate trading the market when it's choppy. I love it. I find my best setups come when
+45:5045 minutes, 50 secondsit's like this. Like, how many of you give up because the market's just not going anywhere. I look at that as good.
+45:5545 minutes, 55 secondsI look at that as opportunity because I have a setup that works when the market's balanced by following responsive participants. A lot of you are saying you get chopped. You get
+46:0346 minutes, 3 secondschopped because most likely you're either a trading in the middle or b longing a breakout or selling a a low
+46:1146 minutes, 11 secondswhen it should be the opposite. Should be trading around the extremes or fading the extremes is what I call it. Um, let me see here. Okay, so here's a trade
+46:2046 minutes, 20 secondsthat I took. This was a a little under a $14,000 profit. 5 and a half to1 realized risk-to-reward ratio. Again,
+46:2646 minutes, 26 secondswhy I love trading order flow is because of the risk-to-reward ratios. I'm getting in essentially be well before
+46:3446 minutes, 34 secondsthe move happens and it helps me define my risk. Right? A lot of people would see this like trend line here and they'd say, "All right, as soon as the market breaks the trend line, I'm getting
+46:4246 minutes, 42 secondsshort." But look at my entry. It was like eight or nine points higher than that. And that's by using the order flow. So 2500 bucks worth of risk,
+46:4946 minutes, 49 secondslittle under 14,000 profit, a five and a half to one risk-to-reward ratio on this trade. I shorted the market up here at
+46:5646 minutes, 56 secondsthe 7590s. I put my stop loss above the 7593 and a halfs and uh I took profits
+47:0347 minutes, 3 secondsunder these lows right here and under the low of the day. It's kind of a common theme of my targets. So let's go into my pre-market plan. This was last
+47:1147 minutes, 11 secondsMonday. The setup was right here last Monday. My pre-market plan stated balance range structure here. To me,
+47:1947 minutes, 19 secondsthis is not a morning where I want to plan or first approach the session expecting a continuation or a breakout,
+47:2847 minutes, 28 secondsbut more so a reversal. Very key point here. This is a 30-inut chart right here. We can see this clearly defined
+47:3647 minutes, 36 seconds3-day range right here that I just highlighted. The market is in a range.
+47:4047 minutes, 40 secondsWe're balancing out. I do not want to trade in the middle of the range that I'm highlighting here. But the market now in this pre-market session as I'm
+47:4847 minutes, 48 secondscreating my pre-market plan is going towards the high of the range. What a lot of traders will do will say, "Oh, we're breaking above yesterday's high.
+47:5647 minutes, 56 secondsI'm longing this thing." To me, that actually validates my strategy even more and makes it a lot more uh gives me a
+48:0448 minutes, 4 secondslot more conviction. So, after the market rejected uh the supply zone two days prior, it became key. I was
+48:1148 minutes, 11 secondswatching the same supply zone to reject 7572 7582. I'm looking for sellers to play short targeting downside levels of
+48:2048 minutes, 20 secondssupport. Pretty much a straightforward game plan. But the most important point that I want to talk about is that this is not a session that I could expect a
+48:2648 minutes, 26 secondsbreakout, but more so a reversal because the market is balanced. This looks bullish, right? Let's ignore what
+48:3448 minutes, 34 secondshappened higher time frame. Let's ignore all that. The market's putting in higher highs. The market's putting in higher lows. If I didn't explain that I'm a reversal trader, a lot of you would say
+48:4248 minutes, 42 secondsthat this looks really bullish and it does, right? I mean, this to me looks really bullish. What I'm going to show
+48:4948 minutes, 49 secondsyou here on the footprint is that as the market goes and breaks the high of the day, and keep in mind the supply zone was like 7572,
+48:5848 minutes, 58 seconds75.82 was the general start of the supply zone. We're trading into this range here. As the market goes and we break the high of the day, look at the
+49:0649 minutes, 6 secondsfootprint here. on this footprint. The lower portion of the range is the cumulative delta. What this shows me is as this bar spikes down here, there's a
+49:1549 minutes, 15 secondssignificant amount of buying volume coming into the market. In fact, as the market is breaking above the high of the day, we are seeing the most amount of
+49:2449 minutes, 24 secondsbuying volume that we've seen all session. I'll say that again. As the market is breaking above the high of the day, we are seeing the most amount of
+49:3249 minutes, 32 secondsbuying volume that we've seen all session. Let's ask ourselves if we're seeing the most amount of buying that we saw all session, shouldn't the market
+49:4049 minutes, 40 secondsbreak out? It should. Here we could see the same thing on the heat map. We could see the cumive delta expanding. We could see the aggressive buying coming in. We could see the passive seller sitting
+49:4949 minutes, 49 secondsthere. Did never get filled. If we're seeing the most amount of buying coming in at a level of supply, but this buying
+49:5649 minutes, 56 secondsis not going anywhere. What did I say to start this master class? When there's a significant amount of volume coming into the market with no follow-through, this
+50:0550 minutes, 5 secondsis a good indication that a passive participant is resisting. This is how a resistance level forms. So then the
+50:1250 minutes, 12 secondsmarket sells off. Right? Here's the rejection at the high of the day inside the supply. We could see even more passive sellers right here filling and I
+50:2050 minutes, 20 secondsget short down here a little lower. I would have loved my entry to be here at the 94s, but what I had done here was I got short at the 90s and I put my stop
+50:2950 minutes, 29 secondsloss above these 90s 94s, right? A a best entry I I will not lie here. My entry was still great. A a great
+50:3650 minutes, 36 secondsconfirmation signal is this rejection of the passive sellers right here. The same concept that I've been explaining all master class so far is a rejection of
+50:4450 minutes, 44 secondssupply. All this buying volume with no follow-through at the high of the day.
+50:4850 minutes, 48 secondsPassive seller reloading on the offer side as the market comes down. Great confirmation here. We could see it on the footprint chart. We can see the
+50:5650 minutes, 56 secondsmarket break the high of the day. We see the delta outliers which shows a lot of aggressive buying. But why are we seeing
+51:0451 minutes, 4 secondsall this aggressive buying not go anywhere at the high of the day? And here we could see a lot of aggressive selling stepping in. That's my
+51:1251 minutes, 12 secondsconfirmation signal to take the market short. I shorted up here at the 7590s.
+51:1751 minutes, 17 secondsMy my target was the 7575s which is the zero print. It was four points of risk for a 25point reward. Gave me about a 5
+51:2551 minutes, 25 secondsto1 risk-to-reward ratio and I sold here. I didn't miss majority of the move. My target was here. My plan was
+51:3251 minutes, 32 secondsfor this move. And that's how orderflow is enabling me. Look, there's the high of the day rejection. Here's the high volume again. Look at following. So
+51:4051 minutes, 40 secondsfollowing the highest amount of buying volume in the session so far, we are immediately followed by the most amount of selling volume right here on the
+51:4851 minutes, 48 secondssession so far. That shows me that move got absorbed and this is an excellent confirmation to call a delta flip for
+51:5651 minutes, 56 secondssure. And that is my signal to take the market short. And look like this is the same chart right here. This is a 1 hour candlestick chart. All of you watching
+52:0352 minutes, 3 secondsthis would say this is bullish. Like if you say this is not bullish, you got to be lying. Like to me, without going over
+52:1252 minutes, 12 secondsthe example of what I just went over and not knowing that we did reject, 100 out of 100 traders would say this is bullish. Am I wrong on that? I mean,
+52:2052 minutes, 20 secondslook at that 1 hour candle. We're closing near the highs. We're breaking out above the previous high here. It looks really bullish. But when you dive
+52:2752 minutes, 27 secondsdeeper, it gives you so much more insight that you can't get from this. A candlestick chart trader would would be buying this breakout. Also to mention,
+52:3652 minutes, 36 secondsnot only was it the balance range high, not only was it the balance range high here, it was also a supply zone that formed on the FOMC day here. And then
+52:4452 minutes, 44 secondsthat was the clean rejection of it, you know, and we could see a lot deeper off of a candle, off of the order flow.
+52:4952 minutes, 49 secondsAnother trade, very similar, 3.6 to1R, $7,600 profit, $2,100 worth of risk. I short the market 7470s.
+53:0053 minutesLook, I didn't miss majority of the move. This was my planned trade. Could have been a significant from my entry.
+53:0753 minutes, 7 secondsIt could have been a significant sell-off. So, here we see this happened.
+53:1153 minutes, 11 secondsThis happened uh yesterday. This was my trade from yesterday. So, here we have a 1 hour level of supply and we have a
+53:1853 minutes, 18 secondsbalance range, right? How do I know we have a balance range? Well, the market's ranging right here. We've dropped and we've done nothing but consolidate right
+53:2753 minutes, 27 secondshere. So a balance range has developed and we have formed a level of supply 7475
+53:3353 minutes, 33 seconds74.91 game plan this day let's keep it simple market has now developed a clear balance range and is revisiting the highs for me today will be all about the
+53:4253 minutes, 42 secondsreaction it is not a level where I first will look to long a move up considering it is at the high of a balance range
+53:5153 minutes, 51 secondsvery very key point right there so what I was watching for was a rally into 74757 7490 where sellers appear to play
+53:5853 minutes, 58 secondsshort targeting levels of of support overnight. Look, higher highs overnight higher lows despite this uptrend. I
+54:0754 minutes, 7 secondscannot be a buyer here. I cannot be long. I'm convinced and have confidence in the downside move. Now market opens
+54:1554 minutes, 15 secondsup intraday. Not only overnight do we see higher highs and higher lows, but also intraday we're seeing the same thing. Pullbacks are being bought up.
+54:2454 minutes, 24 secondsWe're putting in higher highs. We're putting higher lows. Still looks really bullish, right? I had so much conviction in this because the market was
+54:3254 minutes, 32 secondsrevisiting, as you could see from what I posted here in the Discord, it was revisiting the balance range high. And this is why I was not interested in a
+54:4054 minutes, 40 secondslong up there on the first test. Market goes, offer fills there at the highs. I was watching for sellers to step in. I
+54:4854 minutes, 48 secondswas interested in a short. There's going to be an offer that fills here at the level of supply, $74.90. It starts turning, very weak. I didn't click the
+54:5654 minutes, 56 secondssell button just yet, but it starts turning very weak. A little late of an entry for me, too. Again, on my part, I got short at the 7470s.
+55:0455 minutes, 4 secondsPut my stop loss above this high that formed here. Yes, I wish I shorted this high here. I wish I shorted this pop. I was a little late to the party.
+55:1355 minutes, 13 secondsTruthfully, this up here is a great confirmation. Not down here. This right here when the offer fills, right? Going back to my point, I don't know the exact
+55:2255 minutes, 22 secondssize of the passive seller, but up here you can see 112 aggressive buy contracts came in. So, what that tells me is there was probably like 200 contracts here to
+55:3155 minutes, 31 secondssell. So, 112 aggressive buyers came in, but maybe 200 passive sellers were sitting there. There was more passive sellers at the 7490s than there were
+55:3955 minutes, 39 secondsaggressive buyers. The market rejected giving enough confirmation signal uh to short this move. And again like this is giving us an opportunity to sell up here
+55:4855 minutes, 48 secondsnot you know down here not down here we're getting in before the move by spotting buy or sellers at the balance range high and you can see a clear
+55:5655 minutes, 56 secondsrejection of this range 7475 7490 now the market cannot stay in this range forever right we cannot stay in this
+Chapter 11: Initiative and trend trading
+56:0456 minutes, 4 secondsrange forever we will eventually have a breakout to the upside or a break down to the downside there will be traders
+56:1256 minutes, 12 secondsinitiating new position positions off of a balanced range. The way the market works is it moves from balance to
+56:1956 minutes, 19 secondsimbalance, balance to imbalance. An imbalance is a trending move and a balance is a choppy consolidation range.
+56:2856 minutes, 28 secondsThat's how the market moves. So when the market moves out of balance, you will have traders initiating which is where the word initiative comes from outside
+56:3756 minutes, 37 secondsof the range. Similarly, why I do not approach the market first going for a breakout is because we don't know how
+56:4556 minutes, 45 secondsstrong the buyers are when they're coming into this range. That's why majority of my plans for the session is first I cannot buy this because maybe we
+56:5356 minutes, 53 secondsreject this. It isn't until the market comes up, breaks out of the level, we see the initiative, and like I was explaining earlier, as we're breaking
+57:0157 minutes, 1 secondout, it'll probably leave clues of strong buyers where then we could long the pull back into it to then get long, showing traders are initiating out of
+57:0957 minutes, 9 secondsbalance and starting the new phase of imbalance or a trending move. So, this is actually an example from today,
+57:1657 minutes, 16 secondsTuesday, 6:30. These are what we call price discovery days. Here's the day before. years. Yesterday on the 29th when I shorted the market at the balance
+57:2557 minutes, 25 secondsrange high end and at a level of supply and there was that sell-off. Later in the session, the market rallies up. We close near the balance range high. Not
+57:3457 minutes, 34 secondsonly do we close near the balance range high, but we support it, support it, support it. Today is a very good example
+57:4157 minutes, 41 secondson on June 30th of buyers initiating above balance. And my main pre-market plan for today was looking for longs
+57:5057 minutes, 50 secondshigher time frame above the balance range high and looking to long pullbacks since we are initiating and supporting above the balance range high. Now, here's another way that I play this.
+58:0158 minutes, 1 secondThis was a 3 1:1 realized risk-to-reward ratio. It was a little under a $10,000 profit and this trade lasted about 25
+58:1058 minutes, 10 secondsminutes or so. Now, what we're going to see here is pre-market plan. This was last week, last Tuesday, I believe.
+58:1658 minutes, 16 secondsYeah, last Tuesday. What we're going to watch here is my game plan was the market was very balanced. So, I look to play the market either way. Scenario
+58:2558 minutes, 25 secondsnumber one, looking to short a strong breakdown under the 7423 level, which is this balance range low. Right? So, just
+58:3258 minutes, 32 secondsto define our range, the market drops, move up, move down, move up, move down.
+58:3758 minutes, 37 secondsWe're balancing here at the lows. So now we have a very well-defined balance range down here at the lows. So my game
+58:4558 minutes, 45 secondsplan was if the market breaks the balance range low and rallies reject under it, I want to play shorts targeting the downside levels. If the
+58:5358 minutes, 53 secondsmarket breaks out above 7454, I want to play longs targeting the upside levels.
+58:5958 minutes, 59 secondsCan play it either way. It depends on the traders who are initiating out of balance. Now, what we're going to see here is the market actually goes to
+59:0859 minutes, 8 secondsbreak the balance range low. And as I said earlier, why I do not like playing breakdowns is for the potential of
+59:1559 minutes, 15 secondsfakeouts. A lot of traders get faked out and that is not how I like or want to trade. So, the market goes, we break
+59:2359 minutes, 23 secondsunder this low and we have a hard time in doing so. The market actually fails to break down out of this range. And now
+59:3059 minutes, 30 secondsI use this as context. This is a very good signal for a long if the market fails to break out of the balance range low. We could say that it's holding the
+59:3959 minutes, 39 secondsbalance range low here. And this is again why I do not initiate a trade on the first test of the high or the low of
+59:4659 minutes, 46 secondsa balance range. So the market broke out under the range. It's a bullish sign here. My eyes were now on the 7454 level
+59:5559 minutes, 55 secondsthat if we break above the 7454 level, it becomes really bullish and I will look for longs above it targeting upside
+1:00:021 hour, 2 secondslevels. Lower wick and a failed breakdown and strong buying at the lows.
+1:00:061 hour, 6 secondsAll eyes are now on the balance range high. You could even see here the clear balance range high, right? You see the drop and you see like the consolidation
+1:00:141 hour, 14 secondsright here. That's where the clear defined balance range uh low is. Now, on this failed breakdown and the rally
+1:00:211 hour, 21 secondsabove 7454, I again I don't like playing the breakouts. I'm repetitive on this.
+1:00:271 hour, 27 secondsAs we break out, it leaves a very clear sign of strong aggressive buyers. And this is in the form of low of a low
+1:00:341 hour, 34 secondsvolume node. I'm sure a lot of you have heard me use this term before for those who have followed me. 7455s.
+1:00:411 hour, 41 secondsSo, what this tells me is the market is going to break out above 7454. And as we break out, we see a lot of aggressive
+1:00:491 hour, 49 secondsbuyers coming in coming in here, leaving a level that we mark now as aggressive buyers around the 7455s, 7455s.
+1:00:581 hour, 58 secondsSo where my game plan now formed from was now that we're above the level, I am watching for a pullback into 7455 to
+1:01:071 hour, 1 minute, 7 seconds7450 to get long targeting the upside levels. I get long at the 62s. I have a
+1:01:141 hour, 1 minute, 14 secondsfive point stop loss for about a 10 plus point reward to the upside. All this was was the market breaking out of the
+1:01:201 hour, 1 minute, 20 secondsbalance range high, not longing the market at the balance range high.
+1:01:261 hour, 1 minute, 26 secondsInstead, letting it break out and looking for a pull back into where the aggressive buyers who initiated the market, key word there, initiation above
+1:01:341 hour, 1 minute, 34 secondsthe balance range high. Market pulls back into this level. Can't really see much off of a candlestick chart, but that was my clear confirmation for the
+1:01:411 hour, 1 minute, 41 secondslong. What we see here on the footprint chart is as the market's selling off, we see a lot of aggressive buyers coming in, we see them come in there after as
+1:01:501 hour, 1 minute, 50 secondswell thereafter as well and down here and on the sell off down. And that is my signal to get long. And we even see
+1:01:571 hour, 1 minute, 57 secondspassive bids coming in as the market's moving up and and bidding and supporting as the market bids higher. A lot of aggressive buyers denoted by the green
+1:02:051 hour, 2 minutes, 5 secondsbubbles pull back into the range and that's how I'm able to capitalize on the initiation to the upside. Now, if
+Chapter 12: Q&A and academy information
+1:02:121 hour, 2 minutes, 12 secondsanybody has any questions, I'm going to turn it over to a Q&A. I'm going to turn it over to a Q&A. Let me just do this on the Zoom chat. So, there will be a Q&A
+1:02:201 hour, 2 minutes, 20 secondssection on the Zoom. I'm going to post a link really fast in the chat right here.
+1:02:251 hour, 2 minutes, 25 secondsLet me just post a link right here. Uh this here. Okay. And then in the Q&A section, which is going to be Q&A right
+1:02:341 hour, 2 minutes, 34 secondshere. I will do this live. Okay. So, first question that I see here is Randy Rogers. Randy says he would like to
+1:02:431 hour, 2 minutes, 43 secondslearn more. And that's actually a very good introduction into the Investor Trade Academy. I built the Investor Trade Academy as more of a hands-on
+1:02:511 hour, 2 minutes, 51 secondsprogram. It helps accelerate traders at every single stage, whether you're beginner, intermediate, or more advanced. The process behind it is three
+1:03:001 hour, 3 minutesdifferent phases. It all is a path to help become more self-sufficient. It includes the A Toz course, the starting
+1:03:071 hour, 3 minutes, 7 secondspoint from basics to more advanced strategies. There's an accelerator behind this, deeper concepts, more advanced strategies that I don't put
+1:03:161 hour, 3 minutes, 16 secondsanywhere on the internet to maintain value in this. And then we do live training sessions where we have weekly coaching calls to help sharpen the skills. Phase one is the A Toz course.
+1:03:261 hour, 3 minutes, 26 secondsPhase two is the accelerator program.
+1:03:271 hour, 3 minutes, 27 secondsPhase three is the live trading sessions. The curriculum as is followed, supply, demand, tape reading, order flow, risk management, psychology,
+1:03:361 hour, 3 minutes, 36 secondsfutures. Then the more advanced accelerator topics is over 23 hours. The full program is about 50 hours of
+1:03:441 hour, 3 minutes, 44 secondspre-recorded videos on top of the two coaching calls per week. A good friend of mine who works on Wall Street, Dylan, I know is in this coaching call, hosts
+1:03:521 hour, 3 minutes, 52 secondsone uh on Thursdays or Wednesdays and I host a live session on Sundays. Um if anybody is interested in this, I have
+1:03:591 hour, 3 minutes, 59 secondsposted a link in the chat feature of this. It is a more hands-on, it's a private community. Um, it is application
+1:04:071 hour, 4 minutes, 7 secondsonly. I keep it very tight-knit. I keep it very small group focused. That way, I could cater to a lot of individual traders. Um, the link to apply for this will be in the chat of this Zoom call.
+1:04:191 hour, 4 minutes, 19 secondsBut now to answer a lot of questions, I got asked how important is it to use Orderflow only at key levels versus at
+1:04:261 hour, 4 minutes, 26 secondsrandom locations on the chart. So to answer that question, as you could see from the CLC rule, context, location,
+1:04:331 hour, 4 minutes, 33 secondsconfirmation, I only like using the market or using how everything I explained in this master class at my
+1:04:421 hour, 4 minutes, 42 secondslevels of interest. It's a lot of noise, not at the levels of interest. It's a lot of noise at random points in the market. So I only use orderflow when it
+1:04:511 hour, 4 minutes, 51 secondsis at my key levels and or if the market has rejected off of my key level.
+1:04:551 hour, 4 minutes, 55 secondsAnother question that I got asked was where do I see the number of orders increasing from 100 to a thousand. You could use a footprint chart. You could
+1:05:031 hour, 5 minutes, 3 secondsuse a volume profile. If you want to quantify the number of orders coming in, a volume profile, a depth of market, um
+1:05:121 hour, 5 minutes, 12 secondsyou could see specific quantities of orders. Now, another thing that I get asked is how do you know what is a large size? Some days a 100 is large size,
+1:05:201 hour, 5 minutes, 20 secondssome days a thousand is large size. How do you know what is large size is by looking at just outliers in the data. If every order coming in today is 100
+1:05:281 hour, 5 minutes, 28 secondscontracts, then something that comes in with a thousand contracts is an outlier.
+1:05:331 hour, 5 minutes, 33 secondsIf every order coming in today is a thousand contracts, then a thousand contracts is not an outlier that day.
+1:05:381 hour, 5 minutes, 38 secondsBut maybe 3,000 is. Just look for difference in the data that is an outlier. Um John asks, "Do I watch my
+1:05:451 hour, 5 minutes, 45 secondsfootprint chart, heat map, or candlesticks while trading?" Um I watch them all. I have multiple monitors as you can see behind me. I have footprint
+1:05:531 hour, 5 minutes, 53 secondson there. I have a heat map on there. I have a candlestick chart on there. I watch it all. Uh, do I use any bookmap add-ons? I do not. Market pulse, stop
+1:06:011 hour, 6 minutes, 1 secondlosses, I do not. Uh, do you use footprint and volume profile but not the heat map? 100% you could be successful.
+1:06:071 hour, 6 minutes, 7 seconds20 tick data, same for all brokers. Uh, market order or limit order. Good question. It depends on how aggressive you want to be. It depends on your size.
+1:06:161 hour, 6 minutes, 16 secondsIt depends on your risk tolerance. No right answer whether you want to market or limit order in or out. How do I manage stop losses? Um my stop loss is
+1:06:251 hour, 6 minutes, 25 secondsalways based on where my analysis is incorrect. I learned my risk management through Dylan. I know Dylan's in here right now. Dylan has um a full lesson in
+1:06:341 hour, 6 minutes, 34 secondsthe accelerator on trade management, maximizing trading profits. I learned my risk management. I attribute a lot of my
+1:06:421 hour, 6 minutes, 42 secondssuccess and my consistency towards Dylan and his riskmanagement system that he has taught me with position sizing. It's
+1:06:491 hour, 6 minutes, 49 secondsso key risk management. We could have the best system in the world. I attribute a lot of my success to the lessons that Dylan has given me on risk
+1:06:581 hour, 6 minutes, 58 secondsmanagement and he also has the lessons in the accelerator videos in the academy as well. Um, you've been following me
+1:07:061 hour, 7 minutes, 6 secondsfor several weeks. You've trans I've transformed your trading uh supply and demand zones. Here's my preferred time frame of supply and demand zones. If
+1:07:131 hour, 7 minutes, 13 secondsanybody wants to write this down, this is in lesson uh in the supply demand videos of the A to Z. Here's my time
+1:07:201 hour, 7 minutes, 20 secondsframes is weekly, daily, 4 hour, 3 hour, 2 hour, 1 hour, 90 minute, 1 hour or uh
+1:07:291 hour, 7 minutes, 29 seconds30 minute and 15 minute for all my supply and demand zones. That is the only time that I will use um a time
+1:07:361 hour, 7 minutes, 36 secondsframe chart. How do you invalidate zero prints? I invalidate zero prints when they fill. How do I behave when an iceberg order shows up on bookmap? Um if
+1:07:451 hour, 7 minutes, 45 secondsan iceberg shows up at one specified price and it's not at a level of interest, I do not look at it. I think it's noise in my opinion. Uh can I use
+1:07:541 hour, 7 minutes, 54 secondsthe way I use orderflow on stocks mainly for break and retest? 100%. Orderflow definitely works best on futures, but as
+1:08:011 hour, 8 minutes, 1 secondyou all know that there are single stock futures coming very very soon. Um I think what this week or next week, right? And you could tell it works best
+1:08:081 hour, 8 minutes, 8 secondsfor break and retest like the one setup that I showed you on the initiative participants. My levels come from price action that formed today, last week,
+1:08:161 hour, 8 minutes, 16 secondslast month. Whenever they form, I draw them until whenever they become invalidated, I remove them. Um CLC
+1:08:231 hour, 8 minutes, 23 secondshigher time frame. Yes. Uh, you could use Bookmap's footprint. I've never used it. Will this video be available for replay? Yes. Do I use gamma? I do not.
+1:08:351 hour, 8 minutes, 35 secondsUh, what's my setup on bookmap? I have a full video on my YouTube on my setup.
+1:08:381 hour, 8 minutes, 38 secondsIt's pretty basic. Uh, will I be willing to detail what I include in my footprint delta chart? Uh, yeah. So, actually my template for my footprint chart is in
+1:08:471 hour, 8 minutes, 47 secondsthe academy. uh but middle column is total volume, left column is delta and right column is a volume profile that is
+1:08:561 hour, 8 minutes, 56 secondsshaded for the uh significance of the delta side. Pretty simple. Um volume
+1:09:031 hour, 9 minutes, 3 secondsprofile very powerful. Yes. Uh I'm sorry there's there's over 200 questions.
+1:09:091 hour, 9 minutes, 9 secondsThere's over 200 questions here. Uh if I choose the A Toz program, do I get live commentary and is it every day? So for
+1:09:161 hour, 9 minutes, 16 secondsmembers of the a toz uh throughout the throughout the week you'll see like the live commentary that I post in here. The
+1:09:221 hour, 9 minutes, 22 secondslive commentary is only on the days. So the text commentary is only for the days that I am not on live voice and video in
+1:09:311 hour, 9 minutes, 31 secondsthe academy which is about once or twice a week I am on live voice and video in the academy. The days that I am not on live voice and and video in the a toz
+1:09:391 hour, 9 minutes, 39 secondsyou'll have access to my a toz uh commentary. Uh this is why I'm the best trading mentor. See you in the Discord tomorrow. Awesome. See you there, man.
+1:09:471 hour, 9 minutes, 47 secondsUh, do I skip days cuz I don't see a setup. 100%. 100%. Uh, so many questions here, guys. I don't know if I could get through them all. 167 of them. Uh, when
+1:09:561 hour, 9 minutes, 56 secondslooking at a delta footprint chart, am I looking for big orders or P-shape Bshape? Both. Looking for delta outliers and Pshapes, Bshapes. This live will be
+1:10:051 hour, 10 minutes, 5 secondssaved. Yes. Oh my gosh, there's so many freaking questions. 175 of them. Um, cool. All right. So if anybody is
+1:10:131 hour, 10 minutes, 13 secondsinterested in the invested trade academy, the link is in the chat of the webinar. I also will send out an email.
+1:10:211 hour, 10 minutes, 21 secondsYou have to apply to it. Is it applicationbased only? I do not accept everybody into this platform. It is a um
+1:10:281 hour, 10 minutes, 28 secondstight-knit community. I only take on very serious traders who want to further expand their knowledge that will find value and add value to the community.
+1:10:381 hour, 10 minutes, 38 secondsThe link again is in the Zoom chat. I would definitely recommend applying. I will send out emails as well. If anybody ever has any questions, feel free to
+1:10:451 hour, 10 minutes, 45 secondsreach out. This will be recorded. I know there's about 188 questions right now. I'm sorry I can't get through them all.
+1:10:521 hour, 10 minutes, 52 secondsUm, but that's pretty much it. I hope you all found value in this. I hope you all learned from it. I will see you all later. And for those in the community, I will see you all uh later. Peace out.
+1:11:031 hour, 11 minutes, 3 secondsAll right. Enjoy.
+
+Chapter 1: Introduction and strategy
+0:000 secondsin this video i want to talk about my day trading strategy and i want to go over exactly how i trade i'm first going to break down a few key points
+0:099 secondsabout how i trade the reasoning behind it and how you guys could use this information to benefit your own trading and then i'm going to
+0:1717 secondsshow you a bunch of different trades and different setups that i actually have taken so you could see it on the chart
+0:2424 secondsvisually and understand the setups relating it to the points that i'm going to explain before we get into it i definitely
+0:3232 secondsrecommend everyone to follow me on instagram at investortrade i'll post a link in the description below if you do want to
+0:3939 secondsfollow me on there i post daily trading recaps along with very good trading tips and tricks that i guarantee you're not
+0:4747 secondsgoing to find anywhere else the link is in the description below you're seriously missing out if you're not following it but now let's get right into the charts first thing i want to
+Chapter 2: Trading psychology
+0:5555 secondssay and i want everybody to understand this is there is no right way to trade everybody is looking for a holy grail
+1:031 minute, 3 secondssomething that works out one hundred percent of the time and it's non-existent nothing is going to work out 100 of the time and
+1:121 minute, 12 secondsthere is no right way to trade somebody that's trading one way could make seven figures a year someone that's trading a
+1:201 minute, 20 secondscompletely different way can make seven figures a year there is no right way to trade and if you're looking for the proper way or the right way it's
+1:281 minute, 28 secondsnon-existent what matters and this is very key is you find a strategy or you find a system that's gonna give you a
+1:351 minute, 35 secondspositive expectancy over the long run something that's sustainable that you could do day after day week after week
+1:431 minute, 43 secondswhile implementing risk management where you keep your loser small and you live to fight another day that you could take another set up and your account doesn't
+1:511 minute, 51 secondsget destroyed by one or two trades that's not a positive expectancy and that's not going to bring longevity so there's no right way to trade everybody
+2:002 minutestries to correct one another saying oh you're using this and that is the wrong way or you're using that why do you use that you know it doesn't work for me
+2:072 minutes, 7 secondswhat works for me might not work for you and what works for you might not work for me i will say you could balance ideas off
+2:152 minutes, 15 secondsof different strategies use different tools because that may work but nothing is going to be symmetrical nothing is identical and that's going to bring me
+Chapter 3: Individual trading styles
+2:232 minutes, 23 secondsinto my second point before we get into the charts over here and getting to the setups the second point is i want you to think
+2:302 minutes, 30 secondsof every trader as a fingerprint so you know the fingerprint right here everybody's fingerprint is different
+2:382 minutes, 38 secondsthey're going to be identical some are going to look the same but what makes us unique and individual
+2:452 minutes, 45 secondscharacteristics is our fingerprints if we just committed a crime what are they going to look for our fingerprint because that's what's going to identify
+2:532 minutes, 53 secondsus so a lot of traders they try to copy somebody exactly to the t it could work out but i will say
+3:023 minutes, 2 secondseverybody has a different personality everybody has different emotions think in different ways has different
+3:093 minutes, 9 secondsuh adrenaline rushes when they're trading excitement anger fear greed no one is the same mentally we could be the same
+3:173 minutes, 17 secondstechnically and take the same setups but we are our unique traders that are not identical so stop trying to find the way
+3:243 minutes, 24 secondsthat works uh 100 of the time there's no right way to trade it and understand that everybody's unique
+3:323 minutes, 32 secondseverybody's identical like snow falling from the sky or the fingerprints on our hand will have the same characteristics
+3:403 minutes, 40 secondsbut we're going to be unique and not identical so if you've been following me for a while you know i love price and volume analysis i love trading with
+Chapter 4: Supply and demand zones
+3:483 minutes, 48 secondssupply and demand zones and one thing before we get into the setups i want to mention is that every
+3:553 minutes, 55 secondssingle zone that you see on my charts i draw before the market trades at them in fact i draw when they do form
+4:044 minutes, 4 secondswhether that be intraday and a new zone forms as the market's developing or the following day when i come up with my plans my levels of interest i see a zone
+4:134 minutes, 13 secondsthat i'm interested in to add on top of this in the discord every single day i post my plans with my
+4:214 minutes, 21 secondszones my charts and my levels of potential trading scenarios that i'm watching so not only does it come before the
+4:284 minutes, 28 secondsmarket opens but also during the day in intraday commentary i post new zones that form and i post my thoughts
+4:354 minutes, 35 secondsthroughout the day so every single level that i trade off of is there before the market trades at them because i let the
+4:434 minutes, 43 secondsmarket come to me i don't chase the market i don't see something ripping a hundred points and i chase it i let the market come to me i plan my setups and i
+4:524 minutes, 52 secondsonly trade those setups that's my edge that's what works for me the best to add on that a little more i also do webinars
+5:015 minutes, 1 secondoccasionally on sundays with members of live charting zones and setups for everybody to see
+5:075 minutes, 7 secondsand i also have a set of rules that i do use to draw every zone some people think that i'm just plotting
+5:155 minutes, 15 secondsrandom areas in the charts i see it with many traders sometimes it works for them because it gives them a set of you know structure in their
+5:225 minutes, 22 secondstrading but for me personally i have a set of rules to know where to draw the zones when to draw them and why to draw them and within that set of rules i have
+5:315 minutes, 31 secondsa subset of rules that i use to make sure i'm trading high quality setups that have a higher odd of working out
+5:385 minutes, 38 secondsbouncing for demand and rejecting for supply and also if you are a beginner trader i recommend sticking to one
+5:455 minutes, 45 secondsstrategy or one style mastering it don't try to become an all-around player because if you try to do everything all at once you are going
+5:545 minutes, 54 secondsto miss mastering and becoming better at that one specific thing because in my opinion quality is more important than quantity
+6:026 minutes, 2 secondsand if you could become a beast with one strategy one style all you gotta do is scale that up and build upon it that's how you get better
+6:106 minutes, 10 secondsyou don't get better by learning many different things although i will say i have many different tools in my repertoire because i have been trading
+6:176 minutes, 17 secondsfor six years i do play supply demand key level breaks but it's very simple and they all are connected with each
+6:256 minutes, 25 secondsother but i see a lot of people i try to correct everybody's mistakes a little bit because i don't want people going down the wrong path but master one thing
+6:346 minutes, 34 secondsand then build upon it and scale that up it's better to know one thing very well than to know five different things not
+6:416 minutes, 41 secondsvery well so take that advice and then also uh in my last youtube video i definitely recommend going to watch this
+6:506 minutes, 50 secondsi talk about how i use supply and demand zones and basically supply and demand zones key levels of support and resistance
+6:586 minutes, 58 secondsalso do this give me my where component in the market it tells me where i'm interested in just because we're at a zone does not
+7:067 minutes, 6 secondsmean i take a setup supply and demand zones give me my where i want to be active and i must use price and volume
+Chapter 5: S&P 500 trading example
+7:137 minutes, 13 secondsto confirm each setup now going over my strategy and some trades that i've taken i want to get into the pre-market plan from july 1st
+7:217 minutes, 21 secondsthis was last friday on the s p 500 and there were two main levels i was watching and i expected the market to
+7:297 minutes, 29 secondsremain in balance below 3806 supply and above 3758.5 demand zone as we keep rejecting
+7:387 minutes, 38 secondsand balancing these zones we also had a continuation play if we broke out of the imbalances but why this is important is
+7:457 minutes, 45 secondsbecause this supply zone was drawn from the day prior this move down and this demand zone i forgot when it was drawn but it was worked
+7:547 minutes, 54 secondsthree or four different occasions so it was very important to me every time we came into the low we bounced so now going to an intraday perspective
+8:028 minutes, 2 secondsi played the market short last friday inside of the supply zone because we broke the high with very high volume and
+8:108 minutes, 10 secondsas the market broke out above it we started to see aggressive selling prints come through on the time and sales
+8:178 minutes, 17 secondssupply zone is my where price and volume analysis tells me my when to enter and why to enter the setup so we broke the high pretty heavy selling pressure the
+8:268 minutes, 26 secondsmarket sold off and on the tape watching the time and sales they were very aggressive market sell orders which kept
+8:338 minutes, 33 secondshitting the bid as we rejected off of the supply zone and it gave me a comfortable risk very small about 10 points
+8:418 minutes, 41 secondsby the time we're targeting demand to make about 60 points now a lot of people say oh i'm claiming high risk to reward setups
+8:498 minutes, 49 secondsif the risk is small we could afford taking much more losing trades because when we do have that one winning trade
+8:568 minutes, 56 secondsor do have those five winning trades out of 10 our reward is much higher again these are high probability areas
+9:039 minutes, 3 secondsthen the market came into demand i did not take this setup but the simple strategy with this is selling inside of
+9:109 minutes, 10 secondssupply and buying into demand the market doesn't work like this every day where we hit supply and sell off the demand
+9:189 minutes, 18 secondsand bounce it doesn't work it's not a perfect world these are just areas of interest but on this day we hit supply
+9:259 minutes, 25 secondssold off into demand and rallied and then by end the day we continued to move even higher so that's the first way i trade using
+9:329 minutes, 32 secondsthese zones is i play calls off of demand and i also play puts or short off of supply now like i said earlier the
+Chapter 6: Trading continuation setups
+9:409 minutes, 40 secondsmarket's not a perfect world it doesn't work out how we want it to work out all the time the market also doesn't move
+9:479 minutes, 47 secondsfrom supply to demand to demand to supply the market moves from balance to imbalance now with this being said if we moved
+9:569 minutes, 56 secondsfrom zone to zone zone to zone there wouldn't be any direction that just means the market's in balance and
+10:0410 minutes, 4 secondswhen the market's balanced that's when we get sell the highs by the lows but sometimes we have continuation and this is where supply and demand could be a
+10:1210 minutes, 12 secondsbenefit and also be a burden dependent on how you view the market and how you view the trade so how i trade certain markets
+10:2010 minutes, 20 secondsespecially when we are uptrending is sometimes i am open depending on the conditions and depending on the context
+10:2810 minutes, 28 secondsand market structure sometimes i am open to playing longs inside of or at supply zones
+10:3710 minutes, 37 secondsto add on top of this a higher quality of a setup would be if we create demand inside of supply that basically just
+10:4410 minutes, 44 secondssays that at one point we had supply sellers were present sellers formed the imbalance but now when price retests a
+10:5110 minutes, 51 secondssupply zone and or we create new demand inside of that supply zone now buyers are finding value at higher prices and
+10:5910 minutes, 59 secondsthe chances of continuation inside of supply is pretty high so in this example the next way i use these zones is i will long at or inside
+11:0811 minutes, 8 secondsof a supply zone and maybe use the next zone to target if we don't have a lot of supply or resistance above so the pre-market plan a few weeks ago
+11:1711 minutes, 17 secondsand again i'm just using these examples on the s p 500 it's the easiest to illustrate my point this works in any market any stock any
+11:2511 minutes, 25 secondsoption it just it doesn't matter what instrument you trade i just explain what works for me the best uh so simple plan i was watching three
+11:3411 minutes, 34 secondseight three eight supply and 303 805 3789 area i expect three
+11:4211 minutes, 42 secondseight three eight supply to be very tough to get above and if we could break this level with strong buying volume confirmed by the tape again price and
+11:5011 minutes, 50 secondsvolume i'm open to playing longs and will target three 3896 right
+11:5811 minutes, 58 secondsbounced off the demand the day prior and we had the 3805 area which i'm going to extend this to the left
+12:0512 minutes, 5 secondswas the previous i want to say hi where i came up with 3 805 but then the market opened up and look
+12:1212 minutes, 12 secondsat the strong amount of buying pressure inside of this supply zone so my thesis here was not only did we get confirmation by the tape aggressive
+12:2012 minutes, 20 secondsmarket buying we had strong buying volume this day market leading equities were very strong i think i even made a recap on my channel about this setup as
+12:2812 minutes, 28 secondswell um created demand inside of supply strong buying pressure and i knew if we got above
+12:3512 minutes, 35 seconds3838 supply this was a key level that at one point in the past we rejected it very strongly that if buyers prove
+12:4312 minutes, 43 secondsthemselves at supply that's when we're gonna get our continuation higher and between three eight three eight we didn't have any
+12:5112 minutes, 51 secondssupply we didn't have any resistance until three eight nine six so that was the target for this setup
+12:5812 minutes, 58 secondsas i said there's not much resistance above three eight three eight so that's another way i use it is sometimes i'll use the zones or
+13:0613 minutes, 6 secondsresistance supply as magnets saying okay if we get above x then there's a high chance of y trading
+13:1513 minutes, 15 secondsor z trading because there's not a lot of supply or resistance above this level and this is a perfect example of this sometimes i will get long inside or at
+13:2313 minutes, 23 secondssupply targeting the next key area inflection point above also another way i trade is sometimes i will play short
+Chapter 7: Trading downtrend markets
+13:3213 minutes, 32 secondswhere play puts at or inside of a demand zone exactly what i just said before the market now flip so if the market is
+13:4013 minutes, 40 secondsseverely downtrending and it works best in downtrends sometimes you know demand zones are not going to find buyers and what's going to
+13:4813 minutes, 48 secondshappen is the market is going to continue moving lower as you can see the market right here is in a downtrend we're putting in lower lows we're
+13:5513 minutes, 55 secondsputting in lower highs now this was directly after a short-term uptrending period now right now i'm just drawing
+14:0214 minutes, 2 secondszones in random points to speed up this illustration just to where i think they would be i don't i'm not drilling down in depth
+14:1014 minutes, 10 secondsbut there would be zones around or near these areas so when buyers are not buying at demand and we kind of let the market tell us
+14:1914 minutes, 19 secondsits story we don't i don't like being a first buyer or first seller if it doesn't fit the context so if we're downtrending and we start
+14:2814 minutes, 28 secondsseeing demand zones not being very reliable then what i'll do with my strategy this is why supply and demand is very powerful as it gives you an
+14:3614 minutes, 36 secondsarsenal or a core to branch off into different ways to enter and exit if i start seeing demand zones not be
+14:4314 minutes, 43 secondsvery reliable after an uptrending period now we're slowly starting to shift to a downtrend and buyers are not buying at
+14:5014 minutes, 50 secondsdemand i'll find ways to play short at or inside of demand if we could spot aggressive selling pressure if we could
+14:5714 minutes, 57 secondsspot weak market leading equities and if we could spot maybe even new supply forming or even us projecting supply i'll be open to playing short inside of
+15:0515 minutes, 5 secondsdemand targeting the next demand zone lower again you know i can show you probably tons of different trades back in uh april and may when the market was
+15:1415 minutes, 14 secondsseverely downtrending even back in covet think about it like this right think about the bull run back in
+15:2115 minutes, 21 seconds2019 2020 and when covet hit the market i'll even go to a daily chart
+15:2815 minutes, 28 secondsi'll go to a weekly chart matter of fact think of all the demand zones that formed on this rally this is a weekly
+15:3515 minutes, 35 secondschart so every candle represents a weekly zone uh weekly data think of all of the demand zones that formed
+15:4415 minutes, 44 secondson this rally the past two years prior to that right when covet hit we wiped away all those gains of that
+15:5215 minutes, 52 secondsrally uh completely gone wipe them away right in this period obviously we're not gonna find buyers at
+15:5915 minutes, 59 secondsdemand they may bounce price temporarily they might serve as a relief bounce but demand zones in downtrending markets
+16:0716 minutes, 7 secondswork the best to take profits or enter a short position as long as we are down trending because every zone back in 2019
+16:1516 minutes, 15 secondsand the 2019 got destroyed from that cover drop and it was very profitable playing puts or shorting demand zones or downside
+16:2416 minutes, 24 secondscontinuation moves below support i also want to get into a setup let me pull up a five minute chart here
+16:3216 minutes, 32 secondsthat i lost on doing this so let me go to june 27th i think it was
+16:4316 minutes, 43 secondson the nasdaq right here on the nasdaq and again you know i posted this in the discord full
+Chapter 8: NASDAQ trade review
+16:5116 minutes, 51 secondstransparency if somebody's on youtube not claiming losing trades they're full of it everybody loses as long as we take trades based off of our
+17:0017 minutesuh system our style and we manage our risk that's the only thing that matters so
+17:0817 minutes, 8 secondsi said nasdaq it's creating a tight wedge as you can see over here where every rally is getting weaker and weaker i'm watching for a strong break below
+17:1717 minutes, 17 secondscall it 12 000 to play short i want to see heavy volume start to build and attract more participants and i'll look to target the 11 880 area
+17:2617 minutes, 26 secondsso what we had here was a wedge make sure i'm not in this picture over here we had a wedge
+17:3317 minutes, 33 secondswhere supply was forming near the highs put this over here the supply was forming near the highs
+17:4017 minutes, 40 secondsand we were wedging out like this what i saw was we didn't find any buyers inside of demand so that was kind of weak we then double bottomed off this
+17:4917 minutes, 49 secondsdemand zone and in hindsight i missed the setup i didn't take it it was a beautiful double bottom inside of demand and then we had a wedge and i was
+17:5617 minutes, 56 secondslooking to play a breakdown below one uh 12 000 right here and i got in a little prematurely when a volume started
+18:0418 minutes, 4 secondsto build anticipating that 12 000 dollar break targeting the next demand zone lower which is right here
+18:1318 minutes, 13 secondsand this was off the sole fact that i was playing puts or shorting a move below demand anticipating that sellers were strong
+18:2118 minutes, 21 secondsand buyers were weak targeting the next demand zone and it did not work out but i know that i've taken a setup plenty of times it's worked out my risk was small
+18:3018 minutes, 30 secondsand we live to fight on another setup and the last way is i love trading equities when the market presents quality setups
+Chapter 9: Equities trading strategies
+18:3818 minutes, 38 secondsi don't know how to define what a quality equity setup is because at this point in my trading it's more of a feeling
+18:4518 minutes, 45 secondsand intuition i know what looks the best and i know when i see something i like and it fits how i trade and my edge that
+18:5418 minutes, 54 secondsi've collected data on that i know when we get this to happen it has a 70 chance of working out when i see that
+19:0219 minutes, 2 secondsthen i know to strike but equity setups haven't really been the best based on how i trade but basically how i trade equities is everything i just said with
+19:1019 minutes, 10 secondssupply and demand with you know longing shorting but also key level breaks and what i define a key level as is support
+19:1719 minutes, 17 secondsresistance with multiple tests and multiple touches ninety percent of my setups i would say
+19:2419 minutes, 24 secondshave some type of supply and demand analysis backing the setup and in this case pull up the pre-market
+19:3219 minutes, 32 secondsplan this was a few weeks ago on amazon uh we had support slash demand at 102.41 it wasn't a proper demand imbalance but
+19:4119 minutes, 41 secondsi made it a zone because it was a larger area that every time the market hit we bounced off so i wouldn't call it an imbalance i would just call it demand
+19:4919 minutes, 49 secondssupport at 102.41 which is this uh area right here and i was watching us to hold above 102
+19:5619 minutes, 56 secondswhich was that support i'm interested in longs we'll be watching 104 50 90 and once we get above spotting interest in
+20:0420 minutes, 4 secondsthe market there's minimal resistance and supply above until 106.50 and then 108 it could be used as targets again
+20:1220 minutes, 12 secondsthe market is a if this happens then we're going to get that type of scenario that's how i trade that's what works out for the best for
+20:2020 minutes, 20 secondsme so amazon before the market opened up hit the support level strong buying volume came in got above 104.50
+20:2820 minutes, 28 secondsthen hit uh high about 106. pulled back into 104.50 old resistance acted as support
+20:3620 minutes, 36 secondsheld the found the bid at v-wop found the bid at uh resistance slash support and then hit our target 106.50 end today
+20:4420 minutes, 44 secondsi need to see volume on my key level breaks i cannot stress this enough a lot of people draw random support resistance levels if
+20:5420 minutes, 54 secondsit works for you good again first point of this video there's no right way to trade but based on my experience you must find
+21:0321 minutes, 3 secondsareas that the market had a hard time getting above or below with multiple tests proving
+21:1021 minutes, 10 secondsbuyers and sellers were strong or initiative at that level a lot of people just draw a high or draw
+21:1721 minutes, 17 secondsa low high a day low a day and expect it to be resistance without the market testing it when we have a level that has
+21:2421 minutes, 24 secondsbeen tested multiple times we know sellers are present or sellers were active at that area
+21:3121 minutes, 31 secondsthe following day amazon is the same thing this was uh the following day or whatever two days after
+21:3921 minutes, 39 secondsamazon perfect setup oh this was the following day we had a monday off i'm watching for some continuation here
+21:4621 minutes, 46 secondsabove the 109 level if we get above with interest it sets up for a big rally in my opinion as there's not a much supply or resistance and it can also help the
+21:5421 minutes, 54 secondsmarket bulls and bears so i love using equities as an extra piece of confirmation for the s p 500 and my nasdaq analysis
+22:0322 minutes, 3 secondsbut amazon same thing strong volume above a key level very nice thick green candle for everybody that's going to comment thick in the comments now
+22:1222 minutes, 12 secondsnice thick green candle and nice continuation for about three points after that move up you need to spot
+22:1922 minutes, 19 secondsvolume at your key level volume shows interest without interest you're not going to get continuation and you're gonna get faked out so this is basically
+22:2722 minutes, 27 secondshow i trade you know many different ways to do it supply and demand could be a core you could use it buying selling holding off being patient
+22:3622 minutes, 36 secondsthere's many ways to do it there's not a right way develop your edge understand what you're doing is not the wrong way to do it because you have to
+22:4522 minutes, 45 secondsbuild upon it scale it up understand that you are unique to yourself no one could trade like you no
+22:5222 minutes, 52 secondsone could trade like me we have different emotions we have different ways of how we perceive the information
+22:5922 minutes, 59 secondsand supply and demand is very powerful so i'm gonna end the video on that note hope you enjoyed comment any questions
+Chapter 10: Conclusion and resources
+23:0623 minutes, 6 secondsdrop a like i would appreciate it and definitely check out the link in the description below i offer a very in-depth and educational course it also
+23:1523 minutes, 15 secondsincludes access to the discord the only way you could get in at no extra charge peace out
+
+Sync to video time
+
+All
+
+From Carmine Rosato
+
+For you
+
+Watched
+Chapter 1: Identifying emotional mistakes
+0:000 secondsThis trading mistake has costed me over $30,000 this month. And I just want to be super honest and transparent and very
+0:077 secondsvulnerable with you all watching this video that despite me being 10 years into my trading career, there's still things that I make emotional decisions
+0:1616 secondswith. And to be honest, I'm not very happy to share them, but I'm willing to share them because I know a lot of traders are going to relate. And to have
+0:2525 secondssomebody online that to tell you that not every day is going to be all glamorous like social media makes trading seem. It will make you look at
+0:3333 secondsthe market differently and understand that you're not going to be perfect and you don't have to be perfect to make money. But just we need to start
+0:4141 secondscontrolling things that we have control over. And despite these mistakes, I'm still ending the month roughly near
+0:4848 seconds$30,000 of profit with a 4.2 2 average win to loss and my P&L curve looks like
+0:5555 secondsa very healthy uptrending chart. And despite having a great trading month that a lot of traders would love to have, there's still so many things that
+1:041 minute, 4 secondsneed improvement that could just amplify a good trading month into an excellent trading month. And I think that's with
+1:111 minute, 11 secondsbeing 10 years in, me striving for everything to work out exactly how I want it to work out and for me to never
+1:191 minute, 19 secondsmake an emotional mistake. And I could say that in the markets that's very very hard, actually probably near impossible
+1:261 minute, 26 secondsto achieve. So let's break down my mistakes. Let's go over how I'm going to fix them. And let's go over this damage.
+1:331 minute, 33 secondsThat way we don't let it damage my trading even further. And any of you watching this cannot make the same mistakes that I'm making. So I currently
+1:411 minute, 41 secondsdo not have a widespread problem in my trading. There's nothing wrong with my system. There's nothing wrong with my edge other than adapting and conforming
+1:501 minute, 50 secondsto the current market conditions. The one mistake is a very repeatable mistake that shows up in my largest losing days
+1:581 minute, 58 secondsof the month. So, looking at February so far, I'm recording this on the 26th. February 3rd was a n $9,500 loss.
+2:062 minutes, 6 secondsFebruary 6th was a $4,800 loss. February 23rd was a $7,700 loss. And today was an
+2:132 minutes, 13 seconds$8,500 loss. My biggest losing days have one similar common pattern that needs to
+2:212 minutes, 21 secondsbe adjusted and needs to be fixed. And I'm going to show you exactly what causes these large losing days. To gain context on the mistake, let's look at
+2:302 minutes, 30 secondsFebruary 26th, which is today, of where I had pretty much my largest loss losing day of the month. Now, let's start this
+Chapter 2: Analyzing Feb 26 trade
+2:382 minutes, 38 secondsfrom the beginning and let's go over the pre-market plan. We could see highlighted here in my pre-market plan that it is very hard to be a bull here
+2:462 minutes, 46 secondsand very hard to expect a breakout to the upside with the information and especially longing the market as it's
+2:532 minutes, 53 secondscoming down as I don't have any major levels of demand or support near the current prices. So before the market opens, I've established my plan that I'm
+3:013 minutes, 1 secondlooking for the market to rally up and pop into 6967 where then I can look to play shorts targeting downside levels and nothing
+3:103 minutes, 10 secondsreally in my plan indicated that I was really leaning towards the bull side. In fact, I was very bearish based on this structure and this information. Now the
+3:193 minutes, 19 secondsmarket opens up. We have a very strong and clear rejection of the 6967 supply zone and the market begins to sell off
+3:273 minutes, 27 secondsand I get my structure and my pattern of how I get good confirmations to enter the market and with this move I see good
+3:363 minutes, 36 secondsconfirmation to short the market but I did not find a good entry point that made sense in terms of risk-to-reward and the market moved down without me and
+3:443 minutes, 44 secondsI was not able to follow my plan just because I didn't see a confirmation signal. 20 minutes into the session, the
+3:513 minutes, 51 secondsmarket begins to sell off and I create now a longside plan where I'm looking to catch the market for a bounce to the
+3:593 minutes, 59 secondsupside. 20 minutes in, I diagnose the problem and I took more losing trades following this. So, as the market's
+4:084 minutes, 8 secondsselling off, I create these plans where I'm seeing it move without me and for for it to fulfill my downside move. And
+4:154 minutes, 15 secondsbecause I missed out on the move, I felt very FOMO. I had the fear of missing out on potential that I did not get that
+4:234 minutes, 23 secondsentry short earlier and then I started chasing the market long for the sake of me missing an earlier move. And really
+4:314 minutes, 31 secondswhat makes me understand this even further is that if I wasn't if I was in the short and I did capitalize on the
+4:394 minutes, 39 secondsdownside move, the longs that I took this day were not longs that I would have looked for in taking. I would have avoided them. I would not have looked
+4:474 minutes, 47 secondsfor them because I would have capitalized on the downside move of me following my plan. Looking at these four trades, we could see an entry, immediate
+4:554 minutes, 55 secondsstopout. Next setup, entry, trying to capitalize on the bounce, immediate stopout. Next setup this day, entry at
+5:025 minutes, 2 secondsthe low, immediate stopout. Same thing for the fourth trade. Entry, immediate stopout within the next few minutes
+5:095 minutes, 9 secondslater. So having a downside plan and me not capitalizing on that downside plan because of either not getting good
+5:155 minutes, 15 secondsconfirmation, me missing the move, me not seeing a potential setup there despite the plan working out enabled me
+5:235 minutes, 23 secondsto then force trades because I felt like I was missing out on this volatility and I went against my plan and diagnosed the
+5:325 minutes, 32 secondsproblem but still did not listen to myself. The problem isn't awareness. I'm aware of my mistakes. Earlier in that
+5:395 minutes, 39 secondssession, I said that I feel like I'm missing out on this and I'm going to try along. So, the gap is between knowing and doing. It's knowing that I'm making
+5:475 minutes, 47 secondsa mistake here and then I have to not do that. And for me, not being able to capitalize on that is costing me so much money this month. Here's another setup.
+Chapter 3: The psychology of chasing
+5:565 minutes, 56 secondsLooking at the pre-market plan, my main game plan was if the market rejects 7022 the 7027 which is this level of supply,
+6:046 minutes, 4 secondsI am looking to play short targeting the downside levels of support. While the market opens up, we reject this.
+6:126 minutes, 12 secondsEverything is leaning more towards a bearish sign. The pops intraday are getting sold into and I was watching for
+6:196 minutes, 19 secondssellers to come present. my plan fulfilled, the market sold off and we hit my downside targets of demand. Now,
+6:276 minutes, 27 secondsbecause I missed this move, I then saw the market come into my downside level targets and automatically tried to catch
+6:366 minutes, 36 secondsthe market long. And I tried this despite the pops intraday being sold into. I try the market long, stop out.
+6:436 minutes, 43 secondsTry the market long, stop out. This isn't an analysis problem. It's the analysis was right. This is a psychological problem that I couldn't
+6:526 minutes, 52 secondssit on my hands after missing an entry and really understanding my mistakes which again have cost me after those four large losing days. It costed me over $30,000.
+7:027 minutes, 2 secondsThe sequence that causes majority of these losses is I'm identifying the correct action and the correct bias or trend in the pre-market or even in the
+7:117 minutes, 11 secondsintraday session. I'm identifying but the problem is I'm missing the move because recently the market's been kind of volatile. So, the moves have been
+7:197 minutes, 19 secondshappening very fast and this is a little bit of an adjustment. And then my FOMO kicks in. My regret of, hey, my plan just worked out. I missed the move. I fear this. I fear me missing the move.
+7:307 minutes, 30 secondsSo then I create possible trading scenarios in my head, possible ideas, possible hypothesis, and I'm creating
+7:387 minutes, 38 secondsthese false trading scenarios. I always say this that our job is to locate trading opportunities, not create them.
+7:477 minutes, 47 secondsAnd I'm not locating them. I'm trying to create them. What I mean by locating them is following our system and following our plan and following our
+7:557 minutes, 55 secondsplaybooks. When we create these false ideas in our head, our brain tells us what we want to see. Our brain, our eyes
+8:058 minutes, 5 secondssee what we want to see. And that is clouding our judgment and us not remaining objective. when we locate opportunities, we're just pattern
+8:138 minutes, 13 secondsrecognition machines that when we see a pattern, we need to act upon that pattern. And then the result of this is the trade loses. And usually my original
+8:208 minutes, 20 secondsthesis was right. My analysis, I'm not going to say, is always 100% of the time right. I'm wrong on some setups. That's
+8:278 minutes, 27 secondswhere risk management comes in. But what needs to be right 100% of the time. And what needs to come in effect without
+8:348 minutes, 34 secondsfail is the discipline to not act when we should not be acting. dissecting these four days that costed me over
+Chapter 4: Reviewing losing days
+8:418 minutes, 41 seconds$30,000. February 3rd, perfect downtrend. That was part of my plan, but I missed the entry and I took five longs
+8:488 minutes, 48 secondsinstead. February 26th, I wrote a bearish bias. Market sold off exactly to my plan. Guess what? I missed the short entry and I took four longs in the
+8:578 minutes, 57 secondsdowntrend. February 23rd, downside plan played out nicely. I missed the entire move and I tried to catch the market long four different times. February 6th,
+9:069 minutes, 6 secondsthe market started moving up in the pre-market session. It went straight up.
+9:109 minutes, 10 secondsI ignored my pre-market plan, created a downside plan, and then shorted a very strong uptrending day three different
+9:179 minutes, 17 secondstimes. My analysis compared to my behavior, my behavior is very irrational, going against my analysis.
+9:259 minutes, 25 secondsWhy have a plan if we're not going to follow that plan? And here's a beautiful trading setup. This was one of my best days this month. It was a little under a
+9:339 minutes, 33 seconds6:1 risk-to-reward ratio. It was simply letting the market rally and then catching the market long on a pullback.
+9:419 minutes, 41 secondsIt's saying, "Hey, buyers are here. Let the market pull back. Let buyers defend price. Let me look to take the market long at my level of interest and take
+9:499 minutes, 49 secondsprofits as the market is breaking out." This is an excellent trade that is based off my repeatable system. There's nothing here me emotionally acting. The
+9:589 minutes, 58 secondsmarket moved without me. I waited for a pullback and I followed that trend. It wasn't me shorting the market just because I missed that uptrend. It's me
+10:0710 minutes, 7 secondsremaining very objective and waiting for my setups and my edge to appear and for me to not act emotionally. My biggest
+10:1410 minutes, 14 secondsproblem is after I miss the move and try to reverse the market, right, and go against the trend, which I'm a more of a reversal trader. That's just how I
+10:2210 minutes, 22 secondstrade. But what I've noticed recently in the market conditions is that when the trend is strong and the trend is obvious, at least in these current
+10:3010 minutes, 30 secondsmarket conditions, it's best to not go against that trend. And if the market's downtrending, shorting pops and shorting rallies. If the market's uptrending,
+10:3810 minutes, 38 secondslooking at long pullbacks down. My issue is I'm not doing that on the losing days. And I'm going against that trend.
+10:4610 minutes, 46 secondsAnd what the problem is is that when I'm going against it and I take it, it's a loss. I tried it again, again, again, again, and after four or five
+10:5310 minutes, 53 secondsunsuccessful attempts, I need to stop the bleeding. And that's more so of me trying to be correct on the markets moving. And I want to feel right. I want
+11:0211 minutes, 2 secondsto feel like I'm going to make money on this. I want to prove to myself that I'm right on this analysis. After a first trade that maybe I lost on, okay, losses
+11:1211 minutes, 12 secondshappen. But then a second, third, fourth attempt is me trying to be correct and feel the fulfillment of me being right
+11:1911 minutes, 19 secondsin my head. And that is not the right way to trade in terms of relatability with a lot of traders. Remaining objective, right? Knowing what the
+11:2811 minutes, 28 secondsmistake is, being aware of it, having a emotional trigger point, right? I know when I'm about to trade this irrationally because there's an
+11:3511 minutes, 35 secondsemotional trigger that I feel deep down subconsciously. But again, knowing this, being aware of it, and then not doing it is what's so important. Having a
+11:4411 minutes, 44 secondsdiscipline to not do it. So figure out what your emotional trigger is and just accept that when you feel it, you know,
+11:5111 minutes, 51 secondsto step back and sit on your hands and not click the buy or sell button. Our job in the markets is not to be right.
+11:5811 minutes, 58 secondsRight? We don't need to be right. We just need to make money. We don't have to be right about how long the market's going to move to our target. We don't
+12:0512 minutes, 5 secondshave to be right in terms of we enter now, is there going to be minimal draw down? We don't have to be perfect. We don't always have to be right. We just need to follow our plan consistently
+12:1412 minutes, 14 secondsbecause our plan is what's going to make us money. And you can see that so far in my trades. All right. So now, what's the fix for this, Carmine? What are you going to do to get yourself back these
+Chapter 5: Fixing behavioral patterns
+12:2312 minutes, 23 secondsprofits that you lost out on? And what I've kind of come to the conclusion with, which I'm going to test out moving forward, again, this is really where
+12:3012 minutes, 30 secondslike data collection and really dissecting your trades is so important because the common similarities between those these four losing days is is
+12:3812 minutes, 38 secondssignificant. I mean, they're all very similar. If I miss my planned entry, I do not create a new trade in the opposite direction. If I miss the move
+12:4612 minutes, 46 secondsthat I had planned for, I'm not just creating a new setup because I missed that move reversing the trend. I'll either wait for new development to form
+12:5312 minutes, 53 secondsthat I could create a new thesis off of or I sit on my hands and not trade it. I think this is a big fix. It would have saved me so much profits and losses that
+13:0113 minutes, 1 secondI missed out on if I just implemented this. And another mindset switch is that a mistrade is not a loss, right? I don't
+13:0813 minutes, 8 secondslook at missing trades. I look at missing trades if we have a plan for it and we did not follow the plan. Right?
+13:1613 minutes, 16 secondsIt's different if you didn't have confirmation. But let's say you have great confirmation. Everything's aligning and you don't take it. That's you missing a trade. That's me sitting
+13:2413 minutes, 24 secondshere saying, "I'm fearful of losing and I'm fearful of accepting the risk and I had a plan for it. I have great confirmation. I didn't take it." That's
+13:3313 minutes, 33 secondsa mistrade. But a mistrade is not the market moving in a direction. And because you did not participate in that
+13:4213 minutes, 42 secondsmove, you missed it. If you didn't have a plan, you didn't miss the move. It's you did not participate in that move.
+13:4913 minutes, 49 secondsAnd that's kind of where my mindset is switching towards is when the market's open and it's moving up or down, I don't miss it if I don't have a plan for it.
+13:5713 minutes, 57 secondsIt's just me not participating in it. And me accepting that helps me mentally.
+14:0214 minutes, 2 secondsAnd I was contemplating even putting this slide in here because truthfully profits that are not realized aren't profits and we could always say we should have, could have, would have, but just simply correcting a simple mistake.
+14:1314 minutes, 13 secondsAnd I was even on the phone with Vince earlier and he's like, "Man, you're the trending days where you take four or five trades are the worst trades trading days that you have." And I'm like,
+14:2114 minutes, 21 seconds"Yeah, dude. I know." And you know, there's rules to implement that like the three loss rule, which is another problem in itself that I didn't implement or follow. And there's so many
+14:2914 minutes, 29 secondsdifferent nuances with this. We could talk about risk management for hours. I could go on for hours and hours on that.
+14:3514 minutes, 35 secondsOn my risk management, I had over a 4 to one um risk man average win to loss this month. So yeah, losing sucks, but when I
+14:4414 minutes, 44 secondshave the winners, those are 20 points, 15 points of profit, whereas my losers might be three points of of losses. So
+14:5114 minutes, 51 secondsthe win rate is really not that high this month. I'm not too happy about that. And that definitely mentally damages you. Imagine being right 20 30%
+14:5914 minutes, 59 secondsof the time and you're wrong 70% of the time. That's going to mess you up mentally despite you making money.
+15:0515 minutes, 5 secondsDespite me being green, I hate to say this, but despite me being green mentally, me being wrong 75% of the time
+15:1315 minutes, 13 secondsabsolutely is damaging despite my account growing at the end of the month. So, there's so many different nuances.
+15:2115 minutes, 21 secondsMy advice is stop trying to be perfect.
+15:2315 minutes, 23 secondsAnd that's something that I'm going to try to not beat myself up with. We don't have to be perfect to make money. We just have to come out at the end of the day or the end of the week or the end of
+15:3215 minutes, 32 secondsthe month following our plan, managing our risk. And if we could do that with an edge and a system and leave our emotions out of it as best as possible,
+15:4015 minutes, 40 secondsthat's when we're going to build the money and that's when we're going to have the profitability and the consistency in the markets. So, let me know if you like these styles of videos.
+15:4715 minutes, 47 secondsI just again want to be just super honest. Everybody makes social media trading to be super glamorous and every day is a great day where there's sunshine and rainbows. And I have no
+15:5615 minutes, 56 secondsproblem telling you 10 years in there's days where I'm like, "Man, Carmine, you suck as a trader." And there's some days where I'm like, "Dude, like this is the
+16:0416 minutes, 4 secondsbest thing ever." It happens. The emotional roller coaster is there. It's not a good day every single day, but it could be a good day if we follow our plan and leave our emotions out of it.
+16:1216 minutes, 12 secondsSo, let me know if you have any questions. Comment them below. Drop a like on this video. And if you're new to my channel, hit that subscribe button.
+
+Sync to video time
+
+All
+
+For you
+
+Watched
+Chapter 1: Overcoming a losing streak
+0:000 secondsall I wanted for Christmas was for my trading account to look like this green candle but ever since Christmas time and even the new year I was over for 13 on
+0:088 secondsmy trading setups every single trade that I took out of 13 trades did not work on me and I lost money on it and
+0:1616 secondscan you imagine how defeated you feel how mentally drained you are when every decision that you make is just simply
+0:2323 secondsincorrect I was on a severe losing streak something that I really haven't experienced to this degree in the 9 years that I've been tring and I was in
+0:3131 secondsdraw down a little under $50,000 now that was in the first 2 weeks now the third week of January as
+0:3939 secondsI'm recording this video the first trading day of this week I made a gross profit of
+0:4545 seconds$24,000 on Tuesday I made $117,000 and now on Wednesday I made $199,000 getting me out of this draw
+0:5454 secondsdown and now in the green now I could have easily thrown in the towel I could have easily Lo lost my composure went on
+1:011 minute, 1 secondtilt and completely blown up and destroyed my account and in this video I really want to talk about how I got out
+Chapter 2: Identifying root causes
+1:081 minute, 8 secondsof this draw down that way anybody watching this if you're on a losing streak if you're struggling if you're in draw down yourself how you can get out
+1:161 minute, 16 secondsof it and I'm going to go over what I did and the the tips necessary to really figure out what's going wrong and make a
+1:241 minute, 24 secondsdraw down go into something that is very successful if you don't give up and you focus on what's needed to start turning
+1:321 minute, 32 secondsyour trading around if you've seen my most recent YouTube video about me starting this losing streak before I got out of it you would know in that video I
+1:401 minute, 40 secondstalk about two main reasons why draw down occurs number one it's simply just failing to adapt to different market
+1:471 minute, 47 secondsconditions the reason why I'm wearing this shirt is prior to Christmas the market was essentially in a very strong uptrend ever since election day and what
+1:561 minute, 56 secondsI've noticed was I was approaching the market in uptrending rules or uptrending setups that from Christmas on the market really
+2:052 minutes, 5 secondswasn't in an uptrend anymore and we were downtrending and there was a lot of selling pressure present in the market so why draw Downs occur whether it's the
+2:132 minutes, 13 secondsdraw down that I was in or any other draw Downs that anybody else might experience now in the future the number one reason that I find it out to be I'm
+2:212 minutes, 21 secondsreally speaking for myself here is simply just failing to adapt to different market conditions different conditions present different
+2:302 minutes, 30 secondsopportunities and different ways that we have to adapt to those conditions to trade properly now on top of this if
+2:372 minutes, 37 secondsit's not adapting to proper market conditions then it's just simply a mental barrier or something that's going on with our emotions that's resulting in
+2:452 minutes, 45 secondsthese losing trades or that's going to result in this draw down that we have to get out of our own head emotionally in order to fix these problems once we
+Chapter 3: Analyzing trading data
+2:542 minutes, 54 secondsunderstand and acknowledge draw down we're in a losing streak and we acknowledge really what we think is the main culprit to it and we accept it now
+3:033 minutes, 3 secondswe have to reassess our trading plan and dissect the data and this is what I did last weekend in fact I'm going to play
+3:113 minutes, 11 secondsclips of the webinar that I did in the invest to trade Academy I do on Sundays that in this webinar I dissected all my
+3:183 minutes, 18 secondstrades to start the month and in this I realized I was making a stupid mistake that could easily be fixed and as I'm
+3:273 minutes, 27 secondsrecording this video I would say it's very confident that I did fix these mistakes because I how I've been trading so far this week so it's dissecting the
+3:353 minutes, 35 secondstrading data reviewing my journal this is what I did over the weekend reviewing my trades and saying hey Carmine the losing trades that I took last week let
+3:433 minutes, 43 secondsme figure out what I did wrong let me see if I could find common similarities to mistakes or issues that arise in those trades and then I could go back in
+3:523 minutes, 52 secondsthe present moment when the Market's open and saying hey if this occurs again I know this caused losing trades for me last week let me not do it again and
+4:014 minutes, 1 secondthen another thing that I did was looking at charts or trades that I did not take and reverse engineering moves
+4:084 minutes, 8 secondsin the market seeing a low form or a high form or seeing a breakout above or below a key level and saying how could I have traded this I did not take the
+4:174 minutes, 17 secondstrade but how could I have traded this that if I was an active participant in the market how could I have made money off of this setup and by reviewing the
+4:254 minutes, 25 secondstrades that I took and dissecting and reverse engineering the markets data of Trades that I did not take I kind of came to a conclusion with my trades that
+4:344 minutes, 34 secondsI'm going to play the replay of the webinar so you can kind of see what's in my head that I fixed this week and it's been working very well and very
+4:414 minutes, 41 secondssuccessful so let's get into this replay of the webinar and then I'm going to get into the screen share of actually trades that I took uh this week that have been
+Chapter 4: Webinar strategy review
+4:494 minutes, 49 secondsworking really well for me we're going to do our normal charting but I really want to take some time and like go over my trades so far this year and I want to look back at like things that I did
+4:574 minutes, 57 secondsright things that I did wrong majority if it's wrong uh and we'll just revieww them and I I I haven't really done it this weekend so I want to take the time
+5:045 minutes, 4 secondsnow and you guys can kind of like see my process I'll speak out loud of the trades that I took why I took them and then just if I read it completely wrong
+5:125 minutes, 12 secondsso I'm just G to act like I'm reviewing it myself without you guys here and I'm going to just speak out loud knowing that you guys are here so that way you
+5:215 minutes, 21 secondsguys can get some insight of like good and bad things that I did but it's going to be mainly bad to be honest and one of my biggest issues that I've noticed in
+5:285 minutes, 28 secondsterms of my char in has been how I'm viewing the market I haven't seen since Christmas to now I'm going to really
+5:355 minutes, 35 secondsreference this patch of my trading from I guess we could say Christmas to the new year to to right now where we're 12
+5:425 minutes, 42 secondsdays into the the 2025 I have not seen many setups that have efficiently worked of If X level breaks there's nothing
+5:505 minutes, 50 secondsstopping the market from going to Y and I think this has been a big mistake of mine recently because this has worked so powerful in the past and I would say
+5:595 minutes, 59 secondsmaybe this is due to the market that we saw leading up to Christmas post elction even prior to election this worked
+6:066 minutes, 6 secondsextremely well if X level breaks there's nothing stopping the market from going to yde same thing to the downside If X level breaks there's nothing stopping
+6:146 minutes, 14 secondsthe market from going to yde a lot of my plans and a lot of my scenarios have been dealing with I guess we could say the line of least resistance is what I
+6:226 minutes, 22 secondsreally call it in the lessons I haven't seen many line of lease resistance setups recently and I've been approaching the market with what has
+6:296 minutes, 29 secondsworked worked in October in November in the start of December I've been approaching it with the line of least resistance setups and I looking back at
+6:376 minutes, 37 secondsmy data have not seen many of these setups occur and I've been formulating a lot of my plans I would say not everyone but majority of them with the line of
+6:466 minutes, 46 secondsleas resistance scenarios if this level breaks and holds then I'm going to play long targeting the next level and majority of them have been Longs because
+6:556 minutes, 55 secondsthe market has been in an uptrend and I guess ever since christmas-ish time a little past Christmas the Market's just
+7:037 minutes, 3 secondsbeen in a downtrend so playing Longs on a short-term downtrend especially line of lease resistance is not an ideal type
+7:127 minutes, 12 secondsof scenario or not an ideal type of setup in these conditions in downtrends it's better to short the rallies meaning
+7:207 minutes, 20 secondswhen the market bounces we could see this here on the daily chart this is another one of my issues on here on the daily chart a rule of mine is if the
+7:287 minutes, 28 secondsmarket is downtrending putting in lower lows and lower highs instead of looking to Long levels of demand or play
+7:357 minutes, 35 secondsbreakouts to the upside this is this is what I've been doing a lot of point I'm trying to get here is I've been coming into the market with a bias because of how strong the Market's been leading up
+7:437 minutes, 43 secondsto December that I'm expecting it to keep going up and up and up and now we're in a short-term downtrend and my issue is that I've been trying to long
+7:527 minutes, 52 secondslet's just say lines of leas resistance to the upside above a breakout level when in downtrending markets that doesn't work out too well same thing for
+8:008 minuteslevels of demand if the Market's downtrending levels of support or levels of demand are not going to really hold as well for a solid reversal you might
+8:098 minutes, 9 secondsget the quick bounces this is very crucial here depending on the trend and conditions in these conditions is
+8:158 minutes, 15 secondsperfect it's great is an ideal setup if the market was uptrending my issue is
+8:238 minutes, 23 secondsthat I am doing the things I would do in an uptrend Market in a market that is currently downtrending and this is where I've been having a lot of struggle with
+8:308 minutes, 30 secondsI think I know my mistakes now it's just adjusting and adapting to them properly and hopefully I could do that uh I'm definitely you're going to see me be a lot more patient this week you're going
+8:388 minutes, 38 secondsto see me wait for the book to maybe thicken up you're going to see me wait for maybe an ideal setup you might see something occur and you should say like hey Kon usually enters there but maybe
+8:468 minutes, 46 secondshe doesn't now this time and that's kind of my where my head's at it's got to look really good and I got to go in with downtrending P perspective until the
+8:538 minutes, 53 secondsmarket begins to uptrend and until the market starts putting in higher lowers bounc is off demand or find find acceptance to the upside that's when
+9:019 minutes, 1 secondI'll switch to the upside if it finds acceptance to the upside if a higher low forms or if we start bouncing off levels of the man that's when I will start
+9:089 minutes, 8 secondsgoing back to my uptrending rules until then I will continue in the downtrending rules so I'll see you all uh this week so now we're back to present day it's
+Chapter 5: Refining trade execution
+9:169 minutes, 16 secondsJanuary 15th it's Wednesday after this turnaround of the draw down and now I want to go over some of the trades and
+9:249 minutes, 24 secondsyou can understand the confirmations and basically what I said in the webinar is exactly what I did it's being aware of the issues recognizing them and then
+9:339 minutes, 33 secondsputting them to the test when the market is actually open and trading so what I said was when I would switch to Longs and when I would flip my bias to
+9:419 minutes, 41 secondsbecoming more bullish and longing pullbacks is when either a higher low forms new demand forms or acceptance
+9:499 minutes, 49 secondsforms to the upside so on this day this is January 13th this was a $24,000 profit it was a 4:1 planned risk
+9:589 minutes, 58 secondsof reward ratio itio and by the time I sold this trade I got about a 5 and a half to one risk of reward ratio I was risking
+10:0610 minutes, 6 seconds$4,000 to make planned $118,000 so again risk management risk of reward is so crucial especially when you're in a
+10:1410 minutes, 14 secondslosing streak and especially when you're in draw down because if your losses are much smaller than your wins you're setting yourself up to win and be
+10:2210 minutes, 22 secondsprofitable especially in the long run so in this example the market had sold off into this level of demand at 5822 in the overnight session the market had then
+10:3110 minutes, 31 secondsopened up and placed a higher low on two separate occasions we have a higher low here in the overnight session and we
+10:3910 minutes, 39 secondsalso have a higher low here when the market is open so now the market is putting in higher lows at a level of demand and now zooming in intraday we
+10:4710 minutes, 47 secondsare seeing a strong upside rally now on this strong upside rally leaves a trail of buying pressure now in the intraday
+10:5610 minutes, 56 secondscommentary tab this is where I update my thoughts in real time as the Market's open as it's developing for trades that I'm taking or scenarios that I'm
+11:0411 minutes, 4 secondswatching pretty strong buying here at the low we're seeing a higher low form at this level of demand and now new
+11:1111 minutes, 11 secondsdemand is possibly forming if the rally continues in the short term I am watching 5823 to
+11:1911 minutes, 19 seconds5818 if it could hold on a pullback I'm interested in Long targeting Friday's lows the market had pulled back perfectly into
+11:2711 minutes, 27 seconds5823 on this significant drop for me personally a really good tip is that if I see Sharp aggressive rallies up or
+11:3511 minutes, 35 secondspullbacks down I like to impulsively get in that move especially if it's at a level of interest because the quicker the move happens the more aggressive the
+11:4311 minutes, 43 secondsmore violent it is usually it attracts a lot of Traders because what a lot of people will do is is they'll see this red candle and they'll automatically get in short not realizing it's at a level
+11:5111 minutes, 51 secondsof interest and this was a perfect opportunity uh for me to get long down here at 5823 going for about a 12 13 point
+12:0012 minutestarget and it was only a three-point stop loss so the market had pulled back perfectly uh into this level hold enough
+12:0712 minutes, 7 secondsfor me to put risk on again demand is forming a higher low is forming here and just going to Target this little pre-market High Resistance and then the
+12:1612 minutes, 16 secondsuh Friday low at 5846 if I were to zoom out this was Friday's low so two Targets that I'm going if I am reading this correct and the buyers are actually here
+12:2512 minutes, 25 secondsthen the market could gravitate towards them we get that upside rally the market could continues to Rally up uh and then I closed out of this trade for a
+12:3212 minutes, 32 seconds$24,000 profit now my mistakes the first two weeks was I was just simply long in
+12:3912 minutes, 39 secondsthe market here on any sign of green candle to the upside or any strong sign of strong buying coming in as soon as
+12:4712 minutes, 47 secondsthe buying came in I was getting long automatically and that was one of my main issues was I was being what I call the first buyer in downtrending markets
+12:5612 minutes, 56 secondsbeing a first buyer is not ideal what I did in this case was I waited for the buyers to prove they are in the market AKA this strong green candle to the
+13:0513 minutes, 5 secondsupside and this left a trail of buying volume that if the market held I'm going
+13:1113 minutes, 11 secondsto now Mark out this uh 5823 level if it holds this level where the buyers really
+13:1813 minutes, 18 secondsbegin to initiate this move right here it would indicate buyers are present and buyers are holding and supporting price here and this is where I'm comfortable
+13:2613 minutes, 26 secondsgetting long placing my stop loss under this low speculating that this thing will continue to rally and this thing will move up and then we get that strong
+13:3413 minutes, 34 secondspush and this trade worked out really well uh from that strong rally up right over here so it wasn't what I was doing
+13:4113 minutes, 41 secondsand what was causing losses was I was getting in the market on the first sign of of of a move up or first sign of buying at a level of Demand on a
+13:4913 minutes, 49 secondsdowntrending market it was best for me to wait for buyers to prove strength in the form of a higher low new demand acceptance higher and then once they
+13:5713 minutes, 57 secondsprove that then I could follow their footstep instead of me being the first buyer this is the second trading day so far this week where it's one and done
+Chapter 6: Executing successful trades
+14:0514 minutes, 5 secondsone setup one win call it a day and walk away this was a $2600 risk for a $119,000 reward it was
+14:1414 minutes, 14 secondsa 7 to1 risk of reward ratio post CPI data so we had the CPI data the market rallied and we're coming into this level
+14:2314 minutes, 23 secondsof resistance now we could argue this is sort of counter Trend however after a 120 point Rally post CPI there has to be
+14:3214 minutes, 32 secondssome type of breathing room for the market to pull back or take a breath we could say uh and those the earlier buyers to take profit and bring the
+14:4114 minutes, 41 secondsmarket lower now we had this level of resistance up here at 5983 and really what I saw was the market was rallying into this level of
+14:4914 minutes, 49 secondsresistance and I was comfortable shorting 59.88 going for a quick 13-point scalp on two points worth of risk that's where
+14:5814 minutes, 58 secondswe get the 7 to1 risk of reward ratio so about 13 to 18 points of reward if I'm right for two to three points of risk if
+15:0715 minutes, 7 secondsI am wrong shorting the strength and shorting this rally uh to the upside now really what my confirmation was here
+15:1415 minutes, 14 secondsaround this 1020 Mark was the market rallies and this is now a footprint chart if you haven't seen the order flow series and you're new to my channel I
+15:2215 minutes, 22 secondswould highly recommend the orderflow playlist on my channel but here are the market rallies and as we rally we can
+15:3015 minutes, 30 secondssee the buying volume coming into the market noted by these blue positive Deltas as the Market's rallying and really what I saw here was the market
+15:3815 minutes, 38 secondsbegan to move lower and on this move lower the selling volume where I'm circling right here began to build now I
+15:4615 minutes, 46 secondsconfirmed weakness at this point but I was not comfortable shorting these 85s or these 86s because that would indicate
+15:5415 minutes, 54 secondsa five or six point stop loss so when I confirm the weakness with what Circle here of the selling pressure I then wait for a rally or then wait for a pop which
+16:0316 minutes, 3 secondswe get here because now I short into this and my risk box if my stop loss is above the high of day is much smaller
+16:1116 minutes, 11 secondshere and now my reward box if I'm short here targeting the 75s is much greater
+16:1816 minutes, 18 secondsrisk to reward my risk is smaller my reward is higher so I'm shorting this pop weakness is confirmed and then the selling you can see continues as we move
+16:2716 minutes, 27 secondslower lower lower and this is what I would want to see if I'm playing a reversal to the downside using the footprint chart and what it looks like
+16:3416 minutes, 34 secondson a Candlestick chart is short this rally up right here and then the market begins to uh sell off after that and I
+16:4316 minutes, 43 secondsdefinitely sold early but I can't look at me selling early because my target eventually hit I definitely had a lot more gains if I kept holding this trade
+16:5116 minutes, 51 secondsbut uh got to take what the market gives me especially in these conditions and this is where I'm sitting at so far this month it's three days into the week I'm
+Chapter 7: Lessons in risk management
+17:0017 minutesup 61,000 gross profit and the previous two weeks was a $113,000 loss and a
+17:0617 minutes, 6 seconds$34,000 loss so I'm up 13,000 so far halfway through this month with a 20%
+17:1317 minutes, 13 secondswin rate and a 5 to1 average winto loss ratio so this is why win rates don't matter obviously wrong more than I am
+17:2117 minutes, 21 secondscorrect having struggle the first two weeks to now this three days um seeing a completely difference in my Trading and
+17:2917 minutes, 29 secondsthis is due to my risk management and me dissecting my data and understanding what's going on with my traits so if anybody is in a losing streak a draw
+17:3617 minutes, 36 secondsdown understand that you should never give up I'm sure a lot of you watching this have gone through a losing streak or gone through draw down or maybe
+17:4517 minutes, 45 secondsyou're currently in one just do not give up focus on risk management that'll be that'll be the only thing that could keep you in the game here if you look at
+17:5417 minutes, 54 secondsmy p&l calendar my losses are significantly smaller compared to my my wins and risk management I guess in this
+18:0118 minutes, 1 secondexample will speak for itself because if your losses are two three four times less than your wins then you're setting yourself up for for Success when you
+18:1018 minutes, 10 secondsactually do win so focus on risk management never give up and also dissect your trades accept why this draw
+18:1918 minutes, 19 secondsdown or this losing streak is occurring and dissect the data and figure out what the issue is and how you can fix the problem to start seeing a difference in
+18:2818 minutes, 28 secondsyour Trading
