@@ -154,6 +154,12 @@ A(P("<b>2. The edge of a previous balance area.</b> \"we had a support level at 
     "13015... it's an old previous little balance range low. <b>It's not so much supply, "
     "it's not so much demand - it's just a previous balanced range low</b>\"", "quote"))
 A(P("<b>3. An ordinary supply or demand zone</b>, as drawn in Module 1."))
+A(P("<b>4. A delta outlier.</b> This one does not appear in the 2022-23 videos at all - it "
+    "comes from the 2025 material, and Module 3 covers it properly. In short: an unusually "
+    "large one-sided volume print at a single price, where price then <i>refuses to move</i> "
+    "in the direction of all that aggression, implying someone is absorbing it. When the "
+    "same price does it again on a later session, it goes into the next day's plan as a key "
+    "level - which is exactly how his 6575 level was built."))
 A(P("<b>HIS RULE.</b> A key level is <b>a price where you have evidence that size traded "
     "and mattered</b>. Where the evidence came from is secondary. Note also that both "
     "examples are given as <b>two numbers</b> - a band, never a single price."))

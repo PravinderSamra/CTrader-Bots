@@ -23,18 +23,18 @@ installed there, not under the default `python3` (3.11).
 |---|---|---|---|
 | 1 | The zone: what it is, how to draw it, when it is tradable | 4 | **done** |
 | 2 | Context: reading the day before you trade it | 4 | **done** |
-| 3 | The order-flow trigger | 4 | transcripts in, not yet built |
+| 3 | The trigger: order flow | 4 | **done** |
 | 4 | The complete method, and risk | 4 | transcripts in, not yet built |
 
 ### Carried forward
 
-Topics he teaches that module 1's four videos do not cover, to be picked up
-once the relevant transcripts are in:
-
 - **Volume-profile shapes (P and b).** Module 1 section 7b reads absorption and
-  exhaustion from footprint and delta only, because that is all these four
-  transcripts use. He does teach profile shapes elsewhere. Best fit: module 3,
-  the order-flow trigger.
+  exhaustion from footprint and delta only, because that is all those four
+  transcripts use. He does teach profile shapes elsewhere. Still not covered by
+  modules 2 or 3 - carry to module 4 or a later batch.
+- **Resolved in module 3:** delta outliers as a fourth source of key levels (now
+  added to module 2 section 5), and the confirmation layer that supersedes
+  module 1 section 6.
 
 
 ## Source dating - read this before trusting a module
