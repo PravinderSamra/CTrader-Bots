@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-11-17T23:15:19.977Z",
+  "generatedAt": "2026-11-18T22:25:38.814Z",
   "yields": {
-    "US10Y": 5.12,
-    "US2Y": 4.83,
-    "realYield10Y": 2.92,
-    "realYield5Y": 2.68,
-    "curve2s10s": 29,
-    "breakeven10Y": 2.21,
-    "breakeven5Y": 2.26,
-    "forward5y5y": 2.16,
+    "US10Y": 5.1,
+    "US2Y": 4.8,
+    "realYield10Y": 2.89,
+    "realYield5Y": 2.64,
+    "curve2s10s": 30,
+    "breakeven10Y": 2.19,
+    "breakeven5Y": 2.23,
+    "forward5y5y": 2.15,
     "dayOverDay": {
-      "US10Y": -0.03,
-      "US2Y": -0.05,
-      "realYield10Y": 0.01
+      "US10Y": -0.02,
+      "US2Y": -0.03,
+      "realYield10Y": -0.03
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-12-09",
     "probCut": 0,
-    "probHold": 60,
-    "probHike": 40
+    "probHold": 64,
+    "probHike": 36
   },
   "marketVolatility": {
-    "GVZ": 26.42,
-    "VIX": 22.91
+    "GVZ": 26.46,
+    "VIX": 25.46
   },
   "positioning": {
     "cotNetLong": 181677,
@@ -34,30 +34,30 @@
     "openInterestChange": 8291
   },
   "etfFlows": {
-    "gldTonnes": 1057.6,
-    "gldWoWChange": 3.1,
+    "gldTonnes": 1093.8,
+    "gldWoWChange": 5.1,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3852.52,
-    "XAGUSD": 47.4885,
-    "EURUSD": 1.09946,
-    "USDJPY": 159.4935,
-    "USDCHF": 0.84147,
-    "USDCNH": 6.66662,
-    "GBPUSD": 1.3206,
-    "USDCAD": 1.43006,
-    "USDSEK": 10.12635,
-    "US500": 7408.5,
-    "GER40": 26232.4,
-    "UK100": 10735.65,
-    "ADR_14day": 93.4,
-    "ADR_usedToday": 5.9,
-    "goldSilverRatio": 81.1
+    "XAUUSD": 3724.995,
+    "XAGUSD": 45.056,
+    "EURUSD": 1.09753,
+    "USDJPY": 159.341,
+    "USDCHF": 0.84296,
+    "USDCNH": 6.66843,
+    "GBPUSD": 1.31515,
+    "USDCAD": 1.43246,
+    "USDSEK": 10.1644,
+    "US500": 7321.6,
+    "GER40": 25761,
+    "UK100": 10562.15,
+    "ADR_14day": 93.8,
+    "ADR_usedToday": 137.6,
+    "goldSilverRatio": 82.7
   },
   "dollarLiquidity": {
-    "stlfsi": -0.4918,
-    "nfci": -0.462
+    "stlfsi": -0.8655,
+    "nfci": -0.478
   },
   "geopoliticalRisk": {
     "gpr": 150.5,
@@ -66,40 +66,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Lawyer for Fed's Cook says she may not participate in 'unfair' White House hearing - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-17T18:49:27.000Z",
-      "hoursAgo": 4.4
-    },
-    {
-      "headline": "7 smart reasons to sell a stock—and my ‘golden rule’ for offloading shares, says hedge fund CEO",
+      "headline": "Fed officials expect more rate hikes, worry about AI impact on inflation, minutes show",
       "source": "CNBC",
-      "publishedAt": "2026-11-17T15:05:01.000Z",
-      "hoursAgo": 8.2
+      "publishedAt": "2026-11-18T19:08:44.000Z",
+      "hoursAgo": 3.3
     },
     {
-      "headline": "Angola central bank eases policy further as inflation keeps falling - Reuters",
+      "headline": "Is Apple the safe haven investors think it is? Here's a way to trade it with less risk",
+      "source": "CNBC",
+      "publishedAt": "2026-11-18T18:10:21.000Z",
+      "hoursAgo": 4.3
+    },
+    {
+      "headline": "Ford starts U.S. battery cell production using Chinese tech amid geopolitical tensions",
+      "source": "CNBC",
+      "publishedAt": "2026-11-18T17:02:53.000Z",
+      "hoursAgo": 5.4
+    },
+    {
+      "headline": "UAE top destination for smuggled African gold despite tighter measures, NGO says - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-17T13:19:22.000Z",
+      "publishedAt": "2026-11-18T16:21:07.000Z",
+      "hoursAgo": 6.1
+    },
+    {
+      "headline": "Indonesia and China agree four strategic partnerships worth $71.8 billion - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-18T13:29:32.000Z",
+      "hoursAgo": 8.9
+    },
+    {
+      "headline": "Worried about the AI bubble popping? How investing pros say to adjust your strategy",
+      "source": "CNBC",
+      "publishedAt": "2026-11-18T13:19:31.000Z",
+      "hoursAgo": 9.1
+    },
+    {
+      "headline": "Fed officials set to raise rates again in December, but the future still looks murky",
+      "source": "CNBC",
+      "publishedAt": "2026-11-18T12:37:32.000Z",
+      "hoursAgo": 9.8
+    },
+    {
+      "headline": "Mortgage demand turns lower, as interest rates shoot back up to the highest level in three weeks.",
+      "source": "CNBC",
+      "publishedAt": "2026-11-18T12:34:10.000Z",
       "hoursAgo": 9.9
-    },
-    {
-      "headline": "Anthropic IPO: For hundreds of billions of dollars flowing into AI startups, a big debut is a must",
-      "source": "CNBC",
-      "publishedAt": "2026-11-17T13:15:44.000Z",
-      "hoursAgo": 10
-    },
-    {
-      "headline": "Sterling edges up against dollar, breaking five-day slump - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-17T11:49:58.000Z",
-      "hoursAgo": 11.4
-    },
-    {
-      "headline": "Dollar steady after five-day rally, NZ dollar at lowest since 2020 - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-17T01:42:00.000Z",
-      "hoursAgo": 21.6
     }
   ],
   "briefing": null
