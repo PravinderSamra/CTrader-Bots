@@ -58,9 +58,12 @@ A(P("The zone: what it is, how to draw it, and when it is tradable.<br/>"
 
 A(P("How to read this", "h2"))
 A(P("<b>HIS RULE</b> means he states it outright. <b>HIS WORDS</b> is a direct quote. "
-    "<b>NOT STATED</b> flags something the method needs but he never specifies - those are "
-    "gaps, left open rather than filled in with textbook theory. Nothing here is "
-    "generic supply-and-demand material dressed up as his."))
+    "<b>NOT STATED</b> flags something the method needs that he does not specify <i>in the "
+    "four videos behind this module</i> - a gap left open rather than filled in with "
+    "textbook theory. <b>NOT IN THESE VIDEOS</b> flags something he does teach, but "
+    "elsewhere, outside this module's source set."))
+A(P("Both labels describe the limits of the source set, not the limits of his method. "
+    "Nothing here is generic supply-and-demand material dressed up as his."))
 
 A(P("1. What a zone actually is", "h2"))
 A(P("The market has two states. <b>Balance</b> is agreement - buyers and sellers happy at "
@@ -142,9 +145,9 @@ t.setStyle(TableStyle([("VALIGN",(0,0),(-1,-1),"TOP"),
                        ("BOTTOMPADDING",(0,0),(-1,-1),4)]))
 A(t)
 A(Spacer(1,8))
-A(P("<b>NOT STATED.</b> He never says how many of these he needs, or whether any single one "
-    "is sufficient. In his worked example he had four lining up at once. Treat \"more is "
-    "better\" as the only safe reading.", "gap"))
+A(P("<b>NOT STATED.</b> He does not say in these videos how many of these he needs, or "
+    "whether any single one is sufficient. In his worked example he had four lining up at "
+    "once. Treat \"more is better\" as the only safe reading.", "gap"))
 
 A(P("7. Why a level holds - two different mechanisms", "h2"))
 A(P("He describes two, and they are not the same thing even though both end a move. "
@@ -182,10 +185,13 @@ A(P("The two can chain, and he says so in one breath: \"there is a passive selle
     "until it gives up. They are still worth reading separately, because absorption is "
     "visible while it is happening and exhaustion is mostly visible once it has."))
 
-A(P("<b>NOT STATED.</b> He never uses volume-profile shape vocabulary. In those terms "
-    "absorption tends to print as a bulge of volume at the extreme - a P at a high, a b at "
-    "a low - while exhaustion prints as the thin tail he does name. Useful shorthand, but "
-    "it is not his language and he does not teach it.", "gap"))
+A(P("<b>NOT IN THESE VIDEOS.</b> These four transcripts describe absorption and exhaustion "
+    "in footprint and delta terms only - the volume-profile shape vocabulary does not "
+    "appear in them. In those terms absorption tends to print as a bulge of volume at the "
+    "extreme - a <b>P</b> at a high, a <b>b</b> at a low - while exhaustion prints as the "
+    "thin tail he does name. He does teach profile shapes, in videos outside this module's "
+    "source set, so this is a gap in the sources rather than in the method. Flagged to be "
+    "picked up in a later module once those transcripts are in.", "gap"))
 
 A(P("7c. The mirror - what makes a level weak", "h2"))
 A(P("The same logic inverted, and this is the part that reverses how most people read "
@@ -213,8 +219,9 @@ A(P("Read it as: <b>enter on the zone that points the same way as the trend</b> 
     "uptrend, supply in a downtrend. The zone on the other side is still worth drawing, but "
     "only as the place you take profit.", "gap"))
 A(KeepTogether([img("05-trend.png", 140*mm)]))
-A(P("<b>NOT STATED.</b> He never defines the trend mechanically - no moving average, no "
-    "lookback. It is eyeballed from higher-timeframe structure.", "gap"))
+A(P("<b>NOT STATED.</b> He does not define the trend mechanically anywhere in these four "
+    "videos - no moving average, no lookback. It is eyeballed from higher-timeframe "
+    "structure.", "gap"))
 
 A(P("9. Fading the obvious", "h2"))
 A(P("Running underneath everything is a contrarian filter he applies to his own levels."))
@@ -238,9 +245,9 @@ A(P("<b>HIS RULE.</b> The stop goes below the swing low that produced the turn -
 A(P("<b>HIS RULE.</b> Targets are the opposing zone, recent swing structure, or the next "
     "zone treated as a magnet. In his worked example he risked about 8 points on the S&amp;P "
     "against a target roughly 60 points away."))
-A(P("<b>NOT STATED.</b> No minimum reward-to-risk is given, no scaling rule, and no time "
-    "stop. He does admit to exiting a runner too early and says only that he \"followed the "
-    "plan\".", "gap"))
+A(P("<b>NOT STATED.</b> No minimum reward-to-risk, scaling rule or time stop appears in "
+    "these videos. He does admit to exiting a runner too early and says only that he "
+    "\"followed the plan\".", "gap"))
 
 A(P("11. His daily routine", "h2"))
 A(P("He publishes a pre-market plan every day containing the zones he is watching, which he "

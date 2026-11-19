@@ -26,6 +26,16 @@ installed there, not under the default `python3` (3.11).
 | 3 | The order-flow trigger | 4 | transcripts needed |
 | 4 | The complete method, and risk | 4 | transcripts needed |
 
+### Carried forward
+
+Topics he teaches that module 1's four videos do not cover, to be picked up
+once the relevant transcripts are in:
+
+- **Volume-profile shapes (P and b).** Module 1 section 7b reads absorption and
+  exhaustion from footprint and delta only, because that is all these four
+  transcripts use. He does teach profile shapes elsewhere. Best fit: module 3,
+  the order-flow trigger.
+
 ## Module 1 sources
 
 | Video | Length | ID |
@@ -44,7 +54,11 @@ Every claim in the PDFs is tagged:
 
 - **HIS RULE** - stated outright in a transcript
 - **HIS WORDS** - direct quote
-- **NOT STATED** - the method needs it but he never specifies it
+- **NOT STATED** - the method needs it and he does not specify it in this module's
+  four videos
+- **NOT IN THESE VIDEOS** - he does teach it, but outside this module's source set
 
+Both labels describe the limits of the source set, not the limits of his method -
+never write "he never teaches X" on the strength of four transcripts.
 Gaps are flagged, never filled with generic textbook theory. Where videos
 disagree, both readings are shown rather than one being picked.
