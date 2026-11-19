@@ -189,9 +189,10 @@ A(P("<b>NOT IN THESE VIDEOS.</b> These four transcripts describe absorption and 
     "in footprint and delta terms only - the volume-profile shape vocabulary does not "
     "appear in them. In those terms absorption tends to print as a bulge of volume at the "
     "extreme - a <b>P</b> at a high, a <b>b</b> at a low - while exhaustion prints as the "
-    "thin tail he does name. He does teach profile shapes, in videos outside this module's "
-    "source set, so this is a gap in the sources rather than in the method. Flagged to be "
-    "picked up in a later module once those transcripts are in.", "gap"))
+    "thin tail he does name. <b>Confirmed in Module 4:</b> asked directly whether he "
+    "looks for big orders or P-shapes and B-shapes on a footprint chart, he answers "
+    "\"<b>Both. Looking for delta outliers and P-shapes, B-shapes.</b>\" He names them, "
+    "but never explains how he reads them, in any of the sixteen videos.", "gap"))
 
 A(P("7c. The mirror - what makes a level weak", "h2"))
 A(P("The same logic inverted, and this is the part that reverses how most people read "

@@ -239,9 +239,11 @@ A(P("Across the four videos he reads: the <b>footprint</b> (delta per price per 
     "<b>heat map</b> for resting liquidity - the orange and red lines he calls walls - "
     "<b>cumulative delta</b>, the <b>depth of market</b> and current order book, and "
     "<b>time and sales</b> with its aggressive-trade bubbles."))
-A(P("<b>NOT STATED.</b> No threshold is ever given for what counts as a delta outlier. It is "
-    "always relative - \"the strongest we've seen so far in the most recent range\" - and "
-    "judged by eye against the session.", "gap"))
+A(P("<b>ANSWERED IN MODULE 4.</b> There is no fixed threshold for a delta outlier, by "
+    "design: \"some days 100 is large size, some days 1000 is large size... if every "
+    "order coming in today is 100 contracts, then something that comes in with 1000 is "
+    "an outlier. <b>Just look for difference in the data.</b>\" It is recalibrated "
+    "against the session you are in.", "gap"))
 
 A(P("15. What this supersedes in Module 1", "h2"))
 A(P("Module 1 section 6, <i>What counts as confirmation</i>, was built on the 2022-23 videos, "

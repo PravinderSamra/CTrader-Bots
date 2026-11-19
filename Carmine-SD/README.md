@@ -24,17 +24,29 @@ installed there, not under the default `python3` (3.11).
 | 1 | The zone: what it is, how to draw it, when it is tradable | 4 | **done** |
 | 2 | Context: reading the day before you trade it | 4 | **done** |
 | 3 | The trigger: order flow | 4 | **done** |
-| 4 | The complete method, and risk | 4 | transcripts in, not yet built |
+| 4 | The complete method, and risk | 4 | **done** |
 
-### Carried forward
+### Resolved across modules
 
-- **Volume-profile shapes (P and b).** Module 1 section 7b reads absorption and
-  exhaustion from footprint and delta only, because that is all those four
-  transcripts use. He does teach profile shapes elsewhere. Still not covered by
-  modules 2 or 3 - carry to module 4 or a later batch.
-- **Resolved in module 3:** delta outliers as a fourth source of key levels (now
-  added to module 2 section 5), and the confirmation layer that supersedes
-  module 1 section 6.
+- **Volume-profile shapes (P and b)** - module 4. Flagged in module 1 as a
+  claim the sources could not support; confirmed in the masterclass Q&A, where
+  he says he looks for "delta outliers and P-shapes, B-shapes". Both. He names
+  them but never teaches how to read them.
+- **Delta outliers as a source of key levels** - module 3, now added to module
+  2 section 5.
+- **What counts as a "large" order** - module 4. No fixed number by design;
+  relative to the session.
+- **The confirmation layer** - module 3 supersedes module 1 section 6.
+
+### Still open after all sixteen videos
+
+- **Position sizing.** The largest hole. Attributed to a friend named Dylan who
+  works on Wall Street; the material sits in the paid accelerator.
+- **Key zones.** The subset of rules that separates zones worth trading from
+  zones worth drawing. Withheld in 2022 and still withheld in 2026.
+- **The three-loss rule** in full, and how P/B shapes are actually read.
+- **A fully mechanical trend definition.** Closest version is in module 4
+  section 11: higher lows, a bounce off demand, or acceptance higher.
 
 
 ## Source dating - read this before trusting a module
