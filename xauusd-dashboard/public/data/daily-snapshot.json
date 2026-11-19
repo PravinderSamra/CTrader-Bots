@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-19T14:56:29.834Z",
+  "generatedAt": "2026-11-19T16:35:07.245Z",
   "yields": {
     "US10Y": 5.1,
     "US2Y": 4.8,
@@ -34,26 +34,26 @@
     "openInterestChange": 8291
   },
   "etfFlows": {
-    "gldTonnes": 1099.4,
-    "gldWoWChange": 5.6,
+    "gldTonnes": 1105.2,
+    "gldWoWChange": 5.8,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3706.02,
-    "XAGUSD": 45.343,
-    "EURUSD": 1.09921,
-    "USDJPY": 159.8855,
+    "XAUUSD": 3686.57,
+    "XAGUSD": 44.719,
+    "EURUSD": 1.09779,
+    "USDJPY": 159.855,
     "USDCHF": 0.8434,
-    "USDCNH": 6.67291,
-    "GBPUSD": 1.314,
-    "USDCAD": 1.43047,
-    "USDSEK": 10.16113,
-    "US500": 7379.5,
-    "GER40": 25703.45,
-    "UK100": 10535.55,
+    "USDCNH": 6.69165,
+    "GBPUSD": 1.31094,
+    "USDCAD": 1.43114,
+    "USDSEK": 10.19014,
+    "US500": 7305.1,
+    "GER40": 25475.65,
+    "UK100": 10461.55,
     "ADR_14day": 97.5,
-    "ADR_usedToday": 64.9,
-    "goldSilverRatio": 81.7
+    "ADR_usedToday": 88.9,
+    "goldSilverRatio": 82.4
   },
   "dollarLiquidity": {
     "stlfsi": -0.8655,
@@ -69,37 +69,37 @@
       "headline": "Gold's bad year is getting worse. Why its price keeps falling",
       "source": "CNBC",
       "publishedAt": "2026-11-19T13:37:52.000Z",
-      "hoursAgo": 1.3
+      "hoursAgo": 3
     },
     {
       "headline": "Gold recoups from 14-month low, tighter Fed outlook caps gains - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-19T06:53:00.000Z",
-      "hoursAgo": 8.1
+      "hoursAgo": 9.7
+    },
+    {
+      "headline": "US sanctions Hezbollah-linked charity in push against Iran's proxies, Treasury says - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-18T19:48:32.000Z",
+      "hoursAgo": 20.8
     },
     {
       "headline": "Fed officials expect more rate hikes, worry about AI impact on inflation, minutes show",
       "source": "CNBC",
       "publishedAt": "2026-11-18T19:08:44.000Z",
-      "hoursAgo": 19.8
+      "hoursAgo": 21.4
     },
     {
       "headline": "Is Apple the safe haven investors think it is? Here's a way to trade it with less risk",
       "source": "CNBC",
       "publishedAt": "2026-11-18T18:10:21.000Z",
-      "hoursAgo": 20.8
+      "hoursAgo": 22.4
     },
     {
       "headline": "Ford starts U.S. battery cell production using Chinese tech amid geopolitical tensions",
       "source": "CNBC",
       "publishedAt": "2026-11-18T17:02:53.000Z",
-      "hoursAgo": 21.9
-    },
-    {
-      "headline": "UAE top destination for smuggled African gold despite tighter measures, NGO says - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-18T16:21:07.000Z",
-      "hoursAgo": 22.6
+      "hoursAgo": 23.5
     }
   ],
   "briefing": null
