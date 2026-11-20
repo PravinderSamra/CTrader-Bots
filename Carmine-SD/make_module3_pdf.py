@@ -56,7 +56,9 @@ A(P("The trigger: what actually makes him click the button.<br/>"
 
 A(P("How to read this", "h2"))
 A(P("<b>HIS RULE</b> means he states it outright. <b>HIS WORDS</b> is a direct quote, "
-    "lightly punctuated. <b>NOT STATED</b> flags something the method needs that he does "
+    "lightly punctuated - and where the captions clearly mangle a term he uses "
+    "constantly elsewhere (\"higher days\" for \"high of day\"), it is written as he "
+    "says it. <b>NOT STATED</b> flags something the method needs that he does "
     "not specify in these videos."))
 A(P("<b>WHEN THIS WAS RECORDED.</b> The four videos behind this module date from "
     "<b>2024 to 2026</b>, from the index levels quoted on screen - ES at 5047, then 6595, "
@@ -196,11 +198,11 @@ A(P("<b>HIS RULE.</b> The stop goes where the thesis dies, not at a distance you
     "high. The tightness is a <i>consequence</i> of entering at the evidence."))
 
 A(P("10. Targets and exits", "h2"))
-A(P("\"majority of my exits come from <b>higher days, lower days, VWAP, the next supply or "
-    "demand zone, or the next support resistance</b>\"", "quote"))
-A(P("\"<b>I'm not going for home runs.</b> I'm simply targeting lower days, pre-market lows, "
-    "support, demand, resistance, supply - I'm getting the confirmation, hitting my target, "
-    "and I'm walking away.\"", "quote"))
+A(P("\"majority of my exits come from <b>high of day, low of day, VWAP, the next supply "
+    "or demand zone, or the next support resistance</b>\"", "quote"))
+A(P("\"<b>I'm not going for home runs.</b> I'm simply targeting lows of day, pre-market "
+    "lows, support, demand, resistance, supply - I'm getting the confirmation, hitting "
+    "my target, and I'm walking away.\"", "quote"))
 A(P("He scales out: in the worked long, first target was the high of day, second the "
     "pre-market high. Typical size is \"10, 15, 20 point rewards because my risk is 1, 2, 3, "
     "4 points.\""))
