@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-19T22:31:44.587Z",
+  "generatedAt": "2026-11-20T14:38:11.696Z",
   "yields": {
     "US10Y": 5.07,
     "US2Y": 4.8,
@@ -22,8 +22,8 @@
     "probHike": 40
   },
   "marketVolatility": {
-    "GVZ": 28.04,
-    "VIX": 24.56
+    "GVZ": 28.7,
+    "VIX": 28.44
   },
   "positioning": {
     "cotNetLong": 181677,
@@ -34,26 +34,26 @@
     "openInterestChange": 8291
   },
   "etfFlows": {
-    "gldTonnes": 1123.9,
-    "gldWoWChange": 18.7,
+    "gldTonnes": 1139.2,
+    "gldWoWChange": 15.3,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3625.365,
-    "XAGUSD": 42.882,
-    "EURUSD": 1.09689,
-    "USDJPY": 159.6855,
-    "USDCHF": 0.84391,
-    "USDCNH": 6.69311,
-    "GBPUSD": 1.30916,
-    "USDCAD": 1.43352,
-    "USDSEK": 10.19436,
-    "US500": 7164.7,
-    "GER40": 25246.3,
-    "UK100": 10437.65,
-    "ADR_14day": 99.5,
-    "ADR_usedToday": 138.5,
-    "goldSilverRatio": 84.5
+    "XAUUSD": 3576.775,
+    "XAGUSD": 42.181,
+    "EURUSD": 1.09836,
+    "USDJPY": 158.8125,
+    "USDCHF": 0.84015,
+    "USDCNH": 6.67508,
+    "GBPUSD": 1.31116,
+    "USDCAD": 1.4321,
+    "USDSEK": 10.21551,
+    "US500": 7147.8,
+    "GER40": 24976.25,
+    "UK100": 10408.05,
+    "ADR_14day": 102.8,
+    "ADR_usedToday": 122.2,
+    "goldSilverRatio": 84.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.8655,
@@ -64,19 +64,6 @@
     "gprDate": "2026-10"
   },
   "economicCalendar": [],
-  "newsItems": [
-    {
-      "headline": "Gold's bad year is getting worse. Why its price keeps falling",
-      "source": "CNBC",
-      "publishedAt": "2026-11-19T13:37:52.000Z",
-      "hoursAgo": 8.9
-    },
-    {
-      "headline": "Gold recoups from 14-month low, tighter Fed outlook caps gains - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-19T06:53:00.000Z",
-      "hoursAgo": 15.6
-    }
-  ],
+  "newsItems": [],
   "briefing": null
 }

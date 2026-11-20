@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-20",
+  "entries": [
+    {
+      "at": "2026-11-20T14:38:15.930Z",
+      "londonTime": "14:38 GMT",
+      "mode": "POST_ORB",
+      "price": 10407.45,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — VIX in STRESS — violent reversals both ways; cut size and distrust breakouts in either direction.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "VIX in STRESS — violent reversals both ways; cut size and distrust breakouts in either direction."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "STRUCTURE",
+          "rule": "R3",
+          "text": "ORB break DOWN is aligned with the BEARISH macro bias (-10) — continuation has the backdrop behind it."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -1.03%) — the cross-market lean is down."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -10,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10436.5,
+        "orbLow": 10399.8,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10452.6,
+        "overnightLow": 10394.1,
+        "priorDayHigh": 10598.4,
+        "priorDayLow": 10412.1,
+        "gapPct": -0.26,
+        "adr14": 178.8,
+        "adrUsedPct": 62
+      },
+      "outcome": null
+    }
+  ]
+}
