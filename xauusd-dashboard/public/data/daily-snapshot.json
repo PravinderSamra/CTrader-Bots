@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-20T14:38:11.696Z",
+  "generatedAt": "2026-11-20T16:10:11.132Z",
   "yields": {
     "US10Y": 5.07,
     "US2Y": 4.8,
@@ -34,26 +34,26 @@
     "openInterestChange": 8291
   },
   "etfFlows": {
-    "gldTonnes": 1139.2,
-    "gldWoWChange": 15.3,
+    "gldTonnes": 1147.7,
+    "gldWoWChange": 8.5,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3576.775,
-    "XAGUSD": 42.181,
-    "EURUSD": 1.09836,
-    "USDJPY": 158.8125,
-    "USDCHF": 0.84015,
-    "USDCNH": 6.67508,
-    "GBPUSD": 1.31116,
-    "USDCAD": 1.4321,
-    "USDSEK": 10.21551,
-    "US500": 7147.8,
-    "GER40": 24976.25,
-    "UK100": 10408.05,
+    "XAUUSD": 3550.145,
+    "XAGUSD": 41.705,
+    "EURUSD": 1.09833,
+    "USDJPY": 158.8005,
+    "USDCHF": 0.83909,
+    "USDCNH": 6.67384,
+    "GBPUSD": 1.31024,
+    "USDCAD": 1.43217,
+    "USDSEK": 10.20857,
+    "US500": 7077.9,
+    "GER40": 24857.25,
+    "UK100": 10374.55,
     "ADR_14day": 102.8,
     "ADR_usedToday": 122.2,
-    "goldSilverRatio": 84.8
+    "goldSilverRatio": 85.1
   },
   "dollarLiquidity": {
     "stlfsi": -0.8655,
@@ -64,6 +64,19 @@
     "gprDate": "2026-10"
   },
   "economicCalendar": [],
-  "newsItems": [],
+  "newsItems": [
+    {
+      "headline": "Bitcoin selloff: Crypto is failing the 'digital gold' test again as it sinks with stocks",
+      "source": "CNBC",
+      "publishedAt": "2026-11-20T15:09:06.000Z",
+      "hoursAgo": 1
+    },
+    {
+      "headline": "US Treasury sanctions three people linked to Southeast Asia scam centers - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-19T17:38:21.000Z",
+      "hoursAgo": 22.5
+    }
+  ],
   "briefing": null
 }
