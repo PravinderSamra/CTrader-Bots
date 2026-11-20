@@ -56,7 +56,33 @@
         "adr14": 178.8,
         "adrUsedPct": 62
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-11-20T22:03:38.493Z",
+        "fwd1hPct": -0.46,
+        "fwd3hPct": null,
+        "toClosePct": -0.46,
+        "maxUpPct": 0.25,
+        "maxDownPct": -0.68,
+        "verdict": null,
+        "signalVerdicts": [
+          {
+            "rule": "R9",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R3",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
     },
     {
       "at": "2026-11-20T16:10:16.537Z",
@@ -115,6 +141,79 @@
       },
       "outcome": {
         "resolvedAt": "2026-11-20T16:10:18.708Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
+    },
+    {
+      "at": "2026-11-20T22:03:35.992Z",
+      "londonTime": "22:03 GMT",
+      "mode": "CLOSED",
+      "price": 10311.15,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — 104% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "104% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "VIX in STRESS — violent reversals both ways; cut size and distrust breakouts in either direction."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -2.32%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 5th percentile of its 20-day range and falling — a weak-GBP tailwind for the index's dollar earners."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -9,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10436.5,
+        "orbLow": 10399.8,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10452.6,
+        "overnightLow": 10394.1,
+        "priorDayHigh": 10598.4,
+        "priorDayLow": 10412.1,
+        "gapPct": -1.18,
+        "adr14": 178.8,
+        "adrUsedPct": 104
+      },
+      "outcome": {
+        "resolvedAt": "2026-11-20T22:03:38.493Z",
         "fwd1hPct": null,
         "fwd3hPct": null,
         "toClosePct": 0,

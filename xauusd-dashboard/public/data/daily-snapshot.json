@@ -1,59 +1,59 @@
 {
-  "generatedAt": "2026-11-20T16:10:11.132Z",
+  "generatedAt": "2026-11-20T22:03:31.004Z",
   "yields": {
-    "US10Y": 5.07,
-    "US2Y": 4.8,
+    "US10Y": 5.04,
+    "US2Y": 4.76,
     "realYield10Y": 2.88,
-    "realYield5Y": 2.66,
-    "curve2s10s": 27,
+    "realYield5Y": 2.64,
+    "curve2s10s": 28,
     "breakeven10Y": 2.16,
     "breakeven5Y": 2.22,
     "forward5y5y": 2.1,
     "dayOverDay": {
       "US10Y": -0.03,
-      "US2Y": 0,
-      "realYield10Y": -0.01
+      "US2Y": -0.04,
+      "realYield10Y": 0
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-12-09",
     "probCut": 0,
-    "probHold": 60,
-    "probHike": 40
+    "probHold": 20,
+    "probHike": 80
   },
   "marketVolatility": {
     "GVZ": 28.7,
     "VIX": 28.44
   },
   "positioning": {
-    "cotNetLong": 181677,
-    "cotWoWChange": 10276,
+    "cotNetLong": 157208,
+    "cotWoWChange": -24469,
     "crowding": "NEUTRAL",
-    "reportDate": "2026-11-10T00:00:00.000",
-    "openInterest": 546481,
-    "openInterestChange": 8291
+    "reportDate": "2026-11-17T00:00:00.000",
+    "openInterest": 569022,
+    "openInterestChange": 22541
   },
   "etfFlows": {
-    "gldTonnes": 1147.7,
-    "gldWoWChange": 8.5,
+    "gldTonnes": 1152.7,
+    "gldWoWChange": 5,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3550.145,
-    "XAGUSD": 41.705,
-    "EURUSD": 1.09833,
-    "USDJPY": 158.8005,
-    "USDCHF": 0.83909,
-    "USDCNH": 6.67384,
-    "GBPUSD": 1.31024,
-    "USDCAD": 1.43217,
-    "USDSEK": 10.20857,
-    "US500": 7077.9,
-    "GER40": 24857.25,
-    "UK100": 10374.55,
-    "ADR_14day": 102.8,
-    "ADR_usedToday": 122.2,
-    "goldSilverRatio": 85.1
+    "XAUUSD": 3534.935,
+    "XAGUSD": 41.201,
+    "EURUSD": 1.09656,
+    "USDJPY": 158.567,
+    "USDCHF": 0.84022,
+    "USDCNH": 6.67523,
+    "GBPUSD": 1.30814,
+    "USDCAD": 1.43495,
+    "USDSEK": 10.23928,
+    "US500": 6953.1,
+    "GER40": 24643.3,
+    "UK100": 10311.15,
+    "ADR_14day": 98.4,
+    "ADR_usedToday": 133.9,
+    "goldSilverRatio": 85.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.8655,
@@ -69,13 +69,19 @@
       "headline": "Bitcoin selloff: Crypto is failing the 'digital gold' test again as it sinks with stocks",
       "source": "CNBC",
       "publishedAt": "2026-11-20T15:09:06.000Z",
-      "hoursAgo": 1
+      "hoursAgo": 6.9
     },
     {
-      "headline": "US Treasury sanctions three people linked to Southeast Asia scam centers - Reuters",
+      "headline": "US Treasury presses Singapore and Malaysia on Iran sanctions compliance - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-19T17:38:21.000Z",
-      "hoursAgo": 22.5
+      "publishedAt": "2026-11-20T14:27:44.000Z",
+      "hoursAgo": 7.6
+    },
+    {
+      "headline": "India's forex reserves fall to over three month low of $705 billion - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-20T11:48:55.000Z",
+      "hoursAgo": 10.2
     }
   ],
   "briefing": null
