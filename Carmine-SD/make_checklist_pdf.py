@@ -56,8 +56,13 @@ A(box("<b>Balanced</b> (a range) or <b>imbalanced</b> (trending)? Balance means 
       "extremes. Imbalance means trade continuation."))
 A(box("How did zones behave <b>yesterday</b>? Did demand hold, or get cut through? "
       "<i>Same reaction, same result.</i>"))
-A(box("Do related markets agree? For NAS100: the biggest components, and VIX."))
-A(box("Anything on the calendar? Central-bank speakers, data, earnings."))
+A(box("Do related markets agree? For ES: the mega-cap names that drive it, NQ, and "
+      "<b>VIX</b> - \"keep an eye on VIX... that's just going to support and fuel a "
+      "further rally.\""))
+A(box("Check <b>ForexFactory</b> for today's news - central-bank speakers, data "
+      "releases, earnings. Mark the times on the chart."))
+A(P("8:30am ET = 1:30pm UK, an hour before the open. 10:00am ET = 3:00pm UK, which lands "
+    "<i>inside</i> your session, half an hour after it starts.", "note"))
 
 A(P("2 &#183; LEVELS &#8212; where would I act?", "h2"))
 A(box("Draw top-down: weekly, daily, 4H, 1H, 30m, 15m."))
