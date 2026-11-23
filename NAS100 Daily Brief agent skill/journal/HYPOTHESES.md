@@ -17,6 +17,8 @@ added between runs. H12/H13 were each opened twice for unrelated claims
 09-17); D19 was opened for a `freshness` defect hours after D19 had been taken
 by the VIX9D null-guard (renumbered to D20/D21 here, 09-21).
 
+**Highest allocated as of 2026-11-20 (the 11-20 review, grading 11-19), allocated ONE number: H27 · D33 · P5 and P-I · M7.** Next free: **H28 · D34 · P-J** (and **M8**), confirmed by `grep -c` on 2026-11-20 (all four return 0 after this entry; `^## D33` returned 0 before it). **THERE IS NO 2026-11-20 SCAN AND IT IS NOT A MISSING-DAY MYSTERY — D33 IS ALLOCATED FOR IT.** `brief.py` exited 1 on an unhandled `HTTPError` through `brief.py:24 gather()` → `gex_levels.build()` → `gex_levels.py:71 G.spot_ndx()` → `cboe_gex.py:141` → `:59 urlopen`; no brief, chart, journal entry or commit exists, `journal/2026-11-20/` does not exist and `index.json` still ends at `2026-11-19/1247-london.json` (88 entries). **Verified independently rather than taken on trust:** `cdn.cboe.com` **307-redirects to `cdn-api.cboe.com`** and the target serves **403 with a 4544-byte Cloudflare interstitial** (`server: cloudflare`, `cf-ray: a5d795d52d1337b9-ORD`, `__cf_bm` cookie, *“Attention Required! | Cloudflare”*) on **all four paths the scan uses** (`quotes/_NDX.json`, `options/_NDX.json`, `quotes/QQQ.json`, `options/QQQ.json`), and **plain `curl` and plain `urllib` both 403 in the same minute** — so unlike **D32** this is **upstream and a client swap does not fix it**, and the two must not be conflated in either direction; **honest limit: the header/UA-variant sweep was refused by the permission layer**, so that claim is established for those two clients only. **The asymmetry is the finding and NO EXISTING ENTRY OWNS IT** (D17 is the 429 and its fix retries transients only, `_RETRY_STATUS` at `cboe_gex.py:32` re-raising everything else by design; D27 is the contrast; D23 is a stale-but-served chain; D32 owns the *silent* 403 and the *source_health-not-in-path* gap): `brief.py:20–21` guards cTrader, `:47–50` guards GEXBot under its own doctrine *“A paid feed must never be able to cost us a scan”* — which has degraded cleanly on **21 consecutive trading-day scans** (10-22 → 11-19, derived from disk) — `:1163–1174` guards the chart, `macro_probe._json` degrades everywhere, and **`gex_levels.build()` at `:24` is the only unguarded call in `gather()`**, carrying `gamma +4` on 11-19 while **fuel, rates, structure, news, events and the §4 day-frame liquidity rows need no CBOE data at all**. **Second limb: the failure left no trace anywhere on disk** — the inverse of D10/D11, *the run looked like nothing at all*. Two asks, neither touching scoring logic (guard + degrade with the gamma rows **dropped, not scored 0** per D14/D15; a `SCAN-FAILED` breadcrumb that is **not a `prediction` block and never enters a statistic**); the host constant moves to `cdn-api.cboe.com`; **a fallback vendor is DECLINED with a re-examine-after-three-days trigger.** **11-19 graded: +5 MILDLY BULLISH, WRONG on both bases** (post-scan −**1148.0**, day-net −**597.0**), session 27107.0 / 27756.0 / 26478.5 / **26510.0**, range **1277.5 = 1.319× ADR**, **16 levels published, 12 touched (0.75), 3 held / 9 lost**. **The sharpest finding is not a scoring error: the brief contained the trade and three instructions against holding it** — §4's *“Prime S1 sweep trigger”* **27757.0** caught the session high at **27756.0 (1.0 point)** and the reversal ran **1277.5**, against `expected_direction +1`, §3's *“the range is close to done”* on **581.1** of new range (**2.14×** budget) and `COHERENT_LONG`'s *“keep targets modest”*; **fuel and gamma AGREED**, so this is the 11-11 shape, not a fuel-vs-gamma instance. **§2's flip rider WORKED** (price lost 27352.4 at 15:20Z and ran a further **874.1**); **H4 stays failed**, close **842.4** below it. **STALE `macro` TAKES ITS FIRST DEMONSTRABLE HARM CASE and still nothing is proposed** — the only same-day blocks, `gamma +4` and `vol −4`, **cancelled exactly**, and dropping the two ≥2-business-day-old FRED rows gives **+5 → +1 → NO CALL** by `journal.py:68`; **condition n=5, harm n=1.** **THE D22(a) REPAIR LEDGER TAKES ITS FIRST ADVERSE GRADED INSTANCE and yesterday's sentence needs restating:** the corrected breadth row makes 11-19 **+7 BULLISH** on a day that fell 1148 post-scan, so *“the cost is zero”* was **specific to 11-18** — the ledger now reads **cost zero on 11-18, adverse on 11-19**, and the case for shipping rests on **correctness, not measured improvement**. **M6 at full scale, and the largest understatement ratio in the entries checked (prior max 5.7×, 11-18):** 12 of 12 touched rows above the close; **PUT WALL 27588.2** (*“the strongest floor on the board”*) traded through by **1109.7**, graded *“broke **UP** through it — lost by **27.7**pts”* — **inverted and understated 40.1×**, with `held` false by **2.7 points** against `SETTLE_TOL = 25.0`; **+9 inverted rows** (increment only). **H23 RE-RAISED on the largest magnitude in its series** (downside brake 27538.2 sliced by **1059.7 = 1.094× ADR** against a series max of 0.69×; both brakes reachable, both sliced, no split) and **P5 RE-RAISED on its first clean 4-of-4 failure** (four in-range *“acts as support”* strikes all sliced, deepest by 509.7, none in `prediction.levels`). **The gamma-pinning vs vol-expansion test is FEEDABLE at n=3 in its registered configuration and the answer is SPLIT (2–1 to vol; census 3–2 to gamma overall) — NOTHING PROPOSED.** **ONE FIGURE RECONCILED:** yesterday's “does not reconcile” flag on D25's §7 counter resolves mechanically — `brief.py:723–730` returns the 401 one-liner **instead of** §7, and the two windows are **identical** (last render 10-21; 401 on every scan brief 10-22 → 11-19, **21 days**), so the 21 non-renders are **21 D27 suppressions, not 21 D25 instances**; the runner's *“20 consecutive”* is **21**, and `git log` shows **no commit** to the skill's `scripts/` near 10-21, so the shared boundary is **flagged, not diagnosed**. **`track.py` exit 0 and DIRECTION CROSSES BACK BELOW 50%: 31 days / 31 scans, 13 R / 14 W / 4 no-call = 48.1%** — **not one data point**: 11-19 enters WRONG *and* **10-05 fully aged out**, taking a CORRECT with it, exactly as yesterday predicted. **H1 per-day mean 89.9 → 105.7** (distribution still two-sided, −283.9 … +1261.2), fleet **levels touched 0.50**, **D26 gap widens to 26** (31 bar sets vs **57** finished trading-day directories) with **`2026-10-06` mislabelled *“HELD BACK — day not finished”* at 97 bars** — third consecutive review. **Nothing else proposed:** **H1 +309.3** right after 11-18's −283.9, **no rescale** · **level-board void instance 6 with its largest harm case** (**766.0** points, **66.7%** of the post-scan move, below the lowest published row) and **no spacing rule on two harm cases** · **H2** an instance **for the fade** and the instance where the score contradicted its own fade instruction (table now 6 R / 5 W / 1 no-call) · **H6** 0.75 and nearly meaningless · **H8** post-closure **MISS** (close 581.0 below the band), stays CLOSED · **D31 supporting at 2.214×** · **H19** coverage **3.8%**, `news 0` on a −597 day · **D7/D15** 4 stretch rows, 3 tags, structural unmarked · **D23** offset −**11.8** `nq_implied`, **D6 breach census stays SEVEN** · **D27** 21st consecutive 401, clean every time · **P-C/D32** zero `events` rows for a **12th** scan, and **D32 gains its second instance of *source_health is not in the scan path* and no new number** · **H10 did not fire** but the close is **130.2 below the prior-week low**, arming the −3 branch with **still no reclaim condition** · **H17 not an instance**, recorded as the control at **89.9% of range** · **P-H no deciding instance** · **H26** no instance. **No new data point is warranted.** Full review in `journal/2026-11-19/REVIEW.md`.
+
 **Highest allocated as of 2026-11-19 (the 11-19 review, grading 11-18), allocated NOTHING: H27 · D32 · P5 and P-I · M7.** Next free: **H28 · D33 · P-J** (and **M8**), confirmed by `grep -c` on 2026-11-19 (all four return 0 before this entry). 11-18: **−3 MILDLY BEARISH, CORRECT on post-scan (−26.6) and WRONG on day-net (+117.2)**, session 26992.3 / 27526.5 / 26842.6 / 27109.5, range 683.9, 8 of 19 levels touched and **all 8 below the scan price**. `track.py` exit 0, **31 days / 31 scans, 14 R / 13 W / 4 no-call = 51.9%**, H1 per-day mean **96.9 → 89.9**; **2026-10-05 aged out and is mislabelled *"HELD BACK — day not finished"* at 94 bars (D26 again)**, so the unchanged 14/13/4 hides a CORRECT in and a CORRECT out; D26 gap **25** (31 bar sets vs 56 finished trading-day directories). **ONE CORRECTION and it is the substantive finding — D32's diagnosis is WRONG and the earnings feed is ALIVE:** probed live 2026-11-19, `api.nasdaq.com/api/calendar/earnings` returns **200 with 39 rows via `curl`** (browser UA, the exact `macro_probe.UA` string, and `--http1.1` all 200) while **`macro_probe._json` returns 403 in the same minute**, and every bare-`urllib` variant tried (browser UA, `Accept`, `Accept-Encoding`, `Accept-Language`) **also 403s** — so it is the **HTTP client, not the host and not the User-Agent**, and the two other paths D32 cited as proof of a host-wide block (`economicevents`, `quote/NVDA/info`) **also return 200**. Mechanism **narrowed, not closed** (reading the 403's own response headers was refused by the environment's permission layer). **The lost data is recoverable and checked:** the live feed lists **`NVDA` on 2026-11-17, `epsForecast $2.47`**, confirming from source that `bias_engine.py:262`'s *"INDEX-DEFINING event"* row should have printed on 11-12/11-13/11-16/11-17. **D32 gains a third ask — route this host through a client it serves — and no new ID.** **D22(a) takes a SEVENTH limb, a SECOND CONSECUTIVE breadth sign flip, all runner claims reproducing from an independent fetch:** printed vs true prior session (11-17 → 11-18 close) `^NDX` **+0.42%** vs **+0.424%** (match, cash) · `ES=F` **+1.16%** vs **−0.251%** (**sign flip, 1.411pp**) · `DX-Y.NYB` **−0.11%** vs **+0.358%** (0.468pp, `rates +0` either way); corrected gap **+0.675pp** → `breadth −1 → +1` and the printed *"tech lagging, rotation out of tech"* is **inverted for the second day running**. **TWO CORRECTIONS to the runner, both against the runner's own framing:** (i) **it IS grade-changing** — `bias_engine.py:268` bands the label at `≥ 6`, so `+5 → +7` turns `brief.py:836` from *"MILDLY BULLISH (score +5)"* into **"BULLISH (score +7)"**; direction and strategy are unchanged, so part 1's grade-affecting count goes to **2** (11-18 direction, 11-19 label); (ii) the **DXY row is a ±2, not a ±1** (`:150`), so the 0.042pp margin to the −0.4 gate is worth **two points** and **bias-gate fragility must carry that magnitude**. `^TNX`/`^FVX` checked and **clean** (−0.725% / −0.327%, cash windows) — the blast radius stays confined to the two 24-hour instruments. **YESTERDAY'S OPEN QUESTION IS ANSWERED and the answer favours shipping:** the 11-18 part-1 repair (`−3 → −1` → NO CALL) **destroys a CORRECT on the official post-scan basis**, but that CORRECT is an **H17 noise case at 3.89% of range** which H17's own proposal converts to `no call (inside noise)` anyway, and on day-net the repair destroys a **WRONG** — **the two pending proposals agree on 11-18, so the cost is zero.** **ONE RUNNER CLAIM REFUTED and it does NOT accrue:** the NVDA mega-cap-window condition **stays at n=1** — the report landed **2026-11-17 after the cash close**, established three ways (the recovered feed's own 11-17 date; the immutable 11-18 news block already carrying *"Nvidia gains on earnings beat"* at 12:47Z; NVDA trading **159.1–161.0 in the 11-18 pre-market** against a 155.46 close, then closing **150.96, −2.90%**), so the 11-18 cash session today's row quotes is the **POST-event reaction session** and the window is **correct**. **THE LEVEL-BOARD VOID TAKES ITS FIRST DEMONSTRABLE HARM CASE** — session low **26842.6 inside a 337.5-point published hole** (135.1 from the nearest row, 202.4 from the next), and that low was the pivot of the whole post-scan rally — while **8 of 19 rows sat inside 150.0 points** and **6 of them were first-touched in the SAME 5-minute bar** (`bar_index 199`, 14:35Z, ≥94.2pt span), which is what the 0.42 hit rate actually measures (**H6**'s normalisation question, sharpened to rows-consumed-per-bar). **No spacing rule proposed on one harm case.** **M6 gains its strongest instance:** PUT WALL 26977.7 graded *"held as support for 240min, worst −23.6pts"*, `held: true`, on a level price traded **135.1 points through** — excursion understated **5.7×** and the **verdict reversed**, with two more on the same bar (26994.3 by 151.7, 27003.2 by 160.6); and the brief's short-gamma rider (*"if it breaks, expect it to speed UP, not bounce. Don't buy the break"*) was **inverted** — it broke by 135.1 and the bounce was the best post-scan trade available. **H1 MUST STOP BEING CALLED A SYSTEMATIC UNDER-ESTIMATE:** mean **+89.9** but **median +23.4**, 19 under / 12 over, **+50.9 without 11-05's +1261.2**, and the **last six sessions mean −76.6** (4 of 6 over) with 11-18's **−283.9 the largest over-estimate in the window** — **no rescale factor is proposable on an unstable sign.** **Nothing else proposed:** **H17 instance 4** and the pattern is **4-for-4 bearish-CORRECT-on-up-days** (09-11 0.2% / 10-19 1.35% / 11-06 2.66% / **11-18 3.89%**, closes +252.1 / +430.6 / +331.9 / **+117.2**) · **P-H deciding instance 8**, and **3 of 8 are also H17 cases** · **H22 / P-I second limb take their FIRST GRADED outcome** — `COHERENT_SHORT`'s *"ADR can be exceeded, don't cap the target early"* against realised **0.707× ADR** and extension **0.31× budget**, on the 1-of-54 day where *"every expiry is short gamma"* is false by `DEADBAND_BN` · **D31 supporting at 1.161×** (683.9 / 588.8), direction consistent but the **lowest ratio in the run** and well under the 1.54 median / √(8/π) = 1.596 · **H23** brake 27127.7 at −11 **SLICED by 284.9 (0.294× ADR)**, increment only, total not restated · the **§3 corridor far end lands 433.2 ABOVE the high** after 11-17's 369.4 below the low — two consecutive noise readings in opposite directions · **H19** coverage **6.3%** (4 of 63) with `news +1` carried by two `earnings_beat` rows whose subject closed **−2.90%** (n=1 shape, logged) · **D25** §7 non-render again, and **derived from disk it is 21 consecutive trading-day briefs, last render 2026-10-21** — the hand-maintained *"9th consecutive"* counter **does not reconcile and is FLAGGED for re-derivation, not overwritten** · **D7/D15** 2 stretch rows, 0 tags · **D23** offsets **−22.3** (11-18) and **−11.8** (11-19), both `nq_implied`, **D6 breach census stays at SEVEN** · **H2 takes no instance** (11-18 fuel was `MODERATE`) · **`track.py` still emits no `actionable: YES/NO`**, header line quoted instead. **TWO THINGS FOUND WHILE VERIFYING, BOTH n=1, BOTH LOGGED ONLY:** the put-wall rider switch is a **real three-branch guard** (`brief.py:240–241, :309–322`), **not a dead ternary** — but `brief.py` defines **`long_gamma` three times with two meanings** (`:240` `above_flip AND net_wk > 0` for the rider; `:689–690` and `:862` `px > flip` alone for the concentration table and §2 Regime), which would print the long-gamma regime read beside a *"the book is CONFLICTED"* put-wall row — **censused at 1 of 71 scans** (09-10, `net −0.058`), so nothing proposed; and the **stale-`macro` re-partition reaches a counted condition** — 11-19's only current-data blocks are **`gamma +4` and `vol −4`, cancelling exactly**, with the published **+5** carried entirely by data ≥1 session old and the **+3 DFII10 row its largest single contributor**, against a census of **`gamma+vol` exactly zero on 4 of 71** (09-11, 09-14, 09-22, 11-19) and **opposite-signed on 7 of 71** — **11 of 71 (15%)**, the ±3 real-yield row firing at full magnitude on **52 of 71 (73%)** off a never-same-day series; **condition n=4, harm NOT established, NOTHING PROPOSED.** **No new data point is warranted** — the one candidate (an "event already public" flag) is answered by recovering D32's feed, which already carries the date. Full review in `journal/2026-11-18/REVIEW.md`.
 
 **Highest allocated as of 2026-11-18 (the 11-18 review, grading 11-17): H27 · D32 · P5 and P-I · M7.** Next free: **H28 · D33 · P-J** (and **M8**), confirmed by `grep -c` on 2026-11-18 (all four return 0 before this entry). **D32 IS ALLOCATED HERE, and it is the substantive finding:** the heavyweight-earnings feed (`macro_probe.py:158`, `api.nasdaq.com`) returns **HTTP 403 and fails silently** — `_json`'s error dict becomes `[]`, there is no `_earnings_error` key, nothing prints, and `source_health.py`'s `nasdaq_earn_cal` probe is **not in the scan path**. **Zero `events` rows for 11 consecutive scans (11-04 → 11-18)**, last real row 11-03 (AMD); **NVDA's report sat inside the 5-day window on 11-12/11-13/11-16/11-17** and `bias_engine.py:262`'s *"INDEX-DEFINING event; day before pins, day after expands"* printed on **neither side of it**. P-C's *"and there were none"* reading (9 places) is **sound to 11-03 and contaminated after it**. **THREE proposals, all low-risk and none touching a score:** D32 (surface the error, re-scope P-C) · **P-I's second limb** — `COHERENT_SHORT`'s *"deepens with tenor"* is **false on 8 distinct days** of 54 `COHERENT_*` firings and the classifier never tests it (`gex_levels.py:491–495`) · **D9's second limb** — `\brate hike\b` / `\brate cut\b` **fail on the plural**, 3 printed-list sessions (10-08, 10-26, 11-17), lower bound, no grade changed. **D22(a) takes a SIXTH limb and the runner's 11-18 claims all reproduce from an independent fetch**: `ES=F` printed **+0.26%** against a true prior-session **−1.075%** (sign flip 1.335pp), NDX matches, DXY `rates +0` either way — corrected, `breadth −1 → +1`, score **−3 → −1**, and `journal.py:68` (**threshold reading CONFIRMED at |score| ≥ 3**) turns the delivered bearish call into **NO CALL**. **Two corrections, both for the runner:** the flip is **repair-agnostic** (part 2's live basis also gives +1, margins 0.157pp / 0.131pp), and it is **part 1's FIRST grade-changing instance**, so the standing *"part 1 changes ZERO direction grades"* sentence must be restated — but **11-18 is UNGRADED**, so whether the no-call helps is **not yet knowable**. **The prose/score mismatch is PLACED, not opened:** three thresholds on one number (points ±0.2, prose 0.0, `DEADBAND_BN` 0.05), **9 of 70 scans inside the points deadband**, prose half → **H22** (which owns the sentence and the unshipped fix), gate half → **bias-gate fragility**. **Nothing else proposed:** the level board takes **void instance 5** and its first *majority* occupancy (66.3% of post-scan bars inside a 365.8-point hole, session low 64.8 below the lowest row) · **P5 instance 3, explicitly WEAKER than instance 2** · the **PDL CISD=long** row reaches n=3 **with the regime discriminator falsified** (all three were short gamma) · the **event gate's post-print window worked a 2nd time and both sweeps landed on the NY open to the minute** · the **§3 corridor far end lands 369.4 BELOW the low**, confirming it is noise · **M6 session 46** (verdict hinges on an **8.2-point** closing margin; 61.2 reported against a 430.6 excursion) · **H22 label WRONG and its hand-maintained counter silently REVERTED by 2** (21 → 19 at 11-06), flagged, no number quoted · **D31 supporting** (1.480×, 16 of 18) · **H1 −106.0**, per-day mean **96.9** · **H23** never-reached · rear-view block **amplify-a-correct**, stays two-sided. `track.py` exit 0, **31/31, 14 R / 13 W / 4 no-call = 51.9%**, **no day aged out**; D26 gap **24**. Full review in `journal/2026-11-17/REVIEW.md`.
@@ -19987,3 +19989,239 @@ collapsed by `track.py`'s 15-minute `_dedupe`, so they inflate nothing. Recorded
 because the 08-27 equivalents *were* flagged and these were not — the dedupe
 makes the inconsistency harmless today, and it would stop being harmless if the
 dedupe window ever changed.
+
+---
+
+# Review 2026-11-20 (grading 2026-11-19) — ONE number allocated: D33
+
+## D33 (NEW, OPENED) — `gex_levels.build()` is unguarded in `gather()`, so one non-retryable CBOE status destroys the entire scan
+
+**Grepped first:** `^## D33`, `^## H28`, `^## P-J`, `^## M8` all return 0 before
+this entry. Checked against existing entries and **none owns it**: **D17** is the
+CBOE **429** and its fix is *retry the transients* — `cboe_gex._get` retries only
+`(429, 500, 502, 503, 504)` (`:32`) and **re-raises everything else by design**,
+so D17's fix deliberately leaves the fatal path intact for a 403; **D27** is the
+GEXBot 401 and is the *contrast*, not the owner; **D23** is a stale chain served
+successfully; **D32** owns *a silent 403 that degrades to an empty list* and
+separately owns *`source_health.py` is not in the scan path* — the opposite
+failure mode to this one. **D14/D15** own *a missing value published as a number*,
+which is the rule the proposed guard must obey.
+
+**2026-11-20: there is no brief, no chart, no journal entry, no commit.**
+`brief.py` exited 1 on an unhandled `HTTPError` through
+`brief.py:24 gather()` → `gex_levels.build()` → `gex_levels.py:71 G.spot_ndx()`
+→ `cboe_gex.py:141` → `cboe_gex.py:59 urlopen`. Verified independently, not
+taken on trust: `cdn.cboe.com` **307-redirects** to **`cdn-api.cboe.com`**,
+urllib follows it, and the target returns **403 with a 4544-byte Cloudflare
+interstitial** (`server: cloudflare`, `cf-ray: a5d795d52d1337b9-ORD`, `__cf_bm`
+set-cookie, `<title>Attention Required! | Cloudflare</title>`). **All four paths
+the scan uses 307 → 403 at 4544 bytes**: `quotes/_NDX.json`, `options/_NDX.json`,
+`quotes/QQQ.json`, `options/QQQ.json`. **Plain `curl` (HTTP/2, default UA) and
+plain `urllib` both 403 in the same minute**, so unlike D32 this is **upstream
+and a client swap does not fix it** — the two must not be conflated in either
+direction. **Honest limit:** the header/UA-variant sweep was **refused by the
+permission layer**, so *"no client fixes it"* is established for those two
+clients only; the runner's wider sweep is relayed, not reproduced.
+
+**The asymmetry is the finding.** `brief.py:20–21` guards cTrader with an error
+dict. `:47–50` guards GEXBot in `try/except` under its own doctrine — *"A paid
+feed must never be able to cost us a scan"* — and that guard has degraded
+cleanly on **21 consecutive trading-day scans** (401 on
+`/v2/NDX/classic/gex_full`, 10-22 → 11-19, derived from disk). `:1163–1174`
+guards the chart. `macro_probe._json` degrades to `{"_error": …}` everywhere.
+**`gex_levels.build()` at `:24` is the only unguarded call in `gather()`, and it
+is the most load-bearing source in the project.** On 11-19's own component table
+the fatal half carries `gamma +4`; **fuel, rates, structure, news, events and
+the §4 day-frame liquidity rows need no CBOE data at all** — including the
+**27757.0** row that called the 11-19 high to **1.0 point** — and all of it was
+destroyed with the gamma block. Blast radius from the code: `cboe_gex.py:24–25`
+(chains + quotes), `macro_probe.py:78` via `cboe_quote` at `:196` and `:206–208`
+(`_VIX`, `_VIX9D`, `_VVIX`, `_NDX`, `QQQ` → the whole `vol` block, which was the
+**only right-signed current-data block on 11-19**), and `source_health.py:23`,
+`:28–30`, `:32`, `:34–35`.
+
+**Second limb — the failure left no trace.** No `journal/2026-11-20/`, no
+`index.json` entry (ends at `2026-11-19/1247-london.json`, 88 entries), no
+commit, clean working tree, and `find` returns no 11-20 file anywhere. The only
+record is an ephemeral traceback. This is the **inverse of D10/D11**: not *the
+run looked like it worked* but *the run looked like nothing at all*, and a
+missing day becomes indistinguishable from a day nobody ran.
+
+**PROPOSED, two changes, neither touching scoring logic.** (1) Guard
+`gex_levels.build()` as GEXBot and the chart already are: carry an error marker,
+suppress §2's gamma read, §4's gamma rows and the secondary table, print one
+degraded-source line naming status and host, and **deliver the brief** on the
+non-CBOE blocks. The score must **drop** the gamma rows, not score them 0 —
+D14/D15's rule, a missing block is not a neutral block. (2) Write a
+`SCAN-FAILED` breadcrumb on abort (timestamp, exception, host) that is **not a
+`prediction` block and never enters a statistic**, for the same reason
+`is_trading_day: false` scans never do. **Also needed and NOT new:** the host
+constant moves to `cdn-api.cboe.com`, and `source_health.py` **still** is not in
+the scan path — **D32 owns that and today is its second instance, so it accrues
+there and takes no number.** **Expected effect:** nothing changes on any day
+CBOE is up; on an outage the brief is delivered degraded instead of not at all,
+and the day is on the record either way. **Scope:** a code-certain defect with
+one total-loss instance, not a calibration change — nothing here is tuned.
+
+**A fallback index/options vendor was considered and DECLINED as a proposal.**
+D33 restores the brief, which is the actual loss; a second vendor is a larger
+change than one outage supports. **Re-examine if the 403 persists past three
+trading days** — at that point the question stops being robustness and becomes
+data availability, and the answer may be an authenticated CBOE path rather than
+a scrape.
+
+## 11-19 graded — WRONG on both bases, and the strategy block was right while the score was wrong
+
+Session **27107.0 / 27756.0 / 26478.5 / 26510.0**, range **1277.5 = 1.319× ADR14
+968.2**, net **−597.0**, post-scan **−1148.0**. Call **+5 MILDLY BULLISH**,
+`COHERENT_LONG`, Strategy 1, `LOW_FUEL` budget **271.8**, offset **−11.8**
+(`nq_implied`, D23 clean, **D6 breach census stays SEVEN**). **16 levels
+published, 12 touched (0.75), 3 held / 9 lost / 0 ungraded.**
+
+**The sharpest finding is not a scoring error: the brief contained the trade and
+three instructions against holding it.** §1 picked Strategy 1, §2 said *"this is
+your fade day"*, §4 marked **27757.0** *"Prime S1 sweep trigger"* — and the
+session high came in at **27756.0, 1.0 point below it**, reversing **1277.5**.
+Against that: `expected_direction +1` (the opposite side of the trade the
+strategy block had just described), §3's *"the range is close to done… mostly
+inside the extremes"* on a day that added **581.1** of new range (**2.14×**
+budget), and `COHERENT_LONG`'s *"tight, pinned range… keep targets modest"* with
+the 272-point budget marking **every level in the direction price went** as
+partials-only. **The fuel and gamma blocks AGREED today**, so this is not a
+fuel-vs-gamma instance — it is the 11-11 shape: all blocks agreed and the day
+falsified them together. **The one conditional that worked** is §2's flip rider
+(*"it stops working below 27352.4… stop fading"*): price lost the flip at 15:20Z
+and ran a further **874.1** points. **H4 stays failed** (close **842.4** below
+the flip); the flip worked as a **regime switch**, not a magnet.
+
+**STALE `macro` TAKES ITS FIRST DEMONSTRABLE HARM CASE, and still nothing is
+proposed.** The only same-day blocks were **`gamma +4` and `vol −4`, cancelling
+exactly**; the published **+5** is carried by `macro +4` (DFII10 **+3** and
+DGS10 **+1**, both resolving to **2026-11-17** observations, under the brief's
+own printed staleness warning), `rates +1`, `structure +1`, `breadth −1`.
+**Counterfactual: drop the two stale FRED rows → +1 → inside `journal.py:68`'s
+`|score| ≥ 3` band → NO CALL**, i.e. the stale block is the whole difference
+between a wrong call and no call on a 1148-point adverse move. **Condition n=5,
+harm n=1. NOTHING PROPOSED.**
+
+**THE D22(a) REPAIR LEDGER TAKES ITS FIRST ADVERSE GRADED INSTANCE, and it is a
+correction to yesterday's own sentence.** Yesterday established 11-19's breadth
+row is inverted → `breadth −1 → +1` → **+5 → +7** → `bias_engine.py:268` bands
+it **BULLISH**. 11-19 is now **WRONG on both bases**, so the repair **upgrades
+the label and the conviction on a day price fell 1148 post-scan**. Yesterday's
+*"the cost is zero"* was **specific to 11-18 and must not be generalised**: the
+ledger now reads **part 1 grade-affecting on 2 days (11-18 direction, 11-19
+label); cost zero on 11-18, adverse on 11-19.** This is **not** an argument
+against shipping — a correct input is correct whichever way the day went — but
+**the case rests on correctness, not on measured improvement**, and the first
+graded test of the corrected row moved the score **away** from the realised day.
+Part 2 is untouched.
+
+**M6 at full scale, and the largest understatement ratio in the M6 entries checked for this review (prior maximum 5.7×, 11-18).** **12 of 12
+touched rows sit above the close**, so 12 of 12 verdicts were decided by
+`bars[-1]["close"]`. **PUT WALL 27588.2** — published as *"the strongest floor on
+the board… defended across expiries"* — was traded through by **1109.7** and
+closed **1078.2** below, and is graded *"broke **UP** through it — lost by
+**27.7**pts"*: direction **inverted** (`review_day.py:160–161`) and magnitude
+understated **40.1×** (`settled_read` measures only after the last far-side
+close, `:87–98`). **`held` is false by 2.7 points** (27.7 against
+`SETTLE_TOL = 25.0`) — at 24.9 the register would carry that level as
+**`held: true, acted_as: resistance`**. **+9 inverted rows today** (increment
+only, total not restated). The three `held: true` rows all read *"held as
+resistance"* and are near-tautological on a −597 close; **27606.2** is the real
+instance of the three (`worst_excursion +9.7` against first-touch `travel_up`
+**44.9**, understated **4.6×**).
+
+**H23 RE-RAISED on the largest magnitude in its series** — both named brakes
+reachable, **both sliced, no split**; the downside brake **27538.2** (*"take
+partials into it rather than assuming a clean breakdown"*) was sliced by
+**1059.7 = 1.094× ADR**, against a series maximum of **0.69×** (10-05) and
+recent increments of 0.18×–0.358×. Threshold met 10-02, proposal unshipped.
+**P5 RE-RAISED on its first clean 4-of-4 failure** — the secondary table's four
+in-range *"acts as **support**"* strikes (27488.2 · 27388.2 · 27188.2 ·
+26988.2) were all sliced, the deepest by **509.7**, and **none is in
+`prediction.levels` so none was graded**; instance 4, sequencing caveat
+unchanged.
+
+**THE GAMMA-PINNING vs VOL-EXPANSION TEST IS FEEDABLE AT n=3 AND THE ANSWER IS
+SPLIT.** 5th co-occurrence, census **3–1 → 3–2 to gamma**; in the
+**pre-registered configuration** (positive net GEX **and** backwardated
+VIX9D/VIX) the feedable days are 09-16 / 09-17 / **11-19** at **2–1 to vol**.
+Threshold met on count, **direction split, NOTHING PROPOSED**; the 10-09 ask
+(log both values and the realised range every scan regardless of sign
+configuration) stands unchanged.
+
+**ONE FIGURE RECONCILED, and it resolves yesterday's flag.** Yesterday flagged
+D25's §7 counter as *"not reconciling"*. It reconciles, mechanically:
+`brief.py:723–730` returns the one-line
+`_[volume-weighted view unavailable: …]_` **instead of** §7 whenever `gexbot`
+carries an error. Derived from disk: last §7 render **2026-10-21**; the 401 line
+appears on **every** trading-day scan brief **10-22 → 11-19 — 21 consecutive
+days, the identical window**. So the 21 non-renders are **21 D27 suppressions,
+not 21 D25 instances**, and **D25's instance counter is right not to advance**;
+the two numbers were never measuring the same thing. The runner's *"20
+consecutive"* for the 401 is **21** on this derivation. `git log` shows **no
+commit** to the skill's `scripts/` near 10-21, so the shared boundary has **no
+code explanation in this repo** — credential or upstream, **flagged, not
+diagnosed**.
+
+**Nothing else proposed:** **H1 +309.3** (2.14× under) immediately after
+11-18's **−283.9**, the sign is still unstable and **no rescale is proposable**
+· **the level-board void reaches instance 6 with its largest harm case** —
+**766.0 points, 66.7% of the post-scan move, below the lowest published row
+(27244.5)** — and **no spacing rule is proposed on two harm cases**; the next
+question is whether the hole is a *selection* failure (rows filtered out by the
+range-budget/reach window) or a *generation* failure, answerable from
+`gex_levels` with no new data · **H2** an instance **for the fade** (`LOW_FUEL`,
+positive gamma, price at the top of the pre-scan range, the fade won by more
+than an ADR) **and** the instance where the score contradicted its own fade
+instruction · **H6** 0.75 on 16 rows and nearly meaningless — all 9 rows below
+the scan price were guaranteed a touch, the only rows that could fail were the
+four furthest above, and they did · **H8** post-closure **MISS**, close **581.0
+below** the straddle band, **stays CLOSED** · **D31 supporting at 2.214×**
+(1277.5 vs VXN-implied 577.0), and the gated *"use the smaller budget"*
+instruction was wrong by 2.2× on the day the smaller budget would have capped
+the best trade available · **H19** coverage **3.8%** (2 of 53 relevant),
+`news 0` on a −597 day with *"Nvidia faces 2028 growth concerns as UBS cuts
+price target"* sitting unscored · **D7/D15** **4** `stretch: true` rows, **3**
+tags, the **structural row unmarked again** · **D27** 401 on its **21st
+consecutive** scan, degrading cleanly every one — the contrast D33 rests on ·
+**P-C/D32** zero `events` rows for a **12th** consecutive scan while
+`events_24h` carried two Medium rows 42 minutes out · **H10 did not fire**, but
+the close **26510.0 is 130.2 below the prior-week low 26640.2**, so the −3
+displacement branch is **armed for the next session and still has no reclaim
+condition** · **H17 not an instance** and recorded as the control at **89.9% of
+range**, the far end of the distribution — the deadband proposal must not touch
+days like this · **P-H no deciding instance** (both bases WRONG) · **H26** no
+instance (`|score| = 5`). **`track.py` exit 0** (~27 min) and
+**DIRECTION CROSSES BACK BELOW 50%: 31 days / 31 scans, 13 R / 14 W / 4 no-call
+= 48.1%**, from 14/13/4 = 51.9% — and **that is not one data point**: 11-19
+enters **WRONG** *and* **2026-10-05 has fully aged out of the 45-day bar window**
+(the table now starts 10-07), taking a **CORRECT** with it, which is exactly the
+composition yesterday's entry predicted. **H1 per-day mean 89.9 → 105.7**, the
+distribution still two-sided (−283.9 … +1261.2). Fleet **levels touched 0.50**.
+**D26 again and the gap WIDENS to 26** (31 bar sets against **57** finished
+trading-day directories, counted from disk by `is_trading_day`):
+**`2026-10-06` is reported under *"HELD BACK — day not finished"* at 97 bars**, a
+session six weeks past — third consecutive review to see the same conflation of
+*aged out* with *unfinished* (09-28 on 11-12, 10-05 on 11-19, 10-06 today).
+**H2's low-fuel table holds 12 in-window scans at 6 CORRECT / 5 WRONG / 1
+no-call**, 11-19 the largest traversal in it after 11-05. This build still emits
+**no `actionable: YES/NO`** string (`grep` returns 0) — third consecutive
+review, flagged not substituted. **No new data point is warranted** (the one candidate, a fallback
+CBOE vendor, is declined inside D33 with a re-examination trigger).
+
+## Journal hygiene
+
+11-19: one scan, `is_trading_day: true`, `outcome: null`, **276 bars**, **0 test
+artefacts**, **one commit** (`f213b72`, carrying both 11-19 journal files) — no
+backfill, no fabricated entry, no `prediction` block modified by this review.
+**2026-11-20 has NO journal entry and must never acquire one retroactively**: the
+scan died before `journal.write`, and any entry created for it later would be a
+fabricated observation. The outage is recorded in **D33** and in this header,
+which is where it belongs. No `is_trading_day: false` scan entered any statistic
+above. **No part of this review was blocked by the CBOE outage:** the 11-19
+grading needs only the stored `prediction` block and cTrader M5 bars, and both
+`review_day.py` and `track.py` ran clean (exit 0). The one thing refused was a
+header/UA-variant probe of the blocked host, by the permission layer, and that
+limit is stated inside D33.
