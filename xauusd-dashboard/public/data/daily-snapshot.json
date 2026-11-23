@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T16:53:41.729Z",
+  "generatedAt": "2026-11-23T19:15:21.191Z",
   "yields": {
     "US10Y": 5.04,
     "US2Y": 4.76,
@@ -34,26 +34,26 @@
     "openInterestChange": 22541
   },
   "etfFlows": {
-    "gldTonnes": 1112.7,
-    "gldWoWChange": -40,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1114.9,
+    "gldWoWChange": 2.2,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3661.965,
-    "XAGUSD": 43.52,
-    "EURUSD": 1.08867,
-    "USDJPY": 159.257,
-    "USDCHF": 0.84293,
-    "USDCNH": 6.66791,
-    "GBPUSD": 1.30138,
-    "USDCAD": 1.43724,
-    "USDSEK": 10.30062,
-    "US500": 7231.7,
-    "GER40": 25354.25,
-    "UK100": 10513.05,
+    "XAUUSD": 3654.585,
+    "XAGUSD": 43.343,
+    "EURUSD": 1.08952,
+    "USDJPY": 159.087,
+    "USDCHF": 0.84237,
+    "USDCNH": 6.66729,
+    "GBPUSD": 1.30281,
+    "USDCAD": 1.43755,
+    "USDSEK": 10.284,
+    "US500": 7252.8,
+    "GER40": 25384.25,
+    "UK100": 10520.95,
     "ADR_14day": 104.9,
     "ADR_usedToday": 130.9,
-    "goldSilverRatio": 84.1
+    "goldSilverRatio": 84.3
   },
   "dollarLiquidity": {
     "stlfsi": -0.8655,
@@ -66,16 +66,34 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "An options strategy for making even more of your money back in Nvidia",
+      "source": "CNBC",
+      "publishedAt": "2026-11-23T18:52:46.000Z",
+      "hoursAgo": 0.4
+    },
+    {
+      "headline": "How Nvidia’s billion-dollar turnaround in China is threatened by Huang’s exit - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-23T11:50:53.000Z",
+      "hoursAgo": 7.4
+    },
+    {
       "headline": "Indonesia central bank says MSCI talks with Prabowo support rupiah - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-23T03:36:00.000Z",
-      "hoursAgo": 13.3
+      "hoursAgo": 15.7
     },
     {
       "headline": "Dollar jumps on hawkish Fed bets, AI rally - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-22T23:43:00.000Z",
-      "hoursAgo": 17.2
+      "hoursAgo": 19.5
+    },
+    {
+      "headline": "POLL Bank of Israel to keep rates on hold amid uncertainty about new government - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-22T20:56:00.000Z",
+      "hoursAgo": 22.3
     }
   ],
   "briefing": null
