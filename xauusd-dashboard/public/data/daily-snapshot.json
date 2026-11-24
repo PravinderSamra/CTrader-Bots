@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-11-20T22:03:31.004Z",
+  "generatedAt": "2026-11-24T03:06:39.835Z",
   "yields": {
-    "US10Y": 5.04,
-    "US2Y": 4.76,
-    "realYield10Y": 2.88,
-    "realYield5Y": 2.64,
-    "curve2s10s": 28,
-    "breakeven10Y": 2.16,
-    "breakeven5Y": 2.22,
-    "forward5y5y": 2.1,
+    "US10Y": 4.92,
+    "US2Y": 4.63,
+    "realYield10Y": 2.77,
+    "realYield5Y": 2.53,
+    "curve2s10s": 29,
+    "breakeven10Y": 2.13,
+    "breakeven5Y": 2.15,
+    "forward5y5y": 2.11,
     "dayOverDay": {
-      "US10Y": -0.03,
-      "US2Y": -0.04,
-      "realYield10Y": 0
+      "US10Y": -0.12,
+      "US2Y": -0.13,
+      "realYield10Y": -0.11
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-12-09",
     "probCut": 0,
-    "probHold": 20,
-    "probHike": 80
+    "probHold": 24,
+    "probHike": 76
   },
   "marketVolatility": {
-    "GVZ": 28.7,
-    "VIX": 28.44
+    "GVZ": 34.8,
+    "VIX": 35.89
   },
   "positioning": {
     "cotNetLong": 157208,
@@ -34,26 +34,26 @@
     "openInterestChange": 22541
   },
   "etfFlows": {
-    "gldTonnes": 1152.7,
-    "gldWoWChange": 5,
+    "gldTonnes": 1120.6,
+    "gldWoWChange": 5.7,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3534.935,
-    "XAGUSD": 41.201,
-    "EURUSD": 1.09656,
-    "USDJPY": 158.567,
-    "USDCHF": 0.84022,
-    "USDCNH": 6.67523,
-    "GBPUSD": 1.30814,
-    "USDCAD": 1.43495,
-    "USDSEK": 10.23928,
-    "US500": 6953.1,
-    "GER40": 24643.3,
-    "UK100": 10311.15,
-    "ADR_14day": 98.4,
-    "ADR_usedToday": 133.9,
-    "goldSilverRatio": 85.8
+    "XAUUSD": 3636.15,
+    "XAGUSD": 42.88,
+    "EURUSD": 1.09105,
+    "USDJPY": 158.9315,
+    "USDCHF": 0.8413,
+    "USDCNH": 6.66151,
+    "GBPUSD": 1.30385,
+    "USDCAD": 1.43609,
+    "USDSEK": 10.2712,
+    "US500": 7235.2,
+    "GER40": 25333.15,
+    "UK100": 10510.25,
+    "ADR_14day": 107.2,
+    "ADR_usedToday": 58.6,
+    "goldSilverRatio": 84.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.8655,
@@ -64,25 +64,6 @@
     "gprDate": "2026-10"
   },
   "economicCalendar": [],
-  "newsItems": [
-    {
-      "headline": "Bitcoin selloff: Crypto is failing the 'digital gold' test again as it sinks with stocks",
-      "source": "CNBC",
-      "publishedAt": "2026-11-20T15:09:06.000Z",
-      "hoursAgo": 6.9
-    },
-    {
-      "headline": "US Treasury presses Singapore and Malaysia on Iran sanctions compliance - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-20T14:27:44.000Z",
-      "hoursAgo": 7.6
-    },
-    {
-      "headline": "India's forex reserves fall to over three month low of $705 billion - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-20T11:48:55.000Z",
-      "hoursAgo": 10.2
-    }
-  ],
+  "newsItems": [],
   "briefing": null
 }
