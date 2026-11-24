@@ -1,33 +1,5 @@
 {
   "mcpServers": {
-    "tradingview-mcp": {
-      "type": "stdio",
-      "command": "uvx",
-      "args": [
-        "tradingview-mcp"
-      ],
-      "_notes": "Screener, RSI/MACD/BB scans, technical analysis, 76+ markets"
-    },
-    "tradingview-ohlcv": {
-      "type": "stdio",
-      "command": "uv",
-      "args": [
-        "run",
-        "mcp-tradingview"
-      ],
-      "env": {
-        "UV_PROJECT_DIR": "/tmp/mcp-tradingview-server"
-      },
-      "_notes": "OHLCV candles + indicators via bidouilles/mcp-tradingview-server. Clone repo first: git clone https://github.com/bidouilles/mcp-tradingview-server /tmp/mcp-tradingview-server && cd /tmp/mcp-tradingview-server && uv venv --python 3.11 && uv pip install -e ."
-    },
-    "massive": {
-      "type": "stdio",
-      "command": "mcp_massive",
-      "env": {
-        "MASSIVE_API_KEY": "YOUR_MASSIVE_API_KEY"
-      },
-      "_notes": "Massive.com (formerly Polygon.io) \u2014 real-time forex/crypto/stocks OHLCV, tick data, 35+ tools. Get key at https://massive.com"
-    },
     "coingecko": {
       "type": "http",
       "url": "https://mcp.api.coingecko.com/mcp",
