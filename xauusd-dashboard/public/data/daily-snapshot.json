@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-11-23T19:15:21.191Z",
+  "generatedAt": "2026-11-24T03:06:39.835Z",
   "yields": {
-    "US10Y": 5.04,
-    "US2Y": 4.76,
-    "realYield10Y": 2.88,
-    "realYield5Y": 2.64,
-    "curve2s10s": 28,
-    "breakeven10Y": 2.15,
-    "breakeven5Y": 2.18,
-    "forward5y5y": 2.12,
+    "US10Y": 4.92,
+    "US2Y": 4.63,
+    "realYield10Y": 2.77,
+    "realYield5Y": 2.53,
+    "curve2s10s": 29,
+    "breakeven10Y": 2.13,
+    "breakeven5Y": 2.15,
+    "forward5y5y": 2.11,
     "dayOverDay": {
-      "US10Y": -0.03,
-      "US2Y": -0.04,
-      "realYield10Y": 0
+      "US10Y": -0.12,
+      "US2Y": -0.13,
+      "realYield10Y": -0.11
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-12-09",
     "probCut": 0,
-    "probHold": 20,
-    "probHike": 80
+    "probHold": 24,
+    "probHike": 76
   },
   "marketVolatility": {
     "GVZ": 34.8,
@@ -34,26 +34,26 @@
     "openInterestChange": 22541
   },
   "etfFlows": {
-    "gldTonnes": 1114.9,
-    "gldWoWChange": 2.2,
+    "gldTonnes": 1120.6,
+    "gldWoWChange": 5.7,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3654.585,
-    "XAGUSD": 43.343,
-    "EURUSD": 1.08952,
-    "USDJPY": 159.087,
-    "USDCHF": 0.84237,
-    "USDCNH": 6.66729,
-    "GBPUSD": 1.30281,
-    "USDCAD": 1.43755,
-    "USDSEK": 10.284,
-    "US500": 7252.8,
-    "GER40": 25384.25,
-    "UK100": 10520.95,
-    "ADR_14day": 104.9,
-    "ADR_usedToday": 130.9,
-    "goldSilverRatio": 84.3
+    "XAUUSD": 3636.15,
+    "XAGUSD": 42.88,
+    "EURUSD": 1.09105,
+    "USDJPY": 158.9315,
+    "USDCHF": 0.8413,
+    "USDCNH": 6.66151,
+    "GBPUSD": 1.30385,
+    "USDCAD": 1.43609,
+    "USDSEK": 10.2712,
+    "US500": 7235.2,
+    "GER40": 25333.15,
+    "UK100": 10510.25,
+    "ADR_14day": 107.2,
+    "ADR_usedToday": 58.6,
+    "goldSilverRatio": 84.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.8655,
@@ -64,37 +64,6 @@
     "gprDate": "2026-10"
   },
   "economicCalendar": [],
-  "newsItems": [
-    {
-      "headline": "An options strategy for making even more of your money back in Nvidia",
-      "source": "CNBC",
-      "publishedAt": "2026-11-23T18:52:46.000Z",
-      "hoursAgo": 0.4
-    },
-    {
-      "headline": "How Nvidia’s billion-dollar turnaround in China is threatened by Huang’s exit - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-23T11:50:53.000Z",
-      "hoursAgo": 7.4
-    },
-    {
-      "headline": "Indonesia central bank says MSCI talks with Prabowo support rupiah - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-23T03:36:00.000Z",
-      "hoursAgo": 15.7
-    },
-    {
-      "headline": "Dollar jumps on hawkish Fed bets, AI rally - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-22T23:43:00.000Z",
-      "hoursAgo": 19.5
-    },
-    {
-      "headline": "POLL Bank of Israel to keep rates on hold amid uncertainty about new government - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-22T20:56:00.000Z",
-      "hoursAgo": 22.3
-    }
-  ],
+  "newsItems": [],
   "briefing": null
 }
