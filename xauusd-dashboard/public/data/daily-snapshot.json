@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-24T16:44:12.047Z",
+  "generatedAt": "2026-11-24T18:54:36.087Z",
   "yields": {
     "US10Y": 4.92,
     "US2Y": 4.63,
@@ -34,26 +34,26 @@
     "openInterestChange": 22541
   },
   "etfFlows": {
-    "gldTonnes": 1141.1,
-    "gldWoWChange": 20.5,
+    "gldTonnes": 1145.5,
+    "gldWoWChange": 4.4,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3570.735,
-    "XAGUSD": 40.997,
-    "EURUSD": 1.09659,
-    "USDJPY": 159.1615,
-    "USDCHF": 0.83514,
-    "USDCNH": 6.66505,
-    "GBPUSD": 1.31103,
-    "USDCAD": 1.43215,
-    "USDSEK": 10.24447,
-    "US500": 7153.7,
-    "GER40": 25040.65,
-    "UK100": 10485.05,
+    "XAUUSD": 3556.99,
+    "XAGUSD": 40.885,
+    "EURUSD": 1.09678,
+    "USDJPY": 159.2715,
+    "USDCHF": 0.83536,
+    "USDCNH": 6.6654,
+    "GBPUSD": 1.31168,
+    "USDCAD": 1.427,
+    "USDSEK": 10.23487,
+    "US500": 7191.2,
+    "GER40": 25193.65,
+    "UK100": 10524.05,
     "ADR_14day": 107.2,
-    "ADR_usedToday": 119.4,
-    "goldSilverRatio": 87.1
+    "ADR_usedToday": 125.5,
+    "goldSilverRatio": 87
   },
   "dollarLiquidity": {
     "stlfsi": -0.8655,
@@ -66,34 +66,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Iraqi PM orders federal government to manage oilfields under control of Kurds, Kurds reject move - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-24T17:09:34.000Z",
+      "hoursAgo": 1.7
+    },
+    {
+      "headline": "Property Play: Commercial real estate activity falls 14% in October, as interest rates rise",
+      "source": "CNBC",
+      "publishedAt": "2026-11-24T13:05:43.000Z",
+      "hoursAgo": 5.8
+    },
+    {
+      "headline": "Japan accelerates ICC funding as US sanctions threaten court - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-24T08:15:28.000Z",
+      "hoursAgo": 10.7
+    },
+    {
       "headline": "InPost aims for rapid expansion after FedEx-Advent buyout, CEO says - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-23T23:05:43.000Z",
-      "hoursAgo": 17.6
+      "hoursAgo": 19.8
     },
     {
       "headline": "Fed's John Williams indicates higher interest rates likely 'over time' to address inflation",
       "source": "CNBC",
       "publishedAt": "2026-11-23T21:02:17.000Z",
-      "hoursAgo": 19.7
+      "hoursAgo": 21.9
     },
     {
       "headline": "Political and corporate leaders react to Huang's return as Nvidia CEO - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-23T20:52:01.000Z",
-      "hoursAgo": 19.9
+      "hoursAgo": 22
     },
     {
       "headline": "US imposes sanctions on dozens linked to Iran's shadow banking networks - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-23T19:38:00.000Z",
-      "hoursAgo": 21.1
+      "hoursAgo": 23.3
     },
     {
       "headline": "An options strategy for making even more of your money back in Nvidia",
       "source": "CNBC",
       "publishedAt": "2026-11-23T18:52:46.000Z",
-      "hoursAgo": 21.9
+      "hoursAgo": 24
     }
   ],
   "briefing": null
