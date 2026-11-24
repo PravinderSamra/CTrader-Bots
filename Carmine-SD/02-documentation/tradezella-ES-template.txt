@@ -1,0 +1,22 @@
+ES : [DATE]
+
+--- BEFORE THE OPEN ---
+Trend (D/4H): up / down / flat
+Market state: balanced / imbalanced
+Yesterday's zones: demand held / demand failed / supply held / supply failed
+News (ForexFactory): 
+Key level: 
+Scenario 1 (long): trigger ______ -> target ______
+Scenario 2 (short): trigger ______ -> target ______
+
+--- AFTER THE CLOSE ---
+Reached level?: yes / no
+Level outcome: held / broke / neither
+Scenario triggered: 1 / 2 / neither
+Traded?: yes / no
+Strategy: 
+Plan followed?: yes / no
+Deviation: none / chased after missing entry / traded mid-range / was first buyer-seller / bought the breakout / took it without confirmation / other
+MAX R: 
+Notes: 
+Visual Evidence: 
