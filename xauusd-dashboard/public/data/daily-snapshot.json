@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-11-24T03:06:39.835Z",
+  "generatedAt": "2026-11-25T01:12:16.569Z",
   "yields": {
     "US10Y": 4.92,
     "US2Y": 4.63,
-    "realYield10Y": 2.77,
-    "realYield5Y": 2.53,
+    "realYield10Y": 2.79,
+    "realYield5Y": 2.59,
     "curve2s10s": 29,
-    "breakeven10Y": 2.13,
-    "breakeven5Y": 2.15,
-    "forward5y5y": 2.11,
+    "breakeven10Y": 2.12,
+    "breakeven5Y": 2.11,
+    "forward5y5y": 2.13,
     "dayOverDay": {
-      "US10Y": -0.12,
-      "US2Y": -0.13,
-      "realYield10Y": -0.11
+      "US10Y": 0,
+      "US2Y": 0,
+      "realYield10Y": 0.02
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-12-09",
     "probCut": 0,
-    "probHold": 24,
-    "probHike": 76
+    "probHold": 20,
+    "probHike": 80
   },
   "marketVolatility": {
-    "GVZ": 34.8,
-    "VIX": 35.89
+    "GVZ": 31.25,
+    "VIX": 26.62
   },
   "positioning": {
     "cotNetLong": 157208,
@@ -34,26 +34,26 @@
     "openInterestChange": 22541
   },
   "etfFlows": {
-    "gldTonnes": 1120.6,
-    "gldWoWChange": 5.7,
+    "gldTonnes": 1151.9,
+    "gldWoWChange": 6.4,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3636.15,
-    "XAGUSD": 42.88,
-    "EURUSD": 1.09105,
-    "USDJPY": 158.9315,
-    "USDCHF": 0.8413,
-    "USDCNH": 6.66151,
-    "GBPUSD": 1.30385,
-    "USDCAD": 1.43609,
-    "USDSEK": 10.2712,
-    "US500": 7235.2,
-    "GER40": 25333.15,
-    "UK100": 10510.25,
-    "ADR_14day": 107.2,
-    "ADR_usedToday": 58.6,
-    "goldSilverRatio": 84.8
+    "XAUUSD": 3537.355,
+    "XAGUSD": 40.712,
+    "EURUSD": 1.09583,
+    "USDJPY": 159.217,
+    "USDCHF": 0.83596,
+    "USDCNH": 6.66413,
+    "GBPUSD": 1.31106,
+    "USDCAD": 1.42687,
+    "USDSEK": 10.2485,
+    "US500": 7179.4,
+    "GER40": 25178.4,
+    "UK100": 10519.75,
+    "ADR_14day": 109.3,
+    "ADR_usedToday": 32.9,
+    "goldSilverRatio": 86.9
   },
   "dollarLiquidity": {
     "stlfsi": -0.8655,
@@ -64,6 +64,55 @@
     "gprDate": "2026-10"
   },
   "economicCalendar": [],
-  "newsItems": [],
+  "newsItems": [
+    {
+      "headline": "Gold is doing something strange. Here's one way to play it",
+      "source": "CNBC",
+      "publishedAt": "2026-11-24T19:25:13.000Z",
+      "hoursAgo": 5.8
+    },
+    {
+      "headline": "Trump administration set to unveil new tariffs after probe on excess factory capacity, sources say - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-24T18:48:05.000Z",
+      "hoursAgo": 6.4
+    },
+    {
+      "headline": "Property Play: Commercial real estate activity falls 14% in October, as interest rates rise",
+      "source": "CNBC",
+      "publishedAt": "2026-11-24T13:05:43.000Z",
+      "hoursAgo": 12.1
+    },
+    {
+      "headline": "UK targets Houthis with new sanctions - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-24T12:04:56.000Z",
+      "hoursAgo": 13.1
+    },
+    {
+      "headline": "Japan accelerates ICC funding as US sanctions threaten court - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-24T08:15:28.000Z",
+      "hoursAgo": 16.9
+    },
+    {
+      "headline": "'Awaiting the king's return': Taiwan celebrates Huang's return to Nvidia - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-24T07:29:00.000Z",
+      "hoursAgo": 17.7
+    },
+    {
+      "headline": "US stocks slide as Nvidia rally fizzles out, dollar falls - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-24T01:29:00.000Z",
+      "hoursAgo": 23.7
+    },
+    {
+      "headline": "Dollar takes a breather from AI-driven rally - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-24T01:14:00.000Z",
+      "hoursAgo": 24
+    }
+  ],
   "briefing": null
 }

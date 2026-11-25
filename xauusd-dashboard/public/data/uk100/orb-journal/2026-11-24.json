@@ -49,7 +49,171 @@
         "adr14": 187.7,
         "adrUsedPct": 24
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-11-24T16:44:36.306Z",
+        "fwd1hPct": 0.1,
+        "fwd3hPct": 0.18,
+        "toClosePct": -0.28,
+        "maxUpPct": 0.23,
+        "maxDownPct": -0.45,
+        "verdict": "RIGHT",
+        "signalVerdicts": [
+          {
+            "rule": "R8",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-11-24T16:44:33.720Z",
+      "londonTime": "16:44 GMT",
+      "mode": "CLOSED",
+      "price": 10487.05,
+      "stance": "MIXED",
+      "stanceLine": "No clean edge — mixed signals — VIX in STRESS — violent reversals both ways; cut size and distrust breakouts in either direction.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "VIX in STRESS — violent reversals both ways; cut size and distrust breakouts in either direction."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10318.4) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "INFO",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "US PCE Price Index prints tomorrow 13:30 GMT — late-session moves today are as likely pre-event de-risking as conviction."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -10,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10504.2,
+        "orbLow": 10481.5,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10541,
+        "overnightLow": 10476.5,
+        "priorDayHigh": 10532.5,
+        "priorDayLow": 10318.4,
+        "gapPct": -0.4,
+        "adr14": 187.7,
+        "adrUsedPct": 47
+      },
+      "outcome": {
+        "resolvedAt": "2026-11-24T16:44:36.306Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
+    },
+    {
+      "at": "2026-11-24T18:54:41.848Z",
+      "londonTime": "18:54 GMT",
+      "mode": "CLOSED",
+      "price": 10524.55,
+      "stance": "FADE_FAVOURED",
+      "stanceLine": "Fade day — the ORB break was a trap — ORB broke DOWN but price has fully reclaimed the range (back above 10504.2) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break.",
+      "signals": [
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "STRONG",
+          "source": "STRUCTURE",
+          "rule": "R1",
+          "text": "ORB broke DOWN but price has fully reclaimed the range (back above 10504.2) — the break was a liquidity sweep; the reclaim direction is in control, don't trade the original break."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10318.4) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a softer European tape (Euro Stoxx -0.72%) — the cross-market lean is down."
+        },
+        {
+          "direction": "FAVOURS_SHORT",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures -0.9% — the 14:30 US handoff argues against holding longs into the US open."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "INFO",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "US PCE Price Index prints tomorrow 13:30 GMT — late-session moves today are as likely pre-event de-risking as conviction."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -8,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10504.2,
+        "orbLow": 10481.5,
+        "orbBrokenDirection": "DOWN",
+        "overnightHigh": 10541,
+        "overnightLow": 10476.5,
+        "priorDayHigh": 10532.5,
+        "priorDayLow": 10318.4,
+        "gapPct": -0.04,
+        "adr14": 187.7,
+        "adrUsedPct": 47
+      },
+      "outcome": {
+        "resolvedAt": "2026-11-24T18:54:43.862Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
