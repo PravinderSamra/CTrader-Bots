@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-25T01:12:16.569Z",
+  "generatedAt": "2026-11-25T16:30:04.537Z",
   "yields": {
     "US10Y": 4.92,
     "US2Y": 4.63,
@@ -22,8 +22,8 @@
     "probHike": 80
   },
   "marketVolatility": {
-    "GVZ": 31.25,
-    "VIX": 26.62
+    "GVZ": 33.64,
+    "VIX": 26.36
   },
   "positioning": {
     "cotNetLong": 157208,
@@ -34,30 +34,30 @@
     "openInterestChange": 22541
   },
   "etfFlows": {
-    "gldTonnes": 1151.9,
-    "gldWoWChange": 6.4,
+    "gldTonnes": 1176.6,
+    "gldWoWChange": 24.7,
     "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3537.355,
-    "XAGUSD": 40.712,
-    "EURUSD": 1.09583,
-    "USDJPY": 159.217,
-    "USDCHF": 0.83596,
-    "USDCNH": 6.66413,
-    "GBPUSD": 1.31106,
-    "USDCAD": 1.42687,
-    "USDSEK": 10.2485,
-    "US500": 7179.4,
-    "GER40": 25178.4,
-    "UK100": 10519.75,
+    "XAUUSD": 3463.085,
+    "XAGUSD": 38.9005,
+    "EURUSD": 1.09464,
+    "USDJPY": 159.0305,
+    "USDCHF": 0.83161,
+    "USDCNH": 6.67064,
+    "GBPUSD": 1.30695,
+    "USDCAD": 1.42341,
+    "USDSEK": 10.27375,
+    "US500": 7010.6,
+    "GER40": 24738.55,
+    "UK100": 10447.25,
     "ADR_14day": 109.3,
-    "ADR_usedToday": 32.9,
-    "goldSilverRatio": 86.9
+    "ADR_usedToday": 148.8,
+    "goldSilverRatio": 89
   },
   "dollarLiquidity": {
     "stlfsi": -0.8655,
-    "nfci": -0.478
+    "nfci": -0.444
   },
   "geopoliticalRisk": {
     "gpr": 150.5,
@@ -66,52 +66,46 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Wealthy investors seek tax savings from municipal bonds as yields remain elevated",
+      "source": "CNBC",
+      "publishedAt": "2026-11-25T15:00:01.000Z",
+      "hoursAgo": 1.5
+    },
+    {
+      "headline": "Nasdaq futures slide over 2% as AI losses deepen; inflation data in focus - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-25T12:54:22.000Z",
+      "hoursAgo": 3.6
+    },
+    {
+      "headline": "World stocks fall as new US tariffs loom, AI rebound fizzles - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-25T01:50:00.000Z",
+      "hoursAgo": 14.7
+    },
+    {
+      "headline": "Risk-off mood lifts dollar ahead of inflation data - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-25T01:19:00.000Z",
+      "hoursAgo": 15.2
+    },
+    {
+      "headline": "Gold slips on stronger dollar, US inflation data in focus - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-25T00:49:00.000Z",
+      "hoursAgo": 15.7
+    },
+    {
       "headline": "Gold is doing something strange. Here's one way to play it",
       "source": "CNBC",
       "publishedAt": "2026-11-24T19:25:13.000Z",
-      "hoursAgo": 5.8
+      "hoursAgo": 21.1
     },
     {
       "headline": "Trump administration set to unveil new tariffs after probe on excess factory capacity, sources say - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-24T18:48:05.000Z",
-      "hoursAgo": 6.4
-    },
-    {
-      "headline": "Property Play: Commercial real estate activity falls 14% in October, as interest rates rise",
-      "source": "CNBC",
-      "publishedAt": "2026-11-24T13:05:43.000Z",
-      "hoursAgo": 12.1
-    },
-    {
-      "headline": "UK targets Houthis with new sanctions - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-24T12:04:56.000Z",
-      "hoursAgo": 13.1
-    },
-    {
-      "headline": "Japan accelerates ICC funding as US sanctions threaten court - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-24T08:15:28.000Z",
-      "hoursAgo": 16.9
-    },
-    {
-      "headline": "'Awaiting the king's return': Taiwan celebrates Huang's return to Nvidia - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-24T07:29:00.000Z",
-      "hoursAgo": 17.7
-    },
-    {
-      "headline": "US stocks slide as Nvidia rally fizzles out, dollar falls - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-24T01:29:00.000Z",
-      "hoursAgo": 23.7
-    },
-    {
-      "headline": "Dollar takes a breather from AI-driven rally - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-24T01:14:00.000Z",
-      "hoursAgo": 24
+      "hoursAgo": 21.7
     }
   ],
   "briefing": null
