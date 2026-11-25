@@ -152,6 +152,86 @@
         "verdict": "UNSCORABLE",
         "signalVerdicts": []
       }
+    },
+    {
+      "at": "2026-11-25T17:58:53.488Z",
+      "londonTime": "17:58 GMT",
+      "mode": "CLOSED",
+      "price": 10535.75,
+      "stance": "BREAKOUTS_SUSPECT",
+      "stanceLine": "Breakouts suspect in both directions today — VIX in STRESS — violent reversals both ways; cut size and distrust breakouts in either direction.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "STRONG",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "VIX in STRESS — violent reversals both ways; cut size and distrust breakouts in either direction."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "77% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "NEUTRAL",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R7",
+          "text": "The obvious draw (PDL 10452.9) sits beyond what's left of a typical day's range — targets past it are stretch-only today."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is diverging from a united European tape — it's trading its own story today; tape-based confirmation is unreliable."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "US PCE Price Index @ 13:30 GMT today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 5th percentile of its 20-day range and falling — a weak-GBP tailwind for the index's dollar earners."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -6,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": 10550.5,
+        "orbLow": 10520.6,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10561.8,
+        "overnightLow": 10488.7,
+        "priorDayHigh": 10541,
+        "priorDayLow": 10452.9,
+        "gapPct": 0.18,
+        "adr14": 165.3,
+        "adrUsedPct": 77
+      },
+      "outcome": {
+        "resolvedAt": "2026-11-25T17:58:55.241Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
