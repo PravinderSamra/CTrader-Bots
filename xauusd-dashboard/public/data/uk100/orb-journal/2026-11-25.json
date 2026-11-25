@@ -1,0 +1,55 @@
+{
+  "date": "2026-11-25",
+  "entries": [
+    {
+      "at": "2026-11-25T01:12:21.180Z",
+      "londonTime": "01:12 GMT",
+      "mode": "PRE_OPEN",
+      "price": 10519.35,
+      "stance": "SHORT_FAVOURED",
+      "stanceLine": "Backdrop favours downside breaks — US PCE Price Index @ 13:30 GMT today — pre-release breaks are positioning, not conviction.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "EVENT",
+          "rule": "R13",
+          "text": "US PCE Price Index @ 13:30 GMT today — pre-release breaks are positioning, not conviction."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 5th percentile of its 20-day range and falling — a weak-GBP tailwind for the index's dollar earners."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": -4,
+        "label": "BEARISH"
+      },
+      "orb": {
+        "orbHigh": null,
+        "orbLow": null,
+        "orbBrokenDirection": null,
+        "overnightHigh": 10529.3,
+        "overnightLow": 10488.7,
+        "priorDayHigh": 10541,
+        "priorDayLow": 10452.9,
+        "gapPct": 0.02,
+        "adr14": 165.3,
+        "adrUsedPct": 25
+      },
+      "outcome": null
+    }
+  ]
+}
