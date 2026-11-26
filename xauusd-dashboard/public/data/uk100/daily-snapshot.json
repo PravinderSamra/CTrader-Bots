@@ -1,58 +1,58 @@
 {
-  "generatedAt": "2026-11-26T00:47:07.615Z",
+  "generatedAt": "2026-11-26T16:03:30.134Z",
   "prices": {
-    "UK100": 10594.05,
-    "GBPUSD": 1.31127,
-    "GBPEUR": 1.19533,
-    "US500": 7216.6,
-    "NAS100": 26139.6,
-    "BRENT": 94.055,
-    "COPPER": 5.4752,
-    "VIX": 24.805,
-    "USDX": 103.737,
-    "XAUUSD": 3568.92,
-    "UK100_dayPct": 0.34
+    "UK100": 10647.45,
+    "GBPUSD": 1.31099,
+    "GBPEUR": 1.19479,
+    "US500": 7239.5,
+    "NAS100": 26237.95,
+    "BRENT": 94.717,
+    "COPPER": 5.4449,
+    "VIX": 24.605,
+    "USDX": 103.811,
+    "XAUUSD": 3574.17,
+    "UK100_dayPct": 0.85
   },
   "fx": {
-    "gbpUsdDayPct": -0.02,
+    "gbpUsdDayPct": -0.04,
     "gbpUsd20dPercentile": 5,
-    "sterlingEri": 85.489,
-    "sterlingEriDayChange": 0.29,
+    "sterlingEri": 85.2154,
+    "sterlingEriDayChange": -0.27,
     "ftseImpactFromGbp": "NEUTRAL"
   },
   "ukRates": {
     "bankRate": 4,
-    "sonia": 3.9847,
-    "soniaMinusBankRate": -0.02,
-    "gilt5y": 4.851,
-    "gilt10y": 5.1928,
-    "gilt20y": 5.6871,
-    "gilt10yDayBp": -4,
-    "gilt20yDayBp": -6,
-    "slope5s20s": 0.84,
-    "giltUst10ySpread": 0.28,
+    "sonia": 3.9861,
+    "soniaMinusBankRate": -0.01,
+    "gilt5y": 4.8285,
+    "gilt10y": 5.1796,
+    "gilt20y": 5.6857,
+    "gilt10yDayBp": -1,
+    "gilt20yDayBp": 0,
+    "slope5s20s": 0.86,
+    "giltUst10ySpread": 0.27,
     "longEndStress": false,
     "nextMpcDate": "2026-12-17",
     "daysToMpc": 21
   },
   "usLinkage": {
-    "us500DayPct": 0.63,
-    "nas100DayPct": 0.85,
-    "vix": 24.805,
+    "us500DayPct": 0.95,
+    "nas100DayPct": 1.23,
+    "vix": 24.605,
     "vixRegime": "NORMAL",
     "us10y": 4.91,
-    "usdx": 103.737
+    "usdx": 103.811
   },
   "commodities": {
-    "brentDayPct": 2.33,
-    "copperDayPct": 0.02,
-    "goldDayPct": -0.54,
+    "brentDayPct": 0.72,
+    "copperDayPct": -0.54,
+    "goldDayPct": -0.4,
     "brent20dTrend": "DOWN"
   },
   "europeanTape": {
-    "eurostoxx50DayPct": 0.35,
-    "dax40DayPct": 0.36,
-    "eurUsdDayPct": -0.05,
+    "eurostoxx50DayPct": 0.53,
+    "dax40DayPct": 0.72,
+    "eurUsdDayPct": -0.03,
     "ftseDaxCorr20d": 0.9,
     "ftseSx5eCorr20d": 0.89,
     "tapeAgreement": "ALIGNED",
@@ -69,22 +69,22 @@
     {
       "sector": "ENERGY",
       "weightNote": "Shell, BP — top-5 index weights",
-      "driver": "Brent +2.33%",
+      "driver": "Brent +0.72%",
       "read": "BULLISH",
       "detail": "Higher oil lifts the energy majors directly."
     },
     {
       "sector": "MINERS",
       "weightNote": "Rio, Glencore, Anglo, Antofagasta",
-      "driver": "Copper +0.02%",
+      "driver": "Copper -0.54%",
       "read": "NEUTRAL",
       "detail": "Copper is the fast proxy for China demand + global growth."
     },
     {
       "sector": "BANKS",
       "weightNote": "HSBC, Barclays, NatWest, StanChart",
-      "driver": "10Y gilt -4bp",
-      "read": "BEARISH",
+      "driver": "10Y gilt -1bp",
+      "read": "NEUTRAL",
       "detail": "Yields up helps bank net interest margins."
     },
     {
@@ -105,89 +105,95 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "EXCLUSIVE: Boehly signs US-backed share swap deal to buy Lukoil global assets - Reuters",
+      "headline": "How Trump's proposed tariffs for India compare with rival nations - Reuters",
       "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxQM05VWXNudnhTWW1BY2VFUHpZRzdNSjU4TG1Ob3NYZTRKM0tNUWNGQmxyNEp6NW0yTEJWaTZabF9UNW9CUUZTclBhaGpnQmZ6WVRZTVhqS3dpOTBsZEtaOGZnMzFPQlR5MDRpZThJNmU0cXc5Q0trMDNhdWtxVjV4V1lMYzYyR1RHU0lBNDdWZDlzOWxBN1J1Wm0xWlJkNEVMaVNXUXdQcTRuUHlvczlnMTd1VGRWQQ?oc=5",
-      "hoursAgo": 6.7
+      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNazJTSjI3dk40ZnhoM2ZJR2N2eXp0NUFoaWUxNUI4NW9wV19YWEtpd24tS0t5YnFHV2YzSkRmSXdiTnR6cjRuMTROY1d1VlQ2NUR3UjNNMUJkeU5XQVBOeUQ1VnVTQmtQU3BVOUNndHdyeUhvWDcxdmRHMGtheVJCREs4UzdCWS1VVDQwcmdQYWtILXltMHRhN1UxeTVtdGhuMFhpemlOdDRkLTB5?oc=5",
+      "hoursAgo": 4.9
     },
     {
-      "headline": "US third-quarter economic growth revised sharply higher; inflation broadening out - Reuters",
+      "headline": "India swaps, treasury bills signal possibility of outsized RBI rate hike next week - Reuters",
       "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNalBrRjhRWHdhRDduMzduLU1kN1lGVFpzNFllX0RzdjJXMjdtajRZS1l1dms2MFJFbkhJQmx3Qzgydi1nTTJnQ1JPLUtoa1R5LWZjWjItUXJhXzhoZG51NU9ENzVBQjVSZWFpdHlqbV9PSkVncWtjUlptdXhjd0ZKRXZ6d2Y1dw?oc=5",
-      "hoursAgo": 8.5
+      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNTURLc0UwZjNUdy05dVdJMVFLLUpDNUQwN19INXh3cVcwdW5fM2k3eDV2bnY4ZkZkMDVzSjN4N3Yzcm9CQ1MtT1hmaVJzMmY5VkpMUzgxQzVrQm1zZzU2OERSak1TeU84dDlTOVk0aEZSNXFGcUNzaFo2bVlXN2wwYjRScUxtVE9GeXFFRjBFdWdlZ2tjOEpnQ19UTmVJVnlBQ0ZVclBQdHhieTd0SDJlVEU3c0ZTaFZFazB6cVAtbWpqMmU2?oc=5",
+      "hoursAgo": 5.7
     },
     {
-      "headline": "Investors led by U.S. billionaire Todd Boehly to buy Lukoil's oil and gas assets outside Russia, sources say",
-      "source": "CNBC",
-      "url": "https://www.cnbc.com/2026/11/25/investors-led-by-todd-boehly-to-buy-lukoil-oil-and-gas-assets-outside-russia.html",
-      "hoursAgo": 8.8
+      "headline": "Gold drifts lower as Fed rate-hike fears loom - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNczNWcXJNQVFwUEZ5UjlTc1o0ZFE5NVFYZzA2eTJURHRsMmRMRmc1LTZ1TWszbFYyN05QRHRiQ1VIb1ZxUE9pTUs5WDVya1M0WFJEQ3lCN3J0T3h4bndfa1NyZFB4VFFaby1NWVdRRlFZeGlKdDNnYkRZN0c0eFZQY3VSWS11NW9SbUdndElMZk9oNk1kd0haVWh0Rl9VcTA1MDg1REE1cHZXWk14Umc?oc=5",
+      "hoursAgo": 12.4
     },
     {
-      "headline": "Nasdaq futures slide over 2% as AI losses deepen; inflation data in focus - Reuters",
+      "headline": "Stocks climb as traders shrug off latest US tariff salvo - Reuters",
       "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNdUdBTGhVT2V5cDcydUZMX2NTdTkxVDBJSHdCMUgwNXBibGhQc28zdktpLXA2dGVUYzRzV3hpMld1U29KempSNUswd2dNYVdITlFxV2NycEkwbnlpZkdPSDNicVRKM3NCU2l0M0hoWU13UTZkbTAtX2JFempxaUtFbjdTZGMxT2lXM2g3dkR4cy1UYnVfZ09kOWpTNGxtUEZZOTRPaXhENlZ6OGt2ZF94d0RCVjdOSldfc0E?oc=5",
-      "hoursAgo": 11.9
+      "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxPUWRTQ2N0czgwTVhPdVhvZDUzeDNDRUJ6cFd0MWx1N05aSTJHaUlOdTQ5X2xieEVueHJ3VTRrb0ppNEtzbFVBRm1fU3VvV0xpMWVlUWg3c0NvWXJxS2ZabkwwejhwenhCVmhYRUdweUwwdHhTTWd1bTh2QlR1dFpvVDFHVQ?oc=5",
+      "hoursAgo": 14.5
     },
     {
-      "headline": "World stocks fall as new US tariffs loom, AI rebound fizzles - Reuters",
+      "headline": "South Korea's central bank raises rates, upgrades 2027 growth outlook - Reuters",
       "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxNRFVsTjFROGtER0loSkZOcnF2NDRLUWFmcjBHZ01ybE51N19idjFFMXI1dnFqZ21JYS1HVVpicTJ1V1RfVU4zd3pkVEZMWHdqMUJWRENOQWJ2VjFqT1Y3WS0xYTV3bzd2RnRraFhtOVpzVE9yYThzdV9tdWxJbUpjNzFraw?oc=5",
-      "hoursAgo": 23
+      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQSTJjdUdXNzZ0QVUtZS1QMGowZkw1ellJM1ZkZUMzYVQ1OVp5ME5vQnRTMHgyYm9YVFRxcm11TkdSUmJ6RV9nYlY0YnkzZnhuNkNWa0g0MmNQVDhNMTRiYVN0M1lUbERad1Rqb1h0U3BCa2RJam5DVXBXUk8zNy1CNDlVaXQwRE56Ykl6NjhXTy1Bc21Lbm1sc214UlNVLUdOajVQWlprbG1mRnlIQVNyaWpNSDFBa0Fo?oc=5",
+      "hoursAgo": 15
     },
     {
-      "headline": "Risk-off mood lifts dollar ahead of inflation data - Reuters",
+      "headline": "BOK raises base rate by 25 bps to 3.25% as expected - Reuters",
       "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPUUFucHFRbGxzR3laOUhHVU5fQ215SV82VkdMcExqZy1DMmpLalE4RHkyUDgyaEVLQmhVQ3l1VFZXcUV2ZV9UQmlqX1p2X09UbjlfbzlTY1EwUld2Z2dFV0d3cTI0bDlUejkxbFRsczJ5Q2ZmdXVaTkNNTXNKLUZkYkxLVVhFejU1VjdVTXp4d3ctRmc2NWhDbFdJV1NDRTE4UFQzOGQ4eXI4bXdjLWJB?oc=5",
-      "hoursAgo": 23.5
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNdGZ4ajJzLU5oLXdIVy1SU1lPX0kzaTBGZ1VrY2k0M0NhU00zY2l5bkxsb3JKb2xfTWlzc0FSOTByR0xBeWkybFZDZVhDY3hkb3ZYeC1RRVdwMVI3cmJyNEktVXdkVXpQa1BTZjVXVUU2THVTZ2p1OEtmazhEXzJIemJVblZxREVtQVdURWpR?oc=5",
+      "hoursAgo": 15.1
     },
     {
-      "headline": "Gold slips on stronger dollar, US inflation data in focus - Reuters",
+      "headline": "US proposes surprise new tariffs on Brazil imports, including 10% duty on aircraft - Reuters",
       "source": "Reuters",
-      "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOV1p3ZkduX2FrdGJhMEMtbmNXNTgxN05HeDFsX2xxNDBkWXZQVkFWS3NzNFpITzZ2RnRyYXVZQ1k5bmthekYzdG9aSDVxcGZGS1RxMnNTTHNRRkQyQWFoWm1zNXVfd2hVQW96VHQ1ZFd4eU04cXNTRWk0cFJ4LS1PLUd1eUFmN3Y4ZjJQbXZpVkd3UQ?oc=5",
-      "hoursAgo": 24
+      "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxNTGZ4TFg5REgyY0VnandHQjZIMFN1cnNBOEJVQTBDaU1IWDFLVUxmdHFTXzRLVnVKc3pHd3lTYk9lRHZBOWV1Skd5V0VzVU05ZDRjZXdZekl5cWFneWI2b3ptS09taEhjNzZIcGhuWVdydDk5cnpkcElkMUdTZkJjTjROT09sOG5adVUxNVpNeGp5UmxaaHl2bzh6TklXMlp2eVQyVW9idi1QV25LcnpIeFBjMEF4RzNNbkNIU3JOUlN6WWVqSjRtTlFZMA?oc=5",
+      "hoursAgo": 16.4
+    },
+    {
+      "headline": "New Trump tariffs would likely increase sugar prices in the US - Reuters",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNOUJSZDlKMEI2OHVpZjlzVFhrbXlSVFpZRHFCMWFSSVVHRmZhcG9WVHlObTdFVGhUdjROUmRCYWYyRmFMQjNaMTlsOEktdVcyYlR6YjlMQUtiTXhPRm8wSTVRWGNLbllNVTVxR3VocFcxa1ZEQlZyeEpOTXk2ZUdENjczRl9zYnA4ODJQaEM4eHo4ZnNZdWZGOGdneVZ0ZjFDMGc?oc=5",
+      "hoursAgo": 16.4
     }
   ],
   "riskTone": null,
   "bias": {
-    "score": 6,
+    "score": 4,
     "label": "BULLISH",
-    "conviction": "HIGH",
+    "conviction": "MEDIUM",
     "drivers": [
       {
         "name": "GBP",
         "weight": 3,
         "impact": "NEUTRAL",
-        "detail": "GBP/USD -0.02% → FTSE tailwind (sign-flipped)"
+        "detail": "GBP/USD -0.04% → FTSE tailwind (sign-flipped)"
       },
       {
         "name": "US futures",
         "weight": 2.5,
         "impact": "BULLISH",
-        "detail": "US500 +0.63% today"
+        "detail": "US500 +0.95% today"
       },
       {
         "name": "VIX regime",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "VIX 24.805 — NORMAL regime"
+        "detail": "VIX 24.605 — NORMAL regime"
       },
       {
         "name": "Brent",
         "weight": 1.5,
         "impact": "BULLISH",
-        "detail": "Brent +2.33% (energy majors)"
+        "detail": "Brent +0.72% (energy majors)"
       },
       {
         "name": "Copper (China proxy)",
         "weight": 1.5,
         "impact": "NEUTRAL",
-        "detail": "Copper +0.02% (miners/China)"
+        "detail": "Copper -0.54% (miners/China)"
       },
       {
         "name": "Gilts / rotation",
         "weight": 1,
         "impact": "NEUTRAL",
-        "detail": "10Y gilt -4bp"
+        "detail": "10Y gilt -1bp"
       },
       {
         "name": "GBP COT (proxy, contrarian)",
@@ -203,59 +209,66 @@
       },
       {
         "name": "European tape (SX5E/DAX)",
-        "weight": 2.5,
+        "weight": 1,
         "impact": "BULLISH",
-        "detail": "SX5E +0.35% / DAX +0.36%"
+        "detail": "SX5E +0.53% / DAX +0.72%"
       }
     ],
     "eventSuppressed": false
   },
   "orbContext": {
-    "computedAt": "2026-11-26T00:47:07.614Z",
-    "mode": "PRE_OPEN",
+    "computedAt": "2026-11-26T16:03:30.133Z",
+    "mode": "POST_ORB",
     "cashOpenLondon": "08:00 GMT",
-    "overnightHigh": 10595,
-    "overnightLow": 10557,
+    "overnightHigh": 10609.4,
+    "overnightLow": 10551.2,
     "priorDayHigh": 10582.3,
     "priorDayLow": 10434.1,
     "priorClose": 10557.7,
     "prevWeekHigh": 10978.9,
     "prevWeekLow": 10266.6,
-    "gapPts": 36.3,
-    "gapPct": 0.34,
-    "orbHigh": null,
-    "orbLow": null,
-    "orbBrokenDirection": null,
+    "gapPts": 89.8,
+    "gapPct": 0.85,
+    "orbHigh": 10588.3,
+    "orbLow": 10551.2,
+    "orbBrokenDirection": "UP",
     "eventWindows": [],
     "adr14": 154.9,
-    "adrUsedPct": 25,
+    "adrUsedPct": 63,
     "expansionState": {
-      "label": "UNKNOWN",
-      "rangeSoFarPct": 25,
-      "expectedRangePctByNow": null,
-      "rangeVsTypical": null,
-      "expectedVolPctByNow": null,
-      "moveMostlyDone": false,
-      "note": "Pre-open — session range has not started."
+      "label": "COMPRESSED",
+      "rangeSoFarPct": 63,
+      "expectedRangePctByNow": 100,
+      "rangeVsTypical": 0.63,
+      "expectedVolPctByNow": 100,
+      "moveMostlyDone": true,
+      "note": "Range 63% of ADR vs ~100% typical by 16:00 BST (below the typical pace (compressed/range)). ~100% of a typical day's volume already done — expect a rangebound remainder, tighten targets."
     }
   },
   "orbIntel": {
     "stance": "LONG_FAVOURED",
-    "stanceLine": "Backdrop favours upside breaks — Gap up in the bias direction with a tight overnight range — trend-day conditions; the first ORB break long carries the setup.",
+    "stanceLine": "Backdrop favours upside breaks — ORB break UP is aligned with the BULLISH macro bias (+4) — continuation has the backdrop behind it.",
     "signals": [
       {
         "direction": "FAVOURS_LONG",
         "severity": "INFO",
-        "source": "GAP",
-        "rule": "R6",
-        "text": "Gap up in the bias direction with a tight overnight range — trend-day conditions; the first ORB break long carries the setup."
+        "source": "STRUCTURE",
+        "rule": "R3",
+        "text": "ORB break UP is aligned with the BULLISH macro bias (+4) — continuation has the backdrop behind it."
       },
       {
         "direction": "FAVOURS_LONG",
         "severity": "INFO",
         "source": "TAPE",
         "rule": "R8",
-        "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.35%) — the cross-market lean is up."
+        "text": "FTSE is tracking a firmer European tape (Euro Stoxx +0.53%) — the cross-market lean is up."
+      },
+      {
+        "direction": "FAVOURS_LONG",
+        "severity": "INFO",
+        "source": "TAPE",
+        "rule": "R9",
+        "text": "Past 13:30 with US futures +0.95% — the 14:30 US handoff argues for holding longs into the US open."
       },
       {
         "direction": "FAVOURS_LONG",

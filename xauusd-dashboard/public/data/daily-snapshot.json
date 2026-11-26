@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-26T00:46:59.198Z",
+  "generatedAt": "2026-11-26T16:03:16.929Z",
   "yields": {
     "US10Y": 4.91,
     "US2Y": 4.63,
@@ -34,26 +34,26 @@
     "openInterestChange": 22541
   },
   "etfFlows": {
-    "gldTonnes": 1142.1,
-    "gldWoWChange": -16.6,
+    "gldTonnes": 1140,
+    "gldWoWChange": -2.1,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3567.52,
-    "XAGUSD": 41.249,
-    "EURUSD": 1.09704,
-    "USDJPY": 159.095,
-    "USDCHF": 0.83146,
-    "USDCNH": 6.66545,
-    "GBPUSD": 1.31127,
-    "USDCAD": 1.42127,
-    "USDSEK": 10.23395,
-    "US500": 7214.9,
-    "GER40": 25197.1,
-    "UK100": 10592.05,
+    "XAUUSD": 3574.275,
+    "XAGUSD": 41.578,
+    "EURUSD": 1.09733,
+    "USDJPY": 159.3375,
+    "USDCHF": 0.83413,
+    "USDCNH": 6.66204,
+    "GBPUSD": 1.31101,
+    "USDCAD": 1.42501,
+    "USDSEK": 10.21504,
+    "US500": 7240.4,
+    "GER40": 25291.25,
+    "UK100": 10647.35,
     "ADR_14day": 115,
-    "ADR_usedToday": 21.1,
-    "goldSilverRatio": 86.5
+    "ADR_usedToday": 55.7,
+    "goldSilverRatio": 86
   },
   "dollarLiquidity": {
     "stlfsi": -0.0697,
@@ -66,40 +66,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "US third-quarter economic growth revised sharply higher; inflation broadening out - Reuters",
+      "headline": "How Trump's proposed tariffs for India compare with rival nations - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-25T16:15:17.000Z",
-      "hoursAgo": 8.5
+      "publishedAt": "2026-11-26T11:10:56.000Z",
+      "hoursAgo": 4.9
     },
     {
-      "headline": "Wealthy investors seek tax savings from municipal bonds as yields remain elevated",
-      "source": "CNBC",
-      "publishedAt": "2026-11-25T15:00:01.000Z",
-      "hoursAgo": 9.8
+      "headline": "India swaps, treasury bills signal possibility of outsized RBI rate hike next week - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-26T10:21:58.000Z",
+      "hoursAgo": 5.7
     },
     {
-      "headline": "Nasdaq futures slide over 2% as AI losses deepen; inflation data in focus - Reuters",
+      "headline": "Gold drifts lower as Fed rate-hike fears loom - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-25T12:54:22.000Z",
-      "hoursAgo": 11.9
+      "publishedAt": "2026-11-26T03:39:00.000Z",
+      "hoursAgo": 12.4
     },
     {
-      "headline": "World stocks fall as new US tariffs loom, AI rebound fizzles - Reuters",
+      "headline": "Dollar rally takes a pause for Thanksgiving - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-25T01:50:00.000Z",
-      "hoursAgo": 22.9
+      "publishedAt": "2026-11-26T01:44:00.000Z",
+      "hoursAgo": 14.3
     },
     {
-      "headline": "Risk-off mood lifts dollar ahead of inflation data - Reuters",
+      "headline": "Stocks climb as traders shrug off latest US tariff salvo - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-25T01:19:00.000Z",
-      "hoursAgo": 23.5
+      "publishedAt": "2026-11-26T01:35:00.000Z",
+      "hoursAgo": 14.5
     },
     {
-      "headline": "Gold slips on stronger dollar, US inflation data in focus - Reuters",
+      "headline": "South Korea's central bank raises rates, upgrades 2027 growth outlook - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-25T00:49:00.000Z",
-      "hoursAgo": 24
+      "publishedAt": "2026-11-26T01:05:00.000Z",
+      "hoursAgo": 15
+    },
+    {
+      "headline": "BOK raises base rate by 25 bps to 3.25% as expected - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-26T00:58:00.000Z",
+      "hoursAgo": 15.1
+    },
+    {
+      "headline": "US proposes surprise new tariffs on Brazil imports, including 10% duty on aircraft - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-25T23:42:10.000Z",
+      "hoursAgo": 16.4
     }
   ],
   "briefing": null
