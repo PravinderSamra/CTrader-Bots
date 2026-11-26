@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-26T16:03:16.929Z",
+  "generatedAt": "2026-11-26T17:44:13.078Z",
   "yields": {
     "US10Y": 4.91,
     "US2Y": 4.63,
@@ -34,26 +34,26 @@
     "openInterestChange": 22541
   },
   "etfFlows": {
-    "gldTonnes": 1140,
-    "gldWoWChange": -2.1,
-    "trend3W": "OUTFLOW"
+    "gldTonnes": 1142.4,
+    "gldWoWChange": 2.4,
+    "trend3W": "INFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3574.275,
-    "XAGUSD": 41.578,
-    "EURUSD": 1.09733,
-    "USDJPY": 159.3375,
-    "USDCHF": 0.83413,
-    "USDCNH": 6.66204,
-    "GBPUSD": 1.31101,
-    "USDCAD": 1.42501,
-    "USDSEK": 10.21504,
-    "US500": 7240.4,
-    "GER40": 25291.25,
-    "UK100": 10647.35,
+    "XAUUSD": 3566.685,
+    "XAGUSD": 41.549,
+    "EURUSD": 1.09697,
+    "USDJPY": 159.3125,
+    "USDCHF": 0.83436,
+    "USDCNH": 6.66167,
+    "GBPUSD": 1.31052,
+    "USDCAD": 1.42442,
+    "USDSEK": 10.21473,
+    "US500": 7220.4,
+    "GER40": 25235.05,
+    "UK100": 10630.45,
     "ADR_14day": 115,
     "ADR_usedToday": 55.7,
-    "goldSilverRatio": 86
+    "goldSilverRatio": 85.8
   },
   "dollarLiquidity": {
     "stlfsi": -0.0697,
@@ -66,52 +66,52 @@
   "economicCalendar": [],
   "newsItems": [
     {
+      "headline": "Spain's De Cos set to be nominated by EU countries as next head of ECB - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-26T14:57:22.000Z",
+      "hoursAgo": 2.8
+    },
+    {
+      "headline": "Spain's de Cos to become ECB's next president, FT reports - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-26T13:51:46.000Z",
+      "hoursAgo": 3.9
+    },
+    {
       "headline": "How Trump's proposed tariffs for India compare with rival nations - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-26T11:10:56.000Z",
-      "hoursAgo": 4.9
+      "hoursAgo": 6.6
     },
     {
       "headline": "India swaps, treasury bills signal possibility of outsized RBI rate hike next week - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-26T10:21:58.000Z",
-      "hoursAgo": 5.7
+      "hoursAgo": 7.4
     },
     {
       "headline": "Gold drifts lower as Fed rate-hike fears loom - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-26T03:39:00.000Z",
-      "hoursAgo": 12.4
+      "hoursAgo": 14.1
     },
     {
       "headline": "Dollar rally takes a pause for Thanksgiving - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-26T01:44:00.000Z",
-      "hoursAgo": 14.3
+      "hoursAgo": 16
     },
     {
       "headline": "Stocks climb as traders shrug off latest US tariff salvo - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-26T01:35:00.000Z",
-      "hoursAgo": 14.5
+      "hoursAgo": 16.2
     },
     {
       "headline": "South Korea's central bank raises rates, upgrades 2027 growth outlook - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-26T01:05:00.000Z",
-      "hoursAgo": 15
-    },
-    {
-      "headline": "BOK raises base rate by 25 bps to 3.25% as expected - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-26T00:58:00.000Z",
-      "hoursAgo": 15.1
-    },
-    {
-      "headline": "US proposes surprise new tariffs on Brazil imports, including 10% duty on aircraft - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-25T23:42:10.000Z",
-      "hoursAgo": 16.4
+      "hoursAgo": 16.7
     }
   ],
   "briefing": null

@@ -156,6 +156,65 @@
         "verdict": "UNSCORABLE",
         "signalVerdicts": []
       }
+    },
+    {
+      "at": "2026-11-26T17:44:17.460Z",
+      "londonTime": "17:44 GMT",
+      "mode": "CLOSED",
+      "price": 10630.95,
+      "stance": "LONG_FAVOURED",
+      "stanceLine": "Backdrop favours upside breaks — Past 13:30 with US futures +0.69% — the 14:30 US handoff argues for holding longs into the US open.",
+      "signals": [
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures +0.69% — the 14:30 US handoff argues for holding longs into the US open."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 5th percentile of its 20-day range and falling — a weak-GBP tailwind for the index's dollar earners."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 4,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": 10588.3,
+        "orbLow": 10551.2,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10609.4,
+        "overnightLow": 10551.2,
+        "priorDayHigh": 10582.3,
+        "priorDayLow": 10434.1,
+        "gapPct": 0.69,
+        "adr14": 154.9,
+        "adrUsedPct": 65
+      },
+      "outcome": {
+        "resolvedAt": "2026-11-26T17:44:18.945Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }
