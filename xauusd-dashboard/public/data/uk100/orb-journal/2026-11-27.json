@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-27",
+  "entries": [
+    {
+      "at": "2026-11-27T00:53:57.969Z",
+      "londonTime": "00:53 GMT",
+      "mode": "PRE_OPEN",
+      "price": 10642.25,
+      "stance": "LONG_FAVOURED",
+      "stanceLine": "Backdrop favours upside breaks — Sterling is at the 5th percentile of its 20-day range and falling — a weak-GBP tailwind for the index's dollar earners.",
+      "signals": [
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "FX",
+          "rule": "R10",
+          "text": "Sterling is at the 5th percentile of its 20-day range and falling — a weak-GBP tailwind for the index's dollar earners."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 3,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": null,
+        "orbLow": null,
+        "orbBrokenDirection": null,
+        "overnightHigh": 10651.2,
+        "overnightLow": 10620.6,
+        "priorDayHigh": 10651.3,
+        "priorDayLow": 10551.2,
+        "gapPct": 0.1,
+        "adr14": 149.1,
+        "adrUsedPct": 21
+      },
+      "outcome": null
+    }
+  ]
+}
