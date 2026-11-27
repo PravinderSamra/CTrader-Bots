@@ -42,6 +42,81 @@
         "adr14": 149.1,
         "adrUsedPct": 21
       },
+      "outcome": {
+        "resolvedAt": "2026-11-27T15:51:55.331Z",
+        "fwd1hPct": 0.13,
+        "fwd3hPct": 0.24,
+        "toClosePct": 0.49,
+        "maxUpPct": 0.64,
+        "maxDownPct": -0.09,
+        "verdict": "RIGHT",
+        "signalVerdicts": [
+          {
+            "rule": "R10",
+            "verdict": "RIGHT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-11-27T15:51:53.029Z",
+      "londonTime": "15:51 GMT",
+      "mode": "POST_ORB",
+      "price": 10712.65,
+      "stance": "LONG_FAVOURED",
+      "stanceLine": "Backdrop favours upside breaks — ORB break UP is aligned with the BULLISH macro bias (+5) — continuation has the backdrop behind it.",
+      "signals": [
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "STRUCTURE",
+          "rule": "R3",
+          "text": "ORB break UP is aligned with the BULLISH macro bias (+5) — continuation has the backdrop behind it."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +1.26%) — the cross-market lean is up."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures +0.61% — the 14:30 US handoff argues for holding longs into the US open."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 5,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": 10710.2,
+        "orbLow": 10658.2,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10710.2,
+        "overnightLow": 10620.6,
+        "priorDayHigh": 10651.3,
+        "priorDayLow": 10551.2,
+        "gapPct": 0.76,
+        "adr14": 149.1,
+        "adrUsedPct": 66
+      },
       "outcome": null
     }
   ]

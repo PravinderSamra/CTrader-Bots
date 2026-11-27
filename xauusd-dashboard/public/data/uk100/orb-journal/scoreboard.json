@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-11-26T16:03:32.827Z",
-  "entriesScored": 186,
+  "updatedAt": "2026-11-27T15:51:55.337Z",
+  "entriesScored": 187,
   "byStance": {
     "SHORT_FAVOURED": {
       "n": 34,
@@ -10,11 +10,11 @@
       "avgToClosePct": 0.05
     },
     "LONG_FAVOURED": {
-      "n": 25,
-      "right": 9,
+      "n": 26,
+      "right": 10,
       "wrong": 6,
       "flat": 10,
-      "avgToClosePct": 0.01
+      "avgToClosePct": 0.03
     },
     "FADE_FAVOURED": {
       "n": 19,
@@ -32,8 +32,8 @@
       "flat": 26
     },
     "R11b": {
-      "n": 175,
-      "right": 83,
+      "n": 176,
+      "right": 84,
       "wrong": 10,
       "flat": 82
     },
@@ -74,8 +74,8 @@
       "flat": 14
     },
     "R10": {
-      "n": 39,
-      "right": 9,
+      "n": 40,
+      "right": 10,
       "wrong": 9,
       "flat": 21
     },

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-27T00:53:52.868Z",
+  "generatedAt": "2026-11-27T15:51:48.931Z",
   "yields": {
     "US10Y": 4.91,
     "US2Y": 4.63,
@@ -22,8 +22,8 @@
     "probHike": 84
   },
   "marketVolatility": {
-    "GVZ": 33.64,
-    "VIX": 26.36
+    "GVZ": 35.84,
+    "VIX": 26.8
   },
   "positioning": {
     "cotNetLong": 157208,
@@ -34,26 +34,26 @@
     "openInterestChange": 22541
   },
   "etfFlows": {
-    "gldTonnes": 1144.8,
-    "gldWoWChange": 2.4,
-    "trend3W": "INFLOW"
+    "gldTonnes": 1122.4,
+    "gldWoWChange": -22.4,
+    "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3559.265,
-    "XAGUSD": 41.44,
-    "EURUSD": 1.09622,
-    "USDJPY": 159.327,
-    "USDCHF": 0.83478,
-    "USDCNH": 6.66279,
-    "GBPUSD": 1.30936,
-    "USDCAD": 1.42514,
-    "USDSEK": 10.21625,
-    "US500": 7232.3,
-    "GER40": 25244.8,
-    "UK100": 10642.25,
+    "XAUUSD": 3630.205,
+    "XAGUSD": 43.533,
+    "EURUSD": 1.09399,
+    "USDJPY": 159.55,
+    "USDCHF": 0.83686,
+    "USDCNH": 6.65561,
+    "GBPUSD": 1.31052,
+    "USDCAD": 1.42523,
+    "USDSEK": 10.26678,
+    "US500": 7264.5,
+    "GER40": 25439.85,
+    "UK100": 10713.05,
     "ADR_14day": 108.6,
-    "ADR_usedToday": 16,
-    "goldSilverRatio": 85.9
+    "ADR_usedToday": 127.7,
+    "goldSilverRatio": 83.4
   },
   "dollarLiquidity": {
     "stlfsi": -0.0697,
@@ -66,52 +66,28 @@
   "economicCalendar": [],
   "newsItems": [
     {
-      "headline": "Stocks rally, Europe sizes up next ECB chief - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-26T15:51:24.000Z",
-      "hoursAgo": 9
+      "headline": "Inflation has shoppers hunting for value. That bodes well for Black Friday",
+      "source": "CNBC",
+      "publishedAt": "2026-11-27T11:00:01.000Z",
+      "hoursAgo": 4.9
     },
     {
-      "headline": "Spain's De Cos set to be nominated by EU countries as next head of ECB - Reuters",
+      "headline": "Australia sanctions alleged Iranian agents suspected of directing antisemitic attacks - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-26T14:57:22.000Z",
-      "hoursAgo": 9.9
+      "publishedAt": "2026-11-27T03:17:00.000Z",
+      "hoursAgo": 12.6
     },
     {
-      "headline": "China Railway Resources Group plans $600 million investment in Zimbabwe gold mines - Reuters",
+      "headline": "Shares find footing after bruising month, dollar set for third monthly gain - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-26T13:57:50.000Z",
-      "hoursAgo": 10.9
+      "publishedAt": "2026-11-27T02:01:00.000Z",
+      "hoursAgo": 13.8
     },
     {
-      "headline": "Spain's de Cos to become ECB's next president, FT reports - Reuters",
+      "headline": "Mexico urges Asian trade partners to crack down on tariff dodging - Reuters",
       "source": "Reuters",
-      "publishedAt": "2026-11-26T13:51:46.000Z",
-      "hoursAgo": 11
-    },
-    {
-      "headline": "How Trump's proposed tariffs for India compare with rival nations - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-26T11:10:56.000Z",
-      "hoursAgo": 13.7
-    },
-    {
-      "headline": "India swaps, treasury bills signal possibility of outsized RBI rate hike next week - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-26T10:21:58.000Z",
-      "hoursAgo": 14.5
-    },
-    {
-      "headline": "Trump's new tariffs aim to prise global trade from China's grip - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-26T07:03:00.000Z",
-      "hoursAgo": 17.8
-    },
-    {
-      "headline": "Gold drifts lower as Fed rate-hike fears loom - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-26T03:39:00.000Z",
-      "hoursAgo": 21.2
+      "publishedAt": "2026-11-26T17:09:43.000Z",
+      "hoursAgo": 22.7
     }
   ],
   "briefing": null
