@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-11-27T17:28:37.667Z",
+  "generatedAt": "2026-11-27T23:50:41.671Z",
   "yields": {
-    "US10Y": 4.91,
-    "US2Y": 4.63,
-    "realYield10Y": 2.79,
-    "realYield5Y": 2.58,
-    "curve2s10s": 28,
-    "breakeven10Y": 2.12,
-    "breakeven5Y": 2.13,
-    "forward5y5y": 2.11,
+    "US10Y": 4.85,
+    "US2Y": 4.61,
+    "realYield10Y": 2.73,
+    "realYield5Y": 2.52,
+    "curve2s10s": 24,
+    "breakeven10Y": 2.15,
+    "breakeven5Y": 2.16,
+    "forward5y5y": 2.14,
     "dayOverDay": {
-      "US10Y": -0.01,
-      "US2Y": 0,
-      "realYield10Y": 0
+      "US10Y": -0.06,
+      "US2Y": -0.02,
+      "realYield10Y": -0.06
     }
   },
   "fedExpectations": {
     "nextMeeting": "2026-12-09",
     "probCut": 0,
-    "probHold": 16,
-    "probHike": 84
+    "probHold": 0,
+    "probHike": 100
   },
   "marketVolatility": {
     "GVZ": 35.84,
@@ -34,24 +34,24 @@
     "openInterestChange": 22541
   },
   "etfFlows": {
-    "gldTonnes": 1119.9,
-    "gldWoWChange": -2.5,
+    "gldTonnes": 1114.9,
+    "gldWoWChange": -5,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3638.405,
-    "XAGUSD": 43.548,
-    "EURUSD": 1.09394,
-    "USDJPY": 159.51,
-    "USDCHF": 0.83562,
-    "USDCNH": 6.65435,
-    "GBPUSD": 1.31051,
-    "USDCAD": 1.42391,
-    "USDSEK": 10.26013,
-    "US500": 7285.2,
-    "GER40": 25489.55,
-    "UK100": 10723.65,
-    "ADR_14day": 108.6,
+    "XAUUSD": 3654.62,
+    "XAGUSD": 43.743,
+    "EURUSD": 1.09325,
+    "USDJPY": 159.5765,
+    "USDCHF": 0.83626,
+    "USDCNH": 6.65505,
+    "GBPUSD": 1.30951,
+    "USDCAD": 1.42494,
+    "USDSEK": 10.26528,
+    "US500": 7295.9,
+    "GER40": 25497.8,
+    "UK100": 10728.25,
+    "ADR_14day": 110.7,
     "ADR_usedToday": 127.7,
     "goldSilverRatio": 83.5
   },
@@ -69,19 +69,19 @@
       "headline": "Inflation has shoppers hunting for value. That bodes well for Black Friday",
       "source": "CNBC",
       "publishedAt": "2026-11-27T11:00:01.000Z",
-      "hoursAgo": 6.5
+      "hoursAgo": 12.8
+    },
+    {
+      "headline": "Gold pares gains as Fed-hike risks linger, eyes first weekly rise in three weeks - Reuters",
+      "source": "Reuters",
+      "publishedAt": "2026-11-27T03:28:00.000Z",
+      "hoursAgo": 20.4
     },
     {
       "headline": "Australia sanctions alleged Iranian agents suspected of directing antisemitic attacks - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-27T03:17:00.000Z",
-      "hoursAgo": 14.2
-    },
-    {
-      "headline": "Shares find footing after bruising month, dollar set for third monthly gain - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-27T02:01:00.000Z",
-      "hoursAgo": 15.5
+      "hoursAgo": 20.6
     }
   ],
   "briefing": null
