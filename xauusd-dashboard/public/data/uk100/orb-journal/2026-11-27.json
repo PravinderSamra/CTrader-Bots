@@ -117,7 +117,99 @@
         "adr14": 149.1,
         "adrUsedPct": 66
       },
-      "outcome": null
+      "outcome": {
+        "resolvedAt": "2026-11-27T17:28:44.151Z",
+        "fwd1hPct": 0.07,
+        "fwd3hPct": null,
+        "toClosePct": 0.07,
+        "maxUpPct": 0.14,
+        "maxDownPct": -0.09,
+        "verdict": "FLAT",
+        "signalVerdicts": [
+          {
+            "rule": "R3",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R8",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R9",
+            "verdict": "FLAT"
+          },
+          {
+            "rule": "R11b",
+            "verdict": "RIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-11-27T17:28:41.812Z",
+      "londonTime": "17:28 GMT",
+      "mode": "CLOSED",
+      "price": 10723.65,
+      "stance": "LONG_FAVOURED",
+      "stanceLine": "Backdrop favours upside breaks — 72% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing.",
+      "signals": [
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "CAUTION",
+          "source": "RANGE",
+          "rule": "R4",
+          "text": "72% of a typical day's range is already spent — fresh breakouts have little fuel; favour fades back into the range over chasing."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R8",
+          "text": "FTSE is tracking a firmer European tape (Euro Stoxx +1.43%) — the cross-market lean is up."
+        },
+        {
+          "direction": "FAVOURS_LONG",
+          "severity": "INFO",
+          "source": "TAPE",
+          "rule": "R9",
+          "text": "Past 13:30 with US futures +0.9% — the 14:30 US handoff argues for holding longs into the US open."
+        },
+        {
+          "direction": "BREAKOUT_SUSPECT",
+          "severity": "INFO",
+          "source": "POSITIONING",
+          "rule": "R11b",
+          "text": "GBP is a crowded short — a short-squeeze higher in sterling is a latent slap for upside breaks (strong GBP weighs on FTSE)."
+        }
+      ],
+      "aiStanceLine": null,
+      "aiBullets": [],
+      "bias": {
+        "score": 4,
+        "label": "BULLISH"
+      },
+      "orb": {
+        "orbHigh": 10710.2,
+        "orbLow": 10658.2,
+        "orbBrokenDirection": "UP",
+        "overnightHigh": 10710.2,
+        "overnightLow": 10620.6,
+        "priorDayHigh": 10651.3,
+        "priorDayLow": 10551.2,
+        "gapPct": 0.86,
+        "adr14": 149.1,
+        "adrUsedPct": 72
+      },
+      "outcome": {
+        "resolvedAt": "2026-11-27T17:28:44.151Z",
+        "fwd1hPct": null,
+        "fwd3hPct": null,
+        "toClosePct": 0,
+        "maxUpPct": 0,
+        "maxDownPct": 0,
+        "verdict": "UNSCORABLE",
+        "signalVerdicts": []
+      }
     }
   ]
 }

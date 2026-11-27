@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-27T15:51:48.931Z",
+  "generatedAt": "2026-11-27T17:28:37.667Z",
   "yields": {
     "US10Y": 4.91,
     "US2Y": 4.63,
@@ -34,26 +34,26 @@
     "openInterestChange": 22541
   },
   "etfFlows": {
-    "gldTonnes": 1122.4,
-    "gldWoWChange": -22.4,
+    "gldTonnes": 1119.9,
+    "gldWoWChange": -2.5,
     "trend3W": "OUTFLOW"
   },
   "snapshotPrices": {
-    "XAUUSD": 3630.205,
-    "XAGUSD": 43.533,
-    "EURUSD": 1.09399,
-    "USDJPY": 159.55,
-    "USDCHF": 0.83686,
-    "USDCNH": 6.65561,
-    "GBPUSD": 1.31052,
-    "USDCAD": 1.42523,
-    "USDSEK": 10.26678,
-    "US500": 7264.5,
-    "GER40": 25439.85,
-    "UK100": 10713.05,
+    "XAUUSD": 3638.405,
+    "XAGUSD": 43.548,
+    "EURUSD": 1.09394,
+    "USDJPY": 159.51,
+    "USDCHF": 0.83562,
+    "USDCNH": 6.65435,
+    "GBPUSD": 1.31051,
+    "USDCAD": 1.42391,
+    "USDSEK": 10.26013,
+    "US500": 7285.2,
+    "GER40": 25489.55,
+    "UK100": 10723.65,
     "ADR_14day": 108.6,
     "ADR_usedToday": 127.7,
-    "goldSilverRatio": 83.4
+    "goldSilverRatio": 83.5
   },
   "dollarLiquidity": {
     "stlfsi": -0.0697,
@@ -69,25 +69,19 @@
       "headline": "Inflation has shoppers hunting for value. That bodes well for Black Friday",
       "source": "CNBC",
       "publishedAt": "2026-11-27T11:00:01.000Z",
-      "hoursAgo": 4.9
+      "hoursAgo": 6.5
     },
     {
       "headline": "Australia sanctions alleged Iranian agents suspected of directing antisemitic attacks - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-27T03:17:00.000Z",
-      "hoursAgo": 12.6
+      "hoursAgo": 14.2
     },
     {
       "headline": "Shares find footing after bruising month, dollar set for third monthly gain - Reuters",
       "source": "Reuters",
       "publishedAt": "2026-11-27T02:01:00.000Z",
-      "hoursAgo": 13.8
-    },
-    {
-      "headline": "Mexico urges Asian trade partners to crack down on tariff dodging - Reuters",
-      "source": "Reuters",
-      "publishedAt": "2026-11-26T17:09:43.000Z",
-      "hoursAgo": 22.7
+      "hoursAgo": 15.5
     }
   ],
   "briefing": null
